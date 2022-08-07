@@ -2,12 +2,11 @@
   <div v-if="message.showLoading2" class="h-screen mt-large pt-small">
     <Spinner class="bg-lightBlueB-200  " />
   </div>
-  <div
-    style="width: 1000px"
-    class="bg-white mb-large rounded pr-20 pl-20 pb-12"
-  >
+  <div style="width: 1000px" class="bg-white mb-large rounded pr-20 pl-20 pb-12">
     <div v-if="!message.showLoading2">
-      <div class="flex justify-center"><Title message="Summary" /></div>
+      <div class="flex justify-center">
+        <Title message="Summary" />
+      </div>
       <div class="flex justify-start flex-col mb-large mt-large">
         <div class="flex justify-start mb-medium">
           <Title message="Profile Picture" />
@@ -26,7 +25,7 @@
           <label class="ml-8 text-primary-300"> Full Name</label>
           <h5 class="ml-8">
             {{
-              personalInfo.name +
+                personalInfo.name +
                 " " +
                 personalInfo.fatherName +
                 " " +
@@ -38,7 +37,7 @@
           <label class="ml-8 text-primary-300"> Full Alternative Name</label>
           <h5 class="ml-8">
             {{
-              personalInfo.alternativeName +
+                personalInfo.alternativeName +
                 " " +
                 personalInfo.alternativeFatherName +
                 " " +
@@ -76,27 +75,47 @@
           <label class="ml-8 text-primary-300"> Email Address</label>
           <h5 class="ml-8">{{ user.emailAddress }}</h5>
         </div>
-      </div>
-            <div class="flex flex-row">
-        <div v-if="personalInfo.employeeId!=null ||personalInfo.employeeId!=''">
-          <label class="ml-8 font-bold text-primary-500">HRA Employee Id</label>
+        <div v-if="personalInfo.employeeId != null || personalInfo.employeeId != ''">
+          <label class="ml-8 text-primary-300">HRA Employee Id</label>
           <h5 class="ml-8">{{ personalInfo.employeeId }}</h5>
-        </div>
+      </div>
+        <div v-if="personalInfo.fileNumber != null || personalInfo.fileNumber != ''">
+          <label class="ml-8 text-primary-300">HRA File Number</label>
+          <h5 class="ml-8">{{ personalInfo.fileNumber }}</h5>
+      </div>
       </div>
       <div class="mt-12 flex justify-center mb-medium">
         <div>
-          <button @click="prevStep" class="mx-auto w-1/2" variant="outline">
+          <button class="            
+                            inline-block
+                            px-6
+                            py-2.5
+                            bg-blue-600
+                            text-white
+                            font-medium
+                            text-xs
+                            leading-tight
+                            uppercase
+                            rounded
+                            shadow-lg
+                            hover:bg-blue-600 
+                            hover:shadow-lg
+                            focus:bg-blue-700
+                            focus:shadow-lg
+                            focus:outline-none
+                            focus:ring-0
+                            active:bg-blue-800 active:shadow-lg
+                            transition
+                            duration-150
+                            ease-in-out" variant="outline" type="button" @click="prevStep">
             Back
           </button>
         </div>
         <div v-if="!message.showLoading">
-          <button v-on:click="submit()" class="p-1">Save Profile</button>
+          <button v-on:click="submit()" variant="outline" type="button" class="p-1">Save Profile</button>
         </div>
       </div>
-      <div
-        class="flex justify-center justify-items-center mt-8 mb-12"
-        v-if="message.showLoading"
-      >
+      <div class="flex justify-center justify-items-center mt-8 mb-12" v-if="message.showLoading">
         <Spinner />
       </div>
     </div>
@@ -119,6 +138,7 @@ import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
 import moment from "moment";
+import { useToast } from "vue-toastification";
 
 export default {
   components: { Title, FlashMessage, ErrorFlashMessage, Spinner },
@@ -130,6 +150,7 @@ export default {
     const store = useStore();
     const router = useRouter();
     let profilePic = null;
+    const toast = useToast();
     let message = ref({
       showFlash: false,
       showErrorFlash: false,
@@ -155,7 +176,8 @@ export default {
       maritalStatusId: null,
       maritalStatus: null,
       poBox: null,
-      employeeId:null
+      employeeId: null,
+      fileNumber:null
     };
     let address = {
       poBox: null
@@ -189,12 +211,20 @@ export default {
           poBox: personalInfo.poBox,
           photo: personalInfo.photo,
           userId: +localStorage.getItem("userId"),
-          employeeId:personalInfo.employeeId?personalInfo.employeeId:null
+          employeeId: personalInfo.employeeId ? personalInfo.employeeId : null,
+          fileNumber: personalInfo.fileNumber ? personalInfo.fileNumber : null
         })
         .then(response => {
           if (response.statusText == "Created") {
             let userId = +localStorage.getItem("userId");
             let formData = new FormData();
+            toast.success(response.data.message, {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true
+            });
             formData.append("document", photoFormData);
             let payload = { document: formData, id: userId };
             store
@@ -210,12 +240,12 @@ export default {
                   message.value.showErrorFlash = !message.value.showErrorFlash;
                 }
               })
-              .catch(err => {});
+              .catch(err => { });
 
             message.value.showLoading = false;
             message.value.showFlash = true;
             message.value.showErrorFlash = false;
-
+          
             setTimeout(() => {
               location.reload(true);
             }, 1500);
@@ -226,6 +256,13 @@ export default {
             message.value.showLoading = false;
             message.value.showFlash = false;
             message.value.showErrorFlash = true;
+          toast.error(response.data.message, {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true
+            });
             setTimeout(() => {
               message.value.showErrorFlash = false;
             }, 3000);
@@ -263,7 +300,7 @@ export default {
     photoFormData = store.getters["profile/getPhoto"];
     onMounted(() => {
       fetchUser();
-      nextTick(function() {
+      nextTick(function () {
         window.setInterval(() => {
           showFlash.value = false;
         }, 10000);
@@ -288,8 +325,8 @@ export default {
 };
 </script>
 <style>
-.text-danger > label,
-.text-danger > h5 {
+.text-danger>label,
+.text-danger>h5 {
   color: red;
 }
 </style>
