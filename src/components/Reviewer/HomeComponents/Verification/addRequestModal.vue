@@ -206,6 +206,7 @@
                         "
                         id="lNumber"
                         placeholder="License Number"
+                        v-model="licenseNumber"
                       />
                     </div>
                     <div class="flex justify-center">
@@ -330,7 +331,7 @@ export default {
       let submittedData = {
         regionId: region.value,
         licenseNumber: licenseNumber.value,
-        applicantId: assignedUser.value?.id,
+        applicantId: assignedUser.value .id,
         requesterId: loggedInAdmin.id,
       };
       store
@@ -393,9 +394,10 @@ export default {
 
     const setInput = (value) => {
       assignedUser.value = {
-        id: value.id,
+        id: value.userId,
         name: value.name + " " + value.fatherName + " " + value.grandFatherName,
       };
+      console.log(assignedUser.value,value);
       showOptions.value = false;
     };
 

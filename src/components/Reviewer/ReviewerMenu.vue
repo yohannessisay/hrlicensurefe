@@ -51,7 +51,7 @@
         </li>
       </router-link>
 
-      <router-link to="/admin/userManagement">
+      <router-link to="/admin/userManagement" v-if="isUserRegional?isUserRegional.regionId==null:''">
         <li class="mb-2">
           <a href="#UserManagement">
             <i class="bx bx-user"></i>
@@ -62,7 +62,7 @@
 
       <router-link to="/admin/report">
         <li class="mb-2">
-          <a href="#CpdCertified">
+          <a href="#Report">
             <i class="bx bx-table"></i>
             <span class="links_name">Report</span>
           </a>
@@ -108,16 +108,17 @@ export default {
   },
   setup() {
     const store = useStore();
+    const isUserRegional = JSON.parse(localStorage.getItem("allAdminData"));
     store.dispatch("ReviewerSideNav/assignSelectedSideBar", "mainPage");
     let currentMenu = store.getters["ReviewerSideNav/getSelectedSideBar"];
 
     function updateMenu(menu) {
       currentMenu = menu;
     }
-
     return {
       currentMenu,
       updateMenu,
+      isUserRegional
     };
   },
 };

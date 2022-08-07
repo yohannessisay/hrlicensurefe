@@ -402,7 +402,10 @@ const routes = [
   {
     path: "/admin/list",
     name: "AdminUserManagement",
-    component: () => import("../components/UserManagement/UserDashboard.vue"),
+    component: () =>
+      import(
+        "../components/Reviewer/HomeComponents/UserManagement/userManagement.vue"
+      ),
   },
   {
     path: "/admin/newLicense/unassigned",
@@ -873,7 +876,6 @@ const routes = [
       ),
   },
 
-
   //New Updated Routes....please follow these guidelines when refactoring
   //Admin New license section
   {
@@ -1119,15 +1121,29 @@ const routes = [
     path: "/admin/userManagement",
     name: "UserManagement",
     component: () =>
-      import("../components/Reviewer/HomeComponents/UserManagement/userManagement.vue"),
+      import(
+        "../components/Reviewer/HomeComponents/UserManagement/userManagement.vue"
+      ),
   },
 
-    //Import Results
+  //Import Results
+  {
+    path: "/admin/importResults",
+    name: "ImportResults",
+    component: () =>
+      import(
+        "../components/Reviewer/HomeComponents/ImportResults/importResults.vue"
+      ),
+  },
+
+    //Report
     {
-      path: "/admin/importResults",
-      name: "ImportResults",
+      path: "/admin/report",
+      name: "AdminReport",
       component: () =>
-        import("../components/Reviewer/HomeComponents/ImportResults/importResults.vue"),
+        import(
+          "../components/Reviewer/HomeComponents/Report/report.vue"
+        ),
     },
 ];
 

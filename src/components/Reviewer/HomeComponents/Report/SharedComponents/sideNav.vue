@@ -1,6 +1,6 @@
 <template>
   <div class="sidebar">
-    <router-link to="/admin/review/">
+    <router-link to="/admin/review">
       <div class="logo-details ml-4">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -31,28 +31,26 @@
         <span class="logo_name ml-4">eHPL</span>
       </div>
     </router-link>
-        <li class="inverted-border-radius mb-8 mt-3">
-      <i class="bx bx-badge-check ml-8 mt-2 text-2xl" style="color: #224771"></i>
- <span class="header_text ml-4">Cpd Certified</span>
-     
-    </li>
-    
-    <ul class="nav-links mb-64">
-      <router-link to="/admin/report/">
-        <li
-          :class="
-            $route.fullPath === '/admin/report' ? 'mb-2 active' : ''
-          "
-        >
-          <a href="">
-            <i class="bx bx-certification"></i>
+    <div id="outer">
+      <div class="top left"></div>
+    </div>
+    <li class="inverted-border-radius mb-8 mt-4">
+      <i class="bx bx-table ml-8 mt-4" style="color: #224771"></i>
 
-            <span class="links_name">Service</span>
+      <span class="header_text ml-4">Report</span>
+    </li>
+    <ul class="nav-links">
+      <router-link to="admin/report">
+        <li :class="$route.fullPath === '/admin/report' ? 'mb-2 active' : ''">
+          <a href="#UserManagement">
+            <i class="bx bx-table"></i>
+
+            <span class="links_name">Report</span>
           </a>
         </li>
       </router-link>
     </ul>
-    <ul class="nav-links">
+  <ul class="nav-links">
       <div
         class="profile-details mb-8 ml-4"
         style="
@@ -67,7 +65,7 @@
         <router-link to="/admin/review/">
           <li>
             <a href="" class="ml-6">
-              <i class="bx bx-arrow-to-left text-white "></i>
+              <i class="bx bx-arrow-to-left text-white"></i>
 
               <span class="links_name text-white mr-12">All Listing</span>
             </a>

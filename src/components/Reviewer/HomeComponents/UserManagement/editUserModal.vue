@@ -13,11 +13,11 @@
       outline-none
       overflow-x-hidden overflow-y-auto
     "
-    id="addUser"
+    id="editUser"
     data-bs-backdrop="static"
     data-bs-keyboard="false"
     tabindex="-1"
-    aria-labelledby="addUserLabel"
+    aria-labelledby="editUserLabel"
     aria-hidden="true"
   >
     <div class="modal-dialog modal-xl relative w-auto pointer-events-none">
@@ -59,9 +59,7 @@
             <section class="text-gray-800">
               <div class="flex justify-center">
                 <div class="text-center lg:max-w-3xl md:max-w-full">
-                  <h2 class="text-2xl font-bold mb-8 px-6">
-                    Create Admin User
-                  </h2>
+                  <h2 class="text-2xl font-bold mb-8 px-6">{{ !isUserManager?'View Admin Details':'Edit Admin User' }}</h2>
                 </div>
               </div>
 
@@ -81,7 +79,9 @@
                     >
                       <div class="flex w-full">
                         <div class="flex flex-col w-1/2 mr-12">
-                          <label class="ml-4 text-primary-700 font-bold">First Name</label>
+                          <label class="ml-4 text-primary-600 font-bold"
+                            >First Name</label
+                          >
                           <input
                             class="
                               form-control
@@ -106,6 +106,7 @@
                             "
                             type="text"
                             v-model="admin.firstName"
+                            :disabled="!isUserManager"
                           />
                           <span
                             style="color: red"
@@ -114,7 +115,9 @@
                           >
                         </div>
                         <div class="flex flex-col mb-medium w-1/2 mr-12">
-                           <label class="ml-4 text-primary-700 font-bold">Father's Name</label>
+                          <label class="ml-4 text-primary-600 font-bold"
+                            >Father's Name</label
+                          >
                           <input
                             class="
                               form-control
@@ -139,6 +142,7 @@
                             "
                             type="text"
                             v-model="admin.fatherName"
+                             :disabled="!isUserManager"
                           />
                           <span
                             style="color: red"
@@ -149,7 +153,9 @@
                       </div>
                       <div class="flex">
                         <div class="flex flex-col mb-medium w-1/2 mr-12">
-                           <label class="ml-4 text-primary-700 font-bold">Grandfather's Name</label>
+                          <label class="ml-4 text-primary-600 font-bold"
+                            >Grandfather's Name</label
+                          >
                           <input
                             class="
                               form-control
@@ -174,6 +180,7 @@
                             "
                             type="text"
                             v-model="admin.grandfatherName"
+                             :disabled="!isUserManager"
                           />
                           <span
                             style="color: red"
@@ -182,7 +189,9 @@
                           >
                         </div>
                         <div class="flex flex-col mb-medium w-1/2 mr-12">
-                        <label class="ml-4 text-primary-700 font-bold">Email</label>
+                          <label class="ml-4 text-primary-600 font-bold"
+                            >Email</label
+                          >
                           <input
                             class="
                               form-control
@@ -207,6 +216,7 @@
                             "
                             type="text"
                             v-model="admin.email"
+                             :disabled="!isUserManager"
                           />
                           <span
                             style="color: red"
@@ -217,7 +227,9 @@
                       </div>
                       <div class="flex">
                         <div class="flex flex-col mb-medium w-1/2 mr-12">
-                    <label class="ml-4 text-primary-700 font-bold">Phone Number</label>
+                          <label class="ml-4 text-primary-600 font-bold"
+                            >Phone Number</label
+                          >
                           <input
                             class="
                               form-control
@@ -242,6 +254,7 @@
                             "
                             type="text"
                             v-model="admin.phoneNumber"
+                             :disabled="!isUserManager"
                           />
                           <span
                             style="color: red"
@@ -250,7 +263,10 @@
                           >
                         </div>
                         <div class="flex flex-col mb-medium w-1/2 mr-12">
-                       <label class="ml-4 text-primary-700 font-bold">Role</label>
+                          <label class="ml-4 text-primary-600 font-bold"
+                            >Role</label
+                          >
+
                           <select
                             class="
                               form-control
@@ -275,7 +291,34 @@
                               focus:outline-none
                             "
                             v-model="admin.roleId"
+                             :disabled="!isUserManager"
                           >
+                            <option
+                              selected
+                              :value="
+                                state &&
+                                state.roles &&
+                                state.roles.find(
+                                  (role) => role.id == admin.roleId
+                                )
+                                  ? state.roles.find(
+                                      (role) => role.id == admin.roleId
+                                    ).id
+                                  : ''
+                              "
+                            >
+                              {{
+                                state &&
+                                state.roles &&
+                                state.roles.find(
+                                  (role) => role.id == admin.roleId
+                                )
+                                  ? state.roles.find(
+                                      (role) => role.id == admin.roleId
+                                    ).name
+                                  : ""
+                              }}
+                            </option>
                             <option
                               v-for="role in state.roles"
                               v-bind:key="role.name"
@@ -296,7 +339,10 @@
                           class="flex flex-col mb-medium w-1/2 mr-12"
                           v-if="adminExpertId == 3"
                         >
-                       <label class="ml-4 text-primary-700 font-bold">Expert Type</label>
+                          <label class="ml-4 text-primary-600 font-bold"
+                            >Expert Type</label
+                          >
+
                           <select
                             class="
                               form-control
@@ -322,11 +368,37 @@
                             "
                             v-model="expertLevels.id"
                             @change="selectedExpertLevel"
+                             :disabled="!isUserManager"
                           >
                             <option
+                              class="bg-primary-700 text-white"
+                              selected
+                              :value="
+                                expertLevels &&
+                                expertLevels.find(
+                                  (exp) => exp.id == admin.expertLevelId
+                                )
+                                  ? expertLevels.find(
+                                      (exp) => exp.id == admin.expertLevelId
+                                    ).id
+                                  : ''
+                              "
+                            >
+                              {{
+                                expertLevels &&
+                                expertLevels.find(
+                                  (exp) => exp.id == admin.expertLevelId
+                                )
+                                  ? expertLevels.find(
+                                      (exp) => exp.id == admin.expertLevelId
+                                    ).name
+                                  : ""
+                              }}
+                            </option>
+                            <option
                               v-for="expertLevel in expertLevels"
-                              v-bind:key="expertLevel.name"
-                              v-bind:value="expertLevel.id"
+                              :key="expertLevel.name"
+                              :value="expertLevel.id"
                             >
                               {{ expertLevel.name }}
                             </option>
@@ -337,8 +409,10 @@
                             >{{ state.validationErrors.expertLevel }}</span
                           >
                         </div>
-                        <span v-show="expertLevels.id == 4">
-                          <label class="ml-4">Region</label>
+                        <span v-show="showRegion == 4">
+                          <label class="text-primary-600 font-bold ml-4"
+                            >Region</label
+                          >
                           <div>
                             <select
                               class="
@@ -346,6 +420,7 @@
                                 block
                                 w-full
                                 px-3
+                                ml-4
                                 py-1
                                 h-12
                                 text-base
@@ -356,7 +431,6 @@
                                 rounded
                                 transition
                                 ease-in-out
-                                m-4
                                 mt-0
                                 focus:text-gray-700
                                 focus:bg-white
@@ -365,7 +439,17 @@
                               "
                               v-model="regions.id"
                               @change="selectedRegion"
+                               :disabled="!isUserManager"
                             >
+                              <option selected>
+                                {{
+                                  modalData &&
+                                  modalData.data &&
+                                  modalData.data.region
+                                    ? modalData.data.region.name
+                                    : ""
+                                }}
+                              </option>
                               <option
                                 v-for="region in regions"
                                 v-bind:key="region.name"
@@ -383,7 +467,7 @@
                         </span>
                       </div>
 
-                      <div class="flex justify-center ml-4">
+                      <div class="flex justify-center ml-4" v-if="isUserManager">
                         <button
                           class="
                             px-2
@@ -404,9 +488,9 @@
                             duration-150
                             ease-in-out
                           "
-                          @click="registerAdmin()"
+                          @click="saveAdmin()"
                         >
-                          Create User
+                          Save
                         </button>
                       </div>
                     </form>
@@ -460,7 +544,7 @@
 </template>
 <script>
 import { useStore } from "vuex";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed, watch } from "vue";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 import { useToast } from "vue-toastification";
@@ -469,28 +553,28 @@ export default {
   components: {
     Loading,
   },
-
-  setup() {
+  props: ["modalData"],
+  setup(props) {
     const store = useStore();
     let isLoading = ref(false);
     const toast = useToast();
     const adminExpertId = JSON.parse(
       localStorage.getItem("allAdminData")
     ).expertLevelId;
+       const isUserManager = localStorage.getItem("role") == "UM";
     let errorMessage = ref("");
 
-    let admin = {
-      firstName: null,
-      fatherName: null,
-      grandfatherName: null,
-      email: null,
-      phoneNumber: null,
-      roleId: null,
-      expertLevelId: null,
-      regionId: null,
-      password: "password1",
+    let admin = ref({
+      firstName: "",
+      fatherName: "",
+      grandfatherName: "",
+      email: "",
+      phoneNumber: "",
+      roleId: "",
+      expertLevelId: "",
+      regionId: "",
       isActive: true,
-    };
+    });
 
     let showLoading = ref(false);
     let showButtons = ref(false);
@@ -542,19 +626,20 @@ export default {
         expertLevels.value = res.data.data;
       });
     };
-
+    let showRegion=ref("");
     const selectedExpertLevel = () => {
-      admin.expertLevelId = expertLevels.value.id;
-      admin.regionId='';
+      admin.value.expertLevelId = expertLevels.value.id;
+      showRegion.value=admin.value.expertLevelId;
+      admin.value.regionId = "";
     };
 
     const selectedRegion = () => {
-      admin.regionId = regions.value.id;
+      admin.value.regionId = regions.value.id;
     };
 
-    const registerAdmin = () => {
+    const saveAdmin = () => {
       isLoading.value = true;
-      let isValidated = validateForm(admin);
+      let isValidated = validateForm(admin.value);
       showLoading.value = true;
       showButtons.value = true;
       if (isValidated) {
@@ -562,23 +647,28 @@ export default {
         state.value.showErrorMessages = true;
         showButtons.value = false;
       } else {
-        state.value.showErrorMessages = false;
-        admin.name =
-          admin.firstName +
+        let editData = {};
+        editData.id = admin.value.id;
+        editData.name =
+          admin.value.firstName +
           " " +
-          admin.fatherName +
+          admin.value.fatherName +
           " " +
-          admin.grandfatherName;
-
-        admin.email = admin.email.toLowerCase();
-
+          admin.value.grandfatherName;
+        editData.phoneNumber=admin.value.phoneNumber;
+        editData.email=admin.value.email;
+        editData.roleId=admin.value.roleId;
+        editData.expertLevelId=admin.value.expertLevelId;
+        editData.isActive=admin.value.isActive;
+        if (admin.value.regionId == "REG") {
+          editData.regionId = admin.value.regionId;
+        }
         store
-          .dispatch("admin/registerAdmin", admin)
+          .dispatch("admin/updateAdmin", admin.value)
           .then((res) => {
-            console.log(res);
             showLoading.value = false;
             if (res.data.status == "Success") {
-              toast.success("User added Successfully", {
+              toast.success("Admin edited Successfully", {
                 timeout: 5000,
                 position: "bottom-center",
                 pauseOnFocusLoss: true,
@@ -586,8 +676,8 @@ export default {
                 icon: true,
               });
               isLoading.value = false;
-            } else if (res.data.status == "Error") {
-              toast.error(res.data.message, {
+            } else {
+              toast.error(res.data.message.name, {
                 timeout: 5000,
                 position: "bottom-center",
                 pauseOnFocusLoss: true,
@@ -639,7 +729,9 @@ export default {
       ) {
         return null;
       } else {
+        isLoading.value=false;
         return errors;
+        
       }
     };
 
@@ -648,7 +740,39 @@ export default {
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(email);
     };
-
+    watch(props.modalData, () => {
+      admin.value.id =
+        props.modalData.data && props.modalData.data.data
+          ? props.modalData.data.data.id
+          : "";
+      admin.value.firstName = props.modalData.data
+        ? props.modalData.data.FullName.split(" ")[0]
+        : "";
+      admin.value.fatherName = props.modalData.data
+        ? props.modalData.data.FullName.split(" ")[1]
+        : "";
+      admin.value.grandfatherName = props.modalData.data
+        ? props.modalData.data.FullName.split(" ")[2]
+        : "";
+      admin.value.email = props.modalData.data
+        ? props.modalData.data.Email
+        : "";
+      admin.value.phoneNumber = props.modalData.data
+        ? props.modalData.data.PhoneNumber
+        : "";
+      admin.value.roleId =
+        props.modalData.data && props.modalData.data.data
+          ? props.modalData.data.data.roleId
+          : "";
+      admin.value.expertLevelId =
+        props.modalData.data && props.modalData.data.data
+          ? props.modalData.data.data.expertLevelId
+          : "";
+      showRegion.value=
+        props.modalData.data && props.modalData.data.data
+          ? props.modalData.data.data.expertLevelId
+          : "";
+    });
     onMounted(() => {
       fetchRole();
       fetchExpertLevels();
@@ -657,6 +781,7 @@ export default {
 
     return {
       state,
+      showRegion,
       message,
       errorMessage,
       expertLevels,
@@ -665,12 +790,13 @@ export default {
       admin,
       adminExpertId,
       fetchRole,
-      registerAdmin,
+      saveAdmin,
       validateForm,
       isValidEmail,
       selectedExpertLevel,
       selectedRegion,
       showButtons,
+      isUserManager,
       isLoading,
     };
   },
