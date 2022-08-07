@@ -216,12 +216,11 @@
                       ></label>
                       <span>
                         {{
-                          modalData.IsVerified == null ||
-                          modalData.IsVerified == ""
+                          modalData.IsVerified == null
                             ? "Click the Checkbox"
-                            : isVerified === true
-                            ? "Verified"
-                            : "Not Verified"
+                            : isVerified == true
+                            ? "Yes"
+                            : "No"
                         }}
                       </span>
                     </div>
@@ -437,20 +436,20 @@ export default {
     const applicantName = computed(() => props.modalData.ApplicantName);
     const editedData = ref({});
     const saveVerification = () => {
-      editedData.value.isVerified = isVerified.value;
-      editedData.value.remark = remark.value;
-      editedData.value.malpracticeInfo = malpracticeInfo.value;
+      editedData.value.isVerified = isVerified.value?isVerified.value:'';
+      editedData.value.remark = remark.value?remark.value:'';
+      editedData.value.malpracticeInfo = malpracticeInfo.value? malpracticeInfo.value:'';
       editedData.value.verifier = loggedInAdmin.name;
-      editedData.value.applicantId = applicantId.value;
-      editedData.value.issuedInGoodStanding = issuedInGoodStanding.value;
-      editedData.value.regionId = regionId.value;
+      editedData.value.applicantId = applicantId.value?applicantId.value:'';
+      editedData.value.issuedInGoodStanding = issuedInGoodStanding.value?issuedInGoodStanding.value:'';
+      editedData.value.regionId = regionId.value?regionId.value:'';
       editedData.value.verifiedById = loggedInAdmin.id;
-      editedData.value.renewalId = renewalId.value;
-      editedData.value.licenseId = licenseCode.value;
-      editedData.value.verificationId = verificationId.value;
-
+      editedData.value.renewalId = renewalId.value?renewalId.value:'';
+      editedData.value.licenseId = licenseCode.value?licenseCode.value:'';
+      editedData.value.verificationId = verificationId.value?verificationId.value:"";
+     
       store
-        .dispatch("applicationVerification/saveResponse", editedData)
+        .dispatch("applicationVerification/saveResponse", editedData.value)
         .then((res) => {
           if (res.data.status == "Success") {
             toast.success("Verification request is successfully verified", {
