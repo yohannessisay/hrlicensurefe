@@ -201,11 +201,11 @@ export default {
           name: personalInfo.name,
           fatherName: personalInfo.fatherName,
           grandFatherName: personalInfo.grandFatherName,
-          alternativeName: personalInfo.alternativeName,
-          alternativeFatherName: personalInfo.alternativeFatherName,
-          alternativeGrandFatherName: personalInfo.alternativeGrandFatherName,
+          alternativeName: personalInfo.alternativeName ? personalInfo.alternativeName :"",
+          alternativeFatherName: personalInfo.alternativeFatherName ? personalInfo.alternativeFatherName:"",
+          alternativeGrandFatherName: personalInfo.alternativeGrandFatherName?personalInfo.alternativeGrandFatherName :"",
           gender: personalInfo.gender,
-          dateOfBirth: personalInfo.dateOfBirth,
+          dateOfBirth: personalInfo.dateOfBirth !="" ? personalInfo.dateOfBirth : null,
           nationalityId: personalInfo.nationalityId,
           maritalStatusId: parseInt(personalInfo.maritalStatusId),
           poBox: personalInfo.poBox,
@@ -218,13 +218,7 @@ export default {
           if (response.statusText == "Created") {
             let userId = +localStorage.getItem("userId");
             let formData = new FormData();
-            toast.success(response.data.message, {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true
-            });
+        
             formData.append("document", photoFormData);
             let payload = { document: formData, id: userId };
             store
@@ -234,8 +228,16 @@ export default {
                   message.value.showFlash = !message.value.showFlash;
                   message.value.showLoading = false;
                   setTimeout(() => {
-                    router.push({ path: "/menu" });
-                  }, 5000);
+                  }, 1500);
+                toast.success(response.data.message, {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true
+            });
+                 router.push({ path: "/menu" });
+
                 } else {
                   message.value.showErrorFlash = !message.value.showErrorFlash;
                 }
