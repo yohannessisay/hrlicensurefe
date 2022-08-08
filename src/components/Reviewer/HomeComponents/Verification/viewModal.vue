@@ -424,7 +424,7 @@ export default {
       props.modalData.data ? props.modalData.data.applicant.id : ""
     );
     const licenseCode = computed(() =>
-      props.modalData.data ? props.modalData.data.newLicense.newLicenseCode : ""
+      props.modalData.data ? props.modalData.data.id : ""
     );
     const requestedRegion = computed(() => props.modalData.RequestedRegion);
     const verifiedBy = computed(() =>
@@ -441,7 +441,7 @@ export default {
       editedData.value.malpracticeInfo = malpracticeInfo.value? malpracticeInfo.value:'';
       editedData.value.verifier = loggedInAdmin.name;
       editedData.value.applicantId = applicantId.value?applicantId.value:'';
-      editedData.value.issuedInGoodStanding = issuedInGoodStanding.value?issuedInGoodStanding.value:'';
+      editedData.value.issuedInGoodStanding = issuedInGoodStanding.value?issuedInGoodStanding.value:"";
       editedData.value.regionId = regionId.value?regionId.value:'';
       editedData.value.verifiedById = loggedInAdmin.id;
       editedData.value.renewalId = renewalId.value?renewalId.value:'';
@@ -459,7 +459,6 @@ export default {
               pauseOnHover: true,
               icon: true,
             });
-            emit("getVerification");
           } else {
             toast.error(res.data.message, {
               timeout: 5000,
