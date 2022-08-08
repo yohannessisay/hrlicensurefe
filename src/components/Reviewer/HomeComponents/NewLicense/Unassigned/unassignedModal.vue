@@ -612,7 +612,6 @@ export default {
       store
         .dispatch("reviewer/getNewLicenseApplication", props.modalDataId.id)
         .then((res) => {
-          console.log(res)
           if (
             res.data.status == "Success" &&
             res.data.message !=

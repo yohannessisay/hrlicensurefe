@@ -439,14 +439,14 @@ export default {
       editedData.value.isVerified = isVerified.value?isVerified.value:'';
       editedData.value.remark = remark.value?remark.value:'';
       editedData.value.malpracticeInfo = malpracticeInfo.value? malpracticeInfo.value:'';
-      editedData.value.verifier = loggedInAdmin.name;
-      editedData.value.applicantId = applicantId.value?applicantId.value:'';
+      // editedData.value.verifier = loggedInAdmin.name;
+      // editedData.value.applicantId = applicantId.value?applicantId.value:'';
       editedData.value.issuedInGoodStanding = issuedInGoodStanding.value?issuedInGoodStanding.value:'';
-      editedData.value.regionId = regionId.value?regionId.value:'';
-      editedData.value.verifiedById = loggedInAdmin.id;
-      editedData.value.renewalId = renewalId.value?renewalId.value:'';
+      // editedData.value.regionId = regionId.value?regionId.value:'';
+      // editedData.value.verifiedById = loggedInAdmin.id;
+      // editedData.value.renewalId = renewalId.value?renewalId.value:'';
       editedData.value.licenseId = licenseCode.value?licenseCode.value:'';
-      editedData.value.verificationId = verificationId.value?verificationId.value:"";
+      // editedData.value.verificationId = verificationId.value?verificationId.value:"";
      
       store
         .dispatch("applicationVerification/saveResponse", editedData.value)
@@ -459,7 +459,6 @@ export default {
               pauseOnHover: true,
               icon: true,
             });
-            emit("getVerification");
           } else {
             toast.error(res.data.message, {
               timeout: 5000,
