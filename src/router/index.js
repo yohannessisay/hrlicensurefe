@@ -1099,14 +1099,6 @@ const routes = [
       ),
   },
 
-  {
-    path: "/admin/report",
-    name: "report",
-    component: () =>
-    import(
-      "../components/Reviewer/HomeComponents/Report/Report.vue"
-    ),
-  },
 
   //Dashboard
   {
