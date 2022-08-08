@@ -1,21 +1,23 @@
 <template>
   <div class="overflow-x-hidden overflow-y-scroll">
     <Navigation />
-    <div
-      class="w-screen h-full bg-lightBlueB-200 flex items-center justify-center"
-    >
+    <div v-if="this.approvalModal == 0" class="w-screen h-screen bg-lightBlueB-200 flex items-center justify-center">
+      <transition name="slide-fade-to-left">
+        <Modal>
+          <ApprovedMessageModal @approvalModal="(n) => approverespone(n)" />
+        </Modal>
+      </transition>
+    </div>
+    <div class="w-screen h-full bg-lightBlueB-200 flex items-center justify-center" v-if="this.approvalModal != 0">
       <div id="navg" class="flex flex-row justify-center mb-medium"></div>
       <transition name="fade" mode="out-in">
         <div v-if="this.activeState == 1">
-          <PersonalInfo :activeState="1" @changeActiveState="activeState++" />
+          <PersonalInfo :activeState="1" @changeActiveState="activeState++" :approvalModal="this.approvalModal" />
         </div>
       </transition>
       <transition name="fade" mode="out-in">
         <div v-if="this.activeState == 2">
-          <Preview
-            :activeState="2"
-            @changeActiveStatePrevious="activeState--"
-          />
+          <Preview :activeState="2" @changeActiveStatePrevious="activeState--" />
         </div>
       </transition>
     </div>
@@ -27,23 +29,34 @@
 import Navigation from "@/views/Navigation";
 import PersonalInfo from "@/components/Profile/PersonalInfo.vue";
 import Preview from "@/components/Profile/Preview.vue";
+import ApprovedMessageModal from "@/components/Profile/HraConfirmationModal.vue";
 
 export default {
   name: "NewProfile",
-  data: () => ({
-    activeState: 1,
-  }),
+  data: function () {
+    return {
+      activeState: 1,
+      approvalModal: 0
+    };
+  },
+  methods: {
+    approverespone: function (value) {
+      this.approvalModal = value;
+    }
+  },
   components: {
     PersonalInfo,
     Preview,
-    Navigation,
-  },
+    ApprovedMessageModal,
+    Navigation
+  }
 };
 </script>
 <style>
 #holder {
   height: max-content;
 }
+
 #navg a {
   margin-left: 20px;
   height: 45px;
@@ -53,13 +66,16 @@ export default {
   border-radius: 100%;
   display: inline-block;
 }
+
 #navg a:hover {
   background-color: #2f639d;
   cursor: pointer;
 }
+
 #navg a:visited {
   background-color: #2f639d;
 }
+
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0.5s;
