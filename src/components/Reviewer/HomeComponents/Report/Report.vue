@@ -1,761 +1,503 @@
-<template
-  ><div>
-    <!-- <ReviewerNavBar tab="Report" /> -->
-    <div class="flex ">
-      <!-- <div>
-        <ReviewerSideBar style="width: 30vh" />
-      </div> -->
-      <div>
-        <div class="px-4">
-          <div class="py-8">
-            <div class="flex flex-row titile-container">
-              <div class="ml-2 flex flex-row">
-                <div>
-                  <label class="text-primary-700 mr-4">Application Type</label>
+<template>
+  <!-- Sidebar -->
+  <reviewer-side-bar> </reviewer-side-bar>
 
-                  <select
-                    @click="handleFilterByApplication()"
-                    v-model="selectedApplicationType"
-                    class="w-48"
-                  >
-                  
-                    <option disabled value="">Please select Application</option>
-                    <option>All</option>
-                    <option>New License</option>
-                    <option> Renewal Report</option>
-                    <option> Goodstanding Report</option>
-                  </select>
-                  <!-- <input
-                    v-on:click="handleCheckBoxClick('newLicense', $event)"
-                    type="checkbox"
-                    class="bg-gray-50 mr-4 border border-gray-300 focus:ring-3 focus:ring-blue-300 h-4 w-4 rounded dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
-                    required
-                    :checked="checked.newLicense"
-                  />
-                  <a class="text-2xl font-semibold leading-tight">
-                    New License Report
-                  </a>
-                </div>
-                <div class="ml-8">
+  <!-- Sidebar -->
+  <section class="home-section">
+    <!-- Header -->
+    <reviewer-nav-bar><h2>Report</h2></reviewer-nav-bar>
+    <!-- Header -->
+
+    <!-- Main Content -->
+    <div class="home-content">
+      <div class="container mx-auto px-4 sm:px-8">
+        <div class="relative py-4">
+          <p class="absolute left-0 text-2xl font-semibold leading-tight">
+            View reports for all applications
+          </p>
+          <p class="absolute right-0">
+            <button
+              class="
+                px-2
+                bg-primary-700
+                text-white
+                font-medium
+                text-xs
+                uppercase
+                rounded
+                shadow-md
+                hover:bg-blue-700 hover:shadow-lg
+                focus:bg-blue-700
+                focus:shadow-lg
+                focus:outline-none
+                focus:ring-0
+                active:bg-blue-800 active:shadow-lg
+                transition
+                duration-150
+                ease-in-out
+              "
+              @click="exportTable()"
+            >
+              <i class="fa fa-file-excel text-xl"></i>
+              Generate Report
+            </button>
+          </p>
+        </div>
+        <div class="py-8">
+          <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 overflow-x-auto">
+            <div class="flex justify-left">
+              <div class="mb-3 xl:w-full">
+                <div
+                  class="
+                    input-group
+                    relative
+                    flex flex-wrap
+                    items-stretch
+                    w-full
+                    mb-4
+                  "
+                >
                   <input
-                    v-on:click="handleCheckBoxClick('renewal', $event)"
-                    type="checkbox"
-                    class="bg-gray-50 mr-4 border border-gray-300 focus:ring-3 focus:ring-blue-300 h-4 w-4 rounded dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
-                    required
-                    :checked="checked.renewal"
+                    type="search"
+                    class="
+                      form-control
+                      relative
+                      flex-auto
+                      min-w-0
+                      block
+                      w-full
+                      px-6
+                      py-1.5
+                      text-base
+                      font-normal
+                      text-gray-700
+                      bg-white bg-clip-padding
+                      border border-solid border-gray-300
+                      rounded
+                      transition
+                      ease-in-out
+                      focus:text-gray-700
+                      focus:bg-white
+                      focus:border-blue-600
+                      focus:outline-none
+                    "
+                    placeholder="Start Searching For Name"
+                    aria-label="Search"
+                    aria-describedby="button-addon2"
+                    v-model="searchTerm"
                   />
-                  <a class="text-2xl font-semibold leading-tight">
-                    Renewal Report
-                  </a>
-                </div>
-                <div class="ml-8">
-                  <input
-                    v-on:click="handleCheckBoxClick('goodStanding', $event)"
-                    type="checkbox"
-                    class="bg-gray-50 mr-4 border border-gray-300 focus:ring-3 focus:ring-blue-300 h-4 w-4 rounded dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
-                    required
-                    :checked="checked.goodStanding"
-                  />
-                  <a class="text-2xl font-semibold leading-tight">
-                    Goodstanding Report
-                  </a> -->
-                </div>
-              </div>
-              <!-- <div id="export" @click="exportTable()" class="ml-12">
-                <a class="text-2xl font-semibold leading-tight">
-                  <i class="fa fa-file-text" aria-hidden="true"></i>
-                  Export
-                </a>
-              </div> -->
-            </div>
-            <div class="mt-8">
-              <label>Filter By:</label>
-            </div>
+                  <button
+                    class="
+                      inline-block
+                      px-6
+                      py-2
+                      bg-primary-700
+                      text-white
+                      font-medium
+                      text-xs
+                      leading-tight
+                      uppercase
+                      rounded
+                      shadow-md
+                      hover:bg-blue-700 hover:shadow-lg
+                      focus:bg-blue-700
+                      focus:shadow-lg
+                      focus:outline-none
+                      focus:ring-0
+                      active:bg-blue-800 active:shadow-lg
+                      transition
+                      duration-150
+                      ease-in-out
+                      items-center
+                    "
+                  >
+                    <svg
+                      aria-hidden="true"
+                      focusable="false"
+                      data-prefix="fas"
+                      data-icon="search"
+                      class="w-5"
+                      role="img"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 512 512"
+                    >
+                      <path
+                        fill="currentColor"
+                        d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
+                      ></path>
+                    </svg>
+                  </button>
 
-            <div class="max-w-3xl red">
-              <input
-                type="text"
-                id="fname"
-                name="fname"
-                v-model="searchedValue"
-                class="mr-6"
-                placeholder="search by name"
-              />
-              <span v-if="!searchingState">
-                <Button class="ml-4" @click="searchByName()">search</Button>
-              </span>
-              <span v-else>
-                <label for="lname" class="clear-lable" @click="clearSearch()"
-                  >clear</label
-                >
-              </span>
-            </div>
-
-            <div class="flex filter-container mt-4">
-              <div class="flex flex-col mb-medium w-72 mr-4">
-                <label class="text-primary-700">Department</label>
-                <select
-                  class="max-w-3xl"
-                  v-model="filter.deptType"
-                  @change="filterDpartmentType(filter.deptType)"
-                >
-                  <option v-bind:key="filter.all" v-bind:value="filter.all"
-                    >All</option
-                  >
-                  <option
-                    v-for="department in departments"
-                    v-bind:key="department.id"
-                    v-bind:value="department"
-                  >
-                    {{ department.name }}
-                  </option>
-                </select>
-              </div>
-              <div class="flex flex-col mb-medium w-72 mr-4">
-                <label class="text-primary-700">Professional Type</label>
-                <select
-                  class="max-w-3xl"
-                  v-model="filter.profType"
-                  @change="filterProfessionType(filter.profType)"
-                >
-                  <option v-bind:key="filter.all" v-bind:value="filter.all"
-                    >All</option
-                  >
-                  <option
-                    v-for="profession in professions"
-                    v-bind:key="profession.name"
-                    v-bind:value="profession.name"
-                  >
-                    {{ profession.name }}
-                  </option>
-                </select>
-              </div>
-              <div class="flex flex-col mb-small w-72 mr-4">
-                <label class="text-primary-700">Gender</label>
-                <div class="flex w-full">
-                      <div class="flex">
-                           <select
-                    @click="filterGender(filter.gender)"
-                    v-model="filter.gender"
-                  >
-                    <option disabled value="">Please select Gender</option>
-                    <option value="">Both</option>
-                    <option value="male">Male</option>
-                    <option value="female"> Female</option>
-                  </select>
-                        <!-- <input
-                          type="radio"
-                          id="both"
-                          value=""
-                          v-model="filter.gender"
-                          @change="filterGender(filter.gender)"
-                        />
-                        <label class="ml-tiny text-primary-700" for="female">
-                          Both
-                        </label> -->
-                  </div>
-                  <!-- <div class="flex flex-col mb-small w-60 mr-4">
-                    <div class="flex py-2">
-                      <input
-                        class="flex flex-col"
-                        type="radio"
-                        id="male"
-                        value="male"
-                        v-model="filter.gender"
-                        @change="filterGender(filter.gender)"
-                      />
-                      <label
-                        class="ml-tiny flex flex-col text-primary-700"
-                        for="male"
-                      >
-                        Male
-                      </label>
-                    </div>
-                  </div> -->
-                  <!-- <div class="flex w-1/3">
-                    <div class="flex flex-col w-60">
-                      <div class="flex py-2">
-                        <input
-                          type="radio"
-                          id="female"
-                          value="female"
-                          v-model="filter.gender"
-                          @change="filterGender(filter.gender)"
-                        />
-                        <label class="ml-tiny text-primary-700" for="female">
-                          Female
-                        </label>
-                      </div>
-                    </div>
-                  </div> -->
-                </div>
-              </div>
-              <div class="flex flex-col mb-small w-80 mr-4">
-                <label class="text-primary-700">Application Statuses</label>
-                <select
-                  class="max-w-3xl"
-                  clearable="{true}"
-                  v-model="filter.status"
-                  @change="filterAppStatus(filter.status)"
-                >
-                  <option v-bind:key="filter.all" v-bind:value="filter.all"
-                    >All</option
-                  >
-                  <option
-                    v-for="status in applicationStatuses"
-                    v-bind:key="status.name"
-                    v-bind:value="status.name"
-                  >
-                    {{ status.name }}
-                  </option>
-                </select>
-              </div>
-              <div class="flex flex-col mb-small w-80 mr-4">
-                <label class="text-primary-700">Expert Level</label>
-                <select
-                  class="max-w-3xl"
-                  clearable="{true}"
-                  v-model="filter.expertLevel"
-                  @change="filterExpertLevel(filter.expertLevel)"
-                >
-                  <option v-bind:key="filter.all" v-bind:value="filter.all"
-                    >All</option
-                  >
-                  <option
-                    v-for="status in expertLevels"
-                    v-bind:key="status.code"
-                    v-bind:value="status.code"
-                  >
-                    {{ status.name }}
-                  </option>
-                </select>
-              </div>
-              <div
-                class="flex flex-col mb-small w-80 mr-4"
-                v-if="filter.expertLevel == 'REG'"
-              >
-                <label class="text-primary-700">Regions</label>
-                <select
-                  class="max-w-3xl"
-                  clearable="{true}"
-                  v-model="filter.region"
-                  @change="filterRegions(filter.region)"
-                >
-                  <option v-bind:key="filter.all" v-bind:value="filter.all"
-                    >All</option
-                  >
-                  <option
-                    v-for="status in regions"
-                    v-bind:key="status.name"
-                    v-bind:value="status.name"
-                  >
-                    {{ status.name }}
-                  </option>
-                </select>
-              </div>
-              <div class="flex flex-row mb-small w-80 mr-4">
-                <label class="text-primary-700 mr-2">From</label>
-                <input
-                  v-model="filter.startDate"
-                  class="max-w-3xl mr-5"
-                  type="date"
-                />
-                <label class="text-primary-700 mr-2">To</label>
-                <input
-                  v-model="filter.endDate"
-                  @change="filterDate(filter.startDate, filter.endDate)"
-                  class="max-w-3xl mr-5"
-                  type="date"
-                />
-              </div>
-            </div>
-            <div v-if="loader" style="margin-left: 45%; margin-top: 5%">
-              <Spinner />
-            </div>
-            <div class="">
-              <label class="text-primary-700">Rows per page: </label>
-              <select
-                class="max-w-3xl mb-4"
-                v-model="paginationSize"
-                @change="handlePagSize($)"
-                style="padding: 0px 35px 0px 5px; border: none; border-radius: unset; border-bottom: 2px solid lightblue;margin-left: 8px"
-              >
-                <option
-                  v-for="size in paginationSizeList"
-                  v-bind:key="size"
-                  v-bind:value="size"
-                >
-                  {{ size }}
-                </option>
-              </select>
-                 <span id="export" @click="exportTable()" class="ml-12 float-right">
-                <a class="text-2xl font-semibold leading-tight">
-                  <i class="fa fa-file-text" aria-hidden="true"></i>
-                  Export
-                </a>
-              </span>
-              <div
-                id="printable"
-                class="shadow-md rounded-lg  min-w-full"
-                v-if="!showLoading"
-              >
-                <table class="w-full" id="myTable">
-                  <thead>
-                    <tr class="">
-                      <th
-                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
-                      >
-                        First Name
-                      </th>
-                      <th
-                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
-                      >
-                        Middle Name
-                      </th>
-                      <th
-                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
-                      >
-                        Last Name
-                      </th>
-                           <th
-                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
-                      >
-                        Application Type
-                      </th>
-                      <th
-                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
-                      >
-                        License Status
-                      </th>
-                   
-                      <th
-                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
-                      >
-                        Professional Type
-                      </th>
-                      <th
-                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
-                      >
-                        Organizational Unit 
-                      </th>
-                      <th
-                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
-                      >
-                        License Number
-                      </th>
-                      <!-- <th
-                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
-                      >
-                        Remark
-                      </th> -->
-                      <th
-                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
-                      >
-                        Issued Date
-                      </th>
-                      <th
-                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
-                      >
-                        Phone
-                      </th>
-                      <th
-                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
-                      >
-                        Email
-                      </th>
-                      <th
-                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
-                      >
-                        Gender
-                      </th>
-
-                      <th
-                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
-                      >
-                        Birth Date
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr v-for="item in report" :key="item">
-                      <td class="px-5 py-5 border-gray-200 bg-white text-sm">
-                        <div class="flex">
-                          <div class="ml-3">
-                            <p class="text-gray-900 whitespace-no-wrap">
-                              {{ item.name }}
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="px-5 py-5  border-gray-200 bg-white text-sm">
-                        <div class="flex">
-                          <div class="ml-3">
-                            <p class="text-gray-900 whitespace-no-wrap">
-                              {{ item.fatherName }}
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="px-5 py-5  border-gray-200 bg-white text-sm">
-                        <div class="flex">
-                          <div class="ml-3">
-                            <p class="text-gray-900 whitespace-no-wrap">
-                              {{ item.grandFatherName }}
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                         <td
-                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
-                      >
-                        <div class="flex">
-                          <div class="ml-3">
-                            <p class="text-gray-900 whitespace-no-wrap">
-                              {{ item.newLicenseCode? "New License" : item.renewalCode? "Renewal": item.goodStandingCode? "Good Standing": ""   }}
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td
-                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
-                        v-if="item.applicationStatus.name"
-                      >
-                        <div class="flex">
-                          <div class="ml-3">
-                            <p class="text-gray-900 whitespace-no-wrap">
-                              {{ item.applicationStatus.name }}
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td
-                        v-else
-                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
-                      >
-                        <div class="flex">
-                          <div class="ml-3">
-                            <p class="text-gray-900 whitespace-no-wrap">
-                              ---
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td
-                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
-                        v-if="
-                          item.licenseProfessionalTypes[0].professionalTypes
+                  <div class="flex justify-center">
+                    <div class="mb-3 xl:w-full">
+                      <select
+                        class="
+                          form-select
+                          appearance-none
+                          block
+                          w-full
+                          px-6
+                          ml-4
+                          py-2
+                          text-base
+                          font-normal
+                          text-gray-700
+                          bg-white bg-clip-padding bg-no-repeat
+                          border border-solid border-gray-300
+                          rounded
+                          transition
+                          ease-in-out
+                          focus:text-gray-700
+                          focus:bg-white
+                          focus:border-blue-600
+                          focus:outline-none
                         "
+                        @change="handleFilterByApplication($event.target.value)"
+                        aria-label="Default select example"
                       >
-                        <div class="flex">
-                          <div class="ml-3">
-                            <p class="text-gray-900 whitespace-no-wrap">
-                              {{
-                                item.licenseProfessionalTypes[0]
-                                  .professionalTypes.name
-                                  ? item.licenseProfessionalTypes[0]
-                                      .professionalTypes.name
-                                  : "-"
-                              }}
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td
-                        v-else
-                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                        <option selected disabled>Application Type</option>
+                        <option value="newLicense">
+                          New License Applications
+                        </option>
+                        <option value="goodStanding">
+                          Goodstanding Applications
+                        </option>
+                        <option value="renewal">Renewed Applications</option>
+                        <option value="verification">
+                          Verification Applications
+                        </option>
+                      </select>
+                    </div>
+
+                    <div class="mb-3 xl:w-full ml-2">
+                      <select
+                        class="
+                          form-select
+                          appearance-none
+                          block
+                          w-full
+                          px-6
+                          ml-4
+                          py-2
+                          text-base
+                          font-normal
+                          text-gray-700
+                          bg-white bg-clip-padding bg-no-repeat
+                          border border-solid border-gray-300
+                          rounded
+                          transition
+                          ease-in-out
+                          focus:text-gray-700
+                          focus:bg-white
+                          focus:border-blue-600
+                          focus:outline-none
+                        "
+                        @change="filterAppStatus($event.target.value)"
+                        aria-label="Default select example"
                       >
-                        <div class="flex">
-                          <div class="ml-3">
-                            <p class="text-gray-900 whitespace-no-wrap">
-                              ---
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td
-                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
-                        v-if="item.region"
+                        <option selected disabled>Application Status</option>
+                        <option
+                          v-for="appStatus in applicationStatuses"
+                          :key="appStatus.id"
+                          :value="appStatus.name"
+                        >
+                          {{ appStatus.name }}
+                        </option>
+                      </select>
+                    </div>
+
+                    <div class="mb-3 xl:w-full ml-2">
+                      <select
+                        class="
+                          form-select
+                          appearance-none
+                          block
+                          w-full
+                          px-6
+                          ml-4
+                          py-2
+                          text-base
+                          font-normal
+                          text-gray-700
+                          bg-white bg-clip-padding bg-no-repeat
+                          border border-solid border-gray-300
+                          rounded
+                          transition
+                          ease-in-out
+                          focus:text-gray-700
+                          focus:bg-white
+                          focus:border-blue-600
+                          focus:outline-none
+                        "
+                        @change="filterGender($event.target.value)"
+                        aria-label="Default select example"
                       >
-                        <div class="flex">
-                          <div class="ml-3">
-                            <p class="text-gray-900 whitespace-no-wrap">
-                              {{ item.region.name ? item.region.name : "-" }}
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                       <td
-                        v-else-if="item.expertLevels.code == 'FED'"
-                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
-                      >
-                        <div class="flex">
-                          <div class="ml-3">
-                            <p class="text-gray-900 whitespace-no-wrap">
-                              Federal
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td
-                        v-else
-                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
-                      >
-                        <div class="flex">
-                          <div class="ml-3">
-                            <p class="text-gray-900 whitespace-no-wrap">
-                              ---
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td
-                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
-                        v-if="item.newLicenseCode"
-                      >
-                        <div class="flex">
-                          <div class="ml-3">
-                            <p class="text-gray-900 whitespace-no-wrap">
-                              {{ item.newLicenseCode }}
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td
-                        v-else-if="item.renewalCode"
-                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
-                      >
-                        <div class="flex">
-                          <div class="ml-3">
-                            <p class="text-gray-900 whitespace-no-wrap">
-                              {{item.renewalCode}}
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                       <td
-                        v-else-if="item.goodStandingCode"
-                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
-                      >
-                        <div class="flex">
-                          <div class="ml-3">
-                            <p class="text-gray-900 whitespace-no-wrap">
-                              {{item.goodStandingCode}}
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                       <td
-                        v-else
-                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
-                      >
-                        <div class="flex">
-                          <div class="ml-3">
-                            <p class="text-gray-900 whitespace-no-wrap">
-                              ---
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <!-- <td
-                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
-                        v-if="item.remark"
-                      >
-                        <div class="flex">
-                          <div class="ml-3">
-                            <p class="text-gray-900 whitespace-no-wrap">
-                              {{ item.remark }}
-                            </p>
-                          </div>
-                        </div>
-                      </td> -->
-                      <!-- <td
-                        v-else
-                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
-                      >
-                        <div class="flex">
-                          <div class="ml-3">
-                            <p class="text-gray-900 whitespace-no-wrap">
-                              ---
-                            </p>
-                          </div>
-                        </div>
-                      </td> -->
-                      <td
-                        v-if="item.certifiedDate"
-                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
-                      >
-                        <div class="flex">
-                          <div class="ml-3">
-                            <p class="text-gray-900 whitespace-no-wrap">
-                              {{
-                                moment(item.certifiedDate).format(
-                                  "MMM DD, YYYY"
-                                )
-                              }}
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td
-                        v-else
-                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
-                      >
-                        <div class="flex">
-                          <div class="ml-3">
-                            <p class="text-gray-900 whitespace-no-wrap">
-                              ---
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td
-                        v-if="item.applicant.phoneNumber"
-                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
-                      >
-                        <div class="flex">
-                          <div class="ml-3">
-                            <p class="text-gray-900 whitespace-no-wrap">
-                              {{ item.applicant.phoneNumber }}
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td
-                        v-else
-                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
-                      >
-                        <div class="flex">
-                          <div class="ml-3">
-                            <p class="text-gray-900 whitespace-no-wrap">
-                              ---
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td
-                        v-if="item.applicant.emailAddress"
-                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
-                      >
-                        <div class="flex">
-                          <div class="ml-3">
-                            <p class="text-gray-900 whitespace-no-wrap">
-                              {{ item.applicant.emailAddress }}
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td
-                        v-else
-                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
-                      >
-                        <div class="flex">
-                          <div class="ml-3">
-                            <p class="text-gray-900 whitespace-no-wrap">
-                              ---
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td
-                        v-if="item.gender"
-                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
-                      >
-                        <div class="flex">
-                          <div class="ml-3">
-                            <p class="text-gray-900 whitespace-no-wrap">
-                              {{ item.gender }}
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td
-                        v-else
-                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
-                      >
-                        <div class="flex">
-                          <div class="ml-3">
-                            <p class="text-gray-900 whitespace-no-wrap">
-                              ---
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td
-                        v-if="item.dateOfBirth"
-                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
-                      >
-                        <div class="flex">
-                          <div class="ml-3">
-                            <p class="text-gray-900 whitespace-no-wrap">
-                              {{
-                                moment(item.dateOfBirth).format("MMM DD, YYYY")
-                              }}
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td
-                        v-else
-                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
-                      >
-                        <div class="flex">
-                          <div class="ml-3">
-                            <p class="text-gray-900 whitespace-no-wrap">
-                              ---
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                        <option selected disabled>Gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <VueTailwindPagination
-                :current="currentPage"
-                :total="totalCount"
-                :per-page="paginationSize"
-                @page-changed="pageChanged($event)"
-                text-before-input="Go to page"
-                text-after-input="Go"
-              />
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-lg overflow-x-scroll">
+              <div
+                class="
+                  inline-block
+                  min-w-full
+                  shadow-md
+                  rounded-lg
+                  overflow-hidden
+                  bg-primary-800
+                "
+              >
+                <vue-table-lite
+                  :is-static-mode="true"
+                  :is-loading="userTable.isLoading"
+                  :columns="userTable.columns"
+                  :rows="userTable.rows"
+                  :total="userTable.totalRecordCount"
+                  :sortable="userTable.sortable"
+                  @is-finished="tableLoadingFinish"
+                  @row-clicked="rowClicked"
+                ></vue-table-lite>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+
+    <div
+      id="printable"
+      class="shadow-md rounded-lg min-w-full"
+      style="display: none"
+    >
+      <table class="w-full" id="myTable">
+        <thead>
+          <tr class="">
+            <th
+              class="
+                px-5
+                py-3
+                border-b-2 border-gray-200
+                bg-gray-100
+                text-left text-xs
+                font-semibold
+                text-gray-700
+                uppercase
+                tracking-wider
+              "
+            >
+              First Name
+            </th>
+            <th
+              class="
+                px-5
+                py-3
+                border-b-2 border-gray-200
+                bg-gray-100
+                text-left text-xs
+                font-semibold
+                text-gray-700
+                uppercase
+                tracking-wider
+              "
+            >
+              Middle Name
+            </th>
+            <th
+              class="
+                px-5
+                py-3
+                border-b-2 border-gray-200
+                bg-gray-100
+                text-left text-xs
+                font-semibold
+                text-gray-700
+                uppercase
+                tracking-wider
+              "
+            >
+              Last Name
+            </th>
+            <th
+              class="
+                px-5
+                py-3
+                border-b-2 border-gray-200
+                bg-gray-100
+                text-left text-xs
+                font-semibold
+                text-gray-700
+                uppercase
+                tracking-wider
+              "
+            >
+              License Number
+            </th>
+            <th
+              class="
+                px-5
+                py-3
+                border-b-2 border-gray-200
+                bg-gray-100
+                text-left text-xs
+                font-semibold
+                text-gray-700
+                uppercase
+                tracking-wider
+              "
+            >
+              License Status
+            </th>
+
+            <th
+              class="
+                px-5
+                py-3
+                border-b-2 border-gray-200
+                bg-gray-100
+                text-left text-xs
+                font-semibold
+                text-gray-700
+                uppercase
+                tracking-wider
+              "
+            >
+              Professional Type
+            </th>
+
+            <th
+              class="
+                px-5
+                py-3
+                border-b-2 border-gray-200
+                bg-gray-100
+                text-left text-xs
+                font-semibold
+                text-gray-700
+                uppercase
+                tracking-wider
+              "
+            >
+              Issued Date
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="item in userTable.rows" :key="item">
+            <td class="px-5 py-5 border-gray-200 bg-white text-sm">
+              <div class="flex">
+                <div class="ml-3">
+                  <p class="text-gray-900 whitespace-no-wrap">
+                    {{ item.FirstName }}
+                  </p>
+                </div>
+              </div>
+            </td>
+            <td class="px-5 py-5 border-gray-200 bg-white text-sm">
+              <div class="flex">
+                <div class="ml-3">
+                  <p class="text-gray-900 whitespace-no-wrap">
+                    {{ item.MiddleName }}
+                  </p>
+                </div>
+              </div>
+            </td>
+            <td class="px-5 py-5 border-gray-200 bg-white text-sm">
+              <div class="flex">
+                <div class="ml-3">
+                  <p class="text-gray-900 whitespace-no-wrap">
+                    {{ item.LastName }}
+                  </p>
+                </div>
+              </div>
+            </td>
+            <td class="px-5 py-5 border-gray-200 bg-white text-sm text-right">
+              <div class="flex">
+                <div class="ml-3">
+                  <p class="text-gray-900 whitespace-no-wrap">
+                    {{ item.LicenseNumber }}
+                  </p>
+                </div>
+              </div>
+            </td>
+            <td class="px-5 py-5 border-gray-200 bg-white text-sm text-right">
+              <div class="flex">
+                <div class="ml-3">
+                  <p class="text-gray-900 whitespace-no-wrap">
+                    {{ item.LicenseStatus }}
+                  </p>
+                </div>
+              </div>
+            </td>
+
+            <td class="px-5 py-5 border-gray-200 bg-white text-sm text-right">
+              <div class="flex">
+                <div class="ml-3">
+                  <p class="text-gray-900 whitespace-no-wrap">
+                    {{ item.ProfessionalType }}
+                  </p>
+                </div>
+              </div>
+            </td>
+
+            <td class="px-5 py-5 border-gray-200 bg-white text-sm text-right">
+              <div class="flex">
+                <div class="ml-3">
+                  <p class="text-gray-900 whitespace-no-wrap">
+                    {{ moment(item.IssuedDate).format("MMM DD, YYYY") }}
+                  </p>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Main Content -->
+  </section>
 </template>
 
-<script scoped>
-import Spinner from "@/sharedComponents/Spinner";
-import {ref, onMounted} from "vue";
-import {useStore} from "vuex";
-import {useRouter, useRoute} from "vue-router";
-import moment from "moment";
-import {saveAs} from "file-saver";
+<script>
 import "@ocrv/vue-tailwind-pagination/dist/style.css";
-import VueTailwindPagination from "@ocrv/vue-tailwind-pagination";
-import ReviewerSideNav from "./SharedComponents/sideNav.vue";
+import { ref, reactive, computed } from "@vue/reactivity";
+import { onMounted } from "@vue/runtime-core";
+import { useStore } from "vuex";
 import ReviewerNavBar from "./SharedComponents/navBar.vue";
+import ReviewerSideBar from "./SharedComponents/sideNav.vue";
+import VueTableLite from "vue3-table-lite";
+
+import moment from "moment";
+import { saveAs } from "file-saver";
+import "@ocrv/vue-tailwind-pagination/dist/style.css";
+
 export default {
   components: {
-    ReviewerSideNav,
     ReviewerNavBar,
-    Spinner,
-    VueTailwindPagination,
+    ReviewerSideBar,
+    VueTableLite,
   },
-
   computed: {
     moment: () => moment,
     getAllassignedToOthers() {
       return store.getters["reviewer/getAssignedForEveryOneSearched"];
     },
   },
-  setup(props, {emit}) {
+  setup() {
     const store = useStore();
-    const route = useRoute();
-    const router = useRouter();
+    let allData = ref([]);
+    let searchData = ref();
+    let expertLevelFilter = ref();
 
+    let userTable = ref({ isLoading: true });
+    let modalData = ref({ change: 0 });
+    let tableData = reactive([]);
+    const searchTerm = ref("");
     let expertlevelCode = ref("");
     let departmentValue = ref("");
     let professionTypeValue = ref("");
@@ -781,9 +523,7 @@ export default {
 
     let currentPage = ref(1);
     let totalCount = ref();
-    let lastIndex = ref(2);
     let report = ref([]);
-    let showLoading = ref(false);
     let selectBackgroundColor = ref("newLicense");
 
     let searchingState = ref(false);
@@ -795,7 +535,6 @@ export default {
     const paginationSizeList = [10, 25, 50, 100];
     let reportData = ref([]);
     let reportForRegions = ref([]);
-    let allData = ref([]);
 
     let renewalData = ref([]);
     let newLicenseData = ref([]);
@@ -810,60 +549,6 @@ export default {
       currentPage.value = 1;
       indexValue.value = 0;
       paginateReport(reportData.value, indexValue.value);
-    };
-    const handleFilterByApplication = () => {
-      console.log(selectedApplicationType.value, "selected application");
-
-      switch (selectedApplicationType.value) {
-        case "All": {
-          console.log(selectedApplicationType.value, "all application");
-
-          let fullData = [];
-
-          ///// good standing
-          fullData.push(...goodStandingData.value);
-          //// new license
-          fullData.push(...newLicenseData.value);
-          /////  renewal
-          fullData.push(...renewalData.value);
-
-          reportData.value = fullData;
-          allData.value = fullData;
-          paginateReport(allData.value, 0);
-          break;
-        }
-        case "New License": {
-          console.log(selectedApplicationType.value, "new application");
-          let newLData = [];
-          allData.value = [];
-          reportData.value = [];
-          newLData.push(...newLicenseData.value);
-          reportData.value = newLData;
-          allData.value = newLData;
-          paginateReport(allData.value, 0);
-          break;
-        }
-        case "Renewal Report": {
-          let newRRData = [];
-          allData.value = [];
-          reportData.value = [];
-          newRRData.push(...renewalData.value);
-          reportData.value = newRRData;
-          allData.value = newRRData;
-          paginateReport(allData.value, 0);
-          break;
-        }
-        case "Goodstanding Report": {
-          let newGSRData = [];
-          allData.value = [];
-          reportData.value = [];
-          newGSRData.push(...goodStandingData.value);
-          reportData.value = newGSRData;
-          allData.value = newGSRData;
-          paginateReport(allData.value, 0);
-          break;
-        }
-      }
     };
 
     const handleCheckBoxClick = (type, event) => {
@@ -912,8 +597,8 @@ export default {
     let departments = ref([]);
     let professions = ref([]);
     let expertLevels = ref([
-      {name: "Federal", id: 3, code: "FED"},
-      {name: "Regional", id: 4, code: "REG"},
+      { name: "Federal", id: 3, code: "FED" },
+      { name: "Regional", id: 4, code: "REG" },
     ]);
     let regions = ref([]);
     let zones = ref([]);
@@ -936,57 +621,543 @@ export default {
 
     let loader = ref(false);
 
+    const tableLoadingFinish = () => {
+      userTable.value.isLoading = false;
+      userTable.value.isLoading = false;
+      let elements = document.getElementsByClassName("edit-btn");
+
+      Array.prototype.forEach.call(elements, function (element) {
+        if (element.classList.contains("edit-btn")) {
+          element.addEventListener("click", rowClicked());
+        }
+      });
+    };
+
+    const rowClicked = (row) => {
+      if (row != undefined) {
+        row = JSON.parse(JSON.stringify(row));
+        modalData.value.change++;
+        modalData.value.data = row ? row : {};
+      }
+    };
+
     const changeBackgroundColor = (title) => {
       selectBackgroundColor.value = title;
     };
 
     const fetchNewLicenseReport = () => {
-      loader.value = true;
-      changeBackgroundColor("newLicense");
       store.dispatch("report/getNewLicenseReport").then((res) => {
         newLicenseData.value = res.data.data;
         reportData.value.push(...res.data.data);
-        allData.value.push(...res.data.data);
-        paginateReport(reportData.value, 0);
-        store.dispatch("report/setReport", reportData.value);
-        loader.value = false;
+
+        res.data.data.forEach((element) => {
+          tableData.push({
+            id: element.id ? element.id : "",
+            FirstName: element.name ? element.name : "",
+            MiddleName: element.fatherName ? element.fatherName : "",
+            LastName: element.grandFatherName ? element.grandFatherName : "",
+            LicenseStatus: element.applicationStatus
+              ? element.applicationStatus.name
+              : "",
+            LicenseNumber: element.newLicenseCode ? element.newLicenseCode : "",
+            IssuedDate: element.certifiedDate
+              ? element.certifiedDate.slice(0, 10)
+              : "",
+
+            ProfessionalType:
+              element.licenseProfessionalTypes &&
+              element.licenseProfessionalTypes[0] &&
+              element.licenseProfessionalTypes[0].professionalTypes
+                ? element.licenseProfessionalTypes[0].professionalTypes.name
+                : "",
+            Gender: element.gender ? element.gender : "",
+            OrganizationalUnit: element.region ? element.region.name : "",
+            data: element ? element : {},
+          });
+        });
+        allData.value = tableData;
+        userTable.value = {
+          columns: [
+            {
+              label: "ID",
+              field: "id",
+              width: "5%",
+              sortable: true,
+              isKey: true,
+            },
+            {
+              label: "First Name",
+              field: "FirstName",
+              width: "10%",
+              sortable: true,
+            },
+            {
+              label: "Father Name",
+              field: "MiddleName",
+              width: "10%",
+              sortable: true,
+            },
+            {
+              label: "Grandfather Name",
+              field: "LastName",
+              width: "10%",
+              sortable: true,
+            },
+            {
+              label: "License Status",
+              field: "LicenseStatus",
+              width: "5%",
+              sortable: true,
+            },
+            {
+              label: "Professional Type",
+              field: "ProfessionalType",
+              width: "35%",
+              sortable: true,
+            },
+            {
+              label: "License Number",
+              field: "LicenseNumber",
+              width: "5%",
+              sortable: true,
+            },
+            {
+              label: "Issued Date",
+              field: "IssuedDate",
+              width: "5%",
+              sortable: true,
+            },
+            {
+              label: "Gender",
+              field: "Gender",
+              width: "5%",
+              sortable: true,
+            },
+            {
+              label: "Organizational Unit",
+              field: "OrganizationalUnit",
+              width: "5%",
+              sortable: true,
+            },
+          ],
+          rows: computed(() => {
+            return tableData.filter((x) =>
+              x.FirstName
+                ? x.FirstName.toLowerCase().includes(
+                    searchTerm.value.toLowerCase()
+                  )
+                : "" || x.MiddleName
+                ? x.MiddleName.toLowerCase().includes(
+                    searchTerm.value.toLowerCase()
+                  )
+                : "" || x.LastName
+                ? x.LastName.toLowerCase().includes(
+                    searchTerm.value.toLowerCase()
+                  )
+                : ""
+            );
+          }),
+          totalRecordCount: allData.value.length,
+          sortable: {
+            order: "id",
+            sort: "asc",
+          },
+        };
       });
     };
-
+    const handleFilterByApplication = (applicationType) => {
+      switch (applicationType) {
+        case "newLicense": {
+          userTable.value.isLoading = true;
+          userTable.value.rows = computed(()=>{});
+          tableData = [];
+          fetchNewLicenseReport();
+          break;
+        }
+        case "verification": {
+          userTable.value.isLoading = true;
+          userTable.value.rows = computed(()=>{});
+          tableData = [];
+          fetchVerificationReport();
+          break;
+        }
+        case "renewal": {
+          userTable.value.isLoading = true;
+          userTable.value.rows = computed(()=>{});
+          tableData = [];
+          fetchRenewalReport();
+          break;
+        }
+        case "goodStanding": {
+          userTable.value.isLoading = true;
+          userTable.value.rows = computed(()=>{});
+          tableData = [];
+          fetchGoodstandingReport();
+          break;
+        }
+      }
+    };
     const fetchRenewalReport = () => {
-      loader.value = true;
-      changeBackgroundColor("renewal");
       store.dispatch("report/getRenewalReport").then((res) => {
-        renewalData.value = res.data.data;
+        newLicenseData.value = res.data.data;
         reportData.value.push(...res.data.data);
-        allData.value.push(...res.data.data);
-        paginateReport(reportData.value, 0);
-        store.dispatch("report/setReport", reportData.value);
-        loader.value = false;
+
+        res.data.data.forEach((element) => {
+          tableData.push({
+            id: element.id ? element.id : "",
+            FirstName: element.name ? element.name : "",
+            MiddleName: element.fatherName ? element.fatherName : "",
+            LastName: element.grandFatherName ? element.grandFatherName : "",
+            LicenseStatus: element.applicationStatus
+              ? element.applicationStatus.name
+              : "",
+            LicenseNumber: element.renewalCode ? element.renewalCode : "",
+            IssuedDate: element.certifiedDate
+              ? element.certifiedDate.slice(0, 10)
+              : "",
+
+            ProfessionalType:
+              element.licenseProfessionalTypes &&
+              element.licenseProfessionalTypes[0] &&
+              element.licenseProfessionalTypes[0].professionalTypes
+                ? element.licenseProfessionalTypes[0].professionalTypes.name
+                : "",
+            Gender: element.gender ? element.gender : "",
+            OrganizationalUnit: element.region ? element.region.name : "",
+            data: element ? element : {},
+          });
+        });
+        allData.value = tableData;
+        userTable.value = {
+          columns: [
+            {
+              label: "ID",
+              field: "id",
+              width: "5%",
+              sortable: true,
+              isKey: true,
+            },
+            {
+              label: "First Name",
+              field: "FirstName",
+              width: "10%",
+              sortable: true,
+            },
+            {
+              label: "Father Name",
+              field: "MiddleName",
+              width: "10%",
+              sortable: true,
+            },
+            {
+              label: "Grandfather Name",
+              field: "LastName",
+              width: "10%",
+              sortable: true,
+            },
+            {
+              label: "License Status",
+              field: "LicenseStatus",
+              width: "5%",
+              sortable: true,
+            },
+            {
+              label: "Professional Type",
+              field: "ProfessionalType",
+              width: "35%",
+              sortable: true,
+            },
+            {
+              label: "License Number",
+              field: "LicenseNumber",
+              width: "5%",
+              sortable: true,
+            },
+            {
+              label: "Issued Date",
+              field: "IssuedDate",
+              width: "5%",
+              sortable: true,
+            },
+            {
+              label: "Gender",
+              field: "Gender",
+              width: "5%",
+              sortable: true,
+            },
+            {
+              label: "Organizational Unit",
+              field: "OrganizationalUnit",
+              width: "5%",
+              sortable: true,
+            },
+          ],
+          rows: computed(() => {
+            return tableData.filter((x) =>
+              x.FirstName
+                ? x.FirstName.toLowerCase().includes(
+                    searchTerm.value.toLowerCase()
+                  )
+                : "" || x.MiddleName
+                ? x.MiddleName.toLowerCase().includes(
+                    searchTerm.value.toLowerCase()
+                  )
+                : "" || x.LastName
+                ? x.LastName.toLowerCase().includes(
+                    searchTerm.value.toLowerCase()
+                  )
+                : ""
+            );
+          }),
+          totalRecordCount: allData.value.length,
+          sortable: {
+            order: "id",
+            sort: "asc",
+          },
+        };
       });
     };
 
     const fetchVerificationReport = () => {
-      loader.value = true;
-      changeBackgroundColor("verification");
       store.dispatch("report/getVerificationReport").then((res) => {
+        newLicenseData.value = res.data.data;
         reportData.value.push(...res.data.data);
-        allData.value.push(...res.data.data);
-        paginateReport(reportData.value, 0);
-        store.dispatch("report/setReport", reportData.value);
-        loader.value = false;
+
+        res.data.data.forEach((element) => {
+          tableData.push({
+            id: element.id ? element.id : "",
+            FirstName: element.name ? element.name : "",
+            MiddleName: element.fatherName ? element.fatherName : "",
+            LastName: element.grandFatherName ? element.grandFatherName : "",
+            LicenseStatus: element.applicationStatus
+              ? element.applicationStatus.name
+              : "",
+            LicenseNumber: element.newLicenseCode ? element.newLicenseCode : "",
+            IssuedDate: element.certifiedDate
+              ? element.certifiedDate.slice(0, 10)
+              : "",
+
+            ProfessionalType:
+              element.licenseProfessionalTypes &&
+              element.licenseProfessionalTypes[0] &&
+              element.licenseProfessionalTypes[0].professionalTypes
+                ? element.licenseProfessionalTypes[0].professionalTypes.name
+                : "",
+            Gender: element.gender ? element.gender : "",
+            OrganizationalUnit: element.region ? element.region.name : "",
+            data: element ? element : {},
+          });
+        });
+        allData.value = tableData;
+        userTable.value = {
+          columns: [
+            {
+              label: "ID",
+              field: "id",
+              width: "5%",
+              sortable: true,
+              isKey: true,
+            },
+            {
+              label: "First Name",
+              field: "FirstName",
+              width: "10%",
+              sortable: true,
+            },
+            {
+              label: "Father Name",
+              field: "MiddleName",
+              width: "10%",
+              sortable: true,
+            },
+            {
+              label: "Grandfather Name",
+              field: "LastName",
+              width: "10%",
+              sortable: true,
+            },
+            {
+              label: "License Status",
+              field: "LicenseStatus",
+              width: "5%",
+              sortable: true,
+            },
+            {
+              label: "Professional Type",
+              field: "ProfessionalType",
+              width: "35%",
+              sortable: true,
+            },
+            {
+              label: "License Number",
+              field: "LicenseNumber",
+              width: "5%",
+              sortable: true,
+            },
+            {
+              label: "Issued Date",
+              field: "IssuedDate",
+              width: "5%",
+              sortable: true,
+            },
+            {
+              label: "Gender",
+              field: "Gender",
+              width: "5%",
+              sortable: true,
+            },
+            {
+              label: "Organizational Unit",
+              field: "OrganizationalUnit",
+              width: "5%",
+              sortable: true,
+            },
+          ],
+          rows: computed(() => {
+            return tableData.filter((x) =>
+              x.FirstName
+                ? x.FirstName.toLowerCase().includes(
+                    searchTerm.value.toLowerCase()
+                  )
+                : "" || x.MiddleName
+                ? x.MiddleName.toLowerCase().includes(
+                    searchTerm.value.toLowerCase()
+                  )
+                : "" || x.LastName
+                ? x.LastName.toLowerCase().includes(
+                    searchTerm.value.toLowerCase()
+                  )
+                : ""
+            );
+          }),
+          totalRecordCount: allData.value.length,
+          sortable: {
+            order: "id",
+            sort: "asc",
+          },
+        };
       });
     };
     const fetchGoodstandingReport = () => {
-      loader.value = true;
-      changeBackgroundColor("goodStanding");
       store.dispatch("report/getGoodstandingReport").then((res) => {
-        goodStandingData.value = res.data.data;
+        newLicenseData.value = res.data.data;
         reportData.value.push(...res.data.data);
-        allData.value.push(...res.data.data);
-        paginateReport(reportData.value, 0);
-        store.dispatch("report/setReport", reportData.value);
-        loader.value = false;
+
+        res.data.data.forEach((element) => {
+          tableData.push({
+            id: element.id ? element.id : "",
+            FirstName: element.name ? element.name : "",
+            MiddleName: element.fatherName ? element.fatherName : "",
+            LastName: element.grandFatherName ? element.grandFatherName : "",
+            LicenseStatus: element.applicationStatus
+              ? element.applicationStatus.name
+              : "",
+            LicenseNumber: element.goodStandingCode
+              ? element.goodStandingCode
+              : "",
+            IssuedDate: element.certifiedDate
+              ? element.certifiedDate.slice(0, 10)
+              : "",
+
+            ProfessionalType:
+              element.licenseProfessionalTypes &&
+              element.licenseProfessionalTypes[0] &&
+              element.licenseProfessionalTypes[0].professionalTypes
+                ? element.licenseProfessionalTypes[0].professionalTypes.name
+                : "",
+            Gender: element.gender ? element.gender : "",
+            OrganizationalUnit: element.region ? element.region.name : "",
+            data: element ? element : {},
+          });
+        });
+        allData.value = tableData;
+        userTable.value = {
+          columns: [
+            {
+              label: "ID",
+              field: "id",
+              width: "5%",
+              sortable: true,
+              isKey: true,
+            },
+            {
+              label: "First Name",
+              field: "FirstName",
+              width: "10%",
+              sortable: true,
+            },
+            {
+              label: "Father Name",
+              field: "MiddleName",
+              width: "10%",
+              sortable: true,
+            },
+            {
+              label: "Grandfather Name",
+              field: "LastName",
+              width: "10%",
+              sortable: true,
+            },
+            {
+              label: "License Status",
+              field: "LicenseStatus",
+              width: "5%",
+              sortable: true,
+            },
+            {
+              label: "Professional Type",
+              field: "ProfessionalType",
+              width: "35%",
+              sortable: true,
+            },
+            {
+              label: "License Number",
+              field: "LicenseNumber",
+              width: "5%",
+              sortable: true,
+            },
+            {
+              label: "Issued Date",
+              field: "IssuedDate",
+              width: "5%",
+              sortable: true,
+            },
+            {
+              label: "Gender",
+              field: "Gender",
+              width: "5%",
+              sortable: true,
+            },
+            {
+              label: "Organizational Unit",
+              field: "OrganizationalUnit",
+              width: "5%",
+              sortable: true,
+            },
+          ],
+          rows: computed(() => {
+            return tableData.filter((x) =>
+              x.FirstName
+                ? x.FirstName.toLowerCase().includes(
+                    searchTerm.value.toLowerCase()
+                  )
+                : "" || x.MiddleName
+                ? x.MiddleName.toLowerCase().includes(
+                    searchTerm.value.toLowerCase()
+                  )
+                : "" || x.LastName
+                ? x.LastName.toLowerCase().includes(
+                    searchTerm.value.toLowerCase()
+                  )
+                : ""
+            );
+          }),
+          totalRecordCount: allData.value.length,
+          sortable: {
+            order: "id",
+            sort: "asc",
+          },
+        };
       });
     };
 
@@ -1031,9 +1202,9 @@ export default {
       store.dispatch("report/getapplicationStatuses").then((res) => {
         applicationStatuses.value = res.data.data.filter((application) => {
           return (
-            application.code === "APP" ||
-            application.code === "DEC" ||
-            application.code === "CONF"
+            application.code == "APP" ||
+            application.code == "DEC" ||
+            application.code == "CONF"
           );
         });
       });
@@ -1041,23 +1212,29 @@ export default {
 
     const exportTable = () => {
       var blob = new Blob([document.getElementById("printable").innerHTML], {
-        type:
-          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8",
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8",
       });
-      saveAs(blob, "Report.xls");
+      let date = new Date().toISOString();
+      saveAs(blob, date.slice(0, 10) + " Report.xls");
     };
 
     const searchByName = () => {
       searchingState.value = true;
       let filterByName = allData.value.filter((report) => {
-        return (
-          report.name.toLowerCase().includes(searchedValue.value) ||
+        return report.name.toLowerCase().includes(searchedValue.value) ||
           report.fatherName.toLowerCase().includes(searchedValue.value) ||
           report.grandFatherName.toLowerCase().includes(searchedValue.value) ||
-          report.goodStandingCode? report.goodStandingCode.toLowerCase().includes(searchedValue.value.toLowerCase()): 
-          report.renewalCode? report.renewalCode.toLowerCase().includes(searchedValue.value.toLowerCase()): 
-          report.newLicenseCode.toLowerCase().includes(searchedValue.value.toLowerCase()) 
-        );
+          report.goodStandingCode
+          ? report.goodStandingCode
+              .toLowerCase()
+              .includes(searchedValue.value.toLowerCase())
+          : report.renewalCode
+          ? report.renewalCode
+              .toLowerCase()
+              .includes(searchedValue.value.toLowerCase())
+          : report.newLicenseCode
+              .toLowerCase()
+              .includes(searchedValue.value.toLowerCase());
       });
       paginateReport(filterByName, 0);
       reportData.value = filterByName;
@@ -1156,8 +1333,9 @@ export default {
         }
       }
       if (profType == null) {
+        return;
       } else {
-        report.value = tableFilter2.filter(function(e) {
+        report.value = tableFilter2.filter(function (e) {
           return e.professionalTypes.name == profType;
         });
       }
@@ -1176,7 +1354,7 @@ export default {
       if (zone.name == null) {
         report.value = store.getter["report/getReport"];
       } else {
-        report.value = tableFilter2.filter(function(e) {
+        report.value = tableFilter2.filter(function (e) {
           return e.zone.name == zone.name;
         });
       }
@@ -1193,34 +1371,27 @@ export default {
       if (woreda.name == null) {
         report.value = store.getter["report/getReport"];
       } else {
-        report.value = tableFilter2.filter(function(e) {
+        report.value = tableFilter2.filter(function (e) {
           return e.woreda.name == woreda.name;
         });
       }
     };
-    const filterDate = (startDate, endDate) => {
-      if (endDate == "") {
-        startDateValue.value = "1900-01-01";
-        endDateValue.value = "2100-01-01";
-        filter.value.startDate = "";
-      } else {
-        startDateValue.value = startDate;
-        endDateValue.value = endDate;
-      }
-      filterApplication();
-    };
-    const filterGender = (gender) => {
-      genderValue.value = gender;
-      filterApplication();
-    };
+
     const filterAppStatus = (status) => {
-      applicationStatusValue.value = status;
-      filterApplication();
+      tableData = allData.value.filter((stat) => {
+        return stat.LicenseStatus.toLowerCase() == status.toLowerCase();
+      });
+      userTable.value.rows = computed(() => tableData);
+    };
+
+    const filterGender = (status) => {
+      tableData = allData.value.filter((stat) => {
+        return stat.Gender.toLowerCase() == status.toLowerCase();
+      });
+      userTable.value.rows = computed(() => tableData);
     };
     onMounted(() => {
       fetchNewLicenseReport();
-      fetchRenewalReport();
-      fetchGoodstandingReport();
       fetchRegion();
       fetchApplicationStatuses();
       fetchDepartmentType();
@@ -1246,7 +1417,6 @@ export default {
       filterProfession,
       filterGender,
       filterAppStatus,
-      filterDate,
       filterZone,
       selectedApplication,
       changeBackgroundColor,
@@ -1270,57 +1440,16 @@ export default {
       searchByName,
       searchedValue,
       clearSearch,
+      tableLoadingFinish,
+      rowClicked,
       searchingState,
+
+      searchData,
+      userTable,
+      searchTerm,
+      modalData,
+      expertLevelFilter,
     };
   },
 };
 </script>
-
-<style>
-.titile-container {
-  flex-wrap: wrap;
-}
-.filter-container {
-  flex-wrap: wrap;
-}
-.applicationType {
-  background-color: #285180;
-  color: #ffffff;
-}
-th {
-  color: #648ea3;
-  background-color: #eff6ff;
-}
-.sidenav {
-  width: 500px;
-}
-#export {
-  cursor: pointer;
-}
-a:link {
-  color: yellow;
-}
-a {
-  cursor: pointer;
-  color: #648ea3;
-}
-a:visited {
-  color: red;
-  cursor: pointer;
-}
-a:active {
-  color: red;
-}
-a:hover {
-  color: #0b5980;
-}
-#printable {
-  /* display: block; */
-  /* width: 90%; */
-  overflow-x: scroll;
-  overflow-y: hidden;
-}
-.clear-lable {
-  cursor: pointer;
-}
-</style>
