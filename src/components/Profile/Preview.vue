@@ -235,7 +235,7 @@ export default {
                   message.value.showLoading = false;
                   setTimeout(() => {
                     router.push({ path: "/menu" });
-                  }, 1500);
+                  }, 5000);
                 } else {
                   message.value.showErrorFlash = !message.value.showErrorFlash;
                 }
@@ -251,7 +251,7 @@ export default {
             }, 1500);
             setTimeout(() => {
               router.push({ path: "/menu" });
-            }, 25);
+            }, 2500);
           } else {
             message.value.showLoading = false;
             message.value.showFlash = false;
