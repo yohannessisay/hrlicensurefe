@@ -155,13 +155,7 @@ const routes = [
         "../components/Reviewer/Configurations/ChangePassword/ChangePassword.vue"
       ),
   },
-  {
-    path: "/admin/review/report",
-    name: "report",
-    component: () => import("../components/Report/Report.vue"),
-  },
-
-  {
+    {
     path: "/myWork",
     name: "myWork",
     component: () => import("../components/Reviewer/MyWork.vue"),
@@ -1105,6 +1099,7 @@ const routes = [
       ),
   },
 
+
   //Dashboard
   {
     path: "/admin/dashboard",
@@ -1139,7 +1134,7 @@ const routes = [
       name: "AdminReport",
       component: () =>
         import(
-          "../components/Reviewer/HomeComponents/Report/report.vue"
+          "../components/Reviewer/HomeComponents/Report/Report.vue"
         ),
     },
 ];
