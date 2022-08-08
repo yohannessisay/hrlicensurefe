@@ -1142,7 +1142,7 @@ const routes = [
       name: "AdminReport",
       component: () =>
         import(
-          "../components/Reviewer/HomeComponents/Report/report.vue"
+          "../components/Reviewer/HomeComponents/Report/Report.vue"
         ),
     },
 ];
