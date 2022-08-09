@@ -560,6 +560,9 @@ const toast = useToast();
               pauseOnHover: true,
               icon: true,
             });
+                setTimeout(() => {
+              window.location.reload();
+            }, 3000);
           }
         })
         .catch(() => {
@@ -570,6 +573,9 @@ const toast = useToast();
               pauseOnHover: true,
               icon: true,
             });
+                setTimeout(() => {
+              window.location.reload();
+            }, 3000);
         });
     };
 

@@ -1101,8 +1101,9 @@ export default {
               icon: true,
             });
             isLoading.value = false;
-
-            getResults();
+    setTimeout(() => {
+              window.location.reload();
+            }, 3000);
           });
         }
       });

@@ -511,7 +511,6 @@ export default {
         .then(res => {
           isLoading.value = false;
           if (res.statusText == "Created") {
-            console.log("sucessfull api");
             showGenerateModal.value = false;
           } else {
             showGenerateModal.value = false;
@@ -543,13 +542,6 @@ export default {
         .dispatch("reviewer/getQrCode", qrParam)
         .then(res => {
           imageSrc.value = res.data.data;
-          toast.success("Certificate Generated Successfully.", {
-            timeout: 5000,
-            position: "bottom-center",
-            pauseOnFocusLoss: true,
-            pauseOnHover: true,
-            icon: true
-          });
         })
         .finally(() => {
           toast.success("Certificate Generated Successfully.", {

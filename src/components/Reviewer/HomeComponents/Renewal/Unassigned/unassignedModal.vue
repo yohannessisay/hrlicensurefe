@@ -550,6 +550,10 @@ export default {
               icon: true
             });
             isLoading.value = false;
+
+                setTimeout(() => {
+              window.location.reload();
+            }, 3000);
           } else {
             toast.error(response.data.message, {
               timeout: 5000,
@@ -560,6 +564,10 @@ export default {
             });
 
             isLoading.value = false;
+
+                setTimeout(() => {
+              window.location.reload();
+            }, 3000);
           }
         })
         .catch(() => {
@@ -570,6 +578,10 @@ export default {
             pauseOnHover: true,
             icon: true
           });
+
+                setTimeout(() => {
+              window.location.reload();
+            }, 3000);
         });
     };
 

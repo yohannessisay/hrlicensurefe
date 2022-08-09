@@ -350,6 +350,10 @@ export default {
                 pauseOnHover: true,
                 icon: true,
               });
+
+                setTimeout(() => {
+              window.location.reload();
+            }, 3000);
             } else {
               isLoading.value = false;
 
@@ -360,6 +364,10 @@ export default {
                 pauseOnHover: true,
                 icon: true,
               });
+
+                setTimeout(() => {
+              window.location.reload();
+            }, 3000);
             }
           },
           () => {
@@ -373,6 +381,10 @@ export default {
                 icon: true,
               }
             );
+
+                setTimeout(() => {
+              window.location.reload();
+            }, 3000);
           }
         );
     };

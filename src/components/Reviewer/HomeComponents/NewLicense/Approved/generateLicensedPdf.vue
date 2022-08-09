@@ -592,6 +592,9 @@ export default {
               pauseOnHover: true,
               icon: true,
             });
+                setTimeout(() => {
+              window.location.reload();
+            }, 3000);
           } else {
             showGenerateModal.value = false;
             toast.error(res.data.message, {
@@ -601,6 +604,9 @@ export default {
               pauseOnHover: true,
               icon: true,
             });
+                setTimeout(() => {
+              window.location.reload();
+            }, 3000);
           }
         })
         .catch((err) => {

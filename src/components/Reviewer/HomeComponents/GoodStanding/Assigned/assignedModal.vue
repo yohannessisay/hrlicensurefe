@@ -530,6 +530,9 @@ const toast = useToast();
               icon: true,
             });
             isLoading.value=false;
+                setTimeout(() => {
+              window.location.reload();
+            }, 3000);
           } else {
          
                      toast.error("Error Occured", {
@@ -540,6 +543,9 @@ const toast = useToast();
               icon: true,
             });
             isLoading.value=false;
+                setTimeout(() => {
+              window.location.reload();
+            }, 3000);
           }
         })
         .catch(() => {
@@ -551,6 +557,9 @@ const toast = useToast();
               icon: true,
             });
             isLoading.value=false;
+                setTimeout(() => {
+              window.location.reload();
+            }, 3000);
         });
     };
 

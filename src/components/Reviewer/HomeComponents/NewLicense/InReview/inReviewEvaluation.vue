@@ -1760,6 +1760,9 @@ export default {
                 pauseOnHover: true,
                 icon: true,
               });
+                  setTimeout(() => {
+              window.location.reload();
+            }, 3000);
             } else {
               toast.error("Please try again", {
                 timeout: 5000,
@@ -1768,6 +1771,9 @@ export default {
                 pauseOnHover: true,
                 icon: true,
               });
+                  setTimeout(() => {
+              window.location.reload();
+            }, 3000);
             }
           })
           .catch((err) => {
@@ -1778,6 +1784,9 @@ export default {
               pauseOnHover: true,
               icon: true,
             });
+                setTimeout(() => {
+              window.location.reload();
+            }, 3000);
           });
       }
     };

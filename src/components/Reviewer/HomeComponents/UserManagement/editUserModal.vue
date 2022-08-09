@@ -676,6 +676,10 @@ export default {
                 icon: true,
               });
               isLoading.value = false;
+
+                setTimeout(() => {
+              window.location.reload();
+            }, 3000);
             } else {
               toast.error(res.data.message.name, {
                 timeout: 5000,
@@ -685,6 +689,10 @@ export default {
                 icon: true,
               });
               isLoading.value = false;
+
+                setTimeout(() => {
+              window.location.reload();
+            }, 3000);
             }
           })
           .catch(() => {
@@ -699,6 +707,10 @@ export default {
                 icon: true,
               }
             );
+
+                setTimeout(() => {
+              window.location.reload();
+            }, 3000);
           });
       }
     };

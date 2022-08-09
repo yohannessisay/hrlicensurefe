@@ -548,6 +548,9 @@ export default {
               icon: true,
             });
             isLoading.value = true;
+                setTimeout(() => {
+              window.location.reload();
+            }, 3000);
           } else {
             toast.error(
               "Sorry there seems to be a problem, please try again.",
@@ -560,6 +563,9 @@ export default {
               }
             );
             isLoading.value = true;
+                setTimeout(() => {
+              window.location.reload();
+            }, 3000);
           }
         })
         .catch(() => {
@@ -571,6 +577,9 @@ export default {
             icon: true,
           });
           isLoading.value = true;
+              setTimeout(() => {
+              window.location.reload();
+            }, 3000);
         });
     };
 
