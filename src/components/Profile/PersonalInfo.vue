@@ -671,12 +671,6 @@ export default {
       if (!formData.fatherName) errors.fatherName = "Father's Name Required";
       if (!formData.grandFatherName)
         errors.grandFatherName = "Grandfather's Name Required";
-        if (!formData.alternativeName)
-        errors.alternativeName = "Name in Amharic is Required";
-          if (!formData.alternativeFatherName)
-        errors.alternativeFatherName = "Father's Name in Amharic is Required";
-          if (!formData.alternativeGrandFatherName)
-        errors.alternativeGrandFatherName = "Grandfather's Name  in Amharic is Required";
       if (!formData.nationalityId)
         errors.nationalityId = "Nationality Required";
       return errors;
