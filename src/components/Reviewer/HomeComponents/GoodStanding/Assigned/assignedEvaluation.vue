@@ -57,20 +57,20 @@
                 </div>
                 <div class="flex justify-start mt-4 flex-wrap ml-12">
                   <div>
-                    <picture
-                      class="flex justify-center items-center mb-small"
-                  
-                    >
+                    <picture class="flex justify-center items-center mb-small">
                       <span
                         v-if="
-                          goodStanding&&
-                          goodStanding.profile&&
+                          goodStanding &&
+                          goodStanding.profile &&
                           goodStanding.profile.profilePicture !== '' &&
                           goodStanding.profile.profilePicture !== null
                         "
                       >
                         <img
-                          :src="googleApi+goodStanding.profile.profilePicture.filePath"
+                          :src="
+                            googleApi +
+                            goodStanding.profile.profilePicture.filePath
+                          "
                           alt="profile"
                           class="w-20 h-12"
                         />
@@ -156,7 +156,7 @@
                 <div class="flex flex-col justify-center items-center ml-large">
                   <div class="ml-medium">
                     <label
-                      v-if="!docs.length>0"
+                      v-if="!docs.length > 0"
                       class="
                         justify-center
                         items-center
@@ -168,7 +168,7 @@
                     </label>
 
                     <div class="flex justify-start flex-wrap">
-                      <div v-if="!docs.length>0">
+                      <div v-if="!docs.length > 0">
                         <div class="flex justify-center">
                           <Title message="Summary" />
                         </div>
@@ -298,7 +298,7 @@
                             <button @click="disallowChangeName">cancel</button>
                           </div>
                         </div>
-                  
+
                         <div class="flex flex-row">
                           <div
                             :class="[
@@ -324,8 +324,7 @@
                             <label class="ml-8 titleColors"> Nationality</label>
                             <h5 class="ml-8">
                               {{
-                                profileInfo&&
-                                profileInfo.nationality
+                                profileInfo && profileInfo.nationality
                                   ? profileInfo.nationality.name
                                   : "-"
                               }}
@@ -333,7 +332,8 @@
                           </div>
                           <div
                             :class="[
-                            profileInfo&&profileInfo.maritalStatus&&
+                              profileInfo &&
+                              profileInfo.maritalStatus &&
                               profileInfo.maritalStatus.name === null
                                 ? errorClass
                                 : activeClass,
@@ -344,7 +344,8 @@
                             >
                             <h5 class="ml-8">
                               {{
-                                profileInfo&&profileInfo.maritalStatus&&
+                                profileInfo &&
+                                profileInfo.maritalStatus &&
                                 profileInfo.maritalStatus.name
                                   ? profileInfo.maritalStatus.name
                                   : "-"
@@ -352,15 +353,12 @@
                             </h5>
                           </div>
                         </div>
-            
 
                         <div class="flex justify-start">
                           <Title message="Professional Type" />
                         </div>
                         <div class="flex flex-row">
-                          <div
-                            v-if="goodStanding?.GSProfessionals?.length > 0"
-                          >
+                          <div v-if="goodStanding?.GSProfessionals?.length > 0">
                             <div class="flex flex-col mb-medium mr-12 ml-8">
                               <div style="background: lightgray; padding: 8px">
                                 <p style="color: blue">
@@ -578,7 +576,6 @@
                             </div>
                           </div>
                         </div>
-                
                       </div>
                       <div v-else>
                         <picture v-if="docs.length > 0">
@@ -621,35 +618,145 @@
                     </div>
                   </div>
                   <div class="mt-medium" v-if="!showButtons">
-                    <span v-if="docs.length>0">
-                      <button class="mr-medium" @click="accept(docs[index])">
+                    <span v-if="docs.length > 0">
+                      <button
+                        class="
+                          inline-block
+                          px-6
+                          text-white
+                          font-medium
+                          text-xs
+                          leading-tight
+                          uppercase
+                          rounded
+                          shadow-lg
+                          hover:bg-purple-700 hover:shadow-lg
+                          focus:bg-purple-700
+                          focus:shadow-lg
+                          focus:outline-none
+                          focus:ring-0
+                          active:bg-purple-800 active:shadow-lg
+                          transition
+                          duration-150
+                          hover:bg-primary-400 hover:text-white
+                          ease-in-out
+                        "
+                        @click="accept(docs[index])"
+                      >
                         Accept
                       </button>
-                    </span>
-
-                    <span v-else>
-                      <button class="mr-medium" @click="action('ApproveEvent')">
+                          <button
+                        class="
+                          inline-block
+                          px-6
+                          text-white
+                          font-medium
+                          text-xs
+                          leading-tight
+                          uppercase
+                          rounded
+                          shadow-lg
+                          hover:bg-purple-700 hover:shadow-lg
+                          focus:bg-purple-700
+                          focus:shadow-lg
+                          focus:outline-none
+                          focus:ring-0
+                          active:bg-purple-800 active:shadow-lg
+                          transition
+                          duration-150
+                          hover:bg-primary-400 hover:text-white
+                          ease-in-out
+                        "
+                        @click="action('ApproveEvent')"
+                      >
                         Submit
                       </button>
-                    </span>
-
-                    <button class="decline" @click="reject(docs[index])">
+                          <button
+                      class="
+                        inline-block
+                        px-6
+                        text-white
+                        font-medium
+                        text-xs
+                        leading-tight
+                        uppercase
+                        rounded
+                        shadow-lg
+                        hover:bg-purple-700 hover:shadow-lg
+                        focus:bg-purple-700
+                        focus:shadow-lg
+                        focus:outline-none
+                        focus:ring-0
+                        active:bg-purple-800 active:shadow-lg
+                        transition
+                        duration-150
+                        hover:bg-primary-400 hover:text-white
+                        ease-in-out
+                      "
+                      @click="reject(docs[index])"
+                    >
                       Reject
                     </button>
                     <button
-                      class="p-1"
-                      variant="outline"
+                      class="
+                        inline-block
+                        px-6
+                        text-white
+                        font-medium
+                        text-xs
+                        leading-tight
+                        uppercase
+                        rounded
+                        shadow-lg
+                        hover:bg-purple-700 hover:shadow-lg
+                        focus:bg-purple-700
+                        focus:shadow-lg
+                        focus:outline-none
+                        focus:ring-0
+                        active:bg-purple-800 active:shadow-lg
+                        transition
+                        duration-150
+                        hover:bg-primary-400 hover:text-white
+                        ease-in-out
+                      "
                       @click="action('ReviewerDraftEvent')"
                     >
                       Save as Draft
                     </button>
                     <button
                       v-if="showTransferToAdminButton"
-                      variant="outline"
+                      class="
+                        inline-block
+                        px-6
+                        text-white
+                        font-medium
+                        text-xs
+                        leading-tight
+                        uppercase
+                        rounded
+                        shadow-lg
+                        hover:bg-purple-700 hover:shadow-lg
+                        focus:bg-purple-700
+                        focus:shadow-lg
+                        focus:outline-none
+                        focus:ring-0
+                        active:bg-purple-800 active:shadow-lg
+                        transition
+                        duration-150
+                        hover:bg-primary-400 hover:text-white
+                        ease-in-out
+                      "
                       @click="transferToFederal()"
                     >
                       Transfer to Federal
                     </button>
+                    </span>
+
+                    <span v-else>
+                  
+                    </span>
+
+                
                   </div>
                   <div class="relative pt-1 mt-medium">
                     <div
@@ -715,8 +822,27 @@
                   v-bind:value="button.id"
                 >
                   <button
-                    variant="outline"
-                    v-bind:class="button.class"
+                    class="
+                      inline-block
+                      px-6
+                      text-white
+                      font-medium
+                      text-xs
+                      leading-tight
+                      uppercase
+                      rounded
+                      shadow-lg
+                      hover:bg-purple-700 hover:shadow-lg
+                      focus:bg-purple-700
+                      focus:shadow-lg
+                      focus:outline-none
+                      focus:ring-0
+                      active:bg-purple-800 active:shadow-lg
+                      transition
+                      duration-150
+                      hover:bg-primary-400 hover:text-white
+                      ease-in-out
+                    "
                     @click="action(button.action)"
                   >
                     {{ button.name }}
@@ -951,13 +1077,13 @@
               <div v-if="showNameChangeErrorFlash">
                 <ErrorFlashMessage message="name change Failed!" />
               </div>
-          
+
               <div v-if="showProfessionChangeError">
                 <ErrorFlashMessage
                   message="you can't change profession if you are not approving"
                 />
               </div>
-       
+
               <div v-if="showTransferSuccessMessage">
                 <FlashMessage message="Transfer Successful!" />
               </div>
@@ -982,6 +1108,7 @@ import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { googleApi } from "@/composables/baseURL";
 
+import { useToast } from "vue-toastification";
 import Title from "@/sharedComponents/Title";
 import Modal from "@/sharedComponents/Modal";
 import FlashMessage from "@/sharedComponents/FlashMessage";
@@ -1008,6 +1135,7 @@ export default {
     const route = useRoute();
     const store = useStore();
     const router = useRouter();
+       const toast = useToast();
 
     const options = ref([0, 1, 2]);
     const selectedOptions = ref([0]);
@@ -1019,7 +1147,6 @@ export default {
 
     let isGoodStanding = ref(false);
 
-   
     let isProfessionalTypeChanged = ref(false);
 
     let otherProfessionalType = ref();
@@ -1120,6 +1247,9 @@ export default {
           profileInfo.value = goodStanding.value.profile;
           buttons.value = res.data.data.applicationStatus.buttons;
           docs.value = res.data.data.documents;
+          if(docs.value.length==0){
+            showButtons.value=true;
+          }
           fetchDocumentTypes();
           for (let i = 0; i < goodStanding.value.GSProfessionals.length; i++) {
             goodStanding.value.GSProfessionals[i].showPrefix = false;
@@ -1182,8 +1312,12 @@ export default {
         nextClickable.value = false;
       }
       if (
-        accepted.value.includes(doc.documentTypeCode) ||
-        rejected.value.includes(doc.documentTypeCode)
+        accepted.value.includes(
+          doc && doc.documentTypeCode ? doc.documentTypeCode : ""
+        ) ||
+        rejected.value.includes(
+          doc && doc.documentTypeCode ? doc.documentTypeCode : ""
+        )
       ) {
         nextClickable.value = true;
       }
@@ -1253,8 +1387,15 @@ export default {
     const accept = (doc) => {
       nextClickable.value = true;
       if (accepted.value.length > 0) {
-        if (doc && !accepted.value.includes(doc.documentTypeCode)) {
-          accepted.value.push(doc.documentTypeCode);
+        if (
+          doc &&
+          !accepted.value.includes(
+            doc && doc.documentTypeCode ? doc.documentTypeCode : ""
+          )
+        ) {
+          accepted.value.push(
+            doc && doc.documentTypeCode ? doc.documentTypeCode : ""
+          );
           if (index.value == docs.value.length - 1) {
             showButtons.value = true;
           } else {
@@ -1263,9 +1404,15 @@ export default {
             width.value = "width:" + amount.value + "%";
             findDocumentType(documentTypes.value, docs.value[index.value]);
           }
-          if (rejected.value.includes(doc.documentTypeCode)) {
+          if (
+            rejected.value.includes(
+              doc && doc.documentTypeCode ? doc.documentTypeCode : ""
+            )
+          ) {
             rejected.value.splice(
-              rejected.value.indexOf(doc.documentTypeCode),
+              rejected.value.indexOf(
+                doc && doc.documentTypeCode ? doc.documentTypeCode : ""
+              ),
               1
             );
             rejectedObj.value.splice(rejectedObj.value.indexOf(doc), 1);
@@ -1281,7 +1428,9 @@ export default {
           }
         }
       } else {
-        accepted.value.push(doc ? doc.documentTypeCode : "");
+        accepted.value.push(
+          doc ? (doc && doc.documentTypeCode ? doc.documentTypeCode : "") : ""
+        );
         if (index.value == docs.value.length - 1) {
           showButtons.value = true;
         } else {
@@ -1290,9 +1439,15 @@ export default {
           width.value = "width:" + amount.value + "%";
           findDocumentType(documentTypes.value, docs.value[index.value]);
         }
-        if (rejected.value.includes(doc && doc.documentTypeCode)) {
+        if (
+          rejected.value.includes(
+            doc && doc && doc.documentTypeCode ? doc.documentTypeCode : ""
+          )
+        ) {
           rejected.value.splice(
-            rejected.value.indexOf(doc.documentTypeCode),
+            rejected.value.indexOf(
+              doc && doc.documentTypeCode ? doc.documentTypeCode : ""
+            ),
             1
           );
           rejectedObj.value.splice(rejectedObj.value.indexOf(doc), 1);
@@ -1303,8 +1458,14 @@ export default {
     const reject = (doc) => {
       nextClickable.value = true;
       if (rejected.value.length > 0) {
-        if (!rejected.value.includes(doc.documentTypeCode)) {
-          rejected.value.push(doc.documentTypeCode);
+        if (
+          !rejected.value.includes(
+            doc && doc.documentTypeCode ? doc.documentTypeCode : ""
+          )
+        ) {
+          rejected.value.push(
+            doc && doc.documentTypeCode ? doc.documentTypeCode : ""
+          );
           rejectedObj.value.push(doc);
           if (index.value == docs.value.length - 1) {
             showButtons.value = true;
@@ -1314,9 +1475,15 @@ export default {
             width.value = "width:" + amount.value + "%";
             findDocumentType(documentTypes.value, docs.value[index.value]);
           }
-          if (accepted.value.includes(doc.documentTypeCode)) {
+          if (
+            accepted.value.includes(
+              doc && doc.documentTypeCode ? doc.documentTypeCode : ""
+            )
+          ) {
             accepted.value.splice(
-              accepted.value.indexOf(doc.documentTypeCode),
+              accepted.value.indexOf(
+                doc && doc.documentTypeCode ? doc.documentTypeCode : ""
+              ),
               1
             );
           }
@@ -1331,7 +1498,9 @@ export default {
           }
         }
       } else {
-        rejected.value.push(doc.documentTypeCode);
+        rejected.value.push(
+          doc && doc.documentTypeCode ? doc.documentTypeCode : ""
+        );
         rejectedObj.value.push(doc);
         if (index.value == docs.value.length - 1) {
           showButtons.value = true;
@@ -1341,9 +1510,15 @@ export default {
           width.value = "width:" + amount.value + "%";
           findDocumentType(documentTypes.value, docs.value[index.value]);
         }
-        if (accepted.value.includes(doc.documentTypeCode)) {
+        if (
+          accepted.value.includes(
+            doc && doc.documentTypeCode ? doc.documentTypeCode : ""
+          )
+        ) {
           accepted.value.splice(
-            accepted.value.indexOf(doc.documentTypeCode),
+            accepted.value.indexOf(
+              doc && doc.documentTypeCode ? doc.documentTypeCode : ""
+            ),
             1
           );
         }
@@ -1394,25 +1569,28 @@ export default {
         loopCounter = 0;
       }
 
-
-
       if (actionValue == "DeclineEvent") {
         showActionLoading.value = false;
         showLoadingButtons.value = false;
         let checkProfessionResult = false;
         goodStanding.value.isProfessionChanged == false
           ? (checkProfessionResult = checkProfessionChanged(
-              goodStanding.value.professionalTypes
+              goodStanding.value.GSProfessionals
             ))
           : (checkProfessionResult = true);
 
         if (checkProfessionResult) {
           showProfessionChangeError.value = true;
-          setTimeout(() => {
-            showProfessionChangeError.value = false;
-          }, 4000);
-          showActionLoading.value = false;
-          showLoadingButtons.value = false;
+          toast.success("Application Approved Successfully", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
+              setTimeout(() => {
+                window.location.reload();
+              }, 3000);
           return;
         } else {
           showRemark.value = true;
@@ -1427,7 +1605,7 @@ export default {
         let checkProfessionResult = false;
         goodStanding.value.isProfessionChanged == false
           ? (checkProfessionResult = checkProfessionChanged(
-              goodStanding.value.professionalTypes
+              goodStanding.value.GSProfessionals
             ))
           : (checkProfessionResult = true);
 
@@ -1672,7 +1850,11 @@ export default {
 
     const checkProfessionChanged = (previousProfessionType) => {
       let count = 0;
-      if (previousProfessionType.length !== professionalTypeIdss.value.length) {
+      if (
+        previousProfessionType &&
+        professionalTypeIdss &&
+        previousProfessionType.length !== professionalTypeIdss.value.length
+      ) {
         return true;
       } else {
         for (let i = 0; i < previousProfessionType.length; i++) {
@@ -1695,7 +1877,7 @@ export default {
     };
 
     onMounted(() => {
-      created("New License", route.params.id);
+      created("Good Standing", route.params.id);
     });
     return {
       isPdf,

@@ -983,8 +983,27 @@
                   v-bind:value="button.id"
                 >
                   <button
-                    variant="outline"
-                    v-bind:class="button.class"
+                    class="
+                      inline-block
+                      px-6
+                      text-white
+                      font-medium
+                      text-xs
+                      leading-tight
+                      uppercase
+                      rounded
+                      shadow-lg
+                      hover:bg-purple-700 hover:shadow-lg
+                      focus:bg-purple-700
+                      focus:shadow-lg
+                      focus:outline-none
+                      focus:ring-0
+                      active:bg-purple-800 active:shadow-lg
+                      transition
+                      duration-150
+                      hover:bg-primary-400 hover:text-white
+                      ease-in-out
+                    "
                     @click="action(button.action)"
                   >
                     {{ button.name }}
@@ -1693,7 +1712,7 @@ export default {
         let checkProfessionResult = false;
         newLicense.value.isProfessionChanged == false
           ? (checkProfessionResult = checkProfessionChanged(
-              newLicense.value.professionalTypes
+              newLicense.value.licenseProfessions
             ))
           : (checkProfessionResult = true);
 
@@ -1718,7 +1737,7 @@ export default {
         let checkProfessionResult = false;
         newLicense.value.isProfessionChanged == false
           ? (checkProfessionResult = checkProfessionChanged(
-              newLicense.value.professionalTypes
+              newLicense.value.licenseProfessions
             ))
           : (checkProfessionResult = true);
 
@@ -1760,9 +1779,9 @@ export default {
                 pauseOnHover: true,
                 icon: true,
               });
-                  setTimeout(() => {
-              window.location.reload();
-            }, 3000);
+              setTimeout(() => {
+                window.location.reload();
+              }, 3000);
             } else {
               toast.error("Please try again", {
                 timeout: 5000,
@@ -1771,9 +1790,9 @@ export default {
                 pauseOnHover: true,
                 icon: true,
               });
-                  setTimeout(() => {
-              window.location.reload();
-            }, 3000);
+              setTimeout(() => {
+                window.location.reload();
+              }, 3000);
             }
           })
           .catch((err) => {
@@ -1784,7 +1803,7 @@ export default {
               pauseOnHover: true,
               icon: true,
             });
-                setTimeout(() => {
+            setTimeout(() => {
               window.location.reload();
             }, 3000);
           });
@@ -1822,10 +1841,10 @@ export default {
         .then((res) => {
           res.data.data
             .filter(function (e) {
-              for (let i in newLicense.value.professionalTypes) {
+              for (let i in newLicense.value.licenseProfessions) {
                 if (
                   e.code ===
-                  newLicense.value.professionalTypes[i].professionalTypes.code
+                  newLicense.value.licenseProfessions[i].professionalTypes.code
                 ) {
                   professionSelected.value = true;
                 }
@@ -1882,14 +1901,14 @@ export default {
       if (checkResult.value) {
         if (event.target.checked) {
           previousProfession
-            ? (newLicense.value.professionalTypes[index].showPrefixLink = true)
+            ? (newLicense.value.licenseProfessions[index].showPrefixLink = true)
             : (professionalTypes.value[index].showPrefixLink = true);
           previousProfession
             ? professionalTypeIdss.value.push(profession.professionalTypes.id)
             : professionalTypeIdss.value.push(profession.id);
         } else {
           previousProfession
-            ? (newLicense.value.professionalTypes[index].showPrefixLink = false)
+            ? (newLicense.value.licenseProfessions[index].showPrefixLink = false)
             : (professionalTypes.value[index].showPrefixLink = false);
           previousProfession
             ? professionalTypeIdss.value.splice(
@@ -1959,6 +1978,7 @@ export default {
         });
         return;
       }
+
       for (let i = 0; i < professionalTypePrefixes.value.length; i++) {
         if (
           professionId !== professionalTypePrefixes.value[i].professionalTypeId
@@ -1994,7 +2014,11 @@ export default {
 
     const checkProfessionChanged = (previousProfessionType) => {
       let count = 0;
-      if (previousProfessionType.length !== professionalTypeIdss.value.length) {
+      if (
+        previousProfessionType &&
+        professionalTypeIdss &&
+        previousProfessionType.length != professionalTypeIdss.value.length
+      ) {
         return true;
       } else {
         for (let i = 0; i < previousProfessionType.length; i++) {

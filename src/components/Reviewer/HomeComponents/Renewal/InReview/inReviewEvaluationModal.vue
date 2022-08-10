@@ -3,7 +3,7 @@
   <reviewer-side-nav />
   <!-- Sidebar -->
 
-  <section class="home-section ">
+  <section class="home-section">
     <!-- Header -->
     <reviewer-nav-bar>
       <h2 class="dashboard">Evaluate</h2>
@@ -11,10 +11,9 @@
     <!-- Header -->
 
     <!-- Main Content -->
-    <div class="home-content ">
-      <div class="container mx-auto px-4 sm:px-4 mb-12 ">
-       
- <div class="rounded-lg  bg-primary-800 w-full shadow-md ">
+    <div class="home-content">
+      <div class="container mx-auto px-4 sm:px-4 mb-12">
+        <div class="rounded-lg bg-primary-800 w-full shadow-md">
           <h2 class="text-white ml-4">
             Evaluating
             {{
@@ -30,9 +29,9 @@
             }}
             's License
           </h2>
-          <div class=" w-full ">
+          <div class="w-full">
             <div class="box-shadow-pop bg-lightGrey-100">
-              <div class="flex  justify-center">
+              <div class="flex justify-center">
                 <div
                   class="
                     w-64
@@ -137,8 +136,7 @@
                           {{
                             renewal.education
                               ? renewal.education.institution
-                                ? renewal.education.institution
-                                    .institutionType
+                                ? renewal.education.institution.institutionType
                                   ? renewal.education.institution
                                       .institutionType.name
                                   : "-"
@@ -318,8 +316,7 @@
                                   class="max-w-3xl ml-8"
                                   type="text"
                                   v-model="
-                                    renewal.profile
-                                      .alternativeGrandFatherName
+                                    renewal.profile.alternativeGrandFatherName
                                   "
                                 />
                               </div>
@@ -492,8 +489,8 @@
                             </h5>
                           </div>
                         </div>
-                           <div class="flex justify-start">
-                         <h2 class="font-bold">Professional Type</h2>
+                        <div class="flex justify-start">
+                          <h2 class="font-bold">Professional Type</h2>
                         </div>
                         <div class="flex flex-row">
                           <div v-if="renewal?.renewalProfessions?.length > 0">
@@ -527,11 +524,20 @@
                                       name="ckb"
                                       :checked="professionName.showPrefixLink"
                                     />
-                                    {{ professionName.professionalTypes.name }}
+                                    {{
+                                      professionName &&
+                                      professionName.professionalTypes &&
+                                      professionName.professionalTypes.name
+                                        ? professionName.professionalTypes.name
+                                        : ""
+                                    }}
                                     |
                                     {{
+                                      professionName &&
                                       professionName.professionalTypes
-                                        .amharicProfessionalType
+                                        ? professionName.professionalTypes
+                                            .amharicProfessionalType
+                                        : ""
                                     }}
                                   </li>
                                   <a
@@ -546,6 +552,7 @@
                                     "
                                     v-show="professionName.showPrefixLink"
                                     >{{
+                                      professionName &&
                                       professionName.showPrefix
                                         ? "Hide Prefix?"
                                         : "Show Prefix?"
@@ -561,8 +568,10 @@
                                       border-right: 1px solid lightgray;
                                     "
                                     v-if="
+                                      professionName &&
+                                      professionName.professionalTypes &&
                                       professionName.professionalTypes.name ==
-                                      'Other'
+                                        'Other'
                                     "
                                   >
                                     <label style="display: block"
@@ -600,7 +609,7 @@
                                         v-bind:key="prefix.id"
                                         v-bind:value="prefix.name"
                                       >
-                                        {{ prefix.name }}
+                                        {{ prefix.name ? prefix.name : "" }}
                                       </option>
                                     </select>
                                   </div>
@@ -634,9 +643,16 @@
                                       class="form-checkbox"
                                       name="nckb"
                                     />
-                                    {{ newProfessionName.name }} |
                                     {{
-                                      newProfessionName.amharicProfessionalType
+                                      newProfessionName
+                                        ? newProfessionName.name
+                                        : ""
+                                    }}
+                                    |
+                                    {{
+                                      newProfessionName
+                                        ? newProfessionName.amharicProfessionalType
+                                        : ""
                                     }}
                                   </li>
                                   <a
@@ -751,9 +767,7 @@
                               "
                               v-bind:src="googleApi + '' + docs[index].filePath"
                             />
-                            <div style="width: 400px">
-                            
-                            </div>
+                            <div style="width: 400px"></div>
                           </div>
                         </picture>
                       </div>
@@ -766,22 +780,107 @@
                     </div>
                   </div>
                   <div class="mt-medium" v-if="!showButtons">
-                    <button class="mr-medium" @click="accept(docs[index])">
+                    <button
+                      class="
+                        inline-block
+                        px-6
+                        text-white
+                        font-medium
+                        text-xs
+                        leading-tight
+                        uppercase
+                        rounded
+                        shadow-lg
+                        hover:bg-purple-700 hover:shadow-lg
+                        focus:bg-purple-700
+                        focus:shadow-lg
+                        focus:outline-none
+                        focus:ring-0
+                        active:bg-purple-800 active:shadow-lg
+                        transition
+                        duration-150
+                        hover:bg-primary-400 hover:text-white
+                        ease-in-out
+                      "
+                      @click="accept(docs[index])"
+                    >
                       Accept
                     </button>
-                    <button class="decline" @click="reject(docs[index])">
+                    <button
+                      class="
+                        inline-block
+                        px-6
+                        text-white
+                        font-medium
+                        text-xs
+                        leading-tight
+                        uppercase
+                        rounded
+                        shadow-lg
+                        hover:bg-purple-700 hover:shadow-lg
+                        focus:bg-purple-700
+                        focus:shadow-lg
+                        focus:outline-none
+                        focus:ring-0
+                        active:bg-purple-800 active:shadow-lg
+                        transition
+                        duration-150
+                        hover:bg-primary-400 hover:text-white
+                        ease-in-out
+                      "
+                      @click="reject(docs[index])"
+                    >
                       Reject
                     </button>
                     <button
-                      class="p-1"
-                      variant="outline"
+                      class="
+                        inline-block
+                        px-6
+                        text-white
+                        font-medium
+                        text-xs
+                        leading-tight
+                        uppercase
+                        rounded
+                        shadow-lg
+                        hover:bg-purple-700 hover:shadow-lg
+                        focus:bg-purple-700
+                        focus:shadow-lg
+                        focus:outline-none
+                        focus:ring-0
+                        active:bg-purple-800 active:shadow-lg
+                        transition
+                        duration-150
+                        hover:bg-primary-400 hover:text-white
+                        ease-in-out
+                      "
                       @click="action('ReviewerDraftEvent')"
                     >
                       Save as Draft
                     </button>
                     <button
                       v-if="showTransferToAdminButton"
-                      variant="outline"
+                      class="
+                        inline-block
+                        px-6
+                        text-white
+                        font-medium
+                        text-xs
+                        leading-tight
+                        uppercase
+                        rounded
+                        shadow-lg
+                        hover:bg-purple-700 hover:shadow-lg
+                        focus:bg-purple-700
+                        focus:shadow-lg
+                        focus:outline-none
+                        focus:ring-0
+                        active:bg-purple-800 active:shadow-lg
+                        transition
+                        duration-150
+                        hover:bg-primary-400 hover:text-white
+                        ease-in-out
+                      "
                       @click="transferToFederal()"
                     >
                       Transfer to Federal
@@ -851,8 +950,27 @@
                   v-bind:value="button.id"
                 >
                   <button
-                    variant="outline"
-                    v-bind:class="button.class"
+                    class="
+                      inline-block
+                      px-6
+                      text-white
+                      font-medium
+                      text-xs
+                      leading-tight
+                      uppercase
+                      rounded
+                      shadow-lg
+                      hover:bg-purple-700 hover:shadow-lg
+                      focus:bg-purple-700
+                      focus:shadow-lg
+                      focus:outline-none
+                      focus:ring-0
+                      active:bg-purple-800 active:shadow-lg
+                      transition
+                      duration-150
+                      hover:bg-primary-400 hover:text-white
+                      ease-in-out
+                    "
                     @click="action(button.action)"
                   >
                     {{ button.name }}
@@ -1111,8 +1229,6 @@
             </div>
           </div>
         </div>
-
-
       </div>
     </div>
     <!-- Main Content -->
@@ -1253,7 +1369,7 @@ export default {
     let professionalTypes = ref([]);
     let evaluateRoute = ref("/admin/evaluate/Renewal" + route.params.id);
     const created = async (applicationTypeName, applicationId) => {
-      applicationType.value = "New License";
+      applicationType.value = "Renewal";
 
       store
         .dispatch("reviewer/getRenewalApplication", applicationId)
@@ -1307,7 +1423,7 @@ export default {
           }
         });
 
-      applicationType.value = "New License";
+      applicationType.value = "Renewal";
     };
     const fetchDocumentTypes = async () => {
       store.dispatch("reviewer/getDocumentTypes").then((res) => {
@@ -1377,8 +1493,7 @@ export default {
           licenseId: route.params.applicationId,
           expertLevelId: federalData[0].id,
           createdByAdminId: adminId,
-          isTransferred: true
-
+          isTransferred: true,
         };
         store
           .dispatch("reviewer/transferToFederal", transferData)
@@ -1499,10 +1614,10 @@ export default {
       showLoadingButtons.value = true;
       if (professionalTypeIdss.value.length > 0) {
         renewal.value.professionalTypeIds = professionalTypeIdss.value;
-        renewal.value.professionalTypePrefixes =
-          professionalTypePrefixes.value;
+        renewal.value.professionalTypePrefixes = professionalTypePrefixes.value;
       } else {
         showProfessionChangeError.value = true;
+        console.log("here");
         setTimeout(() => {
           showProfessionChangeError.value = false;
         }, 4000);
@@ -1573,7 +1688,7 @@ export default {
               renewal.value.professionalTypeIds
             ))
           : (checkProfessionResult = true);
-
+           
         if (checkProfessionResult) {
           showProfessionChangeError.value = true;
           setTimeout(() => {
@@ -1593,7 +1708,6 @@ export default {
 
       if (actionValue == "ReviewerDraftEvent") {
         let checkProfessionResult = false;
-        console.log(renewal.value);
         renewal.value.isProfessionChanged == false
           ? (checkProfessionResult = checkProfessionChanged(
               renewal.value.professionalTypeIds
@@ -1610,8 +1724,7 @@ export default {
       }
       if (professionalTypeIdss.value.length > 0) {
         renewal.value.professionalTypeIds = professionalTypeIdss.value;
-        renewal.value.professionalTypePrefixes =
-          professionalTypePrefixes.value;
+        renewal.value.professionalTypePrefixes = professionalTypePrefixes.value;
       }
       renewal.value.declinedFields = rejected.value;
       renewal.value.acceptedFields = accepted.value;
@@ -1622,10 +1735,10 @@ export default {
         data: renewal.value,
       };
       if (
-        applicationType.value == "New License" &&
+        applicationType.value == "Renewal" &&
         sendDeclinedData.value == true
       ) {
-        console.log(req)
+        console.log(req);
         store
           .dispatch("reviewer/editRenewal", req)
           .then((res) => {
@@ -1925,9 +2038,14 @@ export default {
       }
     };
 
-    const checkProfessionChanged = (previousProfessionType) => {
+     const checkProfessionChanged = (previousProfessionType) => {
       let count = 0;
-      if (previousProfessionType.length !== professionalTypeIdss.value.length) {
+     
+      if (
+        previousProfessionType &&
+        professionalTypeIdss &&
+        previousProfessionType.length != professionalTypeIdss.value.length
+      ) {
         return true;
       } else {
         for (let i = 0; i < previousProfessionType.length; i++) {
@@ -1939,18 +2057,20 @@ export default {
               count++;
             }
           }
-          if (count == previousProfessionType.length) {
+   
+        }
+               if (count == previousProfessionType.length) {
             return true;
           } else {
             count = 0;
+            return false;
           }
-        }
       }
-      return false;
     };
 
+
     onMounted(() => {
-      created("New License", route.params.id);
+      created("Renewal", route.params.id);
     });
     return {
       isPdf,
