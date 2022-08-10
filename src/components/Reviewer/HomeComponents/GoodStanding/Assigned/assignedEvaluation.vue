@@ -168,7 +168,7 @@
                     </label>
 
                     <div class="flex justify-start flex-wrap">
-                      <div v-if="!docs.length > 0">
+                      <div v-if="showButtons">
                         <div class="flex justify-center">
                           <Title message="Summary" />
                         </div>
