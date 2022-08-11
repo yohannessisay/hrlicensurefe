@@ -1617,7 +1617,7 @@ export default {
         renewal.value.professionalTypePrefixes = professionalTypePrefixes.value;
       } else {
         showProfessionChangeError.value = true;
-        console.log("here");
+
         setTimeout(() => {
           showProfessionChangeError.value = false;
         }, 4000);
@@ -1685,12 +1685,13 @@ export default {
         let checkProfessionResult = false;
         renewal.value.isProfessionChanged == false
           ? (checkProfessionResult = checkProfessionChanged(
-              renewal.value.professionalTypeIds
+              renewal.value.renewalProfessions
             ))
           : (checkProfessionResult = true);
-           
+
         if (checkProfessionResult) {
           showProfessionChangeError.value = true;
+
           setTimeout(() => {
             showProfessionChangeError.value = false;
           }, 4000);
@@ -1710,7 +1711,7 @@ export default {
         let checkProfessionResult = false;
         renewal.value.isProfessionChanged == false
           ? (checkProfessionResult = checkProfessionChanged(
-              renewal.value.professionalTypeIds
+              renewal.value.renewalProfessions
             ))
           : (checkProfessionResult = true);
 
@@ -2038,9 +2039,9 @@ export default {
       }
     };
 
-     const checkProfessionChanged = (previousProfessionType) => {
+    const checkProfessionChanged = (previousProfessionType) => {
       let count = 0;
-     
+
       if (
         previousProfessionType &&
         professionalTypeIdss &&
@@ -2057,17 +2058,15 @@ export default {
               count++;
             }
           }
-   
         }
-               if (count == previousProfessionType.length) {
-            return true;
-          } else {
-            count = 0;
-            return false;
-          }
+        if (count == previousProfessionType.length) {
+          return true;
+        } else {
+          count = 0;
+          return false;
+        }
       }
     };
-
 
     onMounted(() => {
       created("Renewal", route.params.id);
