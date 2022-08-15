@@ -646,6 +646,7 @@
                         Accept
                       </button>
                       <button
+                      v-if="showButtons"
                         class="
                           inline-block
                           px-6
@@ -669,7 +670,7 @@
                         "
                         @click="action('ApproveEvent')"
                       >
-                        Submit
+                        Approve
                       </button>
                       <button
                         class="
