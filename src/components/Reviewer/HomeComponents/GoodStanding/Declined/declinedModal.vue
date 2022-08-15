@@ -105,7 +105,7 @@
                                 justify-center
                               "
                             >
-                                 <picture>
+                              <picture>
                                 <source
                                   :srcset="
                                     modalData.profile &&
@@ -345,9 +345,7 @@
                                   />
                                 </a>
 
-                                <h4 style="font-weight: bold">
-                                  Document Type
-                                </h4>
+                                <h4 style="font-weight: bold">Document Type</h4>
                                 <h5 class="text-primary-500">
                                   {{
                                     document.documentType
@@ -446,13 +444,10 @@ export default {
 
     const check = () => {
       store
-        .dispatch("reviewer/getNewLicenseApplication", props.modalDataId.id)
+        .dispatch("reviewer/getGoodStandingApplication", props.modalDataId.id)
         .then((res) => {
-          if (
-            res.data.status == "Success" &&
-            res.data.message !=
-              "New licenses total count retrieved successfully!"
-          ) {
+          console.log(res);
+          if (res.data.status == "Success") {
             result = res.data.data;
 
             modalData.value.name =
@@ -479,16 +474,20 @@ export default {
             modalData.value.email = result.applicant.emailAddress
               ? result.applicant.emailAddress
               : "-----";
-            modalData.value.instName = result.education.institution?.name
-              ? result.education.institution?.name
-              : "-----";
-            modalData.value.instType = result.education.institution
-              ?.institutionType
-              ? result.education.institution?.institutionType.name
-              : "-----";
-            modalData.value.department = result.education.department.name
-              ? result.education?.department.name
-              : "-----";
+            modalData.value.instName =
+              result.education && result.education.institution
+                ? result.education.institution?.name
+                : "-----";
+            modalData.value.instType =
+              result.education &&
+              result.education.institution &&
+              result.education.institution?.institutionType
+                ? result.education.institution?.institutionType.name
+                : "-----";
+            modalData.value.department =
+              result.education && result.education.department
+                ? result.education.department.name
+                : "-----";
             modalData.value.profile = result.profile;
             modalData.value.professionalTypes = result.licenseProfessions;
             modalData.value.certifiedDate = result.certifiedDate;
