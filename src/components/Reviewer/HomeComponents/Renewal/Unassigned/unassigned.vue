@@ -368,7 +368,6 @@ export default {
         store
           .dispatch("reviewerRenewal/getRenewalUnassigned", statusId)
           .then((res) => {
-            console.log(res);
             allInfo.value.assignApplication =
               store.getters["reviewerRenewal/getRenewalUnassignedSearched"];
 
@@ -624,7 +623,6 @@ export default {
         store
           .dispatch("reviewerRenewal/getRenewalReApply", adminStatus)
           .then((res) => {
-            console.log(res);
             allInfo.value.assignApplication =
               store.getters["reviewerRenewal/getRenewalReApplySearched"];
 

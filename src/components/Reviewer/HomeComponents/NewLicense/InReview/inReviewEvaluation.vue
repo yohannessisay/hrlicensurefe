@@ -17,15 +17,9 @@
           <h2 class="text-white ml-4">
             Evaluating
             {{
-              newLicense.profile
+              newLicense && newLicense.profile && newLicense.profile.name
                 ? newLicense.profile.name
-                  ? newLicense.profile.name +
-                    " " +
-                    (newLicense.profile.fatherName
-                      ? newLicense.profile.fatherName
-                      : "-")
-                  : "-"
-                : "-"
+                : ""
             }}
             's License
           </h2>
@@ -34,6 +28,7 @@
               <div class="flex justify-content-evenly">
                 <div
                   class="
+                    p-4
                     w-64
                     h-40
                     mt-8
@@ -63,12 +58,18 @@
                     >
                       <span
                         v-if="
-                          newLicense.profile.profilePicture !== '' &&
-                          newLicense.profile.profilePicture !== null
+                          newLicense &&
+                            newLicense.profile &&
+                            newLicense.profile.profilePicture != '' &&
+                            newLicense.profile.profilePicture != null
                         "
                       >
                         <img
-                          :src="newLicense.profile.profilePicture"
+                          :src="
+                            newLicense && newLicense.profile
+                              ? newLicense.profile.profilePicture
+                              : ''
+                          "
                           alt="profile"
                           class="w-20 h-12"
                         />
@@ -182,67 +183,160 @@
                           {{ documentTypeName }}
                         </label>
 
-                        <div class="flex justify-start flex-wrap">
-                          <div v-if="showButtons">
-                            <div class="flex justify-center">
-                              <Title message="Summary" />
-                            </div>
-                            <div class="flex justify-start">
-                              <Title message="Personal Info" />
-                              <div>
-                                <button @click="allowChangeName">
-                                  change name?
-                                </button>
-                                <i
-                                  class="fas fa-chevron-edit float-right mt-2"
-                                  @click="allowChangeName"
-                                ></i>
-                              </div>
-                            </div>
-                            <div class="flex flex-row">
-                              <div
-                                :class="[
-                                  profileInfo.name === null
-                                    ? errorClass
-                                    : activeClass,
-                                ]"
+                        <div
+                          class="container my-2 mx-auto px-4 md:px-4"
+                          v-if="showButtons"
+                        >
+                          <div class="flex flex-wrap md:-mx-4 lg:-mx-8">
+                            <!-- Personal Info card -->
+                            <div class="my-1 mx-4 w-full mb-4">
+                              <!-- Article -->
+                              <article
+                                class="overflow-hidden rounded-lg shadow-lg"
                               >
-                                <label class="ml-8 titleColors">
-                                  Full Name
-                                </label>
-                                <h5 class="ml-8">
-                                  {{
-                                    (profileInfo.name
-                                      ? profileInfo.name
-                                      : "-") +
-                                    " " +
-                                    (profileInfo.fatherName
-                                      ? profileInfo.fatherName
-                                      : "-") +
-                                    " " +
-                                    (profileInfo.grandFatherName
-                                      ? profileInfo.grandFatherName
-                                      : "-")
-                                  }}
-                                </h5>
-                              </div>
-                              <div v-if="!canChangeName" class="flex flex-row">
-                                <div
-                                  :class="[
-                                    profileInfo.alternativeName === null
-                                      ? errorClass
-                                      : activeClass,
-                                  ]"
+                                <header
+                                  class="
+                                    flex
+                                    items-center
+                                    justify-between
+                                    leading-tight
+                                    p-2
+                                    md:p-4
+                                  "
                                 >
-                                  <label class="ml-8 titleColors">
-                                    Full Name In Amharic
-                                  </label>
+                                  <h2 class="font-bold">
+                                    Personal Information
+                                    <span
+                                      @click="
+                                        editPersonalData = !editPersonalData
+                                      "
+                                      ><i
+                                        class="
+                                          fa fa-pencil
+                                          cursor-pointer
+                                          ml-4
+                                          text-yellow-300
+                                        "
+                                      ></i
+                                      >Edit Amharic Name</span
+                                    >
+                                  </h2>
+                                  <i
+                                    class="fa fa-user fa-2x text-primary-600"
+                                  ></i>
+                                </header>
+                                <hr class="text-grey-100" />
+                                <div
+                                  class="
+                                    container
+                                    flex
+                                    items-center
+                                    justify-between
+                                    leading-tight
+                                    p-2
+                                    md:p-4
+                                  "
+                                >
+                                  <div class="font-bold">Full Name</div>
+
                                   <div>
-                                    <h5 class="ml-8">
-                                      {{
-                                        (profileInfo.alternativeName
-                                          ? profileInfo.alternativeName
+                                    {{
+                                      (profileInfo.name
+                                        ? profileInfo.name
+                                        : "-") +
+                                        " " +
+                                        (profileInfo.fatherName
+                                          ? profileInfo.fatherName
                                           : "-") +
+                                        " " +
+                                        (profileInfo.grandFatherName
+                                          ? profileInfo.grandFatherName
+                                          : "-")
+                                    }}
+                                  </div>
+                                </div>
+                                <div
+                                  class="
+                                    container
+                                    flex
+                                    items-center
+                                    justify-between
+                                    leading-tight
+                                    p-2
+                                    md:p-4
+                                  "
+                                >
+                                  <div class="font-bold">
+                                    Full Name In Amharic
+                                  </div>
+                                  <div v-if="editPersonalData">
+                                    <input
+                                      v-model="
+                                        newLicense.profile.alternativeName
+                                      "
+                                      class="w-48 mr-1"
+                                      type="text"
+                                    />
+                                  </div>
+                                  <div v-if="editPersonalData">
+                                    <input
+                                      v-model="
+                                        newLicense.profile.alternativeFatherName
+                                      "
+                                      class="w-48 mr-1"
+                                      type="text"
+                                    />
+                                  </div>
+                                  <div v-if="editPersonalData">
+                                    <input
+                                      v-model="
+                                        newLicense.profile
+                                          .alternativeGrandFatherName
+                                      "
+                                      class="w-48"
+                                      type="text"
+                                    />
+                                  </div>
+                                  <div class="vld-parent">
+                                    <loading
+                                      :active="isLoadingName"
+                                      :is-full-page="false"
+                                      :color="'#2F639D'"
+                                      :opacity="1"
+                                    ></loading>
+                                    <button
+                                      v-if="editPersonalData"
+                                      class="
+                                        inline-block
+                                        px-6
+                                        text-white
+                                        font-medium
+                                        text-xs
+                                        leading-tight
+                                        uppercase
+                                        rounded
+                                        shadow-lg
+                                        hover:bg-purple-700 hover:shadow-lg
+                                        focus:bg-purple-700
+                                        focus:shadow-lg
+                                        focus:outline-none
+                                        focus:ring-0
+                                        active:bg-purple-800 active:shadow-lg
+                                        transition
+                                        duration-150
+                                        ease-in-out
+                                      "
+                                      @click="changeAmharicName"
+                                    >
+                                      Save
+                                    </button>
+                                  </div>
+
+                                  <div v-if="!editPersonalData">
+                                    {{
+                                      (profileInfo.alternativeName
+                                        ? profileInfo.alternativeName
+                                        : "-") +
                                         " " +
                                         (profileInfo.alternativeFatherName
                                           ? profileInfo.alternativeFatherName
@@ -251,499 +345,647 @@
                                         (profileInfo.alternativeGrandFatherName
                                           ? profileInfo.alternativeGrandFatherName
                                           : "-")
-                                      }}
-                                    </h5>
+                                    }}
                                   </div>
                                 </div>
-                              </div>
-                              <div v-if="canChangeName" class="flex flex-row">
-                                <div>
-                                  <label class="ml-8 titleColors">
-                                    Amharic First Name</label
-                                  >
+                                <div
+                                  class="
+                                    container
+                                    flex
+                                    items-center
+                                    justify-between
+                                    leading-tight
+                                    p-2
+                                    md:p-4
+                                  "
+                                >
+                                  <div class="font-bold">Nationality</div>
                                   <div>
-                                    <input
-                                      class="max-w-3xl ml-8"
-                                      type="text"
-                                      v-model="
-                                        newLicense.profile.alternativeName
-                                      "
-                                    />
+                                    {{
+                                      profileInfo.nationality
+                                        ? profileInfo.nationality.name
+                                        : "-"
+                                    }}
                                   </div>
                                 </div>
-                                <div>
-                                  <label class="ml-8 titleColors">
-                                    Amharic Middle Name</label
-                                  >
+
+                                <div
+                                  class="
+                                    container
+                                    flex
+                                    items-center
+                                    justify-between
+                                    leading-tight
+                                    p-2
+                                    md:p-4
+                                  "
+                                >
+                                  <div class="font-bold">gender</div>
                                   <div>
-                                    <input
-                                      class="max-w-3xl ml-8"
-                                      type="text"
-                                      v-model="
-                                        newLicense.profile.alternativeFatherName
-                                      "
-                                    />
+                                    {{
+                                      profileInfo.gender
+                                        ? profileInfo["gender"]
+                                        : "-"
+                                    }}
                                   </div>
                                 </div>
-                                <div>
-                                  <label class="ml-8 titleColors">
-                                    Amharic Last Name</label
-                                  >
+
+                                <div
+                                  class="
+                                    container
+                                    flex
+                                    items-center
+                                    justify-between
+                                    leading-tight
+                                    p-2
+                                    md:p-4
+                                  "
+                                >
+                                  <div class="font-bold">Martial Status</div>
                                   <div>
-                                    <input
-                                      class="max-w-3xl ml-8"
-                                      type="text"
-                                      v-model="
-                                        newLicense.profile
-                                          .alternativeGrandFatherName
-                                      "
-                                    />
+                                    {{
+                                      profileInfo.maritalStatus
+                                        ? profileInfo.maritalStatus.name
+                                        : "-"
+                                    }}
                                   </div>
                                 </div>
-                              </div>
+                                <hr class="text-grey-100" />
+                                <footer
+                                  class="
+                                    flex
+                                    items-center
+                                    justify-center
+                                    leading-none
+                                    p-2
+                                    md:p-4
+                                  "
+                                >
+                                  {{ new Date().toISOString().slice(0, 10) }}
+                                </footer>
+                              </article>
+                              <!-- END Article -->
                             </div>
+                            <!-- Personal Info card -->
+                            <!-- Contact card -->
                             <div
-                              class="flex flex-row justify-center"
-                              v-if="canChangeName"
+                              class="
+                                my-1
+                                mb-4
+                                px-1
+                                w-full
+                                md:w-1/2
+                                lg:my-4 lg:px-4 lg:w-1/2
+                              "
                             >
-                              <div>
-                                <button
-                                  style="backgroundcolor: red"
-                                  @click="changeAmharicName"
+                              <!-- Article -->
+                              <article
+                                class="overflow-hidden rounded-lg shadow-lg"
+                              >
+                                <header
+                                  class="
+                                    flex
+                                    items-center
+                                    justify-between
+                                    leading-tight
+                                    p-2
+                                    md:p-4
+                                  "
                                 >
-                                  Save
-                                </button>
-                              </div>
-                              <div>
-                                &#160;
-                                <button @click="disallowChangeName">
-                                  cancel
-                                </button>
-                              </div>
-                            </div>
+                                  <h2 class="font-bold">Contact Information</h2>
+                                  <i
+                                    class="fa fa-phone text-primary-600 fa-2xl"
+                                  ></i>
+                                </header>
+                                <hr class="text-grey-100" />
+                                <div
+                                  class="
+                                    container
+                                    flex
+                                    items-center
+                                    justify-between
+                                    leading-tight
+                                    p-2
+                                    md:p-4
+                                  "
+                                >
+                                  <div class="font-bold">Mobile Number</div>
+                                  <div>
+                                    {{
+                                      newLicense && newLicense.applicant
+                                        ? newLicense.applicant.phoneNumber
+                                        : "---"
+                                    }}
+                                  </div>
+                                </div>
 
-                            <div class="flex flex-row">
-                              <div
-                                :class="[
-                                  profileInfo.gender === null
-                                    ? errorClass
-                                    : activeClass,
-                                ]"
-                              >
-                                <label class="ml-8 titleColors"> Gender</label>
-                                <h5 class="ml-8">
-                                  {{
-                                    profileInfo.gender
-                                      ? profileInfo["gender"]
-                                      : "-"
-                                  }}
-                                </h5>
-                              </div>
-                              <div
-                                :class="[
-                                  profileInfo.nationality == null
-                                    ? errorClass
-                                    : activeClass,
-                                ]"
-                              >
-                                <label class="ml-8 titleColors">
-                                  Nationality</label
+                                <div
+                                  class="
+                                    container
+                                    flex
+                                    items-center
+                                    justify-between
+                                    leading-tight
+                                    p-2
+                                    md:p-4
+                                    mb-12
+                                  "
                                 >
-                                <h5 class="ml-8">
-                                  {{
-                                    profileInfo.nationality
-                                      ? profileInfo.nationality.name
-                                      : "-"
-                                  }}
-                                </h5>
-                              </div>
-                              <div
-                                :class="[
-                                  profileInfo.maritalStatus.name === null
-                                    ? errorClass
-                                    : activeClass,
-                                ]"
-                              >
-                                <label class="ml-8 titleColors">
-                                  Marital Status</label
-                                >
-                                <h5 class="ml-8">
-                                  {{
-                                    profileInfo.maritalStatus.name
-                                      ? profileInfo.maritalStatus.name
-                                      : "-"
-                                  }}
-                                </h5>
-                              </div>
+                                  <div class="font-bold mb-1">Email</div>
+                                  <div>
+                                    {{
+                                      newLicense && newLicense.applicant
+                                        ? newLicense.applicant.emailAddress
+                                        : "---"
+                                    }}
+                                  </div>
+                                </div>
+                              </article>
+                              <!-- END Article -->
                             </div>
-                            <div class="flex justify-start">
-                              <Title message="Contact" />
-                            </div>
-                            <div class="flex flex-row">
-                              <div
-                                :class="[
-                                  profileInfo?.user?.phoneNumber === null
-                                    ? errorClass
-                                    : activeClass,
-                                ]"
-                              >
-                                <label class="ml-8 titleColors">
-                                  Mobile Number</label
-                                >
-                                <h5 class="ml-8">
-                                  {{
-                                    profileInfo?.user?.phoneNumber
-                                      ? profileInfo?.user?.phoneNumber
-                                      : "-"
-                                  }}
-                                </h5>
-                              </div>
+                            <!-- Contact card -->
 
-                              <div
-                                :class="[
-                                  profileInfo?.user?.emailAddress === null
-                                    ? errorClass
-                                    : activeClass,
-                                ]"
+                            <!-- Institution Card -->
+                            <div
+                              class="
+                                my-1
+                                px-1
+                                w-full
+                                md:w-1/2
+                                lg:my-4 lg:px-4 lg:w-1/2
+                              "
+                            >
+                              <!-- Article -->
+                              <article
+                                class="overflow-hidden rounded-lg shadow-lg"
                               >
-                                <label class="ml-8 titleColors"> Email</label>
-                                <h5 class="ml-8">
-                                  {{
-                                    profileInfo?.user?.emailAddress
-                                      ? profileInfo?.user?.emailAddress
-                                      : "-"
-                                  }}
-                                </h5>
-                              </div>
-                            </div>
-                            <div class="flex justify-start">
-                              <Title message="Institution" />
-                            </div>
-                            <div class="flex flex-row">
-                              <div>
-                                <label class="ml-8 titleColors">
-                                  Department</label
+                                <header
+                                  class="
+                                    flex
+                                    items-center
+                                    justify-between
+                                    leading-tight
+                                    p-2
+                                    md:p-4
+                                  "
                                 >
-                                <h5 class="ml-8">
-                                  {{
-                                    newLicense.department
-                                      ? newLicense.department.name
-                                      : newLicense.education
-                                      ? newLicense.education.department
-                                        ? newLicense.education.department.name
-                                        : "-"
-                                      : "-"
-                                  }}
-                                </h5>
-                              </div>
-                              <div v-if="!isGoodStanding">
-                                <label class="ml-8 titleColors">
-                                  Institution Name</label
+                                  <h2 class="font-bold">
+                                    Institution Informatiom
+                                  </h2>
+                                  <i
+                                    class="
+                                      fa fa-building
+                                      text-primary-600
+                                      fa-2xl
+                                    "
+                                  ></i>
+                                </header>
+                                <hr class="text-grey-100" />
+                                <div
+                                  class="
+                                    container
+                                    flex
+                                    items-center
+                                    justify-between
+                                    leading-tight
+                                    p-2
+                                    md:p-4
+                                  "
                                 >
-                                <h5 class="ml-8">
-                                  {{
-                                    newLicense.otherEducationalInstitution
-                                      ? newLicense.otherEducationalInstitution
-                                      : newLicense.education
-                                      ? newLicense.education.institution
-                                        ? newLicense.education.institution.name
-                                        : "-"
-                                      : "-"
-                                  }}
-                                </h5>
-                              </div>
-                              <div v-if="!isGoodStanding">
-                                <label class="ml-8 titleColors">
-                                  Institution Type</label
-                                >
-                                <h5 class="ml-8">
-                                  {{
-                                    newLicense.education
-                                      ? newLicense.education.institution
-                                        ? newLicense.education.institution
-                                            .institutionType
-                                          ? newLicense.education.institution
-                                              .institutionType.name
+                                  <div class="font-bold">Department</div>
+                                  <div>
+                                    {{
+                                      newLicense.department
+                                        ? newLicense.department.name
+                                        : newLicense.education
+                                        ? newLicense.education.department
+                                          ? newLicense.education.department.name
                                           : "-"
                                         : "-"
-                                      : "-"
-                                  }}
-                                </h5>
-                              </div>
-                            </div>
-                            <div class="flex justify-start">
-                              <h2 class="font-bold">Professional Type</h2>
-                            </div>
-                            <div class="flex flex-row">
-                              <div
-                                v-if="
-                                  newLicense?.licenseProfessions?.length > 0
-                                "
-                              >
-                                <div class="flex flex-col mb-medium mr-12 ml-8">
-                                  <div
-                                    style="background: lightgray; padding: 8px"
-                                  >
-                                    <p style="color: blue">
-                                      Previous Professional Types
-                                    </p>
+                                    }}
                                   </div>
-
-                                  <ul
-                                    v-for="(
-                                      professionName, index
-                                    ) in newLicense.licenseProfessions"
-                                    v-bind:key="
-                                      professionName.professionalTypeId
-                                    "
-                                    v-bind:value="
-                                      professionName.professionalTypeId
-                                    "
-                                  >
-                                    <div class="grid grid-cols-1">
-                                      <li>
-                                        <input
-                                          v-on:click="
-                                            checkBoxClicked(
-                                              professionName,
-                                              true,
-                                              index,
-                                              $event
-                                            )
-                                          "
-                                          type="checkbox"
-                                          class="form-checkbox"
-                                          name="ckb"
-                                          :checked="
-                                            professionName.showPrefixLink
-                                          "
-                                        />
-                                        {{
-                                          professionName.professionalTypes.name
-                                        }}
-                                        |
-                                        {{
-                                          professionName.professionalTypes
-                                            .amharicProfessionalType
-                                        }}
-                                      </li>
-                                      <a
-                                        class="ml-5"
-                                        style="
-                                          text-decoration: underline;
-                                          font-style: italic;
-                                        "
-                                        @click="
-                                          professionName.showPrefix =
-                                            !professionName.showPrefix
-                                        "
-                                        v-show="professionName.showPrefixLink"
-                                        >{{
-                                          professionName.showPrefix
-                                            ? "Hide Prefix?"
-                                            : "Show Prefix?"
-                                        }}</a
-                                      >
-                                    </div>
-                                    <div
-                                      class="
-                                        grid grid-cols-2
-                                        gap-4
-                                        mb-4
-                                        ml-8
-                                        mt-2
-                                      "
-                                    >
-                                      <div
-                                        style="
-                                          float: left;
-                                          border-right: 1px solid lightgray;
-                                        "
-                                        v-if="
-                                          professionName.professionalTypes
-                                            .name == 'Other'
-                                        "
-                                      >
-                                        <label style="display: block"
-                                          >Other professional Type Name:</label
-                                        >
-                                        <input
-                                          style="display: block"
-                                          type="text"
-                                          v-model="
-                                            newLicense.otherProfessionalType
-                                          "
-                                        />
-                                      </div>
-                                      <div
-                                        style="float: left"
-                                        v-show="
-                                          professionName.showPrefixLink &&
-                                          professionName.showPrefix
-                                        "
-                                      >
-                                        <label style="display: block"
-                                          >Prefix:</label
-                                        >
-                                        <select
-                                          style="display: block"
-                                          class="select"
-                                          @change="
-                                            addPrefix(
-                                              professionName.professionalTypeId,
-                                              $event
-                                            )
-                                          "
-                                          :v-model="selectedOption + `${index}`"
-                                        >
-                                          <option
-                                            v-for="prefix in prefixList"
-                                            v-bind:key="prefix.id"
-                                            v-bind:value="prefix.name"
-                                          >
-                                            {{ prefix.name }}
-                                          </option>
-                                        </select>
-                                      </div>
-                                    </div>
-                                  </ul>
-                                  <div
-                                    style="background: lightgray; padding: 8px"
-                                  >
-                                    <p style="color: blue">
-                                      New Professional Types
-                                    </p>
-                                  </div>
-
-                                  <ul
-                                    v-for="(
-                                      newProfessionName, index
-                                    ) in professionalTypes"
-                                    v-bind:key="newProfessionName.id"
-                                    v-bind:value="newProfessionName.id"
-                                  >
-                                    <div class="grid grid-cols-1">
-                                      <li>
-                                        <input
-                                          v-on:click="
-                                            checkBoxClicked(
-                                              newProfessionName,
-                                              false,
-                                              index,
-                                              $event
-                                            )
-                                          "
-                                          type="checkbox"
-                                          class="form-checkbox"
-                                          name="nckb"
-                                        />
-                                        {{ newProfessionName.name }} |
-                                        {{
-                                          newProfessionName.amharicProfessionalType
-                                        }}
-                                      </li>
-                                      <a
-                                        class="ml-5"
-                                        style="
-                                          text-decoration: underline;
-                                          font-style: italic;
-                                        "
-                                        @click="
-                                          newProfessionName.showPrefix =
-                                            !newProfessionName.showPrefix
-                                        "
-                                        v-show="
-                                          newProfessionName.showPrefixLink
-                                        "
-                                        >{{
-                                          newProfessionName.showPrefix
-                                            ? "Hide Prefix?"
-                                            : "Show Prefix?"
-                                        }}</a
-                                      >
-                                    </div>
-                                    <div
-                                      class="
-                                        grid grid-cols-2
-                                        gap-4
-                                        mb-4
-                                        ml-8
-                                        mt-2
-                                      "
-                                    >
-                                      <div
-                                        style="
-                                          float: left;
-                                          border-right: 1px solid lightgray;
-                                        "
-                                        v-if="
-                                          newProfessionName.showPrefixLink &&
-                                          newProfessionName.name == 'Other'
-                                        "
-                                      >
-                                        <label style="display: block"
-                                          >other profession name</label
-                                        >
-                                        <input
-                                          style="display: block"
-                                          type="text"
-                                          v-model="
-                                            newLicense.otherProfessionalType
-                                          "
-                                        />
-                                      </div>
-                                      <div
-                                        style="float: left"
-                                        v-show="
-                                          newProfessionName.showPrefixLink &&
-                                          newProfessionName.showPrefix
-                                        "
-                                      >
-                                        <label style="display: block"
-                                          >Prefix:</label
-                                        >
-                                        <select
-                                          style="display: block"
-                                          @change="
-                                            addPrefix(
-                                              newProfessionName.id,
-                                              $event
-                                            )
-                                          "
-                                          :v-model="
-                                            newSelectedOptions + `${index}`
-                                          "
-                                        >
-                                          <option
-                                            v-for="prefix in prefixList"
-                                            v-bind:key="prefix.name"
-                                            v-bind:value="prefix.name"
-                                          >
-                                            {{ prefix.name }}
-                                          </option>
-                                        </select>
-                                      </div>
-                                    </div>
-                                  </ul>
                                 </div>
-                              </div>
+
+                                <div
+                                  class="
+                                    container
+                                    flex
+                                    items-center
+                                    justify-between
+                                    leading-tight
+                                    p-2
+                                    md:p-4
+                                  "
+                                >
+                                  <div class="font-bold">Institution Name</div>
+                                  <div>
+                                    {{
+                                      newLicense.otherEducationalInstitution
+                                        ? newLicense.otherEducationalInstitution
+                                        : newLicense.education
+                                        ? newLicense.education.institution
+                                          ? newLicense.education.institution
+                                              .name
+                                          : "-"
+                                        : "-"
+                                    }}
+                                  </div>
+                                </div>
+
+                                <div
+                                  class="
+                                    container
+                                    flex
+                                    items-center
+                                    justify-between
+                                    leading-tight
+                                    p-2
+                                    md:p-4
+                                  "
+                                >
+                                  <div class="font-bold">Institution Type</div>
+                                  <div>
+                                    {{
+                                      newLicense &&
+                                      newLicense.education &&
+                                      newLicense.education.institution &&
+                                      newLicense.education.institution
+                                        .institutionType
+                                        ? newLicense.education.institution
+                                            .institutionType.name
+                                        : "--------------"
+                                    }}
+                                  </div>
+                                </div>
+                              </article>
+                              <!-- END Article -->
                             </div>
-                            <div v-if="!isGoodStanding">
-                              <div class="flex justify-start">
-                                <Title message="License Expiration Date" />
-                              </div>
-                              <div
-                                class="flex flex-col mb-medium w-1/2 ml-8 mr-12"
+                            <!-- Institution Card -->
+                            <!-- Profession Card -->
+                            <div class="my-1 mx-4 w-full mb-4">
+                              <!-- Article -->
+                              <article
+                                class="overflow-hidden rounded-lg shadow-lg"
                               >
-                                <input
-                                  class="max-w-3xl mr-5"
-                                  type="date"
-                                  v-model="newLicense.licenseExpirationDate"
-                                />
-                              </div>
+                                <header
+                                  class="
+                                    flex
+                                    items-center
+                                    justify-between
+                                    leading-tight
+                                    p-2
+                                    md:p-4
+                                  "
+                                >
+                                  <h2 class="font-bold">
+                                    Professional Information
+                                  </h2>
+                                  <i
+                                    class="
+                                      fa fa-briefcase
+                                      text-primary-600
+                                      fa-2xl
+                                    "
+                                  ></i>
+                                </header>
+                                <hr class="text-grey-100 mb-2" />
+                                <div class="flex flex-row">
+                                  <div
+                                    v-if="
+                                      newLicense?.licenseProfessions?.length > 0
+                                    "
+                                  >
+                                    <div
+                                      class="flex flex-col mb-medium mr-12 ml-8"
+                                    >
+                                      <div
+                                        style="
+                                          background: lightgray;
+                                          padding: 8px;
+                                        "
+                                      >
+                                        <p style="color: blue">
+                                          Previous Professional Types
+                                        </p>
+                                      </div>
+
+                                      <ul
+                                        v-for="(professionName,
+                                        index) in newLicense.licenseProfessions"
+                                        v-bind:key="
+                                          professionName.professionalTypeId
+                                        "
+                                        v-bind:value="
+                                          professionName.professionalTypeId
+                                        "
+                                      >
+                                        <div class="grid grid-cols-1">
+                                          <li>
+                                            <input
+                                              v-on:click="
+                                                checkBoxClicked(
+                                                  professionName,
+                                                  true,
+                                                  index,
+                                                  $event
+                                                )
+                                              "
+                                              type="checkbox"
+                                              class="form-checkbox"
+                                              name="ckb"
+                                              :checked="
+                                                professionName.showPrefixLink
+                                              "
+                                            />
+                                            {{
+                                              professionName.professionalTypes
+                                                .name
+                                            }}
+                                            |
+                                            {{
+                                              professionName.professionalTypes
+                                                .amharicProfessionalType
+                                            }}
+                                          </li>
+                                          <a
+                                            class="ml-5"
+                                            style="
+                                              text-decoration: underline;
+                                              font-style: italic;
+                                            "
+                                            @click="
+                                              professionName.showPrefix = !professionName.showPrefix
+                                            "
+                                            v-show="
+                                              professionName.showPrefixLink
+                                            "
+                                            >{{
+                                              professionName.showPrefix
+                                                ? "Hide Prefix?"
+                                                : "Show Prefix?"
+                                            }}</a
+                                          >
+                                        </div>
+                                        <div
+                                          class="
+                                            grid grid-cols-2
+                                            gap-4
+                                            mb-4
+                                            ml-8
+                                            mt-2
+                                          "
+                                        >
+                                          <div
+                                            style="
+                                              float: left;
+                                              border-right: 1px solid lightgray;
+                                            "
+                                            v-if="
+                                              professionName.professionalTypes
+                                                .name == 'Other'
+                                            "
+                                          >
+                                            <label style="display: block"
+                                              >Other professional Type
+                                              Name:</label
+                                            >
+                                            <input
+                                              style="display: block"
+                                              type="text"
+                                              v-model="
+                                                newLicense.otherProfessionalType
+                                              "
+                                            />
+                                          </div>
+                                          <div
+                                            style="float: left"
+                                            v-show="
+                                              professionName.showPrefixLink &&
+                                                professionName.showPrefix
+                                            "
+                                          >
+                                            <label style="display: block"
+                                              >Prefix:</label
+                                            >
+                                            <select
+                                              style="display: block"
+                                              class="select"
+                                              @change="
+                                                addPrefix(
+                                                  professionName.professionalTypeId,
+                                                  $event
+                                                )
+                                              "
+                                              :v-model="
+                                                selectedOption + `${index}`
+                                              "
+                                            >
+                                              <option
+                                                v-for="prefix in prefixList"
+                                                v-bind:key="prefix.id"
+                                                v-bind:value="prefix.name"
+                                              >
+                                                {{ prefix.name }}
+                                              </option>
+                                            </select>
+                                          </div>
+                                        </div>
+                                      </ul>
+                                      <div
+                                        style="
+                                          background: lightgray;
+                                          padding: 8px;
+                                        "
+                                      >
+                                        <p style="color: blue">
+                                          New Professional Types
+                                        </p>
+                                      </div>
+
+                                      <ul
+                                        v-for="(newProfessionName,
+                                        index) in professionalTypes"
+                                        v-bind:key="newProfessionName.id"
+                                        v-bind:value="newProfessionName.id"
+                                      >
+                                        <div class="grid grid-cols-1">
+                                          <li>
+                                            <input
+                                              v-on:click="
+                                                checkBoxClicked(
+                                                  newProfessionName,
+                                                  false,
+                                                  index,
+                                                  $event
+                                                )
+                                              "
+                                              type="checkbox"
+                                              class="form-checkbox"
+                                              name="nckb"
+                                            />
+                                            {{ newProfessionName.name }} |
+                                            {{
+                                              newProfessionName.amharicProfessionalType
+                                            }}
+                                          </li>
+                                          <a
+                                            class="ml-5"
+                                            style="
+                                              text-decoration: underline;
+                                              font-style: italic;
+                                            "
+                                            @click="
+                                              newProfessionName.showPrefix = !newProfessionName.showPrefix
+                                            "
+                                            v-show="
+                                              newProfessionName.showPrefixLink
+                                            "
+                                            >{{
+                                              newProfessionName.showPrefix
+                                                ? "Hide Prefix?"
+                                                : "Show Prefix?"
+                                            }}</a
+                                          >
+                                        </div>
+                                        <div
+                                          class="
+                                            grid grid-cols-2
+                                            gap-4
+                                            mb-4
+                                            ml-8
+                                            mt-2
+                                          "
+                                        >
+                                          <div
+                                            style="
+                                              float: left;
+                                              border-right: 1px solid lightgray;
+                                            "
+                                            v-if="
+                                              newProfessionName.showPrefixLink &&
+                                                newProfessionName.name ==
+                                                  'Other'
+                                            "
+                                          >
+                                            <label style="display: block"
+                                              >other profession name</label
+                                            >
+                                            <input
+                                              style="display: block"
+                                              type="text"
+                                              v-model="
+                                                newLicense.otherProfessionalType
+                                              "
+                                            />
+                                          </div>
+                                          <div
+                                            style="float: left"
+                                            v-show="
+                                              newProfessionName.showPrefixLink &&
+                                                newProfessionName.showPrefix
+                                            "
+                                          >
+                                            <label style="display: block"
+                                              >Prefix:</label
+                                            >
+                                            <select
+                                              style="display: block"
+                                              @change="
+                                                addPrefix(
+                                                  newProfessionName.id,
+                                                  $event
+                                                )
+                                              "
+                                              :v-model="
+                                                newSelectedOptions + `${index}`
+                                              "
+                                            >
+                                              <option
+                                                v-for="prefix in prefixList"
+                                                v-bind:key="prefix.name"
+                                                v-bind:value="prefix.name"
+                                              >
+                                                {{ prefix.name }}
+                                              </option>
+                                            </select>
+                                          </div>
+                                        </div>
+                                      </ul>
+                                    </div>
+                                  </div>
+                                </div>
+                              </article>
+                              <!-- END Article -->
                             </div>
+                            <!-- Profession Card -->
+                            <!-- licesne Exp Card -->
+                            <div class="my-1 mx-4 w-full">
+                              <!-- Article -->
+                              <article
+                                class="overflow-hidden rounded-lg shadow-lg"
+                              >
+                                <header
+                                  class="
+                                    flex
+                                    items-center
+                                    justify-between
+                                    leading-tight
+                                    p-2
+                                    md:p-4
+                                  "
+                                >
+                                  <h2 class="font-bold">
+                                    License Expiration Date
+                                  </h2>
+                                  <i
+                                    class="
+                                      fa fa-calendar fa-2x
+                                      text-primary-600
+                                    "
+                                  ></i>
+                                </header>
+                                <hr class="text-grey-100" />
+
+                                <div
+                                  class="
+                                    container
+                                    flex
+                                    items-center
+                                    justify-between
+                                    leading-tight
+                                    p-2
+                                    md:p-4
+                                  "
+                                >
+                                  <input
+                                    class="max-w-3xl mr-5"
+                                    type="date"
+                                    v-model="newLicense.licenseExpirationDate"
+                                  />
+                                </div>
+                                <hr class="text-grey-100" />
+                                <footer
+                                  class="
+                                    flex
+                                    items-center
+                                    justify-center
+                                    leading-none
+                                    p-2
+                                    md:p-4
+                                  "
+                                >
+                                  License Expiration date minimum value should
+                                  be set after today
+                                </footer>
+                              </article>
+                              <!-- END Article -->
+                            </div>
+                            <!-- licesne Exp Card -->
                           </div>
-                          <div v-else>
+                        </div>
+
+                        <div v-else class="flex justify-start flex-wrap">
+                          <div>
                             <picture v-if="docs.length > 0">
                               <div
                                 v-if="
@@ -772,6 +1014,7 @@
                                     ease-in
                                     duration-500
                                   "
+                                  style="height: 600px; width: 800px"
                                   v-bind:src="
                                     googleApi + '' + docs[index].filePath
                                   "
@@ -895,30 +1138,17 @@
                         </button>
                       </div>
                       <div class="relative pt-1 mt-medium">
-                        <div
-                          class="
-                            overflow-hidden
-                            h-2
-                            mb-4
-                            text-xs
-                            flex
-                            rounded
-                            bg-grey-100
-                          "
-                        >
-                          <div
-                            :style="width"
-                            class="
-                              shadow-none
-                              flex flex-col
-                              text-center
-                              whitespace-nowrap
-                              justify-center
-                              bg-primary-400
-                            "
-                          ></div>
+                        <div class="flex items-center justify-between">
+                          <radial-progress-bar
+                            :diameter="200"
+                            :completed-steps="completedSteps"
+                            :total-steps="totalSteps"
+                          >
+                            {{ completedSteps }} Completed/{{ totalSteps }}
+                          </radial-progress-bar>
                         </div>
                       </div>
+
                       <div>
                         <div
                           class="
@@ -953,6 +1183,7 @@
                     w-64
                     h-40
                     mt-8
+                    p-4
                     mr-8
                     shadow-lg
                     container
@@ -982,32 +1213,40 @@
                   v-bind:key="button.name"
                   v-bind:value="button.id"
                 >
-                  <button
-                    class="
-                      inline-block
-                      px-6
-                      text-white
-                      font-medium
-                      text-xs
-                      leading-tight
-                      uppercase
-                      rounded
-                      shadow-lg
-                      hover:bg-purple-700 hover:shadow-lg
-                      focus:bg-purple-700
-                      focus:shadow-lg
-                      focus:outline-none
-                      focus:ring-0
-                      active:bg-purple-800 active:shadow-lg
-                      transition
-                      duration-150
-                      hover:bg-primary-400 hover:text-white
-                      ease-in-out
-                    "
-                    @click="action(button.action)"
-                  >
-                    {{ button.name }}
-                  </button>
+                  <div class="vld-parent">
+                    <loading
+                      :active="isLoadingFinalAction"
+                      :is-full-page="false"
+                      :color="'#2F639D'"
+                      :opacity="1"
+                    ></loading>
+                    <button
+                      class="
+                        inline-block
+                        px-6
+                        text-white
+                        font-medium
+                        text-xs
+                        leading-tight
+                        uppercase
+                        rounded
+                        shadow-lg
+                        hover:bg-purple-700 hover:shadow-lg
+                        focus:bg-purple-700
+                        focus:shadow-lg
+                        focus:outline-none
+                        focus:ring-0
+                        active:bg-purple-800 active:shadow-lg
+                        transition
+                        duration-150
+                        hover:bg-primary-400 hover:text-white
+                        ease-in-out
+                      "
+                      @click="action(button.action)"
+                    >
+                      {{ button.name }}
+                    </button>
+                  </div>
                 </div>
               </div>
 
@@ -1134,8 +1373,8 @@
                                       <img
                                         v-bind:src="
                                           googleApi +
-                                          '' +
-                                          rejectedObj[ind].filePath
+                                            '' +
+                                            rejectedObj[ind].filePath
                                         "
                                       />
                                     </picture>
@@ -1262,13 +1501,9 @@
 </template>
 <script>
 import { useStore } from "vuex";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { ref, onMounted } from "vue";
-
-import { useRouter } from "vue-router";
 import { googleApi } from "@/composables/baseURL";
-
-import Title from "@/sharedComponents/Title";
 import Modal from "@/sharedComponents/Modal";
 import { useToast } from "vue-toastification";
 
@@ -1277,35 +1512,37 @@ import ReviewerSideNav from "../SharedComponents/sideNav.vue";
 import ReviewerNavBar from "../SharedComponents/navBar.vue";
 
 import FlashMessage from "@/sharedComponents/FlashMessage";
-import Spinner from "@/sharedComponents/Spinner";
+import Loading from "vue3-loading-overlay";
+// Import stylesheet
+import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
-
+import RadialProgressBar from "vue3-radial-progress";
 export default {
   components: {
     Modal,
-    Title,
+    Loading,
     ReviewerSideNav,
     ReviewerNavBar,
     FlashMessage,
-    ErrorFlashMessage,
+    RadialProgressBar,
+    ErrorFlashMessage
   },
   computed: {
-    moment: () => moment,
+    moment: () => moment
   },
   setup() {
     const route = useRoute();
     const store = useStore();
-    const router = useRouter();
     const toast = useToast();
-
+    const router = useRouter();
     const options = ref([0, 1, 2]);
     const selectedOptions = ref([0]);
     const newSelectedOptions = ref([0]);
-
     let isPdf = ref(false);
-
+    let isLoadingFinalAction = ref(false);
     let pdfFilePath = ref("");
-
+    const completedSteps = ref(0);
+    const totalSteps = ref(0);
     let isGoodStanding = ref(false);
 
     let expirationDateExceedTodayError = ref(false);
@@ -1324,7 +1561,7 @@ export default {
       { name: "Senior", id: 4 },
       { name: "Senior expert", id: 5 },
       { name: "Chief", id: 6 },
-      { name: "Chief expert", id: 7 },
+      { name: "Chief expert", id: 7 }
     ]);
     let prefix = ref();
     let canChangeName = ref(false);
@@ -1343,22 +1580,22 @@ export default {
       applicantType: { name: "" },
       education: {
         department: { name: "" },
-        institution: { institutionType: {}, name: "" },
+        institution: { institutionType: {}, name: "" }
       },
       declinedFields: "",
       remark: "",
       documents: [{ filePath: "" }],
       applicationStatus: {
-        buttons: [{ action: "", name: "" }],
-      },
+        buttons: [{ action: "", name: "" }]
+      }
     });
     let buttons = ref([
       { action: "", name: "" },
       { action: "", name: "" },
       { action: "", name: "" },
-      { action: "", name: "" },
+      { action: "", name: "" }
     ]);
-
+    let isLoadingName = ref(false);
     let professionalTypePrefixes = ref([]);
 
     let documentTypes = ref([]);
@@ -1384,7 +1621,6 @@ export default {
     let errorClass = ref("text-danger");
     let showRemark = ref(false);
     let applicationType = ref("");
-    let applicantId = ref("");
     let showFlash = ref(false);
     let showErrorFlash = ref(false);
     let showDeclineFlash = ref(false);
@@ -1396,27 +1632,58 @@ export default {
 
     let professionalTypes = ref([]);
     let evaluateRoute = ref("/admin/evaluate/NewLicense" + route.params.id);
-    const created = async (applicationTypeName, applicationId) => {
+    const editPersonalData = ref(false);
+    const editPersonalInfo = () => {
+      editPersonalData.value = !editPersonalData.value;
+    };
+    const created = async applicationId => {
       applicationType.value = "New License";
 
       store
         .dispatch("reviewer/getNewLicenseApplication", applicationId)
-        .then((res) => {
-          newLicense.value = res.data.data;
-          departmentId.value = res.data.data.education.department.id;
+        .then(res => {
+          newLicense.value = res.data.data ? res.data.data : {};
+          departmentId.value =
+            res.data.data &&
+            res.data.data.education &&
+            res.data.data.education.department
+              ? res.data.data.education.department.id
+              : "";
           getProfessionalTypesByDepartmentId(departmentId.value);
-          profileInfo.value = newLicense.value.profile;
-          buttons.value = res.data.data.applicationStatus.buttons;
-          docs.value = res.data.data.documents;
+          profileInfo.value =
+            newLicense.value && newLicense.value.profile
+              ? newLicense.value.profile
+              : {};
+          buttons.value =
+            newLicense.value &&
+            newLicense.value.applicationStatus &&
+            newLicense.value.applicationStatus.buttons
+              ? newLicense.value.applicationStatus.buttons
+              : {};
+          docs.value =
+            newLicense.value && newLicense.value.documents
+              ? newLicense.value.documents
+              : {};
+          totalSteps.value = docs.value ? docs.value.length : 0;
           fetchDocumentTypes();
-          for (let i = 0; i < newLicense.value.licenseProfessions.length; i++) {
-            newLicense.value.licenseProfessions[i].showPrefix = false;
-            newLicense.value.licenseProfessions[i].showPrefixLink = true;
-            professionalTypeIdss.value.push(
-              newLicense.value.licenseProfessions[i].professionalTypeId
-            );
+          if (newLicense.value && newLicense.value.licenseProfessions) {
+            for (
+              let i = 0;
+              i < newLicense.value.licenseProfessions.length;
+              i++
+            ) {
+              newLicense.value.licenseProfessions[i].showPrefix = false;
+              newLicense.value.licenseProfessions[i].showPrefixLink = true;
+              professionalTypeIdss.value.push(
+                newLicense.value.licenseProfessions[i].professionalTypeId
+              );
+            }
           }
-          if (newLicense.value.applicationStatus.code == "REVDRA") {
+
+          if (
+            newLicense.value &&
+            newLicense.value.applicationStatus.code == "REVDRA"
+          ) {
             rejected.value = newLicense.value.declinedFields;
             for (let i in newLicense.value.documents) {
               for (let j in rejected.value) {
@@ -1429,7 +1696,17 @@ export default {
                 }
               }
             }
+            if (rejected.value > 0) {
+              for (let i = 0; i < buttons.value.length; i++) {
+                if (buttons.value[i].code === "APP") {
+                  buttons.value.splice(i, 1);
+                  i--;
+                }
+              }
+            }
+
             accepted.value = newLicense.value.acceptedFields;
+            completedSteps.value = accepted.value.length;
             index.value = rejected.value.length + accepted.value.length;
             if (index.value == docs.value.length) {
               index.value -= 1;
@@ -1446,7 +1723,10 @@ export default {
             ) {
               findDocumentType(documentTypes.value, docs.value[index.value]);
             }
-          } else if (newLicense.value.applicationStatus.code == "IRV") {
+          } else if (
+            newLicense.value &&
+            newLicense.value.applicationStatus.code == "IRV"
+          ) {
             showTransferToAdminButton.value = true;
           }
         });
@@ -1454,12 +1734,12 @@ export default {
       applicationType.value = "New License";
     };
     const fetchDocumentTypes = async () => {
-      store.dispatch("reviewer/getDocumentTypes").then((res) => {
+      store.dispatch("reviewer/getDocumentTypes").then(res => {
         documentTypes.value = res.data.data;
         findDocumentType(documentTypes.value, docs.value[0]);
       });
     };
-    const next = (doc) => {
+    const next = doc => {
       if (nextClickable.value == true) {
         index.value = index.value + 1;
         amount.value = ((index.value + 1) / docs.value.length) * 100;
@@ -1501,7 +1781,9 @@ export default {
     };
     const findDocumentType = (obj, ab) => {
       for (var prop in obj) {
-        if (obj[prop].code == ab.documentTypeCode) {
+        if (
+          obj[prop].code == ab && ab.documentTypeCode ? ab.documentTypeCode : ""
+        ) {
           documentTypeName.value = obj[prop].name;
         }
       }
@@ -1515,29 +1797,38 @@ export default {
       }
     };
     const transferToFederal = () => {
-      store.dispatch("renewal/getExpertLevel").then((res) => {
-        let federalData = res.data.data.filter((r) => r.code == "FED");
+      store.dispatch("newlicense/getExpertLevel").then(res => {
+        let federalData = res.data.data.filter(r => r.code == "FED");
         let transferData = {
-          licenseId: route.params.applicationId,
+          licenseId: route.params.id,
           expertLevelId: federalData[0].id,
-          createdByAdminId: adminId,
+          createdByAdminId: adminId
         };
-        store
-          .dispatch("reviewer/transferToFederal", transferData)
-          .then((res) => {
-            if (res.data?.status == "Success") {
-              showTransferSuccessMessage.value = true;
-              setTimeout(() => {
-                router.push({ path: "/admin/newLicense/inReview" });
-              }, 4000);
-            } else {
-              showTransferErrorMessage.value = true;
-            }
-          });
+        store.dispatch("reviewer/transferToFederal", transferData).then(res => {
+          if (res.data?.status == "Success") {
+            toast.success("Application transfered Successfully", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true
+            });
+          } else {
+            toast.error("Failed to transfer application", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true
+            });
+          }
+        });
       });
     };
-    const accept = (doc) => {
+
+    const accept = doc => {
       nextClickable.value = true;
+      completedSteps.value += 1;
       if (accepted.value.length > 0) {
         if (!accepted.value.includes(doc.documentTypeCode)) {
           accepted.value.push(doc.documentTypeCode);
@@ -1586,8 +1877,16 @@ export default {
       }
     };
 
-    const reject = (doc) => {
+    const reject = doc => {
+      completedSteps.value += 1;
       nextClickable.value = true;
+      for (let i = 0; i < buttons.value.length; i++) {
+        if (buttons.value[i].code === "APP") {
+          buttons.value.splice(i, 1);
+          i--;
+        }
+      }
+
       if (rejected.value.length > 0) {
         if (!rejected.value.includes(doc.documentTypeCode)) {
           rejected.value.push(doc.documentTypeCode);
@@ -1636,7 +1935,8 @@ export default {
       }
     };
 
-    const action = (actionValue) => {
+    const action = actionValue => {
+      let goTo = "admin/newLicense/underSupervision";
       showActionLoading.value = true;
       showLoadingButtons.value = true;
       if (professionalTypeIdss.value.length > 0) {
@@ -1674,39 +1974,49 @@ export default {
         if (loopCounter == newLicense.value.professionalTypePrefixes.length) {
           newLicense.value.professionalTypePrefixes.push({
             professionalTypeId: professionId,
-            prefix: null,
+            prefix: null
           });
         }
         loopCounter = 0;
       }
-
+      isLoadingFinalAction.value = true;
       if (actionValue === "ApproveEvent") {
+        goTo = "/admin/newLicense/approved";
         if (
           newLicense.value.licenseExpirationDate === null &&
           !isGoodStanding.value
         ) {
-          showLicenseDateRequirementError.value = true;
-          setTimeout(() => {
-            showLicenseDateRequirementError.value = false;
-          }, 4000);
+          toast.warning("Please fill in license expiration date", {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true
+          });
           showActionLoading.value = false;
           showLoadingButtons.value = false;
+          isLoadingFinalAction.value = false;
           return;
         } else if (
           !moment(newLicense.value.licenseExpirationDate).isAfter(new Date()) &&
           !isGoodStanding.value
         ) {
-          expirationDateExceedTodayError.value = true;
-          setTimeout(() => {
-            expirationDateExceedTodayError.value = false;
-          }, 4000);
+          toast.warning("License expiration date must exceed today", {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true
+          });
           showActionLoading.value = false;
           showLoadingButtons.value = false;
+          isLoadingFinalAction.value = false;
           return;
         }
       }
 
       if (actionValue == "DeclineEvent") {
+        goTo = "/admin/newLicense/declined";
         showActionLoading.value = false;
         showLoadingButtons.value = false;
         let checkProfessionResult = false;
@@ -1723,6 +2033,7 @@ export default {
           }, 4000);
           showActionLoading.value = false;
           showLoadingButtons.value = false;
+          isLoadingFinalAction.value = false;
           return;
         } else {
           showRemark.value = true;
@@ -1734,6 +2045,7 @@ export default {
       }
 
       if (actionValue == "ReviewerDraftEvent") {
+        goTo = "/admin/newLicense/draft";
         let checkProfessionResult = false;
         newLicense.value.isProfessionChanged == false
           ? (checkProfessionResult = checkProfessionChanged(
@@ -1760,48 +2072,46 @@ export default {
       newLicense.value.certifiedDate = new Date();
       let req = {
         action: actionValue,
-        data: newLicense.value,
+        data: newLicense.value
       };
       if (
         applicationType.value == "New License" &&
         sendDeclinedData.value == true
       ) {
-        console.log(req);
         store
           .dispatch("reviewer/editNewLicense", req)
-          .then((res) => {
+          .then(res => {
             showActionLoading.value = false;
             if (res.statusText == "Created") {
-              toast.success("Application Approved Successfully", {
+              toast.success("Application reviewed Successfully", {
                 timeout: 5000,
                 position: "bottom-center",
                 pauseOnFocusLoss: true,
                 pauseOnHover: true,
-                icon: true,
+                icon: true
               });
-              setTimeout(() => {
-                window.location.reload();
-              }, 3000);
+              isLoadingFinalAction.value = false;
+              router.push({ path: goTo });
             } else {
               toast.error("Please try again", {
                 timeout: 5000,
                 position: "bottom-center",
                 pauseOnFocusLoss: true,
                 pauseOnHover: true,
-                icon: true,
+                icon: true
               });
-              setTimeout(() => {
-                window.location.reload();
-              }, 3000);
+              isLoadingFinalAction.value = false;
+              router.push({ path: "admin/newLicense/inReview" });
             }
           })
-          .catch((err) => {
+          .catch(() => {
+            isLoadingFinalAction.value = false;
             toast.error("Please try again", {
               timeout: 5000,
               position: "bottom-center",
               pauseOnFocusLoss: true,
               pauseOnHover: true,
-              icon: true,
+              icon: true
             });
             setTimeout(() => {
               window.location.reload();
@@ -1821,7 +2131,7 @@ export default {
       showRemark.value = !showRemark.value;
     };
 
-    const openPdfInNewTab = (pdfPath) => {
+    const openPdfInNewTab = pdfPath => {
       pdfFilePath.value = pdfPath;
       window.open(googleApi + "" + pdfPath, "_blank");
     };
@@ -1834,14 +2144,16 @@ export default {
     };
     const changeProfession = () => {};
 
-    const getProfessionalTypesByDepartmentId = (id) => {
+    const getProfessionalTypesByDepartmentId = id => {
       let professionSelected = ref(false);
       store
         .dispatch("reviewer/getProfessionalTypeByDepartmentId", id)
-        .then((res) => {
+        .then(res => {
           res.data.data
-            .filter(function (e) {
-              for (let i in newLicense.value.licenseProfessions) {
+            .filter(function(e) {
+              for (let i in newLicense.value
+                ? newLicense.value.licenseProfessions
+                : {}) {
                 if (
                   e.code ===
                   newLicense.value.licenseProfessions[i].professionalTypes.code
@@ -1854,7 +2166,7 @@ export default {
               }
               professionSelected.value = false;
             })
-            .map((mapData) => {
+            .map(mapData => {
               mapData.showPrefix = false;
               mapData.showPrefixLink = false;
               return mapData;
@@ -1868,29 +2180,42 @@ export default {
       canChangeName.value = false;
     };
     const changeAmharicName = () => {
+      isLoadingName.value = true;
       const id = profileInfo.value.id;
       let newProfile = {
         alternativeName: newLicense.value.profile.alternativeName,
         alternativeFatherName: newLicense.value.profile.alternativeFatherName,
         alternativeGrandFatherName:
-          newLicense.value.profile.alternativeGrandFatherName,
+          newLicense.value.profile.alternativeGrandFatherName
       };
       const profileData = [id, newProfile];
       store
         .dispatch("profile/changeUserProfile", profileData)
         .then(() => {
           canChangeName.value = false;
-          showNameChangeFlash.value = true;
+          toast.success("Name change was Successfull", {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true
+          });
+          isLoadingName.value = false;
           setTimeout(() => {
-            showNameChangeFlash.value = false;
+            window.location.reload();
           }, 3000);
         })
-        .catch((err) => {
-          console.log(err);
-          canChangeName.value = false;
-          showNameChangeErrorFlash.value = true;
+        .catch(() => {
+          toast.error("Error Occured", {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true
+          });
+          isLoadingName.value = false;
           setTimeout(() => {
-            showNameChangeErrorFlash.value = false;
+            window.location.reload();
           }, 3000);
         });
     };
@@ -1908,7 +2233,9 @@ export default {
             : professionalTypeIdss.value.push(profession.id);
         } else {
           previousProfession
-            ? (newLicense.value.licenseProfessions[index].showPrefixLink = false)
+            ? (newLicense.value.licenseProfessions[
+                index
+              ].showPrefixLink = false)
             : (professionalTypes.value[index].showPrefixLink = false);
           previousProfession
             ? professionalTypeIdss.value.splice(
@@ -1923,17 +2250,19 @@ export default {
               );
 
           if (previousProfession) {
-            professionalTypePrefixes.value =
-              professionalTypePrefixes.value.filter((data) => {
+            professionalTypePrefixes.value = professionalTypePrefixes.value.filter(
+              data => {
                 return (
                   data.professionalTypeId != profession.professionalTypes.id
                 );
-              });
+              }
+            );
           } else {
-            professionalTypePrefixes.value =
-              professionalTypePrefixes.value.filter((data) => {
+            professionalTypePrefixes.value = professionalTypePrefixes.value.filter(
+              data => {
                 return data.professionalTypeId != profession.id;
-              });
+              }
+            );
           }
 
           if (
@@ -1951,9 +2280,7 @@ export default {
     const chkcontrol = (j, previousProfession, event) => {
       if (event.target.checked) {
         if (professionalTypeIdss.value.length == 3) {
-          alert(
-            "You can only select 3 professional types. Please Select only four!"
-          );
+          alert("You can only select 3 professional types.");
           if (previousProfession) {
             document.getElementsByName("ckb")[j].checked = false;
             return false;
@@ -1974,7 +2301,7 @@ export default {
       if (professionalTypePrefixes.value.length === 0) {
         professionalTypePrefixes.value.push({
           professionalTypeId: professionId,
-          prefix: event.target.value,
+          prefix: event.target.value
         });
         return;
       }
@@ -1987,7 +2314,7 @@ export default {
           if (countProLength.value === professionalTypePrefixes.value.length) {
             professionalTypePrefixes.value.push({
               professionalTypeId: professionId,
-              prefix: event.target.value,
+              prefix: event.target.value
             });
             countProLength.value = 0;
             return;
@@ -1995,7 +2322,7 @@ export default {
         } else {
           professionalTypePrefixes.value.splice(
             professionalTypePrefixes.value.indexOf({
-              professionalTypeId: professionId,
+              professionalTypeId: professionId
             }),
             1
           );
@@ -2004,7 +2331,7 @@ export default {
           }
           professionalTypePrefixes.value.push({
             professionalTypeId: professionId,
-            prefix: event.target.value,
+            prefix: event.target.value
           });
           countProLength.value = 0;
           return;
@@ -2012,7 +2339,7 @@ export default {
       }
     };
 
-    const checkProfessionChanged = (previousProfessionType) => {
+    const checkProfessionChanged = previousProfessionType => {
       let count = 0;
       if (
         previousProfessionType &&
@@ -2041,7 +2368,7 @@ export default {
     };
 
     onMounted(() => {
-      created("New License", route.params.id);
+      created(route.params.id);
     });
     return {
       isPdf,
@@ -2081,11 +2408,14 @@ export default {
       submitRemark,
       applicationType,
       showFlash,
+      isLoadingName,
       showErrorFlash,
       showDeclineFlash,
       sendDeclinedData,
       fromModalSendDeclinedData,
       rejectedObj,
+      completedSteps,
+      totalSteps,
       ind,
       modalDocumentTypeName,
       modalFindDocumentType,
@@ -2112,6 +2442,8 @@ export default {
       checkBoxClicked,
       addPrefix,
       options,
+      editPersonalData,
+      editPersonalInfo,
       selectedOptions,
       newSelectedOptions,
       otherProfessionalType,
@@ -2123,9 +2455,9 @@ export default {
       isGoodStanding,
       showActionLoading,
       showLoadingButtons,
-      googleApi,
+      googleApi
     };
-  },
+  }
 };
 </script>
 <style scoped>

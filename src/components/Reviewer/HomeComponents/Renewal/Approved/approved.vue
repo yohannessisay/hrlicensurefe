@@ -245,13 +245,11 @@ export default {
     };
 
     const licensedByYou = () => {
-                   console.log("adminStatus");
 
       applicationStatus(store, "AP").then((ap) => {
         applicationStatus(store, "CONF").then((conf) => {
           applicationStatus(store, "APP").then((app) => {
             let adminStatus = [adminId, ap, conf, app];
-             console.log(adminStatus);
             store
               .dispatch("reviewerRenewal/getRenewalApproved", adminStatus)
               .then(() => {
@@ -259,7 +257,6 @@ export default {
                   store.getters[
                     "reviewerRenewal/getRenewalApprovedSearched"
                   ];
-           console.log(allInfo.value.assignApplication);
                 for (let applicant in allInfo.value.assignApplication) {
                   if (
                     allInfo.value.assignApplication[applicant]

@@ -645,7 +645,7 @@
                       >
                         Accept
                       </button>
-                          <button
+                      <button
                         class="
                           inline-block
                           px-6
@@ -671,118 +671,101 @@
                       >
                         Submit
                       </button>
-                          <button
-                      class="
-                        inline-block
-                        px-6
-                        text-white
-                        font-medium
-                        text-xs
-                        leading-tight
-                        uppercase
-                        rounded
-                        shadow-lg
-                        hover:bg-purple-700 hover:shadow-lg
-                        focus:bg-purple-700
-                        focus:shadow-lg
-                        focus:outline-none
-                        focus:ring-0
-                        active:bg-purple-800 active:shadow-lg
-                        transition
-                        duration-150
-                        hover:bg-primary-400 hover:text-white
-                        ease-in-out
-                      "
-                      @click="reject(docs[index])"
-                    >
-                      Reject
-                    </button>
-                    <button
-                      class="
-                        inline-block
-                        px-6
-                        text-white
-                        font-medium
-                        text-xs
-                        leading-tight
-                        uppercase
-                        rounded
-                        shadow-lg
-                        hover:bg-purple-700 hover:shadow-lg
-                        focus:bg-purple-700
-                        focus:shadow-lg
-                        focus:outline-none
-                        focus:ring-0
-                        active:bg-purple-800 active:shadow-lg
-                        transition
-                        duration-150
-                        hover:bg-primary-400 hover:text-white
-                        ease-in-out
-                      "
-                      @click="action('ReviewerDraftEvent')"
-                    >
-                      Save as Draft
-                    </button>
-                    <button
-                      v-if="showTransferToAdminButton"
-                      class="
-                        inline-block
-                        px-6
-                        text-white
-                        font-medium
-                        text-xs
-                        leading-tight
-                        uppercase
-                        rounded
-                        shadow-lg
-                        hover:bg-purple-700 hover:shadow-lg
-                        focus:bg-purple-700
-                        focus:shadow-lg
-                        focus:outline-none
-                        focus:ring-0
-                        active:bg-purple-800 active:shadow-lg
-                        transition
-                        duration-150
-                        hover:bg-primary-400 hover:text-white
-                        ease-in-out
-                      "
-                      @click="transferToFederal()"
-                    >
-                      Transfer to Federal
-                    </button>
-                    </span>
-
-                    <span v-else>
-                  
-                    </span>
-
-                
-                  </div>
-                  <div class="relative pt-1 mt-medium">
-                    <div
-                      class="
-                        overflow-hidden
-                        h-2
-                        mb-4
-                        text-xs
-                        flex
-                        rounded
-                        bg-grey-100
-                      "
-                    >
-                      <div
-                        :style="width"
+                      <button
                         class="
-                          shadow-none
-                          flex flex-col
-                          text-center
-                          whitespace-nowrap
-                          justify-center
-                          bg-primary-400
+                          inline-block
+                          px-6
+                          text-white
+                          font-medium
+                          text-xs
+                          leading-tight
+                          uppercase
+                          rounded
+                          shadow-lg
+                          hover:bg-purple-700 hover:shadow-lg
+                          focus:bg-purple-700
+                          focus:shadow-lg
+                          focus:outline-none
+                          focus:ring-0
+                          active:bg-purple-800 active:shadow-lg
+                          transition
+                          duration-150
+                          hover:bg-primary-400 hover:text-white
+                          ease-in-out
                         "
-                      ></div>
-                    </div>
+                        @click="reject(docs[index])"
+                      >
+                        Reject
+                      </button>
+                      <button
+                        class="
+                          inline-block
+                          px-6
+                          text-white
+                          font-medium
+                          text-xs
+                          leading-tight
+                          uppercase
+                          rounded
+                          shadow-lg
+                          hover:bg-purple-700 hover:shadow-lg
+                          focus:bg-purple-700
+                          focus:shadow-lg
+                          focus:outline-none
+                          focus:ring-0
+                          active:bg-purple-800 active:shadow-lg
+                          transition
+                          duration-150
+                          hover:bg-primary-400 hover:text-white
+                          ease-in-out
+                        "
+                        @click="action('ReviewerDraftEvent')"
+                      >
+                        Save as Draft
+                      </button>
+                      <button
+                        v-if="showTransferToAdminButton"
+                        class="
+                          inline-block
+                          px-6
+                          text-white
+                          font-medium
+                          text-xs
+                          leading-tight
+                          uppercase
+                          rounded
+                          shadow-lg
+                          hover:bg-purple-700 hover:shadow-lg
+                          focus:bg-purple-700
+                          focus:shadow-lg
+                          focus:outline-none
+                          focus:ring-0
+                          active:bg-purple-800 active:shadow-lg
+                          transition
+                          duration-150
+                          hover:bg-primary-400 hover:text-white
+                          ease-in-out
+                        "
+                        @click="transferToFederal()"
+                      >
+                        Transfer to Federal
+                      </button>
+                    </span>
+
+               
                   </div>
+                        <div class="relative pt-1 mt-medium">
+                        <div class="flex items-center justify-between">
+                          <radial-progress-bar
+                            :diameter="200"
+                            :completed-steps="completedSteps"
+                            :total-steps="totalSteps"
+                          >
+                            {{ completedSteps }} Completed/{{ totalSteps }}
+                          </radial-progress-bar>
+                        </div>
+                      </div>
+           
                   <div>
                     <div
                       class="
@@ -849,12 +832,7 @@
                   </button>
                 </div>
               </div>
-              <div
-                v-if="showActionLoading"
-                class="flex justify-center justify-items-center mt-2"
-              >
-                <Spinner />
-              </div>
+         
               <Modal v-if="showRemark">
                 <div>
                   <div
@@ -1112,21 +1090,26 @@ import { useToast } from "vue-toastification";
 import Title from "@/sharedComponents/Title";
 import Modal from "@/sharedComponents/Modal";
 import FlashMessage from "@/sharedComponents/FlashMessage";
-import Spinner from "@/sharedComponents/Spinner";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 
 import moment from "moment";
 import ReviewerSideNav from "../SharedComponents/sideNav.vue";
 import ReviewerNavBar from "../SharedComponents/navBar.vue";
+import Loading from "vue3-loading-overlay";
+// Import stylesheet
+import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
+import RadialProgressBar from "vue3-radial-progress";
+
 export default {
   components: {
     Modal,
     FlashMessage,
     ErrorFlashMessage,
     Title,
-    Spinner,
     ReviewerSideNav,
     ReviewerNavBar,
+    RadialProgressBar,
+    Loading,
   },
   computed: {
     moment: () => moment,
@@ -1135,7 +1118,7 @@ export default {
     const route = useRoute();
     const store = useStore();
     const router = useRouter();
-       const toast = useToast();
+    const toast = useToast();
 
     const options = ref([0, 1, 2]);
     const selectedOptions = ref([0]);
@@ -1167,7 +1150,6 @@ export default {
     let prefix = ref();
     let canChangeName = ref(false);
     let showProfessionChangeError = ref(false);
-    let showSpinner = ref(false);
 
     let showNameChangeFlash = ref(false);
     let showNameChangeErrorFlash = ref(false);
@@ -1177,6 +1159,8 @@ export default {
     let departmentId = ref(0);
     let adminId = localStorage.getItem("adminId");
 
+    const completedSteps = ref(0);
+    const totalSteps = ref(0);
     let goodStanding = ref({
       applicant: { profile: { name: "", fatherName: "" } },
       applicantType: { name: "" },
@@ -1247,8 +1231,9 @@ export default {
           profileInfo.value = goodStanding.value.profile;
           buttons.value = res.data.data.applicationStatus.buttons;
           docs.value = res.data.data.documents;
-          if(docs.value.length==0){
-            showButtons.value=true;
+           totalSteps.value = docs.value ? docs.value.length : 0;
+          if (docs.value.length == 0) {
+            showButtons.value = true;
           }
           fetchDocumentTypes();
           for (let i = 0; i < goodStanding.value.GSProfessionals.length; i++) {
@@ -1363,7 +1348,7 @@ export default {
       }
     };
     const transferToFederal = () => {
-      store.dispatch("renewal/getExpertLevel").then((res) => {
+      store.dispatch("goodStanding/getExpertLevel").then((res) => {
         let federalData = res.data.data.filter((r) => r.code == "FED");
         let transferData = {
           licenseId: route.params.applicationId,
@@ -1374,18 +1359,28 @@ export default {
           .dispatch("reviewer/transferToFederal", transferData)
           .then((res) => {
             if (res.data?.status == "Success") {
-              showTransferSuccessMessage.value = true;
-              setTimeout(() => {
-                router.push({ path: "/admin/review" });
-              }, 4000);
+               toast.success("Application  transfered Successfully", {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true
+          });
             } else {
-              showTransferErrorMessage.value = true;
+                    toast.success("Error occured", {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true
+          });
             }
           });
       });
     };
     const accept = (doc) => {
       nextClickable.value = true;
+       completedSteps.value += 1;
       if (accepted.value.length > 0) {
         if (
           doc &&
@@ -1456,6 +1451,7 @@ export default {
     };
 
     const reject = (doc) => {
+       completedSteps.value += 1;
       nextClickable.value = true;
       if (rejected.value.length > 0) {
         if (
@@ -1581,16 +1577,13 @@ export default {
 
         if (checkProfessionResult) {
           showProfessionChangeError.value = true;
-          toast.success("Application Approved Successfully", {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true,
-              });
-              setTimeout(() => {
-                window.location.reload();
-              }, 3000);
+             toast.error("Error occured", {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true
+          });
           return;
         } else {
           showRemark.value = true;
@@ -1635,13 +1628,23 @@ export default {
         .then((res) => {
           showActionLoading.value = false;
           if (res.statusText == "Created") {
-            showFlash.value = true;
-          } else {
-            showErrorFlash.value = true;
-          }
+                 toast.success("Application reviewed Successfully", {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true
+          });
+          } 
         })
-        .catch((err) => {
-          showErrorFlash.value = true;
+        .catch(() => {
+                toast.error("Error occured", {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true
+          });
         });
     };
 
@@ -1703,7 +1706,6 @@ export default {
       canChangeName.value = false;
     };
     const changeAmharicName = () => {
-      showSpinner.value = true;
       const id = profileInfo.value.id;
       let newProfile = {
         alternativeName: goodStanding.value.profile.alternativeName,
@@ -1715,20 +1717,22 @@ export default {
       store
         .dispatch("profile/changeUserProfile", profileData)
         .then(() => {
-          showSpinner.value = false;
-          canChangeName.value = false;
-          showNameChangeFlash.value = true;
-          setTimeout(() => {
-            showNameChangeFlash.value = false;
-          }, 3000);
+            toast.success("Name change was Successfull", {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true
+          });
         })
-        .catch((err) => {
-          console.log(err);
-          canChangeName.value = false;
-          showNameChangeErrorFlash.value = true;
-          setTimeout(() => {
-            showNameChangeErrorFlash.value = false;
-          }, 3000);
+        .catch(() => {
+           toast.error("Error occured", {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true
+          });
         });
     };
 
@@ -1789,7 +1793,7 @@ export default {
       if (event.target.checked) {
         if (professionalTypeIdss.value.length == 3) {
           alert(
-            "You can only select 3 professional types. Please Select only four!"
+            "You can only select 3 professional types."
           );
           if (previousProfession) {
             document.getElementsByName("ckb")[j].checked = false;
@@ -1908,6 +1912,8 @@ export default {
       profileInfo,
       disableNext,
       nextClickable,
+         completedSteps,
+      totalSteps,
       foundInRejected,
       foundInAcceptted,
       showRemark,
@@ -1936,7 +1942,6 @@ export default {
       allowChangeName,
       disallowChangeName,
       changeAmharicName,
-      showSpinner,
       showNameChangeFlash,
       showNameChangeErrorFlash,
       showLicenseDateRequirementError,
