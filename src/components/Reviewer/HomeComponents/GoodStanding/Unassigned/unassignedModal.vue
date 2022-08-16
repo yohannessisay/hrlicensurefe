@@ -439,7 +439,7 @@
             flex flex-shrink-0 flex-wrap
             items-center
             justify-end
-            border-t border-grey-200
+            border-t border-grey-100
             rounded-b-md
           "
         >
@@ -546,6 +546,9 @@ export default {
               icon: true,
             });
             isLoading.value = false;
+                setTimeout(() => {
+              window.location.reload();
+            }, 3000);
           } else {
             toast.error(
               "Sorry there seems to be a problem, please try again.",
@@ -558,6 +561,9 @@ export default {
               }
             );
             isLoading.value = false;
+                setTimeout(() => {
+              window.location.reload();
+            }, 3000);
           }
         })
         .catch(() => {
@@ -570,6 +576,9 @@ export default {
           });
           isLoading.value = false;
         });
+            setTimeout(() => {
+              window.location.reload();
+            }, 3000);
     };
 
     const showModal = () => {

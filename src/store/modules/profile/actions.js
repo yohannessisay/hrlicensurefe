@@ -1,5 +1,7 @@
 import ApiService from "../../../services/api.service";
-import { baseUrl } from "../../../composables/baseURL";
+import {
+  baseUrl
+} from "../../../composables/baseURL";
 
 import {
   SET_PROFILE,
@@ -11,7 +13,9 @@ import {
 } from "./mutation-types";
 
 export default {
-  async setProfile({ commit }, profile) {
+  async setProfile({
+    commit
+  }, profile) {
     try {
       const resp = await ApiService.get("/profiles/1", {
         profile
@@ -21,26 +25,50 @@ export default {
       return error;
     }
   },
-  setProfileInfo({ commit }, profileInfo) {
+  setProfileInfo({
+    commit
+  }, profileInfo) {
     commit(SET_PERSONAL_INFO, profileInfo);
   },
 
-  setAddress({ commit }, address) {
+  setAddress({
+    commit
+  }, address) {
     commit(SET_ADDRESS, address);
   },
-  setPhoto({ commit }, photo) {
+  setPhoto({
+    commit
+  }, photo) {
     commit(SET_PHOTO, photo);
   },
-  setNationality({ commit }, nationality) {
+  setNationality({
+    commit
+  }, nationality) {
     commit(SET_NATIONALITY, nationality);
   },
-  setMaritalStatus({ commit }, maritalStatus) {
+  setMaritalStatus({
+    commit
+  }, maritalStatus) {
     commit(SET_MARITAL_STATUS, maritalStatus);
   },
 
   async getUserTypes() {
     try {
       const resp = await ApiService.get(baseUrl + "/lookups/userTypes");
+      return resp;
+    } catch (error) {
+      const resp = error;
+      return resp;
+    }
+  },
+  async checkHrlRegistration({
+    commit
+  }, param) {
+    try {
+      const url = new URL(baseUrl + "/person/search");
+      url.searchParams.append('empValue', param.employeeId)
+      url.searchParams.append('fileValue', param.fileNumber)
+      const resp = await ApiService.get(url);
       return resp;
     } catch (error) {
       const resp = error;
@@ -83,7 +111,9 @@ export default {
       return resp;
     }
   },
-  async addProfile({ commit }, profile) {
+  async addProfile({
+    commit
+  }, profile) {
     try {
       const resp = await ApiService.post(baseUrl + "/profiles/add", profile);
       return resp;
@@ -91,12 +121,13 @@ export default {
       return error;
     }
   },
-  async uploadProfilePicture({ commit }, documents) {
+  async uploadProfilePicture({
+    commit
+  }, documents) {
     try {
       const resp = await ApiService.post(
         baseUrl + "/profiles/profilePicture/" + documents.id,
-        documents.document,
-        {
+        documents.document, {
           headers: {
             "Content-Type": "multipart/form-data"
           }
@@ -108,12 +139,13 @@ export default {
     }
   },
 
-  async updateProfilePicture({ commit }, documents) {
+  async updateProfilePicture({
+    commit
+  }, documents) {
     try {
       const resp = await ApiService.put(
         baseUrl + "/profiles/update/profilePicture/" + documents.id,
-        documents.document,
-        {
+        documents.document, {
           headers: {
             "Content-Type": "multipart/form-data"
           }
@@ -132,7 +164,21 @@ export default {
       return error;
     }
   },
-  async getProfileById({ commit }, id) {
+  async converProfilePicture({
+    commit
+  }, path) {
+    try {
+      console.log(path);
+      const resp = await ApiService.post(baseUrl + "/profiles/convert/profilePicture", path);
+      console.log(resp);
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async getProfileById({
+    commit
+  }, id) {
     try {
       const resp = await ApiService.get(baseUrl + "/profiles/" + id);
       return resp;
@@ -140,7 +186,9 @@ export default {
       return error;
     }
   },
-  async getProfileByUserId({ commit }, id) {
+  async getProfileByUserId({
+    commit
+  }, id) {
     try {
       const resp = await ApiService.get(baseUrl + "/profiles/user/" + id);
       return resp;
@@ -148,7 +196,9 @@ export default {
       return error;
     }
   },
-  async changeUserProfile({ commit }, profileInfo) {
+  async changeUserProfile({
+    commit
+  }, profileInfo) {
     try {
       const resp = await ApiService.put(
         baseUrl + "/profiles/" + profileInfo[0],
@@ -159,7 +209,9 @@ export default {
       return err;
     }
   },
-  async getUserById({ commit }, id) {
+  async getUserById({
+    commit
+  }, id) {
     try {
       const resp = await ApiService.get(baseUrl + "/users/" + id);
       return resp;
@@ -167,7 +219,9 @@ export default {
       return error;
     }
   },
-  async updateProfile({ commit }, profileInfo) {
+  async updateProfile({
+    commit
+  }, profileInfo) {
     try {
       const resp = await ApiService.put(
         baseUrl + "/profiles/" + profileInfo.id,
@@ -178,7 +232,9 @@ export default {
       return error;
     }
   },
-  async resetPassword({ commit }, data) {
+  async resetPassword({
+    commit
+  }, data) {
     data;
     try {
       const resp = await ApiService.post(
@@ -191,7 +247,9 @@ export default {
       return err;
     }
   },
-  async sendEmail({ commit }, email) {
+  async sendEmail({
+    commit
+  }, email) {
     try {
       const resp = await ApiService.post(baseUrl + "/forgotpassword", email);
       return resp;
@@ -199,7 +257,9 @@ export default {
       return err;
     }
   },
-  async adminForgotPassowrd({ commit }, email) {
+  async adminForgotPassowrd({
+    commit
+  }, email) {
     try {
       const resp = await ApiService.post(
         baseUrl + "/resetAdminPassword",

@@ -1,10 +1,18 @@
 <template>
   <!-- Sidebar -->
   <reviewer-side-bar>
-        <ul class="nav-links">
+    <ul class="nav-links">
+      <router-link to="/admin/dashboard">
+        <li class="mb-2">
+          <a href="#Dashboard">
+            <i class="bx bx-chart"></i>
+            <span class="links_name">Dashboard</span>
+          </a>
+        </li>
+      </router-link>
       <router-link to="/admin/newLicense/">
         <li class="mb-2">
-          <a href="#NewLicense" >
+          <a href="#NewLicense">
             <i class="bx bx-certification"></i>
             <span class="links_name">New License</span>
           </a>
@@ -34,7 +42,7 @@
           </a>
         </li>
       </router-link>
-            <router-link to="/admin/cpdCertified">
+      <router-link to="/admin/cpdCertified">
         <li class="mb-2">
           <a href="#CpdCertified">
             <i class="bx bx-badge-check"></i>
@@ -43,11 +51,29 @@
         </li>
       </router-link>
 
-        <router-link to="/admin/dashboard">
+      <router-link to="/admin/userManagement" v-if="isUserRegional?isUserRegional.regionId==null:''">
         <li class="mb-2">
-          <a href="#Dashboard">
-            <i class="bx bx-badge-check"></i>
-            <span class="links_name">Dashboard</span>
+          <a href="#UserManagement">
+            <i class="bx bx-user"></i>
+            <span class="links_name">User Management</span>
+          </a>
+        </li>
+      </router-link>
+
+      <router-link to="/admin/report">
+        <li class="mb-2">
+          <a href="#Report">
+            <i class="bx bx-table"></i>
+            <span class="links_name">Report</span>
+          </a>
+        </li>
+      </router-link>
+
+      <router-link to="/admin/importResults">
+        <li class="mb-2">
+          <a href="#ImportResults">
+            <i class="bx bx-import"></i>
+            <span class="links_name">National Exam Import</span>
           </a>
         </li>
       </router-link>
@@ -79,22 +105,20 @@ export default {
     ReviewerNavBar,
     ReviewerSideBar,
     ReviewerMainContent,
-
-  
   },
   setup() {
     const store = useStore();
+    const isUserRegional = JSON.parse(localStorage.getItem("allAdminData"));
     store.dispatch("ReviewerSideNav/assignSelectedSideBar", "mainPage");
     let currentMenu = store.getters["ReviewerSideNav/getSelectedSideBar"];
 
     function updateMenu(menu) {
       currentMenu = menu;
-      console.log(currentMenu);
     }
-
     return {
       currentMenu,
       updateMenu,
+      isUserRegional
     };
   },
 };

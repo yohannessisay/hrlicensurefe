@@ -1114,7 +1114,7 @@ export default {
         }
         const filePreview = await this.blobToBase64(this.transcript2);
         this.transcript2.docFile = filePreview;
-        this.transcript2.title = "Degree Transcript 2";
+        this.transcript2.title = "Transcript 2";
         this.docList.push(this.transcript2);
       }
     }
@@ -1677,7 +1677,6 @@ export default {
         this.healthExamCert !== "" &&
         this.herqa !== "" &&
         this.proCertificate !== "" &&
-        this.proDiploma !== "" &&
         this.proTranscript !== "" &&
         this.professionalLicense !== ""
       ) {
@@ -1689,7 +1688,6 @@ export default {
         this.healthExamCert !== "" &&
         this.herqa !== "" &&
         this.proCertificate !== "" &&
-        this.proDiploma !== "" &&
         this.proTranscript !== "" &&
         this.professionalLicense !== ""
       ) {
@@ -1952,7 +1950,7 @@ export default {
                       this.showLoading = false;
                       setTimeout(() => {
                         this.$router.push({ path: "/menu" });
-                      }, 1500);
+                      }, 2500);
                     } else {
                       this.showErrorFlash = true;
                     }
@@ -2175,7 +2173,7 @@ export default {
                     this.showFlash = true;
                     setTimeout(() => {
                       this.$router.push({ path: "/menu" });
-                    }, 1500);
+                    }, 5000);
                   } else {
                     this.showErrorFlash = true;
                   }
@@ -2398,7 +2396,7 @@ export default {
                   this.showLoading = false;
                   setTimeout(() => {
                     this.$router.push({ path: "/menu" });
-                  }, 1500);
+                  }, 5000);
                 } else {
                   this.showErrorFlash = true;
                 }
@@ -2605,7 +2603,7 @@ export default {
                 this.showFlash = true;
                 setTimeout(() => {
                   this.$router.push({ path: "/menu" });
-                }, 1500);
+                }, 5000);
               } else {
                 this.showErrorFlash = true;
               }
@@ -2650,7 +2648,7 @@ export default {
             this.showLoading = false;
             setTimeout(() => {
               this.$router.push({ path: "/menu" });
-            }, 1500);
+            }, 5000);
           } else {
             this.showErrorFlash = true;
           }
@@ -2664,7 +2662,7 @@ export default {
               this.showLoading = false;
               setTimeout(() => {
                 this.$router.push({ path: "/menu" });
-              }, 1500);
+              }, 5000);
             }
           });
       }
@@ -2685,7 +2683,7 @@ export default {
           this.showLoading = false;
           setTimeout(() => {
             this.$router.push({ path: "/menu" });
-          }, 1500);
+          }, 5000);
         } else {
           this.showErrorFlash = true;
         }

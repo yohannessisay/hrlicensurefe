@@ -1,7 +1,6 @@
 <template>
-  <div class="w-screen max-w-4xl mt-small h-full">
-    <div
-      class="
+  <div class="w-screen h-screen max-w-4xl mt-small h-full" v-if="approveStatus == 1">
+    <div class="
         flex flex-col
         mt-medium
         w-full
@@ -9,14 +8,122 @@
         blue-box-shadow-light
         rounded
         mb-large
-      "
-    >
-      <div class="mt-large">
-        <TitleWithIllustration
-          illustration="PersonalInfo"
-          message="Personal Infos"
-        />
+      ">
+      <h2 class="font-bold ml-56 mt-4">
+        Search here if you are registered in HRA
+      </h2>
+      <div class="flex justify-center mt-4">
+        <div class="mb-3 xl:w-96">
+          <div class="
+              input-group
+              relative
+              flex flex-wrap
+              items-stretch
+              w-full
+              mb-4
+              gap-2
+            ">
+            <input type="search" class="
+                form-control
+                relative
+                flex-auto
+                min-w-0
+                block
+                w-full
+                px-3
+                py-1.5
+                text-base
+                font-normal
+                text-gray-700
+                bg-white bg-clip-padding
+                border border-solid border-gray-300
+                rounded
+                transition
+                ease-in-out
+                space-x-7 > * + *
+                focus:text-gray-700
+                focus:bg-white
+                focus:border-blue-600
+                focus:outline-none
+              " placeholder="Employee ID *" aria-label="Search" aria-describedby="button-addon2"
+              v-model="searchEmployee" required />
+            <input type="search" class="
+                form-control
+                relative
+                flex-auto
+                min-w-0
+                block
+                w-full
+                px-3
+                py-1.5
+                text-base
+                font-normal
+                text-gray-700
+                bg-white bg-clip-padding
+                border border-solid border-gray-300
+                rounded
+                transition
+                ease-in-out
+                space-x-7 > * + *
+                focus:text-gray-700
+                focus:bg-white
+                focus:border-blue-600
+                focus:outline-none
+              " placeholder="File Number *" aria-label="Search" aria-describedby="button-addon2"
+              v-model="searchByFileNumber" required />
+            <button class="
+                btn
+                inline-block
+                px-6
+                py-2.5
+                bg-blue-600
+                text-white
+                font-medium
+                text-xs
+                leading-tight
+                uppercase
+                rounded
+                shadow-md
+                hover:bg-blue-700 hover:shadow-lg
+                focus:bg-blue-700
+                focus:shadow-lg
+                focus:outline-none
+                focus:ring-0
+                active:bg-blue-800 active:shadow-lg
+                transition
+                duration-150
+                ease-in-out
+                flex
+                space-x-7 > * + *
+                items-center
+              " type="button" id="button-addon2" @click="searchUser()" required>
+              <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="w-4 ml-4" role="img"
+                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <path fill="currentColor"
+                  d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z">
+                </path>
+              </svg>
+            </button>
+          </div>
+        </div>
       </div>
+    </div>
+  </div>
+
+  <div class="w-screen max-w-4xl mt-small h-full" v-if="approveStatus == 2">
+    <div class="
+        flex flex-col
+        mt-medium
+        w-full
+        bg-white
+        blue-box-shadow-light
+        rounded
+        mb-large
+      ">
+      <div class="mt-large">
+        <TitleWithIllustration illustration="PersonalInfo" message="Personal Infos" />
+      </div>
+
       <form class="mx-auto max-w-3xl w-full mt-10" @submit.prevent="nextStep">
         <div class="flex justify-center">
           <span>
@@ -27,22 +134,14 @@
         <div class="flex mb-4 justify-center">
           <span v-if="showUpload">
             <span>
-              <label class="text-primary-700 text-justify"
-                >Maximum size for profile picture is 3 MB
+              <label class="text-primary-700 text-justify">Maximum size for profile picture is 3 MB
               </label>
             </span>
             <br />
-            <label class="text-primary-700 text-justify"
-              >Upload Profile Picture: (*)
+            <label class="text-primary-700 text-justify">Upload Profile Picture: (*)
               <div class="dropbox ml-8">
-                <input
-                  type="file"
-                  id="photoFile"
-                  class="photoFile"
-                  ref="photoFileP"
-                  v-on:change="handleFileUpload()"
-                  style="margin-bottom: 15px !important"
-                />
+                <input type="file" id="photoFile" class="photoFile" ref="photoFileP" v-on:change="handleFileUpload()"
+                  style="margin-bottom: 15px !important" />
                 <!-- file format can be restricted by using accept=".jpeg,.jpg,.png,.pdf,...." -->
                 <p>
                   Drag your Profile Picture here to begin<br />
@@ -60,9 +159,8 @@
             </p>
             <img v-bind:src="filePreview" v-show="showPreview" />
           </picture>
-          <span v-if="photoSizeCheck" style="color: red"
-            >Image size to big, Upload again. Image must be less than 3 MB</span
-          >
+          <span v-if="photoSizeCheck" style="color: red">Image size to big, Upload again. Image must be less than 3
+            MB</span>
           <span v-if="!showUpload && !isImage && !photoSizeCheck">
             <img :src="filePreview" alt="" class="preview" />
           </span>
@@ -70,78 +168,52 @@
         <div class="flex">
           <div class="flex flex-col mb-medium w-1/2 mr-6">
             <label class="text-primary-700">First Name (*)</label>
-            <input
-              class="max-w-3xl"
-              type="text"
-              onkeypress="return /[a-zA-Z]/i.test(event.key)"
-              v-model="personalInfo.name"
-            />
+            <input class="max-w-3xl" type="text" onkeypress="return /[a-zA-Z]/i.test(event.key)"
+              v-model="personalInfo.name" :disabled="isRegisterdHRAuser == true && searchResultData.firstname" />
             <span style="color: red">{{ personalInfoErrors.name }}</span>
           </div>
           <div class="flex flex-col mb-medium w-1/2 ml-12">
             <label class="text-primary-700">Father Name (*)</label>
-            <input
-              class="max-w-3xl"
-              type="text"
-              onkeypress="return /[a-zA-Z]/i.test(event.key)"
-              v-model="personalInfo.fatherName"
-            />
+            <input class="max-w-3xl" type="text" onkeypress="return /[a-zA-Z]/i.test(event.key)"
+              v-model="personalInfo.fatherName" :disabled="isRegisterdHRAuser == true && searchResultData.middlename" />
             <span style="color: red">{{ personalInfoErrors.fatherName }}</span>
           </div>
         </div>
         <div class="flex">
           <div class="flex flex-col mb-medium w-1/2 mr-6">
             <label class="text-primary-700">GrandFather Name (*)</label>
-            <input
-              class="max-w-3xl"
-              type="text"
-              onkeypress="return /[a-zA-Z]/i.test(event.key)"
-              v-model="personalInfo.grandFatherName"
-            />
+            <input class="max-w-3xl" type="text" onkeypress="return /[a-zA-Z]/i.test(event.key)"
+              v-model="personalInfo.grandFatherName" :disabled="
+                isRegisterdHRAuser == true && searchResultData.lastname
+              " />
             <span style="color: red">{{
-              personalInfoErrors.grandFatherName
+                personalInfoErrors.grandFatherName
             }}</span>
           </div>
           <div class="flex flex-col mb-medium w-1/2 ml-12">
             <label class="text-primary-700">ስም በአማርኛ (Name in Amharic)</label>
-            <input
-              class="max-w-3xl"
-              type="text"
-              onkeypress="return /[a-zA-Z]/i.test(event.key)"
-              v-model="personalInfo.alternativeName"
-            />
+            <input class="max-w-3xl" type="text" onkeypress="return /[a-zA-Z]/i.test(event.key)"
+              v-model="personalInfo.alternativeName" />
             <span style="color: red">{{
-              personalInfoErrors.alternativeName
+                personalInfoErrors.alternativeName
             }}</span>
           </div>
         </div>
         <div class="flex">
           <div class="flex flex-col mb-medium w-1/2 mr-12">
-            <label class="text-primary-700"
-              >የአባት ስም በአማርኛ (Father's Name in Amharic)</label
-            >
-            <input
-              class="max-w-3xl"
-              type="text"
-              onkeypress="return /[a-zA-Z]/i.test(event.key)"
-              v-model="personalInfo.alternativeFatherName"
-            />
+            <label class="text-primary-700">የአባት ስም በአማርኛ (Father's Name in Amharic)</label>
+            <input class="max-w-3xl" type="text" onkeypress="return /[a-zA-Z]/i.test(event.key)"
+              v-model="personalInfo.alternativeFatherName" />
             <span style="color: red">{{
-              personalInfoErrors.alternativeFatherName
+                personalInfoErrors.alternativeFatherName
             }}</span>
           </div>
           <div class="flex flex-col mb-medium w-1/2 m1-12">
-            <label class="text-primary-700"
-              >የአያት ስም በአማርኛ (Grandfather's Name in Amharic)</label
-            >
-            <input
-              class="max-w-3xl"
-              type="text"
-              onkeypress="return /[a-zA-Z]/i.test(event.key)"
-              v-model="personalInfo.alternativeGrandFatherName"
-            />
+            <label class="text-primary-700">የአያት ስም በአማርኛ (Grandfather's Name in Amharic)</label>
+            <input class="max-w-3xl" type="text" onkeypress="return
+            /[a-zA-Z]/i.test(event.key)" v-model="personalInfo.alternativeGrandFatherName" />
             <span style="color: red">{{
-              personalInfoErrors.alternativeGrandFatherName
+                personalInfoErrors.alternativeGrandFatherName
             }}</span>
           </div>
         </div>
@@ -149,43 +221,35 @@
         <div class="flex">
           <div class="flex flex-col mb-medium w-1/2 mr-6">
             <label class="text-primary-700">Nationality (*)</label>
-            <select
-              class="max-w-3xl"
-              v-model="personalInfo.nationalityId"
-              @change="fetchNationalities()"
-            >
-              <option
-                v-for="types in state.nationalities"
-                v-bind:key="types.name"
-                v-bind:value="types.id"
-              >
+            <select class="max-w-3xl" v-model="personalInfo.nationalityId" @change="fetchNationalities()" :disabled="
+              isRegisterdHRAuser == true && searchResultData.nationality
+            ">
+              <option v-for="types in state.nationalities" v-bind:key="types.name" v-bind:value="types.id">
                 {{ types.name }}
               </option>
             </select>
             <span style="color: red">{{
-              personalInfoErrors.nationalityId
+                personalInfoErrors.nationalityId
             }}</span>
           </div>
           <div class="flex flex-col mb-medium w-1/2 ml-12">
             <label class="text-primary-700">PO Box(Optional)</label>
-            <input class="max-w-3xl" type="text" v-model="personalInfo.poBox" />
+            <input class="max-w-3xl" type="text" v-model="personalInfo.poBox" :disabled="
+              isRegisterdHRAuser == true && searchResultData.pobox
+            "/>
           </div>
         </div>
         <div class="flex">
           <div class="flex flex-col mb-medium w-1/2 mr-6">
             <label class="text-primary-700">Date of birth (*)</label>
-            <input
-              class="max-w-3xl"
-              type="date"
-              v-model="personalInfo.dateOfBirth"
-              @change="validateDate(personalInfo.dateOfBirth)"
-            />
+            <input class="max-w-3xl" type="date" v-model="personalInfo.dateOfBirth"
+              @change="validateDate(personalInfo.dateOfBirth)" 
+              :disabled="
+              isRegisterdHRAuser == true && searchResultData.birthdate
+            "
+              />
             <span style="color: red">{{ personalInfoErrors.dateOfBirth }}</span>
-            <span
-              v-if="invalidBirthDate"
-              style="color: red"
-              class="mt-2 text-lg"
-            >
+            <span v-if="invalidBirthDate" style="color: red" class="mt-2 text-lg">
               Applicant must be at least 18.
             </span>
           </div>
@@ -195,17 +259,10 @@
               <div class="flex w-full">
                 <div class="flex flex-col mb-small w-1/3">
                   <div class="flex py-2">
-                    <input
-                      class="flex flex-col"
-                      type="radio"
-                      id="male"
-                      value="male"
-                      v-model="personalInfo.gender"
+                    <input class="flex flex-col" type="radio" id="male" value="male" v-model="personalInfo.gender"  :disabled="
+              isRegisterdHRAuser == true && searchResultData.gender"
                     />
-                    <label
-                      class="ml-tiny flex flex-col text-primary-700"
-                      for="male"
-                    >
+                    <label class="ml-tiny flex flex-col text-primary-700" for="male">
                       Male
                     </label>
                   </div>
@@ -213,12 +270,8 @@
                 <div class="flex w-1/3">
                   <div class="flex flex-col w-1/3">
                     <div class="flex py-2">
-                      <input
-                        type="radio"
-                        id="female"
-                        value="female"
-                        v-model="personalInfo.gender"
-                      />
+                      <input type="radio" id="female" value="female" v-model="personalInfo.gender" :disabled="
+              isRegisterdHRAuser == true && searchResultData.gender"/>
                       <label class="ml-tiny text-primary-700" for="female">
                         Female
                       </label>
@@ -227,8 +280,7 @@
                 </div>
               </div>
               <span style="color: red" class="mt-0">
-                {{ personalInfoErrors.gender }}</span
-              >
+                {{ personalInfoErrors.gender }}</span>
             </div>
           </div>
         </div>
@@ -239,17 +291,10 @@
               <div class="flex w-full">
                 <div class="flex flex-col w-1/3">
                   <div class="flex py-2">
-                    <input
-                      class="flex flex-col"
-                      type="radio"
-                      id="single"
-                      value="1"
-                      v-model="personalInfo.maritalStatusId"
-                    />
-                    <label
-                      class="ml-tiny flex flex-col text-primary-700"
-                      for="single"
-                    >
+                    <input class="flex flex-col" type="radio" id="single" value="1"
+                      v-model="personalInfo.maritalStatusId" :disabled="
+              isRegisterdHRAuser == true && searchResultData.maritalStatus"/>
+                    <label class="ml-tiny flex flex-col text-primary-700" for="single">
                       Single
                     </label>
                   </div>
@@ -257,12 +302,8 @@
                 <div class="flex w-1/3">
                   <div class="flex flex-col w-1/3">
                     <div class="flex py-2">
-                      <input
-                        type="radio"
-                        id="married"
-                        value="2"
-                        v-model="personalInfo.maritalStatusId"
-                      />
+                      <input type="radio" id="married" value="2" v-model="personalInfo.maritalStatusId" :disabled="
+              isRegisterdHRAuser == true && searchResultData.maritalStatus"/>
                       <label class="ml-tiny text-primary-700" for="married">
                         Married
                       </label>
@@ -271,12 +312,8 @@
                 </div>
                 <div class="flex flex-col w-1/3">
                   <div class="flex py-2">
-                    <input
-                      type="radio"
-                      id="divorced"
-                      value="3"
-                      v-model="personalInfo.maritalStatusId"
-                    />
+                    <input type="radio" id="divorced" value="3" v-model="personalInfo.maritalStatusId" :disabled="
+              isRegisterdHRAuser == true && searchResultData.maritalStatus" />
                     <label class="ml-tiny text-primary-700" for="divorced">
                       Divorced
                     </label>
@@ -284,11 +321,11 @@
                 </div>
               </div>
               <span style="color: red">{{
-                personalInfoErrors.maritalStatusId
+                  personalInfoErrors.maritalStatusId
               }}</span>
             </div>
           </div>
-
+          <!-- 
           <div class="flex w-1/2 mb-small m1-12 mt-8">
             <div class="form-check">
               <input
@@ -334,19 +371,17 @@
                 />
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
 
         <div class="flex mb-medium w-full mt-medium">
-          <button
-            class="
+          <button class="
               block
               mx-auto
               w-1/4
               bg-lightBlue-500
               hover:bg-lightBlue-600 hover:shadow-lg
-            "
-          >
+            ">
             Next
           </button>
         </div>
@@ -357,17 +392,23 @@
 <script>
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
+import axios from "axios";
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
+import { useToast } from "vue-toastification";
+
 export default {
   components: { TitleWithIllustration },
-  props: ["activeState"],
+  props: ["activeState", "approvalModal"],
   setup(props, { emit }) {
     const store = useStore();
+    let approveStatus = ref(props.approvalModal);
     let photoFile = ref("");
     let photoFileP = ref("");
     let showPreview = ref(false);
     let filePreview = ref("");
     let showUpload = ref(true);
+    const toast = useToast();
+    let isRegisterdHRAuser = ref(false);
     let isImage = ref(true);
     let photoSizeCheck = ref(false);
     let fileSize = ref("");
@@ -379,6 +420,9 @@ export default {
     const hraUser = () => {
       hraUserStat.value = !hraUserStat.value;
     };
+    let searchEmployee = ref("");
+    let searchByFileNumber = ref("");
+    let searchResultData = ref({})
     let personalInfo = ref({
       name: "",
       fatherName: "",
@@ -392,7 +436,7 @@ export default {
       nationalityId: "",
       maritalStatusId: "",
       photo: "",
-      employeeId:"",
+      employeeId: ""
     });
     let personalInfoErrors = ref({
       name: "",
@@ -404,7 +448,7 @@ export default {
       nationalityId: "",
       gender: "",
       maritalStatusId: "",
-      photo: "",
+      photo: ""
     });
     let state = ref({
       userTypes: {},
@@ -414,11 +458,11 @@ export default {
       regions: {},
       zones: {},
       woreda: {},
-      nationalities: {},
+      nationalities: {}
     });
     let id = ref({
       regionID: {},
-      zoneID: {},
+      zoneID: {}
     });
     const reset = () => {
       showUpload.value = true;
@@ -465,8 +509,84 @@ export default {
         }
       }
     };
+
+    const searchUser = () => {
+      let searchparamters = {
+        employeeId: searchEmployee.value,
+        fileNumber: searchByFileNumber.value
+      };
+      store
+        .dispatch("profile/checkHrlRegistration", searchparamters)
+        .then(res => {
+          if (res.data.data) {
+            let searchResult = res.data.data;
+            let nationalityId = 0;
+            searchResultData.value =  searchResult;
+            let nationality = state.value?.nationalities == null ? null : state.value.nationalities;
+            let maritalStatusId = 0;
+            if (searchResult.maritalStatus) {
+              maritalStatusId =
+                searchResult.maritalStatus == "Married"
+                  ? 2
+                  : searchResult.maritalStatus == "Single"
+                    ? 1
+                    : searchResult.maritalStatus == "Divorced"
+                      ? 3
+                      : 0;
+            }
+            if (searchResult.nationality) {
+              nationalityId = nationality.find(
+                nat => nat.name == searchResult?.nationality
+              ).id;
+            }
+            // let maritalStatusId = maritalStatus.find(
+            //   nat => nat.name == searchResult?.maritalStatus
+            // ).id;
+
+            let data = {
+              name: searchResult.firstname,
+              fatherName: searchResult?.middlename,
+              grandFatherName: searchResult?.lastname,
+              alternativeName: searchResult?.alternativeName,
+              alternativeFatherName: searchResult?.alternativeFatherName,
+              alternativeGrandFatherName:
+                searchResult?.alternativeGrandFatherName,
+              gender: searchResult?.gender,
+              dateOfBirth: searchResult?.birthdate,
+              nationalityId: nationalityId,
+              maritalStatusId: maritalStatusId,
+              poBox: searchResult?.pobox,
+              employeeId: searchResult.employeeId
+                ? searchResult.employeeId
+                : null,
+              fileNumber: searchResult.fileNumber
+            };
+
+            store.dispatch("profile/setProfileInfo", data);
+            personalInfo.value = data;
+            approveStatus.value = 2;
+            isRegisterdHRAuser.value = true;
+            toast.success(res.data.message, {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true
+            });
+          } else {
+            toast.error(res.data.message, {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true
+            });
+          }
+        });
+    };
+
     const fetchUserTypes = () => {
-      store.dispatch("profile/getUserTypes").then((res) => {
+      store.dispatch("profile/getUserTypes").then(res => {
         const utResults = res.data;
         state.value.userTypes = utResults.data;
         state.value.userTypes.splice(
@@ -476,31 +596,31 @@ export default {
       });
     };
     const fetchRegions = () => {
-      store.dispatch("profile/getRegions").then((res) => {
+      store.dispatch("profile/getRegions").then(res => {
         const regionsResult = res.data;
         state.value.regions = regionsResult.data;
       });
     };
-    const fetchZones = (id) => {
-      store.dispatch("profile/getZones", id).then((res) => {
+    const fetchZones = id => {
+      store.dispatch("profile/getZones", id).then(res => {
         const zonesResult = res.data;
         state.value.zones = zonesResult.data;
       });
     };
-    const fetchWoredas = (id) => {
-      store.dispatch("profile/getWoredas", id).then((res) => {
+    const fetchWoredas = id => {
+      store.dispatch("profile/getWoredas", id).then(res => {
         const woredasResult = res.data;
         state.value.woreda = woredasResult.data;
       });
     };
     const fetchNationalities = () => {
-      store.dispatch("profile/getNationalities").then((res) => {
+      store.dispatch("profile/getNationalities").then(res => {
         const nationalities = res.data;
         state.value.nationalities = nationalities.data;
       });
     };
     const nextStep = () => {
-      personalInfo.value.employeeId=employeeId.value
+      personalInfo.value.employeeId = searchResultData.value.employeeId;
       personalInfoErrors.value = validateForm(personalInfo.value);
       for (let i = 0; i < state.value.nationalities.length; i++) {
         if (
@@ -522,13 +642,13 @@ export default {
         return;
       }
       if (empty == true) {
-        console.log(personalInfo)
+        console.log(personalInfo);
         store.dispatch("profile/setProfileInfo", personalInfo);
         store.dispatch("profile/setPhoto", photoFile.value);
         emit("changeActiveState");
       }
     };
-    const validateDate = (dateInput) => {
+    const validateDate = dateInput => {
       let today = new Date();
       let birthYear = parseInt(dateInput.slice(0, 4));
       let birthMonth = parseInt(dateInput.slice(5, 7));
@@ -544,7 +664,7 @@ export default {
         invalidBirthDate.value = false;
       }
     };
-    const validateForm = (formData) => {
+    const validateForm = formData => {
       const errors = {};
       if (!formData.photo) errors.photo = "Profile Picture Required";
       if (!formData.name) errors.name = "First Name Required";
@@ -555,7 +675,7 @@ export default {
         errors.nationalityId = "Nationality Required";
       return errors;
     };
-    const isEmpty = (obj) => {
+    const isEmpty = obj => {
       for (var prop in obj) {
         if (obj.hasOwnProperty(prop)) {
           return false;
@@ -623,10 +743,16 @@ export default {
       photoSizeCheck,
       validateForm,
       nationality,
+      searchResultData,
       maritalStatus,
+      isRegisterdHRAuser,
       isEmpty,
+      searchUser,
       state,
+      searchEmployee,
+      searchByFileNumber,
       id,
+      approveStatus,
       hraUserStat,
       employeeId,
       hraUser,
@@ -637,38 +763,47 @@ export default {
       fetchWoredas,
       fetchNationalities,
       validateDate,
-      invalidBirthDate,
+      invalidBirthDate
     };
-  },
+  }
 };
 </script>
 <style>
 @import "../../styles/document-upload.css";
+
 img {
   width: 150px;
   height: 150px;
 }
+
 .photoFile {
-  opacity: 0; /* invisible but it's there! */
+  opacity: 0;
+  /* invisible but it's there! */
   width: 150px;
   height: 150px;
   position: absolute;
   cursor: pointer;
 }
+
 .dropbox {
-  outline: 2px dashed grey; /* the dash box */
+  outline: 2px dashed grey;
+  /* the dash box */
   outline-offset: -10px;
   background: lightcyan;
   color: dimgray;
   padding: 10px 10px;
-  height: 150px; /* minimum height */
+  height: 150px;
+  /* minimum height */
   width: 200px;
   position: relative;
   cursor: pointer;
 }
+
 .dropbox:hover {
-  background: lightblue; /* when mouse over to the drop zone, change color */
+  background: lightblue;
+  /* when mouse over to the drop zone, change color */
 }
+
 .dropbox p {
   font-size: 1.2em;
   text-align: center;

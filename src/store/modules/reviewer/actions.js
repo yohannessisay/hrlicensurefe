@@ -927,11 +927,9 @@ export default {
   },
 
   async updateLicenseGenerated({ commit }, appInfo) {
-    console.log("app data", appInfo);
     const id = parseInt(appInfo[2]);
     const url = `${baseUrl}/${appInfo[1]}/${id}`;
     const resp = await ApiService.put(url, appInfo[0]);
-    console.log("respond", resp);
     return resp;
   },
 
@@ -1048,22 +1046,18 @@ export default {
         baseUrl + "/licenseReviewers/assign",
         assign
       );
-      
+
       return resp;
-      
     } catch (error) {
       return error;
     }
   },
   async assignRenewalReviewer({ commit }, assign) {
     try {
-      console.log(resp,assign);
-
       const resp = await ApiService.post(
         baseUrl + "/renewalReviewers/assign",
         assign
       );
-      console.log(resp,assign);
       return resp;
     } catch (error) {
       return error;
@@ -1082,14 +1076,12 @@ export default {
   },
   async assignGoodStandingReviewer({ commit }, assign) {
     try {
-      
       const resp = await ApiService.post(
         baseUrl + "/goodStandingReviewers/assign",
         assign
       );
       return resp;
     } catch (error) {
-      console.log(error)
       return error;
     }
   },
@@ -1100,7 +1092,7 @@ export default {
         baseUrl + "/licenseReviewers/transfer",
         transfer
       );
-    
+
       return resp;
     } catch (error) {
       return error;
@@ -1267,12 +1259,10 @@ export default {
       );
 
       return resp;
-      
     } catch (error) {
       return error;
     }
   },
-
 
   async editVerification({ commit }, license) {
     try {
@@ -1297,10 +1287,8 @@ export default {
     }
   },
 
-  
   async editRenewal({ commit }, license) {
     try {
-      console.log("license is", license.data.id);
       const resp = await ApiService.put(
         baseUrl + "/renewals/" + license.data.id,
         license
@@ -1317,9 +1305,7 @@ export default {
         baseUrl + "/renewals/" + license.data.data.id,
         license
       );
-      console.log(resp)
       return resp;
-      
     } catch (error) {
       return error;
     }
@@ -1385,20 +1371,20 @@ export default {
     }
   },
 
-  async addImported(id,data) {
+  async addImported(id, data) {
     try {
       const url = baseUrl + "/nationalExamResult/import";
       const resp = await ApiService.post(url, data);
-   
+
       return resp;
     } catch (error) {
       return error;
     }
   },
 
-  async editImported(id,editedData) {
+  async editImported(id, editedData) {
     try {
-      const url = baseUrl + "/nationalExamResult/"+editedData.id;
+      const url = baseUrl + "/nationalExamResult/" + editedData.id;
 
       const resp = await ApiService.put(url, editedData);
       return resp;
@@ -1407,7 +1393,7 @@ export default {
     }
   },
 
-  async getMultiple(id,multipleId) {
+  async getMultiple(id, multipleId) {
     try {
       const url = baseUrl + "/nationalExamResult/getMultiple";
 

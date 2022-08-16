@@ -42,7 +42,7 @@
         <div v-else>
           <TitleWithIllustration
             illustration="Certificate"
-            message="Degree Transcript"
+            message="Transcript"
            
           />
         </div>

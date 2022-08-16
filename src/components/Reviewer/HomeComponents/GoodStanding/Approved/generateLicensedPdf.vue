@@ -261,7 +261,7 @@
             flex flex-shrink-0 flex-wrap
             items-center
             justify-end
-            border-t border-grey-200
+            border-t border-grey-100
             rounded-b-md
           "
         >
@@ -534,6 +534,9 @@ export default {
               pauseOnHover: true,
               icon: true,
             });
+                setTimeout(() => {
+              window.location.reload();
+            }, 3000);
           } else {
             toast.error(res, {
               timeout: 5000,
@@ -542,10 +545,16 @@ export default {
               pauseOnHover: true,
               icon: true,
             });
+                setTimeout(() => {
+              window.location.reload();
+            }, 3000);
           }
         })
         .catch((err) => {
           console.log(err);
+              setTimeout(() => {
+              window.location.reload();
+            }, 3000);
         });
 
       window.open(doc.output("bloburl"));
