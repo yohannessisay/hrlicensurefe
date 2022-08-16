@@ -1137,6 +1137,18 @@ const routes = [
           "../components/Reviewer/HomeComponents/Report/Report.vue"
         ),
     },
+
+
+
+    //System Setting
+    {
+      path: "/admin/systemSetting",
+      name: "SystemSetting",
+      component: () =>
+        import(
+          "../components/Reviewer/HomeComponents/SystemSetting/systemSetting.vue"
+        ),
+    },
 ];
 
 const router = createRouter({

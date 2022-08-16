@@ -1010,9 +1010,9 @@
                                   ></iframe>
                                 </div>
                                 <br />
-                                <a
+                                <button
                                   @click="openPdfInNewTab(docs[index].filePath)"
-                                  >see pdf in detail</a
+                                  >See pdf in detail</button
                                 >
                               </div>
 
