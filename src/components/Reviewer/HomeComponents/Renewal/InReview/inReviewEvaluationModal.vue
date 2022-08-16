@@ -648,7 +648,7 @@
                                 <div class="flex flex-row">
                                   <div
                                     v-if="
-                                      renewal?.licenseProfessions?.length > 0
+                                      renewal.renewalProfessions.length > 0
                                     "
                                   >
                                     <div
@@ -668,7 +668,7 @@
                                       <ul
                                         v-for="(
                                           professionName, index
-                                        ) in renewal.licenseProfessions"
+                                        ) in renewal.renewalProfessions"
                                         v-bind:key="
                                           professionName.professionalTypeId
                                         "
@@ -867,13 +867,23 @@
                                             "
                                           >
                                             <label style="display: block"
-                                              >other profession name</label
+                                              >Other profession name*</label
                                             >
                                             <input
                                               style="display: block"
                                               type="text"
                                               v-model="
                                                 renewal.otherProfessionalType
+                                              "
+                                            />
+                                                   <label style="display: block"
+                                              >Other profession name (Amharic)*</label
+                                            >
+                                               <input
+                                              style="display: block"
+                                              type="text"
+                                              v-model="
+                                                renewal.otherProfessionalTypeAmharic
                                               "
                                             />
                                           </div>
@@ -1551,6 +1561,7 @@ export default {
     let isProfessionalTypeChanged = ref(false);
 
     let otherProfessionalType = ref();
+    let otherProfessionalTypeAmharic = ref();
     let showOtherProfessionError = ref(false);
 
     let professionalTypeIds = ref([]);
@@ -2203,8 +2214,10 @@ export default {
             profession.professionalTypes.name == "Other"
           ) {
             renewal.value.otherProfessionalType = null;
+             renewal.value.otherProfessionalTypeAmharic = null;
           } else if (!previousProfession && profession.name == "Other") {
             renewal.value.otherProfessionalType = null;
+             renewal.value.otherProfessionalTypeAmharic = null;
           }
         }
       }
@@ -2384,6 +2397,7 @@ export default {
       selectedOptions,
       newSelectedOptions,
       otherProfessionalType,
+      otherProfessionalTypeAmharic,
       showOtherProfessionError,
       chkcontrol,
       checkResult,

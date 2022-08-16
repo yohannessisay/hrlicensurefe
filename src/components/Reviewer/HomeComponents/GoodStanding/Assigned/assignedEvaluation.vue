@@ -535,7 +535,7 @@
                                     "
                                   >
                                     <label style="display: block"
-                                      >other profession name</label
+                                      >Other profession name*</label
                                     >
                                     <input
                                       style="display: block"
@@ -544,6 +544,16 @@
                                         goodStanding.otherProfessionalType
                                       "
                                     />
+                                              <label style="display: block"
+                                              >Other profession name (Amharic)*</label
+                                            >
+                                               <input
+                                              style="display: block"
+                                              type="text"
+                                              v-model="
+                                                newLicense.otherProfessionalTypeAmharic
+                                              "
+                                            />
                                   </div>
                                   <div
                                     style="float: left"
@@ -1134,6 +1144,7 @@ export default {
     let isProfessionalTypeChanged = ref(false);
 
     let otherProfessionalType = ref();
+    let otherProfessionalTypeAmharic = ref();
     let showOtherProfessionError = ref(false);
 
     let professionalTypeIds = ref([]);
@@ -1784,8 +1795,10 @@ export default {
             profession.professionalTypes.name == "Other"
           ) {
             goodStanding.value.otherProfessionalType = null;
+            goodStanding.value.otherProfessionalTypeAmharic = null;
           } else if (!previousProfession && profession.name == "Other") {
             goodStanding.value.otherProfessionalType = null;
+            goodStanding.value.otherProfessionalTypeAmharic = null;
           }
         }
       }
@@ -1958,6 +1971,7 @@ export default {
       selectedOptions,
       newSelectedOptions,
       otherProfessionalType,
+      otherProfessionalTypeAmharic,
       showOtherProfessionError,
       chkcontrol,
       checkResult,
