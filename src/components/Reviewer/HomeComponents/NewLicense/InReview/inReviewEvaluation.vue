@@ -1017,6 +1017,7 @@
                               </div>
 
                               <div v-else>
+                              <h5 class="text-grey-200 text-2xl">{{ docs[index].documentType?docs[index].documentType.name:''}}</h5>
                                 <img
                                   class="
                                     scale-50
