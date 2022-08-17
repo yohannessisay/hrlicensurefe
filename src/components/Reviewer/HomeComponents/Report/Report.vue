@@ -90,6 +90,7 @@
                     class="
                       inline-block
                       px-6
+                      mr-4
                       py-2
                       bg-primary-700
                       text-white
@@ -111,170 +112,274 @@
                       items-center
                     "
                   >
-                    <svg
-                      aria-hidden="true"
-                      focusable="false"
-                      data-prefix="fas"
-                      data-icon="search"
-                      class="w-5"
-                      role="img"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 512 512"
-                    >
-                      <path
-                        fill="currentColor"
-                        d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
-                      ></path>
-                    </svg>
+                    <i class="fa fa-user fa-2x"></i>
                   </button>
 
-                  <div class="flex justify-center">
-                    <div class="mb-3 xl:w-full">
-                      <select
-                        class="
-                          form-select
-                          appearance-none
-                          block
-                          w-full
-                          px-6
-                          ml-4
-                          py-2
-                          text-base
-                          font-normal
-                          text-gray-700
-                          bg-white bg-clip-padding bg-no-repeat
-                          border border-solid border-gray-300
-                          rounded
-                          transition
-                          ease-in-out
-                          focus:text-gray-700
-                          focus:bg-white
-                          focus:border-blue-600
-                          focus:outline-none
-                        "
-                        @change="handleFilterByApplication($event.target.value)"
-                        aria-label="Default select example"
-                      >
-                        <option selected disabled>Application Type</option>
-                        <option value="newLicense">
-                          New License Applications
-                        </option>
-                        <option value="goodStanding">
-                          Goodstanding Applications
-                        </option>
-                        <option value="renewal">Renewed Applications</option>
-                        <option value="verification">
-                          Verification Applications
-                        </option>
-                      </select>
-                    </div>
+                  <input
+                    type="search"
+                    class="
+                      form-control
+                      relative
+                      flex-auto
+                      min-w-0
+                      block
+                      w-full
+                      px-6
+                      py-1.5
+                      text-base
+                      font-normal
+                      text-gray-700
+                      bg-white bg-clip-padding
+                      border border-solid border-gray-300
+                      rounded
+                      transition
+                      ease-in-out
+                      focus:text-gray-700
+                      focus:bg-white
+                      focus:border-blue-600
+                      focus:outline-none
+                    "
+                    placeholder="Search for profession"
+                    aria-label="Search"
+                    aria-describedby="button-addon2"
+                    v-model="searchTermProf"
+                    @keyup="filterProfession()"
+                  />
+                  <button
+                    class="
+                      inline-block
+                      px-6
+                      py-2
+                      bg-primary-700
+                      text-white
+                      font-medium
+                      text-xs
+                      leading-tight
+                      uppercase
+                      rounded
+                      shadow-md
+                      hover:bg-blue-700 hover:shadow-lg
+                      focus:bg-blue-700
+                      focus:shadow-lg
+                      focus:outline-none
+                      focus:ring-0
+                      active:bg-blue-800 active:shadow-lg
+                      transition
+                      duration-150
+                      ease-in-out
+                      items-center
+                    "
+                  >
+                    <i class="fa fa-briefcase fa-2x"></i>
+                  </button>
+                </div>
+                <div class="flex justify-center">
+                  <div class="mb-3 xl:w-full">
+                    <select
+                      class="
+                        form-select
+                        appearance-none
+                        block
+                        w-full
+                        px-6
+                        ml-4
+                        py-2
+                        text-base
+                        font-normal
+                        text-gray-700
+                        bg-white bg-clip-padding bg-no-repeat
+                        border border-solid border-gray-300
+                        rounded
+                        transition
+                        ease-in-out
+                        focus:text-gray-700
+                        focus:bg-white
+                        focus:border-blue-600
+                        focus:outline-none
+                      "
+                      @change="handleFilterByApplication($event.target.value)"
+                      aria-label="Default select example"
+                    >
+                      <option selected disabled>Application Type</option>
+                      <option value="newLicense">
+                        New License Applications
+                      </option>
+                      <option value="goodStanding">
+                        Goodstanding Applications
+                      </option>
+                      <option value="renewal">Renewed Applications</option>
+                      <option value="verification">
+                        Verification Applications
+                      </option>
+                    </select>
+                  </div>
 
-                    <div class="mb-3 xl:w-full ml-2">
-                      <select
-                        class="
-                          form-select
-                          appearance-none
-                          block
-                          w-full
-                          px-6
-                          ml-4
-                          py-2
-                          text-base
-                          font-normal
-                          text-gray-700
-                          bg-white bg-clip-padding bg-no-repeat
-                          border border-solid border-gray-300
-                          rounded
-                          transition
-                          ease-in-out
-                          focus:text-gray-700
-                          focus:bg-white
-                          focus:border-blue-600
-                          focus:outline-none
-                        "
-                        @change="filterAppStatus($event.target.value)"
-                        aria-label="Default select example"
+                  <div class="mb-3 xl:w-full ml-2">
+                    <select
+                      class="
+                        form-select
+                        appearance-none
+                        block
+                        w-full
+                        px-6
+                        ml-4
+                        py-2
+                        text-base
+                        font-normal
+                        text-gray-700
+                        bg-white bg-clip-padding bg-no-repeat
+                        border border-solid border-gray-300
+                        rounded
+                        transition
+                        ease-in-out
+                        focus:text-gray-700
+                        focus:bg-white
+                        focus:border-blue-600
+                        focus:outline-none
+                      "
+                      @change="filterAppStatus($event.target.value)"
+                      aria-label="Default select example"
+                    >
+                      <option selected disabled>Application Status</option>
+                      <option
+                        v-for="appStatus in applicationStatuses"
+                        :key="appStatus.id"
+                        :value="appStatus.name"
                       >
-                        <option selected disabled>Application Status</option>
-                        <option
-                          v-for="appStatus in applicationStatuses"
-                          :key="appStatus.id"
-                          :value="appStatus.name"
-                        >
-                          {{ appStatus.name }}
-                        </option>
-                      </select>
-                    </div>
+                        {{ appStatus.name }}
+                      </option>
+                    </select>
+                  </div>
 
-                    <div class="mb-3 xl:w-full ml-2">
-                      <select
-                        class="
-                          form-select
-                          appearance-none
-                          block
-                          w-full
-                          px-6
-                          ml-4
-                          py-2
-                          text-base
-                          font-normal
-                          text-gray-700
-                          bg-white bg-clip-padding bg-no-repeat
-                          border border-solid border-gray-300
-                          rounded
-                          transition
-                          ease-in-out
-                          focus:text-gray-700
-                          focus:bg-white
-                          focus:border-blue-600
-                          focus:outline-none
-                        "
-                        @change="filterGender($event.target.value)"
-                        aria-label="Default select example"
-                      >
-                        <option selected disabled>Gender</option>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                      </select>
-                    </div>
+                  <div class="mb-3 xl:w-full ml-2">
+                    <select
+                      class="
+                        form-select
+                        appearance-none
+                        block
+                        w-full
+                        px-6
+                        ml-4
+                        py-2
+                        text-base
+                        font-normal
+                        text-gray-700
+                        bg-white bg-clip-padding bg-no-repeat
+                        border border-solid border-gray-300
+                        rounded
+                        transition
+                        ease-in-out
+                        focus:text-gray-700
+                        focus:bg-white
+                        focus:border-blue-600
+                        focus:outline-none
+                      "
+                      @change="filterGender($event.target.value)"
+                      aria-label="Default select example"
+                    >
+                      <option selected disabled>Gender</option>
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                    </select>
+                  </div>
 
-                    <div class="mb-3 xl:w-full ml-2">
-                      <select
-                        class="
-                          form-select
-                          appearance-none
-                          block
-                          w-full
-                          px-6
-                          ml-4
-                          py-2
-                          text-base
-                          font-normal
-                          text-gray-700
-                          bg-white bg-clip-padding bg-no-repeat
-                          border border-solid border-gray-300
-                          rounded
-                          transition
-                          ease-in-out
-                          focus:text-gray-700
-                          focus:bg-white
-                          focus:border-blue-600
-                          focus:outline-none
-                        "
-                        @change="filterRegions($event.target.value)"
-                        aria-label="Default select example"
+                  <div class="mb-3 xl:w-full ml-2">
+                    <select
+                      class="
+                        form-select
+                        appearance-none
+                        block
+                        w-full
+                        px-6
+                        ml-4
+                        py-2
+                        text-base
+                        font-normal
+                        text-gray-700
+                        bg-white bg-clip-padding bg-no-repeat
+                        border border-solid border-gray-300
+                        rounded
+                        transition
+                        ease-in-out
+                        focus:text-gray-700
+                        focus:bg-white
+                        focus:border-blue-600
+                        focus:outline-none
+                      "
+                      @change="filterRegions($event.target.value)"
+                      aria-label="Default select example"
+                    >
+                      <option selected disabled>Region</option>
+                      <option value="all">All</option>
+                      <option
+                        v-for="region in regions"
+                        :value="region.name"
+                        :key="region.id"
                       >
-                        <option selected disabled>Region</option>
-                        <option value="all">All</option>
-                        <option
-                          v-for="region in regions"
-                          :value="region.name"
-                          :key="region.id"
-                        >
-                          {{ region.name }}
-                        </option>
-                      </select>
-                    </div>
+                        {{ region.name }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="flex justify-center mt-2">
+                  <label for="" class="ml-4">Certified Date</label>
+                  <div class="mb-3 xl:w-full ml-2">
+                    <label for="" class="ml-4">From</label>
+                    <input
+                      v-model="fromDate"
+                      type="date"
+                      class="
+                        appearance-none
+                        block
+                        w-full
+                        px-6
+                        ml-4
+                        py-2
+                        text-base
+                        font-normal
+                        text-gray-700
+                        bg-white bg-clip-padding bg-no-repeat
+                        border border-solid border-gray-300
+                        rounded
+                        transition
+                        ease-in-out
+                        focus:text-gray-700
+                        focus:bg-white
+                        focus:border-blue-600
+                        focus:outline-none
+                      "
+                      @change="filterDateFrom($event.target.value)"
+                      aria-label="Default select example"
+                    />
+                  </div>
+                  <div class="mb-3 xl:w-full ml-2">
+                    <label for="" class="ml-4"> To</label>
+                    <input
+                      type="date"
+                      class="
+                        appearance-none
+                        block
+                        w-full
+                        px-6
+                        ml-4
+                        py-2
+                        text-base
+                        font-normal
+                        text-gray-700
+                        bg-white bg-clip-padding bg-no-repeat
+                        border border-solid border-gray-300
+                        rounded
+                        transition
+                        ease-in-out
+                        focus:text-gray-700
+                        focus:bg-white
+                        focus:border-blue-600
+                        focus:outline-none
+                      "
+                      @change="filterDateTo($event.target.value)"
+                      aria-label="Default select example"
+                    />
                   </div>
                 </div>
               </div>
@@ -487,7 +592,7 @@
               <div class="flex">
                 <div class="ml-3">
                   <p class="text-gray-900 whitespace-no-wrap">
-                    {{ moment(item.IssuedDate).format("MMM DD, YYYY") }}
+                    {{ item.IssuedDate }}
                   </p>
                 </div>
               </div>
@@ -518,14 +623,9 @@ export default {
   components: {
     ReviewerNavBar,
     ReviewerSideBar,
-    VueTableLite,
+    VueTableLite
   },
-  computed: {
-    moment: () => moment,
-    getAllassignedToOthers() {
-      return store.getters["reviewer/getAssignedForEveryOneSearched"];
-    },
-  },
+
   setup() {
     const store = useStore();
     let allData = ref([]);
@@ -536,33 +636,27 @@ export default {
     let modalData = ref({ change: 0 });
     let tableData = reactive([]);
     const searchTerm = ref("");
-    let expertlevelCode = ref("");
-    let departmentValue = ref("");
-    let professionTypeValue = ref("");
-    let regionValue = ref("");
-    let genderValue = ref("");
-    let applicationStatusValue = ref("");
-    let startDateValue = ref("1900-01-01");
-    let endDateValue = ref("2100-01-01");
+    const searchTermProf = ref("");
+    let fromDate = ref("");
+    let toDate = ref("");
     let selectedApplicationType = ref("");
 
     let checked = ref({
       newLicense: true,
       renewal: true,
-      goodStanding: true,
+      goodStanding: true
     });
 
     let selectedApplication = ref({
       newLicense: true,
       renewal: false,
       goodStanding: false,
-      verification: false,
+      verification: false
     });
 
     let currentPage = ref(1);
     let totalCount = ref();
     let report = ref([]);
-    let selectBackgroundColor = ref("newLicense");
 
     let searchingState = ref(false);
 
@@ -572,13 +666,12 @@ export default {
     let paginationSize = ref(10);
     const paginationSizeList = [10, 25, 50, 100];
     let reportData = ref([]);
-    let reportForRegions = ref([]);
 
     let renewalData = ref([]);
     let newLicenseData = ref([]);
     let goodStandingData = ref([]);
 
-    const pageChanged = (event) => {
+    const pageChanged = event => {
       currentPage.value = event;
       indexValue.value = event - 1;
       paginateReport(reportData.value, indexValue.value);
@@ -591,21 +684,21 @@ export default {
 
     const handleCheckBoxClick = (type, event) => {
       if (!event.target.checked && type == "renewal") {
-        let filterValue = reportData.value.filter((report) => {
+        let filterValue = reportData.value.filter(report => {
           return !report.renewalCode;
         });
         paginateReport(filterValue, 0);
         reportData.value = filterValue;
         allData.value = filterValue;
       } else if (!event.target.checked && type == "newLicense") {
-        let filterValue = reportData.value.filter((report) => {
+        let filterValue = reportData.value.filter(report => {
           return !report.newLicenseCode;
         });
         paginateReport(filterValue, 0);
         reportData.value = filterValue;
         allData.value = filterValue;
       } else if (!event.target.checked && type == "goodStanding") {
-        let filterValue = reportData.value.filter((report) => {
+        let filterValue = reportData.value.filter(report => {
           return !report.goodStandingCode;
         });
         paginateReport(filterValue, 0);
@@ -636,7 +729,7 @@ export default {
     let professions = ref([]);
     let expertLevels = ref([
       { name: "Federal", id: 3, code: "FED" },
-      { name: "Regional", id: 4, code: "REG" },
+      { name: "Regional", id: 4, code: "REG" }
     ]);
     let regions = ref([]);
     let zones = ref([]);
@@ -654,7 +747,7 @@ export default {
       status: "",
       startDate: "",
       endDate: "",
-      all: "",
+      all: ""
     });
 
     let loader = ref(false);
@@ -664,14 +757,14 @@ export default {
       userTable.value.isLoading = false;
       let elements = document.getElementsByClassName("edit-btn");
 
-      Array.prototype.forEach.call(elements, function (element) {
+      Array.prototype.forEach.call(elements, function(element) {
         if (element.classList.contains("edit-btn")) {
           element.addEventListener("click", rowClicked());
         }
       });
     };
 
-    const rowClicked = (row) => {
+    const rowClicked = row => {
       if (row != undefined) {
         row = JSON.parse(JSON.stringify(row));
         modalData.value.change++;
@@ -679,16 +772,15 @@ export default {
       }
     };
 
-    const changeBackgroundColor = (title) => {
-      selectBackgroundColor.value = title;
-    };
-
     const fetchNewLicenseReport = () => {
-      store.dispatch("report/getNewLicenseReport").then((res) => {
+      store.dispatch("report/getNewLicenseReport").then(res => {
         newLicenseData.value = res.data.data;
         reportData.value.push(...res.data.data);
 
-        res.data.data.forEach((element) => {
+        res.data.data.forEach(element => {
+          let prof = element.licenseProfessionalTypes.map(prof => {
+            return prof.professionalTypes ? prof.professionalTypes.name : "";
+          });
           tableData.push({
             id: element.id ? element.id : "",
             FirstName: element.name ? element.name : "",
@@ -702,15 +794,10 @@ export default {
               ? element.certifiedDate.slice(0, 10)
               : "",
 
-            ProfessionalType:
-              element.licenseProfessionalTypes &&
-              element.licenseProfessionalTypes[0] &&
-              element.licenseProfessionalTypes[0].professionalTypes
-                ? element.licenseProfessionalTypes[0].professionalTypes.name
-                : "",
+            ProfessionalType: prof ? prof.join(",") : "",
             Gender: element.gender ? element.gender : "",
             OrganizationalUnit: element.region ? element.region.name : "",
-            data: element ? element : {},
+            data: element ? element : {}
           });
         });
         allData.value = tableData;
@@ -721,65 +808,65 @@ export default {
               field: "id",
               width: "5%",
               sortable: true,
-              isKey: true,
+              isKey: true
             },
             {
               label: "First Name",
               field: "FirstName",
               width: "10%",
-              sortable: true,
+              sortable: true
             },
             {
               label: "Father Name",
               field: "MiddleName",
               width: "10%",
-              sortable: true,
+              sortable: true
             },
             {
               label: "Grandfather Name",
               field: "LastName",
               width: "10%",
-              sortable: true,
+              sortable: true
             },
             {
               label: "License Status",
               field: "LicenseStatus",
               width: "5%",
-              sortable: true,
+              sortable: true
             },
             {
               label: "Professional Type",
               field: "ProfessionalType",
               width: "35%",
-              sortable: true,
+              sortable: true
             },
             {
               label: "License Number",
               field: "LicenseNumber",
               width: "5%",
-              sortable: true,
+              sortable: true
             },
             {
               label: "Issued Date",
               field: "IssuedDate",
               width: "5%",
-              sortable: true,
+              sortable: true
             },
             {
               label: "Gender",
               field: "Gender",
               width: "5%",
-              sortable: true,
+              sortable: true
             },
             {
               label: "Organizational Unit",
               field: "OrganizationalUnit",
               width: "5%",
-              sortable: true,
-            },
+              sortable: true
+            }
           ],
           rows: computed(() => {
-            return tableData.filter((x) =>
+            return tableData.filter(x =>
               x.FirstName
                 ? x.FirstName.toLowerCase().includes(
                     searchTerm.value.toLowerCase()
@@ -798,12 +885,12 @@ export default {
           totalRecordCount: allData.value.length,
           sortable: {
             order: "id",
-            sort: "asc",
-          },
+            sort: "asc"
+          }
         };
       });
     };
-    const handleFilterByApplication = (applicationType) => {
+    const handleFilterByApplication = applicationType => {
       switch (applicationType) {
         case "newLicense": {
           userTable.value.isLoading = true;
@@ -836,11 +923,14 @@ export default {
       }
     };
     const fetchRenewalReport = () => {
-      store.dispatch("report/getRenewalReport").then((res) => {
+      store.dispatch("report/getRenewalReport").then(res => {
         newLicenseData.value = res.data.data;
         reportData.value.push(...res.data.data);
 
-        res.data.data.forEach((element) => {
+        res.data.data.forEach(element => {
+          let prof = element.licenseProfessionalTypes.map(prof => {
+            return prof.professionalTypes ? prof.professionalTypes.name : "";
+          });
           tableData.push({
             id: element.id ? element.id : "",
             FirstName: element.name ? element.name : "",
@@ -854,15 +944,10 @@ export default {
               ? element.certifiedDate.slice(0, 10)
               : "",
 
-            ProfessionalType:
-              element.licenseProfessionalTypes &&
-              element.licenseProfessionalTypes[0] &&
-              element.licenseProfessionalTypes[0].professionalTypes
-                ? element.licenseProfessionalTypes[0].professionalTypes.name
-                : "",
+            ProfessionalType: prof ? prof.join(" , ") : "",
             Gender: element.gender ? element.gender : "",
             OrganizationalUnit: element.region ? element.region.name : "",
-            data: element ? element : {},
+            data: element ? element : {}
           });
         });
         allData.value = tableData;
@@ -873,65 +958,65 @@ export default {
               field: "id",
               width: "5%",
               sortable: true,
-              isKey: true,
+              isKey: true
             },
             {
               label: "First Name",
               field: "FirstName",
               width: "10%",
-              sortable: true,
+              sortable: true
             },
             {
               label: "Father Name",
               field: "MiddleName",
               width: "10%",
-              sortable: true,
+              sortable: true
             },
             {
               label: "Grandfather Name",
               field: "LastName",
               width: "10%",
-              sortable: true,
+              sortable: true
             },
             {
               label: "License Status",
               field: "LicenseStatus",
               width: "5%",
-              sortable: true,
+              sortable: true
             },
             {
               label: "Professional Type",
               field: "ProfessionalType",
               width: "35%",
-              sortable: true,
+              sortable: true
             },
             {
               label: "License Number",
               field: "LicenseNumber",
               width: "5%",
-              sortable: true,
+              sortable: true
             },
             {
               label: "Issued Date",
               field: "IssuedDate",
               width: "5%",
-              sortable: true,
+              sortable: true
             },
             {
               label: "Gender",
               field: "Gender",
               width: "5%",
-              sortable: true,
+              sortable: true
             },
             {
               label: "Organizational Unit",
               field: "OrganizationalUnit",
               width: "5%",
-              sortable: true,
-            },
+              sortable: true
+            }
           ],
           rows: computed(() => {
-            return tableData.filter((x) =>
+            return tableData.filter(x =>
               x.FirstName
                 ? x.FirstName.toLowerCase().includes(
                     searchTerm.value.toLowerCase()
@@ -950,14 +1035,14 @@ export default {
           totalRecordCount: allData.value.length,
           sortable: {
             order: "id",
-            sort: "asc",
-          },
+            sort: "asc"
+          }
         };
       });
     };
 
     const fetchVerificationReport = () => {
-      store.dispatch("report/getVerificationReport").then((res) => {
+      store.dispatch("report/getVerificationReport").then(res => {
         if (res.data.message == "No verifications found!") {
           userTable.value = {
             columns: [
@@ -966,74 +1051,74 @@ export default {
                 field: "id",
                 width: "5%",
                 sortable: true,
-                isKey: true,
+                isKey: true
               },
               {
                 label: "First Name",
                 field: "FirstName",
                 width: "10%",
-                sortable: true,
+                sortable: true
               },
               {
                 label: "Father Name",
                 field: "MiddleName",
                 width: "10%",
-                sortable: true,
+                sortable: true
               },
               {
                 label: "Grandfather Name",
                 field: "LastName",
                 width: "10%",
-                sortable: true,
+                sortable: true
               },
               {
                 label: "License Status",
                 field: "LicenseStatus",
                 width: "5%",
-                sortable: true,
+                sortable: true
               },
               {
                 label: "Professional Type",
                 field: "ProfessionalType",
                 width: "35%",
-                sortable: true,
+                sortable: true
               },
               {
                 label: "License Number",
                 field: "LicenseNumber",
                 width: "5%",
-                sortable: true,
+                sortable: true
               },
               {
                 label: "Issued Date",
                 field: "IssuedDate",
                 width: "5%",
-                sortable: true,
+                sortable: true
               },
               {
                 label: "Gender",
                 field: "Gender",
                 width: "5%",
-                sortable: true,
+                sortable: true
               },
               {
                 label: "Organizational Unit",
                 field: "OrganizationalUnit",
                 width: "5%",
-                sortable: true,
-              },
+                sortable: true
+              }
             ],
             rows: [],
             totalRecordCount: 0,
             sortable: {
               order: "id",
-              sort: "asc",
-            },
+              sort: "asc"
+            }
           };
         } else {
           newLicenseData.value = res.data.data;
           reportData.value.push(...res.data.data);
-          res.data.data.forEach((element) => {
+          res.data.data.forEach(element => {
             tableData.push({
               id: element.id ? element.id : "",
               FirstName: element.name ? element.name : "",
@@ -1057,7 +1142,7 @@ export default {
                   : "",
               Gender: element.gender ? element.gender : "",
               OrganizationalUnit: element.region ? element.region.name : "",
-              data: element ? element : {},
+              data: element ? element : {}
             });
           });
           allData.value = tableData;
@@ -1068,65 +1153,65 @@ export default {
                 field: "id",
                 width: "5%",
                 sortable: true,
-                isKey: true,
+                isKey: true
               },
               {
                 label: "First Name",
                 field: "FirstName",
                 width: "10%",
-                sortable: true,
+                sortable: true
               },
               {
                 label: "Father Name",
                 field: "MiddleName",
                 width: "10%",
-                sortable: true,
+                sortable: true
               },
               {
                 label: "Grandfather Name",
                 field: "LastName",
                 width: "10%",
-                sortable: true,
+                sortable: true
               },
               {
                 label: "License Status",
                 field: "LicenseStatus",
                 width: "5%",
-                sortable: true,
+                sortable: true
               },
               {
                 label: "Professional Type",
                 field: "ProfessionalType",
                 width: "35%",
-                sortable: true,
+                sortable: true
               },
               {
                 label: "License Number",
                 field: "LicenseNumber",
                 width: "5%",
-                sortable: true,
+                sortable: true
               },
               {
                 label: "Issued Date",
                 field: "IssuedDate",
                 width: "5%",
-                sortable: true,
+                sortable: true
               },
               {
                 label: "Gender",
                 field: "Gender",
                 width: "5%",
-                sortable: true,
+                sortable: true
               },
               {
                 label: "Organizational Unit",
                 field: "OrganizationalUnit",
                 width: "5%",
-                sortable: true,
-              },
+                sortable: true
+              }
             ],
             rows: computed(() => {
-              return tableData.filter((x) =>
+              return tableData.filter(x =>
                 x.FirstName
                   ? x.FirstName.toLowerCase().includes(
                       searchTerm.value.toLowerCase()
@@ -1145,18 +1230,21 @@ export default {
             totalRecordCount: allData.value.length,
             sortable: {
               order: "id",
-              sort: "asc",
-            },
+              sort: "asc"
+            }
           };
         }
       });
     };
     const fetchGoodstandingReport = () => {
-      store.dispatch("report/getGoodstandingReport").then((res) => {
+      store.dispatch("report/getGoodstandingReport").then(res => {
         newLicenseData.value = res.data.data;
         reportData.value.push(...res.data.data);
 
-        res.data.data.forEach((element) => {
+        res.data.data.forEach(element => {
+          let prof = element.licenseProfessionalTypes.map(prof => {
+            return prof.professionalTypes ? prof.professionalTypes.name : "";
+          });
           tableData.push({
             id: element.id ? element.id : "",
             FirstName: element.name ? element.name : "",
@@ -1172,15 +1260,10 @@ export default {
               ? element.certifiedDate.slice(0, 10)
               : "",
 
-            ProfessionalType:
-              element.licenseProfessionalTypes &&
-              element.licenseProfessionalTypes[0] &&
-              element.licenseProfessionalTypes[0].professionalTypes
-                ? element.licenseProfessionalTypes[0].professionalTypes.name
-                : "",
+            ProfessionalType: prof ? prof.join(" , ") : "",
             Gender: element.gender ? element.gender : "",
             OrganizationalUnit: element.region ? element.region.name : "",
-            data: element ? element : {},
+            data: element ? element : {}
           });
         });
         allData.value = tableData;
@@ -1191,65 +1274,65 @@ export default {
               field: "id",
               width: "5%",
               sortable: true,
-              isKey: true,
+              isKey: true
             },
             {
               label: "First Name",
               field: "FirstName",
               width: "10%",
-              sortable: true,
+              sortable: true
             },
             {
               label: "Father Name",
               field: "MiddleName",
               width: "10%",
-              sortable: true,
+              sortable: true
             },
             {
               label: "Grandfather Name",
               field: "LastName",
               width: "10%",
-              sortable: true,
+              sortable: true
             },
             {
               label: "License Status",
               field: "LicenseStatus",
               width: "5%",
-              sortable: true,
+              sortable: true
             },
             {
               label: "Professional Type",
               field: "ProfessionalType",
               width: "35%",
-              sortable: true,
+              sortable: true
             },
             {
               label: "License Number",
               field: "LicenseNumber",
               width: "5%",
-              sortable: true,
+              sortable: true
             },
             {
               label: "Issued Date",
               field: "IssuedDate",
               width: "5%",
-              sortable: true,
+              sortable: true
             },
             {
               label: "Gender",
               field: "Gender",
               width: "5%",
-              sortable: true,
+              sortable: true
             },
             {
               label: "Organizational Unit",
               field: "OrganizationalUnit",
               width: "5%",
-              sortable: true,
-            },
+              sortable: true
+            }
           ],
           rows: computed(() => {
-            return tableData.filter((x) =>
+            return tableData.filter(x =>
               x.FirstName
                 ? x.FirstName.toLowerCase().includes(
                     searchTerm.value.toLowerCase()
@@ -1268,8 +1351,8 @@ export default {
           totalRecordCount: allData.value.length,
           sortable: {
             order: "id",
-            sort: "asc",
-          },
+            sort: "asc"
+          }
         };
       });
     };
@@ -1283,37 +1366,29 @@ export default {
     };
 
     const fetchDepartmentType = () => {
-      store.dispatch("goodstanding/getDepartmentType").then((res) => {
+      store.dispatch("goodstanding/getDepartmentType").then(res => {
         departments.value = res.data.data;
       });
     };
 
-    const fetchProfessionType = (deptId) => {
-      store
-        .dispatch("goodstanding/getProfessionalTypes", deptId)
-        .then((res) => {
-          professions.value = res.data.data;
-        });
-    };
-
     const fetchRegion = () => {
-      store.dispatch("report/getRegions").then((res) => {
+      store.dispatch("report/getRegions").then(res => {
         regions.value = res.data.data;
       });
     };
-    const fetchZones = (regionID) => {
-      store.dispatch("report/getZones", regionID).then((res) => {
+    const fetchZones = regionID => {
+      store.dispatch("report/getZones", regionID).then(res => {
         zones.value = res.data.data;
       });
     };
-    const fetchWoredas = (zoneID) => {
-      store.dispatch("report/getWoredas", zoneID).then((res) => {
+    const fetchWoredas = zoneID => {
+      store.dispatch("report/getWoredas", zoneID).then(res => {
         woredas.value = res.data.data;
       });
     };
     const fetchApplicationStatuses = () => {
-      store.dispatch("report/getapplicationStatuses").then((res) => {
-        applicationStatuses.value = res.data.data.filter((application) => {
+      store.dispatch("report/getapplicationStatuses").then(res => {
+        applicationStatuses.value = res.data.data.filter(application => {
           return (
             application.code == "APP" ||
             application.code == "DEC" ||
@@ -1325,7 +1400,8 @@ export default {
 
     const exportTable = () => {
       var blob = new Blob([document.getElementById("printable").innerHTML], {
-        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8",
+        type:
+          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
       });
       let date = new Date().toISOString();
       saveAs(blob, date.slice(0, 10) + " Report.xls");
@@ -1333,7 +1409,7 @@ export default {
 
     const searchByName = () => {
       searchingState.value = true;
-      let filterByName = allData.value.filter((report) => {
+      let filterByName = allData.value.filter(report => {
         return report.name.toLowerCase().includes(searchedValue.value) ||
           report.fatherName.toLowerCase().includes(searchedValue.value) ||
           report.grandFatherName.toLowerCase().includes(searchedValue.value) ||
@@ -1353,115 +1429,49 @@ export default {
       reportData.value = filterByName;
     };
 
-    const clearSearch = () => {
-      searchingState.value = false;
-      searchedValue.value = "";
-      reportData.value = allData.value;
-      paginateReport(reportData.value, 0);
+    const filterDateFrom = date => {
+      fromDate.value = date;
+      if (toDate.value.length > 0) {
+        tableData = allData.value.filter(stat => {
+          return (
+            moment(stat.IssuedDate).isSameOrAfter(fromDate.value) &&
+            moment(stat.IssuedDate).isSameOrBefore(toDate.value)
+          );
+        });
+        userTable.value.rows = computed(() => tableData);
+      } else
+        tableData = allData.value.filter(stat => {
+          return moment(stat.IssuedDate).isSameOrAfter(fromDate.value);
+        });
+      userTable.value.rows = computed(() => tableData);
     };
 
-    const filterProfessionType = (profType) => {
-      professionTypeValue.value = profType;
-      filterApplication();
-    };
-    const filterDpartmentType = (department) => {
-      if (department) {
-        departmentValue.value = department.name;
-        professionTypeValue.value = "";
-        filterApplication();
-        fetchProfessionType(department.id);
-      } else {
-        departmentValue.value = "";
-        professionTypeValue.value = "";
-        filterApplication();
+    const filterDateTo = date => {
+      toDate.value = date;
+      if (fromDate.value.length > 0) {
+        tableData = allData.value.filter(stat => {
+          return (
+            moment(stat.IssuedDate).isSameOrBefore(toDate.value) &&
+            moment(stat.IssuedDate).isSameOrAfter(fromDate.value)
+          );
+        });
+        userTable.value.rows = computed(() => tableData);
       }
     };
 
-    const filterExpertLevel = (code) => {
-      expertlevelCode.value = code;
-      filterApplication();
-    };
-
-    const filterRegions = (name) => {
+    const filterRegions = name => {
       if (name == "all") {
         tableData = allData.value;
         userTable.value.rows = computed(() => tableData);
       } else {
-        tableData = allData.value.filter((stat) => {
+        tableData = allData.value.filter(stat => {
           return stat.OrganizationalUnit.toLowerCase() == name.toLowerCase();
         });
         userTable.value.rows = computed(() => tableData);
       }
     };
 
-    const filterRegionalApplication = () => {
-      let filterRegion = reportForRegions.value.filter((report) => {
-        return report.region.name.includes(regionValue.value);
-      });
-      paginateReport(filterRegion, 0);
-      reportData.value = filterRegion;
-    };
-    const filterApplication = () => {
-      let filterValue = allData.value.filter((report) => {
-        return genderValue.value
-          ? report.gender === genderValue.value &&
-              report.applicationStatus.name.includes(
-                applicationStatusValue.value
-              ) &&
-              report.licenseProfessionalTypes[0].professionalTypes.department.name.includes(
-                departmentValue.value
-              ) &&
-              report.licenseProfessionalTypes[0].professionalTypes.name.includes(
-                professionTypeValue.value
-              ) &&
-              report.expertLevels.code.includes(expertlevelCode.value) &&
-              !moment(startDateValue.value).isAfter(
-                report.applicationStatus.updatedAt
-              ) &&
-              moment(endDateValue.value).isSameOrAfter(
-                report.applicationStatus.updatedAt
-              )
-          : report.gender.includes(genderValue.value) &&
-              report.applicationStatus.name.includes(
-                applicationStatusValue.value
-              ) &&
-              report.licenseProfessionalTypes[0].professionalTypes.department.name.includes(
-                departmentValue.value
-              ) &&
-              report.licenseProfessionalTypes[0].professionalTypes.name.includes(
-                professionTypeValue.value
-              ) &&
-              report.expertLevels.code.includes(expertlevelCode.value) &&
-              !moment(startDateValue.value).isAfter(
-                report.applicationStatus.updatedAt
-              ) &&
-              moment(endDateValue.value).isSameOrAfter(
-                report.applicationStatus.updatedAt
-              );
-      });
-      paginateReport(filterValue, 0);
-      reportData.value = filterValue;
-      reportForRegions.value = reportData.value;
-    };
-    const filterProfession = (profType) => {
-      var tableFilter = [];
-      tableFilter = report.value;
-      var tableFilter2 = [];
-      for (var i = 0; i < tableFilter.length; i++) {
-        if (tableFilter[i].professionalTypes != null) {
-          tableFilter2.push(tableFilter[i]);
-        }
-      }
-      if (profType == null) {
-        return;
-      } else {
-        report.value = tableFilter2.filter(function (e) {
-          return e.professionalTypes.name == profType;
-        });
-      }
-    };
-
-    const filterZone = (zone) => {
+    const filterZone = zone => {
       fetchWoredas(zone.id);
       var tableFilter = [];
       tableFilter = report.value;
@@ -1474,39 +1484,34 @@ export default {
       if (zone.name == null) {
         report.value = store.getter["report/getReport"];
       } else {
-        report.value = tableFilter2.filter(function (e) {
+        report.value = tableFilter2.filter(function(e) {
           return e.zone.name == zone.name;
         });
       }
     };
-    const filterWoreda = (woreda) => {
-      var tableFilter = [];
-      tableFilter = report.value;
-      var tableFilter2 = [];
-      for (var i = 0; i < tableFilter.length; i++) {
-        if (tableFilter[i].woreda.name != null) {
-          tableFilter2.push(tableFilter[i]);
-        }
-      }
-      if (woreda.name == null) {
-        report.value = store.getter["report/getReport"];
-      } else {
-        report.value = tableFilter2.filter(function (e) {
-          return e.woreda.name == woreda.name;
-        });
-      }
-    };
 
-    const filterAppStatus = (status) => {
-      tableData = allData.value.filter((stat) => {
+    const filterAppStatus = status => {
+      tableData = allData.value.filter(stat => {
         return stat.LicenseStatus.toLowerCase() == status.toLowerCase();
       });
       userTable.value.rows = computed(() => tableData);
     };
 
-    const filterGender = (status) => {
-      tableData = allData.value.filter((stat) => {
+    const filterGender = status => {
+      tableData = allData.value.filter(stat => {
         return stat.Gender.toLowerCase() == status.toLowerCase();
+      });
+      userTable.value.rows = computed(() => tableData);
+    };
+
+    const filterProfession = () => {
+      tableData = allData.value.filter(stat => {
+        return stat.data && stat.data.licenseProfessionalTypes
+          ? stat.data.licenseProfessionalTypes.find(lp =>
+              lp.professionalTypes.name
+                .toLowerCase().includes(searchTermProf.value.toLowerCase())
+            )
+          : "";
       });
       userTable.value.rows = computed(() => tableData);
     };
@@ -1530,7 +1535,11 @@ export default {
       fetchApplicationStatuses,
       professions,
       regions,
+      filterDateFrom,
+      filterDateTo,
       zones,
+      fromDate,
+      toDate,
       woredas,
       applicationStatuses,
       filter,
@@ -1539,27 +1548,21 @@ export default {
       filterAppStatus,
       filterZone,
       selectedApplication,
-      changeBackgroundColor,
       currentPage,
       totalCount,
       paginationSize,
       paginationSizeList,
       pageChanged,
       handlePagSize,
-      selectBackgroundColor,
-      filterProfessionType,
       checked,
       handleCheckBoxClick,
       selectedApplicationType,
       handleFilterByApplication,
       departments,
-      filterDpartmentType,
       expertLevels,
-      filterExpertLevel,
       filterRegions,
       searchByName,
       searchedValue,
-      clearSearch,
       tableLoadingFinish,
       rowClicked,
       searchingState,
@@ -1567,9 +1570,10 @@ export default {
       searchData,
       userTable,
       searchTerm,
+      searchTermProf,
       modalData,
-      expertLevelFilter,
+      expertLevelFilter
     };
-  },
+  }
 };
 </script>
