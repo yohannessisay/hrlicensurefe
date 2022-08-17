@@ -21,22 +21,16 @@
             </div>
           </transition>
           <div
-            v-if="
-              this.applicantType == 1 &&
-                this.displayPayrollOption &&
-                this.eduLevel == 'diploma'
-            "
+        
           >
             <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 2">
-                <Passport
+              <div >
+                <Upload v-if="this.activeState == 2"
                   :activeState="2"
-                  @changeActiveState="activeState++"
-                  @changeActiveStateMinus="activeState--"
                 />
               </div>
             </transition>
-            <transition name="fade" mode="out-in">
+            <!-- <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 3">
                 <HealthExamCert
                   :activeState="3"
@@ -116,9 +110,9 @@
                   @changeActiveStateMinus="activeState--"
                 />
               </div>
-            </transition>
+            </transition> -->
           </div>
-          <div
+          <!-- <div
             v-if="
               this.applicantType == 1 &&
                 this.displayPayrollOption &&
@@ -1106,7 +1100,7 @@
                 />
               </div>
             </transition>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -1117,6 +1111,8 @@
 import Navigation from "@/views/Navigation";
 
 import Institution from "./Institution.vue";
+import Upload from "./Upload.vue";
+
 import Passport from "./Passport.vue";
 import HealthExamCert from "./HealthExamCert.vue";
 
@@ -1188,6 +1184,7 @@ export default {
     Navigation,
     Institution,
     Passport,
+    Upload,
     HealthExamCert,
     HERQA,
     ProfessionalDocCertificate,

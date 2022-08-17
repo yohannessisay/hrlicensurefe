@@ -80,6 +80,9 @@ module.exports = {
       },
       lightGrey: {
         100: "#f3f4f6"
+      },
+      green:{
+        100:"#00FF00"
       }
     },
     extend: {
