@@ -18,37 +18,7 @@
                 <h2 class="text-2xl font-semibold leading-tight">
                   Unassigned Applications
                 </h2>
-                <input
-                  class="
-                    form-check-input
-                    appearance-none
-                    h-5
-                    w-5
-                    border border-gray-300
-                    rounded-sm
-                    bg-white
-                    checked:bg-blue-600 checked:border-blue-600
-                    focus:outline-none
-                    transition
-                    duration-200
-                    mt-1
-                    align-top
-                    bg-no-repeat bg-center bg-contain
-                    float-left
-                    mr-2
-                    cursor-pointer
-                  "
-                  @change="includeFromOthers((include = !include))"
-                  type="checkbox"
-                  value=""
-                  id="flexCheckDefault"
-                />
-                <label
-                  class="form-check-label inline-block text-gray-800 mt-1"
-                  for="flexCheckDefault"
-                >
-                  Include From Other Regions
-                </label>
+                
               </div>
               <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
                 <div

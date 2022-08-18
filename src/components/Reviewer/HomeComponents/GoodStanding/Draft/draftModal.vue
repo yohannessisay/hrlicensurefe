@@ -436,6 +436,7 @@
             rounded-b-md
           "
         >
+          <a :href="'/admin/goodStanding/evaluate/' + licenseId">
           <button
             type="button"
             class="
@@ -463,6 +464,7 @@
           >
             Continue Evaluating
           </button>
+          </a>
           <button
             type="button"
             class="
@@ -497,7 +499,7 @@
 
 <script>
 import { useStore } from "vuex";
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted, watch,computed } from "vue";
 import moment from "moment";
 import Loading from "vue3-loading-overlay";
 // Import stylesheet
@@ -519,7 +521,7 @@ const toast = useToast();
     let showOptions = ref(false);
     let reviewer = ref({ id: "", name: "", expertLevel: "", role: "" });
     let adminId = +localStorage.getItem("adminId");
-
+  const licenseId = computed(() => props.modalDataId.id);
     let transfer = ref({
       reviewerId: "",
       licenseId: "",
@@ -647,7 +649,7 @@ const toast = useToast();
 
     const check = () => {
       store
-        .dispatch("reviewer/getNewLicenseApplication", props.modalDataId.id)
+        .dispatch("reviewer/getGoodStandingApplication", props.modalDataId.id)
         .then((res) => {
           if (res.data.status == "Success") {
             result = res.data.data;
@@ -675,14 +677,13 @@ const toast = useToast();
             modalData.value.email = result.applicant.emailAddress
               ? result.applicant.emailAddress
               : "-----";
-            modalData.value.instName = result.education.institution?.name
+            modalData.value.instName = result.education&&result.education.institution
               ? result.education.institution?.name
               : "-----";
-            modalData.value.instType = result.education.institution
-              ?.institutionType
-              ? result.education.institution?.institutionType.name.name
+            modalData.value.instType = result.education&&result.education.institution&&result.education.institution.institutionType
+              ? result.education.institution?.institutionType.name
               : "-----";
-            modalData.value.department = result.education.department.name
+            modalData.value.department = result.education&&result.education.department
               ? result.education?.department.name
               : "-----";
             modalData.value.profile = result.profile;
@@ -712,6 +713,7 @@ const toast = useToast();
       isLoading,
       isLoadingStart,
       fullPage,
+      licenseId,
       modalData,
       transferReviewer,
       onCancel,

@@ -1,5 +1,6 @@
 <template>
-  <div class="
+  <div
+    class="
       modal
       fade
       fixed
@@ -10,15 +11,24 @@
       h-full
       outline-none
       overflow-x-hidden overflow-y-auto
-    " id="generatePdf" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="generatePdfLabel" aria-hidden="true">
-    <div class="
+    "
+    id="generatePdf"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    tabindex="-1"
+    aria-labelledby="generatePdfLabel"
+    aria-hidden="true"
+  >
+    <div
+      class="
         modal-dialog modal-dialog-centered modal-xl
         relative
         w-auto
         pointer-events-none
-      ">
-      <div class="
+      "
+    >
+      <div
+        class="
           modal-content
           border-none
           shadow-lg
@@ -30,79 +40,104 @@
           rounded-md
           outline-none
           text-current
-        ">
-        <div class="
+        "
+      >
+        <div
+          class="
             modal-header
             flex flex-shrink-0
             items-center
             justify-between
             p-2
             rounded-t-md
-          "></div>
+          "
+        ></div>
 
         <div class="modal-body relative p-4">
           <div class="container px-6 mx-auto">
             <section class="text-gray-800">
               <div class="flex justify-center">
                 <div class="text-center lg:max-w-3xl md:max-w-xl">
-                  <h2 class="text-2xl font-bold mb-8 px-6">
-                    Generate
-                    <span class="text-2xl font-bold">{{
-                        modalData.name ? modalData.name : ""
-                    }}</span>
-                    's License Data
-                  </h2>
+           
                 </div>
               </div>
               <div class="vld-parent">
-                <loading :active="isLoading" :can-cancel="true" :on-cancel="onCancel" :is-full-page="fullPage"
-                  :color="'#2F639D'" :opacity="0.7"></loading>
+                <loading
+                  :active="isLoading"
+                  :can-cancel="true"
+                  :on-cancel="onCancel"
+                  :is-full-page="fullPage"
+                  :color="'#2F639D'"
+                  :opacity="0.7"
+                ></loading>
                 <div class="flex flex-wrap">
                   <div class="grow-0 shrink-0 basis-auto w-full">
                     <div>
                       <span>
                         <span v-if="isUserCertified && myRegion">
-                          <div v-if="
-                            applicationStatus !== 'CANC' &&
-                            applicationStatus !== 'SUSP' &&
-                            !showActionLoading
-                          "></div>
+                          <div
+                            v-if="
+                              applicationStatus !== 'CANC' &&
+                              applicationStatus !== 'SUSP' &&
+                              !showActionLoading
+                            "
+                          ></div>
 
-                          <div v-if="modalData" class="
+                          <div
+                            v-if="modalData"
+                            class="
                               bg-lightBlueB-200
                               flex
                               items-center
                               justify-center
-                            ">
+                            "
+                          >
                             <div class="w-screen">
-                              <div class="
+                              <div
+                                class="
                                   flex flex-col
                                   w-full
                                   bg-white
                                   blue-box-shadow-light
                                   rounded
-                                ">
+                                  justify-center
+                                  items-center
+                                "
+                              >
                                 <div>
-                                  <Title message="በኢትዮፕያ ፌደራላዊ ዴሞክራሲያዊ ሪፐብሊክ" />
-                                  <Title message="Federal Democratic Republic Ethiopia" />
+                                  <h2 class="font-bold">
+                                    በኢትዮፕያ ፌደራላዊ ዴሞክራሲያዊ ሪፐብሊክ
+                                  </h2>
+                                  <h2 class="font-bold">
+                                    Federal Democratic Republic Ethiopia
+                                  </h2>
                                 </div>
                                 <span class="mt-1">
-                                  <Title message="የጤና ሚኒስቴር" />
-                                  <Title message="Ministry of Health" />
+                                  <h2 class="font-bold">የጤና ሚኒስቴር</h2>
+                                  <h2 class="font-bold">Ministry of Health</h2>
                                 </span>
 
                                 <div class="flex">
-                                  <div class="
+                                  <div
+                                    class="
                                       flex flex-col
                                       mb-medium
                                       ml-2
                                       w-1/2
                                       mr-12
-                                    ">
-                                    <Title message="የጤና ባለሙያዎች የሙያ ምዝገባና ፈቃድ የምስከር ወረቀት" />
+                                    "
+                                  >
+                                    <h2 class="font-bold">
+                                      የጤና ባለሙያዎች የሙያ ምዝገባና ፈቃድ የምስከር ወረቀት
+                                    </h2>
                                   </div>
-                                  <div class="flex flex-col mb-medium w-1/2 mr-12">
-                                    <Title message="HEALTH PROFFESSIONALS REGISTRATION AND" />
+                                  <div
+                                    class="flex flex-col mb-medium w-1/2 mr-12"
+                                  >
+                                    <h2 class="font-bold">
+                                      Health Professionals Registration and
+                                      Certification
+                                    </h2>
                                   </div>
                                 </div>
                                 <div class="flex">
@@ -190,158 +225,185 @@
                                 </div>
 
                                 <div class="flex">
-                                  <div class="flex flex-col w-1/2 mr-12">
-                                    <h3 class="underline ml-4">
-                                      <b v-if="modalData.profile">{{
+                                  <div
+                                    class="flex flex-row w-1/2 mr-64"
+                                    style="margin-left: -100px"
+                                  >
+                                    <h3 class="underline">
+                                      <b
+                                        v-if="modalData.profile"
+                                        class="text-yellow-300"
+                                        >{{
                                           modalData.profile.alternativeName
                                             ? modalData.profile.alternativeName
                                             : ""
-                                      }}
-                                        {{
-                                            modalData.profile
-                                              .alternativeFatherName
-                                              ? modalData.profile
-                                                .alternativeFatherName
-                                              : ""
                                         }}
                                         {{
-                                            modalData.profile
-                                              .alternativeGrandFatherName
-                                              ? modalData.profile
+                                          modalData.profile
+                                            .alternativeFatherName
+                                            ? modalData.profile
+                                                .alternativeFatherName
+                                            : ""
+                                        }}
+                                        {{
+                                          modalData.profile
+                                            .alternativeGrandFatherName
+                                            ? modalData.profile
                                                 .alternativeGrandFatherName
-                                              : ""
-                                        }}</b>
+                                            : ""
+                                        }}</b
+                                      >
                                     </h3>
                                   </div>
-                                  <div class="flex flex-col w-1/2 mr-12">
-                                    <br />
-                                    <h3 class="underline ml-4 mb-4">
-                                      <b>{{
+                                  <div class="flex flex-row w-1/2 ml-24">
+                                    <h4 class="underline">
+                                      <b class="text-yellow-300"
+                                        >{{
                                           modalData?.profile?.name
                                             ? modalData?.profile?.name
                                             : ""
-                                      }}
-                                        {{
-                                            modalData.profile?.fatherName
-                                              ? modalData.profile?.fatherName
-                                              : ""
                                         }}
                                         {{
-                                            modalData.profile?.grandFatherName
-                                              ? modalData.profile?.grandFatherName
-                                              : ""
-                                        }}</b>
-                                    </h3>
+                                          modalData.profile?.fatherName
+                                            ? modalData.profile?.fatherName
+                                            : ""
+                                        }}
+                                        {{
+                                          modalData.profile?.grandFatherName
+                                            ? modalData.profile?.grandFatherName
+                                            : ""
+                                        }}</b
+                                      >
+                                    </h4>
                                   </div>
                                 </div>
 
                                 <div class="flex">
-                                  <div class="flex flex-col ml-4 w-1/2 mr-12">
+                                  <div class="flex flex-col w-1/2 mr-12">
                                     <h4>
                                       ተገቢውን መስፈርት አሟልተው ስለተገኙ ሚኒስቴር መስሪያ ቤቱ
                                     </h4>
 
                                     <h4 v-if="modalData.professionalTypes">
-                                      <div v-for="professions in modalData.professionalTypes" :key="professions"
-                                        class="flex flex-row ml-4">
-                                        <b>{{
+                                      <div
+                                        v-for="professions in modalData.professionalTypes"
+                                        :key="professions"
+                                        class="flex flex-row ml-4"
+                                      >
+                                        <b class="text-yellow-300"
+                                          >{{
                                             professions.professionalTypes
                                               .amharicProfessionalType === "ሌላ"
                                               ? ""
                                               : professions.professionalTypes
-                                                .amharicProfessionalType
-                                        }}
+                                                  .amharicProfessionalType
+                                          }}
                                         </b>
                                       </div>
-                                      <br />ሙያ መዝግቦ ይህን የሙያ ስራ ፈቃድ ሰጥቷል።
+                                      ሙያ መዝግቦ ይህን የሙያ ስራ ፈቃድ ሰጥቷል።
                                     </h4>
                                   </div>
-                                  <div class="flex flex-col mb-medium w-1/2 mr-12">
+                                  <div
+                                    class="flex flex-col mb-medium w-1/2 mr-12"
+                                  >
                                     <h4>
                                       Having duly satisfied the requirements of
                                       the Ministry
                                     </h4>
                                     <h4>hereby registered and licensed as</h4>
-                                    <h4 v-if="
-                                      modalData.professionalTypes &&
-                                      modalData.professionalTypes[0]
-                                        .professionalTypes.name
-                                    ">
-                                      <div v-for="professions in modalData.professionalTypes" :key="professions"
-                                        class="flex flex-row ml-4">
-                                        <b>{{
+                                    <h4
+                                      v-if="
+                                        modalData.professionalTypes &&
+                                        modalData.professionalTypes[0]
+                                          .professionalTypes.name
+                                      "
+                                    >
+                                      <div
+                                        v-for="professions in modalData.professionalTypes"
+                                        :key="professions"
+                                        class="flex flex-row ml-4"
+                                      >
+                                        <b class="text-yellow-300"
+                                          >{{
                                             professions.prefix
                                               ? "(" + professions.prefix + ")"
                                               : ""
-                                        }}
+                                          }}
                                           {{
-                                              professions.professionalTypes
-                                                .code === "OTH"
+                                            professions.professionalTypes
+                                              .code === "OTH"
+                                              ? certificateDetail.otherProfessionalType
                                                 ? certificateDetail.otherProfessionalType
-                                                  ? certificateDetail.otherProfessionalType
-                                                  : ""
-                                                : professions.professionalTypes
+                                                : ""
+                                              : professions.professionalTypes
                                                   .name
-                                          }}</b>
+                                          }}</b
+                                        >
                                       </div>
                                     </h4>
                                   </div>
                                 </div>
                                 <div class="flex">
-                                  <div class="
+                                  <div
+                                    class="
                                       flex flex-col
                                       mb-medium
                                       ml-4
                                       w-1/2
                                       mr-12
-                                    ">
-                                    <h3>
-                                      <img v-bind:src="imgdata" id="output" />
-
-                                      ይህ የሙያ የስራ ፈቃድ የሚያገለግለው
-                                      <b>
+                                    "
+                                  >
+                                    <h4>
+                                      ይህ የሙያ የስራ ፈቃድ የሚያገለግለው ከ
+                                      <b class="text-yellow-300">
                                         {{
-                                            modalData.certifiedDate
-                                              ? toEthiopian(
+                                          modalData.certifiedDate
+                                            ? toEthiopian(
                                                 moment(
                                                   modalData.certifiedDate
                                                 )._d.toISOString(),
                                                 false
                                               )
-                                              : ""
+                                            : ""
                                         }}
-                                        -{{
-                                            modalData.licenseExpirationDate !==
-                                              null
-                                              ? toEthiopian(
+                                        <span> -እስከ-</span
+                                        >{{
+                                          modalData.licenseExpirationDate !==
+                                          null
+                                            ? toEthiopian(
                                                 moment(
                                                   modalData.licenseExpirationDate
                                                 )._d.toISOString(),
                                                 false
                                               )
-                                              : " አልተገለጸም"
+                                            : " አልተገለጸም"
                                         }}
                                       </b>
-                                    </h3>
+                                    </h4>
                                   </div>
-                                  <div class="flex flex-col mb-medium w-1/2 mr-12">
-                                    <h3>
-                                      The license is valid:<b>{{
+                                  <div
+                                    class="flex flex-col mb-medium w-1/2 mr-12"
+                                  >
+                                    <h4>
+                                      The license is valid from:<b
+                                        class="text-yellow-300"
+                                        >{{
                                           modalData.certifiedDate
                                             ? moment(
-                                              modalData.certifiedDate
-                                            ).format("MMM DD, YYYY")
+                                                modalData.certifiedDate
+                                              ).format("MMM DD, YYYY")
                                             : ""
-                                      }}
-                                        -
+                                        }}
+                                        <span> -To-</span>
                                         {{
-                                            modalData.licenseExpirationDate
-                                              ? moment(
+                                          modalData.licenseExpirationDate
+                                            ? moment(
                                                 modalData.licenseExpirationDate
                                               ).format("MMM DD, YYYY")
-                                              : " Not specified"
-                                        }}</b>
-                                    </h3>
+                                            : " Not specified"
+                                        }}</b
+                                      >
+                                    </h4>
                                   </div>
                                 </div>
                               </div>
@@ -349,23 +411,27 @@
                           </div>
                         </span>
                         <span v-else-if="!isUserCertified && isUserFound">
-                          <div class="
+                          <div
+                            class="
                               flex
                               justify-center
                               content-center
                               userNotFound
-                            ">
+                            "
+                          >
                             <h1>User is not Certified</h1>
                           </div>
                         </span>
 
                         <span v-else-if="!myRegion">
-                          <div class="
+                          <div
+                            class="
                               flex
                               justify-center
                               content-center
                               userNotFound
-                            ">
+                            "
+                          >
                             <h1>
                               You can't generate Certificate for other region
                             </h1>
@@ -380,15 +446,19 @@
           </div>
         </div>
 
-        <div class="
+        <div
+          class="
             modal-footer
             flex flex-shrink-0 flex-wrap
             items-center
             justify-end
             border-t border-grey-100
             rounded-b-md
-          ">
-          <button type="button" class="
+          "
+        >
+          <button
+            type="button"
+            class="
               inline-block
               px-6
               text-white
@@ -407,11 +477,15 @@
               transition
               duration-150
               ease-in-out
-            " @click="generate()">
+            "
+            @click="generate()"
+          >
             <i class="fa fa-check"></i>
             Generate
           </button>
-          <button type="button" class="
+          <button
+            type="button"
+            class="
               inline-block
               px-6
               text-white
@@ -430,7 +504,9 @@
               transition
               duration-150
               ease-in-out
-            " data-bs-dismiss="modal">
+            "
+            data-bs-dismiss="modal"
+          >
             <i class="fa fa-times-circle"></i>
             Close
           </button>
@@ -495,7 +571,6 @@ export default {
     let showFlash = ref(false);
     let showErrorFlash = ref(false);
     let imgdata = ref("");
-    console.log(imgdata);
     const updateLicenseGenerated = () => {
       let req = {
         data: { ...props.modalData, isLicenseGenerated: true }

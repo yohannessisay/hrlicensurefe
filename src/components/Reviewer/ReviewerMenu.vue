@@ -77,6 +77,15 @@
           </a>
         </li>
       </router-link>
+
+            <!-- <router-link to="/admin/systemSetting">
+        <li class="mb-2">
+          <a href="#SystemSetting">
+            <i class="bx bx-desktop"></i>
+            <span class="links_name">System Setting</span>
+          </a>
+        </li>
+      </router-link> -->
     </ul>
   </reviewer-side-bar>
 
