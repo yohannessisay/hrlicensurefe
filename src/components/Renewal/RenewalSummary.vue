@@ -19,10 +19,10 @@
           <h5 class="ml-4">
             {{
               this.profileInfo.name +
-                " " +
-                this.profileInfo.fatherName +
-                " " +
-                this.profileInfo.grandFatherName
+              " " +
+              this.profileInfo.fatherName +
+              " " +
+              this.profileInfo.grandFatherName
             }}
           </h5>
         </div>
@@ -31,10 +31,10 @@
           <h5 class="ml-8">
             {{
               this.profileInfo.alternativeName +
-                " " +
-                this.profileInfo.alternativeFatherName +
-                " " +
-                this.profileInfo.alternativeGrandFatherName
+              " " +
+              this.profileInfo.alternativeFatherName +
+              " " +
+              this.profileInfo.alternativeGrandFatherName
             }}
           </h5>
         </div>
@@ -171,7 +171,7 @@
           <div
             class="mr-4"
             v-for="item in documentsArray.slice((i - 1) * 1, i * 1)"
-            v-bind="item"
+            v-bind:key="item.id"
             v-bind:value="item"
           >
             <Title class="" :message="item.documentType.name" />
@@ -191,6 +191,13 @@
         </label>
       </div>
       <div class="flex justify-center mt-8">
+        <input
+          type="text"
+          class="border-grey-300"
+          placeholder="if you have any feedback write here"
+          @input="feedbackUpdate()"
+          v-model="feedback"
+        />
         <span
           v-if="showAllAttachements"
           style="font-size: 16px; color: red"
@@ -202,9 +209,7 @@
         <div v-if="this.draftStatus == 'DRA' || !this.draftStatus">
           <div class="mt-12 flex justify-center">
             <div>
-              <button @click="submitBack">
-                Back
-              </button>
+              <button @click="submitBack">Back</button>
               <button
                 id="subButton"
                 style="opacity: 0.3"
@@ -226,9 +231,7 @@
             </div>
           </div>
           <div class="flex justify-center mt-4">
-            <h6>
-              You need to check the box to be able to submit.
-            </h6>
+            <h6>You need to check the box to be able to submit.</h6>
           </div>
           <div class="flex justify-center mt-4 mb-8">
             <button
@@ -260,9 +263,7 @@
           v-if="this.draftStatus == 'SUB'"
           class="flex justify-center mt-8 pb-12"
         >
-          <button @click="submitBack">
-            Back
-          </button>
+          <button @click="submitBack">Back</button>
           <button
             class="withdraw"
             @click="withdraw(this.buttons[1].action)"
@@ -275,9 +276,7 @@
           v-if="this.draftStatus == 'USUP'"
           class="flex justify-center mt-8 pb-12"
         >
-          <button @click="submitBack">
-            Back
-          </button>
+          <button @click="submitBack">Back</button>
           <button @click="draft(this.buttons[0].action)" variant="outline">
             {{ this.buttons[0]["name"] }}
           </button>
@@ -289,9 +288,7 @@
           v-if="this.draftStatus == 'DEC' || this.draftStatus == 'CONF'"
           class="flex justify-center mt-8 pb-12"
         >
-          <button @click="submitBack">
-            Back
-          </button>
+          <button @click="submitBack">Back</button>
           <button
             id="reapplyButton"
             @click="draft('UpdateEvent')"
@@ -345,6 +342,10 @@ export default {
     if (this.draftId != undefined) {
       setTimeout(() => {
         this.draftData = this.getDraftData;
+        this.feedback =
+          this.draftData && this.draftData.feedback
+            ? this.draftData.feedback
+            : "";
         this.documentsArray = this.draftData.documents;
       }, 3500);
       if (this.draftStatus == "SUB") {
@@ -376,7 +377,8 @@ export default {
     this.letterFromOrg = this.getLetterFromHiringInstitution;
     this.professionalLicense = this.getProfessionalLicense;
     this.renewedLicense = this.getRenewedLicense;
-    this.renewedLicenseOfHealthFacility = this.getRenewedLicenseOfHealthFacility;
+    this.renewedLicenseOfHealthFacility =
+      this.getRenewedLicenseOfHealthFacility;
     this.letterOrg = this.getLetterFromOrg;
     this.professionalDoc = this.getProfessionalDocuments;
 
@@ -934,6 +936,7 @@ export default {
   data: () => ({
     basePath: "",
     docList: [],
+    feedback: "",
     documentsArray: [],
     show: false,
     profileInfo: {},
@@ -1062,7 +1065,7 @@ export default {
     }),
   },
   methods: {
-    checkBox: function() {
+    checkBox: function () {
       this.checkBoxValue = !this.checkBoxValue;
       if (this.draftStatus == "DEC" || this.draftStatus == "CONF") {
         if (this.checkBoxValue) {
@@ -1082,7 +1085,14 @@ export default {
         }
       }
     },
-    moment: function(date) {
+    feedbackUpdate: function () {
+      if (this.feedback.length < 0) {
+        this.showSubmit = false;
+      } else {
+        this.showSubmit = true;
+      }
+    },
+    moment: function (date) {
       return moment(date);
     },
     fetchProfileInfo() {
@@ -1347,6 +1357,7 @@ export default {
       let educationLevel = localStorage.getItem("educationalLevel");
       let firstTimeUser = localStorage.getItem("firstTimeUser");
       let payroll = localStorage.getItem("payroll");
+      this.draftData.feedback = this.feedback ? this.feedback : "";
       let action = act;
       this.showLoading = true;
       if (this.draftId != null) {
@@ -1664,6 +1675,7 @@ export default {
             islegal: this.checkBoxValue,
             otherEducationalInstitution: this.otherEducationalInstitution,
             otherProfessionalType: this.otherProfessionalType,
+            feedback: this.feedback,
           },
         };
 
@@ -2116,7 +2128,7 @@ export default {
     },
   },
   mounted() {
-    this.$nextTick(function() {
+    this.$nextTick(function () {
       window.setInterval(() => {
         this.showFlash = false;
         this.showErrorFlash = false;

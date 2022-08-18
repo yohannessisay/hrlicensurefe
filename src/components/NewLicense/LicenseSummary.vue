@@ -21,10 +21,10 @@
           <h5 class="ml-4">
             {{
               this.profileInfo.name +
-                " " +
-                this.profileInfo.fatherName +
-                " " +
-                this.profileInfo.grandFatherName
+              " " +
+              this.profileInfo.fatherName +
+              " " +
+              this.profileInfo.grandFatherName
             }}
           </h5>
         </div>
@@ -33,10 +33,10 @@
           <h5 class="ml-8">
             {{
               this.profileInfo.alternativeName +
-                " " +
-                this.profileInfo.alternativeFatherName +
-                " " +
-                this.profileInfo.alternativeGrandFatherName
+              " " +
+              this.profileInfo.alternativeFatherName +
+              " " +
+              this.profileInfo.alternativeGrandFatherName
             }}
           </h5>
         </div>
@@ -192,19 +192,17 @@
             >This is to verify that all the attached documents are legitimate
             and not forgery.</span
           >
-       
         </label>
-        <br />
-             <input
-            type="text"
-            placeholder="Feedback"
-            @input="feedbackUpdate()"
-            v-model="feedback"
-          />
-          <br/>
       </div>
-    
+
       <div class="flex justify-center mt-8">
+        <input
+          type="text"
+          class="border-grey-300"
+          placeholder="if you have any feedback write here"
+          @input="feedbackUpdate()"
+          v-model="feedback"
+        />
         <span
           v-if="showAllAttachements"
           style="font-size: 16px; color: red"
@@ -216,9 +214,7 @@
         <div v-if="!this.draftStatus">
           <div class="mt-12 flex justify-center">
             <div>
-              <button @click="submitBack">
-                Back
-              </button>
+              <button @click="submitBack">Back</button>
               <button
                 v-if="this.buttons.length < 3"
                 @click="draft(this.buttons[1].action)"
@@ -234,9 +230,7 @@
             </div>
           </div>
           <div class="flex justify-center mt-4">
-            <h6>
-              You need to check the box to be able to submit.
-            </h6>
+            <h6>You need to check the box to be able to submit.</h6>
           </div>
           <div class="flex justify-center mt-4 mb-8">
             <button
@@ -273,9 +267,7 @@
         <div v-if="this.draftStatus == 'DRA'">
           <div class="mt-12 flex justify-center">
             <div>
-              <button @click="submitBack">
-                Back
-              </button>
+              <button @click="submitBack">Back</button>
               <button
                 v-if="this.buttons.length < 3"
                 @click="draft(this.buttons[0].action)"
@@ -332,9 +324,7 @@
           v-if="this.draftStatus == 'SUB'"
           class="flex justify-center mt-8 pb-12"
         >
-          <button @click="submitBack">
-            Back
-          </button>
+          <button @click="submitBack">Back</button>
           <button
             id="subButton"
             style="opacity: 0.3"
@@ -356,9 +346,7 @@
           v-if="this.draftStatus == 'USUP'"
           class="flex justify-center mt-8 pb-12"
         >
-          <button @click="submitBack">
-            Back
-          </button>
+          <button @click="submitBack">Back</button>
           <button @click="draft(this.buttons[0].action)" variant="outline">
             {{ this.buttons[0]["name"] }}
           </button>
@@ -370,9 +358,7 @@
           v-if="this.draftStatus == 'DEC' || this.draftStatus == 'CONF'"
           class="flex justify-center mt-8 pb-12"
         >
-          <button @click="submitBack">
-            Back
-          </button>
+          <button @click="submitBack">Back</button>
           <button
             id="reapplyButton"
             @click="draft('UpdateEvent')"
@@ -428,7 +414,7 @@ export default {
     if (this.draftId != undefined) {
       setTimeout(() => {
         this.draftData = this.getDraftData;
-           this.feedback = this.draftData.feedback
+        this.feedback = this.draftData.feedback;
         this.documentsArray = this.draftData.documents;
       }, 3500);
       if (this.draftStatus == "SUB") {
@@ -490,8 +476,10 @@ export default {
     this.phd = this.getPhd;
     this.phdTranscript = this.getPhdTranscript;
     this.phdTranscript2 = this.getPhdTranscript2;
-    this.renewedLicenseFromHealthFacility = this.getRenewedLicenseOfHealthFacility;
-    this.requestLetterFromHiringHealthFacility = this.getRequestLetterFromHiringHealthFacility;
+    this.renewedLicenseFromHealthFacility =
+      this.getRenewedLicenseOfHealthFacility;
+    this.requestLetterFromHiringHealthFacility =
+      this.getRequestLetterFromHiringHealthFacility;
 
     this.buttons = this.getButtons;
     this.fetchProfileInfo();
@@ -510,7 +498,8 @@ export default {
     this.expertLevelId = this.license.expertLevelId;
     this.otherEducationalInstitution = this.license.otherEducationalInstitution;
     this.otherProfessionalType = this.license.otherProfessionalType;
-    this.otherProfessionalTypeAmharic = this.license.otherProfessionalTypeAmharic;
+    this.otherProfessionalTypeAmharic =
+      this.license.otherProfessionalTypeAmharic;
     if (this.levelOfEducation == "diploma") {
       this.docCode = "PDD";
       this.docIdx = 7;
@@ -1502,7 +1491,7 @@ export default {
     }),
   },
   methods: {
-    checkBox: function() {
+    checkBox: function () {
       this.checkBoxValue = !this.checkBoxValue;
       if (this.draftStatus == "DEC" || this.draftStatus == "CONF") {
         if (this.checkBoxValue) {
@@ -1522,15 +1511,14 @@ export default {
         }
       }
     },
-    feedbackUpdate: function() {
-      console.log(this.feedback.length, this.showSubmit)
+    feedbackUpdate: function () {
       if (this.feedback.length < 0) {
         this.showSubmit = false;
       } else {
         this.showSubmit = true;
       }
     },
-    moment: function(date) {
+    moment: function (date) {
       return moment(date);
     },
     fetchProfileInfo() {
@@ -2200,7 +2188,8 @@ export default {
             isLegal: this.checkBoxValue,
             otherEducationalInstitution: this.otherEducationalInstitution,
             otherProfessionalType: this.otherProfessionalType,
-            feedback: this.feedback          },
+            feedback: this.feedback,
+          },
         };
         let educationLevel = localStorage.getItem("educationalLevel");
         let payroll = localStorage.getItem("payroll");
@@ -2759,7 +2748,7 @@ export default {
     },
   },
   mounted() {
-    this.$nextTick(function() {
+    this.$nextTick(function () {
       window.setInterval(() => {
         this.showFlash = false;
         this.showErrorFlash = false;
