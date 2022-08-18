@@ -26,7 +26,13 @@
         <h2>Foreigner</h2>
         <ul>
           <li>Passport</li>
-          <li>Medical Certificate</li>
+          <div class="tooltipclass">
+            Medical Certificate
+            <span class="tooltiptext ml-4">
+              Not lasting three months
+            </span>
+          </div>
+          <br />
           <div class="tooltipclass">
             English Language Proficiency Certificate
             <span class="tooltiptext ml-4">
@@ -77,7 +83,13 @@
         <h2>Ethiopian</h2>
         <ul>
           <li>Residence ID</li>
-          <li>Medical Certificate</li>
+          <div class="tooltipclass">
+            Medical Certificate
+            <span class="tooltiptext ml-4">
+              Not lasting three months
+            </span>
+          </div>
+          <br />
           <div class="tooltipclass">
             COC Certificate
             <span class="tooltiptext ml-4">
@@ -125,7 +137,13 @@
             </span>
           </div>
           <br />
-          <li>Medical Certificate</li>
+          <div class="tooltipclass">
+            Medical Certificate
+            <span class="tooltiptext ml-4">
+              Not lasting three months
+            </span>
+          </div>
+          <br />
           <div class="tooltipclass">
             Higher Education Relevance and Quality Agency
             <span class="tooltiptext ml-4">
