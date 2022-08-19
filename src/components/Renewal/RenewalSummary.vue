@@ -19,10 +19,10 @@
           <h5 class="ml-4">
             {{
               this.profileInfo.name +
-              " " +
-              this.profileInfo.fatherName +
-              " " +
-              this.profileInfo.grandFatherName
+                " " +
+                this.profileInfo.fatherName +
+                " " +
+                this.profileInfo.grandFatherName
             }}
           </h5>
         </div>
@@ -31,10 +31,10 @@
           <h5 class="ml-8">
             {{
               this.profileInfo.alternativeName +
-              " " +
-              this.profileInfo.alternativeFatherName +
-              " " +
-              this.profileInfo.alternativeGrandFatherName
+                " " +
+                this.profileInfo.alternativeFatherName +
+                " " +
+                this.profileInfo.alternativeGrandFatherName
             }}
           </h5>
         </div>
@@ -377,8 +377,7 @@ export default {
     this.letterFromOrg = this.getLetterFromHiringInstitution;
     this.professionalLicense = this.getProfessionalLicense;
     this.renewedLicense = this.getRenewedLicense;
-    this.renewedLicenseOfHealthFacility =
-      this.getRenewedLicenseOfHealthFacility;
+    this.renewedLicenseOfHealthFacility = this.getRenewedLicenseOfHealthFacility;
     this.letterOrg = this.getLetterFromOrg;
     this.professionalDoc = this.getProfessionalDocuments;
 
@@ -955,7 +954,7 @@ export default {
     otherProfessionalType: null,
     otherProfessionalTypeAmharic: null,
     draftId: "",
-    draftData: "",
+    draftData: {},
     draftStatus: "",
     activeClass: "active",
     errorClass: "text-danger",
@@ -1065,7 +1064,7 @@ export default {
     }),
   },
   methods: {
-    checkBox: function () {
+    checkBox: function() {
       this.checkBoxValue = !this.checkBoxValue;
       if (this.draftStatus == "DEC" || this.draftStatus == "CONF") {
         if (this.checkBoxValue) {
@@ -1085,14 +1084,14 @@ export default {
         }
       }
     },
-    feedbackUpdate: function () {
+    feedbackUpdate: function() {
       if (this.feedback.length < 0) {
         this.showSubmit = false;
       } else {
         this.showSubmit = true;
       }
     },
-    moment: function (date) {
+    moment: function(date) {
       return moment(date);
     },
     fetchProfileInfo() {
@@ -2128,7 +2127,7 @@ export default {
     },
   },
   mounted() {
-    this.$nextTick(function () {
+    this.$nextTick(function() {
       window.setInterval(() => {
         this.showFlash = false;
         this.showErrorFlash = false;
