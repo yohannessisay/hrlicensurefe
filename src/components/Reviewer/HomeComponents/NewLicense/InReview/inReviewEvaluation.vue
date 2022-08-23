@@ -1285,7 +1285,7 @@
                             flex
                             items-start
                             justify-between
-                            border-b border-solid border-blueGray-200
+                            border-b border-solid border-grey-100
                             mt-medium
                             rounded-t
                           "
@@ -1308,15 +1308,7 @@
                           >
                             <span
                               class="
-                                bg-transparent
-                                text-black
-                                opacity-5
-                                h-6
-                                w-6
-                                text-2xl
-                                block
-                                outline-none
-                                focus:outline-none
+                               text-3xl
                               "
                             >
                               ×
