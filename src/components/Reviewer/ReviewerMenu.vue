@@ -51,7 +51,10 @@
         </li>
       </router-link>
 
-      <router-link to="/admin/userManagement" v-if="isUserRegional?isUserRegional.regionId==null:''">
+      <router-link
+        to="/admin/userManagement"
+        v-if="isUserRegional ? isUserRegional.regionId == null : ''"
+      >
         <li class="mb-2">
           <a href="#UserManagement">
             <i class="bx bx-user"></i>
@@ -78,14 +81,23 @@
         </li>
       </router-link>
 
-            <!-- <router-link to="/admin/systemSetting">
+      <router-link to="/admin/legacyData">
+        <li class="mb-2">
+          <a href="#LegacyData">
+            <i class="bx bx-skip-previous-circle"></i>
+            <span class="links_name">Legacy Data</span>
+          </a>
+        </li>
+      </router-link>
+
+      <router-link to="/admin/systemSetting">
         <li class="mb-2">
           <a href="#SystemSetting">
             <i class="bx bx-desktop"></i>
             <span class="links_name">System Setting</span>
           </a>
         </li>
-      </router-link> -->
+      </router-link>
     </ul>
   </reviewer-side-bar>
 
@@ -127,7 +139,7 @@ export default {
     return {
       currentMenu,
       updateMenu,
-      isUserRegional
+      isUserRegional,
     };
   },
 };

@@ -23,6 +23,34 @@ export default {
       return resp;
     }
   },
+
+  async addRegion(id,data) {
+    try {
+      const resp = await ApiService.post(baseUrl + "/lookups/addRegion",data);
+      return resp;
+    } catch (error) {
+      const resp = error;
+      return resp;
+    }
+  },
+  async addWoreda(id,data) {
+    try {
+      const resp = await ApiService.post(baseUrl + "/lookups/addWoreda",data);
+      return resp;
+    } catch (error) {
+      const resp = error;
+      return resp;
+    }
+  },
+  async addZone(id,data) {
+    try {
+      const resp = await ApiService.post(baseUrl + "/lookups/addZone",data);
+      return resp;
+    } catch (error) {
+      const resp = error;
+      return resp;
+    }
+  },
   async getWoredas() {
     try {
       const resp = await ApiService.get(baseUrl + "/lookups/woredas");

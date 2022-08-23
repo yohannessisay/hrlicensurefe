@@ -171,43 +171,7 @@
                                   focus:outline-none
                                 "
                                 placeholder="Enter name"
-                              />
-                            </div>
-
-                            <div class="form-group ml-4">
-                              <label
-                                for=""
-                                class="
-                                  form-label
-                                  inline-block
-                                  mb-2
-                                  text-gray-700
-                                "
-                                >Location Code</label
-                              >
-                              <input
-                                type="email"
-                                class="
-                                  form-control
-                                  block
-                                  w-full
-                                  px-3
-                                  py-1.5
-                                  text-base
-                                  font-normal
-                                  text-gray-700
-                                  bg-white bg-clip-padding
-                                  border border-solid border-gray-300
-                                  rounded
-                                  transition
-                                  ease-in-out
-                                  m-0
-                                  focus:text-gray-700
-                                  focus:bg-white
-                                  focus:border-blue-600
-                                  focus:outline-none
-                                "
-                                placeholder="Enter code"
+                                v-model="locationName"
                               />
                             </div>
                           </div>
@@ -224,7 +188,7 @@
                           px-3
                           lg:px-6
                         "
-                        v-if="!isRegion"
+                        v-if="isZone"
                       >
                         <div class="flex items-start">
                           <div class="shrink-0">
@@ -245,9 +209,94 @@
                             </div>
                           </div>
                           <div class="grow ml-6">
-                                  <label class="block text-left">
-                                <div>
-                                  <div class="w-full relative">
+                            <label class="block text-left">
+                              <div>
+                                <div class="w-full relative">
+                                  <div
+                                    class="
+                                      mt-1
+                                      ml-1
+                                      relative
+                                      border border-gray-300
+                                      overflow-hidden
+                                      rounded-md
+                                      shadow-sm
+                                    "
+                                  >
+                                    <input
+                                      id="email"
+                                      @keyup="showOptions = true"
+                                      v-model="regionDropDownSearch"
+                                      class="w-full px-3 py-3"
+                                      style="border: none"
+                                      autocomplete="off"
+                                      placeholder="Start Typing region name"
+                                    />
+                                  </div>
+
+                                  <div
+                                    v-show="resultQuery().length && showOptions"
+                                    class="
+                                      w-full
+                                      bg-white
+                                      border border-gray-300
+                                      mt-2
+                                      ml-1
+                                      max-height-12
+                                      overflow-hidden overflow-y-scroll
+                                      rounded-lg
+                                      shadow-lg
+                                      text-left
+                                      dropdown-menu
+                                    "
+                                    style="height: 148px; border: none"
+                                  >
+                                    <ul class="py-1">
+                                      <li
+                                        v-for="value in resultQuery()"
+                                        :key="value.id"
+                                        @click="setInput(value)"
+                                        class="
+                                          dropdown-toggle
+                                          px-4
+                                          py-2
+                                          cursor-pointer
+                                          hover:bg-primary-700 hover:text-white
+                                        "
+                                      >
+                                        {{ value.Name }}
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </div>
+                            </label>
+                          </div>
+                        </div>
+
+                        <div class="flex items-start mt-8" v-if="isWoreda">
+                          <div class="shrink-0">
+                            <div
+                              class="
+                                p-4
+                                bg-blue-600
+                                rounded-md
+                                shadow-md
+                                w-14
+                                h-18
+                                flex
+                                items-center
+                                justify-center
+                              "
+                            >
+                              <i class="fa fa-map"></i>
+                            </div>
+                          </div>
+                          <div class="grow ml-6">
+                            <label class="block text-left">
+                              <div>
+                                <div class="w-full relative">
+                                  <div>
                                     <div
                                       class="
                                         mt-1
@@ -261,20 +310,19 @@
                                     >
                                       <input
                                         id="email"
-                                        @keyup="showOptions = true"
-                                        v-model="regionDropDownSearch"
+                                        @keyup="showOptionsZone = true"
+                                        v-model="zoneDropDownSearch"
                                         class="w-full px-3 py-3"
                                         style="border: none"
                                         autocomplete="off"
-                                        placeholder="Select region"
+                                        placeholder="Start Typing zone name"
                                       />
                                     </div>
-     <div>
-                                    </div>
-                                    
+
                                     <div
                                       v-show="
-                                        resultQuery().length && showOptions
+                                        resultQueryZone().length &&
+                                        showOptionsZone
                                       "
                                       class="
                                         w-full
@@ -293,9 +341,9 @@
                                     >
                                       <ul class="py-1">
                                         <li
-                                          v-for="value in resultQuery()"
+                                          v-for="value in resultQueryZone()"
                                           :key="value.id"
-                                          @click="setInput(value)"
+                                          @click="setInputZone(value)"
                                           class="
                                             dropdown-toggle
                                             px-4
@@ -311,9 +359,8 @@
                                     </div>
                                   </div>
                                 </div>
-                              </label>
-
-
+                              </div>
+                            </label>
                           </div>
                         </div>
                       </div>
@@ -356,6 +403,33 @@
               duration-150
               ease-in-out
             "
+            @click="saveLocation()"
+          >
+            <i class="fa fa-save"></i>
+            Save
+          </button>
+          <button
+            type="button"
+            class="
+              inline-block
+              px-6
+              text-white
+              font-medium
+              text-xs
+              leading-tight
+              uppercase
+              rounded
+              shadow-lg
+              hover:bg-purple-700 hover:shadow-lg
+              focus:bg-purple-700
+              focus:shadow-lg
+              focus:outline-none
+              focus:ring-0
+              active:bg-purple-800 active:shadow-lg
+              transition
+              duration-150
+              ease-in-out
+            "
             data-bs-dismiss="modal"
           >
             <i class="fa fa-times-circle"></i>
@@ -367,39 +441,62 @@
   </div>
 </template>
 <script>
-import { ref,computed} from "vue";
+import { ref, watch } from "vue";
 import Loading from "vue3-loading-overlay";
+import { useStore } from "vuex";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 export default {
   name: "Modal",
   components: { Loading },
-  props:['modalData'],
+  props: ["modalData"],
   setup(props) {
+     const store = useStore();
     let isLoading = ref(false);
-    let isRegion=ref(true);
-     let showOptions=ref(false);
-    let regionDropDownSearch=ref("");
-    let selectedRegion=ref();
-    let regionDropDown=computed(()=>props.modalData?props.modalData.region:{})
-     let zoneDropDown=computed(()=>props.modalData?props.modalData.zone:{})
+    let isRegion = ref(true);
+    let isWoreda = ref(false);
+    let isZone = ref(false);
+    let showOptions = ref(false);
+    let showOptionsZone = ref(false);
+    let regionDropDownSearch = ref("");
+    let zoneDropDownSearch = ref("");
+    let selectedRegion = ref();
+    let selectedZone = ref();
+    let saveData = ref({});
+    let locationName = ref("");
+    let regionDropDown = ref();
+    let zoneDropDown = ref();
     const locationType = (type) => {
-      if(type=='region'){
-        isRegion.value=true
-      }else{
-         isRegion.value=false
+      if (type == "region") {
+        isRegion.value = true;
+        isWoreda.value = false;
+        isZone.value = false;
+        regionDropDownSearch.value = "";
+        zoneDropDownSearch.value = "";
+      } else if (type == "woreda") {
+        isWoreda.value = true;
+        isRegion.value = false;
+        isZone.value = true;
+        regionDropDownSearch.value = "";
+        zoneDropDownSearch.value = "";
+      } else if (type == "zone") {
+        isRegion.value = false;
+        isZone.value = true;
+        isWoreda.value = false;
+        regionDropDownSearch.value = "";
+        zoneDropDownSearch.value = "";
       }
-      console.log(type);
     };
 
-        const resultQuery = () => {
+    const resultQuery = () => {
       if (regionDropDownSearch.value) {
-        
-        let data = regionDropDown.value.filter((item) => {
-          return regionDropDownSearch.value
-            .toLowerCase()
-            .split(" ")
-            .every((v) => item.Name.toLowerCase().includes(v));
-        });
+        let data = regionDropDown.value
+          ? regionDropDown.value.filter((item) => {
+              return regionDropDownSearch.value
+                .toLowerCase()
+                .split(" ")
+                .every((v) => item.Name.toLowerCase().includes(v));
+            })
+          : "";
 
         return data;
       } else {
@@ -407,26 +504,113 @@ export default {
       }
     };
 
-        const setInput = (value) => {
+    const resultQueryZone = () => {
+      if (zoneDropDownSearch.value) {
+        let data = zoneDropDown.value
+          ? zoneDropDown.value.filter((item) => {
+              return zoneDropDownSearch.value
+                .toLowerCase()
+                .split(" ")
+                .every((v) => item.Name.toLowerCase().includes(v));
+            })
+          : "";
+
+        return data;
+      } else {
+        return [];
+      }
+    };
+
+    const setInput = (value) => {
       selectedRegion.value = {
         id: value.id,
         name: value.Name,
         code: value.Code,
       };
+
+      zoneDropDown.value = zoneDropDown.value.filter((zone) =>
+        zone.data && zone.data.region ? zone.data.region.id == value.id : ""
+      );
+      regionDropDownSearch.value = value.Name;
       showOptions.value = false;
     };
 
+    const setInputZone = (value) => {
+      selectedZone.value = {
+        id: value.id,
+        name: value.Name,
+        code: value.Code,
+      };
+      zoneDropDownSearch.value = value.Name;
+      showOptionsZone.value = false;
+    };
 
+    const saveLocation = () => {
+      let finalUrl='';
+      // if it is region
+      if (isRegion.value) {
+        finalUrl='addRegion'
+        saveData.value = {
+          name: locationName.value ? locationName.value : "",
+          code: locationName.value
+            ? locationName.value.slice(0, 3).toUpperCase()
+            : "",
+        };
+      }
+      // if it is zone
+      else if (isZone.value && !isWoreda.value) {
+         finalUrl='addZone'
+        saveData.value = {
+          name: locationName.value ? locationName.value : "",
+          code: locationName.value
+            ? locationName.value.slice(0, 3).toUpperCase()
+            : "",
+          regionId: selectedRegion.value ? selectedRegion.value.id : "",
+        };
+      }
+      // if it is woreda
+      else if (isZone.value && isWoreda.value) {
+        finalUrl='addWoreda'
+        saveData.value = {
+          name: locationName.value ? locationName.value : "",
+          code: locationName.value
+            ? locationName.value.slice(0, 3).toUpperCase()
+            : "",
+          zoneId: selectedZone.value ? selectedZone.value.id : "",
+        };
+      }
+      // check for existing data
+
+   store.dispatch("lookups/"+finalUrl,saveData.value).then((res) => {
+console.log(res)
+
+   })
+// Finally save the data
+    };
+    watch(props.modalData, () => {
+      regionDropDown.value = props.modalData.region;
+      zoneDropDown.value = props.modalData.zone;
+    });
     return {
       isLoading,
+      saveLocation,
       locationType,
       setInput,
+      setInputZone,
+      selectedZone,
+      showOptionsZone,
+      isWoreda,
+      locationName,
+      isZone,
       regionDropDown,
       regionDropDownSearch,
       zoneDropDown,
       resultQuery,
+      selectedRegion, 
+      resultQueryZone,
+      zoneDropDownSearch,
       showOptions,
-      isRegion
+      isRegion,
     };
   },
 };

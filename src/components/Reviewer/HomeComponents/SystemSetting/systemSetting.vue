@@ -16,8 +16,9 @@
             View and manage regions,zones and woredas found throughout the
             system
           </p>
-          <p class="absolute right-0">
+          <p class="absolute right-0" v-if="showAddButton">
             <button
+            
               class="
                 px-2
                 bg-primary-700
@@ -73,7 +74,7 @@
                       role="tablist"
                     >
                       <li
-                        class="nav-item flex-grow text-center"
+                        class="nav-item flex-grow text-center  mt-4 "
                         role="presentation"
                       >
                         <a
@@ -92,6 +93,7 @@
                             hover:border-transparent hover:bg-gray-100
                             focus:border-transparent
                             active
+                           
                           "
                           id="tabs-home-tabVertical"
                           data-bs-toggle="pill"
@@ -162,7 +164,7 @@
                       </li>
                     </ul>
 
-                    <div class="tab-content" id="tabs-tabContentVertical">
+                    <div class="tab-content shadow-xl" id="tabs-tabContentVertical">
                       <div
                         class="tab-pane fade show active"
                         id="tabs-homeVertical"
@@ -315,7 +317,7 @@ export default {
     let regionTableData = [];
     let woredaTableData = [];
     let zoneTableData = [];
-
+    let showAddButton=ref(false);
     const fetchRegions = () => {
       store.dispatch("lookups/getRegions").then((res) => {
         res.data.data.forEach((element) => {
@@ -324,6 +326,7 @@ export default {
             Name: element.name ? element.name : "",
             Code: element.code ? element.code : "",
             Status: element.status ? element.status : "",
+            data: element ? element : {},
           });
         });
         modalData.value.region = regionTableData;
@@ -363,6 +366,7 @@ export default {
             sort: "asc",
           },
         };
+         showAddButton.value=true;
       });
     };
 
@@ -424,6 +428,7 @@ export default {
             sort: "asc",
           },
         };
+        
       });
     };
 
@@ -435,6 +440,7 @@ export default {
             Name: element.name ? element.name : "",
             Region: element.region ? element.region.name : "",
             Status: element.status ? element.status : "",
+            data: element ? element : {},
           });
         });
         modalData.value.zone = zoneTableData;
@@ -475,28 +481,39 @@ export default {
           },
         };
       });
+     
     };
 
     onMounted(() => {
       fetchRegions();
       fetchWoredas();
       fetchZones();
+      
     });
     return {
       regionsTable,
       zonesTable,
       woredasTable,
       modalData,
+      showAddButton,
     };
   },
 };
 </script>
 <style scoped>
 .tab-content > .active {
+  padding-right: 5px;
+   padding-bottom: 5px;
   display: block;
   border-left: 6px solid #0d3552;
+   border-top: 1px solid #0d3552;
+   border-right: 1px solid #0d3552;
+   border-bottom: 1px solid #0d3552;
   border-top-left-radius: 10px;
-  border-bottom-left-radius: 5px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 10px;
+
 }
 
 .nav-tabs .nav-link.active {
@@ -508,5 +525,7 @@ export default {
   font-weight: bold;
   margin-top: 5px;
   margin-right: -16px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
 }
 </style>

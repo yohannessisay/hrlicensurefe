@@ -647,9 +647,7 @@
                                 <hr class="text-grey-100 mb-2" />
                                 <div class="flex flex-row">
                                   <div
-                                    v-if="
-                                      renewal.renewalProfessions.length > 0
-                                    "
+                                    v-if="renewal.renewalProfessions.length > 0"
                                   >
                                     <div
                                       class="flex flex-col mb-medium mr-12 ml-8"
@@ -876,10 +874,11 @@
                                                 renewal.otherProfessionalType
                                               "
                                             />
-                                                   <label style="display: block"
-                                              >Other profession name (Amharic)*</label
+                                            <label style="display: block"
+                                              >Other profession name
+                                              (Amharic)*</label
                                             >
-                                               <input
+                                            <input
                                               style="display: block"
                                               type="text"
                                               v-model="
@@ -1011,8 +1010,9 @@
                                 <br />
                                 <button
                                   @click="openPdfInNewTab(docs[index].filePath)"
-                                  >See pdf in detail</button
                                 >
+                                  See pdf in detail
+                                </button>
                               </div>
 
                               <div v-else>
@@ -1230,6 +1230,7 @@
                       :opacity="1"
                     ></loading>
                     <button
+                      v-if="button.code != 'US'"
                       class="
                         inline-block
                         px-6
@@ -1252,6 +1253,35 @@
                         ease-in-out
                       "
                       @click="action(button.action)"
+                    >
+                      {{ button.name }}
+                    </button>
+                    <button
+                      v-else
+                      class="
+                        inline-block
+                        px-6
+                        text-white
+                        font-medium
+                        text-xs
+                        leading-tight
+                        uppercase
+                        rounded
+                        shadow-lg
+                        hover:bg-purple-700 hover:shadow-lg
+                        focus:bg-purple-700
+                        focus:shadow-lg
+                        focus:outline-none
+                        focus:ring-0
+                        active:bg-purple-800 active:shadow-lg
+                        transition
+                        duration-150
+                        hover:bg-yellow-300 hover:text-white
+                        ease-in-out
+                      "
+                      data-bs-toggle="modal"
+                      data-bs-target="#superviseModal"
+                      @click="changeAction(button.action)"
                     >
                       {{ button.name }}
                     </button>
@@ -1507,6 +1537,299 @@
     </div>
     <!-- Main Content -->
   </section>
+
+    <div
+    class="
+      modal
+      fade
+      fixed
+      top-0
+      left-0
+      hidden
+      w-full
+      h-full
+      outline-none
+      overflow-x-hidden overflow-y-auto
+    "
+    id="superviseModal"
+    tabindex="-1"
+    aria-labelledby="superviseModalTitle"
+    aria-modal="true"
+    role="dialog"
+  >
+    <div
+      class="
+        modal-dialog modal-dialog-centered
+        relative
+        w-auto
+        pointer-events-none
+      "
+    >
+      <div
+        class="
+          modal-content
+          border-none
+          shadow-lg
+          relative
+          flex flex-col
+          w-full
+          pointer-events-auto
+          bg-white bg-clip-padding
+          rounded-md
+          outline-none
+          text-current
+        "
+      >
+        <div
+          class="
+            modal-header
+            flex flex-shrink-0
+            items-center
+            justify-between
+            p-4
+            border-b border-grey-100
+            rounded-t-md
+          "
+        >
+          <h5
+            class="text-xl font-medium leading-normal text-gray-800"
+            id="superviseModalLabel"
+          >
+            Supervise Detail
+          </h5>
+          <button
+            type="button"
+            class="
+              btn-close
+              box-content
+              w-4
+              h-4
+              p-1
+              text-black
+              border-none
+              rounded-none
+              opacity-50
+              focus:shadow-none focus:outline-none focus:opacity-100
+              hover:text-black hover:opacity-75 hover:no-underline
+            "
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            style="min-height: 28px; min-width: 28px"
+          ></button>
+        </div>
+        <div class="modal-body relative p-4">
+          <label for="" class="ml-2">Institution </label>
+          <label class="block text-left mb-4">
+            <div>
+              <div class="w-full relative">
+                <div
+                  class="
+                    mt-1
+                    ml-1
+                    relative
+                    border border-gray-300
+                    overflow-hidden
+                    rounded-md
+                    shadow-sm
+                  "
+                >
+                  <input
+                    id="institution"
+                    @keyup="showOptions = true"
+                    v-model="instSearched.name"
+                    class="w-full px-3 py-3"
+                    style="border: none"
+                    placeholder="Select institution by typing a name"
+                  />
+                </div>
+                <div></div>
+                <div
+                  v-show="resultQuery().length && showOptions"
+                  class="
+                    w-full
+                    bg-white
+                    border border-gray-300
+                    mt-2
+                    ml-1
+                    max-height-12
+                    overflow-hidden overflow-y-scroll
+                    rounded-lg
+                    shadow-lg
+                    text-left
+                    dropdown-menu
+                  "
+                  style="height: 148px; border: none"
+                >
+                  <ul class="py-1">
+                    <li
+                      v-for="value in resultQuery()"
+                      :key="value.id"
+                      @click="setInput(value)"
+                      class="
+                        dropdown-toggle
+                        px-4
+                        py-2
+                        cursor-pointer
+                        hover:bg-primary-700 hover:text-white
+                      "
+                    >
+                      {{ value.name }}
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </label>
+
+          <label for="" class="ml-2">Supervisor Name</label>
+
+          <div
+            class="
+              mt-1
+              ml-1
+              relative
+              border border-gray-300
+              overflow-hidden
+              rounded-md
+              shadow-sm
+            "
+          >
+            <input
+              id="supervisor"
+              v-model="supervisor"
+              class="w-full px-3 py-3"
+              style="border: none"
+              placeholder="Type supervisors name"
+            />
+          </div>
+
+          <div class="grid grid-cols-2 gap-4">
+            <div class="form-group mb-6 mt-4">
+              <label for="" class="ml-2">Start Date</label>
+              <input
+                v-model="startDate"
+                type="date"
+                class="
+                  form-control
+                  block
+                  w-full
+                  px-3
+                  py-1.5
+                  text-base
+                  font-normal
+                  text-gray-700
+                  bg-white bg-clip-padding
+                  border border-solid border-gray-300
+                  rounded
+                  transition
+                  ease-in-out
+                  m-0
+                  focus:text-gray-700
+                  focus:bg-white
+                  focus:border-blue-600
+                  focus:outline-none
+                "
+              />
+            </div>
+            <div class="form-group mb-6 mt-4">
+              <label for="" class="ml-2">End Date</label>
+              <input
+                class="
+                  form-control
+                  block
+                  w-full
+                  px-3
+                  py-1.5
+                  text-base
+                  font-normal
+                  text-gray-700
+                  bg-white bg-clip-padding
+                  border border-solid border-gray-300
+                  rounded
+                  transition
+                  ease-in-out
+                  m-0
+                  focus:text-gray-700
+                  focus:bg-white
+                  focus:border-blue-600
+                  focus:outline-none
+                "
+                v-model="endDate"
+                type="date"
+              />
+            </div>
+          </div>
+          <h6 v-show="showDateError.show" class="text-red-300">
+            {{ showDateError.message }}
+          </h6>
+        </div>
+        <div
+          class="
+            modal-footer
+            flex flex-shrink-0 flex-wrap
+            items-center
+            justify-end
+            p-1
+            border-t border-grey-100
+            rounded-b-md
+          "
+        >
+          <button
+            type="button"
+            class="
+              inline-block
+              px-2
+              py-1
+              bg-purple-600
+              text-white
+              font-medium
+              text-xs
+              leading-tight
+              uppercase
+              rounded
+              shadow-md
+              hover:bg-purple-700 hover:shadow-lg
+              focus:bg-purple-700
+              focus:shadow-lg
+              focus:outline-none
+              focus:ring-0
+              active:bg-purple-800 active:shadow-lg
+              transition
+              duration-150
+              ease-in-out
+            "
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+          <button
+            class="
+              inline-block
+              px-6
+              py-2.5
+              bg-blue-600
+              text-white
+              font-medium
+              text-xs
+              leading-tight
+              uppercase
+              rounded
+              shadow-lg
+              hover:bg-blue-700 hover:shadow-lg
+              focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
+              active:bg-blue-800 active:shadow-lg
+              transition
+              duration-150
+              ease-in-out
+            "
+            @click="supervise()"
+          >
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 <script>
 import { useStore } from "vuex";
@@ -1552,11 +1875,17 @@ export default {
     let isLoadingFinalAction = ref(false);
     let isLoadingName = ref(false);
     let isPdf = ref(false);
-
     let pdfFilePath = ref("");
 
+    let startDate = ref("");
+    let endDate = ref("");
+    let institutions = ref([]);
     let isGoodStanding = ref(false);
-
+    let showDateError = ref({ show: false, message: "" });
+     let instSearched = ref({ name: "" });
+    let showOptions = ref("");
+    let superviseAction = ref("");
+    let supervisor = ref("");
     let expirationDateExceedTodayError = ref(false);
     let isProfessionalTypeChanged = ref(false);
 
@@ -1635,7 +1964,7 @@ export default {
     let errorClass = ref("text-danger");
     let showRemark = ref(false);
     let applicationType = ref("");
-    let applicantId = ref("");
+
     let showFlash = ref(false);
     let showErrorFlash = ref(false);
     let showDeclineFlash = ref(false);
@@ -1785,7 +2114,7 @@ export default {
           .dispatch("reviewer/transferToFederal", transferData)
           .then((res) => {
             if (res.data.status == "Success") {
-                toast.success("Appliction transfered successfully", {
+              toast.success("Appliction transfered successfully", {
                 timeout: 5000,
                 position: "bottom-center",
                 pauseOnFocusLoss: true,
@@ -1793,13 +2122,16 @@ export default {
                 icon: true,
               });
             } else {
-                   toast.error("Already assigned to federal reviewer,you can transfer the application", {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true,
-              });
+              toast.error(
+                "Already assigned to federal reviewer,you can transfer the application",
+                {
+                  timeout: 5000,
+                  position: "bottom-center",
+                  pauseOnFocusLoss: true,
+                  pauseOnHover: true,
+                  icon: true,
+                }
+              );
             }
           });
       });
@@ -2214,10 +2546,10 @@ export default {
             profession.professionalTypes.name == "Other"
           ) {
             renewal.value.otherProfessionalType = null;
-             renewal.value.otherProfessionalTypeAmharic = null;
+            renewal.value.otherProfessionalTypeAmharic = null;
           } else if (!previousProfession && profession.name == "Other") {
             renewal.value.otherProfessionalType = null;
-             renewal.value.otherProfessionalTypeAmharic = null;
+            renewal.value.otherProfessionalTypeAmharic = null;
           }
         }
       }
@@ -2315,14 +2647,124 @@ export default {
       }
     };
 
+    const supervise = () => {
+      renewal.value.superviseEndDate = endDate.value ? endDate.value : "";
+      renewal.value.superviseStartDate = startDate.value ? startDate.value : "";
+      renewal.value.supervisor = supervisor.value ? supervisor.value : "";
+      renewal.value.superviseInstitutionId = instSearched.value
+        ? instSearched.value.id
+        : "";
+
+      let req = {
+        action: superviseAction.value ? superviseAction.value : "",
+        data: renewal.value,
+      };
+      let minDate = moment(endDate.value).diff(moment(startDate.value), "days");
+      let lessThanToday = moment(startDate.value).diff(
+        moment(new Date()),
+        "days"
+      );
+
+      if (minDate < 30) {
+        showDateError.value.message =
+          "Minimum supervised time is 3 month please change start and end date.";
+        showDateError.value.show = true;
+        return;
+      } else if (lessThanToday < 0) {
+        showDateError.value.message =
+          "Start date can not be set to past,minimum start date is today.";
+        showDateError.value.show = true;
+        console.log(lessThanToday);
+        return;
+      } else {
+        store
+          .dispatch("reviewer/editRenewal", req)
+          .then((res) => {
+            console.log(res);
+            showActionLoading.value = false;
+            if (res.statusText == "Created") {
+              toast.success("Application reviewed Successfully", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
+              isLoadingFinalAction.value = false;
+              router.push({ path: "/admin/renewal/underSupervision" });
+            } else {
+              toast.error("Please try again", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
+              isLoadingFinalAction.value = false;
+              router.push({ path: "admin/renewal/inReview" });
+            }
+          })
+          .catch(() => {
+            isLoadingFinalAction.value = false;
+            toast.error("Please try again", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+            router.push({ path: "admin/newLicense/inReview" });
+          });
+      }
+    };
+    const changeAction = (action) => {
+      superviseAction.value = action;
+    };
+
+    const setInput = (value) => {
+      instSearched.value = value ? value : "";
+      showOptions.value = false;
+    };
+
+    const resultQuery = () => {
+      if (institutions.value) {
+        let data = institutions.value.filter((item) => {
+          return instSearched.value
+            ? instSearched.value.name
+                .toLowerCase()
+                .split(" ")
+                .every((v) => item.name.toLowerCase().includes(v))
+            : "";
+        });
+
+        return data;
+      } else {
+        return [];
+      }
+    };
+
     onMounted(() => {
       created("Renewal", route.params.id);
+      store.dispatch("goodstanding/getInstitution").then((res) => {
+       institutions.value = res.data.data.filter((elm)=>elm.isLocal==true);
+      });
     });
     return {
       isPdf,
       renewal,
       index,
       docs,
+
+      instSearched,
+      showDateError,
+      endDate,
+      startDate,
+      supervisor,
+      setInput,
+      supervise,
+      resultQuery,
+      changeAction,
+
       next,
       previous,
       nextRemark,

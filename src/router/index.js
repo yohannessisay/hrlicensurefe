@@ -1138,7 +1138,15 @@ const routes = [
         ),
     },
 
-
+    //Legacy Data
+    {
+      path: "/admin/legacyData",
+      name: "LwegacyData",
+      component: () =>
+        import(
+          "../components/Reviewer/HomeComponents/LegacyData/legacy.vue"
+        ),
+    },
 
     //System Setting
     {
