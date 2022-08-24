@@ -1,0 +1,219 @@
+<template>
+  <div
+    class="
+      modal
+      fade
+      fixed
+      top-0
+      left-0
+      hidden
+      w-full
+      h-full
+      outline-none
+      overflow-x-hidden overflow-y-auto
+    "
+    id="revokeLicense"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    tabindex="-1"
+    aria-labelledby="revokeLicense"
+    aria-hidden="true"
+  >
+    <div
+      class="
+        modal-dialog modal-dialog-centered modal-xl
+        relative
+        w-auto
+        pointer-events-none
+      "
+    >
+      <div
+        class="
+          modal-content
+          border-none
+          shadow-lg
+          relative
+          flex flex-col
+          w-full
+          pointer-events-auto
+          bg-white bg-clip-padding
+          rounded-md
+          outline-none
+          text-current
+        "
+      >
+        <div
+          class="
+            modal-header
+            flex flex-shrink-0
+            items-center
+            justify-between
+            p-2
+            rounded-t-md
+          "
+        ></div>
+
+        <div class="modal-body relative p-4">
+          <div class="container px-6 mx-auto">
+            <section class="text-gray-800">
+              <div class="flex justify-center">
+                <div class="text-center lg:max-w-3xl md:max-w-xl"></div>
+              </div>
+              <div class="vld-parent">
+                <loading
+                  :active="isLoading"
+                  :can-cancel="true"
+                  :on-cancel="onCancel"
+                  :is-full-page="fullPage"
+                  :color="'#2F639D'"
+                  :opacity="0.7"
+                ></loading>
+                <div class="flex flex-wrap">
+                  <label>Remark</label>
+                  <input type="text" v-model="remark" />
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+
+        <div
+          class="
+            modal-footer
+            flex flex-shrink-0 flex-wrap
+            items-center
+            justify-end
+            border-t border-grey-100
+            rounded-b-md
+          "
+        >
+          <button
+            type="button"
+            class="
+              inline-block
+              px-6
+              text-white
+              font-medium
+              text-xs
+              leading-tight
+              uppercase
+              rounded
+              shadow-lg
+              hover:bg-purple-700 hover:shadow-lg
+              focus:bg-purple-700
+              focus:shadow-lg
+              focus:outline-none
+              focus:ring-0
+              active:bg-purple-800 active:shadow-lg
+              transition
+              duration-150
+              ease-in-out
+            "
+            @click="revoke()"
+          >
+            <i class="fa fa-times-circle"></i>
+            Revoke
+          </button>
+          <button
+            type="button"
+            class="
+              inline-block
+              px-6
+              text-white
+              font-medium
+              text-xs
+              leading-tight
+              uppercase
+              rounded
+              shadow-lg
+              hover:bg-purple-700 hover:shadow-lg
+              focus:bg-purple-700
+              focus:shadow-lg
+              focus:outline-none
+              focus:ring-0
+              active:bg-purple-800 active:shadow-lg
+              transition
+              duration-150
+              ease-in-out
+            "
+            data-bs-dismiss="modal"
+          >
+            <i class="fa fa-times-circle"></i>
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+import Title from "@/sharedComponents/Title";
+import { ref } from "vue";
+import { useStore } from "vuex";
+
+import Loading from "vue3-loading-overlay";
+import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
+import { googleApi } from "../../../../../composables/baseURL";
+import { useToast } from "vue-toastification";
+
+export default {
+  props: ["modalData"],
+  computed: {},
+  components: { Loading },
+  setup(props) {
+    let showFlash = ref(false);
+    let showErrorFlash = ref(false);
+    let remark = ref("");
+    let isLoading = ref(false);
+    const store = useStore();
+    const toast = useToast();
+    const revoke = () => {
+      let revokedData = {
+        data: { ...props.modalData.data, remark: remark.value },
+        action: "RevokeEvent",
+      };
+      isLoading.value = true;
+      console.log(revokedData);
+      store
+        .dispatch("reviewer/editNewLicense", revokedData)
+        .then((res) => {
+          console.log(res, revokedData);
+          isLoading.value = false;
+          if (res.statusText == "Created") {
+            toast.success("Done", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+            setTimeout(() => {
+              window.location.reload();
+            }, 3000);
+          } else {
+            toast.error(res.data.message, {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+            setTimeout(() => {
+              window.location.reload();
+            }, 3000);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+
+    return {
+      showFlash,
+      showErrorFlash,
+      remark,
+      revoke,
+    };
+  },
+};
+</script>

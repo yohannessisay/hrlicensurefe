@@ -295,9 +295,37 @@
                             ease-in-out
                           "
                           type="button"
+                          data-bs-toggle="modal"
+                          data-bs-target="#suspendLicense"
                         >
                           <i class="fa fa-ban"></i>
                           Suspend
+                        </button>
+                            <button
+                          class="
+                            inline-block
+                            px-6
+                            py-2.5
+                            custom-warning
+                            text-white
+                            font-medium
+                            text-xs
+                            leading-tight
+                            uppercase
+                            rounded
+                            shadow-lg
+                            focus:shadow-lg focus:outline-none focus:ring-0
+                            active:bg-blue-800 active:shadow-lg
+                            transition
+                            duration-150
+                            ease-in-out
+                          "
+                          type="button"
+                          data-bs-toggle="modal"
+                          data-bs-target="#revokeLicense"
+                        >
+                          <i class="fa fa-fa-remove"></i>
+                          Revoke
                         </button>
                         <button
                           class="
@@ -462,6 +490,8 @@
     </div>
   </div>
   <generate-pdf :modalData="modalData"></generate-pdf>
+  <revoke-license-modal :modalData="modalData"></revoke-license-modal>
+
 </template>
 <script>
 import { useStore } from "vuex";
@@ -472,12 +502,14 @@ import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 import { googleApi } from "@/composables/baseURL";
 
 import generatePdf from "./generateLicensedPdf.vue";
+import revokeLicenseModal from "./revokeLicenseModal.vue";
 
 export default {
   props: ["modalDataId"],
   components: {
     Loading,
     generatePdf,
+    revokeLicenseModal
   },
   computed: {
     moment: () => moment,
