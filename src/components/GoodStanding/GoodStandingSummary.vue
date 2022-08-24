@@ -596,6 +596,7 @@ export default {
             feedback: this.feedback,
           },
         };
+
         this.$store
           .dispatch("goodstanding/addGoodstandingLicense", license)
           .then((res) => {
@@ -609,7 +610,7 @@ export default {
                   this.showFlash = true;
                   setTimeout(() => {
                     this.$router.push({ path: "/menu" });
-                  }, 3500);
+                  }, 5000);
                 } else {
                   this.showErrorFlash = true;
                 }
@@ -694,6 +695,15 @@ export default {
             departmentId: this.departmentId,
           },
         };
+        let smsData = {
+          recipients: [
+            this.profileInfo.user.phoneNumber
+              ? "251" + this.profileInfo.user.phoneNumber
+              : "",
+          ],
+          message:
+            "Dear applicant you have successfully applied for a good standing letter, after careful examination of your uploaded documents by our reviewers we will get back and notify you on each steps, Thank you for using eHPL.",
+        };
         this.$store
           .dispatch("goodstanding/addGoodstandingLicense", license)
           .then((res) => {
@@ -704,10 +714,12 @@ export default {
               .then((res) => {
                 this.showLoading = false;
                 if (res.data.status == "Success") {
-                  this.showFlash = true;
-                  setTimeout(() => {
-                    this.$router.push({ path: "/menu" });
-                  }, 1500);
+                  this.$store.dispatch("sms/sendSms", smsData).then((res) => {
+                    this.showFlash = true;
+                    setTimeout(() => {
+                      this.$router.push({ path: "/menu" });
+                    }, 1500);
+                  });
                 } else {
                   this.showErrorFlash = true;
                 }

@@ -1,8 +1,11 @@
 <template>
   <div v-if="message.showLoading2" class="h-screen mt-large pt-small">
-    <Spinner class="bg-lightBlueB-200  " />
+    <Spinner class="bg-lightBlueB-200" />
   </div>
-  <div style="width: 1000px" class="bg-white mb-large rounded pr-20 pl-20 pb-12">
+  <div
+    style="width: 1000px"
+    class="bg-white mb-large rounded pr-20 pl-20 pb-12"
+  >
     <div v-if="!message.showLoading2">
       <div class="flex justify-center">
         <Title message="Summary" />
@@ -25,11 +28,11 @@
           <label class="ml-8 text-primary-300"> Full Name</label>
           <h5 class="ml-8">
             {{
-                personalInfo.name +
-                " " +
-                personalInfo.fatherName +
-                " " +
-                personalInfo.grandFatherName
+              personalInfo.name +
+              " " +
+              personalInfo.fatherName +
+              " " +
+              personalInfo.grandFatherName
             }}
           </h5>
         </div>
@@ -37,11 +40,11 @@
           <label class="ml-8 text-primary-300"> Full Alternative Name</label>
           <h5 class="ml-8">
             {{
-                personalInfo.alternativeName +
-                " " +
-                personalInfo.alternativeFatherName +
-                " " +
-                personalInfo.alternativeGrandFatherName
+              personalInfo.alternativeName +
+              " " +
+              personalInfo.alternativeFatherName +
+              " " +
+              personalInfo.alternativeGrandFatherName
             }}
           </h5>
         </div>
@@ -75,47 +78,67 @@
           <label class="ml-8 text-primary-300"> Email Address</label>
           <h5 class="ml-8">{{ user.emailAddress }}</h5>
         </div>
-        <div v-if="personalInfo.employeeId != null || personalInfo.employeeId != ''">
+        <div
+          v-if="
+            personalInfo.employeeId != null || personalInfo.employeeId != ''
+          "
+        >
           <label class="ml-8 text-primary-300">HRA Employee Id</label>
           <h5 class="ml-8">{{ personalInfo.employeeId }}</h5>
-      </div>
-        <div v-if="personalInfo.fileNumber != null || personalInfo.fileNumber != ''">
+        </div>
+        <div
+          v-if="
+            personalInfo.fileNumber != null || personalInfo.fileNumber != ''
+          "
+        >
           <label class="ml-8 text-primary-300">HRA File Number</label>
           <h5 class="ml-8">{{ personalInfo.fileNumber }}</h5>
-      </div>
+        </div>
       </div>
       <div class="mt-12 flex justify-center mb-medium">
         <div>
-          <button class="            
-                            inline-block
-                            px-6
-                            py-2.5
-                            bg-blue-600
-                            text-white
-                            font-medium
-                            text-xs
-                            leading-tight
-                            uppercase
-                            rounded
-                            shadow-lg
-                            hover:bg-blue-600 
-                            hover:shadow-lg
-                            focus:bg-blue-700
-                            focus:shadow-lg
-                            focus:outline-none
-                            focus:ring-0
-                            active:bg-blue-800 active:shadow-lg
-                            transition
-                            duration-150
-                            ease-in-out" variant="outline" type="button" @click="prevStep">
+          <button
+            class="
+              inline-block
+              px-6
+              py-2.5
+              bg-blue-600
+              text-white
+              font-medium
+              text-xs
+              leading-tight
+              uppercase
+              rounded
+              shadow-lg
+              hover:bg-blue-600 hover:shadow-lg
+              focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
+              active:bg-blue-800 active:shadow-lg
+              transition
+              duration-150
+              ease-in-out
+            "
+            variant="outline"
+            type="button"
+            @click="prevStep"
+          >
             Back
           </button>
         </div>
         <div v-if="!message.showLoading">
-          <button v-on:click="submit()" variant="outline" type="button" class="p-1">Save Profile</button>
+          <button
+            v-on:click="submit()"
+            variant="outline"
+            type="button"
+            class="p-1"
+          >
+            Save Profile
+          </button>
         </div>
       </div>
-      <div class="flex justify-center justify-items-center mt-8 mb-12" v-if="message.showLoading">
+      <div
+        class="flex justify-center justify-items-center mt-8 mb-12"
+        v-if="message.showLoading"
+      >
         <Spinner />
       </div>
     </div>
@@ -143,7 +166,7 @@ import { useToast } from "vue-toastification";
 export default {
   components: { Title, FlashMessage, ErrorFlashMessage, Spinner },
   computed: {
-    moment: () => moment
+    moment: () => moment,
   },
   props: ["activeState"],
   setup(props, { emit }) {
@@ -155,12 +178,12 @@ export default {
       showFlash: false,
       showErrorFlash: false,
       showLoading: false,
-      showLoading2: false
+      showLoading2: false,
     });
     let user = ref({
       id: "",
       emailAddress: "",
-      phoneNumber: ""
+      phoneNumber: "",
     });
 
     let personalInfo = {
@@ -177,14 +200,14 @@ export default {
       maritalStatus: null,
       poBox: null,
       employeeId: null,
-      fileNumber:null
+      fileNumber: null,
     };
     let address = {
-      poBox: null
+      poBox: null,
     };
     let contact = {
       email: null,
-      poBox: null
+      poBox: null,
     };
     let success = ref(false);
     let response = {};
@@ -201,53 +224,58 @@ export default {
           name: personalInfo.name,
           fatherName: personalInfo.fatherName,
           grandFatherName: personalInfo.grandFatherName,
-          alternativeName: personalInfo.alternativeName ? personalInfo.alternativeName :"",
-          alternativeFatherName: personalInfo.alternativeFatherName ? personalInfo.alternativeFatherName:"",
-          alternativeGrandFatherName: personalInfo.alternativeGrandFatherName?personalInfo.alternativeGrandFatherName :"",
+          alternativeName: personalInfo.alternativeName
+            ? personalInfo.alternativeName
+            : "",
+          alternativeFatherName: personalInfo.alternativeFatherName
+            ? personalInfo.alternativeFatherName
+            : "",
+          alternativeGrandFatherName: personalInfo.alternativeGrandFatherName
+            ? personalInfo.alternativeGrandFatherName
+            : "",
           gender: personalInfo.gender,
-          dateOfBirth: personalInfo.dateOfBirth !="" ? personalInfo.dateOfBirth : null,
+          dateOfBirth:
+            personalInfo.dateOfBirth != "" ? personalInfo.dateOfBirth : null,
           nationalityId: personalInfo.nationalityId,
           maritalStatusId: parseInt(personalInfo.maritalStatusId),
           poBox: personalInfo.poBox,
           photo: personalInfo.photo,
           userId: +localStorage.getItem("userId"),
           employeeId: personalInfo.employeeId ? personalInfo.employeeId : null,
-          fileNumber: personalInfo.fileNumber ? personalInfo.fileNumber : null
+          fileNumber: personalInfo.fileNumber ? personalInfo.fileNumber : null,
         })
-        .then(response => {
+        .then((response) => {
           if (response.statusText == "Created") {
             let userId = +localStorage.getItem("userId");
             let formData = new FormData();
-        
+
             formData.append("document", photoFormData);
             let payload = { document: formData, id: userId };
             store
               .dispatch("profile/uploadProfilePicture", payload)
-              .then(res => {
+              .then((res) => {
                 if (res.status == 200) {
                   message.value.showFlash = !message.value.showFlash;
                   message.value.showLoading = false;
-                  setTimeout(() => {
-                  }, 1500);
-                toast.success(response.data.message, {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true
-            });
-                 router.push({ path: "/menu" });
-
+                  setTimeout(() => {}, 1500);
+                  toast.success(response.data.message, {
+                    timeout: 5000,
+                    position: "bottom-center",
+                    pauseOnFocusLoss: true,
+                    pauseOnHover: true,
+                    icon: true,
+                  });
+                  router.push({ path: "/menu" });
                 } else {
                   message.value.showErrorFlash = !message.value.showErrorFlash;
                 }
               })
-              .catch(err => { });
+              .catch((err) => {});
 
             message.value.showLoading = false;
             message.value.showFlash = true;
             message.value.showErrorFlash = false;
-          
+
             setTimeout(() => {
               location.reload(true);
             }, 1500);
@@ -258,12 +286,12 @@ export default {
             message.value.showLoading = false;
             message.value.showFlash = false;
             message.value.showErrorFlash = true;
-          toast.error(response.data.message, {
+            toast.error(response.data.message, {
               timeout: 5000,
               position: "bottom-center",
               pauseOnFocusLoss: true,
               pauseOnHover: true,
-              icon: true
+              icon: true,
             });
             setTimeout(() => {
               message.value.showErrorFlash = false;
@@ -275,7 +303,7 @@ export default {
       message.value.showLoading2 = true;
       store
         .dispatch("profile/getUserById", localStorage.getItem("userId"))
-        .then(res => {
+        .then((res) => {
           user.value = res.data.data;
           console.log(user.value);
           message.value.showLoading2 = false;
@@ -321,14 +349,14 @@ export default {
       submit,
       user,
       fetchUser,
-      prevStep
+      prevStep,
     };
-  }
+  },
 };
 </script>
 <style>
-.text-danger>label,
-.text-danger>h5 {
+.text-danger > label,
+.text-danger > h5 {
   color: red;
 }
 </style>

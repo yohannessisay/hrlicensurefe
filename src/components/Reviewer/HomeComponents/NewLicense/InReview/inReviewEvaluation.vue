@@ -1735,7 +1735,7 @@
             <div class="form-group mb-6 mt-4">
               <label for="" class="ml-2">End Date</label>
               <input
-              required
+                required
                 class="
                   form-control
                   block
@@ -2276,6 +2276,7 @@ export default {
     };
 
     const action = (actionValue) => {
+      let smsMessage = "";
       let goTo = "admin/newLicense/underSupervision";
       showActionLoading.value = true;
       showLoadingButtons.value = true;
@@ -2321,6 +2322,11 @@ export default {
       }
       isLoadingFinalAction.value = true;
       if (actionValue === "ApproveEvent") {
+        smsMessage = newLicense.value
+          ? "Dear applicant your applied new license of number " +
+            newLicense.value.newLicenseCode +
+            " has been approved after careful examination of your uploaded documents by our reviewers. Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
+          : "";
         goTo = "/admin/newLicense/approved";
         if (
           newLicense.value.licenseExpirationDate === null &&
@@ -2356,6 +2362,11 @@ export default {
       }
 
       if (actionValue == "DeclineEvent") {
+        smsMessage = newLicense.value
+          ? "Dear applicant your applied new license of number " +
+            newLicense.value.newLicenseCode +
+            " has been declined after careful examination of your uploaded documents by our reviewers. Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
+          : "";
         goTo = "/admin/newLicense/declined";
         showActionLoading.value = false;
         showLoadingButtons.value = false;
@@ -2414,6 +2425,15 @@ export default {
         action: actionValue,
         data: newLicense.value,
       };
+      let smsData = {
+        recipients: [
+          newLicense.value && newLicense.value.applicant
+            ? "251" + profileInfo.value.applicant.phoneNumber
+            : "",
+        ],
+        message: smsMessage ? smsMessage : "",
+      };
+
       if (
         applicationType.value == "New License" &&
         sendDeclinedData.value == true
@@ -2423,15 +2443,19 @@ export default {
           .then((res) => {
             showActionLoading.value = false;
             if (res.statusText == "Created") {
-              toast.success("Application reviewed Successfully", {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true,
+              store.dispatch("sms/sendSms", smsData).then(() => {
+                toast.success("Application reviewed Successfully", {
+                  timeout: 5000,
+                  position: "bottom-center",
+                  pauseOnFocusLoss: true,
+                  pauseOnHover: true,
+                  icon: true,
+                });
+                isLoadingFinalAction.value = false;
+                   setTimeout(() => {
+            window.location.reload();
+          }, 3000);
               });
-              isLoadingFinalAction.value = false;
-              router.push({ path: goTo });
             } else {
               toast.error("Please try again", {
                 timeout: 5000,
@@ -2441,7 +2465,9 @@ export default {
                 icon: true,
               });
               isLoadingFinalAction.value = false;
-              router.push({ path: "admin/newLicense/inReview" });
+                   setTimeout(() => {
+            window.location.reload();
+          }, 3000);
             }
           })
           .catch(() => {
@@ -2758,24 +2784,44 @@ export default {
         showDateError.value.message =
           "Start date can not be set to past,minimum start date is today.";
         showDateError.value.show = true;
-        console.log(lessThanToday);
         return;
       } else {
+        let smsData = {
+          recipients: [
+            newLicense.value && newLicense.value.applicant
+              ? "251" + newLicense.value.applicant.phoneNumber
+              : "",
+          ],
+          message: newLicense.value
+            ? "Dear applicant your applied new license of number " +
+              newLicense.value.newLicenseCode +
+              " has been set to be under supervison of MR/MRS:-" +
+              newLicense.value.supervisor +
+              " at institution of " +
+              instSearched.value.name +
+              " for " +
+              minDate +
+              " days  .Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
+            : "",
+        };
         store
           .dispatch("reviewer/editNewLicense", req)
           .then((res) => {
             showActionLoading.value = false;
             if (res.statusText == "Created") {
-              toast.success("Application reviewed Successfully", {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true,
+              store.dispatch("sms/sendSms", smsData).then(() => {
+                toast.success("Application reviewed Successfully", {
+                  timeout: 5000,
+                  position: "bottom-center",
+                  pauseOnFocusLoss: true,
+                  pauseOnHover: true,
+                  icon: true,
+                });
+                isLoadingFinalAction.value = false;
+                setTimeout(() => {
+                  window.location.reload();
+                }, 2000);
               });
-              isLoadingFinalAction.value = false;
-                 setTimeout(() => {  window.location.reload();},2000)
-              
             } else {
               toast.error("Please try again", {
                 timeout: 5000,
@@ -2785,7 +2831,9 @@ export default {
                 icon: true,
               });
               isLoadingFinalAction.value = false;
-               setTimeout(() => {  window.location.reload();},2000)
+              setTimeout(() => {
+                window.location.reload();
+              }, 2000);
             }
           })
           .catch(() => {
@@ -2797,7 +2845,9 @@ export default {
               pauseOnHover: true,
               icon: true,
             });
-              setTimeout(() => {  window.location.reload();},2000)
+            setTimeout(() => {
+              window.location.reload();
+            }, 2000);
           });
       }
     };
@@ -2807,7 +2857,7 @@ export default {
     onMounted(() => {
       created(route.params.id);
       store.dispatch("goodstanding/getInstitution").then((res) => {
-      institutions.value = res.data.data.filter((elm)=>elm.isLocal==true);
+        institutions.value = res.data.data.filter((elm) => elm.isLocal == true);
       });
     });
     return {

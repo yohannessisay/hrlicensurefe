@@ -21,10 +21,10 @@
           <h5 class="ml-4">
             {{
               this.profileInfo.name +
-              " " +
-              this.profileInfo.fatherName +
-              " " +
-              this.profileInfo.grandFatherName
+                " " +
+                this.profileInfo.fatherName +
+                " " +
+                this.profileInfo.grandFatherName
             }}
           </h5>
         </div>
@@ -33,10 +33,10 @@
           <h5 class="ml-8">
             {{
               this.profileInfo.alternativeName +
-              " " +
-              this.profileInfo.alternativeFatherName +
-              " " +
-              this.profileInfo.alternativeGrandFatherName
+                " " +
+                this.profileInfo.alternativeFatherName +
+                " " +
+                this.profileInfo.alternativeGrandFatherName
             }}
           </h5>
         </div>
@@ -50,7 +50,7 @@
         </div>
         <div
           :class="[
-            this.profileInfo.nationality === null ? errorClass : activeClass,
+            this.profileInfo.nationality === null ? errorClass : activeClass
           ]"
         >
           <label class="ml-4 text-primary-300"> Nationality</label>
@@ -64,7 +64,7 @@
         </div>
         <div
           :class="[
-            this.profileInfo.dateOfBirth === null ? errorClass : activeClass,
+            this.profileInfo.dateOfBirth === null ? errorClass : activeClass
           ]"
         >
           <label class="ml-4 text-primary-300"> Date of Birth</label>
@@ -80,7 +80,7 @@
           :class="[
             this.profileInfo.maritalStatus.name === null
               ? errorClass
-              : activeClass,
+              : activeClass
           ]"
         >
           <label class="ml-4 text-primary-300"> Marital Status</label>
@@ -109,7 +109,7 @@
           :class="[
             this.profileInfo.user.phoneNumber === null
               ? errorClass
-              : activeClass,
+              : activeClass
           ]"
         >
           <label class="ml-4 text-primary-300"> Mobile Number</label>
@@ -128,7 +128,7 @@
           :class="[
             this.profileInfo.user.emailAddress === null
               ? errorClass
-              : activeClass,
+              : activeClass
           ]"
         >
           <label class="ml-4 text-primary-300"> Email</label>
@@ -324,7 +324,7 @@
           v-if="this.draftStatus == 'SUB'"
           class="flex justify-center mt-8 pb-12"
         >
-          <button @click="submitBack">Back</button>
+          <button @click="submitBack"></button>
           <button
             id="subButton"
             style="opacity: 0.3"
@@ -403,7 +403,7 @@ export default {
     Title,
     FlashMessage,
     ErrorFlashMessage,
-    Spinner,
+    Spinner
   },
   async created() {
     this.basePath = googleApi;
@@ -476,10 +476,8 @@ export default {
     this.phd = this.getPhd;
     this.phdTranscript = this.getPhdTranscript;
     this.phdTranscript2 = this.getPhdTranscript2;
-    this.renewedLicenseFromHealthFacility =
-      this.getRenewedLicenseOfHealthFacility;
-    this.requestLetterFromHiringHealthFacility =
-      this.getRequestLetterFromHiringHealthFacility;
+    this.renewedLicenseFromHealthFacility = this.getRenewedLicenseOfHealthFacility;
+    this.requestLetterFromHiringHealthFacility = this.getRequestLetterFromHiringHealthFacility;
 
     this.buttons = this.getButtons;
     this.fetchProfileInfo();
@@ -498,8 +496,7 @@ export default {
     this.expertLevelId = this.license.expertLevelId;
     this.otherEducationalInstitution = this.license.otherEducationalInstitution;
     this.otherProfessionalType = this.license.otherProfessionalType;
-    this.otherProfessionalTypeAmharic =
-      this.license.otherProfessionalTypeAmharic;
+    this.otherProfessionalTypeAmharic = this.license.otherProfessionalTypeAmharic;
     if (this.levelOfEducation == "diploma") {
       this.docCode = "PDD";
       this.docIdx = 7;
@@ -534,7 +531,7 @@ export default {
       if ("name" in this.passport) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "PSP"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "PSP"),
             1
           );
         }
@@ -548,7 +545,7 @@ export default {
       if ("name" in this.healthExamCert) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "HEC"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "HEC"),
             1
           );
         }
@@ -562,7 +559,7 @@ export default {
       if ("name" in this.englishLanguage) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "ELPC"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "ELPC"),
             1
           );
         }
@@ -576,7 +573,7 @@ export default {
       if ("name" in this.proCertificate) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "PDC"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "PDC"),
             1
           );
         }
@@ -590,7 +587,7 @@ export default {
       if ("name" in this.proCertificate2) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "PDC1"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "PDC1"),
             1
           );
         }
@@ -604,7 +601,7 @@ export default {
       if ("name" in this.proCertificate3) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "PDC2"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "PDC2"),
             1
           );
         }
@@ -618,7 +615,7 @@ export default {
       if ("name" in this.proCertificate4) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "PDC3"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "PDC3"),
             1
           );
         }
@@ -632,7 +629,7 @@ export default {
       if ("name" in this.proCertificate5) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "PDC4"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "PDC4"),
             1
           );
         }
@@ -647,7 +644,7 @@ export default {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
             this.documentsArray.findIndex(
-              (e) => e.documentTypeCode === `${this.docCode}`
+              e => e.documentTypeCode === `${this.docCode}`
             ),
             1
           );
@@ -671,7 +668,7 @@ export default {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
             this.documentsArray.findIndex(
-              (e) => e.documentTypeCode === `${this.docCode}${this.docNum + 1}`
+              e => e.documentTypeCode === `${this.docCode}${this.docNum + 1}`
             ),
             1
           );
@@ -695,7 +692,7 @@ export default {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
             this.documentsArray.findIndex(
-              (e) => e.documentTypeCode === `${this.docCode}${this.docNum + 2}`
+              e => e.documentTypeCode === `${this.docCode}${this.docNum + 2}`
             ),
             1
           );
@@ -719,7 +716,7 @@ export default {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
             this.documentsArray.findIndex(
-              (e) => e.documentTypeCode === `${this.docCode}${this.docNum + 3}`
+              e => e.documentTypeCode === `${this.docCode}${this.docNum + 3}`
             ),
             1
           );
@@ -743,7 +740,7 @@ export default {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
             this.documentsArray.findIndex(
-              (e) => e.documentTypeCode === `${this.docCode}${this.docNum + 4}`
+              e => e.documentTypeCode === `${this.docCode}${this.docNum + 4}`
             ),
             1
           );
@@ -766,7 +763,7 @@ export default {
       if ("name" in this.proTranscript) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "PDT"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "PDT"),
             1
           );
         }
@@ -780,7 +777,7 @@ export default {
       if ("name" in this.proTranscript2) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "PDT1"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "PDT1"),
             1
           );
         }
@@ -794,7 +791,7 @@ export default {
       if ("name" in this.proTranscript3) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "PDT2"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "PDT2"),
             1
           );
         }
@@ -808,7 +805,7 @@ export default {
       if ("name" in this.proTranscript4) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "PDT3"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "PDT3"),
             1
           );
         }
@@ -822,7 +819,7 @@ export default {
       if ("name" in this.proTranscript5) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "PDT4"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "PDT4"),
             1
           );
         }
@@ -836,9 +833,7 @@ export default {
       if ("name" in this.eduEighth) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex(
-              (e) => e.documentTypeCode === "EDEGC"
-            ),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "EDEGC"),
             1
           );
         }
@@ -852,9 +847,7 @@ export default {
       if ("name" in this.eduTenth) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex(
-              (e) => e.documentTypeCode === "EDTGC"
-            ),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "EDTGC"),
             1
           );
         }
@@ -868,9 +861,7 @@ export default {
       if ("name" in this.eduTwelveth) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex(
-              (e) => e.documentTypeCode === "EDTWGC"
-            ),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "EDTWGC"),
             1
           );
         }
@@ -884,7 +875,7 @@ export default {
       if ("name" in this.eduTranscript1) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "EDHT"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "EDHT"),
             1
           );
         }
@@ -898,7 +889,7 @@ export default {
       if ("name" in this.eduTranscript2) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "EDPT"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "EDPT"),
             1
           );
         }
@@ -912,9 +903,7 @@ export default {
       if ("name" in this.herqa) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex(
-              (e) => e.documentTypeCode === "HERQA"
-            ),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "HERQA"),
             1
           );
         }
@@ -929,7 +918,7 @@ export default {
         if ("name" in this.supportLetter) {
           if (this.draftId != undefined) {
             this.documentsArray.splice(
-              this.documentsArray.findIndex((e) => e.documentTypeCode === "SL"),
+              this.documentsArray.findIndex(e => e.documentTypeCode === "SL"),
               1
             );
           }
@@ -946,7 +935,7 @@ export default {
           if (this.draftId != undefined) {
             this.documentsArray.splice(
               this.documentsArray.findIndex(
-                (e) => e.documentTypeCode === "SLFSI"
+                e => e.documentTypeCode === "SLFSI"
               ),
               1
             );
@@ -964,7 +953,7 @@ export default {
       if ("name" in this.coc) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "COC"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "COC"),
             1
           );
         }
@@ -978,9 +967,7 @@ export default {
       if ("name" in this.coc2) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex(
-              (e) => e.documentTypeCode === "COC 2"
-            ),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "COC 2"),
             1
           );
         }
@@ -994,9 +981,7 @@ export default {
       if ("name" in this.coc3) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex(
-              (e) => e.documentTypeCode === "COC 3"
-            ),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "COC 3"),
             1
           );
         }
@@ -1010,7 +995,7 @@ export default {
       if ("name" in this.workExperience) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "WE"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "WE"),
             1
           );
         }
@@ -1024,7 +1009,7 @@ export default {
       if ("name" in this.workExperience2) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "WE2"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "WE2"),
             1
           );
         }
@@ -1038,7 +1023,7 @@ export default {
       if ("name" in this.serviceFee) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "SF"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "SF"),
             1
           );
         }
@@ -1052,9 +1037,7 @@ export default {
       if ("name" in this.renewedLicense) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex(
-              (e) => e.documentTypeCode === "RLOTO"
-            ),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "RLOTO"),
             1
           );
         }
@@ -1071,9 +1054,7 @@ export default {
       if ("name" in this.professionalLicense) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex(
-              (e) => e.documentTypeCode === "APLFCO"
-            ),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "APLFCO"),
             1
           );
         }
@@ -1091,7 +1072,7 @@ export default {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
             this.documentsArray.findIndex(
-              (e) => e.documentTypeCode === "APLFCO1"
+              e => e.documentTypeCode === "APLFCO1"
             ),
             1
           );
@@ -1107,7 +1088,7 @@ export default {
       if ("name" in this.diploma) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "PDD"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "PDD"),
             1
           );
         }
@@ -1121,7 +1102,7 @@ export default {
       if ("name" in this.transcript) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "TRAN"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "TRAN"),
             1
           );
         }
@@ -1135,9 +1116,7 @@ export default {
       if ("name" in this.transcript2) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex(
-              (e) => e.documentTypeCode === "TRAN1"
-            ),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "TRAN1"),
             1
           );
         }
@@ -1151,7 +1130,7 @@ export default {
       if ("name" in this.degree) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "DEG"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "DEG"),
             1
           );
         }
@@ -1165,7 +1144,7 @@ export default {
       if ("name" in this.payroll) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "PAYR"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "PAYR"),
             1
           );
         }
@@ -1179,7 +1158,7 @@ export default {
       if ("name" in this.masters) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "MAST"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "MAST"),
             1
           );
         }
@@ -1194,7 +1173,7 @@ export default {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
             this.documentsArray.findIndex(
-              (e) => e.documentTypeCode === "MASTRAN"
+              e => e.documentTypeCode === "MASTRAN"
             ),
             1
           );
@@ -1210,7 +1189,7 @@ export default {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
             this.documentsArray.findIndex(
-              (e) => e.documentTypeCode === "MASTRAN1"
+              e => e.documentTypeCode === "MASTRAN1"
             ),
             1
           );
@@ -1225,7 +1204,7 @@ export default {
       if ("name" in this.phd) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "PHD"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "PHD"),
             1
           );
         }
@@ -1240,7 +1219,7 @@ export default {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
             this.documentsArray.findIndex(
-              (e) => e.documentTypeCode === "PHDTRAN"
+              e => e.documentTypeCode === "PHDTRAN"
             ),
             1
           );
@@ -1256,7 +1235,7 @@ export default {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
             this.documentsArray.findIndex(
-              (e) => e.documentTypeCode === "PHDTRAN1"
+              e => e.documentTypeCode === "PHDTRAN1"
             ),
             1
           );
@@ -1274,9 +1253,7 @@ export default {
       if ("name" in this.renewedLicenseFromHealthFacility) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex(
-              (e) => e.documentTypeCode === "RLHFO"
-            ),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "RLHFO"),
             1
           );
         }
@@ -1296,9 +1273,7 @@ export default {
       if ("name" in this.requestLetterFromHiringHealthFacility) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex(
-              (e) => e.documentTypeCode === "RLFHHF"
-            ),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "RLFHHF"),
             1
           );
         }
@@ -1325,7 +1300,7 @@ export default {
     applicantTypeId: null,
     education: {
       departmentId: null,
-      institutionId: null,
+      institutionId: null
     },
     residenceWoredaId: null,
     professionalTypeIds: [],
@@ -1418,7 +1393,7 @@ export default {
     docIdx2: 0,
     docIdx3: 0,
     docIdx4: 0,
-    docIdx5: 0,
+    docIdx5: 0
   }),
   computed: {
     ...mapGetters({
@@ -1487,11 +1462,11 @@ export default {
       getTranscript: "newlicense/getTranscript",
       getTranscript2: "newlicense/getTranscript2",
       getDegree: "newlicense/getDegree",
-      getPayroll: "newlicense/getPayroll",
-    }),
+      getPayroll: "newlicense/getPayroll"
+    })
   },
   methods: {
-    checkBox: function () {
+    checkBox: function() {
       this.checkBoxValue = !this.checkBoxValue;
       if (this.draftStatus == "DEC" || this.draftStatus == "CONF") {
         if (this.checkBoxValue) {
@@ -1511,19 +1486,19 @@ export default {
         }
       }
     },
-    feedbackUpdate: function () {
+    feedbackUpdate: function() {
       if (this.feedback.length < 0) {
         this.showSubmit = false;
       } else {
         this.showSubmit = true;
       }
     },
-    moment: function (date) {
+    moment: function(date) {
       return moment(date);
     },
     fetchProfileInfo() {
       this.showLoading2 = true;
-      this.$store.dispatch("newlicense/getProfile", this.userId).then((res) => {
+      this.$store.dispatch("newlicense/getProfile", this.userId).then(res => {
         setTimeout(() => {
           this.profileInfo = res.data.data;
           this.show = true;
@@ -1554,7 +1529,7 @@ export default {
       const applicationId = this.getApplicationId;
       this.$store
         .dispatch("newlicense/getDocumentSpecs", applicationId)
-        .then((res) => {
+        .then(res => {
           this.documentTypes = res.data.data;
         });
     },
@@ -1783,13 +1758,13 @@ export default {
           let license = {
             data: {
               action: action,
-              data: this.draftData,
+              data: this.draftData
             },
-            id: this.draftId,
+            id: this.draftId
           };
           this.$store
             .dispatch("newlicense/editNewLicense", license)
-            .then((res) => {
+            .then(res => {
               if (res.data.status == "Success") {
                 let licenseId = this.draftId;
                 let formData = new FormData();
@@ -1988,7 +1963,7 @@ export default {
 
                 this.$store
                   .dispatch("newlicense/uploadDocuments", payload)
-                  .then((res) => {
+                  .then(res => {
                     if (res.status == 200) {
                       this.showFlash = true;
                       this.showLoading = false;
@@ -1999,7 +1974,7 @@ export default {
                       this.showErrorFlash = true;
                     }
                   })
-                  .catch((err) => {});
+                  .catch(err => {});
               }
             });
         }
@@ -2176,7 +2151,7 @@ export default {
             applicantTypeId: this.applicantTypeId,
             education: {
               institutionId: this.education.institutionId,
-              departmentId: this.education.departmentId,
+              departmentId: this.education.departmentId
             },
             residenceWoredaId: this.residenceWoredaId,
             professionalTypeIds: this.professionalTypeIds,
@@ -2188,8 +2163,8 @@ export default {
             isLegal: this.checkBoxValue,
             otherEducationalInstitution: this.otherEducationalInstitution,
             otherProfessionalType: this.otherProfessionalType,
-            feedback: this.feedback,
-          },
+            feedback: this.feedback
+          }
         };
         let educationLevel = localStorage.getItem("educationalLevel");
         let payroll = localStorage.getItem("payroll");
@@ -2207,12 +2182,12 @@ export default {
         } else {
           this.$store
             .dispatch("newlicense/addNewLicense", license)
-            .then((res) => {
+            .then(res => {
               let licenseId = res.data.data.id;
               let payload = { document: formData, id: licenseId };
               this.$store
                 .dispatch("newlicense/uploadDocuments", payload)
-                .then((res) => {
+                .then(res => {
                   this.showLoading = false;
                   if (res.data.status == "Success") {
                     this.showFlash = true;
@@ -2223,7 +2198,7 @@ export default {
                     this.showErrorFlash = true;
                   }
                 })
-                .catch((err) => {
+                .catch(err => {
                   this.showErrorFlash = true;
                 });
             });
@@ -2237,226 +2212,218 @@ export default {
         let license = {
           data: {
             action: action,
-            data: this.draftData,
+            data: this.draftData
           },
-          id: this.draftId,
+          id: this.draftId
         };
-        this.$store
-          .dispatch("newlicense/editNewLicense", license)
-          .then((res) => {
-            if (res.data.status == "Success") {
-              let licenseId = this.draftId;
-              let formData = new FormData();
+        this.$store.dispatch("newlicense/editNewLicense", license).then(res => {
+          if (res.data.status == "Success") {
+            let licenseId = this.draftId;
+            let formData = new FormData();
 
-              formData.append(
-                this.documentTypes[1].documentType.code,
-                this.passport
-              );
-              formData.append(
-                this.documentTypes[2].documentType.code,
-                this.healthExamCert
-              );
+            formData.append(
+              this.documentTypes[1].documentType.code,
+              this.passport
+            );
+            formData.append(
+              this.documentTypes[2].documentType.code,
+              this.healthExamCert
+            );
 
+            formData.append(
+              this.documentTypes[4].documentType.code,
+              this.workExperience
+            );
+            formData.append(
+              this.documentTypes[28].documentType.code,
+              this.workExperience2
+            );
+            formData.append(
+              this.documentTypes[5].documentType.code,
+              this.englishLanguage
+            );
+            formData.append(
+              this.documentTypes[23].documentType.code,
+              this.transcript
+            );
+            formData.append(
+              this.documentTypes[52].documentType.code,
+              this.transcript2
+            );
+            formData.append(
+              this.documentTypes[20].documentType.code,
+              this.payroll
+            );
+            formData.append(
+              this.documentTypes[21].documentType.code,
+              this.degree
+            );
+            formData.append(
+              this.documentTypes[6].documentType.code,
+              this.proCertificate
+            );
+            formData.append(
+              this.documentTypes[29].documentType.code,
+              this.proCertificate2
+            );
+            formData.append(
+              this.documentTypes[30].documentType.code,
+              this.proCertificate3
+            );
+            formData.append(
+              this.documentTypes[31].documentType.code,
+              this.proCertificate4
+            );
+            formData.append(
+              this.documentTypes[32].documentType.code,
+              this.proCertificate5
+            );
+            formData.append(
+              this.documentTypes[this.docIdx].documentType.code,
+              this.proDiploma
+            );
+            formData.append(
+              this.documentTypes[this.docIdx2].documentType.code,
+              this.proDiploma2
+            );
+            formData.append(
+              this.documentTypes[this.docIdx3].documentType.code,
+              this.proDiploma3
+            );
+            formData.append(
+              this.documentTypes[this.docIdx4].documentType.code,
+              this.proDiploma4
+            );
+            formData.append(
+              this.documentTypes[this.docIdx5].documentType.code,
+              this.proDiploma5
+            );
+            formData.append(
+              this.documentTypes[8].documentType.code,
+              this.proTranscript
+            );
+            formData.append(
+              this.documentTypes[37].documentType.code,
+              this.proTranscript2
+            );
+            formData.append(
+              this.documentTypes[38].documentType.code,
+              this.proTranscript3
+            );
+            formData.append(
+              this.documentTypes[39].documentType.code,
+              this.proTranscript4
+            );
+            formData.append(
+              this.documentTypes[40].documentType.code,
+              this.proTranscript5
+            );
+            formData.append(this.documentTypes[9].documentType.code, this.coc);
+            formData.append(
+              this.documentTypes[41].documentType.code,
+              this.coc2
+            );
+            formData.append(
+              this.documentTypes[42].documentType.code,
+              this.coc3
+            );
+            if (this.educationalDocs != undefined) {
               formData.append(
-                this.documentTypes[4].documentType.code,
-                this.workExperience
+                this.documentTypes[10].documentType.code,
+                this.educationalDocs[0]
               );
               formData.append(
-                this.documentTypes[28].documentType.code,
-                this.workExperience2
+                this.documentTypes[11].documentType.code,
+                this.educationalDocs[1]
               );
               formData.append(
-                this.documentTypes[5].documentType.code,
-                this.englishLanguage
+                this.documentTypes[12].documentType.code,
+                this.educationalDocs[2]
               );
               formData.append(
-                this.documentTypes[23].documentType.code,
-                this.transcript
+                this.documentTypes[13].documentType.code,
+                this.educationalDocs[3]
               );
               formData.append(
-                this.documentTypes[52].documentType.code,
-                this.transcript2
+                this.documentTypes[14].documentType.code,
+                this.educationalDocs[4]
               );
-              formData.append(
-                this.documentTypes[20].documentType.code,
-                this.payroll
-              );
-              formData.append(
-                this.documentTypes[21].documentType.code,
-                this.degree
-              );
-              formData.append(
-                this.documentTypes[6].documentType.code,
-                this.proCertificate
-              );
-              formData.append(
-                this.documentTypes[29].documentType.code,
-                this.proCertificate2
-              );
-              formData.append(
-                this.documentTypes[30].documentType.code,
-                this.proCertificate3
-              );
-              formData.append(
-                this.documentTypes[31].documentType.code,
-                this.proCertificate4
-              );
-              formData.append(
-                this.documentTypes[32].documentType.code,
-                this.proCertificate5
-              );
-              formData.append(
-                this.documentTypes[this.docIdx].documentType.code,
-                this.proDiploma
-              );
-              formData.append(
-                this.documentTypes[this.docIdx2].documentType.code,
-                this.proDiploma2
-              );
-              formData.append(
-                this.documentTypes[this.docIdx3].documentType.code,
-                this.proDiploma3
-              );
-              formData.append(
-                this.documentTypes[this.docIdx4].documentType.code,
-                this.proDiploma4
-              );
-              formData.append(
-                this.documentTypes[this.docIdx5].documentType.code,
-                this.proDiploma5
-              );
-              formData.append(
-                this.documentTypes[8].documentType.code,
-                this.proTranscript
-              );
-              formData.append(
-                this.documentTypes[37].documentType.code,
-                this.proTranscript2
-              );
-              formData.append(
-                this.documentTypes[38].documentType.code,
-                this.proTranscript3
-              );
-              formData.append(
-                this.documentTypes[39].documentType.code,
-                this.proTranscript4
-              );
-              formData.append(
-                this.documentTypes[40].documentType.code,
-                this.proTranscript5
-              );
-              formData.append(
-                this.documentTypes[9].documentType.code,
-                this.coc
-              );
-              formData.append(
-                this.documentTypes[41].documentType.code,
-                this.coc2
-              );
-              formData.append(
-                this.documentTypes[42].documentType.code,
-                this.coc3
-              );
-              if (this.educationalDocs != undefined) {
-                formData.append(
-                  this.documentTypes[10].documentType.code,
-                  this.educationalDocs[0]
-                );
-                formData.append(
-                  this.documentTypes[11].documentType.code,
-                  this.educationalDocs[1]
-                );
-                formData.append(
-                  this.documentTypes[12].documentType.code,
-                  this.educationalDocs[2]
-                );
-                formData.append(
-                  this.documentTypes[13].documentType.code,
-                  this.educationalDocs[3]
-                );
-                formData.append(
-                  this.documentTypes[14].documentType.code,
-                  this.educationalDocs[4]
-                );
-              }
-
-              if (this.applicantTypeId == 1) {
-                formData.append(
-                  this.documentTypes[15].documentType.code,
-                  this.supportLetter
-                );
-              }
-              if (this.applicantTypeId == 3) {
-                formData.append(
-                  this.documentTypes[64].documentType.code,
-                  this.supportLetter
-                );
-              }
-              formData.append(
-                this.documentTypes[16].documentType.code,
-                this.herqa
-              );
-              formData.append(
-                this.documentTypes[18].documentType.code,
-                this.renewedLicense
-              );
-              formData.append(
-                this.documentTypes[19].documentType.code,
-                this.professionalLicense
-              );
-              formData.append(
-                this.documentTypes[52].documentType.code,
-                this.professionalLicense2
-              );
-              formData.append(
-                this.documentTypes[24].documentType.code,
-                this.masters
-              );
-              formData.append(
-                this.documentTypes[25].documentType.code,
-                this.mastersTranscript
-              );
-              formData.append(
-                this.documentTypes[57].documentType.code,
-                this.mastersTranscript2
-              );
-              formData.append(
-                this.documentTypes[26].documentType.code,
-                this.phd
-              );
-              formData.append(
-                this.documentTypes[27].documentType.code,
-                this.phdTranscript
-              );
-              formData.append(
-                this.documentTypes[58].documentType.code,
-                this.phdTranscript2
-              );
-              formData.append(
-                this.documentTypes[63].documentType.code,
-                this.renewedLicenseFromHealthFacility
-              );
-              formData.append(
-                this.documentTypes[65].documentType.code,
-                this.requestLetterFromHiringHealthFacility
-              );
-              let payload = { document: formData, id: licenseId };
-              this.$store
-                .dispatch("newlicense/uploadDocuments", payload)
-                .then((res) => {
-                  if (res.status == 200) {
-                    this.showFlash = true;
-                    this.showLoading = false;
-                    setTimeout(() => {
-                      this.$router.push({ path: "/menu" });
-                    }, 5000);
-                  } else {
-                    this.showErrorFlash = true;
-                  }
-                })
-                .catch((err) => {});
             }
-          });
+
+            if (this.applicantTypeId == 1) {
+              formData.append(
+                this.documentTypes[15].documentType.code,
+                this.supportLetter
+              );
+            }
+            if (this.applicantTypeId == 3) {
+              formData.append(
+                this.documentTypes[64].documentType.code,
+                this.supportLetter
+              );
+            }
+            formData.append(
+              this.documentTypes[16].documentType.code,
+              this.herqa
+            );
+            formData.append(
+              this.documentTypes[18].documentType.code,
+              this.renewedLicense
+            );
+            formData.append(
+              this.documentTypes[19].documentType.code,
+              this.professionalLicense
+            );
+            formData.append(
+              this.documentTypes[52].documentType.code,
+              this.professionalLicense2
+            );
+            formData.append(
+              this.documentTypes[24].documentType.code,
+              this.masters
+            );
+            formData.append(
+              this.documentTypes[25].documentType.code,
+              this.mastersTranscript
+            );
+            formData.append(
+              this.documentTypes[57].documentType.code,
+              this.mastersTranscript2
+            );
+            formData.append(this.documentTypes[26].documentType.code, this.phd);
+            formData.append(
+              this.documentTypes[27].documentType.code,
+              this.phdTranscript
+            );
+            formData.append(
+              this.documentTypes[58].documentType.code,
+              this.phdTranscript2
+            );
+            formData.append(
+              this.documentTypes[63].documentType.code,
+              this.renewedLicenseFromHealthFacility
+            );
+            formData.append(
+              this.documentTypes[65].documentType.code,
+              this.requestLetterFromHiringHealthFacility
+            );
+            let payload = { document: formData, id: licenseId };
+            this.$store
+              .dispatch("newlicense/uploadDocuments", payload)
+              .then(res => {
+                if (res.status == 200) {
+                  this.showFlash = true;
+                  this.showLoading = false;
+                  setTimeout(() => {
+                    this.$router.push({ path: "/menu" });
+                  }, 5000);
+                } else {
+                  this.showErrorFlash = true;
+                }
+              })
+              .catch(err => {});
+          }
+        });
       } else {
         let formData = new FormData();
         formData.append(this.documentTypes[1].documentType.code, this.passport);
@@ -2631,7 +2598,7 @@ export default {
             applicantTypeId: this.applicantTypeId,
             education: {
               institutionId: this.education.institutionId,
-              departmentId: this.education.departmentId,
+              departmentId: this.education.departmentId
             },
             residenceWoredaId: this.residenceWoredaId,
             professionalTypeIds: this.professionalTypeIds,
@@ -2642,31 +2609,40 @@ export default {
             expertLevelId: this.expertLevelId,
             isLegal: this.checkBoxValue,
             otherEducationalInstitution: this.otherEducationalInstitution,
-            otherProfessionalType: this.otherProfessionalType,
-          },
+            otherProfessionalType: this.otherProfessionalType
+          }
         };
-        this.$store
-          .dispatch("newlicense/addNewLicense", license)
-          .then((res) => {
-            let licenseId = res.data.data.id;
-            let payload = { document: formData, id: licenseId };
-            this.$store
-              .dispatch("newlicense/uploadDocuments", payload)
-              .then((res) => {
-                this.showLoading = false;
-                if (res.data.status == "Success") {
+        let smsData = {
+          recipients: [
+            this.profileInfo.user.phoneNumber
+              ? "251" + this.profileInfo.user.phoneNumber
+              : ""
+          ],
+          message:
+            "Dear applicant you have successfully applied for a new license, after careful examination of your uploaded documents by our reviewers we will get back and notify you on each steps, Thank you for using eHPL."
+        };
+        this.$store.dispatch("newlicense/addNewLicense", license).then(res => {
+          let licenseId = res.data.data.id;
+          let payload = { document: formData, id: licenseId };
+          this.$store
+            .dispatch("newlicense/uploadDocuments", payload)
+            .then(res => {
+              this.showLoading = false;
+              if (res.data.status == "Success") {
+                this.$store.dispatch("sms/sendSms", smsData).then(() => {
                   this.showFlash = true;
                   setTimeout(() => {
                     this.$router.push({ path: "/menu" });
                   }, 5000);
-                } else {
-                  this.showErrorFlash = true;
-                }
-              })
-              .catch((err) => {
+                });
+              } else {
                 this.showErrorFlash = true;
-              });
-          });
+              }
+            })
+            .catch(err => {
+              this.showErrorFlash = true;
+            });
+        });
       }
     },
     update(action) {
@@ -2679,7 +2655,7 @@ export default {
             applicantTypeId: this.licenseInfo.applicantTypeId,
             education: {
               departmentId: this.licenseInfo.education.departmentId,
-              institutionId: this.licenseInfo.education.institutionId,
+              institutionId: this.licenseInfo.education.institutionId
             },
             residenceWoredaId: this.residenceWoredaId,
             professionalTypeIds: this.professionalTypeIds,
@@ -2690,30 +2666,28 @@ export default {
             expertLevelId: this.expertLevelId,
             isLegal: this.checkBoxValue,
             otherEducationalInstitution: this.otherEducationalInstitution,
-            otherProfessionalType: this.otherProfessionalType,
-          },
+            otherProfessionalType: this.otherProfessionalType
+          }
         },
-        id: this.draftId,
+        id: this.draftId
       };
 
       if (this.draftId != undefined) {
-        this.$store
-          .dispatch("newlicense/editNewLicense", license)
-          .then((res) => {
-            if (res.data.status == "Success") {
-              this.showFlash = true;
-              this.showLoading = false;
-              setTimeout(() => {
-                this.$router.push({ path: "/menu" });
-              }, 5000);
-            } else {
-              this.showErrorFlash = true;
-            }
-          });
+        this.$store.dispatch("newlicense/editNewLicense", license).then(res => {
+          if (res.data.status == "Success") {
+            this.showFlash = true;
+            this.showLoading = false;
+            setTimeout(() => {
+              this.$router.push({ path: "/menu" });
+            }, 5000);
+          } else {
+            this.showErrorFlash = true;
+          }
+        });
       } else {
         this.$store
           .dispatch("newlicense/addNewLicense", license.data)
-          .then((res) => {
+          .then(res => {
             if (res.data.status == "Success") {
               this.showFlash = true;
               this.showLoading = false;
@@ -2728,13 +2702,13 @@ export default {
       this.showLoading = true;
       let withdrawObj = {
         action: action,
-        data: this.getDraftData,
+        data: this.getDraftData
       };
       let payload = {
         licenseId: this.getDraftData.id,
-        withdrawData: withdrawObj,
+        withdrawData: withdrawObj
       };
-      this.$store.dispatch("newlicense/withdraw", payload).then((res) => {
+      this.$store.dispatch("newlicense/withdraw", payload).then(res => {
         if (res) {
           this.showFlash = true;
           this.showLoading = false;
@@ -2745,16 +2719,16 @@ export default {
           this.showErrorFlash = true;
         }
       });
-    },
+    }
   },
   mounted() {
-    this.$nextTick(function () {
+    this.$nextTick(function() {
       window.setInterval(() => {
         this.showFlash = false;
         this.showErrorFlash = false;
       });
     });
-  },
+  }
 };
 </script>
 <style>

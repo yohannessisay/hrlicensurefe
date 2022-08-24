@@ -121,7 +121,7 @@
         mb-large
       ">
       <div class="mt-large">
-        <TitleWithIllustration illustration="PersonalInfo" message="Personal Infos" />
+        <TitleWithIllustration illustration="PersonalInfo" message="Personal Information" />
       </div>
 
       <form class="mx-auto max-w-3xl w-full mt-10" @submit.prevent="nextStep">

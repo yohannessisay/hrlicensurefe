@@ -19,10 +19,10 @@
           <h5 class="ml-4">
             {{
               this.profileInfo.name +
-              " " +
-              this.profileInfo.fatherName +
-              " " +
-              this.profileInfo.grandFatherName
+                " " +
+                this.profileInfo.fatherName +
+                " " +
+                this.profileInfo.grandFatherName
             }}
           </h5>
         </div>
@@ -31,10 +31,10 @@
           <h5 class="ml-8">
             {{
               this.profileInfo.alternativeName +
-              " " +
-              this.profileInfo.alternativeFatherName +
-              " " +
-              this.profileInfo.alternativeGrandFatherName
+                " " +
+                this.profileInfo.alternativeFatherName +
+                " " +
+                this.profileInfo.alternativeGrandFatherName
             }}
           </h5>
         </div>
@@ -48,7 +48,7 @@
         </div>
         <div
           :class="[
-            this.profileInfo.nationality === null ? errorClass : activeClass,
+            this.profileInfo.nationality === null ? errorClass : activeClass
           ]"
         >
           <label class="ml-4 text-primary-300"> Nationality</label>
@@ -62,7 +62,7 @@
         </div>
         <div
           :class="[
-            this.profileInfo.dateOfBirth === null ? errorClass : activeClass,
+            this.profileInfo.dateOfBirth === null ? errorClass : activeClass
           ]"
         >
           <label class="ml-4 text-primary-300"> Date of Birth</label>
@@ -78,7 +78,7 @@
           :class="[
             this.profileInfo.maritalStatus.name === null
               ? errorClass
-              : activeClass,
+              : activeClass
           ]"
         >
           <label class="ml-4 text-primary-300"> Marital Status</label>
@@ -107,7 +107,7 @@
           :class="[
             this.profileInfo.user.phoneNumber === null
               ? errorClass
-              : activeClass,
+              : activeClass
           ]"
         >
           <label class="ml-4 text-primary-300"> Mobile Number</label>
@@ -124,7 +124,7 @@
           :class="[
             this.profileInfo.user.emailAddress === null
               ? errorClass
-              : activeClass,
+              : activeClass
           ]"
         >
           <label class="ml-4 text-primary-300"> Email</label>
@@ -332,7 +332,7 @@ export default {
     Title,
     FlashMessage,
     ErrorFlashMessage,
-    Spinner,
+    Spinner
   },
   async created() {
     this.basePath = googleApi;
@@ -377,8 +377,7 @@ export default {
     this.letterFromOrg = this.getLetterFromHiringInstitution;
     this.professionalLicense = this.getProfessionalLicense;
     this.renewedLicense = this.getRenewedLicense;
-    this.renewedLicenseOfHealthFacility =
-      this.getRenewedLicenseOfHealthFacility;
+    this.renewedLicenseOfHealthFacility = this.getRenewedLicenseOfHealthFacility;
     this.letterOrg = this.getLetterFromOrg;
     this.professionalDoc = this.getProfessionalDocuments;
 
@@ -401,7 +400,7 @@ export default {
       if ("name" in this.passport) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "PSP"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "PSP"),
             1
           );
         }
@@ -416,7 +415,7 @@ export default {
       if ("name" in this.healthExamCert) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "HEC"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "HEC"),
             1
           );
         }
@@ -431,7 +430,7 @@ export default {
       if ("name" in this.workExperience) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "WE"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "WE"),
             1
           );
         }
@@ -445,7 +444,7 @@ export default {
       if ("name" in this.workExperience2) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "WE1"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "WE1"),
             1
           );
         }
@@ -459,7 +458,7 @@ export default {
       if ("name" in this.cpd) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "CPD"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "CPD"),
             1
           );
         }
@@ -473,7 +472,7 @@ export default {
       if ("name" in this.cpd2) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "CPD1"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "CPD1"),
             1
           );
         }
@@ -487,7 +486,7 @@ export default {
       if ("name" in this.cpd3) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "CPD2"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "CPD2"),
             1
           );
         }
@@ -501,7 +500,7 @@ export default {
       if ("name" in this.cpd4) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "CPD3"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "CPD3"),
             1
           );
         }
@@ -515,7 +514,7 @@ export default {
       if ("name" in this.cpd5) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "CPD4"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "CPD4"),
             1
           );
         }
@@ -529,9 +528,7 @@ export default {
       if ("name" in this.herqa) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex(
-              (e) => e.documentTypeCode === "HERQA"
-            ),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "HERQA"),
             1
           );
         }
@@ -545,7 +542,7 @@ export default {
       if ("name" in this.previousLicense) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "PL"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "PL"),
             1
           );
         }
@@ -559,9 +556,7 @@ export default {
       if ("name" in this.renewedLicense) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex(
-              (e) => e.documentTypeCode === "RLOTO"
-            ),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "RLOTO"),
             1
           );
         }
@@ -578,9 +573,7 @@ export default {
       if ("name" in this.renewedLicenseOfHealthFacility) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex(
-              (e) => e.documentTypeCode === "RLHFO"
-            ),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "RLHFO"),
             1
           );
         }
@@ -597,7 +590,7 @@ export default {
       if ("name" in this.supportLetter) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "SL"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "SL"),
             1
           );
         }
@@ -611,7 +604,7 @@ export default {
       if ("name" in this.coc) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "COC"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "COC"),
             1
           );
         }
@@ -625,7 +618,7 @@ export default {
       if ("name" in this.degree) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "DEG"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "DEG"),
             1
           );
         }
@@ -639,7 +632,7 @@ export default {
       if ("name" in this.diploma) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "DIPL"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "DIPL"),
             1
           );
         }
@@ -653,7 +646,7 @@ export default {
       if ("name" in this.payroll) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "PAYR"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "PAYR"),
             1
           );
         }
@@ -667,7 +660,7 @@ export default {
       if ("name" in this.transcript) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "TRAN"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "TRAN"),
             1
           );
         }
@@ -681,7 +674,7 @@ export default {
       if ("name" in this.englishLanguage) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "ELPC"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "ELPC"),
             1
           );
         }
@@ -695,7 +688,7 @@ export default {
       if ("name" in this.letterFromOrg) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "LHI"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "LHI"),
             1
           );
         }
@@ -712,9 +705,7 @@ export default {
       if ("name" in this.professionalLicense) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex(
-              (e) => e.documentTypeCode === "APLFCO"
-            ),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "APLFCO"),
             1
           );
         }
@@ -728,7 +719,7 @@ export default {
       if ("name" in this.letterOrg) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "LFO"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "LFO"),
             1
           );
         }
@@ -742,7 +733,7 @@ export default {
       if ("name" in this.proCertificate) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "PDC"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "PDC"),
             1
           );
         }
@@ -756,7 +747,7 @@ export default {
       if ("name" in this.proTranscript) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "PDT"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "PDT"),
             1
           );
         }
@@ -770,7 +761,7 @@ export default {
       if ("name" in this.proDiploma) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "PDD"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "PDD"),
             1
           );
         }
@@ -784,9 +775,7 @@ export default {
       if ("name" in this.eduEighth) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex(
-              (e) => e.documentTypeCode === "EDEGC"
-            ),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "EDEGC"),
             1
           );
         }
@@ -800,9 +789,7 @@ export default {
       if ("name" in this.eduTenth) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex(
-              (e) => e.documentTypeCode === "EDTGC"
-            ),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "EDTGC"),
             1
           );
         }
@@ -816,9 +803,7 @@ export default {
       if ("name" in this.eduTwelveth) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex(
-              (e) => e.documentTypeCode === "EDTWGC"
-            ),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "EDTWGC"),
             1
           );
         }
@@ -832,7 +817,7 @@ export default {
       if ("name" in this.eduTranscript1) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "EDHT"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "EDHT"),
             1
           );
         }
@@ -846,7 +831,7 @@ export default {
       if ("name" in this.eduTranscript2) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "EDPT"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "EDPT"),
             1
           );
         }
@@ -860,7 +845,7 @@ export default {
       if ("name" in this.masters) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "MAST"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "MAST"),
             1
           );
         }
@@ -875,7 +860,7 @@ export default {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
             this.documentsArray.findIndex(
-              (e) => e.documentTypeCode === "MASTRAN"
+              e => e.documentTypeCode === "MASTRAN"
             ),
             1
           );
@@ -890,7 +875,7 @@ export default {
       if ("name" in this.phd) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "PHD"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "PHD"),
             1
           );
         }
@@ -905,7 +890,7 @@ export default {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
             this.documentsArray.findIndex(
-              (e) => e.documentTypeCode === "PHDTRAN"
+              e => e.documentTypeCode === "PHDTRAN"
             ),
             1
           );
@@ -944,7 +929,7 @@ export default {
     applicantTypeId: null,
     education: {
       departmentId: null,
-      institutionId: null,
+      institutionId: null
     },
     residenceWoredaId: null,
     professionalTypeIds: [],
@@ -1012,7 +997,7 @@ export default {
 
     checkBoxValue: true,
     showAllAttachements: false,
-    showCheckBox: false,
+    showCheckBox: false
   }),
   computed: {
     ...mapGetters({
@@ -1061,11 +1046,11 @@ export default {
       getMasters: "renewal/getMasters",
       getMastersTranscript: "renewal/getMastersTranscript",
       getPhd: "renewal/getPhd",
-      getPhdTranscript: "renewal/getPhdTranscript",
-    }),
+      getPhdTranscript: "renewal/getPhdTranscript"
+    })
   },
   methods: {
-    checkBox: function () {
+    checkBox: function() {
       this.checkBoxValue = !this.checkBoxValue;
       if (this.draftStatus == "DEC" || this.draftStatus == "CONF") {
         if (this.checkBoxValue) {
@@ -1085,19 +1070,19 @@ export default {
         }
       }
     },
-    feedbackUpdate: function () {
+    feedbackUpdate: function() {
       if (this.feedback.length < 0) {
         this.showSubmit = false;
       } else {
         this.showSubmit = true;
       }
     },
-    moment: function (date) {
+    moment: function(date) {
       return moment(date);
     },
     fetchProfileInfo() {
       this.showLoading2 = true;
-      this.$store.dispatch("renewal/getProfile", this.userId).then((res) => {
+      this.$store.dispatch("renewal/getProfile", this.userId).then(res => {
         setTimeout(() => {
           this.profileInfo = res.data.data;
           this.show = true;
@@ -1128,7 +1113,7 @@ export default {
       const applicationId = this.getApplicationId;
       this.$store
         .dispatch("renewal/getDocumentSpecs", applicationId)
-        .then((res) => {
+        .then(res => {
           this.documentTypes = res.data.data;
         });
     },
@@ -1375,13 +1360,13 @@ export default {
           let license = {
             data: {
               action: action,
-              data: this.draftData,
+              data: this.draftData
             },
-            id: this.draftId,
+            id: this.draftId
           };
           this.$store
             .dispatch("renewal/editRenewalLicense", license)
-            .then((res) => {
+            .then(res => {
               if (res.data.status == "Success") {
                 let licenseId = this.draftId;
                 let formData = new FormData();
@@ -1534,7 +1519,7 @@ export default {
 
                 this.$store
                   .dispatch("renewal/uploadDocuments", payload)
-                  .then((res) => {
+                  .then(res => {
                     if (res.status == 200) {
                       this.showFlash = true;
                       this.showLoading = false;
@@ -1545,7 +1530,7 @@ export default {
                       this.showErrorFlash = true;
                     }
                   })
-                  .catch((err) => {});
+                  .catch(err => {});
               }
             });
         }
@@ -1664,7 +1649,7 @@ export default {
             applicantTypeId: this.applicantTypeId,
             education: {
               institutionId: this.education.institutionId,
-              departmentId: this.education.departmentId,
+              departmentId: this.education.departmentId
             },
             residenceWoredaId: this.residenceWoredaId,
             professionalTypeIds: this.professionalTypeIds,
@@ -1675,8 +1660,8 @@ export default {
             islegal: this.checkBoxValue,
             otherEducationalInstitution: this.otherEducationalInstitution,
             otherProfessionalType: this.otherProfessionalType,
-            feedback: this.feedback,
-          },
+            feedback: this.feedback
+          }
         };
 
         if (
@@ -1692,23 +1677,23 @@ export default {
         } else {
           this.$store
             .dispatch("renewal/addRenewalLicense", license)
-            .then((res) => {
+            .then(res => {
               let licenseId = res.data.data.id;
               let payload = { document: formData, id: licenseId };
               this.$store
                 .dispatch("renewal/uploadDocuments", payload)
-                .then((res) => {
+                .then(res => {
                   this.showLoading = false;
                   if (res.data.status == "Success") {
                     this.showFlash = true;
                     setTimeout(() => {
                       this.$router.push({ path: "/menu" });
-                    }, 1500);
+                    }, 5000);
                   } else {
                     this.showErrorFlash = true;
                   }
                 })
-                .catch((err) => {
+                .catch(err => {
                   this.showErrorFlash = true;
                 });
             });
@@ -1725,7 +1710,7 @@ export default {
             applicantTypeId: this.license.applicantTypeId,
             education: {
               departmentId: this.license.education.departmentId,
-              institutionId: this.license.education.institutionId,
+              institutionId: this.license.education.institutionId
             },
             residenceWoredaId: this.residenceWoredaId,
             professionalTypeIds: this.professionalTypeIds,
@@ -1735,16 +1720,16 @@ export default {
             expertLevelId: this.expertLevelId,
             islegal: this.checkBoxValue,
             otherEducationalInstitution: this.otherEducationalInstitution,
-            otherProfessionalType: this.otherProfessionalType,
-          },
+            otherProfessionalType: this.otherProfessionalType
+          }
         },
-        id: this.draftId,
+        id: this.draftId
       };
 
       if (this.draftId != undefined) {
         this.$store
           .dispatch("renewal/editRenewalLicense", license)
-          .then((res) => {
+          .then(res => {
             if (res.data.status == "Success") {
               this.showFlash = true;
               this.showLoading = false;
@@ -1758,7 +1743,7 @@ export default {
       } else {
         this.$store
           .dispatch("renewal/addRenewalLicense", license.data)
-          .then((res) => {
+          .then(res => {
             if (res.data.status == "Success") {
               this.showFlash = true;
               this.showLoading = false;
@@ -1776,13 +1761,13 @@ export default {
         let license = {
           data: {
             action: action,
-            data: this.draftData,
+            data: this.draftData
           },
-          id: this.draftId,
+          id: this.draftId
         };
         this.$store
           .dispatch("renewal/editRenewalLicense", license)
-          .then((res) => {
+          .then(res => {
             if (res.data.status == "Success") {
               let licenseId = this.draftId;
               let formData = new FormData();
@@ -1934,7 +1919,7 @@ export default {
               let payload = { document: formData, id: licenseId };
               this.$store
                 .dispatch("renewal/uploadDocuments", payload)
-                .then((res) => {
+                .then(res => {
                   if (res.status == 200) {
                     this.showFlash = true;
                     this.showLoading = false;
@@ -1945,7 +1930,7 @@ export default {
                     this.showErrorFlash = true;
                   }
                 })
-                .catch((err) => {});
+                .catch(err => {});
             } else {
               setTimeout(() => {
                 this.showErrorFlash = true;
@@ -2067,7 +2052,7 @@ export default {
             applicantTypeId: this.applicantTypeId,
             education: {
               institutionId: this.education.institutionId,
-              departmentId: this.education.departmentId,
+              departmentId: this.education.departmentId
             },
             residenceWoredaId: this.residenceWoredaId,
             professionalTypeIds: this.professionalTypeIds,
@@ -2077,44 +2062,53 @@ export default {
             expertLevelId: this.expertLevelId,
             islegal: this.checkBoxValue,
             otherEducationalInstitution: this.otherEducationalInstitution,
-            otherProfessionalType: this.otherProfessionalType,
-          },
+            otherProfessionalType: this.otherProfessionalType
+          }
         };
-        this.$store
-          .dispatch("renewal/addRenewalLicense", license)
-          .then((res) => {
-            let licenseId = res.data.data.id;
-            let payload = { document: formData, id: licenseId };
-            this.$store
-              .dispatch("renewal/uploadDocuments", payload)
-              .then((res) => {
-                this.showLoading = false;
-                if (res.data.status == "Success") {
+        let smsData = {
+          recipients: [
+            this.profileInfo.user.phoneNumber
+              ? "251" + this.profileInfo.user.phoneNumber
+              : ""
+          ],
+          message:
+            "Dear applicant you have successfully applied for renewal of a license, after careful examination of your uploaded documents by our reviewers we will get back and notify you on each steps, Thank you for using eHPL."
+        };
+        this.$store.dispatch("renewal/addRenewalLicense", license).then(res => {
+          let licenseId = res.data.data.id;
+          let payload = { document: formData, id: licenseId };
+          this.$store
+            .dispatch("renewal/uploadDocuments", payload)
+            .then(res => {
+              this.showLoading = false;
+              if (res.data.status == "Success") {
+                this.$store.dispatch("sms/sendSms", smsData).then(() => {
                   this.showFlash = true;
                   setTimeout(() => {
                     this.$router.push({ path: "/menu" });
                   }, 1500);
-                } else {
-                  this.showErrorFlash = true;
-                }
-              })
-              .catch((err) => {
+                });
+              } else {
                 this.showErrorFlash = true;
-              });
-          });
+              }
+            })
+            .catch(err => {
+              this.showErrorFlash = true;
+            });
+        });
       }
     },
     withdraw(action) {
       this.showLoading = true;
       let withdrawObj = {
         action: action,
-        data: this.getDraftData,
+        data: this.getDraftData
       };
       let payload = {
         licenseId: this.getDraftData.id,
-        withdrawData: withdrawObj,
+        withdrawData: withdrawObj
       };
-      this.$store.dispatch("renewal/withdraw", payload).then((res) => {
+      this.$store.dispatch("renewal/withdraw", payload).then(res => {
         if (res) {
           this.showFlash = true;
           this.showLoading = false;
@@ -2125,16 +2119,16 @@ export default {
           this.showErrorFlash = true;
         }
       });
-    },
+    }
   },
   mounted() {
-    this.$nextTick(function () {
+    this.$nextTick(function() {
       window.setInterval(() => {
         this.showFlash = false;
         this.showErrorFlash = false;
       });
     });
-  },
+  }
 };
 </script>
 <style>

@@ -1538,7 +1538,7 @@
     <!-- Main Content -->
   </section>
 
-    <div
+  <div
     class="
       modal
       fade
@@ -1882,8 +1882,8 @@ export default {
     let institutions = ref([]);
     let isGoodStanding = ref(false);
     let showDateError = ref({ show: false, message: "" });
-     let instSearched = ref({ name: "" });
-    let showOptions = ref("");
+    let instSearched = ref({ name: "" });
+    let showOptions = ref(false);
     let superviseAction = ref("");
     let supervisor = ref("");
     let expirationDateExceedTodayError = ref(false);
@@ -2239,6 +2239,7 @@ export default {
     };
 
     const action = (actionValue) => {
+      let smsMessage = "";
       showActionLoading.value = true;
       showLoadingButtons.value = true;
       if (professionalTypeIdss.value.length > 0) {
@@ -2283,6 +2284,11 @@ export default {
       }
 
       if (actionValue === "ApproveEvent") {
+        smsMessage = renewal.value
+          ? "Dear applicant your applied renewal of license number " +
+            renewal.value.renewalCode +
+            " has been approved after careful examination of your uploaded documents by our reviewers. Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
+          : "";
         if (
           renewal.value.licenseExpirationDate === null &&
           !isGoodStanding.value
@@ -2315,6 +2321,11 @@ export default {
       }
 
       if (actionValue == "DeclineEvent") {
+        smsMessage = renewal.value
+          ? "Dear applicant your applied renewal of license number " +
+            renewal.value.renewalCode +
+            " has been declined after careful examination of your uploaded documents by our reviewers. Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
+          : "";
         showActionLoading.value = false;
         showLoadingButtons.value = false;
         let checkProfessionResult = false;
@@ -2370,6 +2381,14 @@ export default {
         action: actionValue,
         data: renewal.value,
       };
+      let smsData = {
+        recipients: [
+          renewal.value && renewal.value.applicant
+            ? "251" + renewal.value.applicant.phoneNumber
+            : "",
+        ],
+        message: smsMessage ? smsMessage : "",
+      };
       if (
         applicationType.value == "Renewal" &&
         sendDeclinedData.value == true
@@ -2379,14 +2398,16 @@ export default {
           .then((res) => {
             showActionLoading.value = false;
             if (res.statusText == "Created") {
-              toast.success("Application Reviewed Successfully", {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true,
+              store.dispatch("sms/sendSms", smsData).then(() => {
+                toast.success("Application Reviewed Successfully", {
+                  timeout: 5000,
+                  position: "bottom-center",
+                  pauseOnFocusLoss: true,
+                  pauseOnHover: true,
+                  icon: true,
+                });
+                router.push("/admin/renewal/inReview");
               });
-              router.push("/admin/renewal/inReview");
             } else {
               toast.error("Error occured", {
                 timeout: 5000,
@@ -2674,24 +2695,45 @@ export default {
         showDateError.value.message =
           "Start date can not be set to past,minimum start date is today.";
         showDateError.value.show = true;
-        console.log(lessThanToday);
         return;
       } else {
+        let smsData = {
+          recipients: [
+            renewal.value && renewal.value.applicant
+              ? "251" + renewal.value.applicant.phoneNumber
+              : "",
+          ],
+          message: renewal.value
+            ? "Dear applicant your applied new license of number " +
+              renewal.value.renewalCode +
+              " has been set to be under supervison of MR/MRS:-" +
+              renewal.value.supervisor +
+              " at institution of " +
+              instSearched.value.name +
+              " for " +
+              minDate +
+              " days .Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
+            : "",
+        };
         store
           .dispatch("reviewer/editRenewal", req)
           .then((res) => {
             console.log(res);
             showActionLoading.value = false;
             if (res.statusText == "Created") {
-              toast.success("Application reviewed Successfully", {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true,
+              store.dispatch("sms/sendSms", smsData).then(() => {
+                toast.success("Application reviewed Successfully", {
+                  timeout: 5000,
+                  position: "bottom-center",
+                  pauseOnFocusLoss: true,
+                  pauseOnHover: true,
+                  icon: true,
+                });
+                isLoadingFinalAction.value = false;
+                setTimeout(() => {
+                  window.location.reload();
+                }, 3000);
               });
-              isLoadingFinalAction.value = false;
-              router.push({ path: "/admin/renewal/underSupervision" });
             } else {
               toast.error("Please try again", {
                 timeout: 5000,
@@ -2701,7 +2743,9 @@ export default {
                 icon: true,
               });
               isLoadingFinalAction.value = false;
-              router.push({ path: "admin/renewal/inReview" });
+              setTimeout(() => {
+                window.location.reload();
+              }, 3000);
             }
           })
           .catch(() => {
@@ -2713,7 +2757,9 @@ export default {
               pauseOnHover: true,
               icon: true,
             });
-            router.push({ path: "admin/newLicense/inReview" });
+            setTimeout(() => {
+              window.location.reload();
+            }, 3000);
           });
       }
     };
@@ -2746,7 +2792,7 @@ export default {
     onMounted(() => {
       created("Renewal", route.params.id);
       store.dispatch("goodstanding/getInstitution").then((res) => {
-       institutions.value = res.data.data.filter((elm)=>elm.isLocal==true);
+        institutions.value = res.data.data.filter((elm) => elm.isLocal == true);
       });
     });
     return {
@@ -2764,7 +2810,7 @@ export default {
       supervise,
       resultQuery,
       changeAction,
-
+      showOptions,
       next,
       previous,
       nextRemark,

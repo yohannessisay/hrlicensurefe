@@ -1090,7 +1090,7 @@
                       :color="'#2F639D'"
                       :opacity="1"
                     ></loading>
-                     <button
+                    <button
                       v-if="button.code != 'US'"
                       class="
                         inline-block
@@ -1399,7 +1399,7 @@
     <!-- Main Content -->
   </section>
 
-    <div
+  <div
     class="
       modal
       fade
@@ -1729,13 +1729,13 @@ export default {
   setup() {
     const route = useRoute();
     const store = useStore();
-     const router = useRouter();
+    const router = useRouter();
 
     let startDate = ref("");
     let endDate = ref("");
     let institutions = ref([]);
     let showDateError = ref({ show: false, message: "" });
-     let instSearched = ref({ name: "" });
+    let instSearched = ref({ name: "" });
     let showOptions = ref("");
     let superviseAction = ref("");
     let supervisor = ref("");
@@ -2146,6 +2146,7 @@ export default {
     };
 
     const action = (actionValue) => {
+      let smsMessage = "";
       showActionLoading.value = true;
       showLoadingButtons.value = true;
       if (professionalTypeIdss.value.length > 0) {
@@ -2188,8 +2189,19 @@ export default {
         }
         loopCounter = 0;
       }
-
+      if (actionValue === "ApproveEvent") {
+        smsMessage = goodStanding.value
+          ? "Dear applicant your applied renewal of license number " +
+            goodStanding.value.goodStandingCode +
+            " has been approved after careful examination of your uploaded documents by our reviewers. Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
+          : "";
+      }
       if (actionValue == "DeclineEvent") {
+        smsMessage = goodStanding.value
+          ? "Dear applicant your applied renewal of license number " +
+            goodStanding.value.goodStandingCode +
+            " has been declined after careful examination of your uploaded documents by our reviewers. Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
+          : "";
         showActionLoading.value = false;
         showLoadingButtons.value = false;
         let checkProfessionResult = false;
@@ -2247,19 +2259,31 @@ export default {
         action: actionValue,
         data: goodStanding.value,
       };
-
+      let smsData = {
+        recipients: [
+          goodStanding.value && goodStanding.value.applicant
+            ? "251" + goodStanding.value.applicant.phoneNumber
+            : "",
+        ],
+        message: smsMessage ? smsMessage : "",
+      };
       store
         .dispatch("reviewer/editGoodStanding", req)
         .then((res) => {
           showActionLoading.value = false;
           if (res.statusText == "Created") {
-            toast.success("Application reviewed Successfully", {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
+            store.dispatch("sms/sendSms", smsData).then(() => {
+              toast.success("Application reviewed Successfully", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
             });
+                  setTimeout(() => {
+            window.location.reload();
+          }, 3000);
           }
         })
         .catch(() => {
@@ -2537,20 +2561,42 @@ export default {
         console.log(lessThanToday);
         return;
       } else {
+        let smsData = {
+          recipients: [
+            goodStanding.value && goodStanding.value.applicant
+              ? "251" + goodStanding.value.applicant.phoneNumber
+              : "",
+          ],
+          message: goodStanding.value
+            ? "Dear applicant your applied new license of number " +
+              goodStanding.value.goodStandingCode +
+              " has been set to be under supervison of MR/MRS:-" +
+              goodStanding.value.supervisor +
+              " at institution of " +
+              instSearched.value.name +
+              " for " +
+              minDate +
+              " days .Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
+            : "",
+        };
         store
           .dispatch("reviewer/editGoodStanding", req)
           .then((res) => {
             console.log(res);
             showActionLoading.value = false;
             if (res.statusText == "Created") {
-              toast.success("Application reviewed Successfully", {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true,
+              store.dispatch("sms/sendSms", smsData).then(() => {
+                toast.success("Application reviewed Successfully", {
+                  timeout: 5000,
+                  position: "bottom-center",
+                  pauseOnFocusLoss: true,
+                  pauseOnHover: true,
+                  icon: true,
+                });
+                     setTimeout(() => {
+            window.location.reload();
+          }, 3000);
               });
-              router.push({ path: "/admin/goodStanding/underSupervision" });
             } else {
               toast.error("Please try again", {
                 timeout: 5000,
@@ -2559,7 +2605,9 @@ export default {
                 pauseOnHover: true,
                 icon: true,
               });
-              router.push({ path: "admin/goodStanding/inReview" });
+                   setTimeout(() => {
+            window.location.reload();
+          }, 3000);
             }
           })
           .catch(() => {
@@ -2570,7 +2618,9 @@ export default {
               pauseOnHover: true,
               icon: true,
             });
-            router.push({ path: "admin/goodStanding/inReview" });
+               setTimeout(() => {
+            window.location.reload();
+          }, 3000);
           });
       }
     };
@@ -2603,7 +2653,7 @@ export default {
     onMounted(() => {
       created("Good Standing", route.params.id);
       store.dispatch("goodstanding/getInstitution").then((res) => {
-        institutions.value = res.data.data.filter((elm)=>elm.isLocal==true);
+        institutions.value = res.data.data.filter((elm) => elm.isLocal == true);
       });
     });
     return {
