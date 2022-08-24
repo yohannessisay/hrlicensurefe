@@ -940,7 +940,7 @@ export default {
     otherProfessionalType: null,
     otherProfessionalTypeAmharic: null,
     draftId: "",
-    draftData: "",
+    draftData: {},
     draftStatus: "",
     activeClass: "active",
     errorClass: "text-danger",
@@ -1660,8 +1660,8 @@ export default {
             islegal: this.checkBoxValue,
             otherEducationalInstitution: this.otherEducationalInstitution,
             otherProfessionalType: this.otherProfessionalType,
-            feedback: this.feedback
-          }
+            feedback: this.feedback,
+          },
         };
 
         if (

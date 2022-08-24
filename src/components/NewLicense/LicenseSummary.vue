@@ -21,10 +21,10 @@
           <h5 class="ml-4">
             {{
               this.profileInfo.name +
-                " " +
-                this.profileInfo.fatherName +
-                " " +
-                this.profileInfo.grandFatherName
+              " " +
+              this.profileInfo.fatherName +
+              " " +
+              this.profileInfo.grandFatherName
             }}
           </h5>
         </div>
@@ -33,10 +33,10 @@
           <h5 class="ml-8">
             {{
               this.profileInfo.alternativeName +
-                " " +
-                this.profileInfo.alternativeFatherName +
-                " " +
-                this.profileInfo.alternativeGrandFatherName
+              " " +
+              this.profileInfo.alternativeFatherName +
+              " " +
+              this.profileInfo.alternativeGrandFatherName
             }}
           </h5>
         </div>
@@ -324,7 +324,7 @@
           v-if="this.draftStatus == 'SUB'"
           class="flex justify-center mt-8 pb-12"
         >
-          <button @click="submitBack"></button>
+          <button @click="submitBack">Back</button>
           <button
             id="subButton"
             style="opacity: 0.3"
@@ -476,8 +476,10 @@ export default {
     this.phd = this.getPhd;
     this.phdTranscript = this.getPhdTranscript;
     this.phdTranscript2 = this.getPhdTranscript2;
-    this.renewedLicenseFromHealthFacility = this.getRenewedLicenseOfHealthFacility;
-    this.requestLetterFromHiringHealthFacility = this.getRequestLetterFromHiringHealthFacility;
+    this.renewedLicenseFromHealthFacility =
+      this.getRenewedLicenseOfHealthFacility;
+    this.requestLetterFromHiringHealthFacility =
+      this.getRequestLetterFromHiringHealthFacility;
 
     this.buttons = this.getButtons;
     this.fetchProfileInfo();
@@ -496,7 +498,8 @@ export default {
     this.expertLevelId = this.license.expertLevelId;
     this.otherEducationalInstitution = this.license.otherEducationalInstitution;
     this.otherProfessionalType = this.license.otherProfessionalType;
-    this.otherProfessionalTypeAmharic = this.license.otherProfessionalTypeAmharic;
+    this.otherProfessionalTypeAmharic =
+      this.license.otherProfessionalTypeAmharic;
     if (this.levelOfEducation == "diploma") {
       this.docCode = "PDD";
       this.docIdx = 7;
@@ -1466,7 +1469,7 @@ export default {
     })
   },
   methods: {
-    checkBox: function() {
+    checkBox: function () {
       this.checkBoxValue = !this.checkBoxValue;
       if (this.draftStatus == "DEC" || this.draftStatus == "CONF") {
         if (this.checkBoxValue) {
@@ -1486,14 +1489,14 @@ export default {
         }
       }
     },
-    feedbackUpdate: function() {
+    feedbackUpdate: function () {
       if (this.feedback.length < 0) {
         this.showSubmit = false;
       } else {
         this.showSubmit = true;
       }
     },
-    moment: function(date) {
+    moment: function (date) {
       return moment(date);
     },
     fetchProfileInfo() {
@@ -2163,8 +2166,8 @@ export default {
             isLegal: this.checkBoxValue,
             otherEducationalInstitution: this.otherEducationalInstitution,
             otherProfessionalType: this.otherProfessionalType,
-            feedback: this.feedback
-          }
+            feedback: this.feedback,
+          },
         };
         let educationLevel = localStorage.getItem("educationalLevel");
         let payroll = localStorage.getItem("payroll");
@@ -2722,7 +2725,7 @@ export default {
     }
   },
   mounted() {
-    this.$nextTick(function() {
+    this.$nextTick(function () {
       window.setInterval(() => {
         this.showFlash = false;
         this.showErrorFlash = false;
