@@ -2428,7 +2428,7 @@ export default {
       let smsData = {
         recipients: [
           newLicense.value && newLicense.value.applicant
-            ? "251" + profileInfo.value.applicant.phoneNumber
+            ? "251" + newLicense.value.applicant.phoneNumber
             : "",
         ],
         message: smsMessage ? smsMessage : "",

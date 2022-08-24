@@ -291,7 +291,7 @@
                             inline-block
                             px-6
                             py-2.5
-                            custom-warning
+                            hover:bg-yellow-300 hover:text-white
                             text-white
                             font-medium
                             text-xs
@@ -306,6 +306,8 @@
                             ease-in-out
                           "
                           type="button"
+                          data-bs-toggle="modal"
+                          data-bs-target="#suspendLicense"
                         >
                           <i class="fa fa-ban"></i>
                           Suspend
@@ -315,7 +317,7 @@
                             inline-block
                             px-6
                             py-2.5
-                            custom-warning
+                            hover:bg-red-300 hover:text-white
                             text-white
                             font-medium
                             text-xs
@@ -333,7 +335,7 @@
                           data-bs-toggle="modal"
                           data-bs-target="#revokeLicense"
                         >
-                          <i class="fa fa-fa-remove"></i>
+                          <i class="fa fa-remove"></i>
                           Revoke
                         </button>
                         <button
@@ -365,37 +367,6 @@
                         >
                           <i class="fa fa-file-text"></i>
                           Generate PDF
-                        </button>
-                        <button
-                          class="
-                            inline-block
-                            px-6
-                            py-2.5
-                            bg-blue-600
-                            text-white
-                            font-medium
-                            text-xs
-                            leading-tight
-                            uppercase
-                            rounded
-                            shadow-lg
-                            hover:bg-blue-700 hover:shadow-lg
-                            focus:bg-blue-700
-                            focus:shadow-lg
-                            focus:outline-none
-                            focus:ring-0
-                            active:bg-blue-800 active:shadow-lg
-                            transition
-                            duration-150
-                            ease-in-out
-                          "
-                          type="button"
-                          data-bs-toggle="collapse"
-                          data-bs-target="#collapseExample"
-                          aria-expanded="false"
-                          aria-controls="collapseExample"
-                        >
-                          Show Attached Documents
                         </button>
                       </div>
                     </div>
@@ -460,6 +431,34 @@
           "
         >
           <button
+            class="
+              inline-block
+              px-6
+              py-2.5
+              bg-blue-600
+              text-white
+              font-medium
+              text-xs
+              leading-tight
+              uppercase
+              rounded
+              shadow-lg
+              hover:bg-blue-700 hover:shadow-lg
+              focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
+              active:bg-blue-800 active:shadow-lg
+              transition
+              duration-150
+              ease-in-out
+            "
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapseExample"
+            aria-expanded="false"
+            aria-controls="collapseExample"
+          >
+            Show Attached Documents
+          </button>
+          <button
             type="button"
             class="
               inline-block
@@ -491,6 +490,7 @@
   </div>
   <generate-pdf :modalDataGenerate="modalDataGenerate"></generate-pdf>
   <revoke-license-modal :modalData="modalData"></revoke-license-modal>
+  <suspend-license-modal :modalData="modalData"></suspend-license-modal>
 </template>
 <script>
 import { useStore } from "vuex";
@@ -501,6 +501,7 @@ import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 import { googleApi } from "@/composables/baseURL";
 import generatePdf from "./generateLicensedPdf.vue";
 import revokeLicenseModal from "./revokeLicenseModal.vue";
+import suspendLicenseModal from "./suspendLicenseModal.vue";
 
 export default {
   props: ["modalDataId"],
@@ -508,6 +509,7 @@ export default {
     Loading,
     generatePdf,
     revokeLicenseModal,
+    suspendLicenseModal,
   },
   computed: {
     moment: () => moment,

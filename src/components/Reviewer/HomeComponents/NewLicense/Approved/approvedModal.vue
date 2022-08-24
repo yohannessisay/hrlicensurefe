@@ -280,7 +280,7 @@
                             inline-block
                             px-6
                             py-2.5
-                            custom-warning
+                            hover:bg-yellow-300 hover:text-white
                             text-white
                             font-medium
                             text-xs
@@ -301,12 +301,11 @@
                           <i class="fa fa-ban"></i>
                           Suspend
                         </button>
-                            <button
+                        <button
                           class="
                             inline-block
                             px-6
                             py-2.5
-                            custom-warning
                             text-white
                             font-medium
                             text-xs
@@ -314,6 +313,7 @@
                             uppercase
                             rounded
                             shadow-lg
+                            hover:bg-primary-600 hover:text-white
                             focus:shadow-lg focus:outline-none focus:ring-0
                             active:bg-blue-800 active:shadow-lg
                             transition
@@ -324,7 +324,7 @@
                           data-bs-toggle="modal"
                           data-bs-target="#revokeLicense"
                         >
-                          <i class="fa fa-fa-remove"></i>
+                          <i class="fa fa-remove"></i>
                           Revoke
                         </button>
                         <button
@@ -357,38 +357,7 @@
                           <i class="fa fa-file-text"></i>
                           Generate PDF
                         </button>
-                        <button
-                          class="
-                            inline-block
-                            px-6
-                            py-2.5
-                            bg-blue-600
-                            text-white
-                            font-medium
-                            text-xs
-                            leading-tight
-                            uppercase
-                            rounded
-                            shadow-lg
-                            hover:bg-blue-700 hover:shadow-lg
-                            focus:bg-blue-700
-                            focus:shadow-lg
-                            focus:outline-none
-                            focus:ring-0
-                            active:bg-blue-800 active:shadow-lg
-                            transition
-                            duration-150
-                            ease-in-out
-                          "
-                          type="button"
-                          data-bs-toggle="collapse"
-                          data-bs-target="#collapseExample"
-                          aria-expanded="false"
-                          aria-controls="collapseExample"
-                        >
-                          <i class="fa fa-eye"></i>
-                          Show Attached Documents
-                        </button>
+                        
                       </div>
                     </div>
 
@@ -459,6 +428,38 @@
             rounded-b-md
           "
         >
+        <button
+                          class="
+                            inline-block
+                            px-6
+                            py-2.5
+                            bg-blue-600
+                            text-white
+                            font-medium
+                            text-xs
+                            leading-tight
+                            uppercase
+                            rounded
+                            shadow-lg
+                            hover:bg-blue-700 hover:shadow-lg
+                            focus:bg-blue-700
+                            focus:shadow-lg
+                            focus:outline-none
+                            focus:ring-0
+                            active:bg-blue-800 active:shadow-lg
+                            transition
+                            duration-150
+                            ease-in-out
+                          "
+                          type="button"
+                          data-bs-toggle="collapse"
+                          data-bs-target="#collapseExample"
+                          aria-expanded="false"
+                          aria-controls="collapseExample"
+                        >
+                          <i class="fa fa-eye"></i>
+                          Show Attached Documents
+                        </button>
           <button
             type="button"
             class="
@@ -491,7 +492,7 @@
   </div>
   <generate-pdf :modalData="modalData"></generate-pdf>
   <revoke-license-modal :modalData="modalData"></revoke-license-modal>
-
+  <suspend-license-modal :modalData="modalData"></suspend-license-modal>
 </template>
 <script>
 import { useStore } from "vuex";
@@ -503,13 +504,15 @@ import { googleApi } from "@/composables/baseURL";
 
 import generatePdf from "./generateLicensedPdf.vue";
 import revokeLicenseModal from "./revokeLicenseModal.vue";
+import suspendLicenseModal from "./suspendLicenseModal.vue";
 
 export default {
   props: ["modalDataId"],
   components: {
     Loading,
     generatePdf,
-    revokeLicenseModal
+    revokeLicenseModal,
+    suspendLicenseModal,
   },
   computed: {
     moment: () => moment,

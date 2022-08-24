@@ -301,7 +301,7 @@
                               inline-block
                               px-6
                               py-2.5
-                              custom-warning
+                              hover:bg-yellow-300 hover:text-white
                               text-white
                               font-medium
                               text-xs
@@ -309,14 +309,14 @@
                               uppercase
                               rounded
                               shadow-lg
-                              focus:shadow-lg
-                              focus:outline-none
-                              focus:ring-0
+                              focus:shadow-lg focus:outline-none focus:ring-0
                               active:bg-blue-800 active:shadow-lg
                               transition
                               duration-150
                               ease-in-out
                             "
+                            data-bs-toggle="modal"
+                            data-bs-target="#suspendLicense"
                             type="button"
                           >
                             <i class="fa fa-ban"></i>
@@ -324,28 +324,28 @@
                           </button>
                           <button
                             class="
-                            inline-block
-                            px-6
-                            py-2.5
-                            custom-warning
-                            text-white
-                            font-medium
-                            text-xs
-                            leading-tight
-                            uppercase
-                            rounded
-                            shadow-lg
-                            focus:shadow-lg focus:outline-none focus:ring-0
-                            active:bg-blue-800 active:shadow-lg
-                            transition
-                            duration-150
-                            ease-in-out
-                          "
+                              inline-block
+                              px-6
+                              py-2.5
+                              hover:bg-red-300 hover:text-white
+                              text-white
+                              font-medium
+                              text-xs
+                              leading-tight
+                              uppercase
+                              rounded
+                              shadow-lg
+                              focus:shadow-lg focus:outline-none focus:ring-0
+                              active:bg-blue-800 active:shadow-lg
+                              transition
+                              duration-150
+                              ease-in-out
+                            "
                             type="button"
                             data-bs-toggle="modal"
                             data-bs-target="#revokeLicense"
                           >
-                            <i class="fa fa-fa-remove"></i>
+                            <i class="fa fa-remove"></i>
                             Revoke
                           </button>
                           <button
@@ -495,6 +495,7 @@
   </div>
   <generate-pdf v-if="showGenerateModal" :modalData="modalData"></generate-pdf>
   <revoke-license-modal :modalData="modalData"></revoke-license-modal>
+  <suspend-license-modal :modalData="modalData"></suspend-license-modal>
 </template>
 <script>
 import { googleApi } from "@/composables/baseURL";
@@ -504,10 +505,10 @@ import { useStore } from "vuex";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 import revokeLicenseModal from "./revokeLicenseModal.vue";
-
+import suspendLicenseModal from "./suspendLicenseModal.vue";
 export default {
   name: "Modal",
-  components: { generatePdf, Loading, revokeLicenseModal },
+  components: { generatePdf, Loading, revokeLicenseModal, suspendLicenseModal },
   props: ["modalDataId"],
   setup(props) {
     const store = useStore();

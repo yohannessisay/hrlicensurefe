@@ -12,11 +12,11 @@
       outline-none
       overflow-x-hidden overflow-y-auto
     "
-    id="revokeLicense"
+    id="suspendLicense"
     data-bs-backdrop="static"
     data-bs-keyboard="false"
     tabindex="-1"
-    aria-labelledby="revokeLicense"
+    aria-labelledby="suspendLicense"
     aria-hidden="true"
   >
     <div
@@ -54,7 +54,7 @@
             border-b border-grey-100
           "
         >
-          <label class="mb-4 text-lg text-red-300 font-bold">Remark</label>
+          <label class="mb-4 text-lg text-yellow-300 font-bold">Suspend License</label>
         </div>
 
         <div class="modal-body relative p-4">
@@ -73,14 +73,69 @@
                   :opacity="0.7"
                 ></loading>
                 <div class="flex flex-wrap justify-center">
-                  <label for="" class="text-lg text-primary-600 font-bold"
-                    >Revoke License</label
-                  >
+                  <label class="text-lg text-primary-600 font-bold">Suspension Period</label>
+                  <div class="grid grid-cols-2 gap-4">
+                    <div class="form-group mb-6 mt-4">
+                      <label for="" class="ml-2">Start Date</label>
+                      <input
+                        v-model="startDate"
+                        type="date"
+                        class="
+                          form-control
+                          block
+                          w-full
+                          px-3
+                          py-1.5
+                          text-base
+                          font-normal
+                          text-gray-700
+                          bg-white bg-clip-padding
+                          border border-solid border-gray-300
+                          rounded
+                          transition
+                          ease-in-out
+                          m-0
+                          focus:text-gray-700
+                          focus:bg-white
+                          focus:border-blue-600
+                          focus:outline-none
+                        "
+                      />
+                    </div>
+                    <div class="form-group mb-6 mt-4">
+                      <label for="" class="ml-2">End Date</label>
+                      <input
+                        class="
+                          form-control
+                          block
+                          w-full
+                          px-3
+                          py-1.5
+                          text-base
+                          font-normal
+                          text-gray-700
+                          bg-white bg-clip-padding
+                          border border-solid border-gray-300
+                          rounded
+                          transition
+                          ease-in-out
+                          m-0
+                          focus:text-gray-700
+                          focus:bg-white
+                          focus:border-blue-600
+                          focus:outline-none
+                        "
+                        v-model="endDate"
+                        type="date"
+                      />
+                    </div>
+                  </div>
+                  <label class="text-lg mt-4 mb-4 text-primary-600 font-bold">Suspension Remark</label>
                 </div>
                 <div class="flex flex-wrap justify-center">
                   <textarea
                     class="w-full shadow-inner p-4 border-grey-100"
-                    placeholder="Write a remark note of why the license is being revoked."
+                    placeholder="Write a remark note of why the license is being suspended."
                     rows="6"
                     v-model="remark"
                   ></textarea>
@@ -112,7 +167,7 @@
               uppercase
               rounded
               shadow-lg
-              hover:bg-red-300 hover:text-white hover:shadow-lg
+              hover:bg-yellow-300 hover:text-white hover:shadow-lg
               focus:bg-purple-700
               focus:shadow-lg
               focus:outline-none
@@ -122,10 +177,10 @@
               duration-150
               ease-in-out
             "
-            @click="revoke()"
+            @click="suspend()"
           >
             <i class="fa fa-times-circle"></i>
-            Revoke
+            Suspend
           </button>
           <button
             type="button"
@@ -175,17 +230,24 @@ export default {
     let showFlash = ref(false);
     let showErrorFlash = ref(false);
     let remark = ref("");
+    let startDate = ref("");
+    let endDate = ref("");
     let isLoading = ref(false);
     const store = useStore();
     const toast = useToast();
-    const revoke = () => {
-      let revokedData = {
-        data: { ...props.modalData.data, remark: remark.value },
-        action: "RevokeEvent",
+    const suspend = () => {
+      let suspendedData = {
+        data: {
+          ...props.modalData.data,
+          remark: remark.value,
+          suspStartDate: startDate.value,
+          suspEndDate: endDate.value,
+        },
+        action: "SuspendEvent",
       };
       isLoading.value = true;
       store
-        .dispatch("reviewer/editRenewal", revokedData)
+        .dispatch("reviewer/editGoodStanding", suspendedData)
         .then((res) => {
           isLoading.value = false;
           if (res.statusText == "Created") {
@@ -221,7 +283,9 @@ export default {
       showFlash,
       showErrorFlash,
       remark,
-      revoke,
+      startDate,
+      endDate,
+      suspend,
     };
   },
 };

@@ -21,7 +21,7 @@
   >
     <div
       class="
-        modal-dialog modal-dialog-centered modal-xl
+        modal-dialog modal-dialog-centered modal-md
         relative
         w-auto
         pointer-events-none
@@ -40,6 +40,7 @@
           rounded-md
           outline-none
           text-current
+          justify-center
         "
       >
         <div
@@ -47,11 +48,14 @@
             modal-header
             flex flex-shrink-0
             items-center
-            justify-between
+            justify-center
             p-2
             rounded-t-md
+            border-b border-grey-100
           "
-        ></div>
+        >
+          <label class="mb-4 text-lg text-red-300 font-bold">Revoke License</label>
+        </div>
 
         <div class="modal-body relative p-4">
           <div class="container px-6 mx-auto">
@@ -68,9 +72,18 @@
                   :color="'#2F639D'"
                   :opacity="0.7"
                 ></loading>
-                <div class="flex flex-wrap">
-                  <label>Remark</label>
-                  <input type="text" v-model="remark" />
+                <div class="flex flex-wrap justify-center">
+                  <label for="" class="text-lg text-primary-600 font-bold"
+                    >Remark</label
+                  >
+                </div>
+                <div class="flex flex-wrap justify-center">
+                  <textarea
+                    class="w-full shadow-inner p-4 border-grey-100"
+                    placeholder="Write a remark note of why the license is being revoked."
+                    rows="6"
+                    v-model="remark"
+                  ></textarea>
                 </div>
               </div>
             </section>
@@ -82,7 +95,7 @@
             modal-footer
             flex flex-shrink-0 flex-wrap
             items-center
-            justify-end
+            justify-center
             border-t border-grey-100
             rounded-b-md
           "
@@ -99,7 +112,7 @@
               uppercase
               rounded
               shadow-lg
-              hover:bg-purple-700 hover:shadow-lg
+              hover:bg-red-300 hover:text-white hover:shadow-lg
               focus:bg-purple-700
               focus:shadow-lg
               focus:outline-none
@@ -147,13 +160,11 @@
   </div>
 </template>
 <script>
-import Title from "@/sharedComponents/Title";
 import { ref } from "vue";
 import { useStore } from "vuex";
 
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
-import { googleApi } from "../../../../../composables/baseURL";
 import { useToast } from "vue-toastification";
 
 export default {
@@ -172,7 +183,6 @@ export default {
         data: { ...props.modalData.data, remark: remark.value },
         action: "RevokeEvent",
       };
-      console.log(props.modalData)
       isLoading.value = true;
       store
         .dispatch("reviewer/editGoodStanding", revokedData)
@@ -187,7 +197,7 @@ export default {
               icon: true,
             });
             setTimeout(() => {
-                //  window.location.reload();
+              //  window.location.reload();
             }, 3000);
           } else {
             toast.error(res.data.message, {
@@ -198,7 +208,7 @@ export default {
               icon: true,
             });
             setTimeout(() => {
-                //  window.location.reload();
+              //  window.location.reload();
             }, 3000);
           }
         })
