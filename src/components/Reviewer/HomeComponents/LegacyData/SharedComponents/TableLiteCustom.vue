@@ -69,7 +69,7 @@
               </tr>
             </thead>
             <tbody v-if="rows.length > 0" class="vtl-tbody">
-              
+           
               <template v-if="isStaticMode">
                 <tr
                   v-for="(row, i) in localRows"
@@ -478,7 +478,7 @@ export default defineComponent({
   setup(props, { emit, slots }) {
     const store = useStore();
     let localTable = ref(null);
-
+    let customRows = ref([]);
     // 檢查下拉選單中是否包含預設一頁顯示筆數 (Validate dropdown's values have page-size value or not)
     let defaultPageSize =
       props.pageOptions.length > 0
@@ -561,8 +561,8 @@ export default defineComponent({
     });
 
     // 組件內用資料 (Data rows for local)
-    let localRows = computed(() => {
-      let rows = props.rows;
+    let localRows  =(rows)=>{  
+
       // refs https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Collator/compare
       var collator = new Intl.Collator(undefined, {
         numeric: true,
@@ -587,7 +587,7 @@ export default defineComponent({
       });
 
       return result;
-    });
+    };
 
     ////////////////////////////
     //
@@ -744,7 +744,7 @@ export default defineComponent({
           });
         });
 
-        localRows = computed(() => tableData);
+        localRows(tableData);
       });
     };
     // 監聽頁碼切換 (Monitor page switching)
