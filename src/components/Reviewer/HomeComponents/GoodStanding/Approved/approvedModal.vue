@@ -105,7 +105,7 @@
                                 justify-center
                               "
                             >
-                                 <picture>
+                              <picture>
                                 <source
                                   :srcset="
                                     modalData.profile &&
@@ -291,7 +291,7 @@
                             inline-block
                             px-6
                             py-2.5
-                            custom-warning
+                            hover:bg-yellow-300 hover:text-white
                             text-white
                             font-medium
                             text-xs
@@ -306,9 +306,37 @@
                             ease-in-out
                           "
                           type="button"
+                          data-bs-toggle="modal"
+                          data-bs-target="#suspendLicense"
                         >
                           <i class="fa fa-ban"></i>
                           Suspend
+                        </button>
+                        <button
+                          class="
+                            inline-block
+                            px-6
+                            py-2.5
+                            hover:bg-red-300 hover:text-white
+                            text-white
+                            font-medium
+                            text-xs
+                            leading-tight
+                            uppercase
+                            rounded
+                            shadow-lg
+                            focus:shadow-lg focus:outline-none focus:ring-0
+                            active:bg-blue-800 active:shadow-lg
+                            transition
+                            duration-150
+                            ease-in-out
+                          "
+                          type="button"
+                          data-bs-toggle="modal"
+                          data-bs-target="#revokeLicense"
+                        >
+                          <i class="fa fa-remove"></i>
+                          Revoke
                         </button>
                         <button
                           class="
@@ -339,37 +367,6 @@
                         >
                           <i class="fa fa-file-text"></i>
                           Generate PDF
-                        </button>
-                        <button
-                          class="
-                            inline-block
-                            px-6
-                            py-2.5
-                            bg-blue-600
-                            text-white
-                            font-medium
-                            text-xs
-                            leading-tight
-                            uppercase
-                            rounded
-                            shadow-lg
-                            hover:bg-blue-700 hover:shadow-lg
-                            focus:bg-blue-700
-                            focus:shadow-lg
-                            focus:outline-none
-                            focus:ring-0
-                            active:bg-blue-800 active:shadow-lg
-                            transition
-                            duration-150
-                            ease-in-out
-                          "
-                          type="button"
-                          data-bs-toggle="collapse"
-                          data-bs-target="#collapseExample"
-                          aria-expanded="false"
-                          aria-controls="collapseExample"
-                        >
-                          Show Attached Documents
                         </button>
                       </div>
                     </div>
@@ -434,6 +431,34 @@
           "
         >
           <button
+            class="
+              inline-block
+              px-6
+              py-2.5
+              bg-blue-600
+              text-white
+              font-medium
+              text-xs
+              leading-tight
+              uppercase
+              rounded
+              shadow-lg
+              hover:bg-blue-700 hover:shadow-lg
+              focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
+              active:bg-blue-800 active:shadow-lg
+              transition
+              duration-150
+              ease-in-out
+            "
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapseExample"
+            aria-expanded="false"
+            aria-controls="collapseExample"
+          >
+            Show Attached Documents
+          </button>
+          <button
             type="button"
             class="
               inline-block
@@ -463,9 +488,9 @@
       </div>
     </div>
   </div>
-  <generate-pdf
-    :modalDataGenerate="modalDataGenerate"
-  ></generate-pdf>
+  <generate-pdf :modalDataGenerate="modalDataGenerate"></generate-pdf>
+  <revoke-license-modal :modalData="modalData"></revoke-license-modal>
+  <suspend-license-modal :modalData="modalData"></suspend-license-modal>
 </template>
 <script>
 import { useStore } from "vuex";
@@ -475,12 +500,16 @@ import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 import { googleApi } from "@/composables/baseURL";
 import generatePdf from "./generateLicensedPdf.vue";
+import revokeLicenseModal from "./revokeLicenseModal.vue";
+import suspendLicenseModal from "./suspendLicenseModal.vue";
 
 export default {
   props: ["modalDataId"],
   components: {
     Loading,
     generatePdf,
+    revokeLicenseModal,
+    suspendLicenseModal,
   },
   computed: {
     moment: () => moment,
@@ -509,9 +538,7 @@ export default {
       store
         .dispatch("reviewer/getGoodStandingApplication", props.modalDataId.id)
         .then((res) => {
-          if (
-            res.data.status == "Success"
-          ) {
+          if (res.data.status == "Success") {
             result = res.data.data;
 
             modalData.value.name =
@@ -538,7 +565,7 @@ export default {
             modalData.value.email = result.applicant.emailAddress
               ? result.applicant.emailAddress
               : "-----";
-        
+
             modalData.value.profile = result.profile;
             modalData.value.professionalTypes = result.licenseProfessions;
             modalData.value.certifiedDate = result.certifiedDate;
@@ -546,6 +573,8 @@ export default {
               result.licenseExpirationDate;
 
             licenseData.value = result;
+            modalData.value.data = result;
+
             modalData.value.documents = result.documents;
             modalDataGenerate.value = result;
             isLoading.value = false;

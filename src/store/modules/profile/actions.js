@@ -168,9 +168,9 @@ export default {
     commit
   }, path) {
     try {
-      console.log(path);
+     
       const resp = await ApiService.post(baseUrl + "/profiles/convert/profilePicture", path);
-      console.log(resp);
+     
       return resp;
     } catch (error) {
       return error;

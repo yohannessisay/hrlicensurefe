@@ -35,17 +35,17 @@
       <div class="top left"></div>
     </div>
     <li class="inverted-border-radius mb-8 mt-4">
-      <i class="bx bx-table ml-8 mt-4" style="color: #224771"></i>
+      <i class="bx bx-desktop ml-8 mt-4" style="color: #224771"></i>
 
-      <span class="header_text ml-4">Report</span>
+      <span class="text-md ml-4">Lookup Mgmt</span>
     </li>
     <ul class="nav-links">
-      <router-link to="admin/report">
-        <li :class="$route.fullPath === '/admin/report' ? 'mb-2 active' : ''">
-          <a href="#Report">
-            <i class="bx bx-table"></i>
+      <router-link to="admin/lookupManagement">
+        <li :class="$route.fullPath === '/admin/systemSetting' ? 'mb-2 active p-2' : ''">
+          <a href="#LocationManagement">
+            <i class="bx bx-map"></i>
 
-            <span class="links_name">Report</span>
+            <span class="text-white" style=" word-break: break-all;">Locations</span>
           </a>
         </li>
       </router-link>

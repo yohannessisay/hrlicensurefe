@@ -4,7 +4,9 @@
       <img class="moh-logo" src="../../../assets/image.png" />
     </div>
     <div class="title">
-      <h2>Health Professionals Certificate</h2>
+      <h2 class="text-primary-600 text-2xl">
+        Health Professionals Certificate
+      </h2>
     </div>
     <div class="name">
       <span class="underline mt-12"
@@ -31,14 +33,14 @@
     </div>
     <div class="description">
       <h4 class="flex justify-center mt-8 first-text text-2xl">
-        Having duly satisfied the requirement of the ministry hereby
+        Having fully satisfied the requirement of the ministry hereby
       </h4>
       <h4 class="flex justify-center second-text text-2xl">
         registered and licensed as
-        <div class="profession">
+        <div class="text-base mt-1 text-primary-600 font-bold">
           &nbsp;{{
             certificateDetail.professionalTypes
-              ? certificateDetail.professionalTypes.name
+              ? certificateDetail.professionalTypes[0].professionalTypes.name
               : ""
           }}
         </div>
@@ -46,25 +48,58 @@
     </div>
     <div class="mt-8 summary">
       <h4>
-        The license is valid:<b
-          >{{ moment(certificateDetail.certifiedDate).format("MMM DD, YYYY") }}
-          -
-          {{ moment(licenseExpireDate).format("MMM DD, YYYY") }}</b
+        The license is valid from:
+        <b>
+          <span class="text-primary-600">{{
+            moment(certificateDetail.certifiedDate).format("MMM DD, YYYY")
+          }}</span>
+          - to -
+          <span class="text-primary-600">{{
+            moment(licenseExpireDate).format("MMM DD, YYYY")
+          }}</span></b
         >
       </h4>
     </div>
     <div class="mt-8 last">
       <p class="text-lg">Ethiopian Ministry of Health</p>
+      <span
+        >Visit<a
+          href="https://hrl.moh.gov.et/"
+          class="text-sm text-primary-500"
+        >
+          https://hrl.moh.gov.et</a
+        >
+        for more</span
+      >
     </div>
   </div>
   <div v-else-if="!isUserFound">
     <div class="flex justify-center content-center">
+      <img class="moh-logo" src="../../../assets/image.png" />
       <h1>User is not Found</h1>
     </div>
   </div>
   <div v-else-if="!isUserCertified && isUserFound">
-    <div class="flex justify-center content-center">
-      <h1>User is not Certified</h1>
+    <div class="flex justify-center content-center mt-4 mb-4">
+      <div class="grid grid-rows-3">
+        <div class="flex justify-center content-center">
+          <img class="moh-logo" src="../../../assets/image.png" />
+        </div>
+        <div class="flex justify-center content-center">
+          <h1 class="mt-8">Sorry User is not Certified</h1>
+        </div>
+        <div class="flex justify-center content-center">
+          <span
+            >Visit<a
+              href="https://hrl.moh.gov.et/"
+              class="text-sm text-primary-500"
+            >
+              https://hrl.moh.gov.et</a
+            >
+            for more</span
+          >
+        </div>
+      </div>
     </div>
   </div>
 
@@ -77,16 +112,9 @@
   </div>
 </template>
 <script>
-import ReviewerNavBar from "@/components/Reviewer/ReviewerNavBar";
-import Title from "@/sharedComponents/Title";
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
-import { useRouter, useRoute } from "vue-router";
-import store from "../../../store";
-import Spinner from "@/sharedComponents/Spinner";
-import image from "../../../assets/image.png";
-
-import { toEthiopian } from "../Configurations/dateConvertor";
+import { useRoute } from "vue-router";
 
 import moment from "moment";
 export default {
@@ -96,11 +124,7 @@ export default {
     //   return store.getters['reviewer/getUnassigned'][0]
     // }
   },
-  components: {
-    Title,
-    ReviewerNavBar,
-    Spinner,
-  },
+  components: {},
   setup() {
     const store = useStore();
     let route = useRoute();
@@ -119,15 +143,15 @@ export default {
     const fetchCertifiedUser = () => {
       showLoading.value = true;
       store
-        .dispatch("profile/getProfileByUserId", route.params.userId)
+        .dispatch("profile/getProfileById", route.params.userId)
         .then((res) => {
-          // showLoading.value = false;
-          if (res.data.data === undefined) {
+          if (res.data.message != "Found user profile successfully!") {
             isUserFound.value = false;
             return;
+          } else {
+            certifiedUser.value = res.data.data;
+            show.value = true;
           }
-          certifiedUser.value = res.data.data;
-          show.value = true;
         })
         .catch((error) => {
           isUserFound.value = false;
@@ -163,7 +187,7 @@ export default {
             );
           })
           .catch((error) => {});
-      } else if (route.params.applicationType === "Good Standing") {
+      } else if (route.params.applicationType === "GoodStanding") {
         store
           .dispatch(
             "reviewer/getGoodStandingApplication",
@@ -188,8 +212,10 @@ export default {
             licenseExpireDate.value.setFullYear(
               licenseExpireDate.value.getFullYear() + 5
             );
+               certificateDetail.value.professionalTypes =
+              certificateDetail.value.GSProfessions;
           });
-      } else if (route.params.applicationType === "New License") {
+      } else if (route.params.applicationType === "NewLicense") {
         store
           .dispatch(
             "reviewer/getNewLicenseApplication",
@@ -203,7 +229,7 @@ export default {
             }
             certificateDetail.value = res.data.data;
             if (
-              route.params.userId != certificateDetail.value.applicantId ||
+              route.params.userId != certificateDetail.value.profile.id ||
               certificateDetail.value.certified === false
             ) {
               isUserCertified.value = false;
@@ -214,6 +240,8 @@ export default {
             licenseExpireDate.value.setFullYear(
               licenseExpireDate.value.getFullYear() + 5
             );
+            certificateDetail.value.professionalTypes =
+              certificateDetail.value.licenseProfessions;
           });
       } else if (route.params.applicationType === "Renewal") {
         store
@@ -240,6 +268,8 @@ export default {
             licenseExpireDate.value.setFullYear(
               licenseExpireDate.value.getFullYear() + 5
             );
+               certificateDetail.value.professionalTypes =
+              certificateDetail.value.renewalProfessions;
           });
       }
     };
@@ -271,10 +301,7 @@ export default {
   position: relative;
   margin-top: 5%;
 }
-/* .container div {
-  display: flex;
-  align-self: center;
-} */
+
 .container img {
   width: 100px;
   height: 100px;
@@ -283,13 +310,7 @@ export default {
   position: relative;
   margin-top: 1%;
 }
-.title h2 {
-  color: #000;
-  font-size: 40px;
-}
-/* .name {
-  justify-content: space-around;
-} */
+
 .name .underline {
   font-size: 28px;
   color: #707070;
@@ -312,61 +333,4 @@ export default {
 .last p {
   color: #707070;
 }
-/* .name h4 > span {
-  font-size: 40px;
-} */
-/* * {
-  box-sizing: border-box;
-}
-
-body {
-  font-family: Arial;
-  font-size: 17px;
-}
-
-.container {
-  position: relative;
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.container img {
-  vertical-align: middle;
-  opacity: 0.35;
-}
-
-.container .content {
-  position: absolute;
-  bottom: 0;
-  background: rgb(0, 0, 0);
-  background: rgba(0, 0, 0, 0.5); 
-  color: #f1f1f1;
-  width: 100%;
-  padding: 20px;
-}
- .flex-container {
-  display: flex;
-  justify-content: center;
-  
-}
-.flex-container > div {
-  margin: 40px;
-  margin-top: -690px;
-  color: black
-}
-.flex-center {
-  padding-left: 25%;
-  justify-content: center;
-}
-.flex-second-container {
-  display: flex;
-  justify-content: center;
-}
-.flex-second-container > div {
-  margin: 40px;
-  margin-top: -550px;
-}
-.userNotFound {
-  margin-top: 10%;
-} */
 </style>

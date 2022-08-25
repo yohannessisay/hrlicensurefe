@@ -47,6 +47,7 @@
         "vue3-radial-progress": "^1.1.1",
         "vue3-table-lite": "^1.2.3",
         "vuex": "^4.0.0-0",
+        "xhr2": "^0.2.1",
         "xlsx": "^0.18.5"
     },
     "devDependencies": {

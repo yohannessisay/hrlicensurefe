@@ -59,9 +59,9 @@
                       <span
                         v-if="
                           newLicense &&
-                            newLicense.profile &&
-                            newLicense.profile.profilePicture != '' &&
-                            newLicense.profile.profilePicture != null
+                          newLicense.profile &&
+                          newLicense.profile.profilePicture != '' &&
+                          newLicense.profile.profilePicture != null
                         "
                       >
                         <img
@@ -244,14 +244,14 @@
                                       (profileInfo.name
                                         ? profileInfo.name
                                         : "-") +
-                                        " " +
-                                        (profileInfo.fatherName
-                                          ? profileInfo.fatherName
-                                          : "-") +
-                                        " " +
-                                        (profileInfo.grandFatherName
-                                          ? profileInfo.grandFatherName
-                                          : "-")
+                                      " " +
+                                      (profileInfo.fatherName
+                                        ? profileInfo.fatherName
+                                        : "-") +
+                                      " " +
+                                      (profileInfo.grandFatherName
+                                        ? profileInfo.grandFatherName
+                                        : "-")
                                     }}
                                   </div>
                                 </div>
@@ -337,14 +337,14 @@
                                       (profileInfo.alternativeName
                                         ? profileInfo.alternativeName
                                         : "-") +
-                                        " " +
-                                        (profileInfo.alternativeFatherName
-                                          ? profileInfo.alternativeFatherName
-                                          : "-") +
-                                        " " +
-                                        (profileInfo.alternativeGrandFatherName
-                                          ? profileInfo.alternativeGrandFatherName
-                                          : "-")
+                                      " " +
+                                      (profileInfo.alternativeFatherName
+                                        ? profileInfo.alternativeFatherName
+                                        : "-") +
+                                      " " +
+                                      (profileInfo.alternativeGrandFatherName
+                                        ? profileInfo.alternativeGrandFatherName
+                                        : "-")
                                     }}
                                   </div>
                                 </div>
@@ -670,8 +670,9 @@
                                       </div>
 
                                       <ul
-                                        v-for="(professionName,
-                                        index) in newLicense.licenseProfessions"
+                                        v-for="(
+                                          professionName, index
+                                        ) in newLicense.licenseProfessions"
                                         v-bind:key="
                                           professionName.professionalTypeId
                                         "
@@ -714,7 +715,8 @@
                                               font-style: italic;
                                             "
                                             @click="
-                                              professionName.showPrefix = !professionName.showPrefix
+                                              professionName.showPrefix =
+                                                !professionName.showPrefix
                                             "
                                             v-show="
                                               professionName.showPrefixLink
@@ -761,7 +763,7 @@
                                             style="float: left"
                                             v-show="
                                               professionName.showPrefixLink &&
-                                                professionName.showPrefix
+                                              professionName.showPrefix
                                             "
                                           >
                                             <label style="display: block"
@@ -803,8 +805,9 @@
                                       </div>
 
                                       <ul
-                                        v-for="(newProfessionName,
-                                        index) in professionalTypes"
+                                        v-for="(
+                                          newProfessionName, index
+                                        ) in professionalTypes"
                                         v-bind:key="newProfessionName.id"
                                         v-bind:value="newProfessionName.id"
                                       >
@@ -835,7 +838,8 @@
                                               font-style: italic;
                                             "
                                             @click="
-                                              newProfessionName.showPrefix = !newProfessionName.showPrefix
+                                              newProfessionName.showPrefix =
+                                                !newProfessionName.showPrefix
                                             "
                                             v-show="
                                               newProfessionName.showPrefixLink
@@ -863,8 +867,7 @@
                                             "
                                             v-if="
                                               newProfessionName.showPrefixLink &&
-                                                newProfessionName.name ==
-                                                  'Other'
+                                              newProfessionName.name == 'Other'
                                             "
                                           >
                                             <label style="display: block"
@@ -877,10 +880,11 @@
                                                 newLicense.otherProfessionalType
                                               "
                                             />
-                                                 <label style="display: block"
-                                              >Other profession name (Amharic)*</label
+                                            <label style="display: block"
+                                              >Other profession name
+                                              (Amharic)*</label
                                             >
-                                               <input
+                                            <input
                                               style="display: block"
                                               type="text"
                                               v-model="
@@ -892,7 +896,7 @@
                                             style="float: left"
                                             v-show="
                                               newProfessionName.showPrefixLink &&
-                                                newProfessionName.showPrefix
+                                              newProfessionName.showPrefix
                                             "
                                           >
                                             <label style="display: block"
@@ -1010,14 +1014,21 @@
                                   ></iframe>
                                 </div>
                                 <br />
-                                <a
+                                <button
                                   @click="openPdfInNewTab(docs[index].filePath)"
-                                  >see pdf in detail</a
                                 >
+                                  See pdf in detail
+                                </button>
                               </div>
 
                               <div v-else>
-                              <h5 class="text-grey-200 text-2xl">{{ docs[index].documentType?docs[index].documentType.name:''}}</h5>
+                                <h5 class="text-grey-200 text-2xl">
+                                  {{
+                                    docs[index].documentType
+                                      ? docs[index].documentType.name
+                                      : ""
+                                  }}
+                                </h5>
                                 <img
                                   class="
                                     scale-50
@@ -1232,6 +1243,7 @@
                       :opacity="1"
                     ></loading>
                     <button
+                      v-if="button.code != 'US'"
                       class="
                         inline-block
                         px-6
@@ -1254,6 +1266,35 @@
                         ease-in-out
                       "
                       @click="action(button.action)"
+                    >
+                      {{ button.name }}
+                    </button>
+                    <button
+                      v-else
+                      class="
+                        inline-block
+                        px-6
+                        text-white
+                        font-medium
+                        text-xs
+                        leading-tight
+                        uppercase
+                        rounded
+                        shadow-lg
+                        hover:bg-purple-700 hover:shadow-lg
+                        focus:bg-purple-700
+                        focus:shadow-lg
+                        focus:outline-none
+                        focus:ring-0
+                        active:bg-purple-800 active:shadow-lg
+                        transition
+                        duration-150
+                        hover:bg-yellow-300 hover:text-white
+                        ease-in-out
+                      "
+                      data-bs-toggle="modal"
+                      data-bs-target="#superviseModal"
+                      @click="changeAction(button.action)"
                     >
                       {{ button.name }}
                     </button>
@@ -1285,7 +1326,7 @@
                             flex
                             items-start
                             justify-between
-                            border-b border-solid border-blueGray-200
+                            border-b border-solid border-grey-100
                             mt-medium
                             rounded-t
                           "
@@ -1306,21 +1347,7 @@
                             "
                             v-on:click="toggleModal()"
                           >
-                            <span
-                              class="
-                                bg-transparent
-                                text-black
-                                opacity-5
-                                h-6
-                                w-6
-                                text-2xl
-                                block
-                                outline-none
-                                focus:outline-none
-                              "
-                            >
-                              ×
-                            </span>
+                            <span class="text-3xl"> × </span>
                           </div>
                         </div>
                         <!--body-->
@@ -1384,8 +1411,8 @@
                                       <img
                                         v-bind:src="
                                           googleApi +
-                                            '' +
-                                            rejectedObj[ind].filePath
+                                          '' +
+                                          rejectedObj[ind].filePath
                                         "
                                       />
                                     </picture>
@@ -1509,6 +1536,302 @@
     </div>
     <!-- Main Content -->
   </section>
+
+  <div
+    class="
+      modal
+      fade
+      fixed
+      top-0
+      left-0
+      hidden
+      w-full
+      h-full
+      outline-none
+      overflow-x-hidden overflow-y-auto
+    "
+    id="superviseModal"
+    tabindex="-1"
+    aria-labelledby="superviseModalTitle"
+    aria-modal="true"
+    role="dialog"
+  >
+    <div
+      class="
+        modal-dialog modal-dialog-centered
+        relative
+        w-auto
+        pointer-events-none
+      "
+    >
+      <div
+        class="
+          modal-content
+          border-none
+          shadow-lg
+          relative
+          flex flex-col
+          w-full
+          pointer-events-auto
+          bg-white bg-clip-padding
+          rounded-md
+          outline-none
+          text-current
+        "
+      >
+        <div
+          class="
+            modal-header
+            flex flex-shrink-0
+            items-center
+            justify-between
+            p-4
+            border-b border-grey-100
+            rounded-t-md
+          "
+        >
+          <h5
+            class="text-xl font-medium leading-normal text-gray-800"
+            id="superviseModalLabel"
+          >
+            Supervise Detail
+          </h5>
+          <button
+            type="button"
+            class="
+              btn-close
+              box-content
+              w-4
+              h-4
+              p-1
+              text-black
+              border-none
+              rounded-none
+              opacity-50
+              focus:shadow-none focus:outline-none focus:opacity-100
+              hover:text-black hover:opacity-75 hover:no-underline
+            "
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            style="min-height: 28px; min-width: 28px"
+          ></button>
+        </div>
+        <div class="modal-body relative p-4">
+          <label for="" class="ml-2">Institution </label>
+          <label class="block text-left mb-4">
+            <div>
+              <div class="w-full relative">
+                <div
+                  class="
+                    mt-1
+                    ml-1
+                    relative
+                    border border-gray-300
+                    overflow-hidden
+                    rounded-md
+                    shadow-sm
+                  "
+                >
+                  <input
+                    id="institution"
+                    @keyup="showOptions = true"
+                    v-model="instSearched.name"
+                    class="w-full px-3 py-3"
+                    style="border: none"
+                    placeholder="Select institution by typing a name"
+                  />
+                </div>
+                <div></div>
+                <div
+                  v-show="resultQuery().length && showOptions"
+                  class="
+                    w-full
+                    bg-white
+                    border border-gray-300
+                    mt-2
+                    ml-1
+                    max-height-12
+                    overflow-hidden overflow-y-scroll
+                    rounded-lg
+                    shadow-lg
+                    text-left
+                    dropdown-menu
+                  "
+                  style="height: 148px; border: none"
+                >
+                  <ul class="py-1">
+                    <li
+                      v-for="value in resultQuery()"
+                      :key="value.id"
+                      @click="setInput(value)"
+                      class="
+                        dropdown-toggle
+                        px-4
+                        py-2
+                        cursor-pointer
+                        hover:bg-primary-700 hover:text-white
+                      "
+                    >
+                      {{ value.name }}
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </label>
+
+          <label for="" class="ml-2">Supervisor Name</label>
+
+          <div
+            class="
+              mt-1
+              ml-1
+              relative
+              border border-gray-300
+              overflow-hidden
+              rounded-md
+              shadow-sm
+            "
+          >
+            <input
+              id="supervisor"
+              v-model="supervisor"
+              required
+              class="w-full px-3 py-3"
+              style="border: none"
+              placeholder="Type supervisors name"
+            />
+          </div>
+
+          <div class="grid grid-cols-2 gap-4">
+            <div class="form-group mb-6 mt-4">
+              <label for="" class="ml-2">Start Date</label>
+              <input
+                v-model="startDate"
+                required
+                type="date"
+                class="
+                  form-control
+                  block
+                  w-full
+                  px-3
+                  py-1.5
+                  text-base
+                  font-normal
+                  text-gray-700
+                  bg-white bg-clip-padding
+                  border border-solid border-gray-300
+                  rounded
+                  transition
+                  ease-in-out
+                  m-0
+                  focus:text-gray-700
+                  focus:bg-white
+                  focus:border-blue-600
+                  focus:outline-none
+                "
+              />
+            </div>
+            <div class="form-group mb-6 mt-4">
+              <label for="" class="ml-2">End Date</label>
+              <input
+                required
+                class="
+                  form-control
+                  block
+                  w-full
+                  px-3
+                  py-1.5
+                  text-base
+                  font-normal
+                  text-gray-700
+                  bg-white bg-clip-padding
+                  border border-solid border-gray-300
+                  rounded
+                  transition
+                  ease-in-out
+                  m-0
+                  focus:text-gray-700
+                  focus:bg-white
+                  focus:border-blue-600
+                  focus:outline-none
+                "
+                v-model="endDate"
+                type="date"
+              />
+            </div>
+          </div>
+          <h6 v-show="showDateError.show" class="text-red-300">
+            {{ showDateError.message }}
+          </h6>
+        </div>
+        <div
+          class="
+            modal-footer
+            flex flex-shrink-0 flex-wrap
+            items-center
+            justify-end
+            p-1
+            border-t border-grey-100
+            rounded-b-md
+          "
+        >
+          <button
+            type="button"
+            class="
+              inline-block
+              px-2
+              py-1
+              bg-purple-600
+              text-white
+              font-medium
+              text-xs
+              leading-tight
+              uppercase
+              rounded
+              shadow-md
+              hover:bg-purple-700 hover:shadow-lg
+              focus:bg-purple-700
+              focus:shadow-lg
+              focus:outline-none
+              focus:ring-0
+              active:bg-purple-800 active:shadow-lg
+              transition
+              duration-150
+              ease-in-out
+            "
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+          <button
+            class="
+              inline-block
+              px-6
+              py-2.5
+              bg-blue-600
+              text-white
+              font-medium
+              text-xs
+              leading-tight
+              uppercase
+              rounded
+              shadow-lg
+              hover:bg-blue-700 hover:shadow-lg
+              focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
+              active:bg-blue-800 active:shadow-lg
+              transition
+              duration-150
+              ease-in-out
+            "
+            @click="supervise()"
+          >
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 <script>
 import { useStore } from "vuex";
@@ -1536,10 +1859,10 @@ export default {
     ReviewerNavBar,
     FlashMessage,
     RadialProgressBar,
-    ErrorFlashMessage
+    ErrorFlashMessage,
   },
   computed: {
-    moment: () => moment
+    moment: () => moment,
   },
   setup() {
     const route = useRoute();
@@ -1555,10 +1878,11 @@ export default {
     const completedSteps = ref(0);
     const totalSteps = ref(0);
     let isGoodStanding = ref(false);
-
+    let institutions = ref([]);
     let expirationDateExceedTodayError = ref(false);
     let isProfessionalTypeChanged = ref(false);
-
+    let startDate = ref("");
+    let endDate = ref("");
     let otherProfessionalType = ref();
     let otherProfessionalTypeAmharic = ref();
     let showOtherProfessionError = ref(false);
@@ -1573,7 +1897,7 @@ export default {
       { name: "Senior", id: 4 },
       { name: "Senior expert", id: 5 },
       { name: "Chief", id: 6 },
-      { name: "Chief expert", id: 7 }
+      { name: "Chief expert", id: 7 },
     ]);
     let prefix = ref();
     let canChangeName = ref(false);
@@ -1592,24 +1916,24 @@ export default {
       applicantType: { name: "" },
       education: {
         department: { name: "" },
-        institution: { institutionType: {}, name: "" }
+        institution: { institutionType: {}, name: "" },
       },
       declinedFields: "",
       remark: "",
       documents: [{ filePath: "" }],
       applicationStatus: {
-        buttons: [{ action: "", name: "" }]
-      }
+        buttons: [{ action: "", name: "" }],
+      },
     });
     let buttons = ref([
       { action: "", name: "" },
       { action: "", name: "" },
       { action: "", name: "" },
-      { action: "", name: "" }
+      { action: "", name: "" },
     ]);
     let isLoadingName = ref(false);
     let professionalTypePrefixes = ref([]);
-
+    let superviseAction = ref("");
     let documentTypes = ref([]);
     let documentTypeName = ref("");
     let modalDocumentTypeName = ref("");
@@ -1633,27 +1957,29 @@ export default {
     let errorClass = ref("text-danger");
     let showRemark = ref(false);
     let applicationType = ref("");
+    let showDateError = ref({ show: false, message: "" });
+    let supervisor = ref("");
     let showFlash = ref(false);
     let showErrorFlash = ref(false);
     let showDeclineFlash = ref(false);
     let sendDeclinedData = ref(true);
     let fromModalSendDeclinedData = ref(false);
-
+    let showOptions = ref(false);
     let showActionLoading = ref(false);
     let showLoadingButtons = ref(false);
-
+    let instSearched = ref({ name: "" });
     let professionalTypes = ref([]);
     let evaluateRoute = ref("/admin/evaluate/NewLicense" + route.params.id);
     const editPersonalData = ref(false);
     const editPersonalInfo = () => {
       editPersonalData.value = !editPersonalData.value;
     };
-    const created = async applicationId => {
+    const created = async (applicationId) => {
       applicationType.value = "New License";
 
       store
         .dispatch("reviewer/getNewLicenseApplication", applicationId)
-        .then(res => {
+        .then((res) => {
           newLicense.value = res.data.data ? res.data.data : {};
           departmentId.value =
             res.data.data &&
@@ -1746,12 +2072,12 @@ export default {
       applicationType.value = "New License";
     };
     const fetchDocumentTypes = async () => {
-      store.dispatch("reviewer/getDocumentTypes").then(res => {
+      store.dispatch("reviewer/getDocumentTypes").then((res) => {
         documentTypes.value = res.data.data;
         findDocumentType(documentTypes.value, docs.value[0]);
       });
     };
-    const next = doc => {
+    const next = (doc) => {
       if (nextClickable.value == true) {
         index.value = index.value + 1;
         amount.value = ((index.value + 1) / docs.value.length) * 100;
@@ -1809,36 +2135,38 @@ export default {
       }
     };
     const transferToFederal = () => {
-      store.dispatch("newlicense/getExpertLevel").then(res => {
-        let federalData = res.data.data.filter(r => r.code == "FED");
+      store.dispatch("newlicense/getExpertLevel").then((res) => {
+        let federalData = res.data.data.filter((r) => r.code == "FED");
         let transferData = {
           licenseId: route.params.id,
           expertLevelId: federalData[0].id,
-          createdByAdminId: adminId
+          createdByAdminId: adminId,
         };
-        store.dispatch("reviewer/transferToFederal", transferData).then(res => {
-          if (res.data?.status == "Success") {
-            toast.success("Application transfered Successfully", {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true
-            });
-          } else {
-            toast.error("Failed to transfer application", {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true
-            });
-          }
-        });
+        store
+          .dispatch("reviewer/transferToFederal", transferData)
+          .then((res) => {
+            if (res.data?.status == "Success") {
+              toast.success("Application transfered Successfully", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
+            } else {
+              toast.error("Failed to transfer application", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
+            }
+          });
       });
     };
 
-    const accept = doc => {
+    const accept = (doc) => {
       nextClickable.value = true;
       completedSteps.value += 1;
       if (accepted.value.length > 0) {
@@ -1889,7 +2217,7 @@ export default {
       }
     };
 
-    const reject = doc => {
+    const reject = (doc) => {
       completedSteps.value += 1;
       nextClickable.value = true;
       for (let i = 0; i < buttons.value.length; i++) {
@@ -1947,7 +2275,8 @@ export default {
       }
     };
 
-    const action = actionValue => {
+    const action = (actionValue) => {
+      let smsMessage = "";
       let goTo = "admin/newLicense/underSupervision";
       showActionLoading.value = true;
       showLoadingButtons.value = true;
@@ -1986,13 +2315,18 @@ export default {
         if (loopCounter == newLicense.value.professionalTypePrefixes.length) {
           newLicense.value.professionalTypePrefixes.push({
             professionalTypeId: professionId,
-            prefix: null
+            prefix: null,
           });
         }
         loopCounter = 0;
       }
       isLoadingFinalAction.value = true;
       if (actionValue === "ApproveEvent") {
+        smsMessage = newLicense.value
+          ? "Dear applicant your applied new license of number " +
+            newLicense.value.newLicenseCode +
+            " has been approved after careful examination of your uploaded documents by our reviewers. Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
+          : "";
         goTo = "/admin/newLicense/approved";
         if (
           newLicense.value.licenseExpirationDate === null &&
@@ -2003,7 +2337,7 @@ export default {
             position: "bottom-center",
             pauseOnFocusLoss: true,
             pauseOnHover: true,
-            icon: true
+            icon: true,
           });
           showActionLoading.value = false;
           showLoadingButtons.value = false;
@@ -2018,7 +2352,7 @@ export default {
             position: "bottom-center",
             pauseOnFocusLoss: true,
             pauseOnHover: true,
-            icon: true
+            icon: true,
           });
           showActionLoading.value = false;
           showLoadingButtons.value = false;
@@ -2028,6 +2362,11 @@ export default {
       }
 
       if (actionValue == "DeclineEvent") {
+        smsMessage = newLicense.value
+          ? "Dear applicant your applied new license of number " +
+            newLicense.value.newLicenseCode +
+            " has been declined after careful examination of your uploaded documents by our reviewers. Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
+          : "";
         goTo = "/admin/newLicense/declined";
         showActionLoading.value = false;
         showLoadingButtons.value = false;
@@ -2084,36 +2423,51 @@ export default {
       newLicense.value.certifiedDate = new Date();
       let req = {
         action: actionValue,
-        data: newLicense.value
+        data: newLicense.value,
       };
+      let smsData = {
+        recipients: [
+          newLicense.value && newLicense.value.applicant
+            ? "251" + newLicense.value.applicant.phoneNumber
+            : "",
+        ],
+        message: smsMessage ? smsMessage : "",
+      };
+
       if (
         applicationType.value == "New License" &&
         sendDeclinedData.value == true
       ) {
         store
           .dispatch("reviewer/editNewLicense", req)
-          .then(res => {
+          .then((res) => {
             showActionLoading.value = false;
             if (res.statusText == "Created") {
-              toast.success("Application reviewed Successfully", {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true
+              store.dispatch("sms/sendSms", smsData).then(() => {
+                toast.success("Application reviewed Successfully", {
+                  timeout: 5000,
+                  position: "bottom-center",
+                  pauseOnFocusLoss: true,
+                  pauseOnHover: true,
+                  icon: true,
+                });
+                isLoadingFinalAction.value = false;
+                   setTimeout(() => {
+            window.location.reload();
+          }, 3000);
               });
-              isLoadingFinalAction.value = false;
-              router.push({ path: goTo });
             } else {
               toast.error("Please try again", {
                 timeout: 5000,
                 position: "bottom-center",
                 pauseOnFocusLoss: true,
                 pauseOnHover: true,
-                icon: true
+                icon: true,
               });
               isLoadingFinalAction.value = false;
-              router.push({ path: "admin/newLicense/inReview" });
+                   setTimeout(() => {
+            window.location.reload();
+          }, 3000);
             }
           })
           .catch(() => {
@@ -2123,7 +2477,7 @@ export default {
               position: "bottom-center",
               pauseOnFocusLoss: true,
               pauseOnHover: true,
-              icon: true
+              icon: true,
             });
             setTimeout(() => {
               window.location.reload();
@@ -2143,7 +2497,7 @@ export default {
       showRemark.value = !showRemark.value;
     };
 
-    const openPdfInNewTab = pdfPath => {
+    const openPdfInNewTab = (pdfPath) => {
       pdfFilePath.value = pdfPath;
       window.open(googleApi + "" + pdfPath, "_blank");
     };
@@ -2156,13 +2510,13 @@ export default {
     };
     const changeProfession = () => {};
 
-    const getProfessionalTypesByDepartmentId = id => {
+    const getProfessionalTypesByDepartmentId = (id) => {
       let professionSelected = ref(false);
       store
         .dispatch("reviewer/getProfessionalTypeByDepartmentId", id)
-        .then(res => {
+        .then((res) => {
           res.data.data
-            .filter(function(e) {
+            .filter(function (e) {
               for (let i in newLicense.value
                 ? newLicense.value.licenseProfessions
                 : {}) {
@@ -2178,7 +2532,7 @@ export default {
               }
               professionSelected.value = false;
             })
-            .map(mapData => {
+            .map((mapData) => {
               mapData.showPrefix = false;
               mapData.showPrefixLink = false;
               return mapData;
@@ -2198,7 +2552,7 @@ export default {
         alternativeName: newLicense.value.profile.alternativeName,
         alternativeFatherName: newLicense.value.profile.alternativeFatherName,
         alternativeGrandFatherName:
-          newLicense.value.profile.alternativeGrandFatherName
+          newLicense.value.profile.alternativeGrandFatherName,
       };
       const profileData = [id, newProfile];
       store
@@ -2210,7 +2564,7 @@ export default {
             position: "bottom-center",
             pauseOnFocusLoss: true,
             pauseOnHover: true,
-            icon: true
+            icon: true,
           });
           isLoadingName.value = false;
           setTimeout(() => {
@@ -2223,7 +2577,7 @@ export default {
             position: "bottom-center",
             pauseOnFocusLoss: true,
             pauseOnHover: true,
-            icon: true
+            icon: true,
           });
           isLoadingName.value = false;
           setTimeout(() => {
@@ -2262,19 +2616,17 @@ export default {
               );
 
           if (previousProfession) {
-            professionalTypePrefixes.value = professionalTypePrefixes.value.filter(
-              data => {
+            professionalTypePrefixes.value =
+              professionalTypePrefixes.value.filter((data) => {
                 return (
                   data.professionalTypeId != profession.professionalTypes.id
                 );
-              }
-            );
+              });
           } else {
-            professionalTypePrefixes.value = professionalTypePrefixes.value.filter(
-              data => {
+            professionalTypePrefixes.value =
+              professionalTypePrefixes.value.filter((data) => {
                 return data.professionalTypeId != profession.id;
-              }
-            );
+              });
           }
 
           if (
@@ -2285,7 +2637,7 @@ export default {
             newLicense.value.otherProfessionalTypeAmharic = null;
           } else if (!previousProfession && profession.name == "Other") {
             newLicense.value.otherProfessionalType = null;
-             newLicense.value.otherProfessionalTypeAmharic = null;
+            newLicense.value.otherProfessionalTypeAmharic = null;
           }
         }
       }
@@ -2315,7 +2667,7 @@ export default {
       if (professionalTypePrefixes.value.length === 0) {
         professionalTypePrefixes.value.push({
           professionalTypeId: professionId,
-          prefix: event.target.value
+          prefix: event.target.value,
         });
         return;
       }
@@ -2328,7 +2680,7 @@ export default {
           if (countProLength.value === professionalTypePrefixes.value.length) {
             professionalTypePrefixes.value.push({
               professionalTypeId: professionId,
-              prefix: event.target.value
+              prefix: event.target.value,
             });
             countProLength.value = 0;
             return;
@@ -2336,7 +2688,7 @@ export default {
         } else {
           professionalTypePrefixes.value.splice(
             professionalTypePrefixes.value.indexOf({
-              professionalTypeId: professionId
+              professionalTypeId: professionId,
             }),
             1
           );
@@ -2345,7 +2697,7 @@ export default {
           }
           professionalTypePrefixes.value.push({
             professionalTypeId: professionId,
-            prefix: event.target.value
+            prefix: event.target.value,
           });
           countProLength.value = 0;
           return;
@@ -2353,7 +2705,7 @@ export default {
       }
     };
 
-    const checkProfessionChanged = previousProfessionType => {
+    const checkProfessionChanged = (previousProfessionType) => {
       let count = 0;
       if (
         previousProfessionType &&
@@ -2381,25 +2733,159 @@ export default {
       return false;
     };
 
+    const setInput = (value) => {
+      instSearched.value = value ? value : "";
+      showOptions.value = false;
+    };
+
+    const resultQuery = () => {
+      if (institutions.value) {
+        let data = institutions.value.filter((item) => {
+          return instSearched.value
+            ? instSearched.value.name
+                .toLowerCase()
+                .split(" ")
+                .every((v) => item.name.toLowerCase().includes(v))
+            : "";
+        });
+
+        return data;
+      } else {
+        return [];
+      }
+    };
+
+    const supervise = () => {
+      newLicense.value.superviseEndDate = endDate.value ? endDate.value : "";
+      newLicense.value.superviseStartDate = startDate.value
+        ? startDate.value
+        : "";
+      newLicense.value.supervisor = supervisor.value ? supervisor.value : "";
+      newLicense.value.supervisingInstitutionId = instSearched.value
+        ? instSearched.value.id
+        : "";
+
+      let req = {
+        action: superviseAction.value ? superviseAction.value : "",
+        data: newLicense.value,
+      };
+      let minDate = moment(endDate.value).diff(moment(startDate.value), "days");
+      let lessThanToday = moment(startDate.value).diff(
+        moment(new Date()),
+        "days"
+      );
+
+      if (minDate < 30) {
+        showDateError.value.message =
+          "Minimum supervised time is 3 month please change start and end date.";
+        showDateError.value.show = true;
+        return;
+      } else if (lessThanToday < 0) {
+        showDateError.value.message =
+          "Start date can not be set to past,minimum start date is today.";
+        showDateError.value.show = true;
+        return;
+      } else {
+        let smsData = {
+          recipients: [
+            newLicense.value && newLicense.value.applicant
+              ? "251" + newLicense.value.applicant.phoneNumber
+              : "",
+          ],
+          message: newLicense.value
+            ? "Dear applicant your applied new license of number " +
+              newLicense.value.newLicenseCode +
+              " has been set to be under supervison of MR/MRS:-" +
+              newLicense.value.supervisor +
+              " at institution of " +
+              instSearched.value.name +
+              " for " +
+              minDate +
+              " days  .Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
+            : "",
+        };
+        store
+          .dispatch("reviewer/editNewLicense", req)
+          .then((res) => {
+            showActionLoading.value = false;
+            if (res.statusText == "Created") {
+              store.dispatch("sms/sendSms", smsData).then(() => {
+                toast.success("Application reviewed Successfully", {
+                  timeout: 5000,
+                  position: "bottom-center",
+                  pauseOnFocusLoss: true,
+                  pauseOnHover: true,
+                  icon: true,
+                });
+                isLoadingFinalAction.value = false;
+                setTimeout(() => {
+                  window.location.reload();
+                }, 2000);
+              });
+            } else {
+              toast.error("Please try again", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
+              isLoadingFinalAction.value = false;
+              setTimeout(() => {
+                window.location.reload();
+              }, 2000);
+            }
+          })
+          .catch(() => {
+            isLoadingFinalAction.value = false;
+            toast.error("Please try again", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+            setTimeout(() => {
+              window.location.reload();
+            }, 2000);
+          });
+      }
+    };
+    const changeAction = (action) => {
+      superviseAction.value = action;
+    };
     onMounted(() => {
       created(route.params.id);
+      store.dispatch("goodstanding/getInstitution").then((res) => {
+        institutions.value = res.data.data.filter((elm) => elm.isLocal == true);
+      });
     });
     return {
       isPdf,
       newLicense,
       index,
       docs,
+      resultQuery,
       next,
+      setInput,
       previous,
       nextRemark,
       previousRemark,
       amount,
+      supervise,
+      showOptions,
       width,
+      instSearched,
+      institutions,
       documentTypes,
       findDocumentType,
       documentTypeName,
       accepted,
       rejected,
+      startDate,
+      supervisor,
+      showDateError,
+      endDate,
       accept,
       transferToFederal,
       showTransferToAdminButton,
@@ -2412,6 +2898,7 @@ export default {
       isToChangeProfession,
       profileInfo,
       disableNext,
+      changeAction,
       nextClickable,
       foundInRejected,
       foundInAcceptted,
@@ -2470,9 +2957,9 @@ export default {
       isGoodStanding,
       showActionLoading,
       showLoadingButtons,
-      googleApi
+      googleApi,
     };
-  }
+  },
 };
 </script>
 <style scoped>

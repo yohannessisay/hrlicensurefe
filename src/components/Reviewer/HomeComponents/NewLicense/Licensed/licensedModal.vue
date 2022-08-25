@@ -421,7 +421,9 @@
 import { googleApi } from "@/composables/baseURL";
 import { ref, watch } from "vue";
 import { useStore } from "vuex";
-import Loading from "../../../../../plugins/Loader/index.js";
+import Loading from "vue3-loading-overlay";
+// Import stylesheet
+import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 
 export default {
   name: "Modal",

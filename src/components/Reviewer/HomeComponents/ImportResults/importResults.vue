@@ -89,7 +89,7 @@
                     duration-150
                   "
                 >
-                  <i class="fas fa-cloud-upload-alt fa-1x"
+                  <i class="fas fa-cloud-download-alt fa-1x"
                     >Click to download a template</i
                   >
                 </label>
@@ -337,7 +337,7 @@
             <tbody>
               <tr v-for="row in Finalerrors" :key="row.id">
                 <td
-                  class="px-5 py-5 border-gray-200 bg-green-100 text-sm"
+                  class="px-5 py-5 border-gray-200 text-sm"
                   v-for="item in row"
                   :key="item.id"
                 >
@@ -595,11 +595,7 @@
               <tbody>
                 <tr v-for="row in finalData" :key="row.id">
                   <td
-                    :class="
-                      item === 'Fail' || item === 'fail'
-                        ? 'cell-red'
-                        : 'cell-green'
-                    "
+               
                     v-for="item in row"
                     :key="item.id"
                   >
@@ -608,8 +604,8 @@
                         <p
                           :class="
                             item === 'Fail' || item === 'fail'
-                              ? 'px-5 py-5 border-gray-200 bg-green-100 text-sm cell-red'
-                              : ' px-5 py-5 border-gray-200 bg-green-100 text-sm'
+                              ? 'px-5 py-5 border-gray-200 text-sm cell-red'
+                              : ' px-5 py-5 border-gray-200text-sm'
                           "
                         >
                           {{ item }}
@@ -1056,7 +1052,7 @@ export default {
       store.dispatch("reviewer/getMultiple", idArray).then((res) => {
         let checkforExisting = res.data.data;
         let errorForExisting = [];
-
+        let timeOut=1000;
         if (res.data.status === "Success") {
           for (let i = 0; i < finalArray.length; i++) {
             for (let j = 0; j < checkforExisting.length; j++) {
@@ -1064,6 +1060,7 @@ export default {
                 finalArray[i].registrationNo ===
                 checkforExisting[j].registrationNo
               ) {
+                timeOut+=1000;
                 errorForExisting.push({
                   row: i,
                   column: 1,
@@ -1072,9 +1069,9 @@ export default {
                     "There is an already existing record with that id",
                 });
                 toast.error(
-                  "There is an already existing record with that id",
+                  "There is an already existing record with id"+finalArray[i].registrationNo+ "",
                   {
-                    timeout: 5000,
+                    timeout: 6000+timeOut,
                     position: "bottom-center",
                     pauseOnFocusLoss: true,
                     pauseOnHover: true,
