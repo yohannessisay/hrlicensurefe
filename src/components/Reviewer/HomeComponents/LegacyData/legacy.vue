@@ -302,7 +302,6 @@
               >
                 <vue-table-lite
                   :is-static-mode="true"
-                  :is-loading="userTable.isLoading"
                   :columns="userTable.columns"
                   :rows="userTable.rows"
                   :total="userTable.totalRecordCount"
