@@ -445,12 +445,14 @@ import { ref, watch } from "vue";
 import Loading from "vue3-loading-overlay";
 import { useStore } from "vuex";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
+import { useToast } from "vue-toastification";
 export default {
   name: "Modal",
   components: { Loading },
   props: ["modalData"],
   setup(props) {
     const store = useStore();
+    const toast = useToast();
     let isLoading = ref(false);
     let isRegion = ref(true);
     let isWoreda = ref(false);
@@ -582,9 +584,29 @@ export default {
       // check for existing data
 
       store.dispatch("lookups/" + finalUrl, saveData.value).then((res) => {
-        setTimeout(() => {
-          window.location.reload();
-        }, 3000);
+        if (res.data.message == "Created Successfully!") {
+          toast.success("Created Successfully", {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          });
+          // setTimeout(() => {
+          //   window.location.reload();
+          // }, 3000);
+        } else {
+          toast.error(res.data.message, {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          });
+          // setTimeout(() => {
+          //   window.location.reload();
+          // }, 3000);
+        }
       });
       // Finally save the data
     };
