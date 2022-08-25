@@ -69,7 +69,6 @@
               </tr>
             </thead>
             <tbody v-if="rows.length > 0" class="vtl-tbody">
-           
               <template v-if="isStaticMode">
                 <tr
                   v-for="(row, i) in localRows"
@@ -180,10 +179,7 @@
             <span class="vtl-paging-count-label">{{
               messages.pageSizeChangeLabel
             }}</span>
-            <select
-              class="vtl-paging-count-dropdown"
-              v-model="setting.pageSize"
-            >
+            <select class="" v-model="setting.pageSize" style="width: 8%">
               <option
                 v-for="pageOption in pageOptions"
                 :value="pageOption.value"
@@ -192,6 +188,7 @@
                 {{ pageOption.text }}
               </option>
             </select>
+
             <span class="vtl-paging-page-label">{{
               messages.gotoPageLabel
             }}</span>
@@ -322,10 +319,9 @@
           </div>
         </template>
       </div>
+      <!-- If empty put your code here -->
       <div class="vtl-row" v-else>
-        <div class="vtl-empty-msg col-sm-12 text-center">
-          {{ messages.noDataAvailable }}
-        </div>
+        <div class="vtl-empty-msg col-sm-12 text-center"></div>
       </div>
     </div>
   </div>
@@ -353,73 +349,70 @@ export default defineComponent({
     "row-clicked",
   ],
   props: {
-    // 是否讀取中 (is data loading)
-    isLoading: {
-      type: Boolean,
-      require: true,
-    },
-    // 是否執行了重新查詢 (Whether to perform a re-query)
+    //  (is data loading)
+
+    // (Whether to perform a re-query)
     isReSearch: {
       type: Boolean,
       require: true,
     },
-    // 有無Checkbox (Presence of Checkbox)
+    // Checkbox (Presence of Checkbox)
     hasCheckbox: {
       type: Boolean,
       default: false,
     },
-    // Checkbox勾選後返回資料的型態 (Returns data type for checked of Checkbox)
+    // Checkbox (Returns data type for checked of Checkbox)
     checkedReturnType: {
       type: String,
       default: "key",
     },
-    // 標題 (title)
+    //  (title)
     title: {
       type: String,
       default: "",
     },
-    // 是否鎖定第一欄位位置 (Fixed first column's position)
+    //  (Fixed first column's position)
     isFixedFirstColumn: {
       type: Boolean,
       default: false,
     },
-    // 欄位 (Field)
+    //  (Field)
     columns: {
       type: Array,
       default: () => {
         return [];
       },
     },
-    // 資料 (data)
+    //  (data)
     rows: {
       type: Array,
       default: () => {
         return [];
       },
     },
-    // 資料列類別 (data row classes)
+    //  (data row classes)
     rowClasses: {
       type: [Array, Function],
       default: () => {
         return [];
       },
     },
-    // 一頁顯示筆數 (Display the number of items on one page)
+    //  (Display the number of items on one page)
     pageSize: {
       type: Number,
       default: 10,
     },
-    // 總筆數 (Total number of transactions)
+    //  (Total number of transactions)
     total: {
       type: Number,
       default: 100,
     },
-    // 現在頁數 (Current page number)
+    //  (Current page number)
     page: {
       type: Number,
       default: 1,
     },
-    // 排序條件 (Sort condition)
+    //  (Sort condition)
     sortable: {
       type: Object,
       default: () => {
@@ -429,7 +422,7 @@ export default defineComponent({
         };
       },
     },
-    // 顯示文字 (Display text)
+    //  (Display text)
     messages: {
       type: Object,
       default: () => {
@@ -441,22 +434,22 @@ export default defineComponent({
         };
       },
     },
-    // 靜態模式 (Static mode(no refresh server data))
+    //  (Static mode(no refresh server data))
     isStaticMode: {
       type: Boolean,
       default: false,
     },
-    // 插槽模式 (V-slot mode)
+    //  (V-slot mode)
     isSlotMode: {
       type: Boolean,
       default: false,
     },
-    // 是否隱藏換頁資訊 (Hide paging)
+    //  (Hide paging)
     isHidePaging: {
       type: Boolean,
       default: false,
     },
-    // 一頁顯示筆數下拉選單 (Dropdown of Display the number of items on one page)
+    //  (Dropdown of Display the number of items on one page)
     pageOptions: {
       type: Array,
       default: () => [
@@ -478,8 +471,8 @@ export default defineComponent({
   setup(props, { emit, slots }) {
     const store = useStore();
     let localTable = ref(null);
-    let customRows = ref([]);
-    // 檢查下拉選單中是否包含預設一頁顯示筆數 (Validate dropdown's values have page-size value or not)
+    let isLoading = ref(true);
+    //  (Validate dropdown's values have page-size value or not)
     let defaultPageSize =
       props.pageOptions.length > 0
         ? ref(props.pageOptions[0].value)
@@ -496,15 +489,15 @@ export default defineComponent({
       });
     }
 
-    // 組件用內部設定值 (Internal set value for components)
+    //  (Internal set value for components)
     const setting = reactive({
-      // 是否啟用Slot模式 (Enable slot mode)
+      //  (Enable slot mode)
       isSlotMode: props.isSlotMode,
-      // 是否全選 (Whether to select all)
+      //  (Whether to select all)
       isCheckAll: false,
-      // 是否隱藏換頁資訊 (Hide paging)
+      //  (Hide paging)
       isHidePaging: props.isHidePaging,
-      // KEY欄位名稱 (KEY field name)
+      //  (KEY field name)
       keyColumn: computed(() => {
         let key = "";
         Object.assign(props.columns).forEach((col) => {
@@ -514,11 +507,11 @@ export default defineComponent({
         });
         return key;
       }),
-      // 當前頁數 (current page number)
+      //  (current page number)
       page: props.page,
-      // 每頁顯示筆數 (Display count per page)
+      //  (Display count per page)
       pageSize: defaultPageSize.value,
-      // 最大頁數 (Maximum number of pages)
+      //  (Maximum number of pages)
       maxPage: computed(() => {
         if (props.total <= 0) {
           return 0;
@@ -530,16 +523,16 @@ export default defineComponent({
         }
         return maxPage;
       }),
-      // 該頁數起始值 (The starting value of the page number)
+      //  (The starting value of the page number)
       offset: computed(() => {
         return (setting.page - 1) * setting.pageSize + 1;
       }),
-      // 該頁數最大值 (Maximum number of pages0
+      //  (Maximum number of pages0
       limit: computed(() => {
         let limit = setting.page * setting.pageSize;
         return props.total >= limit ? limit : props.total;
       }),
-      // 換頁陣列 (Paging array)
+      //  (Paging array)
       paging: computed(() => {
         let startPage = setting.page - 2 <= 0 ? 1 : setting.page - 2;
         if (setting.maxPage - setting.page <= 2) {
@@ -554,15 +547,14 @@ export default defineComponent({
         }
         return pages;
       }),
-      // 組件內用排序 (Sortable for local)
+      //  (Sortable for local)
       order: props.sortable.order,
       sort: props.sortable.sort,
       pageOptions: props.pageOptions,
     });
-
-    // 組件內用資料 (Data rows for local)
-    let localRows  =(rows)=>{  
-
+    let localRows = ref([]);
+    //  (Data rows for local)
+    let rows = (rows) => {
       // refs https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Collator/compare
       var collator = new Intl.Collator(undefined, {
         numeric: true,
@@ -573,41 +565,33 @@ export default defineComponent({
         return collator.compare(a[setting.order], b[setting.order]) * sortOrder;
       });
 
-      // return sorted and offset rows
-      let result = [];
-      for (let index = setting.offset - 1; index < setting.limit; index++) {
-        if (rows[index]) {
-          result.push(rows[index]);
-        }
-      }
-
       nextTick(function () {
-        // 資料完成渲染後回傳私有元件
+        //
         callIsFinished();
       });
 
-      return result;
+      return rows;
     };
 
     ////////////////////////////
     //
-    //  Checkbox 相關操作
+    //  Checkbox
     //  (Checkbox related operations)
     //
 
-    // 定義Checkbox參照 (Define Checkbox reference)
+    //  (Define Checkbox reference)
     const rowCheckbox = ref([]);
     if (props.hasCheckbox) {
       /**
-       * 重新渲染前執行 (Execute before re-rendering)
+       *  (Execute before re-rendering)
        */
       onBeforeUpdate(() => {
-        // 每次更新前都把值全部清空 (Clear all values before each update)
+        //  (Clear all values before each update)
         rowCheckbox.value = [];
       });
 
       /**
-       * 監聽全勾選Checkbox (Check all checkboxes for monitoring)
+       * Checkbox (Check all checkboxes for monitoring)
        */
       watch(
         () => setting.isCheckAll,
@@ -632,7 +616,7 @@ export default defineComponent({
     }
 
     /**
-     * Checkbox點擊事件 (Checkbox click event)
+     * Checkbox (Checkbox click event)
      */
     const checked = (event) => {
       event.stopPropagation();
@@ -651,7 +635,7 @@ export default defineComponent({
     };
 
     /**
-     * 清空畫面上所有選擇資料 (Clear all selected data on the screen)
+     *  (Clear all selected data on the screen)
      */
     const clearChecked = () => {
       rowCheckbox.value.forEach((val) => {
@@ -665,12 +649,12 @@ export default defineComponent({
 
     ////////////////////////////
     //
-    //  排序·換頁等 相關操作
+    //
     //  (Sorting, page change, etc. related operations)
     //
 
     /**
-     * 呼叫執行排序 (Call execution sequencing)
+     *  (Call execution sequencing)
      */
     const doSort = (order) => {
       let sort = "asc";
@@ -698,12 +682,13 @@ export default defineComponent({
     };
 
     /**
-     * 切換頁碼 (Switch page number)
+     *  (Switch page number)
      *
-     * @param page      number  新頁碼    (New page number)
-     * @param prevPage  number  現在頁碼  (Current page number)
+     * @param page      number      (New page number)
+     * @param prevPage  number    (Current page number)
      */
-    const changePage = (page, prevPage) => {
+    const changePage = (page) => {
+      isLoading.value = true;
       let apiParameters = [page, 10];
       store.dispatch("reviewer/getLegacyData", apiParameters).then((res) => {
         let tableData = [];
@@ -743,13 +728,13 @@ export default defineComponent({
             BirthDate: element.emp_birthday ? element.emp_birthday : "",
           });
         });
-
-        localRows(tableData);
+        isLoading.value = false;
+        localRows.value = rows(tableData);
       });
     };
-    // 監聽頁碼切換 (Monitor page switching)
+    //  (Monitor page switching)
     watch(() => setting.page, changePage);
-    // 監聽手動頁碼切換 (Monitor manual page switching)
+    //  (Monitor manual page switching)
     watch(
       () => props.page,
       (val) => {
@@ -766,21 +751,22 @@ export default defineComponent({
     );
 
     /**
-     * 切換顯示筆數 (Switch display number)
+     *  (Switch display number)
      */
     const changePageSize = () => {
       if (setting.page === 1) {
-        // 沒自動觸發 changePage()，所以手動觸發
-        changePage(setting.page, setting.page);
+        //  changePage()
+           localRows.value=[]
+        changeRows(setting.page,setting.pageSize)
       } else {
-        // 強制返回第一頁,並自動觸發 changePage()
-        setting.page = 1;
-        setting.isCheckAll = false;
+        // changePage()
+           localRows.value=[]
+    changeRows(setting.page,setting.pageSize)
       }
     };
-    // 監聽組件內顯示筆數切換 (Monitor display number switch from component)
+    //  (Monitor display number switch from component)
     watch(() => setting.pageSize, changePageSize);
-    // 監聽來自Prop的顯示筆數切換 (Monitor display number switch from prop)
+    //  (Monitor display number switch from prop)
     watch(
       () => props.pageSize,
       (newPageSize) => {
@@ -789,35 +775,35 @@ export default defineComponent({
     );
 
     /**
-     * 上一頁 (Previous page)
+     *  (Previous page)
      */
     const prevPage = () => {
       if (setting.page == 1) {
-        // 如果是第一頁，不予執行 (If it is the first page, it will not be executed)
+        //  (If it is the first page, it will not be executed)
         return false;
       }
       setting.page--;
     };
 
     /**
-     * 移動至指定頁數 (Move to the specified number of pages)
+     *  (Move to the specified number of pages)
      */
     const movePage = (page) => {
       setting.page = page;
     };
 
     /**
-     * 下一頁 (Next page)
+     *  (Next page)
      */
     const nextPage = () => {
       if (setting.page >= setting.maxPage) {
-        // 如果等於大於最大頁數，不與執行 (If it is equal to or greater than the maximum number of pages, no execution)
+        //  (If it is equal to or greater than the maximum number of pages, no execution)
         return false;
       }
       setting.page++;
     };
 
-    // 監聽資料變更 (Monitoring data changes)
+    //  (Monitoring data changes)
     watch(
       () => props.rows,
       () => {
@@ -825,7 +811,7 @@ export default defineComponent({
           setting.page = 1;
         }
         nextTick(function () {
-          // 資料完成渲染後回傳私有元件 (Return the private components after the data is rendered)
+          //  (Return the private components after the data is rendered)
           if (!props.isStaticMode) {
             callIsFinished();
           }
@@ -848,9 +834,54 @@ export default defineComponent({
       }
       emit("get-now-page", setting.page);
     };
+    let changeRows = (page, rowSize) => {
+   
+      let apiParameters = [page, rowSize];
+      store.dispatch("reviewer/getLegacyData", apiParameters).then((res) => {
+        let tableData = [];
 
+        res.rows.forEach((element) => {
+          tableData.push({
+            EmployeeId: element.employee_id ? element.employee_id : "",
+            FirstName: element.emp_first_name ? element.emp_first_name : "",
+            MiddleName: element.emp_middle_name ? element.emp_middle_name : "",
+            LastName: element.emp_last_name ? element.emp_last_name : "",
+            LicenseNumber: element.license_no ? element.license_no : "",
+            AlternativeFullName:
+              (element.alternative_first_name
+                ? element.alternative_first_name
+                : "") +
+              " " +
+              (element.alternative_middle_name
+                ? element.alternative_last_name
+                : "") +
+              " " +
+              (element.alternative_middle_name
+                ? element.alternative_middle_name
+                : ""),
+            EmployeePrefix: element.prefix_id ? element.prefix_id : "",
+            ExpireDate: element.expiry_date ? element.expiry_date : "",
+            LicenseType: element.license_type_id ? element.license_type_id : "",
+            LicenseStatus: element.license_status_id
+              ? element.license_status_id
+              : "",
+            LicensePrefix: element.license_prefix_id
+              ? element.license_prefix_id
+              : "",
+            IssuedDate: element.issued_date ? element.issued_date : "",
+            EmployeeMobile: element.emp_mobile ? element.emp_mobile : "",
+            EmployeeEmail: element.emp_work_email ? element.emp_work_email : "",
+            Gender: element.emp_gender ? element.emp_gender : "",
+            BirthDate: element.emp_birthday ? element.emp_birthday : "",
+          });
+        });
+        
+        isLoading.value = false;
+        localRows.value = rows(tableData);
+      });
+    };
     /**
-     * 組件掛載後事件 (Mounted Event)
+     *  (Mounted Event)
      */
     onMounted(() => {
       nextTick(() => {
@@ -858,10 +889,11 @@ export default defineComponent({
           callIsFinished();
         }
       });
+      changeRows(1, 10);
     });
 
     if (props.hasCheckbox) {
-      // 需要 Checkbox 時 (When Checkbox is needed)
+      //  Checkbox 時 (When Checkbox is needed)
       return {
         slots,
         localTable,
@@ -871,6 +903,7 @@ export default defineComponent({
         checked,
         doSort,
         prevPage,
+        isLoading,
         movePage,
         nextPage,
         stringFormat,
@@ -883,6 +916,7 @@ export default defineComponent({
         setting,
         doSort,
         prevPage,
+        isLoading,
         movePage,
         nextPage,
         stringFormat,
