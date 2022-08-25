@@ -5,7 +5,7 @@
   <!-- Sidebar -->
   <section class="home-section">
     <!-- Header -->
-    <reviewer-nav-bar><h2>System Setting</h2></reviewer-nav-bar>
+    <reviewer-nav-bar><h2>Location Management</h2></reviewer-nav-bar>
     <!-- Header -->
 
     <!-- Main Content -->

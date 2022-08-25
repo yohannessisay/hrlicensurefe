@@ -114,64 +114,6 @@
                   >
                     <i class="fa fa-user fa-2x"></i>
                   </button>
-
-                  <input
-                    type="search"
-                    class="
-                      form-control
-                      relative
-                      flex-auto
-                      min-w-0
-                      block
-                      w-full
-                      px-6
-                      py-1.5
-                      text-base
-                      font-normal
-                      text-gray-700
-                      bg-white bg-clip-padding
-                      border border-solid border-gray-300
-                      rounded
-                      transition
-                      ease-in-out
-                      focus:text-gray-700
-                      focus:bg-white
-                      focus:border-blue-600
-                      focus:outline-none
-                    "
-                    placeholder="Search for profession"
-                    aria-label="Search"
-                    aria-describedby="button-addon2"
-                    v-model="searchTermProf"
-                    @keyup="filterProfession()"
-                  />
-                  <button
-                    class="
-                      inline-block
-                      px-6
-                      py-2
-                      bg-primary-700
-                      text-white
-                      font-medium
-                      text-xs
-                      leading-tight
-                      uppercase
-                      rounded
-                      shadow-md
-                      hover:bg-blue-700 hover:shadow-lg
-                      focus:bg-blue-700
-                      focus:shadow-lg
-                      focus:outline-none
-                      focus:ring-0
-                      active:bg-blue-800 active:shadow-lg
-                      transition
-                      duration-150
-                      ease-in-out
-                      items-center
-                    "
-                  >
-                    <i class="fa fa-briefcase fa-2x"></i>
-                  </button>
                 </div>
                 <div class="flex justify-center">
                   <div class="mb-3 xl:w-full">
@@ -198,17 +140,16 @@
                         focus:outline-none
                       "
                       aria-label="Default select example"
+                      @change="filterLicenseType($event.target.value)"
                     >
-                      <option selected disabled>Application Type</option>
-                      <option value="newLicense">
-                        New License Applications
-                      </option>
-                      <option value="goodStanding">
-                        Goodstanding Applications
-                      </option>
-                      <option value="renewal">Renewed Applications</option>
-                      <option value="verification">
-                        Verification Applications
+                      <option selected disabled>License Type</option>
+                      <option selected :value="'all'">All</option>
+                      <option
+                        v-for="licenseType in [...new Set(licenseTypes)]"
+                        :value="licenseType"
+                        :key="licenseType"
+                      >
+                        {{ licenseType }}
                       </option>
                     </select>
                   </div>
@@ -236,16 +177,17 @@
                         focus:border-blue-600
                         focus:outline-none
                       "
-                      @change="filterAppStatus($event.target.value)"
+                      @change="filterPrefix($event.target.value)"
                       aria-label="Default select example"
                     >
-                      <option selected disabled>Application Status</option>
+                      <option selected disabled>License Prefix</option>
+                      <option value="all">All</option>
                       <option
-                        v-for="appStatus in applicationStatuses"
-                        :key="appStatus.id"
-                        :value="appStatus.name"
+                        v-for="prefix in [...new Set(licensePrefixes)]"
+                        :key="prefix"
+                        :value="prefix"
                       >
-                        {{ appStatus.name }}
+                        {{ prefix&&prefix!=''?prefix:'NONE' }}
                       </option>
                     </select>
                   </div>
@@ -277,46 +219,9 @@
                       aria-label="Default select example"
                     >
                       <option selected disabled>Gender</option>
+                      <option value="all">All</option>
                       <option value="male">Male</option>
                       <option value="female">Female</option>
-                    </select>
-                  </div>
-
-                  <div class="mb-3 xl:w-full ml-2">
-                    <select
-                      class="
-                        form-select
-                        appearance-none
-                        block
-                        w-full
-                        px-6
-                        ml-4
-                        py-2
-                        text-base
-                        font-normal
-                        text-gray-700
-                        bg-white bg-clip-padding bg-no-repeat
-                        border border-solid border-gray-300
-                        rounded
-                        transition
-                        ease-in-out
-                        focus:text-gray-700
-                        focus:bg-white
-                        focus:border-blue-600
-                        focus:outline-none
-                      "
-                      @change="filterRegions($event.target.value)"
-                      aria-label="Default select example"
-                    >
-                      <option selected disabled>Region</option>
-                      <option value="all">All</option>
-                      <option
-                        v-for="region in regions"
-                        :value="region.name"
-                        :key="region.id"
-                      >
-                        {{ region.name }}
-                      </option>
                     </select>
                   </div>
                 </div>
@@ -630,90 +535,25 @@ export default {
     const store = useStore();
     let allData = ref([]);
     let searchData = ref();
-    let expertLevelFilter = ref();
 
     let userTable = ref({ isLoading: true });
-    let modalData = ref({ change: 0 });
     let tableData = reactive([]);
     const searchTerm = ref("");
-    const searchTermProf = ref("");
     let fromDate = ref("");
     let toDate = ref("");
-    let selectedApplicationType = ref("");
-
-    let checked = ref({
-      newLicense: true,
-      renewal: true,
-      goodStanding: true,
-    });
-
-    let selectedApplication = ref({
-      newLicense: true,
-      renewal: false,
-      goodStanding: false,
-      verification: false,
-    });
 
     let currentPage = ref(1);
     let totalCount = ref();
     let report = ref([]);
 
-    let searchingState = ref(false);
-
     let searchedValue = ref("");
 
-    let paginationSize = ref(10);
-    const paginationSizeList = [10, 25, 50, 100];
     let reportData = ref([]);
 
     let newLicenseData = ref([]);
+    let licenseTypes = ref([]);
 
-    let departments = ref([]);
-    let professions = ref([]);
-    let expertLevels = ref([
-      { name: "Federal", id: 3, code: "FED" },
-      { name: "Regional", id: 4, code: "REG" },
-    ]);
-    let regions = ref([]);
-    let zones = ref([]);
-    let woredas = ref([]);
-    let applicationStatuses = ref([]);
-
-    let filter = ref({
-      deptType: "",
-      profType: "",
-      gender: "",
-      region: "",
-      zone: "",
-      woreda: "",
-      expertLevel: "",
-      status: "",
-      startDate: "",
-      endDate: "",
-      all: "",
-    });
-
-    let loader = ref(false);
-
-    const tableLoadingFinish = () => {
-      userTable.value.isLoading = false;
-      userTable.value.isLoading = false;
-      let elements = document.getElementsByClassName("edit-btn");
-
-      Array.prototype.forEach.call(elements, function (element) {
-        if (element.classList.contains("edit-btn")) {
-          element.addEventListener("click", rowClicked());
-        }
-      });
-    };
-
-    const rowClicked = (row) => {
-      if (row != undefined) {
-        row = JSON.parse(JSON.stringify(row));
-        modalData.value.change++;
-        modalData.value.data = row ? row : {};
-      }
-    };
+    let licensePrefixes = ref([]);
 
     const fetchLicenseReport = () => {
       let apiParameters = [1, 10];
@@ -722,6 +562,12 @@ export default {
         reportData.value.push(...res.rows);
 
         res.rows.forEach((element) => {
+          licenseTypes.value.push(
+            element.license_type_id ? element.license_type_id : ""
+          );
+          licensePrefixes.value.push(
+            element.license_prefix_id ? element.license_prefix_id : ""
+          );
           tableData.push({
             EmployeeId: element.employee_id ? element.employee_id : "",
             FirstName: element.emp_first_name ? element.emp_first_name : "",
@@ -879,72 +725,16 @@ export default {
       });
     };
 
-
-
-    // const handleFilterByApplication = (applicationType) => {
-    //   switch (applicationType) {
-    //     case "newLicense": {
-    //       userTable.value.isLoading = true;
-    //       userTable.value.rows = computed(() => {});
-    //       tableData = [];
-    //       fetchNewLicenseReport();
-    //       break;
-    //     }
-    //     case "verification": {
-    //       userTable.value.isLoading = true;
-    //       userTable.value.rows = computed(() => {});
-    //       tableData = [];
-    //       fetchVerificationReport();
-    //       break;
-    //     }
-    //     case "renewal": {
-    //       userTable.value.isLoading = true;
-    //       userTable.value.rows = computed(() => {});
-    //       tableData = [];
-    //       fetchRenewalReport();
-    //       break;
-    //     }
-    //     case "goodStanding": {
-    //       userTable.value.isLoading = true;
-    //       userTable.value.rows = computed(() => {});
-    //       tableData = [];
-    //       fetchGoodstandingReport();
-    //       break;
-    //     }
-    //   }
-    // };
-
-    const fetchDepartmentType = () => {
-      store.dispatch("goodstanding/getDepartmentType").then((res) => {
-        departments.value = res.data.data;
-      });
-    };
-
-    const fetchRegion = () => {
-      store.dispatch("report/getRegions").then((res) => {
-        regions.value = res.data.data;
-      });
-    };
-    const fetchZones = (regionID) => {
-      store.dispatch("report/getZones", regionID).then((res) => {
-        zones.value = res.data.data;
-      });
-    };
-    const fetchWoredas = (zoneID) => {
-      store.dispatch("report/getWoredas", zoneID).then((res) => {
-        woredas.value = res.data.data;
-      });
-    };
-    const fetchApplicationStatuses = () => {
-      store.dispatch("report/getapplicationStatuses").then((res) => {
-        applicationStatuses.value = res.data.data.filter((application) => {
-          return (
-            application.code == "APP" ||
-            application.code == "DEC" ||
-            application.code == "CONF"
-          );
+    const filterLicenseType = (licenseType) => {
+      if (licenseType == "all") {
+        tableData = allData.value;
+        userTable.value.rows = computed(() => tableData);
+      } else {
+        tableData = allData.value.filter((stat) => {
+          return stat.LicenseType.toLowerCase() == licenseType.toLowerCase();
         });
-      });
+        userTable.value.rows = computed(() => tableData);
+      }
     };
 
     const exportTable = () => {
@@ -973,7 +763,6 @@ export default {
               .toLowerCase()
               .includes(searchedValue.value.toLowerCase());
       });
-      paginateReport(filterByName, 0);
       reportData.value = filterByName;
     };
 
@@ -1007,113 +796,51 @@ export default {
       }
     };
 
-    const filterRegions = (name) => {
-      if (name == "all") {
+    const filterPrefix = (prefix) => {
+      if (prefix == "all") {
         tableData = allData.value;
         userTable.value.rows = computed(() => tableData);
       } else {
         tableData = allData.value.filter((stat) => {
-          return stat.OrganizationalUnit.toLowerCase() == name.toLowerCase();
+          return stat.LicensePrefix.toLowerCase() == prefix.toLowerCase();
         });
         userTable.value.rows = computed(() => tableData);
       }
     };
 
-    const filterZone = (zone) => {
-      fetchWoredas(zone.id);
-      var tableFilter = [];
-      tableFilter = report.value;
-      var tableFilter2 = [];
-      for (var i = 0; i < tableFilter.length; i++) {
-        if (tableFilter[i].zone.name != null) {
-          tableFilter2.push(tableFilter[i]);
-        }
-      }
-      if (zone.name == null) {
-        report.value = store.getter["report/getReport"];
-      } else {
-        report.value = tableFilter2.filter(function (e) {
-          return e.zone.name == zone.name;
-        });
-      }
-    };
-
-    const filterAppStatus = (status) => {
-      tableData = allData.value.filter((stat) => {
-        return stat.LicenseStatus.toLowerCase() == status.toLowerCase();
-      });
-      userTable.value.rows = computed(() => tableData);
-    };
-
     const filterGender = (status) => {
+        if (status == "all") {
+        tableData = allData.value;
+        userTable.value.rows = computed(() => tableData);
+      } else {
       tableData = allData.value.filter((stat) => {
         return stat.Gender.toLowerCase() == status.toLowerCase();
       });
       userTable.value.rows = computed(() => tableData);
+      }
     };
 
-    const filterProfession = () => {
-      tableData = allData.value.filter((stat) => {
-        return stat.data && stat.data.licenseProfessionalTypes
-          ? stat.data.licenseProfessionalTypes.find((lp) =>
-              lp.professionalTypes.name
-                .toLowerCase()
-                .includes(searchTermProf.value.toLowerCase())
-            )
-          : "";
-      });
-      userTable.value.rows = computed(() => tableData);
-    };
     onMounted(() => {
       fetchLicenseReport();
-      fetchRegion();
-      fetchApplicationStatuses();
-      fetchDepartmentType();
     });
     return {
-      loader,
       report,
       exportTable,
-      fetchRegion,
-      fetchZones,
-      fetchWoredas,
-      fetchApplicationStatuses,
-      professions,
-      regions,
       filterDateFrom,
       filterDateTo,
-      zones,
+      filterLicenseType,
       fromDate,
       toDate,
-      woredas,
-      applicationStatuses,
-      filter,
-      filterProfession,
       filterGender,
-      filterAppStatus,
-      filterZone,
-      selectedApplication,
+      filterPrefix,
       currentPage,
       totalCount,
-      paginationSize,
-      paginationSizeList,
-      checked,
-      selectedApplicationType,
-      departments,
-      expertLevels,
-      filterRegions,
+      licenseTypes,
       searchByName,
-      searchedValue,
-      tableLoadingFinish,
-      rowClicked,
-      searchingState,
-
       searchData,
       userTable,
       searchTerm,
-      searchTermProf,
-      modalData,
-      expertLevelFilter,
+      licensePrefixes,
     };
   },
 };

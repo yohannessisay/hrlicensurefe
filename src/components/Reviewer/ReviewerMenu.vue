@@ -90,11 +90,11 @@
         </li>
       </router-link>
 
-      <router-link to="/admin/systemSetting">
+      <router-link to="/admin/lookupManagement">
         <li class="mb-2">
-          <a href="#SystemSetting">
+          <a href="#LookupManagement">
             <i class="bx bx-desktop"></i>
-            <span class="links_name">System Setting</span>
+            <span class="links_name">Lookup Management</span>
           </a>
         </li>
       </router-link>

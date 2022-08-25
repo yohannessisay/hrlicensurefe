@@ -37,10 +37,10 @@
     <li class="inverted-border-radius mb-8 mt-4">
       <i class="bx bx-desktop ml-8 mt-4" style="color: #224771"></i>
 
-      <span class="header_text ml-4">System Setting</span>
+      <span class="text-md ml-4">Lookup Mgmt</span>
     </li>
     <ul class="nav-links">
-      <router-link to="admin/systemSetting">
+      <router-link to="admin/lookupManagement">
         <li :class="$route.fullPath === '/admin/systemSetting' ? 'mb-2 active p-2' : ''">
           <a href="#LocationManagement">
             <i class="bx bx-map"></i>

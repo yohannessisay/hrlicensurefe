@@ -640,137 +640,24 @@ export default {
     let fromDate = ref("");
     let toDate = ref("");
     let selectedApplicationType = ref("");
-
-    let checked = ref({
-      newLicense: true,
-      renewal: true,
-      goodStanding: true
-    });
-
-    let selectedApplication = ref({
-      newLicense: true,
-      renewal: false,
-      goodStanding: false,
-      verification: false
-    });
-
-    let currentPage = ref(1);
-    let totalCount = ref();
     let report = ref([]);
 
     let searchingState = ref(false);
 
     let searchedValue = ref("");
-
-    let indexValue = ref(0);
-    let paginationSize = ref(10);
-    const paginationSizeList = [10, 25, 50, 100];
     let reportData = ref([]);
 
     let renewalData = ref([]);
     let newLicenseData = ref([]);
     let goodStandingData = ref([]);
 
-    const pageChanged = event => {
-      currentPage.value = event;
-      indexValue.value = event - 1;
-      paginateReport(reportData.value, indexValue.value);
-    };
-    const handlePagSize = () => {
-      currentPage.value = 1;
-      indexValue.value = 0;
-      paginateReport(reportData.value, indexValue.value);
-    };
-
-    const handleCheckBoxClick = (type, event) => {
-      if (!event.target.checked && type == "renewal") {
-        let filterValue = reportData.value.filter(report => {
-          return !report.renewalCode;
-        });
-        paginateReport(filterValue, 0);
-        reportData.value = filterValue;
-        allData.value = filterValue;
-      } else if (!event.target.checked && type == "newLicense") {
-        let filterValue = reportData.value.filter(report => {
-          return !report.newLicenseCode;
-        });
-        paginateReport(filterValue, 0);
-        reportData.value = filterValue;
-        allData.value = filterValue;
-      } else if (!event.target.checked && type == "goodStanding") {
-        let filterValue = reportData.value.filter(report => {
-          return !report.goodStandingCode;
-        });
-        paginateReport(filterValue, 0);
-        reportData.value = filterValue;
-        allData.value = filterValue;
-      } else if (event.target.checked && type == "renewal") {
-        let mockRenewalData = reportData.value;
-        mockRenewalData.push(...renewalData.value);
-        reportData.value = mockRenewalData;
-        allData.value = mockRenewalData;
-        paginateReport(allData.value, 0);
-      } else if (event.target.checked && type == "newLicense") {
-        let mockNewLicenseData = reportData.value;
-        mockNewLicenseData.push(...newLicenseData.value);
-        reportData.value = mockNewLicenseData;
-        allData.value = mockNewLicenseData;
-        paginateReport(reportData.value, 0);
-      } else if (event.target.checked && type == "goodStanding") {
-        let mockGoodStandingData = reportData.value;
-        mockGoodStandingData.push(...goodStandingData.value);
-        reportData.value = mockGoodStandingData;
-        allData.value = mockGoodStandingData;
-        paginateReport(reportData.value, 0);
-      }
-    };
-
     let departments = ref([]);
     let professions = ref([]);
-    let expertLevels = ref([
-      { name: "Federal", id: 3, code: "FED" },
-      { name: "Regional", id: 4, code: "REG" }
-    ]);
     let regions = ref([]);
     let zones = ref([]);
     let woredas = ref([]);
     let applicationStatuses = ref([]);
 
-    let filter = ref({
-      deptType: "",
-      profType: "",
-      gender: "",
-      region: "",
-      zone: "",
-      woreda: "",
-      expertLevel: "",
-      status: "",
-      startDate: "",
-      endDate: "",
-      all: ""
-    });
-
-    let loader = ref(false);
-
-    const tableLoadingFinish = () => {
-      userTable.value.isLoading = false;
-      userTable.value.isLoading = false;
-      let elements = document.getElementsByClassName("edit-btn");
-
-      Array.prototype.forEach.call(elements, function(element) {
-        if (element.classList.contains("edit-btn")) {
-          element.addEventListener("click", rowClicked());
-        }
-      });
-    };
-
-    const rowClicked = row => {
-      if (row != undefined) {
-        row = JSON.parse(JSON.stringify(row));
-        modalData.value.change++;
-        modalData.value.data = row ? row : {};
-      }
-    };
 
     const fetchNewLicenseReport = () => {
       store.dispatch("report/getNewLicenseReport").then(res => {
@@ -1357,13 +1244,6 @@ export default {
       });
     };
 
-    const paginateReport = (reportValue, index) => {
-      report.value = reportValue.slice(
-        index * paginationSize.value,
-        index * paginationSize.value + paginationSize.value
-      );
-      totalCount.value = reportValue.length;
-    };
 
     const fetchDepartmentType = () => {
       store.dispatch("goodstanding/getDepartmentType").then(res => {
@@ -1425,7 +1305,6 @@ export default {
               .toLowerCase()
               .includes(searchedValue.value.toLowerCase());
       });
-      paginateReport(filterByName, 0);
       reportData.value = filterByName;
     };
 
@@ -1522,7 +1401,6 @@ export default {
       fetchDepartmentType();
     });
     return {
-      loader,
       report,
       exportTable,
       fetchNewLicenseReport,
@@ -1542,31 +1420,17 @@ export default {
       toDate,
       woredas,
       applicationStatuses,
-      filter,
       filterProfession,
       filterGender,
       filterAppStatus,
       filterZone,
-      selectedApplication,
-      currentPage,
-      totalCount,
-      paginationSize,
-      paginationSizeList,
-      pageChanged,
-      handlePagSize,
-      checked,
-      handleCheckBoxClick,
       selectedApplicationType,
       handleFilterByApplication,
       departments,
-      expertLevels,
       filterRegions,
       searchByName,
       searchedValue,
-      tableLoadingFinish,
-      rowClicked,
       searchingState,
-
       searchData,
       userTable,
       searchTerm,

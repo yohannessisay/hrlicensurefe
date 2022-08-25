@@ -1148,13 +1148,13 @@ const routes = [
         ),
     },
 
-    //System Setting
+    //Lookup Management
     {
-      path: "/admin/systemSetting",
-      name: "SystemSetting",
+      path: "/admin/lookupManagement",
+      name: "LookupManagement",
       component: () =>
         import(
-          "../components/Reviewer/HomeComponents/SystemSetting/systemSetting.vue"
+          "../components/Reviewer/HomeComponents/LookupManagement/lookupManagement.vue"
         ),
     },
 ];
