@@ -69,6 +69,7 @@
               </tr>
             </thead>
             <tbody v-if="rows.length > 0" class="vtl-tbody">
+              
               <template v-if="isStaticMode">
                 <tr
                   v-for="(row, i) in localRows"
@@ -584,7 +585,7 @@ export default defineComponent({
         // 資料完成渲染後回傳私有元件
         callIsFinished();
       });
-      console.log(result)
+
       return result;
     });
 
@@ -705,7 +706,6 @@ export default defineComponent({
     const changePage = (page, prevPage) => {
       let apiParameters = [page, 10];
       store.dispatch("reviewer/getLegacyData", apiParameters).then((res) => {
-     
         let tableData = [];
 
         res.rows.forEach((element) => {
@@ -743,7 +743,8 @@ export default defineComponent({
             BirthDate: element.emp_birthday ? element.emp_birthday : "",
           });
         });
-        localRows = tableData;
+
+        localRows = computed(() => tableData);
       });
     };
     // 監聽頁碼切換 (Monitor page switching)

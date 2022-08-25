@@ -219,6 +219,7 @@ export default {
       message.value.showLoading = true;
       message.value.showFlash = false;
       message.value.showErrorFlash = false;
+
       store
         .dispatch("profile/addProfile", {
           name: personalInfo.name,
@@ -257,7 +258,7 @@ export default {
                 if (res.status == 200) {
                   message.value.showFlash = !message.value.showFlash;
                   message.value.showLoading = false;
-                  setTimeout(() => {}, 1500);
+
                   toast.success(response.data.message, {
                     timeout: 5000,
                     position: "bottom-center",
@@ -265,7 +266,9 @@ export default {
                     pauseOnHover: true,
                     icon: true,
                   });
-                  router.push({ path: "/menu" });
+                  setTimeout(() => {
+                    router.push({ path: "/menu" });
+                  }, 1500);
                 } else {
                   message.value.showErrorFlash = !message.value.showErrorFlash;
                 }

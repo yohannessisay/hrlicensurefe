@@ -55,6 +55,7 @@
                     items-stretch
                     w-full
                     mb-4
+                    ml-4
                   "
                 >
                   <input
@@ -143,7 +144,7 @@
                       @change="filterLicenseType($event.target.value)"
                     >
                       <option selected disabled>License Type</option>
-                      <option selected :value="'all'">All</option>
+                      <option :value="'all'">All</option>
                       <option
                         v-for="licenseType in [...new Set(licenseTypes)]"
                         :value="licenseType"
@@ -187,7 +188,7 @@
                         :key="prefix"
                         :value="prefix"
                       >
-                        {{ prefix&&prefix!=''?prefix:'NONE' }}
+                        {{ prefix && prefix != "" ? prefix : "NONE" }}
                       </option>
                     </select>
                   </div>
@@ -226,9 +227,9 @@
                   </div>
                 </div>
 
-                <div class="flex justify-center mt-2">
-                  <label for="" class="ml-4">Certified Date</label>
-                  <div class="mb-3 xl:w-full ml-2">
+                <div class="flex justify-left mt-2">
+                  <label for="" class="ml-4 mt-8">Certified Date</label>
+                  <div class="mb-3 ml-2">
                     <label for="" class="ml-4">From</label>
                     <input
                       v-model="fromDate"
@@ -238,7 +239,6 @@
                         block
                         w-full
                         px-6
-                        ml-4
                         py-2
                         text-base
                         font-normal
@@ -257,7 +257,7 @@
                       aria-label="Default select example"
                     />
                   </div>
-                  <div class="mb-3 xl:w-full ml-2">
+                  <div class="mb-3 ml-2">
                     <label for="" class="ml-4"> To</label>
                     <input
                       type="date"
@@ -307,9 +307,6 @@
                   :rows="userTable.rows"
                   :total="userTable.totalRecordCount"
                   :sortable="userTable.sortable"
-                  @is-finished="tableLoadingFinish"
-                  @row-clicked="rowClicked"
-                  @do-search="doSearch"
                 ></vue-table-lite>
               </div>
             </div>
@@ -809,14 +806,14 @@ export default {
     };
 
     const filterGender = (status) => {
-        if (status == "all") {
+      if (status == "all") {
         tableData = allData.value;
         userTable.value.rows = computed(() => tableData);
       } else {
-      tableData = allData.value.filter((stat) => {
-        return stat.Gender.toLowerCase() == status.toLowerCase();
-      });
-      userTable.value.rows = computed(() => tableData);
+        tableData = allData.value.filter((stat) => {
+          return stat.Gender.toLowerCase() == status.toLowerCase();
+        });
+        userTable.value.rows = computed(() => tableData);
       }
     };
 

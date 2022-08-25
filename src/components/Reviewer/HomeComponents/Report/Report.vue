@@ -55,11 +55,13 @@
                     items-stretch
                     w-full
                     mb-4
+                    
                   "
                 >
                   <input
                     type="search"
                     class="
+                    ml-4
                       form-control
                       relative
                       flex-auto
@@ -322,9 +324,9 @@
                   </div>
                 </div>
 
-                <div class="flex justify-center mt-2">
-                  <label for="" class="ml-4">Certified Date</label>
-                  <div class="mb-3 xl:w-full ml-2">
+                <div class="flex justify-left mt-2">
+                  <label for="" class="ml-4 mt-8">Certified Date</label>
+                  <div class="mb-3  ml-2">
                     <label for="" class="ml-4">From</label>
                     <input
                       v-model="fromDate"
@@ -353,7 +355,7 @@
                       aria-label="Default select example"
                     />
                   </div>
-                  <div class="mb-3 xl:w-full ml-2">
+                  <div class="mb-3  ml-2">
                     <label for="" class="ml-4"> To</label>
                     <input
                       type="date"

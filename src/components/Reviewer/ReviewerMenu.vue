@@ -81,14 +81,14 @@
         </li>
       </router-link>
 
-      <router-link to="/admin/legacyData">
+      <!-- <router-link to="/admin/legacyData">
         <li class="mb-2">
           <a href="#LegacyData">
             <i class="bx bx-skip-previous-circle"></i>
             <span class="links_name">Legacy Data</span>
           </a>
         </li>
-      </router-link>
+      </router-link> -->
 
       <router-link to="/admin/lookupManagement">
         <li class="mb-2">
