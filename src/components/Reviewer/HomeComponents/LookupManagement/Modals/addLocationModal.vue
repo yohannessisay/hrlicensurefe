@@ -450,7 +450,7 @@ export default {
   components: { Loading },
   props: ["modalData"],
   setup(props) {
-     const store = useStore();
+    const store = useStore();
     let isLoading = ref(false);
     let isRegion = ref(true);
     let isWoreda = ref(false);
@@ -546,10 +546,10 @@ export default {
     };
 
     const saveLocation = () => {
-      let finalUrl='';
+      let finalUrl = "";
       // if it is region
       if (isRegion.value) {
-        finalUrl='addRegion'
+        finalUrl = "addRegion";
         saveData.value = {
           name: locationName.value ? locationName.value : "",
           code: locationName.value
@@ -559,7 +559,7 @@ export default {
       }
       // if it is zone
       else if (isZone.value && !isWoreda.value) {
-         finalUrl='addZone'
+        finalUrl = "addZone";
         saveData.value = {
           name: locationName.value ? locationName.value : "",
           code: locationName.value
@@ -570,7 +570,7 @@ export default {
       }
       // if it is woreda
       else if (isZone.value && isWoreda.value) {
-        finalUrl='addWoreda'
+        finalUrl = "addWoreda";
         saveData.value = {
           name: locationName.value ? locationName.value : "",
           code: locationName.value
@@ -581,11 +581,12 @@ export default {
       }
       // check for existing data
 
-   store.dispatch("lookups/"+finalUrl,saveData.value).then((res) => {
-console.log(res)
-
-   })
-// Finally save the data
+      store.dispatch("lookups/" + finalUrl, saveData.value).then((res) => {
+        setTimeout(() => {
+          window.location.reload();
+        }, 3000);
+      });
+      // Finally save the data
     };
     watch(props.modalData, () => {
       regionDropDown.value = props.modalData.region;
@@ -606,7 +607,7 @@ console.log(res)
       regionDropDownSearch,
       zoneDropDown,
       resultQuery,
-      selectedRegion, 
+      selectedRegion,
       resultQueryZone,
       zoneDropDownSearch,
       showOptions,

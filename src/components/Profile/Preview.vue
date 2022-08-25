@@ -266,25 +266,14 @@ export default {
                     pauseOnHover: true,
                     icon: true,
                   });
-                  setTimeout(() => {
-                    router.push({ path: "/menu" });
-                  }, 1500);
                 } else {
                   message.value.showErrorFlash = !message.value.showErrorFlash;
                 }
               })
               .catch((err) => {});
 
-            message.value.showLoading = false;
-            message.value.showFlash = true;
-            message.value.showErrorFlash = false;
-
-            setTimeout(() => {
-              location.reload(true);
-            }, 1500);
-            setTimeout(() => {
-              router.push({ path: "/menu" });
-            }, 2500);
+                  router.push({ path: "/menu" });
+  
           } else {
             message.value.showLoading = false;
             message.value.showFlash = false;
