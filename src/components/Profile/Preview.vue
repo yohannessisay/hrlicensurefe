@@ -1,13 +1,15 @@
 <template>
   <div v-if="message.showLoading2" class="h-screen mt-large pt-small">
-    <Spinner class="bg-lightBlueB-200  " />
+    <Spinner class="bg-lightBlueB-200" />
   </div>
   <div
     style="width: 1000px"
     class="bg-white mb-large rounded pr-20 pl-20 pb-12"
   >
     <div v-if="!message.showLoading2">
-      <div class="flex justify-center"><Title message="Summary" /></div>
+      <div class="flex justify-center">
+        <Title message="Summary" />
+      </div>
       <div class="flex justify-start flex-col mb-large mt-large">
         <div class="flex justify-start mb-medium">
           <Title message="Profile Picture" />
@@ -27,10 +29,10 @@
           <h5 class="ml-8">
             {{
               personalInfo.name +
-                " " +
-                personalInfo.fatherName +
-                " " +
-                personalInfo.grandFatherName
+              " " +
+              personalInfo.fatherName +
+              " " +
+              personalInfo.grandFatherName
             }}
           </h5>
         </div>
@@ -39,10 +41,10 @@
           <h5 class="ml-8">
             {{
               personalInfo.alternativeName +
-                " " +
-                personalInfo.alternativeFatherName +
-                " " +
-                personalInfo.alternativeGrandFatherName
+              " " +
+              personalInfo.alternativeFatherName +
+              " " +
+              personalInfo.alternativeGrandFatherName
             }}
           </h5>
         </div>
@@ -76,21 +78,61 @@
           <label class="ml-8 text-primary-300"> Email Address</label>
           <h5 class="ml-8">{{ user.emailAddress }}</h5>
         </div>
-      </div>
-            <div class="flex flex-row">
-        <div v-if="personalInfo.employeeId!=null ||personalInfo.employeeId!=''">
-          <label class="ml-8 font-bold text-primary-500">HRA Employee Id</label>
+        <div
+          v-if="
+            personalInfo.employeeId != null || personalInfo.employeeId != ''
+          "
+        >
+          <label class="ml-8 text-primary-300">HRA Employee Id</label>
           <h5 class="ml-8">{{ personalInfo.employeeId }}</h5>
+        </div>
+        <div
+          v-if="
+            personalInfo.fileNumber != null || personalInfo.fileNumber != ''
+          "
+        >
+          <label class="ml-8 text-primary-300">HRA File Number</label>
+          <h5 class="ml-8">{{ personalInfo.fileNumber }}</h5>
         </div>
       </div>
       <div class="mt-12 flex justify-center mb-medium">
         <div>
-          <button @click="prevStep" class="mx-auto w-1/2" variant="outline">
+          <button
+            class="
+              inline-block
+              px-6
+              py-2.5
+              bg-blue-600
+              text-white
+              font-medium
+              text-xs
+              leading-tight
+              uppercase
+              rounded
+              shadow-lg
+              hover:bg-blue-600 hover:shadow-lg
+              focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
+              active:bg-blue-800 active:shadow-lg
+              transition
+              duration-150
+              ease-in-out
+            "
+            variant="outline"
+            type="button"
+            @click="prevStep"
+          >
             Back
           </button>
         </div>
         <div v-if="!message.showLoading">
-          <button v-on:click="submit()" class="p-1">Save Profile</button>
+          <button
+            v-on:click="submit()"
+            variant="outline"
+            type="button"
+            class="p-1"
+          >
+            Save Profile
+          </button>
         </div>
       </div>
       <div
@@ -119,27 +161,29 @@ import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
 import moment from "moment";
+import { useToast } from "vue-toastification";
 
 export default {
   components: { Title, FlashMessage, ErrorFlashMessage, Spinner },
   computed: {
-    moment: () => moment
+    moment: () => moment,
   },
   props: ["activeState"],
   setup(props, { emit }) {
     const store = useStore();
     const router = useRouter();
     let profilePic = null;
+    const toast = useToast();
     let message = ref({
       showFlash: false,
       showErrorFlash: false,
       showLoading: false,
-      showLoading2: false
+      showLoading2: false,
     });
     let user = ref({
       id: "",
       emailAddress: "",
-      phoneNumber: ""
+      phoneNumber: "",
     });
 
     let personalInfo = {
@@ -155,14 +199,15 @@ export default {
       maritalStatusId: null,
       maritalStatus: null,
       poBox: null,
-      employeeId:null
+      employeeId: null,
+      fileNumber: null,
     };
     let address = {
-      poBox: null
+      poBox: null,
     };
     let contact = {
       email: null,
-      poBox: null
+      poBox: null,
     };
     let success = ref(false);
     let response = {};
@@ -174,58 +219,72 @@ export default {
       message.value.showLoading = true;
       message.value.showFlash = false;
       message.value.showErrorFlash = false;
+
       store
         .dispatch("profile/addProfile", {
           name: personalInfo.name,
           fatherName: personalInfo.fatherName,
           grandFatherName: personalInfo.grandFatherName,
-          alternativeName: personalInfo.alternativeName,
-          alternativeFatherName: personalInfo.alternativeFatherName,
-          alternativeGrandFatherName: personalInfo.alternativeGrandFatherName,
+          alternativeName: personalInfo.alternativeName
+            ? personalInfo.alternativeName
+            : "",
+          alternativeFatherName: personalInfo.alternativeFatherName
+            ? personalInfo.alternativeFatherName
+            : "",
+          alternativeGrandFatherName: personalInfo.alternativeGrandFatherName
+            ? personalInfo.alternativeGrandFatherName
+            : "",
           gender: personalInfo.gender,
-          dateOfBirth: personalInfo.dateOfBirth,
+          dateOfBirth:
+            personalInfo.dateOfBirth != "" ? personalInfo.dateOfBirth : null,
           nationalityId: personalInfo.nationalityId,
           maritalStatusId: parseInt(personalInfo.maritalStatusId),
           poBox: personalInfo.poBox,
           photo: personalInfo.photo,
           userId: +localStorage.getItem("userId"),
-          employeeId:personalInfo.employeeId?personalInfo.employeeId:null
+          employeeId: personalInfo.employeeId ? personalInfo.employeeId : null,
+          fileNumber: personalInfo.fileNumber ? personalInfo.fileNumber : null,
         })
-        .then(response => {
+        .then((response) => {
           if (response.statusText == "Created") {
             let userId = +localStorage.getItem("userId");
             let formData = new FormData();
+
             formData.append("document", photoFormData);
             let payload = { document: formData, id: userId };
             store
               .dispatch("profile/uploadProfilePicture", payload)
-              .then(res => {
+              .then((res) => {
                 if (res.status == 200) {
                   message.value.showFlash = !message.value.showFlash;
                   message.value.showLoading = false;
-                  setTimeout(() => {
-                    router.push({ path: "/menu" });
-                  }, 1500);
+
+                  toast.success(response.data.message, {
+                    timeout: 5000,
+                    position: "bottom-center",
+                    pauseOnFocusLoss: true,
+                    pauseOnHover: true,
+                    icon: true,
+                  });
                 } else {
                   message.value.showErrorFlash = !message.value.showErrorFlash;
                 }
               })
-              .catch(err => {});
+              .catch((err) => {});
 
-            message.value.showLoading = false;
-            message.value.showFlash = true;
-            message.value.showErrorFlash = false;
-
-            setTimeout(() => {
-              location.reload(true);
-            }, 1500);
-            setTimeout(() => {
-              router.push({ path: "/menu" });
-            }, 25);
+                  router.push({ path: "/menu" });
+  
           } else {
             message.value.showLoading = false;
             message.value.showFlash = false;
             message.value.showErrorFlash = true;
+            toast.error(response.data.message, {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
             setTimeout(() => {
               message.value.showErrorFlash = false;
             }, 3000);
@@ -236,7 +295,7 @@ export default {
       message.value.showLoading2 = true;
       store
         .dispatch("profile/getUserById", localStorage.getItem("userId"))
-        .then(res => {
+        .then((res) => {
           user.value = res.data.data;
           console.log(user.value);
           message.value.showLoading2 = false;
@@ -263,7 +322,7 @@ export default {
     photoFormData = store.getters["profile/getPhoto"];
     onMounted(() => {
       fetchUser();
-      nextTick(function() {
+      nextTick(function () {
         window.setInterval(() => {
           showFlash.value = false;
         }, 10000);
@@ -282,9 +341,9 @@ export default {
       submit,
       user,
       fetchUser,
-      prevStep
+      prevStep,
     };
-  }
+  },
 };
 </script>
 <style>

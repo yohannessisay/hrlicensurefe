@@ -439,7 +439,7 @@
             flex flex-shrink-0 flex-wrap
             items-center
             justify-end
-            border-t border-grey-200
+            border-t border-grey-100
             rounded-b-md
           "
         >
@@ -531,21 +531,41 @@ export default {
           createdByAdminId: +localStorage.getItem("adminId"),
         };
       }
-
+      let smsData = {
+        recipients: [
+          modalData.value && modalData.value.mobileNumber
+            ? "251" + modalData.value.mobileNumber
+            : "",
+        ],
+        message: licenseData.value
+          ? modalData.value.name
+            ? "Dear " +
+              modalData.value.name +
+              " your applied renewal license for " +
+              modalData.value.department +
+              " has been assigned a reviewer , after careful examination of your uploaded documents by our reviewers we will get back and notify you on each steps, Thank you for using eHPL. https://hrl.moh.gov.et/"
+            : ""
+          : "",
+      };
       isLoading.value = true;
 
       store
         .dispatch("reviewer/assignGoodStandingReviewer", assign.value)
         .then((response) => {
           if (response.statusText == "Created") {
-            toast.success("Selected Rviewer assigned Successfully", {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
+            store.dispatch("sms/sendSms", smsData).then(() => {
+              toast.success("Selected Rviewer assigned Successfully", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
+              isLoading.value = false;
+              setTimeout(() => {
+                window.location.reload();
+              }, 3000);
             });
-            isLoading.value = false;
           } else {
             toast.error(
               "Sorry there seems to be a problem, please try again.",
@@ -558,6 +578,9 @@ export default {
               }
             );
             isLoading.value = false;
+            setTimeout(() => {
+              window.location.reload();
+            }, 3000);
           }
         })
         .catch(() => {
@@ -570,6 +593,9 @@ export default {
           });
           isLoading.value = false;
         });
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000);
     };
 
     const showModal = () => {

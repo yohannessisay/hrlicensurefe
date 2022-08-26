@@ -220,7 +220,6 @@
                                 >
                                   Users
                                 </label>
-                              
                               </div>
                               <label class="block text-left">
                                 <div>
@@ -247,8 +246,8 @@
                                       />
                                     </div>
                                     <div>
-                                       <button
-                                    class="
+                                      <button
+                                        class="
                                       inline-block
                                       px-6
                                       py-2.5
@@ -270,10 +269,10 @@
                                       duration-150
                                       ease-in-out
                                     "
-                                    @click="transferReviewer()"
-                                  >
-                                    Transfer
-                                  </button>
+                                        @click="transferReviewer()"
+                                      >
+                                        Transfer
+                                      </button>
                                     </div>
                                     <div
                                       v-show="
@@ -432,14 +431,14 @@
             flex flex-shrink-0 flex-wrap
             items-center
             justify-end
-            border-t border-grey-200
+            border-t border-grey-100
             rounded-b-md
           "
         >
-        <a :href="'/admin/newLicense/evaluate/'+licenseId">
-          <button
-            type="button"
-            class="
+          <a :href="'/admin/newLicense/evaluate/' + licenseId">
+            <button
+              type="button"
+              class="
           inline-block
               px-6
               text-white
@@ -459,10 +458,9 @@
               duration-150
               ease-in-out
             "
-          
-          >
-          Evaluate
-          </button>
+            >
+              Evaluate
+            </button>
           </a>
           <button
             type="button"
@@ -494,39 +492,38 @@
       </div>
     </div>
   </div>
-
 </template>
 
 <script>
 import { useStore } from "vuex";
-import { ref, onMounted, watch,computed } from "vue";
+import { ref, onMounted, watch, computed } from "vue";
 import moment from "moment";
 import Loading from "vue3-loading-overlay";
 // Import stylesheet
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 
-
+import { useToast } from "vue-toastification";
 export default {
   props: ["modalDataId", "reviewers"],
   components: {
-    Loading,
+    Loading
   },
   computed: {
-    moment: () => moment,
+    moment: () => moment
   },
   setup(props) {
     const store = useStore();
-
+    const toast = useToast();
     let show = ref(true);
     let showRes = ref(false);
     let showOptions = ref(false);
     let reviewer = ref({ id: "", name: "", expertLevel: "", role: "" });
     let adminId = +localStorage.getItem("adminId");
-    const licenseId=computed(()=>props.modalDataId.id);
+    const licenseId = computed(() => props.modalDataId.id);
     let transfer = ref({
       reviewerId: "",
       licenseId: "",
-      createdByAdminId: "",
+      createdByAdminId: ""
     });
     let role = ref({});
     let isLoading = ref(false);
@@ -535,8 +532,8 @@ export default {
     const evaluationData = ref({});
     let reviewerAdminId = ref(0);
 
-    const fetchRole = (id) => {
-      store.dispatch("reviewer/getRoles", id).then((res) => {
+    const fetchRole = id => {
+      store.dispatch("reviewer/getRoles", id).then(res => {
         role.value = res.data.data.role;
       });
     };
@@ -546,7 +543,7 @@ export default {
         transfer.value = {
           licenseId: props.modalDataId.id,
           reviewerId: transfer.value.reviewerId,
-          createdByAdminId: +localStorage.getItem("adminId"),
+          createdByAdminId: +localStorage.getItem("adminId")
         };
       }
 
@@ -554,7 +551,7 @@ export default {
         transfer.value = {
           licenseId: props.modalDataId.id,
           reviewerId: +localStorage.getItem("adminId"),
-          createdByAdminId: +localStorage.getItem("adminId"),
+          createdByAdminId: +localStorage.getItem("adminId")
         };
       }
 
@@ -562,27 +559,45 @@ export default {
 
       store
         .dispatch("reviewer/transferLicenseReview", transfer.value)
-        .then((response) => {
+        .then(response => {
           if (response.statusText == "Created") {
-            toast("Selected reviewer is successfully assigned.", {
-              duration: 4000,
-              position: "bottom",
-              toastClass: "toast-success",
+            toast.success("Selected application transfered Successfully", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true
             });
+            isLoading.value = false;
+            setTimeout(() => {
+              window.location.reload();
+            }, 3000);
           } else {
-            toast("Something is wrong please try again after few minutes.", {
-              duration: 4000,
-              position: "bottom",
-              toastClass: "toast-error",
+            toast.error("Error transfering", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true
             });
+            isLoading.value = false;
+            setTimeout(() => {
+              window.location.reload();
+            }, 3000);
           }
         })
         .catch(() => {
-          toast("Sorry there seems to be a problem, please try again.", {
-            duration: 3000,
-            position: "bottom",
-            toastClass: "toast-error",
+          toast.error("Error transfering", {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true
           });
+          isLoading.value = false;
+          setTimeout(() => {
+            window.location.reload();
+          }, 3000);
         });
     };
 
@@ -591,11 +606,11 @@ export default {
     };
     const resultQuery = () => {
       if (reviewer.value.name) {
-        let data = props.reviewers.filter((item) => {
+        let data = props.reviewers.filter(item => {
           return reviewer.value.name
             .toLowerCase()
             .split(" ")
-            .every((v) => item.name.toLowerCase().includes(v));
+            .every(v => item.name.toLowerCase().includes(v));
         });
 
         return data;
@@ -604,12 +619,12 @@ export default {
       }
     };
 
-    const setInput = (value) => {
+    const setInput = value => {
       reviewer.value = {
         id: value.id,
         name: value.name,
         expertLevel: value.expertLevel.code,
-        role: value.role.code,
+        role: value.role.code
       };
       transfer.value.reviewerId = value.id;
       showOptions.value = false;
@@ -625,7 +640,6 @@ export default {
     watch(props.modalDataId, () => {
       isLoadingStart.value = true;
       check();
-
     });
     const modalData = ref({});
     let result;
@@ -634,7 +648,7 @@ export default {
     const check = () => {
       store
         .dispatch("reviewer/getNewLicenseApplication", props.modalDataId.id)
-        .then((res) => {
+        .then(res => {
           if (res.data.status == "Success") {
             result = res.data.data;
             evaluationData.value = result;
@@ -703,9 +717,9 @@ export default {
       modalData,
       evaluationData,
       transferReviewer,
-      onCancel,
+      onCancel
     };
-  },
+  }
 };
 </script>
 

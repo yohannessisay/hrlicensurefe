@@ -63,7 +63,8 @@
     <!-- Main Content -->
     <div class="home-content">
  <div class="parent">
-    <iframe
+ <iframe
+
       src="https://hrdelk.sandboxaddis.com/s/hrl/app/dashboards#/view/9908c940-d900-11ec-adc0-8b86323e9901?embed=true&_g=(filters%3A!()%2CrefreshInterval%3A(pause%3A!t%2Cvalue%3A0)%2Ctime%3A(from%3Anow-1y%2Cto%3Anow))&show-time-filter=true&hide-filter-bar=true"></iframe>
 
     </div>

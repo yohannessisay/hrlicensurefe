@@ -392,7 +392,7 @@
             flex flex-shrink-0 flex-wrap
             items-center
             justify-end
-            border-t border-grey-200
+            border-t border-grey-100
             rounded-b-md
           "
         >
@@ -462,7 +462,7 @@ import moment from "moment";
 import Loading from "vue3-loading-overlay";
 // Import stylesheet
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
-
+import { useToast } from "vue-toastification";
 export default {
   props: ["modalDataId", "reviewers"],
   components: {
@@ -473,7 +473,7 @@ export default {
   },
   setup(props) {
     const store = useStore();
-
+const toast = useToast();
     let show = ref(true);
     let showRes = ref(false);
     let showOptions = ref(false);
@@ -521,25 +521,45 @@ export default {
         .dispatch("reviewer/transferLicenseReview", transfer.value)
         .then((response) => {
           if (response.statusText == "Created") {
-            toast("Selected reviewer is successfully assigned.", {
-              duration: 4000,
-              position: "bottom",
-              toastClass: "toast-success",
+       
+                     toast.success("Selected reviewer is successfully assigned", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
             });
+            isLoading.value=false;
+                setTimeout(() => {
+              window.location.reload();
+            }, 3000);
           } else {
-            toast("Something is wrong please try again after few minutes.", {
-              duration: 4000,
-              position: "bottom",
-              toastClass: "toast-error",
+         
+                     toast.error("Error Occured", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
             });
+            isLoading.value=false;
+                setTimeout(() => {
+              window.location.reload();
+            }, 3000);
           }
         })
         .catch(() => {
-          toast("Sorry there seems to be a problem, please try again.", {
-            duration: 3000,
-            position: "bottom",
-            toastClass: "toast-error",
-          });
+                     toast.error("Error Occured", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+            isLoading.value=false;
+                setTimeout(() => {
+              window.location.reload();
+            }, 3000);
         });
     };
 

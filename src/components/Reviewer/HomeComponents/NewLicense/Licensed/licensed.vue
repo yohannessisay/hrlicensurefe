@@ -102,6 +102,7 @@ import VueTableLite from "../../../../../plugins/TableLite.vue";
 import editModal from "./licensedModal.vue";
 import editModalOthers from "./licensedModalOthers.vue";
 
+
 export default {
   name: "home",
   components: {

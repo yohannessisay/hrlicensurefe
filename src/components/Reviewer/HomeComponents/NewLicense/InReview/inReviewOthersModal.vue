@@ -113,11 +113,23 @@
                                 justify-center
                               "
                             >
-                              <img
-                                src="../../../../../assets/showLicense/profile.png"
-                                alt=""
-                                style="height: 152px; width: 150px"
-                              />
+                                 <picture>
+                                <source
+                                  :srcset="
+                                    modalData.profile &&
+                                    modalData.profile.profilePicture
+                                      ? googleApi +
+                                        modalData.profile.profilePicture
+                                          .filePath
+                                      : ''
+                                  "
+                                  type="image/jpg"
+                                />
+
+                                <img
+                                  src="../../../../../assets/showLicense/profile.png"
+                                />
+                              </picture>
                             </div>
                           </div>
                           <div class="grow ml-6">

@@ -98,7 +98,6 @@ import ReviewerNavBar from "../SharedComponents/navBar.vue";
 import NewLicenseMainContent from "../../../ApplicationTypes/NewLicense/MainComponents/licensed.vue";
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
-
 import applicationStatus from "../../../Configurations/getApplicationStatus.js";
 import VueTableLite from "vue3-table-lite";
 import editModal from "./approvedModal.vue";
@@ -246,13 +245,11 @@ export default {
     };
 
     const licensedByYou = () => {
-                   console.log("adminStatus");
 
       applicationStatus(store, "AP").then((ap) => {
         applicationStatus(store, "CONF").then((conf) => {
           applicationStatus(store, "APP").then((app) => {
             let adminStatus = [adminId, ap, conf, app];
-             console.log(adminStatus);
             store
               .dispatch("reviewerRenewal/getRenewalApproved", adminStatus)
               .then(() => {
@@ -260,7 +257,6 @@ export default {
                   store.getters[
                     "reviewerRenewal/getRenewalApprovedSearched"
                   ];
-           console.log(allInfo.value.assignApplication);
                 for (let applicant in allInfo.value.assignApplication) {
                   if (
                     allInfo.value.assignApplication[applicant]

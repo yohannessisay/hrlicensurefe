@@ -462,7 +462,7 @@
       />
     </div>
   </div>
-
+ 
   <transition name="slide-fade-up">
     <Modal v-if="this.importModal">
       <ImportModal
@@ -1032,7 +1032,6 @@ export default {
       result: "",
       startDate: "",
       endDate: "",
-
       currentPage: 0,
       totalCount: 0,
       paginationSizeList: [10, 25, 50, 100],

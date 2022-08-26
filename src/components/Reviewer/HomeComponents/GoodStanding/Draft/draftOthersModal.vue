@@ -113,11 +113,23 @@
                                 justify-center
                               "
                             >
-                              <img
-                                src="../../../../../assets/showLicense/profile.png"
-                                alt=""
-                                style="height: 152px; width: 150px"
-                              />
+                                 <picture>
+                                <source
+                                  :srcset="
+                                    modalData.profile &&
+                                    modalData.profile.profilePicture
+                                      ? googleApi +
+                                        modalData.profile.profilePicture
+                                          .filePath
+                                      : ''
+                                  "
+                                  type="image/jpg"
+                                />
+
+                                <img
+                                  src="../../../../../assets/showLicense/profile.png"
+                                />
+                              </picture>
                             </div>
                           </div>
                           <div class="grow ml-6">
@@ -327,7 +339,7 @@ export default {
     let result;
     const check = () => {
       store
-        .dispatch("reviewer/getNewLicenseApplication", props.modalDataIdOthers.id)
+        .dispatch("reviewer/getGoodStandingApplication", props.modalDataIdOthers.id)
         .then((res) => {
           if (res.data.status == "Success") {
             result = res.data.data;

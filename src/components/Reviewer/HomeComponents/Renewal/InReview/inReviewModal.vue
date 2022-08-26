@@ -433,7 +433,7 @@
             flex flex-shrink-0 flex-wrap
             items-center
             justify-end
-            border-t border-grey-200
+            border-t border-grey-100
             rounded-b-md
           "
         >
@@ -579,6 +579,10 @@ export default {
               icon: true
             });
             isLoading.value = false;
+
+                setTimeout(() => {
+              window.location.reload();
+            }, 3000);
           } else {
             toast.error(response.data.message, {
               timeout: 5000,
@@ -589,6 +593,10 @@ export default {
             });
 
             isLoading.value = false;
+
+                setTimeout(() => {
+              window.location.reload();
+            }, 3000);
           }
         })
         .catch(() => {
@@ -599,6 +607,10 @@ export default {
             pauseOnHover: true,
             icon: true
           });
+
+                setTimeout(() => {
+              window.location.reload();
+            }, 3000);
         });
     };
 

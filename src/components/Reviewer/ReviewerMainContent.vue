@@ -303,6 +303,7 @@
       </div>
     </div>
   </div>
+  
 </template>
 <script>
 import { ref, onMounted } from "vue";
@@ -335,10 +336,10 @@ export default {
           window.requestAnimationFrame(step);
         };
 
-        animateValue(objApp, 0, stat.value.applicantCount, 5000);
-        animateValue(objRen, 0, stat.value.newLicenseCount, 5000);
-        animateValue(objNew, 0, stat.value.renewalCount, 5000);
-        animateValue(objGoo, 0, stat.value.goodStandingCount, 5000);
+        animateValue(objApp, 0, stat.value.applicantCount, 4000);
+        animateValue(objRen, 0, stat.value.newLicenseCount, 3000);
+        animateValue(objNew, 0, stat.value.renewalCount, 2000);
+        animateValue(objGoo, 0, stat.value.goodStandingCount, 1000);
       });
     };
 

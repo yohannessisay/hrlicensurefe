@@ -163,7 +163,11 @@
                   <label for="requestedRegion">Verified By</label>
                   <input
                     disabled
-                    :value="modalData.data&& modalData.data.verifier? modalData.data.verifier.name : ''"
+                    :value="
+                      modalData.data && modalData.data.verifier
+                        ? modalData.data.verifier.name
+                        : ''
+                    "
                     type="text"
                     class="
                       form-control
@@ -195,11 +199,11 @@
                   <div class="m-4">
                     <div class="toggle slim colour">
                       <input
-                        @change="verifiedCheck"
-                        :disabled="modalData.IsVerified==true"
+                        @change="verifiedCheck()"
                         id="isVerified"
                         class="toggle-checkbox hidden cursor-pointer"
                         type="checkbox"
+                        :checked="isVerified"
                       />
                       <label
                         for="isVerified"
@@ -215,14 +219,7 @@
                         "
                       ></label>
                       <span>
-                        {{
-                          modalData.IsVerified == null ||
-                          modalData.IsVerified == ""
-                            ? "Click the Checkbox"
-                            : isVerified === true
-                            ? "Verified"
-                            : "Not Verified"
-                        }}
+                        {{ isVerified ? "Yes" : "No" }}
                       </span>
                     </div>
                   </div>
@@ -285,8 +282,8 @@
                       dark:focus:border-blue-500
                     "
                     id="remark"
-                    placeholder="Remark details"
-                    :value="modalData.data ? modalData.data.remark : ''"
+                    placeholder="Remark note "
+                    :value="remark"
                   />
                 </div>
 
@@ -312,9 +309,7 @@
                       dark:focus:border-blue-500
                     "
                     placeholder="Information regarding malpractice"
-                    :value="
-                      modalData.data ? modalData.data.malpracticeInfo : ''
-                    "
+                    :value="malpracticeInfo"
                     type="textarea"
                     id="malpracticeInfo"
                   />
@@ -398,69 +393,90 @@ import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
 export default {
   props: ["modalData"],
-  setup(props, { emit }) {
+  setup(props) {
     const store = useStore();
     const toast = useToast();
-    const remark = ref("");
+    const remark = ref(props.modalData.data ? props.modalData.data.remark : "");
     let loggedInAdmin = JSON.parse(localStorage.getItem("allAdminData"));
-    const malpracticeInfo = computed(() =>
+    const malpracticeInfo = ref(
       props.modalData.data ? props.modalData.data.malpracticeInfo : ""
     );
     const issuedInGoodStanding = computed(() =>
-      props.modalData.data ? props.modalData.data.issuedInGoodStanding : ""
+      props.modalData.data ? props.modalData.data.issuedInGoodStanding : null
     );
     const regionId = computed(() =>
-      props.modalData.data ? props.modalData.data.region.id : ""
+      props.modalData.data ? props.modalData.data.region.id : null
     );
     const verificationId = computed(() =>
-      props.modalData ? props.modalData.Number : ""
+      props.modalData ? props.modalData.Number : null
     );
     const renewalId = ref(
-      props.modalData.data
-        ? props.modalData.data.renewal.renewalLicenseCode
-        : ""
+      props.modalData.data && props.modalData.data.renewal
+        ? props.modalData.data.renewal.id
+        : null
     );
-    const isVerified = ref("");
+    let isVerified = ref(props.modalData.data ? props.modalData.data.isVerified : false);
+    let isVerifiedComputed = computed(() =>
+      props.modalData.data ? props.modalData.data.isVerified : false
+    );
+   if (isVerifiedComputed.value == true) {
+        isVerified.value == true;
+      }
+
     const applicantId = computed(() =>
-      props.modalData.data ? props.modalData.data.applicant.id : ""
+      props.modalData.data ? props.modalData.data.applicant.id : null
     );
     const licenseCode = computed(() =>
-      props.modalData.data ? props.modalData.data.newLicense.newLicenseCode : ""
+      props.modalData.data && props.modalData.data.newLicense
+        ? props.modalData.data.newLicense.id
+        : null
     );
     const requestedRegion = computed(() => props.modalData.RequestedRegion);
     const verifiedBy = computed(() =>
-      props.modalData.data ? props.modalData.data.verifier.name : ""
+      props.modalData.data ? props.modalData.data.verifier.name : null
     );
     const requester = computed(() =>
-      props.modalData.data ? props.modalData.data.requester.name : ""
+      props.modalData.data ? props.modalData.data.requester.name : null
     );
     const applicantName = computed(() => props.modalData.ApplicantName);
     const editedData = ref({});
     const saveVerification = () => {
-      editedData.value.isVerified = isVerified.value;
-      editedData.value.remark = remark.value;
+      if (isVerifiedComputed.value == true) {
+        isVerified.value == true;
+      }
+      console.log(isVerifiedComputed.value)
+      editedData.value.isVerified =isVerified.value;
+      editedData.value.remark = remark.value ;
       editedData.value.malpracticeInfo = malpracticeInfo.value;
       editedData.value.verifier = loggedInAdmin.name;
-      editedData.value.applicantId = applicantId.value;
-      editedData.value.issuedInGoodStanding = issuedInGoodStanding.value;
-      editedData.value.regionId = regionId.value;
+      editedData.value.applicantId = applicantId.value
+        ? applicantId.value
+        : null;
+      editedData.value.issuedInGoodStanding = issuedInGoodStanding.value
+        ? issuedInGoodStanding.value
+        : null;
+      editedData.value.regionId = regionId.value ? regionId.value : null;
       editedData.value.verifiedById = loggedInAdmin.id;
-      editedData.value.renewalId = renewalId.value;
-      editedData.value.licenseId = licenseCode.value;
-      editedData.value.verificationId = verificationId.value;
+      editedData.value.renewalId = renewalId.value ? renewalId.value : null;
+      editedData.value.licenseId = licenseCode.value ? licenseCode.value : null;
+      editedData.value.verificationId = verificationId.value
+        ? verificationId.value
+        : null;
 
       store
-        .dispatch("applicationVerification/saveResponse", editedData)
+        .dispatch("applicationVerification/saveResponse", editedData.value)
         .then((res) => {
           if (res.data.status == "Success") {
             toast.success("Verification request is successfully verified", {
-                 timeout: 5000,
+              timeout: 5000,
               position: "bottom-center",
               pauseOnFocusLoss: true,
               pauseOnHover: true,
               icon: true,
             });
-            emit("getVerification");
+            setTimeout(() => {
+              window.location.reload();
+            }, 3000);
           } else {
             toast.error(res.data.message, {
               timeout: 5000,
@@ -469,6 +485,9 @@ export default {
               pauseOnHover: true,
               icon: true,
             });
+             setTimeout(() => {
+              window.location.reload();
+            }, 3000);
           }
         });
     };
@@ -476,6 +495,7 @@ export default {
     const verifiedCheck = () => {
       isVerified.value = !isVerified.value;
     };
+
     return {
       saveVerification,
       applicantName,
@@ -485,6 +505,7 @@ export default {
       regionId,
       verificationId,
       renewalId,
+      isVerifiedComputed,
       isVerified,
       applicantId,
       verifiedCheck,

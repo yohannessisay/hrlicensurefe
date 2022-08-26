@@ -14,6 +14,7 @@
     width: 240px;
     background: #0d3552;
     transition: all 0.5s ease;
+    overflow-y: scroll;
   }
 
   .sidebar.active {
@@ -1498,21 +1499,9 @@
 
 
 
-/* Applicant Side Css */
-[x-cloak] {
-  display: none;
-}
 
-@media screen and (max-width: 1600px) {
-  .tabs-wrapper label {
-    width: 15%;
- }
-}
-@media screen and (max-width: 900px) {
-  .tabs-wrapper label {
-    width: 20%;
- }
-}
+
+
 @media screen and (max-width: 600px) {
   .tabs-wrapper label {
     width: 100%;
@@ -1557,6 +1546,16 @@
   position: relative;
   top: 0px;
 
+}
+
+
+/* Modal Cards */
+
+.bg-blue-600 {
+  --bg-opacity: 1;
+  background-color: #2F639D;
+  background-color: rgba(47, 99, 157, var(--bg-opacity));
+  color: white;
 }
 
 
@@ -1675,7 +1674,21 @@
 
 
 
+/* Applicant Side Css */
+[x-cloak] {
+  display: none;
+}
 
+@media screen and (max-width: 1600px) {
+  .tabs-wrapper label {
+    width: 15%;
+ }
+}
+@media screen and (max-width: 900px) {
+  .tabs-wrapper label {
+    width: 20%;
+ }
+}
 
 
 
