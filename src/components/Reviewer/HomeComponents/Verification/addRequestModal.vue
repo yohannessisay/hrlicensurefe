@@ -206,6 +206,7 @@
                         "
                         id="lNumber"
                         placeholder="License Number"
+                        v-model="licenseNumber"
                       />
                     </div>
                     <div class="flex justify-center">
@@ -246,7 +247,7 @@
             flex flex-shrink-0 flex-wrap
             items-center
             justify-end
-            border-t border-grey-200
+            border-t border-grey-100
             rounded-b-md
           "
         >
@@ -330,7 +331,7 @@ export default {
       let submittedData = {
         regionId: region.value,
         licenseNumber: licenseNumber.value,
-        applicantId: assignedUser.value?.id,
+        applicantId: assignedUser.value .id,
         requesterId: loggedInAdmin.id,
       };
       store
@@ -349,6 +350,10 @@ export default {
                 pauseOnHover: true,
                 icon: true,
               });
+
+                setTimeout(() => {
+              window.location.reload();
+            }, 3000);
             } else {
               isLoading.value = false;
 
@@ -359,6 +364,10 @@ export default {
                 pauseOnHover: true,
                 icon: true,
               });
+
+                setTimeout(() => {
+              window.location.reload();
+            }, 3000);
             }
           },
           () => {
@@ -372,6 +381,10 @@ export default {
                 icon: true,
               }
             );
+
+                setTimeout(() => {
+              window.location.reload();
+            }, 3000);
           }
         );
     };
@@ -393,9 +406,10 @@ export default {
 
     const setInput = (value) => {
       assignedUser.value = {
-        id: value.id,
+        id: value.userId,
         name: value.name + " " + value.fatherName + " " + value.grandFatherName,
       };
+      console.log(assignedUser.value,value);
       showOptions.value = false;
     };
 

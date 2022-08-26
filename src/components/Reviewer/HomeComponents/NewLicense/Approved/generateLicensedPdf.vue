@@ -452,7 +452,7 @@
             flex flex-shrink-0 flex-wrap
             items-center
             justify-end
-            border-t border-grey-200
+            border-t border-grey-100
             rounded-b-md
           "
         >
@@ -592,6 +592,9 @@ export default {
               pauseOnHover: true,
               icon: true,
             });
+                setTimeout(() => {
+              window.location.reload();
+            }, 3000);
           } else {
             showGenerateModal.value = false;
             toast.error(res.data.message, {
@@ -601,6 +604,9 @@ export default {
               pauseOnHover: true,
               icon: true,
             });
+                setTimeout(() => {
+              window.location.reload();
+            }, 3000);
           }
         })
         .catch((err) => {
@@ -623,6 +629,9 @@ export default {
         .then((res) => {
           imageSrc.value = res.data.data;
         })
+        .finally(() => {
+          downloadPdf();
+        })
         .catch((err) => {
           console.log(err);
         });
@@ -630,7 +639,6 @@ export default {
 
     const generate = () => {
       isLoading.value = true;
-      fetchQrCode();
       certifiedUser.value = props.modalData.profile;
       certificateDetail.value = props.modalData.data;
 
@@ -651,7 +659,8 @@ export default {
           myRegion.value = false;
         }
       }
-      downloadPdf();
+      fetchQrCode();
+
     };
 
     const handleRegionsLayout = (
@@ -888,16 +897,16 @@ export default {
     };
 
     const downloadPdf = () => {
+
+      const userImage = certifiedUser.value.profilePicture
+        ? certifiedUser.value.profilePicture.filePath
+        : null;
       const doc = new jsPDF({
         orientation: "landscape",
         filters: ["ASCIIHexEncode"],
       });
 
       updateLicenseGenerated();
-
-      const userImage = certifiedUser.value.profilePicture
-        ? googleApi + certifiedUser.value.profilePicture.filePath
-        : null;
 
       if (certificateDetail.value.reviewer.expertLevel.code === "FED") {
         doc.addImage(backgroundImage, "JPG", 0, 0, 298, 213, undefined, "FAST");
@@ -932,12 +941,20 @@ export default {
       // doc.addImage(backgroundImage, "JPEG", 0, 0, 298, 213, undefined, "FAST");
       doc.addImage(imageSrc.value, "JPG", 246, 14, 35, 35);
       if (userImage !== null) {
-        doc.addImage(userImage, "JPEG", 33, 20, 30, 30);
+        let path = {
+          path: userImage
+        };
+        store.dispatch("profile/converProfilePicture", path).then(res => {
+          // doc.addImage(backgroundImage, "JPEG", 0, 0, 298, 213, undefined, "FAST");
+          doc.addImage(res.data.data, "JPG", 33, 20, 30, 30);
+          doc.setFontSize(10);
+          window.open(doc.output("bloburl"));
+        });
       }
-      // doc.text(10, 203, `ቀን: ${toEthiopian(new Date().toISOString(), false)}`)
-      doc.setFontSize(10);
-
-      window.open(doc.output("bloburl"));
+      else {
+        doc.setFontSize(10);
+        window.open(doc.output("bloburl"));
+      }
     };
 
     const onCancel = () => {

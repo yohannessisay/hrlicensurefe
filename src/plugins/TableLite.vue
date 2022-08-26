@@ -16,6 +16,7 @@
             </div>
           </div>
           <table
+          id="printable"
             class="vtl-table vtl-table-hover vtl-table-bordered vtl-table-responsive vtl-table-responsive-sm"
             ref="localTable"
           >

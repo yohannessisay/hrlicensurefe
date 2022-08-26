@@ -441,7 +441,7 @@
               flex flex-shrink-0 flex-wrap
               items-center
               justify-end
-              border-t border-grey-200
+              border-t border-grey-100
               rounded-b-md
             "
           >
@@ -484,7 +484,7 @@ import { ref, onMounted, watch } from "vue";
 import moment from "moment";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
-
+import { useToast } from "vue-toastification";
 export default {
   props: ["modalDataIdResub", "reviewers"],
   components: {
@@ -495,7 +495,7 @@ export default {
   },
   setup(props) {
     const store = useStore();
-
+const toast = useToast();
     let show = ref(true);
     let showRes = ref(false);
     let showOptions = ref(false);
@@ -541,24 +541,41 @@ export default {
         .dispatch("reviewer/assignReviewer", assign.value)
         .then((response) => {
           if (response.statusText == "Created") {
-            toast("Selected reviewer is successfully assigned.", {
-              duration: 3000,
-              position: "bottom",
+                     toast.success("Selected application is successfully drafted", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
             });
             setTimeout(() => {
               isLoading.value = false;
               window.location.reload();
             }, 1000);
           } else {
-            console.log("no sup");
+                           toast.error("Error Occured", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+                setTimeout(() => {
+              window.location.reload();
+            }, 3000);
           }
         })
         .catch(() => {
-          toast("Sorry there seems to be a problem, please try again.", {
-            duration: 3000,
-            position: "bottom",
-          });
-          console.log("Error is related to the reviewer/assignReviewer action");
+                          toast.error("Error Occured", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+                setTimeout(() => {
+              window.location.reload();
+            }, 3000);
         });
     };
 
@@ -604,41 +621,45 @@ export default {
         )
         .then((res) => {
           if (res.data.status == "Success") {
-            result = res.data.data;
+             result = res.data.data;
             modalData.value.name =
-              result.profile.name +
-              " " +
-              result.profile.fatherName +
-              "  " +
-              result.profile.grandFatherName;
-            modalData.value.gender = result.profile.gender
+              (result.profile ? result.profile.name + " " : "") +
+              (result.profile ? result.profile.fatherName + "  " : " ") +
+              (result.profile ? result.profile.grandFatherName : "");
+            modalData.value.gender = result.profile
               ? result.profile.gender
               : "-----";
-            modalData.value.nationality = result.profile.nationality?.name
-              ? result.profile.nationality?.name
-              : "-----";
-            modalData.value.dateOfBirth = result.profile.dateOfBirth
+            modalData.value.nationality =
+              result.profile && result.profile.nationality
+                ? result.profile.nationality?.name
+                : "-----";
+            modalData.value.dateOfBirth = result.profile
               ? result.profile.dateOfBirth
               : "-----";
-            modalData.value.martialStatus = result.profile.martialStatus?.name
-              ? result.profile.martialStatus.name
-              : "-----";
-            modalData.value.mobileNumber = result.applicant.phoneNumber
+            modalData.value.martialStatus =
+              result.profile && result.profile.martialStatus
+                ? result.profile.martialStatus.name
+                : "-----";
+            modalData.value.mobileNumber = result.applicant
               ? result.applicant.phoneNumber
               : "-----";
-            modalData.value.email = result.applicant.emailAddress
+            modalData.value.email = result.applicant
               ? result.applicant.emailAddress
               : "-----";
-            modalData.value.instName = result.education.institution?.name
-              ? result.education.institution?.name
-              : "-----";
-            modalData.value.instType = result.education.institution
-              ?.institutionType
-              ? result.education.institution?.institutionType.name
-              : "-----";
-            modalData.value.department = result.education.department.name
-              ? result.education?.department.name
-              : "-----";
+            modalData.value.instName =
+              result.education && result.education.institution
+                ? result.education.institution?.name
+                : "-----";
+            modalData.value.instType =
+              result.education &&
+              result.education.institution &&
+              result.education.institution.institutionType
+                ? result.education.institution?.institutionType.name
+                : "-----";
+            modalData.value.department =
+              result.education && result.education.department
+                ? result.education?.department.name
+                : "-----";
             modalData.value.profile = result.profile;
             modalData.value.professionalTypes = result.licenseProfessions;
             modalData.value.certifiedDate = result.certifiedDate;

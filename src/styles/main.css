@@ -14,6 +14,7 @@
     width: 240px;
     background: #0d3552;
     transition: all 0.5s ease;
+    overflow-y: scroll;
   }
 
   .sidebar.active {
@@ -1498,21 +1499,9 @@
 
 
 
-/* Applicant Side Css */
-[x-cloak] {
-  display: none;
-}
 
-@media screen and (max-width: 1600px) {
-  .tabs-wrapper label {
-    width: 15%;
- }
-}
-@media screen and (max-width: 900px) {
-  .tabs-wrapper label {
-    width: 20%;
- }
-}
+
+
 @media screen and (max-width: 600px) {
   .tabs-wrapper label {
     width: 100%;
@@ -1560,113 +1549,14 @@
 }
 
 
+/* Modal Cards */
 
-
-
-/* Applicant Side */
-
-/* Toggle Styles */
-#wrapper {
-  padding-left: 0;
-  -webkit-transition: all 0.5s ease;
-  transition: all 0.5s ease;
+.bg-blue-600 {
+  --bg-opacity: 1;
+  background-color: #2F639D;
+  background-color: rgba(47, 99, 157, var(--bg-opacity));
+  color: white;
 }
-
-#wrapper.toggled {
-  padding-left: 250px;
-}
-
-#sidebar-wrapper {
-  z-index: 1000;
-  position: fixed;
-  left: 250px;
-  width: 0;
-  height: 100%;
-  margin-left: -250px;
-  overflow-y: auto;
-  background: #298099;
-  -webkit-transition: all 0.5s ease;
-  transition: all 0.5s ease;
-  overflow-x: hidden;
-}
-
-#wrapper.toggled #sidebar-wrapper {
-  width: 250px;
-}
-
-#page-content-wrapper {
-  position: absolute;
-  padding: 15px;
-}
-
-#wrapper.toggled #page-content-wrapper {
-  position: absolute;
-}
-
-/* Sidebar Styles */
-.sidebar-nav {
-  position: absolute;
-  top: 0;
-  width: 250px;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-/*new code*/
-.sidebar-nav a {
-  display: block;
-  text-decoration: none;
-  padding-left: 32px;
-  color: #ffffff;
-  -webkit-transition: 0.3s;
-  transition: 0.3s;
-  margin: 20px auto;
-  font-size: 18px;
-}
-
-.sidebar-nav a:first-child {
-  margin-bottom: 80px;
-}
-
-.sidebar-nav a:hover {
-  color: #f1f1f1;
-}
-
-/* Desktop View*/
-@media only screen and (min-width: 768px) {
-  #wrapper {
-    padding-left: 250px;
-  }
-  #wrapper.toggled {
-    padding-left: 0;
-  }
-  #sidebar-wrapper {
-    width: 250px;
-  }
-  #wrapper.toggled #sidebar-wrapper {
-    width: 0;
-  }
-  #page-content-wrapper {
-    padding-bottom: 80px;
-    padding-top: 10px;
-    padding-left: 20px;
-    position: relative;
-  }
-  #wrapper.toggled #page-content-wrapper {
-    position: relative;
-    margin-right: 0;
-  }
-}
-
-/* mobile */
-#page-content-wrapper #menu-toggle {
-  cursor: pointer;
-  font-size: 30px;
-}
-
-
 
 
 

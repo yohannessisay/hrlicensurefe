@@ -48,7 +48,7 @@
         <span style="color: red">{{ credentialsErrors.email }}</span>
       </div>
       <div class="flex flex-col mb-medium w-full">
-        <label for="password">Phone Number</label>
+        <label for="password">Phone Number(+251)</label>
         <input
           v-model="credentials.phoneNumber"
           id="phone"
@@ -57,6 +57,13 @@
           autocomplete="current-number"
           required
         />
+        <span class="text-sm"
+          >Area code for phone is not needed, valid phone number
+          eg-912345678</span
+        >
+        <span v-if="phoneError" class="text-sm text-red-300"
+          >phone number must be exactly 9 digits, eg-912345678</span
+        >
         <span style="color: red">{{ credentialsErrors.phoneNumber }}</span>
       </div>
       <div class="flex flex-col mb-medium w-full">
@@ -98,7 +105,7 @@
         <password-meter :password="credentials.repassword" />
         <span style="color: red">{{ credentialsErrors.repassword }}</span>
       </div>
-  
+
       <div v-if="!message.showLoading">
         <button click="submit()">Sign up</button>
       </div>
@@ -149,7 +156,7 @@ export default {
       showLoading: false,
       errorMessage: "",
     });
-
+    let phoneError = ref(false);
     const credentials = ref({
       emailAddress: "",
       phoneNumber: "",
@@ -182,6 +189,21 @@ export default {
         message.value.showLoading = true;
         message.value.showFlash = false;
         message.value.showErrorFlash = false;
+        console.log(credentials.value.phoneNumber.length);
+        if (credentials.value.phoneNumber.length != 9) {
+          phoneError.value = true;
+          message.value.showLoading = false;
+        }
+        let smsData = {
+          recipients: [
+            credentials.value.phoneNumber
+              ? "251" + credentials.value.phoneNumber
+              : "",
+          ],
+          message:
+            "Dear applicant you have successfully registered on eHPL for your license/s, please complete the process of creating your account by loging in to your account using the credentials you entered previously and fill remaining data, Thank you for using eHPL.",
+        };
+
         store.dispatch("user/signUp", signup).then((res) => {
           if (res.data.status == "Error") {
             message.value.showLoading = false;
@@ -192,12 +214,14 @@ export default {
               message.value.showErrorFlash = false;
             }, 3000);
           } else if (res.data.status == "Success") {
-            message.value.showLoading = false;
-            message.value.showFlash = true;
-            message.value.showErrorFlash = false;
-            setTimeout(() => {
-              location.reload();
-            }, 1500);
+            store.dispatch("sms/sendSms", smsData).then(() => {
+              message.value.showLoading = false;
+              message.value.showFlash = true;
+              message.value.showErrorFlash = false;
+              setTimeout(() => {
+                location.reload();
+              }, 1500);
+            });
           } else {
             message.value.showFlash = false;
             message.value.showErrorFlash = true;
@@ -235,6 +259,7 @@ export default {
       validateForm,
       message,
       password,
+      phoneError,
       showPasswordStrength,
       passwordStrengthDisplay,
     };
