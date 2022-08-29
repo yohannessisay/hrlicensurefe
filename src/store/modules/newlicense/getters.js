@@ -60,4 +60,6 @@ export default {
         state.renewedLicenseOfHealthFacility,
     getRequestLetterFromHiringHealthFacility: (state) =>
         state.requestLetterFromHiringHealthFacility,
+        getGeneralInfo: (state) => state.generalInfo,
+
 };

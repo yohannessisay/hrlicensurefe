@@ -96,20 +96,22 @@
         </tr>
       </tbody>
     </table>
+    <button @click="next()"> next</button>
   </div>
   <filePreview :modalData="filePreviewData"> </filePreview>
 </template>
 <script>
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
-import MAX_FILE_SIZE from "../../composables/documentMessage";
+import MAX_FILE_SIZE from "../../../composables/documentMessage";
 import filePreview from "@/sharedComponents/FilePreview";
 import { boolean } from "yargs";
 
 export default {
   components: { filePreview },
 
-  setup() {
+  setup(props,{ emit }) {
+    let store = useStore();
     let documents = ref([]);
     let imageUploader = ref(null);
     let fileName = ref({});
@@ -156,6 +158,7 @@ export default {
     let previewDocuments = ref({});
     let showPreview = ref("");
     maxFileSize.value = MAX_FILE_SIZE.MAX_FILE_SIZE;
+    let generalInfo = ref({});
 
     let documentUploaded = ref({});
     const previewFile = (code, name) => {
@@ -211,6 +214,15 @@ export default {
         documentUploaded.value[code] = "";
       }
     };
+    const next = () =>
+    {
+emit('changeActiveState');
+    }
+       onMounted(()=>
+    {
+        generalInfo.value = store.getters["newlicense/getGeneralInfo"];
+        console.log(generalInfo.value);
+    })
     return {
       documents,
       files,
@@ -222,6 +234,7 @@ export default {
       imageUploader,
       filePreviewData,
       fileName,
+      next
     };
   },
 };

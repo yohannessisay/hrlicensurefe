@@ -7,7 +7,20 @@
       <div class="w-screen max-w-4xl mt-medium">
         <div class="flex flex-col w-full rounded mb-large">
           <h2 class="flex justify-center pb-medium">New License</h2>
-          <transition name="fade" mode="out-in">
+          <!-- <transition name="fade" mode="out-in">
+            <div v-if="this.activeState == 1">
+              <Institution
+                :activeState="1"
+                @changeActiveState="activeState++"
+                @changeActiveStateMinus="activeState--"
+                @applicantTypeValue="applicantTypeSet"
+                @nativeLanguageSet="nativeLanguage"
+                @payrollDocumentSet="payrollDocumentSet"
+                @diplomaSet="diplomaSet"
+              />
+            </div>
+          </transition> -->
+                   <transition name="fade" mode="out-in">
             <div v-if="this.activeState == 1">
               <Institution
                 :activeState="1"
@@ -20,16 +33,42 @@
               />
             </div>
           </transition>
+                   <transition name="fade" mode="out-in">
+            <div v-if="this.activeState == 2">
+              <Upload
+                :activeState="2"
+                @changeActiveState="activeState++"
+                @changeActiveStateMinus="activeState--"
+                @applicantTypeValue="applicantTypeSet"
+                @nativeLanguageSet="nativeLanguage"
+                @payrollDocumentSet="payrollDocumentSet"
+                @diplomaSet="diplomaSet"
+              />
+            </div>
+          </transition>
+                  <transition name="fade" mode="out-in">
+            <div v-if="this.activeState == 3">
+              <MultipleUpload
+                :activeState="3"
+                @changeActiveState="activeState++"
+                @changeActiveStateMinus="activeState--"
+                @applicantTypeValue="applicantTypeSet"
+                @nativeLanguageSet="nativeLanguage"
+                @payrollDocumentSet="payrollDocumentSet"
+                @diplomaSet="diplomaSet"
+              />
+            </div>
+          </transition>
           <div
         
           >
-            <transition name="fade" mode="out-in">
+            <!-- <transition name="fade" mode="out-in">
               <div >
-                <Upload v-if="this.activeState == 2"
+                <Upload
                   :activeState="2"
                 />
               </div>
-            </transition>
+            </transition> -->
             <!-- <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 3">
                 <HealthExamCert
@@ -1110,8 +1149,8 @@
 <script>
 import Navigation from "@/views/Navigation";
 
-import Institution from "./Institution.vue";
-import Upload from "./Upload.vue";
+import Institution from "./NewForm/GeneralInfo.vue";
+ import Upload from "./NewForm/Upload.vue";
 
 import Passport from "./Passport.vue";
 import HealthExamCert from "./HealthExamCert.vue";
@@ -1152,6 +1191,7 @@ import RenewedLicense from "./Foreigner/RenewedLicense";
 import WorkExperienceFF from "./Foreigner/WorkExperience.vue";
 
 import LicenseSummary from "./LicenseSummary.vue";
+import MultipleUpload from "./NewForm/MultipleUpload.vue";
 
 export default {
   created() {
@@ -1216,7 +1256,8 @@ export default {
     RenewedLicense,
     WorkExperienceFF,
     LicenseSummary,
-  },
+    MultipleUpload
+},
 
   methods: {
     applicantTypeSet: function(params) {
