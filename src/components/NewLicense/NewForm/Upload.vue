@@ -1,102 +1,403 @@
 <template>
   <div>
-    <table class="min-w-full h-full">
-      <thead>
-        <th
-          class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
-        >
-          Document Name
-        </th>
-        <th
-          class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
-        >
-          Document Description
-        </th>
+    <button
+      class="
+        inline-block
+        px-6
+        py-2.5
+        bg-blue-600
+        text-white
+        font-medium
+        text-xs
+        leading-tight
+        uppercase
+        rounded
+        shadow-md
+        hover:bg-blue-700 hover:shadow-lg
+        focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
+        active:bg-blue-800 active:shadow-lg
+        transition
+        duration-150
+        ease-in-out
+      "
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#commonFiles"
+      aria-expanded="false"
+      aria-controls="commonFiles"
+    >
+      Common Files Upload
+    </button>
+    <button
+      class="
+        inline-block
+        px-6
+        py-2.5
+        bg-blue-600
+        text-white
+        font-medium
+        text-xs
+        leading-tight
+        uppercase
+        rounded
+        shadow-md
+        hover:bg-blue-700 hover:shadow-lg
+        focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
+        active:bg-blue-800 active:shadow-lg
+        transition
+        duration-150
+        ease-in-out
+      "
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#mainFiles"
+      aria-expanded="false"
+      aria-controls="mainFiles"
+    >
+      Department Files Upload
+    </button>
 
-        <th
-          class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+    <div class="collapse" id="commonFiles">
+      <div class="block p-6 rounded-lg shadow-lg bg-white mt-8">
+        <h4 class="text-primary-600 font-bold">Common Files</h4>
+        <table
+          class="min-w-full h-full"
+          style="overflow-x: scroll; overflow-y: scroll"
         >
-          Upload
-        </th>
-        <th
-          class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
-        >
-          Status
-        </th>
-        <th
-          class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
-        >
-          View
-        </th>
-      </thead>
-      <tbody>
-        <tr v-for="(item, index) in documents">
-          <td class="px-2 py-3 border-gray-200 bg-white text-sm">
-            <div class="flex">
-              <div class="ml-3">
-                <p class="text-gray-900 whitespace-no-wrap">
-                  {{ item.documentName }}
-                </p>
-              </div>
-            </div>
-          </td>
-          <td class="px-2 py-1 border-gray-200 bg-white text-sm">
-            <div class="flex">
-              <div class="ml-3">
-                <p class="text-gray-900 whitespace-no-wrap">
-                  {{ item.documentDescription }}
-                </p>
-              </div>
-            </div>
-          </td>
-          <td class="px-2 py-1 border-gray-200 bg-white text-sm">
-            <div class="flex">
-              <div class="">
-                <label :for="`files${index}`" class="upload-button"
-                  >Upload</label
-                >
+          <thead>
+            <th
+              class="
+                px-5
+                py-3
+                border-b-2 border-gray-200
+                bg-gray-100
+                text-left text-xs
+                font-semibold
+                text-gray-700
+                uppercase
+                tracking-wider
+              "
+            >
+              Document Name
+            </th>
+            <th
+              class="
+                px-5
+                py-3
+                border-b-2 border-gray-200
+                bg-gray-100
+                text-left text-xs
+                font-semibold
+                text-gray-700
+                uppercase
+                tracking-wider
+              "
+            >
+              Document Description
+            </th>
 
-                <input
-                  type="file"
-                  class=""
-                  :id="`files${index}`"
-                  accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
-                  :ref="`imageUploader${index}`"
-                  style="visibility:hidden; max-width: 20px;"
-                  v-on:change="handleFileUpload(item.documentCode, $event)"
-                />
-                <span
-                  class="document-name"
-                  v-if="fileName[item.documentCode]"
-                  >{{ fileName[item.documentCode] }}</span
-                >
-              </div>
-            </div>
-          </td>
-          <td class="px-4 py-1 border-gray-200 bg-white text-sm">
-            <div class="flex text-center">
-              <div v-if="fileName[item.documentCode]">
-                <i class="fa fa-check" title="Uploaded"> </i>
-              </div>
-            </div>
-          </td>
-          <td class="px-2 py-1 border-gray-200 bg-white text-sm">
-            <div class="flex bg-white">
-              <div class=" bg-white">
-                <span
-                  data-bs-toggle="modal"
-                  data-bs-target="#filePreview"
-                  @click="previewFile(item.documentCode, item.documentName)"
-                >
-                  <i class="fa fa-eye cursor-pointer" aria-hidden="true"></i>
-                </span>
-              </div>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <button @click="next()"> next</button>
+            <th
+              class="
+                px-5
+                py-3
+                border-b-2 border-gray-200
+                bg-gray-100
+                text-left text-xs
+                font-semibold
+                text-gray-700
+                uppercase
+                tracking-wider
+              "
+            >
+              Upload
+            </th>
+            <th
+              class="
+                px-5
+                py-3
+                border-b-2 border-gray-200
+                bg-gray-100
+                text-left text-xs
+                font-semibold
+                text-gray-700
+                uppercase
+                tracking-wider
+              "
+            >
+              Status
+            </th>
+            <th
+              class="
+                px-5
+                py-3
+                border-b-2 border-gray-200
+                bg-gray-100
+                text-left text-xs
+                font-semibold
+                text-gray-700
+                uppercase
+                tracking-wider
+              "
+            >
+              View
+            </th>
+          </thead>
+          <tbody>
+            <tr v-for="item in documents" :key="item.id">
+              <td class="px-2 py-3 border-gray-200 bg-white text-sm">
+                <div class="flex">
+                  <div class="ml-3">
+                    <p class="text-gray-900 whitespace-no-wrap">
+                      {{ item.documentName }}
+                    </p>
+                  </div>
+                </div>
+              </td>
+              <td class="px-2 py-1 border-gray-200 bg-white text-sm">
+                <div class="flex">
+                  <div class="ml-3">
+                    <p class="text-gray-900 whitespace-no-wrap">
+                      {{ item.documentDescription }}
+                    </p>
+                  </div>
+                </div>
+              </td>
+              <td class="px-2 py-1 border-gray-200 bg-white text-sm">
+                <div class="flex">
+                  <div class="">
+                    <label :for="`files${index}`" class="upload-button"
+                      >Upload</label
+                    >
+
+                    <input
+                      type="file"
+                      class=""
+                      :id="`files${index}`"
+                      accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
+                      :ref="`imageUploader${index}`"
+                      style="visibility: hidden; max-width: 20px"
+                      v-on:change="handleFileUpload(item.documentCode, $event)"
+                    />
+                  </div>
+                </div>
+              </td>
+              <td class="px-4 py-1 border-gray-200 bg-white text-sm">
+                <div class="flex text-center">
+                  <div>
+                    <i class="fa fa-check" title="Uploaded"> </i>
+                  </div>
+                </div>
+              </td>
+              <td class="px-2 py-1 border-gray-200 bg-white text-sm">
+                <div class="flex bg-white">
+                  <div class="bg-white">
+                    <span
+                      data-bs-toggle="modal"
+                      data-bs-target="#filePreview"
+                      @click="previewFile(item.documentCode, item.documentName)"
+                    >
+                      <i
+                        class="fa fa-eye cursor-pointer"
+                        aria-hidden="true"
+                      ></i>
+                    </span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="collapse" id="mainFiles">
+      <div
+        class="block p-6 rounded-lg shadow-lg bg-white mt-8"
+        v-for="table in generalInfo.multipleDepartment"
+        :key="table"
+      >
+        <h4 class="text-primary-600 font-bold">
+          {{ table.department ? table.department.name : "" }} Department Related
+          Files
+        </h4>
+        <table
+          class="min-w-full h-full"
+          style="overflow-x: scroll; overflow-y: scroll"
+        >
+          <thead>
+            <th
+              class="
+                px-5
+                py-3
+                border-b-2 border-gray-200
+                bg-gray-100
+                text-left text-xs
+                font-semibold
+                text-gray-700
+                uppercase
+                tracking-wider
+              "
+            >
+              Document Name
+            </th>
+            <th
+              class="
+                px-5
+                py-3
+                border-b-2 border-gray-200
+                bg-gray-100
+                text-left text-xs
+                font-semibold
+                text-gray-700
+                uppercase
+                tracking-wider
+              "
+            >
+              Document Description
+            </th>
+
+            <th
+              class="
+                px-5
+                py-3
+                border-b-2 border-gray-200
+                bg-gray-100
+                text-left text-xs
+                font-semibold
+                text-gray-700
+                uppercase
+                tracking-wider
+              "
+            >
+              Upload
+            </th>
+            <th
+              class="
+                px-5
+                py-3
+                border-b-2 border-gray-200
+                bg-gray-100
+                text-left text-xs
+                font-semibold
+                text-gray-700
+                uppercase
+                tracking-wider
+              "
+            >
+              Status
+            </th>
+            <th
+              class="
+                px-5
+                py-3
+                border-b-2 border-gray-200
+                bg-gray-100
+                text-left text-xs
+                font-semibold
+                text-gray-700
+                uppercase
+                tracking-wider
+              "
+            >
+              View
+            </th>
+          </thead>
+          <tbody>
+            <tr v-for="(item, index) in departmentDocuments" :key="item.id">
+              <td class="px-2 py-3 border-gray-200 bg-white text-sm">
+                <div class="flex">
+                  <div class="ml-3">
+                    <p class="text-gray-900 whitespace-no-wrap">
+                      {{ item.documentType.name }}
+                    </p>
+                  </div>
+                </div>
+              </td>
+              <td class="px-2 py-1 border-gray-200 bg-white text-sm">
+                <div class="flex">
+                  <div class="ml-3">
+                    <p class="text-gray-900 whitespace-no-wrap">
+                      {{ item.documentType.description }}
+                    </p>
+                  </div>
+                </div>
+              </td>
+
+              <td class="px-2 py-1 border-gray-200 bg-white text-sm">
+                <div class="flex">
+                  <div class="">
+                    <input
+                      type="file"
+                      :required="item.isRequired"
+                      :id="`files${index}`"
+                      accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
+                      :ref="`imageUploader${index}`"
+                      class="custom-file-input"
+                      v-on:change="handleFileUpload(item, $event)"
+                    />
+                  </div>
+                </div>
+              </td>
+
+              <td class="px-4 py-1 border-gray-200 bg-white text-sm">
+                <div class="flex text-center">
+                  <div>
+                    <i class="fa fa-check" title="Uploaded"> </i>
+                  </div>
+                </div>
+              </td>
+              <td class="px-2 py-1 border-gray-200 bg-white text-sm">
+                <div class="flex bg-white">
+                  <div class="bg-white">
+                    <span
+                      data-bs-toggle="modal"
+                      data-bs-target="#filePreview"
+                      @click="
+                        previewFile(
+                          item.documentType.code,
+                          item.documentType.name
+                        )
+                      "
+                    >
+                      <i
+                        class="fa fa-eye cursor-pointer"
+                        aria-hidden="true"
+                      ></i>
+                    </span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <button
+      class="
+        mt-8
+        inline-block
+        px-6
+        py-2.5
+        bg-blue-600
+        text-white
+        font-medium
+        text-xs
+        leading-tight
+        uppercase
+        rounded
+        shadow-md
+        hover:bg-blue-700 hover:shadow-lg
+        focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
+        active:bg-blue-800 active:shadow-lg
+        transition
+        duration-150
+        ease-in-out
+      "
+      @click="next()"
+    >
+      next
+    </button>
   </div>
   <filePreview :modalData="filePreviewData"> </filePreview>
 </template>
@@ -110,11 +411,13 @@ import { boolean } from "yargs";
 export default {
   components: { filePreview },
 
-  setup(props,{ emit }) {
+  setup(props, { emit }) {
     let store = useStore();
     let documents = ref([]);
     let imageUploader = ref(null);
-    let fileName = ref({});
+    let goToNext = ref(false);
+    let departmentDocuments = [];
+
     documents = [
       {
         documentName: "passport",
@@ -159,8 +462,7 @@ export default {
     let showPreview = ref("");
     maxFileSize.value = MAX_FILE_SIZE.MAX_FILE_SIZE;
     let generalInfo = ref({});
-
-    let documentUploaded = ref({});
+    let documentUploaded = ref([]);
     const previewFile = (code, name) => {
       filePreviewData.value.isImage = isImage.value[code];
       filePreviewData.value.isPdf = isPdf.value[code];
@@ -169,16 +471,17 @@ export default {
       // console.log(filePreviewData.value);
     };
 
-    const handleFileUpload = (code, event) => {
-      console.log(event?.target?.files);
-      documentUploaded.value[code] = event?.target?.files[0];
-      fileName.value[code] = documentUploaded.value[code].name;
-      console.log(documentUploaded.value);
+    const handleFileUpload = (data, event) => {
       let reader = new FileReader();
-      isImage.value[code] = true;
-      let fileS = documentUploaded.value[code].size;
+      let readerResult={};
+      isImage.value[
+        data.educationalLevel ? data.educationalLevel.code : ""
+      ] = true;
+      let fileS = event.target.files[0].size;
       if (fileS <= maxFileSize.value / 1000) {
-        fileSizeExceed.value[code] = false;
+        fileSizeExceed.value[
+          data.educationalLevel ? data.educationalLevel.code : ""
+        ] = false;
         showImage.value = true;
 
         if (fileS > 0 && fileS < 1000) {
@@ -190,39 +493,87 @@ export default {
         }
         reader.addEventListener(
           "load",
-          function() {
+          function () {
             showPreview.value = true;
 
-            previewDocuments.value[code] = reader.result;
+            previewDocuments.value[
+              data.educationalLevel ? data.educationalLevel.code : ""
+            ] = reader.result;
+            readerResult=reader.result;
           },
           false
         );
-        if (documentUploaded.value[code]) {
-          if (/\.(jpe?g|png|gif)$/i.test(documentUploaded.value[code].name)) {
-            isImage.value[code] = true;
-            isPdf.value[code] = false;
+        if (event.target.files[0]) {
+          if (/\.(jpe?g|png|gif)$/i.test(event.target.files[0].name)) {
+            isImage.value[
+              data.educationalLevel ? data.educationalLevel.code : ""
+            ] = true;
+            isPdf.value[
+              data.educationalLevel ? data.educationalLevel.code : ""
+            ] = false;
 
-            reader.readAsDataURL(documentUploaded.value[code]);
-          } else if (/\.(pdf)$/i.test(documentUploaded.value[code].name)) {
-            isImage.value[code] = false;
-            isPdf.value[code] = true;
-            reader.readAsDataURL(documentUploaded.value[code]);
+            reader.readAsDataURL(event.target.files[0]);
+            documentUploaded.value.push({
+              educationalLevelId: data.educationalLevel
+                ? data.educationalLevel.id
+                : "",
+              documentTypeId: data.documentType ? data.documentType.id : "",
+              file:event.target.files[0],
+              fileName: event.target.files[0].name,
+            });
+          } else if (/\.(pdf)$/i.test(event.target.files[0].name)) {
+            isImage.value[
+              data.educationalLevel ? data.educationalLevel.code : ""
+            ] = false;
+            isPdf.value[
+              data.educationalLevel ? data.educationalLevel.code : ""
+            ] = true;
+            reader.readAsDataURL(event.target.files[0]);
+            documentUploaded.value.push({
+              educationalLevelId: data.educationalLevel
+                ? data.educationalLevel.id
+                : "",
+              documentTypeId: data.documentType ? data.documentType.id : "",
+              file: event.target.files[0],
+              fileName: event.target.files[0].name,
+            });
           }
         }
       } else {
-        fileSizeExceed.value[code] = true;
-        documentUploaded.value[code] = "";
+        fileSizeExceed.value[
+          data.educationalLevel ? data.educationalLevel.code : ""
+        ] = true;
+        event.target.files[0] = "";
       }
     };
-    const next = () =>
-    {
-emit('changeActiveState');
-    }
-       onMounted(()=>
-    {
-        generalInfo.value = store.getters["newlicense/getGeneralInfo"];
-        console.log(generalInfo.value);
-    })
+    const next = () => {
+      console.log(documentUploaded);
+      // emit("changeActiveState");
+    };
+    onMounted(() => {
+      generalInfo.value = store.getters["newlicense/getGeneralInfo"];
+      generalInfo.value
+        ? generalInfo.value.multipleDepartment.forEach((element) => {
+            departmentDocuments.push({
+              educationData: element,
+              id: 1,
+              documentType: {
+                name: "Tempo",
+                code: "TEMP",
+                description: "doc",
+                id: 1,
+              },
+              isRequired: true,
+              educationalLevel: {
+                code: "DEG",
+                name: "Degree",
+                id: 2,
+              },
+              isCommonDocument: false,
+            });
+          })
+        : "";
+    });
     return {
       documents,
       files,
@@ -231,10 +582,12 @@ emit('changeActiveState');
       previewDocuments,
       showPreview,
       previewFile,
+      generalInfo,
+      goToNext,
+      departmentDocuments,
       imageUploader,
       filePreviewData,
-      fileName,
-      next
+      next,
     };
   },
 };
@@ -254,5 +607,26 @@ emit('changeActiveState');
 }
 .document-name {
   font-size: small;
+}
+.custom-file-input::-webkit-file-upload-button {
+  visibility: hidden;
+}
+.custom-file-input::before {
+  content: "Upload";
+  display: inline-block;
+  background: #089ca7;
+  border-radius: 3px;
+  padding: 5px 5px;
+  outline: none;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 14px;
+}
+.custom-file-input:hover::before {
+}
+.custom-file-input:active::before {
+  background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
 }
 </style>

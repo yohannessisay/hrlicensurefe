@@ -79,7 +79,11 @@
             <div class="flex">
               <div class="flex flex-col mb-medium w-2/5 ml-medium mr-12">
                 <label class="text-primary-700">Woreda</label>
-                <select class="max-w-3xl" v-model="generalInfo.woredaSelected" required>
+                <select
+                  class="max-w-3xl"
+                  v-model="generalInfo.woredaSelected"
+                  required
+                >
                   <option
                     v-for="woreda in woredas"
                     v-bind:key="woreda.name"
@@ -139,8 +143,8 @@
           <!-- end -->
 
           <!-- educational institution and department -->
-          <div id="main">
-            <div class="flex  mt-4 pt-8">
+          <div id="main" v-if="generalInfo.multipleDepartment.length < 3">
+            <div class="flex mt-4 pt-8">
               <div class="flex flex-col mb-medium w-2/5 ml-medium mr-12">
                 <label class="text-primary-700">Department</label>
                 <select
@@ -156,11 +160,6 @@
                     {{ department.name }}
                   </option>
                 </select>
-                <!-- <span
-                v-if="licenseInfoErrors.departmentId !== null"
-                style="color: red"
-                >{{ licenseInfoErrors.departmentId }}</span
-              > -->
               </div>
               <div class="flex flex-col mb-medium w-2/5 ml-medium mr-12">
                 <label class="text-primary-700">Educational Institution</label>
@@ -176,11 +175,7 @@
                     {{ institution.name }}
                   </option>
                 </select>
-                <!-- <span
-                v-if="licenseInfoErrors.institutionId !== null"
-                style="color: red"
-                >{{ licenseInfoErrors.institutionId }}</span
-              > -->
+
                 <input
                   v-model="generalInfo.otherEducationalInstitution"
                   v-if="showOtherEducation"
@@ -205,11 +200,7 @@
                     {{ pf.name }}
                   </option>
                 </select>
-                <!-- <span
-                 v-if="licenseInfoErrors.institutionId !== null"
-                 style="color: red"
-                 >{{ licenseInfoErrors.institutionId }}</span
-               > -->
+
                 <input
                   v-model="generalInfo.otherProfessionalType"
                   v-if="showOtherProfession"
@@ -227,7 +218,10 @@
               </div>
               <div class="flex flex-col mb-medium w-2/5 mr-12 ml-medium">
                 <label class="text-primary-700">Education Level </label>
-                <select class="max-w-3xl" v-model="generalInfo.educationalLevelSelected">
+                <select
+                  class="max-w-3xl"
+                  v-model="generalInfo.educationalLevelSelected"
+                >
                   <option
                     v-for="educationalLevel in educationalLevels"
                     v-bind:key="educationalLevel.name"
@@ -246,6 +240,9 @@
             <span v-if="multipleDepartmentError" style="color: red"
               >Please fill all fields</span
             >
+            <span v-if="checkForAddedError" style="color: red"
+              >You already added the department</span
+            >
             <span v-if="multipleDepartmentMaxError" style="color: red"
               >Only three departments can be selected</span
             >
@@ -253,36 +250,82 @@
               Add
             </button>
           </div>
-          <div v-if="generalInfo.multipleDepartment.length > 0" class="table-multiple">
-            <table class=" h-full">
+          <div
+            v-if="generalInfo.multipleDepartment.length > 0"
+            class="table-multiple"
+          >
+            <table class="h-full">
               <thead>
                 <th
-                  class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                  class="
+                    px-5
+                    py-3
+                    border-b-2 border-gray-200
+                    bg-gray-100
+                    text-left text-xs
+                    font-semibold
+                    text-gray-700
+                    uppercase
+                    tracking-wider
+                  "
                 >
                   Department
                 </th>
                 <th
-                  class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                  class="
+                    px-5
+                    py-3
+                    border-b-2 border-gray-200
+                    bg-gray-100
+                    text-left text-xs
+                    font-semibold
+                    text-gray-700
+                    uppercase
+                    tracking-wider
+                  "
                 >
                   Education Level
                 </th>
                 <th
-                  class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                  class="
+                    px-5
+                    py-3
+                    border-b-2 border-gray-200
+                    bg-gray-100
+                    text-left text-xs
+                    font-semibold
+                    text-gray-700
+                    uppercase
+                    tracking-wider
+                  "
                 >
                   Institution
                 </th>
                 <th
-                  class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                  class="
+                    px-5
+                    py-3
+                    border-b-2 border-gray-200
+                    bg-gray-100
+                    text-left text-xs
+                    font-semibold
+                    text-gray-700
+                    uppercase
+                    tracking-wider
+                  "
                 >
                   Professional Type
                 </th>
               </thead>
               <tbody class="">
-                <tr v-for="(item, index) in generalInfo.multipleDepartment">
+                <tr
+                  v-for="item in generalInfo.multipleDepartment"
+                  :key="item.id"
+                >
                   <td class="px-2 py-3 border-gray-200 bg-white text-sm">
                     <div class="flex">
                       <div class="ml-3">
-                        <p class="text-gray-900 ">
+                        <p class="text-gray-900">
                           {{ item.department.name }}
                         </p>
                       </div>
@@ -291,7 +334,7 @@
                   <td class="px-2 py-3 border-gray-200 bg-white text-sm">
                     <div class="flex">
                       <div class="ml-3">
-                        <p class="text-gray-900 ">
+                        <p class="text-gray-900">
                           {{ item.educationalLevel.name }}
                         </p>
                       </div>
@@ -300,7 +343,7 @@
                   <td class="px-2 py-3 border-gray-200 bg-white text-sm">
                     <div class="flex">
                       <div class="ml-3">
-                        <p class="text-gray-900 ">
+                        <p class="text-gray-900">
                           {{ item.institution.name }}
                         </p>
                       </div>
@@ -309,7 +352,7 @@
                   <td class="px-2 py-3 border-gray-200 bg-white text-sm">
                     <div class="flex">
                       <div class="ml-3">
-                        <p class="text-gray-900 ">
+                        <p class="text-gray-900">
                           {{ item.professionalType.name }}
                         </p>
                       </div>
@@ -334,18 +377,12 @@
 </template>
 <script>
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
-import { mapGetters, useStore } from "vuex";
-import FlashMessage from "@/sharedComponents/FlashMessage";
-import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
-import Spinner from "@/sharedComponents/Spinner";
+import { useStore } from "vuex";
 import { ref, onMounted } from "vue";
 export default {
   props: ["activeState"],
   components: {
     TitleWithIllustration,
-    FlashMessage,
-    ErrorFlashMessage,
-    Spinner,
   },
 
   setup(props, { emit }) {
@@ -378,9 +415,9 @@ export default {
     let otherProfessionalTypeAmharic = ref("");
     let otherProfessionalType = ref("");
     let showOtherProfession = ref(false);
-    let multipleDepartment = ref([]);
     let multipleDepartmentError = ref(false);
     let multipleDepartmentMaxError = ref(false);
+    let checkForAddedError = ref(false);
     let generalInfo = ref({
       educationalLevelSelected: "",
       applicantTypeSelected: "",
@@ -496,24 +533,61 @@ export default {
         showOtherProfession.value = false;
       }
     };
+
+    const checkForAdded = (data) => {
+      let tempStatus = false;
+      if (generalInfo.value.multipleDepartment) {
+        generalInfo.value.multipleDepartment.forEach((element) => {
+          if (element.department.code == data.code) {
+            checkForAddedError.value = true;
+            tempStatus = true;
+          } 
+        });
+        return tempStatus;
+      }
+    };
     const addMultiple = () => {
       if (
-       generalInfo.value.departmentSelected?.name &&
-       generalInfo.value.educationalLevelSelected?.name &&
-        generalInfo.value.institutionSelected?.name &&
-        generalInfo.value.professionalTypeSelected?.name
+        generalInfo.value.departmentSelected &&
+        generalInfo.value.educationalLevelSelected &&
+        generalInfo.value.institutionSelected &&
+        generalInfo.value.professionalTypeSelected
       ) {
         if (generalInfo.value.multipleDepartment.length > 3) {
           multipleDepartmentMaxError.value = true;
         } else {
           multipleDepartmentMaxError.value = false;
           multipleDepartmentError.value = false;
-          generalInfo.value.multipleDepartment.push({
-            department: generalInfo.value.departmentSelected,
-            educationalLevel: generalInfo.value.educationalLevelSelected,
-            institution: generalInfo.value.institutionSelected,
-            professionalType: generalInfo.value.professionalTypeSelected,
-          });
+
+          if (
+            generalInfo.value.multipleDepartment.length > 0 &&
+            generalInfo.value.multipleDepartment.length <= 3
+          ) {
+           
+            if (
+              checkForAdded(
+                generalInfo.value.departmentSelected
+                  ? generalInfo.value.departmentSelected
+                  : ""
+              ) == false
+            ) {
+              checkForAddedError.value = false;
+              generalInfo.value.multipleDepartment.push({
+                department: generalInfo.value.departmentSelected,
+                educationalLevel: generalInfo.value.educationalLevelSelected,
+                institution: generalInfo.value.institutionSelected,
+                professionalType: generalInfo.value.professionalTypeSelected,
+              });
+            }
+          } else {
+            checkForAddedError.value = false;
+            generalInfo.value.multipleDepartment.push({
+              department: generalInfo.value.departmentSelected,
+              educationalLevel: generalInfo.value.educationalLevelSelected,
+              institution: generalInfo.value.institutionSelected,
+              professionalType: generalInfo.value.professionalTypeSelected,
+            });
+          }
           generalInfo.value.departmentSelected = "";
           generalInfo.value.educationalLevelSelected = "";
           generalInfo.value.institutionSelected = "";
@@ -524,11 +598,11 @@ export default {
       }
     };
     const apply = () => {
-      store.dispatch('newlicense/setGeneralInfo', generalInfo.value).then( ()=>
-      {
-      emit("changeActiveState");
-
-      })
+      store
+        .dispatch("newlicense/setGeneralInfo", generalInfo.value)
+        .then(() => {
+          emit("changeActiveState");
+        });
     };
     onMounted(async () => {
       await fetchApplicantType();
@@ -557,6 +631,7 @@ export default {
       applicantTypes,
       regions,
       woredas,
+      checkForAddedError,
       zones,
       professionalTypes,
       showOccupation,
@@ -574,818 +649,12 @@ export default {
       otherProfessionalType,
       otherProfessionalTypeAmharic,
       educationalLevelSelected,
-      multipleDepartment,
       multipleDepartmentError,
       multipleDepartmentMaxError,
-      generalInfo
+      generalInfo,
     };
   },
 };
-
-//   async created() {
-//     this.draftStatus = this.$route.params.status;
-//     await this.fetchApplicantType();
-//     await this.fetchDepartments();
-//     await this.fetchRegions();
-//     await this.fetchEnglishSpeaker();
-//     await this.fetchPayrollData();
-//     await this.fetchEducationLevel();
-//     this.showLoading = true;
-//     setTimeout(() => {
-//       this.buttons = this.getButtons;
-//       console.log(this.buttons);
-//       this.showButtons = true;
-//       this.showLoading = false;
-//     }, 5000);
-//     console.table(this.buttons);
-//     if (this.getLicense && Object.keys(this.getLicense).length != 0) {
-//       let draftData = this.getLicense;
-//       this.licenseInfo.applicantId = draftData.applicantId;
-//       this.licenseInfo.applicantTypeId = draftData.applicantTypeId;
-//       this.licenseInfo.education.departmentId =
-//         draftData.education.departmentId;
-//       if (this.licenseInfo.applicantTypeId == 1) {
-//         this.fetchInstitutions(true);
-//       } else {
-//         this.fetchInstitutions(false);
-//       }
-//       this.licenseInfo.education.institutionId =
-//         draftData.education.institutionId;
-//       this.licenseInfo.educationalLevelId = draftData.educationalLevelId;
-//       this.licenseInfo.nativeLanguageId = draftData.nativeLanguageId;
-//       this.setEducationLevel(this.licenseInfo.educationalLevelId);
-//       this.licenseInfo.expertLevelId = draftData.expertLevelId;
-//       if (this.licenseInfo.applicantTypeId == 1) {
-//         this.$store.dispatch("newlicense/getExpertLevel").then((res) => {
-//           this.expertLevels = res.data.data.filter(function(e) {
-//             return e.code.includes("REG");
-//           });
-//         });
-//       } else {
-//         this.$store.dispatch("newlicense/getExpertLevel").then((res) => {
-//           this.expertLevels = res.data.data.filter(function(e) {
-//             return e.code.includes("FED");
-//           });
-//         });
-//       }
-//       if (this.licenseInfo.applicantTypeId == 1) {
-//         this.showRegion = true;
-//       } else {
-//         this.showRegion = false;
-//         this.displayEnglishLanguageOption = true;
-//       }
-//       if (
-//         draftData.regionId != undefined ||
-//         draftData.regionId ||
-//         draftData.regionId != ""
-//       ) {
-//         this.regionID = draftData.regionId;
-//         this.fetchZones();
-//         if (draftData.zoneId != undefined || draftData.zoneId) {
-//           this.zoneID = draftData.zoneId;
-//           this.fetchWoredas();
-//           if (
-//             draftData.residenceWoredaId != undefined ||
-//             draftData.residenceWoredaId
-//           ) {
-//             this.licenseInfo.residenceWoredaId = draftData.residenceWoredaId;
-//           }
-//         }
-//       }
-//       if (this.licenseInfo.education.departmentId != "") {
-//         this.showProfessionalTypes = true;
-//         await this.fetchProfessionalType(
-//           this.licenseInfo.education.departmentId
-//         );
-//         for (var j = 0; j < this.professionalTypes.length; j++) {
-//           for (var i = 0; i < draftData.professionalTypeIds.length; i++) {
-//             if (
-//               this.professionalTypes[j].id == draftData.professionalTypeIds[i]
-//             ) {
-//               this.professionalTypes[j].checked = true;
-//             }
-//           }
-//         }
-//         for (var k = 0; k < draftData.professionalTypeIds.length; k++) {
-//           this.licenseInfo.professionalTypeIds.push(
-//             draftData.professionalTypeIds[k]
-//           );
-//         }
-//       }
-//       if (
-//         draftData.otherProfessionalType != null ||
-//         draftData.otherProfessionalType != ""
-//       ) {
-//         this.showOtherProfession = true;
-//         this.licenseInfo.otherProfessionalType =
-//           draftData.otherProfessionalType;
-//       }
-//     } else if (this.$route.params.id != undefined) {
-//       this.draftId = this.$route.params.id;
-//       if (this.draftId != undefined || this.draftStatus) {
-//         setTimeout(() => {
-//           this.fetchDraft();
-//         }, 6500);
-//       }
-//     } else {
-//     }
-//   },
-//   computed: {
-//     ...mapGetters({
-//       getButtons: "newlicense/getButtons",
-//       getDraft: "newlicense/getDraft",
-//       getLicense: "newlicense/getLicense",
-//     }),
-//   },
-//   data: () => ({
-//     licenseInfo: {
-//       applicantId: +localStorage.getItem("userId"),
-//       applicantTypeId: null,
-//       education: {
-//         departmentId: null,
-//         institutionId: null,
-//         id: null,
-//       },
-//       residenceWoredaId: null,
-//       professionalTypeIds: [],
-//       nativeLanguageId: null,
-//       occupationTypeId: null,
-//       expertLevelId: null,
-//       educationalLevelId: null,
-//       otherEducationalInstitution: null,
-//       otherProfessionalType: null,
-//       otherProfessionalTypeAmharic: null,
-//       applicationStatusId: null,
-//     },
-//     licenseInfoErrors: {
-//       applicantTypeId: null,
-//       departmentId: null,
-//       institutionId: null,
-//       educationalLevelId: null,
-//     },
-//     regionID: "",
-//     zoneID: "",
-
-//     regionArray: [],
-//     zoneArray: [],
-//     woredaArray: [],
-//     expertLevels: [],
-//     educationLevel: [],
-
-//     professionalTypes: [],
-
-//     applicantTypes: [],
-//     institutions: [],
-//     departments: [],
-//     buttons: [],
-//     showButtons: false,
-//     showFlash: false,
-//     showErrorFlash: false,
-//     showLoading: false,
-//     showRegion: false,
-
-//     displayEnglishLanguageOption: false,
-//     displayPayrollDoc: false,
-
-//     nativeEnglishSpeaker: false,
-//     payrollDocType: false,
-
-//     englishData: "",
-//     payrollData: "",
-//     educationData: [],
-//     showProfessionalTypes: false,
-
-//     professionalTypeRepeat: false,
-//     professionalTypeLimit: false,
-//     repeatedProfArray: [],
-
-//     institution: "",
-//     showOtherEducation: false,
-
-//     profession: "",
-//     showOtherProfession: false,
-//     checkedProfessionalTypes: [],
-//   }),
-
-//   methods: {
-//     fetchEnglishSpeaker() {
-//       this.$store.dispatch("lookups/getNativeLanguage").then((res) => {
-//         if (res.data.status == "Success") {
-//           this.englishData = res.data;
-//         } else {
-//         }
-//       });
-//     },
-
-//     fetchEducationLevel() {
-//       this.$store.dispatch("lookups/getEducationalLevel").then((res) => {
-//         if (res.data.status == "Success") {
-//           this.educationData = res.data.data;
-//         }
-//       });
-//     },
-//     fetchPayrollData() {
-//       this.$store.dispatch("lookups/getGovernment").then((res) => {
-//         if (res.data.status == "Success") {
-//           this.payrollData = res.data;
-//         } else {
-//         }
-//       });
-//     },
-//     checkOtherEducation(institution) {
-//       this.licenseInfo.education.institutionId = institution.id;
-//       if (institution.name == "Other") {
-//         this.showOtherEducation = true;
-//       } else {
-//         this.showOtherEducation = false;
-//       }
-//     },
-//     checkOtherProfession(profession, event) {
-//       this.professionalTypeRepeat = false;
-//       if (!event.target.checked) {
-//         for (var i = 0; i < this.licenseInfo.professionalTypeIds.length; i++) {
-//           if (this.licenseInfo.professionalTypeIds[i] == profession.id) {
-//             this.licenseInfo.professionalTypeIds.splice(i, 1);
-//           }
-//         }
-//         if (profession.name == "Other") {
-//           this.showOtherProfession = false;
-//         }
-//       } else if (this.licenseInfo.professionalTypeIds.length + 1 > 3) {
-//         this.professionalTypeLimit = true;
-//         event.target.checked = false;
-//         for (var i = 0; i < this.licenseInfo.professionalTypeIds.length; i++) {
-//           if (this.licenseInfo.professionalTypeIds[i] == profession.id) {
-//             this.licenseInfo.professionalTypeIds.splice(i, 1);
-//           }
-//         }
-//       } else {
-//         this.professionalTypeLimit = false;
-//         this.repeatedProfArray = [];
-//         if (profession.name == "Other") {
-//           this.showOtherProfession = true;
-//         }
-//         if (!this.licenseInfo.professionalTypeIds.includes(profession.id)) {
-//           this.licenseInfo.professionalTypeIds.push(profession.id);
-//         } else {
-//           for (
-//             var i = 0;
-//             i < this.licenseInfo.professionalTypeIds.length;
-//             i++
-//           ) {
-//             if (this.licenseInfo.professionalTypeIds[i] == profession.id) {
-//               this.licenseInfo.professionalTypeIds.splice(i, 1);
-//             }
-//           }
-//         }
-//       }
-//     },
-//     checkApplicantType(applicantType) {
-//       this.regionID = null;
-//       this.zoneID = null;
-//       this.licenseInfo.residenceWoredaId = null;
-//       if (applicantType == 1) {
-//         this.licenseInfo.expertLevelId = 4;
-//         this.fetchInstitutions(true);
-//         this.showRegion = true;
-//       } else {
-//         this.licenseInfo.expertLevelId = 3;
-//         this.fetchInstitutions(false);
-//         this.showRegion = false;
-//       }
-//       if (applicantType == 1) {
-//         this.$store.dispatch("newlicense/getExpertLevel").then((res) => {
-//           this.expertLevels = res.data.data.filter(function(e) {
-//             return e.code.includes("REG");
-//           });
-//         });
-//       } else {
-//         this.$store.dispatch("newlicense/getExpertLevel").then((res) => {
-//           this.expertLevels = res.data.data.filter(function(e) {
-//             return e.code.includes("FED");
-//           });
-//         });
-//       }
-//       if (applicantType == 1) {
-//         this.displayPayrollDoc = true;
-//       } else {
-//         this.displayPayrollDoc = false;
-//       }
-//       if (applicantType == 2) {
-//         this.displayEnglishLanguageOption = true;
-//       } else {
-//         this.displayEnglishLanguageOption = false;
-//       }
-//     },
-//     setEnglishLanguage() {
-//       if (this.languageID == 1) {
-//         this.nativeEnglishSpeaker = false;
-//         window.localStorage.setItem("language", "english");
-//       } else {
-//         this.nativeEnglishSpeaker = true;
-//         window.localStorage.setItem("language", "non-english");
-//       }
-//     },
-//     setEducationLevel(educationLevelId) {
-//       if (educationLevelId == 1) {
-//         window.localStorage.setItem("educationalLevel", "diploma");
-//       } else if (educationLevelId == 2) {
-//         window.localStorage.setItem("educationalLevel", "degree");
-//       } else if (educationLevelId == 3) {
-//         window.localStorage.setItem("educationalLevel", "masters");
-//       } else {
-//         window.localStorage.setItem("educationalLevel", "phd");
-//       }
-//     },
-//     setPayrollDoc(id) {
-//       if (id == 2) {
-//         window.localStorage.setItem("payroll", "payroll");
-//       } else {
-//         window.localStorage.setItem("payroll", "non-payroll");
-//       }
-//     },
-
-//     draft(action) {
-//       this.licenseInfoErrors = this.validateForm(this.licenseInfo);
-//       if (
-//         this.licenseInfoErrors &&
-//         Object.keys(this.licenseInfoErrors).length === 0 &&
-//         Object.getPrototypeOf(this.licenseInfoErrors) === Object.prototype
-//       ) {
-//         this.showLoading = true;
-//         if (this.licenseInfo.professionalTypeIds.length <= 0) {
-//           this.licenseInfo.professionalTypeIds = [null];
-//         }
-//         let license = {
-//           data: {
-//             action: action,
-//             data: {
-//               applicantId: this.licenseInfo.applicantId,
-//               applicantTypeId: this.licenseInfo.applicantTypeId,
-//               education: {
-//                 departmentId: this.licenseInfo.education.departmentId,
-//                 institutionId: this.licenseInfo.education.institutionId,
-//                 id: this.licenseInfo.education.id,
-//               },
-//               residenceWoredaId: this.licenseInfo.residenceWoredaId,
-//               professionalTypeIds: this.licenseInfo.professionalTypeIds,
-//               educationalLevelId: this.licenseInfo.educationalLevelId,
-//               paymentSlip: null,
-//               occupationTypeId: this.licenseInfo.occupationTypeId,
-//               nativeLanguageId: this.licenseInfo.nativeLanguageId,
-//               expertLevelId: this.licenseInfo.expertLevelId,
-//               otherEducationalInstitution: this.licenseInfo
-//                 .otherEducationalInstitution,
-//               otherProfessionalType: this.licenseInfo.otherProfessionalType,
-//               otherProfessionalTypeAmharic: this.licenseInfo
-//                 .otherProfessionalTypeAmharic,
-//               applicationStatusId: this.licenseInfo.applicationStatusId,
-//             },
-//           },
-//           id: this.draftId,
-//         };
-//         if (this.draftId != undefined) {
-//           this.$store
-//             .dispatch("newlicense/editNewLicense", license)
-//             .then((res) => {
-//               if (res.data.status == "Success") {
-//                 this.showFlash = true;
-//                 this.showLoading = false;
-//                 setTimeout(() => {
-//                   this.$router.push({ path: "/menu" });
-//                 }, 1500);
-//               } else {
-//                 this.showErrorFlash = true;
-//               }
-//             });
-//         } else {
-//           this.$store
-//             .dispatch("newlicense/addNewLicense", license.data)
-//             .then((res) => {
-//               if (res.data.status == "Success") {
-//                 this.showFlash = true;
-//                 this.showLoading = false;
-//                 setTimeout(() => {}, 1500);
-//                 this.$router.push({ path: "/menu" });
-//               }
-//             });
-//         }
-//       }
-//     },
-//     update(action) {
-//       this.showLoading = true;
-//       let license = {
-//         data: {
-//           action: action,
-//           data: {
-//             applicantId: this.licenseInfo.applicantId,
-//             applicantTypeId: this.licenseInfo.applicantTypeId,
-//             education: {
-//               departmentId: this.licenseInfo.education.departmentId,
-//               institutionId: this.licenseInfo.education.institutionId,
-//               id: this.licenseInfo.education.id,
-//             },
-//             residenceWoredaId: this.licenseInfo.residenceWoredaId,
-//             professionalTypeIds: this.licenseInfo.professionalTypeIds,
-//             educationalLevelId: this.licenseInfo.educationalLevelId,
-//             paymentSlip: null,
-//             occupationTypeId: this.licenseInfo.occupationTypeId,
-//             nativeLanguageId: this.licenseInfo.nativeLanguageId,
-//             otherEducationalInstitution: this.licenseInfo
-//               .otherEducationalInstitution,
-//             expertLevelId: this.licenseInfo.expertLevelId,
-//             otherProfessionalType: this.licenseInfo.otherProfessionalType,
-//             otherProfessionalTypeAmharic: this.licenseInfo
-//               .otherProfessionalTypeAmharic,
-//             applicationStatusId: this.licenseInfo.applicationStatusId,
-//           },
-//         },
-//         id: this.draftId,
-//       };
-
-//       if (this.draftId != undefined) {
-//         this.$store
-//           .dispatch("newlicense/editNewLicense", license)
-//           .then((res) => {
-//             if (res.data.status == "Success") {
-//               this.showFlash = true;
-//               this.showLoading = false;
-//               setTimeout(() => {}, 1500);
-//               this.$router.push({ path: "/menu" });
-//             } else {
-//               this.showErrorFlash = true;
-//             }
-//           });
-//       } else {
-//         this.$store
-//           .dispatch("newlicense/addNewLicense", license.data)
-//           .then((res) => {
-//             if (res.data.status == "Success") {
-//               this.showFlash = true;
-//               this.showLoading = false;
-//               setTimeout(() => {}, 1500);
-//               this.$router.push({ path: "/menu" });
-//             }
-//           });
-//       }
-//     },
-//     withdraw(action) {
-//       this.showLoading = true;
-//       let withdrawObj = {
-//         action: action,
-//         data: this.getDraft,
-//       };
-//       let payload = {
-//         licenseId: this.getDraft.id,
-//         withdrawData: withdrawObj,
-//       };
-//       this.$store.dispatch("newlicense/withdraw", payload).then((res) => {
-//         if (res.data.status == "Success") {
-//           this.showFlash = true;
-//           this.showLoading = false;
-//           setTimeout(() => {
-//             this.$router.push({ path: "/menu" });
-//           }, 1500);
-//         } else {
-//           this.showErrorFlash = true;
-//         }
-//       });
-//     },
-//     submit() {
-//       this.licenseInfoErrors = this.validateForm(this.licenseInfo);
-
-//       if (
-//         this.licenseInfoErrors &&
-//         Object.keys(this.licenseInfoErrors).length === 0 &&
-//         Object.getPrototypeOf(this.licenseInfoErrors) === Object.prototype
-//       ) {
-//         let license = {
-//           applicantId: this.licenseInfo.applicantId,
-//           applicantTypeId: this.licenseInfo.applicantTypeId,
-//           education: {
-//             departmentId: this.licenseInfo.education.departmentId,
-//             institutionId: this.licenseInfo.education.institutionId,
-//             id: this.licenseInfo.education.id,
-//           },
-//           regionId: this.regionID,
-//           zoneId: this.zoneID,
-//           residenceWoredaId: this.licenseInfo.residenceWoredaId,
-//           professionalTypeIds: this.licenseInfo.professionalTypeIds,
-//           educationalLevelId: this.licenseInfo.educationalLevelId,
-//           paymentSlip: null,
-//           occupationTypeId: this.licenseInfo.occupationTypeId,
-//           nativeLanguageId: this.licenseInfo.nativeLanguageId,
-//           expertLevelId: this.licenseInfo.expertLevelId,
-//           otherEducationalInstitution: this.licenseInfo
-//             .otherEducationalInstitution,
-//           otherProfessionalType: this.licenseInfo.otherProfessionalType,
-//           otherProfessionalTypeAmharic: this.licenseInfo
-//             .otherProfessionalTypeAmharic,
-//           applicationStatusId: this.licenseInfo.applicationStatusId,
-//         };
-
-//         let profTypes = {
-//           professionalTypeIds: this.licenseInfo.professionalTypeIds,
-//         };
-//         if (this.$route.params.status == undefined) {
-//           this.$store
-//             .dispatch("newlicense/searchProfessionalType", profTypes)
-//             .then((res) => {
-//               if (res.data.data.length > 0) {
-//                 this.professionalTypeRepeat = true;
-//                 this.repeatedProfArray = res.data.data;
-//               } else {
-//                 this.$emit("changeActiveState");
-//                 this.$emit(
-//                   "applicantTypeValue",
-//                   this.licenseInfo.applicantTypeId
-//                 );
-//                 this.$emit(
-//                   "nativeLanguageSet",
-//                   this.licenseInfo.nativeLanguageId
-//                 );
-//                 this.$emit(
-//                   "payrollDocumentSet",
-//                   this.licenseInfo.occupationTypeId
-//                 );
-//                 this.$emit("diplomaSet", this.licenseInfo.educationalLevelId);
-//                 localStorage.setItem(
-//                   "applicantTypeId",
-//                   this.licenseInfo.applicantTypeId
-//                 );
-//                 this.$store.dispatch("newlicense/setLicense", license);
-//               }
-//             });
-//         } else {
-//           this.$emit("changeActiveState");
-//           this.$emit("applicantTypeValue", this.licenseInfo.applicantTypeId);
-//           this.$emit("nativeLanguageSet", this.licenseInfo.nativeLanguageId);
-//           this.$emit("payrollDocumentSet", this.licenseInfo.occupationTypeId);
-//           this.$emit("diplomaSet", this.licenseInfo.educationalLevelId);
-//           localStorage.setItem(
-//             "applicantTypeId",
-//             this.licenseInfo.applicantTypeId
-//           );
-//           this.$store.dispatch("newlicense/setLicense", license);
-//         }
-//       }
-//     },
-//     fetchApplicantType() {
-//       this.$store.dispatch("newlicense/getApplicantType").then((res) => {
-//         const results = res.data.data;
-//         this.applicantTypes = results;
-//       });
-//     },
-//     fetchInstitutions(value) {
-//       this.$store.dispatch("newlicense/getInstitution", value).then((res) => {
-//         const results = res.data.data;
-//         this.institutions = results;
-//         if (this.getLicense && Object.keys(this.getLicense).length != 0) {
-//           let draftData = this.getLicense;
-//           if (draftData.education.institutionId != null) {
-//             this.licenseInfo.education.institutionId =
-//               draftData.education.institutionId;
-//             for (var i = 0; i < this.institutions.length; i++) {
-//               if (
-//                 this.institutions[i].id ==
-//                 this.licenseInfo.education.institutionId
-//               ) {
-//                 this.institution = this.institutions[i];
-//               }
-//             }
-//             if (this.institution.name == "Other") {
-//               this.showOtherEducation = true;
-//               this.licenseInfo.otherEducationalInstitution =
-//                 draftData.otherEducationalInstitution;
-//             }
-//           }
-//         } else {
-//           let draftData = this.getDraft;
-//           if (draftData?.education?.institutionId != null) {
-//             this.licenseInfo.education.institutionId =
-//               draftData.education.institutionId;
-//             for (var i = 0; i < this.institutions.length; i++) {
-//               if (
-//                 this.institutions[i].id ==
-//                 this.licenseInfo.education.institutionId
-//               ) {
-//                 this.institution = this.institutions[i];
-//               }
-//             }
-//             if (this.institution.name == "Other") {
-//               this.showOtherEducation = true;
-//               this.licenseInfo.otherEducationalInstitution =
-//                 draftData.otherEducationalInstitution;
-//             }
-//           }
-//         }
-//       });
-//     },
-//     fetchDepartments() {
-//       this.$store.dispatch("newlicense/getDepartmentType").then((res) => {
-//         const results = res.data.data;
-//         this.departments = results;
-//       });
-//     },
-//     fetchRegions() {
-//       this.$store.dispatch("newlicense/getRegions").then((res) => {
-//         const regionsResult = res.data;
-//         this.regionArray = regionsResult.data;
-//       });
-//     },
-
-//     fetchZones() {
-//       this.$store.dispatch("newlicense/getZones", this.regionID).then((res) => {
-//         const zonesResult = res.data;
-//         this.zoneArray = zonesResult.data;
-//       });
-//     },
-
-//     fetchWoredas() {
-//       this.$store.dispatch("newlicense/getWoredas", this.zoneID).then((res) => {
-//         const woredasResult = res.data;
-//         this.woredaArray = woredasResult.data;
-//       });
-//     },
-//     async fetchProfessionalType(id) {
-//       this.professionalTypes = [];
-//       this.repeatedProfArray = "";
-//       this.licenseInfo.professionalTypeIds = [];
-//       this.showProfessionalTypes = true;
-//       await this.$store
-//         .dispatch("newlicense/getProfessionalTypes", id)
-//         .then((res) => {
-//           this.professionalTypes = res.data.data;
-//         });
-//       // if (this.getLicense && Object.keys(this.getLicense).length != 0) {
-//       //   let draftData = this.getLicense;
-//       // } else {
-//       //   let draftData = this.getDraft;
-//       // }
-//     },
-//     woredaChanged() {},
-//     validateForm(formData) {
-//       const errors = {};
-//       if (formData.applicantTypeId == null) {
-//         errors.applicantTypeId = "Applicant Type Required";
-//       }
-//       if (formData.education.departmentId == null) {
-//         errors.departmentId = "Department Required";
-//       }
-//       if (formData.education.institutionId == null) {
-//         errors.institutionId = "Institution Required";
-//       }
-//       if (formData.educationalLevelId == null) {
-//         errors.educationalLevelId = "Education Level Required";
-//       }
-//       return errors;
-//     },
-
-//     isEmpty(obj) {
-//       for (var prop in obj) {
-//         if (obj.hasOwnProperty(prop)) {
-//           return false;
-//         }
-//       }
-
-//       return true;
-//     },
-//     async fetchDraft() {
-//       let draftData = this.getDraft;
-
-//       this.licenseInfo.applicantId = draftData.applicantId;
-//       this.licenseInfo.applicantTypeId = draftData.applicantTypeId;
-//       if (this.licenseInfo.applicantTypeId == 1) {
-//         this.fetchInstitutions(true);
-//       } else {
-//         this.fetchInstitutions(false);
-//       }
-//       this.licenseInfo.education.institutionId =
-//         draftData.education.institutionId;
-//       this.payrollData = draftData.occupationTypes;
-//       this.licenseInfo.expertLevelId = draftData.expertLevelId;
-//       this.licenseInfo.educationalLevelId = draftData.educationalLevelId;
-//       this.licenseInfo.education.departmentId =
-//         draftData.education.departmentId;
-//       this.licenseInfo.education.institutionId =
-//         draftData.education.institutionId;
-//       this.payrollData = draftData.occupationTypes;
-//       this.licenseInfo.expertLevelId = draftData.expertLevelId;
-//       this.licenseInfo.educationalLevelId = draftData.educationalLevelId;
-//       this.licenseInfo.education.id = draftData.education.id;
-//       this.licenseInfo.applicationStatusId = draftData.applicationStatusId;
-//       this.setEducationLevel(this.licenseInfo.educationalLevelId);
-//       if (this.licenseInfo.applicantTypeId == 1) {
-//         this.displayPayrollDoc = true;
-//         this.$store.dispatch("newlicense/getExpertLevel").then((res) => {
-//           this.expertLevels = res.data.data.filter(function(e) {
-//             return e.code.includes("REG");
-//           });
-//         });
-//         this.fetchPayrollData();
-//         this.licenseInfo.occupationTypeId = draftData.occupationTypeId;
-//       } else {
-//         this.displayEnglishLanguageOption = true;
-//         this.$store.dispatch("newlicense/getExpertLevel").then((res) => {
-//           this.expertLevels = res.data.data.filter(function(e) {
-//             return e.code.includes("FED");
-//           });
-//         });
-//         this.fetchEnglishSpeaker();
-//         this.licenseInfo.nativeLanguageId = draftData.nativeLanguageId;
-//       }
-//       this.licenseInfo.expertLevelId = draftData.expertLevelId;
-//       if (this.licenseInfo.expertLevelId == 4) {
-//         this.showRegion = true;
-//       } else {
-//         this.showRegion = false;
-//       }
-//       if (draftData.woreda || draftData.woreda != undefined) {
-//         this.licenseInfo.residenceWoredaId = draftData.woreda.id;
-//         if (draftData.woreda.zone || draftData.woreda.zone != undefined) {
-//           this.zoneID = draftData.woreda.zone.id;
-//           if (
-//             draftData.woreda.zone.region ||
-//             draftData.woreda.zone.region != undefined
-//           ) {
-//             this.regionID = draftData.woreda.zone.region.id;
-//           }
-//         }
-//       }
-//       if (this.licenseInfo.applicantTypeId == 1) {
-//         this.displayPayrollDoc = true;
-//       } else {
-//         this.displayPayrollDoc = false;
-//       }
-//       if (this.licenseInfo.applicantTypeId == 2) {
-//         this.displayEnglishLanguageOption = true;
-//       } else {
-//         this.displayEnglishLanguageOption = false;
-//       }
-//       this.$store
-//         .dispatch("newlicense/getZones", this.regionID)
-//         .then((res) => {
-//           const zonesResult = res.data;
-//           this.zoneArray = zonesResult.data;
-//         })
-//         .then((res) => {
-//           this.$store
-//             .dispatch("newlicense/getWoredas", this.zoneID)
-//             .then((res) => {
-//               const woredasResult = res.data;
-//               this.woredaArray = woredasResult.data;
-//             });
-//         });
-//       if (this.licenseInfo.education.departmentId != "") {
-//         this.showProfessionalTypes = true;
-//         await this.fetchProfessionalType(
-//           this.licenseInfo.education.departmentId
-//         );
-//         this.showOtherProfession = false;
-//         for (var k = 0; k < draftData.licenseProfessions.length; k++) {
-//           if (
-//             draftData.licenseProfessions[k].professionalTypes.name == "Other"
-//           ) {
-//             this.showOtherProfession = true;
-//             break;
-//           }
-//         }
-//         this.professionalTypes.map((profData) => {
-//           for (var j = 0; j < draftData.licenseProfessions.length; j++) {
-//             if (
-//               profData.id == draftData.licenseProfessions[j].professionalTypeId
-//             ) {
-//               profData.checked = true;
-//             }
-//             if (profData.name == "Other") {
-//               this.showOtherProfession = true;
-//             } else {
-//               this.showOtherProfession = false;
-//             }
-//           }
-//           return profData;
-//         });
-//       }
-//       if (draftData.licenseProfessions.length > 0) {
-//         for (var k = 0; k < draftData.licenseProfessions.length; k++) {
-//           this.licenseInfo.professionalTypeIds.push(
-//             draftData.licenseProfessions[k].professionalTypeId
-//           );
-//         }
-//       }
-//       if (
-//         draftData.otherProfessionalType != null ||
-//         draftData.otherProfessionalType != ""
-//       ) {
-//         this.showOtherProfession = true;
-//         this.licenseInfo.otherProfessionalType =
-//           draftData.otherProfessionalType;
-//         this.licenseInfo.otherProfessionalTypeAmharic =
-//           draftData.otherProfessionalTypeAmharic;
-//       }
-//     },
-//   },
-// };
 </script>
 <style>
 #main {
