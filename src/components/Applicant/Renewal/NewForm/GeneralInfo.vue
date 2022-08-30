@@ -542,7 +542,7 @@ export default {
       multipleDepartment: [],
     });
     const fetchApplicantType = () => {
-      store.dispatch("newlicense/getApplicantType").then((res) => {
+      store.dispatch("renewal/getApplicantType").then((res) => {
         const results = res.data.data;
         applicantTypes.value = results;
       });
@@ -553,19 +553,19 @@ export default {
       });
     };
     const fetchInstitutions = (value) => {
-      store.dispatch("newlicense/getInstitution", value).then((res) => {
+      store.dispatch("renewal/getInstitution", value).then((res) => {
         const institution = res.data.data;
         institutions.value = institution;
       });
     };
     const fetchDepartments = () => {
-      store.dispatch("newlicense/getDepartmentType").then((res) => {
+      store.dispatch("renewal/getDepartmentType").then((res) => {
         const department = res.data.data;
         departments.value = department;
       });
     };
     const fetchRegions = () => {
-      store.dispatch("newlicense/getRegions").then((res) => {
+      store.dispatch("renewal/getRegions").then((res) => {
         const regionsResult = res.data.data;
         regions.value = regionsResult;
       });
@@ -573,7 +573,7 @@ export default {
 
     const fetchZones = () => {
       store
-        .dispatch("newlicense/getZones", generalInfo.value.regionSelected.id)
+        .dispatch("renewal/getZones", generalInfo.value.regionSelected.id)
         .then((res) => {
           const zonesResult = res.data.data;
           zones.value = zonesResult;
@@ -582,14 +582,14 @@ export default {
 
     const fetchWoredas = () => {
       store
-        .dispatch("newlicense/getWoredas", generalInfo.value.zoneSelected.id)
+        .dispatch("renewal/getWoredas", generalInfo.value.zoneSelected.id)
         .then((res) => {
           const woredasResult = res.data.data;
           woredas.value = woredasResult;
         });
     };
     const fetchProfessionalType = (id) => {
-      store.dispatch("newlicense/getProfessionalTypes", id).then((res) => {
+      store.dispatch("renewal/getProfessionalTypes", id).then((res) => {
         professionalTypes.value = res.data.data;
       });
     };
@@ -710,7 +710,7 @@ export default {
         JSON.stringify(tempApplicationData)
       );
       store
-        .dispatch("newlicense/setGeneralInfo", generalInfo.value)
+        .dispatch("renewal/setGeneralInfo", generalInfo.value)
         .then(() => {
           emit("changeActiveState");
         });

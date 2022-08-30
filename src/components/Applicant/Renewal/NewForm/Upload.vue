@@ -562,7 +562,7 @@ export default {
       // emit("changeActiveState");
     };
     onMounted(() => {
-      generalInfo.value = store.getters["newlicense/getGeneralInfo"];
+      generalInfo.value = store.getters["renewal/getGeneralInfo"];
       generalInfo.value
         ? generalInfo.value.multipleDepartment.forEach((element) => {
             departmentDocuments.push({
