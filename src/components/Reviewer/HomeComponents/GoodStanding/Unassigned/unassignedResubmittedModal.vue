@@ -618,7 +618,7 @@ const toast = useToast();
     const check = () => {
       store
         .dispatch(
-          "reviewer/getNewLicenseApplication",
+          "reviewer/getGoodStandingApplication",
           props.modalDataIdResub.id
         )
         .then((res) => {

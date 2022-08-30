@@ -436,33 +436,35 @@
             rounded-b-md
           "
         >
-          <button
-            type="button"
-            class="
-              inline-block
-              px-6
-              text-white
-              font-medium
-              text-xs
-              leading-tight
-              uppercase
-              rounded
-              ml-4
-              shadow-lg
-              hover:bg-purple-700 hover:shadow-lg
-              focus:bg-purple-700
-              focus:shadow-lg
-              focus:outline-none
-              focus:ring-0
-              active:bg-purple-800 active:shadow-lg
-              transition
-              duration-150
-              ease-in-out
-            "
-            data-bs-dismiss="modal"
-          >
-            Continue Evaluating
-          </button>
+          <a :href="'/admin/newLicense/evaluate/' + licenseId">
+            <button
+              type="button"
+              class="
+                inline-block
+                px-6
+                text-white
+                font-medium
+                text-xs
+                leading-tight
+                uppercase
+                rounded
+                ml-4
+                shadow-lg
+                hover:bg-purple-700 hover:shadow-lg
+                focus:bg-purple-700
+                focus:shadow-lg
+                focus:outline-none
+                focus:ring-0
+                active:bg-purple-800 active:shadow-lg
+                transition
+                duration-150
+                ease-in-out
+              "
+              data-bs-dismiss="modal"
+            >
+              Continue Evaluating
+            </button>
+          </a>
           <button
             type="button"
             class="
@@ -497,7 +499,7 @@
 
 <script>
 import { useStore } from "vuex";
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted, watch,computed } from "vue";
 import moment from "moment";
 import Loading from "vue3-loading-overlay";
 // Import stylesheet
@@ -513,13 +515,13 @@ export default {
   },
   setup(props) {
     const store = useStore();
-const toast = useToast();
+    const toast = useToast();
     let show = ref(true);
     let showRes = ref(false);
     let showOptions = ref(false);
     let reviewer = ref({ id: "", name: "", expertLevel: "", role: "" });
     let adminId = +localStorage.getItem("adminId");
-
+    const licenseId = computed(() => props.modalDataId.id);
     let transfer = ref({
       reviewerId: "",
       licenseId: "",
@@ -561,40 +563,40 @@ const toast = useToast();
         .dispatch("reviewer/transferLicenseReview", transfer.value)
         .then((response) => {
           if (response.statusText == "Created") {
-                       toast.success("Selected application is successfully drafted", {
+            toast.success("Selected application is successfully drafted", {
               timeout: 5000,
               position: "bottom-center",
               pauseOnFocusLoss: true,
               pauseOnHover: true,
               icon: true,
             });
-            isLoading.value=false;
-                setTimeout(() => {
+            isLoading.value = false;
+            setTimeout(() => {
               window.location.reload();
             }, 3000);
           } else {
-                            toast.error("Error Occured", {
+            toast.error("Error Occured", {
               timeout: 5000,
               position: "bottom-center",
               pauseOnFocusLoss: true,
               pauseOnHover: true,
               icon: true,
             });
-            isLoading.value=false;
-                setTimeout(() => {
+            isLoading.value = false;
+            setTimeout(() => {
               window.location.reload();
             }, 3000);
           }
         })
         .catch(() => {
-                        toast.error("Error Occured", {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            });
-            isLoading.value=false;
+          toast.error("Error Occured", {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          });
+          isLoading.value = false;
         });
     };
 
@@ -706,6 +708,7 @@ const toast = useToast();
       setInput,
       showModal,
       resultQuery,
+      licenseId,
       isLoading,
       isLoadingStart,
       fullPage,

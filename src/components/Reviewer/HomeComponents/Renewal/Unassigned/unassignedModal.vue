@@ -230,7 +230,6 @@
                                 >
                                   Users
                                 </label>
-                               
                               </div>
                               <label class="block text-left">
                                 <div>
@@ -293,35 +292,35 @@
                                         </li>
                                       </ul>
                                     </div>
-                                     <div>
-                                  <button
-                                    class="
-                                      inline-block
-                                      px-6
-                                      py-2.5
-                                      bg-blue-600
-                                      text-white
-                                      font-medium
-                                      text-xs
-                                      leading-tight
-                                      uppercase
-                                      rounded
-                                      shadow-lg
-                                      hover:bg-blue-700 hover:shadow-lg
-                                      focus:bg-blue-700
-                                      focus:shadow-lg
-                                      focus:outline-none
-                                      focus:ring-0
-                                      active:bg-blue-800 active:shadow-lg
-                                      transition
-                                      duration-150
-                                      ease-in-out
-                                    "
-                                    @click="assignReviewer()"
-                                  >
-                                    Assign
-                                  </button>
-                                </div>
+                                    <div>
+                                      <button
+                                        class="
+                                          inline-block
+                                          px-6
+                                          py-2.5
+                                          bg-blue-600
+                                          text-white
+                                          font-medium
+                                          text-xs
+                                          leading-tight
+                                          uppercase
+                                          rounded
+                                          shadow-lg
+                                          hover:bg-blue-700 hover:shadow-lg
+                                          focus:bg-blue-700
+                                          focus:shadow-lg
+                                          focus:outline-none
+                                          focus:ring-0
+                                          active:bg-blue-800 active:shadow-lg
+                                          transition
+                                          duration-150
+                                          ease-in-out
+                                        "
+                                        @click="assignReviewer()"
+                                      >
+                                        Assign
+                                      </button>
+                                    </div>
                                   </div>
                                 </div>
                               </label>
@@ -489,10 +488,10 @@ import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 export default {
   props: ["modalDataId", "reviewers"],
   components: {
-    Loading
+    Loading,
   },
   computed: {
-    moment: () => moment
+    moment: () => moment,
   },
   setup(props) {
     const store = useStore();
@@ -506,7 +505,7 @@ export default {
     let assign = ref({
       reviewerId: "",
       renewalId: "",
-      createdByAdminId: ""
+      createdByAdminId: "",
     });
     let role = ref({});
     let isLoadingStart = ref(true);
@@ -524,7 +523,7 @@ export default {
         assign.value = {
           renewalId: licenseData.value.id,
           reviewerId: assign.value.reviewerId,
-          createdByAdminId: +localStorage.getItem("adminId")
+          createdByAdminId: +localStorage.getItem("adminId"),
         };
       }
 
@@ -532,40 +531,57 @@ export default {
         assign.value = {
           renewalId: licenseData.value.id,
           reviewerId: +localStorage.getItem("adminId"),
-          createdByAdminId: +localStorage.getItem("adminId")
+          createdByAdminId: +localStorage.getItem("adminId"),
         };
       }
-
+      let smsData = {
+        recipients: [
+          modalData.value && modalData.value.mobileNumber
+            ? "251" + modalData.value.mobileNumber
+            : "",
+        ],
+        message: licenseData.value
+          ? modalData.value.name
+            ? "Dear " +
+              modalData.value.name +
+              " your applied renewal license for " +
+              modalData.value.department +
+              " has been assigned a reviewer , after careful examination of your uploaded documents by our reviewers we will get back and notify you on each steps, Thank you for using eHPL. https://hrl.moh.gov.et/"
+            : ""
+          : "",
+      };
       isLoading.value = true;
 
       store
         .dispatch("reviewer/assignRenewalReviewer", assign.value)
-        .then(response => {
+        .then((response) => {
           if (response.statusText == "Created") {
-            toast.success("Selected reviewer is successfully assigned.", {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true
-            });
-            isLoading.value = false;
+            store.dispatch("sms/sendSms", smsData).then(() => {
+              toast.success("Selected reviewer is successfully assigned.", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
+              isLoading.value = false;
 
-                setTimeout(() => {
-              window.location.reload();
-            }, 3000);
+              setTimeout(() => {
+                window.location.reload();
+              }, 3000);
+            });
           } else {
             toast.error(response.data.message, {
               timeout: 5000,
               position: "bottom-center",
               pauseOnFocusLoss: true,
               pauseOnHover: true,
-              icon: true
+              icon: true,
             });
 
             isLoading.value = false;
 
-                setTimeout(() => {
+            setTimeout(() => {
               window.location.reload();
             }, 3000);
           }
@@ -576,13 +592,15 @@ export default {
             position: "bottom-center",
             pauseOnFocusLoss: true,
             pauseOnHover: true,
-            icon: true
+            icon: true,
           });
 
-                setTimeout(() => {
-              window.location.reload();
-            }, 3000);
+          setTimeout(() => {
+            window.location.reload();
+          }, 3000);
         });
+    
+    
     };
 
     const showModal = () => {
@@ -590,11 +608,11 @@ export default {
     };
     const resultQuery = () => {
       if (reviewer.value.name) {
-        let data = props.reviewers.filter(item => {
+        let data = props.reviewers.filter((item) => {
           return reviewer.value.name
             .toLowerCase()
             .split(" ")
-            .every(v => item.name.toLowerCase().includes(v));
+            .every((v) => item.name.toLowerCase().includes(v));
         });
 
         return data;
@@ -603,12 +621,12 @@ export default {
       }
     };
 
-    const setInput = value => {
+    const setInput = (value) => {
       reviewer.value = {
         id: value.id,
         name: value.name,
         expertLevel: value.expertLevel.code,
-        role: value.role.code
+        role: value.role.code,
       };
       assign.value.reviewerId = value.id;
       showOptions.value = false;
@@ -622,13 +640,13 @@ export default {
     const check = () => {
       store
         .dispatch("reviewer/getRenewalApplication", props.modalDataId.id)
-        .then(res => {
-          console.log(res)
+        .then((res) => {
+          console.log(res);
           if (
             res.data.status == "Success" &&
             res.data.message != "Renewal total count retrieved successfully!"
           ) {
-             result = res.data.data;
+            result = res.data.data;
             modalData.value.name =
               (result.profile ? result.profile.name + " " : "") +
               (result.profile ? result.profile.fatherName + "  " : " ") +
@@ -706,9 +724,9 @@ export default {
       fullPage,
       assignReviewer,
       onCancel,
-      modalData
+      modalData,
     };
-  }
+  },
 };
 </script>
 

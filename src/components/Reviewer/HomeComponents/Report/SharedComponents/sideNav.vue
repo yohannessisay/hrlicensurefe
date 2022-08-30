@@ -42,7 +42,7 @@
     <ul class="nav-links">
       <router-link to="admin/report">
         <li :class="$route.fullPath === '/admin/report' ? 'mb-2 active' : ''">
-          <a href="#UserManagement">
+          <a href="#Report">
             <i class="bx bx-table"></i>
 
             <span class="links_name">Report</span>

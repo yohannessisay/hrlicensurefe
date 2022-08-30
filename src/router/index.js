@@ -1127,13 +1127,35 @@ const routes = [
       ),
   },
 
-  //Report
-  {
-    path: "/admin/report",
-    name: "AdminReport",
-    component: () =>
-      import("../components/Reviewer/HomeComponents/Report/Report.vue"),
-  },
+    //Report
+    {
+      path: "/admin/report",
+      name: "AdminReport",
+      component: () =>
+        import(
+          "../components/Reviewer/HomeComponents/Report/Report.vue"
+        ),
+    },
+
+    //Legacy Data
+    {
+      path: "/admin/legacyData",
+      name: "LwegacyData",
+      component: () =>
+        import(
+          "../components/Reviewer/HomeComponents/LegacyData/legacy.vue"
+        ),
+    },
+
+    //Lookup Management
+    {
+      path: "/admin/lookupManagement",
+      name: "LookupManagement",
+      component: () =>
+        import(
+          "../components/Reviewer/HomeComponents/LookupManagement/lookupManagement.vue"
+        ),
+    },
 ];
 
 const router = createRouter({

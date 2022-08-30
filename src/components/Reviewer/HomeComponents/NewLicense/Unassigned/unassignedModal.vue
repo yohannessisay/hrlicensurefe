@@ -534,23 +534,40 @@ export default {
       }
 
       isLoading.value = true;
-
+      let smsData = {
+        recipients: [
+          modalData.value && modalData.value.mobileNumber
+            ? "251" + modalData.value.mobileNumber
+            : "",
+        ],
+        message: licenseData.value
+          ? modalData.value.name
+            ? "Dear " +
+              modalData.value.name +
+              " your applied new license for " +
+              modalData.value.department +
+              " has been assigned a reviewer , after careful examination of your uploaded documents by our reviewers we will get back and notify you on each steps, Thank you for using eHPL. https://hrl.moh.gov.et/"
+            : ""
+          : "",
+      };
       store
         .dispatch("reviewer/assignReviewer", assign.value)
         .then((response) => {
           if (response.statusText == "Created") {
-            isLoading.value = false;
-            toast.success("Selected Rviewer assigned Successfully", {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
+            store.dispatch("sms/sendSms", smsData).then(() => {
+              isLoading.value = false;
+              toast.success("Selected Rviewer assigned Successfully", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
+              isLoading.value = true;
+              setTimeout(() => {
+                window.location.reload();
+              }, 3000);
             });
-            isLoading.value = true;
-                setTimeout(() => {
-              window.location.reload();
-            }, 3000);
           } else {
             toast.error(
               "Sorry there seems to be a problem, please try again.",
@@ -563,7 +580,7 @@ export default {
               }
             );
             isLoading.value = true;
-                setTimeout(() => {
+            setTimeout(() => {
               window.location.reload();
             }, 3000);
           }
@@ -577,9 +594,9 @@ export default {
             icon: true,
           });
           isLoading.value = true;
-              setTimeout(() => {
-              window.location.reload();
-            }, 3000);
+          setTimeout(() => {
+            window.location.reload();
+          }, 3000);
         });
     };
 
@@ -626,7 +643,7 @@ export default {
             res.data.message !=
               "New licenses total count retrieved successfully!"
           ) {
-             result = res.data.data;
+            result = res.data.data;
             modalData.value.name =
               (result.profile ? result.profile.name + " " : "") +
               (result.profile ? result.profile.fatherName + "  " : " ") +

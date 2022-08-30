@@ -171,7 +171,7 @@ export default {
 
         store
           .dispatch(
-            "reviewerNewLicense/getNewLicenseOthersUnfinished",
+            "reviewerGoodStanding/getGoodStandingOthersUnfinished",
             adminStatus
           )
           .then((res) => {
@@ -179,7 +179,7 @@ export default {
 
             allInfo.value.assignApplication =
               store.getters[
-                "reviewerNewLicense/getNewLicenseOthersUnfinishedSearched"
+                "reviewerGoodStanding/getGoodStandingOthersUnfinishedSearched"
               ];
 
             for (let applicant in allInfo.value.assignApplication) {
@@ -191,13 +191,7 @@ export default {
                   allInfo.value.assignApplication[applicant].applicantType;
               }
             }
-            if (
-              store.getters[
-                "reviewerNewLicense/getNewLicenseOthersUnfinishedSearched"
-              ].length === 0
-            ) {
-              nothingToShow.value = true;
-            }
+      
 
             JSON.parse(JSON.stringify(allInfo.value.assignApplication)).forEach(
               (element) => {
@@ -283,13 +277,13 @@ export default {
         let statusId = res;
         let adminStatus = [statusId, adminId];
         store
-          .dispatch("reviewerNewLicense/getNewLicenseUnfinished", adminStatus)
+          .dispatch("reviewerGoodStanding/getGoodStandingUnfinished", adminStatus)
           .then((res) => {
             loading.value = false;
 
             allInfo.value.assignApplication =
               store.getters[
-                "reviewerNewLicense/getNewLicenseUnfinishedSearched"
+                "reviewerGoodStanding/getGoodStandingUnfinishedSearched"
               ];
 
             for (let applicant in allInfo.value.assignApplication) {
@@ -301,14 +295,7 @@ export default {
                   allInfo.value.assignApplication[applicant].applicantType;
               }
             }
-            if (
-              store.getters[
-                "reviewerNewLicense/getNewLicenseUnfinishedSearched"
-              ].length === 0
-            ) {
-              nothingToShow.value = true;
-            }
-
+     
             JSON.parse(JSON.stringify(allInfo.value.assignApplication)).forEach(
               (element) => {
                 toYouTableData.value.push({

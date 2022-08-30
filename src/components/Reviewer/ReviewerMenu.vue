@@ -51,7 +51,10 @@
         </li>
       </router-link>
 
-      <router-link to="/admin/userManagement" v-if="isUserRegional?isUserRegional.regionId==null:''">
+      <router-link
+        to="/admin/userManagement"
+        v-if="isUserRegional ? isUserRegional.regionId == null : ''"
+      >
         <li class="mb-2">
           <a href="#UserManagement">
             <i class="bx bx-user"></i>
@@ -74,6 +77,24 @@
           <a href="#ImportResults">
             <i class="bx bx-import"></i>
             <span class="links_name">National Exam Import</span>
+          </a>
+        </li>
+      </router-link>
+
+      <router-link to="/admin/legacyData">
+        <li class="mb-2">
+          <a href="#LegacyData">
+            <i class="bx bx-skip-previous-circle"></i>
+            <span class="links_name">Legacy Data</span>
+          </a>
+        </li>
+      </router-link>
+
+      <router-link to="/admin/lookupManagement">
+        <li class="mb-2">
+          <a href="#LookupManagement">
+            <i class="bx bx-desktop"></i>
+            <span class="links_name">Lookup Management</span>
           </a>
         </li>
       </router-link>
@@ -118,7 +139,7 @@ export default {
     return {
       currentMenu,
       updateMenu,
-      isUserRegional
+      isUserRegional,
     };
   },
 };

@@ -230,12 +230,11 @@
                   placeholder="Write Other Profession"
                   type="text"
                 />
-
               </div>
             </div>
           </div>
           <div
-            v-if="this.displayEnglishLanguageOption || this.displayPayrollDoc" 
+            v-if="this.displayEnglishLanguageOption || this.displayPayrollDoc"
             id="main"
             class="flex pt-8 mt-4"
           >
@@ -382,7 +381,7 @@ export default {
     TitleWithIllustration,
     FlashMessage,
     ErrorFlashMessage,
-    Spinner
+    Spinner,
   },
 
   async created() {
@@ -400,7 +399,7 @@ export default {
       this.showButtons = true;
       this.showLoading = false;
     }, 5000);
-    console.table(this.buttons)
+    console.table(this.buttons);
     if (this.getLicense && Object.keys(this.getLicense).length != 0) {
       let draftData = this.getLicense;
       this.licenseInfo.applicantId = draftData.applicantId;
@@ -419,13 +418,13 @@ export default {
       this.setEducationLevel(this.licenseInfo.educationalLevelId);
       this.licenseInfo.expertLevelId = draftData.expertLevelId;
       if (this.licenseInfo.applicantTypeId == 1) {
-        this.$store.dispatch("newlicense/getExpertLevel").then(res => {
+        this.$store.dispatch("newlicense/getExpertLevel").then((res) => {
           this.expertLevels = res.data.data.filter(function(e) {
             return e.code.includes("REG");
           });
         });
       } else {
-        this.$store.dispatch("newlicense/getExpertLevel").then(res => {
+        this.$store.dispatch("newlicense/getExpertLevel").then((res) => {
           this.expertLevels = res.data.data.filter(function(e) {
             return e.code.includes("FED");
           });
@@ -497,8 +496,8 @@ export default {
     ...mapGetters({
       getButtons: "newlicense/getButtons",
       getDraft: "newlicense/getDraft",
-      getLicense: "newlicense/getLicense"
-    })
+      getLicense: "newlicense/getLicense",
+    }),
   },
   data: () => ({
     licenseInfo: {
@@ -507,7 +506,7 @@ export default {
       education: {
         departmentId: null,
         institutionId: null,
-        id: null
+        id: null,
       },
       residenceWoredaId: null,
       professionalTypeIds: [],
@@ -518,13 +517,13 @@ export default {
       otherEducationalInstitution: null,
       otherProfessionalType: null,
       otherProfessionalTypeAmharic: null,
-      applicationStatusId: null
+      applicationStatusId: null,
     },
     licenseInfoErrors: {
       applicantTypeId: null,
       departmentId: null,
       institutionId: null,
-      educationalLevelId: null
+      educationalLevelId: null,
     },
     regionID: "",
     zoneID: "",
@@ -567,12 +566,12 @@ export default {
 
     profession: "",
     showOtherProfession: false,
-    checkedProfessionalTypes: []
+    checkedProfessionalTypes: [],
   }),
 
   methods: {
     fetchEnglishSpeaker() {
-      this.$store.dispatch("lookups/getNativeLanguage").then(res => {
+      this.$store.dispatch("lookups/getNativeLanguage").then((res) => {
         if (res.data.status == "Success") {
           this.englishData = res.data;
         } else {
@@ -581,14 +580,14 @@ export default {
     },
 
     fetchEducationLevel() {
-      this.$store.dispatch("lookups/getEducationalLevel").then(res => {
+      this.$store.dispatch("lookups/getEducationalLevel").then((res) => {
         if (res.data.status == "Success") {
           this.educationData = res.data.data;
         }
       });
     },
     fetchPayrollData() {
-      this.$store.dispatch("lookups/getGovernment").then(res => {
+      this.$store.dispatch("lookups/getGovernment").then((res) => {
         if (res.data.status == "Success") {
           this.payrollData = res.data;
         } else {
@@ -657,13 +656,13 @@ export default {
         this.showRegion = false;
       }
       if (applicantType == 1) {
-        this.$store.dispatch("newlicense/getExpertLevel").then(res => {
+        this.$store.dispatch("newlicense/getExpertLevel").then((res) => {
           this.expertLevels = res.data.data.filter(function(e) {
             return e.code.includes("REG");
           });
         });
       } else {
-        this.$store.dispatch("newlicense/getExpertLevel").then(res => {
+        this.$store.dispatch("newlicense/getExpertLevel").then((res) => {
           this.expertLevels = res.data.data.filter(function(e) {
             return e.code.includes("FED");
           });
@@ -728,7 +727,7 @@ export default {
               education: {
                 departmentId: this.licenseInfo.education.departmentId,
                 institutionId: this.licenseInfo.education.institutionId,
-                id: this.licenseInfo.education.id
+                id: this.licenseInfo.education.id,
               },
               residenceWoredaId: this.licenseInfo.residenceWoredaId,
               professionalTypeIds: this.licenseInfo.professionalTypeIds,
@@ -742,15 +741,15 @@ export default {
               otherProfessionalType: this.licenseInfo.otherProfessionalType,
               otherProfessionalTypeAmharic: this.licenseInfo
                 .otherProfessionalTypeAmharic,
-              applicationStatusId: this.licenseInfo.applicationStatusId
-            }
+              applicationStatusId: this.licenseInfo.applicationStatusId,
+            },
           },
-          id: this.draftId
+          id: this.draftId,
         };
         if (this.draftId != undefined) {
           this.$store
             .dispatch("newlicense/editNewLicense", license)
-            .then(res => {
+            .then((res) => {
               if (res.data.status == "Success") {
                 this.showFlash = true;
                 this.showLoading = false;
@@ -764,7 +763,7 @@ export default {
         } else {
           this.$store
             .dispatch("newlicense/addNewLicense", license.data)
-            .then(res => {
+            .then((res) => {
               if (res.data.status == "Success") {
                 this.showFlash = true;
                 this.showLoading = false;
@@ -786,7 +785,7 @@ export default {
             education: {
               departmentId: this.licenseInfo.education.departmentId,
               institutionId: this.licenseInfo.education.institutionId,
-              id: this.licenseInfo.education.id
+              id: this.licenseInfo.education.id,
             },
             residenceWoredaId: this.licenseInfo.residenceWoredaId,
             professionalTypeIds: this.licenseInfo.professionalTypeIds,
@@ -800,27 +799,29 @@ export default {
             otherProfessionalType: this.licenseInfo.otherProfessionalType,
             otherProfessionalTypeAmharic: this.licenseInfo
               .otherProfessionalTypeAmharic,
-            applicationStatusId: this.licenseInfo.applicationStatusId
-          }
+            applicationStatusId: this.licenseInfo.applicationStatusId,
+          },
         },
-        id: this.draftId
+        id: this.draftId,
       };
 
       if (this.draftId != undefined) {
-        this.$store.dispatch("newlicense/editNewLicense", license).then(res => {
-          if (res.data.status == "Success") {
-            this.showFlash = true;
-            this.showLoading = false;
-            setTimeout(() => {}, 1500);
-            this.$router.push({ path: "/menu" });
-          } else {
-            this.showErrorFlash = true;
-          }
-        });
+        this.$store
+          .dispatch("newlicense/editNewLicense", license)
+          .then((res) => {
+            if (res.data.status == "Success") {
+              this.showFlash = true;
+              this.showLoading = false;
+              setTimeout(() => {}, 1500);
+              this.$router.push({ path: "/menu" });
+            } else {
+              this.showErrorFlash = true;
+            }
+          });
       } else {
         this.$store
           .dispatch("newlicense/addNewLicense", license.data)
-          .then(res => {
+          .then((res) => {
             if (res.data.status == "Success") {
               this.showFlash = true;
               this.showLoading = false;
@@ -834,13 +835,13 @@ export default {
       this.showLoading = true;
       let withdrawObj = {
         action: action,
-        data: this.getDraft
+        data: this.getDraft,
       };
       let payload = {
         licenseId: this.getDraft.id,
-        withdrawData: withdrawObj
+        withdrawData: withdrawObj,
       };
-      this.$store.dispatch("newlicense/withdraw", payload).then(res => {
+      this.$store.dispatch("newlicense/withdraw", payload).then((res) => {
         if (res.data.status == "Success") {
           this.showFlash = true;
           this.showLoading = false;
@@ -866,7 +867,7 @@ export default {
           education: {
             departmentId: this.licenseInfo.education.departmentId,
             institutionId: this.licenseInfo.education.institutionId,
-            id: this.licenseInfo.education.id
+            id: this.licenseInfo.education.id,
           },
           regionId: this.regionID,
           zoneId: this.zoneID,
@@ -882,16 +883,16 @@ export default {
           otherProfessionalType: this.licenseInfo.otherProfessionalType,
           otherProfessionalTypeAmharic: this.licenseInfo
             .otherProfessionalTypeAmharic,
-          applicationStatusId: this.licenseInfo.applicationStatusId
+          applicationStatusId: this.licenseInfo.applicationStatusId,
         };
 
         let profTypes = {
-          professionalTypeIds: this.licenseInfo.professionalTypeIds
+          professionalTypeIds: this.licenseInfo.professionalTypeIds,
         };
         if (this.$route.params.status == undefined) {
           this.$store
             .dispatch("newlicense/searchProfessionalType", profTypes)
-            .then(res => {
+            .then((res) => {
               if (res.data.data.length > 0) {
                 this.professionalTypeRepeat = true;
                 this.repeatedProfArray = res.data.data;
@@ -932,15 +933,22 @@ export default {
       }
     },
     fetchApplicantType() {
-      this.$store.dispatch("newlicense/getApplicantType").then(res => {
+      this.$store.dispatch("newlicense/getApplicantType").then((res) => {
         const results = res.data.data;
         this.applicantTypes = results;
       });
     },
     fetchInstitutions(value) {
-      this.$store.dispatch("newlicense/getInstitution", value).then(res => {
+      this.$store.dispatch("newlicense/getInstitution", value).then((res) => {
         const results = res.data.data;
         this.institutions = results;
+        this.institutions.forEach((element, index) => {
+          if (element.name == "Other") {
+            let tempInstitution = element;
+            this.institutions.splice(index, 1);
+            this.institutions.push(tempInstitution);
+          }
+        });
         if (this.getLicense && Object.keys(this.getLicense).length != 0) {
           let draftData = this.getLicense;
           if (draftData.education.institutionId != null) {
@@ -983,27 +991,27 @@ export default {
       });
     },
     fetchDepartments() {
-      this.$store.dispatch("newlicense/getDepartmentType").then(res => {
+      this.$store.dispatch("newlicense/getDepartmentType").then((res) => {
         const results = res.data.data;
         this.departments = results;
       });
     },
     fetchRegions() {
-      this.$store.dispatch("newlicense/getRegions").then(res => {
+      this.$store.dispatch("newlicense/getRegions").then((res) => {
         const regionsResult = res.data;
         this.regionArray = regionsResult.data;
       });
     },
 
     fetchZones() {
-      this.$store.dispatch("newlicense/getZones", this.regionID).then(res => {
+      this.$store.dispatch("newlicense/getZones", this.regionID).then((res) => {
         const zonesResult = res.data;
         this.zoneArray = zonesResult.data;
       });
     },
 
     fetchWoredas() {
-      this.$store.dispatch("newlicense/getWoredas", this.zoneID).then(res => {
+      this.$store.dispatch("newlicense/getWoredas", this.zoneID).then((res) => {
         const woredasResult = res.data;
         this.woredaArray = woredasResult.data;
       });
@@ -1015,7 +1023,7 @@ export default {
       this.showProfessionalTypes = true;
       await this.$store
         .dispatch("newlicense/getProfessionalTypes", id)
-        .then(res => {
+        .then((res) => {
           this.professionalTypes = res.data.data;
         });
       // if (this.getLicense && Object.keys(this.getLicense).length != 0) {
@@ -1078,7 +1086,7 @@ export default {
       this.setEducationLevel(this.licenseInfo.educationalLevelId);
       if (this.licenseInfo.applicantTypeId == 1) {
         this.displayPayrollDoc = true;
-        this.$store.dispatch("newlicense/getExpertLevel").then(res => {
+        this.$store.dispatch("newlicense/getExpertLevel").then((res) => {
           this.expertLevels = res.data.data.filter(function(e) {
             return e.code.includes("REG");
           });
@@ -1087,7 +1095,7 @@ export default {
         this.licenseInfo.occupationTypeId = draftData.occupationTypeId;
       } else {
         this.displayEnglishLanguageOption = true;
-        this.$store.dispatch("newlicense/getExpertLevel").then(res => {
+        this.$store.dispatch("newlicense/getExpertLevel").then((res) => {
           this.expertLevels = res.data.data.filter(function(e) {
             return e.code.includes("FED");
           });
@@ -1125,14 +1133,14 @@ export default {
       }
       this.$store
         .dispatch("newlicense/getZones", this.regionID)
-        .then(res => {
+        .then((res) => {
           const zonesResult = res.data;
           this.zoneArray = zonesResult.data;
         })
-        .then(res => {
+        .then((res) => {
           this.$store
             .dispatch("newlicense/getWoredas", this.zoneID)
-            .then(res => {
+            .then((res) => {
               const woredasResult = res.data;
               this.woredaArray = woredasResult.data;
             });
@@ -1151,7 +1159,7 @@ export default {
             break;
           }
         }
-        this.professionalTypes.map(profData => {
+        this.professionalTypes.map((profData) => {
           for (var j = 0; j < draftData.licenseProfessions.length; j++) {
             if (
               profData.id == draftData.licenseProfessions[j].professionalTypeId
@@ -1184,8 +1192,8 @@ export default {
         this.licenseInfo.otherProfessionalTypeAmharic =
           draftData.otherProfessionalTypeAmharic;
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -121,7 +121,7 @@
         mb-large
       ">
       <div class="mt-large">
-        <TitleWithIllustration illustration="PersonalInfo" message="Personal Infos" />
+        <TitleWithIllustration illustration="PersonalInfo" message="Personal Information" />
       </div>
 
       <form class="mx-auto max-w-3xl w-full mt-10" @submit.prevent="nextStep">
@@ -194,9 +194,9 @@
             <label class="text-primary-700">ስም በአማርኛ (Name in Amharic)</label>
             <input class="max-w-3xl" type="text" onkeypress="return /[a-zA-Z]/i.test(event.key)"
               v-model="personalInfo.alternativeName" />
-            <span style="color: red">{{
+            <!-- <span style="color: red">{{
                 personalInfoErrors.alternativeName
-            }}</span>
+            }}</span> -->
           </div>
         </div>
         <div class="flex">
@@ -204,17 +204,17 @@
             <label class="text-primary-700">የአባት ስም በአማርኛ (Father's Name in Amharic)</label>
             <input class="max-w-3xl" type="text" onkeypress="return /[a-zA-Z]/i.test(event.key)"
               v-model="personalInfo.alternativeFatherName" />
-            <span style="color: red">{{
+            <!-- <span style="color: red">{{
                 personalInfoErrors.alternativeFatherName
-            }}</span>
+            }}</span> -->
           </div>
           <div class="flex flex-col mb-medium w-1/2 m1-12">
             <label class="text-primary-700">የአያት ስም በአማርኛ (Grandfather's Name in Amharic)</label>
             <input class="max-w-3xl" type="text" onkeypress="return
             /[a-zA-Z]/i.test(event.key)" v-model="personalInfo.alternativeGrandFatherName" />
-            <span style="color: red">{{
+            <!-- <span style="color: red">{{
                 personalInfoErrors.alternativeGrandFatherName
-            }}</span>
+            }}</span> -->
           </div>
         </div>
 
@@ -442,9 +442,9 @@ export default {
       name: "",
       fatherName: "",
       grandFatherName: "",
-      alternativeName: "",
-      alternativeFatherName: "",
-      alternativeGrandFatherName: "",
+      // alternativeName: "",
+      // alternativeFatherName: "",
+      // alternativeGrandFatherName: "",
       nationalityId: "",
       gender: "",
       maritalStatusId: "",

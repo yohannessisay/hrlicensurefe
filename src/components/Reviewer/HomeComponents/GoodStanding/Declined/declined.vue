@@ -157,11 +157,11 @@ export default {
         let adminStatus = [statusId, adminId];
 
         store
-          .dispatch("reviewerNewLicense/getNewLicenseAllDeclined", adminStatus)
+          .dispatch("reviewerGoodStanding/getGoodStandingAllDeclined", adminStatus)
           .then(() => {
             allInfo.value.assignApplication =
               store.getters[
-                "reviewerNewLicense/getNewLicenseAllDeclinedSearched"
+                "reviewerGoodStanding/getGoodStandingAllDeclinedSearched"
               ];
             for (let applicant in allInfo.value.assignApplication) {
               if (
@@ -256,7 +256,7 @@ export default {
         let statusId = res;
         let adminStatus = [statusId, adminId];
 
-        store
+          store
           .dispatch("reviewerGoodStanding/getGoodStandingDeclined", adminStatus)
           .then(() => {
             allInfo.value.assignApplication =
