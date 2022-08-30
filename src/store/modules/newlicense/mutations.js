@@ -58,6 +58,7 @@ import {
     SET_PHD_TRANSCRIPT2,
     SET_RENEWED_LICENSE_OF_HEALTH_FACILITY,
     SET_REQUEST_LETTER_FROM_HIRING_HEALTH_FACILITY,
+    SET_GENERAL_INFO,
 } from "./mutation-types";
 
 export default {
@@ -244,5 +245,8 @@ export default {
         requestLetterFromHiringHealthFacility
     ) {
         state.requestLetterFromHiringHealthFacility = requestLetterFromHiringHealthFacility;
+    },
+    [SET_GENERAL_INFO](state, generalInfo) {
+        state.generalInfo = generalInfo;
     },
 };

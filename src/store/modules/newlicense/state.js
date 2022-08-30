@@ -75,6 +75,7 @@ export default {
         phdTranscript: "",
         phdTranscript2: "",
         renewedLicenseOfHealthFacility: "",
-        requestLetterFromHiringHealthFacility: ""
+        requestLetterFromHiringHealthFacility: "",
+        generalInfo: {}
     },
 };

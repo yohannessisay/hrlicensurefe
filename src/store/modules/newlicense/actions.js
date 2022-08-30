@@ -61,6 +61,7 @@ import {
     SET_PHD_TRANSCRIPT2,
     SET_RENEWED_LICENSE_OF_HEALTH_FACILITY,
     SET_REQUEST_LETTER_FROM_HIRING_HEALTH_FACILITY,
+    SET_GENERAL_INFO,
 } from "./mutation-types";
 
 const userId = +localStorage.getItem("userId");
@@ -252,6 +253,9 @@ export default {
             SET_REQUEST_LETTER_FROM_HIRING_HEALTH_FACILITY,
             requestLetterFromHiringHealthFacility
         );
+    },
+    setGeneralInfo({ commit }, generalInfo) {
+        commit(SET_GENERAL_INFO, generalInfo);
     },
     async addNewLicense({ commit }, license) {
         try {

@@ -155,7 +155,7 @@ const routes = [
         "../components/Reviewer/Configurations/ChangePassword/ChangePassword.vue"
       ),
   },
-    {
+  {
     path: "/myWork",
     name: "myWork",
     component: () => import("../components/Reviewer/MyWork.vue"),
@@ -1099,7 +1099,6 @@ const routes = [
       ),
   },
 
-
   //Dashboard
   {
     path: "/admin/dashboard",
@@ -1171,6 +1170,13 @@ router.beforeEach(async (to, from, next) => {
     localStorage.getItem("role") === "UM"
   ) {
     next("/admin/list");
+  }
+  if (
+    to.path != "/newLicense" ||
+    (to.path != "/renewal" && localStorage.getItem("firstTimeUser") == false)
+  ) {
+    window.localStorage.setItem("NLApplicationData", "");
+    window.localStorage.setItem("NLApplicationImageData", "");
   }
 
   if (to.matched.some((record) => record.meta.RedirectExternalUrl)) {
