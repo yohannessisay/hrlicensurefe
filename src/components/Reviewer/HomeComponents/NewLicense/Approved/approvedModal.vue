@@ -105,11 +105,23 @@
                                 justify-center
                               "
                             >
-                              <img
-                                src="../../../../../assets/showLicense/profile.png"
-                                alt=""
-                                style="height: 152px; width: 150px"
-                              />
+                              <picture>
+                                <source
+                                  :srcset="
+                                    modalData.profile &&
+                                    modalData.profile.profilePicture
+                                      ? googleApi +
+                                        modalData.profile.profilePicture
+                                          .filePath
+                                      : ''
+                                  "
+                                  type="image/jpg"
+                                />
+
+                                <img
+                                  src="../../../../../assets/showLicense/profile.png"
+                                />
+                              </picture>
                             </div>
                           </div>
                           <div class="grow ml-6">
@@ -185,7 +197,7 @@
                                 justify-center
                               "
                             >
-                              <i class="fa fa-building fa-4x"></i>
+                              <i class="fa fa-building fa-4x text-white"></i>
                             </div>
                           </div>
                           <div class="grow ml-6">
@@ -238,7 +250,7 @@
                                 justify-center
                               "
                             >
-                              <i class="fa fa-phone fa-4x"></i>
+                              <i class="fa fa-phone fa-4x text-white"></i>
                             </div>
                           </div>
                           <div class="grow ml-6">
@@ -268,7 +280,7 @@
                             inline-block
                             px-6
                             py-2.5
-                            custom-warning
+                            hover:bg-yellow-300 hover:text-white
                             text-white
                             font-medium
                             text-xs
@@ -283,9 +295,37 @@
                             ease-in-out
                           "
                           type="button"
+                          data-bs-toggle="modal"
+                          data-bs-target="#suspendLicense"
                         >
                           <i class="fa fa-ban"></i>
                           Suspend
+                        </button>
+                        <button
+                          class="
+                            inline-block
+                            px-6
+                            py-2.5
+                            text-white
+                            font-medium
+                            text-xs
+                            leading-tight
+                            uppercase
+                            rounded
+                            shadow-lg
+                            hover:bg-primary-600 hover:text-white
+                            focus:shadow-lg focus:outline-none focus:ring-0
+                            active:bg-blue-800 active:shadow-lg
+                            transition
+                            duration-150
+                            ease-in-out
+                          "
+                          type="button"
+                          data-bs-toggle="modal"
+                          data-bs-target="#revokeLicense"
+                        >
+                          <i class="fa fa-remove"></i>
+                          Revoke
                         </button>
                         <button
                           class="
@@ -317,7 +357,78 @@
                           <i class="fa fa-file-text"></i>
                           Generate PDF
                         </button>
-                        <button
+                        
+                      </div>
+                    </div>
+
+                    <div class="collapse mt-12" id="collapseExample">
+                      <div class="block p-6 rounded-lg shadow-lg bg-white">
+                        <div class="flex justify-content-evenly align-center">
+                          <h1>Attached Documents</h1>
+                        </div>
+                        <div class="grid grid-cols-4 gap-4">
+                          <div
+                            class="mt-4 mb-8 bg-white"
+                            style="border-radius: 15px; padding: 10px"
+                            v-for="document in modalData.documents"
+                            :key="document.id"
+                          >
+                            <div class="flex justify-center">
+                              <div class="mt-large bg-white">
+                                <a
+                                  :href="
+                                    document.filePath
+                                      ? googleApi + document.filePath
+                                      : ''
+                                  "
+                                  :data-title="
+                                    document.documentType
+                                      ? document.documentType.name
+                                      : '-----'
+                                  "
+                                  data-lightbox="example-2"
+                                >
+                                  <img
+                                    :src="
+                                      document.filePath
+                                        ? googleApi + document.filePath
+                                        : ''
+                                    "
+                                    class="w-full h-48 object-cover"
+                                  />
+                                </a>
+
+                                <h4 style="font-weight: bold">Document Type</h4>
+                                <h5 class="text-primary-500">
+                                  {{
+                                    document.documentType
+                                      ? document.documentType.name
+                                      : "------"
+                                  }}
+                                </h5>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+        <div
+          class="
+            modal-footer
+            flex flex-shrink-0 flex-wrap
+            items-center
+            justify-end
+            border-t border-grey-100
+            rounded-b-md
+          "
+        >
+        <button
                           class="
                             inline-block
                             px-6
@@ -349,68 +460,6 @@
                           <i class="fa fa-eye"></i>
                           Show Attached Documents
                         </button>
-                      </div>
-                    </div>
-
-                    <div class="collapse mt-12" id="collapseExample">
-                      <div class="block p-6 rounded-lg shadow-lg bg-white">
-                        <div class="flex justify-content-evenly align-center">
-                          <h1>Attached Documents</h1>
-                        </div>
-                        <div class="grid grid-cols-4 gap-4">
-                          <div
-                            class="mt-4 mb-8 bg-white"
-                            style="border-radius: 15px; padding: 10px"
-                            v-for="document in modalData.documents"
-                            :key="document.id"
-                          >
-                            <div class="flex justify-center">
-                              <div class="mt-large bg-white">
-                                <a
-                                  :href="googleApi + document.filePath"
-                                  :data-title="
-                                    document.documentType
-                                      ? document.documentType.name
-                                      : '-----'
-                                  "
-                                  data-lightbox="example-2"
-                                >
-                                  <img
-                                    :src="googleApi + document.filePath"
-                                    class="w-full h-48 object-cover"
-                                  />
-                                </a>
-
-                                <h4 style="font-weight: bold">Document Type</h4>
-                                <h5 class="text-primary-500">
-                                  {{
-                                    document.documentType
-                                      ? document.documentType.name
-                                      : "------"
-                                  }}
-                                </h5>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </section>
-            </div>
-          </div>
-        </div>
-        <div
-          class="
-            modal-footer
-            flex flex-shrink-0 flex-wrap
-            items-center
-            justify-end
-            border-t border-grey-200
-            rounded-b-md
-          "
-        >
           <button
             type="button"
             class="
@@ -442,6 +491,8 @@
     </div>
   </div>
   <generate-pdf :modalData="modalData"></generate-pdf>
+  <revoke-license-modal :modalData="modalData"></revoke-license-modal>
+  <suspend-license-modal :modalData="modalData"></suspend-license-modal>
 </template>
 <script>
 import { useStore } from "vuex";
@@ -452,12 +503,16 @@ import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 import { googleApi } from "@/composables/baseURL";
 
 import generatePdf from "./generateLicensedPdf.vue";
+import revokeLicenseModal from "./revokeLicenseModal.vue";
+import suspendLicenseModal from "./suspendLicenseModal.vue";
 
 export default {
   props: ["modalDataId"],
   components: {
     Loading,
     generatePdf,
+    revokeLicenseModal,
+    suspendLicenseModal,
   },
   computed: {
     moment: () => moment,
@@ -530,7 +585,7 @@ export default {
             modalData.value.data = result;
             modalData.value.id = result.id;
             modalData.value.profileImage =
-              googleApi + result.profile.profilePicture
+              result.profile && result.profile.profilePicture
                 ? googleApi + result.profile.profilePicture.filePath
                 : "";
             isLoading.value = false;

@@ -16,10 +16,10 @@
           <h5 class="ml-4">
             {{
               this.profileInfo.name +
-                " " +
-                this.profileInfo.fatherName +
-                " " +
-                this.profileInfo.grandFatherName
+              " " +
+              this.profileInfo.fatherName +
+              " " +
+              this.profileInfo.grandFatherName
             }}
           </h5>
         </div>
@@ -34,10 +34,10 @@
           <h5 class="ml-4">
             {{
               this.profileInfo.alternativeName +
-                " " +
-                this.profileInfo.alternativeFatherName +
-                " " +
-                this.profileInfo.alternativeGrandFatherName
+              " " +
+              this.profileInfo.alternativeFatherName +
+              " " +
+              this.profileInfo.alternativeGrandFatherName
             }}
           </h5>
         </div>
@@ -46,10 +46,10 @@
           <h5 class="ml-8">
             {{
               this.profileInfo.alternativeName +
-                " " +
-                this.profileInfo.alternativeFatherName +
-                " " +
-                this.profileInfo.alternativeGrandFatherName
+              " " +
+              this.profileInfo.alternativeFatherName +
+              " " +
+              this.profileInfo.alternativeGrandFatherName
             }}
           </h5>
         </div>
@@ -191,12 +191,7 @@
           >
             <Title class="" :message="item.documentType.name" />
             <picture>
-              <img
-                :src="
-                  this.basePath +
-                    item.filePath
-                "
-              />
+              <img :src="this.basePath + item.filePath" />
             </picture>
           </div>
         </div>
@@ -209,14 +204,20 @@
             and not forgery.</span
           >
         </label>
+
+        <input
+          type="text"
+          class="border-grey-300"
+          placeholder="if you have any feedback write here"
+          @input="feedbackUpdate()"
+          v-model="feedback"
+        />
       </div>
       <div v-if="!showLoading">
         <div v-if="this.draftStatus == 'DRA' || !this.draftStatus">
           <div class="mt-12 flex justify-center">
             <div>
-              <button @click="submitBack">
-                Back
-              </button>
+              <button @click="submitBack">Back</button>
               <button
                 id="subButton"
                 style="opacity: 0.3"
@@ -238,9 +239,7 @@
             </div>
           </div>
           <div class="flex justify-center mt-4">
-            <h6>
-              You need to check the box to be able to submit.
-            </h6>
+            <h6>You need to check the box to be able to submit.</h6>
           </div>
           <div class="flex justify-center mt-4 mb-8">
             <button
@@ -272,9 +271,7 @@
           v-if="this.draftStatus == 'SUB'"
           class="flex justify-center mt-8 pb-12"
         >
-          <button @click="submitBack">
-            Back
-          </button>
+          <button @click="submitBack">Back</button>
           <button
             class="withdraw"
             @click="withdraw(this.buttons[2].action)"
@@ -287,9 +284,7 @@
           v-if="this.draftStatus == 'USUP'"
           class="flex justify-center mt-8 pb-12"
         >
-          <button @click="submitBack">
-            Back
-          </button>
+          <button @click="submitBack">Back</button>
           <button @click="draft(this.buttons[0].action)" variant="outline">
             {{ this.buttons[0]["name"] }}
           </button>
@@ -301,9 +296,7 @@
           v-if="this.draftStatus == 'DEC' || this.draftStatus == 'CONF'"
           class="flex justify-center mt-8 pb-12"
         >
-          <button @click="submitBack">
-            Back
-          </button>
+          <button @click="submitBack">Back</button>
           <button
             id="reapplyButton"
             @click="draft('UpdateEvent')"
@@ -410,13 +403,15 @@ export default {
     this.buttons = this.getButtons;
 
     this.otherProfessionalType = this.license.otherProfessionalType;
-    this.otherProfessionalTypeAmharic = this.license.otherProfessionalTypeAmharic;
+    this.otherProfessionalTypeAmharic =
+      this.license.otherProfessionalTypeAmharic;
 
     this.departmentId = this.license.departmentId;
   },
   data: () => ({
     basePath: "",
     filePreview: "",
+    feedback: "",
     letterPreview: "",
     docList: [],
     documentsArray: [],
@@ -428,7 +423,7 @@ export default {
     professionalTypeIds: "",
     expertLevelId: "",
     otherProfessionalType: null,
-    otherProfessionalTypeAmharic:null,
+    otherProfessionalTypeAmharic: null,
     draftId: "",
     draftData: "",
     draftStatus: "",
@@ -463,7 +458,7 @@ export default {
     }),
   },
   methods: {
-    checkBox: function() {
+    checkBox: function () {
       this.checkBoxValue = !this.checkBoxValue;
       if (this.draftStatus == "DEC" || this.draftStatus == "CONF") {
         if (this.checkBoxValue) {
@@ -483,8 +478,15 @@ export default {
         }
       }
     },
-    moment: function(date) {
+    moment: function (date) {
       return moment(date);
+    },
+    feedbackUpdate: function () {
+      if (this.feedback.length < 0) {
+        this.showSubmit = false;
+      } else {
+        this.showSubmit = true;
+      }
     },
     blobToBase64(blob) {
       return new Promise((resolve, _) => {
@@ -523,6 +525,7 @@ export default {
       let action = act;
       this.showLoading = true;
       if (this.draftId != null) {
+        this.draftData.feedback = this.feedback ? this.feedback : "";
         let license = {
           data: {
             action: action,
@@ -581,8 +584,8 @@ export default {
             whomGoodStandingFor: this.licenseInfo.whomGoodStandingFor,
             licenseIssuedDate: this.licenseInfo.licenseIssuedDate,
             whoIssued: this.licenseInfo.whoIssued,
-            licenseRegistrationNumber: this.licenseInfo
-              .licenseRegistrationNumber,
+            licenseRegistrationNumber:
+              this.licenseInfo.licenseRegistrationNumber,
             applicantPositionId: this.licenseInfo.applicantPositionId,
             professionalTypeIds: this.professionalTypeIds,
             expertLevelId: this.expertLevelId,
@@ -590,8 +593,10 @@ export default {
             otherProfessionalType: this.otherProfessionalType,
             otherProfessionalTypeAmharic: this.otherProfessionalTypeAmharic,
             departmentId: this.departmentId,
+            feedback: this.feedback,
           },
         };
+
         this.$store
           .dispatch("goodstanding/addGoodstandingLicense", license)
           .then((res) => {
@@ -605,7 +610,7 @@ export default {
                   this.showFlash = true;
                   setTimeout(() => {
                     this.$router.push({ path: "/menu" });
-                  }, 3500);
+                  }, 5000);
                 } else {
                   this.showErrorFlash = true;
                 }
@@ -679,8 +684,8 @@ export default {
             whomGoodStandingFor: this.licenseInfo.whomGoodStandingFor,
             licenseIssuedDate: this.licenseInfo.licenseIssuedDate,
             whoIssued: this.licenseInfo.whoIssued,
-            licenseRegistrationNumber: this.licenseInfo
-              .licenseRegistrationNumber,
+            licenseRegistrationNumber:
+              this.licenseInfo.licenseRegistrationNumber,
             applicantPositionId: this.licenseInfo.applicantPositionId,
             professionalTypeIds: this.professionalTypeIds,
             expertLevelId: this.licenseInfo.expertLevel,
@@ -689,6 +694,15 @@ export default {
             otherProfessionalTypeAmharic: this.otherProfessionalTypeAmharic,
             departmentId: this.departmentId,
           },
+        };
+        let smsData = {
+          recipients: [
+            this.profileInfo.user.phoneNumber
+              ? "251" + this.profileInfo.user.phoneNumber
+              : "",
+          ],
+          message:
+            "Dear applicant you have successfully applied for a good standing letter, after careful examination of your uploaded documents by our reviewers we will get back and notify you on each steps, Thank you for using eHPL.",
         };
         this.$store
           .dispatch("goodstanding/addGoodstandingLicense", license)
@@ -700,10 +714,12 @@ export default {
               .then((res) => {
                 this.showLoading = false;
                 if (res.data.status == "Success") {
-                  this.showFlash = true;
-                  setTimeout(() => {
-                    this.$router.push({ path: "/menu" });
-                  }, 1500);
+                  this.$store.dispatch("sms/sendSms", smsData).then((res) => {
+                    this.showFlash = true;
+                    setTimeout(() => {
+                      this.$router.push({ path: "/menu" });
+                    }, 1500);
+                  });
                 } else {
                   this.showErrorFlash = true;
                 }
@@ -728,8 +744,8 @@ export default {
             whomGoodStandingFor: this.licenseInfo.whomGoodStandingFor,
             licenseIssuedDate: this.licenseInfo.licenseIssuedDate,
             whoIssued: this.licenseInfo.whoIssued,
-            licenseRegistrationNumber: this.licenseInfo
-              .licenseRegistrationNumber,
+            licenseRegistrationNumber:
+              this.licenseInfo.licenseRegistrationNumber,
             applicantPositionId: this.licenseInfo.applicantPositionId,
             professionalTypeIds: this.professionalTypeIds,
             expertLevelId: this.licenseInfo.expertLevel,
@@ -792,7 +808,7 @@ export default {
   },
 
   mounted() {
-    this.$nextTick(function() {
+    this.$nextTick(function () {
       window.setInterval(() => {
         this.showFlash = false;
         this.showErrorFlash = false;

@@ -432,37 +432,39 @@
             flex flex-shrink-0 flex-wrap
             items-center
             justify-end
-            border-t border-grey-200
+            border-t border-grey-100
             rounded-b-md
           "
         >
-          <button
-            type="button"
-            class="
-              inline-block
-              px-6
-              text-white
-              font-medium
-              text-xs
-              leading-tight
-              uppercase
-              rounded
-              ml-4
-              shadow-lg
-              hover:bg-purple-700 hover:shadow-lg
-              focus:bg-purple-700
-              focus:shadow-lg
-              focus:outline-none
-              focus:ring-0
-              active:bg-purple-800 active:shadow-lg
-              transition
-              duration-150
-              ease-in-out
-            "
-            data-bs-dismiss="modal"
-          >
-            Continue Evaluating
-          </button>
+          <a :href="'/admin/newLicense/evaluate/' + licenseId">
+            <button
+              type="button"
+              class="
+                inline-block
+                px-6
+                text-white
+                font-medium
+                text-xs
+                leading-tight
+                uppercase
+                rounded
+                ml-4
+                shadow-lg
+                hover:bg-purple-700 hover:shadow-lg
+                focus:bg-purple-700
+                focus:shadow-lg
+                focus:outline-none
+                focus:ring-0
+                active:bg-purple-800 active:shadow-lg
+                transition
+                duration-150
+                ease-in-out
+              "
+              data-bs-dismiss="modal"
+            >
+              Continue Evaluating
+            </button>
+          </a>
           <button
             type="button"
             class="
@@ -497,12 +499,12 @@
 
 <script>
 import { useStore } from "vuex";
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted, watch,computed } from "vue";
 import moment from "moment";
 import Loading from "vue3-loading-overlay";
 // Import stylesheet
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
-
+import { useToast } from "vue-toastification";
 export default {
   props: ["modalDataId", "reviewers"],
   components: {
@@ -513,13 +515,13 @@ export default {
   },
   setup(props) {
     const store = useStore();
-
+    const toast = useToast();
     let show = ref(true);
     let showRes = ref(false);
     let showOptions = ref(false);
     let reviewer = ref({ id: "", name: "", expertLevel: "", role: "" });
     let adminId = +localStorage.getItem("adminId");
-
+    const licenseId = computed(() => props.modalDataId.id);
     let transfer = ref({
       reviewerId: "",
       licenseId: "",
@@ -561,25 +563,40 @@ export default {
         .dispatch("reviewer/transferLicenseReview", transfer.value)
         .then((response) => {
           if (response.statusText == "Created") {
-            toast("Selected reviewer is successfully assigned.", {
-              duration: 4000,
-              position: "bottom",
-              toastClass: "toast-success",
+            toast.success("Selected application is successfully drafted", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
             });
+            isLoading.value = false;
+            setTimeout(() => {
+              window.location.reload();
+            }, 3000);
           } else {
-            toast("Something is wrong please try again after few minutes.", {
-              duration: 4000,
-              position: "bottom",
-              toastClass: "toast-error",
+            toast.error("Error Occured", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
             });
+            isLoading.value = false;
+            setTimeout(() => {
+              window.location.reload();
+            }, 3000);
           }
         })
         .catch(() => {
-          toast("Sorry there seems to be a problem, please try again.", {
-            duration: 3000,
-            position: "bottom",
-            toastClass: "toast-error",
+          toast.error("Error Occured", {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
           });
+          isLoading.value = false;
         });
     };
 
@@ -691,6 +708,7 @@ export default {
       setInput,
       showModal,
       resultQuery,
+      licenseId,
       isLoading,
       isLoadingStart,
       fullPage,

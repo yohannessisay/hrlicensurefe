@@ -439,7 +439,7 @@
             flex flex-shrink-0 flex-wrap
             items-center
             justify-end
-            border-t border-grey-200
+            border-t border-grey-100
             rounded-b-md
           "
         >
@@ -480,6 +480,7 @@ import { useStore } from "vuex";
 import { ref, onMounted, watch } from "vue";
 import moment from "moment";
 import Loading from "vue3-loading-overlay";
+import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 import { useToast } from "vue-toastification";
 
 export default {
@@ -533,20 +534,40 @@ export default {
       }
 
       isLoading.value = true;
-
+      let smsData = {
+        recipients: [
+          modalData.value && modalData.value.mobileNumber
+            ? "251" + modalData.value.mobileNumber
+            : "",
+        ],
+        message: licenseData.value
+          ? modalData.value.name
+            ? "Dear " +
+              modalData.value.name +
+              " your applied new license for " +
+              modalData.value.department +
+              " has been assigned a reviewer , after careful examination of your uploaded documents by our reviewers we will get back and notify you on each steps, Thank you for using eHPL. https://hrl.moh.gov.et/"
+            : ""
+          : "",
+      };
       store
         .dispatch("reviewer/assignReviewer", assign.value)
         .then((response) => {
           if (response.statusText == "Created") {
-            isLoading.value = false;
-            toast.success("Selected Rviewer assigned Successfully", {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
+            store.dispatch("sms/sendSms", smsData).then(() => {
+              isLoading.value = false;
+              toast.success("Selected Rviewer assigned Successfully", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
+              isLoading.value = true;
+              setTimeout(() => {
+                window.location.reload();
+              }, 3000);
             });
-            isLoading.value = true;
           } else {
             toast.error(
               "Sorry there seems to be a problem, please try again.",
@@ -559,6 +580,9 @@ export default {
               }
             );
             isLoading.value = true;
+            setTimeout(() => {
+              window.location.reload();
+            }, 3000);
           }
         })
         .catch(() => {
@@ -570,6 +594,9 @@ export default {
             icon: true,
           });
           isLoading.value = true;
+          setTimeout(() => {
+            window.location.reload();
+          }, 3000);
         });
     };
 
@@ -618,39 +645,43 @@ export default {
           ) {
             result = res.data.data;
             modalData.value.name =
-              result.profile.name +
-              " " +
-              result.profile.fatherName +
-              "  " +
-              result.profile.grandFatherName;
-            modalData.value.gender = result.profile.gender
+              (result.profile ? result.profile.name + " " : "") +
+              (result.profile ? result.profile.fatherName + "  " : " ") +
+              (result.profile ? result.profile.grandFatherName : "");
+            modalData.value.gender = result.profile
               ? result.profile.gender
               : "-----";
-            modalData.value.nationality = result.profile.nationality?.name
-              ? result.profile.nationality?.name
-              : "-----";
-            modalData.value.dateOfBirth = result.profile.dateOfBirth
+            modalData.value.nationality =
+              result.profile && result.profile.nationality
+                ? result.profile.nationality?.name
+                : "-----";
+            modalData.value.dateOfBirth = result.profile
               ? result.profile.dateOfBirth
               : "-----";
-            modalData.value.martialStatus = result.profile.martialStatus?.name
-              ? result.profile.martialStatus.name
-              : "-----";
-            modalData.value.mobileNumber = result.applicant.phoneNumber
+            modalData.value.martialStatus =
+              result.profile && result.profile.martialStatus
+                ? result.profile.martialStatus.name
+                : "-----";
+            modalData.value.mobileNumber = result.applicant
               ? result.applicant.phoneNumber
               : "-----";
-            modalData.value.email = result.applicant.emailAddress
+            modalData.value.email = result.applicant
               ? result.applicant.emailAddress
               : "-----";
-            modalData.value.instName = result.education.institution?.name
-              ? result.education.institution?.name
-              : "-----";
-            modalData.value.instType = result.education.institution
-              ?.institutionType
-              ? result.education.institution?.institutionType.name
-              : "-----";
-            modalData.value.department = result.education.department.name
-              ? result.education?.department.name
-              : "-----";
+            modalData.value.instName =
+              result.education && result.education.institution
+                ? result.education.institution?.name
+                : "-----";
+            modalData.value.instType =
+              result.education &&
+              result.education.institution &&
+              result.education.institution.institutionType
+                ? result.education.institution?.institutionType.name
+                : "-----";
+            modalData.value.department =
+              result.education && result.education.department
+                ? result.education?.department.name
+                : "-----";
             modalData.value.profile = result.profile;
             modalData.value.professionalTypes = result.licenseProfessions;
             modalData.value.certifiedDate = result.certifiedDate;

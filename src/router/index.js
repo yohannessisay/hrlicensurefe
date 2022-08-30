@@ -49,7 +49,7 @@ const routes = [
   {
     path: "/menu",
     name: "Menu",
-    component: () => import("../views/Menu.vue"),
+    component: () => import("../views/Applicant/Menu.vue"),
   },
   {
     path: "/resetpassword/:id",
@@ -155,17 +155,7 @@ const routes = [
         "../components/Reviewer/Configurations/ChangePassword/ChangePassword.vue"
       ),
   },
-  {
-    path: "/admin/review/report",
-    name: "report",
-    component: () => import("../components/Report/Report.vue"),
-  },
-  {
-    path: "/admin/dashboard",
-    name: "dashboard",
-    component: () => import("../components/Reviewer/Dashboard.vue"),
-  },
-  {
+    {
     path: "/myWork",
     name: "myWork",
     component: () => import("../components/Reviewer/MyWork.vue"),
@@ -412,7 +402,10 @@ const routes = [
   {
     path: "/admin/list",
     name: "AdminUserManagement",
-    component: () => import("../components/UserManagement/UserDashboard.vue"),
+    component: () =>
+      import(
+        "../components/Reviewer/HomeComponents/UserManagement/userManagement.vue"
+      ),
   },
   {
     path: "/admin/newLicense/unassigned",
@@ -882,12 +875,6 @@ const routes = [
         "../components/Reviewer/ApplicationTypes/GoodStanding/GoodStandingAllDeclined.vue"
       ),
   },
-  {
-    path: "/admin/review/importResults",
-    name: "ImportResults",
-    component: () =>
-      import("../components/Reviewer/ImportResults/ImportHome.vue"),
-  },
 
   //New Updated Routes....please follow these guidelines when refactoring
   //Admin New license section
@@ -961,7 +948,9 @@ const routes = [
     path: "/admin/renewal",
     name: "RenewalHome",
     component: () =>
-      import("../components/Reviewer/HomeComponents/Renewal/Unassigned/unassigned.vue"),
+      import(
+        "../components/Reviewer/HomeComponents/Renewal/Unassigned/unassigned.vue"
+      ),
   },
   // {
   //   path: "/admin/renewal/assigned",
@@ -986,13 +975,18 @@ const routes = [
   {
     path: "/admin/renewal/approved",
     name: "RenewalApproved",
-    component: () => import("../components/Reviewer/HomeComponents/Renewal/Approved/approved.vue"),
+    component: () =>
+      import(
+        "../components/Reviewer/HomeComponents/Renewal/Approved/approved.vue"
+      ),
   },
   {
     path: "/admin/renewal/declined",
     name: "RenewalDeclined",
     component: () =>
-      import("../components/Reviewer/HomeComponents/Renewal/Declined/declined.vue"),
+      import(
+        "../components/Reviewer/HomeComponents/Renewal/Declined/declined.vue"
+      ),
   },
   {
     path: "/admin/renewal/underSupervision",
@@ -1006,7 +1000,9 @@ const routes = [
     path: "/admin/renewal/licensed",
     name: "RenewalLicensed",
     component: () =>
-      import("../components/Reviewer/HomeComponents/Renewal/Licensed/licensed.vue"),
+      import(
+        "../components/Reviewer/HomeComponents/Renewal/Licensed/licensed.vue"
+      ),
   },
   {
     path: "/admin/renewal/evaluate/:id",
@@ -1030,31 +1026,41 @@ const routes = [
     path: "/admin/goodStanding/assigned",
     name: "GoodStandingAssigned",
     component: () =>
-      import("../components/Reviewer/HomeComponents/GoodStanding/Assigned/assigned.vue"),
+      import(
+        "../components/Reviewer/HomeComponents/GoodStanding/Assigned/assigned.vue"
+      ),
   },
   {
     path: "/admin/goodStanding/draft",
     name: "GoodStandingDraft",
     component: () =>
-      import("../components/Reviewer/HomeComponents/GoodStanding/Draft/draft.vue"),
+      import(
+        "../components/Reviewer/HomeComponents/GoodStanding/Draft/draft.vue"
+      ),
   },
   {
     path: "/admin/goodStanding/approved",
     name: "GoodStandingApproved",
     component: () =>
-      import("../components/Reviewer/HomeComponents/GoodStanding/Approved/approved.vue"),
+      import(
+        "../components/Reviewer/HomeComponents/GoodStanding/Approved/approved.vue"
+      ),
   },
   {
     path: "/admin/goodStanding/declined",
     name: "GoodStandingDeclined",
     component: () =>
-      import("../components/Reviewer/HomeComponents/GoodStanding/Declined/declined.vue"),
+      import(
+        "../components/Reviewer/HomeComponents/GoodStanding/Declined/declined.vue"
+      ),
   },
   {
     path: "/admin/goodStanding/licensed",
     name: "GoodStandingLicensed",
     component: () =>
-      import("../components/Reviewer/HomeComponents/GoodStanding/Licensed/licensed.vue"),
+      import(
+        "../components/Reviewer/HomeComponents/GoodStanding/Licensed/licensed.vue"
+      ),
   },
   {
     path: "/admin/goodStanding/evaluate/:id",
@@ -1092,6 +1098,65 @@ const routes = [
         "../components/Reviewer/HomeComponents/CpdCertified/cpdCertified.vue"
       ),
   },
+
+
+  //Dashboard
+  {
+    path: "/admin/dashboard",
+    name: "Dashboard",
+    component: () =>
+      import("../components/Reviewer/HomeComponents/Dashboard/dashboard.vue"),
+  },
+
+  //User Management
+  {
+    path: "/admin/userManagement",
+    name: "UserManagement",
+    component: () =>
+      import(
+        "../components/Reviewer/HomeComponents/UserManagement/userManagement.vue"
+      ),
+  },
+
+  //Import Results
+  {
+    path: "/admin/importResults",
+    name: "ImportResults",
+    component: () =>
+      import(
+        "../components/Reviewer/HomeComponents/ImportResults/importResults.vue"
+      ),
+  },
+
+    //Report
+    {
+      path: "/admin/report",
+      name: "AdminReport",
+      component: () =>
+        import(
+          "../components/Reviewer/HomeComponents/Report/Report.vue"
+        ),
+    },
+
+    //Legacy Data
+    {
+      path: "/admin/legacyData",
+      name: "LwegacyData",
+      component: () =>
+        import(
+          "../components/Reviewer/HomeComponents/LegacyData/legacy.vue"
+        ),
+    },
+
+    //Lookup Management
+    {
+      path: "/admin/lookupManagement",
+      name: "LookupManagement",
+      component: () =>
+        import(
+          "../components/Reviewer/HomeComponents/LookupManagement/lookupManagement.vue"
+        ),
+    },
 ];
 
 const router = createRouter({

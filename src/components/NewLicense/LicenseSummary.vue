@@ -21,10 +21,10 @@
           <h5 class="ml-4">
             {{
               this.profileInfo.name +
-                " " +
-                this.profileInfo.fatherName +
-                " " +
-                this.profileInfo.grandFatherName
+              " " +
+              this.profileInfo.fatherName +
+              " " +
+              this.profileInfo.grandFatherName
             }}
           </h5>
         </div>
@@ -33,10 +33,10 @@
           <h5 class="ml-8">
             {{
               this.profileInfo.alternativeName +
-                " " +
-                this.profileInfo.alternativeFatherName +
-                " " +
-                this.profileInfo.alternativeGrandFatherName
+              " " +
+              this.profileInfo.alternativeFatherName +
+              " " +
+              this.profileInfo.alternativeGrandFatherName
             }}
           </h5>
         </div>
@@ -115,9 +115,11 @@
           <label class="ml-4 text-primary-300"> Mobile Number</label>
           <h5 class="ml-4">
             {{
-              this.profileInfo.user ? (this.profileInfo.user.phoneNumber
+              this.profileInfo.user
                 ? this.profileInfo.user.phoneNumber
-                : "-") : '-'
+                  ? this.profileInfo.user.phoneNumber
+                  : "-"
+                : "-"
             }}
           </h5>
         </div>
@@ -191,9 +193,16 @@
             and not forgery.</span
           >
         </label>
-        <br />
       </div>
+
       <div class="flex justify-center mt-8">
+        <input
+          type="text"
+          class="border-grey-300"
+          placeholder="if you have any feedback write here"
+          @input="feedbackUpdate()"
+          v-model="feedback"
+        />
         <span
           v-if="showAllAttachements"
           style="font-size: 16px; color: red"
@@ -205,9 +214,7 @@
         <div v-if="!this.draftStatus">
           <div class="mt-12 flex justify-center">
             <div>
-              <button @click="submitBack">
-                Back
-              </button>
+              <button @click="submitBack">Back</button>
               <button
                 v-if="this.buttons.length < 3"
                 @click="draft(this.buttons[1].action)"
@@ -223,9 +230,7 @@
             </div>
           </div>
           <div class="flex justify-center mt-4">
-            <h6>
-              You need to check the box to be able to submit.
-            </h6>
+            <h6>You need to check the box to be able to submit.</h6>
           </div>
           <div class="flex justify-center mt-4 mb-8">
             <button
@@ -262,9 +267,7 @@
         <div v-if="this.draftStatus == 'DRA'">
           <div class="mt-12 flex justify-center">
             <div>
-              <button @click="submitBack">
-                Back
-              </button>
+              <button @click="submitBack">Back</button>
               <button
                 v-if="this.buttons.length < 3"
                 @click="draft(this.buttons[0].action)"
@@ -281,7 +284,8 @@
           </div>
           <div class="flex justify-center mt-4">
             <h6>
-              You need to check the box to be able to submit.
+              You need to check the box and submit feedback to be able to
+              submit.
             </h6>
           </div>
           <div class="flex justify-center mt-4 mb-8">
@@ -298,7 +302,7 @@
             <button
               id="subButton"
               style="opacity: 0.3"
-              :disabled="this.checkBoxValue == true"
+              :disabled="this.checkBoxValue == true && !this.showSubmit"
               v-if="this.buttons.length > 2"
               @click="submitRequest(this.buttons[2].action)"
               variant="outline"
@@ -320,8 +324,15 @@
           v-if="this.draftStatus == 'SUB'"
           class="flex justify-center mt-8 pb-12"
         >
-          <button @click="submitBack">
-            Back
+          <button @click="submitBack">Back</button>
+          <button
+            id="subButton"
+            style="opacity: 0.3"
+            v-if="this.buttons.length > 2"
+            @click="submitRequest(this.buttons[2].action)"
+            variant="outline"
+          >
+            {{ this.buttons[2].name }}
           </button>
           <button
             class="withdraw"
@@ -335,9 +346,7 @@
           v-if="this.draftStatus == 'USUP'"
           class="flex justify-center mt-8 pb-12"
         >
-          <button @click="submitBack">
-            Back
-          </button>
+          <button @click="submitBack">Back</button>
           <button @click="draft(this.buttons[0].action)" variant="outline">
             {{ this.buttons[0]["name"] }}
           </button>
@@ -349,9 +358,7 @@
           v-if="this.draftStatus == 'DEC' || this.draftStatus == 'CONF'"
           class="flex justify-center mt-8 pb-12"
         >
-          <button @click="submitBack">
-            Back
-          </button>
+          <button @click="submitBack">Back</button>
           <button
             id="reapplyButton"
             @click="draft('UpdateEvent')"
@@ -407,6 +414,7 @@ export default {
     if (this.draftId != undefined) {
       setTimeout(() => {
         this.draftData = this.getDraftData;
+        this.feedback = this.draftData.feedback;
         this.documentsArray = this.draftData.documents;
       }, 3500);
       if (this.draftStatus == "SUB") {
@@ -468,8 +476,10 @@ export default {
     this.phd = this.getPhd;
     this.phdTranscript = this.getPhdTranscript;
     this.phdTranscript2 = this.getPhdTranscript2;
-    this.renewedLicenseFromHealthFacility = this.getRenewedLicenseOfHealthFacility;
-    this.requestLetterFromHiringHealthFacility = this.getRequestLetterFromHiringHealthFacility;
+    this.renewedLicenseFromHealthFacility =
+      this.getRenewedLicenseOfHealthFacility;
+    this.requestLetterFromHiringHealthFacility =
+      this.getRequestLetterFromHiringHealthFacility;
 
     this.buttons = this.getButtons;
     this.fetchProfileInfo();
@@ -488,7 +498,8 @@ export default {
     this.expertLevelId = this.license.expertLevelId;
     this.otherEducationalInstitution = this.license.otherEducationalInstitution;
     this.otherProfessionalType = this.license.otherProfessionalType;
-    this.otherProfessionalTypeAmharic = this.license.otherProfessionalTypeAmharic;
+    this.otherProfessionalTypeAmharic =
+      this.license.otherProfessionalTypeAmharic;
     if (this.levelOfEducation == "diploma") {
       this.docCode = "PDD";
       this.docIdx = 7;
@@ -1114,7 +1125,7 @@ export default {
         }
         const filePreview = await this.blobToBase64(this.transcript2);
         this.transcript2.docFile = filePreview;
-        this.transcript2.title = "Degree Transcript 2";
+        this.transcript2.title = "Transcript 2";
         this.docList.push(this.transcript2);
       }
     }
@@ -1282,6 +1293,8 @@ export default {
 
   data: () => ({
     basePath: "",
+    feedback: "",
+    showSubmit: false,
     docList: [],
     documentsArray: [],
     show: false,
@@ -1302,7 +1315,7 @@ export default {
     otherProfessionalType: null,
     otherProfessionalTypeAmharic: null,
     draftId: "",
-    draftData: "",
+    draftData: {},
     draftStatus: "",
     activeClass: "active",
     errorClass: "text-danger",
@@ -1456,7 +1469,7 @@ export default {
     })
   },
   methods: {
-    checkBox: function() {
+    checkBox: function () {
       this.checkBoxValue = !this.checkBoxValue;
       if (this.draftStatus == "DEC" || this.draftStatus == "CONF") {
         if (this.checkBoxValue) {
@@ -1476,7 +1489,14 @@ export default {
         }
       }
     },
-    moment: function(date) {
+    feedbackUpdate: function () {
+      if (this.feedback.length < 0) {
+        this.showSubmit = false;
+      } else {
+        this.showSubmit = true;
+      }
+    },
+    moment: function (date) {
       return moment(date);
     },
     fetchProfileInfo() {
@@ -1677,7 +1697,6 @@ export default {
         this.healthExamCert !== "" &&
         this.herqa !== "" &&
         this.proCertificate !== "" &&
-        this.proDiploma !== "" &&
         this.proTranscript !== "" &&
         this.professionalLicense !== ""
       ) {
@@ -1689,7 +1708,6 @@ export default {
         this.healthExamCert !== "" &&
         this.herqa !== "" &&
         this.proCertificate !== "" &&
-        this.proDiploma !== "" &&
         this.proTranscript !== "" &&
         this.professionalLicense !== ""
       ) {
@@ -1720,11 +1738,13 @@ export default {
         return false;
       }
     },
+
     async submitRequest(act) {
       let educationLevel = localStorage.getItem("educationalLevel");
       let payroll = localStorage.getItem("payroll");
       let language = localStorage.getItem("language");
       let action = act;
+      this.draftData.feedback = this.feedback;
       this.showLoading = true;
       if (this.draftId != null) {
         if (
@@ -1952,7 +1972,7 @@ export default {
                       this.showLoading = false;
                       setTimeout(() => {
                         this.$router.push({ path: "/menu" });
-                      }, 1500);
+                      }, 2500);
                     } else {
                       this.showErrorFlash = true;
                     }
@@ -2145,8 +2165,9 @@ export default {
             expertLevelId: this.expertLevelId,
             isLegal: this.checkBoxValue,
             otherEducationalInstitution: this.otherEducationalInstitution,
-            otherProfessionalType: this.otherProfessionalType
-          }
+            otherProfessionalType: this.otherProfessionalType,
+            feedback: this.feedback,
+          },
         };
         let educationLevel = localStorage.getItem("educationalLevel");
         let payroll = localStorage.getItem("payroll");
@@ -2175,7 +2196,7 @@ export default {
                     this.showFlash = true;
                     setTimeout(() => {
                       this.$router.push({ path: "/menu" });
-                    }, 1500);
+                    }, 5000);
                   } else {
                     this.showErrorFlash = true;
                   }
@@ -2398,7 +2419,7 @@ export default {
                   this.showLoading = false;
                   setTimeout(() => {
                     this.$router.push({ path: "/menu" });
-                  }, 1500);
+                  }, 5000);
                 } else {
                   this.showErrorFlash = true;
                 }
@@ -2594,6 +2615,15 @@ export default {
             otherProfessionalType: this.otherProfessionalType
           }
         };
+        let smsData = {
+          recipients: [
+            this.profileInfo.user.phoneNumber
+              ? "251" + this.profileInfo.user.phoneNumber
+              : ""
+          ],
+          message:
+            "Dear applicant you have successfully applied for a new license, after careful examination of your uploaded documents by our reviewers we will get back and notify you on each steps, Thank you for using eHPL."
+        };
         this.$store.dispatch("newlicense/addNewLicense", license).then(res => {
           let licenseId = res.data.data.id;
           let payload = { document: formData, id: licenseId };
@@ -2602,10 +2632,12 @@ export default {
             .then(res => {
               this.showLoading = false;
               if (res.data.status == "Success") {
-                this.showFlash = true;
-                setTimeout(() => {
-                  this.$router.push({ path: "/menu" });
-                }, 1500);
+                this.$store.dispatch("sms/sendSms", smsData).then(() => {
+                  this.showFlash = true;
+                  setTimeout(() => {
+                    this.$router.push({ path: "/menu" });
+                  }, 5000);
+                });
               } else {
                 this.showErrorFlash = true;
               }
@@ -2650,7 +2682,7 @@ export default {
             this.showLoading = false;
             setTimeout(() => {
               this.$router.push({ path: "/menu" });
-            }, 1500);
+            }, 5000);
           } else {
             this.showErrorFlash = true;
           }
@@ -2664,7 +2696,7 @@ export default {
               this.showLoading = false;
               setTimeout(() => {
                 this.$router.push({ path: "/menu" });
-              }, 1500);
+              }, 5000);
             }
           });
       }
@@ -2685,7 +2717,7 @@ export default {
           this.showLoading = false;
           setTimeout(() => {
             this.$router.push({ path: "/menu" });
-          }, 1500);
+          }, 5000);
         } else {
           this.showErrorFlash = true;
         }
@@ -2693,7 +2725,7 @@ export default {
     }
   },
   mounted() {
-    this.$nextTick(function() {
+    this.$nextTick(function () {
       window.setInterval(() => {
         this.showFlash = false;
         this.showErrorFlash = false;
