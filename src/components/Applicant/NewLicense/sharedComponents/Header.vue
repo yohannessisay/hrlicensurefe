@@ -258,9 +258,8 @@ export default {
     onMounted(() => {
       let menu = document.querySelector("#menu-icon");
       let sidenavbar = document.querySelector(".side-navbar");
-      let sidenavbarHeader = document.querySelector("#header-text");
       let content = document.querySelector(".content");
-
+      let sidenavbarHeader = document.querySelector("#header-text");
       menu.onclick = () => {
         sidenavbar.classList.toggle("active");
         content.classList.toggle("active");

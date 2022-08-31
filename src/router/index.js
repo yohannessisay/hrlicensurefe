@@ -76,9 +76,9 @@ const routes = [
     component: () => import("../views/Approved.vue"),
   },
   {
-    path: "/submitted",
-    name: "Submitted",
-    component: () => import("../views/Submitted.vue"),
+    path: "/newLicense/submitted",
+    name: "NewLicenseSubmitted",
+    component: () => import("../components/Applicant/NewLicense/submitted.vue"),
   },
   {
     path: "/inReview",
@@ -123,7 +123,7 @@ const routes = [
   {
     path: "/newlicense",
     name: "NewLicense",
-    component: () => import("../components/NewLicense/NewLicense.vue"),
+    component: () => import("../components/Applicant/NewLicense/newLicense.vue"),
   },
 
   {
