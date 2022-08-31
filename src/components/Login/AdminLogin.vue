@@ -1,5 +1,7 @@
 <template>
-  <div class="min-h-screen w-full bg-gray-100 flex flex-col justify-center sm:py-4">
+  <div
+    class="min-h-screen w-full bg-gray-100 flex flex-col justify-center sm:py-4"
+  >
     <div class="p-4 xs:p-0 mx-auto md:w-full md:max-w-md">
       <h1 class="font-bold text-center text-2xl mb-5">
         <button
@@ -76,17 +78,30 @@
                 placeholder="**********"
                 @type="show ? 'password' : 'text'"
               />
-              <div class="w-1/12  ml-2 mt-2 ">
-              <a class="text-primary-500">
-                <i class="fa fa-eye" style="font-size: 26px;" @click="showVisibility()"></i></a>
+              <div class="w-1/12 ml-2 mt-2">
+                <a class="text-primary-500">
+                  <i
+                    class="fa fa-eye"
+                    style="font-size: 26px"
+                    @click="showVisibility()"
+                  ></i
+                ></a>
               </div>
             </div>
-    <div>
-       <a
-        href="#"
-        class="text-primary-500 w-full text-right mr-small hover:underline"
-        @click="$emit('forgotPassword')">Forgot Password</a>
-    </div>
+            <div>
+              <a
+                href="#"
+                class="
+                  text-primary-500
+                  w-full
+                  text-right
+                  mr-small
+                  hover:underline
+                "
+                @click="$emit('forgotPassword')"
+                >Forgot Password</a
+              >
+            </div>
             <div class="form-group mb-6 text-center">
               <button
                 class="
@@ -127,7 +142,13 @@
                     d="M17 8l4 4m0 0l-4 4m4-4H3"
                   />
                 </svg>
-                <vue-element-loading :active="show" spinner="ring" color="white" background-color="#ffffff00;" style="margin-left: 110px;margin-top: -3px;" />
+                <vue-element-loading
+                  :active="show"
+                  spinner="ring"
+                  color="white"
+                  background-color="#ffffff00;"
+                  style="margin-left: 110px; margin-top: -3px"
+                />
               </button>
             </div>
 
@@ -153,8 +174,14 @@ import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
 import VueElementLoading from "vue-element-loading";
 export default {
-  components: { Title, FlashMessage, ErrorFlashMessage, Spinner, VueElementLoading },
-  setup( { emit }) {
+  components: {
+    Title,
+    FlashMessage,
+    ErrorFlashMessage,
+    Spinner,
+    VueElementLoading,
+  },
+  setup({ emit }) {
     const store = useStore();
     const router = useRouter();
     let show = ref(false);
@@ -193,40 +220,29 @@ export default {
         password: credentials.value.password,
       };
       store.dispatch("admin/login", credentialData).then((res) => {
-        loggedInData.value = store.getters["admin/getAdmin"];
+        loggedInData.value = res.data.data;
+
         showLoading.value = false;
         if (loggedInData.value !== undefined) {
           if (!loggedInData.value.isActive) {
-          message.value.showErrorFlash = true;
-          setTimeout(() => {
-            // context.emit("closeModal", true);
-            credentials.value.email = '';
-            credentials.value.password = '';
-            message.value.showErrorFlash = false;
-          }, 3000);
-         }
-        else{
-          if (loggedInData.value.isFirstTime) {
-            message.value.showFlash = !message.value.showFlash;
+            message.value.showErrorFlash = true;
             setTimeout(() => {
               // context.emit("closeModal", true);
               credentials.value.email = "";
               credentials.value.password = "";
               message.value.showErrorFlash = false;
             }, 3000);
-            show.value = false;
           } else {
-            show.value = false;
             if (loggedInData.value.isFirstTime) {
               message.value.showFlash = !message.value.showFlash;
               setTimeout(() => {
                 router.push({ path: "/admin/changePassword" });
-              }, 3000);
+              }, 1000);
             } else if (loggedInData.value.role.code == "UM") {
               message.value.showErrorFlash = !message.value.showFlash;
               setTimeout(() => {
                 router.push({ path: "/admin/list" });
-              });
+              }, 1000);
             } else {
               message.value.showFlash = !message.value.showFlash;
               setTimeout(() => {
@@ -234,7 +250,6 @@ export default {
               }, 3000);
             }
           }
-        }
         } else {
           message.value.showErrorFlash = !message.value.showErrorFlash;
           show.value = false;
