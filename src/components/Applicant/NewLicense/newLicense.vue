@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import Institution from "./AddNewLicense/institution.vue";
+import Institution from "./AddNewLicense/generalInformation.vue";
 import Upload from "./AddNewLicense/Upload.vue";
 
 import LicenseSummary from "./AddNewLicense/LicenseSummary.vue";

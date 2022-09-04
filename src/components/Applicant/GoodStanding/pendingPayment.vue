@@ -2,7 +2,7 @@
   <main-content>
     <div class="pages-navbar flex justify-center h-12 rounded-sm"  style="width: 98% !important">
       <div class="profile p-4">
-        <h2 class="text-white">Your submitted applications</h2>
+        <h2 class="text-white">Your applications pending for payment approval</h2>
       </div>
     </div>
     <div class="container my-12 mx-auto px-4 md:px-12">
@@ -10,7 +10,6 @@
         <!-- Column -->
         <div
           class="
-            bg-main-400
             my-1
             px-1
             w-full
@@ -22,47 +21,47 @@
         >
           <!-- Article -->
 
-          <h1 class="text-white border-b-2">Department Name</h1>
+          <h1 class="text-main-400 border-b-2 ">Department Name</h1>
 
           <header
             class="flex items-center justify-between leading-tight p-2 md:p-2"
           >
             <h1 class="text-lg">
-              <a class="no-underline hover:underline text-white" href="#">
+              <a class="no-underline hover:underline text-black" href="#">
                 Profession Name
               </a>
             </h1>
-            <p class="text-white text-sm">Profession Name</p>
+            <p class="text-grey-darker text-sm">issued date</p>
           </header>
           <div
             class="flex items-center justify-between leading-tight p-2 md:p-2"
           >
             <h1 class="text-lg">
-              <a class="no-underline hover:underline text-white" href="#">
+              <a class="no-underline hover:underline text-black" href="#">
                 Certified Date
               </a>
             </h1>
-            <p class="text-white text-sm">Certified Date</p>
+            <p class="text-grey-darker text-sm">Certified Date</p>
           </div>
           <div
             class="flex items-center justify-between leading-tight p-2 md:p-2"
           >
             <h1 class="text-lg">
-              <a class="no-underline hover:underline text-white" href="#">
+              <a class="no-underline hover:underline text-black" href="#">
                 Expiry Date
               </a>
             </h1>
-            <p class="text-white text-sm">Expiry Date</p>
+            <p class="text-grey-darker text-sm">Expiry Date</p>
           </div>
           <div
             class="flex items-center justify-between leading-tight p-2 md:p-2"
           >
             <h1 class="text-lg">
-              <a class="no-underline hover:underline text-white" href="#">
+              <a class="no-underline hover:underline text-black" href="#">
                 Other Kotets
               </a>
             </h1>
-            <p class="text-white text-sm">kotets</p>
+            <p class="text-grey-darker text-sm">kotets</p>
           </div>
 
           <!-- END Article -->

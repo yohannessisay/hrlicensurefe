@@ -8,6 +8,7 @@ export default {
             const resp = await ApiService.post(baseUrl + "/login", profile, {});
             window.localStorage.setItem("token", resp.data["token"]);
             window.localStorage.setItem("userId", resp.data.data["id"]);
+            window.localStorage.setItem("isApplicant", true);
             commit(SET_PROFILE, resp.data);
             return resp;
         } catch (error) {}

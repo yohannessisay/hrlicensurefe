@@ -1,167 +1,144 @@
 <template>
   <main-content>
     <div>
-      <button
-        class="
-          inline-block
-          px-6
-          py-2.5
-          bg-blue-600
-          text-white
-          font-medium
-          text-xs
-          leading-tight
-          uppercase
-          rounded
-          shadow-md
-          hover:bg-blue-700 hover:shadow-lg
-          focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
-          active:bg-blue-800 active:shadow-lg
-          transition
-          duration-150
-          ease-in-out
-        "
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#commonFiles"
-        aria-expanded="false"
-        aria-controls="commonFiles"
-      >
-        Common Files Upload
-      </button>
-      <button
-        class="
-          inline-block
-          px-6
-          py-2.5
-          bg-blue-600
-          text-white
-          font-medium
-          text-xs
-          leading-tight
-          uppercase
-          rounded
-          shadow-md
-          hover:bg-blue-700 hover:shadow-lg
-          focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
-          active:bg-blue-800 active:shadow-lg
-          transition
-          duration-150
-          ease-in-out
-        "
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#mainFiles"
-        aria-expanded="false"
-        aria-controls="mainFiles"
-      >
-        Department Files Upload
-      </button>
-
-      <div class="collapse" id="commonFiles">
-        <div class="block p-6 rounded-lg shadow-lg bg-white mt-8">
-          <h4 class="text-primary-600 font-bold">Common Files</h4>
-
-          <div class="table-multiple">
-            <div class="flex flex-col">
-              <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
-                <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
-                  <div class="overflow-hidden">
-                    <table class="min-w-full">
-                      <thead class="border-b">
-                        <tr>
-                          <th
-                            scope="col"
-                            class="
-                              text-sm
-                              font-medium
-                              text-gray-900
-                              px-6
-                              py-4
-                              text-left
-                            "
-                          >
-                            Document Name
-                          </th>
-                          <th
-                            scope="col"
-                            class="
-                              text-sm
-                              font-medium
-                              text-gray-900
-                              px-6
-                              py-4
-                              text-left
-                            "
-                          >
-                            Document Description
-                          </th>
-                          <th
-                            scope="col"
-                            class="
-                              text-sm
-                              font-medium
-                              text-gray-900
-                              px-6
-                              py-4
-                              text-left
-                            "
-                          >
-                            Upload
-                          </th>
-                          <th
-                            scope="col"
-                            class="
-                              text-sm
-                              font-medium
-                              text-gray-900
-                              px-6
-                              py-4
-                              text-left
-                            "
-                          >
-                            View
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr
-                          class="border-b border-grey-200"
-                          v-for="item in documents"
-                          :key="item.id"
+      <div class="accordion mr-8" id="FilesAccordion">
+        <div
+          class="accordion-item bg-white border border-grey-200 p-4 rounded-lg"
+        >
+          <h2 class="accordion-header mb-0" id="headingOne">
+            <span
+              class="
+                rounded-md
+                collapsed
+                relative
+                flex
+                items-center
+                w-full
+                py-4
+                px-5
+                text-base text-gray-800 text-left
+                bg-main-400
+                hover:text-main-400
+                text-white
+                border-0
+                transition
+                focus:outline-none
+              "
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#commonFilesAccordion"
+              aria-expanded="true"
+              aria-controls="commonFilesAccordion"
+            >
+              Common Files
+            </span>
+          </h2>
+          <div
+            id="commonFilesAccordion"
+            class="accordion-collapse collapse  "
+            aria-labelledby="commonFilesAccordionheading"
+            data-bs-parent="#FilesAccordion"
+          >
+            <div class="accordion-body py-4 px-5">
+              <div class="bg-red-800 py-5">
+                <div class="overflow-x-auto w-full">
+                  <table
+                    class="
+                      max-w-4xl
+                      w-full
+                      whitespace-nowrap
+                      rounded-lg
+                      bg-white
+                      divide-y
+                      overflow-hidden
+                    "
+                  >
+                    <thead class="bg-main-400">
+                      <tr class="text-left">
+                        <th
+                          class="
+                            font-semibold
+                            text-sm
+                            uppercase
+                            px-6
+                            py-4
+                            text-white
+                          "
                         >
-                          <td
-                            class="
-                              px-6
-                              py-4
-                              whitespace-nowrap
-                              text-sm
-                              font-medium
-                              text-gray-900
-                            "
-                          >
-                            {{ item.documentName }}
-                          </td>
-                          <td
-                            class="
-                              text-sm text-gray-900
-                              font-light
-                              px-6
-                              py-4
-                              whitespace-nowrap
-                            "
-                          >
-                            {{ item.documentDescription }}
-                          </td>
-                          <td
-                            class="
-                              text-sm text-gray-900
-                              font-light
-                              px-6
-                              py-4
-                              whitespace-nowrap
-                            "
-                          >
+                          Document Name
+                        </th>
+                        <th
+                          class="
+                            font-semibold
+                            text-sm
+                            uppercase
+                            px-6
+                            py-4
+                            text-white
+                          "
+                        >
+                          Document Description
+                        </th>
+                        <th
+                          class="
+                            font-semibold
+                            text-sm
+                            uppercase
+                            px-6
+                            py-4
+                            text-left text-white
+                          "
+                        >
+                          Upload
+                        </th>
+                        <th
+                          class="
+                            font-semibold
+                            text-sm
+                            uppercase
+                            px-6
+                            py-4
+                            text-center text-white
+                          "
+                        >
+                          View
+                        </th>
+                        <th
+                          class="
+                            font-semibold
+                            text-sm
+                            uppercase
+                            px-6
+                            py-4
+                            text-white
+                          "
+                        ></th>
+                      </tr>
+                    </thead>
+                    <tbody class="divide-y">
+                      <tr
+                        v-for="item in documents"
+                        :key="item.id"
+                        class="border-b text-main-400"
+                      >
+                        <td class="px-6 py-4">
+                          <div class="flex items-center space-x-3">
+                            <div>
+                              <p class="">{{ item.documentName }}</p>
+                            </div>
+                          </div>
+                        </td>
+                        <td class="px-6 py-4">
+                          <div class="flex items-center space-x-3">
+                            <div>
+                              <p class="">
+                                {{ item.documentDescription }}
+                              </p>
+                            </div>
+                          </div>
+                        </td>
+                        <td class="px-6 py-4">
+                          <p class="text-sm font-semibold tracking-wide">
                             <input
                               type="file"
                               required
@@ -176,176 +153,236 @@
                                 )
                               "
                             />
-                          </td>
-                          <td
-                            class="
-                              text-sm text-gray-900
-                              font-light
-                              px-6
-                              py-4
-                              whitespace-nowrap
+                          </p>
+                        </td>
+
+                        <td class="px-6 py-4 text-center">
+                          <span
+                            data-bs-toggle="modal"
+                            data-bs-target="#filePreview"
+                            @click="
+                              previewFile(item.documentCode, item.documentName)
                             "
                           >
-                            <span
-                              data-bs-toggle="modal"
-                              data-bs-target="#filePreview"
-                              @click="
-                                previewFile(
-                                  item.documentCode,
-                                  item.documentName
-                                )
-                              "
-                            >
-                              <i
-                                class="fa fa-eye cursor-pointer"
-                                aria-hidden="true"
-                              ></i>
-                            </span>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
+                            <i
+                              class="fa fa-eye cursor-pointer"
+                              aria-hidden="true"
+                            ></i>
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="
+            accordion-item
+            bg-white
+            border border-grey-200
+            p-4
+            mt-8
+            rounded-lg
+          "
+        >
+          <h2 class="accordion-header mb-0" id="headingTwo">
+            <span
+              class="
+                rounded-md
+                collapsed
+                relative
+                flex
+                items-center
+                w-full
+                py-4
+                px-5
+                text-base text-gray-800 text-left
+                bg-main-400
+                hover:text-main-400
+                text-white
+                border-0
+                transition
+                focus:outline-none
+              "
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#departmentFilesAccordion"
+              aria-expanded="true"
+              aria-controls="departmentFilesAccordion"
+            >
+              Department Related Files
+            </span>
+          </h2>
+          <div
+            id="departmentFilesAccordion"
+            class="accordion-collapse collapse  "
+            aria-labelledby="departmentFilesAccordionheading"
+            data-bs-parent="#FilesAccordion"
+          >
+            <div class="accordion-body py-4 px-5">
+              <div v-for="table in generalInfo.multipleDepartment" :key="table">
+                <h4 class="text-main-400 font-bold">
+                  {{ table.department ? table.department.name : "" }} Department
+                  Related Files
+                </h4>
+
+                <div class="overflow-x-auto w-full">
+                  <table
+                    class="
+                      max-w-4xl
+                      w-full
+                      whitespace-nowrap
+                      rounded-lg
+                      bg-white
+                      divide-y divide-gray-300
+                      overflow-hidden
+                    "
+                  >
+                    <thead class="bg-main-400">
+                      <tr class="text-left">
+                        <th
+                          class="
+                            font-semibold
+                            text-sm
+                            uppercase
+                            px-6
+                            py-4
+                            text-white
+                          "
+                        >
+                          Document Name
+                        </th>
+                        <th
+                          class="
+                            font-semibold
+                            text-sm
+                            uppercase
+                            px-6
+                            py-4
+                            text-white
+                          "
+                        >
+                          Document Description
+                        </th>
+                        <th
+                          class="
+                            font-semibold
+                            text-sm
+                            uppercase
+                            px-6
+                            py-4
+                            text-left text-white
+                          "
+                        >
+                          Upload
+                        </th>
+                        <th
+                          class="
+                            font-semibold
+                            text-sm
+                            uppercase
+                            px-6
+                            py-4
+                            text-center text-white
+                          "
+                        >
+                          View
+                        </th>
+                        <th
+                          class="
+                            font-semibold
+                            text-sm
+                            uppercase
+                            px-6
+                            py-4
+                            text-white
+                          "
+                        ></th>
+                      </tr>
+                    </thead>
+                    <tbody class="divide-y">
+                      <tr
+                        v-for="(item, index) in departmentDocuments"
+                        :key="item.id"
+                        class="border-b text-main-400"
+                      >
+                        <td class="px-6 py-4 ">
+                          <div class="flex items-center space-x-3">
+                            <div>
+                              <p class="">
+                                {{ item.documentType.name }}
+                              </p>
+                            </div>
+                          </div>
+                        </td>
+                        <td class="px-6 py-4">
+                          <div class="flex items-center space-x-3">
+                            <div>
+                              <p class="">
+                                {{ item.documentType.description }}
+                              </p>
+                            </div>
+                          </div>
+                        </td>
+                        <td class="px-6 py-4">
+                          <p class="">
+                            <input
+                              type="file"
+                              :required="item.isRequired"
+                              :id="`files${index}`"
+                              accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
+                              :ref="`imageUploader${index}`"
+                              class="custom-file-input"
+                              v-on:change="handleFileUpload(item, $event)"
+                            />
+                          </p>
+                        </td>
+
+                        <td class="px-6 py-4 text-center">
+                          <span
+                            data-bs-toggle="modal"
+                            data-bs-target="#filePreview"
+                            @click="
+                              previewFile(
+                                item.documentType.code,
+                                item.documentType.name
+                              )
+                            "
+                          >
+                            <i
+                              class="fa fa-eye cursor-pointer"
+                              aria-hidden="true"
+                            ></i>
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-
-      <div class="collapse" id="mainFiles">
-        <div
-          class="block p-6 rounded-lg shadow-lg bg-white mt-8"
-          v-for="table in generalInfo.multipleDepartment"
-          :key="table"
-        >
-          <h4 class="text-primary-600 font-bold">
-            {{ table.department ? table.department.name : "" }} Department
-            Related Files
-          </h4>
-
-          <table class="min-w-full">
-            <thead class="border-b">
-              <tr>
-                <th
-                  scope="col"
-                  class="text-sm font-medium text-gray-900 px-6 py-4 text-left"
-                >
-                  Document Name
-                </th>
-                <th
-                  scope="col"
-                  class="text-sm font-medium text-gray-900 px-6 py-4 text-left"
-                >
-                  Document Description
-                </th>
-                <th
-                  scope="col"
-                  class="text-sm font-medium text-gray-900 px-6 py-4 text-left"
-                >
-                  Upload
-                </th>
-                <th
-                  scope="col"
-                  class="text-sm font-medium text-gray-900 px-6 py-4 text-left"
-                >
-                  View
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                class="border-b border-grey-200"
-                v-for="(item, index) in departmentDocuments"
-                :key="item.id"
-              >
-                <td
-                  class="
-                    px-6
-                    py-4
-                    whitespace-nowrap
-                    text-sm
-                    font-medium
-                    text-gray-900
-                  "
-                >
-                  {{ item.documentType.name }}
-                </td>
-                <td
-                  class="
-                    text-sm text-gray-900
-                    font-light
-                    px-6
-                    py-4
-                    whitespace-nowrap
-                  "
-                >
-                  {{ item.documentType.description }}
-                </td>
-                <td
-                  class="
-                    text-sm text-gray-900
-                    font-light
-                    px-6
-                    py-4
-                    whitespace-nowrap
-                  "
-                >
-                  <input
-                    type="file"
-                    :required="item.isRequired"
-                    :id="`files${index}`"
-                    accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
-                    :ref="`imageUploader${index}`"
-                    class="custom-file-input"
-                    v-on:change="handleFileUpload(item, $event)"
-                  />
-                </td>
-                <td
-                  class="
-                    text-sm text-gray-900
-                    font-light
-                    px-6
-                    py-4
-                    whitespace-nowrap
-                  "
-                >
-                  <span
-                    data-bs-toggle="modal"
-                    data-bs-target="#filePreview"
-                    @click="
-                      previewFile(
-                        item.documentType.code,
-                        item.documentType.name
-                      )
-                    "
-                  >
-                    <i class="fa fa-eye cursor-pointer" aria-hidden="true"></i>
-                  </span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <button
+<div class="flex justify-end mr-8">
+  <button
         class="
           mt-8
           inline-block
           px-6
           py-2.5
-          bg-blue-600
-          text-white
-          font-medium
-          text-xs
+          bg-main-400
+          hover:text-main-400
+          text-white text-xs
+          font-bold
           leading-tight
           uppercase
           rounded
           shadow-md
-          hover:bg-blue-700 hover:shadow-lg
-          focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
-          active:bg-blue-800 active:shadow-lg
+          active:border-main-400
           transition
           duration-150
           ease-in-out
@@ -354,6 +391,9 @@
       >
         next
       </button>
+
+</div>
+ 
     </div>
     <filePreview :modalData="filePreviewData"> </filePreview>
   </main-content>
@@ -426,7 +466,6 @@ export default {
       filePreviewData.value.isPdf = isPdf.value[code];
       filePreviewData.value.file = previewDocuments.value[code];
       filePreviewData.value.name = name;
-      // console.log(filePreviewData.value);
     };
 
     const handleCommonFileUpload = (code, event) => {
@@ -585,6 +624,10 @@ export default {
             });
           })
         : "";
+
+        store.dispatch("newlicense/getDocumentSpecs").then((res) => {
+        let results = res.data.data;
+      });
     });
     return {
       documents,
@@ -609,7 +652,7 @@ export default {
 <style>
 .upload-button {
   cursor: pointer;
-  background-color: #50c878;
+  background-color: #1f677e;
   color: white;
   border: 1px;
   border-radius: 5%;
@@ -627,10 +670,11 @@ export default {
 .custom-file-input::before {
   content: "Upload";
   display: inline-block;
-  background: #089ca7;
+  background: #1f677e;
   border-radius: 3px;
   padding: 5px 5px;
   outline: none;
+  color: white;
   white-space: nowrap;
   -webkit-user-select: none;
   cursor: pointer;

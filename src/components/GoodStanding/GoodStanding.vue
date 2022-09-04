@@ -2,13 +2,19 @@
   <div class="overflow-x-hidden overflow-y-scroll">
     <Navigation />
     <div
-      class="w-screen h-full pb-xl bg-lightBlueB-200 flex items-center justify-center"
+      class="
+        w-screen
+        h-full
+        pb-xl
+        bg-lightBlueB-200
+        flex
+        items-center
+        justify-center
+      "
     >
       <div class="w-screen max-w-4xl mt-medium">
         <div class="flex flex-col w-full rounded mb-large">
-          <h2 class="flex justify-center pb-medium">
-            Good standing
-          </h2>
+          <h2 class="flex justify-center pb-medium">Good standing</h2>
           <transition name="fade" mode="out-in">
             <div v-if="this.activeState == 1">
               <Institution
@@ -114,31 +120,31 @@ export default {
           this.applicationStatuses = results;
           if (this.draftId != undefined) {
             if (this.draftStatus == "DRA") {
-              let status = this.applicationStatuses.filter(function(e) {
+              let status = this.applicationStatuses.filter(function (e) {
                 return e.code == "DRA";
               });
               this.buttons = status[0]["buttons"];
             }
             if (this.draftStatus == "SUB") {
-              let status = this.applicationStatuses.filter(function(e) {
+              let status = this.applicationStatuses.filter(function (e) {
                 return e.code == "SUB";
               });
               this.buttons = status[0]["buttons"];
             }
             if (this.draftStatus == "USUP") {
-              let status = this.applicationStatuses.filter(function(e) {
+              let status = this.applicationStatuses.filter(function (e) {
                 return e.code == "USUP";
               });
               this.buttons = status[0]["buttons"];
             }
             if (this.draftStatus == "DEC") {
-              let status = this.applicationStatuses.filter(function(e) {
+              let status = this.applicationStatuses.filter(function (e) {
                 return e.code == "DEC";
               });
               this.buttons = status[0]["buttons"];
             }
           } else {
-            let status = this.applicationStatuses.filter(function(e) {
+            let status = this.applicationStatuses.filter(function (e) {
               return e.code == "INIT";
             });
             this.buttons = status[0]["buttons"];

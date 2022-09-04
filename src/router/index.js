@@ -1,8 +1,10 @@
-import { createRouter, createWebHistory, useRouter } from "vue-router";
+import { createRouter, createWebHistory } from "vue-router";
 import Landing from "../components/Landing/Landing.vue";
 const routes = [
   {
-    // path: "*",
+    /******************************************************************************************************************************************/
+    /**************1-COMMON ROUTES*****************/
+    /******************************************************************************************************************************************/
     path: "/:catchAll(.*)",
     name: "NotFound",
     component: () => import("../views/404Page.vue"),
@@ -46,11 +48,7 @@ const routes = [
     name: "Login",
     component: () => import("../views/Login.vue"),
   },
-  {
-    path: "/menu",
-    name: "Menu",
-    component: () => import("../views/Applicant/Menu.vue"),
-  },
+
   {
     path: "/resetpassword/:id",
     name: "ResetPassword",
@@ -70,60 +68,64 @@ const routes = [
         "https://docs.google.com/forms/d/e/1FAIpQLSdHJh4WF9bBHgw7ewMHUzEr3a4dhvOjdF9aWu50PdQo_7no0Q/viewform",
     },
   },
+
+  /******************************************************************************************************************************************/
+  /**************2-APPLICANT SIDE ROUTES*****************/
+  /******************************************************************************************************************************************/
   {
-    path: "/approved",
-    name: "Approved",
-    component: () => import("../views/Approved.vue"),
+    path: "/menu",
+    name: "Menu",
+    component: () => import("../views/Applicant/Menu.vue"),
+  },
+
+  //Applicant Side New License
+  {
+    path: "/Applicant/NewLicense/approved",
+    name: "ApplicantNewLicenseApproved",
+    component: () => import("../components/Applicant/NewLicense/approved.vue"),
   },
   {
-    path: "/newLicense/submitted",
-    name: "NewLicenseSubmitted",
+    path: "/Applicant/NewLicense/submitted",
+    name: "ApplicantNewLicenseSubmitted",
     component: () => import("../components/Applicant/NewLicense/submitted.vue"),
   },
   {
-    path: "/inReview",
-    name: "InReview",
-    component: () => import("../views/InReview.vue"),
+    path: "/Applicant/NewLicense/inReview",
+    name: "ApplicantNewLicenseInReview",
+    component: () => import("../components/Applicant/NewLicense/inReview.vue"),
   },
   {
-    path: "/undersupervision",
-    name: "UnderSupervision",
-    component: () => import("../views/UnderSupervision.vue"),
+    path: "/Applicant/NewLicense/undersupervision",
+    name: "ApplicantNewLicenseUnderSupervision",
+    component: () =>
+      import("../components/Applicant/NewLicense/underSupervision.vue"),
   },
   {
-    path: "/declined",
-    name: "Declined",
-    component: () => import("../views/Declined.vue"),
+    path: "/Applicant/NewLicense/withdraw",
+    name: "ApplicantNewLicenseWithdraw",
+    component: () => import("../components/Applicant/NewLicense/withdraw.vue"),
   },
   {
-    path: "/withdrawn",
-    name: "Withdraw",
-    component: () => import("../views/Withdraw.vue"),
+    path: "/Applicant/NewLicense/pendingPayment",
+    name: "ApplicantNewLicensePendingPayment",
+    component: () =>
+      import("../components/Applicant/NewLicense/pendingPayment.vue"),
   },
   {
-    path: "/pendingPayment",
-    name: "PendingPayment",
-    component: () => import("../views/PendingPayment.vue"),
+    path: "/Applicant/NewLicense/declined",
+    name: "ApplicantDeclined",
+    component: () => import("../components/Applicant/NewLicense/declined.vue"),
   },
   {
-    path: "/approvedPayment",
-    name: "ApprovedPayment",
-    component: () => import("../views/ApprovedPayment.vue"),
+    path: "/Applicant/NewLicense/draft",
+    name: "ApplicantNewLicenseDraft",
+    component: () => import("../components/Applicant/NewLicense/drafted.vue"),
   },
   {
-    path: "/declinedPayment",
-    name: "DeclinedPayment",
-    component: () => import("../views/DeclinedPayment.vue"),
-  },
-  {
-    path: "/draft",
-    name: "Draft",
-    component: () => import("../views/Draft.vue"),
-  },
-  {
-    path: "/newlicense",
-    name: "NewLicense",
-    component: () => import("../components/Applicant/NewLicense/newLicense.vue"),
+    path: "/Applicant/Newlicense",
+    name: "ApplicantNewLicense",
+    component: () =>
+      import("../components/Applicant/NewLicense/newLicense.vue"),
   },
 
   {
@@ -136,11 +138,65 @@ const routes = [
     name: "Verification",
     component: () => import("../components/Verification/Verification.vue"),
   },
+  //Applicant Side Good Standing
   {
-    path: "/goodstanding",
-    name: "GoodStanding",
-    component: () => import("../components/GoodStanding/GoodStanding.vue"),
+    path: "/Applicant/GoodStanding",
+    name: "ApplicantGoodStanding",
+    component: () =>
+      import("../components/Applicant/GoodStanding/goodStanding.vue"),
   },
+  {
+    path: "/Applicant/GoodStanding/approved",
+    name: "ApplicantGoodStandingApproved",
+    component: () =>
+      import("../components/Applicant/GoodStanding/approved.vue"),
+  },
+  {
+    path: "/Applicant/GoodStanding/submitted",
+    name: "ApplicantGoodStandingSubmitted",
+    component: () =>
+      import("../components/Applicant/GoodStanding/submitted.vue"),
+  },
+  {
+    path: "/Applicant/GoodStanding/assigned",
+    name: "ApplicantGoodStandingInReview",
+    component: () =>
+      import("../components/Applicant/GoodStanding/assigned.vue"),
+  },
+  {
+    path: "/Applicant/GoodStanding/undersupervision",
+    name: "ApplicantGoodStandingUnderSupervision",
+    component: () =>
+      import("../components/Applicant/GoodStanding/underSupervision.vue"),
+  },
+  {
+    path: "/Applicant/GoodStanding/withdraw",
+    name: "ApplicantGoodStandingWithdraw",
+    component: () =>
+      import("../components/Applicant/GoodStanding/withdraw.vue"),
+  },
+  {
+    path: "/Applicant/GoodStanding/pendingPayment",
+    name: "ApplicantGoodStandingPendingPayment",
+    component: () =>
+      import("../components/Applicant/GoodStanding/pendingPayment.vue"),
+  },
+  {
+    path: "/Applicant/GoodStanding/declined",
+    name: "ApplicantDeclined",
+    component: () =>
+      import("../components/Applicant/GoodStanding/declined.vue"),
+  },
+  {
+    path: "/Applicant/GoodStanding/draft",
+    name: "ApplicantGoodStandingDraft",
+    component: () => import("../components/Applicant/GoodStanding/drafted.vue"),
+  },
+
+  /******************************************************************************************************************************************/
+  /**************1-END OF APPLICANT SIDE ROUTES*****************/
+  /******************************************************************************************************************************************/
+
   {
     path: "/admin/review",
     name: "ReviewerHome",
@@ -875,12 +931,13 @@ const routes = [
         "../components/Reviewer/ApplicationTypes/GoodStanding/GoodStandingAllDeclined.vue"
       ),
   },
-
-  //New Updated Routes....please follow these guidelines when refactoring
+  /******************************************************************************************************************************************/
+  /**************1-ADMIN SIDE ROUTES*****************/
+  /******************************************************************************************************************************************/
   //Admin New license section
   {
     path: "/admin/newLicense",
-    name: "NewLicenseHome",
+    name: "AdminNewLicenseHome",
     component: () =>
       import(
         "../components/Reviewer/HomeComponents/NewLicense/Unassigned/unassigned.vue"
@@ -888,7 +945,7 @@ const routes = [
   },
   {
     path: "/admin/newLicense/inReview",
-    name: "NewLicenseInReview",
+    name: "AdminNewLicenseInReview",
     component: () =>
       import(
         "../components/Reviewer/HomeComponents/NewLicense/InReview/inReview.vue"
@@ -896,7 +953,7 @@ const routes = [
   },
   {
     path: "/admin/newLicense/draft",
-    name: "NewLicenseDraft",
+    name: "AdminNewLicenseDraft",
     component: () =>
       import(
         "../components/Reviewer/HomeComponents/NewLicense/Draft/draft.vue"
@@ -904,7 +961,7 @@ const routes = [
   },
   {
     path: "/admin/newLicense/approved",
-    name: "NewLicenseApproved",
+    name: "AdminNewLicenseApproved",
     component: () =>
       import(
         "../components/Reviewer/HomeComponents/NewLicense/Approved/approved.vue"
@@ -912,7 +969,7 @@ const routes = [
   },
   {
     path: "/admin/newLicense/declined",
-    name: "NewLicenseDeclined",
+    name: "AdminNewLicenseDeclined",
     component: () =>
       import(
         "../components/Reviewer/HomeComponents/NewLicense/Declined/declined.vue"
@@ -920,7 +977,7 @@ const routes = [
   },
   {
     path: "/admin/newLicense/underSupervision",
-    name: "NewLicenseUnderSupervision",
+    name: "AdminNewLicenseUnderSupervision",
     component: () =>
       import(
         "../components/Reviewer/HomeComponents/NewLicense/UnderSupervision/underSupervision.vue"
@@ -928,7 +985,7 @@ const routes = [
   },
   {
     path: "/admin/newLicense/licensed",
-    name: "NewLicenseLicensed",
+    name: "AdminNewLicenseLicensed",
     component: () =>
       import(
         "../components/Reviewer/HomeComponents/NewLicense/Licensed/licensed.vue"
@@ -936,7 +993,7 @@ const routes = [
   },
   {
     path: "/admin/newLicense/evaluate/:id",
-    name: "NewLicenseEvaluate",
+    name: "AdminNewLicenseEvaluate",
     component: () =>
       import(
         "../components/Reviewer/HomeComponents/NewLicense/InReview/inReviewEvaluation.vue"
@@ -952,12 +1009,6 @@ const routes = [
         "../components/Reviewer/HomeComponents/Renewal/Unassigned/unassigned.vue"
       ),
   },
-  // {
-  //   path: "/admin/renewal/assigned",
-  //   name: "RenewalAssigned",
-  //   component: () =>
-  //     import("../components/Reviewer/HomeComponents/Renewal/assigned.vue"),
-  // },
   {
     path: "/admin/renewal/inReview",
     name: "RenewalInReview",
@@ -1071,7 +1122,7 @@ const routes = [
       ),
   },
 
-  //Verification part
+  //Admin Verification part
   {
     path: "/admin/verification",
     name: "AdminVerification",
@@ -1081,7 +1132,7 @@ const routes = [
       ),
   },
 
-  //Cpd part
+  //Admin Cpd part
   {
     path: "/admin/cpdCertified",
     name: "AdminCpdCertified",
@@ -1099,7 +1150,7 @@ const routes = [
       ),
   },
 
-  //Dashboard
+  //Admin Dashboard
   {
     path: "/admin/dashboard",
     name: "Dashboard",
@@ -1107,7 +1158,7 @@ const routes = [
       import("../components/Reviewer/HomeComponents/Dashboard/dashboard.vue"),
   },
 
-  //User Management
+  //Admin User Management
   {
     path: "/admin/userManagement",
     name: "UserManagement",
@@ -1117,7 +1168,7 @@ const routes = [
       ),
   },
 
-  //Import Results
+  //Admin Import Results
   {
     path: "/admin/importResults",
     name: "ImportResults",
@@ -1127,35 +1178,34 @@ const routes = [
       ),
   },
 
-    //Report
-    {
-      path: "/admin/report",
-      name: "AdminReport",
-      component: () =>
-        import(
-          "../components/Reviewer/HomeComponents/Report/Report.vue"
-        ),
-    },
+  //Admin Report
+  {
+    path: "/admin/report",
+    name: "AdminReport",
+    component: () =>
+      import("../components/Reviewer/HomeComponents/Report/Report.vue"),
+  },
 
-    //Legacy Data
-    {
-      path: "/admin/legacyData",
-      name: "LwegacyData",
-      component: () =>
-        import(
-          "../components/Reviewer/HomeComponents/LegacyData/legacy.vue"
-        ),
-    },
+  //Admin Legacy Data
+  {
+    path: "/admin/legacyData",
+    name: "LwegacyData",
+    component: () =>
+      import("../components/Reviewer/HomeComponents/LegacyData/legacy.vue"),
+  },
 
-    //Lookup Management
-    {
-      path: "/admin/lookupManagement",
-      name: "LookupManagement",
-      component: () =>
-        import(
-          "../components/Reviewer/HomeComponents/LookupManagement/lookupManagement.vue"
-        ),
-    },
+  //Admin Lookup Management
+  {
+    path: "/admin/lookupManagement",
+    name: "LookupManagement",
+    component: () =>
+      import(
+        "../components/Reviewer/HomeComponents/LookupManagement/lookupManagement.vue"
+      ),
+  },
+  /******************************************************************************************************************************************/
+  /**************End of routes*****************/
+  /******************************************************************************************************************************************/
 ];
 
 const router = createRouter({
@@ -1171,12 +1221,13 @@ router.beforeEach(async (to, from, next) => {
   ) {
     next("/admin/list");
   }
-  if (
-    to.path != "/newLicense" ||
-    (to.path != "/renewal" && localStorage.getItem("firstTimeUser") == false)
-  ) {
+  if (to.path != "/Applicant/NewLicense") {
     window.localStorage.setItem("NLApplicationData", "");
     window.localStorage.setItem("NLApplicationImageData", "");
+  }
+  if (to.path != "/Applicant/GoodStanding") {
+    window.localStorage.setItem("GSApplicationData", "");
+    window.localStorage.setItem("GSApplicationImageData", "");
   }
 
   if (to.matched.some((record) => record.meta.RedirectExternalUrl)) {
