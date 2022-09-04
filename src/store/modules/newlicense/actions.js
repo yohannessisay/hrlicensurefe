@@ -450,4 +450,26 @@ export default {
       return error;
     }
   },
+  async getCommonNLdocuments({ commit }, params) {
+    try {
+      const resp = await ApiService.get(
+        baseUrl + `/documentSpecs/common/${params[0]}/${params[1]}/true`
+      );
+      return resp;
+    } catch (error) {
+      const resp = error;
+      return resp;
+    }
+  },
+  async getNLdocuments({ commit }, params) {
+    try {
+      const resp = await ApiService.get(
+        baseUrl + `/documentSpecs/${params[0]}/${params[1]}/${params[2]}`
+      );
+      return resp;
+    } catch (error) {
+      const resp = error;
+      return resp;
+    }
+  },
 };

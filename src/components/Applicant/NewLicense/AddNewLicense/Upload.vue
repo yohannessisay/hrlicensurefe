@@ -35,7 +35,7 @@
           </h2>
           <div
             id="commonFilesAccordion"
-            class="accordion-collapse collapse  "
+            class="accordion-collapse collapse"
             aria-labelledby="commonFilesAccordionheading"
             data-bs-parent="#FilesAccordion"
           >
@@ -117,14 +117,14 @@
                     </thead>
                     <tbody class="divide-y">
                       <tr
-                        v-for="item in documents"
+                        v-for="item in commonDocuments"
                         :key="item.id"
                         class="border-b text-main-400"
                       >
                         <td class="px-6 py-4">
                           <div class="flex items-center space-x-3">
                             <div>
-                              <p class="">{{ item.documentName }}</p>
+                              <p class="">{{ item.documentType.name }}</p>
                             </div>
                           </div>
                         </td>
@@ -132,7 +132,7 @@
                           <div class="flex items-center space-x-3">
                             <div>
                               <p class="">
-                                {{ item.documentDescription }}
+                                {{ item.documentType.description }}
                               </p>
                             </div>
                           </div>
@@ -142,9 +142,9 @@
                             <input
                               type="file"
                               required
-                              :id="`files${index}`"
+                              :id="`files${item.id}`"
                               accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
-                              :ref="`imageUploader${index}`"
+                              :ref="`imageUploader${item.id}`"
                               class="custom-file-input"
                               v-on:change="
                                 handleCommonFileUpload(
@@ -161,7 +161,10 @@
                             data-bs-toggle="modal"
                             data-bs-target="#filePreview"
                             @click="
-                              previewFile(item.documentCode, item.documentName)
+                              previewFile(
+                                item.documentType.code,
+                                item.documentType.name
+                              )
                             "
                           >
                             <i
@@ -213,19 +216,21 @@
               aria-expanded="true"
               aria-controls="departmentFilesAccordion"
             >
-              Department Related Files
+              Education Level Related Files
             </span>
           </h2>
           <div
             id="departmentFilesAccordion"
-            class="accordion-collapse collapse  "
+            class="accordion-collapse collapse"
             aria-labelledby="departmentFilesAccordionheading"
             data-bs-parent="#FilesAccordion"
           >
             <div class="accordion-body py-4 px-5">
-              <div v-for="table in generalInfo.multipleDepartment" :key="table">
+              <div v-for="table in educationalDocs" :key="table" class="border-b-4 text-main-400 mb-8">
                 <h4 class="text-main-400 font-bold">
-                  {{ table.department ? table.department.name : "" }} Department
+                  {{
+                    table.educationalLevel ? table.educationalLevel.name : ""
+                  }}
                   Related Files
                 </h4>
 
@@ -274,6 +279,18 @@
                             uppercase
                             px-6
                             py-4
+                            text-white
+                          "
+                        >
+                          Required
+                        </th>
+                        <th
+                          class="
+                            font-semibold
+                            text-sm
+                            uppercase
+                            px-6
+                            py-4
                             text-left text-white
                           "
                         >
@@ -305,11 +322,11 @@
                     </thead>
                     <tbody class="divide-y">
                       <tr
-                        v-for="(item, index) in departmentDocuments"
+                        v-for="item in table.docs"
                         :key="item.id"
                         class="border-b text-main-400"
                       >
-                        <td class="px-6 py-4 ">
+                        <td class="px-6 py-4">
                           <div class="flex items-center space-x-3">
                             <div>
                               <p class="">
@@ -328,13 +345,22 @@
                           </div>
                         </td>
                         <td class="px-6 py-4">
+                          <div class="flex items-center space-x-3">
+                            <div>
+                              <p class="">
+                                {{ item.isRequired?'Yes':'No' }}
+                              </p>
+                            </div>
+                          </div>
+                        </td>
+                        <td class="px-6 py-4">
                           <p class="">
                             <input
                               type="file"
                               :required="item.isRequired"
-                              :id="`files${index}`"
+                              :id="`files${item.id}`"
                               accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
-                              :ref="`imageUploader${index}`"
+                              :ref="`imageUploader${item.id}`"
                               class="custom-file-input"
                               v-on:change="handleFileUpload(item, $event)"
                             />
@@ -367,33 +393,31 @@
           </div>
         </div>
       </div>
-<div class="flex justify-end mr-8">
-  <button
-        class="
-          mt-8
-          inline-block
-          px-6
-          py-2.5
-          bg-main-400
-          hover:text-main-400
-          text-white text-xs
-          font-bold
-          leading-tight
-          uppercase
-          rounded
-          shadow-md
-          active:border-main-400
-          transition
-          duration-150
-          ease-in-out
-        "
-        @click="next()"
-      >
-        next
-      </button>
-
-</div>
- 
+      <div class="flex justify-end mr-8">
+        <button
+          class="
+            mt-8
+            inline-block
+            px-6
+            py-2.5
+            bg-main-400
+            hover:text-main-400
+            text-white text-xs
+            font-bold
+            leading-tight
+            uppercase
+            rounded
+            shadow-md
+            active:border-main-400
+            transition
+            duration-150
+            ease-in-out
+          "
+          @click="next()"
+        >
+          next
+        </button>
+      </div>
     </div>
     <filePreview :modalData="filePreviewData"> </filePreview>
   </main-content>
@@ -412,37 +436,11 @@ export default {
   setup() {
     let store = useStore();
     let documents = ref([]);
+    let commonDocuments = ref([]);
     let imageUploader = ref(null);
     let goToNext = ref(false);
-    let departmentDocuments = [];
-
-    documents = [
-      {
-        documentName: "passport",
-        documentDescription: "passport",
-        documentCode: "PSP",
-      },
-      {
-        documentName: "Health exam certificate",
-        documentDescription: "passport",
-        documentCode: "HEC",
-      },
-      {
-        documentName: "herqa",
-        documentDescription: "passport",
-        documentCode: "HERQA",
-      },
-      {
-        documentName: "transcript",
-        documentDescription: "passport",
-        documentCode: "TRS",
-      },
-      {
-        documentName: "passport",
-        documentDescription: "passport",
-        documentCode: "PSP1",
-      },
-    ];
+    let educationalDocs = ref([]);
+    let localData = ref({});
     let filePreviewData = ref({
       isImage: boolean,
       isPdf: boolean,
@@ -584,6 +582,9 @@ export default {
         event.target.files[0] = "";
       }
     };
+    const checkForFiles=(docs)=>{
+      console.log(docs)
+    }
     const next = () => {
       let imageData = [];
 
@@ -594,6 +595,7 @@ export default {
           image: element.base[element.code ? element.code : ""],
         });
       });
+      checkForFiles(documentUploaded.value)
 
       window.localStorage.setItem(
         "NLApplicationImageData",
@@ -602,35 +604,55 @@ export default {
       // emit("changeActiveState");
     };
     onMounted(() => {
-      generalInfo.value = store.getters["newlicense/getGeneralInfo"];
-      generalInfo.value
-        ? generalInfo.value.multipleDepartment.forEach((element) => {
-            departmentDocuments.push({
-              educationData: element,
-              id: 1,
-              documentType: {
-                name: "Tempo",
-                code: "TEMP",
-                description: "doc",
-                id: 1,
-              },
-              isRequired: true,
-              educationalLevel: {
-                code: "DEG",
-                name: "Degree",
-                id: 2,
-              },
-              isCommonDocument: false,
-            });
-          })
-        : "";
+      localData.value = window.localStorage.getItem("NLApplicationData")
+        ? JSON.parse(window.localStorage.getItem("NLApplicationData"))
+        : {};
+      if (Object.keys(localData.value).length != 0) {
+        generalInfo.value = localData.value;
 
-        store.dispatch("newlicense/getDocumentSpecs").then((res) => {
-        let results = res.data.data;
-      });
+        store.dispatch("newlicense/getApplicationCategories").then((res) => {
+          let categoryResults = res.data.data
+            ? res.data.data.filter((ele) => ele.code == "NA")
+            : "";
+          let educationLevels = generalInfo.value.multipleDepartment;
+          //Get department docs
+          educationLevels.forEach((element) => {
+            store
+              .dispatch("newlicense/getNLdocuments", [
+                categoryResults[0].id,
+                generalInfo.value.applicantTypeSelected.id,
+                element.educationalLevel.id,
+              ])
+              .then((res) => {
+                let result = res.data.data;
+
+                educationalDocs.value.push({
+                  educationalLevel: element.educationalLevel,
+                  docs: result,
+                });
+              });
+          });
+         
+          //Get Common Docs
+
+          store
+            .dispatch("newlicense/getCommonNLdocuments", [
+              categoryResults[0].id,
+              generalInfo.value.applicantTypeSelected.id,
+            ])
+            .then((res) => {
+              let result = res.data.data;
+              commonDocuments.value = result;
+            });
+
+            console.log(educationalDocs.value);
+        });
+      }
     });
+
     return {
       documents,
+      commonDocuments,
       files,
       handleFileUpload,
       showImage,
@@ -640,7 +662,7 @@ export default {
       handleCommonFileUpload,
       generalInfo,
       goToNext,
-      departmentDocuments,
+      educationalDocs,
       imageUploader,
       filePreviewData,
       next,
