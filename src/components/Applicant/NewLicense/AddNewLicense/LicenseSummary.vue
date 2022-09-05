@@ -1,18 +1,27 @@
 <template>
   <div
     id="services"
-    class="section relative pt-20 p-8 pb-8 md:pt-16 md:pb-0 bg-white mr-8"
+    class="
+      section
+      relative
+      pt-20
+      p-8
+      pb-8
+      mb-12
+      md:pt-16 md:pb-0
+      shadow-2xl
+      bg-main-400
+      mr-8
+    "
   >
     <div class="container xl:max-w-6xl mx-auto p-4">
       <!-- Heading start -->
       <header class="text-center mx-auto mb-12 lg:px-20">
-        <h2 class="text-2xl leading-normal mb-2 font-bold text-main-400">
+        <h2 class="text-3xl leading-normal mb-2 font-bold text-white">
           Summary For New License Application
         </h2>
 
-        <p
-          class="text-main-400 leading-relaxed font-light text-xl mx-auto pb-2"
-        >
+        <p class="text-white leading-relaxed font-light text-xl mx-auto pb-2">
           Here is the detail you have filled in so far
         </p>
       </header>
@@ -28,14 +37,15 @@
           sm:grid-cols-1
         "
       >
-        <div class="bg-main-400 flex-shrink px-4 w-full rounded-md shadow-2xl">
+        <div class="bg-white flex-shrink px-4 w-full rounded-md shadow-2xl">
           <div
             class="
               py-8
               px-12
               mb-12
               bg-gray-50
-              border-b border-white
+              border-b
+              text-main-400
               transform
               transition
               duration-300
@@ -43,21 +53,21 @@
               hover:-translate-y-2
             "
           >
-            <div class="border-b text-white mb-4">
+            <div class="border-b text-main-400 mb-4">
               <div class="text-gray-900 mb-4 flex justify-center">
-                <i class="fa fa-envelope fa-3x text-white"></i>
+                <i class="fa fa-user fa-3x text-main-400"></i>
               </div>
               <div class="flex justify-center text-gray-900 mb-4">
                 <h3
                   class="
-                    text-lg text-white
+                    text-lg text-main-400
                     leading-normal
                     mb-2
                     font-semibold
                     text-black
                   "
                 >
-                  Application Detail
+                  Applicant Detail
                 </h3>
               </div>
             </div>
@@ -65,7 +75,7 @@
               <div>
                 <span
                   class="
-                    text-white
+                    text-main-400
                     font-bold
                     sm:text-sm
                     mdlg:text-base
@@ -77,7 +87,7 @@
                 >
               </div>
               <div>
-                <span class="text-white sm:text-sm">
+                <span class="text-main-400 sm:text-sm">
                   {{
                     localData && localData.applicantTypeSelected
                       ? localData.applicantTypeSelected.name
@@ -89,14 +99,16 @@
           </div>
         </div>
 
-        <div class="bg-main-400 flex-shrink px-4 w-full rounded-md shadow-2xl">
+        <div class="bg-white flex-shrink px-4 w-full rounded-md shadow-2xl">
           <div
             class="
               py-8
+              mt-4
               px-12
               mb-12
               bg-gray-50
-              border-b border-white
+              border-2 border-main-400
+              rounded-md
               transform
               transition
               duration-300
@@ -106,14 +118,14 @@
             v-for="dep in localData.multipleDepartment"
             :key="dep"
           >
-            <div class="border-b text-white mb-4">
+            <div class="border-b-2 text-main-400 mb-4">
               <div class="text-gray-900 mb-4 flex justify-center">
-                <i class="fa fa-envelope fa-3x text-white"></i>
+                <i class="fa fa-university fa-3x text-main-400"></i>
               </div>
               <div class="flex justify-center text-gray-900 mb-4">
                 <h3
                   class="
-                    text-lg text-white
+                    text-lg text-main-400
                     leading-normal
                     mb-2
                     font-semibold
@@ -128,7 +140,7 @@
               <div>
                 <span
                   class="
-                    text-white
+                    text-main-400
                     font-bold
                     sm:text-sm
                     mdlg:text-base
@@ -140,7 +152,7 @@
                 >
               </div>
               <div>
-                <span class="text-white sm:text-sm">
+                <span class="text-main-400 sm:text-sm">
                   {{ dep.department.name }}</span
                 >
               </div>
@@ -149,7 +161,7 @@
               <div>
                 <span
                   class="
-                    text-white
+                    text-main-400
                     font-bold
                     sm:text-sm
                     mdlg:text-base
@@ -169,7 +181,7 @@
               <div>
                 <span
                   class="
-                    text-white
+                    text-main-400
                     font-bold
                     sm:text-sm
                     mdlg:text-base
@@ -180,7 +192,7 @@
                 >
               </div>
               <div>
-                <span class="text-white sm:text-sm">
+                <span class="text-main-400 sm:text-sm">
                   {{ dep.institution.name }}</span
                 >
               </div>
@@ -189,7 +201,7 @@
               <div>
                 <span
                   class="
-                    text-white
+                    text-main-400
                     font-bold
                     sm:text-sm
                     mdlg:text-base
@@ -201,7 +213,7 @@
                 >
               </div>
               <div>
-                <span class="text-white sm:text-sm">
+                <span class="text-main-400 sm:text-sm">
                   {{ dep.professionalType.name }}</span
                 >
               </div>
@@ -221,7 +233,7 @@
           sm:grid-cols-1
         "
       >
-        <div class="bg-main-400 flex-shrink px-4 w-full rounded-md shadow-2xl">
+        <div class="bg-white flex-shrink px-4 w-full rounded-md shadow-2xl">
           <div
             class="
               py-8
@@ -236,14 +248,14 @@
               hover:-translate-y-2
             "
           >
-            <div class="border-b text-white mb-4">
+            <div class="border-b-2 text-main-400 mb-4">
               <div class="text-gray-900 mb-4 flex justify-center">
-                <i class="fa fa-folder fa-3x text-white"></i>
+                <i class="fa fa-folder fa-3x -text-main-400"></i>
               </div>
               <div class="flex justify-center text-gray-900 mb-4">
                 <h3
                   class="
-                    text-lg text-white
+                    text-3xl text-main-400
                     leading-normal
                     mb-2
                     font-semibold
@@ -339,9 +351,9 @@
               hover:-translate-y-2
             "
           >
-            <div class="mb-4">
+            <div class="mb-4 border-t text-white">
               <div class="text-gray-900 mb-4 flex justify-center">
-                <i class="fa fa-check fa-3x text-white"></i>
+                <i class="fa fa-check fa-3x text-white mt-4"></i>
               </div>
               <div class="flex justify-center text-gray-900 mb-4">
                 <div class="form-check">
@@ -397,10 +409,12 @@
               <div class="mb-3 w-full flex justify-center">
                 <input
                   v-model="generalInfo.feedback"
+                  @keyup="checkAgreement()"
                   class="
                     form-control
                     block
                     w-full
+                    text-main-400
                     px-3
                     py-1.5
                     text-base
@@ -429,21 +443,10 @@
           v-for="button in buttons"
           :key="button.id"
           type="button"
-          class="
-            inline-block
-            px-6
-            text-black
-            bg-main-400
-            mt-4
-            font-medium
-            text-xs
-            leading-tight
-            uppercase
-            rounded
-            shadow-lg
-            transition
-            duration-150
-            ease-in-out
+          :class="
+            allowSave
+              ? 'inline-block px-6 text-main-400  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded shadow-lg transition  duration-150 ease-in-out'
+              : 'inline-block px-6 disabled text-main-400  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded shadow-lg transition  duration-150 ease-in-out'
           "
           @click="checkFinalStatus(button.action)"
         >
@@ -461,11 +464,12 @@
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
-import { userInfo } from "os";
+import { useRouter } from "vue-router";
 export default {
   setup() {
     const store = useStore();
     const toast = useToast();
+    const router = useRouter();
     let localData = ref({});
     let localFileData = ref({});
     let generalInfo = ref({});
@@ -473,8 +477,29 @@ export default {
     let documents = ref([]);
     let buttons = ref([]);
     let tempDocs = ref({});
+    let allowSave = ref(false);
     const changeAgrement = () => {
       agreed.value = !agreed.value;
+      if (
+        generalInfo.value &&
+        generalInfo.value.feedback.length >= 4 &&
+        agreed.value != false
+      ) {
+        allowSave.value = true;
+      } else {
+        allowSave.value = false;
+      }
+    };
+    const checkAgreement = () => {
+      if (
+        generalInfo.value &&
+        generalInfo.value.feedback.length >= 4 &&
+        agreed.value != false
+      ) {
+        allowSave.value = true;
+      } else {
+        allowSave.value = false;
+      }
     };
     const checkFinalStatus = (action) => {
       generalInfo.value.licenseFile = [];
@@ -541,6 +566,7 @@ export default {
                   pauseOnHover: true,
                   icon: true,
                 });
+                router.push({ path: "/Applicant/NewLicense/submitted" });
               } else {
                 toast.error("Error occured, please try again", {
                   timeout: 5000,
@@ -576,17 +602,20 @@ export default {
         : {};
 
       generalInfo.value = localData.value;
+      generalInfo.value.feedback = "";
       if (generalInfo.value.applicantTypeSelected.id == 1) {
         store.dispatch("newlicense/getExpertLevel").then((res) => {
-          generalInfo.value.expertLevelId = res.data.data.filter(function (e) {
-            return e.code.includes("REG").id;
+          let expertLevel = res.data.data.filter(function (e) {
+            return e.code.includes("REG");
           });
+          generalInfo.value.expertLevelId = expertLevel[0].id;
         });
       } else {
         store.dispatch("newlicense/getExpertLevel").then((res) => {
-          generalInfo.value.expertLevels = res.data.data.filter(function (e) {
-            return e.code.includes("FED").id;
+          let expertLevel = res.data.data.filter(function (e) {
+            return e.code.includes("FED");
           });
+          generalInfo.value.expertLevelId = expertLevel[0].id;
         });
       }
     });
@@ -596,6 +625,8 @@ export default {
       generalInfo,
       agreed,
       buttons,
+      checkAgreement,
+      allowSave,
       checkFinalStatus,
       changeAgrement,
     };
