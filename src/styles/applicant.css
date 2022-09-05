@@ -279,10 +279,31 @@
 
 
 
+/* Custom Loader */
 
 
 
+.loading-overlay {
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(100, 100, 100, 0.76);
+}
 
+i.fa.fa-cog {
+  font-size: 3em;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+
+.fade-enter, .fade-leave-active {
+  opacity: 0;
+}
+
+/* Custom Loader */
 
 
 

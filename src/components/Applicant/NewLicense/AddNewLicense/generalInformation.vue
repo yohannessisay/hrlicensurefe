@@ -468,7 +468,7 @@
                     <option disabled>First Select Department from above</option>
                     <option
                       v-for="pf in professionalTypes"
-                      v-bind:key="pf.name"
+                      v-bind:key="pf.id"
                       v-bind:value="pf"
                     >
                       {{ pf.name }}
@@ -854,8 +854,10 @@ export default {
 
     const fetchZones = () => {
       store
+      
         .dispatch("newlicense/getZones", generalInfo.value.regionSelected.id)
         .then((res) => {
+          console.log(generalInfo.value.regionSelected.id,res)
           const zonesResult = res.data.data;
           zones.value = zonesResult;
         });

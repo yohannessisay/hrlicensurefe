@@ -41,13 +41,15 @@
           >
             <div class="accordion-body py-4 px-5">
               <div class="bg-red-800 py-5">
-                <div class="overflow-x-auto w-full">
+                <div class="overflow-x-auto w-full p-4">
                   <table
                     class="
                       max-w-4xl
                       w-full
                       whitespace-nowrap
                       rounded-lg
+                      shadow-lg
+                      mb-8
                       bg-white
                       divide-y
                       overflow-hidden
@@ -226,7 +228,11 @@
             data-bs-parent="#FilesAccordion"
           >
             <div class="accordion-body py-4 px-5">
-              <div v-for="table in educationalDocs" :key="table" class="border-b-4 text-main-400 mb-8">
+              <div
+                v-for="table in educationalDocs"
+                :key="table"
+                class="border-b-4 text-main-400 mb-8"
+              >
                 <h4 class="text-main-400 font-bold">
                   {{
                     table.educationalLevel ? table.educationalLevel.name : ""
@@ -234,7 +240,7 @@
                   Related Files
                 </h4>
 
-                <div class="overflow-x-auto w-full">
+                <div class="overflow-x-auto w-full p-4">
                   <table
                     class="
                       max-w-4xl
@@ -242,6 +248,7 @@
                       whitespace-nowrap
                       rounded-lg
                       bg-white
+                      shadow-lg
                       divide-y divide-gray-300
                       overflow-hidden
                     "
@@ -348,7 +355,7 @@
                           <div class="flex items-center space-x-3">
                             <div>
                               <p class="">
-                                {{ item.isRequired?'Yes':'No' }}
+                                {{ item.isRequired ? "Yes" : "No" }}
                               </p>
                             </div>
                           </div>
@@ -383,6 +390,154 @@
                               aria-hidden="true"
                             ></i>
                           </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                  <h4 class="text-main-400 font-bold mt-2">
+                    Multiple File Uploads For
+                    {{
+                      table.educationalLevel ? table.educationalLevel.name : ""
+                    }}
+                  </h4>
+
+           
+                  <table
+                    v-for="(parentDoc, index) in table.parentDoc"
+                    :key="index"
+                    class="
+                      max-w-4xl
+                      w-full
+                      mt-2
+                      whitespace-nowrap
+                      rounded-lg
+                      bg-white
+                      shadow-lg
+                      divide-y divide-gray-300
+                      overflow-hidden
+                    "
+                  >     
+                  <h4 class="text-main-400 font-bold mt-2">
+                    Multiple File Uploads For
+                    {{
+                      parentDoc[0].documentType.name.slice(0,(parentDoc[0].documentType.name.length-2))
+                    }}
+                  </h4>
+                    <thead class="bg-primary-300">
+                      <tr class="text-left">
+                        <th
+                          class="
+                            font-semibold
+                            text-sm
+                            uppercase
+                            px-6
+                            py-4
+                            text-main-400
+                          "
+                        >
+                          Document Name
+                        </th>
+                        <th
+                          class="
+                            font-semibold
+                            text-sm
+                            uppercase
+                            px-6
+                            py-4
+                            text-main-400
+                          "
+                        >
+                          Document Description
+                        </th>
+                        <th
+                          class="
+                            font-semibold
+                            text-sm
+                            uppercase
+                            px-6
+                            py-4
+                            text-main-400
+                          "
+                        >
+                          Required
+                        </th>
+                        <th
+                          class="
+                            font-semibold
+                            text-sm
+                            uppercase
+                            px-6
+                            py-4
+                            text-left text-main-400
+                          "
+                        >
+                          Upload
+                        </th>
+                        <th
+                          class="
+                            font-semibold
+                            text-sm
+                            uppercase
+                            px-6
+                            py-4
+                            text-center text-main-400
+                          "
+                        >
+                          View
+                        </th>
+                        <th
+                          class="
+                            font-semibold
+                            text-sm
+                            uppercase
+                            px-6
+                            py-4
+                            text-main-400
+                          "
+                        ></th>
+                      </tr>
+                    </thead>
+                    <tbody class="divide-y">
+                      <tr
+                        v-for="(item, key) in parentDoc"
+                        :key="key"
+                        class="border-b text-main-400"
+                      >
+                        <td class="px-6 py-4">
+                          <div class="flex items-center space-x-3">
+                            <div>
+                              <p class="">
+                                {{ item.documentType.name }}
+                              </p>
+                            </div>
+                          </div>
+                        </td>
+                        <td class="px-6 py-4">
+                          <div class="flex items-center space-x-3">
+                            <div>
+                              <p class=""></p>
+                            </div>
+                          </div>
+                        </td>
+                        <td class="px-6 py-4">
+                          <div class="flex items-center space-x-3">
+                            <div>
+                              <p class=""></p>
+                            </div>
+                          </div>
+                        </td>
+                        <td class="px-6 py-4">
+                          <p class="">
+                            <input
+                              type="file"
+                              :id="`files${item.id}`"
+                              accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
+                              :ref="`imageUploader${item.id}`"
+                              class="custom-file-input"
+                              v-on:change="handleFileUpload(item, $event)"
+                            />
+                          </p>
                         </td>
                       </tr>
                     </tbody>
@@ -449,6 +604,7 @@ export default {
     });
     let files = ref("");
     let maxFileSize = ref();
+    let parentDocs = ref([]);
     let isImage = ref({});
     let isPdf = ref({});
     let fileSizeExceed = ref({});
@@ -582,9 +738,9 @@ export default {
         event.target.files[0] = "";
       }
     };
-    const checkForFiles=(docs)=>{
-      console.log(docs)
-    }
+    const checkForFiles = (docs) => {
+      console.log(docs);
+    };
     const next = () => {
       let imageData = [];
 
@@ -595,7 +751,7 @@ export default {
           image: element.base[element.code ? element.code : ""],
         });
       });
-      checkForFiles(documentUploaded.value)
+      checkForFiles(documentUploaded.value);
 
       window.localStorage.setItem(
         "NLApplicationImageData",
@@ -603,6 +759,15 @@ export default {
       );
       // emit("changeActiveState");
     };
+    const groupByKey = (array, key) => {
+      return array.reduce((hash, obj) => {
+        if (obj[key] === undefined || obj[key] == null) return hash;
+        return Object.assign(hash, {
+          [obj[key]]: (hash[obj[key]] || []).concat(obj),
+        });
+      }, {});
+    };
+
     onMounted(() => {
       localData.value = window.localStorage.getItem("NLApplicationData")
         ? JSON.parse(window.localStorage.getItem("NLApplicationData"))
@@ -624,17 +789,20 @@ export default {
                 element.educationalLevel.id,
               ])
               .then((res) => {
-                let result = res.data.data;
+                let resp = res.data.data;
 
                 educationalDocs.value.push({
                   educationalLevel: element.educationalLevel,
-                  docs: result,
+                  docs: resp.filter(
+                    (element) => element.parentDocument == null
+                  ),
+                  parentDoc: groupByKey(resp, "parentDocument"),
                 });
               });
           });
-         
-          //Get Common Docs
 
+          //Get Common Docs
+          console.log(educationalDocs.value);
           store
             .dispatch("newlicense/getCommonNLdocuments", [
               categoryResults[0].id,
@@ -644,8 +812,6 @@ export default {
               let result = res.data.data;
               commonDocuments.value = result;
             });
-
-            console.log(educationalDocs.value);
         });
       }
     });

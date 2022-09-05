@@ -364,6 +364,15 @@ export default {
       return error;
     }
   },
+  async getNewLicenseApplication(context, id) {
+    try {
+      const url = baseUrl + "/newLicenses/" + id;
+      const resp = await ApiService.get(url);
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
   async getDraft({ commit }, id) {
     try {
       const resp = await ApiService.get(baseUrl + "/newLicenses/" + id);
@@ -405,7 +414,9 @@ export default {
   },
   async getWoredas(context, zoneId) {
     try {
-      const resp = await ApiService.get(baseUrl + "/lookups/woredas/" + zoneId);
+      const resp = await ApiService.get(
+        baseUrl + "/lookups/woredas/" + zoneId
+      );
       return resp;
     } catch (error) {
       const resp = error;
@@ -414,7 +425,9 @@ export default {
   },
   async getZones(context, regionId) {
     try {
-      const resp = await ApiService.get(baseUrl + "/lookups/zones/" + regionId);
+      const resp = await ApiService.get(
+        baseUrl + "/lookups/zones/" + Number(regionId)
+      );
       return resp;
     } catch (error) {
       const resp = error;
