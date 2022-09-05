@@ -704,8 +704,7 @@ export default {
           fileSize.value = fileS / 1000 + "kB";
         } else {
           fileSize.value = fileS / 1000000 + "MB";
-        }
-        console.log(data);
+        } 
         reader.addEventListener(
           "load",
           function () {

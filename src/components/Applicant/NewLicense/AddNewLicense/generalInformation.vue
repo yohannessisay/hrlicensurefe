@@ -834,8 +834,7 @@ export default {
       store
 
         .dispatch("newlicense/getZones", generalInfo.value.regionSelected.id)
-        .then((res) => {
-          console.log(generalInfo.value.regionSelected.id, res);
+        .then((res) => { 
           const zonesResult = res.data.data;
           zones.value = zonesResult;
         });
@@ -1018,8 +1017,7 @@ export default {
       localData.value = window.localStorage.getItem("NLApplicationData")
         ? JSON.parse(window.localStorage.getItem("NLApplicationData"))
         : {};
-      if (Object.keys(localData.value).length != 0) {
-        console.log(Object.keys(localData.value).length);
+      if (Object.keys(localData.value).length != 0) { 
         generalInfo.value = localData.value;
       }
     });
