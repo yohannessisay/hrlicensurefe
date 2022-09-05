@@ -59,6 +59,7 @@ import {
   SET_RENEWED_LICENSE_OF_HEALTH_FACILITY,
   SET_REQUEST_LETTER_FROM_HIRING_HEALTH_FACILITY,
   SET_GENERAL_INFO,
+  SET_TEMP_DOCS,
 } from "./mutation-types";
 
 export default {
@@ -67,6 +68,9 @@ export default {
   },
   [SET_BUTTONS](state, buttons) {
     state.buttons = buttons;
+  },
+  [SET_TEMP_DOCS](state, docs) {
+    state.tempDocs = docs;
   },
   [SET_APPLICATION_ID](state, id) {
     state.applicationId = id;

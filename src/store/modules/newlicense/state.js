@@ -77,5 +77,6 @@ export default {
     renewedLicenseOfHealthFacility: "",
     requestLetterFromHiringHealthFacility: "",
     generalInfo: {},
+    tempDocs: "",
   },
 };

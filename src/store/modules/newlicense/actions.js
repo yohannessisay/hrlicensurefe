@@ -62,6 +62,7 @@ import {
   SET_RENEWED_LICENSE_OF_HEALTH_FACILITY,
   SET_REQUEST_LETTER_FROM_HIRING_HEALTH_FACILITY,
   SET_GENERAL_INFO,
+  SET_TEMP_DOCS
 } from "./mutation-types";
 
 const userId = +localStorage.getItem("userId");
@@ -72,6 +73,9 @@ export default {
   },
   setButtons({ commit }, buttons) {
     commit(SET_BUTTONS, buttons);
+  },
+  setTempDocs({ commit }, docs) {
+    commit(SET_TEMP_DOCS, docs);
   },
   setApplicationId({ commit }, id) {
     commit(SET_APPLICATION_ID, id);
@@ -280,6 +284,7 @@ export default {
     }
   },
   async uploadDocuments({ commit }, documents) {
+   
     try {
       const resp = await ApiService.post(
         baseUrl + "/documentUploads/licenseDocument/" + documents.id,

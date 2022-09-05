@@ -1,5 +1,6 @@
 export default {
   getLicense: (state) => state.license,
+  getTempDocs: (state) => state.tempDocs,
   getButtons: (state) => state.buttons,
   getApplicationId: (state) => state.applicationId,
   getDocumentSpec: (state) => state.documentSpec,
