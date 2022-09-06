@@ -1,18 +1,26 @@
 <template>
   <div
     id="services"
-    class="section relative pt-20 p-8 pb-8 md:pt-16 md:pb-0 bg-white mr-8"
+    class="
+      section
+      relative
+      pt-20
+      p-8
+      pb-8
+      md:pt-16 md:pb-0
+      bg-main-400
+      mr-8
+      rounded-lg
+    "
   >
     <div class="container xl:max-w-6xl mx-auto p-4">
       <!-- Heading start -->
       <header class="text-center mx-auto mb-12 lg:px-20">
-        <h2 class="text-2xl leading-normal mb-2 font-bold text-main-400">
+        <h2 class="text-2xl leading-normal mb-2 font-bold text-white">
           Summary For Good Standing Letter
         </h2>
 
-        <p
-          class="text-main-400 leading-relaxed font-light text-xl mx-auto pb-2"
-        >
+        <p class="text-white leading-relaxed font-light text-xl mx-auto pb-2">
           Here is the detail you have filled in so far
         </p>
       </header>
@@ -28,14 +36,18 @@
           sm:grid-cols-1
         "
       >
-        <div class="bg-main-400 flex-shrink px-4 w-full rounded-md shadow-2xl">
+        <div class="bg-white flex-shrink px-4 w-full rounded-md shadow-2xl">
           <div
             class="
               py-8
               px-12
               mb-12
               bg-gray-50
-              border-b border-white
+              border-2
+              mt-8
+              shadow-2xl
+              rounded-lg
+              border-main-400
               transform
               transition
               duration-300
@@ -43,14 +55,14 @@
               hover:-translate-y-2
             "
           >
-            <div class="border-b text-white mb-4">
+            <div class="border-b-2 text-main-400 mb-4">
               <div class="text-gray-900 mb-4 flex justify-center">
-                <i class="fa fa-envelope fa-3x text-white"></i>
+                <i class="fa fa-folder-open fa-3x text-main-400"></i>
               </div>
               <div class="flex justify-center text-gray-900 mb-4">
                 <h3
                   class="
-                    text-lg text-white
+                    text-lg text-main-400
                     leading-normal
                     mb-2
                     font-semibold
@@ -65,7 +77,7 @@
               <div>
                 <span
                   class="
-                    text-white
+                    text-main-400
                     font-bold
                     sm:text-sm
                     mdlg:text-base
@@ -77,7 +89,7 @@
                 >
               </div>
               <div>
-                <span class="text-white sm:text-sm">
+                <span class="text-main-400 sm:text-sm">
                   {{
                     localData && localData.applicantTypeId
                       ? localData.applicantTypeId.name
@@ -90,7 +102,7 @@
               <div>
                 <span
                   class="
-                    text-white
+                    text-main-400
                     font-bold
                     sm:text-sm
                     mdlg:text-base
@@ -102,7 +114,7 @@
                 >
               </div>
               <div>
-                <span class="text-white sm:text-sm">
+                <span class="text-main-400 sm:text-sm">
                   {{
                     localData && localData.departmentId
                       ? localData.departmentId.name
@@ -115,7 +127,7 @@
               <div>
                 <span
                   class="
-                    text-white
+                    text-main-400
                     font-bold
                     sm:text-sm
                     mdlg:text-base
@@ -126,10 +138,10 @@
                 >
               </div>
               <div>
-                <span class="text-white sm:text-sm">
+                <span class="text-main-400 sm:text-sm">
                   {{
-                    localData && localData.professionalTypeId
-                      ? localData.professionalTypeId.name
+                    localData && localData.professionTypeIds
+                      ? localData.professionTypeIds.name
                       : ""
                   }}</span
                 >
@@ -139,7 +151,7 @@
               <div>
                 <span
                   class="
-                    text-white
+                    text-main-400
                     font-bold
                     sm:text-sm
                     mdlg:text-base
@@ -151,7 +163,7 @@
                 >
               </div>
               <div>
-                <span class="text-white sm:text-sm">
+                <span class="text-main-400 sm:text-sm">
                   {{
                     localData && localData.applicantTitle
                       ? localData.applicantTitle
@@ -163,29 +175,33 @@
           </div>
         </div>
 
-        <div class="bg-main-400 flex-shrink px-4 w-full rounded-md shadow-2xl">
+        <div class="bg-white flex-shrink px-4 w-full rounded-md shadow-2xl">
           <div
             class="
               py-8
               px-12
               mb-12
               bg-gray-50
-              border-b border-white
+              border-2
+              rounded-lg
+              mt-8
+              text-main-400
               transform
               transition
               duration-300
               ease-in-out
+              shadow-2xl
               hover:-translate-y-2
             "
           >
-            <div class="border-b text-white mb-4">
+            <div class="border-b-2 text-main-400 mb-4">
               <div class="text-gray-900 mb-4 flex justify-center">
-                <i class="fa fa-envelope fa-3x text-white"></i>
+                <i class="fa fa-envelope fa-3x text-main-400"></i>
               </div>
               <div class="flex justify-center text-gray-900 mb-4">
                 <h3
                   class="
-                    text-lg text-white
+                    text-lg text-main-400
                     leading-normal
                     mb-2
                     font-semibold
@@ -200,7 +216,7 @@
               <div>
                 <span
                   class="
-                    text-white
+                    text-main-400
                     font-bold
                     sm:text-sm
                     mdlg:text-base
@@ -212,7 +228,7 @@
                 >
               </div>
               <div>
-                <span class="text-white sm:text-sm">
+                <span class="text-main-400 sm:text-sm">
                   {{
                     localData && localData.whoIssued ? localData.whoIssued : ""
                   }}</span
@@ -223,7 +239,7 @@
               <div>
                 <span
                   class="
-                    text-white
+                    text-main-400
                     font-bold
                     sm:text-sm
                     mdlg:text-base
@@ -234,7 +250,7 @@
                 >
               </div>
               <div>
-                <span class="text-white sm:text-sm">
+                <span class="text-main-400 sm:text-sm">
                   {{
                     localData && localData.whomGoodStandingFor
                       ? localData.whomGoodStandingFor
@@ -247,7 +263,7 @@
               <div>
                 <span
                   class="
-                    text-white
+                    text-main-400
                     font-bold
                     sm:text-sm
                     mdlg:text-base
@@ -258,7 +274,7 @@
                 >
               </div>
               <div>
-                <span class="text-white sm:text-sm">
+                <span class="text-main-400 sm:text-sm">
                   {{
                     localData && localData.licenseRegistrationNumber
                       ? localData.licenseRegistrationNumber
@@ -271,7 +287,7 @@
               <div>
                 <span
                   class="
-                    text-white
+                    text-main-400
                     font-bold
                     sm:text-sm
                     mdlg:text-base
@@ -283,7 +299,7 @@
                 >
               </div>
               <div>
-                <span class="text-white sm:text-sm">
+                <span class="text-main-400 sm:text-sm">
                   {{
                     localData && localData.licenseIssuedDate
                       ? localData.licenseIssuedDate
@@ -307,7 +323,7 @@
           sm:grid-cols-1
         "
       >
-        <div class="bg-main-400 flex-shrink px-4 w-full rounded-md shadow-2xl">
+        <div class="bg-white flex-shrink px-4 w-full rounded-md shadow-2xl">
           <div
             class="
               py-8
@@ -322,14 +338,14 @@
               hover:-translate-y-2
             "
           >
-            <div class="border-b text-white mb-4">
+            <div class="border-2 text-main-400 shadow-2xl rounded-lg p-2 mb-8">
               <div class="text-gray-900 mb-4 flex justify-center">
-                <i class="fa fa-folder fa-3x text-white"></i>
+                <i class="fa fa-folder fa-3x text-main-400"></i>
               </div>
               <div class="flex justify-center text-gray-900 mb-4">
                 <h3
                   class="
-                    text-lg text-white
+                    text-lg text-main-400
                     leading-normal
                     mb-2
                     font-semibold
@@ -369,7 +385,7 @@
                 "
               >
                 <div
-                  class="mt-4 mb-8 bg-white shadow-2xl rounded-md"
+                  class="mt-4 mb-8 bg-white shadow-2xl rounded-md p-4"
                   v-for="localFileData in localFileData"
                   :key="localFileData.documenttype"
                 >
@@ -410,15 +426,19 @@
           sm:grid-cols-1
         "
       >
-        <div class="bg-main-400 flex-shrink px-4 w-full rounded-md shadow-2xl">
+        <div class="bg-white flex-shrink px-4 w-full rounded-md shadow-2xl">
           <div
             class="
               py-8
               px-12
               mb-12
               bg-gray-50
-              border-b border-white
+              border-2
+              text-main-400
               transform
+              rounded-lg
+              shadow-2xl
+              mt-4
               transition
               duration-300
               ease-in-out
@@ -427,9 +447,9 @@
           >
             <div class="mb-4">
               <div class="text-gray-900 mb-4 flex justify-center">
-                <i class="fa fa-check fa-3x text-white"></i>
+                <i class="fa fa-check fa-3x text-main-400"></i>
               </div>
-              <div class="flex justify-center text-gray-900 mb-4">
+              <div class="flex justify-center text-gray-900 mb-4 border-b">
                 <div class="form-check">
                   <input
                     class="
@@ -437,14 +457,15 @@
                       appearance-none
                       h-5
                       w-5
-                      border border-gray-300
+                      border
                       rounded-sm
                       bg-white
-                      checked:bg-blue-600 checked:border-blue-600
+                      checked:bg-main-400 checked:border-main-400
                       focus:outline-none
                       transition
                       duration-200
                       mt-1
+                      text-main-400
                       align-top
                       bg-no-repeat bg-center bg-contain
                       float-left
@@ -459,7 +480,7 @@
                 </div>
                 <h3
                   class="
-                    text-white
+                    text-main-400
                     mb-2
                     sm:text-xs
                     lgmd:text-base
@@ -474,7 +495,7 @@
               <div class="flex justify-center">
                 <label
                   for="feedback"
-                  class="form-label inline-block mb-2 text-white"
+                  class="form-label inline-block mb-2 text-main-400"
                   >Feedback on the process and system
                   <span class="text-red-200">(required*)</span>
                 </label>
@@ -492,13 +513,15 @@
                     text-base
                     font-normal
                     text-gray-700
-                    border border-solid border-gray-300
+                    border border-solid border-main-400
                     rounded
+                    focus:border-main-400
                     transition
                     ease-in-out
                     m-0
                     focus:outline-none
                   "
+                  @keyup="checkAgreement()"
                   id="feedback"
                   rows="6"
                   placeholder="Your feedback"
@@ -515,21 +538,10 @@
           v-for="button in buttons"
           :key="button.id"
           type="button"
-          class="
-            inline-block
-            px-6
-            text-black
-            bg-main-400
-            mt-4
-            font-medium
-            text-xs
-            leading-tight
-            uppercase
-            rounded
-            shadow-lg
-            transition
-            duration-150
-            ease-in-out
+          :class="
+            allowSave
+              ? 'inline-block px-6 text-main-400  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded shadow-lg transition  duration-150 ease-in-out'
+              : 'inline-block px-6 disabled text-main-400  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded shadow-lg transition  duration-150 ease-in-out'
           "
           @click="checkFinalStatus(button.action)"
         >
@@ -547,19 +559,42 @@
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
+import { useRouter } from "vue-router";
 export default {
   setup() {
     const store = useStore();
     const toast = useToast();
+    const router = useRouter();
     let localData = ref({});
     let localFileData = ref({});
     let generalInfo = ref({});
     let agreed = ref(false);
     let documents = ref([]);
     let buttons = ref([]);
-    let tempDocs=ref({});
+    let tempDocs = ref({});
+    let allowSave = ref(false);
     const changeAgrement = () => {
       agreed.value = !agreed.value;
+      if (
+        generalInfo.value &&
+        generalInfo.value.feedback.length >= 4 &&
+        agreed.value != false
+      ) {
+        allowSave.value = true;
+      } else {
+        allowSave.value = false;
+      }
+    };
+    const checkAgreement = () => {
+      if (
+        generalInfo.value &&
+        generalInfo.value.feedback.length >= 4 &&
+        agreed.value != false
+      ) {
+        allowSave.value = true;
+      } else {
+        allowSave.value = false;
+      }
     };
     const checkFinalStatus = (action) => {
       generalInfo.value.licenseFile = [];
@@ -567,11 +602,9 @@ export default {
 
       if (agreed.value == true && generalInfo.value.feedback.length != 0) {
         let formData = new FormData();
-        tempDocs.value.forEach((element) => {
-         
-          formData.append(element.documentTypeCode, element.tempFile);
+        tempDocs.value.forEach((element, index) => {
+          formData.append(index, element);
         });
-        console.log(tempDocs)
 
         // let smsData = {
         //   recipients: [
@@ -582,67 +615,91 @@ export default {
         //   message:
         //     "Dear applicant you have successfully applied for a new license, after careful examination of your uploaded documents by our reviewers we will get back and notify you on each steps, Thank you for using eHPL.",
         // };
-        console.log(formData);
+
         let license = {
           action: action,
           data: {
+            
             applicantId: generalInfo.value.applicantId,
             applicantTypeId: generalInfo.value.applicantTypeId.id,
-            residenceWoredaId: generalInfo.value.residenceWoredaId,
-            applicantTitle: generalInfo.value.applicantTitle,
-            whomGoodStandingFor: generalInfo.value.whomGoodStandingFor,
-            licenseIssuedDate: generalInfo.value.licenseIssuedDate,
-            whoIssued: generalInfo.value.whoIssued,
-            licenseRegistrationNumber:
-              generalInfo.value.licenseRegistrationNumber,
-            applicantPositionId: generalInfo.value.applicantPositionId,
-            professionalTypeIds: generalInfo.value.professionalTypeId,
-            expertLevelId: generalInfo.value.expertLevelId,
+            residenceWoredaId: generalInfo.value.residenceWoredaId
+              ? generalInfo.value.residenceWoredaId
+              : null,
+            applicantTitle: generalInfo.value.applicantTitle
+              ? generalInfo.value.applicantTitle
+              : "",
+            whomGoodStandingFor: generalInfo.value.whomGoodStandingFor
+              ? generalInfo.value.whomGoodStandingFor
+              : "",
+            licenseIssuedDate: generalInfo.value.licenseIssuedDate
+              ? generalInfo.value.licenseIssuedDate
+              : null,
+            whoIssued: generalInfo.value.whoIssued
+              ? generalInfo.value.whoIssued
+              : "",
+            licenseRegistrationNumber: generalInfo.value
+              .licenseRegistrationNumber
+              ? generalInfo.value.licenseRegistrationNumber
+              : "",
+            professionalTypeIds: generalInfo.value.professionTypeIds.id
+              ? [generalInfo.value.professionTypeIds.id]
+              : null,
+            expertLevelId: generalInfo.value.expertLevelId
+              ? generalInfo.value.expertLevelId
+              : null,
             islegal: true,
-            otherProfessionalType: generalInfo.value.otherProfessionalType,
-            otherProfessionalTypeAmharic:
-              generalInfo.value.otherProfessionalTypeAmharic,
-            departmentId: generalInfo.value.departmentId.id,
-            feedback: generalInfo.value.feedback,
+            otherProfessionalType: generalInfo.value.otherProfessionType
+              ? generalInfo.value.otherProfessionType
+              : "",
+            otherProfessionalTypeAmharic: generalInfo.value
+              .otherProfessionTypeAmharic
+              ? generalInfo.value.otherProfessionTypeAmharic
+              : "",
+              departmentId: generalInfo.value.departmentId.id
+              ? generalInfo.value.departmentId.id
+              : null,
+            feedback: generalInfo.value.feedback
+              ? generalInfo.value.feedback
+              : "", 
           },
-        };
-        // store
-        //   .dispatch("goodstanding/addGoodstandingLicense", license)
-        //   .then((res) => {
-        //     let licenseId = res.data.data.id;
-        //     let payload = { document: formData, id: licenseId };
-        //     store
-        //       .dispatch("goodstanding/uploadDocuments", payload)
-        //       .then(() => {
-        //         this.showLoading = false;
-        //         if (res.data.status == "Success") {
-        //           toast.success("Applied successfuly", {
-        //             timeout: 5000,
-        //             position: "bottom-center",
-        //             pauseOnFocusLoss: true,
-        //             pauseOnHover: true,
-        //             icon: true,
-        //           });
-        //         } else {
-        //           toast.error("Error occured, please try again", {
-        //             timeout: 5000,
-        //             position: "bottom-center",
-        //             pauseOnFocusLoss: true,
-        //             pauseOnHover: true,
-        //             icon: true,
-        //           });
-        //         }
-        //       })
-        //       .catch(() => {
-        //         toast.error("Error occured, please try again", {
-        //           timeout: 5000,
-        //           position: "bottom-center",
-        //           pauseOnFocusLoss: true,
-        //           pauseOnHover: true,
-        //           icon: true,
-        //         });
-        //       });
-        //   });
+        }; 
+        store
+          .dispatch("goodstanding/addGoodstandingLicense", license)
+          .then((res) => {
+            let licenseId = res.data.data.id;
+            let payload = { document: formData, id: licenseId };
+            store
+              .dispatch("goodstanding/uploadDocuments", payload)
+              .then((res) => { 
+                if (res.data.status == "Success") {
+                  toast.success("Applied successfuly", {
+                    timeout: 5000,
+                    position: "bottom-center",
+                    pauseOnFocusLoss: true,
+                    pauseOnHover: true,
+                    icon: true,
+                  });
+                  router.push({ path: "/Applicant/GoodStanding/submitted" });
+                } else {
+                  toast.error("Error occured, please try again", {
+                    timeout: 5000,
+                    position: "bottom-center",
+                    pauseOnFocusLoss: true,
+                    pauseOnHover: true,
+                    icon: true,
+                  });
+                }
+              })
+              .catch(() => {
+                toast.error("Error occured, please try again", {
+                  timeout: 5000,
+                  position: "bottom-center",
+                  pauseOnFocusLoss: true,
+                  pauseOnHover: true,
+                  icon: true,
+                });
+              });
+          });
       }
     };
     onMounted(() => {
@@ -657,6 +714,22 @@ export default {
         ? JSON.parse(window.localStorage.getItem("GSApplicationImageData"))
         : {};
       generalInfo.value = localData.value;
+      generalInfo.value.feedback = "";
+      if (generalInfo.value.applicantTypeId.id == 1) {
+        store.dispatch("goodstanding/getExpertLevel").then((res) => {
+          let expertLevel = res.data.data.filter(function (e) {
+            return e.code.includes("REG");
+          });
+          generalInfo.value.expertLevelId = expertLevel[0].id;
+        });
+      } else {
+        store.dispatch("goodstanding/getExpertLevel").then((res) => {
+          let expertLevel = res.data.data.filter(function (e) {
+            return e.code.includes("FED");
+          });
+          generalInfo.value.expertLevelId = expertLevel[0].id;
+        });
+      }
     });
     return {
       localData,
@@ -666,6 +739,8 @@ export default {
       buttons,
       checkFinalStatus,
       changeAgrement,
+      checkAgreement,
+      allowSave
     };
   },
 };

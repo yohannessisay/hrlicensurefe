@@ -1059,13 +1059,14 @@
                             inline-block
                             px-6
                             text-white
+                        bg-primary-600
                             font-medium
                             text-xs
                             leading-tight
                             uppercase
                             rounded
                             shadow-lg
-                            hover:bg-purple-700 hover:shadow-lg
+                            hover:text-primary-600 hover:shadow-lg
                             focus:bg-purple-700
                             focus:shadow-lg
                             focus:outline-none
@@ -1082,10 +1083,11 @@
                         <button
                           class="
                             inline-block
-                            px-6
-                            text-white
+                            px-6 
                             font-medium
                             text-xs
+                            text-white
+                        bg-red-300
                             leading-tight
                             uppercase
                             rounded
@@ -1096,7 +1098,7 @@
                             focus:outline-none
                             focus:ring-0
                             active:bg-white active:shadow-lg
-                            hover:bg-red-300 hover:text-white
+                            hover:bg-white hover:text-primary-600
                             transition
                             duration-150
                             ease-in-out
@@ -1110,6 +1112,7 @@
                             inline-block
                             px-6
                             text-white
+                        bg-yellow-300
                             font-medium
                             text-xs
                             leading-tight
@@ -1124,7 +1127,7 @@
                             active:bg-purple-800 active:shadow-lg
                             transition
                             duration-150
-                            hover:bg-yellow-300 hover:text-white
+                            hover:bg-white hover:text-primary-600
                             ease-in-out
                           "
                           @click="action('ReviewerDraftEvent')"
@@ -1137,6 +1140,7 @@
                             inline-block
                             px-6
                             text-white
+                        bg-primary-600
                             font-medium
                             text-xs
                             leading-tight
@@ -1248,6 +1252,7 @@
                         inline-block
                         px-6
                         text-white
+                        bg-primary-600
                         font-medium
                         text-xs
                         leading-tight
@@ -1275,6 +1280,7 @@
                         inline-block
                         px-6
                         text-white
+                        bg-primary-600
                         font-medium
                         text-xs
                         leading-tight
@@ -1536,7 +1542,7 @@
     </div>
     <!-- Main Content -->
   </section>
-
+<!-- Supervise part -->
   <div
     class="
       modal
@@ -1832,6 +1838,7 @@
       </div>
     </div>
   </div>
+  <!-- Supervise part -->
 </template>
 <script>
 import { useStore } from "vuex";

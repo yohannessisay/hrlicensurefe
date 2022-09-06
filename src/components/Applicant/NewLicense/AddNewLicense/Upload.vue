@@ -625,7 +625,7 @@ export default {
       documentUploaded.value[data.documentType.code] = "";
       documentUploaded.value[data.documentType.code] = event?.target?.files[0];
       formData.append(data.documentType.code, event?.target?.files[0]);
- 
+
       let reader = new FileReader();
       isImage.value[data.documentType.code] = true;
       let fileS = documentUploaded.value[data.documentType.code].size;
@@ -691,10 +691,16 @@ export default {
     const handleFileUpload = (data, event) => {
       documentUploaded.value[data.documentType.code] = event?.target?.files[0];
       let reader = new FileReader();
-      formData.append(data.documentType.code, event?.target?.files[0]);
+      formData.append(
+        data.educationalLevel.code.slice(0, 2).toUpperCase() +
+          "_" +
+          data.documentType.code,
+        event?.target?.files[0]
+      );
+      
       isImage.value[data.documentType.code] = true;
       let fileS = documentUploaded.value[data.documentType.code].size;
-      if (fileS <= maxFileSize.value / 1000) {  
+      if (fileS <= maxFileSize.value / 1000) {
         fileSizeExceed.value[data.documentType.code] = false;
         showImage.value = true;
 
@@ -704,7 +710,7 @@ export default {
           fileSize.value = fileS / 1000 + "kB";
         } else {
           fileSize.value = fileS / 1000000 + "MB";
-        } 
+        }
         reader.addEventListener(
           "load",
           function () {
