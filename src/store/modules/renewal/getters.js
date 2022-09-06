@@ -48,4 +48,6 @@ export default {
     getRenewedLicenseOfHealthFacility: (state) =>
         state.renewedLicenseOfHealthFacility,
         getGeneralInfo: (state) => state.generalInfo,
+        getTempDocs: (state) => state.tempDocs,
+
 };

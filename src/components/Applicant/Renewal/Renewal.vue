@@ -1,4 +1,5 @@
 <template>
+    <main-content>
   <transition name="fade" mode="out-in">
     <div v-if="this.activeState == 1">
       <Institution
@@ -27,7 +28,7 @@
   </transition>
   <transition name="fade" mode="out-in">
     <div v-if="this.activeState == 3">
-      <MultipleUpload
+      <LicenseSummary
         :activeState="3"
         @changeActiveState="activeState++"
         @changeActiveStateMinus="activeState--"
@@ -37,7 +38,19 @@
         @diplomaSet="diplomaSet"
       />
     </div>
+    <!-- <div v-if="this.activeState == 3">
+      <MultipleUpload
+        :activeState="3"
+        @changeActiveState="activeState++"
+        @changeActiveStateMinus="activeState--"
+        @applicantTypeValue="applicantTypeSet"
+        @nativeLanguageSet="nativeLanguage"
+        @payrollDocumentSet="payrollDocumentSet"
+        @diplomaSet="diplomaSet"
+      />
+    </div> -->
   </transition>
+</main-content>
 </template>
 
 <script>
@@ -46,6 +59,8 @@ import Upload from "./CreateRenewal/Upload.vue";
 
 import LicenseSummary from "./CreateRenewal/LicenseSummary.vue";
 import MultipleUpload from "./CreateRenewal/MultipleUpload.vue";
+import MainContent from "./sharedComponents/Menu.vue";
+
 import { useStore } from "vuex";
 import { useRoute, useRouter } from "vue-router";
 import { ref, onMounted } from "vue";
@@ -258,6 +273,7 @@ export default {
     Upload,
     LicenseSummary,
     MultipleUpload,
+    MainContent
   },
 
   // methods: {

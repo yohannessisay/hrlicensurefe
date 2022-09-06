@@ -61,6 +61,7 @@ export default {
         phd: "",
         phdTranscript: "",
         renewedLicenseOfHealthFacility: "",
-        generalInfo: {}
+        generalInfo: {},
+        tempDocs: "",
     },
 };
