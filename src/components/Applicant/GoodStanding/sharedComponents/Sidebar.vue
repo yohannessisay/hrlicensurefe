@@ -30,34 +30,34 @@
       </li>
       <li
         :class="
-          $route.fullPath === '/Applicant/newLicense' ? 'list active' : 'list'
+          $route.fullPath === '/Applicant/GoodStanding' ? 'list active' : 'list'
         "
       >
         <b></b>
         <b></b>
-        <a href="#NewLicense">
-          <router-link class="link" to="/Applicant/NewLicense">
+        <a href="#GoodStanding">
+          <router-link class="link" to="/Applicant/GoodStanding">
             <span class="icon"><i class="bx bx-certification"></i></span>
-            <span class="text text-white font-bold">New License</span>
+            <span class="text text-white font-bold">Good Standing</span>
           </router-link>
         </a>
       </li>
 
       <li
         :class="
-          $route.fullPath === '/Applicant/NewLicense/submitted'
+          $route.fullPath === '/Applicant/GoodStanding/submitted'
             ? 'list active'
             : 'list'
         "
       >
         <b></b>
         <b></b>
-        <a href="#Renewal">
-          <router-link class="link" to="/Applicant/NewLicense/submitted">
+        <a href="#GoodStandingSubmitted">
+          <router-link class="link" to="/Applicant/GoodStanding/submitted">
             <span class="icon"
               ><i
                 :class="
-                  $route.fullPath === '/Applicant/NewLicense/submitted'
+                  $route.fullPath === '/Applicant/GoodStanding/submitted'
                     ? 'bx bxs-save'
                     : 'bx bx-save'
                 "
@@ -69,19 +69,43 @@
       </li>
       <li
         :class="
-          $route.fullPath === '/Applicant/NewLicense/draft'
+          $route.fullPath === '/Applicant/GoodStanding/assigned'
             ? 'list active'
             : 'list'
         "
       >
         <b></b>
         <b></b>
-        <a href="#Verification">
-          <router-link class="link" to="/Applicant/NewLicense/draft">
+        <a href="#GoodStandingAssigned">
+          <router-link class="link" to="/Applicant/GoodStanding/assigned">
             <span class="icon"
               ><i
                 :class="
-                  $route.fullPath === '/Applicant/NewLicense/draft'
+                  $route.fullPath === '/Applicant/GoodStanding/assigned'
+                    ? 'bx bxs-save'
+                    : 'bx bx-save'
+                "
+              ></i
+            ></span>
+            <span class="text text-white font-bold">Assigned</span>
+          </router-link>
+        </a>
+      </li>
+      <li
+        :class="
+          $route.fullPath === '/Applicant/GoodStanding/draft'
+            ? 'list active'
+            : 'list'
+        "
+      >
+        <b></b>
+        <b></b>
+        <a href="#GoodStandingDraft">
+          <router-link class="link" to="/Applicant/GoodStanding/draft">
+            <span class="icon"
+              ><i
+                :class="
+                  $route.fullPath === '/Applicant/GoodStanding/draft'
                     ? 'bx bxs-paste'
                     : 'bx bx-paste'
                 "
@@ -93,19 +117,19 @@
       </li>
       <li
         :class="
-          $route.fullPath === '/Applicant/NewLicense/withdraw'
+          $route.fullPath === '/Applicant/GoodStanding/withdraw'
             ? 'list active'
             : 'list'
         "
       >
         <b></b>
         <b></b>
-        <a href="#GoodStanding">
-          <router-link class="link" to="/Applicant/NewLicense/withdraw">
+        <a href="#GoodStandingWithdraw">
+          <router-link class="link" to="/Applicant/GoodStanding/withdraw">
             <span class="icon"
               ><i
                 :class="
-                  $route.fullPath === '/Applicant/NewLicense/withdraw'
+                  $route.fullPath === '/Applicant/GoodStanding/withdraw'
                     ? 'bx bxs-x-circle'
                     : 'bx bx-x-circle'
                 "
@@ -120,19 +144,19 @@
 
       <li
         :class="
-          $route.fullPath === '/Applicant/NewLicense/approved'
+          $route.fullPath === '/Applicant/GoodStanding/approved'
             ? 'list active'
             : 'list'
         "
       >
         <b></b>
         <b></b>
-        <a href="#">
-          <router-link class="link" to="/Applicant/NewLicense/approved">
+        <a href="#GoodStandingApproved">
+          <router-link class="link" to="/Applicant/GoodStanding/approved">
             <span class="icon"
               ><i
                 :class="
-                  $route.fullPath === '/Applicant/NewLicense/approved'
+                  $route.fullPath === '/Applicant/GoodStanding/approved'
                     ? 'bx bxs-badge-check'
                     : 'bx bx-badge-check'
                 "
@@ -145,19 +169,19 @@
 
       <li
         :class="
-          $route.fullPath === '/Applicant/NewLicense/declined'
+          $route.fullPath === '/Applicant/GoodStanding/declined'
             ? 'list active'
             : 'list'
         "
       >
         <b></b>
         <b></b>
-        <a href="#">
-          <router-link class="link" to="/Applicant/NewLicense/declined">
+        <a href="#GoodStandingDeclined">
+          <router-link class="link" to="/Applicant/GoodStanding/declined">
             <span class="icon"
               ><i
                 :class="
-                  $route.fullPath === '/Applicant/NewLicense/declined'
+                  $route.fullPath === '/Applicant/GoodStanding/declined'
                     ? 'bx bxs-shield-x'
                     : 'bx bx-shield-x'
                 "
@@ -170,19 +194,19 @@
 
       <li
         :class="
-          $route.fullPath === '/Applicant/NewLicense/underSupervision'
+          $route.fullPath === '/Applicant/GoodStanding/underSupervision'
             ? 'list active'
             : 'list'
         "
       >
         <b></b>
         <b></b>
-        <a href="#">
-          <router-link class="link" to="/Applicant/NewLicense/underSupervision">
+        <a href="#GoodStandingUnderSuperVision">
+          <router-link class="link" to="/Applicant/GoodStanding/underSupervision">
             <span class="icon"
               ><i
                 :class="
-                  $route.fullPath === '/Applicant/NewLicense/underSupervision'
+                  $route.fullPath === '/Applicant/GoodStanding/underSupervision'
                     ? 'bx bx-glasses'
                     : 'bx bx-glasses'
                 "
@@ -195,19 +219,19 @@
 
       <li
         :class="
-          $route.fullPath === '/Applicant/NewLicense/pendingPayment'
+          $route.fullPath === '/Applicant/GoodStanding/pendingPayment'
             ? 'list active'
             : 'list'
         "
       >
         <b></b>
         <b></b>
-        <a href="#">
-          <router-link class="link" to="/Applicant/NewLicense/pendingPayment">
+        <a href="GoodStandingPendingPayment">
+          <router-link class="link" to="/Applicant/GoodStanding/pendingPayment">
             <span class="icon"
               ><i
                 :class="
-                  $route.fullPath === '/Applicant/NewLicense/pendingPayment'
+                  $route.fullPath === '/Applicant/GoodStanding/pendingPayment'
                     ? 'bx bx-loader'
                     : 'bx bx-loader'
                 "

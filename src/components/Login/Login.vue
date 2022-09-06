@@ -223,17 +223,12 @@ export default {
                 message.value.showLoading = false;
                 message.value.showFlash = true;
                 message.value.showErrorFlash = false;
-                setTimeout(() => {
-                  location.reload(true);
-                }, 1500);
                 router.push({ path: "/menu" });
               } else {
                 message.value.showLoading = false;
                 message.value.showFlash = true;
                 message.value.showErrorFlash = false;
-                setTimeout(() => {
                   router.push({ path: "/addProfile" });
-                }, 3000);
               }
             });
           } else {
@@ -246,7 +241,7 @@ export default {
               message.value.showErrorFlash = false;
               credentials.value.emailAddress = "";
               credentials.value.password = "";
-            }, 3000);
+            }, 1000);
           }
         });
       }

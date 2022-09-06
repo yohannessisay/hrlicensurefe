@@ -1,4 +1,5 @@
 <template>
+  <main-content>
   <transition name="fade" mode="out-in">
     <div v-if="this.activeState == 1">
       <Institution
@@ -27,7 +28,7 @@
   </transition>
   <transition name="fade" mode="out-in">
     <div v-if="this.activeState == 3">
-      <MultipleUpload
+      <LicenseSummary
         :activeState="3"
         @changeActiveState="activeState++"
         @changeActiveStateMinus="activeState--"
@@ -38,12 +39,13 @@
       />
     </div>
   </transition>
+</main-content>
 </template>
 
 <script>
-import Institution from "./AddNewLicense/institution.vue";
+import Institution from "./AddNewLicense/generalInformation.vue";
 import Upload from "./AddNewLicense/Upload.vue";
-
+import MainContent from "./sharedComponents/Menu.vue";
 import LicenseSummary from "./AddNewLicense/LicenseSummary.vue";
 import MultipleUpload from "./AddNewLicense/MultipleUpload.vue";
 
@@ -78,7 +80,7 @@ export default {
     Institution,
     Upload,
     LicenseSummary,
-    MultipleUpload
+    MainContent
   },
 
   methods: {

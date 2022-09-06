@@ -1,5 +1,10 @@
 <template>
   <main-content>
+    <div class="pages-navbar flex justify-center h-12 rounded-sm"  style="width: 98% !important">
+      <div class="profile p-4">
+        <h2 class="text-white">Applications you have withdrawn</h2>
+      </div>
+    </div>
     <div class="container my-12 mx-auto px-4 md:px-12">
       <div class="flex flex-wrap -mx-1 lg:-mx-4">
         <!-- Column -->
@@ -16,7 +21,7 @@
         >
           <!-- Article -->
 
-          <h1 class="text-primary-600">Department Name</h1>
+          <h1 class="text-main-400 border-b-2 ">Department Name</h1>
 
           <header
             class="flex items-center justify-between leading-tight p-2 md:p-2"
