@@ -204,6 +204,7 @@ export default {
       renewedLicenseOfHealthFacility
     );
   },
+  
   async addRenewalLicense({ commit }, license) {
     try {
       const resp = await ApiService.post(baseUrl + "/renewals/add", license);

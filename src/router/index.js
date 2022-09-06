@@ -129,7 +129,7 @@ const routes = [
   {
     path: "/renewal",
     name: "Renewal",
-    component: () => import("../components/Renewal/Renewal.vue"),
+    component: () => import("../components/Applicant/Renewal/Renewal.vue"),
   },
   {
     path: "/verification",
