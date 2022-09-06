@@ -520,19 +520,7 @@ export default {
         //   message:
         //     "Dear applicant you have successfully applied for a new license, after careful examination of your uploaded documents by our reviewers we will get back and notify you on each steps, Thank you for using eHPL.",
         // };
-        if (generalInfo.value.applicantTypeSelected.id == 1) {
-          store.dispatch("newlicense/getExpertLevel").then((res) => {
-            generalInfo.value.expertLevels = res.data.data.filter(function (e) {
-              return e.code.includes("REG");
-            });
-          });
-        } else {
-          store.dispatch("newlicense/getExpertLevel").then((res) => {
-            generalInfo.value.expertLevels = res.data.data.filter(function (e) {
-              return e.code.includes("FED");
-            });
-          });
-        }
+ 
 
         let license = {
           action: action,

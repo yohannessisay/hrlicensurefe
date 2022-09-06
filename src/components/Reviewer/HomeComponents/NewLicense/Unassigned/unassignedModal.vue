@@ -255,33 +255,40 @@
                                         placeholder="Select reviewer by typing a name"
                                       />
                                     </div>
-                                    <button
-                                      class="
-                                        inline-block
-                                        px-6
-                                        py-2.5
-                                        bg-blue-600
-                                        text-white
-                                        font-medium
-                                        text-xs
-                                        leading-tight
-                                        uppercase
-                                        rounded
-                                        shadow-lg
-                                        hover:bg-blue-700 hover:shadow-lg
-                                        focus:bg-blue-700
-                                        focus:shadow-lg
-                                        focus:outline-none
-                                        focus:ring-0
-                                        active:bg-blue-800 active:shadow-lg
-                                        transition
-                                        duration-150
-                                        ease-in-out
-                                      "
-                                      @click="assignReviewer()"
+
+                                    <div
+                                      v-for="button in modalData.buttons"
+                                      :key="button.id"
                                     >
-                                      Assign
-                                    </button>
+                                      <button
+                                        v-if="button.code == 'AT'"
+                                        class="
+                                          inline-block
+                                          px-6
+                                          py-2.5
+                                          bg-blue-600
+                                          text-white
+                                          font-medium
+                                          text-xs
+                                          leading-tight
+                                          uppercase
+                                          rounded
+                                          shadow-lg
+                                          hover:bg-blue-700 hover:shadow-lg
+                                          focus:bg-blue-700
+                                          focus:shadow-lg
+                                          focus:outline-none
+                                          focus:ring-0
+                                          active:bg-blue-800 active:shadow-lg
+                                          transition
+                                          duration-150
+                                          ease-in-out
+                                        "
+                                        @click="assignReviewer(button.action)"
+                                      >
+                                        {{ button ? button.name : "" }}
+                                      </button>
+                                    </div>
                                     <div
                                       v-show="
                                         resultQuery().length && showOptions
@@ -503,7 +510,6 @@ export default {
     let assign = ref({
       reviewerId: "",
       licenseId: "",
-      createdByAdminId: "",
     });
     let role = ref({});
     let isLoadingStart = ref(true);
@@ -516,12 +522,11 @@ export default {
       role.value = JSON.parse(localStorage.getItem("allAdminData")).role;
     };
 
-    const assignReviewer = () => {
+    const assignReviewer = (action) => {
       if (role.value.code === "TL" || role.value.code === "ADM") {
         assign.value = {
           licenseId: licenseData.value.id,
           reviewerId: assign.value.reviewerId,
-          createdByAdminId: +localStorage.getItem("adminId"),
         };
       }
 
@@ -529,7 +534,6 @@ export default {
         assign.value = {
           licenseId: licenseData.value.id,
           reviewerId: +localStorage.getItem("adminId"),
-          createdByAdminId: +localStorage.getItem("adminId"),
         };
       }
 
@@ -551,7 +555,10 @@ export default {
           : "",
       };
       store
-        .dispatch("reviewer/assignReviewer", assign.value)
+        .dispatch("reviewer/assignReviewer", {
+          action: action,
+          data: assign.value,
+        })
         .then((response) => {
           if (response.statusText == "Created") {
             store.dispatch("sms/sendSms", smsData).then(() => {
@@ -688,6 +695,9 @@ export default {
             modalData.value.licenseExpirationDate =
               result.licenseExpirationDate;
             modalData.value.data = result;
+            modalData.value.buttons = result.applicationStatus
+              ? result.applicationStatus.buttons
+              : {};
             licenseData.value = result;
             isLoadingStart.value = false;
           }

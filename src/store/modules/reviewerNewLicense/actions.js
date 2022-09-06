@@ -99,10 +99,10 @@ export default {
     const url = baseUrl + "/newLicenses/status/" + statusId;
     const resp = await ApiService.get(url);
 
-    const unassignedApplications = resp.data.data.filter((unassigned) => {
-      return unassigned.transferFromId === null;
-    });
+    const unassignedApplications = resp.data.data;
+
     commit(SET_NEW_LICENSE_UNASSIGNED, unassignedApplications);
+    return unassignedApplications;
   },
   getNewLicenseUnassignedSearched({ commit, getters }, searchKey) {
     if (getters.getNewLicenseUnassigned === undefined) {
@@ -616,7 +616,7 @@ export default {
     const resp = await ApiService.get(url);
 
     const onReview = resp.data.data.filter(function(e) {
-      return e.reviewerId === adminStatus[1];
+      return e.licenseReviewer.reviewerId == adminStatus[1];
     });
 
     commit(SET_NEW_LICENSE_ON_REVIEW, onReview);

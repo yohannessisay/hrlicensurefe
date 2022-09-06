@@ -215,7 +215,7 @@
                     focus:border-blue-600
                     focus:outline-none
                   "
-                  v-model="generalInfo.professionalTypeId"
+                  v-model="generalInfo.professionTypeIds"
                   required
                 >
                   <option value="" disabled>
@@ -266,12 +266,13 @@
                 focus:outline-none
               "
               v-model="generalInfo.regionId"
+              @change="fetchZone()"
               required
             >
               <option
                 v-for="region in regions"
                 v-bind:key="region.name"
-                v-bind:value="region"
+                v-bind:value="region.id"
               >
                 {{ region.name }}
               </option>
@@ -541,10 +542,10 @@ export default {
       licenseIssuedDate: "",
       whoIssued: "",
       licenseRegistrationNumber: "",
-      professionalTypeId: "",
+      professionTypeIds: "",
       applicantPositionId: "",
-      otherProfessionalType: "",
-      otherProfessionalTypeAmharic: "",
+      otherProfessionType: "",
+      otherProfessionTypeAmharic: "",
       applicationStatusId: "",
       regionId: "",
       zoneId: "",
@@ -607,6 +608,7 @@ export default {
       store
         .dispatch("goodstanding/getZones", generalInfo.value.regionId)
         .then((res) => {
+          console.log(res)
           zones.value = res.data.data;
         });
     };
@@ -667,6 +669,7 @@ export default {
       fetchProfessionalType,
       setDepartment,
       apply,
+      fetchZone,
       showLocation,
       regions,
       woredas,

@@ -230,6 +230,7 @@ export default {
     let localData = ref();
     let files = ref("");
     let maxFileSize = ref();
+    let imageData = [];
     let isImage = ref({});
     let isPdf = ref({});
     let fileSizeExceed = ref({});
@@ -246,7 +247,7 @@ export default {
       filePreviewData.value.file = previewDocuments.value[code];
       filePreviewData.value.name = name;
     };
-
+    let formData = new FormData();
     const handleCommonFileUpload = (code, event) => {
       documentUploaded.value[code] = event?.target?.files[0];
       let reader = new FileReader();
@@ -291,15 +292,14 @@ export default {
     };
 
     const handleFileUpload = (data, event) => {
+      documentUploaded.value[data.documentType.code] = event?.target?.files[0];
       let reader = new FileReader();
-      isImage.value[
-        data.educationalLevel ? data.educationalLevel.code : ""
-      ] = true;
-      let fileS = event.target.files[0].size;
-      if (fileS <= maxFileSize.value / 1000) {
-        fileSizeExceed.value[
-          data.educationalLevel ? data.educationalLevel.code : ""
-        ] = false;
+      
+      formData.append(data.documentType.code, event?.target?.files[0]);
+      isImage.value[data.documentType.code] = true;
+      let fileS = documentUploaded.value[data.documentType.code].size;
+      if (fileS <= maxFileSize.value / 1000) {  
+        fileSizeExceed.value[data.documentType.code] = false;
         showImage.value = true;
 
         if (fileS > 0 && fileS < 1000) {
@@ -308,76 +308,56 @@ export default {
           fileSize.value = fileS / 1000 + "kB";
         } else {
           fileSize.value = fileS / 1000000 + "MB";
-        }
+        } 
         reader.addEventListener(
           "load",
           function () {
             showPreview.value = true;
 
-            previewDocuments.value[
-              data.educationalLevel ? data.educationalLevel.code : ""
-            ] = reader.result;
+            previewDocuments.value[data.documentType.code] = reader.result;
+            imageData.push({
+              documenttype: data.documentType ? data.documentType.name : "",
+              educationalLevel: data.educationalLevel
+                ? data.educationalLevel.name
+                : "",
+              image: reader.result,
+            });
+             
           },
           false
         );
-        if (event.target.files[0]) {
-          if (/\.(jpe?g|png|gif)$/i.test(event.target.files[0].name)) {
-            isImage.value[
-              data.educationalLevel ? data.educationalLevel.code : ""
-            ] = true;
-            isPdf.value[
-              data.educationalLevel ? data.educationalLevel.code : ""
-            ] = false;
+        if (documentUploaded.value[data.documentType.code]) {
+          if (
+            /\.(jpe?g|png|gif)$/i.test(
+              documentUploaded.value[data.documentType.code].name
+            )
+          ) {
+            isImage.value[data.documentType.code] = true;
+            isPdf.value[data.documentType.code] = false;
 
-            reader.readAsDataURL(event.target.files[0]);
-
-            documentUploaded.value.push({
-              documentTypeCode: data.documentType.code,
-              educationalLevel: data.educationalLevel.name,
-              file: event.target.files[0],
-              fileName: event.target.files[0].name,
-              base: previewDocuments.value,
-              code: data.educationalLevel ? data.educationalLevel.code : "",
-            });
-            console.log(generalInfo);
-            generalInfo.value.licenseFile.push(event.target.files[0]);
-          } else if (/\.(pdf)$/i.test(event.target.files[0].name)) {
-            isImage.value[
-              data.educationalLevel ? data.educationalLevel.code : ""
-            ] = false;
-            isPdf.value[
-              data.educationalLevel ? data.educationalLevel.code : ""
-            ] = true;
-            reader.readAsDataURL(event.target.files[0]);
-            documentUploaded.value.push({
-              documentTypeCode: data.documentType.code,
-              educationalLevel: data.educationalLevel.name,
-              file: event.target.files[0],
-              fileName: event.target.files[0].name,
-              base: previewDocuments.value,
-              code: data.educationalLevel ? data.educationalLevel.code : "",
-            });
-            generalInfo.value.licenseFile.push(event.target.files[0]);
+            reader.readAsDataURL(
+              documentUploaded.value[data.documentType.code]
+            );
+          } else if (
+            /\.(pdf)$/i.test(
+              documentUploaded.value[data.documentType.code].name
+            )
+          ) {
+            isImage.value[data.documentType.code] = false;
+            isPdf.value[data.documentType.code] = true;
+            reader.readAsDataURL(
+              documentUploaded.value[data.documentType.code]
+            );
           }
         }
       } else {
-        fileSizeExceed.value[
-          data.educationalLevel ? data.educationalLevel.code : ""
-        ] = true;
-        event.target.files[0] = "";
+        fileSizeExceed.value[data.documentType.code] = true;
+        documentUploaded.value[data.documentType.code] = "";
       }
     };
-    const next = () => {
-      let imageData = [];
-      documentUploaded.value.forEach((element) => {
-        imageData.push({
-          documentTypeCode: element.documentTypeCode,
-          tempFile: element.file,
-          educationalLevel: element.educationalLevel,
-          image: element.base[element.code ? element.code : ""],
-        });
-      });
-      store.dispatch("goodstanding/setTempDocs", imageData);
+    const next = () => { 
+
+      store.dispatch("goodstanding/setTempDocs", formData);
       window.localStorage.setItem(
         "GSApplicationData",
         JSON.stringify(generalInfo.value)
