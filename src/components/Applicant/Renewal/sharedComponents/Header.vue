@@ -1,6 +1,6 @@
 <template>
   <div class="top-navbar">
-    <div class="bx bx-menu" id="menu-icon"></div>
+    <div class="bx bx-menu text-main-400" id="menu-icon"></div>
     <div class="profile">
       <div class="flex items-center space-x-5">
         <div class="relative inline-block text-left">
@@ -44,7 +44,7 @@
           </div>
         </div>
 
-        <p class="text-white font-bold" v-text="name.fullName"></p>
+        <p class="text-main-400 font-bold" v-text="name.fullName"></p>
         <div class="relative inline-block text-left">
           <a
             class="

@@ -4,7 +4,7 @@
     style="width: 98% !important"
   >
     <div class="profile p-4">
-      <h2 class="text-white">Apply for Renwal</h2>
+      <h2 class="text-main-400">Apply for Renewal</h2>
     </div>
   </div>
   <div
@@ -13,7 +13,7 @@
       p-6
       rounded-lg
       shadow-lg
-      bg-primary-200
+      bg-white
       max-w-full
       mr-8
       mb-8
@@ -26,11 +26,11 @@
 
     <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-10">
       <div
-        class="flex border border-main-400 shadow-2xl rounded-md bg-main-400"
+        class="flex   shadow-2xl rounded-md bg-whiye"
       >
         <!-- applican type -->
         <div class="flex flex-col mb-4 pt-8 sm:ml-4">
-          <label class="text-white">Applicant Type</label>
+          <label class="text-main-400">Applicant Type</label>
           <select
             class="
               form-select
@@ -102,11 +102,11 @@
       <!-- region -->
       <div
         v-if="showLocation"
-        class="pt-8 mt-12 border border-main-400 rounded bg-main-400 shadow-2xl"
+        class="pt-8 mt-12  ounded-lg bg-white shadow-2xl"
       >
         <div class="flex">
           <div class="flex flex-col mb-medium w-2/5 ml-medium mr-12">
-            <label class="text-white">Region</label>
+            <label class="text-main-400">Region</label>
             <select
               class="
                 form-select
@@ -143,7 +143,7 @@
             </select>
           </div>
           <div class="flex flex-col mb-medium w-2/5 mr-12">
-            <label class="text-white">Zone</label>
+            <label class="text-main-400">Zone</label>
             <select
               class="
                 form-select
@@ -181,7 +181,7 @@
         </div>
         <div class="flex">
           <div class="flex flex-col mb-medium w-2/5 ml-medium mr-12">
-            <label class="text-white">Woreda</label>
+            <label class="text-main-400">Woreda</label>
             <select
               class="
                 form-select
@@ -228,9 +228,9 @@
           flex
           pt-8
           mt-12
-          border border-main-400
+         
           rounded-sm
-          bg-main-400
+          bg-white
           shadow-2xl
         "
       >
@@ -238,7 +238,7 @@
           v-if="showLanguage"
           class="flex flex-col mb-medium w-2/5 mr-12 ml-medium"
         >
-          <label class="text-white">English Language</label>
+          <label class="text-main-400">English Language</label>
           <select
             class="
               form-select
@@ -276,7 +276,7 @@
           v-if="showOccupation"
           class="flex flex-col mb-medium w-2/5 mr-12 ml-medium"
         >
-          <label class="text-white">Occupation Type</label>
+          <label class="text-main-400">Occupation Type</label>
           <select
             class="
               form-select
@@ -318,10 +318,9 @@
       <!-- educational institution and department -->
       <div
         class="
-          mt-12
-          border border-main-400
+          mt-12 
           rounded-sm
-          bg-main-400
+          bg-white
           shadow-2xl
           mb-8
         "
@@ -341,7 +340,7 @@
               "
             >
               <div>
-                <label class="text-white">Department</label>
+                <label class="text-main-400">Department</label>
                 <select
                   class="
                     form-select
@@ -382,7 +381,7 @@
               class="flex justify-center text-6xl rounded-xl p-2 bg-gray-100"
             >
               <div>
-                <label class="text-white">Education Level </label>
+                <label class="text-main-400">Education Level </label>
                 <select
                   class="
                     form-select
@@ -426,7 +425,7 @@
               class="flex justify-center text-6xl rounded-xl p-2 bg-gray-100"
             >
               <div>
-                <label class="text-white">Professional Types</label>
+                <label class="text-main-400">Professional Types</label>
                 <select
                   class="
                     form-select
@@ -483,7 +482,7 @@
               class="flex justify-center text-6xl rounded-xl p-2 bg-gray-100"
             >
               <div>
-                <label class="text-white">Educational Institution</label>
+                <label class="text-main-400">Educational Institution</label>
 
                 <select
                   class="
@@ -542,6 +541,7 @@
               mb-2
               py-2.5
               bg-white
+              border
               text-main-400
               font-medium
               text-xs
@@ -549,7 +549,7 @@
               uppercase
               rounded
               shadow-md
-              hover:text-main-500 hover:border-main-500 hover:shadow-lg
+              hover:text-white hover:bg-main-400 hover:shadow-lg
               focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
               active:bg-blue-800 active:shadow-lg
               transition

@@ -21,26 +21,26 @@
           </router-link>
         </a>
       </li>
-      <li :class="$route.fullPath === '/newLicense' ? 'list active' : 'list'">
+      <li :class="$route.fullPath === '/Applicant/Renewal' ? 'list active' : 'list'">
         <b></b>
         <b></b>
         <a href="#NewLicense">
-          <router-link class="link" to="/newLicense">
+          <router-link class="link" to="/Applicant/Renewal">
             <span class="icon"><i class="bx bxs-certification"></i></span>
-            <span class="text font-bold">New License</span>
+            <span class="text font-bold">Renewal</span>
           </router-link>
         </a>
       </li>
 
       <li
         :class="
-          $route.fullPath === '/newLicense/submitted' ? 'list active' : 'list'
+          $route.fullPath === '/Applicant/Renewal/submitted' ? 'list active' : 'list'
         "
       >
         <b></b>
         <b></b>
         <a href="#Renewal">
-          <router-link class="link" to="/newLicense/submitted">
+          <router-link class="link" to="/Applicant/Renewal/submitted">
             <span class="icon"><i class="bx bx-refresh text-white"></i></span>
             <span class="text text-white font-bold">Submitted</span>
           </router-link>
