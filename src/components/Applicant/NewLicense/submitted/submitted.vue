@@ -9,18 +9,19 @@
           isLoading ? 'profile p-4 loading-overlay is-overlay' : 'profile p-4'
         "
       >
-        <h2 class="text-white">Your submitted applications</h2>
+        <h2 class="text-main-400">Your submitted applications</h2>
 
       </div>
     </div>
     <div class="container my-12 mx-auto px-4 md:px-12">
       <div class="flex flex-wrap sm:-mx-1 lg:-mx-4">
         <!-- Column -->
+      
         <div
           v-for="license in newLicense"
           :key="license.id"
           class="
-            bg-main-400
+            bg-white
             my-1
             px-1
             md:w-1/4
@@ -29,15 +30,20 @@
             sm:w-full sm:mr-4
             shadow-2xl
             rounded-lg
+            transform
+                transition
+                duration-300
+                ease-in-out
+                hover:-translate-y-2
           "
         >
           <!-- Article -->
           <router-link
             :to="'/Applicant/NewLicense/submitted/detail/' + license.id"
           >
-            <h2 class="text-white border-b-2 text-xl p-2">
+            <h2 class="text-main-400 border-b-2 text-xl p-2">
               License Number-
-              <span class="text-base text-white">{{
+              <span class="text-base text-main-400">{{
                 license.newLicenseCode
               }}</span>
             </h2>
@@ -54,13 +60,13 @@
               "
             >
               <h1 class="text-lg">
-                <a class="no-underline hover:underline text-white" href="#">
+                <a class="no-underline hover:underline text-main-400" href="#">
                   Profession Name
-                </a>
+                </a>  
               </h1>
-              <p class="text-white text-sm">Profession Name</p>
+              <p v-for="eds in license.educations " :key="eds.id" class="text-black text-sm">{{ eds.professionType.name+' ,' }}</p>
             </header>
-            <div class="border-b-2 text-white">
+            <div class="border-b-2 text-main-400">
               <div
                 class="
                   flex
@@ -72,11 +78,11 @@
                 "
               >
                 <h1 class="text-lg">
-                  <a class="no-underline hover:underline text-white" href="#">
+                  <a class="no-underline hover:underline text-main-400" href="#">
                     Certified Date
                   </a>
                 </h1>
-                <p class="text-white text-sm">Certified Date</p>
+                <p class="text-black text-sm">{{ license.certifiedDate?license.certifiedDate:'Waiting for review'}}</p>
               </div>
               <div
                 class="
@@ -89,29 +95,13 @@
                 "
               >
                 <h1 class="text-lg">
-                  <a class="no-underline hover:underline text-white" href="#">
+                  <a class="no-underline hover:underline text-main-400" href="#">
                     Expiry Date
                   </a>
                 </h1>
-                <p class="text-white text-sm">Expiry Date</p>
+                <p class="text-black text-sm">{{ license.certifiedDate?license.certifiedDate:'Waiting for review'}}</p>
               </div>
-              <div
-                class="
-                  flex
-                  items-center
-                  justify-between
-                  leading-tight
-                  p-2
-                  md:p-2
-                "
-              >
-                <h1 class="text-lg">
-                  <a class="no-underline hover:underline text-white" href="#">
-                    Other Kotets
-                  </a>
-                </h1>
-                <p class="text-white text-sm">kotets</p>
-              </div>
+       
             </div>
             <footer
               class="flex items-center justify-between leading-none p-2 md:p-4"
@@ -135,10 +125,10 @@
                       : ''
                   "
                 />
-                <p class="ml-2 text-sm text-white">{{ userInfo.name }}</p>
+                <p class="ml-2 text-sm text-main-400">{{ userInfo.name }}</p>
               </a>
 
-              <span class="text-white text-sm">{{
+              <span class="text-main-400 text-sm">{{
                 license.createdAt.slice(0, 10)
               }}</span>
             </footer>

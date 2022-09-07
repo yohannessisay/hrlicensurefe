@@ -1,17 +1,56 @@
 <template>
   <div class="top-navbar">
-    <div id="menu-icon">
-      <i class="bx bx-menu text-main-400" @click="sidebarMenu()"></i>
-    </div>
+    <div class="bx bx-menu text-main-400" id="menu-icon"></div>
     <div class="profile">
       <div class="flex items-center space-x-5">
-        <p class="text-main-400 font-bold" v-text="userInfo.fullName"></p>
-        <div class="relative inline-block text-left" style="z-index: 1">
+        <div class="relative inline-block text-left">
+          <a
+            id="options-menu"
+            aria-expanded="true"
+            aria-haspopup="true"
+            v-on:click="showNotification()"
+          >
+          </a>
+          <div
+            v-if="showNotificationDropDown == true"
+            class="
+              origin-top-right
+              absolute
+              right-0
+              w-64
+              rounded-md
+              shadow-lg
+              bg-white
+              focus:outline-none
+            "
+            role="menu"
+            aria-orientation="vertical"
+            aria-labelledby="options-menu"
+          >
+            <div role="none">
+              <li
+                class="
+                  block
+                  px-4
+                  py-2
+                  text-sm text-blue-100
+                  hover:bg-gray-100 hover:text-gray-900
+                "
+                role="menuitem"
+              >
+                Your license is about to expire.
+              </li>
+            </div>
+          </div>
+        </div>
+
+        <p class="text-main-400 font-bold" v-text="name.fullName"></p>
+        <div class="relative inline-block text-left">
           <a
             class="
               focus:outline-none
               bg-lightBlueB-300
-              text-main-400
+              text-lightBlueB-400
               hover:text-gray-800
               w-7
               h-7
@@ -25,14 +64,10 @@
             aria-haspopup="true"
             v-on:click="showDropDown()"
           >
-            <div v-if="!userInfo.isFirstTime" class="w-12 h-12">
-              <img
-                v-bind:src="userInfo.pic"
-                alt="image here"
-                class="w-20 h-12"
-              />
+            <div v-if="!isFirstTime" class="w-12 h-12">
+              <img v-bind:src="pic" alt="image here" class="w-20 h-12" />
             </div>
-            <div v-if="userInfo.isFirstTime">
+            <div v-if="isFirstTime">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="w-12 h-12"
@@ -57,7 +92,6 @@
               right-0
               mt-1
               w-56
-              p-4
               rounded-md
               shadow-lg
               bg-white
@@ -72,19 +106,13 @@
                 <li
                   class="
                     block
-                    border-b
                     px-4
                     py-2
-                    p-2
-                    text-sm
-                     text-main-400
-                    font-bold
-                    hover:bg-grey-100 hover:text-gray-900
-                    cursor-pointer
+                    text-sm text-blue-100
+                    hover:bg-gray-100 hover:text-gray-900
                   "
                   role="menuitem"
                 >
-                <i class="fa fa-info-circle"></i>
                   About
                 </li>
               </router-link>
@@ -93,61 +121,43 @@
               <router-link to="/google-form">
                 <li
                   class="
-                  block
-                    border-b
+                    block
                     px-4
                     py-2
-                    p-2
-                    text-sm
-                     text-main-400
-                    font-bold
-                    hover:bg-grey-100 hover:text-gray-900
-                    cursor-pointer
+                    text-sm text-blue-100
+                    hover:bg-gray-100 hover:text-gray-900
                   "
                   role="menuitem"
                 >
-                <i class="fa fa-message"></i>
                   Leave a Feedback
                 </li>
               </router-link>
               <a @click="updateProfile()">
                 <li
                   class="
-                  block
-                    border-b
+                    block
                     px-4
                     py-2
-                    p-2
-                    text-sm
-                     text-main-400
-                    font-bold
-                    hover:bg-grey-100 hover:text-gray-900
-                    cursor-pointer
+                    text-sm text-blue-100
+                    hover:bg-gray-100 hover:text-gray-900
                   "
                   role="menuitem"
                 >
-                <i class="fa fa-user"></i>
                   Update Profile
                 </li>
               </a>
               <a
                 @click="logout()"
                 class="
-                block
-                    border-b
-                    px-4
-                    py-2
-                    p-2
-                    text-sm
-                     text-main-400
-                    font-bold
-                    hover:bg-grey-100 hover:text-gray-900
-                    cursor-pointer
+                  block
+                  px-4
+                  py-2
+                  text-sm text-blue-100
+                  hover:bg-gray-100 hover:text-gray-900
                 "
                 role="menuitem"
                 id="logout"
               >
-              <i class="fa fa-sign-out"></i>
                 Sign Out
               </a>
             </div>
@@ -160,47 +170,92 @@
 
 
 <script>
-import { ref } from "vue";
+import { useStore } from "vuex";
+import { ref, onMounted } from "vue";
+import { googleApi } from "@/composables/baseURL";
 
 export default {
-  props: ["userInfo"],
-  setup() {
-    let showDD = ref(false);
-    let showNotificationDropDown = ref(false);
-    const logout = () => {
+  data() {
+    return {
+      auth: false,
+      token: "",
+      showDD: false,
+      showNotificationDropDown: false,
+    };
+  },
+  created() {
+    this.token = localStorage.getItem("token");
+    if (this.token != undefined) this.auth = true;
+  },
+  methods: {
+    updateProfile() {
+      const id = +localStorage.getItem("userId");
+      const url = "/update-profile/:" + id;
+      this.$router.push(url);
+    },
+    logout() {
       location.reload();
       localStorage.removeItem("token");
       localStorage.removeItem("userId");
       localStorage.removeItem("educationalLevel");
       localStorage.removeItem("language");
-      localStorage.removeItem("personalInfo");
       localStorage.removeItem("payroll");
       localStorage.removeItem("applicantTypeId");
       this.$router.push({ path: "/" });
-    };
-    const showDropDown = () => {
-      showNotificationDropDown.value = false;
-      showDD.value = !showDD.value;
-    };
-    const showNotification = () => {
-      showNotificationDropDown.value = !showNotificationDropDown.value;
-      showDD.value = false;
-    };
-    const selectMenu = (menu) => {
+    },
+    showDropDown() {
+      this.showNotificationDropDown = false;
+      this.showDD = !this.showDD;
+    },
+    showNotification() {
+      this.showNotificationDropDown = !this.showNotificationDropDown;
+      this.showDD = false;
+    },
+    selectMenu(menu) {
       if (this.$route.name != "Menu") {
         this.$router.push({ path: "/menu" });
       } else {
         this.$emit("changeDisplay", menu);
       }
+    },
+  },
+  computed() {
+    if (this.token != undefined) {
+      this.auth = true;
+    } else {
+      this.auth = false;
+    }
+  },
+  setup() {
+    const store = useStore();
+    const id = +localStorage.getItem("userId");
+    let name = ref({
+      fullName: "",
+    });
+    let isFirstTime = ref(false);
+    let pic = ref();
+    let blob = ref();
+    const getProfile = () => {
+      store.dispatch("profile/getProfileByUserId", id).then((res) => {
+        getImage(res.data.data);
+        getName(res.data.data);
+      });
     };
 
-    const updateProfile = () => {
-      let id = +localStorage.getItem("userId");
-      let url = "/update-profile/:" + id;
-      this.$router.push(url);
+    const getImage = (profile) => {
+      if (!profile) {
+        isFirstTime.value = true;
+      } else {
+        console.log(googleApi + profile.profilePicture.filePath);
+        pic.value = googleApi + profile.profilePicture.filePath;
+      }
     };
-
-    const sidebarMenu = () => {
+    const getName = (profile) => {
+      if (profile) {
+        name.value.fullName = profile.name + " " + profile.fatherName;
+      }
+    };
+    onMounted(() => {
       let menu = document.querySelector("#menu-icon");
       let sidenavbar = document.querySelector(".side-navbar");
       let content = document.querySelector(".content");
@@ -210,17 +265,14 @@ export default {
         content.classList.toggle("active");
         sidenavbarHeader.classList.toggle("disable-header-text");
       };
-    };
-
+      getProfile();
+    });
     return {
-      showDropDown,
-      showNotification,
-      selectMenu,
-
-      showDD,
-      sidebarMenu,
-      updateProfile,
-      logout,
+      name,
+      getImage,
+      pic,
+      blob,
+      isFirstTime,
     };
   },
 };

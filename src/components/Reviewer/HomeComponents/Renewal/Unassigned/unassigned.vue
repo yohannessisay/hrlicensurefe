@@ -623,8 +623,8 @@ export default {
         store
           .dispatch("reviewerRenewal/getRenewalReApply", adminStatus)
           .then((res) => {
-            allInfo.value.assignApplication =
-              store.getters["reviewerRenewal/getRenewalReApplySearched"];
+            allInfo.value.assignApplication = res;
+              // store.getters["reviewerRenewal/getRenewalReApplySearched"];
 
             for (let applicant in allInfo.value.assignApplication) {
               if (
@@ -636,7 +636,7 @@ export default {
               }
             }
 
-            JSON.parse(JSON.stringify(allInfo.value.assignApplication)).forEach(
+           allInfo.value.assignApplication.forEach(
               (element) => {
                 reTableData.value.push({
                   LicenseNumber: element.renewalCode,

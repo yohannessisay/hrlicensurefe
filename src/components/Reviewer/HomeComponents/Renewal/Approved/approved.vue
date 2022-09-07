@@ -153,12 +153,8 @@ export default {
                 "reviewerRenewal/getRenewalAllApproved",
                 adminStatus
               )
-              .then(() => {
-                allInfo.value.assignApplication =
-                  store.getters[
-                    "reviewerRenewal/getRenewalAllApprovedSearched"
-                  ];
-
+              .then((res) => {
+                allInfo.value.assignApplication =res
                 for (let applicant in allInfo.value.assignApplication) {
                   if (
                     allInfo.value.assignApplication[applicant]

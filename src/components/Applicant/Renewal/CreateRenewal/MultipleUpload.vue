@@ -107,7 +107,7 @@
 <script>
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
-import MAX_FILE_SIZE from "../../../composables/documentMessage";
+import MAX_FILE_SIZE from "../../../../composables/documentMessage";
 import filePreview from "@/sharedComponents/FilePreview";
 import { boolean } from "yargs";
 
@@ -248,7 +248,7 @@ export default {
     };
 
     onMounted(() => {
-      generalInfo.value = store.getters["renewal/getGeneralInfo"];
+      generalInfo.value = store.getters["newlicense/getGeneralInfo"];
       console.log(generalInfo.value);
     });
     return {

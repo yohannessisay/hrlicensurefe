@@ -511,7 +511,6 @@ export default {
     let assign = ref({
       reviewerId: "",
       renewalId: "",
-      createdByAdminId: "",
     });
     let role = ref({});
     let isLoadingStart = ref(true);

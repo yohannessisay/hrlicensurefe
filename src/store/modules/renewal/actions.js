@@ -50,6 +50,7 @@ import {
   SET_PHD,
   SET_PHD_TRANSCRIPT,
   SET_RENEWED_LICENSE_OF_HEALTH_FACILITY,
+  SET_TEMP_DOCS,
 } from "./mutation-types";
 
 const userId = +localStorage.getItem("userId");
@@ -203,6 +204,9 @@ export default {
       SET_RENEWED_LICENSE_OF_HEALTH_FACILITY,
       renewedLicenseOfHealthFacility
     );
+  },
+  setTempDocs({ commit }, docs) {
+    commit(SET_TEMP_DOCS, docs);
   },
   async addRenewalLicense({ commit }, license) {
     try {
@@ -399,6 +403,29 @@ export default {
       return resp;
     } catch (error) {
       return error;
+    }
+  },
+
+  async getCommonRNdocuments({ commit }, params) {
+    try {
+      const resp = await ApiService.get(
+        baseUrl + `/documentSpecs/common/${params[0]}/${params[1]}/true`
+      );
+      return resp;
+    } catch (error) {
+      const resp = error;
+      return resp;
+    }
+  },
+  async getRNdocuments({ commit }, params) {
+    try {
+      const resp = await ApiService.get(
+        baseUrl + `/documentSpecs/${params[0]}/${params[1]}/${params[2]}`
+      );
+      return resp;
+    } catch (error) {
+      const resp = error;
+      return resp;
     }
   },
 };

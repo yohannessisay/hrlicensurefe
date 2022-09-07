@@ -94,6 +94,7 @@ export default {
       const url = baseUrl + "/renewals/status/"+statusId;
       const resp = await ApiService.get(url);
       commit(SET_RENEWAL_UNASSIGNED, resp.data.data);
+      return resp.data.data
     } catch (err) {
       return err;
     }
@@ -251,25 +252,15 @@ export default {
   },
 
   async getRenewalApproved({ commit }, adminStatus) {
-    // const url = baseUrl + "/renewals/status/"+adminStatus[0];
-    // const resp = await ApiService.get(url);
-    // if (resp.data.data === undefined) {
-    //   const approved = [];
-    //   commit(SET_RENEWAL_APPROVED, approved);
-    //   return;
-    // }
-    // const Approved = resp.data.data.filter(function(e) {
-    //   return e.reviewerId === adminStatus[1];
-    // });
-    // commit(SET_RENEWAL_APPROVED, Approved);
+ 
     const url = baseUrl + "/renewals/all/approved";
     const resp = await ApiService.get(url);
     const otherApproved = resp.data.data.filter(function(e) {
-      return e.reviewerId !== adminStatus[0];
+      return e.renewalReviewer.reviewerId !== adminStatus[0];
     });
 
     const approvedByYou = resp.data.data.filter(function(e) {
-      return e.reviewerId == adminStatus[0];
+      return  e.renewalReviewer.reviewerId == adminStatus[0];
     });
 
     commit(SET_RENEWAL_ALL_APPROVED, otherApproved);
@@ -610,9 +601,10 @@ export default {
     const url = baseUrl + "/renewals/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
     const onReview = resp.data.data.filter(function(e) {
-      return e.reviewerId === adminStatus[1];
+      return e.renewalReviewer.reviewerId === adminStatus[1];
     });
     commit(SET_RENEWAL_ON_REVIEW, onReview);
+    return onReview;
   },
 
   getRenewalOnReviewSearched({ commit, getters }, searchKey) {
@@ -1173,6 +1165,7 @@ export default {
     const resp = await ApiService.get(url);
     const reApply = resp.data.data;
     commit(SET_RENEWAL_RE_APPLY, reApply);
+    return reApply;
   },
 
   getRenewalReApplySearched({ commit, getters }, searchKey) {

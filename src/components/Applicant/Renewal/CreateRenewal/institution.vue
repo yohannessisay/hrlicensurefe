@@ -1,10 +1,10 @@
 <template>
   <div
-    class="pages-navbar flex justify-center h-12 rounded-sm mb-8 shadow-xl"
+    class="pages-navbar flex justify-center h-12 rounded-sm mb-8 shadow-2xl"
     style="width: 98% !important"
   >
-    <div class="profile p-4 ">
-      <h2 class="text-main-400">Apply for a new license</h2>
+    <div class="profile p-4">
+      <h2 class="text-main-400">Apply for Renewal</h2>
     </div>
   </div>
   <div
@@ -13,7 +13,7 @@
       p-6
       rounded-lg
       shadow-lg
-      bg-primary-200
+      bg-white
       max-w-full
       mr-8
       mb-8
@@ -26,7 +26,7 @@
 
     <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-10">
       <div
-        class="flex  shadow-2xl rounded-md bg-primary-100"
+        class="flex   shadow-2xl rounded-md bg-whiye"
       >
         <!-- applican type -->
         <div class="flex flex-col mb-4 pt-8 sm:ml-4">
@@ -102,7 +102,7 @@
       <!-- region -->
       <div
         v-if="showLocation"
-        class="pt-8 mt-12  rounded bg-primary-100 shadow-2xl"
+        class="pt-8 mt-12  ounded-lg bg-white shadow-2xl"
       >
         <div class="flex">
           <div class="flex flex-col mb-medium w-2/5 ml-medium mr-12">
@@ -227,9 +227,10 @@
         class="
           flex
           pt-8
-          mt-12 
+          mt-12
+         
           rounded-sm
-          bg-primary-100
+          bg-white
           shadow-2xl
         "
       >
@@ -297,13 +298,14 @@
               focus:bg-white
               focus:border-blue-600
               focus:outline-none
-            " 
+            "
+            @change="setPayrollDoc(licenseInfo.occupationTypeId)"
             v-model="generalInfo.occupationSelected"
           >
             <option
               v-for="occupation in occupations"
               v-bind:key="occupation.name"
-              v-bind:value="occupation.id"
+              v-bind:value="occupation"
             >
               {{ occupation.name }}
             </option>
@@ -318,7 +320,7 @@
         class="
           mt-12 
           rounded-sm
-          bg-primary-100
+          bg-white
           shadow-2xl
           mb-8
         "
@@ -449,7 +451,7 @@
                     focus:outline-none
                   "
                   v-model="generalInfo.professionalTypeSelected"
-                  @change="ProfessionTypeChange(institution)"
+                  @change="ProfessionTypeChange()"
                 >
                   <option disabled>First Select Department from above</option>
                   <option
@@ -464,14 +466,14 @@
                   v-model="generalInfo.otherProfessionalType"
                   v-if="showOtherProfession"
                   class="mt-2"
-                  placeholder="Write Educational Institution"
+                  placeholder="Write Professional Type"
                   type="text"
                 />
                 <input
                   v-model="generalInfo.otherProfessionalTypeAmharic"
                   v-if="showOtherProfession"
                   class="mt-2"
-                  placeholder="Write Educational Institution In Amharic"
+                  placeholder="Write Professional Type In Amharic"
                   type="text"
                 />
               </div>
@@ -539,15 +541,15 @@
               mb-2
               py-2.5
               bg-white
+              border
               text-main-400
               font-medium
-              border
               text-xs
               leading-tight
               uppercase
               rounded
               shadow-md
-              hover:text-white hover:border-main-400 hover:shadow-lg
+              hover:text-white hover:bg-main-400 hover:shadow-lg
               focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
               active:bg-blue-800 active:shadow-lg
               transition
@@ -697,7 +699,7 @@
                           whitespace-nowrap
                         "
                       >
-                        {{ item.professionalType.name }}
+                        {{ item.professionType.name }}
                       </td>
                     </tr>
                   </tbody>
@@ -749,12 +751,16 @@
   <script>
 import { useStore } from "vuex";
 import { ref, onMounted } from "vue";
+import MainContent from "../sharedComponents/Menu.vue";
 export default {
   props: ["activeState"],
-  components: {},
+  components: {
+    MainContent,
+  },
 
   setup(props, { emit }) {
     let applicantTypes = ref("");
+    let applicantTypeSelected = ref("");
     let departments = ref([]);
     let institutions = ref([]);
     let educationalLevels = ref([]);
@@ -788,18 +794,25 @@ export default {
     let checkForAddedError = ref(false);
     let generalInfo = ref({
       educationalLevelSelected: "",
-      applicantTypeSelected: "",
-      applicantPositionId: "",
+      applicantTypeSelected: localData.value
+        ? localData.value.applicantTypeSelected
+        : "",
       regionSelected: "",
       zoneSelected: "",
       woredaSelected: "",
       languageSelected: "",
       occupationSelected: "",
+      departmentSelected: "",
+      professionalTypeSelected: "",
+      institutionSelected: "",
+      otherEducationalInstitution: "",
+      otherProfessionalTypeAmharic: "",
+      otherProfessionalType: "",
       multipleDepartment: [],
-      education: [],
+      education:[]
     });
     const fetchApplicantType = () => {
-      store.dispatch("newlicense/getApplicantType").then((res) => {
+      store.dispatch("renewal/getApplicantType").then((res) => {
         const results = res.data.data;
         applicantTypes.value = results;
       });
@@ -810,19 +823,19 @@ export default {
       });
     };
     const fetchInstitutions = (value) => {
-      store.dispatch("newlicense/getInstitution", value).then((res) => {
+      store.dispatch("renewal/getInstitution", value).then((res) => {
         const institution = res.data.data;
         institutions.value = institution;
       });
     };
     const fetchDepartments = () => {
-      store.dispatch("newlicense/getDepartmentType").then((res) => {
+      store.dispatch("renewal/getDepartmentType").then((res) => {
         const department = res.data.data;
         departments.value = department;
       });
     };
     const fetchRegions = () => {
-      store.dispatch("newlicense/getRegions").then((res) => {
+      store.dispatch("renewal/getRegions").then((res) => {
         const regionsResult = res.data.data;
         regions.value = regionsResult;
       });
@@ -830,9 +843,8 @@ export default {
 
     const fetchZones = () => {
       store
-
-        .dispatch("newlicense/getZones", generalInfo.value.regionSelected.id)
-        .then((res) => { 
+        .dispatch("renewal/getZones", generalInfo.value.regionSelected.id)
+        .then((res) => {
           const zonesResult = res.data.data;
           zones.value = zonesResult;
         });
@@ -840,14 +852,14 @@ export default {
 
     const fetchWoredas = () => {
       store
-        .dispatch("newlicense/getWoredas", generalInfo.value.zoneSelected.id)
+        .dispatch("renewal/getWoredas", generalInfo.value.zoneSelected.id)
         .then((res) => {
           const woredasResult = res.data.data;
           woredas.value = woredasResult;
         });
     };
     const fetchProfessionalType = (id) => {
-      store.dispatch("newlicense/getProfessionalTypes", id).then((res) => {
+      store.dispatch("renewal/getProfessionalTypes", id).then((res) => {
         professionalTypes.value = res.data.data;
       });
     };
@@ -940,11 +952,11 @@ export default {
                 department: generalInfo.value.departmentSelected,
                 educationalLevel: generalInfo.value.educationalLevelSelected,
                 institution: generalInfo.value.institutionSelected,
-                professionalType: generalInfo.value.professionalTypeSelected,
+                professionType: generalInfo.value.professionalTypeSelected,
 
                 otherEducationalInstitution: generalInfo.value.otherEducationalInstitution,
-                otherProfessionalTypeAmharic: generalInfo.value.otherProfessionalTypeAmharic,
-                otherProfessionalType: generalInfo.value.otherProfessionalType,
+                otherProfessionTypeAmharic: generalInfo.value.otherProfessionalTypeAmharic,
+                otherProfessionType: generalInfo.value.otherProfessionalType,
               });
               generalInfo.value.education.push({
                 departmentId: generalInfo.value.departmentSelected.id,
@@ -964,51 +976,49 @@ export default {
               department: generalInfo.value.departmentSelected,
               educationalLevel: generalInfo.value.educationalLevelSelected,
               institution: generalInfo.value.institutionSelected,
-              professionalType: generalInfo.value.professionalTypeSelected,
-              otherEducationalInstitution: "",
-              otherProfessionAmharic: "",
-              otherProfessionalType: "",
+              professionType: generalInfo.value.professionalTypeSelected,
+              otherInstitution: generalInfo.value.otherEducationalInstitution,
+                otherProfessionTypeAmharic: generalInfo.value.otherProfessionalTypeAmharic,
+                otherProfessionType: generalInfo.value.otherProfessionalType,
             });
             generalInfo.value.education.push({
               departmentId: generalInfo.value.departmentSelected.id,
               educationalLevelId: generalInfo.value.educationalLevelSelected.id,
               institutionId: generalInfo.value.institutionSelected.id,
               professionTypeId: generalInfo.value.professionalTypeSelected.id,
-              otherInstitution: "",
-              otherProfessionAmharic: "",
-              otherProfessionType: "",
+              otherInstitution: generalInfo.value.otherEducationalInstitution,
+                otherProfessionAmharic: generalInfo.value.otherProfessionalTypeAmharic,
+                otherProfessionType: generalInfo.value.otherProfessionalType,
             });
           }
           generalInfo.value.departmentSelected = "";
           generalInfo.value.educationalLevelSelected = "";
           generalInfo.value.institutionSelected = "";
           generalInfo.value.professionalTypeSelected = "";
+          generalInfo.value.otherProfessionalType = "";
+          generalInfo.value.otherProfessionalTypeAmharic = "";
+          generalInfo.value.otherEducationalInstitution = "";
+          showOtherProfession.value = false;
+          showOtherEducation.value = false;
         }
       } else {
         multipleDepartmentError.value = true;
       }
     };
-    const fetchOccupation=()=> {
-    store.dispatch("lookups/getGovernment").then((res) => {
-        if (res.data.status == "Success") { 
-          occupations.value = res.data.data;
-        }  
-      });
-    };
     const apply = () => {
       let tempApplicationData = generalInfo.value;
       window.localStorage.setItem(
-        "NLApplicationData",
+        "RNApplicationData",
         JSON.stringify(tempApplicationData)
       );
       store
-        .dispatch("newlicense/setGeneralInfo", generalInfo.value)
+        .dispatch("renewal/setGeneralInfo", generalInfo.value)
         .then(() => {
           emit("changeActiveState");
         });
     };
     const clearLocalData = () => {
-      window.localStorage.setItem("NLApplicationData", "");
+      window.localStorage.setItem("RNApplicationData", "");
       setTimeout(() => {
         window.location.reload();
       }, 1000);
@@ -1016,14 +1026,14 @@ export default {
     onMounted(async () => {
       await fetchApplicantType();
       await fetchDepartments();
-      await fetchInstitutions();
+      // await fetchInstitutions();
       await fetchEducationLevel();
       await fetchRegions();
-      await fetchOccupation();
-      localData.value = window.localStorage.getItem("NLApplicationData")
-        ? JSON.parse(window.localStorage.getItem("NLApplicationData"))
+      localData.value = window.localStorage.getItem("RNApplicationData")
+        ? JSON.parse(window.localStorage.getItem("RNApplicationData"))
         : {};
-      if (Object.keys(localData.value).length != 0) { 
+      if (Object.keys(localData.value).length != 0) {
+        console.log(Object.keys(localData.value).length);
         generalInfo.value = localData.value;
       }
     });
@@ -1036,7 +1046,7 @@ export default {
       ProfessionTypeChange,
       addMultiple,
       apply,
-      fetchOccupation,
+      applicantTypeSelected,
       showLocation,
       woredaSelected,
       zoneSelected,

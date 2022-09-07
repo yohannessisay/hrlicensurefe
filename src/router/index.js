@@ -133,9 +133,9 @@ const routes = [
   },
 
   {
-    path: "/renewal",
-    name: "Renewal",
-    component: () => import("../components/Renewal/Renewal.vue")
+    path: "/Applicant/Renewal",
+    name: "ApplicantRenewal",
+    component: () => import("../components/Applicant/Renewal/Renewal.vue"),
   },
   {
     path: "/verification",
@@ -1221,6 +1221,10 @@ router.beforeEach(async (to, from, next) => {
   if (to.path != "/Applicant/NewLicense") {
     window.localStorage.setItem("NLApplicationData", "");
     window.localStorage.setItem("NLApplicationImageData", "");
+  }
+  if (to.path != "/Applicant/Renewal") {
+    window.localStorage.setItem("RNApplicationData", "");
+    window.localStorage.setItem("RNApplicationImageData", "");
   }
   if (to.path != "/Applicant/GoodStanding") {
     window.localStorage.setItem("GSApplicationData", "");
