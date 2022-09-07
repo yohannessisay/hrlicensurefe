@@ -83,7 +83,7 @@
             >
               <!-- Article -->
               <article class="overflow-hidden rounded-lg shadow-lg">
-                <router-link to="renewal">
+                <router-link to="/Applicant/Renewal">
                   <div
                     class="
                       relative

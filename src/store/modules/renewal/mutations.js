@@ -1,3 +1,4 @@
+import { SET_TEMP_DOCS } from "../goodstanding/mutation-types";
 import {
     SET_LICENSE,
     SET_APPLICATION_ID,
@@ -197,4 +198,7 @@ export default {
     [SET_GENERAL_INFO](state, generalInfo) {
         state.generalInfo = generalInfo;
     },
+    [SET_TEMP_DOCS](state, docs) {
+        state.tempDocs = docs;
+      },
 };
