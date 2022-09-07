@@ -1,17 +1,17 @@
 <template>
   <div class="top-navbar">
     <div id="menu-icon">
-      <i class="bx bx-menu" @click="sidebarMenu()"></i>
+      <i class="bx bx-menu text-main-400" @click="sidebarMenu()"></i>
     </div>
     <div class="profile">
       <div class="flex items-center space-x-5">
-        <p class="text-white font-bold" v-text="userInfo.fullName"></p>
+        <p class="text-main-400 font-bold" v-text="userInfo.fullName"></p>
         <div class="relative inline-block text-left" style="z-index: 1">
           <a
             class="
               focus:outline-none
               bg-lightBlueB-300
-              text-lightBlueB-400
+              text-main-400
               hover:text-gray-800
               w-7
               h-7
