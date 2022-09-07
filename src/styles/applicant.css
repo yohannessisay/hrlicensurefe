@@ -104,7 +104,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 7px 20px;
-  background-color: #21565e;
+  background-color: #d8d8d8;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.493);
 }
 .profile img {
@@ -117,8 +117,7 @@
 }
 #menu-icon {
   font-size: 34px;
-  cursor: pointer;
-  color:white ;
+  cursor: pointer; 
 }
 .content.active {
   width: calc(100% - 60px);

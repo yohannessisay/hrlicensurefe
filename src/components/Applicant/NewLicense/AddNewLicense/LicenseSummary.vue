@@ -16,194 +16,134 @@
       class="
         grid grid-cols-2
         gap-4
+        mr-8
         md:grid-cols-2
         lg:grid-cols-2
         mdlg:grid-cols-2
         sm:grid-cols-1
       "
     >
-      <div class="bg-white flex-shrink px-4 w-full rounded-md shadow-lg">
-        <div
-          class="
-            py-8
-            px-12
-            mb-12
-            bg-gray-50
-            border-2
-            mt-4
-            rounded-lg
-            text-main-400
-            transform
-            transition
-            duration-300
-            ease-in-out
-            hover:-translate-y-2
-          "
-        >
-          <div class="border-b-2 text-main-400 mb-4">
-            <div class="text-gray-900 mb-4 flex justify-center">
-              <i class="fa fa-user fa-3x text-main-400"></i>
-            </div>
-            <div class="flex justify-center text-gray-900 mb-4">
-              <h3
-                class="
-                  text-lg text-main-400
-                  leading-normal
-                  mb-2
-                  font-semibold
-                  text-black
-                "
-              >
-                Applicant Detail
-              </h3>
-            </div>
+    
+      
+    
+
+      <div
+        class="
+          py-8
+          mt-4
+          px-12
+          mb-12
+          bg-gray-50
+          shadow-lg
+          rounded-md
+          transform
+          transition
+          duration-300
+          ease-in-out
+          bg-white
+          hover:-translate-y-2
+        "
+        v-for="dep in localData.multipleDepartment"
+        :key="dep"
+      >
+        <div class="border-b-2 text-main-400 mb-4">
+          <div class="text-gray-900 mb-4 flex justify-center">
+            <i class="fa fa-university fa-3x text-main-400"></i>
           </div>
-          <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
-            <div>
-              <span
-                class="
-                  text-main-400
-                  font-bold
-                  sm:text-sm
-                  mdlg:text-base
-                  lg:text-base
-                  md:text-base
-                "
-              >
-                Applicant Type</span
-              >
-            </div>
-            <div>
-              <span class="text-black sm:text-sm">
-                {{
-                  localData && localData.applicantTypeSelected
-                    ? localData.applicantTypeSelected.name
-                    : ""
-                }}</span
-              >
-            </div>
+          <div class="flex justify-center text-gray-900 mb-4">
+            <h3
+              class="
+                text-lg text-main-400
+                leading-normal
+                mb-2
+                font-semibold
+                text-black
+              "
+            >
+              Department Detail
+            </h3>
           </div>
         </div>
-      </div>
-
-      <div class="bg-white flex-shrink px-4 w-full rounded-md shadow-2xl">
-        <div
-          class="
-            py-8
-            mt-4
-            px-12
-            mb-12
-            bg-gray-50
-            border-2 border-main-400
-            rounded-md
-            transform
-            transition
-            duration-300
-            ease-in-out
-            hover:-translate-y-2
-          "
-          v-for="dep in localData.multipleDepartment"
-          :key="dep"
-        >
-          <div class="border-b-2 text-main-400 mb-4">
-            <div class="text-gray-900 mb-4 flex justify-center">
-              <i class="fa fa-university fa-3x text-main-400"></i>
-            </div>
-            <div class="flex justify-center text-gray-900 mb-4">
-              <h3
-                class="
-                  text-lg text-main-400
-                  leading-normal
-                  mb-2
-                  font-semibold
-                  text-black
-                "
-              >
-                Department Detail
-              </h3>
-            </div>
+        <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
+          <div>
+            <span
+              class="
+                text-main-400
+                font-bold
+                sm:text-sm
+                mdlg:text-base
+                lg:text-base
+                md:text-base
+              "
+            >
+              Department Name</span
+            >
           </div>
-          <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
-            <div>
-              <span
-                class="
-                  text-main-400
-                  font-bold
-                  sm:text-sm
-                  mdlg:text-base
-                  lg:text-base
-                  md:text-base
-                "
-              >
-                Department Name</span
-              >
-            </div>
-            <div>
-              <span class="text-black sm:text-sm">
-                {{ dep.department.name }}</span
-              >
-            </div>
+          <div>
+            <span class="text-black sm:text-sm">
+              {{ dep.department.name }}</span
+            >
           </div>
-          <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
-            <div>
-              <span
-                class="
-                  text-main-400
-                  font-bold
-                  sm:text-sm
-                  mdlg:text-base
-                  lg:text-base
-                  md:text-base
-                "
-                >Educational level</span
-              >
-            </div>
-            <div>
-              <span class="text-black sm:text-sm">
-                {{ dep.educationalLevel.name }}</span
-              >
-            </div>
+        </div>
+        <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
+          <div>
+            <span
+              class="
+                text-main-400
+                font-bold
+                sm:text-sm
+                mdlg:text-base
+                lg:text-base
+                md:text-base
+              "
+              >Educational level</span
+            >
           </div>
-          <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
-            <div>
-              <span
-                class="
-                  text-main-400
-                  font-bold
-                  sm:text-sm
-                  mdlg:text-base
-                  lg:text-base
-                  md:text-base
-                "
-                >Institution</span
-              >
-            </div>
-            <div>
-              <span class="text-black sm:text-sm">
-                {{ dep.institution.name }}</span
-              >
-            </div>
+          <div>
+            <span class="text-black sm:text-sm">
+              {{ dep.educationalLevel.name }}</span
+            >
           </div>
-          <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
-            <div>
-              <span
-                class="
-                  text-main-400
-                  font-bold
-                  sm:text-sm
-                  mdlg:text-base
-                  lg:text-base
-                  md:text-base
-                "
-              >
-                Professional Type</span
-              >
-            </div>
-            <div>
-              <span class="text-black sm:text-sm">
-                {{ dep.professionalType.name }}</span
-              >
-            </div>
+        </div>
+        <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
+          <div>
+            <span
+              class="
+                text-main-400
+                font-bold
+                sm:text-sm
+                mdlg:text-base
+                lg:text-base
+                md:text-base
+              "
+              >Institution</span
+            >
+          </div>
+          <div>
+            <span class="text-black sm:text-sm">
+              {{ dep.institution.name }}</span
+            >
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
+          <div>
+            <span
+              class="
+                text-main-400
+                font-bold
+                sm:text-sm
+                mdlg:text-base
+                lg:text-base
+                md:text-base
+              "
+            >
+              Professional Type</span
+            >
+          </div>
+          <div>
+            <span class="text-black sm:text-sm">
+              {{ dep.professionalType.name }}</span
+            >
           </div>
         </div>
       </div>
@@ -221,20 +161,7 @@
       "
     >
       <div class="bg-white flex-shrink px-4 w-full rounded-md shadow-2xl">
-        <div
-          class="
-            py-8
-            px-12
-            mb-12
-            bg-gray-50
-            border-b border-white
-            transform
-            transition
-            duration-300
-            ease-in-out
-            hover:-translate-y-2
-          "
-        >
+        <div class="py-8 px-12 mb-12 bg-gray-50 border-b border-white">
           <div class="border-b-2 text-main-400 mb-4">
             <div class="text-gray-900 mb-4 flex justify-center">
               <i class="fa fa-folder fa-3x -text-main-400"></i>
@@ -269,7 +196,18 @@
             "
           >
             <div
-              class="mt-4 mb-8 bg-white shadow-2xl rounded-md"
+              class="
+                mt-4
+                mb-8
+                bg-white
+                shadow-2xl
+                rounded-md
+                transform
+                transition
+                duration-300
+                ease-in-out
+                hover:-translate-y-2
+              "
               v-for="localFileData in localFileData"
               :key="localFileData.documenttype"
             >
@@ -309,7 +247,7 @@
         sm:grid-cols-1
       "
     >
-      <div class="bg-main-400 flex-shrink px-4 w-full rounded-md shadow-2xl">
+      <div class="bg-white flex-shrink px-4 w-full rounded-md shadow-2xl">
         <div
           class="
             py-8
@@ -324,9 +262,9 @@
             hover:-translate-y-2
           "
         >
-          <div class="mb-4 border-t text-white">
+          <div class="mb-4 border-t text-main-400">
             <div class="text-gray-900 mb-4 flex justify-center">
-              <i class="fa fa-check fa-3x text-white mt-4"></i>
+              <i class="fa fa-check fa-3x text-main-400 mt-4"></i>
             </div>
             <div class="flex justify-center text-gray-900 mb-4">
               <div class="form-check">
@@ -338,7 +276,7 @@
                     w-5
                     border border-gray-300
                     rounded-sm
-                    bg-white
+                    bg-wmain-400
                     checked:bg-blue-600 checked:border-blue-600
                     focus:outline-none
                     transition
@@ -358,7 +296,7 @@
               </div>
               <h3
                 class="
-                  text-white
+                  text-black
                   mb-2
                   sm:text-xs
                   lgmd:text-base
@@ -373,7 +311,7 @@
             <div class="flex justify-center">
               <label
                 for="feedback"
-                class="form-label inline-block mb-2 text-white"
+                class="form-label inline-block mb-2 text-main-400"
                 >Feedback on the process and system
                 <span class="text-red-200">(required*)</span>
               </label>
@@ -418,7 +356,7 @@
         type="button"
         :class="
           allowSave
-            ? 'inline-block px-6 text-main-400  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded shadow-lg transition  duration-150 ease-in-out'
+            ? 'inline-block px-6 border text-main-400 hover:bg-main-400 hober:border-main-400 hover:text-white  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded shadow-lg transition  duration-150 ease-in-out'
             : 'inline-block px-6 disabled text-main-400  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded shadow-lg transition  duration-150 ease-in-out'
         "
         @click="checkFinalStatus(button.action)"
