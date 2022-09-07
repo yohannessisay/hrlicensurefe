@@ -318,7 +318,7 @@
                           </div>
                         </div>
 
-                        <div
+                        <!-- <div
                           class="
                             grow-0
                             shrink-0
@@ -369,7 +369,7 @@
                               </p>
                             </div>
                           </div>
-                        </div>
+                        </div> -->
 
                         <div
                           class="
@@ -448,7 +448,8 @@
               uppercase
               rounded
               shadow-lg
-              hover:bg-purple-700 hover:shadow-lg
+              bg-primary-600
+              hover:text-primary-600 hover:shadow-lg
               focus:bg-purple-700
               focus:shadow-lg
               focus:outline-none
@@ -468,13 +469,14 @@
               inline-block
               px-6
               text-white
+              bg-primary-600
               font-medium
               text-xs
               leading-tight
               uppercase
               rounded
               shadow-lg
-              hover:bg-purple-700 hover:shadow-lg
+              hover:text-primary-600 hover:shadow-lg
               focus:bg-purple-700
               focus:shadow-lg
               focus:outline-none
@@ -675,17 +677,8 @@ export default {
               : "-----";
             modalData.value.email = result.applicant.emailAddress
               ? result.applicant.emailAddress
-              : "-----";
-            modalData.value.instName = result.education.institution?.name
-              ? result.education.institution?.name
-              : "-----";
-            modalData.value.instType = result.education.institution
-              ?.institutionType
-              ? result.education.institution?.institutionType.name
-              : "-----";
-            modalData.value.department = result.education.department.name
-              ? result.education?.department.name
-              : "-----";
+              : "-----"; 
+       
             modalData.value.profile = result.profile;
             modalData.value.professionalTypes = result.licenseProfessions;
             modalData.value.certifiedDate = result.certifiedDate;

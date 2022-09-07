@@ -46,6 +46,7 @@ import {
     SET_PHD,
     SET_PHD_TRANSCRIPT,
     SET_RENEWED_LICENSE_OF_HEALTH_FACILITY,
+    SET_GENERAL_INFO,
 } from "./mutation-types";
 
 export default {
@@ -192,5 +193,8 @@ export default {
         renewedLicenseOfHealthFacility
     ) {
         state.renewedLicenseOfHealthFacility = renewedLicenseOfHealthFacility;
+    },
+    [SET_GENERAL_INFO](state, generalInfo) {
+        state.generalInfo = generalInfo;
     },
 };

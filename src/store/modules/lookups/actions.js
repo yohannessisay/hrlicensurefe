@@ -1,5 +1,5 @@
 import ApiService from "../../../services/api.service";
-import { SET_EDUCATION_LEVEL } from "./mutation-types";
+import { SET_EDUCATION_LEVEL, SET_ALL_DOCUMENT_SPECS } from "./mutation-types";
 import { baseUrl } from "../../../composables/baseURL";
 
 export default {
@@ -24,27 +24,27 @@ export default {
     }
   },
 
-  async addRegion(id,data) {
+  async addRegion(id, data) {
     try {
-      const resp = await ApiService.post(baseUrl + "/lookups/addRegion",data);
+      const resp = await ApiService.post(baseUrl + "/lookups/addRegion", data);
       return resp;
     } catch (error) {
       const resp = error;
       return resp;
     }
   },
-  async addWoreda(id,data) {
+  async addWoreda(id, data) {
     try {
-      const resp = await ApiService.post(baseUrl + "/lookups/addWoreda",data);
+      const resp = await ApiService.post(baseUrl + "/lookups/addWoreda", data);
       return resp;
     } catch (error) {
       const resp = error;
       return resp;
     }
   },
-  async addZone(id,data) {
+  async addZone(id, data) {
     try {
-      const resp = await ApiService.post(baseUrl + "/lookups/addZone",data);
+      const resp = await ApiService.post(baseUrl + "/lookups/addZone", data);
       return resp;
     } catch (error) {
       const resp = error;
@@ -88,6 +88,15 @@ export default {
   async getEducationalLevel({ commit }) {
     try {
       const resp = await ApiService.get(baseUrl + "/lookups/educationalLevels");
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async getAllDocumentSpecs({ commit }) {
+    try {
+      const resp = await ApiService.get(baseUrl + "/documentSpecs/");
+      commit(SET_ALL_DOCUMENT_SPECS, resp.data.data);
       return resp;
     } catch (error) {
       return error;
