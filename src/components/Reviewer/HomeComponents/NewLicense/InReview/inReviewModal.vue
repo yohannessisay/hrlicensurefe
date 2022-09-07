@@ -258,6 +258,7 @@
                                       leading-tight
                                       uppercase
                                       rounded
+                                      hover:text-primary-600
                                       shadow-lg
                                       hover:bg-blue-700 hover:shadow-lg
                                       focus:bg-blue-700

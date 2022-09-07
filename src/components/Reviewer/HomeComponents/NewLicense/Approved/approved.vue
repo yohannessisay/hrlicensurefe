@@ -319,9 +319,8 @@ export default {
 
     const approved = () => {
       store.dispatch("reviewerNewLicense/getNewLicenseApproved").then((res) => {
-        allInfo.value.assignApplication =
-          store.getters["reviewerNewLicense/getNewLicenseApprovedSearched"];
-
+        allInfo.value.assignApplication =res
+        console.log(res)
         for (let applicant in allInfo.value.assignApplication) {
           if (
             allInfo.value.assignApplication[applicant].applicationType ===
@@ -334,7 +333,7 @@ export default {
 
         JSON.parse(JSON.stringify(allInfo.value.assignApplication)).forEach(
           (element) => {
-            if (element.reviewerId == adminId) {
+            if (element.licenseReviewer&&element.licenseReviewer.reviewerId == adminId) {
               toYouTableData.value.push({
                 id: element.id,
                 ApplicantName:

@@ -953,7 +953,7 @@ export default {
                 educationalLevelId:
                   generalInfo.value.educationalLevelSelected.id,
                 institutionId: generalInfo.value.institutionSelected.id,
-                professionlTypeId:
+                professionTypeId:
                   generalInfo.value.professionalTypeSelected.id,
                 otherInstitution: generalInfo.value.otherEducationalInstitution,
                 otherProfessionTypeAmharic: generalInfo.value.otherProfessionAmharic,
