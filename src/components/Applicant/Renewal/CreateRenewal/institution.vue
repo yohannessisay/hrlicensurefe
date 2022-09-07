@@ -452,7 +452,7 @@
                     focus:outline-none
                   "
                   v-model="generalInfo.professionalTypeSelected"
-                  @change="ProfessionTypeChange(institution)"
+                  @change="ProfessionTypeChange()"
                 >
                   <option disabled>First Select Department from above</option>
                   <option
@@ -467,14 +467,14 @@
                   v-model="generalInfo.otherProfessionalType"
                   v-if="showOtherProfession"
                   class="mt-2"
-                  placeholder="Write Educational Institution"
+                  placeholder="Write Professional Type"
                   type="text"
                 />
                 <input
                   v-model="generalInfo.otherProfessionalTypeAmharic"
                   v-if="showOtherProfession"
                   class="mt-2"
-                  placeholder="Write Educational Institution In Amharic"
+                  placeholder="Write Professional Type In Amharic"
                   type="text"
                 />
               </div>
@@ -699,7 +699,7 @@
                           whitespace-nowrap
                         "
                       >
-                        {{ item.professionalType.name }}
+                        {{ item.professionType.name }}
                       </td>
                     </tr>
                   </tbody>
@@ -955,19 +955,19 @@ export default {
                 professionType: generalInfo.value.professionalTypeSelected,
 
                 otherEducationalInstitution: generalInfo.value.otherEducationalInstitution,
-                otherProfessionalTypeAmharic: generalInfo.value.otherProfessionAmharic,
-                otherProfessionalType: generalInfo.value.otherProfessionType,
+                otherProfessionTypeAmharic: generalInfo.value.otherProfessionalTypeAmharic,
+                otherProfessionType: generalInfo.value.otherProfessionalType,
               });
               generalInfo.value.education.push({
                 departmentId: generalInfo.value.departmentSelected.id,
                 educationalLevelId:
                   generalInfo.value.educationalLevelSelected.id,
                 institutionId: generalInfo.value.institutionSelected.id,
-                professionlTypeId:
+                professionTypeId:
                   generalInfo.value.professionalTypeSelected.id,
                 otherInstitution: generalInfo.value.otherEducationalInstitution,
-                otherProfessionTypeAmharic: generalInfo.value.otherProfessionAmharic,
-                otherProfessionType: generalInfo.value.otherProfessionType,
+                otherProfessionTypeAmharic: generalInfo.value.otherProfessionalTypeAmharic,
+                otherProfessionType: generalInfo.value.otherProfessionalType,
               });
             }
           } else {
@@ -977,24 +977,29 @@ export default {
               educationalLevel: generalInfo.value.educationalLevelSelected,
               institution: generalInfo.value.institutionSelected,
               professionType: generalInfo.value.professionalTypeSelected,
-              otherEducationalInstitution: "",
-              otherProfessionAmharic: "",
-              otherProfessionalType: "",
+              otherInstitution: generalInfo.value.otherEducationalInstitution,
+                otherProfessionTypeAmharic: generalInfo.value.otherProfessionalTypeAmharic,
+                otherProfessionType: generalInfo.value.otherProfessionalType,
             });
             generalInfo.value.education.push({
               departmentId: generalInfo.value.departmentSelected.id,
               educationalLevelId: generalInfo.value.educationalLevelSelected.id,
               institutionId: generalInfo.value.institutionSelected.id,
               professionTypeId: generalInfo.value.professionalTypeSelected.id,
-              otherInstitution: "",
-              otherProfessionAmharic: "",
-              otherProfessionType: "",
+              otherInstitution: generalInfo.value.otherEducationalInstitution,
+                otherProfessionAmharic: generalInfo.value.otherProfessionalTypeAmharic,
+                otherProfessionType: generalInfo.value.otherProfessionalType,
             });
           }
           generalInfo.value.departmentSelected = "";
           generalInfo.value.educationalLevelSelected = "";
           generalInfo.value.institutionSelected = "";
           generalInfo.value.professionalTypeSelected = "";
+          generalInfo.value.otherProfessionalType = "";
+          generalInfo.value.otherProfessionalTypeAmharic = "";
+          generalInfo.value.otherEducationalInstitution = "";
+          showOtherProfession.value = false;
+          showOtherEducation.value = false;
         }
       } else {
         multipleDepartmentError.value = true;

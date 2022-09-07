@@ -558,7 +558,7 @@
                                         >
                                           {{
                                             education.professionType
-                                              ? education.professionType.name
+                                              ? education.professionType.name != "Other"?education.professionType.name :education.otherProfessionType +"/" + education.otherProfessionAmharic 
                                               : ""
                                           }}
                                           <span
@@ -1839,6 +1839,10 @@ export default {
         .dispatch("reviewer/getRenewalApplication", applicationId)
         .then((res) => {
           renewal.value = res.data.data ? res.data.data : {};
+          // renewal.value.education.forEach(element =>
+          // {
+          //     tempProf.value[element.department.id] = professionalTypes.value.filter(pr=> pr.name == "Other")[0];
+          // })
           tempEducation =
             res.data.data && res.data.data.educations
               ? res.data.data.educations

@@ -945,8 +945,8 @@ export default {
                 professionalType: generalInfo.value.professionalTypeSelected,
 
                 otherEducationalInstitution: generalInfo.value.otherEducationalInstitution,
-                otherProfessionalTypeAmharic: generalInfo.value.otherProfessionAmharic,
-                otherProfessionalType: generalInfo.value.otherProfessionType,
+                otherProfessionalTypeAmharic: generalInfo.value.otherProfessionalTypeAmharic,
+                otherProfessionalType: generalInfo.value.otherProfessionalType,
               });
               generalInfo.value.education.push({
                 departmentId: generalInfo.value.departmentSelected.id,
@@ -956,8 +956,8 @@ export default {
                 professionTypeId:
                   generalInfo.value.professionalTypeSelected.id,
                 otherInstitution: generalInfo.value.otherEducationalInstitution,
-                otherProfessionTypeAmharic: generalInfo.value.otherProfessionAmharic,
-                otherProfessionType: generalInfo.value.otherProfessionType,
+                otherProfessionTypeAmharic: generalInfo.value.otherProfessionalTypeAmharic,
+                otherProfessionType: generalInfo.value.otherProfessionalType,
               });
             }
           } else {

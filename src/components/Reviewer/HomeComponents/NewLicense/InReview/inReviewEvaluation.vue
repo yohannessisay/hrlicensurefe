@@ -556,9 +556,9 @@
                                         <div
                                           class="text-black text-base font-bold"
                                         >
-                                          {{
+                                        {{
                                             education.professionType
-                                              ? education.professionType.name
+                                              ? education.professionType.name != "Other"?education.professionType.name :education.otherProfessionType +"/" + education.otherProfessionAmharic 
                                               : ""
                                           }}
                                           <span

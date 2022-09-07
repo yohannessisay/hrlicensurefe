@@ -214,7 +214,7 @@
               </div>
               <div>
                 <span class="text-main-400 sm:text-sm">
-                  {{ dep.professionalType.name }}</span
+                  {{ dep.professionType.name }}</span
                 >
               </div>
             </div>
