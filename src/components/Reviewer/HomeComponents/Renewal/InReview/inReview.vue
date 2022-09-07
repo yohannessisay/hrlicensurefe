@@ -267,9 +267,9 @@ export default {
 
         store
           .dispatch("reviewerRenewal/getRenewalOnReview", adminStatus)
-          .then(() => {
-            allInfo.value.assignApplication =
-              store.getters["reviewerRenewal/getRenewalOnReviewSearched"];
+          .then((res) => {
+            allInfo.value.assignApplication = res;
+              // store.getters["reviewerRenewal/getRenewalOnReviewSearched"];
 
             for (let applicant in allInfo.value.assignApplication) {
               if (

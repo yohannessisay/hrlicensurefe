@@ -94,6 +94,7 @@ export default {
       const url = baseUrl + "/renewals/status/"+statusId;
       const resp = await ApiService.get(url);
       commit(SET_RENEWAL_UNASSIGNED, resp.data.data);
+      return resp.data.data
     } catch (err) {
       return err;
     }
@@ -610,9 +611,10 @@ export default {
     const url = baseUrl + "/renewals/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
     const onReview = resp.data.data.filter(function(e) {
-      return e.reviewerId === adminStatus[1];
+      return e.renewalReviewer.reviewerId === adminStatus[1];
     });
     commit(SET_RENEWAL_ON_REVIEW, onReview);
+    return onReview;
   },
 
   getRenewalOnReviewSearched({ commit, getters }, searchKey) {
@@ -1173,6 +1175,7 @@ export default {
     const resp = await ApiService.get(url);
     const reApply = resp.data.data;
     commit(SET_RENEWAL_RE_APPLY, reApply);
+    return reApply;
   },
 
   getRenewalReApplySearched({ commit, getters }, searchKey) {

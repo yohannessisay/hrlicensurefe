@@ -952,7 +952,7 @@ export default {
                 department: generalInfo.value.departmentSelected,
                 educationalLevel: generalInfo.value.educationalLevelSelected,
                 institution: generalInfo.value.institutionSelected,
-                professionalType: generalInfo.value.professionalTypeSelected,
+                professionType: generalInfo.value.professionalTypeSelected,
 
                 otherEducationalInstitution: generalInfo.value.otherEducationalInstitution,
                 otherProfessionalTypeAmharic: generalInfo.value.otherProfessionAmharic,
@@ -976,7 +976,7 @@ export default {
               department: generalInfo.value.departmentSelected,
               educationalLevel: generalInfo.value.educationalLevelSelected,
               institution: generalInfo.value.institutionSelected,
-              professionalType: generalInfo.value.professionalTypeSelected,
+              professionType: generalInfo.value.professionalTypeSelected,
               otherEducationalInstitution: "",
               otherProfessionAmharic: "",
               otherProfessionalType: "",

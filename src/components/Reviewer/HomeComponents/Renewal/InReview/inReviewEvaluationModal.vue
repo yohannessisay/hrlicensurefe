@@ -1990,7 +1990,7 @@ export default {
         .then((res) => {
           renewal.value = res.data.data;
           departmentId.value = res.data.data.education.department.id;
-          getProfessionalTypesByDepartmentId(departmentId.value);
+          getProfessionalTypes(departmentId.value);
           profileInfo.value = renewal.value.profile;
           buttons.value = res.data.data.applicationStatus.buttons;
           docs.value = res.data.data.documents;
@@ -2456,7 +2456,7 @@ export default {
     };
     const changeProfession = () => {};
 
-    const getProfessionalTypesByDepartmentId = (id) => {
+    const getProfessionalTypes = (id) => {
       let professionSelected = ref(false);
       store
         .dispatch("reviewer/getProfessionalTypeByDepartmentId", id)
