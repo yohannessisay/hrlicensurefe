@@ -1,12 +1,12 @@
 <template>
   <div class="top-navbar flex justify-items-center">
     <div id="menu-icon">
-      <i class="bx bx-menu" @click="sidebarMenu()"></i>
+      <i class="bx bx-menu text-main-400" @click="sidebarMenu()"></i>
     </div>
     <div class="profile">
       <div class="flex items-center space-x-5">
         <p
-          class="text-white font-bold"
+          class="text-main-400 font-bold"
           v-text="userInfo ? userInfo.name : ''"
         ></p>
         <div class="relative inline-block text-left" style="z-index: 1">

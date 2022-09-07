@@ -4,7 +4,7 @@
     style="width: 98% !important"
   >
     <div class="profile sm:p-2 p-4">
-      <h2 class="text-white">Apply for a new letter of good standing</h2>
+      <h2 class="text-main-400">Apply for a new letter of good standing</h2>
     </div>
   </div>
   <div
@@ -28,9 +28,9 @@
       <div
         class="
           mt-12
-          border border-main-400
+        
           rounded-sm
-          bg-main-400
+          bg-white
           shadow-2xl
           mb-8
         "
@@ -49,7 +49,7 @@
               "
             >
               <div>
-                <label class="text-white">Applicant Type</label>
+                <label class="text-main-400">Applicant Type</label>
                 <select
                   class="
                     form-select
@@ -126,7 +126,7 @@
             >
               <div>
                 <div class="overflow-hidden shadow-sm">
-                  <label for="" class="text-white sm:ml-4"
+                  <label for="" class="text-main-400 sm:ml-4"
                     >Applicant Title</label
                   >
 
@@ -134,8 +134,8 @@
                     type="text"
                     id="applicantTitle"
                     v-model="generalInfo.applicantTitle"
-                    class="w-full px-3 py-2 rounded-none sm:w-10/12 sm:ml-4"
-                    style="border: none"
+                    class="w-full  rounded-none sm:w-10/12 sm:ml-4 border text-main-400"
+                   
                     autocomplete="off"
                     placeholder="example-MR,MRS"
                   />
@@ -151,7 +151,7 @@
               class="flex justify-center text-6xl rounded-xl p-2 bg-gray-100"
             >
               <div>
-                <label class="text-white">Department</label>
+                <label class="text-main-400">Department</label>
                 <select
                   class="
                   form-select
@@ -192,7 +192,7 @@
               class="flex justify-center text-6xl rounded-xl p-2 bg-gray-100"
             >
               <div>
-                <label class="text-white">Profession</label>
+                <label class="text-main-400">Profession</label>
                 <select
                   class="
                     form-select
@@ -238,11 +238,11 @@
       <!-- region -->
       <div
         v-if="showLocation"
-        class="pt-8 mt-12 border border-main-400 rounded bg-main-400 shadow-2xl"
+        class="pt-8 mt-12 border  rounded bg-white shadow-2xl"
       >
         <div class="flex">
           <div class="flex flex-col mb-medium w-2/5 ml-medium mr-12">
-            <label class="text-white">Region</label>
+            <label class="text-main-400">Region</label>
             <select
               class="
                 form-select
@@ -279,7 +279,7 @@
             </select>
           </div>
           <div class="flex flex-col mb-medium w-2/5 mr-12">
-            <label class="text-white">Zone</label>
+            <label class="text-main-400">Zone</label>
             <select
               class="
                 form-select
@@ -358,10 +358,9 @@
       <!-- GS details -->
       <div
         class="
-          mt-12
-          border border-main-400
+          mt-12 
           rounded-sm
-          bg-main-400
+          bg-white
           shadow-2xl
           mb-8
         "
@@ -381,7 +380,7 @@
             >
               <div>
                 <div class="overflow-hidden shadow-sm">
-                  <label for="" class="text-white"
+                  <label for="" class="text-main-400"
                     >Organization Letter written for</label
                   >
 
@@ -389,8 +388,7 @@
                     type="text"
                     id="applicantTitle"
                     v-model="generalInfo.whomGoodStandingFor"
-                    class="w-full px-3 py-2 rounded-none"
-                    style="border: none"
+                    class="w-full px-3 py-2 rounded-none" 
                     autocomplete="off"
                     placeholder=""
                     required
@@ -412,7 +410,7 @@
             >
               <div>
                 <div class="overflow-hidden shadow-sm">
-                  <label for="" class="text-white"
+                  <label for="" class="text-main-400"
                     >Who Issued Previous License</label
                   >
 
@@ -421,7 +419,7 @@
                     id="applicantTitle"
                     v-model="generalInfo.whoIssued"
                     class="w-full px-3 py-2 rounded-none"
-                    style="border: none"
+                   
                     autocomplete="off"
                     placeholder=""
                     required
@@ -448,7 +446,7 @@
             >
               <div>
                 <div class="overflow-hidden shadow-sm">
-                  <label for="" class="text-white"
+                  <label for="" class="text-main-400"
                     >License Registration Number</label
                   >
 
@@ -456,8 +454,7 @@
                     type="text"
                     id="applicantTitle"
                     v-model="generalInfo.licenseRegistrationNumber"
-                    class="w-full px-3 py-2 rounded-none"
-                    style="border: none"
+                    class="w-full px-3 py-2 rounded-none" 
                     autocomplete="off"
                     placeholder=""
                     required
@@ -471,14 +468,13 @@
             >
               <div>
                 <div class="overflow-hidden shadow-sm">
-                  <label for="" class="text-white">License Issued Date</label>
+                  <label for="" class="text-main-400">License Issued Date</label>
 
                   <input
                     type="date"
                     id="applicantTitle"
                     v-model="generalInfo.licenseIssuedDate"
-                    class="w-full px-3 py-2 rounded-none"
-                    style="border: none"
+                    class="w-full px-3 py-2 rounded-none" 
                     autocomplete="off"
                     placeholder="example-MR,MRS"
                     required
