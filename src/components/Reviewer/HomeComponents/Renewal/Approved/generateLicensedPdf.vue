@@ -76,8 +76,8 @@
                           <div
                             v-if="
                               applicationStatus !== 'CANC' &&
-                              applicationStatus !== 'SUSP' &&
-                              !showActionLoading
+                                applicationStatus !== 'SUSP' &&
+                                !showActionLoading
                             "
                           ></div>
 
@@ -281,20 +281,49 @@
                                     <h4>
                                       ተገቢውን መስፈርት አሟልተው ስለተገኙ ሚኒስቴር መስሪያ ቤቱ
                                     </h4>
-
-                                    <h4 v-if="modalData.professionalTypes">
+                                    <h4 v-if="modalData.educations">
                                       <div
-                                        v-for="professions in modalData.professionalTypes"
-                                        :key="professions"
-                                        class="flex flex-row ml-4"
+                                        v-for="department in modalData.educations"
+                                        :key="department.id"
+                                        class="
+                                          grid grid-flow-col
+                                          auto-cols-max
+                                          border-b
+                                        "
                                       >
-                                        <b class="text-yellow-300"
+                                        <b
+                                          class="
+                                            text-yellow-300 text-sm
+                                            col-span-2
+                                          "
                                           >{{
-                                            professions.professionalTypes
-                                              .amharicProfessionalType === "ሌላ"
-                                              ? ""
-                                              : professions.professionalTypes
+                                            department.professionType &&
+                                            department.professionType
+                                              .amharicProfessionalType
+                                              ? department.professionType
                                                   .amharicProfessionalType
+                                              : department.otherProfessionAmharic
+                                              ? department.otherProfessionAmharic
+                                              : ""
+                                          }}
+                                        </b>
+                                        <span class="text-sm ml-1 mr-1">
+                                          ከ
+                                        </span>
+                                        <b
+                                          class="
+                                            text-yellow-300
+                                            ml-1
+                                            text-sm
+                                            col-span-2
+                                          "
+                                          >{{
+                                            department.institution &&
+                                            department.institution.name
+                                              ? department.institution.name
+                                              : department.otherInstitution
+                                              ? department.otherInstitution
+                                              : ""
                                           }}
                                         </b>
                                       </div>
@@ -302,7 +331,7 @@
                                     </h4>
                                   </div>
                                   <div
-                                    class="flex flex-col mb-medium w-1/2 mr-12"
+                                    class="flex flex-col mb-medium w-1/2 mr-2"
                                   >
                                     <h4>
                                       Having duly satisfied the requirements of
@@ -310,33 +339,51 @@
                                     </h4>
                                     <h4>hereby registered and licensed as</h4>
                                     <h4
-                                      v-if="
-                                        modalData.professionalTypes &&
-                                        modalData.professionalTypes[0]
-                                          .professionalTypes.name
-                                      "
+                                      v-if="modalData.educations"
+                                      class="mt-4"
                                     >
                                       <div
-                                        v-for="professions in modalData.professionalTypes"
-                                        :key="professions"
-                                        class="flex flex-row ml-4"
+                                        v-for="department in modalData.educations"
+                                        :key="department.id"
+                                        class="
+                                          grid grid-flow-col
+                                          auto-cols-max
+                                          border-b
+                                        "
                                       >
-                                        <b class="text-yellow-300"
+                                        <b
+                                          class="
+                                            text-yellow-300 text-sm
+                                            col-span-2
+                                          "
                                           >{{
-                                            professions.prefix
-                                              ? "(" + professions.prefix + ")"
+                                            department.professionType &&
+                                            department.professionType.name
+                                              ? department.professionType.name
+                                              : department.otherProfessionType
+                                              ? department.otherProfessionType
                                               : ""
                                           }}
-                                          {{
-                                            professions.professionalTypes
-                                              .code === "OTH"
-                                              ? certificateDetail.otherProfessionalType
-                                                ? certificateDetail.otherProfessionalType
-                                                : ""
-                                              : professions.professionalTypes
-                                                  .name
-                                          }}</b
+                                        </b>
+                                        <span class="text-sm ml-1 mr-1">
+                                          From</span
                                         >
+                                        <b
+                                          class="
+                                            text-yellow-300
+                                            ml-1
+                                            text-sm
+                                            col-span-2
+                                          "
+                                          >{{
+                                            department.institution &&
+                                            department.institution.name
+                                              ? department.institution.name
+                                              : department.otherInstitution
+                                              ? department.otherInstitution
+                                              : ""
+                                          }}
+                                        </b>
                                       </div>
                                     </h4>
                                   </div>
@@ -507,7 +554,7 @@
 </template>
 <script>
 import Title from "@/sharedComponents/Title";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { useStore } from "vuex";
 
 import jsPDF from "jspdf";
@@ -517,22 +564,21 @@ import addisAbabaCertificateBackground from "../../../../../assets/A_A_Certifica
 import AmharicFont from "../../../Configurations/amharicFont.js";
 import { toEthiopian } from "../../../Configurations/dateConvertor";
 import STATIC_CERTIFICATE_URL from "../../../../../sharedComponents/constants/message.js";
+import { useToast } from "vue-toastification";
 import moment from "moment";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
-import { useToast } from "vue-toastification";
-import { googleApi } from "@/composables/baseURL";
-import { Base64 } from "js-base64";
+import { googleApi } from "../../../../../composables/baseURL";
 
 export default {
   computed: {
     moment: () => moment,
     AmharicFont: () => AmharicFont,
     toEthiopian: () => toEthiopian,
-    STATIC_CERTIFICATE_URL: () => STATIC_CERTIFICATE_URL,
+    STATIC_CERTIFICATE_URL: () => STATIC_CERTIFICATE_URL
   },
   props: ["modalData"],
-  components: { Title, Loading },
+  components: { Loading },
   setup(props) {
     const store = useStore();
     const toast = useToast();
@@ -548,9 +594,8 @@ export default {
     let isUserFound = ref(true);
     let myRegion = ref(true);
     let imageSrc = ref("");
-    const adminRegionId = JSON.parse(
-      localStorage.getItem("allAdminData")
-    ).regionId;
+    const adminRegionId = JSON.parse(localStorage.getItem("allAdminData"))
+      .regionId;
 
     const expertLevelCode = JSON.parse(localStorage.getItem("allAdminData"))
       .expertLevel.code;
@@ -561,35 +606,46 @@ export default {
 
     let showFlash = ref(false);
     let showErrorFlash = ref(false);
-    let imgdata = ref("");
+    let finalData = computed(() => props.modalData);
+
     const updateLicenseGenerated = () => {
+      finalData.value.data
+        ? (finalData.value.data.isLicenseGenerated = true)
+        : null;
       let req = {
-        data: { ...props.modalData, isLicenseGenerated: true },
+        action: null,
+        data: { ...finalData.value.data }
       };
-      imgdata = props.modalData.profile.filePath;
 
       editApplication(req);
     };
 
-    const editApplication = (req) => {
+    const editApplication = req => {
       store
-        .dispatch("reviewer/RenewalGenerate", req)
-        .then((res) => {
+        .dispatch("reviewer/editRenewal", req)
+        .then(res => {
           isLoading.value = false;
           if (res.statusText == "Created") {
             showGenerateModal.value = false;
-          } else {
-            showGenerateModal.value = false;
-            toast.success("Certificate Generated Successfully.", {
+            toast.success("Done", {
               timeout: 5000,
               position: "bottom-center",
               pauseOnFocusLoss: true,
               pauseOnHover: true,
-              icon: true,
+              icon: true
+            });
+          } else {
+            showGenerateModal.value = false;
+            toast.error(res.data.message, {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true
             });
           }
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     };
@@ -606,20 +662,13 @@ export default {
         staticUrl + "/" + applicationType + "/" + userId + "/" + applicationId;
       store
         .dispatch("reviewer/getQrCode", qrParam)
-        .then((res) => {
+        .then(res => {
           imageSrc.value = res.data.data;
         })
         .finally(() => {
-          toast.success("Certificate Generated Successfully.", {
-            timeout: 5000,
-            position: "bottom-center",
-            pauseOnFocusLoss: true,
-            pauseOnHover: true,
-            icon: true,
-          });
           downloadPdf();
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     };
@@ -669,19 +718,13 @@ export default {
 
       let changeWidth = ref(false);
       let changeWidthTooSmall = ref(false);
-      let xPosition = ref(185);
-      for (
-        let i = 0;
-        i < certificateDetail.value.renewalProfessions.length;
-        i++
-      ) {
+      let xPosition = ref(147);
+      for (let i = 0; i < certificateDetail.value.educations.length; i++) {
         let professionPrefix = `${
-          certificateDetail.value.renewalProfessions[i].prefix
-            ? certificateDetail.value.renewalProfessions[i].prefix
+          certificateDetail.value.educations[i].prefix
+            ? certificateDetail.value.educations[i].prefix
             : ""
-        }  ${
-          certificateDetail.value.renewalProfessions[i].professionalTypes.name
-        }`;
+        }  ${certificateDetail.value.educations[i].professionType.name}`;
         let getLength = doc.getTextWidth(professionPrefix);
         if (getLength > 125 && getLength <= 132) {
           if (!changeWidthTooSmall.value) {
@@ -702,34 +745,24 @@ export default {
       } else {
         doc.setFontSize(14);
       }
-      for (
-        let i = 0;
-        i < certificateDetail.value.renewalProfessions.length;
-        i++
-      ) {
+      for (let i = 0; i < certificateDetail.value.educations.length; i++) {
         doc.text(
           xPosition.value,
           professionPossition + i * professionListGap,
           `${
-            certificateDetail.value.renewalProfessions.length > 1
-              ? i + 1 + ". "
-              : ""
+            certificateDetail.value.educations.length > 1 ? i + 1 + ". " : ""
           }${
-            certificateDetail.value.renewalProfessions[i].professionalTypes.name
+            certificateDetail.value.educations[i].professionType.name
               ? `${
-                  certificateDetail.value.renewalProfessions[i].prefix
-                    ? "(" +
-                      certificateDetail.value.renewalProfessions[i].prefix +
-                      ")"
+                  certificateDetail.value.educations[i].prefix
+                    ? "(" + certificateDetail.value.educations[i].prefix + ")"
                     : ""
                 }   ${
-                  certificateDetail.value.renewalProfessions[i]
-                    .professionalTypes.code === "OTH"
-                    ? certificateDetail.value.otherProfessionalType
-                      ? certificateDetail.value.otherProfessionalType
+                  certificateDetail.value.educations[i].otherProfessionType
+                    ? certificateDetail.value.otherProfessionType
+                      ? certificateDetail.value.otherProfessionType
                       : ""
-                    : certificateDetail.value.renewalProfessions[i]
-                        .professionalTypes.name
+                    : certificateDetail.value.educations[i].professionType.name
                 }`
               : ""
           }`
@@ -812,35 +845,29 @@ export default {
 
       if (changeWidth.value) {
         doc.setFontSize(11);
-        xPosition.value = 40;
+        xPosition.value = 14;
       } else if (changeWidthTooSmall.value) {
         doc.setFontSize(11);
-        xPosition.value = 28;
+        xPosition.value = 8;
       } else {
         doc.setFontSize(14);
-        xPosition.value = 65;
+        xPosition.value = 26;
       }
 
-      for (
-        let i = 0;
-        i < certificateDetail.value.renewalProfessions.length;
-        i++
-      ) {
+      for (let i = 0; i < certificateDetail.value.educations.length; i++) {
         doc.text(
           xPosition.value,
           professionPossition + i * professionListGap,
           `${
-            certificateDetail.value.renewalProfessions.length > 1
-              ? i + 1 + ". "
-              : ""
+            certificateDetail.value.educations.length > 1 ? i + 1 + ". " : ""
           }${
-            certificateDetail.value.renewalProfessions[i].professionalTypes
+            certificateDetail.value.educations[i].professionType
               .amharicProfessionalType
-              ? certificateDetail.value.renewalProfessions[i].professionalTypes
+              ? certificateDetail.value.educations[i].professionType
                   .amharicProfessionalType === "ሌላ"
                 ? ""
-                : certificateDetail.value.renewalProfessions[i]
-                    .professionalTypes.amharicProfessionalType
+                : certificateDetail.value.educations[i].professionType
+                    .amharicProfessionalType
               : ""
           }`
         );
@@ -888,12 +915,17 @@ export default {
         : null;
       const doc = new jsPDF({
         orientation: "landscape",
-        filters: ["ASCIIHexEncode"],
+        filters: ["ASCIIHexEncode"]
       });
+
       updateLicenseGenerated();
 
-      if (certificateDetail.value.reviewer.expertLevel.code === "FED") {
+      if (
+        certificateDetail.value.licenseReviewer.reviewer.expertLevel.code ===
+        "FED"
+      ) {
         doc.addImage(backgroundImage, "JPG", 0, 0, 298, 213, undefined, "FAST");
+
         handleRegionsLayout(doc, "FED", 100, 125, 7);
       } else if (certificateDetail.value.reviewer.region.code === "ORO") {
         doc.addImage(
@@ -907,7 +939,9 @@ export default {
           "FAST"
         );
         handleRegionsLayout(doc, "ORO", 110, 133, 4);
-      } else if (certificateDetail.value.reviewer.region.code === "AA") {
+      } else if (
+        certificateDetail.value.licenseReviewer.reviewer.region.code === "AA"
+      ) {
         doc.addImage(
           addisAbabaCertificateBackground,
           "JPG",
@@ -920,12 +954,14 @@ export default {
         );
         handleRegionsLayout(doc, "AA", 110, 133, 4);
       }
+
+      // doc.addImage(backgroundImage, "JPEG", 0, 0, 298, 213, undefined, "FAST");
       doc.addImage(imageSrc.value, "JPG", 246, 14, 35, 35);
       if (userImage !== null) {
         let path = {
-          path: userImage,
+          path: userImage
         };
-        store.dispatch("profile/converProfilePicture", path).then((res) => {
+        store.dispatch("profile/converProfilePicture", path).then(res => {
           // doc.addImage(backgroundImage, "JPEG", 0, 0, 298, 213, undefined, "FAST");
           doc.addImage(res.data.data, "JPG", 33, 20, 30, 30);
           doc.setFontSize(10);
@@ -950,7 +986,6 @@ export default {
       isUserCertified,
       isUserFound,
       myRegion,
-      imgdata,
       generate,
       onCancel,
       fullPage,
@@ -960,8 +995,8 @@ export default {
       showActionLoading,
       applicationStatus,
       showFlash,
-      showErrorFlash,
+      showErrorFlash
     };
-  },
+  }
 };
 </script>

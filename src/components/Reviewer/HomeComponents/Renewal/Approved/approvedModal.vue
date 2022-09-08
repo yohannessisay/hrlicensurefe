@@ -498,7 +498,9 @@ export default {
             modalData.value.email = result.applicant.emailAddress
               ? result.applicant.emailAddress
               : "-----";
-
+            modalData.value.educations = result.educations
+              ? result.educations
+              : {};
             modalData.value.profile = result.profile;
             modalData.value.professionalTypes = result.licenseProfessions;
             modalData.value.certifiedDate = result.certifiedDate;
@@ -510,6 +512,7 @@ export default {
             isLoading.value = false;
           }
         });
+        console.log(modalData.value)
     };
 
     watch(props.modalDataId, () => {
