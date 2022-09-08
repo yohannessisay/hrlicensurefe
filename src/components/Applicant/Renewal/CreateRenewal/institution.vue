@@ -648,6 +648,19 @@
                       >
                         Professional Type
                       </th>
+                      <th
+                        scope="col"
+                        class="
+                          text-sm text-gray-900
+                          px-6
+                          py-4
+                          text-left
+                          font-bold
+                          text-main-400
+                        "
+                      >
+                        Action
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -700,6 +713,17 @@
                         "
                       >
                         {{ item.professionType.name }}
+                      </td>
+                      <td
+                        class="
+                          text-sm text-gray-900
+                          font-light
+                          px-6
+                          py-4
+                          whitespace-nowrap
+                        "
+                      >
+                        <button @click="removeDepartment(index)" class="fa fa-trash  bg-red-200 cursor-pointer " style="color: red;" title="Delete"></button>
                       </td>
                     </tr>
                   </tbody>
@@ -923,6 +947,12 @@ export default {
         return tempStatus;
       }
     };
+
+    const removeDepartment = (index) =>
+    {
+      generalInfo.value.multipleDepartment.splice(index,1);
+      generalInfo.value.education.splice(index,1);
+    }
     const addMultiple = () => {
       if (
         generalInfo.value.departmentSelected &&
@@ -1045,6 +1075,7 @@ export default {
       institutionChange,
       ProfessionTypeChange,
       addMultiple,
+      removeDepartment,
       apply,
       applicantTypeSelected,
       showLocation,

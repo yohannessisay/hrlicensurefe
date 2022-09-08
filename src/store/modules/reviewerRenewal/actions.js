@@ -293,11 +293,11 @@ export default {
     const url = baseUrl + "/renewals/all/approved";
     const resp = await ApiService.get(url);
     const otherApproved = resp.data.data.filter(function(e) {
-      return e.reviewerId !== adminStatus[0];
+      return e.renewalReviewer.reviewerId !== adminStatus[0];
     });
 
     const approvedByYou = resp.data.data.filter(function(e) {
-      return e.reviewerId == adminStatus[0];
+      return e.renewalReviewer.reviewerId == adminStatus[0];
     });
 
     commit(SET_RENEWAL_ALL_APPROVED, otherApproved);
