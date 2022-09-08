@@ -99,11 +99,7 @@
                               justify-center
                             "
                           >
-                            <img
-                              src="../../../../assets/showLicense/profile.png"
-                              alt=""
-                              style="height: 152px; width: 150px"
-                            />
+                         <i class="fa fa-user fa-10x"></i>
                           </div>
                         </div>
                         <div class="grow ml-6">
@@ -162,7 +158,7 @@
                             "
                             style="height:300px"
                           >
-                            <i class="fa fa-certificate fa-9x"></i>
+                            <i class="fa fa-list fa-10x"></i>
                           </div>
                         </div>
                         <div class="grow ml-6">

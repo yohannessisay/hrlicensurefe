@@ -19,24 +19,22 @@
           <p class="absolute right-0" v-if="showAddButton">
             <button
             
-              class="
-                px-2
-                bg-primary-700
-                text-white
-                font-medium
-                text-xs
-                uppercase
-                rounded
-                shadow-md
-                hover:bg-blue-700 hover:shadow-lg
-                focus:bg-blue-700
-                focus:shadow-lg
-                focus:outline-none
-                focus:ring-0
-                active:bg-blue-800 active:shadow-lg
-                transition
-                duration-150
-                ease-in-out
+            class="
+            inline-block
+              px-6
+              text-white
+              bg-primary-700
+              font-medium
+              text-xs
+              leading-tight
+              uppercase
+              border 
+              rounded
+              shadow-lg
+              hover:bg-white hover:text-primary-600
+              transition
+              duration-150
+              ease-in-out
               "
               data-bs-toggle="modal"
               data-bs-target="#addModal"
