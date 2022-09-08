@@ -35,13 +35,18 @@
       <div class="top left"></div>
     </div>
     <li class="inverted-border-radius mb-8 mt-4">
-      <i class="bx bx-skip-previous-circle ml-8 mt-4" style="color: #224771"></i>
+      <i
+        class="bx bx-skip-previous-circle ml-8 mt-4"
+        style="color: #224771"
+      ></i>
 
       <span class="header_text ml-4">Legacy Data</span>
     </li>
     <ul class="nav-links">
-      <router-link to="admin/report">
-        <li :class="$route.fullPath === '/admin/legacyData' ? 'mb-2 active' : ''">
+      <router-link to="legacyData">
+        <li
+          :class="$route.fullPath === '/admin/legacyData' ? 'mb-2 active' : ''"
+        >
           <a href="#legacyData">
             <i class="bx bx-skip-previous-circle"></i>
 
@@ -50,7 +55,7 @@
         </li>
       </router-link>
     </ul>
-  <ul class="nav-links">
+    <ul class="nav-links">
       <div
         class="profile-details mb-8 ml-4"
         style="
