@@ -258,6 +258,7 @@
                                       leading-tight
                                       uppercase
                                       rounded
+                                      hover:text-primary-600
                                       shadow-lg
                                       hover:bg-blue-700 hover:shadow-lg
                                       focus:bg-blue-700
@@ -318,58 +319,7 @@
                           </div>
                         </div>
 
-                        <div
-                          class="
-                            grow-0
-                            shrink-0
-                            basis-auto
-                            w-full
-                            lg:w-6/12
-                            px-3
-                            lg:px-6
-                          "
-                        >
-                          <div class="flex align-center">
-                            <div class="shrink-0">
-                              <div
-                                class="
-                                  p-4
-                                  bg-blue-600
-                                  rounded-md
-                                  shadow-lg
-                                  w-48
-                                  h-48
-                                  flex
-                                  items-center
-                                  justify-center
-                                "
-                              >
-                                <i class="fa fa-building fa-4x"></i>
-                              </div>
-                            </div>
-                            <div class="grow ml-6">
-                              <h2 class="font-bold mb-1">Institution Info</h2>
-                              <p class="text-gray-500">
-                                <span class="font-medium text-primary-700 mb-1"
-                                  >Institution Name:</span
-                                >
-                                {{ modalData.instName }}
-                              </p>
-                              <p class="text-gray-500">
-                                <span class="font-medium text-primary-700 mb-1"
-                                  >Department:</span
-                                >
-                                {{ modalData.department }}
-                              </p>
-                              <p class="text-gray-500">
-                                <span class="font-medium text-primary-700 mb-1"
-                                  >Institution Type:</span
-                                >
-                                {{ modalData.instType }}
-                              </p>
-                            </div>
-                          </div>
-                        </div>
+                       
 
                         <div
                           class="
@@ -448,7 +398,8 @@
               uppercase
               rounded
               shadow-lg
-              hover:bg-purple-700 hover:shadow-lg
+              bg-primary-600
+              hover:text-primary-600 hover:shadow-lg
               focus:bg-purple-700
               focus:shadow-lg
               focus:outline-none
@@ -468,13 +419,14 @@
               inline-block
               px-6
               text-white
+              bg-primary-600
               font-medium
               text-xs
               leading-tight
               uppercase
               rounded
               shadow-lg
-              hover:bg-purple-700 hover:shadow-lg
+              hover:text-primary-600 hover:shadow-lg
               focus:bg-purple-700
               focus:shadow-lg
               focus:outline-none
@@ -675,17 +627,8 @@ export default {
               : "-----";
             modalData.value.email = result.applicant.emailAddress
               ? result.applicant.emailAddress
-              : "-----";
-            modalData.value.instName = result.education.institution?.name
-              ? result.education.institution?.name
-              : "-----";
-            modalData.value.instType = result.education.institution
-              ?.institutionType
-              ? result.education.institution?.institutionType.name
-              : "-----";
-            modalData.value.department = result.education.department.name
-              ? result.education?.department.name
-              : "-----";
+              : "-----"; 
+       
             modalData.value.profile = result.profile;
             modalData.value.professionalTypes = result.licenseProfessions;
             modalData.value.certifiedDate = result.certifiedDate;

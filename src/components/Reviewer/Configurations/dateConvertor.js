@@ -26,6 +26,8 @@ const getMonthName = (monthNumber) => {
         return "ሐምሌ";
       case 12:
         return "ነሐሴ";
+        case 13:
+          return "ጷግሜ";
       default:
         return monthNumber;
     }

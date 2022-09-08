@@ -51,102 +51,13 @@
                   </div>
                 </div>
                 <div class="flex justify-start mt-4 flex-wrap p-4">
-                  <div class="box-shadow-pop bg-lightGrey-100 mb-8 p-4">
-                    <picture
-                      class="flex justify-center items-center mb-small"
-                      v-if="docs.length > 0"
-                    >
-                      <span
-                        v-if="
-                          renewal &&
-                          renewal.profile &&
-                          renewal.profile.profilePicture != '' &&
-                          renewal.profile.profilePicture != null
-                        "
-                      >
-                        <img
-                          :src="
-                            renewal && renewal.profile
-                              ? renewal.profile.profilePicture
-                              : ''
-                          "
-                          alt="profile"
-                          class="w-20 h-12"
-                        />
-                      </span>
-                      <span v-else>
-                        <img
-                          class="box-shadow-pop"
-                          src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
-                        />
-                      </span>
-                    </picture>
-                    <div class="flex justify-center items-center">
-                      <div class="mt-2 mr-small w-1/2">
-                        <h4 class="text-left text-primary-600">
-                          Applicant Name:
-                        </h4>
-                        <h4 class="text-left ml-3">
-                          {{
-                            renewal.profile
-                              ? renewal.profile.name
-                                ? renewal.profile.name +
-                                  " " +
-                                  (renewal.profile.fatherName
-                                    ? renewal.profile.fatherName
-                                    : "-")
-                                : "-"
-                              : "-"
-                          }}
-                        </h4>
-                      </div>
-                      <div class="mt-2 ml-small w-1/2">
-                        <h4 class="text-left text-primary-600">Department:</h4>
-                        <h4 class="text-left ml-3">
-                          {{
-                            renewal.department
-                              ? renewal.department.name
-                              : renewal.education
-                              ? renewal.education.department
-                                ? renewal.education.department.name
-                                : "-"
-                              : "-"
-                          }}
-                        </h4>
-                      </div>
+                  <div
+                    class="box-shadow-pop bg-lightGrey-100 mb-8 p-4 shadow-lg"
+                  >
+                    <div class="flex justify-center">
+                      <h1 class="text-primary-600">Evaluation</h1>
                     </div>
-                    <div class="flex justify-center items-center">
-                      <div class="mt-2 mr-small w-1/2" v-if="!isGoodStanding">
-                        <h4 class="text-left text-primary-600">Institution:</h4>
-                        <h4 class="text-left ml-3">
-                          {{
-                            renewal.education
-                              ? renewal.otherEducationalInstitution
-                                ? renewal.otherEducationalInstitution
-                                : renewal.education.institution.name
-                              : "-"
-                          }}
-                        </h4>
-                      </div>
 
-                      <div class="mt-2 ml-small w-1/2" v-if="!isGoodStanding">
-                        <h4 class="text-left text-primary-600">
-                          Institution Type:
-                        </h4>
-                        <h4 class="text-left ml-3">
-                          {{
-                            renewal.education
-                              ? renewal.education.institution
-                                ? renewal.education.institution.institutionType
-                                  ? renewal.education.institution
-                                      .institutionType.name
-                                  : "-"
-                                : "-"
-                              : "-"
-                          }}
-                        </h4>
-                      </div>
-                    </div>
                     <div class="">
                       <svg
                         width="40"
@@ -188,7 +99,7 @@
                         >
                           <div class="flex flex-wrap md:-mx-4 lg:-mx-8">
                             <!-- Personal Info card -->
-                            <div class="my-1 mx-4 w-full mb-4">
+                            <div class="my-1 mx-4 w-full mb-4 shadow-xl">
                               <!-- Article -->
                               <article
                                 class="overflow-hidden rounded-lg shadow-lg"
@@ -270,7 +181,9 @@
                                   </div>
                                   <div v-if="editPersonalData">
                                     <input
-                                      v-model="renewal.profile.alternativeName"
+                                      v-model="
+                                        renewal.profile.alternativeName
+                                      "
                                       class="w-48 mr-1"
                                       type="text"
                                     />
@@ -307,13 +220,14 @@
                                         inline-block
                                         px-6
                                         text-white
+                                        bg-primary-600
                                         font-medium
                                         text-xs
                                         leading-tight
                                         uppercase
                                         rounded
                                         shadow-lg
-                                        hover:bg-purple-700 hover:shadow-lg
+                                        hover:text-primary-600 hover:shadow-lg
                                         focus:bg-purple-700
                                         focus:shadow-lg
                                         focus:outline-none
@@ -501,122 +415,6 @@
                               <!-- END Article -->
                             </div>
                             <!-- Contact card -->
-
-                            <!-- Institution Card -->
-                            <div
-                              class="
-                                my-1
-                                px-1
-                                w-full
-                                md:w-1/2
-                                lg:my-4 lg:px-4 lg:w-1/2
-                              "
-                            >
-                              <!-- Article -->
-                              <article
-                                class="overflow-hidden rounded-lg shadow-lg"
-                              >
-                                <header
-                                  class="
-                                    flex
-                                    items-center
-                                    justify-between
-                                    leading-tight
-                                    p-2
-                                    md:p-4
-                                  "
-                                >
-                                  <h2 class="font-bold">
-                                    Institution Informatiom
-                                  </h2>
-                                  <i
-                                    class="
-                                      fa fa-building
-                                      text-primary-600
-                                      fa-2xl
-                                    "
-                                  ></i>
-                                </header>
-                                <hr class="text-grey-100" />
-                                <div
-                                  class="
-                                    container
-                                    flex
-                                    items-center
-                                    justify-between
-                                    leading-tight
-                                    p-2
-                                    md:p-4
-                                  "
-                                >
-                                  <div class="font-bold">Department</div>
-                                  <div>
-                                    {{
-                                      renewal.department
-                                        ? renewal.department.name
-                                        : renewal.education
-                                        ? renewal.education.department
-                                          ? renewal.education.department.name
-                                          : "-"
-                                        : "-"
-                                    }}
-                                  </div>
-                                </div>
-
-                                <div
-                                  class="
-                                    container
-                                    flex
-                                    items-center
-                                    justify-between
-                                    leading-tight
-                                    p-2
-                                    md:p-4
-                                  "
-                                >
-                                  <div class="font-bold">Institution Name</div>
-                                  <div>
-                                    {{
-                                      renewal.otherEducationalInstitution
-                                        ? renewal.otherEducationalInstitution
-                                        : renewal.education
-                                        ? renewal.education.institution
-                                          ? renewal.education.institution.name
-                                          : "-"
-                                        : "-"
-                                    }}
-                                  </div>
-                                </div>
-
-                                <div
-                                  class="
-                                    container
-                                    flex
-                                    items-center
-                                    justify-between
-                                    leading-tight
-                                    p-2
-                                    md:p-4
-                                  "
-                                >
-                                  <div class="font-bold">Institution Type</div>
-                                  <div>
-                                    {{
-                                      renewal &&
-                                      renewal.education &&
-                                      renewal.education.institution &&
-                                      renewal.education.institution
-                                        .institutionType
-                                        ? renewal.education.institution
-                                            .institutionType.name
-                                        : "--------------"
-                                    }}
-                                  </div>
-                                </div>
-                              </article>
-                              <!-- END Article -->
-                            </div>
-                            <!-- Institution Card -->
                             <!-- Profession Card -->
                             <div class="my-1 mx-4 w-full mb-4">
                               <!-- Article -->
@@ -626,6 +424,8 @@
                                 <header
                                   class="
                                     flex
+                                    border-b-2
+                                    text-grey-300
                                     items-center
                                     justify-between
                                     leading-tight
@@ -634,7 +434,7 @@
                                   "
                                 >
                                   <h2 class="font-bold">
-                                    Professional Information
+                                    Department Information
                                   </h2>
                                   <i
                                     class="
@@ -644,281 +444,354 @@
                                     "
                                   ></i>
                                 </header>
-                                <hr class="text-grey-100 mb-2" />
-                                <div class="flex flex-row">
-                                  <div
-                                    v-if="renewal.renewalProfessions.length > 0"
-                                  >
+
+                                <div
+                                  class="
+                                    flex flex-row
+                                    border-b-2
+                                    text-grey-400
+                                    m-2
+                                  "
+                                  v-for="education in renewal.educations"
+                                  :key="education.id"
+                                >
+                                  <div>
+                                    <div class="form-check">
+                                      <input
+                                        class="
+                                          form-check-input
+                                          appearance-none
+                                          h-5
+                                          w-5
+                                          border border-gray-300
+                                          rounded-sm
+                                          bg-white
+                                          checked:bg-blue-600
+                                          checked:border-blue-600
+                                          focus:outline-none
+                                          transition
+                                          duration-200
+                                          mt-1
+                                          align-top
+                                          bg-no-repeat bg-center bg-contain
+                                          float-left
+                                          mr-2
+                                          cursor-pointer
+                                        "
+                                        @change="removeDepartment(education)"
+                                        checked
+                                        type="checkbox"
+                                        :id="education.id"
+                                      />
+                                    </div>
                                     <div
                                       class="flex flex-col mb-medium mr-12 ml-8"
                                     >
-                                      <div
-                                        style="
-                                          background: lightgray;
-                                          padding: 8px;
-                                        "
-                                      >
-                                        <p style="color: blue">
-                                          Previous Professional Types
-                                        </p>
-                                      </div>
-
-                                      <ul
-                                        v-for="(
-                                          professionName, index
-                                        ) in renewal.renewalProfessions"
-                                        v-bind:key="
-                                          professionName.professionalTypeId
-                                        "
-                                        v-bind:value="
-                                          professionName.professionalTypeId
-                                        "
-                                      >
-                                        <div class="grid grid-cols-1">
-                                          <li>
-                                            <input
-                                              v-on:click="
-                                                checkBoxClicked(
-                                                  professionName,
-                                                  true,
-                                                  index,
-                                                  $event
-                                                )
-                                              "
-                                              type="checkbox"
-                                              class="form-checkbox"
-                                              name="ckb"
-                                              :checked="
-                                                professionName.showPrefixLink
-                                              "
-                                            />
-                                            {{
-                                              professionName.professionalTypes
-                                                .name
-                                            }}
-                                            |
-                                            {{
-                                              professionName.professionalTypes
-                                                .amharicProfessionalType
-                                            }}
-                                          </li>
-                                          <a
-                                            class="ml-5"
-                                            style="
-                                              text-decoration: underline;
-                                              font-style: italic;
-                                            "
-                                            @click="
-                                              professionName.showPrefix =
-                                                !professionName.showPrefix
-                                            "
-                                            v-show="
-                                              professionName.showPrefixLink
-                                            "
-                                            >{{
-                                              professionName.showPrefix
-                                                ? "Hide Prefix?"
-                                                : "Show Prefix?"
-                                            }}</a
-                                          >
-                                        </div>
-                                        <div
+                                      <div class="grid grid-cols-2 gap-4">
+                                        <p
                                           class="
-                                            grid grid-cols-2
-                                            gap-4
-                                            mb-4
-                                            ml-8
-                                            mt-2
+                                            text-primary-600 text-base
+                                            font-bold
                                           "
                                         >
-                                          <div
-                                            style="
-                                              float: left;
-                                              border-right: 1px solid lightgray;
-                                            "
-                                            v-if="
-                                              professionName.professionalTypes
-                                                .name == 'Other'
-                                            "
-                                          >
-                                            <label style="display: block"
-                                              >Other professional Type
-                                              Name:</label
-                                            >
-                                            <input
-                                              style="display: block"
-                                              type="text"
-                                              v-model="
-                                                renewal.otherProfessionalType
-                                              "
-                                            />
-                                          </div>
-                                          <div
-                                            style="float: left"
-                                            v-show="
-                                              professionName.showPrefixLink &&
-                                              professionName.showPrefix
-                                            "
-                                          >
-                                            <label style="display: block"
-                                              >Prefix:</label
-                                            >
-                                            <select
-                                              style="display: block"
-                                              class="select"
-                                              @change="
-                                                addPrefix(
-                                                  professionName.professionalTypeId,
-                                                  $event
-                                                )
-                                              "
-                                              :v-model="
-                                                selectedOption + `${index}`
-                                              "
-                                            >
-                                              <option
-                                                v-for="prefix in prefixList"
-                                                v-bind:key="prefix.id"
-                                                v-bind:value="prefix.name"
-                                              >
-                                                {{ prefix.name }}
-                                              </option>
-                                            </select>
-                                          </div>
-                                        </div>
-                                      </ul>
-                                      <div
-                                        style="
-                                          background: lightgray;
-                                          padding: 8px;
-                                        "
-                                      >
-                                        <p style="color: blue">
-                                          New Professional Types
+                                          Department Name
+                                        </p>
+                                        <p
+                                          class="text-black text-base font-bold"
+                                        >
+                                          {{
+                                            education.department
+                                              ? education.department.name
+                                              : ""
+                                          }}
                                         </p>
                                       </div>
-
-                                      <ul
-                                        v-for="(
-                                          newProfessionName, index
-                                        ) in professionalTypes"
-                                        v-bind:key="newProfessionName.id"
-                                        v-bind:value="newProfessionName.id"
-                                      >
-                                        <div class="grid grid-cols-1">
-                                          <li>
-                                            <input
-                                              v-on:click="
-                                                checkBoxClicked(
-                                                  newProfessionName,
-                                                  false,
-                                                  index,
-                                                  $event
-                                                )
-                                              "
-                                              type="checkbox"
-                                              class="form-checkbox"
-                                              name="nckb"
-                                            />
-                                            {{ newProfessionName.name }} |
-                                            {{
-                                              newProfessionName.amharicProfessionalType
-                                            }}
-                                          </li>
-                                          <a
-                                            class="ml-5"
-                                            style="
-                                              text-decoration: underline;
-                                              font-style: italic;
-                                            "
-                                            @click="
-                                              newProfessionName.showPrefix =
-                                                !newProfessionName.showPrefix
-                                            "
-                                            v-show="
-                                              newProfessionName.showPrefixLink
-                                            "
-                                            >{{
-                                              newProfessionName.showPrefix
-                                                ? "Hide Prefix?"
-                                                : "Show Prefix?"
-                                            }}</a
-                                          >
-                                        </div>
-                                        <div
+                                      <div class="grid grid-cols-2 gap-4">
+                                        <p
                                           class="
-                                            grid grid-cols-2
-                                            gap-4
-                                            mb-4
-                                            ml-8
-                                            mt-2
+                                            text-primary-600 text-base
+                                            font-bold
                                           "
                                         >
-                                          <div
-                                            style="
-                                              float: left;
-                                              border-right: 1px solid lightgray;
+                                          Education Level
+                                        </p>
+                                        <p
+                                          class="text-black text-base font-bold"
+                                        >
+                                          {{
+                                            education.educationLevel
+                                              ? education.educationLevel.name
+                                              : ""
+                                          }}
+                                        </p>
+                                      </div>
+                                      <div class="grid grid-cols-2 gap-4">
+                                        <p
+                                          class="
+                                            text-primary-600 text-base
+                                            font-bold
+                                          "
+                                        >
+                                          Institution
+                                        </p>
+                                        <p
+                                          class="text-black text-base font-bold"
+                                        >
+                                          {{
+                                            education.institution
+                                              ? education.institution.name
+                                              : ""
+                                          }}
+                                        </p>
+                                      </div>
+                                      <div class="grid grid-cols-2 gap-4">
+                                        <p
+                                          class="
+                                            text-primary-600 text-base
+                                            font-bold
+                                          "
+                                        >
+                                          Profession
+                                        </p>
+                                        <div
+                                          class="text-black text-base font-bold"
+                                        >
+                                          {{
+                                            education.professionType
+                                              ? education.professionType.name != "Other"?education.professionType.name :education.otherProfessionType +"/" + education.otherProfessionAmharic 
+                                              : ""
+                                          }}
+                                          <span
+                                            @click="
+                                              allowProfessionChange(
+                                                education.department.id
+                                              )
                                             "
-                                            v-if="
-                                              newProfessionName.showPrefixLink &&
-                                              newProfessionName.name == 'Other'
+                                            class="
+                                              cursor-pointer
+                                              text-primary-500
                                             "
                                           >
-                                            <label style="display: block"
-                                              >Other profession name*</label
-                                            >
-                                            <input
-                                              style="display: block"
-                                              type="text"
-                                              v-model="
-                                                renewal.otherProfessionalType
+                                            <i
+                                              class="
+                                                fa fa-pencil
+                                                text-green-200
                                               "
-                                            />
-                                            <label style="display: block"
-                                              >Other profession name
-                                              (Amharic)*</label
-                                            >
-                                            <input
-                                              style="display: block"
-                                              type="text"
-                                              v-model="
-                                                renewal.otherProfessionalTypeAmharic
-                                              "
-                                            />
+                                            ></i
+                                            >Edit
+                                          </span>
+                                          <div
+                                            :id="education.department.id"
+                                            class="flex justify-center"
+                                            v-if="
+                                              education.professionType &&
+                                              allowProfChange[
+                                                education.department.id
+                                              ]
+                                            "
+                                          >
+                                            <div class="mb-3 w-full">
+                                              <select
+                                                class="
+                                                  form-select
+                                                  appearance-none
+                                                  block
+                                                  w-full
+                                                  px-3
+                                                  py-1.5
+                                                  text-base
+                                                  font-normal
+                                                  text-gray-700
+                                                  bg-white
+                                                  bg-clip-padding
+                                                  bg-no-repeat
+                                                  border
+                                                  border-solid
+                                                  border-gray-300
+                                                  rounded
+                                                  transition
+                                                  ease-in-out
+                                                  m-0
+                                                  focus:text-gray-700
+                                                  focus:bg-white
+                                                  focus:border-blue-600
+                                                  focus:oProfessionutline-none
+                                                "
+                                                @click="
+                                                  checkForOther(education)
+                                                "
+                                                v-model="
+                                                  tempProf[
+                                                    education.department.id
+                                                  ]
+                                                "
+                                                aria-label="Default select example"
+                                              >
+                                                <option selected disabled>
+                                                  Choose new profession
+                                                </option>
+                                                <option
+                                                  v-for="prof in newProf[
+                                                    education.department.id
+                                                  ]"
+                                                  :key="prof.id"
+                                                  :value="prof"
+                                                >
+                                                  {{ prof.name }}
+                                                </option>
+                                              </select>
+                                            </div>
                                           </div>
                                           <div
-                                            style="float: left"
-                                            v-show="
-                                              newProfessionName.showPrefixLink &&
-                                              newProfessionName.showPrefix
+                                            class="flex justify-center"
+                                            v-if="
+                                              allowOtherProfChange[
+                                                education.department.id
+                                              ] && education.professionType
                                             "
                                           >
-                                            <label style="display: block"
-                                              >Prefix:</label
-                                            >
-                                            <select
-                                              style="display: block"
-                                              @change="
-                                                addPrefix(
-                                                  newProfessionName.id,
-                                                  $event
-                                                )
-                                              "
-                                              :v-model="
-                                                newSelectedOptions + `${index}`
-                                              "
-                                            >
-                                              <option
-                                                v-for="prefix in prefixList"
-                                                v-bind:key="prefix.name"
-                                                v-bind:value="prefix.name"
+                                            <div class="mb-3 xl:w-96">
+                                              <label
+                                                for="exampleFormControlInput1"
+                                                class="
+                                                  form-label
+                                                  inline-block
+                                                  mb-2
+                                                  text-gray-700
+                                                "
+                                                >Other Profession</label
                                               >
-                                                {{ prefix.name }}
-                                              </option>
-                                            </select>
+                                              <input
+                                                type="text"
+                                                @input="
+                                                  setOtherProfession(
+                                                    education,
+                                                    education.department.id,
+                                                    $event,
+                                                    'english'
+                                                  )
+                                                "
+                                                class="
+                                                  form-control
+                                                  block
+                                                  w-full
+                                                  px-3
+                                                  py-1.5
+                                                  text-base
+                                                  font-normal
+                                                  text-gray-700
+                                                  bg-white bg-clip-padding
+                                                  border
+                                                  border-solid
+                                                  border-gray-300
+                                                  rounded
+                                                  transition
+                                                  ease-in-out
+                                                  m-0
+                                                  focus:text-gray-700
+                                                  focus:bg-white
+                                                  focus:border-blue-600
+                                                  focus:outline-none
+                                                "
+                                                id="exampleFormControlInput1"
+                                                placeholder="Type name"
+                                              />
+                                            </div>
+                                            <div class="mb-3 xl:w-96">
+                                              <label
+                                                for="exampleFormControlInput1"
+                                                class="
+                                                  form-label
+                                                  inline-block
+                                                  mb-2
+                                                  text-gray-700
+                                                "
+                                                >Other Profession Amharic
+                                                Name</label
+                                              >
+                                              <input
+                                                type="text"
+                                                @input="
+                                                  setOtherProfession(
+                                                    education,
+                                                    education.department.id,
+                                                    $event,
+                                                    'amharic'
+                                                  )
+                                                "
+                                                class="
+                                                  form-control
+                                                  block
+                                                  w-full
+                                                  px-3
+                                                  py-1.5
+                                                  text-base
+                                                  font-normal
+                                                  text-gray-700
+                                                  bg-white bg-clip-padding
+                                                  border
+                                                  border-solid
+                                                  border-gray-300
+                                                  rounded
+                                                  transition
+                                                  ease-in-out
+                                                  m-0
+                                                  focus:text-gray-700
+                                                  focus:bg-white
+                                                  focus:border-blue-600
+                                                  focus:outline-none
+                                                "
+                                                id="exampleFormControlInput1"
+                                                placeholder="Type amharic name"
+                                              />
+                                            </div>
                                           </div>
                                         </div>
-                                      </ul>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="flex justify-center"
+                                    v-if="showDepRemark"
+                                  >
+                                    <div class="mb-3 xl:w-96">
+                                      <label
+                                        for="exampleFormControlTextarea1"
+                                        class="
+                                          form-label
+                                          inline-block
+                                          mb-2
+                                          text-gray-700
+                                        "
+                                        >Remark on why you removed the
+                                        department</label
+                                      >
+                                      <textarea
+                                        v-model="renewal.remark"
+                                        class="
+                                          form-control
+                                          block
+                                          w-full
+                                          px-3
+                                          py-1.5
+                                          text-base
+                                          font-normal
+                                          text-gray-700
+                                          bg-white bg-clip-padding
+                                          border border-solid border-gray-300
+                                          rounded
+                                          transition
+                                          ease-in-out
+                                          m-0
+                                          focus:text-gray-700
+                                          focus:bg-white
+                                          focus:border-blue-600
+                                          focus:outline-none
+                                        "
+                                        id="exampleFormControlTextarea1"
+                                        rows="3"
+                                        placeholder="Remark note"
+                                      ></textarea>
                                     </div>
                                   </div>
                                 </div>
@@ -926,6 +799,7 @@
                               <!-- END Article -->
                             </div>
                             <!-- Profession Card -->
+
                             <!-- licesne Exp Card -->
                             <div class="my-1 mx-4 w-full">
                               <!-- Article -->
@@ -966,7 +840,26 @@
                                   "
                                 >
                                   <input
-                                    class="max-w-3xl mr-5"
+                                    class="
+                                      form-control
+                                      block
+                                      w-full
+                                      px-3
+                                      py-1.5
+                                      text-base
+                                      font-normal
+                                      text-gray-700
+                                      bg-white bg-clip-padding
+                                      border border-solid border-gray-300
+                                      rounded
+                                      transition
+                                      ease-in-out
+                                      m-0
+                                      focus:text-gray-700
+                                      focus:bg-white
+                                      focus:border-blue-600
+                                      focus:outline-none
+                                    "
                                     type="date"
                                     v-model="renewal.licenseExpirationDate"
                                   />
@@ -1016,6 +909,13 @@
                               </div>
 
                               <div v-else>
+                                <h5 class="text-grey-200 text-2xl">
+                                  {{
+                                    docs[index].documentType
+                                      ? docs[index].documentType.name
+                                      : ""
+                                  }}
+                                </h5>
                                 <img
                                   class="
                                     scale-50
@@ -1046,13 +946,14 @@
                             inline-block
                             px-6
                             text-white
+                            bg-primary-600
                             font-medium
                             text-xs
                             leading-tight
                             uppercase
                             rounded
                             shadow-lg
-                            hover:bg-purple-700 hover:shadow-lg
+                            hover:text-primary-600 hover:shadow-lg
                             focus:bg-purple-700
                             focus:shadow-lg
                             focus:outline-none
@@ -1070,9 +971,9 @@
                           class="
                             inline-block
                             px-6
-                            text-white
                             font-medium
-                            text-xs
+                            text-xs text-white
+                            bg-red-300
                             leading-tight
                             uppercase
                             rounded
@@ -1083,7 +984,7 @@
                             focus:outline-none
                             focus:ring-0
                             active:bg-white active:shadow-lg
-                            hover:bg-red-300 hover:text-white
+                            hover:bg-white hover:text-primary-600
                             transition
                             duration-150
                             ease-in-out
@@ -1097,6 +998,7 @@
                             inline-block
                             px-6
                             text-white
+                            bg-yellow-300
                             font-medium
                             text-xs
                             leading-tight
@@ -1111,7 +1013,7 @@
                             active:bg-purple-800 active:shadow-lg
                             transition
                             duration-150
-                            hover:bg-yellow-300 hover:text-white
+                            hover:bg-white hover:text-primary-600
                             ease-in-out
                           "
                           @click="action('ReviewerDraftEvent')"
@@ -1124,6 +1026,7 @@
                             inline-block
                             px-6
                             text-white
+                            bg-primary-600
                             font-medium
                             text-xs
                             leading-tight
@@ -1222,70 +1125,64 @@
                   v-bind:key="button.name"
                   v-bind:value="button.id"
                 >
-                  <div class="vld-parent">
-                    <loading
-                      :active="isLoadingFinalAction"
-                      :is-full-page="false"
-                      :color="'#2F639D'"
-                      :opacity="1"
-                    ></loading>
-                    <button
-                      v-if="button.code != 'US'"
-                      class="
-                        inline-block
-                        px-6
-                        text-white
-                        font-medium
-                        text-xs
-                        leading-tight
-                        uppercase
-                        rounded
-                        shadow-lg
-                        hover:bg-purple-700 hover:shadow-lg
-                        focus:bg-purple-700
-                        focus:shadow-lg
-                        focus:outline-none
-                        focus:ring-0
-                        active:bg-purple-800 active:shadow-lg
-                        transition
-                        duration-150
-                        hover:bg-primary-400 hover:text-white
-                        ease-in-out
-                      "
-                      @click="action(button.action)"
-                    >
-                      {{ button.name }}
-                    </button>
-                    <button
-                      v-else
-                      class="
-                        inline-block
-                        px-6
-                        text-white
-                        font-medium
-                        text-xs
-                        leading-tight
-                        uppercase
-                        rounded
-                        shadow-lg
-                        hover:bg-purple-700 hover:shadow-lg
-                        focus:bg-purple-700
-                        focus:shadow-lg
-                        focus:outline-none
-                        focus:ring-0
-                        active:bg-purple-800 active:shadow-lg
-                        transition
-                        duration-150
-                        hover:bg-yellow-300 hover:text-white
-                        ease-in-out
-                      "
-                      data-bs-toggle="modal"
-                      data-bs-target="#superviseModal"
-                      @click="changeAction(button.action)"
-                    >
-                      {{ button.name }}
-                    </button>
-                  </div>
+                  <button
+                    v-if="button.code != 'US'"
+                    class="
+                      inline-block
+                      px-6
+                      text-white
+                      bg-primary-600
+                      font-medium
+                      text-xs
+                      leading-tight
+                      uppercase
+                      rounded
+                      shadow-lg
+                      hover:bg-purple-700 hover:shadow-lg
+                      focus:bg-purple-700
+                      focus:shadow-lg
+                      focus:outline-none
+                      focus:ring-0
+                      active:bg-purple-800 active:shadow-lg
+                      transition
+                      duration-150
+                      hover:bg-primary-400 hover:text-white
+                      ease-in-out
+                    "
+                    @click="action(button.action)"
+                  >
+                    {{ button.name }}
+                  </button>
+                  <button
+                    v-else
+                    class="
+                      inline-block
+                      px-6
+                      text-white
+                      bg-primary-600
+                      font-medium
+                      text-xs
+                      leading-tight
+                      uppercase
+                      rounded
+                      shadow-lg
+                      hover:bg-purple-700 hover:shadow-lg
+                      focus:bg-purple-700
+                      focus:shadow-lg
+                      focus:outline-none
+                      focus:ring-0
+                      active:bg-purple-800 active:shadow-lg
+                      transition
+                      duration-150
+                      hover:bg-yellow-300 hover:text-white
+                      ease-in-out
+                    "
+                    data-bs-toggle="modal"
+                    data-bs-target="#superviseModal"
+                    @click="changeAction(button.action)"
+                  >
+                    {{ button.name }}
+                  </button>
                 </div>
               </div>
 
@@ -1313,7 +1210,7 @@
                             flex
                             items-start
                             justify-between
-                            border-b border-solid border-blueGray-200
+                            border-b border-solid border-grey-100
                             mt-medium
                             rounded-t
                           "
@@ -1334,21 +1231,7 @@
                             "
                             v-on:click="toggleModal()"
                           >
-                            <span
-                              class="
-                                bg-transparent
-                                text-black
-                                opacity-5
-                                h-6
-                                w-6
-                                text-2xl
-                                block
-                                outline-none
-                                focus:outline-none
-                              "
-                            >
-                              ×
-                            </span>
+                            <span class="text-3xl"> × </span>
                           </div>
                         </div>
                         <!--body-->
@@ -1492,44 +1375,6 @@
                   </div>
                 </div>
               </Modal>
-              <div v-if="showFlash">
-                <FlashMessage message="Operation Successful!" />
-              </div>
-              <div v-if="showErrorFlash">
-                <ErrorFlashMessage message="Operation Failed!" />
-              </div>
-              <div v-if="showOtherProfessionError">
-                <ErrorFlashMessage
-                  message="Please type other profession type in the input field"
-                />
-              </div>
-              <div v-if="showNameChangeFlash">
-                <FlashMessage message="name change Successful!" />
-              </div>
-              <div v-if="showNameChangeErrorFlash">
-                <ErrorFlashMessage message="name change Failed!" />
-              </div>
-              <div v-if="showLicenseDateRequirementError">
-                <ErrorFlashMessage message="Please add Expiration date!" />
-              </div>
-              <div v-if="showProfessionChangeError">
-                <ErrorFlashMessage
-                  message="you can't change profession if you are not approving"
-                />
-              </div>
-              <div v-if="expirationDateExceedTodayError">
-                <ErrorFlashMessage
-                  message="Error! license expiration date must exceed today"
-                />
-              </div>
-              <div v-if="showTransferSuccessMessage">
-                <FlashMessage message="Transfer Successful!" />
-              </div>
-              <div v-if="showTransferErrorMessage">
-                <ErrorFlashMessage
-                  message="Error! Couldn't transfer to federal"
-                />
-              </div>
             </div>
           </div>
         </div>
@@ -1537,7 +1382,7 @@
     </div>
     <!-- Main Content -->
   </section>
-
+  <!-- Supervise part -->
   <div
     class="
       modal
@@ -1697,6 +1542,7 @@
             <input
               id="supervisor"
               v-model="supervisor"
+              required
               class="w-full px-3 py-3"
               style="border: none"
               placeholder="Type supervisors name"
@@ -1708,6 +1554,7 @@
               <label for="" class="ml-2">Start Date</label>
               <input
                 v-model="startDate"
+                required
                 type="date"
                 class="
                   form-control
@@ -1734,6 +1581,7 @@
             <div class="form-group mb-6 mt-4">
               <label for="" class="ml-2">End Date</label>
               <input
+                required
                 class="
                   form-control
                   block
@@ -1804,23 +1652,22 @@
           </button>
           <button
             class="
-              inline-block
-              px-6
-              py-2.5
-              bg-blue-600
-              text-white
-              font-medium
-              text-xs
-              leading-tight
-              uppercase
-              rounded
-              shadow-lg
-              hover:bg-blue-700 hover:shadow-lg
-              focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
-              active:bg-blue-800 active:shadow-lg
-              transition
-              duration-150
-              ease-in-out
+               inline-block
+                                            px-6
+                                            py-2.5
+                                            bg-primary-700
+                                            text-white
+                                            font-medium
+                                            text-xs
+                                            leading-tight
+                                            uppercase
+                                            rounded
+                                            shadow-lg
+                                            hover:bg-white 
+                                            hover:text-primary-600
+                                            transition
+                                            duration-150
+                                            ease-in-out
             "
             @click="supervise()"
           >
@@ -1830,34 +1677,35 @@
       </div>
     </div>
   </div>
+  <!-- Supervise part -->
 </template>
 <script>
 import { useStore } from "vuex";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { ref, onMounted } from "vue";
-
-import { useRouter } from "vue-router";
 import { googleApi } from "@/composables/baseURL";
 import Modal from "@/sharedComponents/Modal";
-import FlashMessage from "@/sharedComponents/FlashMessage";
-import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import { useToast } from "vue-toastification";
+
 import moment from "moment";
 import ReviewerSideNav from "../SharedComponents/sideNav.vue";
 import ReviewerNavBar from "../SharedComponents/navBar.vue";
-import RadialProgressBar from "vue3-radial-progress";
+
+import FlashMessage from "@/sharedComponents/FlashMessage";
 import Loading from "vue3-loading-overlay";
 // Import stylesheet
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
+import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
+import RadialProgressBar from "vue3-radial-progress";
 export default {
   components: {
     Modal,
-    FlashMessage,
-    ErrorFlashMessage,
+    Loading,
     ReviewerSideNav,
     ReviewerNavBar,
+    FlashMessage,
     RadialProgressBar,
-    Loading,
+    ErrorFlashMessage,
   },
   computed: {
     moment: () => moment,
@@ -1865,32 +1713,21 @@ export default {
   setup() {
     const route = useRoute();
     const store = useStore();
-    const router = useRouter();
     const toast = useToast();
-    const completedSteps = ref(0);
-    const totalSteps = ref(0);
+    const router = useRouter();
     const options = ref([0, 1, 2]);
     const selectedOptions = ref([0]);
     const newSelectedOptions = ref([0]);
-    let isLoadingFinalAction = ref(false);
-    let isLoadingName = ref(false);
     let isPdf = ref(false);
     let pdfFilePath = ref("");
-
-    let startDate = ref("");
-    let endDate = ref("");
-    let institutions = ref([]);
+    const completedSteps = ref(0);
+    const totalSteps = ref(0);
     let isGoodStanding = ref(false);
-    let showDateError = ref({ show: false, message: "" });
-    let instSearched = ref({ name: "" });
-    let showOptions = ref(false);
-    let superviseAction = ref("");
-    let supervisor = ref("");
+    let institutions = ref([]);
     let expirationDateExceedTodayError = ref(false);
     let isProfessionalTypeChanged = ref(false);
-
-    let otherProfessionalType = ref();
-    let otherProfessionalTypeAmharic = ref();
+    let startDate = ref("");
+    let endDate = ref("");
     let showOtherProfessionError = ref(false);
 
     let professionalTypeIds = ref([]);
@@ -1908,23 +1745,18 @@ export default {
     let prefix = ref();
     let canChangeName = ref(false);
     let showProfessionChangeError = ref(false);
-    let showSpinner = ref(false);
 
     let showNameChangeFlash = ref(false);
     let showNameChangeErrorFlash = ref(false);
     let showTransferErrorMessage = ref(false);
     let showTransferSuccessMessage = ref(false);
     let showLicenseDateRequirementError = ref(false);
-    let departmentId = ref(0);
+    let showDepRemark = ref(false);
     let adminId = localStorage.getItem("adminId");
 
     let renewal = ref({
       applicant: { profile: { name: "", fatherName: "" } },
       applicantType: { name: "" },
-      education: {
-        department: { name: "" },
-        institution: { institutionType: {}, name: "" },
-      },
       declinedFields: "",
       remark: "",
       documents: [{ filePath: "" }],
@@ -1938,9 +1770,9 @@ export default {
       { action: "", name: "" },
       { action: "", name: "" },
     ]);
-
+    let isLoadingName = ref(false);
     let professionalTypePrefixes = ref([]);
-
+    let superviseAction = ref("");
     let documentTypes = ref([]);
     let documentTypeName = ref("");
     let modalDocumentTypeName = ref("");
@@ -1964,46 +1796,77 @@ export default {
     let errorClass = ref("text-danger");
     let showRemark = ref(false);
     let applicationType = ref("");
-
+    let showDateError = ref({ show: false, message: "" });
+    let supervisor = ref("");
     let showFlash = ref(false);
     let showErrorFlash = ref(false);
     let showDeclineFlash = ref(false);
     let sendDeclinedData = ref(true);
     let fromModalSendDeclinedData = ref(false);
-
+    let showOptions = ref(false);
     let showActionLoading = ref(false);
     let showLoadingButtons = ref(false);
-
+    let allowProfChange = ref({});
+    let instSearched = ref({ name: "" });
+    let newProf = ref([]);
+    let tempProf = ref({});
+    let tempEducation = [];
+    let modifiedProfession = [];
+    let allowOtherProfChange = ref({});
     let professionalTypes = ref([]);
-    let evaluateRoute = ref("/admin/evaluate/Renewal" + route.params.id);
-
+    let evaluateRoute = ref("/admin/evaluate/renewal" + route.params.id);
     const editPersonalData = ref(false);
+    let others = ref({});
+
     const editPersonalInfo = () => {
       editPersonalData.value = !editPersonalData.value;
     };
+    const allowProfessionChange = (departmentId) => {
+      getProfessionalTypesByDepartmentId(departmentId);
+      allowProfChange.value[departmentId]
+        ? allowProfChange.value[departmentId]
+        : false;
+      allowProfChange.value[departmentId] =
+        !allowProfChange.value[departmentId];
+      allowOtherProfChange.value[departmentId] = false;
+    };
 
-    const created = async (applicationTypeName, applicationId) => {
+    const created = async (applicationId) => {
       applicationType.value = "Renewal";
 
       store
         .dispatch("reviewer/getRenewalApplication", applicationId)
         .then((res) => {
-          renewal.value = res.data.data;
-          departmentId.value = res.data.data.education.department.id;
-          getProfessionalTypesByDepartmentId(departmentId.value);
-          profileInfo.value = renewal.value.profile;
-          buttons.value = res.data.data.applicationStatus.buttons;
-          docs.value = res.data.data.documents;
+          renewal.value = res.data.data ? res.data.data : {};
+          // renewal.value.education.forEach(element =>
+          // {
+          //     tempProf.value[element.department.id] = professionalTypes.value.filter(pr=> pr.name == "Other")[0];
+          // })
+          tempEducation =
+            res.data.data && res.data.data.educations
+              ? res.data.data.educations
+              : "";
+          profileInfo.value =
+            renewal.value && renewal.value.profile
+              ? renewal.value.profile
+              : {};
+          buttons.value =
+            renewal.value &&
+            renewal.value.applicationStatus &&
+            renewal.value.applicationStatus.buttons
+              ? renewal.value.applicationStatus.buttons
+              : {};
+          docs.value =
+            renewal.value && renewal.value.documents
+              ? renewal.value.documents
+              : {};
           totalSteps.value = docs.value ? docs.value.length : 0;
           fetchDocumentTypes();
-          for (let i = 0; i < renewal.value.renewalProfessions.length; i++) {
-            renewal.value.renewalProfessions[i].showPrefix = false;
-            renewal.value.renewalProfessions[i].showPrefixLink = true;
-            professionalTypeIdss.value.push(
-              renewal.value.renewalProfessions[i].professionalTypeId
-            );
-          }
-          if (renewal.value.applicationStatus.code == "REVDRA") {
+
+          if (
+            renewal.value &&
+            renewal.value.applicationStatus.code == "REVDRA"
+          ) {
             rejected.value = renewal.value.declinedFields;
             for (let i in renewal.value.documents) {
               for (let j in rejected.value) {
@@ -2016,7 +1879,17 @@ export default {
                 }
               }
             }
+            if (rejected.value > 0) {
+              for (let i = 0; i < buttons.value.length; i++) {
+                if (buttons.value[i].code === "APP") {
+                  buttons.value.splice(i, 1);
+                  i--;
+                }
+              }
+            }
+
             accepted.value = renewal.value.acceptedFields;
+            completedSteps.value = accepted.value.length;
             index.value = rejected.value.length + accepted.value.length;
             if (index.value == docs.value.length) {
               index.value -= 1;
@@ -2033,7 +1906,10 @@ export default {
             ) {
               findDocumentType(documentTypes.value, docs.value[index.value]);
             }
-          } else if (renewal.value.applicationStatus.code == "IRV") {
+          } else if (
+            renewal.value &&
+            renewal.value.applicationStatus.code == "IRV"
+          ) {
             showTransferToAdminButton.value = true;
           }
         });
@@ -2088,7 +1964,9 @@ export default {
     };
     const findDocumentType = (obj, ab) => {
       for (var prop in obj) {
-        if (obj[prop].code == ab.documentTypeCode) {
+        if (
+          obj[prop].code == ab && ab.documentTypeCode ? ab.documentTypeCode : ""
+        ) {
           documentTypeName.value = obj[prop].name;
         }
       }
@@ -2108,13 +1986,12 @@ export default {
           licenseId: route.params.id,
           expertLevelId: federalData[0].id,
           createdByAdminId: adminId,
-          isTransferred: true,
         };
         store
           .dispatch("reviewer/transferToFederal", transferData)
           .then((res) => {
-            if (res.data.status == "Success") {
-              toast.success("Appliction transfered successfully", {
+            if (res.data?.status == "Success") {
+              toast.success("Application transfered Successfully", {
                 timeout: 5000,
                 position: "bottom-center",
                 pauseOnFocusLoss: true,
@@ -2122,20 +1999,18 @@ export default {
                 icon: true,
               });
             } else {
-              toast.error(
-                "Already assigned to federal reviewer,you can transfer the application",
-                {
-                  timeout: 5000,
-                  position: "bottom-center",
-                  pauseOnFocusLoss: true,
-                  pauseOnHover: true,
-                  icon: true,
-                }
-              );
+              toast.error("Failed to transfer application", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
             }
           });
       });
     };
+
     const accept = (doc) => {
       nextClickable.value = true;
       completedSteps.value += 1;
@@ -2188,8 +2063,15 @@ export default {
     };
 
     const reject = (doc) => {
-      nextClickable.value = true;
       completedSteps.value += 1;
+      nextClickable.value = true;
+      for (let i = 0; i < buttons.value.length; i++) {
+        if (buttons.value[i].code === "APP") {
+          buttons.value.splice(i, 1);
+          i--;
+        }
+      }
+
       if (rejected.value.length > 0) {
         if (!rejected.value.includes(doc.documentTypeCode)) {
           rejected.value.push(doc.documentTypeCode);
@@ -2237,62 +2119,49 @@ export default {
         }
       }
     };
-
+    const setOtherProfession = (education, id, event, type) => {
+      if (type == "english") {
+        if (others.value[id]) {
+          others.value[id]["otherProfessionType"] = event.target.value;
+        } else {
+          others.value[id] = {};
+          others.value[id]["otherProfessionType"] = "";
+          others.value[id]["otherProfessionType"] = event.target.value;
+        }
+        education.otherProfessionType = others.value[id]["otherProfessionType"];
+        modifiedProfession.forEach((element) => {
+          if (element.department.id == education.department.id) {
+            element.otherProfessionType =
+              others.value[id]["otherProfessionType"];
+          }
+        });
+      }
+      if (type == "amharic") {
+        if (others.value[id]) {
+          others.value[id]["otherProfessionTypeAmharic"] = event.target.value;
+        } else {
+          others.value[id] = {};
+          others.value[id]["otherProfessionTypeAmharic"] = "";
+          others.value[id]["otherProfessionTypeAmharic"] = event.target.value;
+        }
+        modifiedProfession.forEach((element) => {
+          if (element.department.id == education.department.id) {
+            element.otherProfessionAmharic =
+              others.value[id]["otherProfessionTypeAmharic"];
+          }
+        });
+      }
+    };
     const action = (actionValue) => {
       let smsMessage = "";
-      showActionLoading.value = true;
-      showLoadingButtons.value = true;
-      if (professionalTypeIdss.value.length > 0) {
-        renewal.value.professionalTypeIds = professionalTypeIdss.value;
-        renewal.value.professionalTypePrefixes = professionalTypePrefixes.value;
-      } else {
-        showProfessionChangeError.value = true;
-
-        setTimeout(() => {
-          showProfessionChangeError.value = false;
-        }, 4000);
-        professionalTypeIdss.value = [];
-        professionalTypePrefixes.value = [];
-        showActionLoading.value = false;
-        showLoadingButtons.value = false;
-        return;
-      }
-
-      let loopCounter = 0;
-
-      for (let i = 0; i < professionalTypeIdss.value.length; i++) {
-        let professionId = professionalTypeIdss.value[i];
-        for (
-          let j = 0;
-          j < renewal.value.professionalTypePrefixes.length;
-          j++
-        ) {
-          if (
-            renewal.value.professionalTypePrefixes[j].professionalTypeId !=
-            professionId
-          ) {
-            loopCounter++;
-          }
-        }
-        if (loopCounter == renewal.value.professionalTypePrefixes.length) {
-          renewal.value.professionalTypePrefixes.push({
-            professionalTypeId: professionId,
-            prefix: null,
-          });
-        }
-        loopCounter = 0;
-      }
 
       if (actionValue === "ApproveEvent") {
         smsMessage = renewal.value
-          ? "Dear applicant your applied renewal of license number " +
+          ? "Dear applicant your applied Renewal license of number " +
             renewal.value.renewalCode +
             " has been approved after careful examination of your uploaded documents by our reviewers. Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
           : "";
-        if (
-          renewal.value.licenseExpirationDate === null &&
-          !isGoodStanding.value
-        ) {
+        if (renewal.value.licenseExpirationDate === null) {
           toast.warning("Please fill in license expiration date", {
             timeout: 5000,
             position: "bottom-center",
@@ -2300,8 +2169,6 @@ export default {
             pauseOnHover: true,
             icon: true,
           });
-          showActionLoading.value = false;
-          showLoadingButtons.value = false;
           return;
         } else if (
           !moment(renewal.value.licenseExpirationDate).isAfter(new Date()) &&
@@ -2314,65 +2181,37 @@ export default {
             pauseOnHover: true,
             icon: true,
           });
-          showActionLoading.value = false;
-          showLoadingButtons.value = false;
           return;
         }
       }
 
       if (actionValue == "DeclineEvent") {
         smsMessage = renewal.value
-          ? "Dear applicant your applied renewal of license number " +
+          ? "Dear applicant your applied renewal license of number " +
             renewal.value.renewalCode +
             " has been declined after careful examination of your uploaded documents by our reviewers. Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
           : "";
-        showActionLoading.value = false;
-        showLoadingButtons.value = false;
-        let checkProfessionResult = false;
-        renewal.value.isProfessionChanged == false
-          ? (checkProfessionResult = checkProfessionChanged(
-              renewal.value.renewalProfessions
-            ))
-          : (checkProfessionResult = true);
+      }
 
-        if (checkProfessionResult) {
-          showProfessionChangeError.value = true;
+      let checkProfessionResult = false;
+      renewal.value.isProfessionChanged == false;
 
-          setTimeout(() => {
-            showProfessionChangeError.value = false;
-          }, 4000);
-          showActionLoading.value = false;
-          showLoadingButtons.value = false;
-          return;
-        } else {
-          showRemark.value = true;
-          sendDeclinedData.value = false;
-          if (fromModalSendDeclinedData.value == true) {
-            sendDeclinedData.value = true;
-          }
+      checkProfessionResult = checkProfessionChanged(
+        renewal.value.educations,
+        modifiedProfession
+      );
+
+      if (checkProfessionResult) {
+        renewal.value.isProfessionChanged == true;
+      } else {
+        showRemark.value = true;
+        sendDeclinedData.value = false;
+        renewal.value.isProfessionChanged == false;
+        if (fromModalSendDeclinedData.value == true) {
+          sendDeclinedData.value = true;
         }
       }
 
-      if (actionValue == "ReviewerDraftEvent") {
-        let checkProfessionResult = false;
-        renewal.value.isProfessionChanged == false
-          ? (checkProfessionResult = checkProfessionChanged(
-              renewal.value.renewalProfessions
-            ))
-          : (checkProfessionResult = true);
-
-        if (checkProfessionResult) {
-          renewal.value.isProfessionChanged = true;
-        }
-      }
-
-      if (prefix.value !== undefined) {
-        renewal.value.prefix = prefix.value;
-      }
-      if (professionalTypeIdss.value.length > 0) {
-        renewal.value.professionalTypeIds = professionalTypeIdss.value;
-        renewal.value.professionalTypePrefixes = professionalTypePrefixes.value;
-      }
       renewal.value.declinedFields = rejected.value;
       renewal.value.acceptedFields = accepted.value;
       renewal.value.certified = true;
@@ -2389,45 +2228,49 @@ export default {
         ],
         message: smsMessage ? smsMessage : "",
       };
-      if (
-        applicationType.value == "Renewal" &&
-        sendDeclinedData.value == true
-      ) {
+   
+      if (applicationType.value == "Renewal") {
         store
           .dispatch("reviewer/editRenewal", req)
           .then((res) => {
             showActionLoading.value = false;
             if (res.statusText == "Created") {
               store.dispatch("sms/sendSms", smsData).then(() => {
-                toast.success("Application Reviewed Successfully", {
+                toast.success("Application reviewed Successfully", {
                   timeout: 5000,
                   position: "bottom-center",
                   pauseOnFocusLoss: true,
                   pauseOnHover: true,
                   icon: true,
                 });
-                router.push("/admin/renewal/inReview");
+                setTimeout(() => {
+                  window.location.reload();
+                }, 3000);
               });
             } else {
-              toast.error("Error occured", {
+              toast.error("Please try again", {
                 timeout: 5000,
                 position: "bottom-center",
                 pauseOnFocusLoss: true,
                 pauseOnHover: true,
                 icon: true,
               });
-              router.push("/admin/renewal/inReview");
+              setTimeout(() => {
+                window.location.reload();
+              }, 3000);
             }
           })
           .catch(() => {
-            toast.error("Error occured", {
+            toast.error("Please try again", {
               timeout: 5000,
               position: "bottom-center",
               pauseOnFocusLoss: true,
               pauseOnHover: true,
               icon: true,
             });
-            router.push("/admin/renewal/inReview");
+            setTimeout(() => {
+              window.location.reload();
+            }, 3000);
           });
       }
     };
@@ -2456,31 +2299,11 @@ export default {
     };
     const changeProfession = () => {};
 
-    const getProfessionalTypesByDepartmentId = (id) => {
-      let professionSelected = ref(false);
-      store
+    const getProfessionalTypesByDepartmentId = async (id) => {
+      await store
         .dispatch("reviewer/getProfessionalTypeByDepartmentId", id)
         .then((res) => {
-          res.data.data
-            .filter(function (e) {
-              for (let i in renewal.value.professionalTypes) {
-                if (
-                  e.code ===
-                  renewal.value.professionalTypes[i].professionalTypes.code
-                ) {
-                  professionSelected.value = true;
-                }
-              }
-              if (!professionSelected.value) {
-                professionalTypes.value.push(e);
-              }
-              professionSelected.value = false;
-            })
-            .map((mapData) => {
-              mapData.showPrefix = false;
-              mapData.showPrefixLink = false;
-              return mapData;
-            });
+          newProf.value[id] = res.data.data;
         });
     };
     const allowChangeName = () => {
@@ -2490,7 +2313,7 @@ export default {
       canChangeName.value = false;
     };
     const changeAmharicName = () => {
-      showSpinner.value = true;
+      isLoadingName.value = true;
       const id = profileInfo.value.id;
       let newProfile = {
         alternativeName: renewal.value.profile.alternativeName,
@@ -2502,22 +2325,31 @@ export default {
       store
         .dispatch("profile/changeUserProfile", profileData)
         .then(() => {
-          toast.success("Applicant name changed successfully", {
+          canChangeName.value = false;
+          toast.success("Name change was Successfull", {
             timeout: 5000,
             position: "bottom-center",
             pauseOnFocusLoss: true,
             pauseOnHover: true,
             icon: true,
           });
+          isLoadingName.value = false;
+          setTimeout(() => {
+            window.location.reload();
+          }, 3000);
         })
         .catch(() => {
-          toast.error("Error occured", {
+          toast.error("Error Occured", {
             timeout: 5000,
             position: "bottom-center",
             pauseOnFocusLoss: true,
             pauseOnHover: true,
             icon: true,
           });
+          isLoadingName.value = false;
+          setTimeout(() => {
+            window.location.reload();
+          }, 3000);
         });
     };
 
@@ -2527,14 +2359,16 @@ export default {
       if (checkResult.value) {
         if (event.target.checked) {
           previousProfession
-            ? (renewal.value.professionalTypes[index].showPrefixLink = true)
+            ? (renewal.value.licenseProfessions[index].showPrefixLink = true)
             : (professionalTypes.value[index].showPrefixLink = true);
           previousProfession
             ? professionalTypeIdss.value.push(profession.professionalTypes.id)
             : professionalTypeIdss.value.push(profession.id);
         } else {
           previousProfession
-            ? (renewal.value.professionalTypes[index].showPrefixLink = false)
+            ? (renewal.value.licenseProfessions[
+                index
+              ].showPrefixLink = false)
             : (professionalTypes.value[index].showPrefixLink = false);
           previousProfession
             ? professionalTypeIdss.value.splice(
@@ -2561,27 +2395,26 @@ export default {
                 return data.professionalTypeId != profession.id;
               });
           }
-
-          if (
-            previousProfession &&
-            profession.professionalTypes.name == "Other"
-          ) {
-            renewal.value.otherProfessionalType = null;
-            renewal.value.otherProfessionalTypeAmharic = null;
-          } else if (!previousProfession && profession.name == "Other") {
-            renewal.value.otherProfessionalType = null;
-            renewal.value.otherProfessionalTypeAmharic = null;
-          }
         }
       }
     };
-
+    let newEducation = [];
+    const removeDepartment = (education) => {
+      if (
+        newEducation.filter((ed) => ed.id == education.id).length == 0 &&
+        newEducation.length != 0
+      ) {
+        showDepRemark.value = true;
+        newEducation.push(education);
+      } else {
+        newEducation = tempEducation.filter((ed) => ed.id != education.id);
+        showDepRemark.value = false;
+      }
+    };
     const chkcontrol = (j, previousProfession, event) => {
       if (event.target.checked) {
         if (professionalTypeIdss.value.length == 3) {
-          alert(
-            "You can only select 3 professional types. Please Select only four!"
-          );
+          alert("You can only select 3 professional types.");
           if (previousProfession) {
             document.getElementsByName("ckb")[j].checked = false;
             return false;
@@ -2606,6 +2439,7 @@ export default {
         });
         return;
       }
+
       for (let i = 0; i < professionalTypePrefixes.value.length; i++) {
         if (
           professionId !== professionalTypePrefixes.value[i].professionalTypeId
@@ -2639,40 +2473,55 @@ export default {
       }
     };
 
-    const checkProfessionChanged = (previousProfessionType) => {
+    const checkProfessionChanged = (previousProfession, modifiedProfesion) => {
       let count = 0;
 
-      if (
-        previousProfessionType &&
-        professionalTypeIdss &&
-        previousProfessionType.length != professionalTypeIdss.value.length
-      ) {
-        return true;
-      } else {
-        for (let i = 0; i < previousProfessionType.length; i++) {
-          for (let j = 0; j < previousProfessionType.length; j++) {
-            if (
-              previousProfessionType[i].professionalTypeId !=
-              professionalTypeIdss.value[j]
-            ) {
-              count++;
-            }
+      for (let i = 0; i < previousProfession.length; i++) {
+        for (let j = 0; j < modifiedProfesion.length; j++) {
+          if (
+            previousProfession[i].professionalTypeId !=
+            modifiedProfesion[j].professionalTypeId
+          ) {
+            count++;
           }
         }
-        if (count == previousProfessionType.length) {
-          return true;
-        } else {
-          count = 0;
-          return false;
-        }
+      }
+      if (count != 0) {
+        return true;
+      } else {
+        return false;
+      }
+    };
+
+    const setInput = (value) => {
+      instSearched.value = value ? value : "";
+      showOptions.value = false;
+    };
+
+    const resultQuery = () => {
+      if (institutions.value) {
+        let data = institutions.value.filter((item) => {
+          return instSearched.value
+            ? instSearched.value.name
+                .toLowerCase()
+                .split(" ")
+                .every((v) => item.name.toLowerCase().includes(v))
+            : "";
+        });
+
+        return data;
+      } else {
+        return [];
       }
     };
 
     const supervise = () => {
       renewal.value.superviseEndDate = endDate.value ? endDate.value : "";
-      renewal.value.superviseStartDate = startDate.value ? startDate.value : "";
+      renewal.value.superviseStartDate = startDate.value
+        ? startDate.value
+        : "";
       renewal.value.supervisor = supervisor.value ? supervisor.value : "";
-      renewal.value.superviseInstitutionId = instSearched.value
+      renewal.value.supervisingInstitutionId = instSearched.value
         ? instSearched.value.id
         : "";
 
@@ -2704,7 +2553,7 @@ export default {
               : "",
           ],
           message: renewal.value
-            ? "Dear applicant your applied new license of number " +
+            ? "Dear applicant your applied renewal license of number " +
               renewal.value.renewalCode +
               " has been set to be under supervison of MR/MRS:-" +
               renewal.value.supervisor +
@@ -2712,13 +2561,12 @@ export default {
               instSearched.value.name +
               " for " +
               minDate +
-              " days .Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
+              " days  .Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
             : "",
         };
         store
-          .dispatch("reviewer/editRenewal", req)
+          .dispatch("reviewer/editrenewal", req)
           .then((res) => {
-            console.log(res);
             showActionLoading.value = false;
             if (res.statusText == "Created") {
               store.dispatch("sms/sendSms", smsData).then(() => {
@@ -2729,10 +2577,9 @@ export default {
                   pauseOnHover: true,
                   icon: true,
                 });
-                isLoadingFinalAction.value = false;
                 setTimeout(() => {
                   window.location.reload();
-                }, 3000);
+                }, 2000);
               });
             } else {
               toast.error("Please try again", {
@@ -2742,14 +2589,12 @@ export default {
                 pauseOnHover: true,
                 icon: true,
               });
-              isLoadingFinalAction.value = false;
               setTimeout(() => {
                 window.location.reload();
-              }, 3000);
+              }, 2000);
             }
           })
           .catch(() => {
-            isLoadingFinalAction.value = false;
             toast.error("Please try again", {
               timeout: 5000,
               position: "bottom-center",
@@ -2759,7 +2604,7 @@ export default {
             });
             setTimeout(() => {
               window.location.reload();
-            }, 3000);
+            }, 2000);
           });
       }
     };
@@ -2767,30 +2612,53 @@ export default {
       superviseAction.value = action;
     };
 
-    const setInput = (value) => {
-      instSearched.value = value ? value : "";
-      showOptions.value = false;
-    };
+    const checkForOther = (education) => {
+      modifiedProfession.forEach((element, index) => {
+        if (element.department.id == education.department.id) {
+          modifiedProfession.splice(index, 1);
+        }
+      });
+      if (
+        tempProf.value[education.department.id].id == education.professionTypeId
+      ) {
+        modifiedProfession = modifiedProfession.filter(
+          (element) => element.oldProfessionTypeId != education.professionTypeId
+        );
+      } else if (
+        tempProf.value[education.department.id] &&
+        tempProf.value[education.department.id].name == "Other"
+      ) {
+        allowOtherProfChange.value[education.department.id] = true;
 
-    const resultQuery = () => {
-      if (institutions.value) {
-        let data = institutions.value.filter((item) => {
-          return instSearched.value
-            ? instSearched.value.name
-                .toLowerCase()
-                .split(" ")
-                .every((v) => item.name.toLowerCase().includes(v))
-            : "";
+        education.oldProfessionTypeId = education.professionTypeId;
+        education.professionTypeId = null;
+        modifiedProfession.push({
+          ...education,
         });
-
-        return data;
       } else {
-        return [];
-      }
-    };
+        education.oldProfessionTypeId = education.professionTypeId;
 
+        education.professionTypeId = tempProf.value[education.department.id].id;
+        modifiedProfession.push({
+          ...education,
+        });
+        allowOtherProfChange.value[education.department.id] = false;
+      }
+      renewal.value.educations.forEach((newP) => {
+        let tempP = false;
+        modifiedProfession.forEach((oldP) => {
+          if (oldP.department.id != newP.department.id) {
+            tempP = true;
+          }
+        });
+        if (tempP) {
+          modifiedProfession.push(newP);
+        }
+      });
+      renewal.value.educations = modifiedProfession;
+    };
     onMounted(() => {
-      created("Renewal", route.params.id);
+      created(route.params.id);
       store.dispatch("goodstanding/getInstitution").then((res) => {
         institutions.value = res.data.data.filter((elm) => elm.isLocal == true);
       });
@@ -2798,30 +2666,30 @@ export default {
     return {
       isPdf,
       renewal,
+      showDepRemark,
       index,
       docs,
-
-      instSearched,
-      showDateError,
-      endDate,
-      startDate,
-      supervisor,
-      setInput,
-      supervise,
       resultQuery,
-      changeAction,
-      showOptions,
       next,
+      setInput,
       previous,
       nextRemark,
       previousRemark,
       amount,
+      supervise,
+      showOptions,
       width,
+      instSearched,
+      institutions,
       documentTypes,
       findDocumentType,
       documentTypeName,
       accepted,
       rejected,
+      startDate,
+      supervisor,
+      showDateError,
+      endDate,
       accept,
       transferToFederal,
       showTransferToAdminButton,
@@ -2830,31 +2698,36 @@ export default {
       reject,
       buttons,
       action,
-      completedSteps,
-      totalSteps,
+      allowProfessionChange,
+      allowProfChange,
       showButtons,
       isToChangeProfession,
       profileInfo,
       disableNext,
+      removeDepartment,
+      changeAction,
+      newProf,
+      checkForOther,
+      allowOtherProfChange,
       nextClickable,
       foundInRejected,
       foundInAcceptted,
       showRemark,
       toggleModal,
-      editPersonalData,
-      editPersonalInfo,
-      isLoadingFinalAction,
-      isLoadingName,
+      tempProf,
       activeClass,
       errorClass,
       submitRemark,
       applicationType,
       showFlash,
+      isLoadingName,
       showErrorFlash,
       showDeclineFlash,
       sendDeclinedData,
       fromModalSendDeclinedData,
       rejectedObj,
+      completedSteps,
+      totalSteps,
       ind,
       modalDocumentTypeName,
       modalFindDocumentType,
@@ -2869,7 +2742,6 @@ export default {
       allowChangeName,
       disallowChangeName,
       changeAmharicName,
-      showSpinner,
       showNameChangeFlash,
       showNameChangeErrorFlash,
       showLicenseDateRequirementError,
@@ -2882,10 +2754,11 @@ export default {
       checkBoxClicked,
       addPrefix,
       options,
+      editPersonalData,
+      editPersonalInfo,
       selectedOptions,
       newSelectedOptions,
-      otherProfessionalType,
-      otherProfessionalTypeAmharic,
+      modifiedProfession,
       showOtherProfessionError,
       chkcontrol,
       checkResult,
@@ -2895,6 +2768,7 @@ export default {
       showActionLoading,
       showLoadingButtons,
       googleApi,
+      setOtherProfession,
     };
   },
 };

@@ -293,33 +293,35 @@
                                       </ul>
                                     </div>
                                     <div>
-                                      <button
-                                        class="
-                                          inline-block
-                                          px-6
-                                          py-2.5
-                                          bg-blue-600
-                                          text-white
-                                          font-medium
-                                          text-xs
-                                          leading-tight
-                                          uppercase
-                                          rounded
-                                          shadow-lg
-                                          hover:bg-blue-700 hover:shadow-lg
-                                          focus:bg-blue-700
-                                          focus:shadow-lg
-                                          focus:outline-none
-                                          focus:ring-0
-                                          active:bg-blue-800 active:shadow-lg
-                                          transition
-                                          duration-150
-                                          ease-in-out
-                                        "
-                                        @click="assignReviewer()"
+                                      <div
+                                        v-for="button in modalData.buttons"
+                                        :key="button.id"
                                       >
-                                        Assign
-                                      </button>
+                                        <button
+                                          v-if="button.code == 'AT'"
+                                          class="
+                                            inline-block
+                                            px-6
+                                            py-2.5
+                                            bg-primary-700
+                                            text-white
+                                            font-medium
+                                            text-xs
+                                            leading-tight
+                                            uppercase
+                                            rounded
+                                            shadow-lg
+                                            hover:bg-white 
+                                            hover:text-primary-600
+                                            transition
+                                            duration-150
+                                            ease-in-out
+                                          "
+                                          @click="assignReviewer(button.action)"
+                                        >
+                                          {{ button ? button.name : "" }}
+                                        </button>
+                                      </div>
                                     </div>
                                   </div>
                                 </div>
@@ -448,21 +450,18 @@
           <button
             type="button"
             class="
-              inline-block
+        inline-block
               px-6
               text-white
               font-medium
               text-xs
+              bg-primary-700
               leading-tight
               uppercase
               rounded
               shadow-lg
-              hover:bg-purple-700 hover:shadow-lg
-              focus:bg-purple-700
-              focus:shadow-lg
-              focus:outline-none
-              focus:ring-0
-              active:bg-purple-800 active:shadow-lg
+              hover:bg-white 
+              hover:text-primary-700
               transition
               duration-150
               ease-in-out
@@ -505,7 +504,6 @@ export default {
     let assign = ref({
       reviewerId: "",
       renewalId: "",
-      createdByAdminId: "",
     });
     let role = ref({});
     let isLoadingStart = ref(true);
@@ -518,12 +516,11 @@ export default {
       role.value = JSON.parse(localStorage.getItem("allAdminData")).role;
     };
 
-    const assignReviewer = () => {
+    const assignReviewer = (action) => {
       if (role.value.code === "TL" || role.value.code === "ADM") {
         assign.value = {
           renewalId: licenseData.value.id,
           reviewerId: assign.value.reviewerId,
-          createdByAdminId: +localStorage.getItem("adminId"),
         };
       }
 
@@ -531,7 +528,6 @@ export default {
         assign.value = {
           renewalId: licenseData.value.id,
           reviewerId: +localStorage.getItem("adminId"),
-          createdByAdminId: +localStorage.getItem("adminId"),
         };
       }
       let smsData = {
@@ -553,7 +549,10 @@ export default {
       isLoading.value = true;
 
       store
-        .dispatch("reviewer/assignRenewalReviewer", assign.value)
+        .dispatch("reviewer/assignRenewalReviewer", {
+          action: action,
+          data: assign.value,
+        })
         .then((response) => {
           if (response.statusText == "Created") {
             store.dispatch("sms/sendSms", smsData).then(() => {
@@ -599,8 +598,6 @@ export default {
             window.location.reload();
           }, 3000);
         });
-    
-    
     };
 
     const showModal = () => {
@@ -692,6 +689,9 @@ export default {
               result.licenseExpirationDate;
             modalData.value.data = result;
             licenseData.value = result;
+            modalData.value.buttons = result.applicationStatus
+              ? result.applicationStatus.buttons
+              : {};
             isLoadingStart.value = false;
           }
         });

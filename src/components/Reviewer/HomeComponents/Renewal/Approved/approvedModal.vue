@@ -185,61 +185,6 @@
                           lg:px-6
                         "
                       >
-                        <div class="flex align-center">
-                          <div class="shrink-0">
-                            <div
-                              class="
-                                p-4
-                                bg-blue-600
-                                rounded-md
-                                shadow-lg
-                                w-48
-                                h-48
-                                flex
-                                items-center
-                                justify-center
-                              "
-                            >
-                              <i class="fa fa-building fa-4x"></i>
-                            </div>
-                          </div>
-                          <div class="grow ml-6">
-                            <h2 class="font-bold mb-1">Institution Info</h2>
-                            <p class="text-gray-500">
-                              <span class="font-medium text-primary-700 mb-1"
-                                >Institution Name:</span
-                              >
-                              {{ modalData.instName ? modalData.instName : "" }}
-                            </p>
-                            <p class="text-gray-500">
-                              <span class="font-medium text-primary-700 mb-1"
-                                >Department:</span
-                              >
-                              {{
-                                modalData.department ? modalData.department : ""
-                              }}
-                            </p>
-                            <p class="text-gray-500">
-                              <span class="font-medium text-primary-700 mb-1"
-                                >Institution Type:</span
-                              >
-                              {{ modalData.instType ? modalData.instType : "" }}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div
-                        class="
-                          grow-0
-                          shrink-0
-                          basis-auto
-                          w-full
-                          lg:w-6/12
-                          px-3
-                          lg:px-6
-                        "
-                      >
                         <div class="flex items-start">
                           <div class="shrink-0">
                             <div
@@ -301,8 +246,9 @@
                               inline-block
                               px-6
                               py-2.5
-                              hover:bg-yellow-300 hover:text-white
+                              bg-yellow-300
                               text-white
+                              hover:bg-ywhite hover:text-yellow-300
                               font-medium
                               text-xs
                               leading-tight
@@ -327,7 +273,8 @@
                               inline-block
                               px-6
                               py-2.5
-                              hover:bg-red-300 hover:text-white
+                              bg-red-300
+                              hover:text-white hover:bg-white hover:text-red-300
                               text-white
                               font-medium
                               text-xs
@@ -353,7 +300,7 @@
                               inline-block
                               px-6
                               py-2.5
-                              bg-
+                              bg-primary-700
                               text-white
                               font-medium
                               text-xs
@@ -361,12 +308,7 @@
                               uppercase
                               rounded
                               shadow-lg
-                              hover:bg-blue-700 hover:shadow-lg
-                              focus:bg-blue-700
-                              focus:shadow-lg
-                              focus:outline-none
-                              focus:ring-0
-                              active:bg-blue-800 active:shadow-lg
+                              hover:bg-white hover:text-primary-600
                               transition
                               duration-150
                               ease-in-out
@@ -389,7 +331,7 @@
                         </div>
                         <div class="grid grid-cols-4 gap-4">
                           <div
-                            class="mt-4 mb-8 bg-white"
+                            class="mt-4 mb-8 bg-white shadow-lg"
                             style="border-radius: 15px; padding: 10px"
                             v-for="document in modalData.documents"
                             :key="document.id"
@@ -398,7 +340,11 @@
                               <div class="mt-large bg-white">
                                 <a
                                   :href="googleApi + document.filePath"
-                                  :data-title="document.documentType.name"
+                                  :data-title="
+                                    document.documentType
+                                      ? document.documentType.name
+                                      : ''
+                                  "
                                   data-lightbox="example-2"
                                 >
                                   <img
@@ -410,7 +356,13 @@
                                 <h4 style="font-weight: bold">
                                   Document Type:-
                                 </h4>
-                                <h6>{{ document.documentType.name }}</h6>
+                                <h6>
+                                  {{
+                                    document.documentType
+                                      ? document.documentType.name
+                                      : ""
+                                  }}
+                                </h6>
                               </div>
                             </div>
                           </div>
@@ -438,7 +390,7 @@
               inline-block
               px-6
               py-2.5
-              bg-primary-400
+              bg-primary-700
               text-white
               font-medium
               text-xs
@@ -446,9 +398,7 @@
               uppercase
               rounded
               shadow-lg
-              hover:bg-blue-700 hover:shadow-lg
-              focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
-              active:bg-blue-800 active:shadow-lg
+              hover:bg-white hover:text-primary-600
               transition
               duration-150
               ease-in-out
@@ -470,16 +420,12 @@
               text-white
               font-medium
               text-xs
+              bg-primary-700
               leading-tight
               uppercase
               rounded
               shadow-lg
-              hover:bg-purple-700 hover:shadow-lg
-              focus:bg-purple-700
-              focus:shadow-lg
-              focus:outline-none
-              focus:ring-0
-              active:bg-purple-800 active:shadow-lg
+              hover:bg-white hover:text-primary-700
               transition
               duration-150
               ease-in-out
@@ -552,16 +498,9 @@ export default {
             modalData.value.email = result.applicant.emailAddress
               ? result.applicant.emailAddress
               : "-----";
-            modalData.value.instName = result.education.institution?.name
-              ? result.education.institution?.name
-              : "-----";
-            modalData.value.instType = result.education.institution
-              ?.institutionType
-              ? result.education.institution?.institutionType.name
-              : "-----";
-            modalData.value.department = result.education.department.name
-              ? result.education?.department.name
-              : "-----";
+            modalData.value.educations = result.educations
+              ? result.educations
+              : {};
             modalData.value.profile = result.profile;
             modalData.value.professionalTypes = result.licenseProfessions;
             modalData.value.certifiedDate = result.certifiedDate;
@@ -573,6 +512,7 @@ export default {
             isLoading.value = false;
           }
         });
+        console.log(modalData.value)
     };
 
     watch(props.modalDataId, () => {

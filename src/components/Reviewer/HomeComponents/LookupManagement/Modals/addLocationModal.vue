@@ -384,21 +384,18 @@
           <button
             type="button"
             class="
-              inline-block
+            inline-block
               px-6
               text-white
+              bg-primary-700
               font-medium
               text-xs
               leading-tight
               uppercase
+              border 
               rounded
               shadow-lg
-              hover:bg-purple-700 hover:shadow-lg
-              focus:bg-purple-700
-              focus:shadow-lg
-              focus:outline-none
-              focus:ring-0
-              active:bg-purple-800 active:shadow-lg
+              hover:bg-white hover:text-primary-600
               transition
               duration-150
               ease-in-out
@@ -411,21 +408,18 @@
           <button
             type="button"
             class="
-              inline-block
+            inline-block
               px-6
               text-white
+              bg-primary-700
               font-medium
               text-xs
               leading-tight
               uppercase
+              border 
               rounded
               shadow-lg
-              hover:bg-purple-700 hover:shadow-lg
-              focus:bg-purple-700
-              focus:shadow-lg
-              focus:outline-none
-              focus:ring-0
-              active:bg-purple-800 active:shadow-lg
+              hover:bg-white hover:text-primary-600
               transition
               duration-150
               ease-in-out

@@ -95,7 +95,7 @@
   [type="button"],
   [type="submit"],
   button {
-    @apply px-medium blue-with-light-blue-gradient text-white blue-box-shadow text-lg  cursor-pointer rounded-full transition duration-500;
+    @apply px-medium  text-white blue-box-shadow text-lg  cursor-pointer rounded-full transition duration-500;
     min-width: 80px;
     min-height: 40px;
     width: fit-content;
@@ -106,7 +106,7 @@
     margin:2px;
 
     &:hover {
-      @apply bg-white no-background-image border text-primary-600 ;
+      @apply bg-white no-background-image border;
     }
     &:focus {
       @apply border-primary-500;

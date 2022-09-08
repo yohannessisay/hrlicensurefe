@@ -1,5 +1,9 @@
 <template>
-  <div>
+New Requests
+
+
+
+  <!-- <div>
     <div class="flex flex-row justify-start h-screen">
       <div class="bg-lightBlueB-200">
         <div class="flex pl-20 pt-8">
@@ -44,27 +48,6 @@
           </transition>
         </div>
         <div class="flex justify-start mt-8 rounded ml-20">
-          <!-- <transition name="slide-fade-to-left">
-            <div
-              class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
-            >
-              <div
-                @click="openModalV()"
-                class=" flex justify-center items-center w-64 h-40"
-              >
-                <div class="p-1">
-                  <div class="my-auto flex justify-center">
-                    <RenderIllustration illustration="Verification" />
-                  </div>
-                  <h4
-                    class="text-lightBlueB-500 justify-center items-center ml-2 mt-tiny"
-                  >
-                    Verification
-                  </h4>
-                </div>
-              </div>
-            </div>
-          </transition> -->
           <transition name="slide-fade-to-left">
             <div
               class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 mb-8"
@@ -106,7 +89,7 @@
         @showTermsOfAgreementGS="showTermsOfAgreementGS = false"
       />
     </Modal>
-  </div>
+  </div> -->
 </template>
 
 <script>

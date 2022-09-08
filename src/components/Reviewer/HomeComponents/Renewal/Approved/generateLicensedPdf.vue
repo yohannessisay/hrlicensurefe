@@ -57,9 +57,7 @@
           <div class="container px-6 mx-auto">
             <section class="text-gray-800">
               <div class="flex justify-center">
-                <div class="text-center lg:max-w-3xl md:max-w-xl">
-           
-                </div>
+                <div class="text-center lg:max-w-3xl md:max-w-xl"></div>
               </div>
               <div class="vld-parent">
                 <loading
@@ -78,8 +76,8 @@
                           <div
                             v-if="
                               applicationStatus !== 'CANC' &&
-                              applicationStatus !== 'SUSP' &&
-                              !showActionLoading
+                                applicationStatus !== 'SUSP' &&
+                                !showActionLoading
                             "
                           ></div>
 
@@ -283,20 +281,49 @@
                                     <h4>
                                       ተገቢውን መስፈርት አሟልተው ስለተገኙ ሚኒስቴር መስሪያ ቤቱ
                                     </h4>
-
-                                    <h4 v-if="modalData.professionalTypes">
+                                    <h4 v-if="modalData.educations">
                                       <div
-                                        v-for="professions in modalData.professionalTypes"
-                                        :key="professions"
-                                        class="flex flex-row ml-4"
+                                        v-for="department in modalData.educations"
+                                        :key="department.id"
+                                        class="
+                                          grid grid-flow-col
+                                          auto-cols-max
+                                          border-b
+                                        "
                                       >
-                                        <b class="text-yellow-300"
+                                        <b
+                                          class="
+                                            text-yellow-300 text-sm
+                                            col-span-2
+                                          "
                                           >{{
-                                            professions.professionalTypes
-                                              .amharicProfessionalType === "ሌላ"
-                                              ? ""
-                                              : professions.professionalTypes
+                                            department.professionType &&
+                                            department.professionType
+                                              .amharicProfessionalType
+                                              ? department.professionType
                                                   .amharicProfessionalType
+                                              : department.otherProfessionAmharic
+                                              ? department.otherProfessionAmharic
+                                              : ""
+                                          }}
+                                        </b>
+                                        <span class="text-sm ml-1 mr-1">
+                                          ከ
+                                        </span>
+                                        <b
+                                          class="
+                                            text-yellow-300
+                                            ml-1
+                                            text-sm
+                                            col-span-2
+                                          "
+                                          >{{
+                                            department.institution &&
+                                            department.institution.name
+                                              ? department.institution.name
+                                              : department.otherInstitution
+                                              ? department.otherInstitution
+                                              : ""
                                           }}
                                         </b>
                                       </div>
@@ -304,7 +331,7 @@
                                     </h4>
                                   </div>
                                   <div
-                                    class="flex flex-col mb-medium w-1/2 mr-12"
+                                    class="flex flex-col mb-medium w-1/2 mr-2"
                                   >
                                     <h4>
                                       Having duly satisfied the requirements of
@@ -312,33 +339,51 @@
                                     </h4>
                                     <h4>hereby registered and licensed as</h4>
                                     <h4
-                                      v-if="
-                                        modalData.professionalTypes &&
-                                        modalData.professionalTypes[0]
-                                          .professionalTypes.name
-                                      "
+                                      v-if="modalData.educations"
+                                      class="mt-4"
                                     >
                                       <div
-                                        v-for="professions in modalData.professionalTypes"
-                                        :key="professions"
-                                        class="flex flex-row ml-4"
+                                        v-for="department in modalData.educations"
+                                        :key="department.id"
+                                        class="
+                                          grid grid-flow-col
+                                          auto-cols-max
+                                          border-b
+                                        "
                                       >
-                                        <b class="text-yellow-300"
+                                        <b
+                                          class="
+                                            text-yellow-300 text-sm
+                                            col-span-2
+                                          "
                                           >{{
-                                            professions.prefix
-                                              ? "(" + professions.prefix + ")"
+                                            department.professionType &&
+                                            department.professionType.name
+                                              ? department.professionType.name
+                                              : department.otherProfessionType
+                                              ? department.otherProfessionType
                                               : ""
                                           }}
-                                          {{
-                                            professions.professionalTypes
-                                              .code === "OTH"
-                                              ? certificateDetail.otherProfessionalType
-                                                ? certificateDetail.otherProfessionalType
-                                                : ""
-                                              : professions.professionalTypes
-                                                  .name
-                                          }}</b
+                                        </b>
+                                        <span class="text-sm ml-1 mr-1">
+                                          From</span
                                         >
+                                        <b
+                                          class="
+                                            text-yellow-300
+                                            ml-1
+                                            text-sm
+                                            col-span-2
+                                          "
+                                          >{{
+                                            department.institution &&
+                                            department.institution.name
+                                              ? department.institution.name
+                                              : department.otherInstitution
+                                              ? department.otherInstitution
+                                              : ""
+                                          }}
+                                        </b>
                                       </div>
                                     </h4>
                                   </div>
@@ -464,16 +509,12 @@
               text-white
               font-medium
               text-xs
+              bg-primary-700
               leading-tight
               uppercase
               rounded
               shadow-lg
-              hover:bg-purple-700 hover:shadow-lg
-              focus:bg-purple-700
-              focus:shadow-lg
-              focus:outline-none
-              focus:ring-0
-              active:bg-purple-800 active:shadow-lg
+              hover:bg-white hover:text-primary-700
               transition
               duration-150
               ease-in-out
@@ -491,16 +532,12 @@
               text-white
               font-medium
               text-xs
+              bg-primary-700
               leading-tight
               uppercase
               rounded
               shadow-lg
-              hover:bg-purple-700 hover:shadow-lg
-              focus:bg-purple-700
-              focus:shadow-lg
-              focus:outline-none
-              focus:ring-0
-              active:bg-purple-800 active:shadow-lg
+              hover:bg-white hover:text-primary-700
               transition
               duration-150
               ease-in-out
@@ -517,7 +554,7 @@
 </template>
 <script>
 import Title from "@/sharedComponents/Title";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { useStore } from "vuex";
 
 import jsPDF from "jspdf";
@@ -527,12 +564,11 @@ import addisAbabaCertificateBackground from "../../../../../assets/A_A_Certifica
 import AmharicFont from "../../../Configurations/amharicFont.js";
 import { toEthiopian } from "../../../Configurations/dateConvertor";
 import STATIC_CERTIFICATE_URL from "../../../../../sharedComponents/constants/message.js";
+import { useToast } from "vue-toastification";
 import moment from "moment";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
-import { useToast } from "vue-toastification";
-import { googleApi } from "@/composables/baseURL";
-import { Base64 } from "js-base64";
+import { googleApi } from "../../../../../composables/baseURL";
 
 export default {
   computed: {
@@ -542,7 +578,7 @@ export default {
     STATIC_CERTIFICATE_URL: () => STATIC_CERTIFICATE_URL
   },
   props: ["modalData"],
-  components: { Title, Loading },
+  components: { Loading },
   setup(props) {
     const store = useStore();
     const toast = useToast();
@@ -570,26 +606,37 @@ export default {
 
     let showFlash = ref(false);
     let showErrorFlash = ref(false);
-    let imgdata = ref("");
+    let finalData = computed(() => props.modalData);
+
     const updateLicenseGenerated = () => {
+      finalData.value.data
+        ? (finalData.value.data.isLicenseGenerated = true)
+        : null;
       let req = {
-        data: { ...props.modalData, isLicenseGenerated: true }
+        action: null,
+        data: { ...finalData.value.data }
       };
-      imgdata = props.modalData.profile.filePath;
 
       editApplication(req);
     };
 
     const editApplication = req => {
       store
-        .dispatch("reviewer/RenewalGenerate", req)
+        .dispatch("reviewer/editRenewal", req)
         .then(res => {
           isLoading.value = false;
           if (res.statusText == "Created") {
             showGenerateModal.value = false;
+            toast.success("Done", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true
+            });
           } else {
             showGenerateModal.value = false;
-            toast.success("Certificate Generated Successfully.", {
+            toast.error(res.data.message, {
               timeout: 5000,
               position: "bottom-center",
               pauseOnFocusLoss: true,
@@ -619,13 +666,6 @@ export default {
           imageSrc.value = res.data.data;
         })
         .finally(() => {
-          toast.success("Certificate Generated Successfully.", {
-            timeout: 5000,
-            position: "bottom-center",
-            pauseOnFocusLoss: true,
-            pauseOnHover: true,
-            icon: true
-          });
           downloadPdf();
         })
         .catch(err => {
@@ -669,25 +709,22 @@ export default {
       doc.text(
         190,
         namePosition,
-        `${certifiedUser.value.name} ${certifiedUser.value.fatherName} ${certifiedUser.value.grandFatherName
-          ? certifiedUser.value.grandFatherName
-          : ""
+        `${certifiedUser.value.name} ${certifiedUser.value.fatherName} ${
+          certifiedUser.value.grandFatherName
+            ? certifiedUser.value.grandFatherName
+            : ""
         }`
       );
 
       let changeWidth = ref(false);
       let changeWidthTooSmall = ref(false);
-      let xPosition = ref(185);
-      for (
-        let i = 0;
-        i < certificateDetail.value.renewalProfessions.length;
-        i++
-      ) {
-        let professionPrefix = `${certificateDetail.value.renewalProfessions[i].prefix
-            ? certificateDetail.value.renewalProfessions[i].prefix
+      let xPosition = ref(147);
+      for (let i = 0; i < certificateDetail.value.educations.length; i++) {
+        let professionPrefix = `${
+          certificateDetail.value.educations[i].prefix
+            ? certificateDetail.value.educations[i].prefix
             : ""
-          }  ${certificateDetail.value.renewalProfessions[i].professionalTypes.name
-          }`;
+        }  ${certificateDetail.value.educations[i].professionType.name}`;
         let getLength = doc.getTextWidth(professionPrefix);
         if (getLength > 125 && getLength <= 132) {
           if (!changeWidthTooSmall.value) {
@@ -708,32 +745,26 @@ export default {
       } else {
         doc.setFontSize(14);
       }
-      for (
-        let i = 0;
-        i < certificateDetail.value.renewalProfessions.length;
-        i++
-      ) {
+      for (let i = 0; i < certificateDetail.value.educations.length; i++) {
         doc.text(
           xPosition.value,
           professionPossition + i * professionListGap,
-          `${certificateDetail.value.renewalProfessions.length > 1
-            ? i + 1 + ". "
-            : ""
-          }${certificateDetail.value.renewalProfessions[i].professionalTypes.name
-            ? `${certificateDetail.value.renewalProfessions[i].prefix
-              ? "(" +
-              certificateDetail.value.renewalProfessions[i].prefix +
-              ")"
+          `${
+            certificateDetail.value.educations.length > 1 ? i + 1 + ". " : ""
+          }${
+            certificateDetail.value.educations[i].professionType.name
+              ? `${
+                  certificateDetail.value.educations[i].prefix
+                    ? "(" + certificateDetail.value.educations[i].prefix + ")"
+                    : ""
+                }   ${
+                  certificateDetail.value.educations[i].otherProfessionType
+                    ? certificateDetail.value.otherProfessionType
+                      ? certificateDetail.value.otherProfessionType
+                      : ""
+                    : certificateDetail.value.educations[i].professionType.name
+                }`
               : ""
-            }   ${certificateDetail.value.renewalProfessions[i]
-              .professionalTypes.code === "OTH"
-              ? certificateDetail.value.otherProfessionalType
-                ? certificateDetail.value.otherProfessionalType
-                : ""
-              : certificateDetail.value.renewalProfessions[i]
-                .professionalTypes.name
-            }`
-            : ""
           }`
         );
       }
@@ -742,21 +773,23 @@ export default {
       doc.text(
         197,
         164,
-        `${certificateDetail.value.certifiedDate
-          ? moment(certificateDetail.value.certifiedDate).format(
-            "MMM DD, YYYY"
-          ) + " - "
-          : "Not Specified"
+        `${
+          certificateDetail.value.certifiedDate
+            ? moment(certificateDetail.value.certifiedDate).format(
+                "MMM DD, YYYY"
+              ) + " - "
+            : "Not Specified"
         }`
       );
       doc.text(
         226,
         164,
-        `${certificateDetail.value.licenseExpirationDate
-          ? moment(certificateDetail.value.licenseExpirationDate).format(
-            "MMM DD, YYYY"
-          )
-          : "Not Specified"
+        `${
+          certificateDetail.value.licenseExpirationDate
+            ? moment(certificateDetail.value.licenseExpirationDate).format(
+                "MMM DD, YYYY"
+              )
+            : "Not Specified"
         }`
       );
       // License Number
@@ -776,64 +809,66 @@ export default {
         doc.text(
           60,
           namePosition - 5,
-          `${certifiedUser.value.alternativeName
-            ? certifiedUser.value.alternativeName
-            : ""
-          } ${certifiedUser.value.alternativeFatherName
-            ? certifiedUser.value.alternativeFatherName
-            : ""
-          } ${certifiedUser.value.alternativeGrandFatherName
-            ? certifiedUser.value.alternativeGrandFatherName
-            : ""
+          `${
+            certifiedUser.value.alternativeName
+              ? certifiedUser.value.alternativeName
+              : ""
+          } ${
+            certifiedUser.value.alternativeFatherName
+              ? certifiedUser.value.alternativeFatherName
+              : ""
+          } ${
+            certifiedUser.value.alternativeGrandFatherName
+              ? certifiedUser.value.alternativeGrandFatherName
+              : ""
           }`
         );
       } else {
         doc.text(
           60,
           namePosition,
-          `${certifiedUser.value.alternativeName
-            ? certifiedUser.value.alternativeName
-            : ""
-          } ${certifiedUser.value.alternativeFatherName
-            ? certifiedUser.value.alternativeFatherName
-            : ""
-          } ${certifiedUser.value.alternativeGrandFatherName
-            ? certifiedUser.value.alternativeGrandFatherName
-            : ""
+          `${
+            certifiedUser.value.alternativeName
+              ? certifiedUser.value.alternativeName
+              : ""
+          } ${
+            certifiedUser.value.alternativeFatherName
+              ? certifiedUser.value.alternativeFatherName
+              : ""
+          } ${
+            certifiedUser.value.alternativeGrandFatherName
+              ? certifiedUser.value.alternativeGrandFatherName
+              : ""
           }`
         );
       }
 
       if (changeWidth.value) {
         doc.setFontSize(11);
-        xPosition.value = 40;
+        xPosition.value = 14;
       } else if (changeWidthTooSmall.value) {
         doc.setFontSize(11);
-        xPosition.value = 28;
+        xPosition.value = 8;
       } else {
         doc.setFontSize(14);
-        xPosition.value = 65;
+        xPosition.value = 26;
       }
 
-      for (
-        let i = 0;
-        i < certificateDetail.value.renewalProfessions.length;
-        i++
-      ) {
+      for (let i = 0; i < certificateDetail.value.educations.length; i++) {
         doc.text(
           xPosition.value,
           professionPossition + i * professionListGap,
-          `${certificateDetail.value.renewalProfessions.length > 1
-            ? i + 1 + ". "
-            : ""
-          }${certificateDetail.value.renewalProfessions[i].professionalTypes
-            .amharicProfessionalType
-            ? certificateDetail.value.renewalProfessions[i].professionalTypes
-              .amharicProfessionalType === "ሌላ"
-              ? ""
-              : certificateDetail.value.renewalProfessions[i]
-                .professionalTypes.amharicProfessionalType
-            : ""
+          `${
+            certificateDetail.value.educations.length > 1 ? i + 1 + ". " : ""
+          }${
+            certificateDetail.value.educations[i].professionType
+              .amharicProfessionalType
+              ? certificateDetail.value.educations[i].professionType
+                  .amharicProfessionalType === "ሌላ"
+                ? ""
+                : certificateDetail.value.educations[i].professionType
+                    .amharicProfessionalType
+              : ""
           }`
         );
       }
@@ -849,25 +884,27 @@ export default {
       doc.text(
         75,
         164,
-        `${certificateDetail.value.certifiedDate
-          ? toEthiopian(
-            moment(certificateDetail.value.certifiedDate)._d.toISOString(),
-            false
-          ) + " - "
-          : ""
+        `${
+          certificateDetail.value.certifiedDate
+            ? toEthiopian(
+                moment(certificateDetail.value.certifiedDate)._d.toISOString(),
+                false
+              ) + " - "
+            : ""
         }`
       );
       doc.text(
         75 + getAmharicLicensedDate,
         164,
-        `${certificateDetail.value.licenseExpirationDate
-          ? toEthiopian(
-            moment(
-              certificateDetail.value.licenseExpirationDate
-            )._d.toISOString(),
-            false
-          )
-          : " አልተገለጸም"
+        `${
+          certificateDetail.value.licenseExpirationDate
+            ? toEthiopian(
+                moment(
+                  certificateDetail.value.licenseExpirationDate
+                )._d.toISOString(),
+                false
+              )
+            : " አልተገለጸም"
         }`
       );
     };
@@ -880,19 +917,15 @@ export default {
         orientation: "landscape",
         filters: ["ASCIIHexEncode"]
       });
+
       updateLicenseGenerated();
 
-      if (certificateDetail.value.reviewer.expertLevel.code === "FED") {
-        doc.addImage(
-          backgroundImage,
-          "JPG",
-          0,
-          0,
-          298,
-          213,
-          undefined,
-          "FAST"
-        );
+      if (
+        certificateDetail.value.licenseReviewer.reviewer.expertLevel.code ===
+        "FED"
+      ) {
+        doc.addImage(backgroundImage, "JPG", 0, 0, 298, 213, undefined, "FAST");
+
         handleRegionsLayout(doc, "FED", 100, 125, 7);
       } else if (certificateDetail.value.reviewer.region.code === "ORO") {
         doc.addImage(
@@ -906,7 +939,9 @@ export default {
           "FAST"
         );
         handleRegionsLayout(doc, "ORO", 110, 133, 4);
-      } else if (certificateDetail.value.reviewer.region.code === "AA") {
+      } else if (
+        certificateDetail.value.licenseReviewer.reviewer.region.code === "AA"
+      ) {
         doc.addImage(
           addisAbabaCertificateBackground,
           "JPG",
@@ -919,6 +954,8 @@ export default {
         );
         handleRegionsLayout(doc, "AA", 110, 133, 4);
       }
+
+      // doc.addImage(backgroundImage, "JPEG", 0, 0, 298, 213, undefined, "FAST");
       doc.addImage(imageSrc.value, "JPG", 246, 14, 35, 35);
       if (userImage !== null) {
         let path = {
@@ -930,8 +967,7 @@ export default {
           doc.setFontSize(10);
           window.open(doc.output("bloburl"));
         });
-      }
-      else {
+      } else {
         doc.setFontSize(10);
         window.open(doc.output("bloburl"));
       }
@@ -950,7 +986,6 @@ export default {
       isUserCertified,
       isUserFound,
       myRegion,
-      imgdata,
       generate,
       onCancel,
       fullPage,
