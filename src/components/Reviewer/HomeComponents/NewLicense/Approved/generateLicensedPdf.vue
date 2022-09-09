@@ -36,7 +36,7 @@
           flex flex-col
           w-full
           pointer-events-auto
-          bg-white bg-clip-padding
+          bg-white  
           rounded-md
           outline-none
           text-current

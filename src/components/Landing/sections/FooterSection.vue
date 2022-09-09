@@ -5,6 +5,6 @@
 </template>
 <style lang="postcss" scoped>
 h2 {
-  background-image: linear-gradient(to right, #285180, #162b43);
+  background-image: linear-gradient(to right, #07677e, #03333F);
 }
 </style>

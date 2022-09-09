@@ -184,21 +184,44 @@
                             Reviewer Detail
                           </a>
                         </h1>
-                        <p class="text-primary-600 text-sm"><i class="fa fa-eyeglass"></i></p>
+                        <p class="text-primary-600 text-sm">
+                          <i class="fa fa-thumbs-up"></i>
+                          <i class="fa fa-thumbs-down"></i>
+                        </p>
                       </header>
 
                       <div class="grid grid-flow-row auto-rows-max">
                         <div class="flex justify-between px-4 py-1">
                           <div>Reviewer Level</div>
-                          <div class="text-primary-600 font-bold">{{ prevData.reviewer&&prevData.reviewer.expertLevel?prevData.reviewer.expertLevel.name:'' }}</div>
+                          <div class="text-primary-600 font-bold">
+                            {{
+                              prevData.licenseReviewer.reviewer &&
+                              prevData.licenseReviewer.reviewer.expertLevel
+                                ? prevData.licenseReviewer.reviewer.expertLevel
+                                    .name
+                                : ""
+                            }}
+                          </div>
                         </div>
                         <div class="flex justify-between px-4 py-1">
                           <div>Reviewer Name</div>
-                          <div class="text-primary-600 font-bold">{{ prevData.reviewer?prevData.reviewer.name:'' }}</div>
+                          <div class="text-primary-600 font-bold">
+                            {{
+                              prevData.licenseReviewer
+                                ? prevData.licenseReviewer.reviewer.name
+                                : ""
+                            }}
+                          </div>
                         </div>
                         <div class="flex justify-between px-4 py-1">
                           <div>Phone Number</div>
-                          <div class="text-primary-600 font-bold">{{ prevData.reviewer?prevData.reviewer.phoneNumber:'' }}</div>
+                          <div class="text-primary-600 font-bold">
+                            {{
+                              prevData.licenseReviewer
+                                ? prevData.licenseReviewer.reviewer.phoneNumber
+                                : ""
+                            }}
+                          </div>
                         </div>
                       </div>
 
@@ -219,6 +242,8 @@
 
                   <!-- Column -->
                   <div
+                    v-for="education in prevData.educations"
+                    :key="education.id"
                     class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
                   >
                     <!-- Article -->
@@ -247,15 +272,33 @@
                       <div class="grid grid-flow-row auto-rows-max">
                         <div class="flex justify-between px-4 py-1">
                           <div>Department</div>
-                          <div class="text-primary-600 font-bold">chebude</div>
+                          <div class="text-primary-600 font-bold">
+                            {{
+                              education.department
+                                ? education.department.name
+                                : ""
+                            }}
+                          </div>
                         </div>
                         <div class="flex justify-between px-4 py-1">
                           <div>Institution</div>
-                          <div class="text-primary-600 font-bold">chebude</div>
+                          <div class="text-primary-600 font-bold">
+                            {{
+                              education.institution
+                                ? education.institution.name
+                                : ""
+                            }}
+                          </div>
                         </div>
                         <div class="flex justify-between px-4 py-1">
                           <div>Education Level</div>
-                          <div class="text-primary-600 font-bold">chebude</div>
+                          <div class="text-primary-600 font-bold">
+                            {{
+                              education.educationLevel
+                                ? education.educationLevel.name
+                                : ""
+                            }}
+                          </div>
                         </div>
                       </div>
 
@@ -273,63 +316,7 @@
                     <!-- END Article -->
                   </div>
                   <!-- END Column -->
-
-                  <!-- Column -->
-                  <div
-                    class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
-                  >
-                    <!-- Article -->
-                    <article class="overflow-hidden rounded-lg shadow-lg">
-                      <header
-                        class="
-                          flex
-                          items-center
-                          justify-between
-                          leading-tight
-                          p-2
-                          md:p-4
-                        "
-                      >
-                        <h1 class="text-lg">
-                          <a
-                            class="no-underline hover:underline text-black"
-                            href="#"
-                          >
-                            Reviewer Detail
-                          </a>
-                        </h1>
-                        <p class="text-primary-600 text-sm">Active</p>
-                      </header>
-
-                      <div class="grid grid-flow-row auto-rows-max">
-                        <div class="flex justify-between px-4 py-1">
-                          <div>Reviewer Level</div>
-                          <div class="text-primary-600 font-bold">chebude</div>
-                        </div>
-                        <div class="flex justify-between px-4 py-1">
-                          <div>Name</div>
-                          <div class="text-primary-600 font-bold">chebude</div>
-                        </div>
-                        <div class="flex justify-between px-4 py-1">
-                          <div>Phone Number</div>
-                          <div class="text-primary-600 font-bold">chebude</div>
-                        </div>
-                      </div>
-
-                      <footer
-                        class="
-                          flex
-                          items-center
-                          justify-between
-                          leading-none
-                          p-2
-                          md:p-4
-                        "
-                      ></footer>
-                    </article>
-                    <!-- END Article -->
-                  </div>
-                  <!-- END Column -->
+ 
 
                   <!-- Column -->
                   <div
@@ -361,23 +348,23 @@
                       <div class="grid grid-flow-row auto-rows-max">
                         <div class="flex justify-between px-4 py-1">
                           <div>Applicant Type</div>
-                          <div class="text-primary-600 font-bold">chebude</div>
+                          <div class="text-primary-600 font-bold">{{ prevData.applicantType?prevData.applicantType.name:'' }}</div>
                         </div>
                         <div class="flex justify-between px-4 py-1">
                           <div>Application Status</div>
-                          <div class="text-primary-600 font-bold">chebude</div>
+                          <div class="text-primary-600 font-bold">{{ prevData.applicationStatus?prevData.applicationStatus.name:'' }}</div>
                         </div>
                         <div class="flex justify-between px-4 py-1">
                           <div>Certified Status</div>
-                          <div class="text-primary-600 font-bold">chebude</div>
+                          <div class="text-primary-600 font-bold">{{ prevData.certified?prevData.certified:'' }}</div>
                         </div>
                         <div class="flex justify-between px-4 py-1">
                           <div>Certified Date</div>
-                          <div class="text-primary-600 font-bold">chebude</div>
+                          <div class="text-primary-600 font-bold">{{ prevData.applicationStatus?prevData.applicationStatus.name:'' }}</div>
                         </div>
                         <div class="flex justify-between px-4 py-1">
                           <div>Expiration Date</div>
-                          <div class="text-primary-600 font-bold">chebude</div>
+                          <div class="text-primary-600 font-bold">{{ prevData.applicationStatus?prevData.applicationStatus.name:'' }}</div>
                         </div>
                       </div>
 

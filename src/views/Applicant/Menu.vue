@@ -4,11 +4,16 @@
     <div class="content">
       <top-nav :userInfo="userInfo"></top-nav>
       <div class="mt-8 ml-8 mr-8">
-        <div class="pages-navbar flex justify-center h-12 rounded-sm shadow-lg">
-          <div class="profile p-4">
-            <h2 class="text-main-400">Welcome Back MR/MRS {{}}</h2>
-          </div>
-        </div>
+        <nav class="bg-grey-100 p-4 rounded-sm w-full shadow-lg">
+          <ol class="list-reset flex">
+            <li>
+              <a href="#" class="text-main-400 hover:text-main-100">Home</a>
+            </li>
+            <li><span class="text-gray-500 mx-2"></span></li>
+        
+           
+          </ol>
+        </nav>
         <div class="container my-12 mx-auto px-4 md:px-12">
           <div class="flex flex-wrap -mx-1 lg:-mx-4">
             <!-- Column -->
@@ -16,18 +21,25 @@
               class="
                 my-1
                 px-1
-                w-full
+                w-10/12
                 mdlg:mr-8 mdlg:w-1/4
                 md:w-1/2
-                lg:my-4 lg:px-4 lg:w-1/4\
+                lg:w-1/5 lg:px-4 
               "
             >
               <!-- Article -->
-              <article class="overflow-hidden rounded-lg shadow-2xl transform
-            transition
-            duration-300
-            ease-in-out
-            hover:-translate-y-4">
+              <article
+                class="
+                  overflow-hidden
+                  rounded-lg
+                  shadow-lg
+                  transform
+                  transition
+                  duration-300
+                  ease-in-out
+                  hover:-translate-y-4
+                "
+              >
                 <router-link to="/Applicant/NewLicense">
                   <div
                     class="
@@ -82,15 +94,22 @@
                 w-full
                 mdlg:w-1/4 mdlg:mr-8
                 md:w-1/2
-                lg:my-4 lg:px-4 lg:w-1/4
+                lg:my-4 lg:px-4 lg:w-1/5 
               "
             >
               <!-- Article -->
-              <article class="overflow-hidden rounded-lg shadow-2xl transform
-            transition
-            duration-300
-            ease-in-out
-            hover:-translate-y-4">
+              <article
+                class="
+                  overflow-hidden
+                  rounded-lg
+                  shadow-lg
+                  transform
+                  transition
+                  duration-300
+                  ease-in-out
+                  hover:-translate-y-4
+                "
+              >
                 <router-link to="/Applicant/Renewal">
                   <div
                     class="
@@ -145,7 +164,7 @@
                 mdlg:w-1/4 mdlg:mr-8
                 w-full
                 md:w-1/2
-                lg:my-4 lg:px-4 lg:w-1/4
+                lg:my-4 lg:px-4 lg:w-1/5 
               "
             >
               <!-- Article -->
@@ -153,7 +172,7 @@
                 class="
                   overflow-hidden
                   rounded-lg
-                  shadow-2xl
+                  shadow-lg
                   transform
                   transition
                   duration-300

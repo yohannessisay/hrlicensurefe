@@ -1,18 +1,16 @@
 <template>
   <main-content>
-    <div
-      class="pages-navbar flex justify-center h-12 rounded-sm"
-      style="width: 98% !important"
-    >
-      <div
-        :class="
-          isLoading ? 'profile p-4 loading-overlay is-overlay' : 'profile p-4'
-        "
-      >
-        <h2 class="text-main-400">Your submitted applications</h2>
-
-      </div>
-    </div>
+    <nav class="bg-gray-100 px-5 py-3 rounded-md w-full">
+    <ol class="list-reset flex">
+      <li><a href="#" class="text-main-400 hover:text-blue-700">Home</a></li>
+      <li><span class="text-gray-500 mx-2">/</span></li>
+      <li>
+        <a href="#" class="text-main-400 hover:text-blue-700">New License</a>
+      </li>
+      <li><span class="text-gray-500 mx-2">/</span></li>
+      <li class="text-gray-500">Submitted</li>
+    </ol>
+  </nav>
     <div class="container my-12 mx-auto px-4 md:px-12">
       <div class="flex flex-wrap sm:-mx-1 lg:-mx-4">
         <!-- Column -->

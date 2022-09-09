@@ -1,12 +1,16 @@
 <template>
-  <div
-    class="pages-navbar flex justify-center h-12 rounded-sm mb-8 shadow-xl"
-    style="width: 98% !important"
-  >
-    <div class="profile p-4 ">
-      <h2 class="text-main-400">Apply for a new license</h2>
-    </div>
-  </div>
+  <nav class="bg-gray-100 px-5 py-3 rounded-md w-full">
+    <ol class="list-reset flex">
+      <li><a href="#" class="text-main-400 hover:text-blue-700">Home</a></li>
+      <li><span class="text-gray-500 mx-2">/</span></li>
+      <li>
+        <a href="#" class="text-main-400 hover:text-blue-700">New License</a>
+      </li>
+      <li><span class="text-gray-500 mx-2">/</span></li>
+      <li class="text-gray-500">Apply</li>
+    </ol>
+  </nav>
+
   <div
     class="
       block
@@ -25,9 +29,7 @@
     </div>
 
     <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-10">
-      <div
-        class="flex  shadow-2xl rounded-md bg-primary-100"
-      >
+      <div class="flex shadow-2xl rounded-md bg-primary-100">
         <!-- applican type -->
         <div class="flex flex-col mb-4 pt-8 sm:ml-4">
           <label class="text-main-400">Applicant Type</label>
@@ -102,7 +104,7 @@
       <!-- region -->
       <div
         v-if="showLocation"
-        class="pt-8 mt-12  rounded bg-primary-100 shadow-2xl"
+        class="pt-8 mt-12 rounded bg-primary-100 shadow-2xl"
       >
         <div class="flex">
           <div class="flex flex-col mb-medium w-2/5 ml-medium mr-12">
@@ -224,14 +226,7 @@
       <!-- language -->
       <div
         v-if="showLanguage || showOccupation"
-        class="
-          flex
-          pt-8
-          mt-12 
-          rounded-sm
-          bg-primary-100
-          shadow-2xl
-        "
+        class="flex pt-8 mt-12 rounded-sm bg-primary-100 shadow-2xl"
       >
         <div
           v-if="showLanguage"
@@ -297,7 +292,7 @@
               focus:bg-white
               focus:border-blue-600
               focus:outline-none
-            " 
+            "
             v-model="generalInfo.occupationSelected"
           >
             <option
@@ -315,13 +310,7 @@
 
       <!-- educational institution and department -->
       <div
-        class="
-          mt-12 
-          rounded-sm
-          bg-primary-100
-          shadow-2xl
-          mb-8
-        "
+        class="mt-12 rounded-sm bg-primary-100 shadow-2xl mb-8"
         v-if="generalInfo.multipleDepartment.length < 3"
       >
         <div class="container mx-auto">
@@ -664,7 +653,7 @@
                   <tbody>
                     <tr
                       class="border-b border-main-400"
-                      v-for="(item,index) in generalInfo.multipleDepartment"
+                      v-for="(item, index) in generalInfo.multipleDepartment"
                       :key="item.id"
                     >
                       <td
@@ -721,7 +710,12 @@
                           whitespace-nowrap
                         "
                       >
-                        <button @click="removeDepartment(index)" class="fa fa-trash  bg-red-200 cursor-pointer " style="color: red;" title="Delete"></button>
+                        <button
+                          @click="removeDepartment(index)"
+                          class="fa fa-trash bg-red-200 cursor-pointer"
+                          style="color: red"
+                          title="Delete"
+                        ></button>
                       </td>
                     </tr>
                   </tbody>
@@ -856,7 +850,7 @@ export default {
       store
 
         .dispatch("newlicense/getZones", generalInfo.value.regionSelected.id)
-        .then((res) => { 
+        .then((res) => {
           const zonesResult = res.data.data;
           zones.value = zonesResult;
         });
@@ -935,11 +929,10 @@ export default {
         return tempStatus;
       }
     };
-    const removeDepartment = (index) =>
-    {
-      generalInfo.value.multipleDepartment.splice(index,1);
-      generalInfo.value.education.splice(index,1);
-    }
+    const removeDepartment = (index) => {
+      generalInfo.value.multipleDepartment.splice(index, 1);
+      generalInfo.value.education.splice(index, 1);
+    };
     const addMultiple = () => {
       if (
         generalInfo.value.departmentSelected &&
@@ -971,8 +964,10 @@ export default {
                 institution: generalInfo.value.institutionSelected,
                 professionalType: generalInfo.value.professionalTypeSelected,
 
-                otherEducationalInstitution: generalInfo.value.otherEducationalInstitution,
-                otherProfessionalTypeAmharic: generalInfo.value.otherProfessionalTypeAmharic,
+                otherEducationalInstitution:
+                  generalInfo.value.otherEducationalInstitution,
+                otherProfessionalTypeAmharic:
+                  generalInfo.value.otherProfessionalTypeAmharic,
                 otherProfessionalType: generalInfo.value.otherProfessionalType,
               });
               generalInfo.value.education.push({
@@ -980,10 +975,10 @@ export default {
                 educationalLevelId:
                   generalInfo.value.educationalLevelSelected.id,
                 institutionId: generalInfo.value.institutionSelected.id,
-                professionTypeId:
-                  generalInfo.value.professionalTypeSelected.id,
+                professionTypeId: generalInfo.value.professionalTypeSelected.id,
                 otherInstitution: generalInfo.value.otherEducationalInstitution,
-                otherProfessionTypeAmharic: generalInfo.value.otherProfessionalTypeAmharic,
+                otherProfessionTypeAmharic:
+                  generalInfo.value.otherProfessionalTypeAmharic,
                 otherProfessionType: generalInfo.value.otherProfessionalType,
               });
             }
@@ -1017,11 +1012,11 @@ export default {
         multipleDepartmentError.value = true;
       }
     };
-    const fetchOccupation=()=> {
-    store.dispatch("lookups/getGovernment").then((res) => {
-        if (res.data.status == "Success") { 
+    const fetchOccupation = () => {
+      store.dispatch("lookups/getGovernment").then((res) => {
+        if (res.data.status == "Success") {
           occupations.value = res.data.data;
-        }  
+        }
       });
     };
     const apply = () => {
@@ -1052,7 +1047,7 @@ export default {
       localData.value = window.localStorage.getItem("NLApplicationData")
         ? JSON.parse(window.localStorage.getItem("NLApplicationData"))
         : {};
-      if (Object.keys(localData.value).length != 0) { 
+      if (Object.keys(localData.value).length != 0) {
         generalInfo.value = localData.value;
       }
     });

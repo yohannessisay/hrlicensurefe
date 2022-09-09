@@ -556,9 +556,14 @@
                                         <div
                                           class="text-black text-base font-bold"
                                         >
-                                        {{
+                                          {{
                                             education.professionType
-                                              ? education.professionType.name != "Other"?education.professionType.name :education.otherProfessionType +"/" + education.otherProfessionAmharic 
+                                              ? education.professionType.name !=
+                                                "Other"
+                                                ? education.professionType.name
+                                                : education.otherProfessionType +
+                                                  "/" +
+                                                  education.otherProfessionAmharic
                                               : ""
                                           }}
                                           <span
@@ -1652,22 +1657,21 @@
           </button>
           <button
             class="
-               inline-block
-                                            px-6
-                                            py-2.5
-                                            bg-primary-700
-                                            text-white
-                                            font-medium
-                                            text-xs
-                                            leading-tight
-                                            uppercase
-                                            rounded
-                                            shadow-lg
-                                            hover:bg-white 
-                                            hover:text-primary-600
-                                            transition
-                                            duration-150
-                                            ease-in-out
+              inline-block
+              px-6
+              py-2.5
+              bg-primary-700
+              text-white
+              font-medium
+              text-xs
+              leading-tight
+              uppercase
+              rounded
+              shadow-lg
+              hover:bg-white hover:text-primary-600
+              transition
+              duration-150
+              ease-in-out
             "
             @click="supervise()"
           >
@@ -2224,7 +2228,7 @@ export default {
         ],
         message: smsMessage ? smsMessage : "",
       };
-      console.log(newLicense.value)
+      console.log(newLicense.value);
       if (applicationType.value == "New License") {
         store
           .dispatch("reviewer/editNewLicense", req)
@@ -2560,48 +2564,48 @@ export default {
               " days  .Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
             : "",
         };
-        store
-          .dispatch("reviewer/editNewLicense", req)
-          .then((res) => {
-            showActionLoading.value = false;
-            if (res.statusText == "Created") {
-              store.dispatch("sms/sendSms", smsData).then(() => {
-                toast.success("Application reviewed Successfully", {
-                  timeout: 5000,
-                  position: "bottom-center",
-                  pauseOnFocusLoss: true,
-                  pauseOnHover: true,
-                  icon: true,
-                });
-                setTimeout(() => {
-                  window.location.reload();
-                }, 2000);
-              });
-            } else {
-              toast.error("Please try again", {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true,
-              });
-              setTimeout(() => {
-                window.location.reload();
-              }, 2000);
-            }
-          })
-          .catch(() => {
-            toast.error("Please try again", {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            });
-            setTimeout(() => {
-              window.location.reload();
-            }, 2000);
-          });
+        // store
+        //   .dispatch("reviewer/editNewLicense", req)
+        //   .then((res) => {
+        //     showActionLoading.value = false;
+        //     if (res.statusText == "Created") {
+        //       store.dispatch("sms/sendSms", smsData).then(() => {
+        //         toast.success("Application reviewed Successfully", {
+        //           timeout: 5000,
+        //           position: "bottom-center",
+        //           pauseOnFocusLoss: true,
+        //           pauseOnHover: true,
+        //           icon: true,
+        //         });
+        //         setTimeout(() => {
+        //           window.location.reload();
+        //         }, 2000);
+        //       });
+        //     } else {
+        //       toast.error("Please try again", {
+        //         timeout: 5000,
+        //         position: "bottom-center",
+        //         pauseOnFocusLoss: true,
+        //         pauseOnHover: true,
+        //         icon: true,
+        //       });
+        //       setTimeout(() => {
+        //         window.location.reload();
+        //       }, 2000);
+        //     }
+        //   })
+        //   .catch(() => {
+        //     toast.error("Please try again", {
+        //       timeout: 5000,
+        //       position: "bottom-center",
+        //       pauseOnFocusLoss: true,
+        //       pauseOnHover: true,
+        //       icon: true,
+        //     });
+        //     setTimeout(() => {
+        //       window.location.reload();
+        //     }, 2000);
+        //   });
       }
     };
     const changeAction = (action) => {
@@ -2640,17 +2644,19 @@ export default {
         });
         allowOtherProfChange.value[education.department.id] = false;
       }
-      newLicense.value.educations.forEach((newP) => {
-        let tempP = false;
-        modifiedProfession.forEach((oldP) => {
-          if (oldP.department.id != newP.department.id) {
-            tempP = true;
+    
+      for (let i = 0; i < newLicense.value.educations.length; i++) {
+        for (let j = 0; i < modifiedProfession.length; j++) {
+          if (
+            newLicense.value.educations[i].department.id ==
+            modifiedProfession[j].department.id
+          ) {
+            newLicense.value.educations[i] = modifiedProfession[j];
           }
-        });
-        if (tempP) {
-          modifiedProfession.push(newP);
         }
-      });
+      }
+   
+ 
       newLicense.value.educations = modifiedProfession;
     };
     onMounted(() => {

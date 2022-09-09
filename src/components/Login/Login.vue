@@ -6,13 +6,18 @@
       <h1 class="font-bold text-center text-2xl mb-5">
         <button
           @click="$emit('closeModal', false)"
-          variant="rounded"
-          style="display: inline-grid !important"
+          class="hover:bg-main-400 border text-main-400 rounded-sm"
         >
           <svg
             viewBox="0 0 329.269 329"
             xmlns="http://www.w3.org/2000/svg"
-            class="close-svg fill-current text-primary-100 relative"
+            class="
+              close-svg
+              fill-current
+              text-primary-700
+              hover:text-white
+              relative
+            "
           >
             <path
               d="M194.8 164.77L323.013 36.555c8.343-8.34 8.343-21.825 0-30.164-8.34-8.34-21.825-8.34-30.164 0L164.633 134.605 36.422 6.391c-8.344-8.34-21.824-8.34-30.164 0-8.344 8.34-8.344 21.824 0 30.164l128.21 128.215L6.259 292.984c-8.344 8.34-8.344 21.825 0 30.164a21.266 21.266 0 0015.082 6.25c5.46 0 10.922-2.09 15.082-6.25l128.21-128.214 128.216 128.214a21.273 21.273 0 0015.082 6.25c5.46 0 10.922-2.09 15.082-6.25 8.343-8.34 8.343-21.824 0-30.164zm0 0"
@@ -31,7 +36,7 @@
             class="w-100"
             alt="HPEL logo"
           />
-          <h2>HPEL Login</h2>
+          <h2 class="text-main-400 font-bold">eHPEL Login</h2>
           <h5>Enter your email and password below</h5>
         </div>
         <form @submit.prevent="submit">
@@ -66,7 +71,7 @@
                 >
 
                 <a
-                  class="text-primary-500 text-sm"
+                  class="text-main-400 text-sm"
                   @click="$emit('forgotPassword')"
                 >
                   Forgot password?
@@ -76,21 +81,20 @@
             <div class="inline-flex w-full">
               <input
                 v-model="credentials.password"
-                type="password"
                 id="password"
                 name="password"
                 autocomplete="current-password"
                 required
                 class="border rounded-lg px-3 py-2 mt-1 mb-2 text-sm w-full"
                 placeholder="************"
-                @type="show ? 'password' : 'text'"
+                :type="showPassword"
               />
               <div class="w-1/12 ml-2 mt-2">
-                <a class="text-primary-500">
+                <a class="text-main-400" @click="showVisibility()">
                   <i
                     class="fa fa-eye"
                     style="font-size: 26px"
-                    @click="showVisibility()"
+                    
                   ></i
                 ></a>
               </div>
@@ -101,15 +105,14 @@
                 class="
                   transition
                   duration-200
-                  bg-blue-500
-           
+                  bg-main-400
                   text-white
                   w-full
                   ml-auto
                   mt-4
                   rounded-lg
                   text-md
-                
+                  hover:text-main-400
                   font-semibold
                   text-center
                   inline-block
@@ -130,13 +133,18 @@
                     d="M17 8l4 4m0 0l-4 4m4-4H3"
                   />
                 </svg>
-              
               </button>
-  <vue-element-loading :active="show" spinner="ring" color="white" background-color="#ffffff00;" style="margin-left: 110px;margin-top: -20px;" />
+              <vue-element-loading
+                :active="show"
+                spinner="ring"
+                color="white"
+                background-color="#ffffff00;"
+                style="margin-left: 110px; margin-top: -20px"
+              />
               <p class="text-gray-800 mt-6 text-center">
                 <a
                   class="
-                    text-base text-primary-500
+                    text-base text-main-400
                     hover:underline
                     cursor-pointer
                   "
@@ -178,6 +186,7 @@ export default {
   setup({ emit }) {
     const store = useStore();
     const router = useRouter();
+    let showPassword = ref('password');
     let show = ref(false);
     let message = ref({
       showFlash: false,
@@ -196,13 +205,12 @@ export default {
       password: undefined,
     });
     const showVisibility = () => {
-      let x = document.getElementById("password");
-
-      if (x.type === "password") {
-        x.type = "text";
-      } else {
-        x.type = "password";
-      }
+     if(showPassword.value=='password'){
+      showPassword.value='text'
+     }
+     else if(showPassword.value=='text'){
+      showPassword.value='password'
+     }
     };
     const submit = () => {
       show.value = true;
@@ -228,7 +236,7 @@ export default {
                 message.value.showLoading = false;
                 message.value.showFlash = true;
                 message.value.showErrorFlash = false;
-                  router.push({ path: "/addProfile" });
+                router.push({ path: "/addProfile" });
               }
             });
           } else {
@@ -269,6 +277,7 @@ export default {
       isEmail,
       showVisibility,
       show,
+      showPassword,
       validateForm,
       message,
       forgot,

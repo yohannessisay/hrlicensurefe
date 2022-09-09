@@ -2644,17 +2644,18 @@ export default {
         });
         allowOtherProfChange.value[education.department.id] = false;
       }
-      renewal.value.educations.forEach((newP) => {
-        let tempP = false;
-        modifiedProfession.forEach((oldP) => {
-          if (oldP.department.id != newP.department.id) {
-            tempP = true;
+
+      for (let i = 0; i < renewal.value.educations.length; i++) {
+        for (let j = 0; i < modifiedProfession.length; j++) {
+          if (
+            renewal.value.educations[i].department.id ==
+            modifiedProfession[j].department.id
+          ) {
+            renewal.value.educations[i] = modifiedProfession[j];
           }
-        });
-        if (tempP) {
-          modifiedProfession.push(newP);
         }
-      });
+      }
+
       renewal.value.educations = modifiedProfession;
     };
     onMounted(() => {

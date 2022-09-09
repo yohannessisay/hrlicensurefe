@@ -1422,4 +1422,15 @@ export default {
     });
     commit(SET_NEW_LICENSE_FOR_SPECIFIC_USER_SEARCHED, searchedVal);
   },
+
+  async getNewLicense({ commit }, userId) {
+    try {
+      const resp = await ApiService.get(
+        baseUrl + "/newLicenses/user/" + userId
+      );
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
 };

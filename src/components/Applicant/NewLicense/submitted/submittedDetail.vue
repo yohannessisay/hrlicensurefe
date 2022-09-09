@@ -9,12 +9,13 @@
       </div>
     </div>
     <div class="container my-12 mx-auto px-4 md:px-12">
-      
 
 
 
 
-      
+
+
+
     </div>
   </main-content>
 </template>
@@ -35,7 +36,7 @@ export default {
     onMounted(() => {
       userInfo.value = JSON.parse(window.localStorage.getItem("personalInfo"));
       store.dispatch("newlicense/getNewLicenseApplication",route.params.id).then((res) => {
-        newLicense.value = res.data.data;
+        ge.value = res.data.data;
         
 
 

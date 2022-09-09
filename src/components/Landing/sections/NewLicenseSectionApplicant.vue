@@ -40,8 +40,8 @@
             y2="1"
             gradientUnits="objectBoundingBox"
           >
-            <stop offset="0" stop-color="#fde68a" />
-            <stop offset="1" stop-color="#3674b9" />
+            <stop offset="0" stop-color="#FCD228B2" />
+            <stop offset="1" stop-color="#BDBA0A" />
           </linearGradient>
           <linearGradient
             id="SVGID_1_"
@@ -51,7 +51,7 @@
             x2="677"
             y2="328.8946"
           >
-            <stop offset="0" style="stop-color: #a8b1a1" />
+            <stop offset="0" style="stop-color: #B8B8B8" />
             <stop offset="1" style="stop-color: #07677e;" />
           </linearGradient>
           <path
