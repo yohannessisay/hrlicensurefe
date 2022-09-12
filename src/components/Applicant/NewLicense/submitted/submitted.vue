@@ -1,20 +1,20 @@
 <template>
   <main-content>
     <nav class="bg-gray-100 px-5 py-3 rounded-md w-full">
-    <ol class="list-reset flex">
-      <li><a href="#" class="text-main-400 hover:text-blue-700">Home</a></li>
-      <li><span class="text-gray-500 mx-2">/</span></li>
-      <li>
-        <a href="#" class="text-main-400 hover:text-blue-700">New License</a>
-      </li>
-      <li><span class="text-gray-500 mx-2">/</span></li>
-      <li class="text-gray-500">Submitted</li>
-    </ol>
-  </nav>
+      <ol class="list-reset flex">
+        <li><a href="#" class="text-main-400 hover:text-blue-700">Home</a></li>
+        <li><span class="text-gray-500 mx-2">/</span></li>
+        <li>
+          <a href="#" class="text-main-400 hover:text-blue-700">New License</a>
+        </li>
+        <li><span class="text-gray-500 mx-2">/</span></li>
+        <li class="text-gray-500">Submitted</li>
+      </ol>
+    </nav>
     <div class="container my-12 mx-auto px-4 md:px-12">
       <div class="flex flex-wrap sm:-mx-1 lg:-mx-4">
         <!-- Column -->
-      
+
         <div
           v-for="license in newLicense"
           :key="license.id"
@@ -29,10 +29,10 @@
             shadow-2xl
             rounded-lg
             transform
-                transition
-                duration-300
-                ease-in-out
-                hover:-translate-y-2
+            transition
+            duration-300
+            ease-in-out
+            hover:-translate-y-2
           "
         >
           <!-- Article -->
@@ -60,9 +60,15 @@
               <h1 class="text-lg">
                 <a class="no-underline hover:underline text-main-400" href="#">
                   Profession Name
-                </a>  
+                </a>
               </h1>
-              <p v-for="eds in license.educations " :key="eds.id" class="text-black text-sm">{{ eds.professionType.name+' ,' }}</p>
+              <p
+                v-for="eds in license.educations"
+                :key="eds.id"
+                class="text-black text-sm"
+              >
+                {{ eds.professionType.name + " ," }}
+              </p>
             </header>
             <div class="border-b-2 text-main-400">
               <div
@@ -76,11 +82,20 @@
                 "
               >
                 <h1 class="text-lg">
-                  <a class="no-underline hover:underline text-main-400" href="#">
+                  <a
+                    class="no-underline hover:underline text-main-400"
+                    href="#"
+                  >
                     Certified Date
                   </a>
                 </h1>
-                <p class="text-black text-sm">{{ license.certifiedDate?license.certifiedDate:'Waiting for review'}}</p>
+                <p class="text-black text-sm">
+                  {{
+                    license.certifiedDate
+                      ? license.certifiedDate
+                      : "Waiting for review"
+                  }}
+                </p>
               </div>
               <div
                 class="
@@ -93,13 +108,21 @@
                 "
               >
                 <h1 class="text-lg">
-                  <a class="no-underline hover:underline text-main-400" href="#">
+                  <a
+                    class="no-underline hover:underline text-main-400"
+                    href="#"
+                  >
                     Expiry Date
                   </a>
                 </h1>
-                <p class="text-black text-sm">{{ license.certifiedDate?license.certifiedDate:'Waiting for review'}}</p>
+                <p class="text-black text-sm">
+                  {{
+                    license.certifiedDate
+                      ? license.certifiedDate
+                      : "Waiting for review"
+                  }}
+                </p>
               </div>
-       
             </div>
             <footer
               class="flex items-center justify-between leading-none p-2 md:p-4"
