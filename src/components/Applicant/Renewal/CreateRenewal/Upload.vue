@@ -387,7 +387,7 @@
                   >
                     <tr
                       v-if="parentItem.length < 2"
-                      class="border-b text-main-400 "
+                      class="border-b text-main-400 bg-lightGrey-100"
                     >
                       <td class="px-6 py-4">
                         <div class="flex items-center ml-4">
@@ -553,7 +553,7 @@
 
                     <tr>
                       <div
-                        class="accordion "
+                        class="accordion"
                         id="accordionExample"
                         style="width: max-content"
                       >
@@ -576,6 +576,12 @@
                             data-bs-parent="#accordionExample"
                           >
                             <div class="accordion-body py-4 px-5">
+                              <div class="bg-lightMain-500 rounded-sm p-2">
+                                <small class="text-white"
+                                  >Only the first file upload is required, the
+                                  remaining ones are optional</small
+                                >
+                              </div>
                               <tr
                                 v-for="parentItem in parentItem"
                                 :key="parentItem"

@@ -593,7 +593,7 @@
           mt-12
           mb-8
           rounded-sm
-          bg-primary-200
+          bg-white
         "
       >
         <h2 class="text-main-400 font-bold m-4 border-b-2">

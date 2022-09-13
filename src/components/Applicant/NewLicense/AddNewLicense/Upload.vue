@@ -387,7 +387,7 @@
                   >
                     <tr
                       v-if="parentItem.length < 2"
-                      class="border-b text-main-400 "
+                      class="border-b text-main-400 bg-lightGrey-100"
                     >
                       <td class="px-6 py-4">
                         <div class="flex items-center ml-4">
@@ -453,7 +453,7 @@
                     </tr>
                     <!-- if parent doc has more than 1 elements -->
                     <tr v-else class="border-b text-main-400 bg-lightGrey-100">
-                      <td class="px-6 ">
+                      <td class="px-6">
                         <div class="flex items-center ml-4">
                           <div>
                             <p class="">
@@ -467,7 +467,7 @@
                           </div>
                         </div>
                       </td>
-                      <td class="px-6 ">
+                      <td class="px-6">
                         <div class="flex items-center ml-4">
                           <div>
                             <p class="">
@@ -553,7 +553,7 @@
 
                     <tr>
                       <div
-                        class="accordion "
+                        class="accordion"
                         id="accordionExample"
                         style="width: max-content"
                       >
@@ -563,9 +563,7 @@
                             shadow-lg
                             w-full
                             bg-white
-                            border border-gray-200
-                            mt-4
-                            mb-4
+                            border border-grey-400
                             ml-8
                           "
                         >
@@ -576,6 +574,13 @@
                             data-bs-parent="#accordionExample"
                           >
                             <div class="accordion-body py-4 px-5">
+                              <div class="bg-lightMain-500 rounded-sm p-2">
+                                <small class="text-white"
+                                  >Only the first file upload is required, the
+                                  remaining ones are optional</small
+                                >
+                              </div>
+
                               <tr
                                 v-for="parentItem in parentItem"
                                 :key="parentItem"
