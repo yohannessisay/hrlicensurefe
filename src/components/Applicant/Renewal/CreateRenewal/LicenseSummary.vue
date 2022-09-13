@@ -224,10 +224,10 @@
                     />
                   </a>
 
-                  <h4 class="text-main-400 font-bold border-b mb-2 mt-2">
+                  <h4 class="text-main-400 font-bold border-b  m-2">
                     Document Type
                   </h4>
-                  <h6 class="mb-4">{{ localFileData.documenttype }}</h6>
+                  <h6 class="m-2">{{ localFileData.documenttype }}</h6>
                 </div>
               </div>
             </div>
