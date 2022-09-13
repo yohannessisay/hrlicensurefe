@@ -34,7 +34,7 @@
         </h2>
         <div
           id="commonFilesAccordion"
-          class="accordion-collapse collapse"
+          class="accordion-collapse collapse show"
           aria-labelledby="commonFilesAccordionheading"
           data-bs-parent="#FilesAccordion"
         >
@@ -52,7 +52,7 @@
                     overflow-hidden
                   "
                 >
-                  <thead class="bg-main-400">
+                  <thead class="bg-lightMain-500">
                     <tr class="text-left">
                       <th
                         class="

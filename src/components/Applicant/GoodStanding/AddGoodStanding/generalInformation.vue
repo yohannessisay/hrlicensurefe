@@ -106,13 +106,17 @@
                     bg-white
                     text-main-400
                     max-w-3xl
+                    border
+                    hover:bg-main-400
+                    hover:text-white
+
                     font-medium
                     text-xs
                     leading-tight
                     uppercase
                     rounded
                     shadow-md
-                    hover:text-main-500 hover:border-main-500
+                     hover:border-main-500
                     focus:bg-blue-700
                     focus:shadow-lg
                     focus:outline-none
@@ -504,7 +508,7 @@
             px-6
             py-2.5
             bg-blue-700
-            text-white
+            text-main-400
             max-w-3xl
             font-medium
             text-xs
@@ -512,8 +516,10 @@
             uppercase
             rounded
             shadow-md
-            bg-main-400
-            hover:text-main-500 hover:border-main-500
+            bg-white
+            border
+            hover:text-white hover:border-main-500
+            hover:bg-main-400
             focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
             active:bg-blue-800 active:shadow-lg
             transition
