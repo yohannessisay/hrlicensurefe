@@ -1,13 +1,39 @@
 <template>
   <section class="wrapper">
     <div
-      class="illustration-and-message relative px-small pt-xl lg:pt-small xl:pt-0 box-border w-full flex flex-col-reverse lg:flex-row justify-end items-center"
+      class="
+        illustration-and-message
+        relative
+        px-small
+        pt-xl
+        lg:pt-small
+        xl:pt-0
+        box-border
+        w-full
+        flex flex-col-reverse
+        lg:flex-row
+        justify-end
+        items-center
+      "
     >
       <LandingIllustration
         class="block lg:absolute z-0 -mb-small sm:-mb-large"
       />
       <div
-        class="content-wrapper-crtified flex justify-center flex-col lg:ml-small w-full sm:w-4/5 lg:w-5/12 z-10 -mb-large sm:-mb-xl lg:-mb-0"
+        class="
+          content-wrapper-crtified
+          flex
+          justify-center
+          flex-col
+          lg:ml-small
+          w-full
+          sm:w-4/5
+          lg:w-5/12
+          z-10
+          -mb-large
+          sm:-mb-xl
+          lg:-mb-0
+        "
       >
         <transition name="slide-fade-to-left">
           <section
@@ -15,7 +41,13 @@
             class="flex flex-col items-center lg:items-end"
           >
             <h1
-              class="text-3xl sm:text-largeDisplay blue-text-gradient -mb-tiny sm:-mb-small"
+              class="
+                text-3xl
+                sm:text-largeDisplay
+                blue-text-gradient
+                -mb-tiny
+                sm:-mb-small
+              "
             >
               Get Certified
             </h1>
@@ -44,7 +76,29 @@
           </transition>
           <transition name="slide-fade-to-left">
             <button
-              class="mt-medium lg:mt-0 lg:self-end px-xl"
+              class="
+                inline-block
+                px-6
+                py-2.5
+                bg-main-400
+                text-white
+                hover:text-primary-600 hover:bg-white
+                font-medium
+                text-xs
+                leading-tight
+                uppercase
+                rounded
+                shadow-md
+                hover:bg-blue-700 hover:shadow-lg
+                focus:bg-blue-700
+                focus:shadow-lg
+                focus:outline-none
+                focus:ring-0
+                active:bg-blue-800 active:shadow-lg
+                transition
+                duration-150
+                ease-in-out
+              "
               v-if="showContent"
               @click="$emit('setShowSignup', true)"
             >
@@ -62,7 +116,7 @@ import LandingIllustration from "./LandingIllustration";
 
 export default {
   components: {
-    LandingIllustration
+    LandingIllustration,
   },
   emits: ["setShowSignup"],
   setup() {
@@ -73,9 +127,9 @@ export default {
       }, 500);
     });
     return {
-      showContent
+      showContent,
     };
-  }
+  },
 };
 </script>
 <style lang="postcss" scoped>

@@ -29,6 +29,8 @@
                     class="
                       px-6
                       text-white
+                      bg-primary-600
+                      hover:text-primary-600
                       font-medium
                       text-xs
                       leading-tight

@@ -179,7 +179,7 @@
                       </select>
                     </div>
                     <div class="form-group mb-6">
-                      <label for="users" class="ml-4">License Number</label>
+                      <label for="users" class="ml-4">License Id</label>
                       <input
                         type="text"
                         class="
@@ -205,7 +205,7 @@
                           focus:outline-none
                         "
                         id="lNumber"
-                        placeholder="License Number"
+                        placeholder="License Id"
                         v-model="licenseNumber"
                       />
                     </div>
@@ -213,21 +213,22 @@
                       <button
                         type="submit"
                         class="
-                          bg-blue-600
-                          text-white
-                          font-medium
-                          text-xs
-                          uppercase
-                          rounded
-                          shadow-md
-                          hover:bg-blue-700 hover:shadow-lg
-                          focus:bg-blue-700
-                          focus:shadow-lg
-                          focus:outline-none
-                          focus:ring-0
-                          active:bg-blue-800 active:shadow-lg
-                          duration-150
-                          ease-in-out
+                        px-6
+                      text-white
+                      bg-primary-600
+                      hover:text-primary-600
+                      font-medium
+                      text-xs
+                      leading-tight
+                      uppercase
+                      rounded
+                      shadow-md
+                      focus:shadow-lg focus:outline-none focus:ring-0
+                      transition
+                      duration-150
+                      mt-0
+                      ease-in-out
+                      text-right
                         "
                         @click="submit()"
                       >
@@ -251,32 +252,8 @@
             rounded-b-md
           "
         >
-          <button
-            type="button"
-            class="
-              inline-block
-              px-6
-              text-white
-              font-medium
-              text-xs
-              leading-tight
-              uppercase
-              rounded
-              shadow-md
-              hover:bg-purple-700 hover:shadow-lg
-              focus:bg-purple-700
-              focus:shadow-lg
-              focus:outline-none
-              focus:ring-0
-              active:bg-purple-800 active:shadow-lg
-              transition
-              duration-150
-              ease-in-out
-            "
-            data-bs-dismiss="modal"
-          >
-            Close
-          </button>
+       
+       
         </div>
       </div>
     </div>

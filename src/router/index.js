@@ -82,7 +82,12 @@ const routes = [
   {
     path: "/Applicant/NewLicense/approved",
     name: "ApplicantNewLicenseApproved",
-    component: () => import("../components/Applicant/NewLicense/approved.vue")
+    component: () => import("../components/Applicant/NewLicense/approved/approved.vue")
+  },
+  {
+    path: "/Applicant/NewLicense/approved/detail/:id",
+    name: "ApplicantNewLicenseApprovedDetail",
+    component: () => import("../components/Applicant/NewLicense/approved/approvedDetail.vue")
   },
   {
     path: "/Applicant/NewLicense/submitted",
@@ -97,41 +102,41 @@ const routes = [
   {
     path: "/Applicant/NewLicense/inReview",
     name: "ApplicantNewLicenseInReview",
-    component: () => import("../components/Applicant/NewLicense/inReview.vue")
+    component: () => import("../components/Applicant/NewLicense/inReview/inReview.vue")
   },
   {
     path: "/Applicant/NewLicense/undersupervision",
     name: "ApplicantNewLicenseUnderSupervision",
     component: () =>
-      import("../components/Applicant/NewLicense/underSupervision.vue")
+      import("../components/Applicant/NewLicense/underSupervision/underSupervision.vue")
   },
   {
     path: "/Applicant/NewLicense/withdraw",
     name: "ApplicantNewLicenseWithdraw",
-    component: () => import("../components/Applicant/NewLicense/withdraw.vue")
+    component: () => import("../components/Applicant/NewLicense/withdraw/withdraw.vue")
   },
   {
     path: "/Applicant/NewLicense/pendingPayment",
     name: "ApplicantNewLicensePendingPayment",
     component: () =>
-      import("../components/Applicant/NewLicense/pendingPayment.vue")
+      import("../components/Applicant/NewLicense/pendingPayment/pendingPayment.vue")
   },
   {
     path: "/Applicant/NewLicense/declined",
-    name: "ApplicantDeclined",
-    component: () => import("../components/Applicant/NewLicense/declined.vue")
+    name: "ApplicantNewLicenseDeclined",
+    component: () => import("../components/Applicant/NewLicense/declined/declined.vue")
   },
   {
     path: "/Applicant/NewLicense/draft",
     name: "ApplicantNewLicenseDraft",
-    component: () => import("../components/Applicant/NewLicense/drafted.vue")
+    component: () => import("../components/Applicant/NewLicense/draft/draft.vue")
   },
   {
     path: "/Applicant/Newlicense",
     name: "ApplicantNewLicense",
     component: () => import("../components/Applicant/NewLicense/newLicense.vue")
   },
-
+  //Applicant Side Renewal
   {
     path: "/Applicant/Renewal",
     name: "ApplicantRenewal",
@@ -152,51 +157,54 @@ const routes = [
   {
     path: "/Applicant/GoodStanding/approved",
     name: "ApplicantGoodStandingApproved",
-    component: () => import("../components/Applicant/GoodStanding/approved.vue")
+    component: () => import("../components/Applicant/GoodStanding/approved/approved.vue")
   },
   {
     path: "/Applicant/GoodStanding/submitted",
     name: "ApplicantGoodStandingSubmitted",
     component: () =>
-      import("../components/Applicant/GoodStanding/submitted.vue")
+      import("../components/Applicant/GoodStanding/submitted/submitted.vue")
   },
   {
     path: "/Applicant/GoodStanding/assigned",
     name: "ApplicantGoodStandingInReview",
-    component: () => import("../components/Applicant/GoodStanding/assigned.vue")
+    component: () => import("../components/Applicant/GoodStanding/assigned/assigned.vue")
   },
   {
     path: "/Applicant/GoodStanding/undersupervision",
     name: "ApplicantGoodStandingUnderSupervision",
     component: () =>
-      import("../components/Applicant/GoodStanding/underSupervision.vue")
+      import("../components/Applicant/GoodStanding/underSupervision/underSupervision.vue")
   },
   {
     path: "/Applicant/GoodStanding/withdraw",
     name: "ApplicantGoodStandingWithdraw",
-    component: () => import("../components/Applicant/GoodStanding/withdraw.vue")
+    component: () => import("../components/Applicant/GoodStanding/withdraw/withdraw.vue")
   },
   {
     path: "/Applicant/GoodStanding/pendingPayment",
     name: "ApplicantGoodStandingPendingPayment",
     component: () =>
-      import("../components/Applicant/GoodStanding/pendingPayment.vue")
+      import("../components/Applicant/GoodStanding/pendingPayment/pendingPayment.vue")
   },
   {
     path: "/Applicant/GoodStanding/declined",
     name: "ApplicantDeclined",
-    component: () => import("../components/Applicant/GoodStanding/declined.vue")
+    component: () => import("../components/Applicant/GoodStanding/declined/declined.vue")
   },
   {
     path: "/Applicant/GoodStanding/draft",
     name: "ApplicantGoodStandingDraft",
-    component: () => import("../components/Applicant/GoodStanding/drafted.vue")
+    component: () => import("../components/Applicant/GoodStanding/draft/draft.vue")
   },
 
   /******************************************************************************************************************************************/
   /**************1-END OF APPLICANT SIDE ROUTES*****************/
   /******************************************************************************************************************************************/
 
+
+
+  
   {
     path: "/admin/review",
     name: "ReviewerHome",

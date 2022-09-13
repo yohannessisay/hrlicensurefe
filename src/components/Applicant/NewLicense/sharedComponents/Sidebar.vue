@@ -112,7 +112,7 @@
               ></i
             ></span>
             <span class="text text-white font-bold hover:text-black"
-              >Withdrawn</span
+              >Withdraw</span
             >
           </router-link>
         </a>

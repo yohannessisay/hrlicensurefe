@@ -19,24 +19,19 @@
     <div class="flex justify-center items-center">
       <RenderIllustration illustration="Logo" class="hidden sm:block" />
       <h3 class="ml-tiny font-AtkinsonHyperlegibleBold">
-        HRIS - Lisence, Admin
+        eHPEL - Lisence, Admin
       </h3>
     </div>
+
     <button
-      variant="outline"
-      class="h-small"
-      @click="$emit('setShowLogin', true)"
-    >
-      Log In
-    </button>
-    <!-- <button
       type="button"
       class="
         inline-block
         px-6
         py-2.5
-        bg-blue-600
+        bg-primary-700
         text-white
+        hover:text-primary-600 hover:bg-white
         font-medium
         text-xs
         leading-tight
@@ -54,7 +49,7 @@
       data-bs-target="#staticBackdrop"
     >
       Log In
-    </button> -->
+    </button>
   </section>
   <div
     class="
@@ -70,13 +65,12 @@
       overflow-x-hidden overflow-y-auto
     "
     id="staticBackdrop"
-    data-bs-backdrop="static"
     data-bs-keyboard="false"
     tabindex="-1"
     aria-labelledby="staticBackdropLabel"
     aria-hidden="true"
   >
-    <div class="modal-dialog  relative w-5/12 pointer-events-none">
+    <div class="modal-dialog relative pointer-events-none">
       <div
         class="
           modal-content
@@ -84,7 +78,12 @@
           shadow-lg
           relative
           flex flex-col
-          w-full
+          w-8/12
+         
+          md:w-9/12
+          mdlg:w-9/12
+          lg:w-10/12
+          sm:w-full
           pointer-events-auto
           bg-white bg-clip-padding
           rounded-md
@@ -96,18 +95,13 @@
           class="
             modal-header
             flex flex-shrink-0
+            justify-center
             items-center
             p-4
             border-b border-grey-100
             rounded-t-md
           "
         >
-          <h5
-            class="text-xl font-medium leading-normal text-gray-800"
-            id="exampleModalLabel"
-          >
-            Sign In
-          </h5>
           <button
             type="button"
             class="
@@ -127,7 +121,7 @@
           ></button>
         </div>
         <div class="modal-body relative p-2 flex justify-center">
-          <form>
+          <form @submit.prevent="submit">
             <div class="form-group mb-6 flex justify-center">
               <img
                 src="../../../assets/image.png"
@@ -144,6 +138,7 @@
               >
               <input
                 type="email"
+                v-model="credentials.email"
                 class="
                   form-control
                   block
@@ -176,7 +171,14 @@
                 >Password</label
               >
               <input
+                v-model="credentials.password"
                 type="password"
+                id="password"
+                name="password"
+                autocomplete="current-password"
+                required
+                placeholder="**********"
+                @type="show ? 'password' : 'text'"
                 class="
                   form-control
                   block
@@ -197,9 +199,14 @@
                   focus:border-blue-600
                   focus:outline-none
                 "
-                id="exampleInputPassword2"
-                placeholder="Password"
               />
+              <a class="text-primary-500">
+                <i
+                  class="fa fa-eye cursor-pointer"
+                  style="font-size: 26px"
+                  @click="showVisibility()"
+                ></i
+              ></a>
             </div>
             <div class="flex justify-between items-center mb-6">
               <a
@@ -212,35 +219,56 @@
                   duration-200
                   ease-in-out
                 "
+                @click="$emit('forgotPassword')"
                 >Forgot password?</a
               >
             </div>
             <button
-              type="submit"
               class="
-                w-full
-                px-6
-                py-2.5
-                bg-blue-600
-                text-white
-                font-medium
-                text-xs
-                leading-tight
-                uppercase
-                rounded
-                shadow-md
-                hover:bg-blue-700 hover:shadow-lg
-                focus:bg-blue-700
-                focus:shadow-lg
-                focus:outline-none
-                focus:ring-0
-                active:bg-blue-800 active:shadow-lg
                 transition
-                duration-150
-                ease-in-out
+                duration-200
+                bg-primary-600
+                focus:bg-blue-700
+                focus:shadow-sm
+                focus:ring-4
+                focus:ring-blue-500
+                focus:ring-opacity-50
+                text-white
+                hover:text-primary-600 hover:bg-white
+                w-full
+                ml-auto
+                mt-4
+                rounded-lg
+                text-md
+                shadow-sm
+                hover:shadow-md
+                font-semibold
+                text-center
+                inline-block
               "
             >
-              Sign in
+              Login
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                class="h-4 inline-block"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M17 8l4 4m0 0l-4 4m4-4H3"
+                />
+              </svg>
+              <vue-element-loading
+                :active="show"
+                spinner="ring"
+                color="white"
+                background-color="#ffffff00;"
+                style="margin-left: 110px; margin-top: -3px"
+              />
             </button>
           </form>
         </div>
@@ -250,9 +278,148 @@
 </template>
 <script>
 import RenderIllustration from "@/sharedComponents/RenderIllustration";
+import VueElementLoading from "vue-element-loading";
+import { useStore } from "vuex";
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { useToast } from "vue-toastification";
 export default {
-  components: { RenderIllustration },
+  components: { RenderIllustration, VueElementLoading },
   emits: ["setShowLogin"],
+  setup({ emit }) {
+    const store = useStore();
+    const router = useRouter();
+    const toast = useToast();
+    let show = ref(false);
+    let showLoading = ref(false);
+    let message = ref({
+      showFlash: false,
+      showErrorFlash: false,
+    });
+
+    const credentials = ref({
+      email: "",
+      password: "",
+    });
+
+    const credentialsErrors = ref({
+      email: undefined,
+      password: undefined,
+    });
+    const showVisibility = () => {
+      let x = document.getElementById("password");
+
+      if (x.type === "password") {
+        x.type = "text";
+      } else {
+        x.type = "password";
+      }
+    };
+    const loggedInData = ref({});
+
+    const submit = () => {
+      showLoading.value = true;
+
+      show.value = true;
+      let credentialData = {
+        email: credentials.value.email.toLowerCase(),
+        password: credentials.value.password,
+      };
+      store.dispatch("admin/login", credentialData).then((res) => {
+        loggedInData.value = store.getters["admin/getAdmin"];
+        showLoading.value = false;
+        if (loggedInData.value !== undefined) {
+          if (!loggedInData.value.isActive) {
+            message.value.showErrorFlash = true;
+            setTimeout(() => {
+              // context.emit("closeModal", true);
+              credentials.value.email = "";
+              credentials.value.password = "";
+              message.value.showErrorFlash = false;
+            }, 3000);
+            show.value = false;
+          } else {
+            show.value = false;
+            if (loggedInData.value.isFirstTime) {
+              show.value = false;
+              toast.success("Logged In Successfully", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
+              router.push({ path: "/admin/changePassword" });
+              setTimeout(() => {
+                window.location.reload();
+              }, 500);
+            } else if (loggedInData.value.role.code == "UM") {
+              show.value = false;
+              toast.success("Logged In Successfully", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
+              router.push({ path: "/admin/list" });
+              setTimeout(() => {
+                window.location.reload();
+              }, 500);
+            } else {
+              show.value = false;
+              toast.success("Logged In Successfully", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
+              router.push({ path: "/admin/review" });
+              setTimeout(() => {
+                window.location.reload();
+              }, 500);
+            }
+          }
+        } else {
+          show.value = false;
+          toast.error("Username or password incorrect", {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          });
+          credentials.value.password = "";
+        }
+      });
+    };
+
+    const isEmail = (email) => {
+      const re = /\S+@\S+\.\S+/;
+      return re.test(email);
+    };
+
+    const validateForm = (formData) => {
+      const errors = {};
+      if (!formData.email) errors.email = "Email Required";
+      if (formData.email && !this.isEmail(formData.email)) {
+        errors.email = "Invalid Email";
+      }
+      return errors;
+    };
+    return {
+      credentials,
+      credentialsErrors,
+      submit,
+      isEmail,
+      showVisibility,
+      validateForm,
+      message,
+      show,
+      showLoading,
+    };
+  },
 };
 </script>
 <style lang="postcss" scoped>
