@@ -10,223 +10,142 @@
               <a href="#" class="text-main-400 hover:text-main-100">Home</a>
             </li>
             <li><span class="text-gray-500 mx-2"></span></li>
-        
-           
           </ol>
         </nav>
-        <div class="container my-12 mx-auto px-4 md:px-12">
-          <div class="flex flex-wrap -mx-1 lg:-mx-4">
-            <!-- Column -->
-            <div
-              class="
-                my-1
-                px-1
-                w-10/12
-                mdlg:mr-8 mdlg:w-1/4
-                md:w-1/2
-                lg:w-1/5 lg:px-4 
-              "
-            >
-              <!-- Article -->
-              <article
-                class="
-                  overflow-hidden
-                  rounded-lg
-                  shadow-lg
-                  transform
-                  transition
-                  duration-300
-                  ease-in-out
-                  hover:-translate-y-4
-                "
-              >
-                <router-link to="/Applicant/NewLicense">
-                  <div
+
+        <div id="home" class="flex flex-row justify-center ml-4 mt-12">
+          <div class="flex flex-col md:flex-row justify-center flex-wrap gap-2">
+            <div class="mr-12 mb-8 overview-boxes rounded-xl">
+              <router-link to="/Applicant/NewLicense">
+                <div
+                  class="
+                    bg-main-400
+                    hover:bg-white
+                    shadow-lg
+                    box
+                    w-full
+                    rounded-lg 
+                    transition
+                    duration-500
+                    transform
+                    hover:scale-110
+                    cursor-pointer
+                    cart
+                  "
+                  style="height: 200px; width: 300px"
+                >
+                  <p
                     class="
-                      relative
-                      overflow-hidden
-                      rounded-lg
-                      shadow-lg
-                      cursor-pointer
-                      w-full
+                      py-6
+                      px-6
+                      text-lg
+                      tracking-wide
+                      text-center
+                      flex flex-row
+                      justify-center
                     "
                   >
                     <img
-                      class="
-                        bg-opacity-10
-                        backdrop-filter backdrop-blur-sm
-                        w-full
-                      "
-                      src="../../assets/applicant/newLicense.jpg"
-                      alt="Flower and sky"
+                      src="../../assets/newLicenseApplicant.png"
+                      alt=""
+                      style="height: 100px; width: 100px"
                     />
+                  </p>
 
-                    <div class="absolute top-0 left-0 px-6 py-4">
-                      <div
-                        class="
-                          flex
-                          justify-center
-                          backdrop-filter backdrop-blur-md
-                          bg-opacity-75
-                          rounded-sm
-                          text-center
-                          p-2
-                        "
-                        style="background: #046572ea"
-                      >
-                        <span class="text-white text-lg font-semibold">
-                          New License
-                        </span>
-                      </div>
-                    </div>
+                  <div class="flex justify-center px-5 mb-2 text-sm mt-4">
+                    <h1 class="text-2xl text-white">New License</h1>
                   </div>
-                </router-link>
-              </article>
-              <!-- END Article -->
+                </div>
+              </router-link>
             </div>
-            <!-- END Column -->
 
-            <!-- Column -->
-            <div
-              class="
-                my-1
-                px-1
-                w-full
-                mdlg:w-1/4 mdlg:mr-8
-                md:w-1/2
-                lg:my-4 lg:px-4 lg:w-1/5 
-              "
-            >
-              <!-- Article -->
-              <article
-                class="
-                  overflow-hidden
-                  rounded-lg
-                  shadow-lg
-                  transform
-                  transition
-                  duration-300
-                  ease-in-out
-                  hover:-translate-y-4
-                "
-              >
-                <router-link to="/Applicant/Renewal">
-                  <div
+            <div class="mr-12 mb-8 overview-boxes">
+              <router-link to="/Applicant/Renewal">
+                <div
+                  class="
+                    bg-main-400
+                    shadow-lg
+                    box
+                    rounded-2xl
+                    hover:shadow-4xl
+                    transition
+                    duration-500
+                    transform
+                    hover:scale-110
+                    cursor-pointer
+                  "
+                  style="height: 200px; width: 300px"
+                >
+                  <p
                     class="
-                      relative
-                      overflow-hidden
-                      rounded-lg
-                      shadow-lg
-                      cursor-pointer
+                      py-6
+                      px-6
+                      text-lg
+                      tracking-wide
+                      text-center
+                      flex flex-row
+                      justify-center
                     "
                   >
                     <img
-                      class="
-                        w-full
-                        bg-opacity-25
-                        backdrop-filter backdrop-blur-lg
-                      "
-                      src="../../assets/applicant/renewal.jpg"
-                      alt="Flower and sky"
+                      src="../../assets/renewApplicant.png"
+                      alt=""
+                      style="height: 100px; width: 100px"
                     />
+                  </p>
 
-                    <div class="absolute top-0 left-0 px-6 py-4">
-                      <div
-                        class="
-                          flex
-                          justify-center
-                          backdrop-filter backdrop-blur-md
-                          bg-opacity-75
-                          rounded-sm
-                          text-center
-                          p-2
-                        "
-                        style="background: #046572ea"
-                      >
-                        <span class="text-white text-lg font-semibold">
-                          Renewal
-                        </span>
-                      </div>
-                    </div>
+                  <div class="flex justify-center px-5 mb-2 text-sm mt-4">
+                    <h1 class="text-2xl text-white">Renewal</h1>
                   </div>
-                </router-link>
-              </article>
-              <!-- END Article -->
+                </div>
+              </router-link>
             </div>
-            <!-- END Column -->
-            <!-- END Column -->
 
-            <!-- Column -->
-            <div
-              class="
-                my-1
-                px-1
-                mdlg:w-1/4 mdlg:mr-8
-                w-full
-                md:w-1/2
-                lg:my-4 lg:px-4 lg:w-1/5 
-              "
-            >
-              <!-- Article -->
-              <article
-                class="
-                  overflow-hidden
-                  rounded-lg
-                  shadow-lg
-                  transform
-                  transition
-                  duration-300
-                  ease-in-out
-                  hover:-translate-y-4
-                "
-              >
-                <router-link to="/Applicant/GoodStanding">
-                  <div
+            <div class="mr-12 mb-8 overview-boxes">
+              <router-link to="/Applicant/GoodStanding">
+                <div
+                  class="
+                    bg-white
+                    shadow-lg
+                    box
+                    rounded-2xl
+                    hover:shadow-4xl
+                    transition
+                    duration-500
+                    transform
+                    hover:scale-110
+                    cursor-pointer
+                  "
+                  style="height: 200px; width: 300px"
+                >
+                  <p
                     class="
-                      relative
-                      overflow-hidden
-                      rounded-lg
-                      shadow-lg
-                      cursor-pointer
+                      py-6
+                      px-6
+                      text-lg
+                      tracking-wide
+                      text-center
+                      flex flex-row
+                      justify-center
                     "
                   >
                     <img
-                      class="
-                        w-full
-                        bg-opacity-25
-                        backdrop-filter backdrop-blur-lg
-                        h-full
-                      "
-                      src="../../assets/applicant/goodStanding.jpg"
-                      alt="Flower and sky"
+                    src="../../assets/goodStandingApplicant.png"
+                      alt=""
+                      style="height: 100px; width: 100px"
                     />
+                  </p>
 
-                    <div class="absolute top-0 left-0 px-6 py-4">
-                      <div
-                        class="
-                          flex
-                          justify-center
-                          backdrop-filter backdrop-blur-md
-                          bg-opacity-75
-                          rounded-sm
-                          text-center
-                          p-2
-                        "
-                        style="background: #046572ea"
-                      >
-                        <span class="text-white text-lg font-semibold">
-                          GoodStanding
-                        </span>
-                      </div>
-                    </div>
+                  <div class="flex justify-center px-5 mb-2 text-sm mt-4">
+                    <h1 class="text-2xl text-white">Goodstanding</h1>
                   </div>
-                </router-link>
-              </article>
-              <!-- END Article -->
+                </div>
+              </router-link>
             </div>
-            <!-- END Column -->
           </div>
         </div>
+
+    
       </div>
     </div>
   </div>
@@ -301,3 +220,22 @@ export default {
   },
 };
 </script>
+<style scoped>
+.overview-boxes .box {
+    align-items: center;
+    justify-content: center;
+    width: calc(100% / 4 - 15px);
+    background: rgb(7 103 126);
+    padding: 15px 14px;
+    border-radius: 12px;
+    box-shadow: 0 5px 10px rgb(0 0 0 / 10%);
+}
+.overview-boxes .box:hover {
+    align-items: center;
+    justify-content: center;
+    width: calc(100% / 4 - 15px); 
+    padding: 15px 14px;
+    border-radius: 12px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.884);
+}
+</style>

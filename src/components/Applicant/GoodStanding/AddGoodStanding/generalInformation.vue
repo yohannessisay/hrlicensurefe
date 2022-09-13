@@ -1,12 +1,21 @@
 <template>
-  <div
-    class="pages-navbar flex justify-center h-12 rounded-sm mb-8 shadow-2xl"
-    style="width: 98% !important"
-  >
-    <div class="profile sm:p-2 p-4">
-      <h2 class="text-main-400">Apply for a new letter of good standing</h2>
-    </div>
-  </div>
+  <nav class="bg-gray-100 px-5 py-3 rounded-md w-full">
+    <ol class="list-reset flex">
+      <li>
+        <router-link to="/menu">
+        <a href="#" class="text-main-400 hover:text-blue-700">Home</a>
+      </router-link>
+        </li>
+      <li><span class="text-gray-500 mx-2">/</span></li>
+      <li>
+        <router-link to="/Applicant/GoodStanding">
+        <a href="#" class="text-main-400 hover:text-blue-700">Goodstanding</a>
+      </router-link>
+      </li>
+      <li><span class="text-gray-500 mx-2">/</span></li>
+      <li class="text-gray-500">Apply</li>
+    </ol>
+  </nav>
   <div
     class="
       block

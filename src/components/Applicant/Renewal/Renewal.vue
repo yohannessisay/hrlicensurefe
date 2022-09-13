@@ -184,8 +184,7 @@ export default {
       });
     };
     const fetchApplicationCategory = () => {
-      store.dispatch("renewal/getApplicationCategories").then((res) => {
-        console.log(res.data);
+      store.dispatch("renewal/getApplicationCategories").then((res) => { 
         const results = res.data.data;
         applicationCategories.value = results;
         const renewalData = applicationCategories.value.filter((item) => {
@@ -199,8 +198,7 @@ export default {
     const fetchDocumentSpec = () => {
       store
         .dispatch("renewal/getDocumentSpecs", applicationId.value)
-        .then((res) => {
-          console.log(res.data.data)
+        .then((res) => { 
           const results = res.data.data;
           documentSpecs.value = results;
           store
