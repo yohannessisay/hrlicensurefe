@@ -2564,48 +2564,48 @@ export default {
               " days  .Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
             : "",
         };
-        // store
-        //   .dispatch("reviewer/editNewLicense", req)
-        //   .then((res) => {
-        //     showActionLoading.value = false;
-        //     if (res.statusText == "Created") {
-        //       store.dispatch("sms/sendSms", smsData).then(() => {
-        //         toast.success("Application reviewed Successfully", {
-        //           timeout: 5000,
-        //           position: "bottom-center",
-        //           pauseOnFocusLoss: true,
-        //           pauseOnHover: true,
-        //           icon: true,
-        //         });
-        //         setTimeout(() => {
-        //           window.location.reload();
-        //         }, 2000);
-        //       });
-        //     } else {
-        //       toast.error("Please try again", {
-        //         timeout: 5000,
-        //         position: "bottom-center",
-        //         pauseOnFocusLoss: true,
-        //         pauseOnHover: true,
-        //         icon: true,
-        //       });
-        //       setTimeout(() => {
-        //         window.location.reload();
-        //       }, 2000);
-        //     }
-        //   })
-        //   .catch(() => {
-        //     toast.error("Please try again", {
-        //       timeout: 5000,
-        //       position: "bottom-center",
-        //       pauseOnFocusLoss: true,
-        //       pauseOnHover: true,
-        //       icon: true,
-        //     });
-        //     setTimeout(() => {
-        //       window.location.reload();
-        //     }, 2000);
-        //   });
+        store
+          .dispatch("reviewer/editNewLicense", req)
+          .then((res) => {
+            showActionLoading.value = false;
+            if (res.statusText == "Created") {
+              store.dispatch("sms/sendSms", smsData).then(() => {
+                toast.success("Application reviewed Successfully", {
+                  timeout: 5000,
+                  position: "bottom-center",
+                  pauseOnFocusLoss: true,
+                  pauseOnHover: true,
+                  icon: true,
+                });
+                setTimeout(() => {
+                  window.location.reload();
+                }, 2000);
+              });
+            } else {
+              toast.error("Please try again", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
+              setTimeout(() => {
+                window.location.reload();
+              }, 2000);
+            }
+          })
+          .catch(() => {
+            toast.error("Please try again", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+            setTimeout(() => {
+              window.location.reload();
+            }, 2000);
+          });
       }
     };
     const changeAction = (action) => {

@@ -102,10 +102,10 @@ module.exports = {
       lightMain: {
         100: "#07667ED0",
         400: "#07667EA1",
-        500: "#27687e9c",
+        500: "#152b328f",
       },
       lightGrey: {
-        100: "#f3f4f6",
+        100: "#DCDEE2",
       },
     },
     extend: {

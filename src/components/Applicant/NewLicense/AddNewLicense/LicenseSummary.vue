@@ -224,10 +224,10 @@
                     />
                   </a>
 
-                  <h4 class="text-main-400 font-bold border-b">
+                  <h4 class="text-main-400 font-bold border-b mt-4 mb-4">
                     Document Type
                   </h4>
-                  <h6>{{ localFileData.documenttype }}</h6>
+                  <h6 class="mt-4">{{ localFileData.documenttype }}</h6>
                 </div>
               </div>
             </div>
@@ -263,10 +263,8 @@
           "
         >
           <div class="mb-4 border-t text-main-400">
-            <div class="text-gray-900 mb-4 flex justify-center">
-              <i class="fa fa-check fa-3x text-main-400 mt-4"></i>
-            </div>
-            <div class="flex justify-center text-gray-900 mb-4">
+        
+            <div class="flex justify-center text-gray-900 mb-4 mt-4">
               <div class="form-check">
                 <input
                   class="

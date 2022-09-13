@@ -5,10 +5,9 @@
         class="accordion-item bg-white border border-grey-200 p-4 rounded-lg"
       >
         <h2 class="accordion-header mb-0" id="headingOne">
-          <span
+          <button
             class="
-              rounded-md
-              collapsed
+              accordion-button
               relative
               flex
               items-center
@@ -16,13 +15,12 @@
               py-4
               px-5
               text-base text-gray-800 text-left
-              bg-main-400
-              hover:text-main-400
-              text-white
               border-0
+              rounded-md
               transition
               focus:outline-none
             "
+            style="background: #d8d8d8 !important; color: #27687e !important"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#commonFilesAccordion"
@@ -30,11 +28,11 @@
             aria-controls="commonFilesAccordion"
           >
             Common Files
-          </span>
+          </button>
         </h2>
         <div
           id="commonFilesAccordion"
-          class="accordion-collapse collapse"
+          class="accordion-collapse collapse show"
           aria-labelledby="commonFilesAccordionheading"
           data-bs-parent="#FilesAccordion"
         >
@@ -54,7 +52,7 @@
                     overflow-hidden
                   "
                 >
-                  <thead class="bg-main-400">
+                  <thead class="bg-lightMain-500">
                     <tr class="text-left">
                       <th
                         class="
@@ -125,7 +123,12 @@
                       <td class="px-6 py-4">
                         <div class="flex items-center p-4">
                           <div>
-                            <p class="">{{ item.documentType.name }}</p>
+                            <p class="">
+                              {{ item.documentType.name }}
+                              <b v-if="item.isRequired" class="text-red-300"
+                                >(*Required)</b
+                              >
+                            </p>
                           </div>
                         </div>
                       </td>
@@ -133,7 +136,11 @@
                         <div class="flex items-center p-4">
                           <div>
                             <p class="">
-                              {{ item.documentType.description }}
+                              {{
+                                item.documentType.description
+                                  ? item.documentType.description
+                                  : "---------------"
+                              }}
                             </p>
                           </div>
                         </div>
@@ -188,10 +195,9 @@
         "
       >
         <h2 class="accordion-header mb-0" id="headingTwo">
-          <span
+          <button
             class="
-              rounded-md
-              collapsed
+              accordion-button
               relative
               flex
               items-center
@@ -199,13 +205,12 @@
               py-4
               px-5
               text-base text-gray-800 text-left
-              bg-main-400
-              hover:text-main-400
-              text-white
               border-0
+              rounded-md
               transition
               focus:outline-none
             "
+            style="background: #d8d8d8 !important; color: #27687e !important"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#departmentFilesAccordion"
@@ -213,7 +218,7 @@
             aria-controls="departmentFilesAccordion"
           >
             Education Level Related Files
-          </span>
+          </button>
         </h2>
         <div
           id="departmentFilesAccordion"
@@ -319,11 +324,10 @@
                         <div class="flex items-center ml-4">
                           <div>
                             <p class="">
-                              {{
-                                item.isRequired
-                                  ? item.documentType.name + " (*Required)"
-                                  : ""
-                              }}
+                              {{ item.documentType.name }}
+                              <b v-if="item.isRequired" class="text-red-300"
+                                >(*Required)</b
+                              >
                             </p>
                           </div>
                         </div>
@@ -332,7 +336,11 @@
                         <div class="flex items-center ml-4">
                           <div>
                             <p class="">
-                              {{ item.documentType.description }}
+                              {{
+                                item.documentType.description
+                                  ? item.documentType.description
+                                  : "-----------------"
+                              }}
                             </p>
                           </div>
                         </div>
@@ -370,337 +378,279 @@
                         </span>
                       </td>
                     </tr>
-                    <tr
-                      v-for="(parentDoc, index) in table.parentDoc"
-                      :key="index"
-                      class="border-b text-main-400"
-                    >
-                      <span v-if="parentDoc.length == 1" class="w-full p-4">
-                        <tr
-                          v-for="(item, key) in parentDoc"
-                          :key="key"
-                          class="border-b text-main-400"
-                        >
-                          <td class="px-6 py-4">
-                            <div class="flex items-center ml-4">
-                              <div>
-                                <p class="">
-                                  {{
-                                    item.isRequired
-                                      ? item.documentType.name + " (*Required)"
-                                      : item.documentType.name
-                                  }}
-                                </p>
-                              </div>
-                            </div>
-                          </td>
-                          <td class="px-6 py-4">
-                            <div class="flex items-center ml-4">
-                              <div>
-                                <p class="">
-                                  {{ item.documentType.description }}
-                                </p>
-                              </div>
-                            </div>
-                          </td>
-
-                          <td class="px-6 py-4">
-                            <p class="">
-                              <input
-                                type="file"
-                                :id="`files${item.id}`"
-                                accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
-                                :ref="`imageUploader${item.id}`"
-                                class="custom-file-input"
-                                v-on:change="handleFileUpload(item, $event)"
-                              />
-                            </p>
-                          </td>
-                        </tr>
-                      </span>
-
-                      <span v-else class="w-full" :id="parentDoc[0].id">
-                        <tr class="border-b-2">
-                          <td class="px-6 py-4">
-                            <div class="flex items-center ml-4">
-                              <div>
-                                <p class="">
-                                  {{
-                                    parentDoc[0].isRequired
-                                      ? parentDoc[0].documentType.name +
-                                        " (*Required)"
-                                      : parentDoc[0].documentType.name
-                                  }}
-                                </p>
-                              </div>
-                            </div>
-                          </td>
-                          <td class="px-6 py-4">
-                            <div class="flex items-center ml-4">
-                              <div>
-                                <p class="">
-                                  {{ parentDoc[0].documentType.description }}
-                                </p>
-                              </div>
-                            </div>
-                          </td>
-
-                          <td class="px-6 py-4">
-                            <p class="">
-                              <input
-                                type="file"
-                                :id="`files${parentDoc[0].id}`"
-                                accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
-                                :ref="`imageUploader${parentDoc[0].id}`"
-                                class="custom-file-input"
-                                v-on:change="
-                                  handleFileUpload(parentDoc[0], $event)
-                                "
-                              />
-                            </p>
-                          </td>
-                          <td>
-                            <button
-                              id="addFile"
-                              class="
-                                mt-8
-                                inline-block
-                                px-6
-                                py-2.5
-                                bg-white
-                                hover:text-white
-                                hover:bg-main-400
-                                text-main-400
-                                border
-                                 text-xs
-                                font-bold
-                                leading-tight
-                                uppercase
-                                rounded
-                                shadow-md
-                                active:border-main-400
-                                transition
-                                duration-150
-                                ease-in-out
-                              "
-                              type="button"
-                              data-bs-toggle="collapse"
-                              :data-bs-target="'#fileDiv'+parentDoc[0].id"
-                              aria-expanded="false"
-                              aria-controls="fileDiv"
-                            >
-                              Add More
-                            </button>
-                          </td>
-                        </tr>
-                        <div
-                          class="collapse  shadow-lg m-4"
-                          :id="'fileDiv'+parentDoc[0].id"
-                        >
-                          <div
-                            class="block p-6 rounded-lg shadow-lg bg-lightMain"
-                          >
-                            <tr v-for="(parentDoc, index) in parentDoc"
-                      :key="index">
-                              <td class="px-6 py-4">
-                                <div class="flex items-center ml-4">
-                                  <div>
-                                    <p class="">
-                                      {{
-                                        parentDoc.isRequired
-                                          ? parentDoc.documentType.name +
-                                            " (*Required)"
-                                          : parentDoc.documentType.name
-                                      }}
-                                    </p>
-                                  </div>
-                                </div>
-                              </td>
-                              <td class="px-6 py-4">
-                                <div class="flex items-center ml-4">
-                                  <div>
-                                    <p class="">
-                                      {{
-                                        parentDoc.documentType.description
-                                      }}
-                                    </p>
-                                  </div>
-                                </div>
-                              </td>
-
-                              <td class="px-6 py-4">
-                                <p class="">
-                                  <input
-                                    type="file"
-                                    :id="`files${parentDoc.id}`"
-                                    accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
-                                    :ref="`imageUploader${parentDoc.id}`"
-                                    class="custom-file-input"
-                                    v-on:change="
-                                      handleFileUpload(parentDoc, $event)
-                                    "
-                                  />
-                                </p>
-                              </td>
-                            </tr>
-                          </div>
-                        </div>
-                      </span>
-                    </tr>
                   </tbody>
-                </table>
-                <!-- 
-                <h4 class="text-main-400 font-bold mt-2">
-                  Multiple File Uploads For
-                  {{
-                    table.educationalLevel ? table.educationalLevel.name : ""
-                  }}
-                </h4>
 
-                <table
-                  v-for="(parentDoc, index) in table.parentDoc"
-                  :key="index"
-                  class="
-                    max-w-4xl
-                    w-full
-                    mt-2
-                    whitespace-nowrap
-                    rounded-lg
-                    bg-white
-                    shadow-lg
-                    divide-y divide-gray-300
-                    overflow-hidden
-                  "
-                >
-                  <h4 class="text-main-400 font-bold mt-2">
-                    Multiple File Uploads For
-                    {{
-                      parentDoc[0].documentType.name.slice(
-                        0,
-                        parentDoc[0].documentType.name.length - 2
-                      )
-                    }}
-                  </h4>
-                  <thead class="bg-primary-300">
-                    <tr class="text-left">
-                      <th
-                        class="
-                          font-semibold
-                          text-sm
-                          uppercase
-                          px-6
-                          py-4
-                          text-main-400
-                        "
-                      >
-                        Document Name
-                      </th>
-                      <th
-                        class="
-                          font-semibold
-                          text-sm
-                          uppercase
-                          px-6
-                          py-4
-                          text-main-400
-                        "
-                      >
-                        Document Description
-                      </th>
-                      <th
-                        class="
-                          font-semibold
-                          text-sm
-                          uppercase
-                          px-6
-                          py-4
-                          text-main-400
-                        "
-                      >
-                        Required
-                      </th>
-                      <th
-                        class="
-                          font-semibold
-                          text-sm
-                          uppercase
-                          px-6
-                          py-4
-                          text-left text-main-400
-                        "
-                      >
-                        Upload
-                      </th>
-                      <th
-                        class="
-                          font-semibold
-                          text-sm
-                          uppercase
-                          px-6
-                          py-4
-                          text-center text-main-400
-                        "
-                      >
-                        View
-                      </th>
-                      <th
-                        class="
-                          font-semibold
-                          text-sm
-                          uppercase
-                          px-6
-                          py-4
-                          text-main-400
-                        "
-                      ></th>
-                    </tr>
-                  </thead>
-                  <tbody class="divide-y">
+                  <tbody
+                    class="divide-y p-4"
+                    v-for="parentItem in table.parentDoc"
+                    :key="parentItem.id"
+                  >
                     <tr
-                      v-for="(item, key) in parentDoc"
-                      :key="key"
-                      class="border-b text-main-400"
+                      v-if="parentItem.length < 2"
+                      class="border-b text-main-400 "
                     >
                       <td class="px-6 py-4">
-                        <div class="flex items-center space-x-3">
+                        <div class="flex items-center ml-4">
                           <div>
                             <p class="">
-                              {{ item.documentType.name }}
+                              {{ parentItem[0].documentType.name }}
+                              <b
+                                v-if="parentItem[0].isRequired"
+                                class="text-red-300"
+                                >(*Required)</b
+                              >
                             </p>
                           </div>
                         </div>
                       </td>
                       <td class="px-6 py-4">
-                        <div class="flex items-center space-x-3">
+                        <div class="flex items-center ml-4">
                           <div>
                             <p class="">
-                              {{ item.documentType.description }}
+                              {{
+                                parentItem[0].documentType.description
+                                  ? parentItem[0].documentType.description
+                                  : "-----------------------"
+                              }}
                             </p>
                           </div>
                         </div>
                       </td>
-                      <td class="px-6 py-4">
-                        <div class="flex items-center space-x-3">
-                          <div>
-                            <p class="">{{ item.isRequired }}</p>
-                          </div>
-                        </div>
-                      </td>
+
                       <td class="px-6 py-4">
                         <p class="">
                           <input
                             type="file"
-                            :id="`files${item.id}`"
+                            :required="parentItem[0].isRequired"
+                            :id="`files${parentItem[0].id}`"
                             accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
-                            :ref="`imageUploader${item.id}`"
+                            :ref="`imageUploader${parentItem[0].id}`"
                             class="custom-file-input"
-                            v-on:change="handleFileUpload(item, $event)"
+                            v-on:change="
+                              handleFileUpload(parentItem[0], $event)
+                            "
                           />
                         </p>
                       </td>
+
+                      <td class="px-6 py-4 text-center">
+                        <span
+                          data-bs-toggle="modal"
+                          data-bs-target="#filePreview"
+                          @click="
+                            previewFile(
+                              parentItem[0].documentType.code,
+                              parentItem[0].documentType.name
+                            )
+                          "
+                        >
+                          <i
+                            class="fa fa-eye cursor-pointer"
+                            aria-hidden="true"
+                          ></i>
+                        </span>
+                      </td>
+                    </tr>
+                    <!-- if parent doc has more than 1 elements -->
+                    <tr v-else class="border-b text-main-400 bg-lightGrey-100">
+                      <td class="px-6 ">
+                        <div class="flex items-center ml-4">
+                          <div>
+                            <p class="">
+                              {{ parentItem[0].documentType.name }}
+                              <b
+                                v-if="parentItem[0].isRequired"
+                                class="text-red-300"
+                                >(*Required)</b
+                              >
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="px-6 ">
+                        <div class="flex items-center ml-4">
+                          <div>
+                            <p class="">
+                              {{
+                                parentItem[0].documentType.description
+                                  ? parentItem[0].documentType.description
+                                  : "-----------------------"
+                              }}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+
+                      <td class="px-6 py-4">
+                        <p class="">
+                          <input
+                            type="file"
+                            :required="parentItem[0].isRequired"
+                            :id="`files${parentItem[0].id}`"
+                            accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
+                            :ref="`imageUploader${parentItem[0].id}`"
+                            class="custom-file-input"
+                            v-on:change="
+                              handleFileUpload(parentItem[0], $event)
+                            "
+                          />
+                        </p>
+                      </td>
+
+                      <td class="px-6 py-4 text-center">
+                        <span
+                          data-bs-toggle="modal"
+                          data-bs-target="#filePreview"
+                          @click="
+                            previewFile(
+                              parentItem[0].documentType.code,
+                              parentItem[0].documentType.name
+                            )
+                          "
+                        >
+                          <i
+                            class="fa fa-eye cursor-pointer"
+                            aria-hidden="true"
+                          ></i>
+                        </span>
+                      </td>
+
+                      <td class="px-6 text-center">
+                        <button
+                          class="
+                            inline-block
+                            px-6
+                            py-2.5
+                            bg-white
+                            hover:bg-main-400 hover:text-white
+                            text-main-400 text-xs
+                            font-bold
+                            leading-tight
+                            uppercase
+                            rounded
+                            shadow-md
+                            active:border-main-400
+                            transition
+                            duration-150
+                            ease-in-out
+                            border
+                          "
+                          type="button"
+                          data-bs-toggle="collapse"
+                          :data-bs-target="
+                            '#docAccordion' + parentItem[0].documentType.id
+                          "
+                          aria-expanded="true"
+                          :aria-controls="
+                            'collapse' + parentItem[0].documentType.id
+                          "
+                        >
+                          Add More
+                        </button>
+                      </td>
+                    </tr>
+                    <!-- end table row -->
+
+                    <tr>
+                      <div
+                        class="accordion "
+                        id="accordionExample"
+                        style="width: max-content"
+                      >
+                        <div
+                          class="
+                            accordion-item
+                            shadow-lg
+                            w-full
+                            bg-white
+                            border border-gray-200
+                            mt-4
+                            mb-4
+                            ml-8
+                          "
+                        >
+                          <div
+                            :id="'docAccordion' + parentItem[0].documentType.id"
+                            class="accordion-collapse collapse"
+                            aria-labelledby="headingOne"
+                            data-bs-parent="#accordionExample"
+                          >
+                            <div class="accordion-body py-4 px-5">
+                              <tr
+                                v-for="parentItem in parentItem"
+                                :key="parentItem"
+                                class="border-b text-main-400 mt-4"
+                              >
+                                <td class="px-6 py-4">
+                                  <div class="flex items-center ml-4">
+                                    <div>
+                                      <p class="">
+                                        {{ parentItem.documentType.name }}
+                                      </p>
+                                    </div>
+                                  </div>
+                                </td>
+                                <td class="px-6 py-4">
+                                  <div class="flex items-center ml-4">
+                                    <div>
+                                      <p class="">
+                                        {{
+                                          parentItem.documentType.description
+                                            ? parentItem.documentType
+                                                .description
+                                            : "- "
+                                        }}
+                                      </p>
+                                    </div>
+                                  </div>
+                                </td>
+
+                                <td class="px-6 py-4">
+                                  <p class="">
+                                    <input
+                                      type="file"
+                                      :required="parentItem.isRequired"
+                                      :id="`files${parentItem.id}`"
+                                      accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
+                                      :ref="`imageUploader${parentItem.id}`"
+                                      class="custom-file-input"
+                                      v-on:change="
+                                        handleFileUpload(parentItem, $event)
+                                      "
+                                    />
+                                  </p>
+                                </td>
+
+                                <td class="px-6 py-4 text-center">
+                                  <span
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#filePreview"
+                                    @click="
+                                      previewFile(
+                                        parentItem.documentType.code,
+                                        parentItem.documentType.name
+                                      )
+                                    "
+                                  >
+                                    <i
+                                      class="fa fa-eye cursor-pointer"
+                                      aria-hidden="true"
+                                    ></i>
+                                  </span>
+                                </td>
+                              </tr>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </tr>
                   </tbody>
-                </table> -->
+                </table>
+                <small
+                  >Note:-document names with
+                  <b class="text-red-300">(*Required)</b> must be uploaded in
+                  order to go forward with application process</small
+                >
               </div>
             </div>
           </div>
@@ -710,25 +660,23 @@
     <div class="flex justify-end mr-8">
       <button
         class="
-        mt-8
-                                inline-block
-                                px-6
-                                py-2.5
-                                bg-white
-                                hover:text-white
-                                hover:bg-main-400
-                                text-main-400
-                                border
-                                 text-xs
-                                font-bold
-                                leading-tight
-                                uppercase
-                                rounded
-                                shadow-md
-                                active:border-main-400
-                                transition
-                                duration-150
-                                ease-in-out
+          mt-8
+          inline-block
+          px-6
+          py-2.5
+          bg-white
+          hover:bg-main-400 hover:text-white
+          text-main-400 text-xs
+          font-bold
+          leading-tight
+          uppercase
+          rounded
+          shadow-md
+          active:border-main-400
+          transition
+          duration-150
+          ease-in-out
+          border
         "
         @click="next()"
       >
@@ -776,6 +724,7 @@ export default {
     let generalInfo = ref({});
     let documentUploaded = ref({});
     let documentToSave = ref({});
+    let divId = ref(0);
     let imageData = [];
     let formData = new FormData();
 
@@ -944,35 +893,36 @@ export default {
     };
 
     const addMoreFile = (doc) => {
-      console.log(doc);
+      divId.value == doc.length;
+      if (divId.value < doc.length) {
+        divId.value++;
+        let divElement = document.createElement("div");
+        divElement.classList.add("border-t-2");
+        divElement.classList.add("mt-4");
+        divElement.classList.add("mb-4");
+        let toBeAddedDoc = doc[divId.value];
+        let template =
+          '<tr id="parent_doc_' +
+          toBeAddedDoc.id +
+          '" class="p-4 text-gray-300"><td class="px-6 py-4"><div class="flex items-center ml-8"><div><p class="">' +
+          (toBeAddedDoc.documentType.name + "(optional)") +
+          '</p></div></div></td><td class="px-6 py-4"><div class="flex items-center ml-8"><div><p class="">' +
+          (toBeAddedDoc.documentType.description
+            ? toBeAddedDoc.documentType.description
+            : "") +
+          '</p></div></div></td><td class="px-6 py-4 "><p class="ml-8"><input type="file" :id="files' +
+          toBeAddedDoc.id +
+          '" accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg" :ref="imageUploader' +
+          toBeAddedDoc.id +
+          '" class="custom-file-input" v-on:change=" handleFileUpload(' +
+          toBeAddedDoc +
+          ', $event) " /></p></td><td><button id="remove_' +
+          toBeAddedDoc.id +
+          '" class="bg-main-400 mt-8 inline-block px-6 py-2.5 bg-main-400 hover:text-main-400 text-white text-xs font-bold leading-tight uppercase rounded shadow-md transition duration-150 ease-in-out " onclick="removeFileUpload()>Remove </button> </td>';
 
-      let divId = 1;
-      let divElement = document.createElement("div");
-      divElement.classList.add("border-t-2");
-      divElement.classList.add("mt-4");
-      divElement.classList.add("mb-4");
-      let toBeAddedDoc = doc[divId];
-      let template =
-        '<tr id="parent_doc_' +
-        toBeAddedDoc.id +
-        '" class="p-4 text-gray-300"><td class="px-6 py-4"><div class="flex items-center ml-8"><div><p class="">' +
-        (toBeAddedDoc.documentType.name + "(optional)") +
-        '</p></div></div></td><td class="px-6 py-4"><div class="flex items-center ml-8"><div><p class="">' +
-        (toBeAddedDoc.documentType.description
-          ? toBeAddedDoc.documentType.description
-          : "") +
-        '</p></div></div></td><td class="px-6 py-4 "><p class="ml-8"><input type="file" :id="files' +
-        toBeAddedDoc.id +
-        '" accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg" :ref="imageUploader' +
-        toBeAddedDoc.id +
-        '" class="custom-file-input" v-on:change=" handleFileUpload(' +
-        toBeAddedDoc +
-        ', $event) " /></p></td><td><button id="remove_' +
-        toBeAddedDoc.id +
-        '" class="bg-main-400 mt-8 inline-block px-6 py-2.5 bg-main-400 hover:text-main-400 text-white text-xs font-bold leading-tight uppercase rounded shadow-md transition duration-150 ease-in-out " onclick="removeFileUpload()>Remove </button> </td>';
-
-      divElement.innerHTML = template;
-      document.getElementById(doc[0].id).appendChild(divElement);
+        divElement.innerHTML = template;
+        document.getElementById(doc[0].id).appendChild(divElement);
+      }
     };
 
     const removeFileUpload = (id) => {

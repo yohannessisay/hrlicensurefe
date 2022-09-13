@@ -1,6 +1,9 @@
 <template>
   <div class="side-navbar">
-    <div class="flex justify-center p-4"  style="border-bottom: 2px solid white;margin-top:-5px">
+    <div
+      class="flex justify-center p-4"
+      style="border-bottom: 2px solid white; margin-top: -5px"
+    >
       <img
         src="../../assets/image.png"
         style="height: 40px; width: 40px"
@@ -25,7 +28,7 @@
         <b></b>
         <b></b>
         <a href="#NewLicense">
-          <router-link class="link" to="/Applicant/newLicense">
+          <router-link class="link" to="/Applicant/NewLicense">
             <span class="icon"
               ><i class="bx bxs-certification text-white"></i
             ></span>
@@ -38,7 +41,7 @@
         <b></b>
         <b></b>
         <a href="#Renewal">
-          <router-link class="link" to="/Applicant/newLicense">
+          <router-link class="link" to="/Applicant/Renewal">
             <span class="icon"><i class="bx bx-refresh text-white"></i></span>
             <span class="text text-white font-bold">Renewal</span>
           </router-link>
@@ -60,7 +63,7 @@
         <b></b>
         <b></b>
         <a href="#">
-          <router-link class="link" to="/Applicant/newLicense">
+          <router-link class="link" to="/Applicant/NewLicense">
             <span class="icon"><i class="bx bx-user text-white"></i></span>
             <span class="text text-white font-bold">Profile</span>
           </router-link>

@@ -30,7 +30,7 @@
       </li>
       <li
         :class="
-          $route.fullPath === '/Applicant/newLicense' ? 'list active' : 'list'
+          $route.fullPath === '/Applicant/NewLicense' ? 'list active' : 'list'
         "
       >
         <b></b>

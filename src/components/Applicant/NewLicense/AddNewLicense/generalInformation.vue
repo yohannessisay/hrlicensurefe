@@ -1,10 +1,16 @@
 <template>
   <nav class="bg-gray-100 px-5 py-3 rounded-md w-full">
     <ol class="list-reset flex">
-      <li><a href="#" class="text-main-400 hover:text-blue-700">Home</a></li>
+      <li>
+        <router-link to="/menu">
+        <a href="#" class="text-main-400 hover:text-blue-700">Home</a>
+      </router-link>
+        </li>
       <li><span class="text-gray-500 mx-2">/</span></li>
       <li>
+        <router-link to="/Applicant/NewLicense">
         <a href="#" class="text-main-400 hover:text-blue-700">New License</a>
+      </router-link>
       </li>
       <li><span class="text-gray-500 mx-2">/</span></li>
       <li class="text-gray-500">Apply</li>
@@ -156,13 +162,13 @@
             </select>
           </div>
         </div>
-        <button
+       
+      </div>
+      <button
           v-show="Object.keys(localData).length != 0"
-          class="
-            mt-8
+          class=" 
             inline-block
-            px-6
-            py-2.5
+            px-6 
             bg-main-400
             text-white
             max-w-3xl
@@ -184,7 +190,6 @@
           <i class="fa fa-close"></i>
           Clear Form
         </button>
-      </div>
       <!-- region -->
       <div
         v-if="showLocation"
@@ -732,12 +737,14 @@
                             whitespace-nowrap
                           "
                         >
-                          <button
+                        <span
                             @click="removeDepartment(index)"
-                            class="fa fa-trash bg-red-200 cursor-pointer"
                             style="color: red"
                             title="Delete"
-                          ></button>
+                            ><i
+                              class="fa fa-trash bg-red-200 cursor-pointer"
+                            ></i
+                          ></span>
                         </td>
                       </tr>
                     </tbody>
