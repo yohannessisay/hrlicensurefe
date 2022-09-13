@@ -316,11 +316,20 @@
           hover:-translate-y-2
         "
       >
-        <div class="bg-white shadow-2xl rounded-lg p-2 mb-8 ">
-          <div class="text-gray-900 mb-4 flex justify-center ">
+        <div class="bg-white shadow-2xl rounded-lg p-2 mb-8">
+          <div class="text-gray-900 mb-4 flex justify-center">
             <i class="fa fa-folder fa-3x text-main-400"></i>
           </div>
-          <div class="flex justify-center text-gray-900 mb-4 border-b-2 text-main-400 ">
+          <div
+            class="
+              flex
+              justify-center
+              text-gray-900
+              mb-4
+              border-b-2
+              text-main-400
+            "
+          >
             <h3
               class="
                 text-lg text-main-400
@@ -335,48 +344,49 @@
             </h3>
           </div>
           <div
-          class="
-            grid grid-cols-4
-            gap-4
-            ml-4
-            sm:w-full sm:grid-cols-1
-            md:w-full
-            mdlg:grid-cols-2
-            lg:w-full
-            md:grid-cols-4
-            mdlg:w-full
-            lg:grid-cols-4
-          "
-        >
-          <div
-            class="mt-4 mb-8 bg-white shadow-lg rounded-md p-4"
-            v-for="localFileData in localFileData"
-            :key="localFileData.documenttype"
+            class="
+              grid grid-cols-4
+              gap-4
+              mt-4
+              ml-4
+              sm:w-full sm:grid-cols-1
+              md:w-full
+              mdlg:grid-cols-2
+              lg:w-full
+              md:grid-cols-4
+              mdlg:w-full
+              lg:grid-cols-4
+            "
           >
-            <div class="flex justify-center">
-              <div class="mt-large bg-white rounded-md">
-                <a
-                  :href="localFileData.image"
-                  :data-title="localFileData.documenttype"
-                  data-lightbox="example-2"
-                >
-                  <img
-                    :src="localFileData.image"
-                    class="w-full h-48 object-cover"
-                  />
-                </a>
+            <div
+              class="mt-4 mb-8 bg-white shadow-lg rounded-md p-4"
+              v-for="localFileData in localFileData"
+              :key="localFileData.documenttype"
+            >
+              <div class="flex justify-center">
+                <div class="mt-large bg-white rounded-md">
+                  <a
+                    :href="localFileData.image"
+                    :data-title="localFileData.documenttype"
+                    data-lightbox="example-2"
+                  >
+                    <img
+                      :src="localFileData.image"
+                      class="w-full h-48 object-cover"
+                    />
+                  </a>
 
-                <h4 class="text-main-400 font-bold border-b m-2">Document Type</h4>
-                <h6 class="m-2">{{ localFileData.documenttype }}</h6>
+                  <h4 class="text-main-400 font-bold border-b m-2">
+                    Document Type
+                  </h4>
+                  <h6 class="m-2">{{ localFileData.documenttype }}</h6>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-        </div>
-
-      
 
     <div
       class="
@@ -389,111 +399,108 @@
         sm:grid-cols-1
       "
     >
-      
-        <div
-          class="
-            py-8
-            px-12
-            mb-12
-            bg-white 
-            text-main-400
-            transform
-            rounded-lg
-            shadow-2xl
-            mt-4
-            transition
-            duration-300
-            ease-in-out
-            hover:-translate-y-2
-          "
-        >
-          <div class="mb-4">
-            <div class="text-gray-900 mb-4 flex justify-center">
-              <i class="fa fa-check fa-3x text-main-400"></i>
-            </div>
-            <div class="flex justify-center text-gray-900 mb-4 border-b">
-              <div class="form-check">
-                <input
-                  class="
-                    form-check-input
-                    appearance-none
-                    h-5
-                    w-5
-                    border
-                    rounded-sm
-                    bg-white
-                    checked:bg-main-400 checked:border-main-400
-                    focus:outline-none
-                    transition
-                    duration-200
-                    mt-1
-                    text-main-400
-                    align-top
-                    bg-no-repeat bg-center bg-contain
-                    float-left
-                    mr-2
-                    cursor-pointer
-                  "
-                  type="checkbox"
-                  :value="agreed"
-                  @click="changeAgrement()"
-                  id="agreed"
-                />
-              </div>
-              <h3
-                class="
-                  text-black
-                  mb-2
-                  sm:text-xs
-                  lgmd:text-base
-                  lg:text-base
-                  md:text-base
-                "
-              >
-                By checking here I hereby verify the documents and details
-                filled in are legal.
-              </h3>
-            </div>
-            <div class="flex justify-center">
-              <label
-                for="feedback"
-                class="form-label inline-block mb-2 text-main-400"
-                >Feedback on the process and system
-                <span class="text-red-200">(required*)</span>
-              </label>
-            </div>
-
-            <div class="mb-3 w-full flex justify-center">
+      <div
+        class="
+          py-8
+          px-12
+          mb-12
+          bg-white
+          text-main-400
+          transform
+          rounded-lg
+          shadow-2xl
+          mt-4
+          transition
+          duration-300
+          ease-in-out
+          hover:-translate-y-2
+        "
+      >
+        <div class="mb-4">
+          <div class="text-gray-900 mb-4 flex justify-center">
+            <i class="fa fa-check fa-3x text-main-400"></i>
+          </div>
+          <div class="flex justify-center text-gray-900 mb-4 border-b">
+            <div class="form-check">
               <input
-                v-model="generalInfo.feedback"
                 class="
-                  form-control
-                  block
-                  w-full
-                  px-3
-                  py-1.5
-                  text-base
-                  font-normal
-                  text-gray-700
-                  border border-solid border-main-400
-                  rounded
-                 
-                  focus:border-main-400
-                  transition
-                  ease-in-out
-                  m-0
+                  form-check-input
+                  appearance-none
+                  h-5
+                  w-5
+                  border
+                  rounded-sm
+                  bg-white
+                  checked:bg-main-400 checked:border-main-400
                   focus:outline-none
+                  transition
+                  duration-200
+                  mt-1
+                  text-main-400
+                  align-top
+                  bg-no-repeat bg-center bg-contain
+                  float-left
+                  mr-2
+                  cursor-pointer
                 "
-                @keyup="checkAgreement()"
-                id="feedback"
-                rows="6"
-                placeholder="Your feedback"
-                type="textarea"
+                type="checkbox"
+                :value="agreed"
+                @click="changeAgrement()"
+                id="agreed"
               />
             </div>
+            <h3
+              class="
+                text-black
+                mb-2
+                sm:text-xs
+                lgmd:text-base
+                lg:text-base
+                md:text-base
+              "
+            >
+              By checking here I hereby verify the documents and details filled
+              in are legal.
+            </h3>
+          </div>
+          <div class="flex justify-center">
+            <label
+              for="feedback"
+              class="form-label inline-block mb-2 text-main-400"
+              >Feedback on the process and system
+              <span class="text-red-200">(required*)</span>
+            </label>
+          </div>
+
+          <div class="mb-3 w-full flex justify-center">
+            <input
+              v-model="generalInfo.feedback"
+              class="
+                form-control
+                block
+                w-full
+                px-3
+                py-1.5
+                text-base
+                font-normal
+                text-gray-700
+                border border-solid border-main-400
+                rounded
+                focus:border-main-400
+                transition
+                ease-in-out
+                m-0
+                focus:outline-none
+              "
+              @keyup="checkAgreement()"
+              id="feedback"
+              rows="6"
+              placeholder="Your feedback"
+              type="textarea"
+            />
           </div>
         </div>
-      
+      </div>
     </div>
 
     <div class="flex justify-end w-1/2">

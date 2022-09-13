@@ -33,7 +33,7 @@
                   block
                   px-4
                   py-2
-                  text-sm text-blue-100
+                  text-sm text-main-400
                   hover:bg-gray-100 hover:text-gray-900
                 "
                 role="menuitem"
@@ -108,11 +108,13 @@
                     block
                     px-4
                     py-2
-                    text-sm text-blue-100
+                    text-sm text-main-400
+                    border-b
                     hover:bg-gray-100 hover:text-gray-900
                   "
                   role="menuitem"
                 >
+                <i class="fa fa-info-circle"></i>
                   About
                 </li>
               </router-link>
@@ -124,11 +126,13 @@
                     block
                     px-4
                     py-2
-                    text-sm text-blue-100
+                    text-sm text-main-400
+                    border-b
                     hover:bg-gray-100 hover:text-gray-900
                   "
                   role="menuitem"
                 >
+                <i class="fa fa-message"></i>
                   Leave a Feedback
                 </li>
               </router-link>
@@ -138,12 +142,14 @@
                     block
                     px-4
                     py-2
-                    text-sm text-blue-100
+                    text-sm text-main-400
+                    border-b
                     hover:bg-gray-100 hover:text-gray-900
                   "
                   role="menuitem"
                 >
-                  Update Profile
+                <i class="fa fa-user"></i>
+                  Profile
                 </li>
               </a>
               <a
@@ -152,15 +158,19 @@
                   block
                   px-4
                   py-2
-                  text-sm text-blue-100
+                  text-sm text-main-400
+                  border-b
                   hover:bg-gray-100 hover:text-gray-900
                 "
                 role="menuitem"
                 id="logout"
               >
+              <i class="fa fa-sign-out"></i>
                 Sign Out
               </a>
             </div>
+
+            
           </div>
         </div>
       </div>

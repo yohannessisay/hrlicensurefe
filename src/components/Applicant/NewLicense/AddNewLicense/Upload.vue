@@ -222,7 +222,7 @@
         </h2>
         <div
           id="departmentFilesAccordion"
-          class="accordion-collapse collapse"
+          class="accordion-collapse collapse show"
           aria-labelledby="departmentFilesAccordionheading"
           data-bs-parent="#FilesAccordion"
         >
@@ -457,7 +457,7 @@
                         <div class="flex items-center ml-4">
                           <div>
                             <p class="">
-                              {{ parentItem[0].documentType.name }}
+                              {{ parentItem[0].documentType.name.slice(0,(parentItem[0].documentType.name.length-2)) }}
                               <b
                                 v-if="parentItem[0].isRequired"
                                 class="text-red-300"
@@ -468,51 +468,15 @@
                         </div>
                       </td>
                       <td class="px-6">
-                        <div class="flex items-center ml-4">
-                          <div>
-                            <p class="">
-                              {{
-                                parentItem[0].documentType.description
-                                  ? parentItem[0].documentType.description
-                                  : "-----------------------"
-                              }}
-                            </p>
-                          </div>
-                        </div>
+                
                       </td>
 
                       <td class="px-6 py-4">
-                        <p class="">
-                          <input
-                            type="file"
-                            :required="parentItem[0].isRequired"
-                            :id="`files${parentItem[0].id}`"
-                            accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
-                            :ref="`imageUploader${parentItem[0].id}`"
-                            class="custom-file-input"
-                            v-on:change="
-                              handleFileUpload(parentItem[0], $event)
-                            "
-                          />
-                        </p>
+                   
                       </td>
 
                       <td class="px-6 py-4 text-center">
-                        <span
-                          data-bs-toggle="modal"
-                          data-bs-target="#filePreview"
-                          @click="
-                            previewFile(
-                              parentItem[0].documentType.code,
-                              parentItem[0].documentType.name
-                            )
-                          "
-                        >
-                          <i
-                            class="fa fa-eye cursor-pointer"
-                            aria-hidden="true"
-                          ></i>
-                        </span>
+                
                       </td>
 
                       <td class="px-6 text-center">
@@ -545,7 +509,7 @@
                             'collapse' + parentItem[0].documentType.id
                           "
                         >
-                          Add More
+                       Upload
                         </button>
                       </td>
                     </tr>

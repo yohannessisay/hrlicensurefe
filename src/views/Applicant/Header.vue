@@ -127,7 +127,7 @@
                   role="menuitem"
                 >
                 <i class="fa fa-user"></i>
-                  Update Profile
+                  Profile
                 </li>
               </a>
               <a

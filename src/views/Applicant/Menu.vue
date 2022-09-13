@@ -46,14 +46,14 @@
                     "
                   >
                     <img
-                      src="../../assets/newLicenseApplicant.png"
+                      src="../../assets/applicant/newLicense.png"
                       alt=""
                       style="height: 100px; width: 100px"
                     />
                   </p>
 
                   <div class="flex justify-center px-5 mb-2 text-sm mt-4">
-                    <h1 class="text-2xl text-white">New License</h1>
+                    <h1 class="text-2xl text-main-400">New License</h1>
                   </div>
                 </div>
               </router-link>
@@ -88,14 +88,14 @@
                     "
                   >
                     <img
-                      src="../../assets/renewApplicant.png"
+                      src="../../assets/applicant/renewal.png"
                       alt=""
                       style="height: 100px; width: 100px"
                     />
                   </p>
 
                   <div class="flex justify-center px-5 mb-2 text-sm mt-4">
-                    <h1 class="text-2xl text-white">Renewal</h1>
+                    <h1 class="text-2xl text-main-400">Renewal</h1>
                   </div>
                 </div>
               </router-link>
@@ -130,14 +130,14 @@
                     "
                   >
                     <img
-                    src="../../assets/goodStandingApplicant.png"
+                    src="../../assets/applicant/goodStanding.png"
                       alt=""
                       style="height: 100px; width: 100px"
                     />
                   </p>
 
                   <div class="flex justify-center px-5 mb-2 text-sm mt-4">
-                    <h1 class="text-2xl text-white">Goodstanding</h1>
+                    <h1 class="text-2xl text-main-400">Goodstanding</h1>
                   </div>
                 </div>
               </router-link>
@@ -221,15 +221,7 @@ export default {
 };
 </script>
 <style scoped>
-.overview-boxes .box {
-    align-items: center;
-    justify-content: center;
-    width: calc(100% / 4 - 15px);
-    background: rgb(7 103 126);
-    padding: 15px 14px;
-    border-radius: 12px;
-    box-shadow: 0 5px 10px rgb(0 0 0 / 10%);
-}
+ 
 .overview-boxes .box:hover {
     align-items: center;
     justify-content: center;

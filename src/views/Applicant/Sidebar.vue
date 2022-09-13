@@ -59,16 +59,7 @@
         </a>
       </li>
 
-      <li class="list">
-        <b></b>
-        <b></b>
-        <a href="#">
-          <router-link class="link" to="/Applicant/NewLicense">
-            <span class="icon"><i class="bx bx-user text-white"></i></span>
-            <span class="text text-white font-bold">Profile</span>
-          </router-link>
-        </a>
-      </li>
+ 
     </ul>
   </div>
 </template>
