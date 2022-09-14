@@ -159,11 +159,7 @@ const routes = [
     name: "ApplicantRenewal",
     component: () => import("../components/Applicant/Renewal/Renewal.vue")
   },
-  {
-    path: "/verification",
-    name: "Verification",
-    component: () => import("../components/Verification/Verification.vue")
-  },
+ 
   //Applicant Side Good Standing
   {
     path: "/Applicant/GoodStanding",
