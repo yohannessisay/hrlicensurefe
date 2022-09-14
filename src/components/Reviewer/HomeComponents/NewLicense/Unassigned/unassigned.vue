@@ -363,27 +363,16 @@ export default {
       applicationStatus(store, "SUB").then((res) => {
         modalDataId.value.apStatusUnassigned = res;
         let statusId = res;
-
+       
         store
           .dispatch("reviewerNewLicense/getNewLicenseUnassigned", statusId)
           .then((res) => {
-            allInfo.value.assignApplication =
-              store.getters[
-                "reviewerNewLicense/getNewLicenseUnassignedSearched"
-              ];
-
-            for (let applicant in allInfo.value.assignApplication) {
-              if (
-                allInfo.value.assignApplication[applicant].applicationType ===
-                undefined
-              ) {
-                allInfo.value.assignApplication[applicant].applicationType =
-                  allInfo.value.assignApplication[applicant].applicantType;
-              }
-            }
-
-            JSON.parse(JSON.stringify(allInfo.value.assignApplication)).forEach(
-              (element) => {
+            console.log(res);
+            allInfo.value = res;
+            if (allInfo.value) {
+              JSON.parse(
+                JSON.stringify(allInfo.value)
+              ).forEach((element) => {
                 tableData.value.push({
                   LicenseNumber: element.newLicenseCode,
                   ApplicantName:
@@ -399,9 +388,8 @@ export default {
                     .replace(/-/g, "/"),
                   data: element,
                 });
-              }
-            );
-
+              });
+            }
             tableDataTemp.value = tableData.value;
             unassignedTable.value = {
               columns: [
@@ -553,17 +541,17 @@ export default {
                     },
                   },
                 ],
-            rows: computed(() => {
-                return tableData.value.filter(
-                  (x) =>
-                    x.ApplicationType.toLowerCase().includes(
-                      searchTerm.value.toLowerCase()
-                    ) ||
-                    x.ApplicantName.toLowerCase().includes(
-                      searchTerm.value.toLowerCase()
-                    )
-                );
-              }),
+                rows: computed(() => {
+                  return tableData.value.filter(
+                    (x) =>
+                      x.ApplicationType.toLowerCase().includes(
+                        searchTerm.value.toLowerCase()
+                      ) ||
+                      x.ApplicantName.toLowerCase().includes(
+                        searchTerm.value.toLowerCase()
+                      )
+                  );
+                }),
                 totalRecordCount: tableData.value.length,
                 sortable: {
                   order: "id",

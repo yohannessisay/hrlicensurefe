@@ -42,24 +42,49 @@
           text-current
         "
       >
-        <div
+   <div
           class="
             modal-header
             flex flex-shrink-0
-            items-center
-            justify-between
+           justify-end
+           
             p-2
             rounded-t-md
           "
         >
           <button
             type="button"
-            class="btn-close border-none rounded-lg hover:text-primary-400"
+            class="     
+              px-6
+              text-white
+              bg-primary-600
+              hover:text-primary-600 hover:border
+              font-medium
+              text-xs
+              leading-tight
+              uppercase
+              rounded
+              shadow-lg
+              hover:bg-purple-700 hover:shadow-lg
+              focus:bg-purple-700
+              focus:shadow-lg
+              focus:outline-none
+              focus:ring-0
+              active:bg-purple-800 active:shadow-lg
+              transition
+              duration-150
+              ease-in-out"
             data-bs-dismiss="modal"
             aria-label="Close"
-          ></button>
+          ><i class="fa fa-close fa-2x"></i></button>
         </div>
-
+        <div class="vld-parent mt-4">
+          <loading
+            :active="isLoading"
+            :is-full-page="false"
+            :color="'#2F639D'"
+            :opacity="1"
+          ></loading>
         <div class="modal-body relative p-4">
           <div class="container px-6 mx-auto">
             <section class="text-gray-800">
@@ -316,7 +341,6 @@
                     <!-- END Article -->
                   </div>
                   <!-- END Column -->
- 
 
                   <!-- Column -->
                   <div
@@ -348,23 +372,49 @@
                       <div class="grid grid-flow-row auto-rows-max">
                         <div class="flex justify-between px-4 py-1">
                           <div>Applicant Type</div>
-                          <div class="text-primary-600 font-bold">{{ prevData.applicantType?prevData.applicantType.name:'' }}</div>
+                          <div class="text-primary-600 font-bold">
+                            {{
+                              prevData.applicantType
+                                ? prevData.applicantType.name
+                                : ""
+                            }}
+                          </div>
                         </div>
                         <div class="flex justify-between px-4 py-1">
                           <div>Application Status</div>
-                          <div class="text-primary-600 font-bold">{{ prevData.applicationStatus?prevData.applicationStatus.name:'' }}</div>
+                          <div class="text-primary-600 font-bold">
+                            {{
+                              prevData.applicationStatus
+                                ? prevData.applicationStatus.name
+                                : ""
+                            }}
+                          </div>
                         </div>
                         <div class="flex justify-between px-4 py-1">
                           <div>Certified Status</div>
-                          <div class="text-primary-600 font-bold">{{ prevData.certified?prevData.certified:'' }}</div>
+                          <div class="text-primary-600 font-bold">
+                            {{ prevData.certified ? 'Certified' : "Not Certified" }}
+                          </div>
                         </div>
                         <div class="flex justify-between px-4 py-1">
                           <div>Certified Date</div>
-                          <div class="text-primary-600 font-bold">{{ prevData.applicationStatus?prevData.applicationStatus.name:'' }}</div>
+                          <div class="text-primary-600 font-bold">
+                            {{
+                              prevData.applicationStatus
+                                ? prevData.applicationStatus.name
+                                : ""
+                            }}
+                          </div>
                         </div>
                         <div class="flex justify-between px-4 py-1">
                           <div>Expiration Date</div>
-                          <div class="text-primary-600 font-bold">{{ prevData.applicationStatus?prevData.applicationStatus.name:'' }}</div>
+                          <div class="text-primary-600 font-bold">
+                            {{
+                              prevData.applicationStatus
+                                ? prevData.applicationStatus.name
+                                : ""
+                            }}
+                          </div>
                         </div>
                       </div>
 
@@ -387,7 +437,7 @@
             </section>
           </div>
         </div>
-
+        </div>
         <div
           class="
             modal-footer
@@ -404,6 +454,36 @@
               inline-block
               px-6
               text-white
+              bg-primary-600
+              hover:text-primary-600 hover:border
+              font-medium
+              text-xs
+              leading-tight
+              uppercase
+              rounded
+              shadow-lg
+              hover:bg-purple-700 hover:shadow-lg
+              focus:bg-purple-700
+              focus:shadow-lg
+              focus:outline-none
+              focus:ring-0
+              active:bg-purple-800 active:shadow-lg
+              transition
+              duration-150
+              ease-in-out
+            "
+            @click="returnLicense()"
+          >
+            Return
+          </button>
+          <button
+            type="button"
+            class="
+              inline-block
+              px-6
+              text-white
+              bg-primary-600
+              hover:text-primary-600 hover:border
               font-medium
               text-xs
               leading-tight
@@ -432,23 +512,108 @@
 
 <script>
 import { useStore } from "vuex";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import moment from "moment";
 // Import stylesheet
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 
+import Loading from "vue3-loading-overlay"; 
+
 import { useToast } from "vue-toastification";
 export default {
   props: ["previousLicenseData"],
-  components: {},
+  components: {Loading},
   computed: {
     moment: () => moment,
   },
   setup(props) {
     const store = useStore();
     const toast = useToast();
+    let licenseData = ref({});
+    let isLoading = ref(false);
+    const check = () => {
+      store
+        .dispatch(
+          "reviewer/getNewLicenseApplication",
+          props.previousLicenseData.id
+        )
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => console.log(err));
+    };
 
-    return {};
+    const returnLicense = () => {
+      isLoading.value=true
+      let action =
+        licenseData.value &&
+        licenseData.value.applicationStatus &&
+        licenseData.value.applicationStatus.buttons
+          ? licenseData.value.applicationStatus.buttons.filter(
+              (button) => button.code == "RTN"
+            )
+          : ""; 
+      let req = {
+        action: action ? action[0].action :null,
+        data: licenseData.value,
+      };
+     
+      store
+        .dispatch("reviewer/editNewLicense", req)
+        .then((res) => {
+          if (res.statusText == "Created") {
+            isLoading.value=true
+            toast.success("Application reviewed Successfully", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+         
+          } else {
+            isLoading.value=true
+            toast.error("Please try again", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+          
+          }
+        })
+        .catch(() => {
+          isLoading.value=true
+          toast.error("Please try again", {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          });
+        
+        });
+    };
+    watch(props.previousLicenseData, () => {
+      if (props.previousLicenseData) {
+        store
+          .dispatch(
+            "reviewerNewLicense/getNewLicenseApplicationById",
+            props.previousLicenseData && props.previousLicenseData[0]
+              ? props.previousLicenseData[0].id
+              : ""
+          )
+          .then((res) => {
+            licenseData.value = res.data.data;
+          })
+          .catch((err) => console.log(err));
+      }
+    });
+    return {
+      returnLicense,
+      isLoading
+    };
   },
 };
 </script>

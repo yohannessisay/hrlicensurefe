@@ -1423,11 +1423,29 @@ export default {
     commit(SET_NEW_LICENSE_FOR_SPECIFIC_USER_SEARCHED, searchedVal);
   },
 
-  async getNewLicense({ commit }, userId) {
+  async getNewLicenseByUserId({ commit }, userId) {
     try {
       const resp = await ApiService.get(
         baseUrl + "/newLicenses/user/" + userId
       );
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async getNewLicenseApplicationById(context, id) {
+    try {
+      const url = baseUrl + "/newLicenses/" + id;
+      const resp = await ApiService.get(url);
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async getNewLicenseReturned() {
+    try {
+      const url = baseUrl + "/newLicenses/returned";
+      const resp = await ApiService.get(url);
       return resp;
     } catch (error) {
       return error;

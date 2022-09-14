@@ -23,10 +23,6 @@
         sm:grid-cols-1
       "
     >
-    
-      
-    
-
       <div
         class="
           py-8
@@ -263,7 +259,6 @@
           "
         >
           <div class="mb-4 border-t text-main-400">
-        
             <div class="flex justify-center text-gray-900 mb-4 mt-4">
               <div class="form-check">
                 <input
@@ -437,17 +432,21 @@ export default {
                 ? generalInfo.value.applicantTypeSelected.id
                 : null,
             residenceWoredaId:
-              generalInfo.value && generalInfo.value.residenceWoredaId
-                ? generalInfo.value.residenceWoredaId
+              generalInfo.value && generalInfo.value.woredaSelected
+                ? generalInfo.value.woredaSelected.id
                 : null,
             educations: generalInfo.value ? generalInfo.value.education : {},
-
-            expertLevelId: generalInfo.value.expertLevelId,
+            occupationTypeId: generalInfo.value.occupationSelected
+              ? generalInfo.value.occupationSelected.id
+              : null,
+            nativeLanguageId: generalInfo.value.nativeLanguageSelected
+              ? generalInfo.value.nativeLanguageSelected.id
+              : null,
+            expertLevelId: generalInfo.value.expertLevelId?generalInfo.value.expertLevelId:null,
             isLegal: true,
-            feedback: generalInfo.value.feedback,
+            feedback: generalInfo.value.feedback?generalInfo.value.feedback:"",
           },
         };
-        console.log(license);
         store.dispatch("newlicense/addNewLicense", license).then((res) => {
           let licenseId = res.data.data.id;
           let payload = { document: formData, id: licenseId };

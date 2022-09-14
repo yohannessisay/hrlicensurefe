@@ -590,8 +590,8 @@ export default {
           data: {
             applicantId: generalInfo.value.applicantId,
             applicantTypeId: generalInfo.value.applicantTypeId.id,
-            residenceWoredaId: generalInfo.value.residenceWoredaId
-              ? generalInfo.value.residenceWoredaId
+            residenceWoredaId: generalInfo.value.woredaSelected
+              ? generalInfo.value.woredaSelected.id
               : null,
             applicantTitle: generalInfo.value.applicantTitle
               ? generalInfo.value.applicantTitle

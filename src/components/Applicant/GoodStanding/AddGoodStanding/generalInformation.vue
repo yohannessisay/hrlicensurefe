@@ -278,7 +278,7 @@
                 focus:border-blue-600
                 focus:outline-none
               "
-              v-model="generalInfo.regionId"
+              v-model="generalInfo.regionSelected"
               @change="fetchZone()"
               required
             >
@@ -315,7 +315,7 @@
                 focus:border-blue-600
                 focus:outline-none
               "
-              v-model="generalInfo.zoneId"
+              v-model="generalInfo.zoneSelected"
             >
               <option
                 v-for="zone in zones"
@@ -352,7 +352,7 @@
                 focus:border-blue-600
                 focus:outline-none
               "
-              v-model="generalInfo.woredaId"
+              v-model="generalInfo.woredaSelected"
               required
             >
               <option
@@ -558,9 +558,9 @@ export default {
       otherProfessionType: "",
       otherProfessionTypeAmharic: "",
       applicationStatusId: "",
-      regionId: "",
-      zoneId: "",
-      woredaId: "",
+      regionSelected: "",
+      zoneSelected: "",
+      woredaSelected: "",
       departmentId: "",
       expertLevelId: "",
       licenseFile: [],

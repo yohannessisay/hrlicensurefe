@@ -160,7 +160,7 @@ export default {
 
         JSON.parse(JSON.stringify(allInfo.value.assignApplication)).forEach(
           (element) => {
-            if (element.reviewerId == adminId) {
+            if (element.licenseReviewer.reviewerId == adminId) {
               toYouTableData.value.push({
                 id: element.id,
                 ApplicantName:

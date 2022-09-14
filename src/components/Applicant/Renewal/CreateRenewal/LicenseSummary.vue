@@ -1,5 +1,5 @@
 <template>
-<div class="container xl:max-w-6xl mx-auto p-4">
+  <div class="container xl:max-w-6xl mx-auto p-4">
     <!-- Heading start -->
     <header class="text-center mx-auto mb-12 lg:px-20">
       <h2 class="text-3xl leading-normal mb-2 font-bold text-main-400">
@@ -23,10 +23,6 @@
         sm:grid-cols-1
       "
     >
-    
-      
-    
-
       <div
         class="
           py-8
@@ -224,7 +220,7 @@
                     />
                   </a>
 
-                  <h4 class="text-main-400 font-bold border-b  m-2">
+                  <h4 class="text-main-400 font-bold border-b m-2">
                     Document Type
                   </h4>
                   <h6 class="m-2">{{ localFileData.documenttype }}</h6>
@@ -263,7 +259,6 @@
           "
         >
           <div class="mb-4 border-t text-main-400">
-           
             <div class="flex justify-center text-gray-900 mb-4 mt-4">
               <div class="form-check">
                 <input
@@ -450,14 +445,23 @@ export default {
                 ? generalInfo.value.applicantTypeSelected.id
                 : null,
             residenceWoredaId:
-              generalInfo.value && generalInfo.value.residenceWoredaId
-                ? generalInfo.value.residenceWoredaId
+              generalInfo.value && generalInfo.value.woredaSelected
+                ? generalInfo.value.woredaSelected.id
                 : null,
-            educations: generalInfo.value.education ? generalInfo.value.education : {},
-
-            expertLevelId: generalInfo.value.expertLevelId,
+            educations: generalInfo.value ? generalInfo.value.education : {},
+            occupationTypeId: generalInfo.value.occupationSelected
+              ? generalInfo.value.occupationSelected.id
+              : null,
+            nativeLanguageId: generalInfo.value.nativeLanguageSelected
+              ? generalInfo.value.nativeLanguageSelected.id
+              : null,
+            expertLevelId: generalInfo.value.expertLevelId
+              ? generalInfo.value.expertLevelId
+              : null,
             isLegal: true,
-            feedback: generalInfo.value.feedback,
+            feedback: generalInfo.value.feedback
+              ? generalInfo.value.feedback
+              : "",
           },
         };
         store.dispatch("renewal/addRenewalLicense", license).then((res) => {
@@ -509,7 +513,7 @@ export default {
         ? JSON.parse(window.localStorage.getItem("RNApplicationImageData"))
         : {};
 
-      generalInfo.value = localData.value; 
+      generalInfo.value = localData.value;
       generalInfo.value.feedback = "";
       if (generalInfo.value.applicantTypeSelected.id == 1) {
         store.dispatch("renewal/getExpertLevel").then((res) => {

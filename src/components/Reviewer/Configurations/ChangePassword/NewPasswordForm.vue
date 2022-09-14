@@ -133,7 +133,7 @@ export default {
       oldPasswordError.value = false;
       showLoading.value = true;
       validateMessage(passwordInfo);
-      if (passwordInfo.newPassword != passwordInfo.confirmPassword) {
+      if (passwordInfo.value.newPassword != passwordInfo.value.confirmPassword) {
         showErrorPassword.value = true;
         showLoading.value = false;
         return;

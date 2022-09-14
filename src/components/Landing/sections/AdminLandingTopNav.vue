@@ -48,6 +48,7 @@
       data-bs-toggle="modal"
       data-bs-target="#staticBackdrop"
     >
+    <i class="fa fa-sign-in"></i>
       Log In
     </button>
   </section>
@@ -247,21 +248,9 @@
                 inline-block
               "
             >
+            <i class="fa fa-sign-in"></i>
               Login
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                class="h-4 inline-block"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M17 8l4 4m0 0l-4 4m4-4H3"
-                />
-              </svg>
+          
               <vue-element-loading
                 :active="show"
                 spinner="ring"
@@ -342,39 +331,20 @@ export default {
             show.value = false;
             if (loggedInData.value.isFirstTime) {
               show.value = false;
-              toast.success("Logged In Successfully", {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true,
-              });
               router.push({ path: "/admin/changePassword" });
               setTimeout(() => {
                 window.location.reload();
               }, 500);
             } else if (loggedInData.value.role.code == "UM") {
               show.value = false;
-              toast.success("Logged In Successfully", {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true,
-              });
+       
               router.push({ path: "/admin/list" });
               setTimeout(() => {
                 window.location.reload();
               }, 500);
             } else {
               show.value = false;
-              toast.success("Logged In Successfully", {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true,
-              });
+    
               router.push({ path: "/admin/review" });
               setTimeout(() => {
                 window.location.reload();

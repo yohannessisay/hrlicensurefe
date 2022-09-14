@@ -113,7 +113,7 @@
                 focus:border-main-400
                 focus:outline-none
               "
-              v-model="generalInfo.languageSelected"
+              v-model="generalInfo.nativeLanguageSelected"
             >
               <option
                 v-for="language in languages"
@@ -155,7 +155,7 @@
               <option
                 v-for="occupation in occupations"
                 v-bind:key="occupation.name"
-                v-bind:value="occupation.id"
+                v-bind:value="occupation"
               >
                 {{ occupation.name }}
               </option>
@@ -821,6 +821,7 @@ export default {
       woredaSelected: "",
       languageSelected: "",
       occupationSelected: "",
+      nativeLanguageSelected:"",
       multipleDepartment: [],
       education: [],
     });

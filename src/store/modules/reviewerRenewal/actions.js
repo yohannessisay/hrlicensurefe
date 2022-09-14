@@ -1347,4 +1347,34 @@ export default {
     });
     commit(SET_RENEWAL_OTHERS_UNDER_SUPER_VISION_CONFIRMED_SEARCHED, searchedVal);
   },
+
+  async getRenewalByUserId({ commit }, userId) {
+    try {
+      const resp = await ApiService.get(
+        baseUrl + "/renewals/user/" + userId
+      );
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async getRenewalApplicationById(context, id) {
+    try {
+      const url = baseUrl + "/renewals/" + id;
+      const resp = await ApiService.get(url);
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+
+  async getRenewalReturned() {
+    try {
+      const url = baseUrl + "/renewals/returned";
+      const resp = await ApiService.get(url);
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
 };

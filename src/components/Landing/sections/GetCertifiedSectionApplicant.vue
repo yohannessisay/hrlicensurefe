@@ -40,15 +40,7 @@
               Create, Manage and follow up on your license request online
             </h3>
           </transition>
-          <transition name="slide-fade-to-left">
-            <button
-              class="mt-medium lg:mt-0 lg:self-end px-xl bg-main-400 rounded-sm hover:text-main-400"
-              v-if="showContent"
-              @click="$emit('setShowSignup', true)"
-            >
-              Sign Up
-            </button>
-          </transition>
+     
         </section>
       </div>
     </div>

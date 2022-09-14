@@ -2191,6 +2191,8 @@ export default {
             newLicense.value.newLicenseCode +
             " has been declined after careful examination of your uploaded documents by our reviewers. Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
           : "";
+        showRemark.value = true;
+        sendDeclinedData.value = false;
       }
 
       let checkProfessionResult = false;
@@ -2204,8 +2206,6 @@ export default {
       if (checkProfessionResult) {
         newLicense.value.isProfessionChanged == true;
       } else {
-        showRemark.value = true;
-        sendDeclinedData.value = false;
         newLicense.value.isProfessionChanged == false;
         if (fromModalSendDeclinedData.value == true) {
           sendDeclinedData.value = true;
@@ -2644,7 +2644,7 @@ export default {
         });
         allowOtherProfChange.value[education.department.id] = false;
       }
-    
+
       for (let i = 0; i < newLicense.value.educations.length; i++) {
         for (let j = 0; i < modifiedProfession.length; j++) {
           if (
@@ -2655,8 +2655,7 @@ export default {
           }
         }
       }
-   
- 
+
       newLicense.value.educations = modifiedProfession;
     };
     onMounted(() => {

@@ -42,9 +42,9 @@
           ease-in-out
         "
         data-bs-toggle="modal"
-        data-bs-target="#register" 
+        data-bs-target="#register"
       >
-      <i class="fa fa-address-card"></i>   Sign Up
+        <i class="fa fa-address-card"></i> Sign Up
       </button>
       <button
         type="button"
@@ -298,10 +298,6 @@
     </div>
   </div>
 
-
-
-
-
   <div
     class="
       modal
@@ -371,158 +367,181 @@
           ></button>
         </div>
         <div class="modal-body relative p-2 flex justify-center">
-          <form @submit.prevent="submit">
-            <div class="form-group mb-6 flex justify-center">
-              <img
-                src="../../../assets/image.png"
-                loading="lazy"
-                class="w-40"
-                alt="HPEL logo"
-              />
-            </div>
-            <div class="form-group mb-6">
-              <label
-                for="exampleInputEmail2"
-                class="form-label inline-block mb-2 text-gray-700"
-                >Email address</label
-              >
+          <div class="form-group mb-6 flex justify-center"></div>
+          <form class="flex flex-col justify-center items-center w-full mt-4">
+            <input type="hidden" name="remember" value="true" />
+            <div class="flex flex-col mb-medium w-full">
+              <label class="ml-4 text-main-400 font-bold">Email</label>
               <input
-                type="email"
-                v-model="credentials.email"
+                v-model="registerCredentials.emailAddress"
+                id="email-address"
+                name="email"
                 class="
-                  form-control
-                  block
                   w-full
-                  px-3
-                  py-1.5
-                  text-base
-                  font-normal
-                  text-gray-700
-                  bg-white bg-clip-padding
-                  border border-solid border-gray-300
-                  rounded
-                  transition
-                  ease-in-out
-                  m-0
-                  focus:text-gray-700
-                  focus:bg-white
-                  focus:border-blue-600
-                  focus:outline-none
+                  rounded-none
+                  sm:w-10/12 sm:ml-4
+                  border
+                  text-main-400
                 "
-                id="exampleInputEmail2"
-                aria-describedby="emailHelp"
-                placeholder="Enter email"
+                type="email"
+                autocomplete="email"
+                required
               />
+              <span style="color: red">{{
+                registerCredentialsErrors.email
+              }}</span>
             </div>
-            <div class="form-group mb-6">
-              <label
-                for="exampleInputPassword2"
-                class="form-label inline-block mb-2 text-gray-700"
-                >Password</label
+            <div class="flex flex-col mb-medium w-full">
+              <label for="password" class="ml-4 text-main-400 font-bold"
+                >Phone Number(+251)</label
               >
               <input
-                v-model="credentials.password"
+                v-model="registerCredentials.phoneNumber"
+                id="phone"
+                name="phone"
+                class="
+                  w-full
+                  rounded-none
+                  sm:w-10/12 sm:ml-4
+                  border
+                  text-main-400
+                "
+                type="text"
+                autocomplete="current-number"
+                required
+              />
+
+              <span class="ml-4 text-sm" style="color: red">{{
+                registerCredentialsErrors.phoneNumber
+                  ? registerCredentialsErrors.phoneNumber
+                  : ""
+              }}</span>
+              <span class="text-sm ml-4"
+                >Area code for phone is not needed, valid phone number
+                eg-912345678</span
+              >
+              <span v-if="phoneError" class="text-sm text-red-300"
+                >phone number must be exactly 9 digits, eg-912345678</span
+              >
+            </div>
+            <div class="flex flex-col mb-medium w-full">
+              <label class="ml-4 text-main-400 font-bold">Password</label>
+              <input
+                v-model="registerCredentials.password"
                 type="password"
-                id="password"
+                id="registerpassword"
                 name="password"
                 autocomplete="current-password"
-                required
-                placeholder="**********"
-                @type="show ? 'password' : 'text'"
                 class="
-                  form-control
-                  block
                   w-full
-                  px-3
-                  py-1.5
-                  text-base
-                  font-normal
-                  text-gray-700
-                  bg-white bg-clip-padding
-                  border border-solid border-gray-300
-                  rounded
-                  transition
-                  ease-in-out
-                  m-0
-                  focus:text-gray-700
-                  focus:bg-white
-                  focus:border-blue-600
-                  focus:outline-none
+                  rounded-none
+                  sm:w-10/12 sm:ml-4
+                  border
+                  text-main-400
                 "
+                required
+                v-on:keyup="showPasswordStrength(registerCredentials.password)"
               />
-              <a class="text-primary-500">
-                <i
-                  class="fa fa-eye cursor-pointer"
-                  style="font-size: 26px"
-                  @click="showVisibility()"
-                ></i
-              ></a>
+              <span class="ml-4 text-sm" style="color: red">{{
+                registerCredentialsErrors.password
+              }}</span>
+              <password-meter :password="registerCredentials.password" />
+              <div v-if="passwordStrengthDisplay">
+                <ul>
+                  Password should be:
+                  <div class="ml-16 pl-8">
+                    <li>Minimum of Eight Characters</li>
+                    <li>At least one Uppercase Character</li>
+                    <li>At least one Lowercase Character</li>
+                    <li>At least one Number</li>
+                    <li>At least one special Character</li>
+                  </div>
+                </ul>
+              </div>
+              <span class="ml-4" style="color: red">{{
+                registerCredentialsErrors.password
+              }}</span>
             </div>
-            <div class="flex justify-between items-center mb-6">
-              <a
-                href="#!"
+            <div class="flex flex-col mb-medium w-full">
+              <label class="ml-4 text-main-400 font-bold"
+                >Re-type Password</label
+              >
+              <input
+                v-model="registerCredentials.repassword"
+                type="password"
+                id="repassword"
+                name="password"
+                autocomplete="current-password"
                 class="
-                  text-blue-600
-                  hover:text-blue-700
-                  focus:text-blue-700
-                  transition
-                  duration-200
-                  ease-in-out
+                  w-full
+                  rounded-none
+                  sm:w-10/12 sm:ml-4
+                  border
+                  text-main-400
                 "
-                @click="$emit('forgotPassword')"
-                >Forgot password?</a
-              >
-            </div>
-            <button
-              class="
-                transition
-                duration-200
-                bg-main-400
-                focus:bg-blue-700
-                focus:shadow-sm
-                focus:ring-4
-                focus:ring-blue-500
-                focus:ring-opacity-50
-                text-white
-                hover:text-main-400 hover:bg-white
-                w-full
-                ml-auto
-                mt-4
-                rounded-lg
-                text-md
-                shadow-sm
-                hover:shadow-md
-                font-semibold
-                text-center
-                inline-block
-              "
-              @click="register()"
-            >
-              Register
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                class="h-4 inline-block"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M17 8l4 4m0 0l-4 4m4-4H3"
-                />
-              </svg>
-              <vue-element-loading
-                :active="show"
-                spinner="ring"
-                color="white"
-                background-color="#ffffff00;"
-                style="margin-left: 110px; margin-top: -3px"
+                required
               />
-            </button>
+              <span class="ml-4 text-sm" style="color: red">{{
+                registerCredentialsErrors.repassword
+              }}</span>
+              <password-meter :password="registerCredentials.repassword" />
+            </div>
+
+            <a
+              class="text-base text-main-400 hover:underline cursor-pointer"
+              data-bs-toggle="modal"
+              data-bs-target="#staticBackdrop"
+              >Already have an account? Log in
+            </a>
           </form>
         </div>
+        <button
+          class="
+            transition
+            duration-200
+            bg-main-400
+            focus:bg-blue-700
+            focus:shadow-sm
+            focus:ring-4
+            focus:ring-blue-500
+            focus:ring-opacity-50
+            text-white
+            hover:text-main-400 hover:bg-white
+            w-full
+            ml-auto
+            mt-4
+            rounded-lg
+            text-md
+            shadow-sm
+            hover:shadow-md
+            font-semibold
+            text-center
+          "
+          @click="registerSubmit"
+        >
+          Register
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            class="h-4 inline-block"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M17 8l4 4m0 0l-4 4m4-4H3"
+            />
+          </svg>
+          <vue-element-loading
+            :active="show"
+            spinner="ring"
+            color="white"
+            background-color="#ffffff00;"
+            style="margin-left: 110px; margin-top: -3px"
+          />
+        </button>
       </div>
     </div>
   </div>
@@ -534,9 +553,10 @@ import { useStore } from "vuex";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useToast } from "vue-toastification";
+import PasswordMeter from "vue-simple-password-meter";
 export default {
-  components: { RenderIllustration, VueElementLoading },
-  emits: ["setShowLogin","setShowSignup"],
+  components: { RenderIllustration, VueElementLoading, PasswordMeter },
+  emits: ["setShowLogin", "setShowSignup"],
   setup({ emit }) {
     const store = useStore();
     const router = useRouter();
@@ -573,39 +593,53 @@ export default {
         emailAddress: credentials.value.email.toLowerCase(),
         password: credentials.value.password,
       };
+      store
+        .dispatch("user/login", email)
+        .then((res) => {
+          if (res) {
+            const userId = res.data.data.id;
+            store.dispatch("profile/getProfileByUserId", userId).then((res) => {
+              const getProfiles = res.data ? res.data.data : null;
+              if (getProfiles) {
+                toast.success("Logged In Successfully", {
+                  timeout: 5000,
+                  position: "bottom-center",
+                  pauseOnFocusLoss: true,
+                  pauseOnHover: true,
+                  icon: true,
+                });
+                router.push({ path: "/menu" });
+                setTimeout(() => {
+                  window.location.reload();
+                }, 500);
+              } else {
+                toast.success("Logged In Successfully", {
+                  timeout: 5000,
+                  position: "bottom-center",
+                  pauseOnFocusLoss: true,
+                  pauseOnHover: true,
+                  icon: true,
+                });
 
-      store.dispatch("user/login", email).then((res) => {
-        if (res) {
-          const userId = res.data.data.id;
-          store.dispatch("profile/getProfileByUserId", userId).then((res) => {
-            const getProfiles = res.data ? res.data.data : null;
-            if (getProfiles) {
-              toast.success("Logged In Successfully", {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true,
-              });
-              setTimeout(() => {
-                window.location.reload();
-              }, 500);
-              router.push({ path: "/menu" });
-            } else {
-              toast.success("Logged In Successfully", {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true,
-              });
-              setTimeout(() => {
-                window.location.reload();
-              }, 100);
-              router.push({ path: "/addProfile" });
-            }
-          });
-        } else {
+                router.push({ path: "/addProfile" });
+                setTimeout(() => {
+                  window.location.reload();
+                }, 100);
+              }
+            });
+          } else {
+            show.value = false;
+            toast.error("Username or password incorrect", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+            credentials.value.password = "";
+          }
+        })
+        .catch(() => {
           show.value = false;
           toast.error("Username or password incorrect", {
             timeout: 5000,
@@ -615,8 +649,7 @@ export default {
             icon: true,
           });
           credentials.value.password = "";
-        }
-      });
+        });
     };
     const isEmail = (email) => {
       const re = /\S+@\S+\.\S+/;
@@ -632,14 +665,125 @@ export default {
       return errors;
     };
 
+    let registerMessage = ref({
+      showFlash: false,
+      showErrorFlash: false,
+      showLoading: false,
+      errorMessage: "",
+    });
 
+    let phoneError = ref(false);
+    const registerCredentials = ref({
+      emailAddress: "",
+      phoneNumber: "",
+      password: "",
+      repassword: "",
+    });
+    const password = ref("");
+    const passwordStrengthDisplay = ref(false);
+    const registerCredentialsErrors = ref({});
 
+    const showPasswordStrength = (password) => {
+      if (password != "") {
+        passwordStrengthDisplay.value = true;
+      } else {
+        passwordStrengthDisplay.value = false;
+      }
+    };
+    const registerSubmit = () => {
+      show.value = true;
+      let signup = {
+        emailAddress: registerCredentials.value.emailAddress.toLowerCase(),
+        phoneNumber: registerCredentials.value.phoneNumber,
+        password: registerCredentials.value.password,
+      };
+      registerCredentialsErrors.value = {};
+      if (!validateRegisterForm(registerCredentials.value)) {
+        registerMessage.value.showLoading = true;
+        registerMessage.value.showFlash = false;
+        registerMessage.value.showErrorFlash = false;
+        if (registerCredentials.value.phoneNumber.length != 9) {
+          phoneError.value = true;
+          registerMessage.value.showLoading = false;
+        }
+        let smsData = {
+          recipients: [
+            registerCredentials.value.phoneNumber
+              ? "251" + registerCredentials.value.phoneNumber
+              : "",
+          ],
+          message:
+            "Dear applicant you have successfully registered on eHPL for your license/s, please complete the process of creating your account by loging in to your account using the credentials you entered previously and fill remaining data, Thank you for using eHPL.",
+        };
 
+        store.dispatch("user/signUp", signup).then((res) => {
+          if (res.data.status == "Error") {
+            show.value = false;
+            toast.error(
+              "The email is already registered, please change email",
+              {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              }
+            );
+          } else if (res.data.status == "Success") {
+            show.value = false;
+            store.dispatch("sms/sendSms", smsData).then(() => {
+              toast.success("Registered Successfully", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
+              setTimeout(() => {
+                window.location.reload();
+              }, 2000);
+            });
+          } else {
+            show.value = false;
+            toast.error(
+              "The email is already registered, please change email",
+              {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              }
+            );
+          }
+        });
+      }
+    };
 
+    const validateRegisterForm = (formData) => {
+      if (!formData.emailAddress) {
+        registerCredentialsErrors.value.emailAddress = "Email is required";
+      }
 
+      if (!formData.phoneNumber)
+        registerCredentialsErrors.value.phoneNumber =
+          "Phone number is required";
+      if (!formData.password)
+        registerCredentialsErrors.value.phoneNumber = "Password is  required";
+      if (!formData.repassword)
+        registerCredentialsErrors.value.repassword = "Re-enter password";
+      if (formData.emailAddress && !isEmail(formData.emailAddress)) {
+        registerCredentialsErrors.value.emailAddress = "Invalid Email";
+      }
+      if (formData.password !== formData.repassword) {
+        registerCredentialsErrors.value.repassword = "Passwords don't match";
+      }
 
+      if (Object.keys(registerCredentialsErrors.value).length == 0)
+        return false;
+      return true;
+    };
 
-    
     return {
       credentials,
       credentialsErrors,
@@ -650,6 +794,16 @@ export default {
       message,
       show,
       showLoading,
+
+      registerCredentials,
+      registerCredentialsErrors,
+      registerSubmit,
+      validateRegisterForm,
+      registerMessage,
+      password,
+      phoneError,
+      showPasswordStrength,
+      passwordStrengthDisplay,
     };
   },
 };

@@ -2191,6 +2191,8 @@ export default {
             renewal.value.renewalCode +
             " has been declined after careful examination of your uploaded documents by our reviewers. Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
           : "";
+          showRemark.value = true;
+        sendDeclinedData.value = false;
       }
 
       let checkProfessionResult = false;
@@ -2204,8 +2206,7 @@ export default {
       if (checkProfessionResult) {
         renewal.value.isProfessionChanged == true;
       } else {
-        showRemark.value = true;
-        sendDeclinedData.value = false;
+     
         renewal.value.isProfessionChanged == false;
         if (fromModalSendDeclinedData.value == true) {
           sendDeclinedData.value = true;

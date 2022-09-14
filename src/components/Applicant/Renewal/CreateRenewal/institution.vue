@@ -818,20 +818,14 @@ export default {
     let checkForAddedError = ref(false);
     let generalInfo = ref({
       educationalLevelSelected: "",
-      applicantTypeSelected: localData.value
-        ? localData.value.applicantTypeSelected
-        : "",
+      applicantTypeSelected: "",
+      applicantPositionId: "",
       regionSelected: "",
       zoneSelected: "",
       woredaSelected: "",
       languageSelected: "",
       occupationSelected: "",
-      departmentSelected: "",
-      professionalTypeSelected: "",
-      institutionSelected: "",
-      otherEducationalInstitution: "",
-      otherProfessionalTypeAmharic: "",
-      otherProfessionalType: "",
+      nativeLanguageSelected:"",
       multipleDepartment: [],
       education: [],
     });
@@ -947,7 +941,13 @@ export default {
         return tempStatus;
       }
     };
-
+    const fetchOccupation = () => {
+      store.dispatch("lookups/getGovernment").then((res) => {
+        if (res.data.status == "Success") {
+          occupations.value = res.data.data;
+        }
+      });
+    };
     const removeDepartment = (index) => {
       generalInfo.value.multipleDepartment.splice(index, 1);
       generalInfo.value.education.splice(index, 1);
@@ -1057,7 +1057,7 @@ export default {
     onMounted(async () => {
       await fetchApplicantType();
       await fetchDepartments();
-      // await fetchInstitutions();
+      fetchOccupation();
       await fetchEducationLevel();
       await fetchRegions();
       localData.value = window.localStorage.getItem("RNApplicationData")
@@ -1099,6 +1099,7 @@ export default {
       occupationSelected,
       languages,
       occupations,
+      fetchOccupation,
       departmentSelected,
       professionalTypeSelected,
       otherEducationalInstitution,
