@@ -46,8 +46,7 @@
 import Institution from "./AddNewLicense/generalInformation.vue";
 import Upload from "./AddNewLicense/Upload.vue";
 import MainContent from "./sharedComponents/Menu.vue";
-import LicenseSummary from "./AddNewLicense/LicenseSummary.vue";
-import MultipleUpload from "./AddNewLicense/MultipleUpload.vue";
+import LicenseSummary from "./AddNewLicense/LicenseSummary.vue"; 
 
 export default {
   created() {

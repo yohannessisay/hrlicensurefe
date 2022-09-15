@@ -48,7 +48,7 @@
       data-bs-toggle="modal"
       data-bs-target="#staticBackdrop"
     >
-    <i class="fa fa-sign-in"></i>
+      <i class="fa fa-sign-in"></i>
       Log In
     </button>
   </section>
@@ -80,7 +80,6 @@
           relative
           flex flex-col
           w-8/12
-         
           md:w-9/12
           mdlg:w-9/12
           lg:w-10/12
@@ -248,9 +247,9 @@
                 inline-block
               "
             >
-            <i class="fa fa-sign-in"></i>
+              <i class="fa fa-sign-in"></i>
               Login
-          
+
               <vue-element-loading
                 :active="show"
                 spinner="ring"
@@ -314,6 +313,7 @@ export default {
         email: credentials.value.email.toLowerCase(),
         password: credentials.value.password,
       };
+
       store.dispatch("admin/login", credentialData).then((res) => {
         loggedInData.value = store.getters["admin/getAdmin"];
         showLoading.value = false;
@@ -331,24 +331,58 @@ export default {
             show.value = false;
             if (loggedInData.value.isFirstTime) {
               show.value = false;
+              document
+                .querySelector("#staticBackdrop")
+                .classList.remove("show");
+              document.querySelector("body").classList.remove("modal-open");
+              const mdbackdrop = document.querySelector(".modal-backdrop");
+              if (mdbackdrop) {
+                mdbackdrop.classList.remove("modal-backdrop", "show");
+              }
+              toast.success("Logged In Successfully", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
               router.push({ path: "/admin/changePassword" });
-              setTimeout(() => {
-                window.location.reload();
-              }, 500);
             } else if (loggedInData.value.role.code == "UM") {
               show.value = false;
-       
+              document
+                .querySelector("#staticBackdrop")
+                .classList.remove("show");
+              document.querySelector("body").classList.remove("modal-open");
+              const mdbackdrop = document.querySelector(".modal-backdrop");
+              if (mdbackdrop) {
+                mdbackdrop.classList.remove("modal-backdrop", "show");
+              }
+              toast.success("Logged In Successfully", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
               router.push({ path: "/admin/list" });
-              setTimeout(() => {
-                window.location.reload();
-              }, 500);
             } else {
+              toast.success("Logged In Successfully", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
               show.value = false;
-    
+              document
+                .querySelector("#staticBackdrop")
+                .classList.remove("show");
+              document.querySelector("body").classList.remove("modal-open");
+              const mdbackdrop = document.querySelector(".modal-backdrop");
+              if (mdbackdrop) {
+                mdbackdrop.classList.remove("modal-backdrop", "show");
+              }
               router.push({ path: "/admin/review" });
-              setTimeout(() => {
-                window.location.reload();
-              }, 500);
             }
           }
         } else {

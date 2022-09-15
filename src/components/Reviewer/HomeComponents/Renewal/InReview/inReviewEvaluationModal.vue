@@ -2244,9 +2244,7 @@ export default {
                   pauseOnHover: true,
                   icon: true,
                 });
-                setTimeout(() => {
-                  window.location.reload();
-                }, 3000);
+                router.push({ name: "AdminRenewalInReview" });
               });
             } else {
               toast.error("Please try again", {

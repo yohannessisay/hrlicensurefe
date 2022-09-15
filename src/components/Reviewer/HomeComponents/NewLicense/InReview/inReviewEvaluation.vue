@@ -2228,7 +2228,7 @@ export default {
         ],
         message: smsMessage ? smsMessage : "",
       };
-      console.log(newLicense.value);
+      router.push({ name: "AdminNewLicenseInReview" });
       if (applicationType.value == "New License") {
         store
           .dispatch("reviewer/editNewLicense", req)
@@ -2243,9 +2243,7 @@ export default {
                   pauseOnHover: true,
                   icon: true,
                 });
-                setTimeout(() => {
-                  window.location.reload();
-                }, 3000);
+                router.push({ name: "AdminNewLicenseInReview" });
               });
             } else {
               toast.error("Please try again", {
@@ -2564,6 +2562,7 @@ export default {
               " days  .Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
             : "",
         };
+       
         store
           .dispatch("reviewer/editNewLicense", req)
           .then((res) => {

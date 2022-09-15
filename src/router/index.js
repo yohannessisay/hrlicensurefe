@@ -317,7 +317,7 @@ const routes = [
   },
   {
     path: "/admin/renewal/inReview",
-    name: "RenewalInReview",
+    name: "AdminRenewalInReview",
     component: () =>
       import(
         "../components/Reviewer/HomeComponents/Renewal/InReview/inReview.vue"

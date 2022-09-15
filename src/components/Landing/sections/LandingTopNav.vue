@@ -608,10 +608,15 @@ export default {
                   pauseOnHover: true,
                   icon: true,
                 });
+                document
+                  .querySelector("#staticBackdrop")
+                  .classList.remove("show");
+                document.querySelector("body").classList.remove("modal-open");
+                const mdbackdrop = document.querySelector(".modal-backdrop");
+                if (mdbackdrop) {
+                  mdbackdrop.classList.remove("modal-backdrop", "show");
+                }
                 router.push({ path: "/menu" });
-                setTimeout(() => {
-                  window.location.reload();
-                }, 500);
               } else {
                 toast.success("Logged In Successfully", {
                   timeout: 5000,
@@ -620,11 +625,15 @@ export default {
                   pauseOnHover: true,
                   icon: true,
                 });
-
+                document
+                  .querySelector("#staticBackdrop")
+                  .classList.remove("show");
+                document.querySelector("body").classList.remove("modal-open");
+                const mdbackdrop = document.querySelector(".modal-backdrop");
+                if (mdbackdrop) {
+                  mdbackdrop.classList.remove("modal-backdrop", "show");
+                }
                 router.push({ path: "/addProfile" });
-                setTimeout(() => {
-                  window.location.reload();
-                }, 100);
               }
             });
           } else {
@@ -732,6 +741,14 @@ export default {
           } else if (res.data.status == "Success") {
             show.value = false;
             store.dispatch("sms/sendSms", smsData).then(() => {
+              document
+                .querySelector("#register")
+                .classList.remove("show");
+              document.querySelector("body").classList.remove("modal-open");
+              const mdbackdrop = document.querySelector(".modal-backdrop");
+              if (mdbackdrop) {
+                mdbackdrop.classList.remove("modal-backdrop", "show");
+              }
               toast.success("Registered Successfully", {
                 timeout: 5000,
                 position: "bottom-center",
@@ -739,9 +756,7 @@ export default {
                 pauseOnHover: true,
                 icon: true,
               });
-              setTimeout(() => {
-                window.location.reload();
-              }, 2000);
+         
             });
           } else {
             show.value = false;
