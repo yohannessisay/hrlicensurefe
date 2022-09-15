@@ -907,8 +907,8 @@ export default {
           let categoryResults = res.data.data
             ? res.data.data.filter((ele) => ele.code == "NA")
             : "";
-          let educationLevels = generalInfo.value.multipleDepartment;
-          console.log( generalInfo.value.applicantTypeSelected.id,)
+          let educationLevels = generalInfo.value.educations;
+         
           //Get department docs
           educationLevels.forEach((element) => {
             store
@@ -929,6 +929,7 @@ export default {
                 });
               });
           });
+          console.log(educationalDocs.value)
           //Get Common Docs
 
           store

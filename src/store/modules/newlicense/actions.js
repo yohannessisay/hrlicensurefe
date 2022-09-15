@@ -62,7 +62,7 @@ import {
   SET_RENEWED_LICENSE_OF_HEALTH_FACILITY,
   SET_REQUEST_LETTER_FROM_HIRING_HEALTH_FACILITY,
   SET_GENERAL_INFO,
-  SET_TEMP_DOCS
+  SET_TEMP_DOCS,
 } from "./mutation-types";
 
 const userId = +localStorage.getItem("userId");
@@ -284,7 +284,6 @@ export default {
     }
   },
   async uploadDocuments({ commit }, documents) {
-   
     try {
       const resp = await ApiService.post(
         baseUrl + "/documentUploads/licenseDocument/" + documents.id,
@@ -369,6 +368,14 @@ export default {
       return error;
     }
   },
+  async getNewLicenseByUser({ commit }, id) {
+    try {
+      const resp = await ApiService.get(baseUrl + "/newLicenses/user/" + id);
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
   async getNewLicenseApplication(context, id) {
     try {
       const url = baseUrl + "/newLicenses/" + id;
@@ -419,9 +426,7 @@ export default {
   },
   async getWoredas(context, zoneId) {
     try {
-      const resp = await ApiService.get(
-        baseUrl + "/lookups/woredas/" + zoneId
-      );
+      const resp = await ApiService.get(baseUrl + "/lookups/woredas/" + zoneId);
       return resp;
     } catch (error) {
       const resp = error;

@@ -219,7 +219,8 @@ export default {
     onMounted(() => {
       isLoading.value = true;
       userInfo.value = JSON.parse(window.localStorage.getItem("personalInfo"));
-      store.dispatch("newlicense/getNewLicense").then((res) => {
+     let userId = JSON.parse(window.localStorage.getItem("userId"));
+      store.dispatch("newlicense/getNewLicenseByUser",userId).then((res) => {
         newLicense.value = res.data.data;
         console.log(newLicense);
         if (newLicense.value) {
