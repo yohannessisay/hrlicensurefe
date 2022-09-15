@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <side-nav></side-nav>
-    <div class="content">
+    <div class="content h-screen overflow-y-scroll">
       <top-nav></top-nav>
       <div class="mt-8 ml-8">
       <slot></slot>
