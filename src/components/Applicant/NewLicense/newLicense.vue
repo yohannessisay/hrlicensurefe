@@ -1,7 +1,7 @@
 <template>
   <main-content>
   <transition name="fade" mode="out-in">
-    <div v-if="this.activeState == 1" class="h-full overflow-y-scroll">
+    <div v-if="this.activeState == 1" class="h-screen overflow-y-scroll">
       <Institution
         :activeState="1"
         @changeActiveState="activeState++"
@@ -14,7 +14,7 @@
     </div>
   </transition>
   <transition name="fade" mode="out-in">
-    <div v-if="this.activeState == 2" class="h-full overflow-y-scroll">
+    <div v-if="this.activeState == 2" class="h-screen overflow-y-scroll">
       <Upload
         :activeState="2"
         @changeActiveState="activeState++"
@@ -27,7 +27,7 @@
     </div>
   </transition>
   <transition name="fade" mode="out-in">
-    <div v-if="this.activeState == 3" class="h-full overflow-y-scroll">
+    <div v-if="this.activeState == 3" class="h-screenoverflow-y-scroll">
       <LicenseSummary
         :activeState="3"
         @changeActiveState="activeState++"

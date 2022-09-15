@@ -676,7 +676,7 @@ export default {
       isImage: boolean,
       isPdf: boolean,
       file: "",
-      name: "",
+      name: ""
     });
     let files = ref("");
     let maxFileSize = ref();
@@ -724,7 +724,7 @@ export default {
         }
         reader.addEventListener(
           "load",
-          function () {
+          function() {
             showPreview.value = true;
 
             previewDocuments.value[data.documentType.code] = reader.result;
@@ -733,7 +733,7 @@ export default {
               educationalLevel: data.educationalLevel
                 ? data.educationalLevel.name
                 : "",
-              image: reader.result,
+              image: reader.result
             });
             documentToSave.value[data.documentType.code] = reader.result;
           },
@@ -795,7 +795,7 @@ export default {
         }
         reader.addEventListener(
           "load",
-          function () {
+          function() {
             showPreview.value = true;
 
             previewDocuments.value[data.documentType.code] = reader.result;
@@ -804,7 +804,7 @@ export default {
               educationalLevel: data.educationalLevel
                 ? data.educationalLevel.name
                 : "",
-              image: reader.result,
+              image: reader.result
             });
             // documentUploaded.value[data.documentType.code] = reader.result;
           },
@@ -839,7 +839,7 @@ export default {
         documentUploaded.value[data.documentType.code] = "";
       }
     };
-    const checkForFiles = (docs) => {};
+    const checkForFiles = docs => {};
     const next = () => {
       checkForFiles(documentUploaded.value);
       store.dispatch("newlicense/setTempDocs", formData).then(() => {
@@ -855,12 +855,12 @@ export default {
       return array.reduce((hash, obj) => {
         if (obj[key] === undefined || obj[key] == null) return hash;
         return Object.assign(hash, {
-          [obj[key]]: (hash[obj[key]] || []).concat(obj),
+          [obj[key]]: (hash[obj[key]] || []).concat(obj)
         });
       }, {});
     };
 
-    const addMoreFile = (doc) => {
+    const addMoreFile = doc => {
       divId.value == doc.length;
       if (divId.value < doc.length) {
         divId.value++;
@@ -893,7 +893,7 @@ export default {
       }
     };
 
-    const removeFileUpload = (id) => {
+    const removeFileUpload = id => {
       console.log("here");
     };
     onMounted(() => {
@@ -903,41 +903,43 @@ export default {
       if (Object.keys(localData.value).length != 0) {
         generalInfo.value = localData.value;
 
-        store.dispatch("newlicense/getApplicationCategories").then((res) => {
+        store.dispatch("newlicense/getApplicationCategories").then(res => {
           let categoryResults = res.data.data
-            ? res.data.data.filter((ele) => ele.code == "NA")
+            ? res.data.data.filter(ele => ele.code == "NA")
             : "";
-          let educationLevels = generalInfo.value.educations;
-         
+          let educationLevels = generalInfo.value.multipleDepartment;
+
           //Get department docs
-          educationLevels.forEach((element) => {
+          educationLevels.forEach(element => {
             store
               .dispatch("newlicense/getNLdocuments", [
                 categoryResults[0].id,
                 generalInfo.value.applicantTypeSelected.id,
-                element&&element.educationalLevel?element.educationalLevel.id:element.educationalLevelId,
+                element.educationalLevel
+                  ? element.educationalLevel.id
+                  : element.educationLevel?element.educationLevel.id:''
               ])
-              .then((res) => {
+              .then(res => {
                 let resp = res.data.data;
 
                 educationalDocs.value.push({
-                  educationalLevel: element.educationalLevel,
-                  docs: resp.filter(
-                    (element) => element.parentDocument == null
-                  ),
-                  parentDoc: groupByKey(resp, "parentDocument"),
+                  educationalLevel:   element.educationalLevel
+                  ? element.educationalLevel
+                  : element.educationLevel?element.educationLevel:'',
+                  docs: resp.filter(element => element.parentDocument == null),
+                  parentDoc: groupByKey(resp, "parentDocument")
                 });
               });
           });
-          console.log(educationalDocs.value)
+          console.log('aaaa',educationalDocs.value);
           //Get Common Docs
 
           store
             .dispatch("newlicense/getCommonNLdocuments", [
               categoryResults[0].id,
-              generalInfo.value.applicantTypeSelected.id,
+              generalInfo.value.applicantTypeSelected.id
             ])
-            .then((res) => {
+            .then(res => {
               let result = res.data.data;
               commonDocuments.value = result;
             });
@@ -963,9 +965,9 @@ export default {
       educationalDocs,
       imageUploader,
       filePreviewData,
-      next,
+      next
     };
-  },
+  }
 };
 </script>
 
