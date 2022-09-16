@@ -5,10 +5,10 @@
         <li><a href="#" class="text-main-400 hover:text-blue-700">Home</a></li>
         <li><span class="text-gray-500 mx-2">/</span></li>
         <li>
-          <a href="#" class="text-main-400 hover:text-blue-700">New License</a>
+          <a href="#" class="text-main-400 hover:text-blue-700">Good Standing</a>
         </li>
         <li><span class="text-gray-500 mx-2">/</span></li>
-        <li class="text-gray-500">Submitted</li>
+        <li class="text-gray-500">Declined</li>
       </ol>
     </nav>
     <div class="container my-12 mx-auto px-4 md:px-12">
@@ -178,7 +178,7 @@ export default {
     onMounted(() => {
       isLoading.value = true;
       userInfo.value = JSON.parse(window.localStorage.getItem("personalInfo"));
-      store.dispatch("newlicense/getNewLicense").then((res) => {
+      store.dispatch("goodstanding/getGoodStandingLicense").then((res) => {
         newLicense.value = res.data.data;
         console.log(newLicense);
         if (newLicense.value) {
