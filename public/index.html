@@ -5,9 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
     <link rel="icon" href="./image.png" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap"
+      rel="stylesheet"
+    />
     <link
       href="https://unpkg.com/nprogress@0.2.0/nprogress.css"
       rel="stylesheet"
@@ -25,7 +28,10 @@
       referrerpolicy="no-referrer"
     />
     <link rel="stylesheet" type="text/css" href="/src/styles/main.css" />
-    <link href="https://cdn.jsdelivr.net/npm/vue-loading-overlay@5/dist/vue-loading.css" rel="stylesheet">
+    <link
+      href="https://cdn.jsdelivr.net/npm/vue-loading-overlay@5/dist/vue-loading.css"
+      rel="stylesheet"
+    />
     <title>HRL</title>
   </head>
   <body>
@@ -38,7 +44,10 @@
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->
-
+    <script
+      src="https://unpkg.com/@popperjs/core@2.9.1/dist/umd/popper.min.js"
+      charset="utf-8"
+    ></script>
     <script src="https://unpkg.com/nprogress@0.2.0/nprogress.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script
@@ -47,6 +56,13 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     ></script>
- 
+    <script type="text/javascript">
+      var tooltipTriggerList = [].slice.call(
+        document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      );
+      var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
+        return new Tooltip(tooltipTriggerEl);
+      });
+    </script>
   </body>
 </html>

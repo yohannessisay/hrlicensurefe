@@ -1,14 +1,33 @@
 <template>
-  <form class="mx-auto max-w-3xl w-full mt-10 " @submit.prevent="submitForm">
+  <form class="mx-auto max-w-3xl w-full mt-10" @submit.prevent="submitForm">
     <div class="flex">
-      <div class="flex flex-col block mx-auto w-1/2 ">
+      <div class="flex flex-col block mx-auto w-1/2">
         <!-- <span v-show="!isFirstTimeLogin"> -->
         <label class="text-primary-700" v-show="!isFirstTimeLogin"
           >Old Password</label
         >
         <br />
         <input
-          class="max-w-3xl"
+          class="
+            form-control
+            block
+            w-full
+            px-3
+            py-1.5
+            text-base
+            font-normal
+            text-gray-700
+            bg-white bg-clip-padding
+            border border-solid border-gray-300
+            rounded
+            transition
+            ease-in-out
+            m-0
+            focus:text-gray-700
+            focus:bg-white
+            focus:border-blue-600
+            focus:outline-none
+          "
           type="password"
           v-show="!isFirstTimeLogin"
           v-model="passwordInfo.oldPassword"
@@ -18,7 +37,26 @@
         <!-- <span style="color: red">{{ personalInfoErrors.name }}</span> -->
         <label class="text-primary-700">New Password</label>
         <input
-          class="max-w-3xl"
+          class="
+            form-control
+            block
+            w-full
+            px-3
+            py-1.5
+            text-base
+            font-normal
+            text-gray-700
+            bg-white bg-clip-padding
+            border border-solid border-gray-300
+            rounded
+            transition
+            ease-in-out
+            m-0
+            focus:text-gray-700
+            focus:bg-white
+            focus:border-blue-600
+            focus:outline-none
+          "
           type="password"
           v-model="passwordInfo.newPassword"
           v-on:keyup="showPasswordStrength(passwordInfo.newPassword)"
@@ -28,28 +66,37 @@
           <ul>
             Password should be:
             <div class="ml-16 pl-8">
-              <li>
-                Minimum of Eight Characters
-              </li>
-              <li>
-                At least one Uppercase Character
-              </li>
-              <li>
-                At least one Lowercase Character
-              </li>
-              <li>
-                At least one Number
-              </li>
-              <li>
-                At least one special Character
-              </li>
+              <li>Minimum of Eight Characters</li>
+              <li>At least one Uppercase Character</li>
+              <li>At least one Lowercase Character</li>
+              <li>At least one Number</li>
+              <li>At least one special Character</li>
             </div>
           </ul>
         </div>
         <br />
         <label class="text-primary-700">Confirm New Password</label>
         <input
-          class="max-w-3xl"
+          class="
+            form-control
+            block
+            w-full
+            px-3
+            py-1.5
+            text-base
+            font-normal
+            text-gray-700
+            bg-white bg-clip-padding
+            border border-solid border-gray-300
+            rounded
+            transition
+            ease-in-out
+            m-0
+            focus:text-gray-700
+            focus:bg-white
+            focus:border-blue-600
+            focus:outline-none
+          "
           type="password"
           v-model="passwordInfo.confirmPassword"
         />
@@ -62,9 +109,23 @@
         <div v-if="oldPasswordError && !showErrorMessage">
           <label class="text-red-200">*old password doesn't match</label>
         </div>
-        <div class="flex mb-medium w-full mt-medium">
+        <div class="flex mb-medium w-full mt-medium justify-center">
           <button
-            class="block mx-auto w-1/2  bg-lightBlue-500 hover:bg-lightBlue-600 hover:shadow-lg"
+            class="
+              px-2
+              bg-primary-700
+              text-white
+              hover:border
+              font-medium
+              text-xs
+              uppercase
+              rounded
+              shadow-md
+              hover:bg-white hover:text-primary-600
+              transition
+              duration-150
+              ease-in-out
+            "
           >
             Confirm
           </button>
@@ -100,8 +161,9 @@ export default {
   name: "NewPasswordForm",
   setup() {
     let showLoading = ref(false);
-    const isFirstTimeLogin = JSON.parse(localStorage.getItem("allAdminData"))
-      .isFirstTime;
+    const isFirstTimeLogin = JSON.parse(
+      localStorage.getItem("allAdminData")
+    ).isFirstTime;
 
     let passwordInfo = ref({
       email: localStorage.getItem("adminEmail"),
@@ -133,7 +195,9 @@ export default {
       oldPasswordError.value = false;
       showLoading.value = true;
       validateMessage(passwordInfo);
-      if (passwordInfo.value.newPassword != passwordInfo.value.confirmPassword) {
+      if (
+        passwordInfo.value.newPassword != passwordInfo.value.confirmPassword
+      ) {
         showErrorPassword.value = true;
         showLoading.value = false;
         return;

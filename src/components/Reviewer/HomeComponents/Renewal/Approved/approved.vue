@@ -142,198 +142,253 @@ export default {
     toYouTable.value = {
       isLoading: true,
     };
-    const licensedByOthers = () => {
-      applicationStatus(store, "AP").then((ap) => {
-        applicationStatus(store, "CONF").then((conf) => {
-          applicationStatus(store, "APP").then((app) => {
-            let adminStatus = [adminId, ap, conf, app];
-
-            store
-              .dispatch(
-                "reviewerRenewal/getRenewalAllApproved",
-                adminStatus
-              )
-              .then((res) => {
-                allInfo.value.assignApplication =res
-                for (let applicant in allInfo.value.assignApplication) {
-                  if (
-                    allInfo.value.assignApplication[applicant]
-                      .applicationType === undefined
-                  ) {
-                    allInfo.value.assignApplication[applicant].applicationType =
-                      allInfo.value.assignApplication[applicant].applicantType;
-                  }
-                }
-
-                JSON.parse(
-                  JSON.stringify(allInfo.value.assignApplication)
-                ).forEach((element) => {
-                  tableData.value.push({
-                    id: element.id,
-                    ApplicantName:
-                      element.profile.name +
-                      " " +
-                      element.profile.fatherName +
-                      " " +
-                      element.profile.grandFatherName,
-                    ApplicationType: element.applicationType.name,
-                    Date: new Date(element.createdAt)
-                      .toJSON()
-                      .slice(0, 10)
-                      .replace(/-/g, "/"),
-                    data: element,
-                  });
+    const approved = () => {
+      store
+        .dispatch("reviewerRenewal/getRenewalAllApproved", adminId)
+        .then((res) => {
+          if (res != "No Data") {
+            allInfo.value.assignApplication = res;
+            JSON.parse(JSON.stringify(allInfo.value.assignApplication)).forEach(
+              (element) => {
+                tableData.value.push({
+                  id: element.id,
+                  ApplicantName:
+                    element.profile.name +
+                    " " +
+                    element.profile.fatherName +
+                    " " +
+                    element.profile.grandFatherName,
+                  ApplicationType: element.applicationType.name,
+                  Date: new Date(element.createdAt)
+                    .toJSON()
+                    .slice(0, 10)
+                    .replace(/-/g, "/"),
+                  data: element,
                 });
+              }
+            );
 
-                toOthersTable.value = {
-                  columns: [
-                    {
-                      label: "ID",
-                      field: "id",
-                      width: "3%",
-                      sortable: true,
-                      isKey: true,
-                    },
-                    {
-                      label: "Applicant Name",
-                      field: "ApplicantName",
-                      width: "20%",
-                      sortable: true,
-                    },
-                    {
-                      label: "Applicant Type",
-                      field: "ApplicationType",
-                      width: "15%",
-                      sortable: true,
-                    },
-                    {
-                      label: "Requested Date",
-                      field: "Date",
-                      width: "15%",
-                      sortable: true,
-                    },
-                    {
-                      label: "",
-                      field: "quick",
-                      width: "10%",
-                      display: function (row) {
-                        return (
-                          '<button  data-set="' +
-                          row +
-                          '"  data-bs-toggle="modal" data-bs-target="#staticBackdropOthers" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
-                          row.id +
-                          '" ><i class="fa fa-eye"></i>View/Edit</button>'
-                        );
-                      },
-                    },
-                  ],
-                  rows: JSON.parse(JSON.stringify(tableData.value)),
-                  totalRecordCount: tableData.value.length,
-                  sortable: {
-                    order: "id",
-                    sort: "asc",
-                  },
-                };
-              });
-          });
-        });
-      });
-    };
-
-    const licensedByYou = () => {
-
-      applicationStatus(store, "AP").then((ap) => {
-        applicationStatus(store, "CONF").then((conf) => {
-          applicationStatus(store, "APP").then((app) => {
-            let adminStatus = [adminId, ap, conf, app];
-            store
-              .dispatch("reviewerRenewal/getRenewalApproved", adminStatus)
-              .then(() => {
-                allInfo.value.assignApplication =
-                  store.getters[
-                    "reviewerRenewal/getRenewalApprovedSearched"
-                  ];
-                for (let applicant in allInfo.value.assignApplication) {
-                  if (
-                    allInfo.value.assignApplication[applicant]
-                      .applicationType === undefined
-                  ) {
-                    allInfo.value.assignApplication[applicant].applicationType =
-                      allInfo.value.assignApplication[applicant].applicantType;
-                  }
-                }
-
-                JSON.parse(
-                  JSON.stringify(allInfo.value.assignApplication)
-                ).forEach((element) => {
-                  toYouTableData.value.push({
-                    id: element.id,
-                    ApplicantName:
-                      element.profile.name +
-                      " " +
-                      element.profile.fatherName +
-                      " " +
-                      element.profile.grandFatherName,
-                    ApplicationType: element.applicationType.name,
-                    Date: new Date(element.createdAt)
-                      .toJSON()
-                      .slice(0, 10)
-                      .replace(/-/g, "/"),
-                    data: element,
-                  });
+            JSON.parse(JSON.stringify(allInfo.value.assignApplication)).forEach(
+              (element) => {
+                toYouTableData.value.push({
+                  id: element.id,
+                  ApplicantName:
+                    element.profile.name +
+                    " " +
+                    element.profile.fatherName +
+                    " " +
+                    element.profile.grandFatherName,
+                  ApplicationType: element.applicationType.name,
+                  Date: new Date(element.createdAt)
+                    .toJSON()
+                    .slice(0, 10)
+                    .replace(/-/g, "/"),
+                  data: element,
                 });
+              }
+            );
 
-                toYouTable.value = {
-                  columns: [
-                    {
-                      label: "ID",
-                      field: "id",
-                      width: "3%",
-                      sortable: true,
-                      isKey: true,
-                    },
-                    {
-                      label: "Applicant Name",
-                      field: "ApplicantName",
-                      width: "20%",
-                      sortable: true,
-                    },
-                    {
-                      label: "Applicant Type",
-                      field: "ApplicationType",
-                      width: "15%",
-                      sortable: true,
-                    },
-                    {
-                      label: "Date",
-                      field: "Date",
-                      width: "15%",
-                      sortable: true,
-                    },
-                    {
-                      label: "",
-                      field: "quick",
-                      width: "10%",
-                      display: function (row) {
-                        return (
-                          '<button data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
-                          row.id +
-                          '" ><i class="fa fa-eye"></i>View/Edit</button>'
-                        );
-                      },
-                    },
-                  ],
-                  rows: JSON.parse(JSON.stringify(toYouTableData.value)),
-                  totalRecordCount: toYouTableData.value.length,
-                  sortable: {
-                    order: "id",
-                    sort: "asc",
+            toYouTable.value = {
+              columns: [
+                {
+                  label: "ID",
+                  field: "id",
+                  width: "3%",
+                  sortable: true,
+                  isKey: true,
+                },
+                {
+                  label: "Applicant Name",
+                  field: "ApplicantName",
+                  width: "20%",
+                  sortable: true,
+                },
+                {
+                  label: "Applicant Type",
+                  field: "ApplicationType",
+                  width: "15%",
+                  sortable: true,
+                },
+                {
+                  label: "Date",
+                  field: "Date",
+                  width: "15%",
+                  sortable: true,
+                },
+                {
+                  label: "",
+                  field: "quick",
+                  width: "10%",
+                  display: function (row) {
+                    return (
+                      '<button data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
+                      row.id +
+                      '" ><i class="fa fa-eye"></i>View/Edit</button>'
+                    );
                   },
-                };
-              });
-          });
+                },
+              ],
+              rows: JSON.parse(JSON.stringify(toYouTableData.value)),
+              totalRecordCount: toYouTableData.value.length,
+              sortable: {
+                order: "id",
+                sort: "asc",
+              },
+            };
+
+            toOthersTable.value = {
+              isLoading: false,
+              columns: [
+                {
+                  label: "ID",
+                  field: "id",
+                  width: "3%",
+                  sortable: true,
+                  isKey: true,
+                },
+                {
+                  label: "Applicant Name",
+                  field: "ApplicantName",
+                  width: "20%",
+                  sortable: true,
+                },
+                {
+                  label: "Applicant Type",
+                  field: "ApplicationType",
+                  width: "15%",
+                  sortable: true,
+                },
+                {
+                  label: "Requested Date",
+                  field: "Date",
+                  width: "15%",
+                  sortable: true,
+                },
+                {
+                  label: "",
+                  field: "quick",
+                  width: "10%",
+                  display: function (row) {
+                    return (
+                      '<button  data-set="' +
+                      row +
+                      '"  data-bs-toggle="modal" data-bs-target="#staticBackdropOthers" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
+                      row.id +
+                      '" ><i class="fa fa-eye"></i>View/Edit</button>'
+                    );
+                  },
+                },
+              ],
+              rows: JSON.parse(JSON.stringify(tableData.value)),
+              totalRecordCount: tableData.value.length,
+              sortable: {
+                order: "id",
+                sort: "asc",
+              },
+            };
+          } else {
+            toYouTable.value = {
+              isLoading: false,
+              columns: [
+                {
+                  label: "ID",
+                  field: "id",
+                  width: "3%",
+                  sortable: true,
+                  isKey: true,
+                },
+                {
+                  label: "Applicant Name",
+                  field: "ApplicantName",
+                  width: "20%",
+                  sortable: true,
+                },
+                {
+                  label: "Applicant Type",
+                  field: "ApplicationType",
+                  width: "15%",
+                  sortable: true,
+                },
+                {
+                  label: "Requested Date",
+                  field: "Date",
+                  width: "15%",
+                  sortable: true,
+                },
+                {
+                  label: "",
+                  field: "quick",
+                  width: "10%",
+                  display: function (row) {
+                    return (
+                      '<button  data-set="' +
+                      row +
+                      '"  data-bs-toggle="modal" data-bs-target="#staticBackdropOthers" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
+                      row.id +
+                      '" ><i class="fa fa-eye"></i>View/Edit</button>'
+                    );
+                  },
+                },
+              ],
+              rows: [],
+              totalRecordCount: 0,
+              sortable: {
+                order: "id",
+                sort: "asc",
+              },
+            };
+            toOthersTable.value = {
+              isLoading: false,
+              columns: [
+                {
+                  label: "ID",
+                  field: "id",
+                  width: "3%",
+                  sortable: true,
+                  isKey: true,
+                },
+                {
+                  label: "Applicant Name",
+                  field: "ApplicantName",
+                  width: "20%",
+                  sortable: true,
+                },
+                {
+                  label: "Applicant Type",
+                  field: "ApplicationType",
+                  width: "15%",
+                  sortable: true,
+                },
+                {
+                  label: "Requested Date",
+                  field: "Date",
+                  width: "15%",
+                  sortable: true,
+                },
+                {
+                  label: "",
+                  field: "quick",
+                  width: "10%",
+                  display: function (row) {
+                    return (
+                      '<button  data-set="' +
+                      row +
+                      '"  data-bs-toggle="modal" data-bs-target="#staticBackdropOthers" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
+                      row.id +
+                      '" ><i class="fa fa-eye"></i>View/Edit</button>'
+                    );
+                  },
+                },
+              ],
+              rows: [],
+              totalRecordCount: 0,
+              sortable: {
+                order: "id",
+                sort: "asc",
+              },
+            };
+          }
         });
-      });
     };
 
     const tableLoadingFinish = () => {
@@ -348,8 +403,7 @@ export default {
       });
     };
 
-        const tableLoadingFinishOthers = () => {
-
+    const tableLoadingFinishOthers = () => {
       let elements = document.getElementsByClassName("edit-btn-others");
 
       Array.prototype.forEach.call(elements, function (element) {
@@ -357,7 +411,7 @@ export default {
           element.addEventListener("click", rowClicked());
         }
       });
-            toOthersTable.value.isLoading = false;
+      toOthersTable.value.isLoading = false;
     };
 
     const rowClicked = (row) => {
@@ -368,7 +422,7 @@ export default {
       }
     };
 
-        const rowClickedOthers = (row) => {
+    const rowClickedOthers = (row) => {
       if (row != undefined) {
         row = JSON.parse(JSON.stringify(row));
         modalDataIdOthers.value.change++;
@@ -377,8 +431,7 @@ export default {
     };
 
     onMounted(() => {
-      licensedByYou();
-      licensedByOthers();
+      approved();
     });
 
     return {
@@ -389,12 +442,11 @@ export default {
       toYouTable,
       showModal,
       tableLoadingFinish,
-      licensedByOthers,
       rowClicked,
       modalDataId,
       modalDataIdOthers,
       rowClickedOthers,
-      tableLoadingFinishOthers
+      tableLoadingFinishOthers,
     };
   },
 };

@@ -16,136 +16,1053 @@
         <div id="home" class="flex flex-row justify-center ml-4 mt-12">
           <div class="flex flex-col md:flex-row justify-center flex-wrap gap-2">
             <div class="mr-12 mb-8 overview-boxes rounded-xl">
-              <router-link to="/Applicant/NewLicense">
-                <div
+              <div
+                class="
+                  bg-main-400
+                  hover:bg-white
+                  shadow-lg
+                  box
+                  w-full
+                  rounded-lg
+                  transition
+                  duration-500
+                  transform
+                  hover:scale-110
+                  cursor-pointer
+                  cart
+                "
+                data-bs-toggle="modal"
+                data-bs-target="#newLicenseDetail"
+                style="height: 200px; width: 300px"
+              >
+                <p
                   class="
-                    bg-main-400
-                    hover:bg-white
-                    shadow-lg
-                    box
-                    w-full
-                    rounded-lg 
-                    transition
-                    duration-500
-                    transform
-                    hover:scale-110
-                    cursor-pointer
-                    cart
+                    py-6
+                    px-6
+                    text-lg
+                    tracking-wide
+                    text-center
+                    flex flex-row
+                    justify-center
                   "
-                  style="height: 200px; width: 300px"
                 >
-                  <p
-                    class="
-                      py-6
-                      px-6
-                      text-lg
-                      tracking-wide
-                      text-center
-                      flex flex-row
-                      justify-center
-                    "
-                  >
-                    <img
-                      src="../../assets/applicant/newLicense.png"
-                      alt=""
-                      style="height: 100px; width: 100px"
-                    />
-                  </p>
+                  <img
+                    src="../../assets/applicant/newLicense.png"
+                    alt=""
+                    style="height: 100px; width: 100px"
+                  />
+                </p>
 
-                  <div class="flex justify-center px-5 mb-2 text-sm mt-4">
-                    <h1 class="text-2xl text-main-400">New License</h1>
-                  </div>
+                <div class="flex justify-center px-5 mb-2 text-sm mt-4">
+                  <h1 class="text-2xl text-main-400">New License</h1>
                 </div>
-              </router-link>
+              </div>
             </div>
 
             <div class="mr-12 mb-8 overview-boxes">
-              <router-link to="/Applicant/Renewal">
-                <div
+              <div
+                class="
+                  bg-main-400
+                  shadow-lg
+                  box
+                  rounded-2xl
+                  hover:shadow-4xl
+                  transition
+                  duration-500
+                  transform
+                  hover:scale-110
+                  cursor-pointer
+                "
+                data-bs-toggle="modal"
+                data-bs-target="#renewalDetail"
+                style="height: 200px; width: 300px"
+              >
+                <p
                   class="
-                    bg-main-400
-                    shadow-lg
-                    box
-                    rounded-2xl
-                    hover:shadow-4xl
-                    transition
-                    duration-500
-                    transform
-                    hover:scale-110
-                    cursor-pointer
+                    py-6
+                    px-6
+                    text-lg
+                    tracking-wide
+                    text-center
+                    flex flex-row
+                    justify-center
                   "
-                  style="height: 200px; width: 300px"
                 >
-                  <p
-                    class="
-                      py-6
-                      px-6
-                      text-lg
-                      tracking-wide
-                      text-center
-                      flex flex-row
-                      justify-center
-                    "
-                  >
-                    <img
-                      src="../../assets/applicant/renewal.png"
-                      alt=""
-                      style="height: 100px; width: 100px"
-                    />
-                  </p>
+                  <img
+                    src="../../assets/applicant/renewal.png"
+                    alt=""
+                    style="height: 100px; width: 100px"
+                  />
+                </p>
 
-                  <div class="flex justify-center px-5 mb-2 text-sm mt-4">
-                    <h1 class="text-2xl text-main-400">Renewal</h1>
-                  </div>
+                <div class="flex justify-center px-5 mb-2 text-sm mt-4">
+                  <h1 class="text-2xl text-main-400">Renewal</h1>
                 </div>
-              </router-link>
+              </div>
             </div>
 
             <div class="mr-12 mb-8 overview-boxes">
-              <router-link to="/Applicant/GoodStanding">
-                <div
+              <div
+                class="
+                  bg-white
+                  shadow-lg
+                  box
+                  rounded-2xl
+                  hover:shadow-4xl
+                  transition
+                  duration-500
+                  transform
+                  hover:scale-110
+                  cursor-pointer
+                "
+                data-bs-toggle="modal"
+                data-bs-target="#goodStandingDetail"
+                style="height: 200px; width: 300px"
+              >
+                <p
                   class="
-                    bg-white
-                    shadow-lg
-                    box
-                    rounded-2xl
-                    hover:shadow-4xl
-                    transition
-                    duration-500
-                    transform
-                    hover:scale-110
-                    cursor-pointer
+                    py-6
+                    px-6
+                    text-lg
+                    tracking-wide
+                    text-center
+                    flex flex-row
+                    justify-center
                   "
-                  style="height: 200px; width: 300px"
                 >
-                  <p
-                    class="
-                      py-6
-                      px-6
-                      text-lg
-                      tracking-wide
-                      text-center
-                      flex flex-row
-                      justify-center
-                    "
-                  >
-                    <img
+                  <img
                     src="../../assets/applicant/goodStanding.png"
-                      alt=""
-                      style="height: 100px; width: 100px"
-                    />
-                  </p>
+                    alt=""
+                    style="height: 100px; width: 100px"
+                  />
+                </p>
 
-                  <div class="flex justify-center px-5 mb-2 text-sm mt-4">
-                    <h1 class="text-2xl text-main-400">Goodstanding</h1>
-                  </div>
+                <div class="flex justify-center px-5 mb-2 text-sm mt-4">
+                  <h1 class="text-2xl text-main-400">Goodstanding</h1>
                 </div>
-              </router-link>
+              </div>
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
 
-    
+  <!-- Modal Section -->
+  <!-- New License -->
+  <div
+    class="
+      modal
+      fade
+      fixed
+      top-0
+      left-0
+      hidden
+      w-full
+      h-full
+      outline-none
+      overflow-x-hidden overflow-y-auto
+    "
+    id="newLicenseDetail"
+    tabindex="-1"
+    aria-labelledby="newLicenseLabel"
+    aria-modal="true"
+    role="dialog"
+  >
+    <div class="modal-dialog modal-xl relative w-auto pointer-events-none">
+      <div
+        class="
+          modal-content
+          border-none
+          shadow-lg
+          relative
+          flex flex-col
+          w-full
+          pointer-events-auto
+          bg-white bg-clip-padding
+          rounded-md
+          outline-none
+          text-current
+        "
+      >
+        <div
+          class="
+            modal-header
+            flex flex-shrink-0
+            items-center
+            justify-between
+            p-4
+            border-b border-grey-100
+            rounded-t-md
+          "
+        >
+          <h2 class="text-xl font-bold leading-normal text-main-400">
+            Document specification for new License
+          </h2>
+          <button
+            type="button"
+            class="
+              inline-block
+              px-6
+              py-2.5
+              bg-main-400
+              text-white
+              font-medium
+              text-lg
+              leading-tight
+              uppercase
+              rounded
+              shadow-lg
+              hover:bg-white hover:text-main-400
+              transition
+              duration-150
+              ease-in-out
+            "
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          >
+            X
+          </button>
+        </div>
+        <div class="modal-body relative p-4">
+          <div class="bg-white rounded-lg py-6 md:py-12">
+            <div class="container mx-auto px-4">
+              <div class="max-w-3xl mx-auto text-center">
+                <h1
+                  class="
+                    text-3xl
+                    md:text-4xl
+                    font-medium
+                    text-main-400
+                    mb-4
+                    border-b-4
+                    md:mb-6
+                  "
+                >
+                  Required Documents for New License
+                </h1>
+                <p class="text-main-400 xl:mx-12">
+                  Attached Documents must be clear and visible.
+                </p>
+              </div>
+
+              <div class="lg:flex lg:-mx-4 mt-6 md:mt-12">
+                <div class="pricing-plan-wrap lg:w-1/3 my-4 md:my-6 mr-4">
+                  <div
+                    class="
+                      pricing-plan
+                      border-t-4 border-solid border-white
+                      bg-white
+                      rounded-lg
+                      shadow-2xl
+                      text-center
+                      max-w-full
+                      mx-auto
+                      hover:border-indigo-600
+                      transition-colors
+                      duration-300
+                    "
+                  >
+                    <div class="p-2 md:py-4">
+                      <h4
+                        class="
+                          font-medium
+                          text-main-400
+                          leading-tight
+                          text-2xl
+                          border-b-4
+                        "
+                      >
+                        Ethiopian Applicants
+                      </h4>
+                    </div>
+                    <div class="pricing-amount transition-colors duration-300">
+                      <div>
+                        <span class="text-xl text-main-4oo font-semibold"
+                          >Attached Documents must be clear and visible.</span
+                        >
+                      </div>
+                      <small class="text-main-400 ml-2"
+                        >(hover over lists to see details)</small
+                      >
+                    </div>
+                    <div class="p-6 mb-2">
+                      <ul
+                        v-for="doc in NLdocumentSpecs.ethiopian"
+                        :key="doc.id"
+                        class="bg-white"
+                      >
+                        <li
+                          class="
+                            text-main-400 text-lg
+                            rounded-lg
+                            bg-white
+                            cursor-pointer
+                          "
+                          data-bs-toggle="tooltip"
+                          :title="
+                            doc && doc.documentType
+                              ? doc.documentType.description
+                              : ''
+                          "
+                        >
+                          <i class="fa fa-arrow-right-long"></i>
+                          {{
+                            doc && doc.documentType ? doc.documentType.name : ""
+                          }}
+                        </li>
+                      </ul>
+                      <div class="mt-6 py-4">
+                        <a href="/Applicant/NewLicense">
+                          <button
+                            class="
+                              text-xl text-white
+                              py-2
+                              bg-main-400
+                              hover:text-main-400 hover:border hover:bg-white
+                              px-6
+                              rounded-sm
+                            "
+                          >
+                            Get Started
+                          </button>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="pricing-plan-wrap lg:w-1/3 my-4 md:my-6 mr-4">
+                  <div
+                    class="
+                      pricing-plan
+                      border-t-4 border-solid border-white
+                      bg-white
+                      rounded-lg
+                      shadow-2xl
+                      text-center
+                      max-w-full
+                      mx-auto
+                      hover:border-indigo-600
+                      transition-colors
+                      duration-300
+                    "
+                  >
+                    <div class="p-2 md:py-4">
+                      <h4
+                        class="
+                          font-medium
+                          text-main-400
+                          leading-tight
+                          text-2xl
+                          border-b-4
+                        "
+                      >
+                        Ethiopian From Abroad
+                      </h4>
+                    </div>
+                    <div class="pricing-amount transition-colors duration-300">
+                      <div>
+                        <span class="text-xl text-main-4oo font-semibold"
+                          >Attached Documents must be clear and visible.</span
+                        >
+                      </div>
+                      <small class="text-main-400 ml-2"
+                        >(hover over lists to see details)</small
+                      >
+                    </div>
+                    <div class="p-6 mb-2">
+                      <ul
+                        v-for="doc in NLdocumentSpecs.ethiopianAbroad"
+                        :key="doc.id"
+                        class="bg-white"
+                      >
+                        <li
+                          class="
+                            text-main-400 text-lg
+                            rounded-lg
+                            bg-white
+                            cursor-pointer
+                          "
+                          data-bs-toggle="tooltip"
+                          :title="
+                            doc && doc.documentType
+                              ? doc.documentType.description
+                              : ''
+                          "
+                        >
+                          <i class="fa fa-arrow-right-long"></i>
+                          {{
+                            doc && doc.documentType ? doc.documentType.name : ""
+                          }}
+                        </li>
+                      </ul>
+                      <div class="mt-6 py-4">
+                        <a href="/Applicant/NewLicense">
+                          <button
+                            class="
+                              text-xl text-white
+                              py-2
+                              bg-main-400
+                              hover:text-main-400 hover:border hover:bg-white
+                              px-6
+                              rounded-sm
+                            "
+                          >
+                            Get Started
+                          </button>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="pricing-plan-wrap lg:w-1/3 my-4 md:my-6 mr-4">
+                  <div
+                    class="
+                      pricing-plan
+                      border-t-4 border-solid border-white
+                      bg-white
+                      rounded-lg
+                      shadow-2xl
+                      text-center
+                      max-w-full
+                      mx-auto
+                      hover:border-indigo-600
+                      transition-colors
+                      duration-300
+                    "
+                  >
+                    <div class="p-2 md:py-4">
+                      <h4
+                        class="
+                          font-medium
+                          text-main-400
+                          leading-tight
+                          text-2xl
+                          border-b-4
+                        "
+                      >
+                        Foreign Applicants
+                      </h4>
+                    </div>
+                    <div class="pricing-amount transition-colors duration-300">
+                      <div>
+                        <span class="text-xl text-main-4oo font-semibold"
+                          >Attached Documents must be clear and visible.</span
+                        >
+                      </div>
+                      <small class="text-main-400 ml-2"
+                        >(hover over lists to see details)</small
+                      >
+                    </div>
+                    <div class="p-6 mb-2">
+                      <ul
+                        v-for="doc in NLdocumentSpecs.foreigner"
+                        :key="doc.id"
+                        class="bg-white"
+                      >
+                        <li
+                          class="
+                            text-main-400 text-lg
+                            rounded-lg
+                            bg-white
+                            cursor-pointer
+                          "
+                          data-bs-toggle="tooltip"
+                          :title="
+                            doc && doc.documentType
+                              ? doc.documentType.description
+                              : ''
+                          "
+                        >
+                          <i class="fa fa-arrow-right-long"></i>
+                          {{
+                            doc && doc.documentType ? doc.documentType.name : ""
+                          }}
+                        </li>
+                      </ul>
+                      <div class="mt-6 py-4">
+                        <a href="/Applicant/NewLicense">
+                          <button
+                            class="
+                              text-xl text-white
+                              py-2
+                              bg-main-400
+                              hover:text-main-400 hover:border hover:bg-white
+                              px-6
+                              rounded-sm
+                            "
+                          >
+                            Get Started
+                          </button>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Renewal -->
+  <div
+    class="
+      modal
+      fade
+      fixed
+      top-0
+      left-0
+      hidden
+      w-full
+      h-full
+      outline-none
+      overflow-x-hidden overflow-y-auto
+    "
+    id="renewalDetail"
+    tabindex="-1"
+    aria-labelledby="renewalLabel"
+    aria-modal="true"
+    role="dialog"
+  >
+    <div class="modal-dialog modal-xl relative w-auto pointer-events-none">
+      <div
+        class="
+          modal-content
+          border-none
+          shadow-lg
+          relative
+          flex flex-col
+          w-full
+          pointer-events-auto
+          bg-white bg-clip-padding
+          rounded-md
+          outline-none
+          text-current
+        "
+      >
+        <div
+          class="
+            modal-header
+            flex flex-shrink-0
+            items-center
+            justify-between
+            p-4
+            border-b border-grey-100
+            rounded-t-md
+          "
+        >
+          <h2 class="text-xl font-bold leading-normal text-main-400">
+            Document specification for license renewal
+          </h2>
+          <button
+            type="button"
+            class="
+              inline-block
+              px-6
+              py-2.5
+              bg-main-400
+              text-white
+              font-medium
+              text-lg
+              leading-tight
+              uppercase
+              rounded
+              shadow-lg
+              hover:bg-white hover:text-main-400
+              transition
+              duration-150
+              ease-in-out
+            "
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          >
+            X
+          </button>
+        </div>
+        <div class="modal-body relative p-4 overflow-y-scroll">
+          <div class="bg-white rounded-lg py-6 md:py-12 ">
+            <div class="container mx-auto px-4 ">
+              <div class="max-w-3xl mx-auto text-center">
+                <h1
+                  class="
+                    text-3xl
+                    md:text-4xl
+                    font-medium
+                    text-main-400
+                    mb-4
+                    border-b-4
+                    md:mb-6
+                  "
+                >
+                  Required Documents for License Renewal
+                </h1>
+                <p class="text-main-400 xl:mx-12">
+                  Attached Documents must be clear and visible.
+                </p>
+              </div>
+
+              <div class="lg:flex lg:-mx-4 mt-6 md:mt-12">
+                <div class="pricing-plan-wrap lg:w-1/3 my-4 md:my-6 mr-4">
+                  <div
+                    class="
+                      pricing-plan
+                      border-t-4 border-solid border-white
+                      bg-white
+                      rounded-lg
+                      shadow-2xl
+                      text-center
+                      max-w-full
+                      mx-auto
+                      hover:border-indigo-600
+                      transition-colors
+                      duration-300
+                    "
+                  >
+                    <div class="p-2 md:py-4">
+                      <h4
+                        class="
+                          font-medium
+                          text-main-400
+                          leading-tight
+                          text-2xl
+                          border-b-4
+                        "
+                      >
+                        Ethiopian Applicants
+                      </h4>
+                    </div>
+                    <div class="pricing-amount transition-colors duration-300">
+                      <div>
+                        <span class="text-xl text-main-4oo font-semibold"
+                          >Attached Documents must be clear and visible.</span
+                        >
+                      </div>
+                      <small class="text-main-400 ml-2"
+                        >(hover over lists to see details)</small
+                      >
+                    </div>
+                    <div class="p-6 mb-2">
+                      <ul
+                        v-for="doc in RNdocumentSpecs.ethiopian"
+                        :key="doc.id"
+                        class="bg-white"
+                      >
+                        <li
+                          class="
+                            text-main-400 text-lg
+                            rounded-lg
+                            bg-white
+                            cursor-pointer
+                          "
+                          data-bs-toggle="tooltip"
+                          :title="
+                            doc && doc.documentType
+                              ? doc.documentType.description
+                              : ''
+                          "
+                        >
+                          <i class="fa fa-arrow-right-long"></i>
+                          {{
+                            doc && doc.documentType ? doc.documentType.name : ""
+                          }}
+                        </li>
+                      </ul>
+                      <div class="mt-6 py-4">
+                        <a href="/Applicant/Renewal">
+                          <button
+                            class="
+                              text-xl text-white
+                              py-2
+                              bg-main-400
+                              hover:text-main-400 hover:border hover:bg-white
+                              px-6
+                              rounded-sm
+                            "
+                          >
+                            Get Started
+                          </button>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="pricing-plan-wrap lg:w-1/3 my-4 md:my-6 mr-4">
+                  <div
+                    class="
+                      pricing-plan
+                      border-t-4 border-solid border-white
+                      bg-white
+                      rounded-lg
+                      shadow-2xl
+                      text-center
+                      max-w-full
+                      mx-auto
+                      hover:border-indigo-600
+                      transition-colors
+                      duration-300
+                    "
+                  >
+                    <div class="p-2 md:py-4">
+                      <h4
+                        class="
+                          font-medium
+                          text-main-400
+                          leading-tight
+                          text-2xl
+                          border-b-4
+                        "
+                      >
+                        Ethiopian From Abroad
+                      </h4>
+                    </div>
+                    <div class="pricing-amount transition-colors duration-300">
+                      <div>
+                        <span class="text-xl text-main-4oo font-semibold"
+                          >Attached Documents must be clear and visible.</span
+                        >
+                      </div>
+                      <small class="text-main-400 ml-2"
+                        >(hover over lists to see details)</small
+                      >
+                    </div>
+                    <div class="p-6 mb-2">
+                      <ul
+                        v-for="doc in RNdocumentSpecs.ethiopianAbroad"
+                        :key="doc.id"
+                        class="bg-white"
+                      >
+                        <li
+                          class="
+                            text-main-400 text-lg
+                            rounded-lg
+                            bg-white
+                            cursor-pointer
+                          "
+                          data-bs-toggle="tooltip"
+                          :title="
+                            doc && doc.documentType
+                              ? doc.documentType.description
+                              : ''
+                          "
+                        >
+                          <i class="fa fa-arrow-right-long"></i>
+                          {{
+                            doc && doc.documentType ? doc.documentType.name : ""
+                          }}
+                        </li>
+                      </ul>
+                      <div class="mt-6 py-4">
+                        <a href="/Applicant/Renewal">
+                          <button
+                            class="
+                              text-xl text-white
+                              py-2
+                              bg-main-400
+                              hover:text-main-400 hover:border hover:bg-white
+                              px-6
+                              rounded-sm
+                            "
+                          >
+                            Get Started
+                          </button>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="pricing-plan-wrap lg:w-1/3 my-4 md:my-6 mr-4">
+                  <div
+                    class="
+                      pricing-plan
+                      border-t-4 border-solid border-white
+                      bg-white
+                      rounded-lg
+                      shadow-2xl
+                      text-center
+                      max-w-full
+                      mx-auto
+                      hover:border-indigo-600
+                      transition-colors
+                      duration-300
+                    "
+                  >
+                    <div class="p-2 md:py-4">
+                      <h4
+                        class="
+                          font-medium
+                          text-main-400
+                          leading-tight
+                          text-2xl
+                          border-b-4
+                        "
+                      >
+                        Foreign Applicants
+                      </h4>
+                    </div>
+                    <div class="pricing-amount transition-colors duration-300">
+                      <div>
+                        <span class="text-xl text-main-4oo font-semibold"
+                          >Attached Documents must be clear and visible.</span
+                        >
+                      </div>
+                      <small class="text-main-400 ml-2"
+                        >(hover over lists to see details)</small
+                      >
+                    </div>
+                    <div class="p-6 mb-2">
+                      <ul
+                        v-for="doc in RNdocumentSpecs.foreigner"
+                        :key="doc.id"
+                        class="bg-white"
+                      >
+                        <li
+                          class="
+                            text-main-400 text-lg
+                            rounded-lg
+                            bg-white
+                            cursor-pointer
+                          "
+                          data-bs-toggle="tooltip"
+                          :title="
+                            doc && doc.documentType
+                              ? doc.documentType.description
+                              : ''
+                          "
+                        >
+                          <i class="fa fa-arrow-right-long"></i>
+                          {{
+                            doc && doc.documentType ? doc.documentType.name : ""
+                          }}
+                        </li>
+                      </ul>
+                      <div class="mt-6 py-4">
+                        <a href="/Applicant/Renewal">
+                          <button
+                            class="
+                              text-xl text-white
+                              py-2
+                              bg-main-400
+                              hover:text-main-400 hover:border hover:bg-white
+                              px-6
+                              rounded-sm
+                            "
+                          >
+                            Get Started
+                          </button>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Good Standing -->
+  <div
+    class="
+      modal
+      fade
+      fixed
+      top-0
+      left-0
+      hidden
+      w-full
+      h-full
+      outline-none
+      overflow-x-hidden overflow-y-auto
+    "
+    id="goodStandingDetail"
+    tabindex="-1"
+    aria-labelledby="goodStandingDetailLabel"
+    aria-modal="true"
+    role="dialog"
+  >
+    <div class="modal-dialog modal-xl relative w-auto pointer-events-none">
+      <div
+        class="
+          modal-content
+          border-none
+          shadow-lg
+          relative
+          flex flex-col
+          w-full
+          pointer-events-auto
+          bg-white bg-clip-padding
+          rounded-md
+          outline-none
+          text-current
+        "
+      >
+        <div
+          class="
+            modal-header
+            flex flex-shrink-0
+            items-center
+            justify-between
+            p-4
+            border-b border-grey-200
+            rounded-t-md
+          "
+        >
+          <h2 class="text-xl font-bold leading-normal text-main-400">
+            Document specification for Goodstanding Letter
+          </h2>
+          <button
+            type="button"
+            class="
+              inline-block
+              px-6
+              py-2.5
+              bg-main-400
+              text-white
+              font-medium
+              text-lg
+              leading-tight
+              uppercase
+              rounded
+              shadow-lg
+              hover:bg-white hover:text-main-400
+              transition
+              duration-150
+              ease-in-out
+            "
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          >
+            X
+          </button>
+        </div>
+        <div class="modal-body relative p-4">
+          <div class="bg-white rounded-lg py-6 md:py-12">
+            <div class="container mx-auto px-4">
+              <div class="max-w-3xl mx-auto text-center">
+                <h1
+                  class="
+                    text-3xl
+                    md:text-4xl
+                    font-medium
+                    text-main-400
+                    mb-4
+                    md:mb-6
+                  "
+                >
+                  Required Documents for Goodstanding letter
+                </h1>
+                <p class="text-main-400 xl:mx-4">
+                  Attached Documents must be clear and visible.
+                </p>
+              </div>
+
+              <div class="lg:flex lg:-mx-4 mt-6 md:mt-12 justify-center">
+                <div class="pricing-plan-wrap lg:w-1/2 my-4 md:my-6">
+                  <div
+                    class="
+                      pricing-plan
+                      border-t-4 border-solid border-white
+                      bg-white
+                      rounded-sm
+                      shadow-2xl
+                      text-center
+                      max-w-full
+                      mx-auto
+                      hover:border-indigo-600
+                      transition-colors
+                      duration-300
+                    "
+                  >
+                    <div class="p-6 md:py-8">
+                      <h4
+                        class="
+                          font-medium
+                          text-main-400
+                          leading-tight
+                          text-2xl
+                          border-b-4
+                          mb-2
+                        "
+                      >
+                        For all applicants
+                      </h4>
+                    </div>
+                    <div
+                      class="
+                        pricing-amount
+                        bg-indigo-100
+                        p-6
+                        transition-colors
+                        duration-300
+                      "
+                    >
+                      <div>
+                        <span class="text-2xl text-black font-semibold"
+                          >Attached Documents must be clear and visible.</span
+                        >
+                      </div>
+                      <small class="text-main-400 ml-2"
+                        >(hover over lists to see details)</small
+                      >
+                    </div>
+                    <div class="p-6">
+                      <ul
+                        v-for="doc in GSdocumentSpecs"
+                        :key="doc.id"
+                        class="leading-loose"
+                      >
+                        <li
+                          class="
+                            text-main-400 text-lg
+                            mb-2
+                            bg-white
+                            p-2
+                            cursor-pointer
+                          "
+                          data-bs-toggle="tooltip"
+                          :title="
+                            doc && doc.documentType
+                              ? doc.documentType.description
+                              : ''
+                          "
+                        >
+                          <i class="fa fa-arrow-right-long"></i>
+                          {{
+                            doc && doc.documentType ? doc.documentType.name : ""
+                          }}
+                        </li>
+                      </ul>
+                      <div class="mt-6 py-4">
+                        <a href="/Applicant/GoodStanding">
+                          <button
+                            class="
+                              text-xl text-white
+                              py-2
+                              bg-main-400
+                              hover:text-main-400 hover:border hover:bg-white
+                              px-6
+                              rounded-sm
+                            "
+                          >
+                            Get Started
+                          </button>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -166,7 +1083,7 @@ export default {
     let isFirstTime = ref(false);
     let userInfo = ref({});
 
-    let NLdocumentSpecs = ref([]);
+    let NLdocumentSpecs = ref({});
     let RNdocumentSpecs = ref([]);
     let GSdocumentSpecs = ref([]);
     const getProfile = () => {
@@ -191,43 +1108,90 @@ export default {
       getProfile();
       store.dispatch("lookups/getAllDocumentSpecs").then((res) => {
         if (res.data.status == "Success") {
-          res.data.data.forEach((element) => {
-            // if (element.applicantType &&
-            //  element.applicantType.code == "ETH"
-            //  ) {
-            //   NLdocumentSpecs.value.push(element)
-            // }
-            // if (element.applicantType &&
-            //  element.applicantType.code == "FOR"
-            //  ) {
-            //   NLdocumentSpecs.value.push(element)
-            // }
-            // if (element.applicantType &&
-            //  element.applicantType.code == "ETH"
-            //  ) {
-            //   NLdocumentSpecs.value.push(element)
-            // }
-            NLdocumentSpecs.value.push({
-              LicenseType: "New License",
-              ApplicantTypeL: "Ethiopian",
-              DocumnetType: "COC",
-            });
-          });
+          // NewLicense Section
+          NLdocumentSpecs.value.ethiopian = res.data.data.filter(
+            (element) =>
+              element.applicantType.code == "ETH" &&
+              element.isRequired == true &&
+              element.applicationCategory.code == "NA" &&
+              element.parentDocument == null &&
+              element.educationalLevel &&
+              element.educationalLevel.code == "BACH"
+          );
+          NLdocumentSpecs.value.foreigner = res.data.data.filter(
+            (element) =>
+              element.applicantType.code == "FOR" &&
+              element.isRequired == true &&
+              element.applicationCategory.code == "NA" &&
+              element.parentDocument == null &&
+              element.educationalLevel &&
+              element.educationalLevel.code == "BACH"
+          );
+          NLdocumentSpecs.value.ethiopianAbroad = res.data.data.filter(
+            (element) =>
+              element.applicantType.code == "ETHABRO" &&
+              element.isRequired == true &&
+              element.applicationCategory.code == "NA" &&
+              element.parentDocument == null &&
+              element.educationalLevel &&
+              element.educationalLevel.code == "BACH"
+          );
+
+          // Renewal Section
+          RNdocumentSpecs.value.ethiopian = res.data.data.filter(
+            (element) =>
+              element.applicantType.code == "ETH" &&
+              element.isRequired == true &&
+              element.applicationCategory.code == "RA" &&
+              element.parentDocument == null &&
+              element.educationalLevel &&
+              element.educationalLevel.code == "BACH"
+          );
+          RNdocumentSpecs.value.foreigner = res.data.data.filter(
+            (element) =>
+              element.applicantType.code == "FOR" &&
+              element.isRequired == true &&
+              element.applicationCategory.code == "RA" &&
+              element.parentDocument == null &&
+              element.educationalLevel &&
+              element.educationalLevel.code == "BACH"
+          );
+          RNdocumentSpecs.value.ethiopianAbroad = res.data.data.filter(
+            (element) =>
+              element.applicantType.code == "ETHABRO" &&
+              element.isRequired == true &&
+              element.applicationCategory.code == "RA" &&
+              element.parentDocument == null &&
+              element.educationalLevel &&
+              element.educationalLevel.code == "BACH"
+          );
+
+          //Good Standing section
+          GSdocumentSpecs.value = res.data.data.filter(
+            (element) =>
+              element.applicantType.code == "ETH" &&
+              element.isRequired == true &&
+              element.applicationCategory.code == "GSL" &&
+              element.parentDocument == null &&
+              element.educationalLevel &&
+              element.educationalLevel.code == "BACH"
+          );
+
+          console.log(GSdocumentSpecs.value);
         }
       });
     });
-    return { userInfo };
+    return { userInfo, NLdocumentSpecs, RNdocumentSpecs, GSdocumentSpecs };
   },
 };
 </script>
 <style scoped>
- 
 .overview-boxes .box:hover {
-    align-items: center;
-    justify-content: center;
-    width: calc(100% / 4 - 15px); 
-    padding: 15px 14px;
-    border-radius: 12px;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.884);
+  align-items: center;
+  justify-content: center;
+  width: calc(100% / 4 - 15px);
+  padding: 15px 14px;
+  border-radius: 12px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.884);
 }
 </style>

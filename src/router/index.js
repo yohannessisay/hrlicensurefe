@@ -473,6 +473,14 @@ const routes = [
         "../components/Reviewer/HomeComponents/UserManagement/userManagement.vue"
       )
   },
+  {
+    path: "/admin/list",
+    name: "AdminUserManagement",
+    component: () =>
+      import(
+        "../components/Reviewer/HomeComponents/UserManagement/userManagement.vue"
+      )
+  },
 
   //Admin Import Results
   {

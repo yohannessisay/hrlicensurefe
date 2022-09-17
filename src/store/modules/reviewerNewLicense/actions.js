@@ -163,7 +163,7 @@ export default {
     const resp = await ApiService.get(url);
 
     const myUnfinished = resp.data.data.filter(function(e) {
-      return e.reviewerId == adminStatus[1];
+      return e.licenseReviewer.reviewerId == adminStatus[1];
     });
 
     commit(SET_NEW_LICENSE_UNFINISHED, myUnfinished);
@@ -194,7 +194,7 @@ export default {
     const url = baseUrl + "/newLicenses/status/" + adminStatus[0];
     const resp = await ApiService.get(url);
     const othresUnfinished = resp.data.data.filter(function(e) {
-      return e.reviewerId !== adminStatus[1];
+      return e.licenseReviewer.reviewerId !== adminStatus[1];
     });
 
     commit(SET_NEW_LICENSE_OTHERS_UNFINISHED, othresUnfinished);
@@ -227,7 +227,7 @@ export default {
     const url = baseUrl + "/newLicenses/status/" + adminStatus[0];
     const resp = await ApiService.get(url);
     const assignedToMe = resp.data.data.filter(function(e) {
-      return e.reviewerId === adminStatus[1];
+      return e.licenseReviewer.reviewerId === adminStatus[1];
     });
 
     commit(SET_NEW_LICENSE_ASSIGNED_TO_YOU, assignedToMe);
@@ -258,7 +258,7 @@ export default {
     const url = baseUrl + "/newLicenses/status/" + adminStatus[0];
     const resp = await ApiService.get(url);
     const othresUnfinished = resp.data.data.filter(function(e) {
-      return e.reviewerId !== adminStatus[1];
+      return e.licenseReviewer.reviewerId !== adminStatus[1];
     });
     commit(SET_NEW_LICENSE_ASSIGNED_TO_OTHERS, othresUnfinished);
   },
@@ -320,7 +320,7 @@ export default {
     const resp = await ApiService.get(url);
     // let allApproved = resp.data.data
     const othersApproved = resp.data.data.filter(function(e) {
-      return e.reviewerId !== adminStatus[1];
+      return e.licenseReviewer.reviewerId !== adminStatus[1];
     });
     // if(allApproved === undefined) {
     //   allApproved = [];
@@ -358,7 +358,7 @@ export default {
       return;
     }
     const declined = resp.data.data.filter(function(e) {
-      return e.reviewerId === adminStatus[1];
+      return e.licenseReviewer.reviewerId === adminStatus[1];
     });
     commit(SET_NEW_LICENSE_DECLINED, declined);
   },
@@ -393,7 +393,7 @@ export default {
       return;
     }
     const othersDeclined = resp.data.data.filter(function(e) {
-      return e.reviewerId !== adminStatus[1];
+      return e.licenseReviewer.reviewerId !== adminStatus[1];
     });
     commit(SET_NEW_LICENSE_ALL_DECLINED, othersDeclined);
   },
@@ -423,7 +423,7 @@ export default {
     const url = baseUrl + "/newlicenses/status/" + adminStatus[0];
     const resp = await ApiService.get(url);
     const underSuperVision = resp.data.data.filter(function(e) {
-      return e.reviewerId === adminStatus[1];
+      return e.licenseReviewer.reviewerId === adminStatus[1];
     });
     commit(SET_NEW_LICENSE_UNDER_SUPERVISION, underSuperVision);
   },
@@ -455,7 +455,7 @@ export default {
     const url = baseUrl + "/newlicenses/status/" + adminStatus[0];
     const resp = await ApiService.get(url);
     const othersUnderSuperVision = resp.data.data.filter(function(e) {
-      return e.reviewerId !== adminStatus[1];
+      return e.licenseReviewer.reviewerId !== adminStatus[1];
     });
     commit(SET_NEW_LICENSE_OTHERS_UNDER_SUPERVISION, othersUnderSuperVision);
   },
@@ -487,7 +487,7 @@ export default {
     const url = baseUrl + "/newlicenses/status/" + adminStatus[0];
     const resp = await ApiService.get(url);
     const approvedPayment = resp.data.data.filter(function(e) {
-      return e.reviewerId === adminStatus[1];
+      return e.licenseReviewer.reviewerId === adminStatus[1];
     });
     commit(SET_NEW_LICENSE_APPROVED_PAYMENT, approvedPayment);
   },
@@ -519,7 +519,7 @@ export default {
     const url = baseUrl + "/newlicenses/status/" + adminStatus[0];
     const resp = await ApiService.get(url);
     const othersApprovedPayments = resp.data.data.filter(function(e) {
-      return e.reviewerId !== adminStatus[1];
+      return e.licenseReviewer.reviewerId !== adminStatus[1];
     });
     commit(SET_NEW_LICENSE_OTHERS_APPROVED_PAYMENT, othersApprovedPayments);
   },
@@ -551,7 +551,7 @@ export default {
     const url = baseUrl + "/newlicenses/status/" + adminStatus[0];
     const resp = await ApiService.get(url);
     const declinedPayment = resp.data.data.filter(function(e) {
-      return e.reviewerId === adminStatus[1];
+      return e.licenseReviewer.reviewerId === adminStatus[1];
     });
     commit(SET_NEW_LICENSE_DECLINED_PAYMENT, declinedPayment);
   },
@@ -583,7 +583,7 @@ export default {
     const url = baseUrl + "/newlicenses/status/" + adminStatus[0];
     const resp = await ApiService.get(url);
     const othersDeclinedPayments = resp.data.data.filter(function(e) {
-      return e.reviewerId !== adminStatus[1];
+      return e.licenseReviewer.reviewerId !== adminStatus[1];
     });
     commit(SET_NEW_LICENSE_OTHERS_DECLINED_PAYMENT, othersDeclinedPayments);
   },
@@ -647,7 +647,7 @@ export default {
     const url = baseUrl + "/newlicenses/status/" + adminStatus[0];
     const resp = await ApiService.get(url);
     const othersOnReview = resp.data.data.filter(function(e) {
-      return e.reviewerId !== adminStatus[1];
+      return e.licenseReviewer.reviewerId !== adminStatus[1];
     });
     commit(SET_NEW_LICENSE_OTHERS_ON_REVIEW, othersOnReview);
   },
@@ -754,7 +754,7 @@ export default {
     const resp = await ApiService.get(url);
     const confirmed = resp.data.data.filter(function(e) {
       return (
-        e.reviewerId === adminStatus[1] &&
+        e.licenseReviewer.reviewerId === adminStatus[1] &&
         e.previousApplicationStatus.code === "APP"
       );
     });
@@ -787,7 +787,7 @@ export default {
     const resp = await ApiService.get(url);
     const confirmed = resp.data.data.filter(function(e) {
       return (
-        e.reviewerId !== adminStatus[1] &&
+        e.licenseReviewer.reviewerId !== adminStatus[1] &&
         e.previousApplicationStatus.code === "APP"
       );
     });
@@ -821,7 +821,7 @@ export default {
     const url = baseUrl + "/newlicenses/status/" + adminStatus[0];
     const resp = await ApiService.get(url);
     const confirmed = resp.data.data.filter(function(e) {
-      return e.reviewerId === adminStatus[1];
+      return e.licenseReviewer.reviewerId === adminStatus[1];
     });
     commit(SET_NEW_LICENSE_RETURNED_TO_ME, confirmed);
   },
@@ -851,7 +851,7 @@ export default {
     const url = baseUrl + "/newlicenses/status/" + adminStatus[0];
     const resp = await ApiService.get(url);
     const confirmed = resp.data.data.filter(function(e) {
-      return e.reviewerId !== adminStatus[1];
+      return e.licenseReviewer.reviewerId !== adminStatus[1];
     });
     commit(SET_NEW_LICENSE_RETURNED_TO_OTHERS, confirmed);
   },
@@ -884,7 +884,7 @@ export default {
     const url = baseUrl + "/newlicenses/status/" + adminStatus[0];
     const resp = await ApiService.get(url);
     const pendingPayment = resp.data.data.filter(function(e) {
-      return e.reviewerId === adminStatus[1];
+      return e.licenseReviewer.reviewerId === adminStatus[1];
     });
     commit(SET_NEW_LICENSE_PENDING_PAYMENT, pendingPayment);
   },
@@ -914,7 +914,7 @@ export default {
     const url = baseUrl + "/newlicenses/status/" + adminStatus[0];
     const resp = await ApiService.get(url);
     const AllPendingPayments = resp.data.data.filter(function(e) {
-      return e.reviewerId !== adminStatus[1];
+      return e.licenseReviewer.reviewerId !== adminStatus[1];
     });
     commit(SET_NEW_LICENSE_OTHERS_PENDING_PAYMENT, AllPendingPayments);
   },
@@ -979,10 +979,10 @@ export default {
     const resp = await ApiService.get(url);
     const confirmedResp = await ApiService.get(confirmedUrl);
     const othersLicensed = resp.data.data.filter(function(e) {
-      return e.reviewerId !== adminStatus[0];
+      return e.licenseReviewer.reviewerId !== adminStatus[0];
     });
     const othersConfirmedLicensed = confirmedResp.data.data.filter(function(e) {
-      return e.reviewerId !== adminStatus[0];
+      return e.licenseReviewer.reviewerId !== adminStatus[0];
     });
     const othersConcateLicensedUsers = othersLicensed.concat(
       othersConfirmedLicensed
@@ -991,7 +991,7 @@ export default {
       const ApprovedUrl = baseUrl + "/newLicenses/status/" + adminStatus[3];
       const ApprovedResp = await ApiService.get(ApprovedUrl);
       const ApprovedLicensed = ApprovedResp.data.data.filter(function(e) {
-        return e.reviewerId !== adminStatus[0];
+        return e.licenseReviewer.reviewerId !== adminStatus[0];
       });
       const concateForFederalApproved = othersConcateLicensedUsers.concat(
         ApprovedLicensed
@@ -1062,7 +1062,7 @@ export default {
     const url = baseUrl + "/newLicenses/status/" + adminStatus[1];
     const resp = await ApiService.get(url);
     const suspended = resp.data.data.filter(function(e) {
-      return e.reviewerId === adminStatus[0];
+      return e.licenseReviewer.reviewerId === adminStatus[0];
     });
     commit(SET_NEW_LICENSE_SUSPENDED, suspended);
   },
@@ -1120,7 +1120,7 @@ export default {
     const url = baseUrl + "/newLicenses/status/" + adminStatus[1];
     const resp = await ApiService.get(url);
     const cancelled = resp.data.data.filter(function(e) {
-      return e.reviewerId === adminStatus[0];
+      return e.licenseReviewer.reviewerId === adminStatus[0];
     });
     commit(SET_NEW_LICENSE_CANCELLED, cancelled);
   },
@@ -1206,7 +1206,7 @@ export default {
     const url = baseUrl + "/newLicenses/status/" + adminStatus[0];
     const resp = await ApiService.get(url);
     const othersReApply = resp.data.data.filter(function(e) {
-      return e.reviewerId !== adminStatus[1];
+      return e.licenseReviewer.reviewerId !== adminStatus[1];
     });
     commit(SET_NEW_LICENSE_OTHERS_RE_APPLY, othersReApply);
   },
@@ -1238,7 +1238,7 @@ export default {
     const resp = await ApiService.get(url);
     const declineConfirmed = resp.data.data.filter(function(e) {
       return (
-        e.reviewerId === adminStatus[1] &&
+        e.licenseReviewer.reviewerId === adminStatus[1] &&
         e.previousApplicationStatus.code === "DEC"
       );
     });
@@ -1273,7 +1273,7 @@ export default {
     const resp = await ApiService.get(url);
     const othersDeclineConfirmed = resp.data.data.filter(function(e) {
       return (
-        e.reviewerId !== adminStatus[1] &&
+        e.licenseReviewer.reviewerId !== adminStatus[1] &&
         e.previousApplicationStatus.code === "DEC"
       );
     });
@@ -1309,7 +1309,7 @@ export default {
     const resp = await ApiService.get(url);
     const underSuperVisionConfirmed = resp.data.data.filter(function(e) {
       return (
-        e.reviewerId === adminStatus[1] &&
+        e.licenseReviewer.reviewerId === adminStatus[1] &&
         e.previousApplicationStatus.code === "USUP"
       );
     });
@@ -1350,7 +1350,7 @@ export default {
     const resp = await ApiService.get(url);
     const othersUnderSuperVisionConfirmed = resp.data.data.filter(function(e) {
       return (
-        e.reviewerId !== adminStatus[1] &&
+        e.licenseReviewer.reviewerId !== adminStatus[1] &&
         e.previousApplicationStatus.code === "USUP"
       );
     });

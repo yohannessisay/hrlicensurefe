@@ -1638,23 +1638,18 @@
           <button
             type="button"
             class="
-              inline-block
-              px-2
-              py-1
-              bg-purple-600
+             inline-block
+              px-6
+              py-2.5
+              bg-primary-700
               text-white
               font-medium
               text-xs
               leading-tight
               uppercase
               rounded
-              shadow-md
-              hover:bg-purple-700 hover:shadow-lg
-              focus:bg-purple-700
-              focus:shadow-lg
-              focus:outline-none
-              focus:ring-0
-              active:bg-purple-800 active:shadow-lg
+              shadow-lg
+              hover:bg-white hover:text-primary-600
               transition
               duration-150
               ease-in-out

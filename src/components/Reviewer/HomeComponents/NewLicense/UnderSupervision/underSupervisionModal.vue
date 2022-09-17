@@ -303,10 +303,12 @@
                       >
                         <button
                           class="
-                            inline-block
+                         inline-block
                             px-6
                             py-2.5
                             bg-blue-600
+                            hover:text-primary-600
+                            hover:border
                             text-white
                             font-medium
                             text-xs

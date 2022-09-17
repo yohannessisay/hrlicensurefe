@@ -403,7 +403,7 @@
         >
           <a :href="'/admin/newLicense/evaluate/' + licenseId">
             <button
-              v-if="showEvaluation"
+            
               type="button"
               class="
                 inline-block

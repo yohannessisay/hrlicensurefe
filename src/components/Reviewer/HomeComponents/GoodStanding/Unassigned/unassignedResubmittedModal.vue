@@ -52,14 +52,7 @@
             :opacity="0.7"
           ></loading>
           <div
-            class="
-              modal-header
-              flex flex-shrink-0
-              items-center
-              justify-between
-              p-2
-              rounded-t-md
-            "
+      class="modal-header flex flex-shrink-0 justify-end p-2 rounded-t-md"
           >
             <button
               type="button"

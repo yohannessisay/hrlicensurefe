@@ -94,7 +94,7 @@
                     />
                     <button
                       class="
-                        inline-block
+                     inline-block
                         px-6
                         py-2
                         bg-primary-700
@@ -105,12 +105,9 @@
                         uppercase
                         rounded
                         shadow-md
-                        hover:bg-blue-700 hover:shadow-lg
-                        focus:bg-blue-700
-                        focus:shadow-lg
-                        focus:outline-none
-                        focus:ring-0
-                        active:bg-blue-800 active:shadow-lg
+                        hover:bg-white
+                        hover:text-primary-600
+                        hover:border
                         transition
                         duration-150
                         ease-in-out
@@ -217,7 +214,7 @@
                     />
                     <button
                       class="
-                        inline-block
+                     inline-block
                         px-6
                         py-2
                         bg-primary-700
@@ -228,12 +225,9 @@
                         uppercase
                         rounded
                         shadow-md
-                        hover:bg-blue-700 hover:shadow-lg
-                        focus:bg-blue-700
-                        focus:shadow-lg
-                        focus:outline-none
-                        focus:ring-0
-                        active:bg-blue-800 active:shadow-lg
+                        hover:bg-white
+                        hover:text-primary-600
+                        hover:border
                         transition
                         duration-150
                         ease-in-out

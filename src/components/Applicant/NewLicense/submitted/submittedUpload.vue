@@ -99,9 +99,7 @@
                           py-4
                           text-center text-white
                         "
-                      >
-                        View
-                      </th>
+                      ></th>
                       <th
                         class="
                           font-semibold
@@ -160,22 +158,29 @@
                       </td>
 
                       <td class="px-6 py-4 text-center">
-                        <i
-                          class="fa fa-eye cursor-pointer"
-                          aria-hidden="true"
-                        ></i>
-
                         <a
-                          :id="'image_href'+item.id"
+                          :id="
+                            'common_image_href' + item.documentType.id + item.id
+                          "
                           href=""
                           :data-title="item.name ? item.name : '-----'"
                           data-lightbox="example-2"
                         >
-                          <img
-                            :id="'image_lightbox' + item.id"
-                            src=""
-                            class="w-full h-48 object-cover"
-                          />
+                          <i
+                            :id="'common_icon' + item.documentType.id + item.id"
+                            class="fa fa-eye cursor-pointer text-main-400 disabled"
+                            aria-hidden="true"
+                          >
+                            <img
+                              :id="
+                                'common_image_lightbox' +
+                                item.documentType.id +
+                                item.id
+                              "
+                              src=""
+                              class="w-full h-2 object-cover"
+                            />
+                          </i>
                         </a>
                       </td>
                     </tr>
@@ -301,9 +306,7 @@
                           py-4
                           text-center text-white
                         "
-                      >
-                        View
-                      </th>
+                      ></th>
                       <th
                         class="
                           font-semibold
@@ -357,27 +360,42 @@
                             accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
                             :ref="`imageUploader${item.id}`"
                             class="custom-file-input"
-                            v-on:change="handleFileUpload(item, $event)"
+                            v-on:change="
+                              handleFileUpload(
+                                item,
+                                $event,
+                                table.professionType
+                              )
+                            "
                           />
                         </p>
                       </td>
 
                       <td class="px-6 py-4 text-center">
-                        <span
-                          data-bs-toggle="modal"
-                          data-bs-target="#filePreview"
-                          @click="
-                            previewFile(
-                              item.documentType.code,
-                              item.documentType.name
-                            )
-                          "
+                        <a
+                          :id="'image_href' + table.professionType + item.id"
+                          href=""
+                          :data-title="item.name ? item.name : '-----'"
+                          data-lightbox="example-2"
                         >
                           <i
-                            class="fa fa-eye cursor-pointer"
+                            :id="
+                              'educational_icon' +
+                              table.professionType + item.id
+                            "
+                            class="fa fa-eye cursor-pointer text-main-400 disabled"
                             aria-hidden="true"
-                          ></i>
-                        </span>
+                          >
+                            <img
+                              :id="
+                                'image_lightbox' +
+                                table.professionType + item.id
+                              "
+                              src=""
+                              class="w-full h-2 object-cover"
+                            />
+                          </i>
+                        </a>
                       </td>
                     </tr>
                   </tbody>
@@ -429,28 +447,49 @@
                             :ref="`imageUploader${parentItem[0].id}`"
                             class="custom-file-input"
                             v-on:change="
-                              handleFileUpload(parentItem[0], $event)
+                              handleFileUpload(
+                                parentItem[0],
+                                $event,
+                                table.professionType
+                              )
                             "
                           />
                         </p>
                       </td>
 
                       <td class="px-6 py-4 text-center">
-                        <span
-                          data-bs-toggle="modal"
-                          data-bs-target="#filePreview"
-                          @click="
-                            previewFile(
-                              parentItem[0].documentType.code,
-                              parentItem[0].documentType.name
-                            )
+                        <a
+                          :id="
+                            'image_href' +
+                            table.professionType +
+                            parentItem[0].id
                           "
+                          href=""
+                          :data-title="
+                            parentItem[0].name ? parentItem[0].name : '-----'
+                          "
+                          data-lightbox="example-2"
                         >
                           <i
-                            class="fa fa-eye cursor-pointer"
+                            :id="
+                              'educational_icon' +
+                              table.professionType +
+                              parentItem[0].id
+                            "
+                            class="fa fa-eye cursor-pointer text-main-400 disabled"
                             aria-hidden="true"
-                          ></i>
-                        </span>
+                          >
+                            <img
+                              :id="
+                                'image_lightbox' +
+                                table.professionType +
+                                parentItem[0].id
+                              "
+                              src=""
+                              class="w-full h-2 object-cover"
+                            />
+                          </i>
+                        </a>
                       </td>
                     </tr>
                     <!-- if parent doc has more than 1 elements -->
@@ -503,7 +542,9 @@
                           type="button"
                           data-bs-toggle="collapse"
                           :data-bs-target="
-                            '#docAccordion' + parentItem[0].documentType.id
+                            '#docAccordion' +
+                            table.professionType +
+                            parentItem[0].documentType.id
                           "
                           aria-expanded="true"
                           :aria-controls="
@@ -533,7 +574,11 @@
                           "
                         >
                           <div
-                            :id="'docAccordion' + parentItem[0].documentType.id"
+                            :id="
+                              'docAccordion' +
+                              table.professionType +
+                              parentItem[0].documentType.id
+                            "
                             class="accordion-collapse collapse"
                             aria-labelledby="headingOne"
                             data-bs-parent="#accordionExample"
@@ -585,28 +630,49 @@
                                       :ref="`imageUploader${parentItem.id}`"
                                       class="custom-file-input"
                                       v-on:change="
-                                        handleFileUpload(parentItem, $event)
+                                        handleFileUpload(
+                                          parentItem,
+                                          $event,
+                                          table.professionType
+                                        )
                                       "
                                     />
                                   </p>
                                 </td>
 
                                 <td class="px-6 py-4 text-center">
-                                  <span
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#filePreview"
-                                    @click="
-                                      previewFile(
-                                        parentItem.documentType.code,
-                                        parentItem.documentType.name
-                                      )
+                                  <a
+                                    :id="
+                                      'image_href' +
+                                      +table.professionType +
+                                      parentItem.id
                                     "
+                                    href=""
+                                    :data-title="
+                                      parentItem.name ? item.name : '-----'
+                                    "
+                                    data-lightbox="example-2"
                                   >
                                     <i
-                                      class="fa fa-eye cursor-pointer"
+                                      :id="
+                                        'educational_icon' +
+                                        table.professionType +
+                                        parentItem.id
+                                      "
+                                      class="fa fa-eye cursor-pointer text-main-400 disabled"
                                       aria-hidden="true"
-                                    ></i>
-                                  </span>
+                                    >
+                                      <img
+                                        :id="
+                                          'image_lightbox' +
+                                          table.professionType +
+                                          parentItem.id
+                                        "
+                                        src=""
+                                        class="w-full h-2 object-cover"
+                                      />
+                                    </i>
+                                  </a>
                                 </td>
                               </tr>
                             </div>
@@ -706,7 +772,17 @@ export default {
     };
 
     const handleCommonFileUpload = (data, event) => {
-      var output = document.getElementById("image_lightbox" + data.id);
+      let icon = document.getElementById(
+        "common_icon" + data.documentType.id + data.id
+      );
+      icon.classList.toggle("disabled");
+      let output = document.getElementById(
+        "common_image_lightbox" + data.documentType.id + data.id
+      );
+      let outputHref = document.getElementById(
+        "common_image_href" + data.documentType.id + data.id
+      );
+      outputHref.href = URL.createObjectURL(event.target.files[0]);
       output.src = URL.createObjectURL(event.target.files[0]);
       output.onload = function () {
         URL.revokeObjectURL(output.src); // free memory
@@ -777,7 +853,23 @@ export default {
       }
     };
 
-    const handleFileUpload = (data, event) => {
+    const handleFileUpload = (data, event, professionType) => {
+      console.log("here");
+      let icon = document.getElementById(
+        "educational_icon" + professionType + data.id
+      );
+      icon.classList.toggle("disabled");
+      let output = document.getElementById(
+        "image_lightbox" + professionType + data.id
+      );
+      let outputHref = document.getElementById(
+        "image_href" + professionType + data.id
+      );
+      outputHref.href = URL.createObjectURL(event.target.files[0]);
+      output.src = URL.createObjectURL(event.target.files[0]);
+      output.onload = function () {
+        URL.revokeObjectURL(output.src); // free memory
+      };
       documentUploaded.value[data.documentType.code] = event?.target?.files[0];
       let reader = new FileReader();
       formData.append(
@@ -868,6 +960,7 @@ export default {
     };
 
     const addMoreFile = (doc) => {
+      //For future use on adding individual files, good luck
       divId.value == doc.length;
       if (divId.value < doc.length) {
         divId.value++;
@@ -900,9 +993,6 @@ export default {
       }
     };
 
-    const removeFileUpload = (id) => {
-      console.log("here");
-    };
     onMounted(() => {
       localData.value = window.localStorage.getItem("NLApplicationData")
         ? JSON.parse(window.localStorage.getItem("NLApplicationData"))
@@ -932,6 +1022,12 @@ export default {
                 let resp = res.data.data;
 
                 educationalDocs.value.push({
+                  professionType:
+                    element && element.professionType
+                      ? element.professionType.id
+                      : element
+                      ? element.professionTypeId
+                      : "",
                   educationalLevel: element.educationalLevel
                     ? element.educationalLevel
                     : element.educationLevel
@@ -944,7 +1040,6 @@ export default {
                 });
               });
           });
-          console.log("aaaa", educationalDocs.value);
           //Get Common Docs
 
           store
@@ -971,7 +1066,6 @@ export default {
       previewDocuments,
       showPreview,
       previewFile,
-      removeFileUpload,
       handleCommonFileUpload,
       generalInfo,
       goToNext,

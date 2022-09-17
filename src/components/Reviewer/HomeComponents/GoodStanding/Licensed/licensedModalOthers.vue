@@ -413,7 +413,7 @@
                                 <h4 style="font-weight: bold">
                                   Document Type:-
                                 </h4>
-                                <h6>{{ document.documentType.name }}</h6>
+                                    <h6>{{ document.documentType?document.documentType.name:'' }}</h6>
                               </div>
                             </div>
                           </div>

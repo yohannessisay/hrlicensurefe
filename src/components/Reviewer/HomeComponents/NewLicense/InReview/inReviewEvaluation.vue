@@ -1192,7 +1192,7 @@
               </div>
 
               <Modal v-if="showRemark">
-                <div>
+                <div class="h-screen overflow-y-scroll">
                   <div
                     class="
                       card-wrapper
@@ -1241,10 +1241,12 @@
                         </div>
                         <!--body-->
                         <div class="modalBody pb-xl">
-                          <div class="flex mt-medium justify-center"></div>
+                          <div class="flex mt-medium justify-center">
+                            <h2>Declined documents</h2>
+                          </div>
                           <div class="relative p-6 flex-auto w-full">
                             <div class="flex justify-center">
-                              <div class="">
+                              <div class="mt-12">
                                 <svg
                                   width="40"
                                   height="60"
@@ -1309,7 +1311,7 @@
                                 </div>
                               </div>
 
-                              <div>
+                              <div class="mt-12">
                                 <svg
                                   width="40"
                                   height="60"
@@ -1335,6 +1337,7 @@
                           </div>
                         </div>
                         <!--footer-->
+                        <label for="" class="ml-12">Remark</label>
                         <textarea
                           v-model="newLicense.remark"
                           class="
@@ -1343,10 +1346,14 @@
                             border
                             rounded-md
                             flex
+                            ml-12
                             mb-small
                             w-full
                           "
                         ></textarea>
+                        <small class="text-red-300" v-if="showRemarkError"
+                          >Remark note must be more than 10 letters</small
+                        >
                         <div
                           class="
                             flex
@@ -1358,13 +1365,59 @@
                           "
                         >
                           <button
-                            class="md-danger"
+                            class="
+                              inline-block
+                              px-6
+                              text-white
+                              bg-primary-600
+                              font-medium
+                              text-xs
+                              leading-tight
+                              uppercase
+                              rounded
+                              shadow-lg
+                              hover:bg-purple-700 hover:shadow-lg
+                              focus:bg-purple-700
+                              focus:shadow-lg
+                              focus:outline-none
+                              focus:ring-0
+                              active:bg-purple-800 active:shadow-lg
+                              transition
+                              duration-150
+                              hover:bg-primary-400 hover:text-white
+                              ease-in-out
+                            "
                             type="button"
                             v-on:click="toggleModal()"
                           >
                             Close
                           </button>
-                          <button type="button" v-on:click="submitRemark()">
+                          <button
+                            type="button"
+                            class="
+                              inline-block
+                              px-6
+                              text-white
+                              bg-primary-600
+                              font-medium
+                              text-xs
+                              leading-tight
+                              uppercase
+                              rounded
+                              shadow-lg
+                              hover:bg-purple-700 hover:shadow-lg
+                              focus:bg-purple-700
+                              focus:shadow-lg
+                              focus:outline-none
+                              focus:ring-0
+                              active:bg-purple-800 active:shadow-lg
+                              transition
+                              duration-150
+                              hover:bg-primary-400 hover:text-white
+                              ease-in-out
+                            "
+                            v-on:click="submitRemark()"
+                          >
                             Submit
                           </button>
                         </div>
@@ -1630,23 +1683,18 @@
           <button
             type="button"
             class="
-              inline-block
-              px-2
-              py-1
-              bg-purple-600
+             inline-block
+              px-6
+              py-2.5
+              bg-primary-700
               text-white
               font-medium
               text-xs
               leading-tight
               uppercase
               rounded
-              shadow-md
-              hover:bg-purple-700 hover:shadow-lg
-              focus:bg-purple-700
-              focus:shadow-lg
-              focus:outline-none
-              focus:ring-0
-              active:bg-purple-800 active:shadow-lg
+              shadow-lg
+              hover:bg-white hover:text-primary-600
               transition
               duration-150
               ease-in-out
@@ -1800,6 +1848,7 @@ export default {
     let errorClass = ref("text-danger");
     let showRemark = ref(false);
     let applicationType = ref("");
+    let showRemarkError = ref(false);
     let showDateError = ref({ show: false, message: "" });
     let supervisor = ref("");
     let showFlash = ref(false);
@@ -2185,7 +2234,8 @@ export default {
         }
       }
 
-      if (actionValue == "DeclineEvent") {
+      if (actionValue == "DeclineEvent" && newLicense.value.remark == null) {
+        showRemarkError.value = true;
         smsMessage = newLicense.value
           ? "Dear applicant your applied new license of number " +
             newLicense.value.newLicenseCode +
@@ -2193,8 +2243,9 @@ export default {
           : "";
         showRemark.value = true;
         sendDeclinedData.value = false;
+        return;
       }
-
+      showRemarkError.value = false;
       let checkProfessionResult = false;
       newLicense.value.isProfessionChanged == false;
 
@@ -2228,7 +2279,7 @@ export default {
         ],
         message: smsMessage ? smsMessage : "",
       };
-      router.push({ name: "AdminNewLicenseInReview" });
+
       if (applicationType.value == "New License") {
         store
           .dispatch("reviewer/editNewLicense", req)
@@ -2562,7 +2613,7 @@ export default {
               " days  .Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
             : "",
         };
-       
+
         store
           .dispatch("reviewer/editNewLicense", req)
           .then((res) => {
@@ -2701,6 +2752,7 @@ export default {
       allowProfessionChange,
       allowProfChange,
       showButtons,
+      showRemarkError,
       isToChangeProfession,
       profileInfo,
       disableNext,
