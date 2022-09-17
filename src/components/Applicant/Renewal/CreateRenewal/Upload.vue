@@ -628,6 +628,31 @@
       </div>
     </div>
     <div class="flex justify-end mr-8">
+
+      <button
+        class="
+          mt-8
+          inline-block
+          px-6
+          py-2.5
+          bg-white
+          hover:bg-main-400 hover:text-white
+          text-main-400 text-xs
+          font-bold
+          leading-tight
+          uppercase
+          rounded
+          shadow-md
+          active:border-main-400
+          transition
+          duration-150
+          ease-in-out
+          border
+        "
+        @click="back()"
+      >
+        back
+        </button>
       <button
         class="
           mt-8
@@ -654,7 +679,7 @@
       </button>
     </div>
   </div>
-  <filePreview :modalData="filePreviewData"> </filePreview>
+
 </template>
 <script>
 import { ref, onMounted } from "vue";
@@ -846,6 +871,18 @@ export default {
         emit("changeActiveState");
       });
     };
+    const back = () =>{
+     
+     checkForFiles(documentUploaded.value);
+       store.dispatch("renewal/setTempDocs", formData).then(() => {
+         window.localStorage.setItem(
+           "NLApplicationImageData",
+           JSON.stringify(imageData)
+         );
+         emit("changeActiveStateMinus");
+     
+       });
+     };
 
     const groupByKey = (array, key) => {
       return array.reduce((hash, obj) => {
@@ -920,6 +957,7 @@ export default {
       imageUploader,
       filePreviewData,
       next,
+      back,
     };
   },
 };

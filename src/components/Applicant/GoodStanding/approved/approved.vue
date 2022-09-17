@@ -5,7 +5,7 @@
         <li><a href="#" class="text-main-400 hover:text-blue-700">Home</a></li>
         <li><span class="text-gray-500 mx-2">/</span></li>
         <li>
-          <a href="#" class="text-main-400 hover:text-blue-700">New License</a>
+          <a href="#" class="text-main-400 hover:text-blue-700">Good Standing </a>
         </li>
         <li><span class="text-gray-500 mx-2">/</span></li>
         <li class="text-gray-500">Approved</li>
@@ -178,18 +178,19 @@ export default {
     onMounted(() => {
       isLoading.value = true;
       userInfo.value = JSON.parse(window.localStorage.getItem("personalInfo"));
-      store.dispatch("newlicense/getNewLicense").then((res) => {
-        newLicense.value = res.data.data;
-        console.log(newLicense);
-        if (newLicense.value) {
-          newLicense.value = newLicense.value.filter(function (e) {
-            return (
-              e.applicationStatus.code.includes("UPD") ||
-              e.applicationStatus.code.includes("SUB")
-            );
-          });
-          isLoading.value = false;
-        }
+      store.dispatch("lookups/getApplicationStatuses").then((resp) => {
+        let appStatus = resp.data.data.filter((element) => {
+          return element.code == "DEC";
+        });
+        store.dispatch("goodstanding/getGoodStanding").then((res) => {
+          newLicense.value = res.data.data;
+
+          if (newLicense.value) {
+            newLicense.value = newLicense.value.filter(function (e) {
+              return e.applicationStatus.code.includes(appStatus.code);
+            });
+          }
+        });
       });
     });
 

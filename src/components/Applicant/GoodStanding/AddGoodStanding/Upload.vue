@@ -183,6 +183,30 @@
           inline-block
           px-6
           py-2.5
+          bg-white
+          hover:bg-main-400 hover:text-white
+          text-main-400 text-xs
+          font-bold
+          leading-tight
+          uppercase
+          rounded
+          shadow-md
+          active:border-main-400
+          transition
+          duration-150
+          ease-in-out
+          border
+        "
+        @click="back()"
+      >
+        back
+        </button>
+      <button
+        class="
+          mt-8
+          inline-block
+          px-6
+          py-2.5
           bg-main-400
           hover:text-main-400
           text-white text-xs
@@ -202,7 +226,7 @@
       </button>
     </div>
   </div>
-  <filePreview :modalData="filePreviewData"> </filePreview>
+
 </template>
 <script>
 import { ref, onMounted } from "vue";
@@ -368,6 +392,18 @@ export default {
       );
       emit("changeActiveState");
     };
+    const back = () =>{
+     
+     checkForFiles(documentUploaded.value);
+       store.dispatch("GoodStanding/setTempDocs", formData).then(() => {
+         window.localStorage.setItem(
+           "NLApplicationImageData",
+           JSON.stringify(imageData)
+         );
+         emit("changeActiveStateMinus");
+     
+       });
+     };
 
     onMounted(() => {
       localData.value = window.localStorage.getItem("GSApplicationData")
@@ -412,6 +448,7 @@ export default {
       documents,
       filePreviewData,
       next,
+      back,
     };
   },
 };
