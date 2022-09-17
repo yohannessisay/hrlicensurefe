@@ -883,17 +883,8 @@ export default {
         emit("changeActiveState");
       });
     };
-    const back = () =>{
-     
-    checkForFiles(documentUploaded.value);
-      store.dispatch("newlicense/setTempDocs", formData).then(() => {
-        window.localStorage.setItem(
-          "NLApplicationImageData",
-          JSON.stringify(imageData)
-        );
-        emit("changeActiveStateMinus");
-    
-      });
+    const back = () =>{ 
+        emit("changeActiveStateMinus"); 
     };
 
     const groupByKey = (array, key) => {

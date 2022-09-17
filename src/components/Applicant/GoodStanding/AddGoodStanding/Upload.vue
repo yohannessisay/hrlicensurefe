@@ -200,7 +200,7 @@
         @click="back()"
       >
         back
-        </button>
+      </button>
       <button
         class="
           mt-8
@@ -226,7 +226,6 @@
       </button>
     </div>
   </div>
-
 </template>
 <script>
 import { ref, onMounted } from "vue";
@@ -318,11 +317,11 @@ export default {
     const handleFileUpload = (data, event) => {
       documentUploaded.value[data.documentType.code] = event?.target?.files[0];
       let reader = new FileReader();
-      
+
       formData.append(data.documentType.code, event?.target?.files[0]);
       isImage.value[data.documentType.code] = true;
       let fileS = documentUploaded.value[data.documentType.code].size;
-      if (fileS <= maxFileSize.value / 1000) {  
+      if (fileS <= maxFileSize.value / 1000) {
         fileSizeExceed.value[data.documentType.code] = false;
         showImage.value = true;
 
@@ -332,7 +331,7 @@ export default {
           fileSize.value = fileS / 1000 + "kB";
         } else {
           fileSize.value = fileS / 1000000 + "MB";
-        } 
+        }
         reader.addEventListener(
           "load",
           function () {
@@ -346,7 +345,6 @@ export default {
                 : "",
               image: reader.result,
             });
-             
           },
           false
         );
@@ -379,8 +377,7 @@ export default {
         documentUploaded.value[data.documentType.code] = "";
       }
     };
-    const next = () => { 
-
+    const next = () => {
       store.dispatch("goodstanding/setTempDocs", formData);
       window.localStorage.setItem(
         "GSApplicationData",
@@ -392,18 +389,9 @@ export default {
       );
       emit("changeActiveState");
     };
-    const back = () =>{
-     
-     checkForFiles(documentUploaded.value);
-       store.dispatch("GoodStanding/setTempDocs", formData).then(() => {
-         window.localStorage.setItem(
-           "NLApplicationImageData",
-           JSON.stringify(imageData)
-         );
-         emit("changeActiveStateMinus");
-     
-       });
-     };
+    const back = () => {
+      emit("changeActiveStateMinus");
+    };
 
     onMounted(() => {
       localData.value = window.localStorage.getItem("GSApplicationData")

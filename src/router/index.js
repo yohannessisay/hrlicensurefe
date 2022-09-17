@@ -160,25 +160,23 @@ const routes = [
     component: () => import("../components/Applicant/Renewal/Renewal.vue")
   },
   {
-    path: "/verification",
-    name: "Verification",
-    component: () => import("../components/Verification/Verification.vue")
-  },
-  {
     path: "/Applicant/Renewal/submitted",
     name: "ApplicantRenewalSubmitted",
-    component: () => import("../components/Applicant/Renewal/submitted/submitted.vue")
-  }, 
+    component: () =>
+      import("../components/Applicant/Renewal/submitted/submitted.vue")
+  },
   {
     path: "/Applicant/Renewal/approved",
     name: "ApplicantRenewalApproved",
-    component: () => import("../components/Applicant/Renewal/approved/approved.vue")
-  }, 
+    component: () =>
+      import("../components/Applicant/Renewal/approved/approved.vue")
+  },
   {
     path: "/Applicant/Renewal/declined",
     name: "ApplicantRenewalDeclined",
-    component: () => import("../components/Applicant/Renewal/declined/declined.vue")
-  }, 
+    component: () =>
+      import("../components/Applicant/Renewal/declined/declined.vue")
+  },
   {
     path: "/Applicant/Renewal/withdraw",
     name: "ApplicantRenewalWithdraw",
@@ -188,12 +186,18 @@ const routes = [
   {
     path: "/Applicant/Renewal/underSupervision",
     name: "ApplicantRenewalUnderSupervision",
-    component: () => import("../components/Applicant/Renewal/underSupervision/underSupervision.vue")
-  }, 
+    component: () =>
+      import(
+        "../components/Applicant/Renewal/underSupervision/underSupervision.vue"
+      )
+  },
   {
     path: "/Applicant/Renewal/pendingPayment",
     name: "ApplicantRenewalPendingPayment",
-    component: () => import("../components/Applicant/Renewal/pendingPayment/pendingPayment.vue")
+    component: () =>
+      import(
+        "../components/Applicant/Renewal/pendingPayment/pendingPayment.vue"
+      )
   },
   {
     path: "/Applicant/Renewal/draft",
@@ -256,7 +260,8 @@ const routes = [
   {
     path: "/Applicant/GoodStanding/declined/detail/:id",
     name: "ApplicantGoodStandingDeclinedDetail",
-    component: () => import("../components/Applicant/GoodStanding/declined/declinedDetail.vue")
+    component: () =>
+      import("../components/Applicant/GoodStanding/declined/declinedDetail.vue")
   },
   {
     path: "/Applicant/GoodStanding/draft",

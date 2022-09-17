@@ -357,6 +357,27 @@
         <i class="fa fa-save"></i>
         {{ button.name }}
       </button>
+      <button
+        class="
+          inline-block
+          px-6
+          text-main-400
+          mt-4
+          bg-white
+          font-medium
+          text-xs
+          leading-tight
+          uppercase
+          rounded
+          shadow-lg
+          transition
+          duration-150
+          ease-in-out
+        "
+        @click="back()"
+      >
+        back
+      </button>
     </div>
 
     <!-- end row -->
@@ -369,7 +390,7 @@ import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
 import { useRouter } from "vue-router";
 export default {
-  setup() {
+  setup(props, { emit }) {
     const store = useStore();
     const toast = useToast();
     const router = useRouter();
@@ -442,9 +463,13 @@ export default {
             nativeLanguageId: generalInfo.value.nativeLanguageSelected
               ? generalInfo.value.nativeLanguageSelected.id
               : null,
-            expertLevelId: generalInfo.value.expertLevelId?generalInfo.value.expertLevelId:null,
+            expertLevelId: generalInfo.value.expertLevelId
+              ? generalInfo.value.expertLevelId
+              : null,
             isLegal: true,
-            feedback: generalInfo.value.feedback?generalInfo.value.feedback:"",
+            feedback: generalInfo.value.feedback
+              ? generalInfo.value.feedback
+              : "",
           },
         };
         store.dispatch("newlicense/addNewLicense", license).then((res) => {
@@ -484,6 +509,9 @@ export default {
         });
       }
     };
+    const back = () => {
+      emit("changeActiveStateMinus");
+    };
     onMounted(() => {
       buttons.value = store.getters["newlicense/getButtons"];
       tempDocs.value = store.getters["newlicense/getTempDocs"];
@@ -521,6 +549,7 @@ export default {
       agreed,
       buttons,
       checkAgreement,
+      back,
       allowSave,
       checkFinalStatus,
       changeAgrement,
