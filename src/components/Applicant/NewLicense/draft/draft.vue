@@ -8,7 +8,7 @@
           <a href="#" class="text-main-400 hover:text-blue-700">New License</a>
         </li>
         <li><span class="text-gray-500 mx-2">/</span></li>
-        <li class="text-gray-500">Submitted</li>
+        <li class="text-gray-500">Draft</li>
       </ol>
     </nav>
     <div class="container my-12 mx-auto px-4 md:px-12">

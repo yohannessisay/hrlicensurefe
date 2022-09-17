@@ -159,7 +159,51 @@ const routes = [
     name: "ApplicantRenewal",
     component: () => import("../components/Applicant/Renewal/Renewal.vue")
   },
- 
+  {
+    path: "/Applicant/Renewal/submitted",
+    name: "ApplicantRenewalSubmitted",
+    component: () =>
+      import("../components/Applicant/Renewal/submitted/submitted.vue")
+  },
+  {
+    path: "/Applicant/Renewal/approved",
+    name: "ApplicantRenewalApproved",
+    component: () =>
+      import("../components/Applicant/Renewal/approved/approved.vue")
+  },
+  {
+    path: "/Applicant/Renewal/declined",
+    name: "ApplicantRenewalDeclined",
+    component: () =>
+      import("../components/Applicant/Renewal/declined/declined.vue")
+  },
+  {
+    path: "/Applicant/Renewal/withdraw",
+    name: "ApplicantRenewalWithdraw",
+    component: () =>
+      import("../components/Applicant/Renewal/withdraw/withdraw.vue")
+  },
+  {
+    path: "/Applicant/Renewal/underSupervision",
+    name: "ApplicantRenewalUnderSupervision",
+    component: () =>
+      import(
+        "../components/Applicant/Renewal/underSupervision/underSupervision.vue"
+      )
+  },
+  {
+    path: "/Applicant/Renewal/pendingPayment",
+    name: "ApplicantRenewalPendingPayment",
+    component: () =>
+      import(
+        "../components/Applicant/Renewal/pendingPayment/pendingPayment.vue"
+      )
+  },
+  {
+    path: "/Applicant/Renewal/draft",
+    name: "ApplicantRenewalDraft",
+    component: () => import("../components/Applicant/Renewal/draft/draft.vue")
+  },
   //Applicant Side Good Standing
   {
     path: "/Applicant/GoodStanding",
@@ -212,6 +256,12 @@ const routes = [
     name: "ApplicantDeclined",
     component: () =>
       import("../components/Applicant/GoodStanding/declined/declined.vue")
+  },
+  {
+    path: "/Applicant/GoodStanding/declined/detail/:id",
+    name: "ApplicantGoodStandingDeclinedDetail",
+    component: () =>
+      import("../components/Applicant/GoodStanding/declined/declinedDetail.vue")
   },
   {
     path: "/Applicant/GoodStanding/draft",

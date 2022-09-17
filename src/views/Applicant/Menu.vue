@@ -286,7 +286,8 @@
                         >(hover over lists to see details)</small
                       >
                     </div>
-                    <div class="p-6 mb-2">
+
+                    <div class="p-6 mb-2" v-if="NLdocumentSpecs">
                       <ul
                         v-for="doc in NLdocumentSpecs.ethiopian"
                         :key="doc.id"
@@ -332,7 +333,7 @@
                   </div>
                 </div>
 
-                <div class="pricing-plan-wrap lg:w-1/3 my-4 md:my-6 mr-4">
+                <div class="pricing-plan-wrap lg:w-1/3 my-4 md:my-6 mr-4" >
                   <div
                     class="
                       pricing-plan
@@ -371,7 +372,7 @@
                         >(hover over lists to see details)</small
                       >
                     </div>
-                    <div class="p-6 mb-2">
+                    <div class="p-6 mb-2" v-if="NLdocumentSpecs">
                       <ul
                         v-for="doc in NLdocumentSpecs.ethiopianAbroad"
                         :key="doc.id"
@@ -456,7 +457,7 @@
                         >(hover over lists to see details)</small
                       >
                     </div>
-                    <div class="p-6 mb-2">
+                    <div class="p-6 mb-2" v-if="NLdocumentSpecs">
                       <ul
                         v-for="doc in NLdocumentSpecs.foreigner"
                         :key="doc.id"
@@ -645,7 +646,7 @@
                         >(hover over lists to see details)</small
                       >
                     </div>
-                    <div class="p-6 mb-2">
+                    <div class="p-6 mb-2" v-if="RNdocumentSpecs">
                       <ul
                         v-for="doc in RNdocumentSpecs.ethiopian"
                         :key="doc.id"
@@ -730,7 +731,7 @@
                         >(hover over lists to see details)</small
                       >
                     </div>
-                    <div class="p-6 mb-2">
+                    <div class="p-6 mb-2" v-if="RNdocumentSpecs">
                       <ul
                         v-for="doc in RNdocumentSpecs.ethiopianAbroad"
                         :key="doc.id"
@@ -815,7 +816,7 @@
                         >(hover over lists to see details)</small
                       >
                     </div>
-                    <div class="p-6 mb-2">
+                    <div class="p-6 mb-2" v-if="RNdocumentSpecs">
                       <ul
                         v-for="doc in RNdocumentSpecs.foreigner"
                         :key="doc.id"
@@ -1013,7 +1014,7 @@
                         >(hover over lists to see details)</small
                       >
                     </div>
-                    <div class="p-6">
+                    <div class="p-6" v-if="GSdocumentSpecs">
                       <ul
                         v-for="doc in GSdocumentSpecs"
                         :key="doc.id"
@@ -1083,9 +1084,9 @@ export default {
     let isFirstTime = ref(false);
     let userInfo = ref({});
 
-    let NLdocumentSpecs = ref({});
-    let RNdocumentSpecs = ref([]);
-    let GSdocumentSpecs = ref([]);
+    let NLdocumentSpecs = ref({ethiopian:{},foreigner:{},ethiopianAbroad:{}});
+    let RNdocumentSpecs = ref({ethiopian:{},foreigner:{},ethiopianAbroad:{}});
+    let GSdocumentSpecs = ref({ethiopian:{},foreigner:{},ethiopianAbroad:{}});
     const getProfile = () => {
       store.dispatch("profile/getProfileByUserId", id).then((res) => {
         getImage(res.data.data);
@@ -1176,8 +1177,7 @@ export default {
               element.educationalLevel &&
               element.educationalLevel.code == "BACH"
           );
-
-          console.log(GSdocumentSpecs.value);
+ 
         }
       });
     });

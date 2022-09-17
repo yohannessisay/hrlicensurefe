@@ -33,6 +33,16 @@ export default {
       return resp;
     }
   },
+  async getApplicationStatuses() {
+    try {
+      const resp = await ApiService.get(baseUrl + "/applicationStatuses/");
+      return resp;
+    } catch (error) {
+      const resp = error;
+      return resp;
+    }
+  },
+  
   async addWoreda(id, data) {
     try {
       const resp = await ApiService.post(baseUrl + "/lookups/addWoreda", data);

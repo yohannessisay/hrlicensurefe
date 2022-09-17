@@ -183,6 +183,30 @@
           inline-block
           px-6
           py-2.5
+          bg-white
+          hover:bg-main-400 hover:text-white
+          text-main-400 text-xs
+          font-bold
+          leading-tight
+          uppercase
+          rounded
+          shadow-md
+          active:border-main-400
+          transition
+          duration-150
+          ease-in-out
+          border
+        "
+        @click="back()"
+      >
+        back
+      </button>
+      <button
+        class="
+          mt-8
+          inline-block
+          px-6
+          py-2.5
           bg-main-400
           hover:text-main-400
           text-white text-xs
@@ -202,7 +226,6 @@
       </button>
     </div>
   </div>
-  <filePreview :modalData="filePreviewData"> </filePreview>
 </template>
 <script>
 import { ref, onMounted } from "vue";
@@ -294,11 +317,11 @@ export default {
     const handleFileUpload = (data, event) => {
       documentUploaded.value[data.documentType.code] = event?.target?.files[0];
       let reader = new FileReader();
-      
+
       formData.append(data.documentType.code, event?.target?.files[0]);
       isImage.value[data.documentType.code] = true;
       let fileS = documentUploaded.value[data.documentType.code].size;
-      if (fileS <= maxFileSize.value / 1000) {  
+      if (fileS <= maxFileSize.value / 1000) {
         fileSizeExceed.value[data.documentType.code] = false;
         showImage.value = true;
 
@@ -308,7 +331,7 @@ export default {
           fileSize.value = fileS / 1000 + "kB";
         } else {
           fileSize.value = fileS / 1000000 + "MB";
-        } 
+        }
         reader.addEventListener(
           "load",
           function () {
@@ -322,7 +345,6 @@ export default {
                 : "",
               image: reader.result,
             });
-             
           },
           false
         );
@@ -355,8 +377,7 @@ export default {
         documentUploaded.value[data.documentType.code] = "";
       }
     };
-    const next = () => { 
-
+    const next = () => {
       store.dispatch("goodstanding/setTempDocs", formData);
       window.localStorage.setItem(
         "GSApplicationData",
@@ -367,6 +388,9 @@ export default {
         JSON.stringify(imageData)
       );
       emit("changeActiveState");
+    };
+    const back = () => {
+      emit("changeActiveStateMinus");
     };
 
     onMounted(() => {
@@ -412,6 +436,7 @@ export default {
       documents,
       filePreviewData,
       next,
+      back,
     };
   },
 };

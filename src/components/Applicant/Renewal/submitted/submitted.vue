@@ -5,7 +5,7 @@
         <li><a href="#" class="text-main-400 hover:text-blue-700">Home</a></li>
         <li><span class="text-gray-500 mx-2">/</span></li>
         <li>
-          <a href="#" class="text-main-400 hover:text-blue-700">New License</a>
+          <a href="#" class="text-main-400 hover:text-blue-700">Renewal</a>
         </li>
         <li><span class="text-gray-500 mx-2">/</span></li>
         <li class="text-gray-500">Submitted</li>
