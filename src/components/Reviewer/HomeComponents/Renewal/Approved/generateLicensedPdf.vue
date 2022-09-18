@@ -19,6 +19,7 @@
     aria-labelledby="generatePdfLabel"
     aria-hidden="true"
   >
+
     <div
       class="
         modal-dialog modal-dialog-centered modal-xl
@@ -36,7 +37,7 @@
           flex flex-col
           w-full
           pointer-events-auto
-          bg-white bg-clip-padding
+          bg-white
           rounded-md
           outline-none
           text-current
@@ -63,21 +64,31 @@
                 <loading
                   :active="isLoading"
                   :can-cancel="true"
-                  :on-cancel="onCancel"
-                  :is-full-page="fullPage"
+                  :is-full-page="true"
                   :color="'#2F639D'"
                   :opacity="0.7"
                 ></loading>
                 <div class="flex flex-wrap">
                   <div class="grow-0 shrink-0 basis-auto w-full">
                     <div>
-                      <span>
+                      <!-- if professions are less than 3 -->
+                      <span
+                        v-if="
+                          modalData && modalData.newEducations
+                            ? modalData.newEducations.concat(
+                                modalData && modalData.previousEducations
+                                  ? modalData.previousEducations
+                                  : []
+                              ).length < 4
+                            : []
+                        "
+                      >
                         <span v-if="isUserCertified && myRegion">
                           <div
                             v-if="
                               applicationStatus !== 'CANC' &&
-                                applicationStatus !== 'SUSP' &&
-                                !showActionLoading
+                              applicationStatus !== 'SUSP' &&
+                              !showActionLoading
                             "
                           ></div>
 
@@ -90,7 +101,7 @@
                               justify-center
                             "
                           >
-                            <div class="w-screen">
+                            <div class="w-full overflow-x-scroll">
                               <div
                                 class="
                                   flex flex-col
@@ -140,88 +151,138 @@
                                 </div>
                                 <div class="flex">
                                   <div class="flex flex-col ml-4 w-1/2 mr-12">
-                                    <!-- <h4>
+                                    <h4>
                                       በኢትዮጵያ ፌዴራላዊ ዴሞክራሲያዊ ረፐብሊክ የጤና ሚንስቴር በአዋጅ
                                       ቁጥር
-                                  
-                                    
-                                           {{modalData.data.reviewer&&modalData.data.reviewer.expertLevelId === 3
+
+                                      {{
+                                        modalData.data &&
+                                        modalData.data.renewalReviewer &&
+                                        modalData.data.renewalReviewer
+                                          .reviewer &&
+                                        modalData.data.renewalReviewer.reviewer
+                                          .expertLevelId === 3
                                           ? "1112/2011"
-                                          :modalData.data.reviewer.regionId&&modalData.data.reviewer.region.code === "AA"
+                                          : modalData.data &&
+                                            modalData.data.renewalReviewer &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer.regionId &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer.region.code === "AA"
                                           ? "64/2011"
-                                          :modalData.data.reviewer.regionId&& modalData.data.reviewer.region.code === "ORO"
+                                          : modalData.data &&
+                                            modalData.data.renewalReviewer &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer.regionId &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer.region.code === "ORO"
                                           ? "661/2009"
                                           : "-"
                                       }}
-                                           
+
                                       አንቀጽ
                                       {{
-                                        modalData.data.reviewer &&
-                                        modalData.data.reviewer.expertLevelId === 3
+                                        modalData.data &&
+                                        modalData.data.renewalReviewer &&
+                                        modalData.data.renewalReviewer
+                                          .reviewer &&
+                                        modalData.data.renewalReviewer.reviewer
+                                          .expertLevelId === 3
                                           ? "73"
-                                          : modalData.data.reviewer &&
-                                            modalData.data.reviewer.region &&
-                                            modalData.data.reviewer.region
-                                              .code === "AA"
+                                          : modalData.data &&
+                                            modalData.data.renewalReviewer &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer.region &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer.region.code === "AA"
                                           ? "44/8"
-                                          : modalData.data.reviewer &&
-                                            modalData.data.reviewer.region &&
-                                            modalData.data.reviewer.region
-                                              .code === "ORO"
+                                          : modalData.data &&
+                                            modalData.data.renewalReviewer &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer.region &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer.region.code === "ORO"
                                           ? "3/3"
                                           : "-"
                                       }}
                                       ስልጣን መሰረት
-                                    </h4> -->
+                                    </h4>
                                   </div>
 
                                   <div class="flex flex-col w-1/2 mr-12">
-                                    <!-- <h4>
+                                    <h4>
                                       Under the Federal Democratic Republic of
                                       Ethiopia the Minstry of Health by Virtue
                                       of proclamation No.
                                       {{
-                                        modalData.data.reviewer &&
-                                        modalData.data.reviewer.expertLevel &&
-                                        modalData.data.reviewer.expertLevel
-                                          .code === "FED"
+                                        modalData.data &&
+                                        modalData.data.renewalReviewer &&
+                                        modalData.data.renewalReviewer
+                                          .reviewer &&
+                                        modalData.data.renewalReviewer.reviewer
+                                          .expertLevel &&
+                                        modalData.data.renewalReviewer.reviewer
+                                          .expertLevel.code === "FED"
                                           ? "1112/2019"
-                                          : modalData.data.reviewer &&
-                                            modalData.data.reviewer.region &&
-                                            modalData.data.reviewer.region
-                                              .code === "AA"
+                                          : modalData.data &&
+                                            modalData.data.renewalReviewer &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer.region &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer.region.code === "AA"
                                           ? "64/2019"
-                                          : modalData.data.reviewer &&
-                                            modalData.data.reviewer.region &&
-                                            modalData.data.reviewer.region
-                                              .code === "ORO"
+                                          : modalData.data &&
+                                            modalData.data.renewalReviewer &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer.region &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer.region.code === "ORO"
                                           ? "661/2002"
                                           : "-"
                                       }}
                                       Article
                                       {{
-                                        modalData.data.reviewer &&
-                                        modalData.data.reviewer.expertLevel &&
-                                        modalData.data.reviewer.expertLevel
-                                          .code === "FED"
+                                        modalData.data &&
+                                        modalData.data.renewalReviewer &&
+                                        modalData.data.renewalReviewer
+                                          .reviewer &&
+                                        modalData.data.renewalReviewer.reviewer
+                                          .expertLevel &&
+                                        modalData.data.renewalReviewer.reviewer
+                                          .expertLevel.code === "FED"
                                           ? "73"
-                                          : modalData.data.reviewer &&
-                                            modalData.data.reviewer.region &&
-                                            modalData.data.reviewer.region
-                                              .code === "AA"
+                                          : modalData.data &&
+                                            modalData.data.renewalReviewer &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer.region &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer.region.code === "AA"
                                           ? "44/8"
-                                          : modalData.data.reviewer &&
-                                            modalData.data.reviewer.region &&
-                                            modalData.data.reviewer.region
-                                              .code === "ORO"
+                                          : modalData.data &&
+                                            modalData.data.renewalReviewer &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer.region &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer.region.code === "ORO"
                                           ? "3/3"
                                           : "-"
                                       }}
                                       is given the authority to issue
-                                    </h4> -->
+                                    </h4>
                                   </div>
                                 </div>
-
                                 <div class="flex">
                                   <div
                                     class="flex flex-row w-1/2 mr-64"
@@ -286,7 +347,7 @@
                                         v-for="department in modalData.educations"
                                         :key="department.id"
                                         class="
-                                          grid grid-flow-col
+                                          grid grid-flow-col-dense
                                           auto-cols-max
                                           border-b
                                         "
@@ -346,7 +407,7 @@
                                         v-for="department in modalData.educations"
                                         :key="department.id"
                                         class="
-                                          grid grid-flow-col
+                                          grid grid-flow-col-dense
                                           auto-cols-max
                                           border-b
                                         "
@@ -483,6 +544,1334 @@
                           </div>
                         </span>
                       </span>
+                      <!-- end-->
+                      <!-- if professions are greater than 3 -->
+                      <span
+                        v-if="
+                          modalData && modalData.newEducations
+                            ? modalData.newEducations.concat(
+                                modalData && modalData.previousEducations
+                                  ? modalData.previousEducations
+                                  : []
+                              ).length > 3
+                            : []
+                        "
+                      >
+                     
+                        <div class="flex justify-center mb-4">
+                          <h1>License 1</h1>
+                        </div>
+                        <!-- For the first part -->
+                        <span v-if="isUserCertified && myRegion">
+                          <div
+                            v-if="modalData"
+                            class="
+                              bg-lightBlueB-200
+                              flex
+                              items-center
+                              justify-center
+                              border-t-4
+                            "
+                          >
+                            <div class="w-full overflow-x-scroll">
+                              <div
+                                class="
+                                  flex flex-col
+                                  overflow-x-scroll
+                                  w-full
+                                  bg-white
+                                  blue-box-shadow-light
+                                  rounded
+                                  justify-center
+                                  items-center
+                                "
+                              >
+                                <div>
+                                  <h2 class="font-bold mt-4">
+                                    በኢትዮፕያ ፌደራላዊ ዴሞክራሲያዊ ሪፐብሊክ
+                                  </h2>
+                                  <h2 class="font-bold">
+                                    Federal Democratic Republic Ethiopia
+                                  </h2>
+                                </div>
+                                <span class="mt-1">
+                                  <h2 class="font-bold">የጤና ሚኒስቴር</h2>
+                                  <h2 class="font-bold">Ministry of Health</h2>
+                                </span>
+
+                                <div class="flex">
+                                  <div
+                                    class="
+                                      flex flex-col
+                                      mb-medium
+                                      ml-2
+                                      w-1/2
+                                      mr-12
+                                    "
+                                  >
+                                    <h2 class="font-bold">
+                                      የጤና ባለሙያዎች የሙያ ምዝገባና ፈቃድ የምስከር ወረቀት
+                                    </h2>
+                                  </div>
+                                  <div
+                                    class="flex flex-col mb-medium w-1/2 mr-12"
+                                  >
+                                    <h2 class="font-bold">
+                                      Health Professionals Registration and
+                                      Certification
+                                    </h2>
+                                  </div>
+                                </div>
+                                <div class="flex">
+                                  <div class="flex flex-col ml-4 w-1/2 mr-12">
+                                    <h4>
+                                      በኢትዮጵያ ፌዴራላዊ ዴሞክራሲያዊ ረፐብሊክ የጤና ሚንስቴር በአዋጅ
+                                      ቁጥር
+
+                                      {{
+                                        modalData.data &&
+                                        modalData.data.renewalReviewer &&
+                                        modalData.data.renewalReviewer
+                                          .reviewer &&
+                                        modalData.data.renewalReviewer.reviewer
+                                          .expertLevelId === 3
+                                          ? "1112/2011"
+                                          : modalData.data &&
+                                            modalData.data.renewalReviewer &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer.regionId &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer.region.code === "AA"
+                                          ? "64/2011"
+                                          : modalData.data &&
+                                            modalData.data.renewalReviewer &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer.regionId &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer.region.code === "ORO"
+                                          ? "661/2009"
+                                          : "-"
+                                      }}
+
+                                      አንቀጽ
+                                      {{
+                                        modalData.data &&
+                                        modalData.data.renewalReviewer &&
+                                        modalData.data.renewalReviewer
+                                          .reviewer &&
+                                        modalData.data.renewalReviewer.reviewer
+                                          .expertLevelId === 3
+                                          ? "73"
+                                          : modalData.data &&
+                                            modalData.data.renewalReviewer &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer.region &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer.region.code === "AA"
+                                          ? "44/8"
+                                          : modalData.data &&
+                                            modalData.data.renewalReviewer &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer.region &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer.region.code === "ORO"
+                                          ? "3/3"
+                                          : "-"
+                                      }}
+                                      ስልጣን መሰረት
+                                    </h4>
+                                  </div>
+
+                                  <div class="flex flex-col w-1/2 mr-12">
+                                    <h4>
+                                      Under the Federal Democratic Republic of
+                                      Ethiopia the Minstry of Health by Virtue
+                                      of proclamation No.
+                                      {{
+                                        modalData.data &&
+                                        modalData.data.renewalReviewer &&
+                                        modalData.data.renewalReviewer
+                                          .reviewer &&
+                                        modalData.data.renewalReviewer.reviewer
+                                          .expertLevel &&
+                                        modalData.data.renewalReviewer.reviewer
+                                          .expertLevel.code === "FED"
+                                          ? "1112/2019"
+                                          : modalData.data &&
+                                            modalData.data.renewalReviewer &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer.region &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer.region.code === "AA"
+                                          ? "64/2019"
+                                          : modalData.data &&
+                                            modalData.data.renewalReviewer &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer.region &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer.region.code === "ORO"
+                                          ? "661/2002"
+                                          : "-"
+                                      }}
+                                      Article
+                                      {{
+                                        modalData.data &&
+                                        modalData.data.renewalReviewer &&
+                                        modalData.data.renewalReviewer
+                                          .reviewer &&
+                                        modalData.data.renewalReviewer.reviewer
+                                          .expertLevel &&
+                                        modalData.data.renewalReviewer.reviewer
+                                          .expertLevel.code === "FED"
+                                          ? "73"
+                                          : modalData.data &&
+                                            modalData.data.renewalReviewer &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer.region &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer.region.code === "AA"
+                                          ? "44/8"
+                                          : modalData.data &&
+                                            modalData.data.renewalReviewer &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer.region &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer.region.code === "ORO"
+                                          ? "3/3"
+                                          : "-"
+                                      }}
+                                      is given the authority to issue
+                                    </h4>
+                                  </div>
+                                </div>
+
+                                <div class="flex">
+                                  <div
+                                    class="flex flex-row w-1/2 mr-64"
+                                    style="margin-left: -100px"
+                                  >
+                                    <h3 class="underline">
+                                      <b
+                                        v-if="modalData.profile"
+                                        class="text-yellow-300"
+                                        >{{
+                                          modalData.profile.alternativeName
+                                            ? modalData.profile.alternativeName
+                                            : ""
+                                        }}
+                                        {{
+                                          modalData.profile
+                                            .alternativeFatherName
+                                            ? modalData.profile
+                                                .alternativeFatherName
+                                            : ""
+                                        }}
+                                        {{
+                                          modalData.profile
+                                            .alternativeGrandFatherName
+                                            ? modalData.profile
+                                                .alternativeGrandFatherName
+                                            : ""
+                                        }}</b
+                                      >
+                                    </h3>
+                                  </div>
+                                  <div class="flex flex-row w-1/2 ml-24">
+                                    <h4 class="underline">
+                                      <b class="text-yellow-300"
+                                        >{{
+                                          modalData?.profile?.name
+                                            ? modalData?.profile?.name
+                                            : ""
+                                        }}
+                                        {{
+                                          modalData.profile?.fatherName
+                                            ? modalData.profile?.fatherName
+                                            : ""
+                                        }}
+                                        {{
+                                          modalData.profile?.grandFatherName
+                                            ? modalData.profile?.grandFatherName
+                                            : ""
+                                        }}</b
+                                      >
+                                    </h4>
+                                  </div>
+                                </div>
+
+                                <div class="flex">
+                                  <div class="flex flex-col w-1/2 mr-12">
+                                    <h4>
+                                      ተገቢውን መስፈርት አሟልተው ስለተገኙ ሚኒስቴር መስሪያ ቤቱ
+                                    </h4>
+                                    <h4  >
+                                      <!-- first profession -->
+                                      <div
+                                        class="
+                                          grid grid-flow-col-dense
+                                          auto-cols-max
+                                          border-b
+                                        "
+                                      >
+                                    
+                                        <b
+                                          class="
+                                            text-yellow-300 text-sm
+                                            col-span-2
+                                          "
+                                          >{{
+                                            modalData.newEducations
+                                              ? modalData.newEducations.concat(
+                                                  modalData &&
+                                                    modalData.previousEducations
+                                                    ? modalData.previousEducations
+                                                    : []
+                                                )[0].professionType
+                                                  .amharicProfessionalType
+                                              : []
+                                          }}
+                                        </b>
+                                        <span class="text-sm ml-1 mr-1">
+                                          ከ
+                                        </span>
+                                        <b
+                                          class="
+                                            text-yellow-300
+                                            ml-1
+                                            text-sm
+                                            col-span-2
+                                          "
+                                        >
+                                          {{
+                                            modalData.newEducations
+                                              ? modalData.newEducations.concat(
+                                                  modalData &&
+                                                    modalData.previousEducations
+                                                    ? modalData.previousEducations
+                                                    : []
+                                                )[0].institution.name
+                                              : []
+                                          }}
+                                        </b>
+                                      </div>
+                                      <!-- end -->
+                                      <!-- second profession -->
+                                      <div
+                                        class="
+                                          grid grid-flow-col-dense
+                                          auto-cols-max
+                                          border-b
+                                        "
+                                      >
+                                        <b
+                                          class="
+                                            text-yellow-300 text-sm
+                                            col-span-2
+                                          "
+                                          >{{
+                                            modalData.newEducations
+                                              ? modalData.newEducations.concat(
+                                                  modalData &&
+                                                    modalData.previousEducations
+                                                    ? modalData.previousEducations
+                                                    : []
+                                                )[1].professionType
+                                                  .amharicProfessionalType
+                                              : []
+                                          }}
+                                        </b>
+                                        <span class="text-sm ml-1 mr-1">
+                                          ከ
+                                        </span>
+                                        <b
+                                          class="
+                                            text-yellow-300
+                                            ml-1
+                                            text-sm
+                                            col-span-2
+                                          "
+                                        >
+                                          {{
+                                            modalData.newEducations
+                                              ? modalData.newEducations.concat(
+                                                  modalData &&
+                                                    modalData.previousEducations
+                                                    ? modalData.previousEducations
+                                                    : []
+                                                )[1].institution.name
+                                              : []
+                                          }}
+                                        </b>
+                                      </div>
+                                      <!-- end -->
+                                      <!-- third profession -->
+                                      <div
+                                        class="
+                                          grid grid-flow-col-dense
+                                          auto-cols-max
+                                          border-b
+                                        "
+                                      >
+                                        <b
+                                          class="
+                                            text-yellow-300 text-sm
+                                            col-span-2
+                                          "
+                                          >{{
+                                            modalData.newEducations
+                                              ? modalData.newEducations.concat(
+                                                  modalData &&
+                                                    modalData.previousEducations
+                                                    ? modalData.previousEducations
+                                                    : []
+                                                )[2].professionType
+                                                  .amharicProfessionalType
+                                              : []
+                                          }}
+                                        </b>
+                                        <span class="text-sm ml-1 mr-1">
+                                          ከ
+                                        </span>
+                                        <b
+                                          class="
+                                            text-yellow-300
+                                            ml-1
+                                            text-sm
+                                            col-span-2
+                                          "
+                                        >
+                                          {{
+                                            modalData.newEducations
+                                              ? modalData.newEducations.concat(
+                                                  modalData &&
+                                                    modalData.previousEducations
+                                                    ? modalData.previousEducations
+                                                    : []
+                                                )[2].institution.name
+                                              : []
+                                          }}
+                                        </b>
+                                      </div>
+                                      <!-- end -->
+                                      ሙያ መዝግቦ ይህን የሙያ ስራ ፈቃድ ሰጥቷል።
+                                    </h4>
+                                  </div>
+                                  <div
+                                    class="flex flex-col mb-medium w-1/2 mr-2"
+                                  >
+                                    <h4>
+                                      Having duly satisfied the requirements of
+                                      the Ministry
+                                    </h4>
+                                    <h4>hereby registered and licensed as</h4>
+                                    <h4 
+                                      class="mt-4"
+                                    >
+                                      <!-- first profession -->
+                                      <div
+                                        class="
+                                          grid grid-flow-col-dense
+                                          auto-cols-max
+                                          border-b
+                                        "
+                                      >
+                                        <b
+                                          class="
+                                            text-yellow-300 text-sm
+                                            col-span-2
+                                          "
+                                          >{{
+                                            modalData.newEducations
+                                              ? modalData.newEducations.concat(
+                                                  modalData &&
+                                                    modalData.previousEducations
+                                                    ? modalData.previousEducations
+                                                    : []
+                                                )[0].professionType.name
+                                              : []
+                                          }}
+                                        </b>
+                                        <span class="text-sm ml-1 mr-1">
+                                          from
+                                        </span>
+                                        <b
+                                          class="
+                                            text-yellow-300
+                                            ml-1
+                                            text-sm
+                                            col-span-2
+                                          "
+                                        >
+                                          {{
+                                            modalData.newEducations
+                                              ? modalData.newEducations.concat(
+                                                  modalData &&
+                                                    modalData.previousEducations
+                                                    ? modalData.previousEducations
+                                                    : []
+                                                )[0].institution.name
+                                              : []
+                                          }}
+                                        </b>
+                                      </div>
+                                      <!-- end -->
+                                      <!-- second profession -->
+                                      <div
+                                        class="
+                                          grid grid-flow-col-dense
+                                          auto-cols-max
+                                          border-b
+                                        "
+                                      >
+                                        <b
+                                          class="
+                                            text-yellow-300 text-sm
+                                            col-span-2
+                                          "
+                                          >{{
+                                            modalData.newEducations
+                                              ? modalData.newEducations.concat(
+                                                  modalData &&
+                                                    modalData.previousEducations
+                                                    ? modalData.previousEducations
+                                                    : []
+                                                )[1].professionType.name
+                                              : []
+                                          }}
+                                        </b>
+                                        <span class="text-sm ml-1 mr-1">
+                                          from
+                                        </span>
+                                        <b
+                                          class="
+                                            text-yellow-300
+                                            ml-1
+                                            text-sm
+                                            col-span-2
+                                          "
+                                        >
+                                          {{
+                                            modalData.newEducations
+                                              ? modalData.newEducations.concat(
+                                                  modalData &&
+                                                    modalData.previousEducations
+                                                    ? modalData.previousEducations
+                                                    : []
+                                                )[1].institution.name
+                                              : []
+                                          }}
+                                        </b>
+                                      </div>
+                                      <!-- end -->
+                                      <!-- third profession -->
+                                      <div
+                                        class="
+                                          grid grid-flow-col-dense
+                                          auto-cols-max
+                                          border-b
+                                        "
+                                      >
+                                        <b
+                                          class="
+                                            text-yellow-300 text-sm
+                                            col-span-2
+                                          "
+                                          >{{
+                                            modalData.newEducations
+                                              ? modalData.newEducations.concat(
+                                                  modalData &&
+                                                    modalData.previousEducations
+                                                    ? modalData.previousEducations
+                                                    : []
+                                                )[2].professionType.name
+                                              : []
+                                          }}
+                                        </b>
+                                        <span class="text-sm ml-1 mr-1">
+                                          from
+                                        </span>
+                                        <b
+                                          class="
+                                            text-yellow-300
+                                            ml-1
+                                            text-sm
+                                            col-span-2
+                                          "
+                                        >
+                                          {{
+                                            modalData.newEducations
+                                              ? modalData.newEducations.concat(
+                                                  modalData &&
+                                                    modalData.previousEducations
+                                                    ? modalData.previousEducations
+                                                    : []
+                                                )[2].institution.name
+                                              : []
+                                          }}
+                                        </b>
+                                      </div>
+                                      <!-- end -->
+                                    </h4>
+                                  </div>
+                                </div>
+                                <div class="flex">
+                                  <div
+                                    class="
+                                      flex flex-col
+                                      mb-medium
+                                      ml-4
+                                      w-1/2
+                                      mr-12
+                                    "
+                                  >
+                                    <h4>
+                                      ይህ የሙያ የስራ ፈቃድ የሚያገለግለው ከ
+                                      <b class="text-yellow-300">
+                                        {{
+                                          modalData.certifiedDate
+                                            ? toEthiopian(
+                                                moment(
+                                                  modalData.certifiedDate
+                                                )._d.toISOString(),
+                                                false
+                                              )
+                                            : ""
+                                        }}
+                                        <span> -እስከ-</span
+                                        >{{
+                                          modalData.licenseExpirationDate !==
+                                          null
+                                            ? toEthiopian(
+                                                moment(
+                                                  modalData.licenseExpirationDate
+                                                )._d.toISOString(),
+                                                false
+                                              )
+                                            : " አልተገለጸም"
+                                        }}
+                                      </b>
+                                    </h4>
+                                  </div>
+                                  <div
+                                    class="flex flex-col mb-medium w-1/2 mr-12"
+                                  >
+                                    <h4>
+                                      The license is valid from:<b
+                                        class="text-yellow-300"
+                                        >{{
+                                          modalData.certifiedDate
+                                            ? moment(
+                                                modalData.certifiedDate
+                                              ).format("MMM DD, YYYY")
+                                            : ""
+                                        }}
+                                        <span> -To-</span>
+                                        {{
+                                          modalData.licenseExpirationDate
+                                            ? moment(
+                                                modalData.licenseExpirationDate
+                                              ).format("MMM DD, YYYY")
+                                            : " Not specified"
+                                        }}</b
+                                      >
+                                    </h4>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </span>
+                        <!-- For the second part -->
+                        <div class="flex justify-center">
+                          <h1>License 2</h1>
+                        </div>
+
+                        <span v-if="isUserCertified && myRegion">
+                          <div
+                            v-if="modalData"
+                            class="
+                              bg-lightBlueB-200
+                              flex
+                              items-center
+                              justify-center
+                              border-t-4
+                              mt-4
+                            "
+                          >
+                            <div class="w-full overflow-x-scroll mt-4">
+                              <div
+                                class="
+                                  flex flex-col
+                                  w-full
+                                  bg-white
+                                  blue-box-shadow-light
+                                  rounded
+                                  justify-center
+                                  items-center
+                                  border-t-4
+                                "
+                              >
+                                <div>
+                                  <h2 class="font-bold mt-4">
+                                    በኢትዮፕያ ፌደራላዊ ዴሞክራሲያዊ ሪፐብሊክ
+                                  </h2>
+                                  <h2 class="font-bold">
+                                    Federal Democratic Republic Ethiopia
+                                  </h2>
+                                </div>
+                                <span class="mt-1">
+                                  <h2 class="font-bold">የጤና ሚኒስቴር</h2>
+                                  <h2 class="font-bold">Ministry of Health</h2>
+                                </span>
+
+                                <div class="flex">
+                                  <div
+                                    class="
+                                      flex flex-col
+                                      mb-medium
+                                      ml-2
+                                      w-1/2
+                                      mr-12
+                                    "
+                                  >
+                                    <h2 class="font-bold">
+                                      የጤና ባለሙያዎች የሙያ ምዝገባና ፈቃድ የምስከር ወረቀት
+                                    </h2>
+                                  </div>
+                                  <div
+                                    class="flex flex-col mb-medium w-1/2 mr-12"
+                                  >
+                                    <h2 class="font-bold">
+                                      Health Professionals Registration and
+                                      Certification
+                                    </h2>
+                                  </div>
+                                </div>
+                                <div class="flex">
+                                  <div class="flex flex-col ml-4 w-1/2 mr-12">
+                                    <h4>
+                                      በኢትዮጵያ ፌዴራላዊ ዴሞክራሲያዊ ረፐብሊክ የጤና ሚንስቴር በአዋጅ
+                                      ቁጥር
+
+                                      {{
+                                        modalData.data &&
+                                        modalData.data.renewalReviewer &&
+                                        modalData.data.renewalReviewer
+                                          .reviewer &&
+                                        modalData.data.renewalReviewer.reviewer
+                                          .expertLevelId === 3
+                                          ? "1112/2011"
+                                          : modalData.data &&
+                                            modalData.data.renewalReviewer &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer.regionId &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer.region.code === "AA"
+                                          ? "64/2011"
+                                          : modalData.data &&
+                                            modalData.data.renewalReviewer &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer.regionId &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer.region.code === "ORO"
+                                          ? "661/2009"
+                                          : "-"
+                                      }}
+
+                                      አንቀጽ
+                                      {{
+                                        modalData.data &&
+                                        modalData.data.renewalReviewer &&
+                                        modalData.data.renewalReviewer
+                                          .reviewer &&
+                                        modalData.data.renewalReviewer.reviewer
+                                          .expertLevelId === 3
+                                          ? "73"
+                                          : modalData.data &&
+                                            modalData.data.renewalReviewer &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer.region &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer.region.code === "AA"
+                                          ? "44/8"
+                                          : modalData.data &&
+                                            modalData.data.renewalReviewer &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer.region &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer.region.code === "ORO"
+                                          ? "3/3"
+                                          : "-"
+                                      }}
+                                      ስልጣን መሰረት
+                                    </h4>
+                                  </div>
+
+                                  <div class="flex flex-col w-1/2 mr-12">
+                                    <h4>
+                                      Under the Federal Democratic Republic of
+                                      Ethiopia the Minstry of Health by Virtue
+                                      of proclamation No.
+                                      {{
+                                        modalData.data &&
+                                        modalData.data.renewalReviewer &&
+                                        modalData.data.renewalReviewer
+                                          .reviewer &&
+                                        modalData.data.renewalReviewer.reviewer
+                                          .expertLevel &&
+                                        modalData.data.renewalReviewer.reviewer
+                                          .expertLevel.code === "FED"
+                                          ? "1112/2019"
+                                          : modalData.data &&
+                                            modalData.data.renewalReviewer &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer.region &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer.region.code === "AA"
+                                          ? "64/2019"
+                                          : modalData.data &&
+                                            modalData.data.renewalReviewer &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer.region &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer.region.code === "ORO"
+                                          ? "661/2002"
+                                          : "-"
+                                      }}
+                                      Article
+                                      {{
+                                        modalData.data &&
+                                        modalData.data.renewalReviewer &&
+                                        modalData.data.renewalReviewer
+                                          .reviewer &&
+                                        modalData.data.renewalReviewer.reviewer
+                                          .expertLevel &&
+                                        modalData.data.renewalReviewer.reviewer
+                                          .expertLevel.code === "FED"
+                                          ? "73"
+                                          : modalData.data &&
+                                            modalData.data.renewalReviewer &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer.region &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer.region.code === "AA"
+                                          ? "44/8"
+                                          : modalData.data &&
+                                            modalData.data.renewalReviewer &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer.region &&
+                                            modalData.data.renewalReviewer
+                                              .reviewer.region.code === "ORO"
+                                          ? "3/3"
+                                          : "-"
+                                      }}
+                                      is given the authority to issue
+                                    </h4>
+                                  </div>
+                                </div>
+
+                                <div class="flex">
+                                  <div
+                                    class="flex flex-row w-1/2 mr-64"
+                                    style="margin-left: -100px"
+                                  >
+                                    <h3 class="underline">
+                                      <b
+                                        v-if="modalData.profile"
+                                        class="text-yellow-300"
+                                        >{{
+                                          modalData.profile.alternativeName
+                                            ? modalData.profile.alternativeName
+                                            : ""
+                                        }}
+                                        {{
+                                          modalData.profile
+                                            .alternativeFatherName
+                                            ? modalData.profile
+                                                .alternativeFatherName
+                                            : ""
+                                        }}
+                                        {{
+                                          modalData.profile
+                                            .alternativeGrandFatherName
+                                            ? modalData.profile
+                                                .alternativeGrandFatherName
+                                            : ""
+                                        }}</b
+                                      >
+                                    </h3>
+                                  </div>
+                                  <div class="flex flex-row w-1/2 ml-24">
+                                    <h4 class="underline">
+                                      <b class="text-yellow-300"
+                                        >{{
+                                          modalData?.profile?.name
+                                            ? modalData?.profile?.name
+                                            : ""
+                                        }}
+                                        {{
+                                          modalData.profile?.fatherName
+                                            ? modalData.profile?.fatherName
+                                            : ""
+                                        }}
+                                        {{
+                                          modalData.profile?.grandFatherName
+                                            ? modalData.profile?.grandFatherName
+                                            : ""
+                                        }}</b
+                                      >
+                                    </h4>
+                                  </div>
+                                </div>
+
+                                <div class="flex">
+                                  <div class="flex flex-col w-1/2 mr-12">
+                                    <h4>
+                                      ተገቢውን መስፈርት አሟልተው ስለተገኙ ሚኒስቴር መስሪያ ቤቱ
+                                    </h4>
+                                    <!-- Amharic profession part -->
+                                    <h4  >
+                                      <!-- fourth profession -->
+                                      <div
+                                        class="
+                                          grid grid-flow-col-dense
+                                          auto-cols-max
+                                          border-b
+                                        "
+                                      >
+                                        <b
+                                          class="
+                                            text-yellow-300 text-sm
+                                            col-span-2
+                                          "
+                                          >{{
+                                            modalData.newEducations
+                                              ? modalData.newEducations.concat(
+                                                  modalData &&
+                                                    modalData.previousEducations
+                                                    ? modalData.previousEducations
+                                                    : []
+                                                )[3].professionType
+                                                  .amharicProfessionalType
+                                              : []
+                                          }}
+                                        </b>
+                                        <span class="text-sm ml-1 mr-1">
+                                          ከ
+                                        </span>
+                                        <b
+                                          class="
+                                            text-yellow-300
+                                            ml-1
+                                            text-sm
+                                            col-span-2
+                                          "
+                                        >
+                                          {{
+                                            modalData.newEducations
+                                              ? modalData.newEducations.concat(
+                                                  modalData &&
+                                                    modalData.previousEducations
+                                                    ? modalData.previousEducations
+                                                    : []
+                                                )[3].institution.name
+                                              : []
+                                          }}
+                                        </b>
+                                      </div>
+                                      <!-- end -->
+                                      <!-- fifth profession -->
+                                      <div
+                                        class="
+                                          grid grid-flow-col-dense
+                                          auto-cols-max
+                                          border-b
+                                        "
+                                        v-if="
+                                          modalData.newEducations
+                                            ? modalData.newEducations.concat(
+                                                modalData &&
+                                                  modalData.previousEducations
+                                                  ? modalData.previousEducations
+                                                  : []
+                                              )[4]
+                                            : []
+                                        "
+                                      >
+                                        <b
+                                          class="
+                                            text-yellow-300 text-sm
+                                            col-span-2
+                                          "
+                                          >{{
+                                            modalData.newEducations
+                                              ? modalData.newEducations.concat(
+                                                  modalData &&
+                                                    modalData.previousEducations
+                                                    ? modalData.previousEducations
+                                                    : []
+                                                )[4].professionType
+                                                  .amharicProfessionalType
+                                              : []
+                                          }}
+                                        </b>
+                                        <span class="text-sm ml-1 mr-1">
+                                          ከ
+                                        </span>
+                                        <b
+                                          class="
+                                            text-yellow-300
+                                            ml-1
+                                            text-sm
+                                            col-span-2
+                                          "
+                                        >
+                                          {{
+                                            modalData.newEducations
+                                              ? modalData.newEducations.concat(
+                                                  modalData &&
+                                                    modalData.previousEducations
+                                                    ? modalData.previousEducations
+                                                    : []
+                                                )[4].institution.name
+                                              : []
+                                          }}
+                                        </b>
+                                      </div>
+                                      <!-- end -->
+                                      <!-- sixth profession -->
+                                      <div
+                                        class="
+                                          grid grid-flow-col-dense
+                                          auto-cols-max
+                                          border-b
+                                        "
+                                        v-if="
+                                          modalData.newEducations
+                                            ? modalData.newEducations.concat(
+                                                modalData &&
+                                                  modalData.previousEducations
+                                                  ? modalData.previousEducations
+                                                  : []
+                                              )[5]
+                                            : []
+                                        "
+                                      >
+                                        <b
+                                          class="
+                                            text-yellow-300 text-sm
+                                            col-span-2
+                                          "
+                                          >{{
+                                            modalData.newEducations
+                                              ? modalData.newEducations.concat(
+                                                  modalData &&
+                                                    modalData.previousEducations
+                                                    ? modalData.previousEducations
+                                                    : []
+                                                )[5].professionType
+                                                  .amharicProfessionalType
+                                              : []
+                                          }}
+                                        </b>
+                                        <span class="text-sm ml-1 mr-1">
+                                          ከ
+                                        </span>
+                                        <b
+                                          class="
+                                            text-yellow-300
+                                            ml-1
+                                            text-sm
+                                            col-span-2
+                                          "
+                                        >
+                                          {{
+                                            modalData.newEducations
+                                              ? modalData.newEducations.concat(
+                                                  modalData &&
+                                                    modalData.previousEducations
+                                                    ? modalData.previousEducations
+                                                    : []
+                                                )[5].institution.name
+                                              : []
+                                          }}
+                                        </b>
+                                      </div>
+                                      <!-- end -->
+                                      ሙያ መዝግቦ ይህን የሙያ ስራ ፈቃድ ሰጥቷል።
+                                    </h4>
+                                    <!-- end -->
+                                  </div>
+                                  <div
+                                    class="flex flex-col mb-medium w-1/2 mr-2"
+                                  >
+                                    <h4>
+                                      Having duly satisfied the requirements of
+                                      the Ministry
+                                    </h4>
+                                    <h4>hereby registered and licensed as</h4>
+                                    <!-- English profession part -->
+                                    <h4  >
+                                      <!-- fourth profession -->
+                                      <div
+                                        class="
+                                          grid grid-flow-col-dense
+                                          auto-cols-max
+                                          border-b
+                                        "
+                                      >
+                                        <b
+                                          class="
+                                            text-yellow-300 text-sm
+                                            col-span-2
+                                          "
+                                          >{{
+                                            modalData.newEducations
+                                              ? modalData.newEducations.concat(
+                                                  modalData &&
+                                                    modalData.previousEducations
+                                                    ? modalData.previousEducations
+                                                    : []
+                                                )[3].professionType.name
+                                              : []
+                                          }}
+                                        </b>
+                                        <span class="text-sm ml-1 mr-1">
+                                          from
+                                        </span>
+                                        <b
+                                          class="
+                                            text-yellow-300
+                                            ml-1
+                                            text-sm
+                                            col-span-2
+                                          "
+                                        >
+                                          {{
+                                            modalData.newEducations
+                                              ? modalData.newEducations.concat(
+                                                  modalData &&
+                                                    modalData.previousEducations
+                                                    ? modalData.previousEducations
+                                                    : []
+                                                )[3].institution.name
+                                              : []
+                                          }}
+                                        </b>
+                                      </div>
+                                      <!-- end -->
+                                      <!-- fifth profession -->
+                                      <div
+                                        class="
+                                          grid grid-flow-col-dense
+                                          auto-cols-max
+                                          border-b
+                                        "
+                                        v-if="
+                                          modalData.newEducations
+                                            ? modalData.newEducations.concat(
+                                                modalData &&
+                                                  modalData.previousEducations
+                                                  ? modalData.previousEducations
+                                                  : []
+                                              )[4]
+                                            : []
+                                        "
+                                      >
+                                        <b
+                                          class="
+                                            text-yellow-300 text-sm
+                                            col-span-2
+                                          "
+                                          >{{
+                                            modalData.newEducations
+                                              ? modalData.newEducations.concat(
+                                                  modalData &&
+                                                    modalData.previousEducations
+                                                    ? modalData.previousEducations
+                                                    : []
+                                                )[4].professionType.name
+                                              : []
+                                          }}
+                                        </b>
+                                        <span class="text-sm ml-1 mr-1">
+                                          from
+                                        </span>
+                                        <b
+                                          class="
+                                            text-yellow-300
+                                            ml-1
+                                            text-sm
+                                            col-span-2
+                                          "
+                                        >
+                                          {{
+                                            modalData.newEducations
+                                              ? modalData.newEducations.concat(
+                                                  modalData &&
+                                                    modalData.previousEducations
+                                                    ? modalData.previousEducations
+                                                    : []
+                                                )[4].institution.name
+                                              : []
+                                          }}
+                                        </b>
+                                      </div>
+                                      <!-- end -->
+                                      <!-- sixth profession -->
+                                      <div
+                                        class="
+                                          grid grid-flow-col-dense
+                                          auto-cols-max
+                                          border-b
+                                        "
+                                        v-if="
+                                          modalData.newEducations
+                                            ? modalData.newEducations.concat(
+                                                modalData &&
+                                                  modalData.previousEducations
+                                                  ? modalData.previousEducations
+                                                  : []
+                                              )[5]
+                                            : []
+                                        "
+                                      >
+                                        <b
+                                          class="
+                                            text-yellow-300 text-sm
+                                            col-span-2
+                                          "
+                                          >{{
+                                            modalData.newEducations
+                                              ? modalData.newEducations.concat(
+                                                  modalData &&
+                                                    modalData.previousEducations
+                                                    ? modalData.previousEducations
+                                                    : []
+                                                )[5].professionType.name
+                                              : []
+                                          }}
+                                        </b>
+                                        <span class="text-sm ml-1 mr-1">
+                                          from
+                                        </span>
+                                        <b
+                                          class="
+                                            text-yellow-300
+                                            ml-1
+                                            text-sm
+                                            col-span-2
+                                          "
+                                        >
+                                          {{
+                                            modalData.newEducations
+                                              ? modalData.newEducations.concat(
+                                                  modalData &&
+                                                    modalData.previousEducations
+                                                    ? modalData.previousEducations
+                                                    : []
+                                                )[5].institution.name
+                                              : []
+                                          }}
+                                        </b>
+                                      </div>
+                                      <!-- end -->
+                                      ሙያ መዝግቦ ይህን የሙያ ስራ ፈቃድ ሰጥቷል።
+                                    </h4>
+                                  </div>
+                                </div>
+                                <div class="flex">
+                                  <div
+                                    class="
+                                      flex flex-col
+                                      mb-medium
+                                      ml-4
+                                      w-1/2
+                                      mr-12
+                                    "
+                                  >
+                                    <h4>
+                                      ይህ የሙያ የስራ ፈቃድ የሚያገለግለው ከ
+                                      <b class="text-yellow-300">
+                                        {{
+                                          modalData.certifiedDate
+                                            ? toEthiopian(
+                                                moment(
+                                                  modalData.certifiedDate
+                                                )._d.toISOString(),
+                                                false
+                                              )
+                                            : ""
+                                        }}
+                                        <span> -እስከ-</span
+                                        >{{
+                                          modalData.licenseExpirationDate !==
+                                          null
+                                            ? toEthiopian(
+                                                moment(
+                                                  modalData.licenseExpirationDate
+                                                )._d.toISOString(),
+                                                false
+                                              )
+                                            : " አልተገለጸም"
+                                        }}
+                                      </b>
+                                    </h4>
+                                  </div>
+                                  <div
+                                    class="flex flex-col mb-medium w-1/2 mr-12"
+                                  >
+                                    <h4>
+                                      The license is valid from:<b
+                                        class="text-yellow-300"
+                                        >{{
+                                          modalData.certifiedDate
+                                            ? moment(
+                                                modalData.certifiedDate
+                                              ).format("MMM DD, YYYY")
+                                            : ""
+                                        }}
+                                        <span> -To-</span>
+                                        {{
+                                          modalData.licenseExpirationDate
+                                            ? moment(
+                                                modalData.licenseExpirationDate
+                                              ).format("MMM DD, YYYY")
+                                            : " Not specified"
+                                        }}</b
+                                      >
+                                    </h4>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </span>
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -553,7 +1942,6 @@
   </div>
 </template>
 <script>
-import Title from "@/sharedComponents/Title";
 import { ref, computed } from "vue";
 import { useStore } from "vuex";
 
@@ -568,14 +1956,13 @@ import { useToast } from "vue-toastification";
 import moment from "moment";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
-import { googleApi } from "../../../../../composables/baseURL";
 
 export default {
   computed: {
     moment: () => moment,
     AmharicFont: () => AmharicFont,
     toEthiopian: () => toEthiopian,
-    STATIC_CERTIFICATE_URL: () => STATIC_CERTIFICATE_URL
+    STATIC_CERTIFICATE_URL: () => STATIC_CERTIFICATE_URL,
   },
   props: ["modalData"],
   components: { Loading },
@@ -594,8 +1981,9 @@ export default {
     let isUserFound = ref(true);
     let myRegion = ref(true);
     let imageSrc = ref("");
-    const adminRegionId = JSON.parse(localStorage.getItem("allAdminData"))
-      .regionId;
+    const adminRegionId = JSON.parse(
+      localStorage.getItem("allAdminData")
+    ).regionId;
 
     const expertLevelCode = JSON.parse(localStorage.getItem("allAdminData"))
       .expertLevel.code;
@@ -612,18 +2000,20 @@ export default {
       finalData.value.data
         ? (finalData.value.data.isLicenseGenerated = true)
         : null;
+
       let req = {
         action: null,
-        data: { ...finalData.value.data }
+        data: { ...finalData.value.data },
       };
 
       editApplication(req);
     };
 
-    const editApplication = req => {
+    const editApplication = (req) => {
+      delete req.data.educations
       store
         .dispatch("reviewer/editRenewal", req)
-        .then(res => {
+        .then((res) => {
           isLoading.value = false;
           if (res.statusText == "Created") {
             showGenerateModal.value = false;
@@ -632,20 +2022,20 @@ export default {
               position: "bottom-center",
               pauseOnFocusLoss: true,
               pauseOnHover: true,
-              icon: true
+              icon: true,
             });
           } else {
             showGenerateModal.value = false;
-            toast.error(res.data.message, {
+            toast.success(res.data.message, {
               timeout: 5000,
               position: "bottom-center",
               pauseOnFocusLoss: true,
               pauseOnHover: true,
-              icon: true
+              icon: true,
             });
           }
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
         });
     };
@@ -662,13 +2052,13 @@ export default {
         staticUrl + "/" + applicationType + "/" + userId + "/" + applicationId;
       store
         .dispatch("reviewer/getQrCode", qrParam)
-        .then(res => {
+        .then((res) => {
           imageSrc.value = res.data.data;
         })
         .finally(() => {
           downloadPdf();
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
         });
     };
@@ -677,7 +2067,11 @@ export default {
       isLoading.value = true;
       certifiedUser.value = props.modalData.profile;
       certificateDetail.value = props.modalData.data;
-
+      certificateDetail.value.educations = props.modalData.newEducations.concat(
+        props.modalData && props.modalData.previousEducations
+          ? props.modalData.previousEducations
+          : []
+      ); 
       applicationStatus.value = props.modalData.data.applicationStatus.code;
       isLicenseGenerated.value = props.modalData.data.isLicenseGenerated;
       certificateDetail.value.licenseNumber =
@@ -700,13 +2094,24 @@ export default {
 
     const handleRegionsLayout = (
       doc,
+      doc2,
       code,
       namePosition,
       professionPossition,
       professionListGap
     ) => {
       doc.setFontSize(17);
+      doc2.setFontSize(17);
       doc.text(
+        190,
+        namePosition,
+        `${certifiedUser.value.name} ${certifiedUser.value.fatherName} ${
+          certifiedUser.value.grandFatherName
+            ? certifiedUser.value.grandFatherName
+            : ""
+        }`
+      );
+      doc2.text(
         190,
         namePosition,
         `${certifiedUser.value.name} ${certifiedUser.value.fatherName} ${
@@ -719,58 +2124,157 @@ export default {
       let changeWidth = ref(false);
       let changeWidthTooSmall = ref(false);
       let xPosition = ref(147);
-      for (let i = 0; i < certificateDetail.value.educations.length; i++) {
-        let professionPrefix = `${
-          certificateDetail.value.educations[i].prefix
-            ? certificateDetail.value.educations[i].prefix
-            : ""
-        }  ${certificateDetail.value.educations[i].professionType.name}`;
-        let getLength = doc.getTextWidth(professionPrefix);
-        if (getLength > 125 && getLength <= 132) {
-          if (!changeWidthTooSmall.value) {
-            changeWidth.value = true;
+      if (certificateDetail.value.educations.length <= 3) {
+        for (let i = 0; i < certificateDetail.value.educations.length; i++) {
+          let professionPrefix = `${
+            certificateDetail.value.educations[i].prefix
+              ? certificateDetail.value.educations[i].prefix
+              : ""
+          }  ${certificateDetail.value.educations[i].professionType.name}`;
+          let getLength = doc.getTextWidth(professionPrefix);
+          if (getLength > 125 && getLength <= 132) {
+            if (!changeWidthTooSmall.value) {
+              changeWidth.value = true;
+            }
+          }
+          if (getLength > 132) {
+            changeWidthTooSmall.value = true;
+            changeWidth.value = false;
           }
         }
-        if (getLength > 132) {
-          changeWidthTooSmall.value = true;
-          changeWidth.value = false;
+      } else {
+        for (let i = 0; i < 3; i++) {
+          let professionPrefix = `${
+            certificateDetail.value.educations[i].prefix
+              ? certificateDetail.value.educations[i].prefix
+              : ""
+          }  ${certificateDetail.value.educations[i].professionType.name}`;
+          let getLength = doc.getTextWidth(professionPrefix);
+          if (getLength > 125 && getLength <= 132) {
+            if (!changeWidthTooSmall.value) {
+              changeWidth.value = true;
+            }
+          }
+          if (getLength > 132) {
+            changeWidthTooSmall.value = true;
+            changeWidth.value = false;
+          }
         }
       }
+
       if (changeWidth.value) {
         doc.setFontSize(10);
+        doc2.setFontSize(10);
         xPosition.value = 167;
       } else if (changeWidthTooSmall.value) {
         doc.setFontSize(10);
+        doc2.setFontSize(10);
         xPosition.value = 153;
       } else {
         doc.setFontSize(14);
+        doc2.setFontSize(14);
       }
-      for (let i = 0; i < certificateDetail.value.educations.length; i++) {
-        doc.text(
-          xPosition.value,
-          professionPossition + i * professionListGap,
-          `${
-            certificateDetail.value.educations.length > 1 ? i + 1 + ". " : ""
-          }${
-            certificateDetail.value.educations[i].professionType.name
-              ? `${
-                  certificateDetail.value.educations[i].prefix
-                    ? "(" + certificateDetail.value.educations[i].prefix + ")"
-                    : ""
-                }   ${
-                  certificateDetail.value.educations[i].otherProfessionType
-                    ? certificateDetail.value.otherProfessionType
-                      ? certificateDetail.value.otherProfessionType
+
+      if (certificateDetail.value.educations.length <= 3) {
+        for (let i = 0; i < certificateDetail.value.educations.length; i++) {
+          doc.text(
+            xPosition.value,
+            professionPossition + i * professionListGap,
+            `${
+              certificateDetail.value.educations.length > 1 ? i + 1 + ". " : ""
+            }${
+              certificateDetail.value.educations[i].professionType.name
+                ? `${
+                    certificateDetail.value.educations[i].prefix
+                      ? "(" + certificateDetail.value.educations[i].prefix + ")"
                       : ""
-                    : certificateDetail.value.educations[i].professionType.name
-                }`
-              : ""
-          }`
-        );
+                  }   ${
+                    certificateDetail.value.educations[i].otherProfessionType
+                      ? certificateDetail.value.otherProfessionType
+                        ? certificateDetail.value.otherProfessionType
+                        : ""
+                      : certificateDetail.value.educations[i].professionType
+                          .name
+                  }`
+                : ""
+            }`
+          );
+        }
+      }
+      if (certificateDetail.value.educations.length > 3) {
+        for (let i = 0; i < 3; i++) {
+          doc.text(
+            xPosition.value,
+            professionPossition + i * professionListGap,
+            `${
+              certificateDetail.value.educations.length > 1 ? i + 1 + ". " : ""
+            }${
+              certificateDetail.value.educations[i].professionType.name
+                ? `${
+                    certificateDetail.value.educations[i].prefix
+                      ? "(" + certificateDetail.value.educations[i].prefix + ")"
+                      : ""
+                  }   ${
+                    certificateDetail.value.educations[i].otherProfessionType
+                      ? certificateDetail.value.otherProfessionType
+                        ? certificateDetail.value.otherProfessionType
+                        : ""
+                      : certificateDetail.value.educations[i].professionType
+                          .name
+                  }`
+                : ""
+            }`
+          );
+        }
+
+        for (let i = 3; i < 6; i++) {
+          let newI = 0;
+          if (certificateDetail.value.educations[i]) {
+            doc2.text(
+              xPosition.value,
+              professionPossition + i * professionListGap,
+              `${
+                certificateDetail.value.educations.length > 1
+                  ? newI + 1 + ". "
+                  : ""
+              }${
+                certificateDetail.value.educations[i].professionType.name
+                  ? `${
+                      certificateDetail.value.educations[i].prefix
+                        ? "(" +
+                          certificateDetail.value.educations[i].prefix +
+                          ")"
+                        : ""
+                    }   ${
+                      certificateDetail.value.educations[i].otherProfessionType
+                        ? certificateDetail.value.otherProfessionType
+                          ? certificateDetail.value.otherProfessionType
+                          : ""
+                        : certificateDetail.value.educations[i].professionType
+                            .name
+                    }`
+                  : ""
+              }`
+            );
+            newI++;
+          }
+        }
       }
 
       doc.setFontSize(12);
+      doc2.setFontSize(12);
       doc.text(
+        197,
+        164,
+        `${
+          certificateDetail.value.certifiedDate
+            ? moment(certificateDetail.value.certifiedDate).format(
+                "MMM DD, YYYY"
+              ) + " - "
+            : "Not Specified"
+        }`
+      );
+      doc2.text(
         197,
         164,
         `${
@@ -792,21 +2296,50 @@ export default {
             : "Not Specified"
         }`
       );
-      // License Number
-      // doc.text(245, 58, `${certificateDetail.value.licenseNumber}`);
+      doc2.text(
+        226,
+        164,
+        `${
+          certificateDetail.value.licenseExpirationDate
+            ? moment(certificateDetail.value.licenseExpirationDate).format(
+                "MMM DD, YYYY"
+              )
+            : "Not Specified"
+        }`
+      );
+
       // License Number for amharic
       doc.text(38, 58, `${certificateDetail.value.licenseNumber}`);
-
+      doc2.text(38, 58, `${certificateDetail.value.licenseNumber}`);
       // doc.addFileToVFS("Amiri-Regular.ttf", AmiriRegular);
       doc.addFileToVFS("Tera-Regular-normal.ttf", AmharicFont);
-
+      doc2.addFileToVFS("Tera-Regular-normal.ttf", AmharicFont);
       doc.addFont("Tera-Regular-normal.ttf", "Tera-Regular", "normal");
-
+      doc2.addFont("Tera-Regular-normal.ttf", "Tera-Regular", "normal");
       doc.setFont("Tera-Regular"); // set font
+      doc2.setFont("Tera-Regular");
 
       doc.setFontSize(17);
+      doc2.setFontSize(17);
       if (code === "AA" || code == "FED") {
         doc.text(
+          60,
+          namePosition - 5,
+          `${
+            certifiedUser.value.alternativeName
+              ? certifiedUser.value.alternativeName
+              : ""
+          } ${
+            certifiedUser.value.alternativeFatherName
+              ? certifiedUser.value.alternativeFatherName
+              : ""
+          } ${
+            certifiedUser.value.alternativeGrandFatherName
+              ? certifiedUser.value.alternativeGrandFatherName
+              : ""
+          }`
+        );
+        doc2.text(
           60,
           namePosition - 5,
           `${
@@ -841,39 +2374,104 @@ export default {
               : ""
           }`
         );
-      }
-
-      if (changeWidth.value) {
-        doc.setFontSize(11);
-        xPosition.value = 14;
-      } else if (changeWidthTooSmall.value) {
-        doc.setFontSize(11);
-        xPosition.value = 8;
-      } else {
-        doc.setFontSize(14);
-        xPosition.value = 26;
-      }
-
-      for (let i = 0; i < certificateDetail.value.educations.length; i++) {
-        doc.text(
-          xPosition.value,
-          professionPossition + i * professionListGap,
+        doc2.text(
+          60,
+          namePosition,
           `${
-            certificateDetail.value.educations.length > 1 ? i + 1 + ". " : ""
-          }${
-            certificateDetail.value.educations[i].professionType
-              .amharicProfessionalType
-              ? certificateDetail.value.educations[i].professionType
-                  .amharicProfessionalType === "ሌላ"
-                ? ""
-                : certificateDetail.value.educations[i].professionType
-                    .amharicProfessionalType
+            certifiedUser.value.alternativeName
+              ? certifiedUser.value.alternativeName
+              : ""
+          } ${
+            certifiedUser.value.alternativeFatherName
+              ? certifiedUser.value.alternativeFatherName
+              : ""
+          } ${
+            certifiedUser.value.alternativeGrandFatherName
+              ? certifiedUser.value.alternativeGrandFatherName
               : ""
           }`
         );
       }
 
+      if (changeWidth.value) {
+        doc.setFontSize(11);
+        doc2.setFontSize(11);
+        xPosition.value = 16;
+      } else if (changeWidthTooSmall.value) {
+        doc.setFontSize(11);
+        doc2.setFontSize(11);
+        xPosition.value = 10;
+      } else {
+        doc.setFontSize(14);
+        doc2.setFontSize(14);
+        xPosition.value = 28;
+      }
+      if (certificateDetail.value.educations.length < 4) {
+        for (let i = 0; i < certificateDetail.value.educations.length; i++) {
+          doc.text(
+            xPosition.value,
+            professionPossition + i * professionListGap,
+            `${
+              certificateDetail.value.educations.length > 1 ? i + 1 + ". " : ""
+            }${
+              certificateDetail.value.educations[i].professionType
+                .amharicProfessionalType
+                ? certificateDetail.value.educations[i].professionType
+                    .amharicProfessionalType === "ሌላ"
+                  ? ""
+                  : certificateDetail.value.educations[i].professionType
+                      .amharicProfessionalType
+                : ""
+            }`
+          );
+        }
+      } else {
+        for (let i = 0; i < 3; i++) {
+          doc.text(
+            xPosition.value,
+            professionPossition + i * professionListGap,
+            `${
+              certificateDetail.value.educations.length > 1 ? i + 1 + ". " : ""
+            }${
+              certificateDetail.value.educations[i].professionType
+                .amharicProfessionalType
+                ? certificateDetail.value.educations[i].professionType
+                    .amharicProfessionalType === "ሌላ"
+                  ? ""
+                  : certificateDetail.value.educations[i].professionType
+                      .amharicProfessionalType
+                : ""
+            }`
+          );
+        }
+        for (let i = 3; i < 6; i++) {
+          let newI = 0;
+          if (certificateDetail.value.educations[i]) {
+            doc2.text(
+              xPosition.value,
+              professionPossition + i * professionListGap,
+              `${
+                certificateDetail.value.educations.length > 1
+                  ? newI + 1 + ". "
+                  : ""
+              }${
+                certificateDetail.value.educations[i].professionType
+                  .amharicProfessionalType
+                  ? certificateDetail.value.educations[i].professionType
+                      .amharicProfessionalType === "ሌላ"
+                    ? ""
+                    : certificateDetail.value.educations[i].professionType
+                        .amharicProfessionalType
+                  : ""
+              }`
+            );
+            newI++;
+          }
+        }
+      }
+
       doc.setFontSize(12);
+      doc2.setFontSize(12);
       // doc.text(80)
       let getAmharicLicensedDate = doc.getTextWidth(
         toEthiopian(
@@ -881,7 +2479,25 @@ export default {
           false
         ) + " - "
       );
+      let getAmharicLicensedDate2 = doc2.getTextWidth(
+        toEthiopian(
+          moment(certificateDetail.value.certifiedDate)._d.toISOString(),
+          false
+        ) + " - "
+      );
       doc.text(
+        75,
+        164,
+        `${
+          certificateDetail.value.certifiedDate
+            ? toEthiopian(
+                moment(certificateDetail.value.certifiedDate)._d.toISOString(),
+                false
+              ) + " - "
+            : ""
+        }`
+      );
+      doc2.text(
         75,
         164,
         `${
@@ -907,6 +2523,20 @@ export default {
             : " አልተገለጸም"
         }`
       );
+      doc2.text(
+        75 + getAmharicLicensedDate2,
+        164,
+        `${
+          certificateDetail.value.licenseExpirationDate
+            ? toEthiopian(
+                moment(
+                  certificateDetail.value.licenseExpirationDate
+                )._d.toISOString(),
+                false
+              )
+            : " አልተገለጸም"
+        }`
+      );
     };
 
     const downloadPdf = () => {
@@ -915,66 +2545,191 @@ export default {
         : null;
       const doc = new jsPDF({
         orientation: "landscape",
-        filters: ["ASCIIHexEncode"]
+        filters: ["ASCIIHexEncode"],
+      });
+      const doc2 = new jsPDF({
+        orientation: "landscape",
+        filters: ["ASCIIHexEncode"],
       });
 
-      updateLicenseGenerated();
-
       if (
-        certificateDetail.value.licenseReviewer.reviewer.expertLevel.code ===
-        "FED"
+        certificateDetail.value.educations &&
+        certificateDetail.value.educations.length <= 3
       ) {
-        doc.addImage(backgroundImage, "JPG", 0, 0, 298, 213, undefined, "FAST");
+        if (
+          certificateDetail.value.renewalReviewer.reviewer.expertLevel.code ===
+          "FED"
+        ) {
+          doc.addImage(
+            backgroundImage,
+            "JPG",
+            0,
+            0,
+            298,
+            213,
+            undefined,
+            "FAST"
+          );
+          handleRegionsLayout(doc, doc2, "FED", 100, 125, 7);
+        } else if (
+          certificateDetail.value.renewalReviewer.reviewer.region.code === "ORO"
+        ) {
+          doc.addImage(
+            oromiaCertificateBackground,
+            "JPG",
+            0,
+            0,
+            298,
+            213,
+            undefined,
+            "FAST"
+          );
 
-        handleRegionsLayout(doc, "FED", 100, 125, 7);
-      } else if (certificateDetail.value.reviewer.region.code === "ORO") {
-        doc.addImage(
-          oromiaCertificateBackground,
-          "JPG",
-          0,
-          0,
-          298,
-          213,
-          undefined,
-          "FAST"
-        );
-        handleRegionsLayout(doc, "ORO", 110, 133, 4);
-      } else if (
-        certificateDetail.value.licenseReviewer.reviewer.region.code === "AA"
-      ) {
-        doc.addImage(
-          addisAbabaCertificateBackground,
-          "JPG",
-          0,
-          0,
-          298,
-          213,
-          undefined,
-          "FAST"
-        );
-        handleRegionsLayout(doc, "AA", 110, 133, 4);
-      }
+          handleRegionsLayout(doc, doc2, "ORO", 110, 133, 4);
+        } else if (
+          certificateDetail.value.renewalReviewer.reviewer.region.code === "AA"
+        ) {
+          doc.addImage(
+            addisAbabaCertificateBackground,
+            "JPG",
+            0,
+            0,
+            298,
+            213,
+            undefined,
+            "FAST"
+          );
 
-      // doc.addImage(backgroundImage, "JPEG", 0, 0, 298, 213, undefined, "FAST");
-      doc.addImage(imageSrc.value, "JPG", 246, 14, 35, 35);
-      if (userImage !== null) {
-        let path = {
-          path: userImage
-        };
-        store.dispatch("profile/converProfilePicture", path).then(res => {
-          // doc.addImage(backgroundImage, "JPEG", 0, 0, 298, 213, undefined, "FAST");
-          doc.addImage(res.data.data, "JPG", 33, 20, 30, 30);
+          handleRegionsLayout(doc, doc2, "AA", 110, 133, 4);
+        }
+
+        doc.addImage(imageSrc.value, "JPG", 246, 14, 35, 35);
+        if (userImage !== null) {
+          let path = {
+            path: userImage,
+          };
+          store.dispatch("profile/converProfilePicture", path).then((res) => {
+            doc.addImage(res.data.data, "JPG", 33, 20, 30, 30);
+            doc.setFontSize(10);
+            window.open(doc.output("bloburl"));
+            updateLicenseGenerated();
+          });
+        } else {
           doc.setFontSize(10);
           window.open(doc.output("bloburl"));
-        });
-      } else {
-        doc.setFontSize(10);
-        window.open(doc.output("bloburl"));
+          updateLicenseGenerated();
+        }
       }
-    };
 
-    const onCancel = () => {
-      isLoading.value = false;
+      if (
+        certificateDetail.value.educations &&
+        certificateDetail.value.educations.length > 3
+      ) {
+        if (
+          certificateDetail.value.renewalReviewer.reviewer.expertLevel.code ===
+          "FED"
+        ) {
+          doc.addImage(
+            backgroundImage,
+            "JPG",
+            0,
+            0,
+            298,
+            213,
+            undefined,
+            "FAST"
+          );
+          doc2.addImage(
+            backgroundImage,
+            "JPG",
+            0,
+            0,
+            298,
+            213,
+            undefined,
+            "FAST"
+          );
+
+          handleRegionsLayout(doc, doc2, "FED", 100, 125, 7);
+        } else if (
+          certificateDetail.value.renewalReviewer.reviewer.region.code === "ORO"
+        ) {
+          doc.addImage(
+            oromiaCertificateBackground,
+            "JPG",
+            0,
+            0,
+            298,
+            213,
+            undefined,
+            "FAST"
+          );
+          doc2.addImage(
+            oromiaCertificateBackground,
+            "JPG",
+            0,
+            0,
+            298,
+            213,
+            undefined,
+            "FAST"
+          );
+          handleRegionsLayout(doc, doc2, "ORO", 110, 133, 4);
+        } else if (
+          certificateDetail.value.renewalReviewer.reviewer.region.code === "AA"
+        ) {
+          doc.addImage(
+            addisAbabaCertificateBackground,
+            "JPG",
+            0,
+            0,
+            298,
+            213,
+            undefined,
+            "FAST"
+          );
+          doc2.addImage(
+            addisAbabaCertificateBackground,
+            "JPG",
+            0,
+            0,
+            298,
+            213,
+            undefined,
+            "FAST"
+          );
+          handleRegionsLayout(doc, doc2, "AA", 110, 133, 4);
+        }
+
+        doc.addImage(imageSrc.value, "JPG", 246, 14, 35, 35);
+        doc2.addImage(imageSrc.value, "JPG", 246, 14, 35, 35);
+        if (userImage !== null) {
+          let path = {
+            path: userImage,
+          };
+          store.dispatch("profile/converProfilePicture", path).then((res) => {
+            doc.addImage(res.data.data, "JPG", 33, 20, 30, 30);
+            doc2.addImage(res.data.data, "JPG", 33, 20, 30, 30);
+            doc.setFontSize(10);
+            doc2.setFontSize(10);
+
+            window.open(doc.output("bloburl"), "w1");
+            setTimeout(() => {
+              window.open(doc2.output("bloburl"), "w2");
+            }, 100);
+            updateLicenseGenerated();
+          });
+        } else {
+          doc.setFontSize(10);
+          doc2.setFontSize(10);
+
+          window.open(doc.output("bloburl"), "w1");
+          setTimeout(() => {
+            window.open(doc2.output("bloburl"), "w2");
+          }, 100);
+          updateLicenseGenerated();
+        }
+      }
     };
 
     return {
@@ -987,7 +2742,6 @@ export default {
       isUserFound,
       myRegion,
       generate,
-      onCancel,
       fullPage,
       showGenerateModal,
       isLicenseGenerated,
@@ -995,8 +2749,8 @@ export default {
       showActionLoading,
       applicationStatus,
       showFlash,
-      showErrorFlash
+      showErrorFlash,
     };
-  }
+  },
 };
 </script>

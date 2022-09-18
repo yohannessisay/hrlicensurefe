@@ -98,7 +98,6 @@ import ReviewerNavBar from "../SharedComponents/navBar.vue";
 import NewLicenseMainContent from "../../../ApplicationTypes/NewLicense/MainComponents/licensed.vue";
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
-import applicationStatus from "../../../Configurations/getApplicationStatus.js";
 import VueTableLite from "vue3-table-lite";
 import editModal from "./approvedModal.vue";
 import editModalOthers from "./approvedModalOthers.vue";
@@ -147,46 +146,46 @@ export default {
         .dispatch("reviewerRenewal/getRenewalAllApproved", adminId)
         .then((res) => {
           if (res != "No Data") {
-            allInfo.value.assignApplication = res;
-            JSON.parse(JSON.stringify(allInfo.value.assignApplication)).forEach(
-              (element) => {
-                tableData.value.push({
-                  id: element.id,
-                  ApplicantName:
-                    element.profile.name +
-                    " " +
-                    element.profile.fatherName +
-                    " " +
-                    element.profile.grandFatherName,
-                  ApplicationType: element.applicationType.name,
-                  Date: new Date(element.createdAt)
-                    .toJSON()
-                    .slice(0, 10)
-                    .replace(/-/g, "/"),
-                  data: element,
-                });
-              }
-            );
+            console.log(res)
+            res.approvedByYou
+              ? res.otherApproved.forEach((element) => {
+                  tableData.value.push({
+                    id: element.id,
+                    ApplicantName:
+                      element.profile.name +
+                      " " +
+                      element.profile.fatherName +
+                      " " +
+                      element.profile.grandFatherName,
+                    ApplicationType: element.applicantType.name,
+                    Date: new Date(element.createdAt)
+                      .toJSON()
+                      .slice(0, 10)
+                      .replace(/-/g, "/"),
+                    data: element,
+                  });
+                })
+              : {};
 
-            JSON.parse(JSON.stringify(allInfo.value.assignApplication)).forEach(
-              (element) => {
-                toYouTableData.value.push({
-                  id: element.id,
-                  ApplicantName:
-                    element.profile.name +
-                    " " +
-                    element.profile.fatherName +
-                    " " +
-                    element.profile.grandFatherName,
-                  ApplicationType: element.applicationType.name,
-                  Date: new Date(element.createdAt)
-                    .toJSON()
-                    .slice(0, 10)
-                    .replace(/-/g, "/"),
-                  data: element,
-                });
-              }
-            );
+            res.approvedByYou
+              ? res.approvedByYou.forEach((element) => {
+                  toYouTableData.value.push({
+                    id: element.id,
+                    ApplicantName:
+                      element.profile.name +
+                      " " +
+                      element.profile.fatherName +
+                      " " +
+                      element.profile.grandFatherName,
+                    ApplicationType: element.applicantType.name,
+                    Date: new Date(element.createdAt)
+                      .toJSON()
+                      .slice(0, 10)
+                      .replace(/-/g, "/"),
+                    data: element,
+                  });
+                })
+              : {};
 
             toYouTable.value = {
               columns: [

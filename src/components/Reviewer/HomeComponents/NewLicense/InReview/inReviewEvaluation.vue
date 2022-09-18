@@ -1121,81 +1121,81 @@
                 </div>
               </div>
               <div class="vld-parent">
-                                    <loading
-                                      :active="isLoadingAction"
-                                      :is-full-page="false"
-                                      :color="'#2F639D'"
-                                      :opacity="1"
-                                    ></loading>
-              <div
-                class="flex justify-center items-center mb-medium"
-                v-if="showButtons && !showLoadingButtons"
-              >
+                <loading
+                  :active="isLoadingAction"
+                  :is-full-page="false"
+                  :color="'#2F639D'"
+                  :opacity="1"
+                ></loading>
                 <div
-                  v-for="button in buttons"
-                  v-bind:key="button.name"
-                  v-bind:value="button.id"
+                  class="flex justify-center items-center mb-medium"
+                  v-if="showButtons && !showLoadingButtons"
                 >
-                  <button
-                    v-if="button.code != 'US'"
-                    class="
-                      inline-block
-                      px-6
-                      text-white
-                      bg-primary-600
-                      font-medium
-                      text-xs
-                      leading-tight
-                      uppercase
-                      rounded
-                      shadow-lg
-                      hover:bg-purple-700 hover:shadow-lg
-                      focus:bg-purple-700
-                      focus:shadow-lg
-                      focus:outline-none
-                      focus:ring-0
-                      active:bg-purple-800 active:shadow-lg
-                      transition
-                      duration-150
-                      hover:bg-primary-400 hover:text-white
-                      ease-in-out
-                    "
-                    @click="action(button.action)"
+                  <div
+                    v-for="button in buttons"
+                    v-bind:key="button.name"
+                    v-bind:value="button.id"
                   >
-                    {{ button.name }}
-                  </button>
-                  <button
-                    v-else
-                    class="
-                      inline-block
-                      px-6
-                      text-white
-                      bg-primary-600
-                      font-medium
-                      text-xs
-                      leading-tight
-                      uppercase
-                      rounded
-                      shadow-lg
-                      hover:bg-purple-700 hover:shadow-lg
-                      focus:bg-purple-700
-                      focus:shadow-lg
-                      focus:outline-none
-                      focus:ring-0
-                      active:bg-purple-800 active:shadow-lg
-                      transition
-                      duration-150
-                      hover:bg-yellow-300 hover:text-white
-                      ease-in-out
-                    "
-                    data-bs-toggle="modal"
-                    data-bs-target="#superviseModal"
-                    @click="changeAction(button.action)"
-                  >
-                    {{ button.name }}
-                  </button>
+                    <button
+                      v-if="button.code != 'US'"
+                      class="
+                        inline-block
+                        px-6
+                        text-white
+                        bg-primary-600
+                        font-medium
+                        text-xs
+                        leading-tight
+                        uppercase
+                        rounded
+                        shadow-lg
+                        hover:bg-purple-700 hover:shadow-lg
+                        focus:bg-purple-700
+                        focus:shadow-lg
+                        focus:outline-none
+                        focus:ring-0
+                        active:bg-purple-800 active:shadow-lg
+                        transition
+                        duration-150
+                        hover:bg-primary-400 hover:text-white
+                        ease-in-out
+                      "
+                      @click="action(button.action)"
+                    >
+                      {{ button.name }}
+                    </button>
+                    <button
+                      v-else
+                      class="
+                        inline-block
+                        px-6
+                        text-white
+                        bg-primary-600
+                        font-medium
+                        text-xs
+                        leading-tight
+                        uppercase
+                        rounded
+                        shadow-lg
+                        hover:bg-purple-700 hover:shadow-lg
+                        focus:bg-purple-700
+                        focus:shadow-lg
+                        focus:outline-none
+                        focus:ring-0
+                        active:bg-purple-800 active:shadow-lg
+                        transition
+                        duration-150
+                        hover:bg-yellow-300 hover:text-white
+                        ease-in-out
+                      "
+                      data-bs-toggle="modal"
+                      data-bs-target="#superviseModal"
+                      @click="changeAction(button.action)"
+                    >
+                      {{ button.name }}
+                    </button>
+                  </div>
                 </div>
-              </div>
               </div>
               <Modal v-if="showRemark">
                 <div class="h-screen overflow-y-scroll">
@@ -1689,7 +1689,7 @@
           <button
             type="button"
             class="
-             inline-block
+              inline-block
               px-6
               py-2.5
               bg-primary-700
@@ -1777,7 +1777,7 @@ export default {
     const selectedOptions = ref([0]);
     const newSelectedOptions = ref([0]);
     let isPdf = ref(false);
-    let isLoadingAction=ref(false);
+    let isLoadingAction = ref(false);
     let pdfFilePath = ref("");
     const completedSteps = ref(0);
     const totalSteps = ref(0);
@@ -2252,6 +2252,7 @@ export default {
         sendDeclinedData.value = false;
         return;
       }
+      
       showRemarkError.value = false;
       let checkProfessionResult = false;
       newLicense.value.isProfessionChanged == false;
@@ -2288,12 +2289,12 @@ export default {
       };
 
       if (applicationType.value == "New License") {
-        isLoadingAction.value=true;
+        isLoadingAction.value = true;
         store
           .dispatch("reviewer/editNewLicense", req)
           .then((res) => {
             showActionLoading.value = false;
-            isLoadingAction.value=false;
+            isLoadingAction.value = false;
             if (res.statusText == "Created") {
               store.dispatch("sms/sendSms", smsData).then(() => {
                 toast.success("Application reviewed Successfully", {

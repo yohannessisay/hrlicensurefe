@@ -221,8 +221,7 @@ export default {
       userInfo.value = JSON.parse(window.localStorage.getItem("personalInfo"));
      let userId = JSON.parse(window.localStorage.getItem("userId"));
       store.dispatch("newlicense/getNewLicenseByUser",userId).then((res) => {
-        newLicense.value = res.data.data;
-        console.log(newLicense);
+        newLicense.value = res.data.data; 
         if (newLicense.value) {
           newLicense.value = newLicense.value.filter(function (e) {
             return (
