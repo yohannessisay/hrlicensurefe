@@ -443,10 +443,7 @@ export default {
     const showModal = () => {
       show.value = true;
     };
-
-    const onCancel = () => {
-      isLoading.value = false;
-    };
+ 
     const modalData = ref({});
     let result = {};
 
@@ -509,8 +506,7 @@ export default {
       reviewerAdminId,
       showModal,
       check,
-      isLoading,
-      onCancel,
+      isLoading, 
       modalData,
       googleApi
     };

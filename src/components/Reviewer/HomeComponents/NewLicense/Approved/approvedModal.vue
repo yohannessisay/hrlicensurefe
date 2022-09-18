@@ -36,19 +36,12 @@
           text-current
         "
       >
-   <div
-          class="
-            modal-header
-            flex flex-shrink-0
-           justify-end
-           
-            p-2
-            rounded-t-md
-          "
+        <div
+          class="modal-header flex flex-shrink-0 justify-end p-2 rounded-t-md"
         >
           <button
             type="button"
-            class="     
+            class="
               px-6
               text-white
               bg-primary-600
@@ -67,10 +60,13 @@
               active:bg-purple-800 active:shadow-lg
               transition
               duration-150
-              ease-in-out"
+              ease-in-out
+            "
             data-bs-dismiss="modal"
             aria-label="Close"
-          ><i class="fa fa-close fa-2x"></i></button>
+          >
+            <i class="fa fa-close fa-2x"></i>
+          </button>
         </div>
         <div class="vld-parent mt-4">
           <loading
@@ -189,7 +185,6 @@
                           </div>
                         </div>
                       </div>
- 
 
                       <div
                         class="
@@ -244,23 +239,23 @@
                         <br />
                         <button
                           class="
-                          inline-block
-                              px-6
-                              py-2.5
-                              bg-yellow-300 
-                              text-white
-                              hover:bg-ywhite hover:text-yellow-300
-                              font-medium
-                              text-xs
-                              leading-tight
-                              uppercase
-                              rounded
-                              shadow-lg
-                              focus:shadow-lg focus:outline-none focus:ring-0
-                              active:bg-blue-800 active:shadow-lg
-                              transition
-                              duration-150
-                              ease-in-out
+                            inline-block
+                            px-6
+                            py-2.5
+                            bg-yellow-300
+                            text-white
+                            hover:bg-ywhite hover:text-yellow-300
+                            font-medium
+                            text-xs
+                            leading-tight
+                            uppercase
+                            rounded
+                            shadow-lg
+                            focus:shadow-lg focus:outline-none focus:ring-0
+                            active:bg-blue-800 active:shadow-lg
+                            transition
+                            duration-150
+                            ease-in-out
                           "
                           type="button"
                           data-bs-toggle="modal"
@@ -271,23 +266,23 @@
                         </button>
                         <button
                           class="
-                          inline-block
-                              px-6
-                              py-2.5
-                              bg-red-300
-                              hover:text-white hover:bg-white hover:text-red-300
-                              text-white
-                              font-medium
-                              text-xs
-                              leading-tight
-                              uppercase
-                              rounded
-                              shadow-lg
-                              focus:shadow-lg focus:outline-none focus:ring-0
-                              active:bg-blue-800 active:shadow-lg
-                              transition
-                              duration-150
-                              ease-in-out
+                            inline-block
+                            px-6
+                            py-2.5
+                            bg-red-300
+                            hover:text-white hover:bg-white hover:text-red-300
+                            text-white
+                            font-medium
+                            text-xs
+                            leading-tight
+                            uppercase
+                            rounded
+                            shadow-lg
+                            focus:shadow-lg focus:outline-none focus:ring-0
+                            active:bg-blue-800 active:shadow-lg
+                            transition
+                            duration-150
+                            ease-in-out
                           "
                           type="button"
                           data-bs-toggle="modal"
@@ -297,22 +292,23 @@
                           Revoke
                         </button>
                         <button
+                          v-if="showGenerate"
                           class="
-                          inline-block
-                              px-6
-                              py-2.5
-                              bg-primary-700
-                              text-white
-                              font-medium
-                              text-xs
-                              leading-tight
-                              uppercase
-                              rounded
-                              shadow-lg
-                              hover:bg-white hover:text-primary-600
-                              transition
-                              duration-150
-                              ease-in-out
+                            inline-block
+                            px-6
+                            py-2.5
+                            bg-primary-700
+                            text-white
+                            font-medium
+                            text-xs
+                            leading-tight
+                            uppercase
+                            rounded
+                            shadow-lg
+                            hover:bg-white hover:text-primary-600
+                            transition
+                            duration-150
+                            ease-in-out
                           "
                           type="button"
                           data-bs-toggle="modal"
@@ -320,6 +316,35 @@
                         >
                           <i class="fa fa-file-text"></i>
                           Generate PDF
+                        </button>
+                        <button
+                          v-if="showPreviousLicense"
+                          type="button"
+                          class="
+                            inline-block
+                            px-6
+                            text-white
+                            bg-primary-600
+                            font-medium
+                            text-xs
+                            leading-tight
+                            uppercase
+                            rounded
+                            shadow-lg
+                            hover:text-primary-600 hover:shadow-lg
+                            focus:bg-purple-700
+                            focus:shadow-lg
+                            focus:outline-none
+                            focus:ring-0
+                            active:bg-purple-800 active:shadow-lg
+                            transition
+                            duration-150
+                            ease-in-out
+                          "
+                          data-bs-toggle="modal"
+                          data-bs-target="#returnPreviousLicense"
+                        >
+                          Return Previous License
                         </button>
                       </div>
                     </div>
@@ -447,6 +472,9 @@
   <generate-pdf :modalData="modalData"></generate-pdf>
   <revoke-license-modal :modalData="modalData"></revoke-license-modal>
   <suspend-license-modal :modalData="modalData"></suspend-license-modal>
+  <previous-license
+    :previousLicenseData="previousLicenseData"
+  ></previous-license>
 </template>
 <script>
 import { useStore } from "vuex";
@@ -459,6 +487,7 @@ import { googleApi } from "@/composables/baseURL";
 import generatePdf from "./generateLicensedPdf.vue";
 import revokeLicenseModal from "./revokeLicenseModal.vue";
 import suspendLicenseModal from "./suspendLicenseModal.vue";
+import previousLicense from "./returnPreviousLicense.vue";
 
 export default {
   props: ["modalDataId"],
@@ -467,6 +496,7 @@ export default {
     generatePdf,
     revokeLicenseModal,
     suspendLicenseModal,
+    previousLicense,
   },
   computed: {
     moment: () => moment,
@@ -476,26 +506,83 @@ export default {
 
     let show = ref(true);
     let adminId = +localStorage.getItem("adminId");
-
+    let userId = ref("");
     let isLoading = ref(false);
     let reviewerAdminId = ref(0);
-
+    let showPreviousLicense = ref(false);
     const showModal = () => {
       show.value = true;
     };
-
-    const onCancel = () => {
-      isLoading.value = false;
-    };
-    const modalData = ref({});
+    let showGenerate = ref(false);
+    let previousLicenseData = ref([]);
+    const modalData = ref({ educations: [] });
     let result = {};
-
+    let toBeGeneratedProfs = [];
     const check = () => {
+      modalData.value = {};
       store
         .dispatch("reviewer/getNewLicenseApplication", props.modalDataId.id)
         .then((res) => {
           if (res.data.status == "Success") {
             result = res.data.data;
+            let tempEvaluateResult = false;
+
+            userId.value = result.profile ? result.profile.userId : "";
+            store
+              .dispatch(
+                "reviewerNewLicense/getNewLicenseByUserId",
+                userId.value
+              )
+              .then((res) => {
+                let tempEd = [];
+                if (res.data && res.data.data && res.data.data.length > 0) {
+                  res.data.data.forEach((element) => {
+                    if (
+                      element &&
+                      element.isLicenseGenerated == true &&
+                      element.isReprint == false &&
+                      element.applicationStatus.code == "APP"
+                    ) {
+                      previousLicenseData.value.push(element);
+                      tempEvaluateResult = true;
+                    }
+                    if (
+                      element &&
+                      element.isLicenseGenerated == true &&
+                      element.applicationStatus.code == "RTN"
+                    ) {
+                      tempEd.push([...new Set(element.educations)]);
+                    }
+                  });
+                  tempEd.forEach((element) => {
+                    if (element.length < 2) {
+                      toBeGeneratedProfs.push(element[0]);
+                    } else {
+                      element.forEach((element) => {
+                        toBeGeneratedProfs.push(element);
+                      });
+                    }
+                  });
+                  modalData.value.previousEducations = toBeGeneratedProfs;
+                  if (tempEvaluateResult ) {
+                    showGenerate.value = false;
+                    showPreviousLicense.value = true;
+                  } else {
+                    showGenerate.value = true;
+                    showPreviousLicense.value = false;
+                  }
+                } else {
+                  showGenerate.value = true;
+                  showPreviousLicense.value = false;
+                }
+              
+                if (toBeGeneratedProfs.length == 0) {
+                  modalData.value.educations=result.educations;
+                }
+              })
+
+              .catch((err) => console.log(err));
+
             modalData.value.name =
               result.profile.name +
               " " +
@@ -520,11 +607,10 @@ export default {
             modalData.value.email = result.applicant.emailAddress
               ? result.applicant.emailAddress
               : "-----";
-              modalData.value.educations = result.educations
+            modalData.value.newEducations = result.educations
               ? result.educations
               : {};
             modalData.value.profile = result.profile;
-            modalData.value.professionalTypes = result.licenseProfessions;
             modalData.value.certifiedDate = result.certifiedDate;
             modalData.value.licenseExpirationDate =
               result.licenseExpirationDate;
@@ -534,7 +620,8 @@ export default {
             modalData.value.profileImage =
               result.profile && result.profile.profilePicture
                 ? googleApi + result.profile.profilePicture.filePath
-                : "";
+                : "";   
+                console.log(modalData.value)
             isLoading.value = false;
           }
         });
@@ -549,9 +636,11 @@ export default {
       adminId,
       reviewerAdminId,
       showModal,
+      showGenerate,
+      showPreviousLicense,
+      previousLicenseData,
       check,
       isLoading,
-      onCancel,
       modalData,
       googleApi,
     };
