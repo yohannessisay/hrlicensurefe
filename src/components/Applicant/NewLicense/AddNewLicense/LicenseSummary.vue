@@ -309,33 +309,40 @@
                 <span class="text-red-200">(required*)</span>
               </label>
             </div>
-
-            <div class="mb-3 w-full flex justify-center">
-              <input
-                v-model="generalInfo.feedback"
-                @keyup="checkAgreement()"
-                class="
-                  form-control
-                  block
-                  w-full
-                  text-main-400
-                  px-3
-                  py-1.5
-                  text-base
-                  font-normal
-                  text-gray-700
-                  border border-solid border-gray-300
-                  rounded
-                  transition
-                  ease-in-out
-                  m-0
-                  focus:outline-none
-                "
-                id="feedback"
-                rows="6"
-                placeholder="Your feedback"
-                type="textarea"
-              />
+            <div class="vld-parent mt-4">
+              <loading
+                :active="isLoading"
+                :is-full-page="false"
+                :color="'#2F639D'"
+                :opacity="1"
+              ></loading>
+              <div class="mb-3 w-full flex justify-center">
+                <input
+                  v-model="generalInfo.feedback"
+                  @keyup="checkAgreement()"
+                  class="
+                    form-control
+                    block
+                    w-full
+                    text-main-400
+                    px-3
+                    py-1.5
+                    text-base
+                    font-normal
+                    text-gray-700
+                    border border-solid border-gray-300
+                    rounded
+                    transition
+                    ease-in-out
+                    m-0
+                    focus:outline-none
+                  "
+                  id="feedback"
+                  rows="6"
+                  placeholder="Your feedback"
+                  type="textarea"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -389,11 +396,15 @@ import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
 import { useRouter } from "vue-router";
+import Loading from "vue3-loading-overlay";
+import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 export default {
+  components: { Loading },
   setup(props, { emit }) {
     const store = useStore();
     const toast = useToast();
     const router = useRouter();
+    let isLoading = ref(false);
     let localData = ref({});
     let localFileData = ref({});
     let generalInfo = ref({});
@@ -428,7 +439,7 @@ export default {
     const checkFinalStatus = (action) => {
       generalInfo.value.licenseFile = [];
       documents.value = localFileData.value;
-
+      isLoading.value = true;
       if (agreed.value == true && generalInfo.value.feedback.length != 0) {
         let formData = new FormData();
         tempDocs.value.forEach((element, index) => {
@@ -478,6 +489,7 @@ export default {
           store
             .dispatch("newlicense/uploadDocuments", payload)
             .then((res) => {
+              isLoading.value = false;
               if (res.data.status == "Success") {
                 toast.success("Applied successfuly", {
                   timeout: 5000,
@@ -550,6 +562,7 @@ export default {
       buttons,
       checkAgreement,
       back,
+      isLoading,
       allowSave,
       checkFinalStatus,
       changeAgrement,

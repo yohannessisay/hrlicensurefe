@@ -430,35 +430,7 @@
               Evaluate
             </button>
           </a>
-          <button
-            v-if="showPreviousLicense"
-            type="button"
-            class="
-              inline-block
-              px-6
-              text-white
-              bg-primary-600
-              font-medium
-              text-xs
-              leading-tight
-              uppercase
-              rounded
-              shadow-lg
-              hover:text-primary-600 hover:shadow-lg
-              focus:bg-purple-700
-              focus:shadow-lg
-              focus:outline-none
-              focus:ring-0
-              active:bg-purple-800 active:shadow-lg
-              transition
-              duration-150
-              ease-in-out
-            "
-            data-bs-toggle="modal"
-            data-bs-target="#returnPreviousLicense"
-          >
-            Return Previous License
-          </button>
+         
 
           <button
             type="button"
@@ -491,9 +463,7 @@
       </div>
     </div>
   </div>
-  <previous-license
-    :previousLicenseData="previousLicenseData"
-  ></previous-license>
+
 </template>
 
 <script>
@@ -503,14 +473,13 @@ import moment from "moment";
 import Loading from "vue3-loading-overlay";
 // Import stylesheet
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
-import previousLicense from "./returnPreviousLicense.vue";
+
 
 import { useToast } from "vue-toastification";
 export default {
   props: ["modalDataId", "reviewers"],
   components: {
     Loading,
-    previousLicense,
   },
   computed: {
     moment: () => moment,
@@ -518,8 +487,7 @@ export default {
   setup(props) {
     const store = useStore();
     const toast = useToast();
-    let userId = ref("");
-    let previousLicenseData = ref([]);
+
     let show = ref(true);
     let showRes = ref(false);
     let showOptions = ref(false);
@@ -537,8 +505,8 @@ export default {
     const fullPage = ref(false);
     const evaluationData = ref({});
     let reviewerAdminId = ref(0);
-    let showEvaluation = ref(false);
-    let showPreviousLicense = ref(false);
+  
+   
     const fetchRole = (id) => {
       store.dispatch("reviewer/getRoles", id).then((res) => {
         role.value = res.data.data.role;
@@ -657,42 +625,11 @@ export default {
         .dispatch("reviewer/getNewLicenseApplication", props.modalDataId.id)
         .then((res) => {
           if (res.data.status == "Success") {
-            let tempEvaluateResult = false;
-            result = res.data.data;
-            userId.value = result.profile ? result.profile.userId : "";
-            // Return Application Part
-            store
-              .dispatch(
-                "reviewerNewLicense/getNewLicenseByUserId",
-                userId.value
-              )
-              .then((res) => {
            
-                if (res.data && res.data.data && res.data.data.length > 0) {
-                  res.data.data.forEach((element) => {
-                    if (
-                      element &&
-                      element.certified == true &&
-                      element.applicationStatus.code == "APP"
-                    ) {
-                      previousLicenseData.value.push(element);
-                      tempEvaluateResult = true;
-                    }
-                  });
-                  if (tempEvaluateResult) {
-                    showEvaluation.value = false;
-                    showPreviousLicense.value = true;
-                  } else {
-                    showEvaluation.value = true;
-                    showPreviousLicense.value = false;
-                  }
-                } else {
-                  showEvaluation.value = true;
-                  showPreviousLicense.value = false;
-                }
-              })
-
-              .catch((err) => console.log(err));
+            result = res.data.data;
+         
+            // Return Application Part
+         
             evaluationData.value = result;
 
             modalData.value.name =
@@ -743,9 +680,6 @@ export default {
       reviewer,
       setInput,
       showModal,
-      previousLicenseData,
-      showEvaluation,
-      showPreviousLicense,
       resultQuery,
       isLoading,
       isLoadingStart,

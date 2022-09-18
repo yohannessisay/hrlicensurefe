@@ -1120,7 +1120,13 @@
                   </div>
                 </div>
               </div>
-
+              <div class="vld-parent">
+                                    <loading
+                                      :active="isLoadingAction"
+                                      :is-full-page="false"
+                                      :color="'#2F639D'"
+                                      :opacity="1"
+                                    ></loading>
               <div
                 class="flex justify-center items-center mb-medium"
                 v-if="showButtons && !showLoadingButtons"
@@ -1190,7 +1196,7 @@
                   </button>
                 </div>
               </div>
-
+              </div>
               <Modal v-if="showRemark">
                 <div class="h-screen overflow-y-scroll">
                   <div
@@ -1771,6 +1777,7 @@ export default {
     const selectedOptions = ref([0]);
     const newSelectedOptions = ref([0]);
     let isPdf = ref(false);
+    let isLoadingAction=ref(false);
     let pdfFilePath = ref("");
     const completedSteps = ref(0);
     const totalSteps = ref(0);
@@ -2281,10 +2288,12 @@ export default {
       };
 
       if (applicationType.value == "New License") {
+        isLoadingAction.value=true;
         store
           .dispatch("reviewer/editNewLicense", req)
           .then((res) => {
             showActionLoading.value = false;
+            isLoadingAction.value=false;
             if (res.statusText == "Created") {
               store.dispatch("sms/sendSms", smsData).then(() => {
                 toast.success("Application reviewed Successfully", {
@@ -2741,6 +2750,7 @@ export default {
       supervisor,
       showDateError,
       endDate,
+      isLoadingAction,
       accept,
       transferToFederal,
       showTransferToAdminButton,
