@@ -355,7 +355,7 @@
                             accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
                             :ref="`imageUploader${item.id}`"
                             class="custom-file-input"
-                            v-on:change="handleFileUpload(item, $event)"
+                            v-on:change="handleFileUpload(item, $event,table)"
                           />
                         </p>
                       </td>
@@ -427,7 +427,7 @@
                             :ref="`imageUploader${parentItem[0].id}`"
                             class="custom-file-input"
                             v-on:change="
-                              handleFileUpload(parentItem[0], $event)
+                              handleFileUpload(parentItem[0], $event,table)
                             "
                           />
                         </p>
@@ -453,7 +453,7 @@
                     </tr>
                     <!-- if parent doc has more than 1 elements -->
                     <tr v-else class="border-b text-main-400 bg-lightGrey-100">
-                      <td class="px-6 ">
+                      <td class="px-6">
                         <div class="flex items-center ml-4">
                           <div>
                             <p class="">
@@ -467,8 +467,8 @@
                           </div>
                         </div>
                       </td>
-                      <td class="px-6 ">
-                    
+                      <td class="px-6">
+                
                       </td>
 
                       <td class="px-6 py-4">
@@ -476,7 +476,7 @@
                       </td>
 
                       <td class="px-6 py-4 text-center">
-                  
+                
                       </td>
 
                       <td class="px-6 text-center">
@@ -509,7 +509,7 @@
                             'collapse' + parentItem[0].documentType.id
                           "
                         >
-                         Upload
+                       Upload
                         </button>
                       </td>
                     </tr>
@@ -527,15 +527,13 @@
                             shadow-lg
                             w-full
                             bg-white
-                            border border-gray-200
-                            mt-4
-                            mb-4
+                            border border-grey-400
                             ml-8
                           "
                         >
                           <div
                             :id="'docAccordion' + parentItem[0].documentType.id"
-                            class="accordion-collapse collapse "
+                            class="accordion-collapse collapse"
                             aria-labelledby="headingOne"
                             data-bs-parent="#accordionExample"
                           >
@@ -546,6 +544,7 @@
                                   remaining ones are optional</small
                                 >
                               </div>
+
                               <tr
                                 v-for="parentItem in parentItem"
                                 :key="parentItem"
@@ -585,7 +584,7 @@
                                       :ref="`imageUploader${parentItem.id}`"
                                       class="custom-file-input"
                                       v-on:change="
-                                        handleFileUpload(parentItem, $event)
+                                        handleFileUpload(parentItem, $event,table)
                                       "
                                     />
                                   </p>
@@ -628,7 +627,6 @@
       </div>
     </div>
     <div class="flex justify-end mr-8">
-
       <button
         class="
           mt-8
@@ -652,7 +650,7 @@
         @click="back()"
       >
         back
-        </button>
+      </button>
       <button
         class="
           mt-8
@@ -674,12 +672,19 @@
           border
         "
         @click="next()"
+
       >
+
         next
       </button>
     </div>
-  </div>
 
+    <div class="flex justify-right mr-0"
+    >
+      
+    </div>
+  </div>
+  <!--<filePreview :modalData="filePreviewData"> </filePreview>-->
 </template>
 <script>
 import { ref, onMounted } from "vue";
@@ -800,7 +805,9 @@ export default {
     const handleFileUpload = (data, event) => {
       documentUploaded.value[data.documentType.code] = event?.target?.files[0];
       let reader = new FileReader();
-      formData.append(data.educationalLevel.code.slice(0,2).toUpperCase() + "_" +data.documentType.code, event?.target?.files[0]);
+      formData.append(
+        data.documentType.code +  "_" +  data.educationalLevel.code.toUpperCase() + "_" +  pro.professionType.code.toUpperCase(),
+        );
       isImage.value[data.documentType.code] = true;
       let fileS = documentUploaded.value[data.documentType.code].size;
       if (fileS <= maxFileSize.value / 1000) {  

@@ -428,4 +428,13 @@ export default {
       return resp;
     }
   },
+  async getRenewalApplication(context, id) {
+    try {
+      const url = baseUrl + "/renewals/" + id;
+      const resp = await ApiService.get(url);
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
 };

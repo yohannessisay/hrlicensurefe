@@ -37,7 +37,7 @@
         >
           <!-- Article -->
           <router-link
-            :to="'/Applicant/NewLicense/submitted/detail/' + license.id"
+            :to="'/Applicant/Renewal/submitted/detail/' + license.id"
           >
             <h2 class="text-main-400 border-b-2 text-xl p-2">
               License Number-
@@ -178,7 +178,7 @@ export default {
     onMounted(() => {
       isLoading.value = true;
       userInfo.value = JSON.parse(window.localStorage.getItem("personalInfo"));
-      store.dispatch("newlicense/getNewLicense").then((res) => {
+      store.dispatch("renewal/getRenewalLicense").then((res) => {
         newLicense.value = res.data.data;
         console.log(newLicense);
         if (newLicense.value) {

@@ -355,7 +355,7 @@
                             accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
                             :ref="`imageUploader${item.id}`"
                             class="custom-file-input"
-                            v-on:change="handleFileUpload(item, $event)"
+                            v-on:change="handleFileUpload(item, $event,table)"
                           />
                         </p>
                       </td>
@@ -427,7 +427,7 @@
                             :ref="`imageUploader${parentItem[0].id}`"
                             class="custom-file-input"
                             v-on:change="
-                              handleFileUpload(parentItem[0], $event)
+                              handleFileUpload(parentItem[0], $event,table)
                             "
                           />
                         </p>
@@ -584,7 +584,7 @@
                                       :ref="`imageUploader${parentItem.id}`"
                                       class="custom-file-input"
                                       v-on:change="
-                                        handleFileUpload(parentItem, $event)
+                                        handleFileUpload(parentItem, $event,table)
                                       "
                                     />
                                   </p>
@@ -803,13 +803,13 @@ export default {
       }
     };
 
-    const handleFileUpload = (data, event) => {
+    const handleFileUpload = (data, event, pro) => {
       documentUploaded.value[data.documentType.code] = event?.target?.files[0];
       let reader = new FileReader();
       formData.append(
-        data.educationalLevel.code.slice(0, 2).toUpperCase() +
-          "_" +
-          data.documentType.code,
+        data.documentType.code +  "_" +  data.educationalLevel.code.toUpperCase() + "_" +  pro.professionType.code.toUpperCase(),
+         
+          
         event?.target?.files[0]
       );
 
@@ -875,6 +875,7 @@ export default {
     const checkForFiles = (docs) => {};
     const next = () => {
       checkForFiles(documentUploaded.value);
+      console.log(formData)
       store.dispatch("newlicense/setTempDocs", formData).then(() => {
         window.localStorage.setItem(
           "NLApplicationImageData",
@@ -944,6 +945,7 @@ export default {
             ? res.data.data.filter((ele) => ele.code == "NA")
             : "";
           let educationLevels = generalInfo.value.multipleDepartment;
+          console.log(educationLevels)
           //Get department docs
           educationLevels.forEach((element) => {
             store
@@ -957,6 +959,7 @@ export default {
 
                 educationalDocs.value.push({
                   educationalLevel: element.educationalLevel,
+                  professionType: element.professionalType,
                   docs: resp.filter(
                     (element) => element.parentDocument == null
                   ),
