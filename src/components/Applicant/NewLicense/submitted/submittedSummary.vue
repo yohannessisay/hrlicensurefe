@@ -389,7 +389,7 @@
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 export default {
   setup(props, { emit }) {
     const store = useStore();
@@ -402,6 +402,8 @@ export default {
     let documents = ref([]);
     let buttons = ref([]);
     let tempDocs = ref({});
+    const route = useRoute();
+
     let allowSave = ref(false);
     const changeAgrement = () => {
       agreed.value = !agreed.value;
@@ -448,7 +450,8 @@ export default {
 
         let license = {
           action: action,
-          data: {
+          licenseId: {
+            licenseId: route.params.id,
             applicantTypeId:
               generalInfo.value && generalInfo.value.applicantTypeSelected
                 ? generalInfo.value.applicantTypeSelected.id
@@ -473,7 +476,7 @@ export default {
               : "",
           },
         };
-        store.dispatch("newlicense/addNewLicense", license).then((res) => {
+        store.dispatch("newlicense/updateDraft", license).then((res) => {
           let licenseId = res.data.data.id;
           let payload = { document: formData, id: licenseId };
           store

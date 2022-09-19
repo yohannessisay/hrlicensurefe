@@ -389,12 +389,13 @@
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 export default {
   setup() {
     const store = useStore();
     const toast = useToast();
     const router = useRouter();
+    const route = useRoute();
     let localData = ref({});
     let localFileData = ref({});
     let generalInfo = ref({});
@@ -448,7 +449,8 @@ export default {
 
         let license = {
           action: action,
-          data: {
+          draftData: {
+            licenseId: route.params.id,
             applicantTypeId:
               generalInfo.value && generalInfo.value.applicantTypeSelected
                 ? generalInfo.value.applicantTypeSelected.id
@@ -469,7 +471,7 @@ export default {
             feedback: generalInfo.value.feedback?generalInfo.value.feedback:"",
           },
         };
-        store.dispatch("renewal/addRenewalLicense", license).then((res) => {
+        store.dispatch("renewal/updateDraft", license).then((res) => {
           let licenseId = res.data.data.id;
           let payload = { document: formData, id: licenseId };
           store
