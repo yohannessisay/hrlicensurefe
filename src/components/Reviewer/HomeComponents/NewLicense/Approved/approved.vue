@@ -313,8 +313,7 @@ export default {
 
     const approved = () => {
       store.dispatch("reviewerNewLicense/getNewLicenseApproved").then((res) => {
-        allInfo.value.assignApplication =res
-        console.log(res)
+        allInfo.value.assignApplication =res 
         for (let applicant in allInfo.value.assignApplication) {
           if (
             allInfo.value.assignApplication[applicant].applicationType ===

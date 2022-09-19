@@ -190,58 +190,7 @@
                         </div>
                       </div>
 
-                      <div
-                        class="
-                          grow-0
-                          shrink-0
-                          basis-auto
-                          w-full
-                          lg:w-6/12
-                          px-3
-                          lg:px-6
-                        "
-                      >
-                        <div class="flex align-center">
-                          <div class="shrink-0">
-                            <div
-                              class="
-                                p-4
-                                bg-blue-600
-                                rounded-md
-                                shadow-lg
-                                w-40
-                                h-40
-                                flex
-                                items-center
-                                justify-center
-                              "
-                            >
-                              <i class="fa fa-building fa-4x"></i>
-                            </div>
-                          </div>
-                          <div class="grow ml-6">
-                            <h2 class="font-bold mb-1">Institution Info</h2>
-                            <p class="text-gray-500">
-                              <span class="font-medium text-primary-700 mb-1"
-                                >Institution Name:</span
-                              >
-                              {{ modalData.instName }}
-                            </p>
-                            <p class="text-gray-500">
-                              <span class="font-medium text-primary-700 mb-1"
-                                >Department:</span
-                              >
-                              {{ modalData.department }}
-                            </p>
-                            <p class="text-gray-500">
-                              <span class="font-medium text-primary-700 mb-1"
-                                >Institution Type:</span
-                              >
-                              {{ modalData.instType }}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
+                   
 
                       <div
                         class="
@@ -353,7 +302,7 @@
                               <div class="mt-large bg-white">
                                 <a
                                   :href="googleApi + document.filePath"
-                                  :data-title="document.documentType.name?document.documentType.name:''"
+                                  :data-title="document.documentType?document.documentType.name:''"
                                   data-lightbox="example-2"
                                 >
                                   <img
@@ -365,7 +314,7 @@
                                 <h4 style="font-weight: bold">
                                   Document Type
                                 </h4>
-                                <h5 class="text-primary-500">{{ document.documentType.name?document.documentType.name:'' }}</h5>
+                                <h5 class="text-primary-500">{{ document.documentType?document.documentType.name:'' }}</h5>
                               </div>
                             </div>
                           </div>
@@ -443,10 +392,7 @@ export default {
     const showModal = () => {
       show.value = true;
     };
-
-    const onCancel = () => {
-      isLoading.value = false;
-    };
+ 
     const modalData = ref({});
     let result = {};
 
@@ -509,8 +455,7 @@ export default {
       reviewerAdminId,
       showModal,
       check,
-      isLoading,
-      onCancel,
+      isLoading, 
       modalData,
       googleApi
     };

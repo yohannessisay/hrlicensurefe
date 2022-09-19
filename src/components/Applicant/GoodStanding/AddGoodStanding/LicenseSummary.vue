@@ -471,7 +471,13 @@
               <span class="text-red-200">(required*)</span>
             </label>
           </div>
-
+          <div class="vld-parent mt-4">
+              <loading
+                :active="isLoading"
+                :is-full-page="false"
+                :color="'#2F639D'"
+                :opacity="1"
+              ></loading>
           <div class="mb-3 w-full flex justify-center">
             <input
               v-model="generalInfo.feedback"
@@ -498,6 +504,7 @@
               placeholder="Your feedback"
               type="textarea"
             />
+          </div>
           </div>
         </div>
       </div>
@@ -550,13 +557,18 @@ import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
 import { useRouter } from "vue-router";
+
+import Loading from "vue3-loading-overlay";
+import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 export default {
+  components:{Loading},
   setup(props, { emit }) {
     const store = useStore();
     const toast = useToast();
     const router = useRouter();
     let localData = ref({});
     let localFileData = ref({});
+    let isLoading=ref(false)
     let generalInfo = ref({});
     let agreed = ref(false);
     let documents = ref([]);
@@ -595,7 +607,7 @@ export default {
         tempDocs.value.forEach((element, index) => {
           formData.append(index, element);
         });
-
+        isLoading.value=true;
         // let smsData = {
         //   recipients: [
         //     this.profileInfo.user.phoneNumber
@@ -660,6 +672,7 @@ export default {
             store
               .dispatch("goodstanding/uploadDocuments", payload)
               .then((res) => {
+                isLoading.value=false;
                 if (res.data.status == "Success") {
                   toast.success("Applied successfuly", {
                     timeout: 5000,
@@ -728,6 +741,7 @@ export default {
       localFileData,
       generalInfo,
       agreed,
+      isLoading,
       buttons,
       checkFinalStatus,
       changeAgrement,

@@ -66,9 +66,8 @@
               <div class="vld-parent">
                 <loading
                   :active="isLoading"
-                  :can-cancel="true"
-                  :on-cancel="onCancel"
-                  :is-full-page="fullPage"
+                  :can-cancel="true" 
+                  :is-full-page="true"
                   :color="'#2F639D'"
                   :opacity="0.7"
                 ></loading>
@@ -167,7 +166,8 @@
               uppercase
               rounded
               shadow-lg
-              hover:bg-yellow-300 hover:text-white hover:shadow-lg
+              bg-yellow-300
+              hover:bg-white hover:text-yellow-300 hover:shadow-lg
               focus:bg-purple-700
               focus:shadow-lg
               focus:outline-none
@@ -281,6 +281,7 @@ export default {
       showErrorFlash,
       remark,
       startDate,
+      isLoading,
       endDate,
       suspend,
     };

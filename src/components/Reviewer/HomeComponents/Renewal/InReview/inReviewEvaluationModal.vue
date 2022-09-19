@@ -1115,7 +1115,13 @@
                   </div>
                 </div>
               </div>
-
+              <div class="vld-parent">
+                <loading
+                  :active="isLoadingAction"
+                  :is-full-page="false"
+                  :color="'#2F639D'"
+                  :opacity="1"
+                ></loading>
               <div
                 class="flex justify-center items-center mb-medium"
                 v-if="showButtons && !showLoadingButtons"
@@ -1185,7 +1191,7 @@
                   </button>
                 </div>
               </div>
-
+              </div>
               <Modal v-if="showRemark">
                 <div>
                   <div
@@ -1714,6 +1720,7 @@ export default {
     const selectedOptions = ref([0]);
     const newSelectedOptions = ref([0]);
     let isPdf = ref(false);
+    let isLoadingAction = ref(false);
     let pdfFilePath = ref("");
     const completedSteps = ref(0);
     const totalSteps = ref(0);
@@ -2180,7 +2187,7 @@ export default {
         }
       }
 
-      if (actionValue == "DeclineEvent") {
+      if (actionValue == "DeclineEvent" && renewal.value.remark == null) {
         smsMessage = renewal.value
           ? "Dear applicant your applied renewal license of number " +
             renewal.value.renewalCode +
@@ -2189,7 +2196,7 @@ export default {
           showRemark.value = true;
         sendDeclinedData.value = false;
       }
-
+ 
       let checkProfessionResult = false;
       renewal.value.isProfessionChanged == false;
 
@@ -2226,9 +2233,11 @@ export default {
       };
    
       if (applicationType.value == "Renewal") {
+        isLoadingAction.value = true;
         store
           .dispatch("reviewer/editRenewal", req)
           .then((res) => {
+            isLoadingAction.value = false;
             showActionLoading.value = false;
             if (res.statusText == "Created") {
               store.dispatch("sms/sendSms", smsData).then(() => {
@@ -2710,6 +2719,7 @@ export default {
       showRemark,
       toggleModal,
       tempProf,
+      isLoadingAction,
       activeClass,
       errorClass,
       submitRemark,

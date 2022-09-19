@@ -12,11 +12,11 @@
       outline-none
       overflow-x-hidden overflow-y-auto
     "
-    id="approvedDetail"
+    id="returnPreviousLicense"
     data-bs-backdrop="static"
     data-bs-keyboard="false"
     tabindex="-1"
-    aria-labelledby="approvedDetailLabel"
+    aria-labelledby="returnPreviousLicenseLabel"
     aria-hidden="true"
   >
     <div
@@ -50,8 +50,8 @@
             class="
               px-6
               text-white
-              bg-main-400
-              hover:text-main-400 hover:border
+              bg-primary-600
+              hover:text-primary-600 hover:border
               font-medium
               text-xs
               leading-tight
@@ -78,32 +78,30 @@
           <loading
             :active="isLoading"
             :is-full-page="false"
-            :color="'#07677e'"
+            :color="'#2F639D'"
             :opacity="1"
           ></loading>
           <div class="modal-body relative p-4">
             <div class="container px-6 mx-auto">
               <section class="text-gray-800">
-                <div class="flex justify-center border-b-4 text-main-400">
-                  <h4 class="text-black ml-8">Please bring required documents when coming to pick up your license</h4>
-                </div>
-            
-                <div class="flex justify-center border-b-4 text-main-400">
+                <div class="flex justify-center border-b-4 text-primary-600">
                   <div class="text-center lg:max-w-3xl md:max-w-xl">
-                    <h2 class="text-2xl font-bold mb-8 px-6 text-main-400">
-                      Approved License Detail
+                    <h2 class="text-2xl font-bold mb-8 px-6">
+                      Previous License/s Detail
                     </h2>
                   </div>
                 </div>
 
-                <div class="container my-12 mx-auto px-4 md:px-12 border-b" v-if="licenseData">
+                <div
+                  class="container my-12 mx-auto px-4 md:px-12 border-b" 
+                >
                   <div class="flex flex-wrap -mx-1 lg:-mx-4">
                     <!-- Column -->
                     <div
                       class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
                     >
                       <!-- Article -->
-                      <article class="overflow-hidden rounded-lg shadow-xl ">
+                      <article class="overflow-hidden rounded-lg shadow-lg">
                         <header
                           class="
                             flex
@@ -112,8 +110,6 @@
                             leading-tight
                             p-2
                             md:p-4
-                            border-b-4  
-                            text-main-400
                           "
                         >
                           <h1 class="text-lg">
@@ -124,25 +120,25 @@
                               Applicant Profile
                             </a>
                           </h1>
-                          <p class="text-main-400 text-sm">
+                          <p class="text-primary-600 text-sm">
                             <i class="fa fa-user fa-2x"></i>
                           </p>
                         </header>
 
                         <div class="grid grid-flow-row auto-rows-max">
-                          <div class="flex justify-between px-4 py-1 ">
+                          <div class="flex justify-between px-4 py-1">
                             <div>Applicant Name</div>
-                            <div class="text-main-400 font-bold">
+                            <div class="text-primary-600 font-bold">
                               {{
-                                (licenseData && licenseData.profile
+                                (licenseData&&licenseData.profile
                                   ? licenseData.profile.name
                                   : "") +
                                 " " +
-                                (licenseData && licenseData.profile
+                                (licenseData&&licenseData.profile
                                   ? licenseData.profile.fatherName
                                   : "") +
                                 " " +
-                                (licenseData && licenseData.profile
+                                (licenseData&&licenseData.profile
                                   ? licenseData.profile.grandFatherName
                                   : "")
                               }}
@@ -150,9 +146,9 @@
                           </div>
                           <div class="flex justify-between px-4 py-1">
                             <div>Applicant Email</div>
-                            <div class="text-main-400 font-bold">
+                            <div class="text-primary-600 font-bold">
                               {{
-                                licenseData && licenseData.applicant
+                                licenseData&&licenseData.applicant
                                   ? licenseData.applicant.emailAddress
                                   : ""
                               }}
@@ -160,9 +156,9 @@
                           </div>
                           <div class="flex justify-between px-4 py-1">
                             <div>Applicant Phone</div>
-                            <div class="text-main-400 font-bold">
+                            <div class="text-primary-600 font-bold">
                               {{
-                                licenseData && licenseData.applicant
+                                licenseData&&licenseData.applicant
                                   ? "+251" + licenseData.applicant.phoneNumber
                                   : ""
                               }}
@@ -190,7 +186,7 @@
                       class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
                     >
                       <!-- Article -->
-                      <article class="overflow-hidden rounded-lg shadow-xl">
+                      <article class="overflow-hidden rounded-lg shadow-lg">
                         <header
                           class="
                             flex
@@ -199,8 +195,6 @@
                             leading-tight
                             p-2
                             md:p-4
-                            border-b-4
-                            text-main-400
                           "
                         >
                           <h1 class="text-lg">
@@ -211,7 +205,7 @@
                               Reviewer Detail
                             </a>
                           </h1>
-                          <p class="text-main-400 text-sm">
+                          <p class="text-primary-600 text-sm">
                             <i class="fa fa-thumbs-up"></i>
                             <i class="fa fa-thumbs-down"></i>
                           </p>
@@ -220,7 +214,7 @@
                         <div class="grid grid-flow-row auto-rows-max">
                           <div class="flex justify-between px-4 py-1">
                             <div>Reviewer Level</div>
-                            <div class="text-main-400 font-bold">
+                            <div class="text-primary-600 font-bold">
                               {{
                                 licenseData &&
                                 licenseData.licenseReviewer &&
@@ -234,9 +228,9 @@
                           </div>
                           <div class="flex justify-between px-4 py-1">
                             <div>Reviewer Name</div>
-                            <div class="text-main-400 font-bold">
+                            <div class="text-primary-600 font-bold">
                               {{
-                                licenseData && licenseData.licenseReviewer
+                                licenseData&& licenseData.licenseReviewer
                                   ? licenseData.licenseReviewer.reviewer.name
                                   : ""
                               }}
@@ -244,9 +238,9 @@
                           </div>
                           <div class="flex justify-between px-4 py-1">
                             <div>Phone Number</div>
-                            <div class="text-main-400 font-bold">
+                            <div class="text-primary-600 font-bold">
                               {{
-                                licenseData && licenseData.licenseReviewer
+                                licenseData&&licenseData.licenseReviewer
                                   ? licenseData.licenseReviewer.reviewer
                                       .phoneNumber
                                   : ""
@@ -273,11 +267,11 @@
                     <!-- Column -->
                     <div
                       v-for="education in licenseData.educations"
-                      :key="education ? education.id : ''"
+                      :key="education?education.id:''"
                       class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
                     >
                       <!-- Article -->
-                      <article class="overflow-hidden rounded-lg shadow-xl">
+                      <article class="overflow-hidden rounded-lg shadow-lg">
                         <header
                           class="
                             flex
@@ -286,8 +280,6 @@
                             leading-tight
                             p-2
                             md:p-4
-                            border-b-4
-                            text-main-400
                           "
                         >
                           <h1 class="text-lg">
@@ -298,15 +290,15 @@
                               Applicants Education Detail
                             </a>
                           </h1>
-                          <p class="text-main-400 text-sm">Active</p>
+                          <p class="text-primary-600 text-sm">Active</p>
                         </header>
 
                         <div class="grid grid-flow-row auto-rows-max">
                           <div class="flex justify-between px-4 py-1">
                             <div>Department</div>
-                            <div class="text-main-400 font-bold">
+                            <div class="text-primary-600 font-bold">
                               {{
-                                education && education.department
+                                education&& education.department
                                   ? education.department.name
                                   : ""
                               }}
@@ -314,9 +306,9 @@
                           </div>
                           <div class="flex justify-between px-4 py-1">
                             <div>Institution</div>
-                            <div class="text-main-400 font-bold">
+                            <div class="text-primary-600 font-bold">
                               {{
-                                education && education.institution
+                                education&&education.institution
                                   ? education.institution.name
                                   : ""
                               }}
@@ -324,9 +316,9 @@
                           </div>
                           <div class="flex justify-between px-4 py-1">
                             <div>Education Level</div>
-                            <div class="text-main-400 font-bold">
+                            <div class="text-primary-600 font-bold">
                               {{
-                                education && education.educationLevel
+                                education&&education.educationLevel
                                   ? education.educationLevel.name
                                   : ""
                               }}
@@ -347,7 +339,6 @@
                       </article>
                       <!-- END Article -->
                     </div>
-                    
                     <!-- END Column -->
 
                     <!-- Column -->
@@ -355,7 +346,7 @@
                       class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
                     >
                       <!-- Article -->
-                      <article class="overflow-hidden rounded-lg shadow-xl">
+                      <article class="overflow-hidden rounded-lg shadow-lg">
                         <header
                           class="
                             flex
@@ -364,8 +355,6 @@
                             leading-tight
                             p-2
                             md:p-4
-                            border-b-4
-                            text-main-400
                           "
                         >
                           <h1 class="text-lg">
@@ -376,15 +365,15 @@
                               License Detail
                             </a>
                           </h1>
-                          <p class="text-main-400 text-sm">Active</p>
+                          <p class="text-primary-600 text-sm">Active</p>
                         </header>
 
                         <div class="grid grid-flow-row auto-rows-max">
                           <div class="flex justify-between px-4 py-1">
                             <div>Applicant Type</div>
-                            <div class="text-main-400 font-bold">
+                            <div class="text-primary-600 font-bold">
                               {{
-                                licenseData && licenseData.applicantType
+                                licenseData&&licenseData.applicantType
                                   ? licenseData.applicantType.name
                                   : ""
                               }}
@@ -392,9 +381,9 @@
                           </div>
                           <div class="flex justify-between px-4 py-1">
                             <div>Application Status</div>
-                            <div class="text-main-400 font-bold">
+                            <div class="text-primary-600 font-bold">
                               {{
-                                licenseData && licenseData.applicationStatus
+                                licenseData&&licenseData.applicationStatus
                                   ? licenseData.applicationStatus.name
                                   : ""
                               }}
@@ -402,9 +391,9 @@
                           </div>
                           <div class="flex justify-between px-4 py-1">
                             <div>Certified Status</div>
-                            <div class="text-main-400 font-bold">
+                            <div class="text-primary-600 font-bold">
                               {{
-                                licenseData && licenseData.certified
+                                licenseData&& licenseData.certified
                                   ? "Certified"
                                   : "Not Certified"
                               }}
@@ -412,9 +401,9 @@
                           </div>
                           <div class="flex justify-between px-4 py-1">
                             <div>Certified Date</div>
-                            <div class="text-main-400 font-bold">
+                            <div class="text-primary-600 font-bold">
                               {{
-                                licenseData && licenseData.applicationStatus
+                                licenseData&& licenseData.applicationStatus
                                   ? licenseData.applicationStatus.name
                                   : ""
                               }}
@@ -422,9 +411,9 @@
                           </div>
                           <div class="flex justify-between px-4 py-1">
                             <div>Expiration Date</div>
-                            <div class="text-main-400 font-bold">
+                            <div class="text-primary-600 font-bold">
                               {{
-                                licenseData && licenseData.applicationStatus
+                                licenseData&& licenseData.applicationStatus
                                   ? licenseData.applicationStatus.name
                                   : ""
                               }}
@@ -462,15 +451,42 @@
             rounded-b-md
           "
         >
-      
           <button
             type="button"
             class="
               inline-block
               px-6
               text-white
-              bg-main-400
-              hover:text-main-400 hover:border
+              bg-primary-600
+              hover:text-primary-600 hover:border
+              font-medium
+              text-xs
+              leading-tight
+              uppercase
+              rounded
+              shadow-lg
+              hover:bg-purple-700 hover:shadow-lg
+              focus:bg-purple-700
+              focus:shadow-lg
+              focus:outline-none
+              focus:ring-0
+              active:bg-purple-800 active:shadow-lg
+              transition
+              duration-150
+              ease-in-out
+            "
+            @click="returnLicense()"
+          >
+            Return
+          </button>
+          <button
+            type="button"
+            class="
+              inline-block
+              px-6
+              text-white
+              bg-primary-600
+              hover:text-primary-600 hover:border
               font-medium
               text-xs
               leading-tight
@@ -496,41 +512,115 @@
     </div>
   </div>
 </template>
-  
-  <script>
-import { ref, onMounted,watch } from "vue";
-import { useStore } from "vuex";
-import { googleApi } from "@/composables/baseURL"; 
-import Loading from "vue3-loading-overlay";
-import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
-export default {
-  props:['modalDataId'],
-  components: {Loading},
-  setup(props) { 
-    let store = useStore();
-    let licenseData = ref({});
-    let userInfo = ref({});
-    let isLoading=ref(false);
-    watch(props.modalDataId,()=>{
-    isLoading.value=true
-      store
-        .dispatch("newlicense/getNewLicenseApplication", props.modalDataId.id)
-        .then((res) => {
-          licenseData.value = res.data.data;
-          isLoading.value=false
-        });
-    });
-    onMounted(() => {
-      userInfo.value = JSON.parse(window.localStorage.getItem("personalInfo"));
-    });
 
+<script>
+import { useStore } from "vuex";
+import { ref, watch } from "vue";
+import moment from "moment";
+// Import stylesheet
+import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
+
+import Loading from "vue3-loading-overlay";
+
+import { useToast } from "vue-toastification";
+
+export default {
+  props: ["previousLicenseData"],
+  components: { Loading },
+  computed: {
+    moment: () => moment,
+  },
+  setup(props) {
+    const store = useStore();
+    const toast = useToast();
+    let licenseData = ref({});
+    let isLoading = ref(false);
+
+    const returnLicense = () => {
+      isLoading.value = true;
+      let action =
+        licenseData.value &&
+        licenseData.value.applicationStatus &&
+        licenseData.value.applicationStatus.buttons
+          ? licenseData.value.applicationStatus.buttons.filter(
+              (button) => button.code == "RTN"
+            )
+          : "";
+      let req = {
+        action: action ? action[0].action : null,
+        data: licenseData.value,
+      };
+
+      store
+        .dispatch("reviewer/editNewLicense", req)
+        .then((res) => {
+          if (res.statusText == "Created") {
+            isLoading.value = true;
+            toast.success("Application reviewed Successfully", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+          } else {
+            isLoading.value = true;
+            toast.error("Please try again", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+          }
+        })
+        .catch(() => {
+          isLoading.value = true;
+          toast.error("Please try again", {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          });
+        });
+    };
+    watch(props.previousLicenseData, () => {
+      if (props.previousLicenseData) { 
+        let toBeReturned = [];
+ 
+        toBeReturned = Math.min(
+          ...props.previousLicenseData.map((item) =>
+            Date.parse(item.certifiedDate)
+          )
+        );
+        let toBeReturnedDate = new Date(toBeReturned).toISOString();
+        toBeReturned = props.previousLicenseData.filter(
+          (element) => element.certifiedDate == toBeReturnedDate
+        );
+
+        store
+          .dispatch(
+            "reviewerNewLicense/getNewLicenseApplicationById",
+            toBeReturned && toBeReturned[0] ? toBeReturned[0].id : ""
+          )
+          .then((res) => { 
+            licenseData.value = res.data.data;
+          })
+          .catch((err) => console.log(err));
+      }
+    });
     return {
-      licenseData,
+      returnLicense,
       isLoading,
-      googleApi,
-      userInfo,
+      licenseData,
     };
   },
 };
 </script>
-  
+
+<style scoped>
+.shadow-lg {
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 34%), 0 2px 4px -1px rgb(0 0 0 / 6%);
+}
+</style>
