@@ -167,7 +167,7 @@ const routes = [
   },
   {
     path: "/Applicant/Renewal/submitted/detail/:id",
-    name: "ApplicantNewLicenseSubmittedDetail",
+    name: "ApplicantRenewalSubmittedDetail",
     component: () =>
       import("../components/Applicant/Renewal/submitted/submittedDetail.vue")
   },

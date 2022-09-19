@@ -67,7 +67,7 @@
                 :key="eds.id"
                 class="text-black text-sm"
               >
-                {{ eds.professionType.name + " ," }}
+                {{ eds.professionType?.name + " ," }}
               </p>
             </header>
             <div class="border-b-2 text-main-400">
@@ -180,7 +180,6 @@ export default {
       userInfo.value = JSON.parse(window.localStorage.getItem("personalInfo"));
       store.dispatch("renewal/getRenewalLicense").then((res) => {
         newLicense.value = res.data.data;
-        console.log(newLicense);
         if (newLicense.value) {
           newLicense.value = newLicense.value.filter(function (e) {
             return (
@@ -189,6 +188,8 @@ export default {
             );
           });
           isLoading.value = false;
+          console.log(newLicense.value);
+
         }
       });
     });

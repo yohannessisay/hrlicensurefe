@@ -3,7 +3,7 @@
     <!-- Heading start -->
     <header class="text-center mx-auto mb-12 lg:px-20">
       <h2 class="text-3xl leading-normal mb-2 font-bold text-main-400">
-        Summary For New License Application
+        Summary For Renewal Application
       </h2>
 
       <p class="text-black leading-relaxed font-light text-xl mx-auto pb-2">
@@ -39,7 +39,8 @@
           bg-white
           hover:-translate-y-2
         "
-        v-for="dep in localData.multipleDepartment"
+        v-for="dep in localData.multipleDepartment
+"
         :key="dep"
       >
         <div class="border-b-2 text-main-400 mb-4">
@@ -77,7 +78,7 @@
           </div>
           <div>
             <span class="text-black sm:text-sm">
-              {{ dep.department.name }}</span
+              {{ dep?.department?.name }}</span
             >
           </div>
         </div>
@@ -97,7 +98,7 @@
           </div>
           <div>
             <span class="text-black sm:text-sm">
-              {{ dep.educationalLevel.name }}</span
+              {{ dep?.educationLevel?.name }}</span
             >
           </div>
         </div>
@@ -117,7 +118,7 @@
           </div>
           <div>
             <span class="text-black sm:text-sm">
-              {{ dep.institution.name }}</span
+              {{ dep.institution?.name }}</span
             >
           </div>
         </div>
@@ -138,7 +139,7 @@
           </div>
           <div>
             <span class="text-black sm:text-sm">
-              {{ dep.professionalType.name }}</span
+              {{ dep.professionType?.name }}</span
             >
           </div>
         </div>
@@ -357,6 +358,27 @@
         <i class="fa fa-save"></i>
         {{ button.name }}
       </button>
+      <button
+        class="
+          inline-block
+          px-6
+          text-main-400
+          mt-4
+          bg-white
+          font-medium
+          text-xs
+          leading-tight
+          uppercase
+          rounded
+          shadow-lg
+          transition
+          duration-150
+          ease-in-out
+        "
+        @click="back()"
+      >
+        back
+      </button>
     </div>
 
     <!-- end row -->
@@ -447,11 +469,11 @@ export default {
             feedback: generalInfo.value.feedback?generalInfo.value.feedback:"",
           },
         };
-        store.dispatch("newlicense/addNewLicense", license).then((res) => {
+        store.dispatch("renewal/addRenewalLicense", license).then((res) => {
           let licenseId = res.data.data.id;
           let payload = { document: formData, id: licenseId };
           store
-            .dispatch("newlicense/uploadDocuments", payload)
+            .dispatch("renewal/uploadDocuments", payload)
             .then((res) => {
               if (res.data.status == "Success") {
                 toast.success("Applied successfuly", {
@@ -461,7 +483,7 @@ export default {
                   pauseOnHover: true,
                   icon: true,
                 });
-                router.push({ path: "/Applicant/NewLicense/submitted" });
+                router.push({ path: "/Applicant/Renewal/submitted" });
               } else {
                 toast.error("Error occured, please try again", {
                   timeout: 5000,
@@ -485,28 +507,28 @@ export default {
       }
     };
     onMounted(() => {
-      buttons.value = store.getters["newlicense/getButtons"];
-      tempDocs.value = store.getters["newlicense/getTempDocs"];
-      localData.value = window.localStorage.getItem("NLApplicationData")
-        ? JSON.parse(window.localStorage.getItem("NLApplicationData"))
+      buttons.value = store.getters["renewal/getButtons"];
+      tempDocs.value = store.getters["renewal/getTempDocs"];
+      localData.value = window.localStorage.getItem("RNApplicationData")
+        ? JSON.parse(window.localStorage.getItem("RNApplicationData"))
         : {};
       localFileData.value = window.localStorage.getItem(
-        "NLApplicationImageData"
+        "RNApplicationImageData"
       )
-        ? JSON.parse(window.localStorage.getItem("NLApplicationImageData"))
+        ? JSON.parse(window.localStorage.getItem("RNApplicationImageData"))
         : {};
 
       generalInfo.value = localData.value;
       generalInfo.value.feedback = "";
       if (generalInfo.value.applicantTypeSelected.id == 1) {
-        store.dispatch("newlicense/getExpertLevel").then((res) => {
+        store.dispatch("renewal/getExpertLevel").then((res) => {
           let expertLevel = res.data.data.filter(function (e) {
             return e.code.includes("REG");
           });
           generalInfo.value.expertLevelId = expertLevel[0].id;
         });
       } else {
-        store.dispatch("newlicense/getExpertLevel").then((res) => {
+        store.dispatch("renewal/getExpertLevel").then((res) => {
           let expertLevel = res.data.data.filter(function (e) {
             return e.code.includes("FED");
           });

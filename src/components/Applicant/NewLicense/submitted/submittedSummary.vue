@@ -39,7 +39,8 @@
           bg-white
           hover:-translate-y-2
         "
-        v-for="dep in localData.multipleDepartment"
+        v-for="dep in localData.multipleDepartment
+"
         :key="dep"
       >
         <div class="border-b-2 text-main-400 mb-4">
@@ -77,7 +78,7 @@
           </div>
           <div>
             <span class="text-black sm:text-sm">
-              {{ dep.department.name }}</span
+              {{ dep?.department?.name }}</span
             >
           </div>
         </div>
@@ -97,7 +98,7 @@
           </div>
           <div>
             <span class="text-black sm:text-sm">
-              {{ dep.educationalLevel.name }}</span
+              {{ dep?.educationLevel?.name }}</span
             >
           </div>
         </div>
@@ -117,7 +118,7 @@
           </div>
           <div>
             <span class="text-black sm:text-sm">
-              {{ dep.institution.name }}</span
+              {{ dep.institution?.name }}</span
             >
           </div>
         </div>
@@ -138,7 +139,7 @@
           </div>
           <div>
             <span class="text-black sm:text-sm">
-              {{ dep.professionalType.name }}</span
+              {{ dep.professionType?.name }}</span
             >
           </div>
         </div>
@@ -357,6 +358,27 @@
         <i class="fa fa-save"></i>
         {{ button.name }}
       </button>
+      <button
+        class="
+          inline-block
+          px-6
+          text-main-400
+          mt-4
+          bg-white
+          font-medium
+          text-xs
+          leading-tight
+          uppercase
+          rounded
+          shadow-lg
+          transition
+          duration-150
+          ease-in-out
+        "
+        @click="back()"
+      >
+        back
+      </button>
     </div>
 
     <!-- end row -->
@@ -369,7 +391,7 @@ import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
 import { useRouter } from "vue-router";
 export default {
-  setup() {
+  setup(props, { emit }) {
     const store = useStore();
     const toast = useToast();
     const router = useRouter();
@@ -435,16 +457,20 @@ export default {
               generalInfo.value && generalInfo.value.woredaSelected
                 ? generalInfo.value.woredaSelected.id
                 : null,
-            educations: generalInfo.value ? generalInfo.value.education : {},
+            educations: generalInfo.value ? generalInfo.value.educations : {},
             occupationTypeId: generalInfo.value.occupationSelected
               ? generalInfo.value.occupationSelected.id
               : null,
             nativeLanguageId: generalInfo.value.nativeLanguageSelected
               ? generalInfo.value.nativeLanguageSelected.id
               : null,
-            expertLevelId: generalInfo.value.expertLevelId?generalInfo.value.expertLevelId:null,
+            expertLevelId: generalInfo.value.expertLevelId
+              ? generalInfo.value.expertLevelId
+              : null,
             isLegal: true,
-            feedback: generalInfo.value.feedback?generalInfo.value.feedback:"",
+            feedback: generalInfo.value.feedback
+              ? generalInfo.value.feedback
+              : "",
           },
         };
         store.dispatch("newlicense/addNewLicense", license).then((res) => {
@@ -484,6 +510,9 @@ export default {
         });
       }
     };
+    const back = () => {
+      emit("changeActiveStateMinus");
+    };
     onMounted(() => {
       buttons.value = store.getters["newlicense/getButtons"];
       tempDocs.value = store.getters["newlicense/getTempDocs"];
@@ -521,6 +550,7 @@ export default {
       agreed,
       buttons,
       checkAgreement,
+      back,
       allowSave,
       checkFinalStatus,
       changeAgrement,

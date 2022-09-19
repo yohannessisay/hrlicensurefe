@@ -837,6 +837,7 @@ export default {
       nativeLanguageSelected: "",
       educations: [],
     });
+    let applicationStatuses = ref([]);
 
  
     const fetchApplicantType = () => {
@@ -1036,7 +1037,18 @@ export default {
           console.log( activeState.value  )
         });
     };
+    const fetchApplicationStatuses = () => {
+      store.dispatch("newlicense/getApplicationStatuses").then(res => {
+        const results = res.data.data;
+        applicationStatuses.value = results;
+     
+            let status = applicationStatuses.value.filter(function(e) {
+              return e.code == "SUB";
+            });   
+            store.dispatch("newlicense/setButtons", status[0].buttons);
 
+      });
+    }
     onMounted(async () => {
       fetchApplicantType();
       fetchDepartments();
@@ -1044,6 +1056,7 @@ export default {
       fetchEducationLevel();
       fetchRegions();
       fetchOccupation();
+      fetchApplicationStatuses();
 
       store
         .dispatch("newlicense/getNewLicenseApplication", route.params.id)

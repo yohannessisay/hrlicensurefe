@@ -875,7 +875,6 @@ export default {
     const checkForFiles = (docs) => {};
     const next = () => {
       checkForFiles(documentUploaded.value);
-      console.log(formData)
       store.dispatch("newlicense/setTempDocs", formData).then(() => {
         window.localStorage.setItem(
           "NLApplicationImageData",

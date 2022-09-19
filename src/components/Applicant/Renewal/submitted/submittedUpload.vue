@@ -100,6 +100,7 @@
                           text-center text-white
                         "
                       ></th>
+
                       <th
                         class="
                           font-semibold
@@ -156,13 +157,21 @@
                           />
                         </p>
                       </td>
-
+                      <td class="px-6 py-4">
+                        <span
+                          class="document-name"
+                          v-if="documentsSaved[item.documentType.code]"
+                          >{{
+                            documentsSaved[item.documentType.code].name
+                          }}</span
+                        >
+                      </td>
                       <td class="px-6 py-4 text-center">
                         <a
                           :id="
                             'common_image_href' + item.documentType.id + item.id
                           "
-                          :href="documentsSaved[item.documentType.code]"
+                          :href="documentsSaved[item.documentType.code].path"
                           :data-title="item.name ? item.name : '-----'"
                           data-lightbox="example-2"
                         >
@@ -177,7 +186,9 @@
                                   item.documentType.id +
                                   item.id
                               "
-                              v-bind:src="documentsSaved[item.documentType.code]"
+                              v-bind:src="
+                                documentsSaved[item.documentType.code]
+                              "
                               class="w-full h-2 object-cover"
                             />
                           </i>
@@ -306,7 +317,7 @@
                           py-4
                           text-center text-white
                         "
-                      ></th>
+                      >Upload Document</th>
                       <th
                         class="
                           font-semibold
@@ -370,18 +381,30 @@
                           />
                         </p>
                       </td>
-
+                      <td class="px-6 py-4">
+                        <span
+                          class="document-name"
+                          v-if="documentsSaved[`${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`]?.name"
+                          >{{
+                            documentsSaved[`${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`]?.name
+                          }}</span
+                        >
+                      </td>
                       <td class="px-6 py-4 text-center">
                         <a
-                          :id="'image_href' + table.professionType + item.id"
-                          :href="documentsSaved[`${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`]"
+                          :id="'image_href' + table.professionType.id + item.id"
+                          :href="
+                            documentsSaved[
+                              `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                            ]?.path
+                          "
                           :data-title="item.name ? item.name : '-----'"
                           data-lightbox="example-2"
                         >
                           <i
                             :id="
                               'educational_icon' +
-                                table.professionType +
+                                table.professionType.id +
                                 item.id
                             "
                             class="fa fa-eye cursor-pointer text-main-400 disabled"
@@ -390,10 +413,14 @@
                             <img
                               :id="
                                 'image_lightbox' +
-                                  table.professionType +
+                                  table.professionType.id +
                                   item.id
                               "
-                              :src="documentsSaved[`${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`]"
+                              :src="
+                                documentsSaved[
+                                  `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                ]?.path
+                              "
                               class="w-full h-2 object-cover"
                             />
                           </i>
@@ -458,15 +485,23 @@
                           />
                         </p>
                       </td>
-
+                      <td class="px-6 py-4">
+                        <span
+                          class="document-name"
+                          v-if="documentsSaved[`${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`]?.name"
+                          >{{
+                            documentsSaved[`${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`]?.name
+                          }}</span
+                        >
+                      </td>
                       <td class="px-6 py-4 text-center">
                         <a
                           :id="
                             'image_href' +
-                              table.professionType +
+                              table.professionType.id +
                               parentItem[0].id
                           "
-                          href=""
+                          :href="documentsSaved[`${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`]?.path"
                           :data-title="
                             parentItem[0].name ? parentItem[0].name : '-----'
                           "
@@ -475,7 +510,7 @@
                           <i
                             :id="
                               'educational_icon' +
-                                table.professionType +
+                                table.professionType.id +
                                 parentItem[0].id
                             "
                             class="fa fa-eye cursor-pointer text-main-400 disabled"
@@ -484,10 +519,10 @@
                             <img
                               :id="
                                 'image_lightbox' +
-                                  table.professionType +
+                                  table.professionType.id +
                                   parentItem[0].id
                               "
-                              src=""
+                              :src="documentsSaved[`${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`]?.path"
                               class="w-full h-2 object-cover"
                             />
                           </i>
@@ -545,7 +580,7 @@
                           data-bs-toggle="collapse"
                           :data-bs-target="
                             '#docAccordion' +
-                              table.professionType +
+                              table.professionType.id +
                               parentItem[0].documentType.id
                           "
                           aria-expanded="true"
@@ -578,7 +613,7 @@
                           <div
                             :id="
                               'docAccordion' +
-                                table.professionType +
+                                table.professionType.id +
                                 parentItem[0].documentType.id
                             "
                             class="accordion-collapse collapse"
@@ -594,15 +629,15 @@
                               </div>
 
                               <tr
-                                v-for="parentItem in parentItem"
-                                :key="parentItem"
+                                v-for="parent in parentItem"
+                                :key="parent"
                                 class="border-b text-main-400 mt-4"
                               >
                                 <td class="px-6 py-4">
                                   <div class="flex items-center ml-4">
                                     <div>
                                       <p class="">
-                                        {{ parentItem.documentType.name }}
+                                        {{ parent.documentType.name }}
                                       </p>
                                     </div>
                                   </div>
@@ -612,8 +647,8 @@
                                     <div>
                                       <p class="">
                                         {{
-                                          parentItem.documentType.description
-                                            ? parentItem.documentType
+                                          parent.documentType.description
+                                            ? parent.documentType
                                                 .description
                                             : "- "
                                         }}
@@ -621,19 +656,19 @@
                                     </div>
                                   </div>
                                 </td>
-
-                                <td class="px-6 py-4">
+                                
+                                <td class="px-6 py-4"> 
                                   <p class="">
                                     <input
                                       type="file"
-                                      :required="parentItem.isRequired"
-                                      :id="`files${parentItem.id}`"
+                                      :required="parent.isRequired"
+                                      :id="`files${parent.id}`"
                                       accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
                                       :ref="`imageUploader${parentItem.id}`"
                                       class="custom-file-input"
                                       v-on:change="
                                         handleFileUpload(
-                                          parentItem,
+                                          parent,
                                           $event,
                                           table.professionType
                                         )
@@ -641,17 +676,29 @@
                                     />
                                   </p>
                                 </td>
+                                <td class="px-6 py-4">
+                        <span
+                          class="document-name"
+                          v-if="documentsSaved[`${parent.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`]?.name"
+                          >{{
+                            documentsSaved[`${parent.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`]?.name
+                          }}</span
+                        >
+                      </td>
+
 
                                 <td class="px-6 py-4 text-center">
                                   <a
                                     :id="
                                       'image_href' +
-                                        +table.professionType +
-                                        parentItem.id
+                                        +table.professionType.id +
+                                        parent.id
                                     "
-                                    href=""
+                                    :href="   documentsSaved[
+                                  `${parent.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                ]?.path"
                                     :data-title="
-                                      parentItem.name ? item.name : '-----'
+                                      parent.name ? item.name : '-----'
                                     "
                                     data-lightbox="example-2"
                                   >
@@ -659,7 +706,7 @@
                                       :id="
                                         'educational_icon' +
                                           table.professionType +
-                                          parentItem.id
+                                          parent.id
                                       "
                                       class="fa fa-eye cursor-pointer text-main-400 disabled"
                                       aria-hidden="true"
@@ -667,10 +714,12 @@
                                       <img
                                         :id="
                                           'image_lightbox' +
-                                            table.professionType +
-                                            parentItem.id
+                                            table.professionType.id +
+                                            parent.id
                                         "
-                                        src=""
+                                        :src="   documentsSaved[
+                                  `${parent.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                ]?.path"
                                         class="w-full h-2 object-cover"
                                       />
                                     </i>
@@ -731,7 +780,6 @@ import MAX_FILE_SIZE from "../../../../composables/documentMessage";
 import filePreview from "@/sharedComponents/FilePreview";
 import { boolean } from "yargs";
 import { googleApi } from "@/composables/baseURL";
-
 
 export default {
   components: { filePreview },
@@ -945,9 +993,9 @@ export default {
     const checkForFiles = (docs) => {};
     const next = () => {
       checkForFiles(documentUploaded.value);
-      store.dispatch("newlicense/setTempDocs", formData).then(() => {
+      store.dispatch("renewal/setTempDocs", formData).then(() => {
         window.localStorage.setItem(
-          "NLApplicationImageData",
+          "RNApplicationImageData",
           JSON.stringify(imageData)
         );
         emit("changeActiveState");
@@ -998,18 +1046,20 @@ export default {
     };
 
     onMounted(() => {
-      localData.value = window.localStorage.getItem("NLApplicationData")
-        ? JSON.parse(window.localStorage.getItem("NLApplicationData"))
+      localData.value = window.localStorage.getItem("RNApplicationData")
+        ? JSON.parse(window.localStorage.getItem("RNApplicationData"))
         : {};
       if (Object.keys(localData.value).length != 0) {
         generalInfo.value = localData.value;
-         generalInfo.value?.documents.forEach(element=>
-         {
-          documentsSaved.value[element.documentTypeCode] = googleApi + element.filePath;
-         })
-        console.log(documentsSaved.value);
+        generalInfo.value?.documents.forEach((element) => {
+          documentsSaved.value[element.documentTypeCode] = {}
+          documentsSaved.value[element.documentTypeCode].path =
+            googleApi + element.filePath;
+          documentsSaved.value[element.documentTypeCode].name =
+            element.originalFileName;
+        });
 
-        store.dispatch("newlicense/getApplicationCategories").then((res) => {
+        store.dispatch("renewal/getApplicationCategories").then((res) => {
           let categoryResults = res.data.data
             ? res.data.data.filter((ele) => ele.code == "NA")
             : "";
@@ -1018,7 +1068,7 @@ export default {
           //Get department docs
           educationLevels.forEach((element) => {
             store
-              .dispatch("newlicense/getNLdocuments", [
+              .dispatch("renewal/getRNdocuments", [
                 categoryResults[0].id,
                 generalInfo.value.applicantTypeSelected.id,
                 element.educationalLevel
@@ -1028,7 +1078,6 @@ export default {
                   : "",
               ])
               .then((res) => {
-                console.log(res);
                 let resp = res.data.data;
 
                 educationalDocs.value.push({
@@ -1048,13 +1097,12 @@ export default {
                   ),
                   parentDoc: groupByKey(resp, "parentDocument"),
                 });
-                console.log(educationalDocs)
               });
           });
           //Get Common Docs
 
           store
-            .dispatch("newlicense/getCommonNLdocuments", [
+            .dispatch("renewal/getCommonRNdocuments", [
               categoryResults[0].id,
               generalInfo.value.applicantTypeSelected.id,
             ])
@@ -1084,7 +1132,8 @@ export default {
       imageUploader,
       filePreviewData,
       next,
-      documentsSaved, googleApi
+      documentsSaved,
+      googleApi,
     };
   },
 };

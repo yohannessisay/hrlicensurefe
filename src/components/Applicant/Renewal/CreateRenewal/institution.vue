@@ -832,6 +832,7 @@ export default {
     const fetchApplicantType = () => {
       store.dispatch("renewal/getApplicantType").then((res) => {
         const results = res.data.data;
+        console.log(results)
         applicantTypes.value = results;
       });
     };
@@ -1057,7 +1058,7 @@ export default {
     onMounted(async () => {
       await fetchApplicantType();
       await fetchDepartments();
-      fetchOccupation();
+      await fetchOccupation();
       await fetchEducationLevel();
       await fetchRegions();
       localData.value = window.localStorage.getItem("RNApplicationData")
