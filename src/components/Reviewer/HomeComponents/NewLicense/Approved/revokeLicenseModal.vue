@@ -113,7 +113,8 @@
               uppercase
               rounded
               shadow-lg
-              hover:bg-red-300 hover:text-white hover:shadow-lg
+              bg-red-300
+              hover:bg-white hover:text-red-300 hover:shadow-lg
               focus:bg-purple-700
               focus:shadow-lg
               focus:outline-none

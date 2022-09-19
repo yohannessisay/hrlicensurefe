@@ -311,78 +311,7 @@
                         </div>
                       </div>
 
-                      <div
-                        class="
-                          grow-0
-                          shrink-0
-                          basis-auto
-                          w-full
-                          lg:w-6/12
-                          px-3
-                          lg:px-6
-                        "
-                      >
-                        <div>
-                          <label class="font-bold text-lg text-primary-600 mb-1"
-                            >Actions</label
-                          >
-                          <br />
-                          <button
-                            class="
-                              inline-block
-                              px-6
-                              py-2.5
-                              bg-yellow-200
-                              text-white
-                              font-medium
-                              text-xs
-                              leading-tight
-                              uppercase
-                              rounded
-                              shadow-lg
-                              hover:bg-yellow-200 hover:shadow-lg
-                              focus:bg-yellow-200
-                              focus:shadow-lg
-                              focus:outline-none
-                              focus:ring-0
-                              active:bg-blue-800 active:shadow-lg
-                              transition
-                              duration-150
-                              ease-in-out
-                            "
-                            type="button"
-                          >
-                            <i class="fa fa-ban"></i>
-                            Suspend
-                          </button>
-                          <button
-                            class="
-                           inline-block
-                                            px-6
-                                            py-2.5
-                                            bg-primary-700
-                                            text-white
-                                            font-medium
-                                            text-xs
-                                            leading-tight
-                                            uppercase
-                                            rounded
-                                            shadow-lg
-                                            hover:bg-white 
-                                            hover:text-primary-600
-                                            transition
-                                            duration-150
-                                            ease-in-out
-                            "
-                            type="button"
-                            data-bs-toggle="modal"
-                            data-bs-target="#generatePdf"
-                          >
-                            <i class="fa fa-file-text"></i>
-                            Generate PDF
-                          </button>
-                        </div>
-                      </div>
+                    
                     </div>
 
                     <div class="collapse mt-12" id="collapseExample">
@@ -518,7 +447,7 @@ export default {
     let result = {};
     const check = () => {
       store
-        .dispatch("reviewer/getGoodStandingApplication", props.modalDataId.id)
+        .dispatch("reviewer/getGoodStandingApplication", props.modalDataIdOthers.id)
         .then((res) => {
           if (res.data.status == "Success") {
             result = res.data.data;
@@ -561,6 +490,7 @@ export default {
     };
 
     watch(props.modalDataIdOthers,() => {
+     
        isLoading.value = true;
       check();
     });

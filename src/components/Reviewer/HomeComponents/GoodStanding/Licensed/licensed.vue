@@ -229,7 +229,7 @@ export default {
                       return (
                         '<button  data-set="' +
                         row +
-                        '"  data-bs-toggle="modal" data-bs-target="#staticBackdropOthers" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
+                        '"  data-bs-toggle="modal" data-bs-target="#staticBackdropOthers" class="edit-btn-others bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
                         row.id +
                         '" ><i class="fa fa-eye"></i> View/Edit</button>'
                       );
@@ -360,7 +360,7 @@ export default {
 
       Array.prototype.forEach.call(elements, function (element) {
         if (element.classList.contains("edit-btn-others")) {
-          element.addEventListener("click", rowClicked());
+          element.addEventListener("click", rowClickedOthers());
         }
       });
       toOthersTable.value.isLoading = false;
@@ -375,6 +375,7 @@ export default {
     };
 
     const rowClickedOthers = (row) => {
+      console.log(row)
       if (row != undefined) {
         row = JSON.parse(JSON.stringify(row));
         modalDataIdOthers.value.change++;
