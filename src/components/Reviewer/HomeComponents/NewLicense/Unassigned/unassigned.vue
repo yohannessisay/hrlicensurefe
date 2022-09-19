@@ -104,24 +104,23 @@
                         uppercase
                         rounded
                         shadow-md
-                        hover:bg-blue-700 hover:shadow-lg
-                        focus:bg-blue-700
-                        focus:shadow-lg
-                        focus:outline-none
-                        focus:ring-0
-                        active:bg-blue-800 active:shadow-lg
+                        hover:bg-white
+                        hover:text-primary-600
+                        hover:border
                         transition
                         duration-150
                         ease-in-out
                         items-center
+                        
                       "
+                     
                     >
                       <svg
                         aria-hidden="true"
                         focusable="false"
                         data-prefix="fas"
                         data-icon="search"
-                        class="w-5"
+                        class="w-5 hover:text-primary-600"
                         role="img"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 512 512"
@@ -216,7 +215,7 @@
                     />
                     <button
                       class="
-                        inline-block
+                     inline-block
                         px-6
                         py-2
                         bg-primary-700
@@ -227,12 +226,9 @@
                         uppercase
                         rounded
                         shadow-md
-                        hover:bg-blue-700 hover:shadow-lg
-                        focus:bg-blue-700
-                        focus:shadow-lg
-                        focus:outline-none
-                        focus:ring-0
-                        active:bg-blue-800 active:shadow-lg
+                        hover:bg-white
+                        hover:text-primary-600
+                        hover:border
                         transition
                         duration-150
                         ease-in-out
@@ -363,27 +359,16 @@ export default {
       applicationStatus(store, "SUB").then((res) => {
         modalDataId.value.apStatusUnassigned = res;
         let statusId = res;
-
+       
         store
           .dispatch("reviewerNewLicense/getNewLicenseUnassigned", statusId)
           .then((res) => {
-            allInfo.value.assignApplication =
-              store.getters[
-                "reviewerNewLicense/getNewLicenseUnassignedSearched"
-              ];
-
-            for (let applicant in allInfo.value.assignApplication) {
-              if (
-                allInfo.value.assignApplication[applicant].applicationType ===
-                undefined
-              ) {
-                allInfo.value.assignApplication[applicant].applicationType =
-                  allInfo.value.assignApplication[applicant].applicantType;
-              }
-            }
-
-            JSON.parse(JSON.stringify(allInfo.value.assignApplication)).forEach(
-              (element) => {
+            console.log(res);
+            allInfo.value = res;
+            if (allInfo.value) {
+              JSON.parse(
+                JSON.stringify(allInfo.value)
+              ).forEach((element) => {
                 tableData.value.push({
                   LicenseNumber: element.newLicenseCode,
                   ApplicantName:
@@ -399,9 +384,8 @@ export default {
                     .replace(/-/g, "/"),
                   data: element,
                 });
-              }
-            );
-
+              });
+            }
             tableDataTemp.value = tableData.value;
             unassignedTable.value = {
               columns: [
@@ -436,9 +420,9 @@ export default {
                   width: "10%",
                   display: function (row) {
                     return (
-                      '<button data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" data-id="' +
+                      '<button data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
                       row.id +
-                      '" >View/Edit</button>'
+                      '" ><i class="fa fa-eye"></i>View/Edit</button>'
                     );
                   },
                 },
@@ -546,24 +530,24 @@ export default {
                       return (
                         '<button  data-set="' +
                         row +
-                        '"  data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" data-id="' +
+                        '"  data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
                         row.id +
-                        '" >View/Edit</button>'
+                        '" ><i class="fa fa-eye"></i> View/Edit</button>'
                       );
                     },
                   },
                 ],
-            rows: computed(() => {
-                return tableData.value.filter(
-                  (x) =>
-                    x.ApplicationType.toLowerCase().includes(
-                      searchTerm.value.toLowerCase()
-                    ) ||
-                    x.ApplicantName.toLowerCase().includes(
-                      searchTerm.value.toLowerCase()
-                    )
-                );
-              }),
+                rows: computed(() => {
+                  return tableData.value.filter(
+                    (x) =>
+                      x.ApplicationType.toLowerCase().includes(
+                        searchTerm.value.toLowerCase()
+                      ) ||
+                      x.ApplicantName.toLowerCase().includes(
+                        searchTerm.value.toLowerCase()
+                      )
+                  );
+                }),
                 totalRecordCount: tableData.value.length,
                 sortable: {
                   order: "id",
@@ -612,9 +596,9 @@ export default {
                 return (
                   '<button  data-set="' +
                   row +
-                  '"  data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" data-id="' +
+                  '"  data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
                   row.id +
-                  '" >View/Edit</button>'
+                  '" ><i class="fa fa-eye"></i>View/Edit</button>'
                 );
               },
             },
@@ -717,7 +701,7 @@ export default {
                       row +
                       '"  data-bs-toggle="modal" data-bs-target="#staticBackdropReSubmitted" class="edit-btn-resubmitted inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" data-id="' +
                       row.id +
-                      '" >View/Edit</button>'
+                      '" ><i class="fa fa-eye"></i>View/Edit</button>'
                     );
                   },
                 },

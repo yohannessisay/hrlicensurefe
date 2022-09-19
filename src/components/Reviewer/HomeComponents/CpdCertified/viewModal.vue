@@ -36,22 +36,41 @@
           text-current
         "
       >
-        <div
+   <div
           class="
             modal-header
             flex flex-shrink-0
-            items-center
-            justify-between
+           justify-end
+           
             p-2
             rounded-t-md
           "
         >
           <button
             type="button"
-            class="btn-close border-none rounded-lg hover:text-primary-400"
+            class="     
+              px-6
+              text-white
+              bg-primary-600
+              hover:text-primary-600 hover:border
+              font-medium
+              text-xs
+              leading-tight
+              uppercase
+              rounded
+              shadow-lg
+              hover:bg-purple-700 hover:shadow-lg
+              focus:bg-purple-700
+              focus:shadow-lg
+              focus:outline-none
+              focus:ring-0
+              active:bg-purple-800 active:shadow-lg
+              transition
+              duration-150
+              ease-in-out"
             data-bs-dismiss="modal"
             aria-label="Close"
-          ></button>
+          ><i class="fa fa-close fa-2x"></i></button>
         </div>
 
         <div class="modal-body relative p-4">
@@ -99,11 +118,7 @@
                               justify-center
                             "
                           >
-                            <img
-                              src="../../../../assets/showLicense/profile.png"
-                              alt=""
-                              style="height: 152px; width: 150px"
-                            />
+                         <i class="fa fa-user fa-10x"></i>
                           </div>
                         </div>
                         <div class="grow ml-6">
@@ -162,7 +177,7 @@
                             "
                             style="height:300px"
                           >
-                            <i class="fa fa-certificate fa-9x"></i>
+                            <i class="fa fa-list fa-10x"></i>
                           </div>
                         </div>
                         <div class="grow ml-6">
@@ -250,7 +265,7 @@
           <button
             type="button"
             class="
-              inline-block
+            inline-block
               px-6
               text-white
               font-medium
@@ -259,12 +274,10 @@
               uppercase
               rounded
               shadow-md
-              hover:bg-purple-700 hover:shadow-lg
-              focus:bg-purple-700
-              focus:shadow-lg
-              focus:outline-none
-              focus:ring-0
-              active:bg-purple-800 active:shadow-lg
+              bg-primary-700
+              hover:bg-whitehover:shadow-lg
+              hover:text-primary-600
+              hover:border
               transition
               duration-150
               ease-in-out

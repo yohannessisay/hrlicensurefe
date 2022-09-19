@@ -43,22 +43,41 @@
           text-current
         "
       >
-        <div
+   <div
           class="
             modal-header
             flex flex-shrink-0
-            items-center
-            justify-between
+           justify-end
+           
             p-2
             rounded-t-md
           "
         >
           <button
             type="button"
-            class="btn-close border-none rounded-lg hover:text-primary-400"
+            class="     
+              px-6
+              text-white
+              bg-primary-600
+              hover:text-primary-600 hover:border
+              font-medium
+              text-xs
+              leading-tight
+              uppercase
+              rounded
+              shadow-lg
+              hover:bg-purple-700 hover:shadow-lg
+              focus:bg-purple-700
+              focus:shadow-lg
+              focus:outline-none
+              focus:ring-0
+              active:bg-purple-800 active:shadow-lg
+              transition
+              duration-150
+              ease-in-out"
             data-bs-dismiss="modal"
             aria-label="Close"
-          ></button>
+          ><i class="fa fa-close fa-2x"></i></button>
         </div>
         <div class="vld-parent">
           <loading
@@ -205,7 +224,7 @@
                               inline-block
                               px-6
                               py-2.5
-                              bg-primary-400
+                              bg-primary-700
                               text-white
                               font-medium
                               text-xs
@@ -213,12 +232,8 @@
                               uppercase
                               rounded
                               shadow-lg
-                              hover:bg-blue-700 hover:shadow-lg
-                              focus:bg-blue-700
-                              focus:shadow-lg
-                              focus:outline-none
-                              focus:ring-0
-                              active:bg-blue-800 active:shadow-lg
+                              hover:bg-white hover:text-primary-600
+                              
                               transition
                               duration-150
                               ease-in-out
@@ -304,11 +319,11 @@
                     <div class="collapse mt-12" id="collapseExample">
                       <div class="block p-6 rounded-lg shadow-lg bg-white">
                         <div class="flex justify-content-evenly align-center">
-                          <h1>Attached Documents</h1>
+                          <h1 class="text-primary-600">Attached Documents</h1>
                         </div>
                         <div class="grid grid-cols-4 gap-4">
                           <div
-                            class="mt-4 mb-8 bg-white"
+                            class="mt-4 mb-8 bg-white shadow-lg"
                             style="border-radius: 15px; padding: 10px"
                             v-for="document in modalData.documents"
                             :key="document.id"
@@ -329,7 +344,7 @@
                                 <h4 style="font-weight: bold">
                                   Document Type:-
                                 </h4>
-                                <h6>{{ document.documentType.name }}</h6>
+                                    <h6>{{ document.documentType?document.documentType.name:'' }}</h6>
                               </div>
                             </div>
                           </div>
@@ -360,16 +375,13 @@
               text-white
               font-medium
               text-xs
+              bg-primary-700
               leading-tight
               uppercase
               rounded
               shadow-lg
-              hover:bg-purple-700 hover:shadow-lg
-              focus:bg-purple-700
-              focus:shadow-lg
-              focus:outline-none
-              focus:ring-0
-              active:bg-purple-800 active:shadow-lg
+              hover:bg-white 
+              hover:text-primary-700
               transition
               duration-150
               ease-in-out

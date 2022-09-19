@@ -1,3 +1,4 @@
+import { SET_TEMP_DOCS } from "../goodstanding/mutation-types";
 import {
     SET_LICENSE,
     SET_APPLICATION_ID,
@@ -46,6 +47,7 @@ import {
     SET_PHD,
     SET_PHD_TRANSCRIPT,
     SET_RENEWED_LICENSE_OF_HEALTH_FACILITY,
+    SET_GENERAL_INFO,
 } from "./mutation-types";
 
 export default {
@@ -193,4 +195,10 @@ export default {
     ) {
         state.renewedLicenseOfHealthFacility = renewedLicenseOfHealthFacility;
     },
+    [SET_GENERAL_INFO](state, generalInfo) {
+        state.generalInfo = generalInfo;
+    },
+    [SET_TEMP_DOCS](state, docs) {
+        state.tempDocs = docs;
+      },
 };

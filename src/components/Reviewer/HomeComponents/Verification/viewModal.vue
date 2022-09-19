@@ -333,7 +333,7 @@
             type="button"
             @click="saveVerification()"
             class="
-              inline-block
+            inline-block
               px-6
               text-white
               font-medium
@@ -342,16 +342,13 @@
               uppercase
               rounded
               shadow-md
-              hover:bg-purple-700 hover:shadow-lg
-              focus:bg-purple-700
-              focus:shadow-lg
-              focus:outline-none
-              focus:ring-0
-              active:bg-purple-800 active:shadow-lg
+              bg-primary-700
+              hover:bg-whitehover:shadow-lg
+              hover:text-primary-600
+              hover:border
               transition
               duration-150
               ease-in-out
-              dark:focus:ring-gray-600
             "
           >
             Save
@@ -368,12 +365,10 @@
               uppercase
               rounded
               shadow-md
-              hover:bg-purple-700 hover:shadow-lg
-              focus:bg-purple-700
-              focus:shadow-lg
-              focus:outline-none
-              focus:ring-0
-              active:bg-purple-800 active:shadow-lg
+              bg-primary-700
+              hover:bg-whitehover:shadow-lg
+              hover:text-primary-600
+              hover:border
               transition
               duration-150
               ease-in-out

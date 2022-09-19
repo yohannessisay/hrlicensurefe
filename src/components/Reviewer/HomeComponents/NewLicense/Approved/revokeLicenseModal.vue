@@ -68,9 +68,8 @@
               <div class="vld-parent">
                 <loading
                   :active="isLoading"
-                  :can-cancel="true"
-                  :on-cancel="onCancel"
-                  :is-full-page="fullPage"
+                  :can-cancel="true" 
+                  :is-full-page="true"
                   :color="'#2F639D'"
                   :opacity="0.7"
                 ></loading>
@@ -114,7 +113,8 @@
               uppercase
               rounded
               shadow-lg
-              hover:bg-red-300 hover:text-white hover:shadow-lg
+              bg-red-300
+              hover:bg-white hover:text-red-300 hover:shadow-lg
               focus:bg-purple-700
               focus:shadow-lg
               focus:outline-none
@@ -132,21 +132,18 @@
           <button
             type="button"
             class="
-              inline-block
+        inline-block
               px-6
               text-white
               font-medium
               text-xs
+              bg-primary-700
               leading-tight
               uppercase
               rounded
               shadow-lg
-              hover:bg-purple-700 hover:shadow-lg
-              focus:bg-purple-700
-              focus:shadow-lg
-              focus:outline-none
-              focus:ring-0
-              active:bg-purple-800 active:shadow-lg
+              hover:bg-white 
+              hover:text-primary-700
               transition
               duration-150
               ease-in-out
@@ -222,6 +219,7 @@ export default {
     return {
       showFlash,
       showErrorFlash,
+      isLoading,
       remark,
       revoke,
     };

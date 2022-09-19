@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-full blue-gradient flex flex-col justify-center items-center pt-small sm:pt-xl box-border"
+    class="w-full bg-main-400 flex flex-col justify-center items-center pt-small sm:pt-xl box-border"
     ref="wrapperRef"
   >
     <transition name="fade">
@@ -12,8 +12,7 @@
           class="text-2xl sm:text-largeDisplay white-text-gradient -mb-tiny sm:-mb-small text-center"
         >
           Accessible on any device
-        </h1>
-        <hr class="yellow-gradient separator border-none" />
+        </h1> 
       </div>
     </transition>
     <transition name="slide-fade-to-top">

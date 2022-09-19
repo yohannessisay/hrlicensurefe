@@ -18,23 +18,22 @@
           <p class="absolute right-0">
             <button
               class="
-                px-2
-                bg-primary-700
-                text-white
-                font-medium
-                text-xs
-                uppercase
-                rounded
-                shadow-md
-                hover:bg-blue-700 hover:shadow-lg
-                focus:bg-blue-700
-                focus:shadow-lg
-                focus:outline-none
-                focus:ring-0
-                active:bg-blue-800 active:shadow-lg
-                transition
-                duration-150
-                ease-in-out
+              px-6
+                      text-white
+                      bg-primary-600
+                      hover:text-primary-600
+                      font-medium
+                      text-xs
+                      leading-tight
+                      uppercase
+                      rounded
+                      shadow-md
+                      focus:shadow-lg focus:outline-none focus:ring-0
+                      transition
+                      duration-150
+                      mt-0
+                      ease-in-out
+                      text-right
               "
               @click="exportTable()"
             >

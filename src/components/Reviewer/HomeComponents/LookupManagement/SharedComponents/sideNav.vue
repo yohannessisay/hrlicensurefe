@@ -40,8 +40,8 @@
       <span class="text-md ml-4">Lookup Mgmt</span>
     </li>
     <ul class="nav-links">
-      <router-link to="admin/lookupManagement">
-        <li :class="$route.fullPath === '/admin/systemSetting' ? 'mb-2 active p-2' : ''">
+      <router-link to="lookupManagement">
+        <li :class="$route.fullPath === '/admin/lookupManagement' ? 'mb-2 active p-2' : ''">
           <a href="#LocationManagement">
             <i class="bx bx-map"></i>
 

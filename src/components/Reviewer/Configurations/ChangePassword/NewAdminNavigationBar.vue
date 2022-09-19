@@ -11,7 +11,7 @@
             />
           </router-link>
           <h2 class="text-md AtkinsonHyperlegibleBold text-primary-600 ml-2 ">
-           electronical Health Professional Licensing (eHPL) 
+           eHPEL
 
           </h2>
         </div>
@@ -29,7 +29,7 @@
               <svg
                 viewBox="0 0 24 24"
                 stroke="currentColor"
-                fill="none"
+                fill="#2F639D"
                 class="w-8 h-8 px-1 py-1"
                 aria-hidden="true"
               >

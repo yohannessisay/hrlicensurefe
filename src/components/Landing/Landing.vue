@@ -34,11 +34,11 @@
 <script>
 import { ref, onMounted } from "vue";
 import LandingTopNav from "./sections/LandingTopNav";
-import GetCertifiedSection from "./sections/GetCertifiedSection";
-import NewLicenseSection from "./sections/NewLicenseSection";
-import RenewalSection from "./sections/RenewalSection";
+import GetCertifiedSection from "./sections/GetCertifiedSectionApplicant.vue";
+import NewLicenseSection from "./sections/NewLicenseSectionApplicant.vue";
+import RenewalSection from "./sections/RenewalSectionApplicant.vue";
 import VerificationSection from "./sections/VerificationSection";
-import GoodStandingSection from "./sections/GoodStandingSection";
+import GoodStandingSection from "./sections/GoodStandingSectionApplicant.vue";
 import DeviceAccessibilitySection from "./sections/DeviceAccessibilitySection";
 import MinistryOfHealthSection from "./sections/MinistryOfHealthSection";
 import FooterSection from "./sections/FooterSection";

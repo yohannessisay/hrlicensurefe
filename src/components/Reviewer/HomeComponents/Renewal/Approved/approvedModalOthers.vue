@@ -43,22 +43,41 @@
           text-current
         "
       >
-        <div
+   <div
           class="
             modal-header
             flex flex-shrink-0
-            items-center
-            justify-between
+           justify-end
+           
             p-2
             rounded-t-md
           "
         >
           <button
             type="button"
-            class="btn-close border-none rounded-lg hover:text-primary-400"
+            class="     
+              px-6
+              text-white
+              bg-primary-600
+              hover:text-primary-600 hover:border
+              font-medium
+              text-xs
+              leading-tight
+              uppercase
+              rounded
+              shadow-lg
+              hover:bg-purple-700 hover:shadow-lg
+              focus:bg-purple-700
+              focus:shadow-lg
+              focus:outline-none
+              focus:ring-0
+              active:bg-purple-800 active:shadow-lg
+              transition
+              duration-150
+              ease-in-out"
             data-bs-dismiss="modal"
             aria-label="Close"
-          ></button>
+          ><i class="fa fa-close fa-2x"></i></button>
         </div>
         <div class="vld-parent">
                 <loading
@@ -186,60 +205,7 @@
                         </div>
                       </div>
 
-                      <div
-                        class="
-                          grow-0
-                          shrink-0
-                          basis-auto
-                          w-full
-                          lg:w-6/12
-                          px-3
-                          lg:px-6
-                        "
-                      >
-                        <div class="flex align-center">
-                          <div class="shrink-0">
-                            <div
-                              class="
-                                p-4
-                                bg-blue-600
-                                rounded-md
-                                shadow-lg
-                                w-48
-                                h-48
-                                flex
-                                items-center
-                                justify-center
-                              "
-                            >
-                              <i class="fa fa-building fa-4x"></i>
-                            </div>
-                          </div>
-                          <div class="grow ml-6">
-                            <h2 class="font-bold mb-1">Institution Info</h2>
-                            <p class="text-gray-500">
-                              <span class="font-medium text-primary-700 mb-1"
-                                >Institution Name:</span
-                              >
-                              {{ modalData.instName ? modalData.instName : "" }}
-                            </p>
-                            <p class="text-gray-500">
-                              <span class="font-medium text-primary-700 mb-1"
-                                >Department:</span
-                              >
-                              {{
-                                modalData.department ? modalData.department : ""
-                              }}
-                            </p>
-                            <p class="text-gray-500">
-                              <span class="font-medium text-primary-700 mb-1"
-                                >Institution Type:</span
-                              >
-                              {{ modalData.instType ? modalData.instType : "" }}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
+                   
 
                       <div
                         class="
@@ -338,26 +304,22 @@
                           </button>
                           <button
                             class="
-                              inline-block
-                              px-6
-                              py-2.5
-                              bg-
-                              text-white
-                              font-medium
-                              text-xs
-                              leading-tight
-                              uppercase
-                              rounded
-                              shadow-lg
-                              hover:bg-blue-700 hover:shadow-lg
-                              focus:bg-blue-700
-                              focus:shadow-lg
-                              focus:outline-none
-                              focus:ring-0
-                              active:bg-blue-800 active:shadow-lg
-                              transition
-                              duration-150
-                              ease-in-out
+                           inline-block
+                                            px-6
+                                            py-2.5
+                                            bg-primary-700
+                                            text-white
+                                            font-medium
+                                            text-xs
+                                            leading-tight
+                                            uppercase
+                                            rounded
+                                            shadow-lg
+                                            hover:bg-white 
+                                            hover:text-primary-600
+                                            transition
+                                            duration-150
+                                            ease-in-out
                             "
                             type="button"
                             data-bs-toggle="modal"
@@ -386,7 +348,7 @@
                               <div class="mt-large bg-white">
                                 <a
                                   :href="googleApi + document.filePath"
-                                  :data-title="document.documentType.name"
+                                  :data-title="document.documentType?document.documentType.name:''"
                                   data-lightbox="example-2"
                                 >
                                   <img
@@ -398,7 +360,7 @@
                                 <h4 style="font-weight: bold">
                                   Document Type:-
                                 </h4>
-                                <h6>{{ document.documentType.name }}</h6>
+                                    <h6>{{ document.documentType?document.documentType.name:'' }}</h6>
                               </div>
                             </div>
                           </div>
@@ -425,22 +387,21 @@
           <button
             class="
               inline-block
-              px-6
-              py-2.5
-              bg-primary-400
-              text-white
-              font-medium
-              text-xs
-              leading-tight
-              uppercase
-              rounded
-              shadow-lg
-              hover:bg-blue-700 hover:shadow-lg
-              focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
-              active:bg-blue-800 active:shadow-lg
-              transition
-              duration-150
-              ease-in-out
+                                            px-6
+                                            py-2.5
+                                            bg-primary-700
+                                            text-white
+                                            font-medium
+                                            text-xs
+                                            leading-tight
+                                            uppercase
+                                            rounded
+                                            shadow-lg
+                                            hover:bg-white 
+                                            hover:text-primary-600
+                                            transition
+                                            duration-150
+                                            ease-in-out
             "
             type="button"
             data-bs-toggle="collapse"
@@ -454,21 +415,18 @@
           <button
             type="button"
             class="
-              inline-block
+        inline-block
               px-6
               text-white
               font-medium
               text-xs
+              bg-primary-700
               leading-tight
               uppercase
               rounded
               shadow-lg
-              hover:bg-purple-700 hover:shadow-lg
-              focus:bg-purple-700
-              focus:shadow-lg
-              focus:outline-none
-              focus:ring-0
-              active:bg-purple-800 active:shadow-lg
+              hover:bg-white 
+              hover:text-primary-700
               transition
               duration-150
               ease-in-out
@@ -537,16 +495,7 @@ export default {
             modalData.value.email = result.applicant.emailAddress
               ? result.applicant.emailAddress
               : "-----";
-            modalData.value.instName = result.education.institution?.name
-              ? result.education.institution?.name
-              : "-----";
-            modalData.value.instType = result.education.institution
-              ?.institutionType
-              ? result.education.institution?.institutionType.name
-              : "-----";
-            modalData.value.department = result.education.department.name
-              ? result.education?.department.name
-              : "-----";
+     
             modalData.value.profile = result.profile;
             modalData.value.professionalTypes = result.licenseProfessions;
             modalData.value.certifiedDate = result.certifiedDate;

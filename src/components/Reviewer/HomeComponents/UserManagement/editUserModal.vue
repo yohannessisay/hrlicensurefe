@@ -36,22 +36,41 @@
           text-current
         "
       >
-        <div
+   <div
           class="
             modal-header
             flex flex-shrink-0
-            items-center
-            justify-between
+           justify-end
+           
             p-2
             rounded-t-md
           "
         >
           <button
             type="button"
-            class="btn-close border-none rounded-lg hover:text-primary-400"
+            class="     
+              px-6
+              text-white
+              bg-primary-600
+              hover:text-primary-600 hover:border
+              font-medium
+              text-xs
+              leading-tight
+              uppercase
+              rounded
+              shadow-lg
+              hover:bg-purple-700 hover:shadow-lg
+              focus:bg-purple-700
+              focus:shadow-lg
+              focus:outline-none
+              focus:ring-0
+              active:bg-purple-800 active:shadow-lg
+              transition
+              duration-150
+              ease-in-out"
             data-bs-dismiss="modal"
             aria-label="Close"
-          ></button>
+          ><i class="fa fa-close fa-2x"></i></button>
         </div>
 
         <div class="modal-body relative p-4">
@@ -59,7 +78,11 @@
             <section class="text-gray-800">
               <div class="flex justify-center">
                 <div class="text-center lg:max-w-3xl md:max-w-full">
-                  <h2 class="text-2xl font-bold mb-8 px-6">{{ !isUserManager?'View Admin Details':'Edit Admin User' }}</h2>
+                  <h2 class="text-2xl font-bold mb-8 px-6">
+                    {{
+                      !isUserManager ? "View Admin Details" : "Edit Admin User"
+                    }}
+                  </h2>
                 </div>
               </div>
 
@@ -142,7 +165,7 @@
                             "
                             type="text"
                             v-model="admin.fatherName"
-                             :disabled="!isUserManager"
+                            :disabled="!isUserManager"
                           />
                           <span
                             style="color: red"
@@ -180,7 +203,7 @@
                             "
                             type="text"
                             v-model="admin.grandfatherName"
-                             :disabled="!isUserManager"
+                            :disabled="!isUserManager"
                           />
                           <span
                             style="color: red"
@@ -216,7 +239,7 @@
                             "
                             type="text"
                             v-model="admin.email"
-                             :disabled="!isUserManager"
+                            :disabled="!isUserManager"
                           />
                           <span
                             style="color: red"
@@ -254,7 +277,7 @@
                             "
                             type="text"
                             v-model="admin.phoneNumber"
-                             :disabled="!isUserManager"
+                            :disabled="!isUserManager"
                           />
                           <span
                             style="color: red"
@@ -291,7 +314,7 @@
                               focus:outline-none
                             "
                             v-model="admin.roleId"
-                             :disabled="!isUserManager"
+                            :disabled="!isUserManager"
                           >
                             <option
                               selected
@@ -368,7 +391,7 @@
                             "
                             v-model="expertLevels.id"
                             @change="selectedExpertLevel"
-                             :disabled="!isUserManager"
+                            :disabled="!isUserManager"
                           >
                             <option
                               class="bg-primary-700 text-white"
@@ -439,7 +462,7 @@
                               "
                               v-model="regions.id"
                               @change="selectedRegion"
-                               :disabled="!isUserManager"
+                              :disabled="!isUserManager"
                             >
                               <option selected>
                                 {{
@@ -467,23 +490,24 @@
                         </span>
                       </div>
 
-                      <div class="flex justify-center ml-4" v-if="isUserManager">
+                      <div
+                        class="flex justify-center ml-4"
+                        v-if="isUserManager"
+                      >
                         <button
                           class="
-                            px-2
-                            bg-primary-700
+                            inline-block
+                            px-6
                             text-white
+                            bg-primary-700
                             font-medium
                             text-xs
+                            leading-tight
                             uppercase
+                            border
                             rounded
-                            shadow-md
-                            hover:bg-blue-700 hover:shadow-lg
-                            focus:bg-blue-700
-                            focus:shadow-lg
-                            focus:outline-none
-                            focus:ring-0
-                            active:bg-blue-800 active:shadow-lg
+                            shadow-lg
+                            hover:bg-white hover:text-primary-600
                             transition
                             duration-150
                             ease-in-out
@@ -514,21 +538,18 @@
           <button
             type="button"
             class="
-              inline-block
+            inline-block
               px-6
               text-white
+              bg-primary-700
               font-medium
               text-xs
               leading-tight
               uppercase
+              border 
               rounded
-              shadow-md
-              hover:bg-purple-700 hover:shadow-lg
-              focus:bg-purple-700
-              focus:shadow-lg
-              focus:outline-none
-              focus:ring-0
-              active:bg-purple-800 active:shadow-lg
+              shadow-lg
+              hover:bg-white hover:text-primary-600
               transition
               duration-150
               ease-in-out
@@ -561,7 +582,7 @@ export default {
     const adminExpertId = JSON.parse(
       localStorage.getItem("allAdminData")
     ).expertLevelId;
-       const isUserManager = localStorage.getItem("role") == "UM";
+    const isUserManager = localStorage.getItem("role") == "UM";
     let errorMessage = ref("");
 
     let admin = ref({
@@ -626,10 +647,10 @@ export default {
         expertLevels.value = res.data.data;
       });
     };
-    let showRegion=ref("");
+    let showRegion = ref("");
     const selectedExpertLevel = () => {
       admin.value.expertLevelId = expertLevels.value.id;
-      showRegion.value=admin.value.expertLevelId;
+      showRegion.value = admin.value.expertLevelId;
       admin.value.regionId = "";
     };
 
@@ -655,11 +676,11 @@ export default {
           admin.value.fatherName +
           " " +
           admin.value.grandfatherName;
-        editData.phoneNumber=admin.value.phoneNumber;
-        editData.email=admin.value.email;
-        editData.roleId=admin.value.roleId;
-        editData.expertLevelId=admin.value.expertLevelId;
-        editData.isActive=admin.value.isActive;
+        editData.phoneNumber = admin.value.phoneNumber;
+        editData.email = admin.value.email;
+        editData.roleId = admin.value.roleId;
+        editData.expertLevelId = admin.value.expertLevelId;
+        editData.isActive = admin.value.isActive;
         if (admin.value.regionId == "REG") {
           editData.regionId = admin.value.regionId;
         }
@@ -677,9 +698,9 @@ export default {
               });
               isLoading.value = false;
 
-                setTimeout(() => {
-              window.location.reload();
-            }, 3000);
+              setTimeout(() => {
+                window.location.reload();
+              }, 3000);
             } else {
               toast.error(res.data.message.name, {
                 timeout: 5000,
@@ -690,9 +711,9 @@ export default {
               });
               isLoading.value = false;
 
-                setTimeout(() => {
-              window.location.reload();
-            }, 3000);
+              setTimeout(() => {
+                window.location.reload();
+              }, 3000);
             }
           })
           .catch(() => {
@@ -708,7 +729,7 @@ export default {
               }
             );
 
-                setTimeout(() => {
+            setTimeout(() => {
               window.location.reload();
             }, 3000);
           });
@@ -741,9 +762,8 @@ export default {
       ) {
         return null;
       } else {
-        isLoading.value=false;
+        isLoading.value = false;
         return errors;
-        
       }
     };
 
@@ -780,7 +800,7 @@ export default {
         props.modalData.data && props.modalData.data.data
           ? props.modalData.data.data.expertLevelId
           : "";
-      showRegion.value=
+      showRegion.value =
         props.modalData.data && props.modalData.data.data
           ? props.modalData.data.data.expertLevelId
           : "";

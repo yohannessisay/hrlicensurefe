@@ -36,22 +36,41 @@
           text-current
         "
       >
-        <div
+   <div
           class="
             modal-header
             flex flex-shrink-0
-            items-center
-            justify-between
+           justify-end
+           
             p-2
             rounded-t-md
           "
         >
           <button
             type="button"
-            class="btn-close border-none rounded-lg hover:text-primary-400"
+            class="     
+              px-6
+              text-white
+              bg-primary-600
+              hover:text-primary-600 hover:border
+              font-medium
+              text-xs
+              leading-tight
+              uppercase
+              rounded
+              shadow-lg
+              hover:bg-purple-700 hover:shadow-lg
+              focus:bg-purple-700
+              focus:shadow-lg
+              focus:outline-none
+              focus:ring-0
+              active:bg-purple-800 active:shadow-lg
+              transition
+              duration-150
+              ease-in-out"
             data-bs-dismiss="modal"
             aria-label="Close"
-          ></button>
+          ><i class="fa fa-close fa-2x"></i></button>
         </div>
 
         <div class="modal-body relative p-4">
@@ -81,7 +100,9 @@
                     >
                       <div class="flex w-full">
                         <div class="flex flex-col w-1/2 mr-12">
-                          <label class="ml-4 text-primary-700 font-bold">First Name</label>
+                          <label class="ml-4 text-primary-700 font-bold"
+                            >First Name</label
+                          >
                           <input
                             class="
                               form-control
@@ -114,7 +135,9 @@
                           >
                         </div>
                         <div class="flex flex-col mb-medium w-1/2 mr-12">
-                           <label class="ml-4 text-primary-700 font-bold">Father's Name</label>
+                          <label class="ml-4 text-primary-700 font-bold"
+                            >Father's Name</label
+                          >
                           <input
                             class="
                               form-control
@@ -149,7 +172,9 @@
                       </div>
                       <div class="flex">
                         <div class="flex flex-col mb-medium w-1/2 mr-12">
-                           <label class="ml-4 text-primary-700 font-bold">Grandfather's Name</label>
+                          <label class="ml-4 text-primary-700 font-bold"
+                            >Grandfather's Name</label
+                          >
                           <input
                             class="
                               form-control
@@ -182,7 +207,9 @@
                           >
                         </div>
                         <div class="flex flex-col mb-medium w-1/2 mr-12">
-                        <label class="ml-4 text-primary-700 font-bold">Email</label>
+                          <label class="ml-4 text-primary-700 font-bold"
+                            >Email</label
+                          >
                           <input
                             class="
                               form-control
@@ -217,7 +244,9 @@
                       </div>
                       <div class="flex">
                         <div class="flex flex-col mb-medium w-1/2 mr-12">
-                    <label class="ml-4 text-primary-700 font-bold">Phone Number</label>
+                          <label class="ml-4 text-primary-700 font-bold"
+                            >Phone Number</label
+                          >
                           <input
                             class="
                               form-control
@@ -250,7 +279,9 @@
                           >
                         </div>
                         <div class="flex flex-col mb-medium w-1/2 mr-12">
-                       <label class="ml-4 text-primary-700 font-bold">Role</label>
+                          <label class="ml-4 text-primary-700 font-bold"
+                            >Role</label
+                          >
                           <select
                             class="
                               form-control
@@ -296,7 +327,9 @@
                           class="flex flex-col mb-medium w-1/2 mr-12"
                           v-if="adminExpertId == 3"
                         >
-                       <label class="ml-4 text-primary-700 font-bold">Expert Type</label>
+                          <label class="ml-4 text-primary-700 font-bold"
+                            >Expert Type</label
+                          >
                           <select
                             class="
                               form-control
@@ -386,25 +419,22 @@
                       <div class="flex justify-center ml-4">
                         <button
                           class="
-                            px-2
-                            bg-primary-700
+                            inline-block
+                            px-6
                             text-white
+                            bg-primary-700
                             font-medium
                             text-xs
+                            leading-tight
                             uppercase
+                            border
                             rounded
-                            shadow-md
-                            hover:bg-blue-700 hover:shadow-lg
-                            focus:bg-blue-700
-                            focus:shadow-lg
-                            focus:outline-none
-                            focus:ring-0
-                            active:bg-blue-800 active:shadow-lg
+                            shadow-lg
+                            hover:bg-white hover:text-primary-600
                             transition
                             duration-150
                             ease-in-out
-                          "
-                          @click="registerAdmin()"
+                          " 
                         >
                           Create User
                         </button>
@@ -433,18 +463,15 @@
               inline-block
               px-6
               text-white
+              bg-primary-700
               font-medium
               text-xs
               leading-tight
               uppercase
+              border
               rounded
-              shadow-md
-              hover:bg-purple-700 hover:shadow-lg
-              focus:bg-purple-700
-              focus:shadow-lg
-              focus:outline-none
-              focus:ring-0
-              active:bg-purple-800 active:shadow-lg
+              shadow-lg
+              hover:bg-white hover:text-primary-600
               transition
               duration-150
               ease-in-out
@@ -545,7 +572,7 @@ export default {
 
     const selectedExpertLevel = () => {
       admin.expertLevelId = expertLevels.value.id;
-      admin.regionId='';
+      admin.regionId = "";
     };
 
     const selectedRegion = () => {
@@ -571,11 +598,10 @@ export default {
           admin.grandfatherName;
 
         admin.email = admin.email.toLowerCase();
-
+        console.log(admin)
         store
           .dispatch("admin/registerAdmin", admin)
-          .then((res) => {
-            console.log(res);
+          .then((res) => { 
             showLoading.value = false;
             if (res.data.status == "Success") {
               toast.success("User added Successfully", {
@@ -587,9 +613,9 @@ export default {
               });
               isLoading.value = false;
 
-                setTimeout(() => {
-              window.location.reload();
-            }, 3000);
+              setTimeout(() => {
+                window.location.reload();
+              }, 3000);
             } else if (res.data.status == "Error") {
               toast.error(res.data.message, {
                 timeout: 5000,
@@ -600,9 +626,9 @@ export default {
               });
               isLoading.value = false;
 
-                setTimeout(() => {
-              window.location.reload();
-            }, 3000);
+              setTimeout(() => {
+                window.location.reload();
+              }, 3000);
             }
           })
           .catch(() => {
@@ -618,7 +644,7 @@ export default {
               }
             );
 
-                setTimeout(() => {
+            setTimeout(() => {
               window.location.reload();
             }, 3000);
           });

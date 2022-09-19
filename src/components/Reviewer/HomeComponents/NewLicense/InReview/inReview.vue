@@ -64,7 +64,7 @@
                     />
                     <button
                       class="
-                        inline-block
+                     inline-block
                         px-6
                         py-2
                         bg-primary-700
@@ -75,12 +75,9 @@
                         uppercase
                         rounded
                         shadow-md
-                        hover:bg-blue-700 hover:shadow-lg
-                        focus:bg-blue-700
-                        focus:shadow-lg
-                        focus:outline-none
-                        focus:ring-0
-                        active:bg-blue-800 active:shadow-lg
+                        hover:bg-white
+                        hover:text-primary-600
+                        hover:border
                         transition
                         duration-150
                         ease-in-out
@@ -187,7 +184,7 @@
                     />
                     <button
                       class="
-                        inline-block
+                     inline-block
                         px-6
                         py-2
                         bg-primary-700
@@ -198,12 +195,9 @@
                         uppercase
                         rounded
                         shadow-md
-                        hover:bg-blue-700 hover:shadow-lg
-                        focus:bg-blue-700
-                        focus:shadow-lg
-                        focus:outline-none
-                        focus:ring-0
-                        active:bg-blue-800 active:shadow-lg
+                        hover:bg-white
+                        hover:text-primary-600
+                        hover:border
                         transition
                         duration-150
                         ease-in-out
@@ -407,11 +401,9 @@ export default {
                   width: "10%",
                   display: function (row) {
                     return (
-                      '<button  data-set="' +
-                      row +
-                      '"  data-bs-toggle="modal" data-bs-target="#staticBackdropOthers" class="edit-btn-others inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" data-id="' +
-                      row.id +
-                      '" >View/Edit</button>'
+                  '<button data-bs-toggle="modal" data-bs-target="#editUser" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
+                  row.id +
+                  '" ><i class="fa fa-eye"></i> View</button>'
                     );
                   },
                 },
@@ -516,9 +508,9 @@ export default {
                     return (
                       '<button  data-set="' +
                       row +
-                      '"  data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" data-id="' +
+                      '"  data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn inline-block px-6 py-2.5 bg-blue-600 hover:text-primary-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" data-id="' +
                       row.id +
-                      '" >View/Edit</button>'
+                      '" ><i class="fa fa-eye"></i>View/Edit</button>'
                     );
                   },
                 },
@@ -565,8 +557,7 @@ export default {
     };
     const rowClicked = (row) => {
       if (row != undefined) {
-        store.dispatch("reviewer/getAdmins").then((res) => {
-          console.log(res);
+        store.dispatch("reviewer/getAdmins").then((res) => { 
           reviewers.value = res?.data?.data.filter((e) => {
             return e.role.code !== "UM";
           });

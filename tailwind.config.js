@@ -7,7 +7,18 @@ module.exports = {
       display: ["Atkinson-Hyperlegible"],
       body: ["Atkinson-Hyperlegible"],
       AtkinsonHyperlegible: ["Atkinson-Hyperlegible"],
-      AtkinsonHyperlegibleBold: ["Atkinson-Hyperlegible-Bold"]
+      AtkinsonHyperlegibleBold: ["Atkinson-Hyperlegible-Bold"],
+    },
+    screens: {
+      'sm': '400px',
+      // => @media (min-width: 576px) { ... }
+
+      'md': '960px',
+      // => @media (min-width: 960px) { ... }
+      'mdlg': '1200px',
+      // => @media (min-width: 1440px) { ... }
+      'lg': '1440px',
+      // => @media (min-width: 1440px) { ... }
     },
     fontSize: {
       xs: "12px",
@@ -18,7 +29,7 @@ module.exports = {
       "2xl": "22px",
       "3xl": "36px",
       display: "48px",
-      largeDisplay: "54px"
+      largeDisplay: "54px",
     },
     colors: {
       white: "#ffffff",
@@ -32,7 +43,7 @@ module.exports = {
         700: "#285180",
         800: "#224771",
         900: "#1F3F64",
-        1000: "#162B43"
+        1000: "#162B43",
       },
       grey: {
         100: "#D1D5DB",
@@ -41,23 +52,23 @@ module.exports = {
         400: "#4B5563",
         500: "#374151",
         600: "#1F2937",
-        700: "#111827"
+        700: "#111827",
       },
       green: {
         100: "#074E00",
         200: "#16B900C4",
-        300:"#1EFF00 "
+        300: "#1EFF00 ",
       },
       red: {
         100: "#FECACA",
         200: "#F87171",
-        300:"#ff5252 "
+        300: "#ff5252 ",
       },
       yellow: {
         100: "#FDE68A",
         200: "#FFC400",
         300: "#D97706",
-        400: "#FAD400"
+        400: "#FAD400",
       },
       lightBlue: {
         100: "#EFF6FF",
@@ -69,23 +80,33 @@ module.exports = {
         700: "#2563EB",
         800: "#1D4ED8",
         900: "#1E40AF",
-        1000: "#1E3A8A"
+        1000: "#1E3A8A",
       },
       lightBlueB: {
         100: "#f3f6f9",
         200: "#eceff5",
         300: "#e2e9f5",
         400: "#a0b0cb",
-        500: "#6d91af"
+        500: "#6d91af",
       },
       blue: {
         100: "#3c5d82",
         200: "#3c82f5",
-        600: "#2F639D"
+        600: "#2F639D",
+      },
+      main: {
+        100: "#07677e",
+        400: "#07677e",
+        500: "#21565e",
+      },
+      lightMain: {
+        100: "#07667ED0",
+        400: "#07667EA1",
+        500: "#152b328f",
       },
       lightGrey: {
-        100: "#f3f4f6"
-      }
+        100: "#DCDEE2",
+      },
     },
     extend: {
       spacing: {
@@ -95,16 +116,16 @@ module.exports = {
         16: "16px",
         medium: "30px",
         large: "60px",
-        xl: "100px"
+        xl: "100px",
       },
       inset: {
-        full: "100%"
+        full: "100%",
       },
       opacity: {
         "10": "0.1",
-        "90": "0.9"
-      }
-    }
+        "90": "0.9",
+      },
+    },
   },
   variants: {
     appearance: ["responsive"],
@@ -170,14 +191,14 @@ module.exports = {
     whitespace: ["responsive"],
     wordBreak: ["responsive"],
     width: ["responsive"],
-    zIndex: ["responsive"]
+    zIndex: ["responsive"],
   },
   corePlugins: {
-    container: false
+    container: false,
   },
   content: [
     "./src/**/*.{html,js}",
-    "./node_modules/tw-elements/dist/js/**/*.js"
+    "./node_modules/tw-elements/dist/js/**/*.js",
   ],
-  plugins: [require("@tailwindcss/forms"), require("tw-elements/dist/plugin")]
+  plugins: [require("@tailwindcss/forms"), require("tw-elements/dist/plugin")],
 };

@@ -20,14 +20,7 @@
     aria-labelledby="staticBackdropLabel"
     aria-hidden="true"
   >
-    <div
-      class="
-        modal-dialog modal-dialog-centered modal-xl
-        relative
-        w-auto
-        pointer-events-none
-      "
-    >
+    <div class="modal-dialog modal-xl relative w-auto pointer-events-none">
       <div
         class="
           modal-content
@@ -44,23 +37,38 @@
         "
       >
         <div
-          class="
-            modal-header
-            flex flex-shrink-0
-            items-center
-            justify-between
-            p-2
-            rounded-t-md
-          "
+          class="modal-header flex flex-shrink-0 justify-end p-2 rounded-t-md"
         >
           <button
             type="button"
-            class="btn-close border-none rounded-lg hover:text-primary-400"
+            class="
+              px-6
+              text-white
+              bg-primary-600
+              hover:text-primary-600 hover:border
+              font-medium
+              text-xs
+              leading-tight
+              uppercase
+              rounded
+              shadow-lg
+              hover:bg-purple-700 hover:shadow-lg
+              focus:bg-purple-700
+              focus:shadow-lg
+              focus:outline-none
+              focus:ring-0
+              active:bg-purple-800 active:shadow-lg
+              transition
+              duration-150
+              ease-in-out
+            "
             data-bs-dismiss="modal"
             aria-label="Close"
-          ></button>
+          >
+            <i class="fa fa-close fa-2x"></i>
+          </button>
         </div>
-        <div class="vld-parent">
+        <div class="vld-parent mt-4">
           <loading
             :active="isLoading"
             :is-full-page="false"
@@ -75,7 +83,7 @@
                     <h2 class="text-2xl font-bold mb-8 px-6">
                       Showing
                       <span class="text-2xl font-bold px-6">
-                        {{ modalData.name ? modalData.name : "" }}
+                        {{ modalData.name }}
                       </span>
                       's License Data
                     </h2>
@@ -83,7 +91,7 @@
                 </div>
 
                 <div class="flex flex-wrap">
-                  <div class="grow-0 shrink-0 basis-auto w-full lg:w-11/12">
+                  <div class="grow-0 shrink-0 basis-auto w-full">
                     <div class="flex flex-wrap">
                       <div
                         class="
@@ -112,11 +120,23 @@
                                 justify-center
                               "
                             >
-                              <img
-                                src="../../../../../assets/showLicense/profile.png"
-                                alt=""
-                                style="height: 152px; width: 150px"
-                              />
+                              <picture>
+                                <source
+                                  :srcset="
+                                    modalData.profile &&
+                                    modalData.profile.profilePicture
+                                      ? googleApi +
+                                        modalData.profile.profilePicture
+                                          .filePath
+                                      : ''
+                                  "
+                                  type="image/jpg"
+                                />
+
+                                <img
+                                  src="../../../../../assets/showLicense/profile.png"
+                                />
+                              </picture>
                             </div>
                           </div>
                           <div class="grow ml-6">
@@ -132,23 +152,19 @@
                                 "
                                 >Full Name:</span
                               >
-                              {{ modalData.name ? modalData.name : "" }}
+                              {{ modalData.name }}
                             </p>
                             <p class="text-gray-500">
                               <span class="font-semibold text-primary-700 mb-1"
                                 >Gender:</span
                               >
-                              {{ modalData.gender ? modalData.gender : "" }}
+                              {{ modalData.gender }}
                             </p>
                             <p class="text-gray-500">
                               <span class="font-semibold text-primary-700 mb-1"
                                 >Nationality:</span
                               >
-                              {{
-                                modalData.nationality
-                                  ? modalData.nationality
-                                  : ""
-                              }}
+                              {{ modalData.nationality }}
                             </p>
                             <p class="text-gray-500">
                               <span class="font-semibold text-primary-700 mb-1"
@@ -164,66 +180,7 @@
                               <span class="font-semibold text-primary-700 mb-1"
                                 >Martial Status:</span
                               >
-                              {{
-                                modalData.martialStatus
-                                  ? modalData.martialStatus
-                                  : ""
-                              }}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div
-                        class="
-                          grow-0
-                          shrink-0
-                          basis-auto
-                          w-full
-                          lg:w-6/12
-                          px-3
-                          lg:px-6
-                        "
-                      >
-                        <div class="flex align-center">
-                          <div class="shrink-0">
-                            <div
-                              class="
-                                p-4
-                                bg-blue-600
-                                rounded-md
-                                shadow-lg
-                                w-48
-                                h-48
-                                flex
-                                items-center
-                                justify-center
-                              "
-                            >
-                              <i class="fa fa-building fa-4x"></i>
-                            </div>
-                          </div>
-                          <div class="grow ml-6">
-                            <h2 class="font-bold mb-1">Institution Info</h2>
-                            <p class="text-gray-500">
-                              <span class="font-medium text-primary-700 mb-1"
-                                >Institution Name:</span
-                              >
-                              {{ modalData.instName ? modalData.instName : "" }}
-                            </p>
-                            <p class="text-gray-500">
-                              <span class="font-medium text-primary-700 mb-1"
-                                >Department:</span
-                              >
-                              {{
-                                modalData.department ? modalData.department : ""
-                              }}
-                            </p>
-                            <p class="text-gray-500">
-                              <span class="font-medium text-primary-700 mb-1"
-                                >Institution Type:</span
-                              >
-                              {{ modalData.instType ? modalData.instType : "" }}
+                              {{ modalData.martialStatus }}
                             </p>
                           </div>
                         </div>
@@ -248,14 +205,14 @@
                                 bg-blue-600
                                 rounded-md
                                 shadow-lg
-                                w-48
-                                h-48
+                                w-40
+                                h-40
                                 flex
                                 items-center
                                 justify-center
                               "
                             >
-                              <i class="fa fa-phone fa-4x"></i>
+                              <i class="fa fa-phone fa-4x text-white"></i>
                             </div>
                           </div>
                           <div class="grow ml-6">
@@ -264,121 +221,131 @@
                               <span class="font-medium text-primary-700 mb-1"
                                 >Mobile Number:</span
                               >
-                              {{
-                                modalData.mobileNumber
-                                  ? modalData.mobileNumber
-                                  : ""
-                              }}
+                              {{ modalData.mobileNumber }}
                             </p>
                             <p class="text-gray-500">
                               <span class="font-medium text-primary-700 mb-1"
                                 >Email:</span
                               >
-                              {{ modalData.email ? modalData.email : "" }}
+                              {{ modalData.email }}
                             </p>
                           </div>
                         </div>
                       </div>
-
-                      <div
-                        class="
-                          grow-0
-                          shrink-0
-                          basis-auto
-                          w-full
-                          lg:w-6/12
-                          px-3
-                          lg:px-6
-                        "
-                      >
-                        <div>
-                          <label class="font-bold text-lg text-primary-600 mb-1"
-                            >Actions</label
-                          >
-                          <br />
-                          <button
-                            class="
-                              inline-block
-                              px-6
-                              py-2.5
-                              hover:bg-yellow-300 hover:text-white
-                              text-white
-                              font-medium
-                              text-xs
-                              leading-tight
-                              uppercase
-                              rounded
-                              shadow-lg
-                              focus:shadow-lg focus:outline-none focus:ring-0
-                              active:bg-blue-800 active:shadow-lg
-                              transition
-                              duration-150
-                              ease-in-out
-                            "
-                            data-bs-toggle="modal"
-                            data-bs-target="#suspendLicense"
-                            type="button"
-                          >
-                            <i class="fa fa-ban"></i>
-                            Suspend
-                          </button>
-                          <button
-                            class="
-                              inline-block
-                              px-6
-                              py-2.5
-                              hover:bg-red-300 hover:text-white
-                              text-white
-                              font-medium
-                              text-xs
-                              leading-tight
-                              uppercase
-                              rounded
-                              shadow-lg
-                              focus:shadow-lg focus:outline-none focus:ring-0
-                              active:bg-blue-800 active:shadow-lg
-                              transition
-                              duration-150
-                              ease-in-out
-                            "
-                            type="button"
-                            data-bs-toggle="modal"
-                            data-bs-target="#revokeLicense"
-                          >
-                            <i class="fa fa-remove"></i>
-                            Revoke
-                          </button>
-                          <button
-                            class="
-                              inline-block
-                              px-6
-                              py-2.5
-                              bg-
-                              text-white
-                              font-medium
-                              text-xs
-                              leading-tight
-                              uppercase
-                              rounded
-                              shadow-lg
-                              hover:bg-blue-700 hover:shadow-lg
-                              focus:bg-blue-700
-                              focus:shadow-lg
-                              focus:outline-none
-                              focus:ring-0
-                              active:bg-blue-800 active:shadow-lg
-                              transition
-                              duration-150
-                              ease-in-out
-                            "
-                            type="button"
-                            data-bs-toggle="modal"
-                            data-bs-target="#generatePdf"
-                          >
-                            <i class="fa fa-file-text"></i>
-                            Generate PDF
-                          </button>
-                        </div>
+                      <div>
+                        <label class="font-bold text-lg text-primary-600 mb-1"
+                          >Actions</label
+                        >
+                        <br />
+                        <button
+                          class="
+                            inline-block
+                            px-6
+                            py-2.5
+                            bg-yellow-300
+                            text-white
+                            hover:bg-ywhite hover:text-yellow-300
+                            font-medium
+                            text-xs
+                            leading-tight
+                            uppercase
+                            rounded
+                            shadow-lg
+                            focus:shadow-lg focus:outline-none focus:ring-0
+                            active:bg-blue-800 active:shadow-lg
+                            transition
+                            duration-150
+                            ease-in-out
+                          "
+                          type="button"
+                          data-bs-toggle="modal"
+                          data-bs-target="#suspendLicense"
+                        >
+                          <i class="fa fa-ban"></i>
+                          Suspend
+                        </button>
+                        <button
+                          class="
+                            inline-block
+                            px-6
+                            py-2.5
+                            bg-red-300
+                            hover:text-white hover:bg-white hover:text-red-300
+                            text-white
+                            font-medium
+                            text-xs
+                            leading-tight
+                            uppercase
+                            rounded
+                            shadow-lg
+                            focus:shadow-lg focus:outline-none focus:ring-0
+                            active:bg-blue-800 active:shadow-lg
+                            transition
+                            duration-150
+                            ease-in-out
+                          "
+                          type="button"
+                          data-bs-toggle="modal"
+                          data-bs-target="#revokeLicense"
+                        >
+                          <i class="fa fa-remove"></i>
+                          Revoke
+                        </button>
+                        <button
+                          v-if="showGenerate"
+                          class="
+                            inline-block
+                            px-6
+                            py-2.5
+                            bg-primary-700
+                            text-white
+                            font-medium
+                            text-xs
+                            leading-tight
+                            uppercase
+                            rounded
+                            shadow-lg
+                            hover:bg-white hover:text-primary-600
+                            transition
+                            duration-150
+                            ease-in-out
+                          "
+                          type="button"
+                          data-bs-toggle="modal"
+                          data-bs-target="#generatePdf"
+                        >
+                          <i class="fa fa-file-text"></i>
+                          Generate PDF
+                        </button>
+                        <button
+                          v-if="showPreviousLicense"
+                          type="button"
+                          class="
+                            inline-block
+                            px-6
+                            text-white
+                            bg-primary-600
+                            font-medium
+                            text-xs
+                            leading-tight
+                            uppercase
+                            rounded
+                            shadow-lg
+                            hover:text-primary-600 hover:shadow-lg
+                            focus:bg-purple-700
+                            focus:shadow-lg
+                            focus:outline-none
+                            focus:ring-0
+                            active:bg-purple-800 active:shadow-lg
+                            transition
+                            duration-150
+                            ease-in-out
+                          "
+                          data-bs-toggle="modal"
+                          data-bs-target="#returnPreviousLicense"
+                        >
+                          Return Previous License
+                        </button>
                       </div>
                     </div>
 
@@ -389,7 +356,7 @@
                         </div>
                         <div class="grid grid-cols-4 gap-4">
                           <div
-                            class="mt-4 mb-8 bg-white"
+                            class="mt-4 mb-8 bg-white shadow-lg"
                             style="border-radius: 15px; padding: 10px"
                             v-for="document in modalData.documents"
                             :key="document.id"
@@ -397,20 +364,36 @@
                             <div class="flex justify-center">
                               <div class="mt-large bg-white">
                                 <a
-                                  :href="googleApi + document.filePath"
-                                  :data-title="document.documentType.name"
+                                  :href="
+                                    document.filePath
+                                      ? googleApi + document.filePath
+                                      : ''
+                                  "
+                                  :data-title="
+                                    document.documentType
+                                      ? document.documentType.name
+                                      : '-----'
+                                  "
                                   data-lightbox="example-2"
                                 >
                                   <img
-                                    :src="googleApi + document.filePath"
+                                    :src="
+                                      document.filePath
+                                        ? googleApi + document.filePath
+                                        : ''
+                                    "
                                     class="w-full h-48 object-cover"
                                   />
                                 </a>
 
-                                <h4 style="font-weight: bold">
-                                  Document Type:-
-                                </h4>
-                                <h6>{{ document.documentType.name }}</h6>
+                                <h4 style="font-weight: bold">Document Type</h4>
+                                <h5 class="text-primary-500">
+                                  {{
+                                    document.documentType
+                                      ? document.documentType.name
+                                      : "------"
+                                  }}
+                                </h5>
                               </div>
                             </div>
                           </div>
@@ -438,7 +421,7 @@
               inline-block
               px-6
               py-2.5
-              bg-primary-400
+              bg-primary-700
               text-white
               font-medium
               text-xs
@@ -446,9 +429,7 @@
               uppercase
               rounded
               shadow-lg
-              hover:bg-blue-700 hover:shadow-lg
-              focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
-              active:bg-blue-800 active:shadow-lg
+              hover:bg-white hover:text-primary-600
               transition
               duration-150
               ease-in-out
@@ -470,64 +451,138 @@
               text-white
               font-medium
               text-xs
+              bg-primary-700
               leading-tight
               uppercase
               rounded
               shadow-lg
-              hover:bg-purple-700 hover:shadow-lg
-              focus:bg-purple-700
-              focus:shadow-lg
-              focus:outline-none
-              focus:ring-0
-              active:bg-purple-800 active:shadow-lg
+              hover:bg-white hover:text-primary-700
               transition
               duration-150
               ease-in-out
             "
             data-bs-dismiss="modal"
           >
-            <i class="fa fa-times-circle"></i>
             Close
           </button>
         </div>
       </div>
     </div>
   </div>
-  <generate-pdf v-if="showGenerateModal" :modalData="modalData"></generate-pdf>
+  <generate-pdf :modalData="modalData"></generate-pdf>
   <revoke-license-modal :modalData="modalData"></revoke-license-modal>
   <suspend-license-modal :modalData="modalData"></suspend-license-modal>
+  <previous-license
+    :previousLicenseData="previousLicenseData"
+  ></previous-license>
 </template>
 <script>
-import { googleApi } from "@/composables/baseURL";
-import generatePdf from "./generateLicensedPdf.vue";
-import { ref, watch } from "vue";
 import { useStore } from "vuex";
+import { ref, watch } from "vue";
+import moment from "moment";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
+import { googleApi } from "@/composables/baseURL";
+
+import generatePdf from "./generateLicensedPdf.vue";
 import revokeLicenseModal from "./revokeLicenseModal.vue";
 import suspendLicenseModal from "./suspendLicenseModal.vue";
+import previousLicense from "./returnPreviousLicense.vue";
+
 export default {
-  name: "Modal",
-  components: { generatePdf, Loading, revokeLicenseModal, suspendLicenseModal },
   props: ["modalDataId"],
+  components: {
+    Loading,
+    generatePdf,
+    revokeLicenseModal,
+    suspendLicenseModal,
+    previousLicense,
+  },
+  computed: {
+    moment: () => moment,
+  },
   setup(props) {
     const store = useStore();
+
+    let show = ref(true);
+    let adminId = +localStorage.getItem("adminId");
+    let userId = ref("");
+    let isLoading = ref(false);
+    let reviewerAdminId = ref(0);
+    let showPreviousLicense = ref(false);
     const showModal = () => {
-      this.show = true;
+      show.value = true;
     };
-    const show = ref(true);
-    const showRes = ref(true);
-    const showGenerateModal = ref(true);
-    const showOptions = ref(true);
-    const isLoading = ref(true);
-    const modalData = ref({});
+    let showGenerate = ref(false);
+    let previousLicenseData = ref([]);
+    const modalData = ref({ educations: [] });
     let result = {};
+    let toBeGeneratedProfs = [];
     const check = () => {
+      modalData.value = {};
       store
         .dispatch("reviewer/getRenewalApplication", props.modalDataId.id)
         .then((res) => {
           if (res.data.status == "Success") {
             result = res.data.data;
+            let tempEvaluateResult = false;
+
+            userId.value = result.profile ? result.profile.userId : "";
+            store
+              .dispatch(
+                "reviewerRenewal/getRenewalByUserId",
+                userId.value
+              )
+              .then((res) => {
+                let tempEd = [];
+                if (res.data && res.data.data && res.data.data.length > 0) {
+                  res.data.data.forEach((element) => {
+                    if (
+                      element &&
+                      element.isLicenseGenerated == true &&
+                      element.isReprint == false &&
+                      element.applicationStatus.code == "APP"
+                    ) {
+                      previousLicenseData.value.push(element);
+                      tempEvaluateResult = true;
+                    }
+                    if (
+                      element &&
+                      element.isLicenseGenerated == true &&
+                      element.applicationStatus.code == "RTN"
+                    ) {
+                      tempEd.push([...new Set(element.educations)]);
+                    }
+                  });
+                  tempEd.forEach((element) => {
+                    if (element.length < 2) {
+                      toBeGeneratedProfs.push(element[0]);
+                    } else {
+                      element.forEach((element) => {
+                        toBeGeneratedProfs.push(element);
+                      });
+                    }
+                  });
+                  modalData.value.previousEducations = toBeGeneratedProfs;
+                  if (tempEvaluateResult ) {
+                    showGenerate.value = false;
+                    showPreviousLicense.value = true;
+                  } else {
+                    showGenerate.value = true;
+                    showPreviousLicense.value = false;
+                  }
+                } else {
+                  showGenerate.value = true;
+                  showPreviousLicense.value = false;
+                }
+              
+                if (toBeGeneratedProfs.length == 0) {
+                  modalData.value.educations=result.educations;
+                }
+              })
+
+              .catch((err) => console.log(err));
+
             modalData.value.name =
               result.profile.name +
               " " +
@@ -552,24 +607,21 @@ export default {
             modalData.value.email = result.applicant.emailAddress
               ? result.applicant.emailAddress
               : "-----";
-            modalData.value.instName = result.education.institution?.name
-              ? result.education.institution?.name
-              : "-----";
-            modalData.value.instType = result.education.institution
-              ?.institutionType
-              ? result.education.institution?.institutionType.name
-              : "-----";
-            modalData.value.department = result.education.department.name
-              ? result.education?.department.name
-              : "-----";
+            modalData.value.newEducations = result.educations
+              ? result.educations
+              : {};
             modalData.value.profile = result.profile;
-            modalData.value.professionalTypes = result.licenseProfessions;
             modalData.value.certifiedDate = result.certifiedDate;
             modalData.value.licenseExpirationDate =
               result.licenseExpirationDate;
             modalData.value.documents = result.documents;
             modalData.value.data = result;
             modalData.value.id = result.id;
+            modalData.value.profileImage =
+              result.profile && result.profile.profilePicture
+                ? googleApi + result.profile.profilePicture.filePath
+                : "";   
+                console.log(modalData.value)
             isLoading.value = false;
           }
         });
@@ -579,16 +631,18 @@ export default {
       isLoading.value = true;
       check();
     });
+
     return {
+      adminId,
+      reviewerAdminId,
       showModal,
-      show,
+      showGenerate,
+      showPreviousLicense,
+      previousLicenseData,
       check,
       isLoading,
-      showRes,
-      showGenerateModal,
-      showOptions,
-      googleApi,
       modalData,
+      googleApi,
     };
   },
 };

@@ -11,36 +11,35 @@
       items-center
       relative
       pt-8
-      pb-8
     "
   >
     <button
-      class="absolute top-0 right-0 mr-2 mt-2"
+      class="hover:bg-main-400 border text-main-400 rounded-sm mb-4"
       @click="$emit('closeModal', false)"
-      variant="rounded"
     >
       <svg
         viewBox="0 0 329.269 329"
         xmlns="http://www.w3.org/2000/svg"
-        class="close-svg fill-current text-primary-100 relative"
+        class="close-svg fill-current text-main-400 relative hover:text-white"
       >
         <path
           d="M194.8 164.77L323.013 36.555c8.343-8.34 8.343-21.825 0-30.164-8.34-8.34-21.825-8.34-30.164 0L164.633 134.605 36.422 6.391c-8.344-8.34-21.824-8.34-30.164 0-8.344 8.34-8.344 21.824 0 30.164l128.21 128.215L6.259 292.984c-8.344 8.34-8.344 21.825 0 30.164a21.266 21.266 0 0015.082 6.25c5.46 0 10.922-2.09 15.082-6.25l128.21-128.214 128.216 128.214a21.273 21.273 0 0015.082 6.25c5.46 0 10.922-2.09 15.082-6.25 8.343-8.34 8.343-21.824 0-30.164zm0 0"
         />
       </svg>
     </button>
-    <Title message="Sign up" />
+    <h2 class="font-bold text-main-400">Sign Up</h2>
     <form
       class="flex flex-col justify-center items-center w-full mt-4"
       @submit.prevent="submit"
     >
       <input type="hidden" name="remember" value="true" />
       <div class="flex flex-col mb-medium w-full">
-        <label>Email</label>
+        <label class=" ml-4 text-main-400 font-bold">Email</label>
         <input
           v-model="credentials.emailAddress"
           id="email-address"
           name="email"
+          class="w-full  rounded-none sm:w-10/12 sm:ml-4 border text-main-400"
           type="email"
           autocomplete="email"
           required
@@ -48,16 +47,17 @@
         <span style="color: red">{{ credentialsErrors.email }}</span>
       </div>
       <div class="flex flex-col mb-medium w-full">
-        <label for="password">Phone Number(+251)</label>
+        <label for="password" class=" ml-4 text-main-400 font-bold">Phone Number(+251)</label>
         <input
           v-model="credentials.phoneNumber"
           id="phone"
           name="phone"
+          class="w-full  rounded-none sm:w-10/12 sm:ml-4 border text-main-400"
           type="text"
           autocomplete="current-number"
           required
         />
-        <span class="text-sm"
+        <span class="text-sm ml-4"
           >Area code for phone is not needed, valid phone number
           eg-912345678</span
         >
@@ -67,13 +67,14 @@
         <span style="color: red">{{ credentialsErrors.phoneNumber }}</span>
       </div>
       <div class="flex flex-col mb-medium w-full">
-        <label>Password</label>
+        <label class=" ml-4 text-main-400 font-bold">Password</label>
         <input
           v-model="credentials.password"
           type="password"
           id="password"
           name="password"
           autocomplete="current-password"
+          class="w-full  rounded-none sm:w-10/12 sm:ml-4 border text-main-400"
           required
           v-on:keyup="showPasswordStrength(credentials.password)"
         />
@@ -93,13 +94,14 @@
         <span style="color: red">{{ credentialsErrors.password }}</span>
       </div>
       <div class="flex flex-col mb-medium w-full">
-        <label>Re-type Password</label>
+        <label class=" ml-4 text-main-400 font-bold">Re-type Password</label>
         <input
           v-model="credentials.repassword"
           type="password"
           id="repassword"
           name="password"
           autocomplete="current-password"
+          class="w-full  rounded-none sm:w-10/12 sm:ml-4 border text-main-400"
           required
         />
         <password-meter :password="credentials.repassword" />
@@ -107,7 +109,27 @@
       </div>
 
       <div v-if="!message.showLoading">
-        <button click="submit()">Sign up</button>
+        <button
+          class="
+            transition
+            duration-200
+            bg-main-400
+            text-white
+            w-full
+            ml-auto
+            mt-4
+            rounded-sm
+            mb-4
+            text-md
+            hover:text-main-400
+            font-semibold
+            text-center
+            inline-block
+          "
+          click="submit()"
+        >
+          Sign up
+        </button>
       </div>
       <Spinner
         v-if="message.showLoading"
@@ -115,7 +137,7 @@
         style="width: 20px; height: 20px"
       />
       <a
-        class="text-base text-primary-500 hover:underline cursor-pointer"
+        class="text-base text-main-400 hover:underline cursor-pointer"
         @click="$emit('redirectToLogin')"
         >Already have an account? Log in
       </a>

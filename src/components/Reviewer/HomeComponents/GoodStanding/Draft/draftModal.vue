@@ -50,21 +50,33 @@
             :opacity="0.7"
           ></loading>
           <div
-            class="
-              modal-header
-              flex flex-shrink-0
-              items-center
-              justify-between
-              p-2
-              rounded-t-md
-            "
+      class="modal-header flex flex-shrink-0 justify-end p-2 rounded-t-md"
           >
             <button
-              type="button"
-              class="btn-close border-none rounded-lg hover:text-primary-400"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
+            type="button"
+            class="     
+              px-6
+              text-white
+              bg-primary-600
+              hover:text-primary-600 hover:border
+              font-medium
+              text-xs
+              leading-tight
+              uppercase
+              rounded
+              shadow-lg
+              hover:bg-purple-700 hover:shadow-lg
+              focus:bg-purple-700
+              focus:shadow-lg
+              focus:outline-none
+              focus:ring-0
+              active:bg-purple-800 active:shadow-lg
+              transition
+              duration-150
+              ease-in-out"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ><i class="fa fa-close fa-2x"></i></button>
           </div>
 
           <div class="modal-body relative p-4">
@@ -224,26 +236,22 @@
                                 <div>
                                   <button
                                     class="
-                                      inline-block
-                                      px-6
-                                      py-2.5
-                                      bg-blue-600
-                                      text-white
-                                      font-medium
-                                      text-xs
-                                      leading-tight
-                                      uppercase
-                                      rounded
-                                      shadow-lg
-                                      hover:bg-blue-700 hover:shadow-lg
-                                      focus:bg-blue-700
-                                      focus:shadow-lg
-                                      focus:outline-none
-                                      focus:ring-0
-                                      active:bg-blue-800 active:shadow-lg
-                                      transition
-                                      duration-150
-                                      ease-in-out
+                                        inline-block
+                                            px-6
+                                            py-2.5
+                                            bg-primary-700
+                                            text-white
+                                            font-medium
+                                            text-xs
+                                            leading-tight
+                                            uppercase
+                                            rounded
+                                            shadow-lg
+                                            hover:bg-white 
+                                            hover:text-primary-600
+                                            transition
+                                            duration-150
+                                            ease-in-out
                                     "
                                     @click="transferReviewer()"
                                   >
@@ -468,21 +476,18 @@
           <button
             type="button"
             class="
-              inline-block
+        inline-block
               px-6
               text-white
               font-medium
               text-xs
+              bg-primary-700
               leading-tight
               uppercase
               rounded
               shadow-lg
-              hover:bg-purple-700 hover:shadow-lg
-              focus:bg-purple-700
-              focus:shadow-lg
-              focus:outline-none
-              focus:ring-0
-              active:bg-purple-800 active:shadow-lg
+              hover:bg-white 
+              hover:text-primary-700
               transition
               duration-150
               ease-in-out
