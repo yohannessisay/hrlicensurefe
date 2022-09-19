@@ -141,9 +141,9 @@
                           <input
                             type="file"
                             required
-                            :id="`files${item}`"
+                            :id="`files${item.id}`"
                             accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
-                            :ref="`imageUploader${item}`"
+                            :ref="`imageUploader${item.id}`"
                             class="custom-file-input"
                             v-on:change="handleFileUpload(item, $event)"
                           />

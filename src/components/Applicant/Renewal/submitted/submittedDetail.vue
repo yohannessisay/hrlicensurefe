@@ -10,9 +10,7 @@
         <li><span class="text-gray-500 mx-2">/</span></li>
         <li>
           <router-link to="/Applicant/NewLicense">
-            <a href="#" class="text-main-400 hover:text-blue-700"
-              >Renewal</a
-            >
+            <a href="#" class="text-main-400 hover:text-blue-700">Renewal</a>
           </router-link>
         </li>
         <li><span class="text-gray-500 mx-2">/</span></li>
@@ -21,7 +19,7 @@
     </nav>
 
     <div
-    v-if="activeState == 1"
+      v-if="activeState == 1"
       class="
         block
         p-6
@@ -748,18 +746,52 @@
           </div>
         </div>
         <!-- Table for selected departments data -->
-        <div class="flex justify-end mb-2 mr-1">
-          <button
-            :class="
-              generalInfo.educations.length > 0
-                ? 'px-6 mr-2 mb-2 py-2.5 bg-white text-main-400 font-medium border text-xs leading-tight uppercase rounded shadow-md hover:text-white hover:border-main-400 hover:bg-main-400 transition duration-150   ease-in-out'
-                : 'px-6 mr-2 mb-2 py-2.5 bg-white text-main-400 font-medium border text-xs leading-tight uppercase rounded shadow-md hover:text-white hover:border-main-400 hover:bg-main-400 transition duration-150   ease-in-out  disabled'
-            "
-            type="submit"
-            @click="apply()"
-          >
-            Next
-          </button>
+        <div class="vld-parent">
+          <loading
+            :active="isLoading"
+            :can-cancel="true"
+            :is-full-page="true"
+            :color="'#2F639D'"
+            :opacity="0.7"
+          ></loading>
+          <div class="flex justify-end mb-2 mr-1">
+            <button
+              :class="
+                generalInfo.educations.length > 0
+                  ? 'px-6 mr-2 mb-2 py-2.5 bg-white text-main-400 font-medium border text-xs leading-tight uppercase rounded shadow-md hover:text-white hover:border-main-400 hover:bg-main-400 transition duration-150   ease-in-out'
+                  : 'px-6 mr-2 mb-2 py-2.5 bg-white text-main-400 font-medium border text-xs leading-tight uppercase rounded shadow-md hover:text-white hover:border-main-400 hover:bg-main-400 transition duration-150   ease-in-out  disabled'
+              "
+              type="submit"
+              @click="apply()"
+            >
+              Next
+            </button>
+            <button
+              class="
+                px-6
+                mr-2
+                mb-2
+                py-2.5
+                bg-yellow-300
+                text-white
+                font-medium
+                border
+                text-xs
+                leading-tight
+                uppercase
+                rounded
+                shadow-md
+                hover:text-yellow-300 hover:border-yellow-300 hover:bg-white
+                transition
+                duration-150
+                ease-in-out
+              "
+              type="submit"
+              @click="withdraw()"
+            >
+              Withdraw
+            </button>
+          </div>
         </div>
       </form>
     </div>
@@ -791,11 +823,17 @@ import { useRoute } from "vue-router";
 import LicenseSummary from "./submittedSummary.vue";
 import Upload from "./submittedUpload.vue";
 import MainContent from "../sharedComponents/Menu.vue";
+import { useToast } from "vue-toastification";
+import Loading from "vue3-loading-overlay";
+import { useRouter } from "vue-router";
+import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 export default {
-  components: { MainContent, LicenseSummary, Upload },
+  components: { MainContent, LicenseSummary, Upload, Loading },
 
   setup(props, { emit }) {
     const route = useRoute();
+    const router = useRouter();
+    const toast = useToast();
     let activeState = ref(1);
     let applicantTypes = ref("");
     let departments = ref([]);
@@ -837,9 +875,43 @@ export default {
       nativeLanguageSelected: "",
       educations: [],
     });
-    let applicationStatuses= ref([]);
-
- 
+    let applicationStatuses = ref([]);
+    let isLoading = ref(false);
+    let withdrawData = ref({});
+    const withdraw = () => {
+      isLoading.value = true;
+      let req = {
+        data: withdrawData.value,
+        action: "WithdrawEvent",
+      };
+      store
+        .dispatch("reviewer/editRenewal", req)
+        .then((res) => {
+          isLoading.value = false;
+          if (res.statusText == "Created") {
+            toast.success("Done", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+            router.push({ path: "/Applicant/Renewal/withdraw" });
+          } else {
+            toast.error(res.data.message, {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+            router.push({ path: "/Applicant/Renewal/withdraw" });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
     const fetchApplicantType = () => {
       store.dispatch("renewal/getApplicantType").then((res) => {
         const results = res.data.data;
@@ -924,16 +996,16 @@ export default {
       });
     };
     const fetchApplicationStatuses = () => {
-      store.dispatch("newlicense/getApplicationStatuses").then(res => {
+      store.dispatch("newlicense/getApplicationStatuses").then((res) => {
         const results = res.data.data;
         applicationStatuses.value = results;
-       
-        let status = applicationStatuses.value.filter(function(e) {
-              return e.code == "SUB";
-            });   
-            store.dispatch("newlicense/setButtons", status[0].buttons);
+
+        let status = applicationStatuses.value.filter(function (e) {
+          return e.code == "SUB";
+        });
+        store.dispatch("newlicense/setButtons", status[0].buttons);
       });
-    }
+    };
     const departmentChange = () => {
       fetchProfessionalType(generalInfo.value.departmentSelected.id);
     };
@@ -1040,13 +1112,10 @@ export default {
         "RNApplicationData",
         JSON.stringify(tempApplicationData)
       );
-      store
-        .dispatch("renewal/setGeneralInfo", generalInfo.value)
-        .then(() => {
-          emit("changeActiveState");
-          activeState.value+=1; 
-          console.log( activeState.value  )
-        });
+      store.dispatch("renewal/setGeneralInfo", generalInfo.value).then(() => {
+        emit("changeActiveState");
+        activeState.value += 1;
+      });
     };
 
     onMounted(async () => {
@@ -1056,11 +1125,12 @@ export default {
       fetchEducationLevel();
       fetchRegions();
       fetchOccupation();
-      fetchApplicationStatuses()
-            store
+      fetchApplicationStatuses();
+      store
         .dispatch("renewal/getRenewalApplication", route.params.id)
         .then((res) => {
-          console.log(res.data.data)
+         
+          withdrawData.value = res.data.data;
           generalInfo.value = res.data.data;
           generalInfo.value.regionSelected =
             res.data.data && res.data.data.woreda
@@ -1097,7 +1167,7 @@ export default {
           generalInfo.value.multipleDepartment = JSON.parse(
             JSON.stringify(res.data.data.educations)
           );
-          generalInfo.value.applicantTypeSelected=res.data.data.applicantType
+          generalInfo.value.applicantTypeSelected = res.data.data.applicantType;
           console.log(generalInfo.value);
         });
     });
@@ -1121,9 +1191,10 @@ export default {
       woredas,
       checkForAddedError,
       zones,
+      isLoading,
       professionalTypes,
       showOccupation,
-      showLanguage, 
+      showLanguage,
       languageSelected,
       languages,
       occupations,
@@ -1135,6 +1206,7 @@ export default {
       institutionSelected,
       showOtherProfession,
       otherProfessionalType,
+      withdraw,
       otherProfessionalTypeAmharic,
       educationalLevelSelected,
       multipleDepartmentError,

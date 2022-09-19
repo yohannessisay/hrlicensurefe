@@ -5,10 +5,10 @@
         <li><a href="#" class="text-main-400 hover:text-blue-700">Home</a></li>
         <li><span class="text-gray-500 mx-2">/</span></li>
         <li>
-          <a href="#" class="text-main-400 hover:text-blue-700">Good Standing</a>
+          <a href="#" class="text-main-400 hover:text-blue-700">Goodstanding</a>
         </li>
         <li><span class="text-gray-500 mx-2">/</span></li>
-        <li class="text-gray-500">Assigned</li>
+        <li class="text-gray-500">Submitted</li>
       </ol>
     </nav>
     <div class="container my-12 mx-auto px-4 md:px-12">
@@ -184,8 +184,7 @@ export default {
         if (newLicense.value) {
           newLicense.value = newLicense.value.filter(function (e) {
             return (
-              e.applicationStatus.code.includes("UPD") ||
-              e.applicationStatus.code.includes("SUB")
+              e.applicationStatus.code.includes("IRV") 
             );
           });
           isLoading.value = false;

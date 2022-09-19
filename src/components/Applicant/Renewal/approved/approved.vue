@@ -238,7 +238,7 @@ export default {
 
           if (renewal.value) {
             renewal.value = renewal.value.filter(function (e) {
-              return e.applicationStatus.code.includes("DRA");
+              return e.applicationStatus.code.includes("APP");
             });
             isLoading.value = false;
             if (renewal.value.length < 1) {

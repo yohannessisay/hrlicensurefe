@@ -240,7 +240,7 @@ export default {
         if (newLicense.value) {
           newLicense.value = newLicense.value.filter(function (e) {
             return (
-              e.applicationStatus.code.includes("US")  
+              e.applicationStatus.code.includes("WD")  
             );
           });
           isLoading.value = false;
