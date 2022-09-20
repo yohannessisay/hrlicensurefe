@@ -149,6 +149,12 @@ const routes = [
       import("../components/Applicant/NewLicense/draft/draft.vue")
   },
   {
+    path: "/Applicant/NewLicense/draft/detail/:id",
+    name: "ApplicantNewLicenseDraftDetail",
+    component: () =>
+      import("../components/Applicant/NewLicense/draft/draftDetail.vue")
+  },
+  {
     path: "/Applicant/Newlicense",
     name: "ApplicantNewLicense",
     component: () => import("../components/Applicant/NewLicense/newLicense.vue")
