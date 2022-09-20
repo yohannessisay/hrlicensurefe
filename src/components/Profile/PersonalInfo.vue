@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-screen h-screen max-w-4xl mt-small h-full"
+    class="w-screen max-w-4xl mt-small overflow-y-scroll"
     v-if="approveStatus == 1"
   >
     <div
@@ -44,14 +44,11 @@
                 text-base
                 font-normal
                 text-gray-700
-             
                 border border-solid border-gray-300
                 rounded
                 transition
                 ease-in-out
-             
                 hover:text-primary-600 hover:border
-                
                 focus:outline-none
               "
               placeholder="Employee ID *"
@@ -148,7 +145,10 @@
     </div>
   </div>
 
-  <div class="w-screen max-w-4xl mt-small h-full" v-if="approveStatus == 2">
+  <div
+    class="w-screen max-w-4xl mt-small overflow-y-scroll"
+    v-if="approveStatus == 2"
+  >
     <div
       class="
         flex flex-col
