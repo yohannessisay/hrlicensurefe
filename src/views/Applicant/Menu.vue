@@ -273,7 +273,7 @@
                           border-b-4
                         "
                       >
-                        Ethiopian Applicants
+                        Foreign Applicants
                       </h4>
                     </div>
                     <div class="pricing-amount transition-colors duration-300">
@@ -288,11 +288,7 @@
                     </div>
 
                     <div class="p-6 mb-2" v-if="NLdocumentSpecs">
-                      <ul
-                        v-for="doc in NLdocumentSpecs.ethiopian"
-                        :key="doc.id"
-                        class="bg-white"
-                      >
+                      <ul class="bg-white">
                         <li
                           class="
                             text-main-400 text-lg
@@ -301,83 +297,10 @@
                             cursor-pointer
                           "
                           data-bs-toggle="tooltip"
-                          :title="
-                            doc && doc.documentType
-                              ? doc.documentType.description
-                              : ''
-                          "
                         >
                           <i class="fa fa-arrow-right-long"></i>
-                          {{
-                            doc && doc.documentType ? doc.documentType.name : ""
-                          }}
+                          Passport
                         </li>
-                      </ul>
-                      <div class="mt-6 py-4">
-                        <a href="/Applicant/NewLicense">
-                          <button
-                            class="
-                              text-xl text-white
-                              py-2
-                              bg-main-400
-                              hover:text-main-400 hover:border hover:bg-white
-                              px-6
-                              rounded-sm
-                            "
-                          >
-                            Get Started
-                          </button>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="pricing-plan-wrap lg:w-1/3 my-4 md:my-6 mr-4" >
-                  <div
-                    class="
-                      pricing-plan
-                      border-t-4 border-solid border-white
-                      bg-white
-                      rounded-lg
-                      shadow-2xl
-                      text-center
-                      max-w-full
-                      mx-auto
-                      hover:border-indigo-600
-                      transition-colors
-                      duration-300
-                    "
-                  >
-                    <div class="p-2 md:py-4">
-                      <h4
-                        class="
-                          font-medium
-                          text-main-400
-                          leading-tight
-                          text-2xl
-                          border-b-4
-                        "
-                      >
-                        Ethiopian From Abroad
-                      </h4>
-                    </div>
-                    <div class="pricing-amount transition-colors duration-300">
-                      <div>
-                        <span class="text-xl text-main-4oo font-semibold"
-                          >Attached Documents must be clear and visible.</span
-                        >
-                      </div>
-                      <small class="text-main-400 ml-2"
-                        >(hover over lists to see details)</small
-                      >
-                    </div>
-                    <div class="p-6 mb-2" v-if="NLdocumentSpecs">
-                      <ul
-                        v-for="doc in NLdocumentSpecs.ethiopianAbroad"
-                        :key="doc.id"
-                        class="bg-white"
-                      >
                         <li
                           class="
                             text-main-400 text-lg
@@ -386,16 +309,107 @@
                             cursor-pointer
                           "
                           data-bs-toggle="tooltip"
-                          :title="
-                            doc && doc.documentType
-                              ? doc.documentType.description
-                              : ''
-                          "
+                          title="For non english speaking countries only"
                         >
                           <i class="fa fa-arrow-right-long"></i>
-                          {{
-                            doc && doc.documentType ? doc.documentType.name : ""
-                          }}
+                          Medical Certificate
+                        </li>
+                        <li
+                          class="
+                            text-main-400 text-lg
+                            rounded-lg
+                            bg-white
+                            cursor-pointer
+                          "
+                          data-bs-toggle="tooltip"
+                          title="For non english speaking countries only"
+                        >
+                          <i class="fa fa-arrow-right-long"></i>
+                          English Language Proficiency Certificate
+                        </li>
+
+                        <li
+                          class="
+                            text-main-400 text-lg
+                            rounded-lg
+                            bg-white
+                            cursor-pointer
+                          "
+                          data-bs-toggle="tooltip"
+                          title="Equivalence letter"
+                        >
+                          <i class="fa fa-arrow-right-long"></i>
+                          Higher Education Relevance and Quality Agency
+                        </li>
+
+                        <li
+                          class="
+                            text-main-400 text-lg
+                            rounded-lg
+                            bg-white
+                            cursor-pointer
+                          "
+                          data-bs-toggle="tooltip"
+                          title="Diploma,transcript for both undergraduates and postgraduates"
+                        >
+                          <i class="fa fa-arrow-right-long"></i>
+                          Authenticated Academic Document
+                        </li>
+
+                        <li
+                          class="
+                            text-main-400 text-lg
+                            rounded-lg
+                            bg-white
+                            cursor-pointer
+                          "
+                          data-bs-toggle="tooltip"
+                        >
+                          <i class="fa fa-arrow-right-long"></i>
+                          Authenticated Professional License from Country of
+                          Origin
+                        </li>
+
+                        <li
+                          class="
+                            text-main-400 text-lg
+                            rounded-lg
+                            bg-white
+                            cursor-pointer
+                          "
+                          data-bs-toggle="tooltip"
+                          title="More than two years"
+                        >
+                          <i class="fa fa-arrow-right-long"></i>
+                          Current Work Experience / Goodstanding Letter
+                        </li>
+
+                        <li
+                          class="
+                            text-main-400 text-lg
+                            rounded-lg
+                            bg-white
+                            cursor-pointer
+                          "
+                          data-bs-toggle="tooltip"
+                          title="Foun in ethiopia"
+                        >
+                          <i class="fa fa-arrow-right-long"></i>
+                          Renewed License of Health FacilityFound in Ethiopia
+                        </li>
+
+                        <li
+                          class="
+                            text-main-400 text-lg
+                            rounded-lg
+                            bg-white
+                            cursor-pointer
+                          "
+                          data-bs-toggle="tooltip"
+                          title="Foun in ethiopia"
+                        >
+                          <i class="fa fa-arrow-right-long"></i>
+                          Request Letter from Hiring Health Facility
                         </li>
                       </ul>
                       <div class="mt-6 py-4">
@@ -444,7 +458,7 @@
                           border-b-4
                         "
                       >
-                        Foreign Applicants
+                        Ethiopian From Abroad
                       </h4>
                     </div>
                     <div class="pricing-amount transition-colors duration-300">
@@ -458,11 +472,7 @@
                       >
                     </div>
                     <div class="p-6 mb-2" v-if="NLdocumentSpecs">
-                      <ul
-                        v-for="doc in NLdocumentSpecs.foreigner"
-                        :key="doc.id"
-                        class="bg-white"
-                      >
+                      <ul class="bg-white">
                         <li
                           class="
                             text-main-400 text-lg
@@ -471,16 +481,320 @@
                             cursor-pointer
                           "
                           data-bs-toggle="tooltip"
-                          :title="
-                            doc && doc.documentType
-                              ? doc.documentType.description
-                              : ''
-                          "
+                          title="Equivalence letter"
                         >
                           <i class="fa fa-arrow-right-long"></i>
-                          {{
-                            doc && doc.documentType ? doc.documentType.name : ""
-                          }}
+                          Higher Education Relevance and Quality Agency
+                        </li>
+
+                        <li
+                          class="
+                            text-main-400 text-lg
+                            rounded-lg
+                            bg-white
+                            cursor-pointer
+                          "
+                          data-bs-toggle="tooltip"
+                          title="Diploma,transcript for both undergraduates and postgraduates"
+                        >
+                          <i class="fa fa-arrow-right-long"></i>
+                          Authenticated Academic Document
+                        </li>
+
+                        <li
+                          class="
+                            text-main-400 text-lg
+                            rounded-lg
+                            bg-white
+                            cursor-pointer
+                          "
+                          data-bs-toggle="tooltip"
+                          title="Proof of Ethiopian decent"
+                        >
+                          <i class="fa fa-arrow-right-long"></i>
+                          Residence ID or Passport or Yellow Card
+                        </li>
+
+                        <li
+                          class="
+                            text-main-400 text-lg
+                            rounded-lg
+                            bg-white
+                            cursor-pointer
+                          "
+                          data-bs-toggle="tooltip"
+                          title=" "
+                        >
+                          <i class="fa fa-arrow-right-long"></i>
+                          Authenticated Professional License from Country of
+                          Origin
+                        </li>
+
+                        <li
+                          class="
+                            text-main-400 text-lg
+                            rounded-lg
+                            bg-white
+                            cursor-pointer
+                          "
+                          data-bs-toggle="tooltip"
+                          title="More than two years"
+                        >
+                          <i class="fa fa-arrow-right-long"></i>
+                          Current Work Experience/ Goodstanding Letter
+                        </li>
+
+                        <li
+                          class="
+                            text-main-400 text-lg
+                            rounded-lg
+                            bg-white
+                            cursor-pointer
+                          "
+                          data-bs-toggle="tooltip"
+                          title=" "
+                        >
+                          <i class="fa fa-arrow-right-long"></i>
+                          Support Letter from Sponsored Institution
+                        </li>
+                        <li
+                          class="
+                            text-main-400 text-lg
+                            rounded-lg
+                            bg-white
+                            cursor-pointer
+                          "
+                          data-bs-toggle="tooltip"
+                          title=" "
+                        >
+                          <i class="fa fa-arrow-right-long"></i>
+                          Medical Certificate
+                        </li>
+                      </ul>
+                      <div class="mt-6 py-4">
+                        <a href="/Applicant/NewLicense">
+                          <button
+                            class="
+                              text-xl text-white
+                              py-2
+                              bg-main-400
+                              hover:text-main-400 hover:border hover:bg-white
+                              px-6
+                              rounded-sm
+                            "
+                          >
+                            Get Started
+                          </button>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="pricing-plan-wrap lg:w-1/3 my-4 md:my-6 mr-4">
+                  <div
+                    class="
+                      pricing-plan
+                      border-t-4 border-solid border-white
+                      bg-white
+                      rounded-lg
+                      shadow-2xl
+                      text-center
+                      max-w-full
+                      mx-auto
+                      hover:border-indigo-600
+                      transition-colors
+                      duration-300
+                    "
+                  >
+                    <div class="p-2 md:py-4">
+                      <h4
+                        class="
+                          font-medium
+                          text-main-400
+                          leading-tight
+                          text-2xl
+                          border-b-4
+                        "
+                      >
+                        Ethiopian
+                      </h4>
+                    </div>
+                    <div class="pricing-amount transition-colors duration-300">
+                      <div>
+                        <span class="text-xl text-main-4oo font-semibold"
+                          >Attached Documents must be clear and visible.</span
+                        >
+                      </div>
+                      <small class="text-main-400 ml-2"
+                        >(hover over lists to see details)</small
+                      >
+                    </div>
+                    <div class="p-6 mb-2" v-if="NLdocumentSpecs">
+                      <ul class="bg-white">
+                        <li
+                          class="
+                            text-main-400 text-lg
+                            rounded-lg
+                            bg-white
+                            cursor-pointer
+                          "
+                          data-bs-toggle="tooltip"
+                        >
+                          <i class="fa fa-arrow-right-long"></i>
+                          Residence Id
+                        </li>
+                        <li
+                          class="
+                            text-main-400 text-lg
+                            rounded-lg
+                            bg-white
+                            cursor-pointer
+                          "
+                          data-bs-toggle="tooltip"
+                          title="For non english speaking countries only"
+                        >
+                          <i class="fa fa-arrow-right-long"></i>
+                          Medical Certificate
+                        </li>
+                        <li
+                          class="
+                            text-main-400 text-lg
+                            rounded-lg
+                            bg-white
+                            cursor-pointer
+                          "
+                          data-bs-toggle="tooltip"
+                          title="Only for diploma graduates"
+                        >
+                          <i class="fa fa-arrow-right-long"></i>
+                          COC Certificate
+                        </li>
+
+                        <li
+                          class="
+                            text-main-400 text-lg
+                            rounded-lg
+                            bg-white
+                            cursor-pointer
+                          "
+                          data-bs-toggle="tooltip"
+                          title=""
+                        >
+                          <i class="fa fa-arrow-right-long"></i>
+                          8th, 10th, 12th Grade Certificate
+                        </li>
+
+                        <li
+                          class="
+                            text-main-400 text-lg
+                            rounded-lg
+                            bg-white
+                            cursor-pointer
+                          "
+                          data-bs-toggle="tooltip"
+                          title="Diploma,transcript for both undergraduates and postgraduates"
+                        >
+                          <i class="fa fa-arrow-right-long"></i>
+                          Academic Document
+                        </li>
+
+                        <li
+                          class="
+                            text-main-400 text-lg
+                            rounded-lg
+                            bg-white
+                            cursor-pointer
+                          "
+                          data-bs-toggle="tooltip"
+                        >
+                          <i class="fa fa-arrow-right-long"></i>
+                          Authenticated Professional License from Country of
+                          Origin
+                        </li>
+
+                        <li
+                          class="
+                            text-main-400 text-lg
+                            rounded-lg
+                            bg-white
+                            cursor-pointer
+                          "
+                          data-bs-toggle="tooltip"
+                          title=" "
+                        >
+                          <i class="fa fa-arrow-right-long"></i>
+                          9th - 10th Grade Transcript
+                        </li>
+
+                        <li
+                          class="
+                            text-main-400 text-lg
+                            rounded-lg
+                            bg-white
+                            cursor-pointer
+                          "
+                          data-bs-toggle="tooltip"
+                          title=""
+                        >
+                          <i class="fa fa-arrow-right-long"></i>
+                          11th - 12th Grade Transcript
+                        </li>
+
+                        <li
+                          class="
+                            text-main-400 text-lg
+                            rounded-lg
+                            bg-white
+                            cursor-pointer
+                          "
+                          data-bs-toggle="tooltip"
+                          title="Non-government Institutions"
+                        >
+                          <i class="fa fa-arrow-right-long"></i>
+                          Payroll Document
+                        </li>
+
+                        <li
+                          class="
+                            text-main-400 text-lg
+                            rounded-lg
+                            bg-white
+                            cursor-pointer
+                          "
+                          data-bs-toggle="tooltip"
+                          title="For those upgraded by the sponsorship of an Institution"
+                        >
+                          <i class="fa fa-arrow-right-long"></i>
+                          Support Letter from Sponsored Institution
+                        </li>
+
+                        <li
+                          class="
+                            text-main-400 text-lg
+                            rounded-lg
+                            bg-white
+                            cursor-pointer
+                          "
+                          data-bs-toggle="tooltip"
+                          title="Non-government Institutions"
+                        >
+                          <i class="fa fa-arrow-right-long"></i>
+                          Work Experience
+                        </li>
+
+                        <li
+                          class="
+                            text-main-400 text-lg
+                            rounded-lg
+                            bg-white
+                            cursor-pointer
+                          "
+                          data-bs-toggle="tooltip"
+                          title="Non-government Institutions"
+                        >
+                          <i class="fa fa-arrow-right-long"></i>
+                          Academic Transcript
                         </li>
                       </ul>
                       <div class="mt-6 py-4">
@@ -585,8 +899,8 @@
           </button>
         </div>
         <div class="modal-body relative p-4 overflow-y-scroll">
-          <div class="bg-white rounded-lg py-6 md:py-12 ">
-            <div class="container mx-auto px-4 ">
+          <div class="bg-white rounded-lg py-6 md:py-12">
+            <div class="container mx-auto px-4">
               <div class="max-w-3xl mx-auto text-center">
                 <h1
                   class="
@@ -647,11 +961,7 @@
                       >
                     </div>
                     <div class="p-6 mb-2" v-if="RNdocumentSpecs">
-                      <ul
-                        v-for="doc in RNdocumentSpecs.ethiopian"
-                        :key="doc.id"
-                        class="bg-white"
-                      >
+                      <ul class="bg-white">
                         <li
                           class="
                             text-main-400 text-lg
@@ -660,16 +970,80 @@
                             cursor-pointer
                           "
                           data-bs-toggle="tooltip"
-                          :title="
-                            doc && doc.documentType
-                              ? doc.documentType.description
-                              : ''
-                          "
+                          title=""
                         >
                           <i class="fa fa-arrow-right-long"></i>
-                          {{
-                            doc && doc.documentType ? doc.documentType.name : ""
-                          }}
+                          Health Exam Certificate
+                        </li>
+
+                        <li
+                          class="
+                            text-main-400 text-lg
+                            rounded-lg
+                            bg-white
+                            cursor-pointer
+                          "
+                          data-bs-toggle="tooltip"
+                          title="Found in Ethiopia"
+                        >
+                          <i class="fa fa-arrow-right-long"></i>
+                          Letter from Hiring Organization
+                        </li>
+
+                        <li
+                          class="
+                            text-main-400 text-lg
+                            rounded-lg
+                            bg-white
+                            cursor-pointer
+                          "
+                          data-bs-toggle="tooltip"
+                          title=" "
+                        >
+                          <i class="fa fa-arrow-right-long"></i>
+                          Previous License
+                        </li>
+
+                        <li
+                          class="
+                            text-main-400 text-lg
+                            rounded-lg
+                            bg-white
+                            cursor-pointer
+                          "
+                          data-bs-toggle="tooltip"
+                          title=" "
+                        >
+                          <i class="fa fa-arrow-right-long"></i>
+                          CPD Certificate
+                        </li>
+
+                        <li
+                          class="
+                            text-main-400 text-lg
+                            rounded-lg
+                            bg-white
+                            cursor-pointer
+                          "
+                          data-bs-toggle="tooltip"
+                          title="More than two years"
+                        >
+                          <i class="fa fa-arrow-right-long"></i>
+                          Work Experience
+                        </li>
+
+                        <li
+                          class="
+                            text-main-400 text-lg
+                            rounded-lg
+                            bg-white
+                            cursor-pointer
+                          "
+                          data-bs-toggle="tooltip"
+                          title=" "
+                        >
+                          <i class="fa fa-arrow-right-long"></i>
+                          Renewed License of Health Facility
                         </li>
                       </ul>
                       <div class="mt-6 py-4">
@@ -732,11 +1106,7 @@
                       >
                     </div>
                     <div class="p-6 mb-2" v-if="RNdocumentSpecs">
-                      <ul
-                        v-for="doc in RNdocumentSpecs.ethiopianAbroad"
-                        :key="doc.id"
-                        class="bg-white"
-                      >
+                      <ul class="bg-white">
                         <li
                           class="
                             text-main-400 text-lg
@@ -745,16 +1115,52 @@
                             cursor-pointer
                           "
                           data-bs-toggle="tooltip"
-                          :title="
-                            doc && doc.documentType
-                              ? doc.documentType.description
-                              : ''
-                          "
+                          title=""
                         >
                           <i class="fa fa-arrow-right-long"></i>
-                          {{
-                            doc && doc.documentType ? doc.documentType.name : ""
-                          }}
+                          Health Exam Certificate
+                        </li>
+
+                        <li
+                          class="
+                            text-main-400 text-lg
+                            rounded-lg
+                            bg-white
+                            cursor-pointer
+                          "
+                          data-bs-toggle="tooltip"
+                          title=" "
+                        >
+                          <i class="fa fa-arrow-right-long"></i>
+                          CPD Certificate
+                        </li>
+
+                        <li
+                          class="
+                            text-main-400 text-lg
+                            rounded-lg
+                            bg-white
+                            cursor-pointer
+                          "
+                          data-bs-toggle="tooltip"
+                          title=" "
+                        >
+                          <i class="fa fa-arrow-right-long"></i>
+                          Previous License
+                        </li>
+
+                        <li
+                          class="
+                            text-main-400 text-lg
+                            rounded-lg
+                            bg-white
+                            cursor-pointer
+                          "
+                          data-bs-toggle="tooltip"
+                          title=" "
+                        >
+                          <i class="fa fa-arrow-right-long"></i>
+                          Work Experience
                         </li>
                       </ul>
                       <div class="mt-6 py-4">
@@ -817,11 +1223,7 @@
                       >
                     </div>
                     <div class="p-6 mb-2" v-if="RNdocumentSpecs">
-                      <ul
-                        v-for="doc in RNdocumentSpecs.foreigner"
-                        :key="doc.id"
-                        class="bg-white"
-                      >
+                       <ul class="bg-white">
                         <li
                           class="
                             text-main-400 text-lg
@@ -830,16 +1232,53 @@
                             cursor-pointer
                           "
                           data-bs-toggle="tooltip"
-                          :title="
-                            doc && doc.documentType
-                              ? doc.documentType.description
-                              : ''
-                          "
+                          title=""
                         >
                           <i class="fa fa-arrow-right-long"></i>
-                          {{
-                            doc && doc.documentType ? doc.documentType.name : ""
-                          }}
+                          Health Exam Certificate
+                        </li>
+
+                        <li
+                          class="
+                            text-main-400 text-lg
+                            rounded-lg
+                            bg-white
+                            cursor-pointer
+                          "
+                          data-bs-toggle="tooltip"
+                          title=" "
+                        >
+                          <i class="fa fa-arrow-right-long"></i>
+                          CPD Certificate
+                        </li>
+               
+
+                        <li
+                          class="
+                            text-main-400 text-lg
+                            rounded-lg
+                            bg-white
+                            cursor-pointer
+                          "
+                          data-bs-toggle="tooltip"
+                          title=" "
+                        >
+                          <i class="fa fa-arrow-right-long"></i>
+                          Previous License
+                        </li>
+
+                        <li
+                          class="
+                            text-main-400 text-lg
+                            rounded-lg
+                            bg-white
+                            cursor-pointer
+                          "
+                          data-bs-toggle="tooltip"
+                          title=" "
+                        >
+                          <i class="fa fa-arrow-right-long"></i>
+                          Work Experience
                         </li>
                       </ul>
                       <div class="mt-6 py-4">
@@ -1084,9 +1523,21 @@ export default {
     let isFirstTime = ref(false);
     let userInfo = ref({});
 
-    let NLdocumentSpecs = ref({ethiopian:{},foreigner:{},ethiopianAbroad:{}});
-    let RNdocumentSpecs = ref({ethiopian:{},foreigner:{},ethiopianAbroad:{}});
-    let GSdocumentSpecs = ref({ethiopian:{},foreigner:{},ethiopianAbroad:{}});
+    let NLdocumentSpecs = ref({
+      ethiopian: {},
+      foreigner: {},
+      ethiopianAbroad: {},
+    });
+    let RNdocumentSpecs = ref({
+      ethiopian: {},
+      foreigner: {},
+      ethiopianAbroad: {},
+    });
+    let GSdocumentSpecs = ref({
+      ethiopian: {},
+      foreigner: {},
+      ethiopianAbroad: {},
+    });
     const getProfile = () => {
       store.dispatch("profile/getProfileByUserId", id).then((res) => {
         getImage(res.data.data);
@@ -1177,7 +1628,6 @@ export default {
               element.educationalLevel &&
               element.educationalLevel.code == "BACH"
           );
- 
         }
       });
     });

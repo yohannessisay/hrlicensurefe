@@ -3,14 +3,14 @@
     <ol class="list-reset flex">
       <li>
         <router-link to="/menu">
-        <a href="#" class="text-main-400 hover:text-blue-700">Home</a>
-      </router-link>
-        </li>
+          <a href="#" class="text-main-400 hover:text-blue-700">Home</a>
+        </router-link>
+      </li>
       <li><span class="text-gray-500 mx-2">/</span></li>
       <li>
         <router-link to="/Applicant/GoodStanding">
-        <a href="#" class="text-main-400 hover:text-blue-700">Goodstanding</a>
-      </router-link>
+          <a href="#" class="text-main-400 hover:text-blue-700">Goodstanding</a>
+        </router-link>
       </li>
       <li><span class="text-gray-500 mx-2">/</span></li>
       <li class="text-gray-500">Apply</li>
@@ -34,16 +34,7 @@
     </div>
 
     <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-10">
-      <div
-        class="
-          mt-12
-        
-          rounded-sm
-          bg-white
-          shadow-2xl
-          mb-8
-        "
-      >
+      <div class="mt-12 rounded-sm bg-white shadow-2xl mb-8">
         <div class="container mx-auto">
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
             <div
@@ -107,16 +98,14 @@
                     text-main-400
                     max-w-3xl
                     border
-                    hover:bg-main-400
-                    hover:text-white
-
+                    hover:bg-main-400 hover:text-white
                     font-medium
                     text-xs
                     leading-tight
                     uppercase
                     rounded
                     shadow-md
-                     hover:border-main-500
+                    hover:border-main-500
                     focus:bg-blue-700
                     focus:shadow-lg
                     focus:outline-none
@@ -147,8 +136,13 @@
                     type="text"
                     id="applicantTitle"
                     v-model="generalInfo.applicantTitle"
-                    class="w-full  rounded-none sm:w-10/12 sm:ml-4 border text-main-400"
-                   
+                    class="
+                      w-full
+                      rounded-none
+                      sm:w-10/12 sm:ml-4
+                      border
+                      text-main-400
+                    "
                     autocomplete="off"
                     placeholder="example-MR,MRS"
                   />
@@ -167,7 +161,7 @@
                 <label class="text-main-400">Department</label>
                 <select
                   class="
-                  form-select
+                    form-select
                     appearance-none
                     block
                     sm:w-3/4
@@ -251,7 +245,7 @@
       <!-- region -->
       <div
         v-if="showLocation"
-        class="pt-8 mt-12 border  rounded bg-white shadow-2xl"
+        class="pt-8 mt-12 border rounded bg-white shadow-2xl"
       >
         <div class="flex">
           <div class="flex flex-col mb-medium w-2/5 ml-medium mr-12">
@@ -279,13 +273,13 @@
                 focus:outline-none
               "
               v-model="generalInfo.regionSelected"
-              @change="fetchZone()"
+              @change="regionChangeHandler()"
               required
             >
               <option
                 v-for="region in regions"
                 v-bind:key="region.name"
-                v-bind:value="region.id"
+                v-bind:value="region"
               >
                 {{ region.name }}
               </option>
@@ -315,6 +309,7 @@
                 focus:border-blue-600
                 focus:outline-none
               "
+              @change="zoneChangeHandler()"
               v-model="generalInfo.zoneSelected"
             >
               <option
@@ -369,15 +364,7 @@
       <!-- end -->
 
       <!-- GS details -->
-      <div
-        class="
-          mt-12 
-          rounded-sm
-          bg-white
-          shadow-2xl
-          mb-8
-        "
-      >
+      <div class="mt-12 rounded-sm bg-white shadow-2xl mb-8">
         <div class="container mx-auto">
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
             <div
@@ -401,7 +388,7 @@
                     type="text"
                     id="applicantTitle"
                     v-model="generalInfo.whomGoodStandingFor"
-                    class="w-full px-3 py-2 rounded-none" 
+                    class="w-full px-3 py-2 rounded-none"
                     autocomplete="off"
                     placeholder=""
                     required
@@ -432,7 +419,6 @@
                     id="applicantTitle"
                     v-model="generalInfo.whoIssued"
                     class="w-full px-3 py-2 rounded-none"
-                   
                     autocomplete="off"
                     placeholder=""
                     required
@@ -467,7 +453,7 @@
                     type="text"
                     id="applicantTitle"
                     v-model="generalInfo.licenseRegistrationNumber"
-                    class="w-full px-3 py-2 rounded-none" 
+                    class="w-full px-3 py-2 rounded-none"
                     autocomplete="off"
                     placeholder=""
                     required
@@ -481,13 +467,15 @@
             >
               <div>
                 <div class="overflow-hidden shadow-sm">
-                  <label for="" class="text-main-400">License Issued Date</label>
+                  <label for="" class="text-main-400"
+                    >License Issued Date</label
+                  >
 
                   <input
                     type="date"
                     id="applicantTitle"
                     v-model="generalInfo.licenseIssuedDate"
-                    class="w-full px-3 py-2 rounded-none" 
+                    class="w-full px-3 py-2 rounded-none"
                     autocomplete="off"
                     placeholder="example-MR,MRS"
                     required
@@ -518,8 +506,7 @@
             shadow-md
             bg-white
             border
-            hover:text-white hover:border-main-500
-            hover:bg-main-400
+            hover:text-white hover:border-main-500 hover:bg-main-400
             focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
             active:bg-blue-800 active:shadow-lg
             transition
@@ -535,7 +522,7 @@
     </form>
   </div>
 </template>
-  <script>
+<script>
 import { useStore } from "vuex";
 import { ref, onMounted } from "vue";
 export default {
@@ -590,6 +577,23 @@ export default {
         showLocation.value = false;
       }
     };
+    const zoneChangeHandler = () => {
+      fetchWoredas();
+    };
+    const regionChangeHandler = () => {
+      fetchZones();
+    };
+
+    const fetchZones = () => {
+     
+      store
+
+        .dispatch("newlicense/getZones", generalInfo.value.regionSelected.id)
+        .then((res) => {
+          const zonesResult = res.data.data;
+          zones.value = zonesResult;
+        });
+    };
     const checkOtherProfession = (profession, event) => {
       showOtherProfession.value = true;
     };
@@ -619,13 +623,12 @@ export default {
       store
         .dispatch("goodstanding/getZones", generalInfo.value.regionId)
         .then((res) => {
-          console.log(res)
           zones.value = res.data.data;
         });
     };
     const fetchWoredas = () => {
       store
-        .dispatch("goodstanding/getWoredas", generalInfo.value.zoneId)
+        .dispatch("goodstanding/getWoredas", generalInfo.value.zoneSelected.id)
         .then((res) => {
           woredas.value = res.data.data;
         });
@@ -678,6 +681,8 @@ export default {
       checkApplicantType,
       checkOtherProfession,
       fetchProfessionalType,
+      regionChangeHandler,
+      zoneChangeHandler,
       setDepartment,
       apply,
       fetchZone,
@@ -695,7 +700,7 @@ export default {
   },
 };
 </script>
-  <style>
+<style>
 #main {
   border: 1px solid #cccccc;
   border-radius: 5px;
@@ -705,4 +710,3 @@ export default {
   border-radius: 5px;
 }
 </style>
-  
