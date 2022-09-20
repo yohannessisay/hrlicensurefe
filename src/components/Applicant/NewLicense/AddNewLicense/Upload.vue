@@ -355,7 +355,7 @@
                             accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
                             :ref="`imageUploader${item.id}`"
                             class="custom-file-input"
-                            v-on:change="handleFileUpload(item, $event,table)"
+                            v-on:change="handleFileUpload(item, $event, table)"
                           />
                         </p>
                       </td>
@@ -427,7 +427,7 @@
                             :ref="`imageUploader${parentItem[0].id}`"
                             class="custom-file-input"
                             v-on:change="
-                              handleFileUpload(parentItem[0], $event,table)
+                              handleFileUpload(parentItem[0], $event, table)
                             "
                           />
                         </p>
@@ -457,7 +457,12 @@
                         <div class="flex items-center ml-4">
                           <div>
                             <p class="">
-                              {{ parentItem[0].documentType.name.slice(0,(parentItem[0].documentType.name.length-2)) }}
+                              {{
+                                parentItem[0].documentType.name.slice(
+                                  0,
+                                  parentItem[0].documentType.name.length - 2
+                                )
+                              }}
                               <b
                                 v-if="parentItem[0].isRequired"
                                 class="text-red-300"
@@ -467,17 +472,11 @@
                           </div>
                         </div>
                       </td>
-                      <td class="px-6">
-                
-                      </td>
+                      <td class="px-6"></td>
 
-                      <td class="px-6 py-4">
-                   
-                      </td>
+                      <td class="px-6 py-4"></td>
 
-                      <td class="px-6 py-4 text-center">
-                
-                      </td>
+                      <td class="px-6 py-4 text-center"></td>
 
                       <td class="px-6 text-center">
                         <button
@@ -509,7 +508,7 @@
                             'collapse' + parentItem[0].documentType.id
                           "
                         >
-                       Upload
+                          Upload
                         </button>
                       </td>
                     </tr>
@@ -584,7 +583,11 @@
                                       :ref="`imageUploader${parentItem.id}`"
                                       class="custom-file-input"
                                       v-on:change="
-                                        handleFileUpload(parentItem, $event,table)
+                                        handleFileUpload(
+                                          parentItem,
+                                          $event,
+                                          table
+                                        )
                                       "
                                     />
                                   </p>
@@ -672,17 +675,12 @@
           border
         "
         @click="next()"
-
       >
-
         next
       </button>
     </div>
 
-    <div class="flex justify-right mr-0"
-    >
-      
-    </div>
+    <div class="flex justify-right mr-0"></div>
   </div>
   <!--<filePreview :modalData="filePreviewData"> </filePreview>-->
 </template>
@@ -697,7 +695,6 @@ export default {
   components: { filePreview },
 
   setup(props, { emit }) {
-   
     let store = useStore();
     let documents = ref([]);
     let commonDocuments = ref([]);
@@ -761,6 +758,9 @@ export default {
             showPreview.value = true;
 
             previewDocuments.value[data.documentType.code] = reader.result;
+            imageData = imageData.filter(
+              (el) => el.documenttype != data.documentType.name
+            );
             imageData.push({
               documenttype: data.documentType ? data.documentType.name : "",
               educationalLevel: data.educationalLevel
@@ -807,9 +807,12 @@ export default {
       documentUploaded.value[data.documentType.code] = event?.target?.files[0];
       let reader = new FileReader();
       formData.append(
-        data.documentType.code +  "_" +  data.educationalLevel.code.toUpperCase() + "_" +  pro.professionType.code.toUpperCase(),
-         
-          
+        data.documentType.code +
+          "_" +
+          data.educationalLevel.code.toUpperCase() +
+          "_" +
+          pro.professionType.code.toUpperCase(),
+
         event?.target?.files[0]
       );
 
@@ -832,6 +835,9 @@ export default {
             showPreview.value = true;
 
             previewDocuments.value[data.documentType.code] = reader.result;
+            imageData = imageData.filter(
+            (el) => el.documenttype != data.documentType.name
+          );
             imageData.push({
               documenttype: data.documentType ? data.documentType.name : "",
               educationalLevel: data.educationalLevel
@@ -883,8 +889,8 @@ export default {
         emit("changeActiveState");
       });
     };
-    const back = () =>{ 
-        emit("changeActiveStateMinus"); 
+    const back = () => {
+      emit("changeActiveStateMinus");
     };
 
     const groupByKey = (array, key) => {
@@ -943,8 +949,7 @@ export default {
           let categoryResults = res.data.data
             ? res.data.data.filter((ele) => ele.code == "NA")
             : "";
-          let educationLevels = generalInfo.value.multipleDepartment;
-          console.log(educationLevels)
+          let educationLevels = generalInfo.value.multipleDepartment; 
           //Get department docs
           educationLevels.forEach((element) => {
             store

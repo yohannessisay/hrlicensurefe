@@ -355,7 +355,7 @@
                             accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
                             :ref="`imageUploader${item.id}`"
                             class="custom-file-input"
-                            v-on:change="handleFileUpload(item, $event,table)"
+                            v-on:change="handleFileUpload(item, $event, table)"
                           />
                         </p>
                       </td>
@@ -427,7 +427,7 @@
                             :ref="`imageUploader${parentItem[0].id}`"
                             class="custom-file-input"
                             v-on:change="
-                              handleFileUpload(parentItem[0], $event,table)
+                              handleFileUpload(parentItem[0], $event, table)
                             "
                           />
                         </p>
@@ -457,7 +457,12 @@
                         <div class="flex items-center ml-4">
                           <div>
                             <p class="">
-                              {{ parentItem[0].documentType.name.slice(0,(parentItem[0].documentType.name.length-2)) }}
+                              {{
+                                parentItem[0].documentType.name.slice(
+                                  0,
+                                  parentItem[0].documentType.name.length - 2
+                                )
+                              }}
                               <b
                                 v-if="parentItem[0].isRequired"
                                 class="text-red-300"
@@ -467,17 +472,11 @@
                           </div>
                         </div>
                       </td>
-                      <td class="px-6">
-                
-                      </td>
+                      <td class="px-6"></td>
 
-                      <td class="px-6 py-4">
-                   
-                      </td>
+                      <td class="px-6 py-4"></td>
 
-                      <td class="px-6 py-4 text-center">
-                
-                      </td>
+                      <td class="px-6 py-4 text-center"></td>
 
                       <td class="px-6 text-center">
                         <button
@@ -509,7 +508,7 @@
                             'collapse' + parentItem[0].documentType.id
                           "
                         >
-                       Upload
+                          Upload
                         </button>
                       </td>
                     </tr>
@@ -584,7 +583,11 @@
                                       :ref="`imageUploader${parentItem.id}`"
                                       class="custom-file-input"
                                       v-on:change="
-                                        handleFileUpload(parentItem, $event,table)
+                                        handleFileUpload(
+                                          parentItem,
+                                          $event,
+                                          table
+                                        )
                                       "
                                     />
                                   </p>
@@ -672,17 +675,12 @@
           border
         "
         @click="next()"
-
       >
-
         next
       </button>
     </div>
 
-    <div class="flex justify-right mr-0"
-    >
-      
-    </div>
+    <div class="flex justify-right mr-0"></div>
   </div>
   <!--<filePreview :modalData="filePreviewData"> </filePreview>-->
 </template>
@@ -724,7 +722,7 @@ export default {
     let generalInfo = ref({});
     let documentUploaded = ref({});
     let documentToSave = ref({});
-
+    let divId = ref(0);
     let imageData = [];
     let formData = new FormData();
 
@@ -739,7 +737,7 @@ export default {
       documentUploaded.value[data.documentType.code] = "";
       documentUploaded.value[data.documentType.code] = event?.target?.files[0];
       formData.append(data.documentType.code, event?.target?.files[0]);
- 
+
       let reader = new FileReader();
       isImage.value[data.documentType.code] = true;
       let fileS = documentUploaded.value[data.documentType.code].size;
@@ -760,6 +758,9 @@ export default {
             showPreview.value = true;
 
             previewDocuments.value[data.documentType.code] = reader.result;
+            imageData = imageData.filter(
+              (el) => el.documenttype != data.documentType.name
+            );
             imageData.push({
               documenttype: data.documentType ? data.documentType.name : "",
               educationalLevel: data.educationalLevel
@@ -802,15 +803,22 @@ export default {
       }
     };
 
-    const handleFileUpload = (data, event) => {
+    const handleFileUpload = (data, event, pro) => {
       documentUploaded.value[data.documentType.code] = event?.target?.files[0];
       let reader = new FileReader();
       formData.append(
-        data.documentType.code +  "_" +  data.educationalLevel.code.toUpperCase() + "_" +  pro.professionType.code.toUpperCase(),
-        );
+        data.documentType.code +
+          "_" +
+          data.educationalLevel.code.toUpperCase() +
+          "_" +
+          pro.professionType.code.toUpperCase(),
+
+        event?.target?.files[0]
+      );
+
       isImage.value[data.documentType.code] = true;
       let fileS = documentUploaded.value[data.documentType.code].size;
-      if (fileS <= maxFileSize.value / 1000) {  
+      if (fileS <= maxFileSize.value / 1000) {
         fileSizeExceed.value[data.documentType.code] = false;
         showImage.value = true;
 
@@ -820,13 +828,16 @@ export default {
           fileSize.value = fileS / 1000 + "kB";
         } else {
           fileSize.value = fileS / 1000000 + "MB";
-        } 
+        }
         reader.addEventListener(
           "load",
           function () {
             showPreview.value = true;
 
             previewDocuments.value[data.documentType.code] = reader.result;
+            imageData = imageData.filter(
+            (el) => el.documenttype != data.documentType.name
+          );
             imageData.push({
               documenttype: data.documentType ? data.documentType.name : "",
               educationalLevel: data.educationalLevel
@@ -878,18 +889,9 @@ export default {
         emit("changeActiveState");
       });
     };
-    const back = () =>{
-     
-     checkForFiles(documentUploaded.value);
-       store.dispatch("renewal/setTempDocs", formData).then(() => {
-         window.localStorage.setItem(
-           "NLApplicationImageData",
-           JSON.stringify(imageData)
-         );
-         emit("changeActiveStateMinus");
-     
-       });
-     };
+    const back = () => {
+      emit("changeActiveStateMinus");
+    };
 
     const groupByKey = (array, key) => {
       return array.reduce((hash, obj) => {
@@ -900,6 +902,40 @@ export default {
       }, {});
     };
 
+    const addMoreFile = (doc) => {
+      divId.value == doc.length;
+      if (divId.value < doc.length) {
+        divId.value++;
+        let divElement = document.createElement("div");
+        divElement.classList.add("border-t-2");
+        divElement.classList.add("mt-4");
+        divElement.classList.add("mb-4");
+        let toBeAddedDoc = doc[divId.value];
+        let template =
+          '<tr id="parent_doc_' +
+          toBeAddedDoc.id +
+          '" class="p-4 text-gray-300"><td class="px-6 py-4"><div class="flex items-center ml-8"><div><p class="">' +
+          (toBeAddedDoc.documentType.name + "(optional)") +
+          '</p></div></div></td><td class="px-6 py-4"><div class="flex items-center ml-8"><div><p class="">' +
+          (toBeAddedDoc.documentType.description
+            ? toBeAddedDoc.documentType.description
+            : "") +
+          '</p></div></div></td><td class="px-6 py-4 "><p class="ml-8"><input type="file" :id="files' +
+          toBeAddedDoc.id +
+          '" accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg" :ref="imageUploader' +
+          toBeAddedDoc.id +
+          '" class="custom-file-input" v-on:change=" handleFileUpload(' +
+          toBeAddedDoc +
+          ', $event) " /></p></td><td><button id="remove_' +
+          toBeAddedDoc.id +
+          '" class="bg-main-400 mt-8 inline-block px-6 py-2.5 bg-main-400 hover:text-main-400 text-white text-xs font-bold leading-tight uppercase rounded shadow-md transition duration-150 ease-in-out " onclick="removeFileUpload()>Remove </button> </td>';
+
+        divElement.innerHTML = template;
+        document.getElementById(doc[0].id).appendChild(divElement);
+      }
+    };
+
+ 
     onMounted(() => {
       localData.value = window.localStorage.getItem("RNApplicationData")
         ? JSON.parse(window.localStorage.getItem("RNApplicationData"))
@@ -911,7 +947,7 @@ export default {
           let categoryResults = res.data.data
             ? res.data.data.filter((ele) => ele.code == "NA")
             : "";
-          let educationLevels = generalInfo.value.multipleDepartment;
+          let educationLevels = generalInfo.value.multipleDepartment; 
           //Get department docs
           educationLevels.forEach((element) => {
             store
@@ -925,6 +961,7 @@ export default {
 
                 educationalDocs.value.push({
                   educationalLevel: element.educationalLevel,
+                  professionType: element.professionType,
                   docs: resp.filter(
                     (element) => element.parentDocument == null
                   ),
@@ -932,7 +969,6 @@ export default {
                 });
               });
           });
-
           //Get Common Docs
 
           store
@@ -947,16 +983,18 @@ export default {
         });
       }
     });
+    // emit("changeActiveStateMinus");
 
     return {
       documents,
       commonDocuments,
       files,
       handleFileUpload,
+      addMoreFile,
       showImage,
       previewDocuments,
       showPreview,
-      previewFile,
+      previewFile, 
       handleCommonFileUpload,
       generalInfo,
       goToNext,
@@ -973,8 +1011,8 @@ export default {
 <style>
 .upload-button {
   cursor: pointer;
-  background-color: #1f677e;
-  color: white;
+  background-color: #ffffff;
+  color: #1f677e;
   border: 1px;
   border-radius: 5%;
   padding: 7px;
@@ -991,11 +1029,12 @@ export default {
 .custom-file-input::before {
   content: "Upload";
   display: inline-block;
-  background: #1f677e;
+  background: #ffffff;
   border-radius: 3px;
   padding: 5px 5px;
+  border: 1px solid;
   outline: none;
-  color: white;
+  color: #1f677e;
   white-space: nowrap;
   -webkit-user-select: none;
   cursor: pointer;
@@ -1003,8 +1042,10 @@ export default {
   font-size: 14px;
 }
 .custom-file-input:hover::before {
+  background: -webkit-linear-gradient(top, #1f677e, #1f677e);
+  color: white;
 }
 .custom-file-input:active::before {
-  background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
+  background: -webkit-linear-gradient(top, #1f677e, #1f677e);
 }
 </style>
