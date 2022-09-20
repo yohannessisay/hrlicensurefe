@@ -240,8 +240,7 @@ export default {
         if (newLicense.value) {
           newLicense.value = newLicense.value.filter(function (e) {
             return (
-              e.applicationStatus.code.includes("AP") ||
-              e.applicationStatus.code.includes("APP")
+              e.applicationStatus.code.includes("APP") 
             );
           });
           isLoading.value = false;

@@ -241,7 +241,7 @@ export default {
 
           if (newLicense.value) {
             newLicense.value = newLicense.value.filter(function (e) {
-              return e.applicationStatus.code.includes("DRA");
+              return e.applicationStatus.code=='PP';
             });
             isLoading.value = false;
             if (newLicense.value.length < 1) {

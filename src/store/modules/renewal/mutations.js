@@ -47,7 +47,7 @@ import {
     SET_PHD,
     SET_PHD_TRANSCRIPT,
     SET_RENEWED_LICENSE_OF_HEALTH_FACILITY,
-    SET_GENERAL_INFO,
+    SET_GENERAL_INFO, 
 } from "./mutation-types";
 
 export default {

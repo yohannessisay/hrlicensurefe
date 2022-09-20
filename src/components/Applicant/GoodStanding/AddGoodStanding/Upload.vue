@@ -141,9 +141,9 @@
                           <input
                             type="file"
                             required
-                            :id="`files${item}`"
+                            :id="`files${item.id}`"
                             accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
-                            :ref="`imageUploader${item}`"
+                            :ref="`imageUploader${item.id}`"
                             class="custom-file-input"
                             v-on:change="handleFileUpload(item, $event)"
                           />
@@ -332,22 +332,22 @@ export default {
         } else {
           fileSize.value = fileS / 1000000 + "MB";
         }
-        reader.addEventListener(
-          "load",
-          function () {
-            showPreview.value = true;
+        reader.addEventListener("load", function () {
+          showPreview.value = true;
 
-            previewDocuments.value[data.documentType.code] = reader.result;
-            imageData.push({
-              documenttype: data.documentType ? data.documentType.name : "",
-              educationalLevel: data.educationalLevel
-                ? data.educationalLevel.name
-                : "",
-              image: reader.result,
-            });
-          },
-          false
-        );
+          previewDocuments.value[data.documentType.code] = reader.result;
+          imageData = imageData.filter(
+            (el) => el.documenttype != data.documentType.name
+          );
+          imageData.push({
+            documenttype: data.documentType ? data.documentType.name : "",
+            educationalLevel: data.educationalLevel
+              ? data.educationalLevel.name
+              : "",
+            image: reader.result,
+          });
+          console.log(imageData);
+        });
         if (documentUploaded.value[data.documentType.code]) {
           if (
             /\.(jpe?g|png|gif)$/i.test(

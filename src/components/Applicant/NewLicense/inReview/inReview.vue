@@ -184,8 +184,7 @@ export default {
         if (newLicense.value) {
           newLicense.value = newLicense.value.filter(function (e) {
             return (
-              e.applicationStatus.code.includes("UPD") ||
-              e.applicationStatus.code.includes("SUB")
+              e.applicationStatus.code.includes("IRV") 
             );
           });
           isLoading.value = false;

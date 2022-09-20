@@ -11,12 +11,16 @@
         <li class="text-gray-500">Submitted</li>
       </ol>
     </nav>
-    <div class="container my-12 mx-auto px-4 md:px-12">
+    <h2 class="ml-8 mt-8" v-if="isLoading">Loading...</h2>
+    <div
+      class="container my-12 mx-auto px-4 md:px-12"
+      v-if="noData==false"
+    >
       <div class="flex flex-wrap sm:-mx-1 lg:-mx-4">
         <!-- Column -->
 
         <div
-          v-for="license in newLicense"
+          v-for="license in renewal"
           :key="license.id"
           class="
             bg-white
@@ -42,7 +46,7 @@
             <h2 class="text-main-400 border-b-2 text-xl p-2">
               License Number-
               <span class="text-base text-main-400">{{
-                license.newLicenseCode
+                license.renewalCode
               }}</span>
             </h2>
 
@@ -56,21 +60,30 @@
                 md:p-2
                 mt-2
               "
-            >
-              <h1 class="text-lg">
-                <a class="no-underline hover:underline text-main-400" href="#">
-                  Profession Name
-                </a>
-              </h1>
-              <p
-                v-for="eds in license.educations"
-                :key="eds.id"
-                class="text-black text-sm"
-              >
-                {{ eds.professionType?.name + " ," }}
-              </p>
-            </header>
+            ></header>
+
             <div class="border-b-2 text-main-400">
+              <div class="grid grid-cols-2 p-2">
+                <h1 class="text-lg">
+                  <a
+                    class="no-underline hover:underline text-main-400"
+                    href="#"
+                  >
+                    Profession Name
+                  </a>
+                </h1>
+
+                <div
+                  v-for="eds in license.educations"
+                  :key="eds.id"
+                  class="text-black text-sm"
+                >
+                  <div class="grid grid-rows-1 text-black">
+                    {{ "*" + eds.professionType.name }}
+                  </div>
+                </div>
+              </div>
+
               <div
                 class="
                   flex
@@ -157,8 +170,35 @@
 
           <!-- END Article -->
         </div>
-        <!-- END Column -->
+
+        <!-- END Article -->
       </div>
+      <!-- END Column -->
+    </div>
+    <div
+      v-else
+      class="
+        bg-white
+        my-1
+        px-1
+        md:w-1/4
+        lg:w-1/4
+        mdlg:w-1/4
+        sm:w-full sm:mr-4
+        shadow-2xl
+        rounded-lg
+        transform
+        transition
+        duration-300
+        ease-in-out
+        hover:-translate-y-2
+      "
+    >
+      <!-- Article -->
+
+      <h2 class="text-main-400 border-b-2 text-xl p-2">
+        There are no submitted applications currently.
+      </h2>
     </div>
   </main-content>
 </template>
@@ -172,32 +212,36 @@ export default {
   components: { MainContent },
   setup() {
     let store = useStore();
-    let newLicense = ref({});
+    let renewal = ref({});
     let userInfo = ref({});
-    let isLoading = ref(false);
+    let isLoading = ref(true);
+    let noData=ref(false);
     onMounted(() => {
       isLoading.value = true;
       userInfo.value = JSON.parse(window.localStorage.getItem("personalInfo"));
-      store.dispatch("renewal/getRenewalLicense").then((res) => {
-        newLicense.value = res.data.data;
-        if (newLicense.value) {
-          newLicense.value = newLicense.value.filter(function (e) {
+     let userId = JSON.parse(window.localStorage.getItem("userId"));
+      store.dispatch("renewal/getRenewalLicense",userId).then((res) => {
+        renewal.value = res.data.data; 
+        if (renewal.value) {
+          renewal.value = renewal.value.filter(function (e) {
             return (
               e.applicationStatus.code.includes("UPD") ||
               e.applicationStatus.code.includes("SUB")
             );
           });
           isLoading.value = false;
-          console.log(newLicense.value);
-
+          if(renewal.value.length<1){
+            noData.value=true;
+          }
         }
       });
     });
 
     return {
-      newLicense,
+      renewal,
       googleApi,
       userInfo,
+      noData,
       isLoading,
     };
   },

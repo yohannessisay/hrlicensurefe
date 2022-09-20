@@ -223,10 +223,10 @@
                             <div class="text-main-400 font-bold">
                               {{
                                 licenseData &&
-                                licenseData.licenseReviewer &&
-                                licenseData.licenseReviewer.reviewer &&
-                                licenseData.licenseReviewer.reviewer.expertLevel
-                                  ? licenseData.licenseReviewer.reviewer
+                                licenseData.renewalReviewer &&
+                                licenseData.renewalReviewer.reviewer &&
+                                licenseData.renewalReviewer.reviewer.expertLevel
+                                  ? licenseData.renewalReviewer.reviewer
                                       .expertLevel.name
                                   : ""
                               }}
@@ -236,8 +236,8 @@
                             <div>Reviewer Name</div>
                             <div class="text-main-400 font-bold">
                               {{
-                                licenseData && licenseData.licenseReviewer
-                                  ? licenseData.licenseReviewer.reviewer.name
+                                licenseData && licenseData.renewalReviewer
+                                  ? licenseData.renewalReviewer.reviewer.name
                                   : ""
                               }}
                             </div>
@@ -246,8 +246,8 @@
                             <div>Phone Number</div>
                             <div class="text-main-400 font-bold">
                               {{
-                                licenseData && licenseData.licenseReviewer
-                                  ? licenseData.licenseReviewer.reviewer
+                                licenseData && licenseData.renewalReviewer
+                                  ? licenseData.renewalReviewer.reviewer
                                       .phoneNumber
                                   : ""
                               }}
@@ -514,7 +514,7 @@ export default {
     watch(props.modalDataId,()=>{
     isLoading.value=true
       store
-        .dispatch("newlicense/getNewLicenseApplication", props.modalDataId.id)
+        .dispatch("renewal/getRenewalApplication", props.modalDataId.id)
         .then((res) => {
           licenseData.value = res.data.data;
           isLoading.value=false
