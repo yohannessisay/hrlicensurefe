@@ -49,6 +49,8 @@ pipelines:
             - docker login -u _json_key --password-stdin https://$DOCKER_GCR_REPO_URL < ~/.gcloud-api-key.json
             - docker build -t $IMAGE_NAME .
             - docker push $IMAGE_NAME
+            services:
+              - docker
 
         - step:
             #size: 2x
@@ -70,6 +72,8 @@ pipelines:
             - sed -i "s|{{cert}}|$TLS|g" deployment.yml
             - kubectl apply -n hadmin -f deployment.yml
             - echo "all done please visit https://$DNS"
+            services:
+              - docker
 
     staging:
         - step:
