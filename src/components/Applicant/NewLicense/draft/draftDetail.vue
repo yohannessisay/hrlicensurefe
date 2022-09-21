@@ -1119,7 +1119,7 @@ export default {
         applicationStatuses.value = results;
 
         let status = applicationStatuses.value.filter(function (e) {
-          return e.code == "SUB";
+          return e.code == "DRA";
         });
         store.dispatch("newlicense/setButtons", status[0].buttons);
       });

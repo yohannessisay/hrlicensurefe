@@ -402,6 +402,8 @@ export default {
     let documents = ref([]);
     let buttons = ref([]);
     let tempDocs = ref({});
+    let savedData = ref({});
+
     const route = useRoute();
 
     let allowSave = ref(false);
@@ -449,10 +451,11 @@ export default {
         // };
 
         let license = {
-          action: action,
-          licenseId: {
-            licenseId: route.params.id,
-            applicantTypeId:
+          licenseId: route.params.id,
+          draftData: {
+            action: action,
+            data: { ... savedData,
+              applicantTypeId:
               generalInfo.value && generalInfo.value.applicantTypeSelected
                 ? generalInfo.value.applicantTypeSelected.id
                 : null,
@@ -474,6 +477,8 @@ export default {
             feedback: generalInfo.value.feedback
               ? generalInfo.value.feedback
               : "",
+            }
+          
           },
         };
         store.dispatch("newlicense/updateDraft", license).then((res) => {
@@ -517,6 +522,11 @@ export default {
       emit("changeActiveStateMinus");
     };
     onMounted(() => {
+      store
+        .dispatch("newlicense/getNewLicenseApplication", route.params.id)
+        .then((res) => {
+          savedData = res.data.data;
+        });
       buttons.value = store.getters["newlicense/getButtons"];
       tempDocs.value = store.getters["newlicense/getTempDocs"];
       localData.value = window.localStorage.getItem("NLApplicationData")

@@ -171,7 +171,7 @@
                           :id="
                             'common_image_href' + item.documentType.id + item.id
                           "
-                          :href="documentsSaved[item.documentType.code].path"
+                          :href="documentsSaved[item.documentType.code]?.path"
                           :data-title="item.name ? item.name : '-----'"
                           data-lightbox="example-2"
                         >
@@ -829,17 +829,17 @@ export default {
         "common_icon" + data.documentType.id + data.id
       );
       icon.classList.toggle("disabled");
-      let output = document.getElementById(
-        "common_image_lightbox" + data.documentType.id + data.id
-      );
-      let outputHref = document.getElementById(
-        "common_image_href" + data.documentType.id + data.id
-      );
-      outputHref.href = URL.createObjectURL(event.target.files[0]);
-      output.src = URL.createObjectURL(event.target.files[0]);
-      output.onload = function() {
-        URL.revokeObjectURL(output.src); // free memory
-      };
+      // let output = document.getElementById(
+      //   "common_image_lightbox" + data.documentType.id + data.id
+      // );
+      // let outputHref = document.getElementById(
+      //   "common_image_href" + data.documentType.id + data.id
+      // );
+      // outputHref.href = URL.createObjectURL(event.target.files[0]);
+      // output.src = URL.createObjectURL(event.target.files[0]);
+      // output.onload = function() {
+      //   URL.revokeObjectURL(output.src); // free memory
+      // };
       documentUploaded.value[data.documentType.code] = "";
       documentUploaded.value[data.documentType.code] = event?.target?.files[0];
       formData.append(data.documentType.code, event?.target?.files[0]);
@@ -907,21 +907,21 @@ export default {
     };
 
     const handleFileUpload = (data, event, professionType) => {
-      let icon = document.getElementById(
-        "educational_icon" + professionType.id + data.id
-      );
-      icon.classList.toggle("disabled");
-      let output = document.getElementById(
-        "image_lightbox" + professionType.id + data.id
-      );
-      let outputHref = document.getElementById(
-        "image_href" + professionType.id + data.id
-      );
-      outputHref.href = URL.createObjectURL(event.target.files[0]);
-      output.src = URL.createObjectURL(event.target.files[0]);
-      output.onload = function() {
-        URL.revokeObjectURL(output.src); // free memory
-      };
+      // let icon = document.getElementById(
+      //   "educational_icon" + professionType.id + data.id
+      // );
+      // icon.classList.toggle("disabled");
+      // let output = document.getElementById(
+      //   "image_lightbox" + professionType.id + data.id
+      // );
+      // let outputHref = document.getElementById(
+      //   "image_href" + professionType.id + data.id
+      // );
+      // outputHref.href = URL.createObjectURL(event.target.files[0]);
+      // output.src = URL.createObjectURL(event.target.files[0]);
+      // output.onload = function() {
+      //   URL.revokeObjectURL(output.src); // free memory
+      // };
       documentUploaded.value[data.documentType.code] = event?.target?.files[0];
       let reader = new FileReader();
       formData.append(

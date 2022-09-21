@@ -404,6 +404,8 @@ export default {
     let buttons = ref([]);
     let tempDocs = ref({});
     let allowSave = ref(false);
+    let savedData = ref({});
+
     const changeAgrement = () => {
       agreed.value = !agreed.value;
       if (
@@ -448,10 +450,11 @@ export default {
         // };
 
         let license = {
-          action: action,
+          licenseId: route.params.id,
           draftData: {
-            licenseId: route.params.id,
-            applicantTypeId:
+            action: action,
+            data: { ... savedData,
+              applicantTypeId:
               generalInfo.value && generalInfo.value.applicantTypeSelected
                 ? generalInfo.value.applicantTypeSelected.id
                 : null,
@@ -459,16 +462,22 @@ export default {
               generalInfo.value && generalInfo.value.woredaSelected
                 ? generalInfo.value.woredaSelected.id
                 : null,
-            educations: generalInfo.value ? generalInfo.value.education : {},
+            educations: generalInfo.value ? generalInfo.value.educations : {},
             occupationTypeId: generalInfo.value.occupationSelected
               ? generalInfo.value.occupationSelected.id
               : null,
             nativeLanguageId: generalInfo.value.nativeLanguageSelected
               ? generalInfo.value.nativeLanguageSelected.id
               : null,
-            expertLevelId: generalInfo.value.expertLevelId?generalInfo.value.expertLevelId:null,
+            expertLevelId: generalInfo.value.expertLevelId
+              ? generalInfo.value.expertLevelId
+              : null,
             isLegal: true,
-            feedback: generalInfo.value.feedback?generalInfo.value.feedback:"",
+            feedback: generalInfo.value.feedback
+              ? generalInfo.value.feedback
+              : "",
+            }
+          
           },
         };
         store.dispatch("renewal/updateDraft", license).then((res) => {
@@ -509,6 +518,11 @@ export default {
       }
     };
     onMounted(() => {
+      store
+        .dispatch("newlicense/getNewLicenseApplication", route.params.id)
+        .then((res) => {
+          savedData = res.data.data;
+        });
       buttons.value = store.getters["renewal/getButtons"];
       tempDocs.value = store.getters["renewal/getTempDocs"];
       localData.value = window.localStorage.getItem("RNApplicationData")

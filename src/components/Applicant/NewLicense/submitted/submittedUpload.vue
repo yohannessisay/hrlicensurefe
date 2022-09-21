@@ -171,7 +171,7 @@
                           :id="
                             'common_image_href' + item.documentType.id + item.id
                           "
-                          :href="documentsSaved[item.documentType.code].path"
+                          :href="documentsSaved[item.documentType.code]?.path"
                           :data-title="item.name ? item.name : '-----'"
                           data-lightbox="example-2"
                         >
