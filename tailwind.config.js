@@ -10,14 +10,14 @@ module.exports = {
       AtkinsonHyperlegibleBold: ["Atkinson-Hyperlegible-Bold"],
     },
     screens: {
-      'sm': '400px',
+      sm: "400px",
       // => @media (min-width: 576px) { ... }
 
-      'md': '960px',
+      md: "960px",
       // => @media (min-width: 960px) { ... }
-      'mdlg': '1200px',
+      mdlg: "1200px",
       // => @media (min-width: 1440px) { ... }
-      'lg': '1440px',
+      lg: "1440px",
       // => @media (min-width: 1440px) { ... }
     },
     fontSize: {
@@ -201,4 +201,15 @@ module.exports = {
     "./node_modules/tw-elements/dist/js/**/*.js",
   ],
   plugins: [require("@tailwindcss/forms"), require("tw-elements/dist/plugin")],
+  purge: {
+    // Learn more on https://tailwindcss.com/docs/controlling-file-size/#removing-unused-css
+    enabled: process.env.NODE_ENV === "production",
+    content: [
+      "components/**/*.vue",
+      "layouts/**/*.vue",
+      "pages/**/*.vue",
+      "plugins/**/*.js",
+      "nuxt.config.js",
+    ],
+  },
 };

@@ -1,536 +1,1235 @@
 <template>
-  <div
-    class="
-      modal
-      fade
-      fixed
-      top-0
-      left-0
-      hidden
-      w-full
-      h-full
-      outline-none
-      overflow-x-hidden overflow-y-auto
-    "
-    id="approvedDetail"
-    data-bs-backdrop="static"
-    data-bs-keyboard="false"
-    tabindex="-1"
-    aria-labelledby="approvedDetailLabel"
-    aria-hidden="true"
-  >
+  <main-content>
+    <nav class="bg-gray-100 px-5 py-3 rounded-md w-full">
+      <ol class="list-reset flex">
+        <li>
+          <router-link to="/menu">
+            <a href="#" class="text-main-400 hover:text-blue-700">Home</a>
+          </router-link>
+        </li>
+        <li><span class="text-gray-500 mx-2">/</span></li>
+        <li>
+          <router-link to="/Applicant/NewLicense">
+            <a href="#" class="text-main-400 hover:text-blue-700"
+              >New License</a
+            >
+          </router-link>
+        </li>
+        <li><span class="text-gray-500 mx-2">/</span></li>
+        <li class="text-gray-500">Edit</li>
+      </ol>
+    </nav>
+
     <div
+      v-if="activeState == 1"
       class="
-        modal-dialog modal-dialog-centered modal-xl
-        relative
-        w-auto
-        pointer-events-none
+        block
+        p-6
+        rounded-lg
+        shadow-lg
+        bg-primary-200
+        max-w-full
+        mr-8
+        mb-8
+        sm:p-4
       "
     >
-      <div
-        class="
-          modal-content
-          border-none
-          shadow-lg
-          relative
-          flex flex-col
-          w-full
-          pointer-events-auto
-          bg-white bg-clip-padding
-          rounded-md
-          outline-none
-          text-current
-        "
-      >
+      <div class="mt-small flex justify-center">
+        <h2 class="text-main-400 text-3xl font-bold">General Information</h2>
+      </div>
+
+      <form @submit.prevent="submit" class="mx-auto w-full mt-10">
         <div
-          class="modal-header flex flex-shrink-0 justify-end p-2 rounded-t-md"
+          class="flex shadow-lg rounded-md bg-primary-100 justify-center p-4"
         >
-          <button
-            type="button"
+          <!-- applican type -->
+          <div
             class="
-              px-6
-              text-white
-              bg-main-400
-              hover:text-main-400 hover:border
-              font-medium
-              text-xs
-              leading-tight
-              uppercase
-              rounded
-              shadow-lg
-              hover:bg-purple-700 hover:shadow-lg
-              focus:bg-purple-700
-              focus:shadow-lg
-              focus:outline-none
-              focus:ring-0
-              active:bg-purple-800 active:shadow-lg
-              transition
-              duration-150
-              ease-in-out
+              grid grid-cols-3
+              sm:grid-cols-1
+              lg:grid-cols-3
+              mdlg:grid-cols-3
+              md:grid-cols-3
+              p-4
             "
-            data-bs-dismiss="modal"
-            aria-label="Close"
           >
-            <i class="fa fa-close fa-2x"></i>
-          </button>
-        </div>
-        <div class="vld-parent mt-4">
-          <loading
-            :active="isLoading"
-            :is-full-page="false"
-            :color="'#07677e'"
-            :opacity="1"
-          ></loading>
-          <div class="modal-body relative p-4">
-            <div class="container px-6 mx-auto">
-              <section class="text-gray-800">
-                <div class="flex justify-center border-b-4 text-main-400">
-                  <h4 class="text-black ml-8">Please bring required documents when coming to pick up your license</h4>
-                </div>
-            
-                <div class="flex justify-center border-b-4 text-main-400">
-                  <div class="text-center lg:max-w-3xl md:max-w-xl">
-                    <h2 class="text-2xl font-bold mb-8 px-6 text-main-400">
-                      Approved License Detail
-                    </h2>
-                  </div>
-                </div>
-
-                <div class="container my-12 mx-auto px-4 md:px-12 border-b" v-if="licenseData">
-                  <div class="flex flex-wrap -mx-1 lg:-mx-4">
-                    <!-- Column -->
-                    <div
-                      class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
-                    >
-                      <!-- Article -->
-                      <article class="overflow-hidden rounded-lg shadow-xl ">
-                        <header
-                          class="
-                            flex
-                            items-center
-                            justify-between
-                            leading-tight
-                            p-2
-                            md:p-4
-                            border-b-4  
-                            text-main-400
-                          "
-                        >
-                          <h1 class="text-lg">
-                            <a
-                              class="no-underline hover:underline text-black"
-                              href="#"
-                            >
-                              Applicant Profile
-                            </a>
-                          </h1>
-                          <p class="text-main-400 text-sm">
-                            <i class="fa fa-user fa-2x"></i>
-                          </p>
-                        </header>
-
-                        <div class="grid grid-flow-row auto-rows-max">
-                          <div class="flex justify-between px-4 py-1 ">
-                            <div>Applicant Name</div>
-                            <div class="text-main-400 font-bold">
-                              {{
-                                (licenseData && licenseData.profile
-                                  ? licenseData.profile.name
-                                  : "") +
-                                " " +
-                                (licenseData && licenseData.profile
-                                  ? licenseData.profile.fatherName
-                                  : "") +
-                                " " +
-                                (licenseData && licenseData.profile
-                                  ? licenseData.profile.grandFatherName
-                                  : "")
-                              }}
-                            </div>
-                          </div>
-                          <div class="flex justify-between px-4 py-1">
-                            <div>Applicant Email</div>
-                            <div class="text-main-400 font-bold">
-                              {{
-                                licenseData && licenseData.applicant
-                                  ? licenseData.applicant.emailAddress
-                                  : ""
-                              }}
-                            </div>
-                          </div>
-                          <div class="flex justify-between px-4 py-1">
-                            <div>Applicant Phone</div>
-                            <div class="text-main-400 font-bold">
-                              {{
-                                licenseData && licenseData.applicant
-                                  ? "+251" + licenseData.applicant.phoneNumber
-                                  : ""
-                              }}
-                            </div>
-                          </div>
-                        </div>
-
-                        <footer
-                          class="
-                            flex
-                            items-center
-                            justify-between
-                            leading-none
-                            p-2
-                            md:p-4
-                          "
-                        ></footer>
-                      </article>
-                      <!-- END Article -->
-                    </div>
-                    <!-- END Column -->
-
-                    <!-- Column -->
-                    <div
-                      class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
-                    >
-                      <!-- Article -->
-                      <article class="overflow-hidden rounded-lg shadow-xl">
-                        <header
-                          class="
-                            flex
-                            items-center
-                            justify-between
-                            leading-tight
-                            p-2
-                            md:p-4
-                            border-b-4
-                            text-main-400
-                          "
-                        >
-                          <h1 class="text-lg">
-                            <a
-                              class="no-underline hover:underline text-black"
-                              href="#"
-                            >
-                              Reviewer Detail
-                            </a>
-                          </h1>
-                          <p class="text-main-400 text-sm">
-                            <i class="fa fa-thumbs-up"></i>
-                            <i class="fa fa-thumbs-down"></i>
-                          </p>
-                        </header>
-
-                        <div class="grid grid-flow-row auto-rows-max">
-                          <div class="flex justify-between px-4 py-1">
-                            <div>Reviewer Level</div>
-                            <div class="text-main-400 font-bold">
-                              {{
-                                licenseData &&
-                                licenseData.licenseReviewer &&
-                                licenseData.licenseReviewer.reviewer &&
-                                licenseData.licenseReviewer.reviewer.expertLevel
-                                  ? licenseData.licenseReviewer.reviewer
-                                      .expertLevel.name
-                                  : ""
-                              }}
-                            </div>
-                          </div>
-                          <div class="flex justify-between px-4 py-1">
-                            <div>Reviewer Name</div>
-                            <div class="text-main-400 font-bold">
-                              {{
-                                licenseData && licenseData.licenseReviewer
-                                  ? licenseData.licenseReviewer.reviewer.name
-                                  : ""
-                              }}
-                            </div>
-                          </div>
-                          <div class="flex justify-between px-4 py-1">
-                            <div>Phone Number</div>
-                            <div class="text-main-400 font-bold">
-                              {{
-                                licenseData && licenseData.licenseReviewer
-                                  ? licenseData.licenseReviewer.reviewer
-                                      .phoneNumber
-                                  : ""
-                              }}
-                            </div>
-                          </div>
-                        </div>
-
-                        <footer
-                          class="
-                            flex
-                            items-center
-                            justify-between
-                            leading-none
-                            p-2
-                            md:p-4
-                          "
-                        ></footer>
-                      </article>
-                      <!-- END Article -->
-                    </div>
-                    <!-- END Column -->
-
-                    <!-- Column -->
-                    <div
-                      v-for="education in licenseData.educations"
-                      :key="education ? education.id : ''"
-                      class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
-                    >
-                      <!-- Article -->
-                      <article class="overflow-hidden rounded-lg shadow-xl">
-                        <header
-                          class="
-                            flex
-                            items-center
-                            justify-between
-                            leading-tight
-                            p-2
-                            md:p-4
-                            border-b-4
-                            text-main-400
-                          "
-                        >
-                          <h1 class="text-lg">
-                            <a
-                              class="no-underline hover:underline text-black"
-                              href="#"
-                            >
-                              Applicants Education Detail
-                            </a>
-                          </h1>
-                          <p class="text-main-400 text-sm">Active</p>
-                        </header>
-
-                        <div class="grid grid-flow-row auto-rows-max">
-                          <div class="flex justify-between px-4 py-1">
-                            <div>Department</div>
-                            <div class="text-main-400 font-bold">
-                              {{
-                                education && education.department
-                                  ? education.department.name
-                                  : ""
-                              }}
-                            </div>
-                          </div>
-                          <div class="flex justify-between px-4 py-1">
-                            <div>Institution</div>
-                            <div class="text-main-400 font-bold">
-                              {{
-                                education && education.institution
-                                  ? education.institution.name
-                                  : ""
-                              }}
-                            </div>
-                          </div>
-                          <div class="flex justify-between px-4 py-1">
-                            <div>Education Level</div>
-                            <div class="text-main-400 font-bold">
-                              {{
-                                education && education.educationLevel
-                                  ? education.educationLevel.name
-                                  : ""
-                              }}
-                            </div>
-                          </div>
-                        </div>
-
-                        <footer
-                          class="
-                            flex
-                            items-center
-                            justify-between
-                            leading-none
-                            p-2
-                            md:p-4
-                          "
-                        ></footer>
-                      </article>
-                      <!-- END Article -->
-                    </div>
-                    
-                    <!-- END Column -->
-
-                    <!-- Column -->
-                    <div
-                      class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
-                    >
-                      <!-- Article -->
-                      <article class="overflow-hidden rounded-lg shadow-xl">
-                        <header
-                          class="
-                            flex
-                            items-center
-                            justify-between
-                            leading-tight
-                            p-2
-                            md:p-4
-                            border-b-4
-                            text-main-400
-                          "
-                        >
-                          <h1 class="text-lg">
-                            <a
-                              class="no-underline hover:underline text-black"
-                              href="#"
-                            >
-                              License Detail
-                            </a>
-                          </h1>
-                          <p class="text-main-400 text-sm">Active</p>
-                        </header>
-
-                        <div class="grid grid-flow-row auto-rows-max">
-                          <div class="flex justify-between px-4 py-1">
-                            <div>Applicant Type</div>
-                            <div class="text-main-400 font-bold">
-                              {{
-                                licenseData && licenseData.applicantType
-                                  ? licenseData.applicantType.name
-                                  : ""
-                              }}
-                            </div>
-                          </div>
-                          <div class="flex justify-between px-4 py-1">
-                            <div>Application Status</div>
-                            <div class="text-main-400 font-bold">
-                              {{
-                                licenseData && licenseData.applicationStatus
-                                  ? licenseData.applicationStatus.name
-                                  : ""
-                              }}
-                            </div>
-                          </div>
-                          <div class="flex justify-between px-4 py-1">
-                            <div>Certified Status</div>
-                            <div class="text-main-400 font-bold">
-                              {{
-                                licenseData && licenseData.certified
-                                  ? "Certified"
-                                  : "Not Certified"
-                              }}
-                            </div>
-                          </div>
-                          <div class="flex justify-between px-4 py-1">
-                            <div>Certified Date</div>
-                            <div class="text-main-400 font-bold">
-                              {{
-                                licenseData && licenseData.applicationStatus
-                                  ? licenseData.applicationStatus.name
-                                  : ""
-                              }}
-                            </div>
-                          </div>
-                          <div class="flex justify-between px-4 py-1">
-                            <div>Expiration Date</div>
-                            <div class="text-main-400 font-bold">
-                              {{
-                                licenseData && licenseData.applicationStatus
-                                  ? licenseData.applicationStatus.name
-                                  : ""
-                              }}
-                            </div>
-                          </div>
-                        </div>
-
-                        <footer
-                          class="
-                            flex
-                            items-center
-                            justify-between
-                            leading-none
-                            p-2
-                            md:p-4
-                          "
-                        ></footer>
-                      </article>
-                      <!-- END Article -->
-                    </div>
-                    <!-- END Column -->
-                  </div>
-                </div>
-              </section>
+            <div class="mr-4">
+              <label class="text-main-400">Applicant Type</label>
+              <select
+                class="
+                  form-select
+                  appearance-none
+                  block
+                  xl:w-64
+                  md:w-64
+                  sm:w-64
+                  px-3
+                  py-1.5
+                  text-base
+                  font-normal
+                  text-gray-700
+                  hover:text-main-500 hover:border-main-500
+                  border border-solid border-gray-300
+                  rounded
+                  transition
+                  ease-in-out
+                  m-0
+                  focus:text-gray-700
+                  focus:bg-white
+                  focus:border-main-400
+                  focus:outline-none
+                "
+                aria-label="Default select example"
+                @change="applicantTypeChangeHandler()"
+                v-model="generalInfo.applicantType"
+                required
+              >
+                <option
+                  v-for="applicant in applicantTypes"
+                  :key="applicant.name"
+                  :value="applicant"
+                >
+                  {{ applicant.name }}
+                </option>
+              </select>
+            </div>
+            <div v-if="showLanguage" class="mr-4">
+              <label class="text-main-400">Language Type</label>
+              <select
+                class="
+                  form-select
+                  appearance-none
+                  block
+                  xl:w-64
+                  md:w-64
+                  sm:w-64
+                  px-3
+                  py-1.5
+                  text-base
+                  font-normal
+                  text-gray-700
+                  hover:text-main-500 hover:border-main-500
+                  border border-solid border-gray-300
+                  rounded
+                  transition
+                  ease-in-out
+                  m-0
+                  focus:text-gray-700
+                  focus:bg-white
+                  focus:border-main-400
+                  focus:outline-none
+                "
+                v-model="generalInfo.nativeLanguageSelected"
+              >
+                <option
+                  v-for="language in languages"
+                  v-bind:key="language.name"
+                  v-bind:value="language"
+                >
+                  {{ language.name }}
+                </option>
+              </select>
+            </div>
+            <div v-if="showOccupation">
+              <label class="text-main-400">Occupation Type</label>
+              <select
+                class="
+                  form-select
+                  appearance-none
+                  block
+                  xl:w-64
+                  md:w-64
+                  sm:w-64
+                  px-3
+                  py-1.5
+                  text-base
+                  font-normal
+                  text-gray-700
+                  hover:text-main-500 hover:border-main-500
+                  border border-solid border-gray-300
+                  rounded
+                  transition
+                  ease-in-out
+                  m-0
+                  focus:text-gray-700
+                  focus:bg-white
+                  focus:border-main-400
+                  focus:outline-none
+                "
+                v-model="generalInfo.occupationTypes"
+              >
+                <option
+                  v-for="occupation in occupations"
+                  v-bind:key="occupation.name"
+                  v-bind:value="occupation"
+                >
+                  {{ occupation.name }}
+                </option>
+              </select>
             </div>
           </div>
         </div>
+
+        <!-- region -->
         <div
+          v-if="showLocation"
           class="
-            modal-footer
-            flex flex-shrink-0 flex-wrap
-            items-center
-            justify-end
-            border-t border-grey-100
-            rounded-b-md
+            flex
+            shadow-lg
+            rounded-md
+            bg-primary-100
+            justify-center
+            mt-8
+            p-4
           "
         >
-      
-          <button
-            type="button"
-            class="
-              inline-block
-              px-6
-              text-white
-              bg-main-400
-              hover:text-main-400 hover:border
-              font-medium
-              text-xs
-              leading-tight
-              uppercase
-              rounded
-              shadow-lg
-              hover:bg-purple-700 hover:shadow-lg
-              focus:bg-purple-700
-              focus:shadow-lg
-              focus:outline-none
-              focus:ring-0
-              active:bg-purple-800 active:shadow-lg
-              transition
-              duration-150
-              ease-in-out
-            "
-            data-bs-dismiss="modal"
-          >
-            Close
-          </button>
+          <div class="flex">
+            <div
+              class="
+                grid grid-cols-3
+                sm:grid-cols-1
+                lg:grid-cols-3
+                mdlg:grid-cols-3
+                md:grid-cols-3
+                p-4
+              "
+            >
+              <div class="mr-4">
+                <label class="text-main-400">Region</label>
+                <select
+                  class="
+                    form-select
+                    appearance-none
+                    block
+                    xl:w-64
+                    md:w-64
+                    sm:w-64
+                    px-3
+                    py-1.5
+                    text-base
+                    font-normal
+                    text-gray-700
+                    hover:text-main-500 hover:border-main-500
+                    border border-solid border-gray-300
+                    rounded
+                    transition
+                    ease-in-out
+                    m-0
+                    focus:text-gray-700
+                    focus:bg-white
+                    focus:border-main-400
+                    focus:outline-none
+                  "
+                  v-model="generalInfo.regionSelected"
+                  @change="regionChangeHandler()"
+                  required
+                >
+                  <option
+                    v-for="region in regions"
+                    v-bind:key="region.name"
+                    v-bind:value="region"
+                  >
+                    {{ region.name }}
+                  </option>
+                </select>
+              </div>
+              <div class="mr-4">
+                <label class="text-main-400">Zone</label>
+                <select
+                  class="
+                    form-select
+                    appearance-none
+                    block
+                    xl:w-64
+                    md:w-64
+                    sm:w-64
+                    px-3
+                    py-1.5
+                    text-base
+                    font-normal
+                    text-gray-700
+                    hover:text-main-500 hover:border-main-500
+                    border border-solid border-gray-300
+                    rounded
+                    transition
+                    ease-in-out
+                    m-0
+                    focus:text-gray-700
+                    focus:bg-white
+                    focus:border-main-400
+                    focus:outline-none
+                  "
+                  @change="zoneChangeHandler()"
+                  v-model="generalInfo.zoneSelected"
+                >
+                  <option
+                    v-for="zone in zones"
+                    v-bind:key="zone.name"
+                    v-bind:value="zone"
+                  >
+                    {{ zone.name }}
+                  </option>
+                </select>
+              </div>
+
+              <div class="mr-4">
+                <label class="text-main-400">Woreda</label>
+                <select
+                  class="
+                    form-select
+                    appearance-none
+                    block
+                    xl:w-64
+                    md:w-64
+                    sm:w-64
+                    px-3
+                    py-1.5
+                    text-base
+                    font-normal
+                    text-gray-700
+                    hover:text-main-500 hover:border-main-500
+                    border border-solid border-gray-300
+                    rounded
+                    transition
+                    ease-in-out
+                    m-0
+                    focus:text-gray-700
+                    focus:bg-white
+                    focus:border-main-400
+                    focus:outline-none
+                  "
+                  v-model="generalInfo.woredaSelected"
+                  required
+                >
+                  <option
+                    v-for="woreda in woredas"
+                    v-bind:key="woreda.name"
+                    v-bind:value="woreda"
+                  >
+                    {{ woreda.name }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+
+        <!-- end -->
+
+        <!-- language -->
+
+        <!-- end -->
+
+        <!-- educational institution and department -->
+        <div
+          class="mt-12 rounded-sm bg-primary-100 shadow-lg mb-8 justify-center"
+          v-if="generalInfo.educations.length < 3"
+        >
+          <div class="container">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+              <div
+                class="
+                  flex
+                  justify-center
+                  text-6xl
+                  min-w-full
+                  rounded-xl
+                  p-6
+                  bg-gray-100
+                "
+              >
+                <div>
+                  <label class="text-main-400">Department</label>
+                  <select
+                    class="
+                      form-select
+                      appearance-none
+                      block
+                      max-w-3xl
+                      px-3
+                      py-1.5
+                      text-base
+                      font-normal
+                      text-gray-700
+                      hover:text-main-500 hover:border-main-500
+                      border border-solid border-gray-300
+                      rounded
+                      transition
+                      ease-in-out
+                      m-0
+                      focus:text-gray-700
+                      focus:bg-white
+                      focus:border-blue-600
+                      focus:outline-none
+                    "
+                    v-model="generalInfo.departmentSelected"
+                    @change="departmentChange()"
+                  >
+                    <option
+                      v-for="department in departments"
+                      v-bind:key="department.name"
+                      v-bind:value="department"
+                    >
+                      {{ department.name }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+
+              <div
+                class="flex justify-center text-6xl rounded-xl p-2 bg-gray-100"
+              >
+                <div>
+                  <label class="text-main-400">Education Level </label>
+                  <select
+                    class="
+                      form-select
+                      appearance-none
+                      block
+                      max-w-3xl
+                      px-3
+                      py-1.5
+                      text-base
+                      font-normal
+                      text-gray-700
+                      hover:text-main-500 hover:border-main-500
+                      border border-solid border-gray-300
+                      rounded
+                      transition
+                      ease-in-out
+                      m-0
+                      focus:text-gray-700
+                      focus:bg-white
+                      focus:border-blue-600
+                      focus:outline-none
+                    "
+                    v-model="generalInfo.educationalLevelSelected"
+                  >
+                    <option
+                      v-for="educationalLevel in educationalLevels"
+                      v-bind:key="educationalLevel.name"
+                      v-bind:value="educationalLevel"
+                    >
+                      {{ educationalLevel.name }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="container mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+              <div
+                class="flex justify-center text-6xl rounded-xl p-2 bg-gray-100"
+              >
+                <div>
+                  <label class="text-main-400">Professional Types</label>
+                  <select
+                    class="
+                      form-select
+                      appearance-none
+                      block
+                      px-3
+                      xl:w-64
+                      md:w-64
+                      sm:w-64
+                      py-1.5
+                      text-base
+                      font-normal
+                      text-gray-700
+                      hover:text-main-500 hover:border-main-500
+                      border border-solid border-gray-300
+                      rounded
+                      transition
+                      ease-in-out
+                      m-0
+                      focus:text-gray-700
+                      focus:bg-white
+                      focus:border-blue-600
+                      focus:outline-none
+                    "
+                    v-model="generalInfo.professionalTypeSelected"
+                    @change="ProfessionTypeChange(institution)"
+                  >
+                    <option disabled>First Select Department from above</option>
+                    <option
+                      v-for="pf in professionalTypes"
+                      v-bind:key="pf.id"
+                      v-bind:value="pf"
+                    >
+                      {{ pf.name }}
+                    </option>
+                  </select>
+                  <input
+                    v-model="generalInfo.otherProfessionalType"
+                    v-if="showOtherProfession"
+                    class="mt-2"
+                    placeholder="Write Educational Institution"
+                    type="text"
+                  />
+                  <input
+                    v-model="generalInfo.otherProfessionalTypeAmharic"
+                    v-if="showOtherProfession"
+                    class="mt-2"
+                    placeholder="Write Educational Institution In Amharic"
+                    type="text"
+                  />
+                </div>
+              </div>
+              <div
+                class="flex justify-center text-6xl rounded-xl p-2 bg-gray-100"
+              >
+                <div>
+                  <label class="text-main-400">Educational Institution</label>
+
+                  <select
+                    class="
+                      xl:w-64
+                      md:w-64
+                      sm:w-64
+                      form-select
+                      appearance-none
+                      block
+                      px-3
+                      py-1.5
+                      text-base
+                      font-normal
+                      text-gray-700
+                      hover:text-main-500 hover:border-main-500
+                      border border-solid border-gray-300
+                      rounded
+                      transition
+                      ease-in-out
+                      m-0
+                      focus:text-gray-700
+                      focus:bg-white
+                      focus:border-blue-600
+                      focus:outline-none
+                    "
+                    v-model="generalInfo.institutionSelected"
+                    @change="institutionChange(institution)"
+                  >
+                    <option disabled>Please Select Applicant Type first</option>
+                    <option
+                      v-for="institution in institutions"
+                      v-bind:key="institution.name"
+                      v-bind:value="institution"
+                    >
+                      {{ institution.name }}
+                    </option>
+                  </select>
+                  <input
+                    v-model="generalInfo.otherEducationalInstitution"
+                    v-if="showOtherEducation"
+                    class="mt-2"
+                    placeholder="Write Educational Institution"
+                    type="text"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-right">
+            <button
+              type="button"
+              class="
+                px-6
+                mr-2
+                mb-2
+                py-2.5
+                bg-white
+                text-main-400
+                font-medium
+                border
+                text-xs
+                leading-tight
+                uppercase
+                rounded
+                shadow-md
+                hover:text-white hover:border-main-400 hover:bg-main-400
+                focus:bg-blue-700
+                focus:shadow-lg
+                focus:outline-none
+                focus:ring-0
+                active:bg-blue-800 active:shadow-lg
+                transition
+                duration-150
+                ease-in-out
+              "
+              @click="addMultiple()"
+            >
+              <i class="fa fa-plus"></i>
+              Add
+            </button>
+          </div>
+
+          <span v-if="multipleDepartmentError" class="ml-8 text-red-300"
+            >Please fill in all fields</span
+          >
+          <span v-if="checkForAddedError" class="ml-8 text-red-300"
+            >You already added the department</span
+          >
+          <span v-if="multipleDepartmentMaxError" class="ml-8 text-red-300"
+            >Only three departments can be selected</span
+          >
+        </div>
+        <!-- Table for selected departments data -->
+        <div
+          class="
+            table-multiple
+            border border-white
+            shadow-lg
+            mt-12
+            mb-8
+            rounded-sm
+            bg-white
+          "
+        >
+          <h2 class="text-main-400 font-bold m-4 border-b-2">
+            Selected Departments
+          </h2>
+
+          <div class="flex flex-col">
+            <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+              <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+                <div class="overflow-hidden">
+                  <div
+                    class="flex justify-center"
+                    v-if="generalInfo.educations.length < 1"
+                  >
+                    No Data
+                  </div>
+                  <div v-else>
+                    <table class="min-w-full p-4">
+                      <thead class="border-b border-t text-main-400 p-4">
+                        <tr>
+                          <th
+                            scope="col"
+                            class="
+                              text-sm text-gray-900
+                              p-5
+                              text-left
+                              font-bold
+                              text-main-400
+                            "
+                          >
+                            Department
+                          </th>
+                          <th
+                            scope="col"
+                            class="
+                              text-sm text-gray-900
+                              px-6
+                              py-4
+                              text-left
+                              font-bold
+                              text-main-400
+                            "
+                          >
+                            Education Level
+                          </th>
+                          <th
+                            scope="col"
+                            class="
+                              text-sm text-gray-900
+                              px-6
+                              py-4
+                              text-left
+                              font-bold
+                              text-main-400
+                            "
+                          >
+                            Institution
+                          </th>
+                          <th
+                            scope="col"
+                            class="
+                              text-sm text-gray-900
+                              px-6
+                              py-4
+                              text-left
+                              font-bold
+                              text-main-400
+                            "
+                          >
+                            Professional Type
+                          </th>
+                          <th
+                            scope="col"
+                            class="
+                              text-sm text-gray-900
+                              px-6
+                              py-4
+                              text-left
+                              font-bold
+                              text-main-400
+                            "
+                          >
+                            Action
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody></tbody>
+                      <tbody>
+                        <tr
+                          class="border-b border-main-400 p-4"
+                          v-for="(
+                            item, index
+                          ) in generalInfo.multipleDepartment"
+                          :key="item.id"
+                        >
+                          <td
+                            class="
+                              p-4
+                              whitespace-nowrap
+                              text-sm
+                              font-medium
+                              text-gray-900
+                            "
+                          >
+                            {{ item.department.name }}
+                          </td>
+                          <td
+                            class="
+                              text-sm text-gray-900
+                              font-light
+                              p-4
+                              whitespace-nowrap
+                            "
+                          >
+                            {{ item.educationLevel.name }}
+                          </td>
+                          <td
+                            class="
+                              text-sm text-gray-900
+                              font-light
+                              p-4
+                              whitespace-nowrap
+                            "
+                          >
+                            {{ item.institution.name }}
+                          </td>
+                          <td
+                            class="
+                              text-sm text-gray-900
+                              font-light
+                              p-4
+                              whitespace-nowrap
+                            "
+                          >
+                            {{ item.professionType.name }}
+                          </td>
+                          <td
+                            class="
+                              text-sm text-gray-900
+                              font-light
+                              p-5
+                              whitespace-nowrap
+                            "
+                          >
+                            <span
+                              @click="removeDepartment(index)"
+                              style="color: red"
+                              title="Delete"
+                              ><i
+                                class="fa fa-trash bg-red-200 cursor-pointer"
+                              ></i
+                            ></span>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Table for selected departments data -->
+        <div class="vld-parent">
+          <loading
+            :active="isLoading"
+            :can-cancel="true"
+            :is-full-page="true"
+            :color="'#2F639D'"
+            :opacity="0.7"
+          ></loading>
+          <div class="flex justify-end mb-2 mr-1">
+            <button
+              :class="
+                generalInfo.educations.length > 0
+                  ? 'px-6 mr-2 mb-2 py-2.5 bg-white text-main-400 font-medium border text-xs leading-tight uppercase rounded shadow-md hover:text-white hover:border-main-400 hover:bg-main-400 transition duration-150   ease-in-out'
+                  : 'px-6 mr-2 mb-2 py-2.5 bg-white text-main-400 font-medium border text-xs leading-tight uppercase rounded shadow-md hover:text-white hover:border-main-400 hover:bg-main-400 transition duration-150   ease-in-out  disabled'
+              "
+              type="submit"
+              @click="apply()"
+            >
+              Next
+            </button>
+            <button
+              class="
+                px-6
+                mr-2
+                mb-2
+                py-2.5
+                bg-yellow-300
+                text-white
+                font-medium
+                border
+                text-xs
+                leading-tight
+                uppercase
+                rounded
+                shadow-md
+                hover:text-yellow-300 hover:border-yellow-300 hover:bg-white
+                transition
+                duration-150
+                ease-in-out
+              "
+              type="submit"
+              @click="withdraw()"
+            >
+              Withdraw
+            </button>
+          </div>
+        </div>
+      </form>
     </div>
-  </div>
+
+    <transition name="fade" mode="out-in">
+      <div v-if="activeState == 2">
+        <Upload
+          :activeState="2"
+          @changeActiveState="activeState++"
+          @changeActiveStateMinus="activeState--"
+        />
+      </div>
+    </transition>
+    <transition name="fade" mode="out-in">
+      <div v-if="activeState == 3">
+        <LicenseSummary
+          :activeState="3"
+          @changeActiveState="activeState++"
+          @changeActiveStateMinus="activeState--"
+        />
+      </div>
+    </transition>
+  </main-content>
 </template>
-  
   <script>
-import { ref, onMounted,watch } from "vue";
 import { useStore } from "vuex";
-import { googleApi } from "@/composables/baseURL"; 
+import { ref, onMounted } from "vue";
+import { useRoute } from "vue-router";
+import LicenseSummary from "./draftSummary.vue";
+import Upload from "./draftUpload.vue";
+import MainContent from "../sharedComponents/Menu.vue";
+import { useToast } from "vue-toastification";
 import Loading from "vue3-loading-overlay";
+import { useRouter } from "vue-router";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 export default {
-  props:['modalDataId'],
-  components: {Loading},
-  setup(props) { 
+  components: { MainContent, LicenseSummary, Upload, Loading },
+
+  setup(props, { emit }) {
+    const route = useRoute();
+    const router = useRouter();
+    const toast = useToast();
+    let activeState = ref(1);
+    let applicantTypes = ref("");
+    let departments = ref([]);
+    let institutions = ref([]);
+    let educationalLevels = ref([]);
+    let educationalLevelSelected = ref({});
+    let professionalTypes = ref([]);
+    let regions = ref("");
+    let woredas = ref("");
+    let zones = ref("");
     let store = useStore();
-    let licenseData = ref({});
-    let userInfo = ref({});
-    let isLoading=ref(false);
-    watch(props.modalDataId,()=>{
-    isLoading.value=true
+    let showLocation = ref(false);
+    let showOccupation = ref(false);
+    let showLanguage = ref(false);
+    let languageSelected = ref({});
+    let occupations = ref([]);
+    let languages = ref([]);
+    let departmentSelected = ref({});
+    let professionalTypeSelected = ref({});
+    let otherEducationalInstitution = ref("");
+    let showOtherEducation = ref(false);
+    let institutionSelected = ref({});
+    let otherProfessionalTypeAmharic = ref("");
+    let otherProfessionalType = ref("");
+    let showOtherProfession = ref(false);
+    let multipleDepartmentError = ref(false);
+    let multipleDepartmentMaxError = ref(false);
+    let checkForAddedError = ref(false);
+    let withdrawData = ref({});
+    let generalInfo = ref({
+      educationalLevelSelected: "",
+      applicantType: "",
+      applicantPositionId: "",
+      regionSelected: "",
+      zoneSelected: "",
+      woredaSelected: "",
+      languageSelected: "",
+      multipleDepartment: [],
+      occupationTypes: "",
+      nativeLanguageSelected: "",
+      educations: [],
+    });
+    let applicationStatuses = ref([]);
+    let isLoading = ref(false);
+
+    const fetchApplicantType = () => {
+      store.dispatch("newlicense/getApplicantType").then((res) => {
+        const results = res.data.data;
+        applicantTypes.value = results;
+      });
+    };
+    const fetchEducationLevel = () => {
+      store.dispatch("lookups/getEducationalLevel").then((res) => {
+        educationalLevels.value = res.data.data;
+      });
+    };
+    const fetchInstitutions = (value) => {
+      store.dispatch("newlicense/getInstitution", value).then((res) => {
+        const institution = res.data.data;
+        institutions.value = institution;
+      });
+    };
+    const fetchDepartments = () => {
+      store.dispatch("newlicense/getDepartmentType").then((res) => {
+        const department = res.data.data;
+        departments.value = department;
+      });
+    };
+    const fetchRegions = () => {
+      store.dispatch("newlicense/getRegions").then((res) => {
+        const regionsResult = res.data.data;
+        regions.value = regionsResult;
+      });
+    };
+
+    const fetchZones = () => {
       store
-        .dispatch("newlicense/getNewLicenseApplication", props.modalDataId.id)
+
+        .dispatch("newlicense/getZones", generalInfo.value.regionSelected.id)
         .then((res) => {
-          licenseData.value = res.data.data;
-          isLoading.value=false
+          const zonesResult = res.data.data;
+          zones.value = zonesResult;
+        });
+    };
+
+    const withdraw = () => {
+      isLoading.value = true;
+      let req = {
+        data: withdrawData.value,
+        action: "WithdrawEvent",
+      };
+      store
+        .dispatch("reviewer/editNewLicense", req)
+        .then((res) => {
+          isLoading.value = false;
+          if (res.statusText == "Created") {
+            toast.success("Done", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+            router.push({ path: "/withdraw" });
+          } else {
+            toast.error(res.data.message, {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+            router.push({ path: "/withdraw" });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+
+    const fetchWoredas = () => {
+      store
+        .dispatch("newlicense/getWoredas", generalInfo.value.zoneSelected.id)
+        .then((res) => {
+          const woredasResult = res.data.data;
+          woredas.value = woredasResult;
+        });
+    };
+    const fetchProfessionalType = (id) => {
+      store.dispatch("newlicense/getProfessionalTypes", id).then((res) => {
+        professionalTypes.value = res.data.data;
+      });
+    };
+    const applicantTypeChangeHandler = async () => {
+      if (generalInfo.value.applicantType.code == "ETH") {
+        showLocation.value = true;
+        showOccupation.value = true;
+        fetchInstitutions(true);
+      } else {
+        showLocation.value = false;
+        showOccupation.value = false;
+        fetchInstitutions(false);
+      }
+      if (generalInfo.value.applicantType.code == "FOR") {
+        fetchLanguages();
+        showLanguage.value = true;
+      } else {
+        showLanguage.value = false;
+      }
+    };
+    const regionChangeHandler = () => {
+      fetchZones();
+    };
+    const zoneChangeHandler = () => {
+      fetchWoredas();
+    };
+    const fetchLanguages = () => {
+      store.dispatch("lookups/getNativeLanguage").then((res) => {
+        if (res.data.status == "Success") {
+          languages.value = res.data.data;
+        }
+      });
+    };
+    const departmentChange = () => {
+      fetchProfessionalType(generalInfo.value.departmentSelected.id);
+    };
+    const institutionChange = () => {
+      if (generalInfo.value.institutionSelected.code == "OTH") {
+        showOtherEducation.value = true;
+      } else {
+        showOtherEducation.value = false;
+      }
+    };
+    const ProfessionTypeChange = () => {
+      if (generalInfo.value.professionalTypeSelected.code == "OTH") {
+        showOtherProfession.value = true;
+      } else {
+        showOtherProfession.value = false;
+      }
+    };
+
+    const checkForAdded = (data) => {
+      let tempStatus = false;
+      if (generalInfo.value.multipleDepartment) {
+        generalInfo.value.multipleDepartment.forEach((element) => {
+          if (element.department.code == data.code) {
+            checkForAddedError.value = true;
+            tempStatus = true;
+          }
+        });
+        return tempStatus;
+      }
+    };
+    const removeDepartment = (index) => {
+      generalInfo.value.multipleDepartment.splice(index, 1);
+    };
+    const addMultiple = () => {
+      if (
+        generalInfo.value.departmentSelected &&
+        generalInfo.value.educationalLevelSelected &&
+        generalInfo.value.institutionSelected &&
+        generalInfo.value.professionalTypeSelected
+      ) {
+        if (generalInfo.value.multipleDepartment.length > 3) {
+          multipleDepartmentMaxError.value = true;
+        } else {
+          multipleDepartmentMaxError.value = false;
+          multipleDepartmentError.value = false;
+
+          if (
+            generalInfo.value.multipleDepartment.length > 0 &&
+            generalInfo.value.multipleDepartment.length <= 3
+          ) {
+            if (
+              checkForAdded(
+                generalInfo.value.departmentSelected
+                  ? generalInfo.value.departmentSelected
+                  : ""
+              ) == false
+            ) {
+              checkForAddedError.value = false;
+
+              generalInfo.value.multipleDepartment.push({
+                department: generalInfo.value.departmentSelected,
+                educationLevel: generalInfo.value.educationalLevelSelected,
+                institution: generalInfo.value.institutionSelected,
+                professionType: generalInfo.value.professionalTypeSelected,
+                otherEducationalInstitution:
+                  generalInfo.value.otherEducationalInstitution,
+                otherProfessionalTypeAmharic:
+                  generalInfo.value.otherProfessionalTypeAmharic,
+                otherProfessionalType: generalInfo.value.otherProfessionalType,
+              });
+
+              generalInfo.value.educations.push({
+                departmentId: generalInfo.value.departmentSelected.id,
+                educationalLevelId:
+                  generalInfo.value.educationalLevelSelected.id,
+                institutionId: generalInfo.value.institutionSelected.id,
+                professionTypeId: generalInfo.value.professionalTypeSelected.id,
+                otherInstitution: generalInfo.value.otherEducationalInstitution,
+                otherProfessionTypeAmharic:
+                  generalInfo.value.otherProfessionalTypeAmharic,
+                otherProfessionType: generalInfo.value.otherProfessionalType,
+              });
+            }
+          }
+          generalInfo.value.departmentSelected = "";
+          generalInfo.value.educationalLevelSelected = "";
+          generalInfo.value.institutionSelected = "";
+          generalInfo.value.professionalTypeSelected = "";
+        }
+      } else {
+        multipleDepartmentError.value = true;
+      }
+    };
+    const fetchOccupation = () => {
+      store.dispatch("lookups/getGovernment").then((res) => {
+        if (res.data.status == "Success") {
+          occupations.value = res.data.data;
+        }
+      });
+    };
+    const apply = () => {
+      let tempApplicationData = generalInfo.value;
+      window.localStorage.setItem(
+        "NLApplicationData",
+        JSON.stringify(tempApplicationData)
+      );
+      store
+        .dispatch("newlicense/setGeneralInfo", generalInfo.value)
+        .then(() => {
+          emit("changeActiveState");
+          activeState.value += 1;
+          console.log(activeState.value);
+        });
+    };
+    const fetchApplicationStatuses = () => {
+      store.dispatch("newlicense/getApplicationStatuses").then((res) => {
+        const results = res.data.data;
+        applicationStatuses.value = results;
+
+        let status = applicationStatuses.value.filter(function (e) {
+          return e.code == "SUB";
+        });
+        store.dispatch("newlicense/setButtons", status[0].buttons);
+      });
+    };
+    onMounted(async () => {
+      fetchApplicantType();
+      fetchDepartments();
+      fetchInstitutions();
+      fetchEducationLevel();
+      fetchRegions();
+      fetchOccupation();
+      fetchApplicationStatuses();
+
+      store
+        .dispatch("newlicense/getNewLicenseApplication", route.params.id)
+        .then((res) => {
+          withdrawData.value = res.data.data;
+          generalInfo.value = res.data.data;
+          generalInfo.value.regionSelected =
+            res.data.data && res.data.data.woreda
+              ? res.data.data.woreda.zone.region
+              : "";
+
+          generalInfo.value.zoneSelected =
+            res.data.data && res.data.data.woreda
+              ? {
+                  code: res.data.data.woreda.zone.code,
+                  createdAt: res.data.data.woreda.zone.createdAt,
+                  id: res.data.data.woreda.zone.id,
+                  name: res.data.data.woreda.zone.name,
+                  regionId: res.data.data.woreda.zone.regionId,
+                  rowguid: res.data.data.woreda.zone.rowguid,
+                  updatedAt: res.data.data.woreda.zone.updatedAt,
+                }
+              : "";
+          generalInfo.value.woredaSelected =
+            res.data.data && res.data.data.woreda
+              ? {
+                  code: res.data.data.woreda.code,
+                  createdAt: res.data.data.woreda.createdAt,
+                  id: res.data.data.woreda.id,
+                  name: res.data.data.woreda.name,
+                  zoneId: res.data.data.woreda.zoneId,
+                  rowguid: res.data.data.woreda.rowguid,
+                  updatedAt: res.data.data.woreda.updatedAt,
+                }
+              : "";
+          applicantTypeChangeHandler();
+          regionChangeHandler();
+          zoneChangeHandler();
+          generalInfo.value.multipleDepartment = JSON.parse(
+            JSON.stringify(res.data.data.educations)
+          );
+          generalInfo.value.applicantTypeSelected = res.data.data.applicantType;
+          console.log(generalInfo.value);
         });
     });
-    onMounted(() => {
-      userInfo.value = JSON.parse(window.localStorage.getItem("personalInfo"));
-    });
-
     return {
-      licenseData,
+      applicantTypeChangeHandler,
+      regionChangeHandler,
+      zoneChangeHandler,
+      departmentChange,
+      institutionChange,
+      ProfessionTypeChange,
+      addMultiple,
+      removeDepartment,
+      apply,
+      fetchOccupation,
+      showLocation,
+      departments,
+      withdraw,
+      institutions,
+      educationalLevels,
+      applicantTypes,
+      regions,
+      woredas,
+      checkForAddedError,
+      zones,
+      professionalTypes,
+      showOccupation,
+      showLanguage,
+      languageSelected,
+      languages,
+      occupations,
+      activeState,
       isLoading,
-      googleApi,
-      userInfo,
+      departmentSelected,
+      professionalTypeSelected,
+      otherEducationalInstitution,
+      showOtherEducation,
+      institutionSelected,
+      showOtherProfession,
+      otherProfessionalType,
+      otherProfessionalTypeAmharic,
+      educationalLevelSelected,
+      multipleDepartmentError,
+      multipleDepartmentMaxError,
+      generalInfo,
     };
   },
 };
 </script>
+  <style>
+#main {
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+}
+.table-multiple {
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+}
+</style>
   
