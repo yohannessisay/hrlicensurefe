@@ -39,7 +39,7 @@ pipelines:
               - docker
     development:
         - step:
-            #size: 2x
+            size: 2x
             name: Build
             image: google/cloud-sdk:latest
             script:
@@ -53,7 +53,7 @@ pipelines:
               - docker
 
         - step:
-            #size: 2x
+            size: 2x
             name: Deploy
             image: google/cloud-sdk:latest
             script:
