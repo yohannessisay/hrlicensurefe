@@ -913,12 +913,10 @@
                             uppercase
                             rounded
                             shadow-lg
-                            hover:bg-purple-700 hover:shadow-lg
-                            focus:bg-purple-700
-                            focus:shadow-lg
-                            focus:outline-none
-                            focus:ring-0
-                            active:bg-purple-800 active:shadow-lg
+                            bg-primary-700
+                            hover:bg-white
+                            hover:text-primary-600
+                            hover:border
                             transition
                             duration-150
                             ease-in-out
@@ -938,13 +936,12 @@
                             uppercase
                             rounded
                             shadow-lg
-                            hover:bg-purple-700 hover:shadow-lg
-                            focus:bg-purple-700
-                            focus:shadow-lg
-                            focus:outline-none
-                            focus:ring-0
+                            bg-red-300
+                            hover:bg-white
+                            hover:text-primary-600
+                            hover:border
                             active:bg-white active:shadow-lg
-                            hover:bg-red-300 hover:text-white
+                            
                             transition
                             duration-150
                             ease-in-out
@@ -964,15 +961,13 @@
                             uppercase
                             rounded
                             shadow-lg
-                            hover:bg-purple-700 hover:shadow-lg
-                            focus:bg-purple-700
-                            focus:shadow-lg
-                            focus:outline-none
-                            focus:ring-0
-                            active:bg-purple-800 active:shadow-lg
+                            bg-primary-700
+                            hover:bg-white
+                            hover:text-primary-600
+                            hover:border
                             transition
                             duration-150
-                            hover:bg-yellow-300 hover:text-white
+                            
                             ease-in-out
                           "
                           @click="action('ReviewerDraftEvent')"
@@ -991,15 +986,13 @@
                             uppercase
                             rounded
                             shadow-lg
-                            hover:bg-purple-700 hover:shadow-lg
-                            focus:bg-purple-700
-                            focus:shadow-lg
-                            focus:outline-none
-                            focus:ring-0
-                            active:bg-purple-800 active:shadow-lg
+                            bg-primary-400
+                            hover:bg-white
+                            hover:text-primary-600
+                            hover:border
                             transition
                             duration-150
-                            hover:bg-primary-400 hover:text-white
+                       
                             ease-in-out
                           "
                           @click="transferToFederal()"
@@ -1102,15 +1095,12 @@
                         uppercase
                         rounded
                         shadow-lg
-                        hover:bg-purple-700 hover:shadow-lg
-                        focus:bg-purple-700
-                        focus:shadow-lg
-                        focus:outline-none
-                        focus:ring-0
-                        active:bg-purple-800 active:shadow-lg
+                        bg-primary-700
+                        hover:text-primary-600
+                        hover:border
                         transition
                         duration-150
-                        hover:bg-primary-400 hover:text-white
+                      
                         ease-in-out
                       "
                       @click="action(button.action)"
@@ -1129,15 +1119,12 @@
                         uppercase
                         rounded
                         shadow-lg
-                        hover:bg-purple-700 hover:shadow-lg
-                        focus:bg-purple-700
-                        focus:shadow-lg
-                        focus:outline-none
-                        focus:ring-0
-                        active:bg-purple-800 active:shadow-lg
+                        bg-yellow-300 
+                        hover:border hover:text-yellow-300
+                     
                         transition
                         duration-150
-                        hover:bg-yellow-300 hover:text-white
+                      
                         ease-in-out
                       "
                       data-bs-toggle="modal"

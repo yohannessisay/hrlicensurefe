@@ -588,12 +588,6 @@
                                           <div
                                             :id="education.department.id"
                                             class="flex justify-center"
-                                            v-if="
-                                              education.professionType &&
-                                              allowProfChange[
-                                                education.department.id
-                                              ]
-                                            "
                                           >
                                             <div class="mb-3 w-full">
                                               <select
@@ -2252,7 +2246,7 @@ export default {
         sendDeclinedData.value = false;
         return;
       }
-      
+
       showRemarkError.value = false;
       let checkProfessionResult = false;
       newLicense.value.isProfessionChanged == false;
@@ -2708,8 +2702,11 @@ export default {
       for (let i = 0; i < newLicense.value.educations.length; i++) {
         for (let j = 0; i < modifiedProfession.length; j++) {
           if (
+            newLicense.value &&
+            newLicense.value.educations[i] &&
+            newLicense.value.educations[i].department &&
             newLicense.value.educations[i].department.id ==
-            modifiedProfession[j].department.id
+              modifiedProfession[j].department.id
           ) {
             newLicense.value.educations[i] = modifiedProfession[j];
           }
