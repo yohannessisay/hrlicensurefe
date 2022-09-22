@@ -36,19 +36,12 @@
           text-current
         "
       >
-   <div
-          class="
-            modal-header
-            flex flex-shrink-0
-           justify-end
-           
-            p-2
-            rounded-t-md
-          "
+        <div
+          class="modal-header flex flex-shrink-0 justify-end p-2 rounded-t-md"
         >
           <button
             type="button"
-            class="     
+            class="
               px-6
               text-white
               bg-primary-600
@@ -67,10 +60,13 @@
               active:bg-purple-800 active:shadow-lg
               transition
               duration-150
-              ease-in-out"
+              ease-in-out
+            "
             data-bs-dismiss="modal"
             aria-label="Close"
-          ><i class="fa fa-close fa-2x"></i></button>
+          >
+            <i class="fa fa-close fa-2x"></i>
+          </button>
         </div>
         <div class="vld-parent mt-4">
           <loading
@@ -310,15 +306,14 @@
                             inline-block
                             px-6
                             py-2.5
-                            bg-yellow-300 
-                        hover:border hover:text-yellow-300
+                            bg-yellow-300
+                            hover:border hover:text-yellow-300
                             font-medium
                             text-xs
                             leading-tight
                             uppercase
                             rounded
                             shadow-lg
-                        
                             transition
                             duration-150
                             ease-in-out
@@ -335,8 +330,8 @@
                             inline-block
                             px-6
                             py-2.5
-                            bg-red-300 
-                        hover:border hover:text-red-300
+                            bg-red-300
+                            hover:border hover:text-red-300
                             text-white
                             font-medium
                             text-xs
@@ -345,7 +340,6 @@
                             rounded
                             shadow-lg
                             focus:shadow-lg focus:outline-none focus:ring-0
-                         
                             transition
                             duration-150
                             ease-in-out
@@ -370,8 +364,8 @@
                             uppercase
                             rounded
                             shadow-lg
-                            bg-primary-700 
-                        hover:border hover:text-primary-700 
+                            bg-primary-700
+                            hover:border hover:text-primary-700
                             active:bg-blue-800 active:shadow-lg
                             transition
                             duration-150
@@ -448,22 +442,21 @@
         >
           <button
             class="
-               inline-block
-                                            px-6
-                                            py-2.5
-                                            bg-primary-700
-                                            text-white
-                                            font-medium
-                                            text-xs
-                                            leading-tight
-                                            uppercase
-                                            rounded
-                                            shadow-lg
-                                            hover:bg-white 
-                                            hover:text-primary-600
-                                            transition
-                                            duration-150
-                                            ease-in-out
+              inline-block
+              px-6
+              py-2.5
+              bg-primary-700
+              text-white
+              font-medium
+              text-xs
+              leading-tight
+              uppercase
+              rounded
+              shadow-lg
+              hover:bg-white hover:text-primary-600
+              transition
+              duration-150
+              ease-in-out
             "
             type="button"
             data-bs-toggle="collapse"
@@ -476,7 +469,7 @@
           <button
             type="button"
             class="
-        inline-block
+              inline-block
               px-6
               text-white
               font-medium
@@ -486,8 +479,7 @@
               uppercase
               rounded
               shadow-lg
-              hover:bg-white 
-              hover:text-primary-700
+              hover:bg-white hover:text-primary-700
               transition
               duration-150
               ease-in-out

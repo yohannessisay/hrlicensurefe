@@ -418,6 +418,9 @@
                 inline-block
                 px-6
                 text-white
+                bg-primary-700
+                hover:bg-white
+                hover:text-primary-600
                 font-medium
                 text-xs
                 leading-tight
