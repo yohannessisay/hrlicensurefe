@@ -904,8 +904,11 @@
                       <div class="mt-medium" v-if="!showButtons">
                         <button
                           class="
-                            inline-block
+                          inline-block
                             px-6
+                            py-2.5
+                            bg-primary-700
+                            hover:text-primary-600 hover:bg-white hover:border
                             text-white
                             font-medium
                             text-xs
@@ -913,10 +916,6 @@
                             uppercase
                             rounded
                             shadow-lg
-                            bg-primary-700
-                            hover:bg-white
-                            hover:text-primary-600
-                            hover:border
                             transition
                             duration-150
                             ease-in-out
@@ -927,8 +926,11 @@
                         </button>
                         <button
                           class="
-                            inline-block
+                          inline-block
                             px-6
+                            py-2.5
+                            bg-red-300
+                            hover:text-red-300 hover:bg-white hover:border
                             text-white
                             font-medium
                             text-xs
@@ -936,12 +938,6 @@
                             uppercase
                             rounded
                             shadow-lg
-                            bg-red-300
-                            hover:bg-white
-                            hover:text-primary-600
-                            hover:border
-                            active:bg-white active:shadow-lg
-                            
                             transition
                             duration-150
                             ease-in-out
@@ -952,8 +948,11 @@
                         </button>
                         <button
                           class="
-                            inline-block
+                          inline-block
                             px-6
+                            py-2.5
+                            bg-yellow-300
+                            hover:text-yellow-300 hover:bg-white hover:border
                             text-white
                             font-medium
                             text-xs
@@ -961,13 +960,8 @@
                             uppercase
                             rounded
                             shadow-lg
-                            bg-primary-700
-                            hover:bg-white
-                            hover:text-primary-600
-                            hover:border
                             transition
                             duration-150
-                            
                             ease-in-out
                           "
                           @click="action('ReviewerDraftEvent')"
@@ -977,8 +971,11 @@
                         <button
                           v-if="showTransferToAdminButton"
                           class="
-                            inline-block
+                          inline-block
                             px-6
+                            py-2.5
+                            bg-primary-700
+                            hover:text-primary-600 hover:bg-white hover:border
                             text-white
                             font-medium
                             text-xs
@@ -986,13 +983,8 @@
                             uppercase
                             rounded
                             shadow-lg
-                            bg-primary-400
-                            hover:bg-white
-                            hover:text-primary-600
-                            hover:border
                             transition
                             duration-150
-                       
                             ease-in-out
                           "
                           @click="transferToFederal()"

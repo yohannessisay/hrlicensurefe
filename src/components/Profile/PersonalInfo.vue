@@ -147,6 +147,7 @@
 
   <div
     class="w-screen max-w-4xl mt-small overflow-y-scroll"
+    style="height:100vh;"
     v-if="approveStatus == 2"
   >
     <div

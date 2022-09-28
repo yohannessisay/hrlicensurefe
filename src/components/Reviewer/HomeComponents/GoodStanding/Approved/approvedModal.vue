@@ -303,11 +303,12 @@
                         <br />
                         <button
                           class="
-                            inline-block
+                          inline-block
                             px-6
                             py-2.5
                             bg-yellow-300
-                            hover:border hover:text-yellow-300
+                            hover:text-yellow-300 hover:bg-white hover:border
+                            text-white
                             font-medium
                             text-xs
                             leading-tight
@@ -327,11 +328,11 @@
                         </button>
                         <button
                           class="
-                            inline-block
+                          inline-block
                             px-6
                             py-2.5
                             bg-red-300
-                            hover:border hover:text-red-300
+                            hover:text-red-300 hover:bg-white hover:border
                             text-white
                             font-medium
                             text-xs
@@ -339,7 +340,6 @@
                             uppercase
                             rounded
                             shadow-lg
-                            focus:shadow-lg focus:outline-none focus:ring-0
                             transition
                             duration-150
                             ease-in-out
@@ -356,7 +356,8 @@
                             inline-block
                             px-6
                             py-2.5
-                            bg-
+                            bg-primary-700
+                            hover:text-primary-600 hover:bg-white hover:border
                             text-white
                             font-medium
                             text-xs
@@ -364,9 +365,6 @@
                             uppercase
                             rounded
                             shadow-lg
-                            bg-primary-700
-                            hover:border hover:text-primary-700
-                            active:bg-blue-800 active:shadow-lg
                             transition
                             duration-150
                             ease-in-out
