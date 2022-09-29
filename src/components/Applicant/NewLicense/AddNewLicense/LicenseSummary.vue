@@ -204,7 +204,9 @@
                 ease-in-out
                 hover:-translate-y-2
               "
-              v-for="localFileData in localFileData"
+              v-for="localFileData in localFileData[0]
+                ? localFileData[0].data
+                : {}"
               :key="localFileData.documenttype"
             >
               <div class="flex justify-center">
@@ -530,11 +532,23 @@ export default {
       localData.value = window.localStorage.getItem("NLApplicationData")
         ? JSON.parse(window.localStorage.getItem("NLApplicationData"))
         : {};
-      localFileData.value = window.localStorage.getItem(
-        "NLApplicationImageData"
-      )
-        ? JSON.parse(window.localStorage.getItem("NLApplicationImageData"))
-        : {};
+
+      let request = indexedDB.open("NLdocumentUploads", 1);
+
+      request.onerror = function () {
+        console.error("Unable to open database.");
+      };
+
+      request.onsuccess = function () {
+        let db = request.result;
+        const tx = db.transaction("NLdocumentUploads", "readonly");
+        const store = tx.objectStore("NLdocumentUploads");
+        let getAllIDB = store.getAll();
+
+        getAllIDB.onsuccess = function (evt) {
+          localFileData.value = evt.target.result ? evt.target.result : {};
+        };
+      };
 
       generalInfo.value = localData.value;
       generalInfo.value.feedback = "";

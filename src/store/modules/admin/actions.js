@@ -1,4 +1,5 @@
 import ApiService from "../../../services/api.service";
+import { baseUrl } from "../../../composables/baseURL";
 import {
   SET_ADMIN,
   ADD_ADMIN_LOADING,
@@ -6,17 +7,18 @@ import {
   ADD_ADMIN_ERROR,
   SET_APPLICATION_STATUSES,
 } from "./mutation-types";
-const url = "https://ihris.moh.gov.et/hrl/api/";
+ 
 export default {
   async login({ commit }, admin) {
     commit(ADD_ADMIN_LOADING);
     try {
-      const resp = await ApiService.post(url + "admins/login", admin, {});
+      const resp = await ApiService.post(baseUrl + "/admins/login", admin, {});
       window.localStorage.setItem("token", resp.data["token"]);
       window.localStorage.setItem("adminId", resp.data.data["id"]);
       window.localStorage.setItem("role", resp.data.data["role"]["code"]);
       window.localStorage.setItem("adminEmail", resp.data.data["email"]);
       window.localStorage.setItem("allAdminData", JSON.stringify(resp.data.data))
+      
       commit(SET_ADMIN, resp.data.data);
       commit(ADD_ADMIN_SUCCESS);
       return resp;
@@ -30,7 +32,7 @@ export default {
   },
   async getApplicationStatus({commit}) {
     try {
-      const AppStatuses = await ApiService.get(url+"applicationStatuses");
+      const AppStatuses = await ApiService.get(baseUrl+"/applicationStatuses");
       commit(SET_APPLICATION_STATUSES, AppStatuses.data.data)
     } catch(error) {
     }
@@ -38,7 +40,7 @@ export default {
   async getRole({ commit }) {
     // commit(ADD_ADMIN_LOADING);
     try {
-      const resp = await ApiService.get(url + "roles");
+      const resp = await ApiService.get(baseUrl + "roles");
       return resp;
     } catch (error) {
       const resp = error;
@@ -48,7 +50,7 @@ export default {
   async registerAdmin({ commit }, admin) {
     commit(ADD_ADMIN_LOADING);
     try {
-      const resp = await ApiService.post(url + "admins/register", admin, {});
+      const resp = await ApiService.post(baseUrl + "/admins/register", admin, {});
       commit(ADD_ADMIN_SUCCESS);
       return resp;
     } catch (error) {
@@ -58,7 +60,7 @@ export default {
   },
   async getExpertLevels() {
     try {
-      const resp = await ApiService.get(url + "lookups/expertLevels");
+      const resp = await ApiService.get(baseUrl + "/lookups/expertLevels");
       return resp;
     } catch (error) {
       const resp = error;
@@ -67,7 +69,7 @@ export default {
   },
   async getRegions() {
     try {
-      const resp = await ApiService.get(url + "lookups/regions");
+      const resp = await ApiService.get(baseUrl + "/lookups/regions");
       return resp;
     } catch (error) {
       const resp = error;
@@ -76,7 +78,7 @@ export default {
   },
   async changePassword({ commit }, newPassword) {
     try {
-      const resp = await ApiService.post(url+"admins/changePassword", newPassword)
+      const resp = await ApiService.post(baseUrl+"/admins/changePassword", newPassword)
       return resp;
     } catch(error) {
       return error;
@@ -84,7 +86,7 @@ export default {
   },
   async getAdmins() {
     try {
-      const resp = await ApiService.get(url + "admins/all");
+      const resp = await ApiService.get(baseUrl + "admins/all");
       return resp;
     } catch (error) {
       const resp = error;
@@ -93,7 +95,7 @@ export default {
   },
   async updateAdmin({ commit }, data) {
     try {
-      const resp = await ApiService.put(url+`admins/${data.id}`, data)
+      const resp = await ApiService.put(baseUrl+`/admins/${data.id}`, data)
       return resp;
     } catch(error) {
       return error;

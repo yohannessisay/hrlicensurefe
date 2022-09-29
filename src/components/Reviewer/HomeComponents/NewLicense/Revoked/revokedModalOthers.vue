@@ -20,7 +20,14 @@
     aria-labelledby="staticBackdropOthersLabel"
     aria-hidden="true"
   >
-    <div class="modal-dialog modal-xl relative w-auto pointer-events-none">
+    <div
+      class="
+        modal-dialog modal-dialog-centered modal-xl
+        relative
+        w-auto
+        pointer-events-none
+      "
+    >
       <div
         class="
           modal-content
@@ -72,7 +79,7 @@
             aria-label="Close"
           ><i class="fa fa-close fa-2x"></i></button>
         </div>
-        <div class="vld-parent mt-4">
+        <div class="vld-parent">
           <loading
             :active="isLoading"
             :is-full-page="false"
@@ -87,7 +94,7 @@
                     <h2 class="text-2xl font-bold mb-8 px-6">
                       Showing
                       <span class="text-2xl font-bold px-6">
-                        {{ modalData.name }}
+                        {{ modalData.name ? modalData.name : "" }}
                       </span>
                       's License Data
                     </h2>
@@ -156,19 +163,23 @@
                                 "
                                 >Full Name:</span
                               >
-                              {{ modalData.name }}
+                              {{ modalData.name ? modalData.name : "" }}
                             </p>
                             <p class="text-gray-500">
                               <span class="font-semibold text-primary-700 mb-1"
                                 >Gender:</span
                               >
-                              {{ modalData.gender }}
+                              {{ modalData.gender ? modalData.gender : "" }}
                             </p>
                             <p class="text-gray-500">
                               <span class="font-semibold text-primary-700 mb-1"
                                 >Nationality:</span
                               >
-                              {{ modalData.nationality }}
+                              {{
+                                modalData.nationality
+                                  ? modalData.nationality
+                                  : ""
+                              }}
                             </p>
                             <p class="text-gray-500">
                               <span class="font-semibold text-primary-700 mb-1"
@@ -184,64 +195,17 @@
                               <span class="font-semibold text-primary-700 mb-1"
                                 >Martial Status:</span
                               >
-                              {{ modalData.martialStatus }}
+                              {{
+                                modalData.martialStatus
+                                  ? modalData.martialStatus
+                                  : ""
+                              }}
                             </p>
                           </div>
                         </div>
                       </div>
 
-                      <div
-                        class="
-                          grow-0
-                          shrink-0
-                          basis-auto
-                          w-full
-                          lg:w-6/12
-                          px-3
-                          lg:px-6
-                        "
-                      >
-                        <div class="flex align-center">
-                          <div class="shrink-0">
-                            <div
-                              class="
-                                p-4
-                                bg-blue-600
-                                rounded-md
-                                shadow-lg
-                                w-40
-                                h-40
-                                flex
-                                items-center
-                                justify-center
-                              "
-                            >
-                              <i class="fa fa-building fa-4x"></i>
-                            </div>
-                          </div>
-                          <div class="grow ml-6">
-                            <h2 class="font-bold mb-1">Institution Info</h2>
-                            <p class="text-gray-500">
-                              <span class="font-medium text-primary-700 mb-1"
-                                >Institution Name:</span
-                              >
-                              {{ modalData.instName }}
-                            </p>
-                            <p class="text-gray-500">
-                              <span class="font-medium text-primary-700 mb-1"
-                                >Department:</span
-                              >
-                              {{ modalData.department }}
-                            </p>
-                            <p class="text-gray-500">
-                              <span class="font-medium text-primary-700 mb-1"
-                                >Institution Type:</span
-                              >
-                              {{ modalData.instType }}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
+                      
 
                       <div
                         class="
@@ -262,8 +226,8 @@
                                 bg-blue-600
                                 rounded-md
                                 shadow-lg
-                                w-40
-                                h-40
+                                w-48
+                                h-48
                                 flex
                                 items-center
                                 justify-center
@@ -278,62 +242,20 @@
                               <span class="font-medium text-primary-700 mb-1"
                                 >Mobile Number:</span
                               >
-                              {{ modalData.mobileNumber }}
+                              {{
+                                modalData.mobileNumber
+                                  ? modalData.mobileNumber
+                                  : ""
+                              }}
                             </p>
                             <p class="text-gray-500">
                               <span class="font-medium text-primary-700 mb-1"
                                 >Email:</span
                               >
-                              {{ modalData.email }}
+                              {{ modalData.email ? modalData.email : "" }}
                             </p>
                           </div>
                         </div>
-                      </div>
-
-                      <div
-                        class="
-                          grow-0
-                          shrink-0
-                          basis-auto
-                          w-full
-                          lg:w-6/12
-                          px-3
-                          lg:px-6
-                        "
-                      >
-                        <button
-                          class="
-                         inline-block
-                            px-6
-                            py-2.5
-                            bg-blue-600
-                            hover:text-primary-600
-                            hover:border
-                            text-white
-                            font-medium
-                            text-xs
-                            leading-tight
-                            uppercase
-                            rounded
-                            shadow-lg
-                            hover:bg-blue-700 hover:shadow-lg
-                            focus:bg-blue-700
-                            focus:shadow-lg
-                            focus:outline-none
-                            focus:ring-0
-                            active:bg-blue-800 active:shadow-lg
-                            transition
-                            duration-150
-                            ease-in-out
-                          "
-                          type="button"
-                          data-bs-toggle="collapse"
-                          data-bs-target="#collapseExample"
-                          aria-expanded="false"
-                          aria-controls="collapseExample"
-                        >
-                          Show Attached Documents
-                        </button>
                       </div>
                     </div>
 
@@ -353,7 +275,7 @@
                               <div class="mt-large bg-white">
                                 <a
                                   :href="googleApi + document.filePath"
-                                  :data-title="document.documentType.name?document.documentType.name:''"
+                                  :data-title="document.documentType?document.documentType.name:''"
                                   data-lightbox="example-2"
                                 >
                                   <img
@@ -363,9 +285,9 @@
                                 </a>
 
                                 <h4 style="font-weight: bold">
-                                  Document Type
+                                  Document Type:-
                                 </h4>
-                                <h5 class="text-primary-500">{{ document.documentType.name?document.documentType.name:'' }}</h5>
+                                    <h6>{{ document.documentType?document.documentType.name:'' }}</h6>
                               </div>
                             </div>
                           </div>
@@ -389,6 +311,34 @@
           "
         >
           <button
+            class="
+              inline-block
+                                            px-6
+                                            py-2.5
+                                            bg-primary-700
+                                            text-white
+                                            font-medium
+                                            text-xs
+                                            leading-tight
+                                            uppercase
+                                            rounded
+                                            shadow-lg
+                                            hover:bg-white 
+                                            hover:text-primary-600
+                                            transition
+                                            duration-150
+                                            ease-in-out
+            "
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapseExample"
+            aria-expanded="false"
+            aria-controls="collapseExample"
+          >
+            <i class="fa fa-eye"></i>
+            Show Attached Documents
+          </button>
+          <button
             type="button"
             class="
         inline-block
@@ -409,59 +359,45 @@
             "
             data-bs-dismiss="modal"
           >
+            <i class="fa fa-times-circle"></i>
             Close
           </button>
         </div>
       </div>
     </div>
   </div>
+  <generate-pdf v-if="showGenerateModal" :modalData="modalData"></generate-pdf>
 </template>
 <script>
-import { useStore } from "vuex";
+import { googleApi } from "@/composables/baseURL";
 import { ref, watch } from "vue";
-import moment from "moment";
+import { useStore } from "vuex";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
-import { googleApi } from "@/composables/baseURL";
 export default {
+  name: "Modal",
+  components: { Loading },
   props: ["modalDataIdOthers"],
-  components: {
-    Loading,
-  },
-  computed: {
-    moment: () => moment,
-  },
   setup(props) {
     const store = useStore();
-
-    let show = ref(true);
-    let adminId = +localStorage.getItem("adminId");
-
-    const isLoading = ref(true);
-    let reviewerAdminId = ref(0);
-
     const showModal = () => {
-      show.value = true;
+      this.show = true;
     };
-
-    const onCancel = () => {
-      isLoading.value = false;
-    };
+    const show = ref(true);
+    const showRes = ref(true);
+    const showGenerateModal = ref(true);
+    const showOptions = ref(true);
+    const isLoading = ref(true);
     const modalData = ref({});
     let result = {};
-
     const check = () => {
       store
         .dispatch(
-          "reviewer/getRenewalApplication",
+          "reviewer/getNewLicenseApplication",
           props.modalDataIdOthers.id
         )
         .then((res) => {
-          if (
-            res.data.status == "Success" &&
-            res.data.message !=
-              "Renewal total count retrieved successfully!"
-          ) {
+          if (res.data.status == "Success") {
             result = res.data.data;
             modalData.value.name =
               result.profile.name +
@@ -472,8 +408,8 @@ export default {
             modalData.value.gender = result.profile.gender
               ? result.profile.gender
               : "-----";
-            modalData.value.nationality = result.profile.nationality?.name
-              ? result.profile.nationality?.name
+            modalData.value.nationality = result.profile.nationality
+              ? result.profile.nationality.name
               : "-----";
             modalData.value.dateOfBirth = result.profile.dateOfBirth
               ? result.profile.dateOfBirth
@@ -494,7 +430,8 @@ export default {
             modalData.value.licenseExpirationDate =
               result.licenseExpirationDate;
             modalData.value.documents = result.documents;
-            isLoading.value=false
+            modalData.value.data = result;
+            isLoading.value = false;
           }
         });
     };
@@ -503,16 +440,16 @@ export default {
       isLoading.value = true;
       check();
     });
-
     return {
-      adminId,
-      reviewerAdminId,
       showModal,
+      show,
       check,
       isLoading,
-      onCancel,
+      showRes,
+      showGenerateModal,
+      showOptions,
+      googleApi,
       modalData,
-      googleApi
     };
   },
 };

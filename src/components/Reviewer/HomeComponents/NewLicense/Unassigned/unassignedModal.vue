@@ -134,11 +134,7 @@
                                   justify-center
                                 "
                               >
-                                <img
-                                  src="../../../../../assets/showLicense/profile.png"
-                                  alt=""
-                                  style="height: 152px; width: 150px"
-                                />
+                                <i class="fa fa-user fa-4x"></i>
                               </div>
                             </div>
                             <div class="grow ml-6">
@@ -354,59 +350,6 @@
                             lg:px-6
                           "
                         >
-                          <div class="flex align-center">
-                            <div class="shrink-0">
-                              <div
-                                class="
-                                  p-4
-                                  bg-blue-600
-                                  rounded-md
-                                  shadow-lg
-                                  w-48
-                                  h-48
-                                  flex
-                                  items-center
-                                  justify-center
-                                "
-                              >
-                                <i class="fa fa-building fa-4x"></i>
-                              </div>
-                            </div>
-                            <div class="grow ml-6">
-                              <h2 class="font-bold mb-1">Institution Info</h2>
-                              <p class="text-gray-500">
-                                <span class="font-medium text-primary-700 mb-1"
-                                  >Institution Name:</span
-                                >
-                                {{ modalData.instName }}
-                              </p>
-                              <p class="text-gray-500">
-                                <span class="font-medium text-primary-700 mb-1"
-                                  >Department:</span
-                                >
-                                {{ modalData.department }}
-                              </p>
-                              <p class="text-gray-500">
-                                <span class="font-medium text-primary-700 mb-1"
-                                  >Institution Type:</span
-                                >
-                                {{ modalData.instType }}
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div
-                          class="
-                            grow-0
-                            shrink-0
-                            basis-auto
-                            w-full
-                            lg:w-6/12
-                            px-3
-                            lg:px-6
-                          "
-                        >
                           <div class="flex items-start">
                             <div class="shrink-0">
                               <div
@@ -512,7 +455,7 @@ export default {
     let showOptions = ref(false);
     let reviewer = ref({ id: "", name: "", expertLevel: "", role: "" });
     let adminId = +localStorage.getItem("adminId");
-
+    let modalData = ref({});
     let assign = ref({
       reviewerId: "",
       licenseId: "",
@@ -644,19 +587,14 @@ export default {
     const onCancel = () => {
       isLoading.value = false;
     };
-    const modalData = ref({});
-    let result = {};
 
     const check = () => {
       store
         .dispatch("reviewer/getNewLicenseApplication", props.modalDataId.id)
         .then((res) => {
-          if (
-            res.data.status == "Success" &&
-            res.data.message !=
-              "New licenses total count retrieved successfully!"
-          ) {
-            result = res.data.data;
+          let result = {};
+          if (res.data.status == "Success") {
+            result = JSON.parse(JSON.stringify(res.data.data));
             modalData.value.name =
               (result.profile ? result.profile.name + " " : "") +
               (result.profile ? result.profile.fatherName + "  " : " ") +
@@ -681,33 +619,11 @@ export default {
             modalData.value.email = result.applicant
               ? result.applicant.emailAddress
               : "-----";
-            modalData.value.instName =
-              result.education && result.education.institution
-                ? result.education.institution?.name
-                : "-----";
-            modalData.value.instType =
-              result.education &&
-              result.education.institution &&
-              result.education.institution.institutionType
-                ? result.education.institution?.institutionType.name
-                : "-----";
-            modalData.value.department =
-              result.education && result.education.department
-                ? result.education?.department.name
-                : "-----";
             modalData.value.profile = result.profile;
-            modalData.value.professionalTypes = result.licenseProfessions;
-            modalData.value.certifiedDate = result.certifiedDate;
-            modalData.value.licenseExpirationDate =
-              result.licenseExpirationDate;
-            modalData.value.data = result;
-            modalData.value.buttons = result.applicationStatus
-              ? result.applicationStatus.buttons
-              : {};
-            licenseData.value = result;
             isLoadingStart.value = false;
           }
         });
+      console.log(modalData.value);
     };
 
     watch(props.modalDataId, () => {

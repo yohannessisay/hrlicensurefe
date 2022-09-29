@@ -177,14 +177,19 @@
                         >
                           <i
                             :id="'common_icon' + item.documentType.id + item.id"
-                            class="fa fa-eye cursor-pointer text-main-400 disabled"
+                            class="
+                              fa fa-eye
+                              cursor-pointer
+                              text-main-400
+                              disabled
+                            "
                             aria-hidden="true"
                           >
                             <img
                               :id="
                                 'common_image_lightbox' +
-                                  item.documentType.id +
-                                  item.id
+                                item.documentType.id +
+                                item.id
                               "
                               v-bind:src="
                                 documentsSaved[item.documentType.code]
@@ -317,7 +322,9 @@
                           py-4
                           text-center text-white
                         "
-                      >Upload Document</th>
+                      >
+                        Upload Document
+                      </th>
                       <th
                         class="
                           font-semibold
@@ -384,9 +391,15 @@
                       <td class="px-6 py-4">
                         <span
                           class="document-name"
-                          v-if="documentsSaved[`${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`]?.name"
+                          v-if="
+                            documentsSaved[
+                              `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                            ]?.name
+                          "
                           >{{
-                            documentsSaved[`${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`]?.name
+                            documentsSaved[
+                              `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                            ]?.name
                           }}</span
                         >
                       </td>
@@ -404,17 +417,22 @@
                           <i
                             :id="
                               'educational_icon' +
-                                table.professionType.id +
-                                item.id
+                              table.professionType.id +
+                              item.id
                             "
-                            class="fa fa-eye cursor-pointer text-main-400 disabled"
+                            class="
+                              fa fa-eye
+                              cursor-pointer
+                              text-main-400
+                              disabled
+                            "
                             aria-hidden="true"
                           >
                             <img
                               :id="
                                 'image_lightbox' +
-                                  table.professionType.id +
-                                  item.id
+                                table.professionType.id +
+                                item.id
                               "
                               :src="
                                 documentsSaved[
@@ -488,9 +506,15 @@
                       <td class="px-6 py-4">
                         <span
                           class="document-name"
-                          v-if="documentsSaved[`${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`]?.name"
+                          v-if="
+                            documentsSaved[
+                              `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                            ]?.name
+                          "
                           >{{
-                            documentsSaved[`${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`]?.name
+                            documentsSaved[
+                              `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                            ]?.name
                           }}</span
                         >
                       </td>
@@ -498,10 +522,14 @@
                         <a
                           :id="
                             'image_href' +
-                              table.professionType.id +
-                              parentItem[0].id
+                            table.professionType.id +
+                            parentItem[0].id
                           "
-                          :href="documentsSaved[`${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`]?.path"
+                          :href="
+                            documentsSaved[
+                              `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                            ]?.path
+                          "
                           :data-title="
                             parentItem[0].name ? parentItem[0].name : '-----'
                           "
@@ -510,19 +538,28 @@
                           <i
                             :id="
                               'educational_icon' +
-                                table.professionType.id +
-                                parentItem[0].id
+                              table.professionType.id +
+                              parentItem[0].id
                             "
-                            class="fa fa-eye cursor-pointer text-main-400 disabled"
+                            class="
+                              fa fa-eye
+                              cursor-pointer
+                              text-main-400
+                              disabled
+                            "
                             aria-hidden="true"
                           >
                             <img
                               :id="
                                 'image_lightbox' +
-                                  table.professionType.id +
-                                  parentItem[0].id
+                                table.professionType.id +
+                                parentItem[0].id
                               "
-                              :src="documentsSaved[`${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`]?.path"
+                              :src="
+                                documentsSaved[
+                                  `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                ]?.path
+                              "
                               class="w-full h-2 object-cover"
                             />
                           </i>
@@ -580,8 +617,8 @@
                           data-bs-toggle="collapse"
                           :data-bs-target="
                             '#docAccordion' +
-                              table.professionType.id +
-                              parentItem[0].documentType.id
+                            table.professionType.id +
+                            parentItem[0].documentType.id
                           "
                           aria-expanded="true"
                           :aria-controls="
@@ -613,8 +650,8 @@
                           <div
                             :id="
                               'docAccordion' +
-                                table.professionType.id +
-                                parentItem[0].documentType.id
+                              table.professionType.id +
+                              parentItem[0].documentType.id
                             "
                             class="accordion-collapse collapse"
                             aria-labelledby="headingOne"
@@ -648,16 +685,15 @@
                                       <p class="">
                                         {{
                                           parent.documentType.description
-                                            ? parent.documentType
-                                                .description
+                                            ? parent.documentType.description
                                             : "- "
                                         }}
                                       </p>
                                     </div>
                                   </div>
                                 </td>
-                                
-                                <td class="px-6 py-4"> 
+
+                                <td class="px-6 py-4">
                                   <p class="">
                                     <input
                                       type="file"
@@ -677,26 +713,33 @@
                                   </p>
                                 </td>
                                 <td class="px-6 py-4">
-                        <span
-                          class="document-name"
-                          v-if="documentsSaved[`${parent.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`]?.name"
-                          >{{
-                            documentsSaved[`${parent.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`]?.name
-                          }}</span
-                        >
-                      </td>
-
+                                  <span
+                                    class="document-name"
+                                    v-if="
+                                      documentsSaved[
+                                        `${parent.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                      ]?.name
+                                    "
+                                    >{{
+                                      documentsSaved[
+                                        `${parent.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                      ]?.name
+                                    }}</span
+                                  >
+                                </td>
 
                                 <td class="px-6 py-4 text-center">
                                   <a
                                     :id="
                                       'image_href' +
-                                        +table.professionType.id +
-                                        parent.id
+                                      +table.professionType.id +
+                                      parent.id
                                     "
-                                    :href="   documentsSaved[
-                                  `${parent.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
-                                ]?.path"
+                                    :href="
+                                      documentsSaved[
+                                        `${parent.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                      ]?.path
+                                    "
                                     :data-title="
                                       parent.name ? item.name : '-----'
                                     "
@@ -705,21 +748,28 @@
                                     <i
                                       :id="
                                         'educational_icon' +
-                                          table.professionType +
-                                          parent.id
+                                        table.professionType +
+                                        parent.id
                                       "
-                                      class="fa fa-eye cursor-pointer text-main-400 disabled"
+                                      class="
+                                        fa fa-eye
+                                        cursor-pointer
+                                        text-main-400
+                                        disabled
+                                      "
                                       aria-hidden="true"
                                     >
                                       <img
                                         :id="
                                           'image_lightbox' +
-                                            table.professionType.id +
-                                            parent.id
+                                          table.professionType.id +
+                                          parent.id
                                         "
-                                        :src="   documentsSaved[
-                                  `${parent.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
-                                ]?.path"
+                                        :src="
+                                          documentsSaved[
+                                            `${parent.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                          ]?.path
+                                        "
                                         class="w-full h-2 object-cover"
                                       />
                                     </i>
@@ -837,7 +887,7 @@ export default {
       );
       outputHref.href = URL.createObjectURL(event.target.files[0]);
       output.src = URL.createObjectURL(event.target.files[0]);
-      output.onload = function() {
+      output.onload = function () {
         URL.revokeObjectURL(output.src); // free memory
       };
       documentUploaded.value[data.documentType.code] = "";
@@ -860,7 +910,7 @@ export default {
         }
         reader.addEventListener(
           "load",
-          function() {
+          function () {
             showPreview.value = true;
 
             previewDocuments.value[data.documentType.code] = reader.result;
@@ -919,7 +969,7 @@ export default {
       );
       outputHref.href = URL.createObjectURL(event.target.files[0]);
       output.src = URL.createObjectURL(event.target.files[0]);
-      output.onload = function() {
+      output.onload = function () {
         URL.revokeObjectURL(output.src); // free memory
       };
       documentUploaded.value[data.documentType.code] = event?.target?.files[0];
@@ -946,7 +996,7 @@ export default {
         }
         reader.addEventListener(
           "load",
-          function() {
+          function () {
             showPreview.value = true;
 
             previewDocuments.value[data.documentType.code] = reader.result;

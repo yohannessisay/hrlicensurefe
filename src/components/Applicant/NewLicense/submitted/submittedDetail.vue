@@ -709,7 +709,7 @@
                               whitespace-nowrap
                             "
                           >
-                            {{ item.institution.name }}
+                            {{ item.institution&&item.institution.code!='OTH'?item.institution.name:item.otherEducationalInstitution }}
                           </td>
                           <td
                             class="

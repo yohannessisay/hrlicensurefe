@@ -18,7 +18,9 @@
                 <h2 class="text-2xl font-semibold leading-tight">
                   Unassigned Applications
                 </h2>
+
                 <input
+                  v-if="adminLevel.code != 'REG'"
                   class="
                     form-check-input
                     appearance-none
@@ -44,6 +46,7 @@
                   id="flexCheckDefault"
                 />
                 <h4
+                  v-if="adminLevel.code != 'REG'"
                   class="form-check-label inline-block text-gray-800 mt-1"
                   for="flexCheckDefault"
                 >
@@ -104,16 +107,12 @@
                         uppercase
                         rounded
                         shadow-md
-                        hover:bg-white
-                        hover:text-primary-600
-                        hover:border
+                        hover:bg-white hover:text-primary-600 hover:border
                         transition
                         duration-150
                         ease-in-out
                         items-center
-                        
                       "
-                     
                     >
                       <svg
                         aria-hidden="true"
@@ -215,7 +214,7 @@
                     />
                     <button
                       class="
-                     inline-block
+                        inline-block
                         px-6
                         py-2
                         bg-primary-700
@@ -226,9 +225,7 @@
                         uppercase
                         rounded
                         shadow-md
-                        hover:bg-white
-                        hover:text-primary-600
-                        hover:border
+                        hover:bg-white hover:text-primary-600 hover:border
                         transition
                         duration-150
                         ease-in-out
@@ -321,6 +318,9 @@ export default {
     const searchTermOthers = ref("");
     let searchedReviewer = ref("");
     const adminId = +localStorage.getItem("adminId");
+    const adminLevel = JSON.parse(
+      localStorage.getItem("allAdminData")
+    ).expertLevel;
     let modalDataId = ref({
       id: "",
       change: 0,
@@ -359,16 +359,13 @@ export default {
       applicationStatus(store, "SUB").then((res) => {
         modalDataId.value.apStatusUnassigned = res;
         let statusId = res;
-       
+
         store
           .dispatch("reviewerNewLicense/getNewLicenseUnassigned", statusId)
           .then((res) => {
-            console.log(res);
             allInfo.value = res;
             if (allInfo.value) {
-              JSON.parse(
-                JSON.stringify(allInfo.value)
-              ).forEach((element) => {
+              JSON.parse(JSON.stringify(allInfo.value)).forEach((element) => {
                 tableData.value.push({
                   LicenseNumber: element.newLicenseCode,
                   ApplicantName:
@@ -793,6 +790,7 @@ export default {
       includeFromOthers,
       rowClickedResub,
       modalDataId,
+      adminLevel,
       modalDataIdResub,
     };
   },

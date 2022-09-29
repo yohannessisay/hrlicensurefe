@@ -622,6 +622,19 @@ export default {
     commit(SET_NEW_LICENSE_ON_REVIEW, onReview);
   },
 
+
+  async getNewLicenseRevoked({ commit }, revokeStatus) {
+   
+    const url = baseUrl + "/newlicenses/status/" + revokeStatus;
+    const resp = await ApiService.get(url);
+
+    const onReview = resp.data.data.filter(function(e) {
+      return e.licenseReviewer&&e.licenseReviewer.reviewerId== adminStatus[1];
+    });
+
+    commit(SET_NEW_LICENSE_ON_REVIEW, onReview);
+  },
+
   getNewLicenseOnReviewSearched({ commit, getters }, searchKey) {
     if (getters.getNewLicenseOnReview === undefined) {
       return;

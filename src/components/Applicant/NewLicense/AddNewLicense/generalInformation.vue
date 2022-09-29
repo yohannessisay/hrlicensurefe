@@ -3,14 +3,14 @@
     <ol class="list-reset flex">
       <li>
         <router-link to="/menu">
-        <a href="#" class="text-main-400 hover:text-blue-700">Home</a>
-      </router-link>
-        </li>
+          <a href="#" class="text-main-400 hover:text-blue-700">Home</a>
+        </router-link>
+      </li>
       <li><span class="text-gray-500 mx-2">/</span></li>
       <li>
         <router-link to="/Applicant/NewLicense">
-        <a href="#" class="text-main-400 hover:text-blue-700">New License</a>
-      </router-link>
+          <a href="#" class="text-main-400 hover:text-blue-700">New License</a>
+        </router-link>
       </li>
       <li><span class="text-gray-500 mx-2">/</span></li>
       <li class="text-gray-500">Apply</li>
@@ -162,34 +162,33 @@
             </select>
           </div>
         </div>
-       
       </div>
       <button
-          v-show="Object.keys(localData).length != 0"
-          class=" 
-            inline-block
-            px-6 
-            bg-main-400
-            text-white
-            max-w-3xl
-            font-medium
-            text-xs
-            leading-tight
-            uppercase
-            rounded
-            shadow-md
-            hover:text-main-500 hover:border-main-500
-            focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
-            active:bg-blue-800 active:shadow-lg
-            transition
-            duration-150
-            ease-in-out
-          "
-          @click="clearLocalData()"
-        >
-          <i class="fa fa-close"></i>
-          Clear Form
-        </button>
+        v-show="Object.keys(localData).length != 0"
+        class="
+          inline-block
+          px-6
+          bg-main-400
+          text-white
+          max-w-3xl
+          font-medium
+          text-xs
+          leading-tight
+          uppercase
+          rounded
+          shadow-md
+          hover:text-main-500 hover:border-main-500
+          focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
+          active:bg-blue-800 active:shadow-lg
+          transition
+          duration-150
+          ease-in-out
+        "
+        @click="clearLocalData()"
+      >
+        <i class="fa fa-close"></i>
+        Clear Form
+      </button>
       <!-- region -->
       <div
         v-if="showLocation"
@@ -337,7 +336,7 @@
         class="mt-12 rounded-sm bg-primary-100 shadow-lg mb-8 justify-center"
         v-if="generalInfo.multipleDepartment.length < 3"
       >
-        <div class="container  ">
+        <div class="container">
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
             <div
               class="
@@ -473,20 +472,22 @@
                     {{ pf.name }}
                   </option>
                 </select>
-                <input
-                  v-model="generalInfo.otherProfessionalType"
-                  v-if="showOtherProfession"
-                  class="mt-2"
-                  placeholder="Write Educational Institution"
-                  type="text"
-                />
-                <input
-                  v-model="generalInfo.otherProfessionalTypeAmharic"
-                  v-if="showOtherProfession"
-                  class="mt-2"
-                  placeholder="Write Educational Institution In Amharic"
-                  type="text"
-                />
+                <div class="grid grid-rows-2">
+                  <input
+                    v-model="generalInfo.otherProfessionalType"
+                    v-if="showOtherProfession"
+                    class="mt-2"
+                    placeholder="Write profession title"
+                    type="text"
+                  />
+                  <input
+                    v-model="generalInfo.otherProfessionalTypeAmharic"
+                    v-if="showOtherProfession"
+                    class="mt-2"
+                    placeholder="Write profession title in Amharic"
+                    type="text"
+                  />
+                </div>
               </div>
             </div>
             <div
@@ -618,7 +619,6 @@
                           scope="col"
                           class="
                             text-sm text-gray-900
-                           
                             p-5
                             text-left
                             font-bold
@@ -717,7 +717,11 @@
                             whitespace-nowrap
                           "
                         >
-                          {{ item.institution.name }}
+                          {{
+                            item.institution && item.institution.code != "OTH"
+                              ? item.institution.name
+                              : item.otherEducationalInstitution
+                          }}
                         </td>
                         <td
                           class="
@@ -727,7 +731,15 @@
                             whitespace-nowrap
                           "
                         >
-                          {{ item.professionalType.name }}
+                          {{
+                            item.professionalType &&
+                            item.professionalType.code != "OTH"
+                              ? item.professionalType.name
+                              : item.otherProfessionalType +
+                                " ( " +
+                                item.otherProfessionalTypeAmharic +
+                                " )"
+                          }}
                         </td>
                         <td
                           class="
@@ -737,7 +749,7 @@
                             whitespace-nowrap
                           "
                         >
-                        <span
+                          <span
                             @click="removeDepartment(index)"
                             style="color: red"
                             title="Delete"
@@ -775,12 +787,14 @@
   <script>
 import { useStore } from "vuex";
 import { ref, onMounted } from "vue";
+import { useToast } from "vue-toastification";
 export default {
   props: ["activeState"],
   components: {},
 
   setup(props, { emit }) {
     let applicantTypes = ref("");
+    const toast = useToast();
     let departments = ref([]);
     let institutions = ref([]);
     let educationalLevels = ref([]);
@@ -812,6 +826,7 @@ export default {
     let multipleDepartmentError = ref(false);
     let multipleDepartmentMaxError = ref(false);
     let checkForAddedError = ref(false);
+    let existingLicense = ref({});
     let generalInfo = ref({
       educationalLevelSelected: "",
       applicantTypeSelected: "",
@@ -821,7 +836,8 @@ export default {
       woredaSelected: "",
       languageSelected: "",
       occupationSelected: "",
-      nativeLanguageSelected:"",
+      nativeLanguageSelected: "",
+      otherEducationalInstitution: "",
       multipleDepartment: [],
       education: [],
     });
@@ -998,24 +1014,31 @@ export default {
               educationalLevel: generalInfo.value.educationalLevelSelected,
               institution: generalInfo.value.institutionSelected,
               professionalType: generalInfo.value.professionalTypeSelected,
-              otherEducationalInstitution: "",
-              otherProfessionAmharic: "",
-              otherProfessionalType: "",
+
+              otherEducationalInstitution:
+                generalInfo.value.otherEducationalInstitution,
+              otherProfessionalTypeAmharic:
+                generalInfo.value.otherProfessionalTypeAmharic,
+              otherProfessionalType: generalInfo.value.otherProfessionalType,
             });
             generalInfo.value.education.push({
               departmentId: generalInfo.value.departmentSelected.id,
               educationalLevelId: generalInfo.value.educationalLevelSelected.id,
               institutionId: generalInfo.value.institutionSelected.id,
               professionTypeId: generalInfo.value.professionalTypeSelected.id,
-              otherInstitution: "",
-              otherProfessionAmharic: "",
-              otherProfessionType: "",
+              otherInstitution: generalInfo.value.otherEducationalInstitution,
+              otherProfessionTypeAmharic:
+                generalInfo.value.otherProfessionalTypeAmharic,
+              otherProfessionType: generalInfo.value.otherProfessionalType,
             });
           }
           generalInfo.value.departmentSelected = "";
           generalInfo.value.educationalLevelSelected = "";
           generalInfo.value.institutionSelected = "";
           generalInfo.value.professionalTypeSelected = "";
+          generalInfo.value.otherProfessionalType = "";
+          generalInfo.value.otherProfessionalTypeAmharic = "";
+          generalInfo.value.otherEducationalInstitution = "";
         }
       } else {
         multipleDepartmentError.value = true;
@@ -1029,16 +1052,57 @@ export default {
       });
     };
     const apply = () => {
-      let tempApplicationData = generalInfo.value;
-      window.localStorage.setItem(
-        "NLApplicationData",
-        JSON.stringify(tempApplicationData)
-      );
-      store
-        .dispatch("newlicense/setGeneralInfo", generalInfo.value)
-        .then(() => {
-          emit("changeActiveState");
+      let tempComparision = [];
+      if (existingLicense.value && generalInfo.value.education) {
+        existingLicense.value.forEach((element) => {
+          if (element.educations) {
+            tempComparision.push({
+              licenseId: element.id,
+              educations: element.educations,
+            });
+          }
         });
+      }
+      let tempError = false;
+      tempComparision.forEach((existingEd) => {
+        generalInfo.value.education.forEach((newEd) => {
+          if (existingEd.educations) {
+            existingEd.educations.forEach((element) => {
+              if (
+                element.departmentId == newEd.departmentId &&
+                element.professionTypeId == newEd.professionTypeId
+              ) {
+                tempError = true;
+                return;
+              }
+            });
+          }
+        });
+      });
+
+      if (tempError == false) {
+        let tempApplicationData = generalInfo.value;
+        window.localStorage.setItem(
+          "NLApplicationData",
+          JSON.stringify(tempApplicationData)
+        );
+        store
+          .dispatch("newlicense/setGeneralInfo", generalInfo.value)
+          .then(() => {
+            emit("changeActiveState");
+          });
+      } else {
+        toast.error(
+          "Sorry, seems like you have applied for this department and profession already",
+          {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          }
+        );
+      }
     };
     const clearLocalData = () => {
       window.localStorage.setItem("NLApplicationData", "");
@@ -1047,18 +1111,22 @@ export default {
       }, 1000);
     };
     onMounted(async () => {
-      await fetchApplicantType();
-      await fetchDepartments();
-      await fetchInstitutions();
-      await fetchEducationLevel();
-      await fetchRegions();
-      await fetchOccupation();
+      fetchApplicantType();
+      fetchDepartments();
+      fetchInstitutions();
+      fetchEducationLevel();
+      fetchRegions();
+      fetchOccupation();
       localData.value = window.localStorage.getItem("NLApplicationData")
         ? JSON.parse(window.localStorage.getItem("NLApplicationData"))
         : {};
       if (Object.keys(localData.value).length != 0) {
         generalInfo.value = localData.value;
       }
+      let userId = JSON.parse(window.localStorage.getItem("userId"));
+      store.dispatch("newlicense/getNewLicenseByUser", userId).then((res) => {
+        existingLicense.value = res.data.data;
+      });
     });
     return {
       applicantTypeChangeHandler,

@@ -1,9 +1,7 @@
 <template>
   <ModalIdle v-if="isIdle" />
   <router-view v-slot="{ Component }">
-    <!-- <transition name="fade" mode="out-in"> -->
     <component :is="Component" />
-    <!-- </transition> -->
   </router-view>
 </template>
 
@@ -17,6 +15,10 @@ export default {
     isIdle() {
       return this.$store.state.idleVue.isIdle;
     },
+  },
+
+  created: function () {
+    this.$store.dispatch("applicationStatuses/getAppStatuses").then(() => {});
   },
 };
 </script>

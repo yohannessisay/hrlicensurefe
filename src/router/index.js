@@ -359,6 +359,33 @@ const routes = [
         "../components/Reviewer/HomeComponents/NewLicense/Licensed/licensed.vue"
       )
   },
+
+  {
+    path: "/admin/newLicense/revoked",
+    name: "AdminNewLicenseRevoked",
+    component: () =>
+      import(
+        "../components/Reviewer/HomeComponents/NewLicense/Revoked/revoked.vue"
+      )
+  },
+
+  {
+    path: "/admin/newLicense/suspended",
+    name: "AdminNewLicenseSuspended",
+    component: () =>
+      import(
+        "../components/Reviewer/HomeComponents/NewLicense/Suspended/suspended.vue"
+      )
+  },
+
+  {
+    path: "/admin/newLicense/returned",
+    name: "AdminNewLicenseReturned",
+    component: () =>
+      import(
+        "../components/Reviewer/HomeComponents/NewLicense/Returned/returned.vue"
+      )
+  },
   {
     path: "/admin/newLicense/evaluate/:id",
     name: "AdminNewLicenseEvaluate",
@@ -367,6 +394,8 @@ const routes = [
         "../components/Reviewer/HomeComponents/NewLicense/InReview/inReviewEvaluation.vue"
       )
   },
+
+  
 
   //Admin Renewal Section
   {
@@ -598,8 +627,8 @@ router.beforeEach(async (to, from, next) => {
     next("/admin/list");
   }
   if (to.path != "/Applicant/NewLicense") {
-    window.localStorage.setItem("NLApplicationData", "");
-    window.localStorage.setItem("NLApplicationImageData", "");
+    window.localStorage.setItem("NLApplicationData", ""); 
+    window.indexedDB.deleteDatabase("NLdocumentUploads");
   }
   if (to.path != "/Applicant/Renewal") {
     window.localStorage.setItem("RNApplicationData", "");

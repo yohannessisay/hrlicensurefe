@@ -14,7 +14,7 @@
     </div>
   </transition>
   <transition name="fade" mode="out-in">
-    <div v-if="this.activeState == 2" class="h-screen overflow-y-scroll">
+    <div v-if="this.activeState == 2"  >
       <Upload
         :activeState="2"
         @changeActiveState="activeState++"
