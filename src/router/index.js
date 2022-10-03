@@ -453,6 +453,32 @@ const routes = [
       )
   },
   {
+    path: "/admin/renewal/revoked",
+    name: "AdminRenewalRevoked",
+    component: () =>
+      import(
+        "../components/Reviewer/HomeComponents/Renewal/Revoked/revoked.vue"
+      )
+  },
+
+  {
+    path: "/admin/renewal/suspended",
+    name: "AdminRenewalSuspended",
+    component: () =>
+      import(
+        "../components/Reviewer/HomeComponents/Renewal/Suspended/suspended.vue"
+      )
+  },
+
+  {
+    path: "/admin/renewal/returned",
+    name: "AdminRenewalReturned",
+    component: () =>
+      import(
+        "../components/Reviewer/HomeComponents/Renewal/Returned/returned.vue"
+      )
+  },
+  {
     path: "/admin/renewal/evaluate/:id",
     name: "RenewalEvaluate",
     component: () =>

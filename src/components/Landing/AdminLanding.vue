@@ -395,7 +395,8 @@ export default {
 
       store
         .dispatch("admin/login", credentialData)
-        .then((res) => {
+        .then(() => {
+       
           loggedInData.value = store.getters["admin/getAdmin"];
           showLoading.value = false;
           if (loggedInData.value !== undefined) {

@@ -54,7 +54,9 @@
             border-b border-grey-100
           "
         >
-          <label class="mb-4 text-lg  text-yellow-300 font-bold">Suspend License</label>
+          <label class="mb-4 text-lg text-yellow-300 font-bold"
+            >Suspend License</label
+          >
         </div>
 
         <div class="modal-body relative p-4">
@@ -66,13 +68,15 @@
               <div class="vld-parent">
                 <loading
                   :active="isLoading"
-                  :can-cancel="true" 
+                  :can-cancel="true"
                   :is-full-page="true"
                   :color="'#2F639D'"
                   :opacity="0.7"
                 ></loading>
                 <div class="flex flex-wrap justify-center">
-                  <label class="text-lg  text-primary-600 font-bold">Suspension Period</label>
+                  <label class="text-lg text-primary-600 font-bold"
+                    >Suspension Period</label
+                  >
                   <div class="grid grid-cols-2 gap-4">
                     <div class="form-group mb-6 mt-4">
                       <label for="" class="ml-2">Start Date</label>
@@ -129,7 +133,9 @@
                       />
                     </div>
                   </div>
-                  <label class="text-lg mt-4 mb-4  text-primary-600 font-bold">Suspension Remark</label>
+                  <label class="text-lg mt-4 mb-4 text-primary-600 font-bold"
+                    >Suspension Remark</label
+                  >
                 </div>
                 <div class="flex flex-wrap justify-center">
                   <textarea
@@ -185,7 +191,7 @@
           <button
             type="button"
             class="
-        inline-block
+              inline-block
               px-6
               text-white
               font-medium
@@ -195,8 +201,7 @@
               uppercase
               rounded
               shadow-lg
-              hover:bg-white 
-              hover:text-primary-700
+              hover:bg-white hover:text-primary-700
               transition
               duration-150
               ease-in-out
@@ -243,6 +248,30 @@ export default {
         action: "SuspendEvent",
       };
       isLoading.value = true;
+      if (
+        new Date(endDate.value).getMilliseconds() <
+        new Date(startDate.value).getMilliseconds()
+      ) {
+        toast.error("End date can not be before start date", {
+          timeout: 5000,
+          position: "bottom-center",
+          pauseOnFocusLoss: true,
+          pauseOnHover: true,
+          icon: true,
+        });
+        isLoading.value = false;
+      }
+      if (new Date(startDate.value).getDate() < new Date().getDate()) {
+        toast.error("Start date can not be before today", {
+          timeout: 5000,
+          position: "bottom-center",
+          pauseOnFocusLoss: true,
+          pauseOnHover: true,
+          icon: true,
+        });
+        isLoading.value = false;
+     
+      }
       store
         .dispatch("reviewer/editNewLicense", suspendedData)
         .then((res) => {

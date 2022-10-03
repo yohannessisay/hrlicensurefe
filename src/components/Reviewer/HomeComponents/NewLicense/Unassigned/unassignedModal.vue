@@ -620,10 +620,11 @@ export default {
               ? result.applicant.emailAddress
               : "-----";
             modalData.value.profile = result.profile;
+            licenseData.value=result;
+            modalData.value.buttons=result&&result.applicationStatus?result.applicationStatus.buttons:{};
             isLoadingStart.value = false;
           }
-        });
-      console.log(modalData.value);
+        }); 
     };
 
     watch(props.modalDataId, () => {

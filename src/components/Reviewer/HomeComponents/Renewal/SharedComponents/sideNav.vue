@@ -129,6 +129,50 @@
             <span class="links_name">Licensed</span>
           </a>
         </li>
+        <router-link to="/admin/renewal/revoked">
+        <li
+          :class="
+            $route.fullPath === '/admin/renewal/revoked'
+              ? 'mb-2 active'
+              : ''
+          "
+        >
+          <a href="#Licensed">
+            <i class="bx bx-trash-alt"></i>
+            <span class="links_name">Revoked</span>
+          </a>
+        </li>
+      </router-link>
+
+      <router-link to="/admin/renewal/suspended">
+        <li
+          :class="
+            $route.fullPath === '/admin/renewal/suspended'
+              ? 'mb-2 active'
+              : ''
+          "
+        >
+          <a href="#Licensed">
+            <i class="bx bx-stop-circle bx-sm"></i>
+            <span class="links_name">Suspended</span>
+          </a>
+        </li>
+      </router-link>
+
+      <router-link to="/admin/renewal/returned">
+        <li
+          :class="
+            $route.fullPath === '/admin/renewal/returned'
+              ? 'mb-2 active'
+              : ''
+          "
+        >
+          <a href="#Licensed">
+            <i class="bx bx-rotate-left bx-sm"></i>
+            <span class="links_name">Returned</span>
+          </a>
+        </li>
+      </router-link>
       </router-link>
     </ul>
       <ul class="nav-links">

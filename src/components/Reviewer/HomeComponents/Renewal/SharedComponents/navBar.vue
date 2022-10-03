@@ -86,14 +86,7 @@ import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 
 export default {
-  components: {},
-  props: {
-    tab: {
-      type: String,
-      required: true,
-      default: "No title",
-    },
-  },
+  components: {}, 
 
   computed: {
     changeSelectedSideBar(menu) {

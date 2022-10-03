@@ -1,5 +1,6 @@
 <template>
-  <div class="side-navbar">
+  <div class="sidebar-parent">
+  <div class="side-navbar" >
     <div
       class="flex justify-center p-4"
       style="border-bottom: 2px solid white; margin-top: -5px"
@@ -62,6 +63,7 @@
  
     </ul>
   </div>
+</div>
 </template>
 
 <script>

@@ -656,8 +656,7 @@ export default {
     const check = () => {
       store
         .dispatch("reviewer/getRenewalApplication", props.modalDataId.id)
-        .then((res) => {
-          console.log(res);
+        .then((res) => { 
           if (
             res.data.status == "Success" &&
             res.data.message != "Renewal total count retrieved successfully!"

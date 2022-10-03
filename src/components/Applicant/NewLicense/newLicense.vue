@@ -1,7 +1,7 @@
 <template>
   <main-content>
   <transition name="fade" mode="out-in">
-    <div v-if="this.activeState == 1" class="h-screen overflow-y-scroll">
+    <div v-if="this.activeState == 1"  >
       <Institution
         :activeState="1"
         @changeActiveState="activeState++"

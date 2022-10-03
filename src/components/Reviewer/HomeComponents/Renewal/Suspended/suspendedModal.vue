@@ -239,22 +239,21 @@
                                 >Suspension Start Date:</span
                               >
                               {{
-                                modalData.suspStartDate ? modalData.suspStartDate : ""
+                                modalData.mobileNumber ? modalData.email : ""
                               }}
                             </p>
                             <p class="text-gray-500">
                               <span class="font-medium text-primary-700 mb-1"
                                 >Suspension End Date:</span
                               >
-                              {{ modalData.suspEndDate ? modalData.suspEndDate : "" }}
+                              {{ modalData.email ? modalData.email : "" }}
                             </p>
                             <p class="text-gray-500">
                               <span class="font-medium text-primary-700 mb-1"
                                 >Suspension Remark:</span
                               >
-                              {{ modalData.remark ? modalData.remark : "" }}
+                              {{ modalData.email ? modalData.email : "" }}
                             </p>
-                        
                           </div>
                         </div>
                       </div>
@@ -589,33 +588,10 @@
                   >
                   <div class="grid grid-cols-2 gap-4">
                     <div class="form-group mb-6 mt-4">
-                      <label for="" class="ml-2">Start Date</label>
-                      <input
-                        class="
-                          form-control
-                          block
-                          w-full
-                          px-3
-                          py-1.5
-                          text-base
-                          font-normal
-                          text-gray-700
-                          bg-white bg-clip-padding
-                          border border-solid border-gray-300
-                          rounded
-                          transition
-                          ease-in-out
-                          m-0
-                          focus:text-gray-700
-                          focus:bg-white
-                          focus:border-blue-600
-                          focus:outline-none
-                        "
-                        disabled
-                        :value=" new Date().toISOString().slice(0, 10)"
-                        type="date"
-                      />  
-                 
+                      <label for="" class="ml-2">Start Date-</label>
+                      <span class="font-bold">
+                        {{ new Date().toISOString().slice(0, 10) }}</span
+                      >
                     </div>
 
                     <div class="form-group mb-6 mt-4">
@@ -640,11 +616,10 @@
                           focus:bg-white
                           focus:border-blue-600
                           focus:outline-none
-                        "  
+                        "
                         v-model="extendedData.suspEndDate"
                         type="date"
                       />
-                      <span class="text-red-300">{{ extendInfo.endDate }}</span>
                     </div>
                   </div>
                   <label class="text-lg mt-4 mb-4 text-primary-600 font-bold"
@@ -697,7 +672,6 @@
               duration-150
               ease-in-out
             "
-            @click="extend()"
           >
             <i class="fa fa-times-circle"></i>
             Extend
@@ -737,7 +711,6 @@ import { useStore } from "vuex";
 import Loading from "vue3-loading-overlay";
 // Import stylesheet
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
-import { useToast } from "vue-toastification";
 
 export default {
   name: "Modal",
@@ -745,14 +718,13 @@ export default {
   props: ["modalDataId"],
   setup(props) {
     const store = useStore();
-    let extendInfo={endDate:'',remark:''};
+
     let show = ref(true);
     let showRes = ref(true);
     let showGenerateModal = ref(true);
     let showOptions = ref(true);
     let isLoading = ref(true);
     let modalData = ref({});
-    const toast = useToast();
     let extendedData = ref({});
     let isLoadingSuspend = ref(false);
     let result = {};
@@ -793,64 +765,11 @@ export default {
             modalData.value.licenseExpirationDate =
               result.licenseExpirationDate;
             modalData.value.documents = result.documents;
-            modalData.value.reviewer = result?result.licenseReviewer:{};
+            modalData.value.data = result;
             modalData.value.id = result.id;
             extendedData.value = result;
             isLoading.value = false;
           }
-        });
-    };
-
-    const extend=()=>{
-      isLoading.value=true;
-      let req = {
-        action: "ApproveEvent",
-        data: extendedData,
-      };
-      let smsData =
-      extendedData.value && extendedData.value.profile
-          ? "Dear " +
-          extendedData.value.profile.name +
-          extendedData.value.profile.fatherName +
-            ", Your license with license number " +
-            extendedData.value.newLicenseCode +
-            " has been released from revoked state. Thank you for using eHPEL,https://www.hrl.moh.gov.et"
-          : "";
-      store
-        .dispatch("reviewer/editNewLicense", req)
-        .then((res) => {
-          isLoading.value=false;
-          if (res.statusText == "Created") {
-            store.dispatch("sms/sendSms", smsData).then(() => {
-              toast.success("Application reviewed Successfully", {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true,
-              });
-             
-            });
-          } else {
-            toast.error("Please try again", {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            });
-           
-          }
-        })
-        .catch(() => {
-          toast.error("Please try again", {
-            timeout: 5000,
-            position: "bottom-center",
-            pauseOnFocusLoss: true,
-            pauseOnHover: true,
-            icon: true,
-          });
-         
         });
     };
 
@@ -860,10 +779,8 @@ export default {
     });
     return {
       show,
-      extend,
       check,
       isLoading,
-      extendInfo,
       showRes,
       showGenerateModal,
       showOptions,

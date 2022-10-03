@@ -68,13 +68,9 @@ import {
   SET_RENEWAL_UNDER_SUPER_VISION_CONFIRMED,
   SET_RENEWAL_UNDER_SUPER_VISION_CONFIRMED_SEARCHED,
   SET_RENEWAL_OTHERS_UNDER_SUPER_VISION_CONFIRMED,
-  SET_RENEWAL_OTHERS_UNDER_SUPER_VISION_CONFIRMED_SEARCHED,
-  SET_RENEWAL_SUSPENDED,
-  SET_RENEWAL_SUSPENDED_SEARCHED,
+  SET_RENEWAL_OTHERS_UNDER_SUPER_VISION_CONFIRMED_SEARCHED, 
   SET_RENEWAL_CANCELLED,
-  SET_RENEWAL_CANCELLED_SEARCHED,
-  SET_RENEWAL_ALL_Suspended,
-  SET_RENEWAL_ALL_Suspended_SEARCHED,
+  SET_RENEWAL_CANCELLED_SEARCHED, 
   SET_RENEWAL_ALL_Cancelled,
   SET_RENEWAL_ALL_Cancelled_SEARCHED,
 } from "./mutation-types";
@@ -1035,65 +1031,30 @@ export default {
     });
     commit(SET_RENEWAL_ALL_LICENSED_SEARCHED, searchedVal);
   },
-
-  async getRenewalSuspended({ commit }, adminStatus) {
-    const url = baseUrl + "/renewals/status/" + adminStatus[1];
+  async getNewLicenseRevoked({ commit }, revokeStatus) {
+    const url = baseUrl + "/renewals/status/" + revokeStatus;
     const resp = await ApiService.get(url);
-    const suspended = resp.data.data.filter(function(e) {
-      return e.renewalReviewer&&e.renewalReviewer.reviewerId === adminStatus[0];
-    });
-    commit(SET_RENEWAL_SUSPENDED, suspended);
-  },
 
-  getRenewalSuspendedSearched({ commit, getters }, searchKey) {
-    if (getters.getRenewalSuspended === undefined) {
-      return;
-    }
-    const searchedVal = getters.getRenewalSuspended.filter(function(e) {
-      return e.renewalCode === undefined
-        ? ""
-        : e.renewalCode.toLowerCase().includes(searchKey.toLowerCase()) ||
-            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
-              .toLowerCase()
-              .includes(searchKey.toLowerCase()) ||
-            e.applicant.profile.name
-              .toLowerCase()
-              .includes(searchKey.toLowerCase()) ||
-            e.applicant.profile.fatherName
-              .toLowerCase()
-              .includes(searchKey.toLowerCase());
-    });
-    commit(SET_RENEWAL_SUSPENDED_SEARCHED, searchedVal);
-  },
+    let revoked = resp.data.data;
 
-  async getRenewalAllSuspended({ commit }, status) {
-    const url = baseUrl + "/renewals/status/" + status;
+    return revoked;
+  },
+  async getNewLicenseReturned({ commit }, returnStatus) {
+    const url = baseUrl + "/renewals/status/" + returnStatus;
     const resp = await ApiService.get(url);
-    const renewalAllSuspended = resp.data.data;
-    commit(SET_RENEWAL_ALL_Suspended, renewalAllSuspended);
-  },
 
-  getRenewalAllSuspendedSearched({ commit, getters }, searchKey) {
-    if (getters.getRenewalAllSuspended === undefined) {
-      return;
-    }
-    const searchedVal = getters.getRenewalAllSuspended.filter(function(e) {
-      return e.renewalCode === undefined
-        ? ""
-        : e.renewalCode.toLowerCase().includes(searchKey.toLowerCase()) ||
-            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
-              .toLowerCase()
-              .includes(searchKey.toLowerCase()) ||
-            e.applicant.profile.name
-              .toLowerCase()
-              .includes(searchKey.toLowerCase()) ||
-            e.applicant.profile.fatherName
-              .toLowerCase()
-              .includes(searchKey.toLowerCase());
-    });
-    commit(SET_RENEWAL_ALL_Suspended_SEARCHED, searchedVal);
-  },
+    let returned = resp.data.data;
 
+    return returned;
+  },
+  async getNewLicenseSuspended({ commit }, suspendStatus) { 
+    const url = baseUrl + "/renewals/status/" + suspendStatus;
+    const resp = await ApiService.get(url);
+
+    let suspended = resp.data.data;
+
+    return suspended;
+  },
   async getRenewalCancelled({ commit }, adminStatus) {
     const url = baseUrl + "/renewals/status/" + adminStatus[1];
     const resp = await ApiService.get(url);

@@ -585,7 +585,7 @@
                                             ></i
                                             >Edit
                                           </span>
-                                          <div
+                                          <div 
                                             :id="education.department.id"
                                             class="flex justify-center"
                                           >

@@ -13,11 +13,11 @@
       outline-none
       overflow-x-hidden overflow-y-auto
     "
-    id="staticBackdrop"
+    id="staticBackdropOthers"
     data-bs-backdrop="static"
     data-bs-keyboard="false"
     tabindex="-1"
-    aria-labelledby="staticBackdropLabel"
+    aria-labelledby="staticBackdropOthersLabel"
     aria-hidden="true"
   >
     <div
@@ -43,12 +43,19 @@
           text-current
         "
       >
-        <div
-          class="modal-header flex flex-shrink-0 justify-end p-2 rounded-t-md"
+   <div
+          class="
+            modal-header
+            flex flex-shrink-0
+           justify-end
+           
+            p-2
+            rounded-t-md
+          "
         >
           <button
             type="button"
-            class="
+            class="     
               px-6
               text-white
               bg-primary-600
@@ -67,13 +74,10 @@
               active:bg-purple-800 active:shadow-lg
               transition
               duration-150
-              ease-in-out
-            "
+              ease-in-out"
             data-bs-dismiss="modal"
             aria-label="Close"
-          >
-            <i class="fa fa-close fa-2x"></i>
-          </button>
+          ><i class="fa fa-close fa-2x"></i></button>
         </div>
         <div class="vld-parent">
           <loading
@@ -127,7 +131,7 @@
                                 justify-center
                               "
                             >
-                              <picture>
+                                 <picture>
                                 <source
                                   :srcset="
                                     modalData.profile &&
@@ -137,12 +141,10 @@
                                           .filePath
                                       : ''
                                   "
-                                  style="    height: 177px;"
                                   type="image/jpg"
                                 />
 
                                 <img
-                                style="    height: 177px;"
                                   src="../../../../../assets/showLicense/profile.png"
                                 />
                               </picture>
@@ -203,79 +205,7 @@
                         </div>
                       </div>
 
-                      <div
-                        class="
-                          grow-0
-                          shrink-0
-                          basis-auto
-                          w-full
-                          lg:w-6/12
-                          px-3
-                          lg:px-6
-                        "
-                      >
-                        <div class="flex items-start">
-                          <div class="shrink-0">
-                            <div
-                              class="
-                                p-4
-                                bg-blue-600
-                                rounded-md
-                                shadow-lg
-                                w-48
-                                h-48
-                                flex
-                                items-center
-                                justify-center
-                              "
-                            >
-                              <i class="fa fa-phone fa-4x"></i>
-                            </div>
-                          </div>
-                          <div class="grow ml-6">
-                            <h2 class="font-bold mb-1">Revoke Info</h2>
-                            <p class="text-gray-500">
-                              <span class="font-medium text-primary-700 mb-1"
-                                >Reviewer:</span
-                              >
-                              {{
-                                modalData.reviewer &&
-                                modalData.reviewer.reviewer
-                                  ? modalData.reviewer.reviewer.name
-                                  : ""
-                              }}
-                            </p>
-                            <p class="text-gray-500">
-                              <span class="font-medium text-primary-700 mb-1"
-                                >Reviewer Phone:</span
-                              >
-                              {{
-                                modalData.reviewer &&
-                                modalData.reviewer.reviewer
-                                  ? modalData.reviewer.reviewer.phoneNumber
-                                  : ""
-                              }}
-                            </p>
-                            <p class="text-gray-500">
-                              <span class="font-medium text-primary-700 mb-1"
-                                >Reviewer Email:</span
-                              >
-                              {{
-                                modalData.reviewer &&
-                                modalData.reviewer.reviewer
-                                  ? modalData.reviewer.reviewer.email
-                                  : ""
-                              }}
-                            </p>
-                            <p class="text-gray-500">
-                              <span class="font-medium text-primary-700 mb-1"
-                                >Revoked Reason:</span
-                              >
-                              {{ modalData ? modalData.remark : "" }}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
+                      
 
                       <div
                         class="
@@ -327,81 +257,6 @@
                           </div>
                         </div>
                       </div>
-
-                      <div
-                        class="
-                          grow-0
-                          shrink-0
-                          basis-auto
-                          w-full
-                          lg:w-6/12
-                          px-3
-                          lg:px-6
-                        "
-                      >
-                        <div class="flex items-start">
-                          <div class="shrink-0">
-                            <div
-                              class="
-                                p-4
-                                bg-blue-600
-                                rounded-md
-                                shadow-lg
-                                w-48
-                                h-48
-                                flex
-                                items-center
-                                justify-center
-                              "
-                            >
-                              <i class="fa fa-phone fa-4x"></i>
-                            </div>
-                          </div>
-                          <div
-                            class="grow ml-6"
-                            v-if="
-                              adminData.expertLevel.code == 'FED' &&
-                              adminData.role.code == 'ADM'
-                            "
-                          >
-                            <h2 class="font-bold mb-1">Action</h2>
-                            <button
-                              type="button"
-                              class="
-                                inline-block
-                                px-6
-                                text-white
-                                font-medium
-                                text-xs
-                                bg-yellow-300
-                                leading-tight
-                                uppercase
-                                rounded
-                                shadow-lg
-                                hover:bg-white hover:text-yellow-300
-                                transition
-                                duration-150
-                                ease-in-out
-                              "
-                              @click="release()"
-                            >
-                              <i class="fa fa-refresh"></i>
-                              Release
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class="
-                          grow-0
-                          shrink-0
-                          basis-auto
-                          w-full
-                          lg:w-6/12
-                          px-3
-                          lg:px-6
-                        "
-                      ></div>
                     </div>
 
                     <div class="collapse mt-12" id="collapseExample">
@@ -420,11 +275,7 @@
                               <div class="mt-large bg-white">
                                 <a
                                   :href="googleApi + document.filePath"
-                                  :data-title="
-                                    document.documentType
-                                      ? document.documentType.name
-                                      : ''
-                                  "
+                                  :data-title="document.documentType?document.documentType.name:''"
                                   data-lightbox="example-2"
                                 >
                                   <img
@@ -436,13 +287,7 @@
                                 <h4 style="font-weight: bold">
                                   Document Type:-
                                 </h4>
-                                <h6>
-                                  {{
-                                    document.documentType
-                                      ? document.documentType.name
-                                      : ""
-                                  }}
-                                </h6>
+                                    <h6>{{ document.documentType?document.documentType.name:'' }}</h6>
                               </div>
                             </div>
                           </div>
@@ -468,20 +313,21 @@
           <button
             class="
               inline-block
-              px-6
-              py-2.5
-              bg-primary-700
-              text-white
-              font-medium
-              text-xs
-              leading-tight
-              uppercase
-              rounded
-              shadow-lg
-              hover:bg-white hover:text-primary-600
-              transition
-              duration-150
-              ease-in-out
+                                            px-6
+                                            py-2.5
+                                            bg-primary-700
+                                            text-white
+                                            font-medium
+                                            text-xs
+                                            leading-tight
+                                            uppercase
+                                            rounded
+                                            shadow-lg
+                                            hover:bg-white 
+                                            hover:text-primary-600
+                                            transition
+                                            duration-150
+                                            ease-in-out
             "
             type="button"
             data-bs-toggle="collapse"
@@ -495,7 +341,7 @@
           <button
             type="button"
             class="
-              inline-block
+        inline-block
               px-6
               text-white
               font-medium
@@ -505,7 +351,8 @@
               uppercase
               rounded
               shadow-lg
-              hover:bg-white hover:text-primary-700
+              hover:bg-white 
+              hover:text-primary-700
               transition
               duration-150
               ease-in-out
@@ -519,22 +366,20 @@
       </div>
     </div>
   </div>
+  <generate-pdf v-if="showGenerateModal" :modalData="modalData"></generate-pdf>
 </template>
 <script>
 import { googleApi } from "@/composables/baseURL";
 import { ref, watch } from "vue";
 import { useStore } from "vuex";
 import Loading from "vue3-loading-overlay";
-// Import stylesheet
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
-import { useToast } from "vue-toastification";
 export default {
   name: "Modal",
   components: { Loading },
-  props: ["modalDataId"],
+  props: ["modalDataIdOthers"],
   setup(props) {
     const store = useStore();
-    const toast = useToast();
     const showModal = () => {
       this.show = true;
     };
@@ -544,12 +389,13 @@ export default {
     const showOptions = ref(true);
     const isLoading = ref(true);
     const modalData = ref({});
-    let adminData = JSON.parse(localStorage.getItem("allAdminData"));
     let result = {};
-    let newLicense = {};
     const check = () => {
       store
-        .dispatch("reviewer/getNewLicenseApplication", props.modalDataId.id)
+        .dispatch(
+          "reviewer/getNewLicenseApplication",
+          props.modalDataIdOthers.id
+        )
         .then((res) => {
           if (res.data.status == "Success") {
             result = res.data.data;
@@ -577,76 +423,20 @@ export default {
             modalData.value.email = result.applicant.emailAddress
               ? result.applicant.emailAddress
               : "-----";
-            modalData.value.reviewer = result.licenseReviewer
-              ? result.licenseReviewer
-              : {};
-
-            modalData.value.professionalTypes = result.licenseProfessions;
+     
             modalData.value.profile = result.profile;
+            modalData.value.professionalTypes = result.licenseProfessions;
             modalData.value.certifiedDate = result.certifiedDate;
             modalData.value.licenseExpirationDate =
               result.licenseExpirationDate;
             modalData.value.documents = result.documents;
-            modalData.value.remark = result ? result.remark : "";
-            modalData.value.id = result.id;
-            newLicense = result ? result : {};
+            modalData.value.data = result;
             isLoading.value = false;
           }
         });
     };
-    const release = () => {
-      isLoading.value=true;
-      let req = {
-        action: "ApproveEvent",
-        data: newLicense,
-      };
-      let smsData =
-        newLicense && newLicense.profile
-          ? "Dear " +
-            newLicense.profile.name +
-            newLicense.profile.fatherName +
-            ", Your license with license number " +
-            newLicense.newLicenseCode +
-            " has been released from revoked state. Thank you for using eHPEL,https://www.hrl.moh.gov.et"
-          : "";
-      store
-        .dispatch("reviewer/editNewLicense", req)
-        .then((res) => {
-          isLoading.value=false;
-          if (res.statusText == "Created") {
-            store.dispatch("sms/sendSms", smsData).then(() => {
-              toast.success("Application reviewed Successfully", {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true,
-              });
-             
-            });
-          } else {
-            toast.error("Please try again", {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            });
-           
-          }
-        })
-        .catch(() => {
-          toast.error("Please try again", {
-            timeout: 5000,
-            position: "bottom-center",
-            pauseOnFocusLoss: true,
-            pauseOnHover: true,
-            icon: true,
-          });
-         
-        });
-    };
-    watch(props.modalDataId, () => {
+
+    watch(props.modalDataIdOthers, () => {
       isLoading.value = true;
       check();
     });
@@ -654,14 +444,12 @@ export default {
       showModal,
       show,
       check,
-      release,
       isLoading,
       showRes,
       showGenerateModal,
       showOptions,
       googleApi,
       modalData,
-      adminData,
     };
   },
 };
