@@ -6,7 +6,7 @@
   <section class="home-section">
     <!-- Header -->
     <reviewer-nav-bar>
-      <h2 class="dashboard">Approved</h2>
+      <h2 class="dashboard">Returned</h2>
     </reviewer-nav-bar>
     <!-- Header -->
 
@@ -95,14 +95,13 @@
 <script>
 import ReviewerSideNav from "../SharedComponents/sideNav.vue";
 import ReviewerNavBar from "../SharedComponents/navBar.vue";
-import NewLicenseMainContent from "../../../ApplicationTypes/NewLicense/MainComponents/inReview.vue";
+import NewLicenseMainContent from "../../../ApplicationTypes/NewLicense/MainComponents/returned.vue";
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
-
-import applicationStatus from "../../../Configurations/getApplicationStatus.js";
-import VueTableLite from "vue3-table-lite";
+import VueTableLite from "../../../../../plugins/TableLite.vue";
 import editModal from "./returnedModal.vue";
 import editModalOthers from "./returnedModalOthers.vue";
+import applicationStatus from "../../../Configurations/getApplicationStatus.js";
 
 export default {
   name: "home",
@@ -118,6 +117,9 @@ export default {
     const store = useStore();
     const showModal = ref(true);
     const adminId = +localStorage.getItem("adminId");
+
+    let nothingToShow = ref(false);
+    let loading = ref(false);
 
     let modalDataId = ref({
       id: "",
@@ -141,60 +143,99 @@ export default {
       isLoading: true,
     };
 
-    const approved = () => {
-      applicationStatus(store, "APP").then((res) => {
-        let statusId = res;
-        let adminStatus = [statusId, adminId];
-
+    const returned = () => {
+      applicationStatus(store, "RTN").then((statusId) => {
+        console.log(statusId)
         store
-          .dispatch("reviewerRenewal/getRenewalReturned", adminStatus)
-          .then((res) => {
-            allInfo.value.assignApplication = res;
+          .dispatch("reviewerNewLicense/getNewLicenseRevoked", statusId)
+          .then((res) => { 
+            allInfo.value = res;
 
-            JSON.parse(JSON.stringify(allInfo.value.assignApplication)).forEach(
-              (element) => {
-                if (element.renewalReviewer.reviewerId == adminId) {
-                  toYouTableData.value.push({
-                    id: element.id,
-                    ApplicantName:
-                      (element.profile.name ? element.profile.name : "-----") +
-                      " " +
-                      (element.profile.fatherName
-                        ? element.profile.fatherName
-                        : "-----") +
-                      " " +
-                      (element.profile.grandFatherName
-                        ? element.profile.grandFatherName
-                        : "-----"),
-                    ApplicationType: element.applicationType.name,
-                    Date: new Date(element.createdAt)
-                      .toJSON()
-                      .slice(0, 10)
-                      .replace(/-/g, "/"),
-                    data: element,
-                  });
-                } else {
-                  tableData.value.push({
-                    id: element.id,
-                    ApplicantName:
-                      element.profile.name +
-                      " " +
-                      element.profile.fatherName +
-                      " " +
-                      element.profile.grandFatherName,
-                    ApplicationType: element.applicationType.name,
-                    Date: new Date(element.applicationType.createdAt)
-                      .toJSON()
-                      .slice(0, 10)
-                      .replace(/-/g, "/"),
-                    data: element,
-                  });
-                }
+            JSON.parse(JSON.stringify(allInfo.value)).forEach((element) => {
+              if (element.licenseReviewer.reviewerId == adminId) {
+                toYouTableData.value.push({
+                  id: element.id,
+                  ApplicantName:
+                    element.profile.name +
+                    " " +
+                    element.profile.fatherName +
+                    " " +
+                    element.profile.grandFatherName,
+                  ApplicationType: element.applicantType.name,
+                  Date: new Date(element.createdAt)
+                    .toJSON()
+                    .slice(0, 10)
+                    .replace(/-/g, "/"),
+                  data: element,
+                });
+              } else {
+                tableData.value.push({
+                  id: element.id,
+                  ApplicantName:
+                    element.profile.name +
+                    " " +
+                    element.profile.fatherName +
+                    " " +
+                    element.profile.grandFatherName,
+                  ApplicationType: element.applicantType.name,
+                  Date: new Date(element.createdAt)
+                    .toJSON()
+                    .slice(0, 10)
+                    .replace(/-/g, "/"),
+                  data: element,
+                });
               }
-            );
+            });
 
             toYouTable.value = {
-              isLoading: false,
+              columns: [
+                {
+                  label: "ID",
+                  field: "id",
+                  width: "3%",
+                  sortable: true,
+                  isKey: true,
+                },
+                {
+                  label: "Applicant Name",
+                  field: "ApplicantName",
+                  width: "20%",
+                  sortable: true,
+                },
+                {
+                  label: "Applicant Type",
+                  field: "ApplicationType",
+                  width: "15%",
+                  sortable: true,
+                },
+                {
+                  label: "Date",
+                  field: "Date",
+                  width: "15%",
+                  sortable: true,
+                },
+                {
+                  label: "",
+                  field: "quick",
+                  width: "10%",
+                  display: function (row) {
+                    return (
+                      '<button data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
+                      row.id +
+                      '" ><i class="fa fa-eye"></i>View/Edit</button>'
+                    );
+                  },
+                },
+              ],
+              rows: JSON.parse(JSON.stringify(toYouTableData.value)),
+              totalRecordCount: toYouTableData.value.length,
+              sortable: {
+                order: "id",
+                sort: "asc",
+              },
+            };
+
+            toOthersTable.value = {
               columns: [
                 {
                   label: "ID",
@@ -229,15 +270,15 @@ export default {
                     return (
                       '<button  data-set="' +
                       row +
-                      '"  data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
+                      '"  data-bs-toggle="modal" data-bs-target="#staticBackdropOthers" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
                       row.id +
                       '" ><i class="fa fa-eye"></i>View/Edit</button>'
                     );
                   },
                 },
               ],
-              rows: JSON.parse(JSON.stringify(toYouTableData.value)),
-              totalRecordCount: toYouTableData.value.length,
+              rows: JSON.parse(JSON.stringify(tableData.value)),
+              totalRecordCount: tableData.value.length,
               sortable: {
                 order: "id",
                 sort: "asc",
@@ -264,44 +305,46 @@ export default {
 
       Array.prototype.forEach.call(elements, function (element) {
         if (element.classList.contains("edit-btn-others")) {
-          element.addEventListener("click", rowClickedOthers());
+          element.addEventListener("click", rowClicked());
         }
       });
       toOthersTable.value.isLoading = false;
     };
+
     const rowClicked = (row) => {
       if (row != undefined) {
         row = JSON.parse(JSON.stringify(row));
-        modalDataId.value.id = row.id ? row.id : "------";
         modalDataId.value.change++;
+        modalDataId.value.id = row.id ? row.id : "";
       }
     };
+
     const rowClickedOthers = (row) => {
       if (row != undefined) {
         row = JSON.parse(JSON.stringify(row));
-
-        modalDataIdOthers.value.id = row.id ? row.id : "------";
         modalDataIdOthers.value.change++;
+        modalDataIdOthers.value.id = row.id ? row.id : "";
       }
     };
+
     onMounted(() => {
-      approved();
+      returned();
     });
 
     return {
+      nothingToShow,
       allInfo,
+      loading,
       toOthersTable,
       toYouTable,
       showModal,
       tableLoadingFinish,
-      approved,
       rowClicked,
       modalDataId,
-      rowClickedOthers,
       modalDataIdOthers,
+      rowClickedOthers,
       tableLoadingFinishOthers,
     };
   },
 };
 </script>
-
