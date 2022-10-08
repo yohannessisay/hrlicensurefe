@@ -64,6 +64,7 @@
               leading-tight
               uppercase
               rounded
+              hover:border-primary-600
               shadow-lg
               hover:bg-purple-700 hover:shadow-lg
               focus:bg-purple-700
@@ -195,8 +196,8 @@
                                   >Martial Status:</span
                                 >
                                 {{
-                                  modalData.martialStatus
-                                    ? modalData.martialStatus
+                                  modalData.maritalStatus
+                                    ? modalData.maritalStatus
                                     : ""
                                 }}
                               </p>
@@ -276,7 +277,7 @@
                                     </div>
                                     <button
                                       class="
-                                        inline-block
+                                       inline-block
                                         px-6
                                         py-2.5
                                         bg-primary-700
@@ -286,6 +287,9 @@
                                         text-white
                                         font-medium
                                         text-xs
+                                        mt-2
+                                        hover:border-primary-600
+                                        ml-1
                                         leading-tight
                                         uppercase
                                         rounded
@@ -477,6 +481,7 @@
               leading-tight
               uppercase
               rounded
+              hover:border-primary-600
               shadow-lg
               hover:bg-white 
               hover:text-primary-700
@@ -677,9 +682,9 @@ export default {
             modalData.value.dateOfBirth = result.profile
               ? result.profile.dateOfBirth
               : "-----";
-            modalData.value.martialStatus =
-              result.profile && result.profile.martialStatus
-                ? result.profile.martialStatus.name
+            modalData.value.maritalStatus =
+              result.profile && result.profile.maritalStatus
+                ? result.profile.maritalStatus.name
                 : "-----";
             modalData.value.mobileNumber = result.applicant
               ? result.applicant.phoneNumber

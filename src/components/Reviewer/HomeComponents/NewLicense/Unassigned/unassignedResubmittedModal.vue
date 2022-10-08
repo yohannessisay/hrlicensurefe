@@ -52,11 +52,11 @@
             :opacity="0.7"
           ></loading>
           <div
-      class="modal-header flex flex-shrink-0 justify-end p-2 rounded-t-md"
+            class="modal-header flex flex-shrink-0 justify-end p-2 rounded-t-md"
           >
             <button
               type="button"
-              class="btn-close border-none rounded-lg "
+              class="btn-close border-none rounded-lg"
               data-bs-dismiss="modal"
               aria-label="Close"
             ></button>
@@ -170,8 +170,8 @@
                                   >Martial Status:</span
                                 >
                                 {{
-                                  modalData.martialStatus
-                                    ? modalData.martialStatus
+                                  modalData.maritalStatus
+                                    ? modalData.maritalStatus
                                     : ""
                                 }}
                               </p>
@@ -227,22 +227,21 @@
                                 <div>
                                   <button
                                     class="
-                                        inline-block
-                                            px-6
-                                            py-2.5
-                                            bg-primary-700
-                                            text-white
-                                            font-medium
-                                            text-xs
-                                            leading-tight
-                                            uppercase
-                                            rounded
-                                            shadow-lg
-                                            hover:bg-white 
-                                            hover:text-primary-600
-                                            transition
-                                            duration-150
-                                            ease-in-out
+                                      inline-block
+                                      px-6
+                                      py-2.5
+                                      bg-primary-700
+                                      text-white
+                                      font-medium
+                                      text-xs
+                                      leading-tight
+                                      uppercase
+                                      rounded
+                                      shadow-lg
+                                      hover:bg-white hover:text-primary-600
+                                      transition
+                                      duration-150
+                                      ease-in-out
                                     "
                                     @click="assignReviewer()"
                                   >
@@ -484,7 +483,7 @@ export default {
   },
   setup(props) {
     const store = useStore();
-const toast = useToast();
+    const toast = useToast();
     let show = ref(true);
     let showRes = ref(false);
     let showOptions = ref(false);
@@ -530,7 +529,7 @@ const toast = useToast();
         .dispatch("reviewer/assignReviewer", assign.value)
         .then((response) => {
           if (response.statusText == "Created") {
-                     toast.success("Selected application is successfully drafted", {
+            toast.success("Selected application is successfully drafted", {
               timeout: 5000,
               position: "bottom-center",
               pauseOnFocusLoss: true,
@@ -542,29 +541,29 @@ const toast = useToast();
               window.location.reload();
             }, 1000);
           } else {
-                           toast.error("Error Occured", {
+            toast.error("Error Occured", {
               timeout: 5000,
               position: "bottom-center",
               pauseOnFocusLoss: true,
               pauseOnHover: true,
               icon: true,
             });
-                setTimeout(() => {
+            setTimeout(() => {
               window.location.reload();
             }, 3000);
           }
         })
         .catch(() => {
-                          toast.error("Error Occured", {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            });
-                setTimeout(() => {
-              window.location.reload();
-            }, 3000);
+          toast.error("Error Occured", {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          });
+          setTimeout(() => {
+            window.location.reload();
+          }, 3000);
         });
     };
 
@@ -610,7 +609,7 @@ const toast = useToast();
         )
         .then((res) => {
           if (res.data.status == "Success") {
-             result = res.data.data;
+            result = res.data.data;
             modalData.value.name =
               (result.profile ? result.profile.name + " " : "") +
               (result.profile ? result.profile.fatherName + "  " : " ") +
@@ -625,9 +624,9 @@ const toast = useToast();
             modalData.value.dateOfBirth = result.profile
               ? result.profile.dateOfBirth
               : "-----";
-            modalData.value.martialStatus =
-              result.profile && result.profile.martialStatus
-                ? result.profile.martialStatus.name
+            modalData.value.maritalStatus =
+              result.profile && result.profile.maritalStatus
+                ? result.profile.maritalStatus.name
                 : "-----";
             modalData.value.mobileNumber = result.applicant
               ? result.applicant.phoneNumber
@@ -662,8 +661,10 @@ const toast = useToast();
     };
 
     watch(props.modalDataIdResub, () => {
-      isLoadingStart.value = true;
-      check();
+      if (props.modalDataIdResub.id != "") {
+        isLoadingStart.value = true;
+        check();
+      }
     });
 
     onMounted(() => {

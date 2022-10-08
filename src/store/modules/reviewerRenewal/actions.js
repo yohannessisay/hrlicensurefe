@@ -1031,7 +1031,7 @@ export default {
     });
     commit(SET_RENEWAL_ALL_LICENSED_SEARCHED, searchedVal);
   },
-  async getNewLicenseRevoked({ commit }, revokeStatus) {
+  async getRenewalRevoked({ commit }, revokeStatus) {
     const url = baseUrl + "/renewals/status/" + revokeStatus;
     const resp = await ApiService.get(url);
 
@@ -1039,7 +1039,7 @@ export default {
 
     return revoked;
   },
-  async getNewLicenseReturned({ commit }, returnStatus) {
+  async getRenewalReturned({ commit }, returnStatus) {
     const url = baseUrl + "/renewals/status/" + returnStatus;
     const resp = await ApiService.get(url);
 
@@ -1047,7 +1047,7 @@ export default {
 
     return returned;
   },
-  async getNewLicenseSuspended({ commit }, suspendStatus) { 
+  async getRenewalSuspended({ commit }, suspendStatus) { 
     const url = baseUrl + "/renewals/status/" + suspendStatus;
     const resp = await ApiService.get(url);
 

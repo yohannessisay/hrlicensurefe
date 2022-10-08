@@ -6,7 +6,25 @@
   <section class="home-section">
     <!-- Header -->
     <reviewer-nav-bar>
-      <h2 class="dashboard">Revoked</h2>
+      <ol class="list-reset flex">
+          <li>
+            <router-link to="/admin/review"
+              ><span class="text-primary-600 text-base">Home</span></router-link
+            >
+          </li>
+          <li><span class="text-gray-500 mx-2">/</span></li>
+          <li>
+            <a href="#" class="hover:text-primary-600 text-grey-300"
+              >Renewal</a
+            >
+          </li>
+          <li><span class="text-gray-500 mx-2">/</span></li>
+          <li>
+            <a href="#" class="pointer-events-none text-lg text-grey-300"
+              >Revoked</a
+            >
+          </li>
+        </ol>
     </reviewer-nav-bar>
     <!-- Header -->
 
@@ -146,7 +164,7 @@ export default {
     const revoked = () => {
       applicationStatus(store, "RVK").then((statusId) => {
         store
-          .dispatch("reviewerNewLicense/getNewLicenseRevoked", statusId)
+          .dispatch("reviewerRenewal/getRenewalRevoked", statusId)
           .then((res) => { 
             allInfo.value = res;
 

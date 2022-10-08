@@ -42,7 +42,7 @@
           <button
             type="button"
             class="
-              px-6
+                  px-6
               text-white
               bg-primary-600
               hover:text-primary-600 hover:border
@@ -51,6 +51,7 @@
               leading-tight
               uppercase
               rounded
+              hover:border-primary-600
               shadow-lg
               hover:bg-purple-700 hover:shadow-lg
               focus:bg-purple-700
@@ -180,7 +181,7 @@
                               <span class="font-semibold text-primary-700 mb-1"
                                 >Martial Status:</span
                               >
-                              {{ modalData.martialStatus }}
+                              {{ modalData.maritalStatus }}
                             </p>
                           </div>
                         </div>
@@ -598,8 +599,8 @@ export default {
             modalData.value.dateOfBirth = result.profile.dateOfBirth
               ? result.profile.dateOfBirth
               : "-----";
-            modalData.value.martialStatus = result.profile.martialStatus?.name
-              ? result.profile.martialStatus.name
+            modalData.value.maritalStatus = result.profile.maritalStatus?.name
+              ? result.profile.maritalStatus.name
               : "-----";
             modalData.value.mobileNumber = result.applicant.phoneNumber
               ? result.applicant.phoneNumber

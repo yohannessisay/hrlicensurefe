@@ -49,7 +49,7 @@
           <button
             type="button"
             class="
-              px-6
+                  px-6
               text-white
               bg-primary-600
               hover:text-primary-600 hover:border
@@ -58,6 +58,7 @@
               leading-tight
               uppercase
               rounded
+              hover:border-primary-600
               shadow-lg
               hover:bg-purple-700 hover:shadow-lg
               focus:bg-purple-700
@@ -192,8 +193,8 @@
                                 >Martial Status:</span
                               >
                               {{
-                                modalData.martialStatus
-                                  ? modalData.martialStatus
+                                modalData.maritalStatus
+                                  ? modalData.maritalStatus
                                   : ""
                               }}
                             </p>
@@ -720,8 +721,7 @@ export default {
     const store = useStore();
 
     let show = ref(true);
-    let showRes = ref(true);
-    let showGenerateModal = ref(true);
+    let showRes = ref(true); 
     let showOptions = ref(true);
     let isLoading = ref(true);
     let modalData = ref({});
@@ -730,7 +730,7 @@ export default {
     let result = {};
     const check = () => {
       store
-        .dispatch("reviewer/getNewLicenseApplication", props.modalDataId.id)
+        .dispatch("reviewer/getRenewalApplication", props.modalDataId.id)
         .then((res) => {
           if (res.data.status == "Success") {
             result = res.data.data;
@@ -749,8 +749,8 @@ export default {
             modalData.value.dateOfBirth = result.profile.dateOfBirth
               ? result.profile.dateOfBirth
               : "-----";
-            modalData.value.martialStatus = result.profile.martialStatus?.name
-              ? result.profile.martialStatus.name
+            modalData.value.maritalStatus = result.profile.maritalStatus?.name
+              ? result.profile.maritalStatus.name
               : "-----";
             modalData.value.mobileNumber = result.applicant.phoneNumber
               ? result.applicant.phoneNumber
@@ -781,8 +781,7 @@ export default {
       show,
       check,
       isLoading,
-      showRes,
-      showGenerateModal,
+      showRes, 
       showOptions,
       extendedData,
       googleApi,

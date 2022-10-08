@@ -268,7 +268,7 @@
           <button
             type="button"
             class="
-        inline-block
+         inline-block
               px-6
               text-white
               font-medium
@@ -277,6 +277,7 @@
               leading-tight
               uppercase
               rounded
+              hover:border-primary-600
               shadow-lg
               hover:bg-white 
               hover:text-primary-700
@@ -292,7 +293,7 @@
           <button
             type="button"
             class="
-        inline-block
+         inline-block
               px-6
               text-white
               font-medium
@@ -301,6 +302,7 @@
               leading-tight
               uppercase
               rounded
+              hover:border-primary-600
               shadow-lg
               hover:bg-white 
               hover:text-primary-700
@@ -360,7 +362,7 @@ export default {
       gender: "",
       phoneNumber: "",
       email: "",
-      martialStatus: "",
+      maritalStatus: "",
       nationality: "",
       dateOfBirth: "",
     });

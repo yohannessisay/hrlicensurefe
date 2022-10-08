@@ -40,7 +40,7 @@ export default {
   async getRole({ commit }) {
     // commit(ADD_ADMIN_LOADING);
     try {
-      const resp = await ApiService.get(baseUrl + "roles");
+      const resp = await ApiService.get(baseUrl + "/roles");
       return resp;
     } catch (error) {
       const resp = error;
@@ -86,7 +86,7 @@ export default {
   },
   async getAdmins() {
     try {
-      const resp = await ApiService.get(baseUrl + "admins/all");
+      const resp = await ApiService.get(baseUrl + "/admins/all");
       return resp;
     } catch (error) {
       const resp = error;

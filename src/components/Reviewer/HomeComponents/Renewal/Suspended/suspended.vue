@@ -6,7 +6,25 @@
   <section class="home-section">
     <!-- Header -->
     <reviewer-nav-bar>
-      <h2 class="dashboard">Suspended</h2>
+      <ol class="list-reset flex">
+          <li>
+            <router-link to="/admin/review"
+              ><span class="text-primary-600 text-base">Home</span></router-link
+            >
+          </li>
+          <li><span class="text-gray-500 mx-2">/</span></li>
+          <li>
+            <a href="#" class="hover:text-primary-600 text-grey-300"
+              >Renewal</a
+            >
+          </li>
+          <li><span class="text-gray-500 mx-2">/</span></li>
+          <li>
+            <a href="#" class="pointer-events-none text-lg text-grey-300"
+              >Suspended</a
+            >
+          </li>
+        </ol>
     </reviewer-nav-bar>
     <!-- Header -->
 
@@ -147,12 +165,12 @@ export default {
       applicationStatus(store, "SUSP").then((statusId) => {
       
         store
-          .dispatch("reviewerNewLicense/getNewLicenseSuspended", statusId)
+          .dispatch("reviewerRenewal/getRenewalSuspended", statusId)
           .then((res) => { 
             allInfo.value = res;
 
             JSON.parse(JSON.stringify(allInfo.value)).forEach((element) => {
-              if (element.licenseReviewer.reviewerId == adminId) {
+              if (element.renewalReviewer.reviewerId == adminId) {
                 toYouTableData.value.push({
                   id: element.id,
                   ApplicantName:

@@ -631,9 +631,50 @@ const routes = [
     name: "LookupManagement",
     component: () =>
       import(
-        "../components/Reviewer/HomeComponents/LookupManagement/lookupManagement.vue"
+        "../components/Reviewer/HomeComponents/LookupManagement/location/location.vue"
       )
-  }
+  },
+  {
+    path: "/admin/lookupManagement/departments",
+    name: "DepartmentsLookupManagement",
+    component: () =>
+      import(
+        "../components/Reviewer/HomeComponents/LookupManagement/department/departments.vue"
+      )
+  },
+  {
+    path: "/admin/lookupManagement/applicantTitle",
+    name: "ApplicantTitleLookupManagement",
+    component: () =>
+      import(
+        "../components/Reviewer/HomeComponents/LookupManagement/applicantTitle/applicantTitle.vue"
+      )
+  },
+  {
+    path: "/admin/lookupManagement/educationLevel",
+    name: "EducationLevelLookupManagement",
+    component: () =>
+      import(
+        "../components/Reviewer/HomeComponents/LookupManagement/educationLevel/educationLevel.vue"
+      )
+  },
+  {
+    path: "/admin/lookupManagement/professionalPrefix",
+    name: "ProfessionalPrefixLookupManagement",
+    component: () =>
+      import(
+        "../components/Reviewer/HomeComponents/LookupManagement/professionalPrefix/professionalPrefix.vue"
+      )
+  },
+  {
+    path: "/admin/lookupManagement/professionalType",
+    name: "ProfessionalTypeLookupManagement",
+    component: () =>
+      import(
+        "../components/Reviewer/HomeComponents/LookupManagement/professionalType/professionalType.vue"
+      )
+  },
+  
   /******************************************************************************************************************************************/
   /**************End of routes*****************/
   /******************************************************************************************************************************************/
