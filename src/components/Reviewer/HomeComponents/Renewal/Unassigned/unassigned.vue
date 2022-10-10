@@ -309,8 +309,8 @@
 
 <script>
 import ReviewerSideNav from "../SharedComponents/sideNav.vue";
-import ReviewerNavBar from "../SharedComponents/navBar.vue";
-import NewLicenseMainContent from "../../../ApplicationTypes/NewLicense/MainComponents/unassigned.vue";
+import ReviewerNavBar from "../../../SharedComponents/navBar.vue";
+import NewLicenseMainContent from "../../../SharedComponents/unassigned.vue";
 import { ref, onMounted, computed } from "vue";
 import { useStore } from "vuex";
 import applicationStatus from "../../../Configurations/getApplicationStatus.js";

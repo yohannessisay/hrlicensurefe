@@ -1,22 +1,26 @@
   <template>
   <nav>
     <div class="sidebar-button">
-     <slot></slot>
+      <slot></slot>
     </div>
 
     <div class="profile-details">
       <div style="color: #2081f8">
         {{ adminName }}
       </div>
+
+      
       <div class="flex flex-row">
-        <div class="relative inline-block text-left">
+        <div class="relative inline-block text-left ">
           <a
             class="
+
               focus:outline-none
-              bg-lightBlueB-300
+            bg-primary-700
               text-lightBlueB-400
               hover:text-gray-800
               w-7
+              ml-4
               h-7
               rounded-full
               flex
@@ -33,7 +37,7 @@
               viewBox="0 0 24 24"
               stroke="currentColor"
               fill="none"
-              class="w-8 h-8 px-1 py-1"
+              class="w-8 h-8 px-1 py-1 text-white font-bold"
               aria-hidden="true"
             >
               <circle cx="12" cy="8" r="5" />
@@ -43,6 +47,8 @@
           <div
             v-if="showDD == true"
             class="
+            bg-primary-600
+              
               origin-top-right
               absolute
               right-0
@@ -50,26 +56,57 @@
               w-56
               rounded-md
               shadow-lg
-              bg-white
+             text-white
+            
               focus:outline-none
             "
             role="menu"
             aria-orientation="vertical"
             aria-labelledby="options-menu"
           >
-            <div class="py-1" role="none">
-              <a
-                @click="logout()"
+            <div class="py-1 px-1 " role="none">
+            
+                <a
+                href="/admin/profile"
                 class="
                   block
                   px-4
                   py-2
-                  text-sm text-blue-100
-                  hover:bg-gray-100 hover:text-gray-900
+                  mb-2
+                  border-b-4
+                  font-bold
+                  hover:bg-white
+                  hover:text-primary-600
+                  text-sm text-white
+               
                 "
                 role="menuitem"
                 id="logout"
               >
+            
+              <i class="fa fa-user mr-2"></i>
+               Manage Profile
+          
+              </a>
+           
+            
+              <a
+              @click="logout"
+                class="
+                  block
+                  px-4
+                  py-2
+                 
+                  font-bold
+                  hover:bg-white
+                  hover:text-primary-600
+                  text-sm text-white
+               
+                "
+                role="menuitem"
+                id="logout"
+              >
+              <i class="fa fa-sign-out mr-2"></i>
                 Sign Out
               </a>
             </div>
@@ -81,20 +118,13 @@
 </template>
 
 <script scoped>
-import { ref, watch } from "vue";
+import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 
 export default {
   components: {},
-
-
-  computed: {
-    changeSelectedSideBar(menu) {
-      return menu;
-    },
-  },
-  setup(props, { emit }) {
+  setup () {
     const router = useRouter();
     const store = useStore();
     let showDD = ref(false);
@@ -107,32 +137,7 @@ export default {
     let isUserManager = ref(false);
     const adminName = JSON.parse(localStorage.getItem("allAdminData")).name;
 
-
-    const navigateToHomePage = () => {
-      if (loggedInAdminRole === "UM") {
-        return;
-      }
-      if (router.currentRoute._value.path === "/admin/review") {
-        emit("navigateToHome", "newLicenseUnassigned");
-      } else {
-        router.push("/admin/review");
-      }
-    };
-
-    let showAdminCreate = false;
-    let isSuperAdmin = ref(false);
-    const loggedInAdminRole = localStorage.getItem("role");
-    loggedInAdminRole === "UM"
-      ? (showAdminCreate = true)
-      : (showAdminCreate = false);
-
-    loggedInAdminRole === "ADM"
-      ? (isSuperAdmin.value = true)
-      : (isSuperAdmin.value = false);
-
-    if (isSuperAdmin.value == false) {
-      primaryText.value = "text-primary-300";
-    }
+ 
     const showDropDown = () => {
       showDD.value = !showDD.value;
       showUnfinishedDD.value = false;
@@ -141,35 +146,6 @@ export default {
       showLicensedDD.value = false;
     };
 
-    const showUnfinishedDropDown = () => {
-      showUnfinishedDD.value = !showUnfinishedDD.value;
-      showDD.value = false;
-      showAssignedDD.value = false;
-      showFinishedDD.value = false;
-      showLicensedDD.value = false;
-    };
-    const showAssignedDropDown = () => {
-      showAssignedDD.value = !showAssignedDD.value;
-      showDD.value = false;
-      showUnfinishedDD.value = false;
-      showFinishedDD.value = false;
-      showLicensedDD.value = false;
-    };
-
-    const showFinishedDropDown = () => {
-      showFinishedDD.value = !showFinishedDD.value;
-      showAssignedDD.value = false;
-      showDD.value = false;
-      showUnfinishedDD.value = false;
-      showLicensedDD.value = false;
-    };
-    const showLicensedDropDown = () => {
-      showLicensedDD.value = !showLicensedDD.value;
-      showAssignedDD.value = false;
-      showDD.value = false;
-      showUnfinishedDD.value = false;
-      showFinishedDD.value = false;
-    };
     const logout = () => {
       localStorage.removeItem("token");
       localStorage.removeItem("adminEmail");
@@ -185,19 +161,12 @@ export default {
       showUnfinishedDD,
       showAssignedDD,
       showFinishedDD,
-      showLicensedDD,
-      showUnfinishedDropDown,
-      showAssignedDropDown,
-      showFinishedDropDown,
-      showLicensedDropDown,
+      showLicensedDD, 
       search,
-      logout,
-      showAdminCreate,
-      isSuperAdmin,
+      logout, 
       primaryText,
       adminName,
-      isUserManager,
-      navigateToHomePage,
+      isUserManager, 
     };
   },
 };

@@ -46,10 +46,19 @@
             </h2>
 
             <div class="border-b-2 text-main-400">
-              <div class="grid grid-rows-2 p-2 mb-2 border-b-2">
-                <h1 class="text-lg">
+              <div
+                class="
+                  flex
+                  items-center
+                  justify-between
+                  leading-tight
+                  p-2
+                  md:p-2
+                "
+              >
+              <h1 class="text-lg">
                   <a
-                    class=" hover:underline underline text-main-400"
+                    class=" text-main-400 pointer-events-none"
                     href="#"
                   >
                     Department
@@ -61,6 +70,7 @@
                   :key="eds.id"
                   class="text-black text-sm"
                 >
+              
                   <span class="text-black text-sm">
                     {{ "*" + eds.department.name }}</span
                   >
@@ -77,21 +87,7 @@
                   md:p-2
                 "
               >
-                <h1 class="text-lg">
-                  <a
-                    class="no-underline hover:underline text-main-400"
-                    href="#"
-                  >
-                    Certified Date
-                  </a>
-                </h1>
-                <p class="text-black text-sm">
-                  {{
-                    license.certifiedDate
-                      ? license.certifiedDate.slice(0, 10)
-                      : "Waiting for review"
-                  }}
-                </p>
+         
               </div>
               <div
                 class="
@@ -103,21 +99,25 @@
                   md:p-2
                 "
               >
-                <h1 class="text-lg">
+              <h1 class="text-lg">
                   <a
-                    class="no-underline hover:underline text-main-400"
+                  class=" text-main-400 pointer-events-none"
                     href="#"
                   >
-                    Expiry Date
+                    Profession
                   </a>
                 </h1>
-                <p class="text-black text-sm">
-                  {{
-                    license.certifiedDate
-                      ? license.certifiedDate.slice(0, 10)
-                      : "Waiting for review"
-                  }}
-                </p>
+
+                <ul
+                  v-for="eds in license.educations"
+                  :key="eds.id"
+                  class="text-black text-sm"
+                >
+              
+                  <span class="text-black text-sm">
+                    {{ "*" + eds.professionType.name }}</span
+                  >
+                </ul>
               </div>
             </div>
             <footer
@@ -235,8 +235,7 @@ export default {
       isLoading.value = true;
       userInfo.value = JSON.parse(window.localStorage.getItem("personalInfo"));
       store.dispatch("newlicense/getNewLicense").then((res) => {
-        newLicense.value = res.data.data;
-        console.log(newLicense);
+        newLicense.value = res.data.data; 
         if (newLicense.value) {
           newLicense.value = newLicense.value.filter(function (e) {
             return (

@@ -31,98 +31,30 @@
         <span class="logo_name ml-4">eHPL</span>
       </div>
     </router-link>
+    <div id="outer">
+      <div class="top left"></div>
+    </div>
     <li class="inverted-border-radius mb-8 mt-4">
-      <i class="fa fa-thumbs-up fa-2x ml-8 mt-2" style="color: #224771"></i>
+      <i class="bx bx-user ml-8 mt-4" style="color: #224771"></i>
 
-      <span class="header_text ml-4"> Good Standing</span>
+      <span class="header_text ml-4">Profile</span>
     </li>
     <ul class="nav-links">
-      <router-link to="/admin/goodStanding/">
+      <router-link to="/admin/profile/">
         <li
-          :class="
-            $route.fullPath === '/admin/goodStanding/' ? 'mb-2 active' : ''
-          "
+          :class="$route.fullPath === '/admin/profile' ? 'mb-2 active' : ''"
         >
-          <a href="">
-            <i class="bx bx-certification"></i>
+          <a href="#Unassigned">
+            <i class="bx bx-user"></i>
 
-            <span class="links_name"> Unassigned</span>
-          </a>
-        </li>
-      </router-link>
-      <router-link to="/admin/goodStanding/assigned">
-        <li
-          :class="
-            $route.fullPath === '/admin/goodStanding/assigned'
-              ? 'mb-2 active'
-              : ''
-          "
-        >
-          <a href="">
-            <i class="bx bx-refresh"></i>
-            <span class="links_name">Assigned</span>
-          </a>
-        </li>
-      </router-link>
-      <router-link to="/admin/goodStanding/draft">
-        <li
-          :class="
-            $route.fullPath === '/admin/goodStanding/draft' ? 'mb-2 active' : ''
-          "
-        >
-          <a href="">
-            <i class="bx bx-pencil"></i>
-            <span class="links_name">Draft</span>
-          </a>
-        </li>
-      </router-link>
-      <router-link to="/admin/goodStanding/approved">
-        <li
-          :class="
-            $route.fullPath === '/admin/goodStanding/approved'
-              ? 'mb-2 active'
-              : ''
-          "
-        >
-          <a href="#">
-            <i class="bx bx-badge"></i>
-            <span class="links_name">Approved</span>
-          </a>
-        </li>
-      </router-link>
-      <router-link to="/admin/goodStanding/declined">
-        <li
-          :class="
-            $route.fullPath === '/admin/goodStanding/declined'
-              ? 'mb-2 active'
-              : ''
-          "
-        >
-          <a href="#">
-            <i class="bx bx-error-alt"></i>
-            <span class="links_name">Declined</span>
-          </a>
-        </li>
-      </router-link>
-
-      <router-link to="/admin/goodStanding/licensed">
-        <li
-          :class="
-            $route.fullPath === '/admin/goodStanding/licensed'
-              ? 'mb-2 active'
-              : ''
-          "
-        >
-          <a href="#">
-            <i class="bx bx-badge-check"></i>
-            <span class="links_name">Licensed</span>
+            <span class="links_name"> Profile</span>
           </a>
         </li>
       </router-link>
     </ul>
     <ul class="nav-links">
       <div
-        class="profile-details mb-8 ml-4"
+        class="profile-details mb-8 "
      
       >
         <router-link to="/admin/review/">

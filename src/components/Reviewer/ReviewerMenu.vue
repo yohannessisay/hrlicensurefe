@@ -117,7 +117,7 @@
 
 <script>
 import { ref } from "vue";
-import ReviewerNavBar from "./ReviewerNavBar.vue";
+import ReviewerNavBar from "./SharedComponents/navBar.vue";
 import ReviewerSideBar from "./ReviewerSideNav.vue";
 import ReviewerMainContent from "./ReviewerMainContent.vue";
 import { useStore } from "vuex";
