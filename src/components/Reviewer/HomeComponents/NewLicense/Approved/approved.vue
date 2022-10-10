@@ -279,8 +279,8 @@
 
 <script>
 import ReviewerSideNav from "../SharedComponents/sideNav.vue";
-import ReviewerNavBar from "../SharedComponents/navBar.vue";
-import NewLicenseMainContent from "../../../ApplicationTypes/NewLicense/MainComponents/approved.vue";
+import ReviewerNavBar from "../../../SharedComponents/navBar.vue";
+import NewLicenseMainContent from "../../../SharedComponents/approved.vue";
 import { ref, onMounted, computed } from "vue";
 import { useStore } from "vuex";
 import VueTableLite from "vue3-table-lite";

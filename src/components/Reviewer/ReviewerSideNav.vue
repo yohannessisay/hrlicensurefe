@@ -1,10 +1,10 @@
 <template>
   <div class="sidebar">
-    <div class="logo-details ml-4">
+    <div class="logo-details ">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 39.082 39.096"
-        class="w-10 h-10"
+        class="w-10 h-10 ml-4"
       >
         <defs>
           <linearGradient

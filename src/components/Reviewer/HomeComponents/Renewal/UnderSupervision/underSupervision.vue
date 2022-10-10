@@ -112,8 +112,8 @@
 
 <script>
 import ReviewerSideNav from "../SharedComponents/sideNav.vue";
-import ReviewerNavBar from "../SharedComponents/navBar.vue";
-import NewLicenseMainContent from "../../../ApplicationTypes/NewLicense/MainComponents/underSupervision.vue";
+import ReviewerNavBar from "../../../SharedComponents/navBar.vue";
+import NewLicenseMainContent from "../../../SharedComponents/underSupervision.vue";
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
 

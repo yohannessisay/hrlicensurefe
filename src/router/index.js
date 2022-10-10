@@ -282,6 +282,16 @@ const routes = [
       import("../components/Applicant/GoodStanding/draft/draft.vue")
   },
 
+    //Applicant Profile Management
+    {
+      path: "/applicant/profile",
+      name: "ApplicantProfileManagement",
+      component: () =>
+        import(
+          "../components/Applicant/Profile/profile.vue"
+        )
+    },
+
   /******************************************************************************************************************************************/
   /**************1-END OF APPLICANT SIDE ROUTES*****************/
   /******************************************************************************************************************************************/
@@ -672,6 +682,16 @@ const routes = [
     component: () =>
       import(
         "../components/Reviewer/HomeComponents/LookupManagement/professionalType/professionalType.vue"
+      )
+  },
+
+  //Admin Profile Management
+  {
+    path: "/admin/profile",
+    name: "AdminProfileManagement",
+    component: () =>
+      import(
+        "../components/Reviewer/HomeComponents/Profile/profile.vue"
       )
   },
   

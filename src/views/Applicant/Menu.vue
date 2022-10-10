@@ -1622,8 +1622,7 @@ export default {
               element.educationalLevel &&
               element.educationalLevel.code == "BACH"
           );
-        }
-        console.log(NLdocumentSpecs.value)
+        } 
       });
     });
     return { userInfo, NLdocumentSpecs, RNdocumentSpecs, GSdocumentSpecs };

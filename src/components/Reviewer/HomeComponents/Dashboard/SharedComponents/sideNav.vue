@@ -1,11 +1,11 @@
 <template>
   <div class="sidebar">
     <router-link to="/admin/review/">
-      <div class="logo-details ml-4">
+       <div class="logo-details">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 39.082 39.096"
-          class="w-10 h-10"
+          class="w-10 h-10 ml-4"
         >
           <defs>
             <linearGradient
@@ -55,21 +55,14 @@
     <ul class="nav-links">
       <div
         class="profile-details mb-8 ml-4"
-        style="
-          position: fixed;
-          bottom: 0;
-          width: 140px;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-        "
+     
       >
         <router-link to="/admin/review/">
-          <li>
+          <li  style="margin-top:100px;">
             <a href="" class="ml-6">
               <i class="bx bx-arrow-to-left text-white"></i>
 
-              <span class="links_name text-white mr-12">All Listing</span>
+              <span class="links_name text-white mr-12">Home</span>
             </a>
           </li>
         </router-link>

@@ -1,17 +1,20 @@
 <template>
-  <div class="top-navbar">
+  <div class="top-navbar flex justify-items-center">
     <div id="menu-icon">
       <i class="bx bx-menu text-main-400" @click="sidebarMenu()"></i>
     </div>
     <div class="profile">
       <div class="flex items-center space-x-5">
-        <p class="text-main-400 font-bold" v-text="userInfo.fullName"></p>
+        <p
+          class="text-main-400 font-bold"
+          v-text="userInfo ? userInfo.name : ''"
+        ></p>
         <div class="relative inline-block text-left" style="z-index: 1">
           <a
             class="
               focus:outline-none
               bg-lightBlueB-300
-              text-main-400
+              text-lightBlueB-400
               hover:text-gray-800
               w-7
               h-7
@@ -25,14 +28,18 @@
             aria-haspopup="true"
             v-on:click="showDropDown()"
           >
-            <div v-if="!userInfo.isFirstTime" class="w-12 h-12">
+            <div v-if="userInfo != {}" class="w-12 h-12">
               <img
-                v-bind:src="userInfo.pic"
+                v-bind:src="
+                 userInfo.profilePicturePath
+                    ? googleApi + userInfo.profilePicturePath
+                    : ''
+                "
                 alt="image here"
                 class="w-20 h-12"
               />
             </div>
-            <div v-if="userInfo.isFirstTime">
+            <div v-if="userInfo == {}">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="w-12 h-12"
@@ -57,7 +64,6 @@
               right-0
               mt-1
               w-56
-              p-4
               rounded-md
               shadow-lg
               bg-white
@@ -67,20 +73,16 @@
             aria-orientation="vertical"
             aria-labelledby="options-menu"
           >
-            <div role="none">
+          <div role="none">
               <router-link to="/about">
                 <li
                   class="
                     block
-                    border-b
                     px-4
                     py-2
-                    p-2
-                    text-sm
-                     text-main-400
-                    font-bold
-                    hover:bg-grey-100 hover:text-gray-900
-                    cursor-pointer
+                    text-sm text-main-400
+                    border-b
+                    hover:bg-gray-100 hover:text-gray-900
                   "
                   role="menuitem"
                 >
@@ -93,16 +95,12 @@
               <router-link to="/google-form">
                 <li
                   class="
-                  block
-                    border-b
+                    block
                     px-4
                     py-2
-                    p-2
-                    text-sm
-                     text-main-400
-                    font-bold
-                    hover:bg-grey-100 hover:text-gray-900
-                    cursor-pointer
+                    text-sm text-main-400
+                    border-b
+                    hover:bg-gray-100 hover:text-gray-900
                   "
                   role="menuitem"
                 >
@@ -110,19 +108,15 @@
                   Leave a Feedback
                 </li>
               </router-link>
-              <a  href="/applicant/profile">
+              <a @click="updateProfile()">
                 <li
                   class="
-                  block
-                    border-b
+                    block
                     px-4
                     py-2
-                    p-2
-                    text-sm
-                     text-main-400
-                    font-bold
-                    hover:bg-grey-100 hover:text-gray-900
-                    cursor-pointer
+                    text-sm text-main-400
+                    border-b
+                    hover:bg-gray-100 hover:text-gray-900
                   "
                   role="menuitem"
                 >
@@ -133,16 +127,12 @@
               <a
                 @click="logout()"
                 class="
-                block
-                    border-b
-                    px-4
-                    py-2
-                    p-2
-                    text-sm
-                     text-main-400
-                    font-bold
-                    hover:bg-grey-100 hover:text-gray-900
-                    cursor-pointer
+                  block
+                  px-4
+                  py-2
+                  text-sm text-main-400
+                  border-b
+                  hover:bg-gray-100 hover:text-gray-900
                 "
                 role="menuitem"
                 id="logout"
@@ -160,21 +150,25 @@
 
 
 <script>
-import { ref } from "vue";
+import { useStore } from "vuex";
+import { ref, onMounted } from "vue";
+import { googleApi } from "@/composables/baseURL";
 
 export default {
-  props: ["userInfo"],
   setup() {
+    const store = useStore();
     let showDD = ref(false);
     let showNotificationDropDown = ref(false);
+    let isFirstTime = ref(false);
+    let userInfo = ref({});
     const logout = () => {
       location.reload();
       localStorage.removeItem("token");
       localStorage.removeItem("userId");
       localStorage.removeItem("educationalLevel");
       localStorage.removeItem("language");
-      localStorage.removeItem("personalInfo");
       localStorage.removeItem("payroll");
+      localStorage.removeItem("personalInfo");
       localStorage.removeItem("applicantTypeId");
       this.$router.push({ path: "/" });
     };
@@ -211,13 +205,18 @@ export default {
         sidenavbarHeader.classList.toggle("disable-header-text");
       };
     };
-
+    onMounted(() => {
+      userInfo.value = JSON.parse(window.localStorage.getItem('personalInfo'));
+      
+    });
     return {
       showDropDown,
       showNotification,
       selectMenu,
-
+      isFirstTime,
+      googleApi,
       showDD,
+      userInfo,
       sidebarMenu,
       updateProfile,
       logout,

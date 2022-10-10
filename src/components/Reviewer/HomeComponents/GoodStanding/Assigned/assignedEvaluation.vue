@@ -1680,7 +1680,7 @@ import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 
 import moment from "moment";
 import ReviewerSideNav from "../SharedComponents/sideNav.vue";
-import ReviewerNavBar from "../SharedComponents/navBar.vue";
+import ReviewerNavBar from "../../../SharedComponents/navBar.vue";
 import Loading from "vue3-loading-overlay";
 // Import stylesheet
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";

@@ -799,8 +799,7 @@ export default {
       if (empty == false) {
         return;
       }
-      if (empty == true) {
-        console.log(personalInfo);
+      if (empty == true) { 
         store.dispatch("profile/setProfileInfo", personalInfo);
         store.dispatch("profile/setPhoto", photoFile.value);
         emit("changeActiveState");

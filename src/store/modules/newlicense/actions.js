@@ -415,6 +415,17 @@ export default {
       return error;
     }
   },
+  async updateDeclined({ commit }, payload) {
+    try {
+      const resp = await ApiService.put(
+        baseUrl + "/newLicenses/" + payload.licenseId,
+        payload.declineData
+      );
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
   async getRegions() {
     try {
       const resp = await ApiService.get(baseUrl + "/lookups/regions");

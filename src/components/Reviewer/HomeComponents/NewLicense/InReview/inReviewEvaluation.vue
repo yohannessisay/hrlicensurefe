@@ -1846,7 +1846,7 @@ import { useToast } from "vue-toastification";
 
 import moment from "moment";
 import ReviewerSideNav from "../SharedComponents/sideNav.vue";
-import ReviewerNavBar from "../SharedComponents/navBar.vue";
+import ReviewerNavBar from "../../../SharedComponents/navBar.vue";
 
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import Loading from "vue3-loading-overlay";
