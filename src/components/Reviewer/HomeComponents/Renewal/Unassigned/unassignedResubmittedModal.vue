@@ -170,8 +170,8 @@
                                   >Martial Status:</span
                                 >
                                 {{
-                                  modalData.martialStatus
-                                    ? modalData.martialStatus
+                                  modalData.maritalStatus
+                                    ? modalData.maritalStatus
                                     : ""
                                 }}
                               </p>
@@ -632,9 +632,9 @@ export default {
             modalData.value.dateOfBirth = result.profile
               ? result.profile.dateOfBirth
               : "-----";
-            modalData.value.martialStatus =
-              result.profile && result.profile.martialStatus
-                ? result.profile.martialStatus.name
+            modalData.value.maritalStatus =
+              result.profile && result.profile.maritalStatus
+                ? result.profile.maritalStatus.name
                 : "-----";
             modalData.value.mobileNumber = result.applicant
               ? result.applicant.phoneNumber

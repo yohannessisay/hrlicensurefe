@@ -49,7 +49,7 @@
           <button
             type="button"
             class="
-              px-6
+                  px-6
               text-white
               bg-primary-600
               hover:text-primary-600 hover:border
@@ -58,6 +58,7 @@
               leading-tight
               uppercase
               rounded
+              hover:border-primary-600
               shadow-lg
               hover:bg-purple-700 hover:shadow-lg
               focus:bg-purple-700
@@ -192,8 +193,8 @@
                                 >Martial Status:</span
                               >
                               {{
-                                modalData.martialStatus
-                                  ? modalData.martialStatus
+                                modalData.maritalStatus
+                                  ? modalData.maritalStatus
                                   : ""
                               }}
                             </p>
@@ -239,14 +240,20 @@
                                 >Suspension Start Date:</span
                               >
                               {{
-                                modalData.suspStartDate ? modalData.suspStartDate : ""
+                                modalData.suspStartDate
+                                  ? modalData.suspStartDate
+                                  : ""
                               }}
                             </p>
                             <p class="text-gray-500">
                               <span class="font-medium text-primary-700 mb-1"
                                 >Suspension End Date:</span
                               >
-                              {{ modalData.suspEndDate ? modalData.suspEndDate : "" }}
+                              {{
+                                modalData.suspEndDate
+                                  ? modalData.suspEndDate
+                                  : ""
+                              }}
                             </p>
                             <p class="text-gray-500">
                               <span class="font-medium text-primary-700 mb-1"
@@ -254,7 +261,6 @@
                               >
                               {{ modalData.remark ? modalData.remark : "" }}
                             </p>
-                        
                           </div>
                         </div>
                       </div>
@@ -360,6 +366,7 @@
                                 duration-150
                                 ease-in-out
                               "
+                              @click="earlySuspension()"
                             >
                               <i class="fa fa-times-circle"></i>
                               Early Susupension
@@ -612,10 +619,9 @@
                           focus:outline-none
                         "
                         disabled
-                        :value=" new Date().toISOString().slice(0, 10)"
+                        :value="new Date().toISOString().slice(0, 10)"
                         type="date"
-                      />  
-                 
+                      />
                     </div>
 
                     <div class="form-group mb-6 mt-4">
@@ -640,7 +646,7 @@
                           focus:bg-white
                           focus:border-blue-600
                           focus:outline-none
-                        "  
+                        "
                         v-model="extendedData.suspEndDate"
                         type="date"
                       />
@@ -745,7 +751,7 @@ export default {
   props: ["modalDataId"],
   setup(props) {
     const store = useStore();
-    let extendInfo={endDate:'',remark:''};
+    let extendInfo = { endDate: "", remark: "" };
     let show = ref(true);
     let showRes = ref(true);
     let showGenerateModal = ref(true);
@@ -777,8 +783,8 @@ export default {
             modalData.value.dateOfBirth = result.profile.dateOfBirth
               ? result.profile.dateOfBirth
               : "-----";
-            modalData.value.martialStatus = result.profile.martialStatus?.name
-              ? result.profile.martialStatus.name
+            modalData.value.maritalStatus = result.profile.maritalStatus?.name
+              ? result.profile.maritalStatus.name
               : "-----";
             modalData.value.mobileNumber = result.applicant.phoneNumber
               ? result.applicant.phoneNumber
@@ -793,43 +799,42 @@ export default {
             modalData.value.licenseExpirationDate =
               result.licenseExpirationDate;
             modalData.value.documents = result.documents;
-            modalData.value.reviewer = result?result.licenseReviewer:{};
+            modalData.value.reviewer = result ? result.licenseReviewer : {};
             modalData.value.id = result.id;
             extendedData.value = result;
             isLoading.value = false;
           }
         });
     };
-
-    const extend=()=>{
-      isLoading.value=true;
+    const earlySuspension = () => {
+      extendedData.value.suspEndDate = new Date().toISOString().slice(0, 10);
+      isLoading.value = true;
       let req = {
         action: "ApproveEvent",
-        data: extendedData,
+        data: extendedData.value,
       };
       let smsData =
-      extendedData.value && extendedData.value.profile
+        extendedData.value && extendedData.value.profile
           ? "Dear " +
-          extendedData.value.profile.name +
-          extendedData.value.profile.fatherName +
+            extendedData.value.profile.name +
+            extendedData.value.profile.fatherName +
             ", Your license with license number " +
             extendedData.value.newLicenseCode +
-            " has been released from revoked state. Thank you for using eHPEL,https://www.hrl.moh.gov.et"
+            " has been released from suspension. Thank you for using eHPEL,https://www.hrl.moh.gov.et"
           : "";
       store
         .dispatch("reviewer/editNewLicense", req)
         .then((res) => {
-          isLoading.value=false;
+          isLoading.value = false;
           if (res.statusText == "Created") {
             store.dispatch("sms/sendSms", smsData).then(() => {
-              toast.success("Application reviewed Successfully", {
+              toast.success("Application released from suspension Successfully", {
                 timeout: 5000,
                 position: "bottom-center",
                 pauseOnFocusLoss: true,
                 pauseOnHover: true,
                 icon: true,
               });
-             
             });
           } else {
             toast.error("Please try again", {
@@ -839,7 +844,6 @@ export default {
               pauseOnHover: true,
               icon: true,
             });
-           
           }
         })
         .catch(() => {
@@ -850,7 +854,55 @@ export default {
             pauseOnHover: true,
             icon: true,
           });
-         
+        });
+    };
+    const extend = () => {
+      isLoading.value = true;
+      let req = {
+        action: "ApproveEvent",
+        data: extendedData,
+      };
+      let smsData =
+        extendedData.value && extendedData.value.profile
+          ? "Dear " +
+            extendedData.value.profile.name +
+            extendedData.value.profile.fatherName +
+            ", Your license with license number " +
+            extendedData.value.newLicenseCode +
+            " has been extended . Thank you for using eHPEL,https://www.hrl.moh.gov.et"
+          : "";
+      store
+        .dispatch("reviewer/editNewLicense", req)
+        .then((res) => {
+          isLoading.value = false;
+          if (res.statusText == "Created") {
+            store.dispatch("sms/sendSms", smsData).then(() => {
+              toast.success("Application reviewed Successfully", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
+            });
+          } else {
+            toast.error("Please try again", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+          }
+        })
+        .catch(() => {
+          toast.error("Please try again", {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          });
         });
     };
 
@@ -868,6 +920,7 @@ export default {
       showGenerateModal,
       showOptions,
       extendedData,
+      earlySuspension,
       googleApi,
       modalData,
       isLoadingSuspend,

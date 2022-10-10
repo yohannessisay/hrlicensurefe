@@ -48,7 +48,7 @@
           <button
             type="button"
             class="
-              px-6
+                  px-6
               text-white
               bg-primary-600
               hover:text-primary-600 hover:border
@@ -57,6 +57,7 @@
               leading-tight
               uppercase
               rounded
+              hover:border-primary-600
               shadow-lg
               hover:bg-purple-700 hover:shadow-lg
               focus:bg-purple-700
@@ -187,8 +188,8 @@
                                   >Martial Status:</span
                                 >
                                 {{
-                                  modalData.martialStatus
-                                    ? modalData.martialStatus
+                                  modalData.maritalStatus
+                                    ? modalData.maritalStatus
                                     : ""
                                 }}
                               </p>
@@ -595,6 +596,7 @@ export default {
           let result = {};
           if (res.data.status == "Success") {
             result = JSON.parse(JSON.stringify(res.data.data));
+
             modalData.value.name =
               (result.profile ? result.profile.name + " " : "") +
               (result.profile ? result.profile.fatherName + "  " : " ") +
@@ -609,9 +611,9 @@ export default {
             modalData.value.dateOfBirth = result.profile
               ? result.profile.dateOfBirth
               : "-----";
-            modalData.value.martialStatus =
-              result.profile && result.profile.martialStatus
-                ? result.profile.martialStatus.name
+            modalData.value.maritalStatus =
+              result.profile && result.profile.maritalStatus
+                ? result.profile.maritalStatus.name
                 : "-----";
             modalData.value.mobileNumber = result.applicant
               ? result.applicant.phoneNumber
@@ -620,16 +622,23 @@ export default {
               ? result.applicant.emailAddress
               : "-----";
             modalData.value.profile = result.profile;
-            licenseData.value=result;
-            modalData.value.buttons=result&&result.applicationStatus?result.applicationStatus.buttons:{};
-            isLoadingStart.value = false;
+            licenseData.value = result;
+            modalData.value.buttons =
+              result && result.applicationStatus
+                ? result.applicationStatus.buttons
+                : {};
           }
-        }); 
+          isLoadingStart.value = false;
+        })
+        .catch((err) => console.log(err));
     };
 
     watch(props.modalDataId, () => {
-      isLoadingStart.value = true;
-      check();
+      console.log(props.modalDataId.id)
+      if (props.modalDataId.id != '') {
+        isLoadingStart.value = true;
+        check();
+      }
     });
 
     onMounted(() => {

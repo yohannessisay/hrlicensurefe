@@ -5,8 +5,21 @@
   <!-- Sidebar -->
   <section class="home-section">
     <!-- Header -->
-    <reviewer-nav-bar
-      ><h2>Import and Manage National Exam Results</h2></reviewer-nav-bar
+    <reviewer-nav-bar>
+      <ol class="list-reset flex">
+        <li>
+          <router-link to="/admin/review"
+            ><span class="text-primary-600 text-base">Home</span></router-link
+          >
+        </li>
+        <li><span class="text-gray-500 mx-2">/</span></li>
+
+        <li>
+          <a href="#" class="pointer-events-none text-lg text-grey-300"
+            >Import and Manage National Exam Results</a
+          >
+        </li>
+      </ol></reviewer-nav-bar
     >
     <!-- Header -->
 
@@ -25,10 +38,11 @@
       >
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
           <div class="m-2 grid grid-row-2 grid-flow-col">
-            <div class="bg-green-200 rounded-lg">
-              <h1 class="mt-4 ml-2">
-                Import the required documnet and view the reults before
-                finalizing it and saving.(Allowed file types are .XLSX and .CSV)
+            <div class="bg-grey-200 rounded-lg">
+              <h1 class="mt-4 ml-2 text-white text-lg">
+                Import the required document and view the reults before
+                finalizing it and saving.(Allowed file types are files name
+                ending wit .XLSX and .CSV Eg-template.xlsx or template.csv)
               </h1>
               <label
                 class="
@@ -36,17 +50,18 @@
                   items-center
                   mt-3
                   py-4
-                  bg-grey-100
                   rounded-lg
                   shadow-md
                   uppercase
-                  hover:bg-purple-600 hover:text-lightBlue-1000
                   ease-linear
+                  bg-main-400
                   transition-all
                   duration-150
                 "
               >
-                <i class="fas fa-cloud-upload-alt fa-1x">Select a file</i>
+                <i class="fas fa-cloud-upload-alt fa-2x text-white"
+                  >Select a file</i
+                >
 
                 <input
                   type="file"
@@ -67,10 +82,11 @@
           <hr />
 
           <div class="m-2 grid grid-row-2 grid-flow-col">
-            <div class="bg-green-200 rounded-lg">
-              <h1 class="mt-4 ml-2">
-                Download a template and fill it with the required data and come
-                back here to upload it.
+            <div class="bg-grey-200 rounded-lg">
+              <h1 class="mt-4 ml-2 text-white text-lg">
+                Download a template file and fill it with your data by following
+                the structure of the template file and come back here to upload
+                your final result.
               </h1>
               <a href="/template/importTemplate.xlsx" download>
                 <label
@@ -79,7 +95,7 @@
                     items-center
                     mt-3
                     py-4
-                    bg-primary-400
+                    bg-primary-600
                     rounded-lg
                     shadow-md
                     uppercase
@@ -89,7 +105,7 @@
                     duration-150
                   "
                 >
-                  <i class="fas fa-cloud-download-alt fa-1x"
+                  <i class="fas fa-cloud-download-alt fa-2x text-white"
                     >Click to download a template</i
                   >
                 </label>
@@ -98,7 +114,7 @@
           </div>
 
           <hr />
-          <h1 class="ml-4 mt-4">These are the previously added records</h1>
+          <h1 class="ml-4 mt-4 text-xl">These are the previously added records</h1>
 
           <div>
             <div class="grid lg:grid-cols-4 xl:gap-6 ml-4 mt-4">
@@ -366,21 +382,9 @@
             "
             @click="toggleErrorModal()"
           >
-            <i class="fas fa-times"></i> Cancel
+            <i class="fas fa-times"></i> Close
           </button>
-          <button
-            class="
-              px-4
-              bg-primary-700
-              text-white
-              rounded
-              hover:bg-blue-700
-              mr-2
-            "
-            @click="addImported()"
-          >
-            <i class="fas fa-save"></i> Save
-          </button>
+     
         </div>
       </div>
     </div>
@@ -594,11 +598,7 @@
               </thead>
               <tbody>
                 <tr v-for="row in finalData" :key="row.id">
-                  <td
-               
-                    v-for="item in row"
-                    :key="item.id"
-                  >
+                  <td v-for="item in row" :key="item.id">
                     <div class="flex">
                       <div class="ml-3">
                         <p
@@ -635,10 +635,11 @@
           <button
             class="
               px-4
-              bg-primary-700
+              bg-primary-600
               text-white
               rounded
-              hover:bg-blue-700
+              hover:bg-white
+              hover:text-primary-600
               mr-2
             "
             @click="addImported()"
@@ -1052,7 +1053,7 @@ export default {
       store.dispatch("reviewer/getMultiple", idArray).then((res) => {
         let checkforExisting = res.data.data;
         let errorForExisting = [];
-        let timeOut=1000;
+        let timeOut = 1000;
         if (res.data.status === "Success") {
           for (let i = 0; i < finalArray.length; i++) {
             for (let j = 0; j < checkforExisting.length; j++) {
@@ -1060,7 +1061,7 @@ export default {
                 finalArray[i].registrationNo ===
                 checkforExisting[j].registrationNo
               ) {
-                timeOut+=1000;
+                timeOut += 1000;
                 errorForExisting.push({
                   row: i,
                   column: 1,
@@ -1069,9 +1070,11 @@ export default {
                     "There is an already existing record with that id",
                 });
                 toast.error(
-                  "There is an already existing record with id"+finalArray[i].registrationNo+ "",
+                  "There is an already existing record with id" +
+                    finalArray[i].registrationNo +
+                    "",
                   {
-                    timeout: 6000+timeOut,
+                    timeout: 6000 + timeOut,
                     position: "bottom-center",
                     pauseOnFocusLoss: true,
                     pauseOnHover: true,
@@ -1098,7 +1101,7 @@ export default {
               icon: true,
             });
             isLoading.value = false;
-    setTimeout(() => {
+            setTimeout(() => {
               window.location.reload();
             }, 3000);
           });
@@ -1139,7 +1142,7 @@ export default {
       }
     };
 
-       const filterResult = (eventParam) => {
+    const filterResult = (eventParam) => {
       if (eventParam == "Result") {
         tableData = allData.value;
         userTable.value.rows = computed(() => {
@@ -1149,7 +1152,7 @@ export default {
         tableData = allData.value.filter((data) => {
           return data.Result
             ? data.Result.toLowerCase() == "Pass" ||
-                data.Result.toLowerCase() == "pass" 
+                data.Result.toLowerCase() == "pass"
             : "";
         });
         userTable.value.rows = computed(() => {
@@ -1159,7 +1162,7 @@ export default {
         tableData = allData.value.filter((data) => {
           return data.Result
             ? data.Result.toLowerCase() == "fail" ||
-                data.Result.toLowerCase() == "Fail" 
+                data.Result.toLowerCase() == "Fail"
             : "";
         });
         userTable.value.rows = computed(() => {

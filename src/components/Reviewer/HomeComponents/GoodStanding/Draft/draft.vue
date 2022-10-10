@@ -6,7 +6,25 @@
   <section class="home-section">
     <!-- Header -->
     <reviewer-nav-bar>
-      <h2 class="dashboard">Draft</h2>
+      <ol class="list-reset flex">
+          <li>
+            <router-link to="/admin/review"
+              ><span class="text-primary-600 text-base">Home</span></router-link
+            >
+          </li>
+          <li><span class="text-gray-500 mx-2">/</span></li>
+          <li>
+            <a href="#" class="hover:text-primary-600 text-grey-300"
+              >Good Standing</a
+            >
+          </li>
+          <li><span class="text-gray-500 mx-2">/</span></li>
+          <li>
+            <a href="#" class="pointer-events-none text-lg text-grey-300"
+              >Draft</a
+            >
+          </li>
+        </ol>
     </reviewer-nav-bar>
     <!-- Header -->
 
