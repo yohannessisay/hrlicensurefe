@@ -196,7 +196,8 @@
                 mt-4
                 mb-8
                 bg-white
-                shadow-2xl
+                shadow-lg
+                hover:shadow-2xl
                 rounded-md
                 transform
                 transition
@@ -306,7 +307,7 @@
                 for="feedback"
                 class="form-label inline-block mb-2 text-main-400"
                 >Feedback on the process and system
-                <span class="text-red-200">(required*)</span>
+                <span class="text-yellow-300">(Optional)</span>
               </label>
             </div>
             <div class="vld-parent mt-4">
@@ -415,9 +416,7 @@ export default {
     let allowSave = ref(false);
     const changeAgrement = () => {
       agreed.value = !agreed.value;
-      if (
-        generalInfo.value &&
-        generalInfo.value.feedback.length >= 4 &&
+      if ( 
         agreed.value != false
       ) {
         allowSave.value = true;
@@ -426,9 +425,7 @@ export default {
       }
     };
     const checkAgreement = () => {
-      if (
-        generalInfo.value &&
-        generalInfo.value.feedback.length >= 4 &&
+      if ( 
         agreed.value != false
       ) {
         allowSave.value = true;
@@ -440,7 +437,7 @@ export default {
       generalInfo.value.licenseFile = [];
       documents.value = localFileData.value;
 
-      if (agreed.value == true && generalInfo.value.feedback.length != 0) {
+      if (agreed.value == true  ) {
         let formData = new FormData();
         tempDocs.value.forEach((element, index) => {
           formData.append(index, element);

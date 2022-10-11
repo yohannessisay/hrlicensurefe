@@ -402,6 +402,7 @@
                       focus:outline-none
                     "
                     v-model="generalInfo.educationalLevelSelected"
+                    @change="educationalLevelChange()"
                   >
                     <option
                       v-for="educationalLevel in educationalLevels"
@@ -919,7 +920,7 @@ export default {
       });
     };
     const fetchEducationLevel = () => {
-      store.dispatch("lookups/getEducationalLevel").then((res) => {
+      store.dispatch("lookups/getEducationLevel").then((res) => {
         educationalLevels.value = res.data.data;
       });
     };
@@ -960,8 +961,8 @@ export default {
           woredas.value = woredasResult;
         });
     };
-    const fetchProfessionalType = (id) => {
-      store.dispatch("renewal/getProfessionalTypes", id).then((res) => {
+    const fetchProfessionalType = (departmentId, educationalLevelId) => {
+      store.dispatch("newlicense/getProfessionalTypes", departmentId, educationalLevelId).then((res) => {
         professionalTypes.value = res.data.data;
       });
     };
@@ -1007,7 +1008,7 @@ export default {
       });
     };
     const departmentChange = () => {
-      fetchProfessionalType(generalInfo.value.departmentSelected.id);
+      // fetchProfessionalType(generalInfo.value.departmentSelected.id);
     };
     const institutionChange = () => {
       if (generalInfo.value.institutionSelected.code == "OTH") {
@@ -1117,7 +1118,11 @@ export default {
         activeState.value += 1;
       });
     };
+    const educationalLevelChange = () =>
+    {
+            fetchProfessionalType(generalInfo.value.departmentSelected.id,generalInfo.value.educationalLevelSelected.id,);
 
+    }
     onMounted(async () => {
       fetchApplicantType();
       fetchDepartments();
@@ -1182,6 +1187,7 @@ export default {
       removeDepartment,
       apply,
       fetchOccupation,
+      educationalLevelChange,
       showLocation,
       departments,
       institutions,
