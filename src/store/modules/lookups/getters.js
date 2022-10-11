@@ -1,5 +1,5 @@
 export default {
-  getEducationalLevel: (state) => state.educationalLevel,
+  getEducationLevel: (state) => state.educationalLevel,
   getRegions: (state) => state.regions,
   getAllDocumentSpecs: (state) => state.allDocumentSpecs,
 };

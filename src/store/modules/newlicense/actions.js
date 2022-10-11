@@ -455,10 +455,14 @@ export default {
       return resp;
     }
   },
-  async getProfessionalTypes(context, deptId) {
-    try {
+  async getProfessionalTypes({ commit }, professionDetail) {
+    try { 
       const resp = await ApiService.get(
-        baseUrl + "/lookups/professionalTypes/" + deptId
+        baseUrl +
+          "/lookups/professionalTypes/" +
+          professionDetail.departmentId +
+          "/" +
+          professionDetail.educationalLevelId
       );
       return resp;
     } catch (error) {

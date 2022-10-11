@@ -84,8 +84,10 @@
           <div class="modal-body relative p-4">
             <div class="container px-6 mx-auto">
               <section class="text-gray-800">
-                <div class="flex justify-center border-b-4 text-main-400"></div>
-
+                <div class="flex justify-center border-b-4 text-main-400">
+              
+                </div>
+            
                 <div class="flex justify-center border-b-4 text-main-400">
                   <div class="text-center lg:max-w-3xl md:max-w-xl">
                     <h2 class="text-2xl font-bold mb-8 px-6 text-main-400">

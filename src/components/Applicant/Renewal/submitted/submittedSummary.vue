@@ -481,7 +481,7 @@ export default {
           },
         };
         store.dispatch("renewal/updateDraft", license).then((res) => {
-          let licenseId = res.data.data.id;
+          let licenseId = route.params.id;
           let payload = { document: formData, id: licenseId };
           store
             .dispatch("renewal/uploadDocuments", payload)
