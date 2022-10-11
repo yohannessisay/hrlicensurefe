@@ -126,7 +126,7 @@
                             <p class="">
                               {{ item.documentType.name }}
                               <b v-if="item.isRequired" class="text-red-300"
-                                >(*Required)</b
+                                >(*)</b
                               >
                             </p>
                           </div>
@@ -340,7 +340,7 @@
                             <p class="">
                               {{ item.documentType.name }}
                               <b v-if="item.isRequired" class="text-red-300"
-                                >(*Required)</b
+                                >(*)</b
                               >
                             </p>
                           </div>
@@ -428,7 +428,7 @@
                               <b
                                 v-if="parentItem[0].isRequired"
                                 class="text-red-300"
-                                >(*Required)</b
+                                >(*)</b
                               >
                             </p>
                           </div>
@@ -514,7 +514,7 @@
                               <b
                                 v-if="parentItem[0].isRequired"
                                 class="text-red-300"
-                                >(*Required)</b
+                                >(*)</b
                               >
                             </p>
                           </div>
@@ -549,7 +549,7 @@
                           type="button"
                           @click="addMore(parentItem[0])"
                         >
-                          Upload
+                          Add
                         </button>
                       </td>
                     </tr>
@@ -605,7 +605,7 @@
                                   <div class="flex items-center ml-4">
                                     <div>
                                       <p class="">
-                                        {{ showNestedDocuments }}
+                                       
                                         {{ parentChildItem.documentType.name }}
                                       </p>
                                     </div>
@@ -716,7 +716,7 @@
                 </table>
                 <small
                   >Note:-document names with
-                  <b class="text-red-300">(*Required)</b> must be uploaded in
+                  <b class="text-red-300">(*)</b> must be uploaded in
                   order to go forward with application process</small
                 >
               </div>
@@ -1062,9 +1062,8 @@ export default {
       };
     };
 
-    const checkDocuments = () => {
-      console.log(educationalDocs.value);
-      console.log(documentsUploaded.value);
+    const checkDocuments = () => { 
+
       let temp = false;
       let CMtemp = false;
       let NSTemp = false;
@@ -1264,8 +1263,7 @@ export default {
         document.getElementById(doc[0].id).appendChild(divElement);
       }
     };
-    const addMore = (parentItem) => {
-      console.log(parentItem);
+    const addMore = (parentItem) => { 
       if (
         showNestedDocuments.value[parentItem.documentType.code] == undefined
       ) {

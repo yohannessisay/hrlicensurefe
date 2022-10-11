@@ -850,7 +850,7 @@ export default {
       });
     };
     const fetchEducationLevel = () => {
-      store.dispatch("lookups/getEducationalLevel").then((res) => {
+      store.dispatch("lookups/getEducationLevel").then((res) => {
         educationalLevels.value = res.data.data;
       });
     };
