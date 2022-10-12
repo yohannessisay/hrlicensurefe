@@ -84,10 +84,8 @@
           <div class="modal-body relative p-4">
             <div class="container px-6 mx-auto">
               <section class="text-gray-800">
-                <div class="flex justify-center border-b-4 text-main-400">
-              
-                </div>
-            
+                <div class="flex justify-center border-b-4 text-main-400"></div>
+
                 <div class="flex justify-center border-b-4 text-main-400">
                   <div class="text-center lg:max-w-3xl md:max-w-xl">
                     <h2 class="text-2xl font-bold mb-8 px-6 text-main-400">
@@ -352,7 +350,6 @@
                     </div>
 
                     <!-- END Column -->
- 
 
                     <!-- Column -->
                     <div
@@ -432,8 +429,7 @@
                         py-4
                         px-5
                         text-base text-left
-                        hover:border-main-400
-                        hover:text-main-400
+                        hover:border-main-400 hover:text-main-400
                         border-0
                         rounded-none
                         transition
@@ -458,7 +454,7 @@
                         <div
                           class="mt-4 mb-8 bg-white shadow-lg"
                           style="border-radius: 15px; padding: 10px"
-                          v-for="document in licenseData.documents"
+                          v-for="document in declinedDocuments"
                           :key="document.id"
                         >
                           <i
@@ -484,8 +480,7 @@
                                 `${document.documentTypeCode}`
                               "
                               class="
-                                fa fa-eye
-                                fa-2x
+                                fa fa-eye fa-2x
                                 pointer-events-none
                                 text-main-400
                                 disabled
@@ -504,19 +499,17 @@
                             </i>
                           </a>
                           <div class="break-words">
-                         
-                          <input
-                            type="file"
-                            required
-                            :id="`files${document.id}`"
-                            accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
-                            :ref="`imageUploader${document.id}`"
-                            class="custom-file-input "
-                            v-on:change="handleFileUpload(document, $event)"
-                          />
-                             
-                        </div>
-                       
+                            <input
+                              type="file"
+                              required
+                              :id="`files${document.id}`"
+                              accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
+                              :ref="`imageUploader${document.id}`"
+                              class="custom-file-input"
+                              v-on:change="handleFileUpload(document, $event)"
+                            />
+                          </div>
+
                           <div
                             class="
                               flex
@@ -628,11 +621,15 @@ import { googleApi } from "@/composables/baseURL";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 import MAX_FILE_SIZE from "../../../../composables/documentMessage";
+import { useToast } from "vue-toastification";
+import { useRouter } from "vue-router";
 export default {
   props: ["modalDataId"],
   components: { Loading },
   setup(props) {
     let store = useStore();
+    const router = useRouter();
+    const toast = useToast();
     let licenseData = ref({});
     let userInfo = ref({});
     let documentUploaded = ref({});
@@ -641,8 +638,9 @@ export default {
     let fileSizeExceed = ref({});
     let showImage = ref(false);
     let fileSize = ref("");
+    let declinedDocuments = ref([]);
     let showPreview = ref("");
-    let previewDocuments = ref({}); 
+    let previewDocuments = ref({});
     let isPdf = ref({});
     let maxFileSize = ref();
     maxFileSize.value = MAX_FILE_SIZE.MAX_FILE_SIZE;
@@ -653,13 +651,26 @@ export default {
         .dispatch("newlicense/getNewLicenseApplication", props.modalDataId.id)
         .then((res) => {
           licenseData.value = res.data.data;
+          if (
+            licenseData.value.declinedFields &&
+            licenseData.value.declinedFields.length > 0
+          ) {
+            licenseData.value.declinedFields.forEach((rejected) => {
+              licenseData.value.documents.forEach((doc) => {
+                if (rejected == doc.fileName) {
+                  declinedDocuments.value.push(doc);
+                }
+              });
+            });
+          }
           isLoading.value = false;
         });
     });
+
     const handleFileUpload = (data, event) => {
       documentUploaded.value[data.documentType.code] = event?.target?.files[0];
-      let reader = new FileReader(); 
-      formData.append(data.documentType.code, event?.target?.files[0]);
+      let reader = new FileReader();
+      formData.append(data.fileName, event?.target?.files[0]);
 
       isImage.value[data.documentType.code] = true;
       let fileS = documentUploaded.value[data.documentType.code].size;
@@ -728,13 +739,48 @@ export default {
     };
 
     const reApply = () => {
-      let req={
-        action:'UpdateEvent',
-        data:licenseData
-      }
-      store.dispatch("newlicense/updateDeclined",req).then((res) => {
- 
-    console.log(res)
+      let license = {
+        licenseId: licenseData.value.id,
+        declinedData: {
+          action: "UpdateEvent",
+          data: licenseData.value,
+        },
+      };
+
+      store.dispatch("newlicense/updateDeclined", license).then((res) => {
+        let licenseId = licenseData.value.id;
+        let payload = { document: formData, id: licenseId };
+        store
+          .dispatch("newlicense/uploadDocuments", payload)
+          .then((res) => {
+            if (res.data.status == "Success") {
+              toast.success("Applied successfuly", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
+              router.push({ path: "/Applicant/NewLicense/submitted" });
+            } else {
+              toast.error("Error occured, please try again", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
+            }
+          })
+          .catch(() => {
+            toast.error("Error occured, please try again", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+          });
       });
       console.log(formData);
     };
@@ -748,6 +794,7 @@ export default {
       handleFileUpload,
       googleApi,
       userInfo,
+      declinedDocuments,
       reApply,
     };
   },

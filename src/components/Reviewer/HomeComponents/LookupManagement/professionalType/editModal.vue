@@ -130,8 +130,8 @@
                                       focus:border-blue-600
                                       focus:outline-none
                                     "
-                                    v-model="selectedDepartment" 
-                                  > 
+                                    v-model="selectedDepartment"
+                                  >
                                     <option
                                       class="border-b-2 mb-8"
                                       :value="
@@ -277,7 +277,6 @@
                                     focus:font-bold
                                     focus:drop-shadow-lg
                                   "
-                                  @keyup="enableSaveButton()"
                                   required
                                   placeholder="Enter name"
                                   v-model="editData.Name"
@@ -343,9 +342,7 @@
                                   "
                                   required
                                   placeholder="Enter name in amharic"
-                                  v-model="
-                                    editData.amharicProfessionalType
-                                  "
+                                  v-model="editData.amharicProfessionalType"
                                 />
 
                                 <i
@@ -436,7 +433,7 @@ export default {
     let professionalTypeName = ref("");
     let showProfessionalTypeNameError = ref(false);
     let professionalTypeNameError = ref("");
-    let professionalTypeNameFilled = ref(false);
+    let professionalTypeNameFilled = ref(true);
     let saveData = ref({});
     let professionalTypeAmharicName = ref("");
     let selectedEducationLevel = ref("");
@@ -452,13 +449,7 @@ export default {
     let departments = computed(() =>
       props.modalLookups ? props.modalLookups.departments : {}
     );
-    const enableSaveButton = () => {
-      if (professionalTypeName.value.length > 3) {
-        professionalTypeNameFilled.value = true;
-      } else {
-        professionalTypeNameFilled.value = false;
-      }
-    };
+
     const saveProfessionalType = () => {
       let today = new Date().getMilliseconds();
       isLoading.value = true;
@@ -466,26 +457,25 @@ export default {
       //Validation of input
 
       showProfessionalTypeNameError.value = false;
-
       saveData.value = {
-        name: professionalTypeName.value ? professionalTypeName.value : "",
-        code: professionalTypeName.value
-          ? "DP_" +
-            professionalTypeName.value.slice(0, 4).toUpperCase() +
-            "_" +
-            today
+        id: editData.value ? editData.value.id : "",
+        name: editData.value ? editData.value.Name : "",
+        departmentId: selectedDepartment.value
+          ? selectedDepartment.value.id
+          :  editData.value && editData.value.data
+          ? editData.value.data.departmentId
           : "",
-        departmentId: selectedDepartment.value ? selectedDepartment.value : "",
         educationalLevelId: selectedEducationLevel.value
           ? selectedEducationLevel.value
+          : editData.value && editData.value.data
+          ? editData.value.data.educationalLevelId
           : "",
-        amharicProfessionalType: professionalTypeAmharicName.value
-          ? professionalTypeAmharicName.value
+        amharicProfessionalType: editData.value.amharicProfessionalType
+          ? editData.value.amharicProfessionalType
           : "",
       };
-
       store
-        .dispatch("lookups/addProfessionalType", saveData.value)
+        .dispatch("lookups/updateProfessionalType", saveData.value)
         .then((res) => {
           isLoading.value = false;
           if (res.data.status == "Success") {
@@ -513,7 +503,6 @@ export default {
     return {
       isLoading,
       saveProfessionalType,
-      enableSaveButton,
       professionalTypeNameFilled,
       showProfessionalTypeNameError,
       professionalTypeName,

@@ -30,283 +30,294 @@
           <div class="container mx-auto my-5 p-5">
             <div class="md:flex no-wrap md:-mx-2">
               <!-- Left Side -->
-     
+
               <!-- Right Side -->
               <div class="w-full md:w-9/12 mx-2 h-64">
                 <!-- Profile tab -->
                 <!-- About Section -->
                 <div class="bg-white p-3 shadow-xl rounded-sm">
-                  <div
-                    class="
-                      flex
-                      items-center
-                      space-x-2
-                      font-semibold
-                      text-gray-900
-                      leading-8
-                    "
-                  >
-                    <span clas="text-green-500">
-                      <svg
-                        class="h-5"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                        />
-                      </svg>
-                    </span>
-                    <span class="tracking-wide">About</span>
-                  </div>
-                  <div class="text-gray-700">
-                    <div class="grid md:grid-cols-2 text-sm">
-                      <div class="grid grid-cols-2">
-                        <div class="px-4 py-2 font-semibold">First Name</div>
-                        <div class="mb-3 xl:w-96">
+                  <div class="vld-parent mt-4">
+                    <loading
+                      :active="isLoadingUserInfo"
+                      :is-full-page="false"
+                      :color="'#2F639D'"
+                      :opacity="1"
+                    ></loading>
+                    <div
+                      class="
+                        flex
+                        items-center
+                        space-x-2
+                        font-semibold
+                        text-gray-900
+                        leading-8
+                      "
+                    >
+                      <span clas="text-green-500">
+                        <svg
+                          class="h-5"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                          />
+                        </svg>
+                      </span>
+                      <span class="tracking-wide">About</span>
+                    </div>
+                    <div class="text-gray-700">
+                      <div class="grid md:grid-cols-2 text-sm">
+                        <div class="grid grid-cols-2">
+                          <div class="px-4 py-2 font-semibold">First Name</div>
+                          <div class="mb-3 xl:w-96">
+                            <input
+                              type="text"
+                              class="
+                                form-control
+                                block
+                                w-full
+                                px-3
+                                py-1.5
+                                text-base
+                                font-normal
+                                text-gray-700
+                                bg-white bg-clip-padding
+                                border border-solid border-gray-300
+                                rounded
+                                transition
+                                ease-in-out
+                                m-0
+                                focus:bg-white
+                                focus:border-primary-600
+                                focus:outline-none
+                              "
+                              id="firstName"
+                              placeholder="First name"
+                              v-model="userInfo.firstName"
+                            />
+                          </div>
+                        </div>
+                        <div class="grid grid-cols-2">
+                          <div class="px-4 py-2 font-semibold">Last Name</div>
+                          <div class="mb-3 xl:w-96">
+                            <input
+                              type="text"
+                              class="
+                                form-control
+                                block
+                                w-full
+                                px-3
+                                py-1.5
+                                text-base
+                                font-normal
+                                text-gray-700
+                                bg-white bg-clip-padding
+                                border border-solid border-gray-300
+                                rounded
+                                transition
+                                ease-in-out
+                                m-0
+                                focus:bg-white
+                                focus:border-primary-600
+                                focus:outline-none
+                              "
+                              id="fatherName"
+                              placeholder="Father Name"
+                              v-model="userInfo.fatherName"
+                            />
+                          </div>
+                        </div>
+                        <div class="grid grid-cols-2">
+                          <div class="px-4 py-2 font-semibold">
+                            Grandfather Name
+                          </div>
+                          <div class="mb-3 xl:w-96">
+                            <input
+                              type="text"
+                              class="
+                                form-control
+                                block
+                                w-full
+                                px-3
+                                py-1.5
+                                text-base
+                                font-normal
+                                text-gray-700
+                                bg-white bg-clip-padding
+                                border border-solid border-gray-300
+                                rounded
+                                transition
+                                ease-in-out
+                                m-0
+                                focus:bg-white
+                                focus:border-primary-600
+                                focus:outline-none
+                              "
+                              id="grandFatherName"
+                              placeholder="Grand Father Name"
+                              v-model="userInfo.grandFatherName"
+                            />
+                          </div>
+                        </div>
+                        <div class="grid grid-cols-2">
+                          <div class="px-4 py-2 font-semibold">Gender</div>
+                          <div class="mb-3 xl:w-96">
+                            <select
+                              class="
+                                form-select
+                                appearance-none
+                                block
+                                w-full
+                                px-3
+                                py-1.5
+                                text-base
+                                font-normal
+                                text-gray-700
+                                bg-white bg-clip-padding bg-no-repeat
+                                border border-solid border-gray-300
+                                rounded
+                                transition
+                                ease-in-out
+                                m-0
+                                focus:text-gray-700
+                                focus:bg-white
+                                focus:border-blue-600
+                                focus:outline-none
+                              "
+                              aria-label="Default select example"
+                            >
+                              <option selected>Gender</option>
+                              <option value="1">Male</option>
+                              <option value="2">Female</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="grid grid-cols-2">
+                          <div class="px-4 py-2 font-semibold">
+                            Phone Number
+                          </div>
+                          <div class="mb-3 xl:w-96">
+                            <input
+                              type="text"
+                              class="
+                                form-control
+                                block
+                                w-full
+                                px-3
+                                py-1.5
+                                text-base
+                                font-normal
+                                text-gray-700
+                                bg-white bg-clip-padding
+                                border border-solid border-gray-300
+                                rounded
+                                transition
+                                ease-in-out
+                                m-0
+                                focus:bg-white
+                                focus:border-primary-600
+                                focus:outline-none
+                              "
+                              id="phoneNumber"
+                              placeholder="First name"
+                              v-model="userInfo.phoneNumber"
+                            />
+                          </div>
+                        </div>
+                        <div class="grid grid-cols-2">
+                          <div class="px-4 py-2 font-semibold">Address</div>
+                          <div class="mb-3 xl:w-96">
+                            <input
+                              type="text"
+                              class="
+                                form-control
+                                block
+                                w-full
+                                px-3
+                                py-1.5
+                                text-base
+                                font-normal
+                                text-gray-700
+                                bg-white bg-clip-padding
+                                border border-solid border-gray-300
+                                rounded
+                                transition
+                                ease-in-out
+                                m-0
+                                focus:bg-white
+                                focus:border-primary-600
+                                focus:outline-none
+                              "
+                              id="address"
+                              placeholder="Address"
+                            />
+                          </div>
+                        </div>
+                        <div class="grid grid-cols-2">
+                          <div class="px-4 py-2 font-semibold">Email</div>
+                          <div class="mb-3 xl:w-96">
+                            <input
+                              type="text"
+                              class="
+                                form-control
+                                block
+                                w-full
+                                px-3
+                                py-1.5
+                                text-base
+                                font-normal
+                                text-gray-700
+                                bg-white bg-clip-padding
+                                border border-solid border-gray-300
+                                rounded
+                                transition
+                                ease-in-out
+                                m-0
+                                focus:bg-white
+                                focus:border-primary-600
+                                focus:outline-none
+                              "
+                              id="firstName"
+                              placeholder="First name"
+                              v-model="userInfo.email"
+                            />
+                          </div>
+                        </div>
+                        <div class="grid grid-cols-2">
+                          <div class="px-4 py-2 font-semibold">Birthday</div>
                           <input
-                            type="text"
-                            class="
-                              form-control
-                              block
-                              w-full
-                              px-3
-                              py-1.5
-                              text-base
-                              font-normal
-                              text-gray-700
-                              bg-white bg-clip-padding
-                              border border-solid border-gray-300
-                              rounded
-                              transition
-                              ease-in-out
-                              m-0
-                              focus:bg-white
-                              focus:border-primary-600
-                              focus:outline-none
-                            "
-                            id="firstName"
-                            placeholder="First name"
-                            v-model="userInfo.firstName"
+                            type="date"
+                            name="birthDay"
+                            id="birthDay"
+                            class="form-control"
                           />
                         </div>
-                      </div>
-                      <div class="grid grid-cols-2">
-                        <div class="px-4 py-2 font-semibold">Last Name</div>
-                        <div class="mb-3 xl:w-96">
-                          <input
-                            type="text"
-                            class="
-                              form-control
-                              block
-                              w-full
-                              px-3
-                              py-1.5
-                              text-base
-                              font-normal
-                              text-gray-700
-                              bg-white bg-clip-padding
-                              border border-solid border-gray-300
-                              rounded
-                              transition
-                              ease-in-out
-                              m-0
-                              focus:bg-white
-                              focus:border-primary-600
-                              focus:outline-none
-                            "
-                            id="fatherName"
-                            placeholder="Father Name"
-                            v-model="userInfo.fatherName"
-                          />
-                        </div>
-                      </div>
-                      <div class="grid grid-cols-2">
-                        <div class="px-4 py-2 font-semibold">
-                          Grandfather Name
-                        </div>
-                        <div class="mb-3 xl:w-96">
-                          <input
-                            type="text"
-                            class="
-                              form-control
-                              block
-                              w-full
-                              px-3
-                              py-1.5
-                              text-base
-                              font-normal
-                              text-gray-700
-                              bg-white bg-clip-padding
-                              border border-solid border-gray-300
-                              rounded
-                              transition
-                              ease-in-out
-                              m-0
-                              focus:bg-white
-                              focus:border-primary-600
-                              focus:outline-none
-                            "
-                            id="grandFatherName"
-                            placeholder="Grand Father Name"
-                            v-model="userInfo.grandFatherName"
-                          />
-                        </div>
-                      </div>
-                      <div class="grid grid-cols-2">
-                        <div class="px-4 py-2 font-semibold">Gender</div>
-                        <div class="mb-3 xl:w-96">
-                          <select
-                            class="
-                              form-select
-                              appearance-none
-                              block
-                              w-full
-                              px-3
-                              py-1.5
-                              text-base
-                              font-normal
-                              text-gray-700
-                              bg-white bg-clip-padding bg-no-repeat
-                              border border-solid border-gray-300
-                              rounded
-                              transition
-                              ease-in-out
-                              m-0
-                              focus:text-gray-700
-                              focus:bg-white
-                              focus:border-blue-600
-                              focus:outline-none
-                            "
-                            aria-label="Default select example"
-                          >
-                            <option selected>Gender</option>
-                            <option value="1">Male</option>
-                            <option value="2">Female</option>
-                          </select>
-                        </div>
-                      </div>
-                      <div class="grid grid-cols-2">
-                        <div class="px-4 py-2 font-semibold">Phone Number</div>
-                        <div class="mb-3 xl:w-96">
-                          <input
-                            type="text"
-                            class="
-                              form-control
-                              block
-                              w-full
-                              px-3
-                              py-1.5
-                              text-base
-                              font-normal
-                              text-gray-700
-                              bg-white bg-clip-padding
-                              border border-solid border-gray-300
-                              rounded
-                              transition
-                              ease-in-out
-                              m-0
-                              focus:bg-white
-                              focus:border-primary-600
-                              focus:outline-none
-                            "
-                            id="phoneNumber"
-                            placeholder="First name"
-                            v-model="userInfo.phoneNumber"
-                          />
-                        </div>
-                      </div>
-                      <div class="grid grid-cols-2">
-                        <div class="px-4 py-2 font-semibold">Address</div>
-                        <div class="mb-3 xl:w-96">
-                          <input
-                            type="text"
-                            class="
-                              form-control
-                              block
-                              w-full
-                              px-3
-                              py-1.5
-                              text-base
-                              font-normal
-                              text-gray-700
-                              bg-white bg-clip-padding
-                              border border-solid border-gray-300
-                              rounded
-                              transition
-                              ease-in-out
-                              m-0
-                              focus:bg-white
-                              focus:border-primary-600
-                              focus:outline-none
-                            "
-                            id="address"
-                            placeholder="Address"
-                          />
-                        </div>
-                      </div>
-                      <div class="grid grid-cols-2">
-                        <div class="px-4 py-2 font-semibold">Email</div>
-                        <div class="mb-3 xl:w-96">
-                          <input
-                            type="text"
-                            class="
-                              form-control
-                              block
-                              w-full
-                              px-3
-                              py-1.5
-                              text-base
-                              font-normal
-                              text-gray-700
-                              bg-white bg-clip-padding
-                              border border-solid border-gray-300
-                              rounded
-                              transition
-                              ease-in-out
-                              m-0
-                              focus:bg-white
-                              focus:border-primary-600
-                              focus:outline-none
-                            "
-                            id="firstName"
-                            placeholder="First name"
-                            v-model="userInfo.email"
-                          />
-                        </div>
-                      </div>
-                      <div class="grid grid-cols-2">
-                        <div class="px-4 py-2 font-semibold">Birthday</div>
-                        <input
-                          type="date"
-                          name="birthDay"
-                          id="birthDay"
-                          class="form-control"
-                        />
                       </div>
                     </div>
+                    <button
+                      class="
+                        block
+                        w-full
+                        text-white
+                        bg-primary-600
+                        font-semibold
+                        rounded-lg
+                        hover:bg-white hover:text-primary-600 hover:shadow-xs
+                        p-3
+                        my-4
+                      "
+                      @click="updateUserInfo()"
+                    >
+                      <i class="fa fa-save"></i>
+                      Update Profile
+                    </button>
                   </div>
-                  <button
-                    class="
-                      block
-                      w-full
-                      text-white
-                      bg-primary-600
-                      font-semibold
-                      rounded-lg
-                      hover:bg-white hover:text-primary-600 hover:shadow-xs
-                      p-3
-                      my-4
-                    "
-                  >
-                    <i class="fa fa-save"></i>
-                    Update Profile
-                  </button>
                 </div>
                 <!-- End of about section -->
 
@@ -426,34 +437,77 @@
 import { ref, onMounted } from "vue";
 import ReviewerNavBar from "./../../SharedComponents/navBar.vue";
 import ReviewerSideBar from "./SharedComponents/sideNav.vue";
+import Loading from "vue3-loading-overlay";
+import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
+import { useStore } from "vuex";
+import { useToast } from "vue-toastification";
 export default {
   components: {
     ReviewerNavBar,
     ReviewerSideBar,
+    Loading,
   },
   setup() {
+    const store = useStore();
+    const toast = useToast();
     let display = ref("dashboard");
     let userInfo = ref({ firstName: "", fatherName: "", grandFatherName: "" });
+    let userId = +window.localStorage.getItem("adminId");
+    let isLoadingUserInfo = ref(true);
 
-    onMounted(() => {
-      let info = JSON.parse(window.localStorage.getItem("allAdminData"));
-      if (info) {
-        userInfo.value = info;
-        userInfo.value.firstName = info.name.split(" ")[0];
-        userInfo.value.fatherName = info.name.split(" ")[1];
-        userInfo.value.grandFatherName = info.name.split(" ")[2];
-      }
-      const actualBtn = document.getElementById("profilePicture");
-
-      const fileChosen = document.getElementById("fileChosen");
-
-      actualBtn.addEventListener("change", function () {
-        fileChosen.textContent = this.files[0].name;
+    const updateUserInfo = () => {
+      isLoadingUserInfo.value = true;
+      userInfo.value.name =
+        userInfo.value.firstName +
+        " " +
+        userInfo.value.fatherName +
+        " " +
+        userInfo.value.grandFatherName;
+      store.dispatch("admin/updateAdmin", userInfo.value).then((res) => {
+        if (res.data.status == "Success") {
+          toast.success("Profile Updated successfuly", {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          });
+          getProfile();
+          isLoadingUserInfo.value = false;
+        } else {
+          toast.error("Please try again", {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          });
+          getProfile();
+          isLoadingUserInfo.value = false;
+ 
+        }
       });
+    };
+    const getProfile=()=>{
+      store.dispatch("admin/getAdminById", userId).then((res) => {
+        userInfo.value = res.data.data;
+        if (userInfo.value) {
+          userInfo.value.firstName = userInfo.value.name.split(" ")[0];
+          userInfo.value.fatherName = userInfo.value.name.split(" ")[1];
+          userInfo.value.grandFatherName = userInfo.value.name.split(" ")[2];
+          isLoadingUserInfo.value = false;
+        }  
+      });
+    }
+    onMounted(() => {
+   
+      getProfile();
     });
     return {
       display,
+      isLoadingUserInfo,
       userInfo,
+      updateUserInfo,
     };
   },
 };

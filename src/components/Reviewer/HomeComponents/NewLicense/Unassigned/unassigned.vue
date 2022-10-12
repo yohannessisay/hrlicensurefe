@@ -5,25 +5,27 @@
 
   <section class="home-section">
     <!-- Header -->
-    <reviewer-nav-bar> <ol class="list-reset flex">
-          <li>
-            <router-link to="/admin/review"
-              ><span class="text-primary-600 text-base">Home</span></router-link
-            >
-          </li>
-          <li><span class="text-gray-500 mx-2">/</span></li>
-          <li>
-            <a href="#" class="hover:text-primary-600 text-grey-300"
-              >New License</a
-            >
-          </li>
-          <li><span class="text-gray-500 mx-2">/</span></li>
-          <li>
-            <a href="#" class="pointer-events-none text-lg text-grey-300"
-              >Unassigned</a
-            >
-          </li>
-        </ol></reviewer-nav-bar>
+    <reviewer-nav-bar>
+      <ol class="list-reset flex">
+        <li>
+          <router-link to="/admin/review"
+            ><span class="text-primary-600 text-base">Home</span></router-link
+          >
+        </li>
+        <li><span class="text-gray-500 mx-2">/</span></li>
+        <li>
+          <a href="#" class="hover:text-primary-600 text-grey-300"
+            >New License</a
+          >
+        </li>
+        <li><span class="text-gray-500 mx-2">/</span></li>
+        <li>
+          <a href="#" class="pointer-events-none text-lg text-grey-300"
+            >Unassigned</a
+          >
+        </li>
+      </ol></reviewer-nav-bar
+    >
     <!-- Header -->
 
     <!-- Main Content -->
@@ -348,18 +350,7 @@ export default {
       change: 0,
     });
 
-    let allInfo = ref({
-      alreadyPushed: false,
-      searchByInput: false,
-      assignApplication: [],
-      message: {
-        showErrorFlash: false,
-      },
-      filteredByDate: [],
-      searchFromDate: "",
-      searchUpToDate: "",
-      app_type: "",
-    });
+    let allInfo = ref({ });
 
     const unassignedTable = ref({});
     const reSubmittedTable = ref([]);
@@ -392,7 +383,9 @@ export default {
                     element.profile.fatherName +
                     " " +
                     element.profile.grandFatherName,
-                  ApplicationType: element.newLicenseCode ? "New License" : "",
+                  ApplicantType: element.applicantType
+                    ? element.applicantType.name
+                    : "",
                   Date: new Date(element.createdAt)
                     .toJSON()
                     .slice(0, 10)
@@ -418,13 +411,13 @@ export default {
                   sortable: true,
                 },
                 {
-                  label: "Application Type",
-                  field: "ApplicationType",
+                  label: "Applicant Type",
+                  field: "ApplicantType",
                   width: "20%",
                   sortable: true,
                 },
                 {
-                  label: "Date",
+                  label: "Applied Date",
                   field: "Date",
                   width: "15%",
                   sortable: true,
@@ -443,14 +436,10 @@ export default {
                 },
               ],
               rows: computed(() => {
-                return tableData.value.filter(
-                  (x) =>
-                    x.ApplicationType.toLowerCase().includes(
-                      searchTerm.value.toLowerCase()
-                    ) ||
-                    x.ApplicantName.toLowerCase().includes(
-                      searchTerm.value.toLowerCase()
-                    )
+                return tableData.value.filter((x) =>
+                  x.ApplicantName.toLowerCase().includes(
+                    searchTerm.value.toLowerCase()
+                  )
                 );
               }),
               totalRecordCount: tableData.value.length,
@@ -553,14 +542,10 @@ export default {
                   },
                 ],
                 rows: computed(() => {
-                  return tableData.value.filter(
-                    (x) =>
-                      x.ApplicationType.toLowerCase().includes(
-                        searchTerm.value.toLowerCase()
-                      ) ||
-                      x.ApplicantName.toLowerCase().includes(
-                        searchTerm.value.toLowerCase()
-                      )
+                  return tableData.value.filter((x) =>
+                    x.ApplicantName.toLowerCase().includes(
+                      searchTerm.value.toLowerCase()
+                    )
                   );
                 }),
                 totalRecordCount: tableData.value.length,
@@ -619,14 +604,10 @@ export default {
             },
           ],
           rows: computed(() => {
-            return tableData.value.filter(
-              (x) =>
-                x.ApplicationType.toLowerCase().includes(
-                  searchTerm.value.toLowerCase()
-                ) ||
-                x.ApplicantName.toLowerCase().includes(
-                  searchTerm.value.toLowerCase()
-                )
+            return tableData.value.filter((x) =>
+              x.ApplicantName.toLowerCase().includes(
+                searchTerm.value.toLowerCase()
+              )
             );
           }),
           totalRecordCount: tableData.value.length,
@@ -669,7 +650,7 @@ export default {
                     (element.profile ? element.profile.fatherName : "") +
                     " " +
                     (element.profile ? element.profile.grandFatherName : ""),
-                  ApplicationType: element.newLicenseCode ? "New License" : "",
+                  ApplicationType: element ? element.applicantType.name : "",
                   Date: new Date(element.createdAt)
                     .toJSON()
                     .slice(0, 10)
@@ -714,7 +695,7 @@ export default {
                     return (
                       '<button  data-set="' +
                       row +
-                      '"  data-bs-toggle="modal" data-bs-target="#staticBackdropReSubmitted" class="edit-btn-resubmitted inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" data-id="' +
+                      '"  data-bs-toggle="modal" data-bs-target="#staticBackdropReSubmitted" class="edit-btn-resubmitted inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-white  hover:shadow-lg hover:border hover:text-primary-600 focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" data-id="' +
                       row.id +
                       '" ><i class="fa fa-eye"></i>View/Edit</button>'
                     );
@@ -722,14 +703,10 @@ export default {
                 },
               ],
               rows: computed(() => {
-                return reTableData.value.filter(
-                  (x) =>
-                    x.ApplicationType.toLowerCase().includes(
-                      searchTermOthers.value.toLowerCase()
-                    ) ||
-                    x.ApplicantName.toLowerCase().includes(
-                      searchTermOthers.value.toLowerCase()
-                    )
+                return reTableData.value.filter((x) =>
+                  x.ApplicantName.toLowerCase().includes(
+                    searchTermOthers.value.toLowerCase()
+                  )
                 );
               }),
               totalRecordCount: reTableData.value.length,
@@ -765,7 +742,6 @@ export default {
     };
 
     const rowClicked = (row) => {
-    
       if (row != undefined) {
         row = JSON.parse(JSON.stringify(row));
         modalDataId.value.id = row.data.id ? row.data.id : "";

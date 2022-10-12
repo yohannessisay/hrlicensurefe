@@ -414,9 +414,9 @@
                     focus:border-blue-600
                     focus:outline-none
                   "
+                  :disabled="!isDepartmentSelected"
                   v-model="generalInfo.educationalLevelSelected"
                   @change="educationalLevelChange()"
-
                 >
                   <option
                     v-for="educationalLevel in educationalLevels"
@@ -462,6 +462,7 @@
                     focus:border-blue-600
                     focus:outline-none
                   "
+                  :disabled="!isEdLevelSelected"
                   v-model="generalInfo.professionalTypeSelected"
                   @change="ProfessionTypeChange(institution)"
                 >
@@ -522,6 +523,7 @@
                     focus:border-blue-600
                     focus:outline-none
                   "
+                  :disabled="!isAppTypeSelected"
                   v-model="generalInfo.institutionSelected"
                   @change="institutionChange(institution)"
                 >
@@ -802,6 +804,9 @@ export default {
     let educationalLevels = ref([]);
     let educationalLevelSelected = ref({});
     let professionalTypes = ref([]);
+    let isDepartmentSelected=ref(false);
+    let isEdLevelSelected=ref(false);
+    let isAppTypeSelected=ref(false);
     let regions = ref("");
     let woredas = ref("");
     let zones = ref("");
@@ -892,11 +897,18 @@ export default {
         });
     };
     const fetchProfessionalType = (departmentId, educationalLevelId) => {
-      store.dispatch("newlicense/getProfessionalTypes", departmentId, educationalLevelId).then((res) => {
-        professionalTypes.value = res.data.data;
-      });
+      let profession = {
+        departmentId: departmentId,
+        educationalLevelId: educationalLevelId,
+      };
+      store
+        .dispatch("newlicense/getProfessionalTypes", profession)
+        .then((res) => {
+          professionalTypes.value = res.data.data;
+        });
     };
     const applicantTypeChangeHandler = async () => {
+      isAppTypeSelected.value=true;
       if (generalInfo.value.applicantTypeSelected.code == "ETH") {
         showLocation.value = true;
         showOccupation.value = true;
@@ -927,7 +939,7 @@ export default {
       });
     };
     const departmentChange = () => {
-      // fetchProfessionalType(generalInfo.value.departmentSelected.id);
+      isDepartmentSelected.value=true;
     };
     const institutionChange = () => {
       if (generalInfo.value.institutionSelected.code == "OTH") {
@@ -1112,11 +1124,13 @@ export default {
         window.location.reload();
       }, 1000);
     };
-    const educationalLevelChange = () =>
-    {
-            fetchProfessionalType(generalInfo.value.departmentSelected.id,generalInfo.value.educationalLevelSelected.id,);
-
-    }
+    const educationalLevelChange = () => {
+      isEdLevelSelected.value=true;
+      fetchProfessionalType(
+        generalInfo.value.departmentSelected.id,
+        generalInfo.value.educationalLevelSelected.id
+      );
+    };
     onMounted(async () => {
       fetchApplicantType();
       fetchDepartments();
@@ -1148,8 +1162,11 @@ export default {
       fetchOccupation,
       educationalLevelChange,
       showLocation,
+      isEdLevelSelected,
+      isDepartmentSelected,
       woredaSelected,
       zoneSelected,
+      isAppTypeSelected,
       regionSelected,
       departments,
       institutions,

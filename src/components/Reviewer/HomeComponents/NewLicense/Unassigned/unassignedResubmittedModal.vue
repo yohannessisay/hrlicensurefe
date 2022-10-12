@@ -224,30 +224,7 @@
                                 >
                                   Users
                                 </label>
-                                <div>
-                                  <button
-                                    class="
-                                      inline-block
-                                      px-6
-                                      py-2.5
-                                      bg-primary-700
-                                      text-white
-                                      font-medium
-                                      text-xs
-                                      leading-tight
-                                      uppercase
-                                      rounded
-                                      shadow-lg
-                                      hover:bg-white hover:text-primary-600
-                                      transition
-                                      duration-150
-                                      ease-in-out
-                                    "
-                                    @click="assignReviewer()"
-                                  >
-                                    Assign
-                                  </button>
-                                </div>
+                                
                               </div>
                               <label class="block text-left">
                                 <div>
@@ -310,62 +287,38 @@
                                         </li>
                                       </ul>
                                     </div>
+                                    <div
+                                    v-for="button in modalData.buttons"
+                                    :key="button.id"
+                                  >
+                                    <button
+                                      v-if="button.code == 'AT'"
+                                      class="
+                                        inline-block
+                                        px-6
+                                        py-2.5
+                                        mt-4
+                                        bg-primary-700
+                                        text-white
+                                        font-medium
+                                        text-xs
+                                        leading-tight
+                                        uppercase
+                                        rounded
+                                        shadow-lg
+                                        hover:bg-white hover:text-primary-600
+                                        transition
+                                        duration-150
+                                        ease-in-out
+                                      "
+                                      @click="assignReviewer(button.action)"
+                                    >
+                                      {{ button ? button.name : "" }}
+                                    </button>
+                                  </div>
                                   </div>
                                 </div>
                               </label>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div
-                          class="
-                            grow-0
-                            shrink-0
-                            basis-auto
-                            w-full
-                            lg:w-6/12
-                            px-3
-                            lg:px-6
-                          "
-                        >
-                          <div class="flex align-center">
-                            <div class="shrink-0">
-                              <div
-                                class="
-                                  p-4
-                                  bg-blue-600
-                                  rounded-md
-                                  shadow-lg
-                                  w-48
-                                  h-48
-                                  flex
-                                  items-center
-                                  justify-center
-                                "
-                              >
-                                <i class="fa fa-building fa-4x"></i>
-                              </div>
-                            </div>
-                            <div class="grow ml-6">
-                              <h2 class="font-bold mb-1">Institution Info</h2>
-                              <p class="text-gray-500">
-                                <span class="font-medium text-primary-700 mb-1"
-                                  >Institution Name:</span
-                                >
-                                {{ modalData.instName }}
-                              </p>
-                              <p class="text-gray-500">
-                                <span class="font-medium text-primary-700 mb-1"
-                                  >Department:</span
-                                >
-                                {{ modalData.department }}
-                              </p>
-                              <p class="text-gray-500">
-                                <span class="font-medium text-primary-700 mb-1"
-                                  >Institution Type:</span
-                                >
-                                {{ modalData.instType }}
-                              </p>
                             </div>
                           </div>
                         </div>
@@ -440,16 +393,15 @@
                 px-6
                 text-white
                 font-medium
+                bg-primary-600
                 text-xs
                 leading-tight
                 uppercase
                 rounded
                 shadow-lg
-                hover:bg-purple-700 hover:shadow-lg
-                focus:bg-purple-700
-                focus:shadow-lg
-                focus:outline-none
-                focus:ring-0
+                hover:bg-white
+                focus:bg-purple-700 focus:shadow-lg
+                hover:border hover:text-primary-600
                 active:bg-purple-800 active:shadow-lg
                 transition
                 duration-150
@@ -506,12 +458,11 @@ export default {
       role.value = JSON.parse(localStorage.getItem("allAdminData")).role;
     };
 
-    const assignReviewer = () => {
+    const assignReviewer = (action) => {
       if (role.value.code === "TL" || role.value.code === "ADM") {
         assign.value = {
           licenseId: licenseData.value.id,
           reviewerId: assign.value.reviewerId,
-          createdByAdminId: +localStorage.getItem("adminId"),
         };
       }
 
@@ -519,42 +470,66 @@ export default {
         assign.value = {
           licenseId: licenseData.value.id,
           reviewerId: +localStorage.getItem("adminId"),
-          createdByAdminId: +localStorage.getItem("adminId"),
         };
       }
 
       isLoading.value = true;
-
+      let smsData = {
+        recipients: [
+          modalData.value && modalData.value.mobileNumber
+            ? "251" + modalData.value.mobileNumber
+            : "",
+        ],
+        message: licenseData.value
+          ? modalData.value.name
+            ? "Dear " +
+              modalData.value.name +
+              " your applied new license for " +
+              modalData.value.department +
+              " has been assigned a reviewer , after careful examination of your uploaded documents by our reviewers we will get back and notify you on each steps, Thank you for using eHPL. https://hrl.moh.gov.et/"
+            : ""
+          : "",
+      };
       store
-        .dispatch("reviewer/assignReviewer", assign.value)
+        .dispatch("reviewer/assignReviewer", {
+          action: action,
+          data: assign.value,
+        })
         .then((response) => {
           if (response.statusText == "Created") {
-            toast.success("Selected application is successfully drafted", {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            });
-            setTimeout(() => {
+            store.dispatch("sms/sendSms", smsData).then(() => {
               isLoading.value = false;
-              window.location.reload();
-            }, 1000);
-          } else {
-            toast.error("Error Occured", {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
+              toast.success("Selected Rviewer assigned Successfully", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
+              isLoading.value = true;
+              setTimeout(() => {
+                window.location.reload();
+              }, 3000);
             });
+          } else {
+            toast.error(
+              "Sorry there seems to be a problem, please try again.",
+              {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              }
+            );
             setTimeout(() => {
-              window.location.reload();
-            }, 3000);
+                window.location.reload();
+              }, 3000);
+            isLoading.value = true;
           }
         })
         .catch(() => {
-          toast.error("Error Occured", {
+          toast.error("Sorry there seems to be a problem, please try again.", {
             timeout: 5000,
             position: "bottom-center",
             pauseOnFocusLoss: true,
@@ -562,11 +537,11 @@ export default {
             icon: true,
           });
           setTimeout(() => {
-            window.location.reload();
-          }, 3000);
+                window.location.reload();
+              }, 3000);
+          isLoading.value = true;
         });
     };
-
     const showModal = () => {
       show.value = true;
     };
@@ -634,20 +609,7 @@ export default {
             modalData.value.email = result.applicant
               ? result.applicant.emailAddress
               : "-----";
-            modalData.value.instName =
-              result.education && result.education.institution
-                ? result.education.institution?.name
-                : "-----";
-            modalData.value.instType =
-              result.education &&
-              result.education.institution &&
-              result.education.institution.institutionType
-                ? result.education.institution?.institutionType.name
-                : "-----";
-            modalData.value.department =
-              result.education && result.education.department
-                ? result.education?.department.name
-                : "-----";
+
             modalData.value.profile = result.profile;
             modalData.value.professionalTypes = result.licenseProfessions;
             modalData.value.certifiedDate = result.certifiedDate;
@@ -655,6 +617,10 @@ export default {
               result.licenseExpirationDate;
             modalData.value.data = result;
             licenseData.value = result;
+            modalData.value.buttons =
+              result && result.applicationStatus
+                ? result.applicationStatus.buttons
+                : {};
             isLoadingStart.value = false;
           }
         });

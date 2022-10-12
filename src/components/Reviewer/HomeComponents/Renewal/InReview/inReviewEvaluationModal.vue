@@ -2175,7 +2175,7 @@ export default {
       completedSteps.value += 1;
       if (accepted.value.length > 0) {
         if (!accepted.value.includes(doc.documentTypeCode)) {
-          accepted.value.push(doc.documentTypeCode);
+          accepted.value.push(doc.fileName);
           if (index.value == docs.value.length - 1) {
             showButtons.value = true;
           } else {
@@ -2202,7 +2202,7 @@ export default {
           }
         }
       } else {
-        accepted.value.push(doc.documentTypeCode);
+        accepted.value.push(doc.fileName);
         if (index.value == docs.value.length - 1) {
           showButtons.value = true;
         } else {
@@ -2233,7 +2233,7 @@ export default {
 
       if (rejected.value.length > 0) {
         if (!rejected.value.includes(doc.documentTypeCode)) {
-          rejected.value.push(doc.documentTypeCode);
+          rejected.value.push(doc.fileName);
           rejectedObj.value.push(doc);
           if (index.value == docs.value.length - 1) {
             showButtons.value = true;
@@ -2260,7 +2260,7 @@ export default {
           }
         }
       } else {
-        rejected.value.push(doc.documentTypeCode);
+        rejected.value.push(doc.fileName);
         rejectedObj.value.push(doc);
         if (index.value == docs.value.length - 1) {
           showButtons.value = true;
@@ -2754,7 +2754,7 @@ export default {
       store.dispatch("goodstanding/getInstitution").then((res) => {
         institutions.value = res.data.data.filter((elm) => elm.isLocal == true);
       });
-      store.dispatch("lookups/getPrefix").then((res) => {
+      store.dispatch("lookups/getProfessionalPrefix").then((res) => {
         prefixes.value = res.data.data;
       });
     });

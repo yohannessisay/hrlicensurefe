@@ -1324,6 +1324,7 @@ export default {
                 element.educationalLevel.id,
               ])
               .then((res) => {
+                console.log(res)
                 let resp = res.data.data;
                 newLicenseDocuments.value = res.data.data;
 

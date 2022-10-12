@@ -419,7 +419,7 @@ export default {
     try {
       const resp = await ApiService.put(
         baseUrl + "/newLicenses/" + payload.licenseId,
-        payload.declineData
+        payload.declinedData
       );
       return resp;
     } catch (error) {

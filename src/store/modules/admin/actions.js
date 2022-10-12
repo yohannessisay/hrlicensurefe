@@ -93,6 +93,15 @@ export default {
       return resp;
     }
   },
+  async getAdminById(context,adminId) {
+    try {
+      const resp = await ApiService.get(baseUrl + "/admins/"+adminId);
+      return resp;
+    } catch (error) {
+      const resp = error;
+      return resp;
+    }
+  },
   async updateAdmin({ commit }, data) {
     try {
       const resp = await ApiService.put(baseUrl+`/admins/${data.id}`, data)
