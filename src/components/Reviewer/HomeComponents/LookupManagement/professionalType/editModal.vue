@@ -110,7 +110,7 @@
                                 <div class="relative flex items-center">
                                   <select
                                     class="
-                                      form-select
+                                    form-select
                                       appearance-none
                                       block
                                       w-full
@@ -130,10 +130,12 @@
                                       focus:border-blue-600
                                       focus:outline-none
                                     "
+                                    aria-label="Default select example"
                                     v-model="selectedDepartment"
                                   >
+                                  
                                     <option
-                                      class="border-b-2 mb-8"
+                                    class="bg-primary-600 text-white font-bold"  
                                       :value="
                                         editData &&
                                         editData.data &&
@@ -148,7 +150,7 @@
                                         editData.data.department
                                           ? editData.data.department.name
                                           : ""
-                                      }}
+                                      }}✓ 
                                     </option>
                                     <option
                                       v-for="department in departments"
@@ -158,6 +160,7 @@
                                       {{ department.name }}
                                     </option>
                                   </select>
+                                 
                                 </div>
                               </div>
                             </div>
@@ -208,6 +211,7 @@
                                 >
                                   <option
                                     selected
+                                    class="bg-primary-600 text-white font-bold"  
                                     :value="
                                       editModalData &&
                                       editModalData.data &&
@@ -223,7 +227,7 @@
                                         ? editModalData.data.educationalLevel
                                             .name
                                         : ""
-                                    }}
+                                    }} ✓ 
                                   </option>
                                   <option
                                     v-for="education in educationLevels"
@@ -408,6 +412,7 @@
               ease-in-out
             "
             data-bs-dismiss="modal"
+            @click="clearData()"
           >
             <i class="fa fa-times-circle"></i>
             Close
@@ -449,7 +454,10 @@ export default {
     let departments = computed(() =>
       props.modalLookups ? props.modalLookups.departments : {}
     );
-
+    const clearData = () => {
+      selectedDepartment.value = "";
+      selectedEducationLevel.value = "";
+    };
     const saveProfessionalType = () => {
       let today = new Date().getMilliseconds();
       isLoading.value = true;
@@ -461,8 +469,8 @@ export default {
         id: editData.value ? editData.value.id : "",
         name: editData.value ? editData.value.Name : "",
         departmentId: selectedDepartment.value
-          ? selectedDepartment.value.id
-          :  editData.value && editData.value.data
+          ? selectedDepartment.value
+          : editData.value && editData.value.data
           ? editData.value.data.departmentId
           : "",
         educationalLevelId: selectedEducationLevel.value
@@ -502,6 +510,7 @@ export default {
     };
     return {
       isLoading,
+      clearData,
       saveProfessionalType,
       professionalTypeNameFilled,
       showProfessionalTypeNameError,
