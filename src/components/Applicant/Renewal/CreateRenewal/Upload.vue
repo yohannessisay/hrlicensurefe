@@ -557,7 +557,7 @@
                                   <div class="flex items-center ml-4">
                                     <div>
                                       <p class="">
-                                        {{ showNestedDocuments }}
+                                  
                                         {{ parentChildItem.documentType.name }}
                                       </p>
                                     </div>

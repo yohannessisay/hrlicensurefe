@@ -9,23 +9,8 @@
     <DeviceAccessibilitySection />
     <MinistryOfHealthSection />
     <FooterSection />
-    <transition name="slide-fade-to-left">
-      <Modal v-if="showLogin" >
-        <Login
-          @closeModal="showLogin = false"
-          @redirectToSignup="redirectToSignup"
-          @forgotPassword="forgotPassword"
-        />
-      </Modal>
-    </transition>
-    <transition name="slide-fade-to-left">
-      <Modal v-if="showSignUp">
-        <Signup
-          @closeModal="showSignUp = false"
-          @redirectToLogin="redirectToLogin"
-        />
-      </Modal>
-    </transition>
+
+
     <Modal v-if="showSendEmail">
       <SendEmail @closeModal="showSendEmail = false" />
     </Modal>
@@ -41,11 +26,8 @@ import VerificationSection from "./sections/VerificationSection";
 import GoodStandingSection from "./sections/GoodStandingSectionApplicant.vue";
 import DeviceAccessibilitySection from "./sections/DeviceAccessibilitySection";
 import MinistryOfHealthSection from "./sections/MinistryOfHealthSection";
-import FooterSection from "./sections/FooterSection";
-import SendEmail from "@/components/Signup/SendEmail";
-import Modal from "@/sharedComponents/Modal";
-import Login from "@/components/Login/Login";
-import Signup from "@/components/Signup/Signup";
+import FooterSection from "./sections/FooterSection"; 
+import Modal from "@/sharedComponents/Modal"; 
 
 export default {
   components: {
@@ -59,9 +41,6 @@ export default {
     MinistryOfHealthSection,
     FooterSection,
     Modal,
-    Login,
-    Signup,
-    SendEmail,
   },
   setup() {
     onMounted(() => {});

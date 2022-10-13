@@ -615,7 +615,6 @@
                           "
                           type="button"
                           @click="addMore(parentItem[0])"
-                    
                         >
                           Upload
                         </button>
@@ -673,7 +672,6 @@
                                   <div class="flex items-center ml-4">
                                     <div>
                                       <p class="">
-                                        {{ showNestedDocuments }}
                                         {{ parentChildItem.documentType.name }}
                                       </p>
                                     </div>
@@ -716,9 +714,7 @@
                                       :required="parentChildItem.isRequired"
                                       :id="`files${parentChildItem.id}`"
                                       accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
-                                      :ref="
-                                        `imageUploader${parentChildItem.id}`
-                                      "
+                                      :ref="`imageUploader${parentChildItem.id}`"
                                       class="custom-file-input"
                                       v-on:change="
                                         handleFileUpload(
@@ -742,7 +738,7 @@
                                   <a
                                     :id="
                                       'image_href_' +
-                                        `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                      `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                                     "
                                     href=""
                                     :data-title="
@@ -753,7 +749,7 @@
                                     <i
                                       :id="
                                         'educational_icon_' +
-                                          `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                        `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                                       "
                                       class="
                                         fa fa-eye
@@ -766,7 +762,7 @@
                                       <img
                                         :id="
                                           'image_lightbox_' +
-                                            `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                          `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                                         "
                                         src=""
                                         class="w-full h-2 object-cover"
@@ -830,6 +826,7 @@ import MAX_FILE_SIZE from "../../../../composables/documentMessage";
 import filePreview from "@/sharedComponents/FilePreview";
 import { boolean } from "yargs";
 import { googleApi } from "@/composables/baseURL";
+import { useRoute } from "vue-router";
 
 export default {
   components: { filePreview },
@@ -837,7 +834,7 @@ export default {
   setup(props, { emit }) {
     let store = useStore();
     const toast = useToast();
-
+    const route = useRoute();
     let documents = ref([]);
     let commonDocuments = ref([]);
     let imageUploader = ref(null);
@@ -968,16 +965,16 @@ export default {
       }
     };
 
-    const handleFileUpload = (data, event, professionType) => {
+    const handleFileUpload = (data, event, pro) => {
       let icon = document.getElementById(
-        "educational_icon" + professionType.id + data.id
+        "educational_icon" + pro.id + data.id
       );
       icon.classList.toggle("disabled");
       let output = document.getElementById(
-        "image_lightbox" + professionType.id + data.id
+        "image_lightbox" + pro.id + data.id
       );
       let outputHref = document.getElementById(
-        "image_href" + professionType.id + data.id
+        "image_href" + pro.id + data.id
       );
       outputHref.href = URL.createObjectURL(event.target.files[0]);
       output.src = URL.createObjectURL(event.target.files[0]);
@@ -1145,15 +1142,14 @@ export default {
     const next = () => {
       let documentValidation = checkDocuments();
       if (documentValidation) {
-           store.dispatch("newlicense/setTempDocs", formData).then(() => {
-        window.localStorage.setItem(
-          "NLApplicationImageData",
-          JSON.stringify(imageData)
-        );
-        emit("changeActiveState");
-      });
-    }
-    else {
+        store.dispatch("newlicense/setTempDocs", formData).then(() => {
+          window.localStorage.setItem(
+            "NLApplicationImageData",
+            JSON.stringify(imageData)
+          );
+          emit("changeActiveState");
+        });
+      } else {
         let errors = "";
         errorDocuments.value.forEach((element) => {
           if (!errors) {
@@ -1230,73 +1226,72 @@ export default {
     };
 
     onMounted(() => {
-      localData.value = window.localStorage.getItem("NLApplicationData")
-        ? JSON.parse(window.localStorage.getItem("NLApplicationData"))
-        : {};
-      if (Object.keys(localData.value).length != 0) {
-        generalInfo.value = localData.value;
-        generalInfo.value?.documents.forEach((element) => {
-          documentsSaved.value[element.documentTypeCode] = {};
-          documentsSaved.value[element.documentTypeCode].path =
-            googleApi + element.filePath;
-          documentsSaved.value[element.documentTypeCode].name =
-            element.originalFileName;
+     
+      store
+        .dispatch("newlicense/getNewLicenseApplication", route.params.id)
+        .then((res) => {
+          generalInfo.value=res.data.data
+        
+          generalInfo.value?.documents.forEach((element) => {
+            documentsSaved.value[element.fileName] = {};
+            documentsSaved.value[element.fileName].path =
+              googleApi + element.filePath;
+            documentsSaved.value[element.fileName].name =
+              element.originalFileName;
+          });
         });
 
-        store.dispatch("newlicense/getApplicationCategories").then((res) => {
-          let categoryResults = res.data.data
-            ? res.data.data.filter((ele) => ele.code == "NA")
-            : "";
-          let educationLevels = generalInfo.value.multipleDepartment;
+      store.dispatch("newlicense/getApplicationCategories").then((res) => {
+        let categoryResults = res.data.data
+          ? res.data.data.filter((ele) => ele.code == "NA")
+          : "";
+       
 
-          //Get department docs
-          educationLevels.forEach((element) => {
-            store
-              .dispatch("newlicense/getNLdocuments", [
-                categoryResults[0].id,
-                generalInfo.value.applicantTypeSelected.id,
-                element.educationalLevel
-                  ? element.educationalLevel.id
-                  : element.educationLevel
-                  ? element.educationLevel.id
-                  : "",
-              ])
-              .then((res) => {
-                console.log(res);
-                let resp = res.data.data;
-                newLicenseDocuments.value = res.data.data;
-                educationalDocs.value.push({
-                  professionType:
-                    element && element.professionType
-                      ? element.professionType
-                      : element
-                      ? element.professionTypeId
-                      : "",
-                  educationalLevel: element.educationalLevel
-                    ? element.educationalLevel
-                    : element.educationLevel
-                    ? element.educationLevel
-                    : "",
-                  docs: resp.filter(
-                    (element) => element.parentDocument == null
-                  ),
-                  parentDoc: groupByKey(resp, "parentDocument"),
-                });
-              });
-          });
-          //Get Common Docs
-
+        //Get department docs
+        generalInfo.value.multipleDepartment.forEach((element) => {
           store
-            .dispatch("newlicense/getCommonNLdocuments", [
+            .dispatch("newlicense/getNLdocuments", [
               categoryResults[0].id,
               generalInfo.value.applicantTypeSelected.id,
+              element.educationalLevel
+                ? element.educationalLevel.id
+                : element.educationLevel
+                ? element.educationLevel.id
+                : "",
             ])
             .then((res) => {
-              let result = res.data.data;
-              commonDocuments.value = result;
+              console.log(res);
+              let resp = res.data.data;
+              newLicenseDocuments.value = res.data.data;
+              educationalDocs.value.push({
+                professionType:
+                  element && element.professionType
+                    ? element.professionType
+                    : element
+                    ? element.professionTypeId
+                    : "",
+                educationalLevel: element.educationalLevel
+                  ? element.educationalLevel
+                  : element.educationLevel
+                  ? element.educationLevel
+                  : "",
+                docs: resp.filter((element) => element.parentDocument == null),
+                parentDoc: groupByKey(resp, "parentDocument"),
+              });
             });
         });
-      }
+        //Get Common Docs
+
+        store
+          .dispatch("newlicense/getCommonNLdocuments", [
+            categoryResults[0].id,
+            generalInfo.value.applicantTypeSelected.id,
+          ])
+          .then((res) => {
+            let result = res.data.data;
+            commonDocuments.value = result;
+          });
+      });
     });
     // emit("changeActiveStateMinus");
 

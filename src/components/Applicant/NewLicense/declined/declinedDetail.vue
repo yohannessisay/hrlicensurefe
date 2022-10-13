@@ -762,6 +762,9 @@ export default {
                 icon: true,
               });
               router.push({ path: "/Applicant/NewLicense/submitted" });
+              setTimeout(() => {
+                window.location.reload();
+              }, 3000);
             } else {
               toast.error("Error occured, please try again", {
                 timeout: 5000,
@@ -770,6 +773,9 @@ export default {
                 pauseOnHover: true,
                 icon: true,
               });
+              setTimeout(() => {
+                window.location.reload();
+              }, 3000);
             }
           })
           .catch(() => {
@@ -780,6 +786,9 @@ export default {
               pauseOnHover: true,
               icon: true,
             });
+            setTimeout(() => {
+                window.location.reload();
+              }, 3000);
           });
       });
       console.log(formData);

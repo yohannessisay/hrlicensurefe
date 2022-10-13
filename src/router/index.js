@@ -44,9 +44,9 @@ const routes = [
     component: () => import("../components/Profile/NewProfile.vue")
   },
   {
-    path: "/signup",
-    name: "Signup",
-    component: () => import("../views/Signup.vue")
+    path: "/verifyOTP",
+    name: "verifyOTP",
+    component: () => import("../components/Signup/verifyOTP.vue")
   },
   {
     path: "/login",
@@ -737,6 +737,7 @@ router.beforeEach(async (to, from, next) => {
     !auth &&
     to.path !== "/landing" &&
     to.path !== "/" &&
+    to.path !== "/verifyOTP" &&
     to.path !== "/admin" &&
     to.name !== "scannedCertifiedUser"
   )

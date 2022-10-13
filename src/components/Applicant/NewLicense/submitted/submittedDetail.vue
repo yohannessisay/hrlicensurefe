@@ -1180,7 +1180,7 @@ export default {
             JSON.stringify(res.data.data.educations)
           );
           generalInfo.value.applicantTypeSelected = res.data.data.applicantType;
-          console.log(generalInfo.value);
+       
         });
     });
     return {
