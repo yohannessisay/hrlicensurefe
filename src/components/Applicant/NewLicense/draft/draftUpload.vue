@@ -177,7 +177,7 @@
                         >
                           <i
                             :id="'common_icon' + item.documentType.id + item.id"
-                            class="fa fa-eye cursor-pointer text-main-400 disabled"
+                            class="fa fa-eye cursor-pointer text-main-400"
                             aria-hidden="true"
                           >
                             <img
@@ -317,7 +317,9 @@
                           py-4
                           text-center text-white
                         "
-                      >Upload Document</th>
+                      >
+                        Upload Document
+                      </th>
                       <th
                         class="
                           font-semibold
@@ -384,15 +386,24 @@
                       <td class="px-6 py-4">
                         <span
                           class="document-name"
-                          v-if="documentsSaved[`${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`]?.name"
+                          v-if="
+                            documentsSaved[
+                              `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                            ]?.name
+                          "
                           >{{
-                            documentsSaved[`${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`]?.name
+                            documentsSaved[
+                              `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                            ]?.name
                           }}</span
                         >
                       </td>
                       <td class="px-6 py-4 text-center">
                         <a
-                          :id="'image_href' + table.professionType.id + item.id"
+                          :id="
+                            'image_href_' +
+                              `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                          "
                           :href="
                             documentsSaved[
                               `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
@@ -403,18 +414,16 @@
                         >
                           <i
                             :id="
-                              'educational_icon' +
-                                table.professionType.id +
-                                item.id
+                              'educational_icon_' +
+                                `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                             "
-                            class="fa fa-eye cursor-pointer text-main-400 disabled"
+                            class="fa fa-eye cursor-pointer text-main-400"
                             aria-hidden="true"
                           >
                             <img
                               :id="
-                                'image_lightbox' +
-                                  table.professionType.id +
-                                  item.id
+                                'image_lightbox_' +
+                                  `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                               "
                               :src="
                                 documentsSaved[
@@ -488,20 +497,29 @@
                       <td class="px-6 py-4">
                         <span
                           class="document-name"
-                          v-if="documentsSaved[`${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`]?.name"
+                          v-if="
+                            documentsSaved[
+                              `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                            ]?.name
+                          "
                           >{{
-                            documentsSaved[`${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`]?.name
+                            documentsSaved[
+                              `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                            ]?.name
                           }}</span
                         >
                       </td>
                       <td class="px-6 py-4 text-center">
                         <a
                           :id="
-                            'image_href' +
-                              table.professionType.id +
-                              parentItem[0].id
+                            'image_href_' +
+                              `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                           "
-                          :href="documentsSaved[`${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`]?.path"
+                          :href="
+                            documentsSaved[
+                              `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                            ]?.path
+                          "
                           :data-title="
                             parentItem[0].name ? parentItem[0].name : '-----'
                           "
@@ -509,20 +527,22 @@
                         >
                           <i
                             :id="
-                              'educational_icon' +
-                                table.professionType.id +
-                                parentItem[0].id
+                              'educational_icon_' +
+                                `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                             "
-                            class="fa fa-eye cursor-pointer text-main-400 disabled"
+                            class="fa fa-eye cursor-pointer text-main-400"
                             aria-hidden="true"
                           >
                             <img
                               :id="
-                                'image_lightbox' +
-                                  table.professionType.id +
-                                  parentItem[0].id
+                                'image_lightbox_' +
+                                  `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                               "
-                              :src="documentsSaved[`${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`]?.path"
+                              :src="
+                                documentsSaved[
+                                  `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                ]?.path
+                              "
                               class="w-full h-2 object-cover"
                             />
                           </i>
@@ -578,7 +598,6 @@
                           "
                           type="button"
                           @click="addMore(parentItem[0])"
-                 
                         >
                           Upload
                         </button>
@@ -593,7 +612,7 @@
                             parentItem[0].documentType.code
                           ] != null
                         "
-                        class="accordion"
+                        class="accordion mt-4 mb-4"
                         id="accordionExample"
                         style="width: max-content"
                       >
@@ -636,7 +655,6 @@
                                   <div class="flex items-center ml-4">
                                     <div>
                                       <p class="">
-                                      
                                         {{ parentChildItem.documentType.name }}
                                       </p>
                                     </div>
@@ -693,7 +711,21 @@
                                     />
                                   </p>
                                 </td>
-
+                                <td class="px-6 py-4">
+                                  <span
+                                    class="document-name"
+                                    v-if="
+                                      documentsSaved[
+                                        `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                      ]?.name
+                                    "
+                                    >{{
+                                      documentsSaved[
+                                        `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                      ]?.name
+                                    }}</span
+                                  >
+                                </td>
                                 <td
                                   v-if="
                                     showNestedDocuments[
@@ -707,7 +739,11 @@
                                       'image_href_' +
                                         `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                                     "
-                                    href=""
+                                    :href="
+                                      documentsSaved[
+                                        `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                      ]?.path
+                                    "
                                     :data-title="
                                       parentChildItem.name ? item.name : '-----'
                                     "
@@ -722,7 +758,6 @@
                                         fa fa-eye
                                         cursor-pointer
                                         text-main-400
-                                        disabled
                                       "
                                       aria-hidden="true"
                                     >
@@ -731,7 +766,11 @@
                                           'image_lightbox_' +
                                             `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                                         "
-                                        src=""
+                                        :src="
+                                          documentsSaved[
+                                            `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                          ]?.path
+                                        "
                                         class="w-full h-2 object-cover"
                                       />
                                     </i>
@@ -794,14 +833,14 @@ import MAX_FILE_SIZE from "../../../../composables/documentMessage";
 import filePreview from "@/sharedComponents/FilePreview";
 import { boolean } from "yargs";
 import { googleApi } from "@/composables/baseURL";
-
+import { useRoute } from "vue-router";
 export default {
   components: { filePreview },
 
   setup(props, { emit }) {
     let store = useStore();
     const toast = useToast();
-
+    const route = useRoute();
     let documents = ref([]);
     let commonDocuments = ref([]);
     let imageUploader = ref(null);
@@ -812,7 +851,7 @@ export default {
       isImage: boolean,
       isPdf: boolean,
       file: "",
-      name: "",
+      name: ""
     });
     let files = ref("");
     let maxFileSize = ref();
@@ -837,8 +876,8 @@ export default {
     let errorDocuments = ref([
       {
         name: "",
-        code: "",
-      },
+        code: ""
+      }
     ]);
     let showNestedDocuments = ref({});
 
@@ -894,7 +933,7 @@ export default {
               educationalLevel: data.educationalLevel
                 ? data.educationalLevel.name
                 : "",
-              image: reader.result,
+              image: reader.result
             });
             documentToSave.value[data.documentType.code] = reader.result;
           },
@@ -931,35 +970,24 @@ export default {
       }
     };
 
-    const handleFileUpload = (data, event, professionType) => {
-      let icon = document.getElementById(
-        "educational_icon" + professionType.id + data.id
-      );
-      icon.classList.toggle("disabled");
-      let output = document.getElementById(
-        "image_lightbox" + professionType.id + data.id
-      );
-      let outputHref = document.getElementById(
-        "image_href" + professionType.id + data.id
-      );
-      outputHref.href = URL.createObjectURL(event.target.files[0]);
-      output.src = URL.createObjectURL(event.target.files[0]);
-      output.onload = function() {
-        URL.revokeObjectURL(output.src); // free memory
-      };
+    const handleFileUpload = (data, event, pro) => {
+      console.log(data, pro);
       documentUploaded.value[data.documentType.code] = event?.target?.files[0];
       let reader = new FileReader();
       formData.append(
-        data.educationalLevel.code.slice(0, 2).toUpperCase() +
+        data.documentType.code +
           "_" +
-          data.documentType.code,
+          data.educationalLevel.code.toUpperCase() +
+          "_" +
+          pro.code.toUpperCase(),
+
         event?.target?.files[0]
       );
       if (data.parentDocument) {
         documentsUploaded.value[
           data.educationalLevel.code.toUpperCase() +
             "_" +
-            professionType.code.toUpperCase() +
+            pro.code.toUpperCase() +
             "_" +
             data.parentDocument
         ] = event?.target?.files[0];
@@ -969,7 +997,7 @@ export default {
             "_" +
             data.educationalLevel.code.toUpperCase() +
             "_" +
-            professionType.code.toUpperCase()
+            pro.code.toUpperCase()
         ] = event?.target?.files[0];
       }
 
@@ -990,14 +1018,24 @@ export default {
           "load",
           function() {
             showPreview.value = true;
-
+            console.log(formData);
             previewDocuments.value[data.documentType.code] = reader.result;
+            imageData = imageData.filter(
+              el => el.documenttype != data.documentType.name
+            );
             imageData.push({
+              imageId:
+                "image_lightbox_" +
+                data.documentType.code +
+                "_" +
+                pro.educationalLevel.code +
+                "_" +
+                pro.code,
               documenttype: data.documentType ? data.documentType.name : "",
               educationalLevel: data.educationalLevel
                 ? data.educationalLevel.name
                 : "",
-              image: reader.result,
+              image: reader.result
             });
             // documentUploaded.value[data.documentType.code] = reader.result;
           },
@@ -1031,10 +1069,38 @@ export default {
         fileSizeExceed.value[data.documentType.code] = true;
         documentUploaded.value[data.documentType.code] = "";
       }
+      let icon = document.getElementById(
+        "educational_icon_" +
+          data.documentType.code +
+          "_" +
+          pro.educationalLevel.code +
+          "_" +
+          pro.code
+      );
+      icon.classList.toggle("disabled");
+      let output = document.getElementById(
+        "image_lightbox_" +
+          data.documentType.code +
+          "_" +
+          pro.educationalLevel.code +
+          "_" +
+          pro.code
+      );
+      let outputHref = document.getElementById(
+        "image_href_" +
+          data.documentType.code +
+          "_" +
+          pro.educationalLevel.code +
+          "_" +
+          pro.code
+      );
+      outputHref.href = URL.createObjectURL(event.target.files[0]);
+      output.src = URL.createObjectURL(event.target.files[0]);
+      output.onload = function() {
+        URL.revokeObjectURL(output.src); // free memory
+      };
     };
     const checkDocuments = () => {
-      console.log(educationalDocs.value);
-      console.log(documentsUploaded.value);
       let temp = false;
       let CMtemp = false;
       let NSTemp = false;
@@ -1042,25 +1108,25 @@ export default {
       /// check common documents
 
       commonDocuments.value
-        .filter((cd) => cd.isRequired)
-        .forEach((element) => {
+        .filter(cd => cd.isRequired)
+        .forEach(element => {
           CMtemp = documentsUploaded.value.hasOwnProperty(
             element.documentType.code
           );
           if (!CMtemp) {
             errorDocuments.value.push({
               name: element.documentType.name,
-              code: element.documentType.code,
+              code: element.documentType.code
             });
           }
         });
 
-      educationalDocs.value.forEach((ed) => {
+      educationalDocs.value.forEach(ed => {
         // check normal docs with no parents
 
         ed.docs
-          .filter((docs) => docs.isRequired)
-          .forEach((single) => {
+          .filter(docs => docs.isRequired)
+          .forEach(single => {
             temp = documentsUploaded.value.hasOwnProperty(
               single.documentType.code +
                 "_" +
@@ -1076,7 +1142,7 @@ export default {
                   "_" +
                   ed.educationalLevel.code.toUpperCase() +
                   "_" +
-                  ed.professionType.code.toUpperCase(),
+                  ed.professionType.code.toUpperCase()
               });
             }
           });
@@ -1084,7 +1150,7 @@ export default {
         for (var pd in ed.parentDoc) {
           if (
             newLicenseDocuments.value.filter(
-              (nld) => nld.parentDocument == pd && nld.isRequired
+              nld => nld.parentDocument == pd && nld.isRequired
             ).length > 0
           ) {
             NSTemp = documentsUploaded.value.hasOwnProperty(
@@ -1097,7 +1163,7 @@ export default {
             if (!NSTemp) {
               errorDocuments.value.push({
                 name: pd,
-                code: pd,
+                code: pd
               });
             }
           }
@@ -1107,18 +1173,17 @@ export default {
     };
     const next = () => {
       let documentValidation = checkDocuments();
-      if (documentValidation) {   
-          store.dispatch("newlicense/setTempDocs", formData).then(() => {
-        window.localStorage.setItem(
-          "NLApplicationImageData",
-          JSON.stringify(imageData)
-        );
-        emit("changeActiveState");
-      });
-    }
-    else {
+      if (documentValidation) {
+        store.dispatch("newlicense/setTempDocs", formData).then(() => {
+          window.localStorage.setItem(
+            "NLApplicationImageData",
+            JSON.stringify(imageData)
+          );
+          emit("changeActiveState");
+        });
+      } else {
         let errors = "";
-        errorDocuments.value.forEach((element) => {
+        errorDocuments.value.forEach(element => {
           if (!errors) {
             errors = element.name;
           } else {
@@ -1132,7 +1197,7 @@ export default {
             position: "bottom-center",
             pauseOnFocusLoss: true,
             pauseOnHover: true,
-            icon: true,
+            icon: true
           }
         );
       }
@@ -1142,12 +1207,11 @@ export default {
       return array.reduce((hash, obj) => {
         if (obj[key] === undefined || obj[key] == null) return hash;
         return Object.assign(hash, {
-          [obj[key]]: (hash[obj[key]] || []).concat(obj),
+          [obj[key]]: (hash[obj[key]] || []).concat(obj)
         });
       }, {});
     };
-    const addMore = (parentItem) => {
-      console.log(parentItem);
+    const addMore = parentItem => {
       if (
         showNestedDocuments.value[parentItem.documentType.code] == undefined
       ) {
@@ -1158,8 +1222,9 @@ export default {
       }
     };
 
-    const addMoreFile = (doc) => {
+    const addMoreFile = doc => {
       //For future use on adding individual files, good luck
+
       divId.value == doc.length;
       if (divId.value < doc.length) {
         divId.value++;
@@ -1193,73 +1258,75 @@ export default {
     };
 
     onMounted(() => {
-      localData.value = window.localStorage.getItem("NLApplicationData")
-        ? JSON.parse(window.localStorage.getItem("NLApplicationData"))
-        : {};
-      if (Object.keys(localData.value).length != 0) {
-        generalInfo.value = localData.value;
-        generalInfo.value?.documents.forEach((element) => {
-          documentsSaved.value[element.documentTypeCode] = {};
-          documentsSaved.value[element.documentTypeCode].path =
-            googleApi + element.filePath;
-          documentsSaved.value[element.documentTypeCode].name =
-            element.originalFileName;
-        });
-
-        store.dispatch("newlicense/getApplicationCategories").then((res) => {
-          let categoryResults = res.data.data
-            ? res.data.data.filter((ele) => ele.code == "NA")
-            : "";
-          let educationLevels = generalInfo.value.multipleDepartment;
-
-          //Get department docs
-          educationLevels.forEach((element) => {
-            store
-              .dispatch("newlicense/getNLdocuments", [
-                categoryResults[0].id,
-                generalInfo.value.applicantTypeSelected.id,
-                element.educationalLevel
-                  ? element.educationalLevel.id
-                  : element.educationLevel
-                  ? element.educationLevel.id
-                  : "",
-              ])
-              .then((res) => { 
-                let resp = res.data.data;
-                newLicenseDocuments.value = res.data.data;
-                educationalDocs.value.push({
-                  professionType:
-                    element && element.professionType
-                      ? element.professionType
-                      : element
-                      ? element.professionTypeId
-                      : "",
-                  educationalLevel: element.educationalLevel
-                    ? element.educationalLevel
-                    : element.educationLevel
-                    ? element.educationLevel
-                    : "",
-                  docs: resp.filter(
-                    (element) => element.parentDocument == null
-                  ),
-                  parentDoc: groupByKey(resp, "parentDocument"),
-                });
-              });
-          });
-          //Get Common Docs
-
-          store
-            .dispatch("newlicense/getCommonNLdocuments", [
-              categoryResults[0].id,
-              generalInfo.value.applicantTypeSelected.id,
-            ])
-            .then((res) => {
-              let result = res.data.data;
-              commonDocuments.value = result;
+      store
+        .dispatch("newlicense/getNewLicenseApplication", route.params.id)
+        .then(res => {
+          if (res.data.data) {
+            generalInfo.value = res.data.data;
+            generalInfo.value?.documents.forEach(element => {
+              documentsSaved.value[element.fileName] = {};
+              documentsSaved.value[element.fileName].path =
+                googleApi + element.filePath;
+              documentsSaved.value[element.fileName].name =
+                element.originalFileName;
             });
+
+            store.dispatch("newlicense/getApplicationCategories").then(res => {
+              let categoryResults = res.data.data
+                ? res.data.data.filter(ele => ele.code == "NA")
+                : "";
+              let educationLevels = generalInfo.value.educations;
+
+              //Get department docs
+              educationLevels.forEach(element => {
+                store
+                  .dispatch("newlicense/getNLdocuments", [
+                    categoryResults[0].id,
+                    generalInfo.value.applicantType.id,
+                    element.educationalLevel
+                      ? element.educationalLevel.id
+                      : element.educationLevel
+                      ? element.educationLevel.id
+                      : ""
+                  ])
+                  .then(res => {
+                    let resp = res.data.data;
+                    newLicenseDocuments.value = res.data.data;
+                    educationalDocs.value.push({
+                      professionType:
+                        element && element.professionType
+                          ? element.professionType
+                          : element
+                          ? element.professionTypeId
+                          : "",
+                      educationalLevel: element.educationalLevel
+                        ? element.educationalLevel
+                        : element.educationLevel
+                        ? element.educationLevel
+                        : "",
+                      docs: resp.filter(
+                        element => element.parentDocument == null
+                      ),
+                      parentDoc: groupByKey(resp, "parentDocument")
+                    });
+                  });
+              });
+              //Get Common Docs
+
+              store
+                .dispatch("newlicense/getCommonNLdocuments", [
+                  categoryResults[0].id,
+                  generalInfo.value.applicantType.id
+                ])
+                .then(res => {
+                  let result = res.data.data;
+                  commonDocuments.value = result;
+                });
+            });
+          }
         });
-      }
     });
+
     // emit("changeActiveStateMinus");
 
     return {
@@ -1282,9 +1349,9 @@ export default {
       documentsSaved,
       googleApi,
       addMore,
-      showNestedDocuments,
+      showNestedDocuments
     };
-  },
+  }
 };
 </script>
 

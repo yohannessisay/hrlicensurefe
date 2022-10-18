@@ -5,9 +5,9 @@
       <!-- Column -->
       <div class="my-1 px-1 lg:px-4 w-full">
         <!-- Article -->
-        <article class="overflow-hidden rounded-lg shadow-lg p-4 ">
-          <div class="flex justify-start flex-col mb-large  ">
-            <div class="flex justify-start  ">
+        <article class="overflow-hidden rounded-lg shadow-lg p-4">
+          <div class="flex justify-start flex-col mb-large">
+            <div class="flex justify-start">
               <h2 class="text-main-400 font-bold text-lg">Profile Picture</h2>
             </div>
           </div>
@@ -36,7 +36,16 @@
             </div>
           </div>
 
-          <div class="grid grid-rows-1 flex-row">
+          <div
+            class="
+              grid grid-rows-3
+              md:grid-cols-3
+              mdlg:grid-cols-3
+              lg:grid-cols-3
+              xl:grid-cols-3
+              sm:grid-rows-3
+            "
+          >
             <div>
               <label class="ml-8 text-main-400 font-semibold"> Full Name</label>
               <h5 class="ml-8">
@@ -92,7 +101,16 @@
           <div class="flex justify-start border-b-4 text-main-400 mt-4 mb-4">
             <h2 class="text-main-400 font-bold text-lg">Contact Info</h2>
           </div>
-          <div class="flex flex-row">
+          <div
+            class="
+              grid grid-rows-3
+              md:grid-cols-3
+              mdlg:grid-cols-3
+              lg:grid-cols-3
+              xl:grid-cols-3
+              sm:grid-rows-3
+            "
+          >
             <div>
               <label class="ml-8 text-main-400 font-semibold">
                 Email Address</label
@@ -127,80 +145,77 @@
     </div>
   </div>
   <div class="container my-12 mx-auto px-4 md:px-12">
-  
     <div class="flex flex-wrap -mx-1 lg:-mx-4">
       <!-- Column -->
       <div class="my-1 px-1 lg:px-4 w-full">
         <!-- Article -->
         <article class="overflow-hidden rounded-lg shadow-lg p-4">
-      
           <div class="mt-12 flex justify-center mb-medium">
-        <div>
-          <button
-            class="
-              inline-block
-              px-6
-              py-2.5
-              bg-main-400
-              text-white
-              font-medium
-              text-xs
-              leading-tight
-              uppercase
-              rounded
-              shadow-lg
-              hover:bg-white hover:shadow-lg hover:text-main-400
-              transition
-              duration-150
-              ease-in-out
-            "
-            variant="outline"
-            type="button"
-            @click="prevStep"
-          >
-            Back
-          </button>
-        </div>
-        <div v-if="!message.showLoading">
-          <div
-        class="flex justify-center justify-items-center mt-8 mb-12"
-        v-if="message.showLoading"
-      >
-        <Spinner />
-      </div>
-          <button
-            v-on:click="submit()"
-            variant="outline"
-            type="button"
-            class="
-              inline-block
-              px-6
-              py-2.5
-              bg-main-400
-              text-white
-              font-medium
-              text-xs
-              leading-tight
-              uppercase
-              rounded
-              shadow-lg
-              hover:bg-white hover:shadow-lg hover:text-main-400
-              transition
-              duration-150
-              ease-in-out
-            "
-          >
-            Save Profile
-          </button>
-        </div>
-      </div>
+            <div>
+              <button
+                class="
+                  inline-block
+                  px-6
+                  py-2.5
+                  bg-main-400
+                  text-white
+                  font-medium
+                  text-xs
+                  leading-tight
+                  uppercase
+                  rounded
+                  shadow-lg
+                  hover:bg-white hover:shadow-lg hover:text-main-400
+                  transition
+                  duration-150
+                  ease-in-out
+                "
+                variant="outline"
+                type="button"
+                @click="prevStep"
+              >
+                Back
+              </button>
+            </div>
+            <div v-if="!message.showLoading">
+              <div
+                class="flex justify-center justify-items-center mt-8 mb-12"
+                v-if="message.showLoading"
+              >
+                <Spinner />
+              </div>
+              <button
+                v-on:click="submit()"
+                variant="outline"
+                type="button"
+                class="
+                  inline-block
+                  px-6
+                  py-2.5
+                  bg-main-400
+                  text-white
+                  font-medium
+                  text-xs
+                  leading-tight
+                  uppercase
+                  rounded
+                  shadow-lg
+                  hover:bg-white hover:shadow-lg hover:text-main-400
+                  transition
+                  duration-150
+                  ease-in-out
+                "
+              >
+                Save Profile
+              </button>
+            </div>
+          </div>
         </article>
         <!-- END Article -->
       </div>
       <!-- END Column -->
     </div>
   </div>
-  
 </template>
 
 <script>

@@ -39,8 +39,8 @@
         <!-- applican type -->
         <div
           class="
-            grid grid-cols-3
-            sm:grid-cols-1
+            grid grid-rows-3
+            sm:grid-rows-1
             lg:grid-cols-3
             mdlg:grid-cols-3
             md:grid-cols-3
@@ -57,6 +57,7 @@
                 xl:w-64
                 md:w-64
                 sm:w-64
+                w-full
                 px-3
                 py-1.5
                 text-base
@@ -74,6 +75,11 @@
                 focus:outline-none
               "
               aria-label="Default select example"
+              :disabled="
+                generalInfo.multipleDepartment
+                  ? generalInfo.multipleDepartment.length > 0
+                  : 0
+              "
               @change="applicantTypeChangeHandler()"
               v-model="generalInfo.applicantTypeSelected"
               required
@@ -86,6 +92,16 @@
                 {{ applicant.name }}
               </option>
             </select>
+            <small
+              v-if="
+                generalInfo.multipleDepartment
+                  ? generalInfo.multipleDepartment.length > 0
+                  : 0
+              "
+              class="text-green-200"
+              >You can change applicant type when there is no added
+              education/department data below</small
+            >
           </div>
           <div v-if="showLanguage" class="mr-4">
             <label class="text-main-400">Language Type</label>
@@ -97,6 +113,7 @@
                 xl:w-64
                 md:w-64
                 sm:w-64
+                w-full
                 px-3
                 py-1.5
                 text-base
@@ -134,6 +151,7 @@
                 xl:w-64
                 md:w-64
                 sm:w-64
+                w-full
                 px-3
                 py-1.5
                 text-base
@@ -197,8 +215,8 @@
         <div class="flex">
           <div
             class="
-              grid grid-cols-3
-              sm:grid-cols-1
+              grid grid-rows-3
+              sm:grid-rows-3
               lg:grid-cols-3
               mdlg:grid-cols-3
               md:grid-cols-3
@@ -214,7 +232,8 @@
                   block
                   xl:w-64
                   md:w-64
-                  sm:w-64
+                  sm:w-full
+                  w-full
                   px-3
                   py-1.5
                   text-base
@@ -230,6 +249,11 @@
                   focus:bg-white
                   focus:border-main-400
                   focus:outline-none
+                "
+                :disabled="
+                  generalInfo.multipleDepartment
+                    ? generalInfo.multipleDepartment.length > 0
+                    : 0
                 "
                 v-model="generalInfo.regionSelected"
                 @change="regionChangeHandler()"
@@ -243,7 +267,18 @@
                   {{ region.name }}
                 </option>
               </select>
+              <small
+              v-if="
+                generalInfo.multipleDepartment
+                  ? generalInfo.multipleDepartment.length > 0
+                  : 0
+              "
+              class="text-green-200"
+              >You can change region  when there is no added
+              education/department data below</small
+            >
             </div>
+
             <div class="mr-4">
               <label class="text-main-400">Zone</label>
               <select
@@ -254,6 +289,7 @@
                   xl:w-64
                   md:w-64
                   sm:w-64
+                  w-full
                   px-3
                   py-1.5
                   text-base
@@ -269,6 +305,11 @@
                   focus:bg-white
                   focus:border-main-400
                   focus:outline-none
+                "
+                :disabled="
+                  generalInfo.multipleDepartment
+                    ? generalInfo.multipleDepartment.length > 0
+                    : 0
                 "
                 @change="zoneChangeHandler()"
                 v-model="generalInfo.zoneSelected"
@@ -281,6 +322,16 @@
                   {{ zone.name }}
                 </option>
               </select>
+              <small
+              v-if="
+                generalInfo.multipleDepartment
+                  ? generalInfo.multipleDepartment.length > 0
+                  : 0
+              "
+              class="text-green-200"
+              >You can change zone when there is no added
+              education/department data below</small
+            >
             </div>
 
             <div class="mr-4">
@@ -293,6 +344,7 @@
                   xl:w-64
                   md:w-64
                   sm:w-64
+                  w-full
                   px-3
                   py-1.5
                   text-base
@@ -309,6 +361,11 @@
                   focus:border-main-400
                   focus:outline-none
                 "
+                :disabled="
+                  generalInfo.multipleDepartment
+                    ? generalInfo.multipleDepartment.length > 0
+                    : 0
+                "
                 v-model="generalInfo.woredaSelected"
                 required
               >
@@ -320,6 +377,16 @@
                   {{ woreda.name }}
                 </option>
               </select>
+              <small
+              v-if="
+                generalInfo.multipleDepartment
+                  ? generalInfo.multipleDepartment.length > 0
+                  : 0
+              "
+              class="text-green-200"
+              >You can change woreda when there is no added
+              education/department data below</small
+            >
             </div>
           </div>
         </div>
@@ -337,7 +404,15 @@
         v-if="generalInfo.multipleDepartment.length < 3"
       >
         <div class="container">
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+          <div
+            class="
+              grid grid-rows-1
+              md:grid-cols-2
+              lg:grid-cols-2
+              sm:grid-rows-4
+              gap-6
+            "
+          >
             <div
               class="
                 flex
@@ -356,7 +431,10 @@
                     form-select
                     appearance-none
                     block
-                    max-w-3xl
+                    xl:w-64
+                    md:w-64
+                    sm:w-64
+                    w-full
                     px-3
                     py-1.5
                     text-base
@@ -370,7 +448,7 @@
                     m-0
                     focus:text-gray-700
                     focus:bg-white
-                    focus:border-blue-600
+                    focus:border-main-400
                     focus:outline-none
                   "
                   v-model="generalInfo.departmentSelected"
@@ -397,7 +475,10 @@
                     form-select
                     appearance-none
                     block
-                    max-w-3xl
+                    xl:w-64
+                    md:w-64
+                    sm:w-64
+                    w-full
                     px-3
                     py-1.5
                     text-base
@@ -411,7 +492,7 @@
                     m-0
                     focus:text-gray-700
                     focus:bg-white
-                    focus:border-blue-600
+                    focus:border-main-400
                     focus:outline-none
                   "
                   :disabled="!isDepartmentSelected"
@@ -431,10 +512,26 @@
           </div>
         </div>
 
-        <div class="container mx-auto">
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+        <div class="container">
+          <div
+            class="
+              grid grid-rows-1
+              md:grid-cols-2
+              lg:grid-cols-2
+              sm:grid-rows-4
+              gap-6
+            "
+          >
             <div
-              class="flex justify-center text-6xl rounded-xl p-2 bg-gray-100"
+              class="
+                flex
+                justify-center
+                text-6xl
+                min-w-full
+                rounded-xl
+                p-6
+                bg-gray-100
+              "
             >
               <div>
                 <label class="text-main-400">Professional Types</label>
@@ -443,10 +540,11 @@
                     form-select
                     appearance-none
                     block
-                    px-3
                     xl:w-64
                     md:w-64
                     sm:w-64
+                    w-full
+                    px-3
                     py-1.5
                     text-base
                     font-normal
@@ -459,14 +557,13 @@
                     m-0
                     focus:text-gray-700
                     focus:bg-white
-                    focus:border-blue-600
+                    focus:border-main-400
                     focus:outline-none
                   "
                   :disabled="!isEdLevelSelected"
                   v-model="generalInfo.professionalTypeSelected"
                   @change="ProfessionTypeChange(institution)"
                 >
-                  <option disabled>First Select Department from above</option>
                   <option
                     v-for="pf in professionalTypes"
                     v-bind:key="pf.id"
@@ -501,12 +598,13 @@
 
                 <select
                   class="
-                    xl:w-64
-                    md:w-64
-                    sm:w-64
                     form-select
                     appearance-none
                     block
+                    xl:w-64
+                    md:w-64
+                    sm:w-64
+                    w-full
                     px-3
                     py-1.5
                     text-base
@@ -520,14 +618,13 @@
                     m-0
                     focus:text-gray-700
                     focus:bg-white
-                    focus:border-blue-600
+                    focus:border-main-400
                     focus:outline-none
                   "
                   :disabled="!isAppTypeSelected"
                   v-model="generalInfo.institutionSelected"
                   @change="institutionChange(institution)"
                 >
-                  <option disabled>Please Select Applicant Type first</option>
                   <option
                     v-for="institution in institutions"
                     v-bind:key="institution.name"
@@ -804,9 +901,9 @@ export default {
     let educationalLevels = ref([]);
     let educationalLevelSelected = ref({});
     let professionalTypes = ref([]);
-    let isDepartmentSelected=ref(false);
-    let isEdLevelSelected=ref(false);
-    let isAppTypeSelected=ref(false);
+    let isDepartmentSelected = ref(false);
+    let isEdLevelSelected = ref(false);
+    let isAppTypeSelected = ref(false);
     let regions = ref("");
     let woredas = ref("");
     let zones = ref("");
@@ -908,7 +1005,7 @@ export default {
         });
     };
     const applicantTypeChangeHandler = async () => {
-      isAppTypeSelected.value=true;
+      isAppTypeSelected.value = true;
       if (generalInfo.value.applicantTypeSelected.code == "ETH") {
         showLocation.value = true;
         showOccupation.value = true;
@@ -939,7 +1036,8 @@ export default {
       });
     };
     const departmentChange = () => {
-      isDepartmentSelected.value=true;
+      isDepartmentSelected.value = true;
+      generalInfo.value.educationalLevelSelected = "";
     };
     const institutionChange = () => {
       if (generalInfo.value.institutionSelected.code == "OTH") {
@@ -1125,7 +1223,7 @@ export default {
       }, 1000);
     };
     const educationalLevelChange = () => {
-      isEdLevelSelected.value=true;
+      isEdLevelSelected.value = true;
       fetchProfessionalType(
         generalInfo.value.departmentSelected.id,
         generalInfo.value.educationalLevelSelected.id

@@ -1,6 +1,6 @@
 <template>
 
-  <div class="overflow-x-hidden overflow-y-hidden">
+  <div class="overflow-x-hidden overflow-y-scroll h-full">
     <Navigation />
     <div v-if="this.approvalModal == 0" class="w-screen h-screen bg-lightBlueB-200 flex items-center justify-center">
       <transition name="slide-fade-to-left">

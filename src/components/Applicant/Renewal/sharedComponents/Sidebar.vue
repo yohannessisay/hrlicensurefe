@@ -193,7 +193,7 @@
         </a>
       </li>
 
-      <li
+      <!-- <li
         :class="
           $route.fullPath === '/Applicant/Renewal/pendingPayment'
             ? 'list active'
@@ -216,7 +216,7 @@
             <span class="text text-white font-bold">Pending Payment</span>
           </router-link>
         </a>
-      </li>
+      </li> -->
     </ul>
   </div>
 </template>

@@ -336,8 +336,8 @@ i.fa.fa-cog {
     order: -1;
   }
   .content.active {
-    width: calc(100% - 40px);
-    left: 60px;
+    width: calc(100% - 85px);
+    left: 85px;
   }
   .side-navbar.active {
     left: 0;

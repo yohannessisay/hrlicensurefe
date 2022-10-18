@@ -162,7 +162,10 @@
         <h1 class="text-main-400">Profile Management</h1>
       </div>
 
-      <form class="mx-auto max-w-3xl w-full mt-10 p-2" @submit.prevent="nextStep">
+      <form
+        class="mx-auto max-w-3xl w-full mt-10 p-2"
+        @submit.prevent="nextStep"
+      >
         <div class="flex justify-center">
           <span>
             <h6 class="text-sm border-b-2 text-main-400">
@@ -195,8 +198,12 @@
                   or click to browse
                 </p>
               </div>
-              <div class="ml-8">
-                <span style="color: red">{{ personalInfoErrors.photo }}</span>
+              <div class="ml-8 mt-4">
+                <span
+                  v-if="personalInfoErrors.photo"
+                  class="mt-2 border p-2 text-sm text-red-300 ml-4"
+                  >{{ personalInfoErrors.photo }}</span
+                >
               </div>
             </label>
           </span>
@@ -287,9 +294,12 @@
                 placeholder="First name"
               />
               <label for="floatingInput" class="text-gray-700">Name</label>
+              <span
+                v-if="personalInfoErrors.name"
+                class="mt-2 border p-2 text-sm text-red-300 ml-4"
+                >{{ personalInfoErrors.name }}</span
+              >
             </div>
-
-            <span style="color: red">{{ personalInfoErrors.name }}</span>
           </div>
           <div class="flex">
             <div class="form-floating mb-3 xl:w-96">
@@ -331,8 +341,12 @@
               <label for="floatingInput" class="text-gray-700"
                 >Father Name</label
               >
+              <span
+                v-if="personalInfoErrors.fatherName"
+                class="mt-2 border p-2 text-sm text-red-300 ml-4"
+                >{{ personalInfoErrors.fatherName }}</span
+              >
             </div>
-            <span style="color: red">{{ personalInfoErrors.fatherName }}</span>
           </div>
         </div>
 
@@ -384,12 +398,12 @@
               <label for="floatingInput" class="text-gray-700"
                 >Grandfather Name</label
               >
-              <span style="color: red">{{
-                personalInfoErrors.grandFatherName
-              }}</span>
+              <span
+                v-if="personalInfoErrors.grandFatherName"
+                class="mt-2 border p-2 text-sm text-red-300 ml-4"
+                >{{ personalInfoErrors.grandFatherName }}</span
+              >
             </div>
-
-            <span style="color: red">{{ personalInfoErrors.name }}</span>
           </div>
         </div>
         <!-- End Of English Name Part -->
@@ -523,12 +537,8 @@
                 id="amhGName"
                 placeholder="Amharic Grand Father name"
               />
-              <label for="amhGName" class="text-gray-700"
-                >የ ኣያት ስም</label
-              >
+              <label for="amhGName" class="text-gray-700">የ ኣያት ስም</label>
             </div>
-
-            <span style="color: red">{{ personalInfoErrors.name }}</span>
           </div>
         </div>
         <!-- End Of English Name Part -->
@@ -565,6 +575,7 @@
                     transition
                     ease-in-out
                     m-0
+                    mb-4
                   "
                   aria-label="Default select example"
                   v-model="personalInfo.nationalityId"
@@ -581,9 +592,11 @@
                     {{ types.name }}
                   </option>
                 </select>
-                <span style="color: red">{{
-                  personalInfoErrors.nationalityId
-                }}</span>
+                <span
+                  v-if="personalInfoErrors.nationalityId"
+                  class="mt-2 border p-2 text-sm text-red-300 ml-4"
+                  >{{ personalInfoErrors.nationalityId }}</span
+                >
               </div>
             </div>
           </div>
@@ -607,6 +620,7 @@
                   transition
                   ease-in-out
                   m-0
+                  mb-4
                 "
                 aria-label="Default select example"
                 v-model="personalInfo.maritalStatusId"
@@ -621,6 +635,11 @@
                 <option value="4">Widowed</option>
                 <option value="5">Separated</option>
               </select>
+              <span
+                v-if="personalInfoErrors.maritalStatus"
+                class="mt-2 border p-2 text-sm text-red-300 ml-4"
+                >{{ personalInfoErrors.maritalStatus }}</span
+              >
             </div>
           </div>
         </div>
@@ -661,6 +680,8 @@
                   m-2
                   focus:border-main-400 focus:outline-none
                 "
+                :max="minimumBirthDate"
+                min='1899-01-01'
                 v-model="personalInfo.dateOfBirth"
                 @change="validateDate(personalInfo.dateOfBirth)"
                 :disabled="
@@ -669,16 +690,18 @@
                 id="birthDate"
               />
               <label for="birthDate" class="text-gray-700">Date of Birth</label>
+              <div
+                v-if="
+                  personalInfoErrors.dateOfBirth ||
+                  personalInfoErrors.invalidBirthDate
+                "
+                class="border p-2 text-sm text-red-300 mr-4"
+              >
+                <span class="mt-2 text-sm text-red-300 ml-4">{{
+                  personalInfoErrors.dateOfBirth
+                }}</span>
+              </div>
             </div>
-
-            <span style="color: red">{{ personalInfoErrors.dateOfBirth }}</span>
-            <span
-              v-if="invalidBirthDate"
-              style="color: red"
-              class="mt-2 text-lg"
-            >
-              Applicant must be at least 18.
-            </span>
           </div>
 
           <div class="flex">
@@ -704,29 +727,28 @@
                       >
                         Male
                       </label>
-                    </div>
+                    </div> 
                   </div>
-                  
-                  
-                      <div class="flex py-2 ml-4">
-                        <input
-                          type="radio"
-                          id="female"
-                          value="female"
-                          v-model="personalInfo.gender"
-                          :disabled="
-                            isRegisterdHRAuser == true &&
-                            searchResultData.gender
-                          "
-                        />
-                        <label class="ml-tiny text-primary-700" for="female">
-                          Female
-                        </label>
-                      </div>
-                    
-                 
+
+                  <div class="flex py-2 ml-4">
+                    <input
+                      type="radio"
+                      id="female"
+                      value="female"
+                      v-model="personalInfo.gender"
+                      :disabled="
+                        isRegisterdHRAuser == true && searchResultData.gender
+                      "
+                    />
+                    <label class="ml-tiny text-primary-700" for="female">
+                      Female
+                    </label>
+                  </div>
                 </div>
-                <span style="color: red" class="mt-0">
+                <span
+                  v-if="personalInfoErrors.gender"
+                  class="border p-2 text-sm text-red-300 ml-4"
+                >
                   {{ personalInfoErrors.gender }}</span
                 >
               </div>
@@ -824,6 +846,8 @@ export default {
     let photoSizeCheck = ref(false);
     let fileSize = ref("");
     let nationality = ref("");
+    let minimumBirthDate =  
+      new Date(`${new Date().getFullYear()-18}`).toISOString().slice(0,10);
     let maritalStatus = ref("");
     let invalidBirthDate = ref(false);
     const hraUserStat = ref(false);
@@ -853,12 +877,10 @@ export default {
       name: "",
       fatherName: "",
       grandFatherName: "",
-      // alternativeName: "",
-      // alternativeFatherName: "",
-      // alternativeGrandFatherName: "",
       nationalityId: "",
       gender: "",
-      maritalStatusId: "",
+      maritalStatus: "",
+      dateOfBirth: "",
       photo: "",
     });
     let state = ref({
@@ -1052,10 +1074,11 @@ export default {
       store.dispatch("profile/setNationality", nationality.value);
       store.dispatch("profile/setMaritalStatus", maritalStatus.value);
       let empty = isEmpty(personalInfoErrors.value);
-      if (empty == false) {
+
+      console.log(personalInfoErrors.value,empty)
+      if (empty == false || invalidBirthDate.value == true) {
         return;
-      }
-      if (empty == true) {
+      } else if (empty == true) {
         store.dispatch("profile/setProfileInfo", personalInfo);
         store.dispatch("profile/setPhoto", photoFile.value);
         emit("changeActiveState");
@@ -1073,19 +1096,32 @@ export default {
       }
       if (age < 18) {
         invalidBirthDate.value = true;
+        personalInfoErrors.value.dateOfBirth = "Applicant must be 18 or above";
       } else {
-        invalidBirthDate.value = false;
+        invalidBirthDate.value = false; 
       }
     };
     const validateForm = (formData) => {
       const errors = {};
-      if (!formData.photo) errors.photo = "Profile Picture Required";
-      if (!formData.name) errors.name = "First Name Required";
-      if (!formData.fatherName) errors.fatherName = "Father's Name Required";
+      if (!formData.photo) errors.photo = "Profile picture is required";
+      if (!formData.name) errors.name = "First name is required";
+      if (!formData.fatherName) errors.fatherName = "Father's name is required";
+      if (!formData.dateOfBirth)
+        errors.dateOfBirth = "Date of birth is required";
+      if (!formData.maritalStatusId)
+        errors.maritalStatus = "Marital status is required";
+      if (!formData.gender) errors.gender = "Gender is required";
       if (!formData.grandFatherName)
-        errors.grandFatherName = "Grandfather's Name Required";
+        errors.grandFatherName = "Grandfather's name is required";
       if (!formData.nationalityId)
-        errors.nationalityId = "Nationality Required";
+        errors.nationalityId = "Nationality is required";
+
+      let today = new Date().getFullYear();
+      let age = today - new Date(formData.dateOfBirth).getFullYear();
+    
+      if (age < 18) {
+        errors.dateOfBirth = "Applicant must be 18 or above";
+      }  
       return errors;
     };
     const isEmpty = (obj) => {
@@ -1155,6 +1191,7 @@ export default {
       personalInfoErrors,
       photoSizeCheck,
       validateForm,
+      minimumBirthDate,
       nationality,
       searchResultData,
       maritalStatus,

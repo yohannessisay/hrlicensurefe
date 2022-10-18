@@ -418,29 +418,25 @@ export default {
     let allowSave = ref(false);
     const changeAgrement = () => {
       agreed.value = !agreed.value;
-      if ( 
-        agreed.value != false
-      ) {
+      if (agreed.value != false) {
         allowSave.value = true;
       } else {
         allowSave.value = false;
       }
     };
     const checkAgreement = () => {
-      if ( 
-        agreed.value != false
-      ) {
+      if (agreed.value != false) {
         allowSave.value = true;
       } else {
         allowSave.value = false;
       }
     };
     const checkFinalStatus = (action) => {
-      console.log()
+      console.log();
       generalInfo.value.licenseFile = [];
       documents.value = localFileData.value;
       isLoading.value = true;
-      if (agreed.value == true  ) {
+      if (agreed.value == true) {
         let formData = new FormData();
         tempDocs.value.forEach((element, index) => {
           formData.append(index, element);
@@ -498,7 +494,12 @@ export default {
                   pauseOnHover: true,
                   icon: true,
                 });
-                router.push({ path: "/Applicant/NewLicense/submitted" });
+
+                if (license.action == "DraftEvent") {
+                  router.push({ path: "/Applicant/NewLicense/draft" });
+                } else {
+                  router.push({ path: "/Applicant/NewLicense/submitted" });
+                }
               } else {
                 toast.error("Error occured, please try again", {
                   timeout: 5000,

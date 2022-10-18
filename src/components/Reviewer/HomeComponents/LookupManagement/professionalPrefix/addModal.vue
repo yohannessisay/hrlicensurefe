@@ -152,6 +152,66 @@
                             </div>
                           </div>
                         </div>
+
+                        <div class="flex items-start mt-4">
+                          <div class="grow ml-6">
+                            <div class="group w-full md:full lg:w-full ml-4">
+                              <label
+                                for="depName"
+                                class="
+                                  inline-block
+                                  w-full
+                                  text-md
+                                  mb-2
+                                  text-primary-600
+                                  font-bold
+                                  text-gray-500
+                                  transition-all
+                                  duration-200
+                                  ease-in-out
+                                "
+                                >Professional Prefix Code</label
+                              >
+                              <div class="relative flex items-center">
+                                <input
+                                  id="depName"
+                                  type="text"
+                                  class="
+                                    peer
+                                    relative
+                                    h-18
+                                    w-full
+                                    rounded-sm
+                                    pl-10
+                                    pr-4
+                                    outline-none
+                                    drop-shadow-sm
+                                    transition-all
+                                    duration-200
+                                    ease-in-out
+                                    focus:bg-white
+                                    focus:text-primary-600
+                                    focus:font-bold
+                                    focus:drop-shadow-lg
+                                  "
+                                  required
+                                  placeholder="Enter name"
+                                  v-model="professionalPrefixCode"
+                                />
+
+                                <i
+                                  class="
+                                    fa fa-text-width
+                                    ml-4
+                                    absolute
+                                    left-auto
+                                    text-primary-600
+                                  "
+                                ></i>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </form>
@@ -223,11 +283,18 @@ export default {
     const toast = useToast();
     let isLoading = ref(false);
     let professionalPrefixName = ref("");
+    let professionalPrefixCode = ref("");
     let showProfessionalPrefixNameError = ref(false);
     let professionalPrefixNameError = ref("");
     let professionalPrefixNameFilled = ref(false);
     let saveData = ref({});
+    let todayCode = new Date().getMilliseconds();
     const enableSaveButton = () => {
+      professionalPrefixCode.value =
+        "PP_" +
+        professionalPrefixName.value.slice(0, 4).toUpperCase() +
+        "_" +
+        todayCode;
       if (professionalPrefixName.value.length > 3) {
         professionalPrefixNameFilled.value = true;
       } else {
@@ -245,7 +312,7 @@ export default {
       saveData.value = {
         name: professionalPrefixName.value ? professionalPrefixName.value : "",
         code: professionalPrefixName.value
-          ? "DP_" +
+          ? "PP_" +
             professionalPrefixName.value.slice(0, 4).toUpperCase() +
             "_" +
             today
@@ -282,6 +349,7 @@ export default {
       isLoading,
       saveProfessionalPrefix,
       enableSaveButton,
+      professionalPrefixCode,
       professionalPrefixNameFilled,
       showProfessionalPrefixNameError,
       professionalPrefixName,

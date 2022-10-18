@@ -45,24 +45,26 @@
           <!-- applican type -->
           <div
             class="
-              grid grid-cols-3
-              sm:grid-cols-1
-              lg:grid-cols-3
-              mdlg:grid-cols-3
-              md:grid-cols-3
-              p-4
+            grid grid-rows-3
+            sm:grid-rows-1
+            lg:grid-cols-3
+            mdlg:grid-cols-3
+            md:grid-cols-3
+            p-4
             "
           >
             <div class="mr-4">
               <label class="text-main-400">Applicant Type</label>
+             
               <select
                 class="
-                  form-select
+                form-select
                   appearance-none
                   block
                   xl:w-64
                   md:w-64
-                  sm:w-64
+                  sm:w-full
+                  w-full
                   px-3
                   py-1.5
                   text-base
@@ -79,6 +81,7 @@
                   focus:border-main-400
                   focus:outline-none
                 "
+                
                 aria-label="Default select example"
                 @change="applicantTypeChangeHandler()"
                 v-model="generalInfo.applicantType"
@@ -97,12 +100,13 @@
               <label class="text-main-400">Language Type</label>
               <select
                 class="
-                  form-select
+                form-select
                   appearance-none
                   block
                   xl:w-64
                   md:w-64
-                  sm:w-64
+                  sm:w-full
+                  w-full
                   px-3
                   py-1.5
                   text-base
@@ -134,12 +138,13 @@
               <label class="text-main-400">Occupation Type</label>
               <select
                 class="
-                  form-select
+                form-select
                   appearance-none
                   block
                   xl:w-64
                   md:w-64
-                  sm:w-64
+                  sm:w-full
+                  w-full
                   px-3
                   py-1.5
                   text-base
@@ -186,39 +191,40 @@
           <div class="flex">
             <div
               class="
-                grid grid-cols-3
-                sm:grid-cols-1
-                lg:grid-cols-3
-                mdlg:grid-cols-3
-                md:grid-cols-3
-                p-4
+              grid grid-rows-3
+            sm:grid-rows-1
+            lg:grid-cols-3
+            mdlg:grid-cols-3
+            md:grid-cols-3
+            p-4
               "
             >
               <div class="mr-4">
                 <label class="text-main-400">Region</label>
                 <select
                   class="
-                    form-select
-                    appearance-none
-                    block
-                    xl:w-64
-                    md:w-64
-                    sm:w-64
-                    px-3
-                    py-1.5
-                    text-base
-                    font-normal
-                    text-gray-700
-                    hover:text-main-500 hover:border-main-500
-                    border border-solid border-gray-300
-                    rounded
-                    transition
-                    ease-in-out
-                    m-0
-                    focus:text-gray-700
-                    focus:bg-white
-                    focus:border-main-400
-                    focus:outline-none
+                  form-select
+                  appearance-none
+                  block
+                  xl:w-64
+                  md:w-64
+                  sm:w-full
+                  w-full
+                  px-3
+                  py-1.5
+                  text-base
+                  font-normal
+                  text-gray-700
+                  hover:text-main-500 hover:border-main-500
+                  border border-solid border-gray-300
+                  rounded
+                  transition
+                  ease-in-out
+                  m-0
+                  focus:text-gray-700
+                  focus:bg-white
+                  focus:border-main-400
+                  focus:outline-none
                   "
                   v-model="generalInfo.regionSelected"
                   @change="regionChangeHandler()"
@@ -237,27 +243,28 @@
                 <label class="text-main-400">Zone</label>
                 <select
                   class="
-                    form-select
-                    appearance-none
-                    block
-                    xl:w-64
-                    md:w-64
-                    sm:w-64
-                    px-3
-                    py-1.5
-                    text-base
-                    font-normal
-                    text-gray-700
-                    hover:text-main-500 hover:border-main-500
-                    border border-solid border-gray-300
-                    rounded
-                    transition
-                    ease-in-out
-                    m-0
-                    focus:text-gray-700
-                    focus:bg-white
-                    focus:border-main-400
-                    focus:outline-none
+                  form-select
+                  appearance-none
+                  block
+                  xl:w-64
+                  md:w-64
+                  sm:w-full
+                  w-full
+                  px-3
+                  py-1.5
+                  text-base
+                  font-normal
+                  text-gray-700
+                  hover:text-main-500 hover:border-main-500
+                  border border-solid border-gray-300
+                  rounded
+                  transition
+                  ease-in-out
+                  m-0
+                  focus:text-gray-700
+                  focus:bg-white
+                  focus:border-main-400
+                  focus:outline-none
                   "
                   @change="zoneChangeHandler()"
                   v-model="generalInfo.zoneSelected"
@@ -276,27 +283,28 @@
                 <label class="text-main-400">Woreda</label>
                 <select
                   class="
-                    form-select
-                    appearance-none
-                    block
-                    xl:w-64
-                    md:w-64
-                    sm:w-64
-                    px-3
-                    py-1.5
-                    text-base
-                    font-normal
-                    text-gray-700
-                    hover:text-main-500 hover:border-main-500
-                    border border-solid border-gray-300
-                    rounded
-                    transition
-                    ease-in-out
-                    m-0
-                    focus:text-gray-700
-                    focus:bg-white
-                    focus:border-main-400
-                    focus:outline-none
+                  form-select
+                  appearance-none
+                  block
+                  xl:w-64
+                  md:w-64
+                  sm:w-full
+                  w-full
+                  px-3
+                  py-1.5
+                  text-base
+                  font-normal
+                  text-gray-700
+                  hover:text-main-500 hover:border-main-500
+                  border border-solid border-gray-300
+                  rounded
+                  transition
+                  ease-in-out
+                  m-0
+                  focus:text-gray-700
+                  focus:bg-white
+                  focus:border-main-400
+                  focus:outline-none
                   "
                   v-model="generalInfo.woredaSelected"
                   required
@@ -342,25 +350,28 @@
                   <label class="text-main-400">Department</label>
                   <select
                     class="
-                      form-select
-                      appearance-none
-                      block
-                      max-w-3xl
-                      px-3
-                      py-1.5
-                      text-base
-                      font-normal
-                      text-gray-700
-                      hover:text-main-500 hover:border-main-500
-                      border border-solid border-gray-300
-                      rounded
-                      transition
-                      ease-in-out
-                      m-0
-                      focus:text-gray-700
-                      focus:bg-white
-                      focus:border-blue-600
-                      focus:outline-none
+                    form-select
+                  appearance-none
+                  block
+                  xl:w-64
+                  md:w-64
+                  sm:w-full
+                  w-full
+                  px-3
+                  py-1.5
+                  text-base
+                  font-normal
+                  text-gray-700
+                  hover:text-main-500 hover:border-main-500
+                  border border-solid border-gray-300
+                  rounded
+                  transition
+                  ease-in-out
+                  m-0
+                  focus:text-gray-700
+                  focus:bg-white
+                  focus:border-main-400
+                  focus:outline-none
                     "
                     v-model="generalInfo.departmentSelected"
                     @change="departmentChange()"
@@ -383,25 +394,28 @@
                   <label class="text-main-400">Education Level </label>
                   <select
                     class="
-                      form-select
-                      appearance-none
-                      block
-                      max-w-3xl
-                      px-3
-                      py-1.5
-                      text-base
-                      font-normal
-                      text-gray-700
-                      hover:text-main-500 hover:border-main-500
-                      border border-solid border-gray-300
-                      rounded
-                      transition
-                      ease-in-out
-                      m-0
-                      focus:text-gray-700
-                      focus:bg-white
-                      focus:border-blue-600
-                      focus:outline-none
+                    form-select
+                  appearance-none
+                  block
+                  xl:w-64
+                  md:w-64
+                  sm:w-full
+                  w-full
+                  px-3
+                  py-1.5
+                  text-base
+                  font-normal
+                  text-gray-700
+                  hover:text-main-500 hover:border-main-500
+                  border border-solid border-gray-300
+                  rounded
+                  transition
+                  ease-in-out
+                  m-0
+                  focus:text-gray-700
+                  focus:bg-white
+                  focus:border-main-400
+                  focus:outline-none
                     "
                     v-model="generalInfo.educationalLevelSelected"
                     @change="educationalLevelChange()"
@@ -428,27 +442,28 @@
                   <label class="text-main-400">Professional Types</label>
                   <select
                     class="
-                      form-select
-                      appearance-none
-                      block
-                      px-3
-                      xl:w-64
-                      md:w-64
-                      sm:w-64
-                      py-1.5
-                      text-base
-                      font-normal
-                      text-gray-700
-                      hover:text-main-500 hover:border-main-500
-                      border border-solid border-gray-300
-                      rounded
-                      transition
-                      ease-in-out
-                      m-0
-                      focus:text-gray-700
-                      focus:bg-white
-                      focus:border-blue-600
-                      focus:outline-none
+                    form-select
+                  appearance-none
+                  block
+                  xl:w-64
+                  md:w-64
+                  sm:w-full
+                  w-full
+                  px-3
+                  py-1.5
+                  text-base
+                  font-normal
+                  text-gray-700
+                  hover:text-main-500 hover:border-main-500
+                  border border-solid border-gray-300
+                  rounded
+                  transition
+                  ease-in-out
+                  m-0
+                  focus:text-gray-700
+                  focus:bg-white
+                  focus:border-main-400
+                  focus:outline-none
                     "
                     v-model="generalInfo.professionalTypeSelected"
                     @change="ProfessionTypeChange(institution)"
@@ -486,27 +501,28 @@
 
                   <select
                     class="
-                      xl:w-64
-                      md:w-64
-                      sm:w-64
-                      form-select
-                      appearance-none
-                      block
-                      px-3
-                      py-1.5
-                      text-base
-                      font-normal
-                      text-gray-700
-                      hover:text-main-500 hover:border-main-500
-                      border border-solid border-gray-300
-                      rounded
-                      transition
-                      ease-in-out
-                      m-0
-                      focus:text-gray-700
-                      focus:bg-white
-                      focus:border-blue-600
-                      focus:outline-none
+                    form-select
+                  appearance-none
+                  block
+                  xl:w-64
+                  md:w-64
+                  sm:w-full
+                  w-full
+                  px-3
+                  py-1.5
+                  text-base
+                  font-normal
+                  text-gray-700
+                  hover:text-main-500 hover:border-main-500
+                  border border-solid border-gray-300
+                  rounded
+                  transition
+                  ease-in-out
+                  m-0
+                  focus:text-gray-700
+                  focus:bg-white
+                  focus:border-main-400
+                  focus:outline-none
                     "
                     v-model="generalInfo.institutionSelected"
                     @change="institutionChange(institution)"
@@ -1110,8 +1126,7 @@ export default {
         .dispatch("newlicense/setGeneralInfo", generalInfo.value)
         .then(() => {
           emit("changeActiveState");
-          activeState.value += 1;
-          console.log(activeState.value);
+          activeState.value += 1; 
         });
     };
     const fetchApplicationStatuses = () => {
@@ -1179,8 +1194,7 @@ export default {
           generalInfo.value.multipleDepartment = JSON.parse(
             JSON.stringify(res.data.data.educations)
           );
-          generalInfo.value.applicantTypeSelected = res.data.data.applicantType;
-          console.log(generalInfo.value);
+          generalInfo.value.applicantTypeSelected = res.data.data.applicantType; 
         });
     });
     return {
