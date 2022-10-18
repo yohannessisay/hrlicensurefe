@@ -525,8 +525,7 @@ export default {
 
     let assign = ref({
       reviewerId: "",
-      goodStandingId: "",
-      createdByAdminId: "",
+      goodStandingId: "", 
     });
     let role = ref({});
     let isLoadingStart = ref(true);
@@ -565,8 +564,8 @@ export default {
           ? modalData.value.name
             ? "Dear " +
               modalData.value.name +
-              " your applied renewal license for " +
-              modalData.value.department +
+              " your applied good standing letter for " +
+              modalData.value.department.name +
               " has been assigned a reviewer , after careful examination of your uploaded documents by our reviewers we will get back and notify you on each steps, Thank you for using eHPL. https://hrl.moh.gov.et/"
             : ""
           : "",

@@ -26,7 +26,7 @@
             id="options-menu"
             aria-expanded="true"
             aria-haspopup="true"
-            v-on:click="showDropDown()"
+            v-on:click="showDropDown()" 
           >
             <div v-if="userInfo != {}" class="w-12 h-12">
               <img

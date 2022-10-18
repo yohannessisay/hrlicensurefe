@@ -48,10 +48,7 @@
             <div class="border-b-2 text-main-400">
               <div class="grid grid-rows-2 p-2 mb-2 border-b-2">
                 <h1 class="text-lg">
-                  <a
-                    class=" hover:underline underline text-main-400"
-                    href="#"
-                  >
+                  <a class="hover:underline underline text-main-400" href="#">
                     Department
                   </a>
                 </h1>
@@ -236,12 +233,9 @@ export default {
       userInfo.value = JSON.parse(window.localStorage.getItem("personalInfo"));
       store.dispatch("newlicense/getNewLicense").then((res) => {
         newLicense.value = res.data.data;
-        console.log(newLicense);
         if (newLicense.value) {
           newLicense.value = newLicense.value.filter(function (e) {
-            return (
-              e.applicationStatus.code.includes("APP") 
-            );
+            return e.applicationStatus.code.includes("APP");
           });
           isLoading.value = false;
           if (newLicense.value.length < 1) {

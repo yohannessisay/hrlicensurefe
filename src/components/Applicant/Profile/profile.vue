@@ -99,490 +99,564 @@
               <div class="w-full md:w-9/12 mx-2 h-64">
                 <!-- About Section -->
                 <div class="vld-parent mt-4">
-                    <loading
-                      :active="isLoadingUserInfo"
-                      :is-full-page="false"
-                      :color="'#2F639D'"
-                      :opacity="1"
-                    ></loading>
-                <form @submit.prevent="submit">
-                  <div class="bg-white p-3 shadow-xl rounded-sm mb-4">
-                    <div
-                      class="
-                        flex
-                        items-center
-                        space-x-2
-                        mb-4
-                        border-b-4
-                        text-main-400
-                        font-semibold
-                        text-gray-900
-                        leading-8
-                      "
-                    >
-                      <span clas="text-green-500">
-                        <i class="fa fa-user text-main-400"></i>
-                      </span>
-                      <span class="tracking-wide text-main-400"
-                        >Personal Information</span
+                  <loading
+                    :active="isLoadingUserInfo"
+                    :is-full-page="false"
+                    :color="'#2F639D'"
+                    :opacity="1"
+                  ></loading>
+                  <form @submit.prevent="submit">
+                    <div class="bg-white p-3 shadow-xl rounded-sm mb-4">
+                      <div
+                        class="
+                          flex
+                          items-center
+                          space-x-2
+                          mb-4
+                          border-b-4
+                          text-main-400
+                          font-semibold
+                          text-gray-900
+                          leading-8
+                        "
                       >
-                    </div>
-                    <div class="text-gray-700">
-                      <div class="grid md:grid-cols-2 text-sm">
-                        <div class="grid grid-cols-2">
-                          <div
-                            class="px-4 py-2 text-base font-bold text-main-400"
-                          >
-                            First Name
-                          </div>
-                          <div class="mb-3 xl:w-96">
-                            <input
-                              type="text"
+                        <span clas="text-green-500">
+                          <i class="fa fa-user text-main-400"></i>
+                        </span>
+                        <span class="tracking-wide text-main-400"
+                          >Personal Information</span
+                        >
+                      </div>
+                      <div class="text-gray-700">
+                        <div class="grid md:grid-cols-2 text-sm">
+                          <div class="grid grid-cols-2">
+                            <div
                               class="
-                                form-control
-                                block
-                                w-full
-                                px-3
-                                py-1.5
+                                px-4
+                                py-2
                                 text-base
-                                font-normal
-                                text-gray-700
-                                bg-white bg-clip-padding
-                                border border-solid border-gray-300
-                                rounded
-                                transition
-                                ease-in-out
-                                m-0
-                                focus:bg-white
-                                focus:border-primary-600
-                                focus:outline-none
+                                font-bold
+                                text-main-400
                               "
-                              id="firstName"
-                              placeholder="First name"
-                              v-model="userInfo.name"
-                            />
-                          </div>
-                        </div>
-                        <div class="grid grid-cols-2">
-                          <div
-                            class="px-4 py-2 text-base font-bold text-main-400"
-                          >
-                            Last Name
-                          </div>
-                          <div class="mb-3 xl:w-96">
-                            <input
-                              type="text"
-                              class="
-                                form-control
-                                block
-                                w-full
-                                px-3
-                                py-1.5
-                                text-base
-                                font-normal
-                                text-gray-700
-                                bg-white bg-clip-padding
-                                border border-solid border-gray-300
-                                rounded
-                                transition
-                                ease-in-out
-                                m-0
-                                focus:bg-white
-                                focus:border-primary-600
-                                focus:outline-none
-                              "
-                              id="fatherName"
-                              placeholder="Father Name"
-                              v-model="userInfo.fatherName"
-                            />
-                          </div>
-                        </div>
-                        <div class="grid grid-cols-2">
-                          <div
-                            class="px-4 py-2 text-base font-bold text-main-400"
-                          >
-                            Grandfather Name
-                          </div>
-                          <div class="mb-3 xl:w-96">
-                            <input
-                              type="text"
-                              class="
-                                form-control
-                                block
-                                w-full
-                                px-3
-                                py-1.5
-                                text-base
-                                font-normal
-                                text-gray-700
-                                bg-white bg-clip-padding
-                                border border-solid border-gray-300
-                                rounded
-                                transition
-                                ease-in-out
-                                m-0
-                                focus:bg-white
-                                focus:border-primary-600
-                                focus:outline-none
-                              "
-                              id="grandFatherName"
-                              placeholder="Grand Father Name"
-                              v-model="userInfo.grandFatherName"
-                            />
-                          </div>
-                        </div>
-                        <div class="grid grid-cols-2">
-                          <div
-                            class="px-4 py-2 text-base font-bold text-main-400"
-                          >
-                            Gender
-                          </div>
-                          <div class="mb-3 xl:w-96">
-                            <select
-                              class="
-                                form-select
-                                appearance-none
-                                block
-                                w-full
-                                px-3
-                                py-1.5
-                                text-base
-                                font-normal
-                                text-gray-700
-                                bg-white bg-clip-padding bg-no-repeat
-                                border border-solid border-gray-300
-                                rounded
-                                transition
-                                ease-in-out
-                                m-0
-                                focus:text-gray-700
-                                focus:bg-white
-                                focus:border-blue-600
-                                focus:outline-none
-                              "
-                              aria-label="Default select example"
-                              v-model="userInfo.gender"
                             >
-                              <option selected>{{ userInfo.gender }}</option>
-                              <option value="male">Male</option>
-                              <option value="female">Female</option>
-                            </select>
+                              First Name
+                            </div>
+                            <div class="mb-3 xl:w-96">
+                              <input
+                                type="text"
+                                class="
+                                  form-control
+                                  block
+                                  w-full
+                                  px-3
+                                  py-1.5
+                                  text-base
+                                  font-normal
+                                  text-gray-700
+                                  bg-white bg-clip-padding
+                                  border border-solid border-gray-300
+                                  rounded
+                                  transition
+                                  ease-in-out
+                                  m-0
+                                  focus:bg-white
+                                  focus:border-primary-600
+                                  focus:outline-none
+                                "
+                                id="firstName"
+                                placeholder="First name"
+                                v-model="userInfo.name"
+                              />
+                            </div>
+                          </div>
+                          <div class="grid grid-cols-2">
+                            <div
+                              class="
+                                px-4
+                                py-2
+                                text-base
+                                font-bold
+                                text-main-400
+                              "
+                            >
+                              Last Name
+                            </div>
+                            <div class="mb-3 xl:w-96">
+                              <input
+                                type="text"
+                                class="
+                                  form-control
+                                  block
+                                  w-full
+                                  px-3
+                                  py-1.5
+                                  text-base
+                                  font-normal
+                                  text-gray-700
+                                  bg-white bg-clip-padding
+                                  border border-solid border-gray-300
+                                  rounded
+                                  transition
+                                  ease-in-out
+                                  m-0
+                                  focus:bg-white
+                                  focus:border-primary-600
+                                  focus:outline-none
+                                "
+                                id="fatherName"
+                                placeholder="Father Name"
+                                v-model="userInfo.fatherName"
+                              />
+                            </div>
+                          </div>
+                          <div class="grid grid-cols-2">
+                            <div
+                              class="
+                                px-4
+                                py-2
+                                text-base
+                                font-bold
+                                text-main-400
+                              "
+                            >
+                              Grandfather Name
+                            </div>
+                            <div class="mb-3 xl:w-96">
+                              <input
+                                type="text"
+                                class="
+                                  form-control
+                                  block
+                                  w-full
+                                  px-3
+                                  py-1.5
+                                  text-base
+                                  font-normal
+                                  text-gray-700
+                                  bg-white bg-clip-padding
+                                  border border-solid border-gray-300
+                                  rounded
+                                  transition
+                                  ease-in-out
+                                  m-0
+                                  focus:bg-white
+                                  focus:border-primary-600
+                                  focus:outline-none
+                                "
+                                id="grandFatherName"
+                                placeholder="Grand Father Name"
+                                v-model="userInfo.grandFatherName"
+                              />
+                            </div>
+                          </div>
+                          <div class="grid grid-cols-2">
+                            <div
+                              class="
+                                px-4
+                                py-2
+                                text-base
+                                font-bold
+                                text-main-400
+                              "
+                            >
+                              Gender
+                            </div>
+                            <div class="mb-3 xl:w-96">
+                              <select
+                                class="
+                                  form-select
+                                  appearance-none
+                                  block
+                                  w-full
+                                  px-3
+                                  py-1.5
+                                  text-base
+                                  font-normal
+                                  text-gray-700
+                                  bg-white bg-clip-padding bg-no-repeat
+                                  border border-solid border-gray-300
+                                  rounded
+                                  transition
+                                  ease-in-out
+                                  m-0
+                                  focus:text-gray-700
+                                  focus:bg-white
+                                  focus:border-blue-600
+                                  focus:outline-none
+                                "
+                                aria-label="Default select example"
+                                v-model="userInfo.gender"
+                              >
+                                <option selected>{{ userInfo.gender }}</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                              </select>
+                            </div>
+                          </div>
+
+                          <div class="grid grid-cols-2">
+                            <div
+                              class="
+                                px-4
+                                py-2
+                                text-base
+                                font-bold
+                                text-main-400
+                              "
+                            >
+                              Birthdate
+                            </div>
+                            <input
+                              type="date"
+                              v-model="userInfo.dateOfBirth"
+                              name="birthDay"
+                              id="birthDay"
+                              class="form-control"
+                            />
+                          </div>
+                          <div class="grid grid-cols-2">
+                            <div
+                              class="
+                                px-4
+                                py-2
+                                text-base
+                                font-bold
+                                text-main-400
+                              "
+                            >
+                              Martial Status
+                            </div>
+                            <div class="mb-3 xl:w-96">
+                              <select
+                                class="
+                                  form-select
+                                  appearance-none
+                                  block
+                                  w-full
+                                  px-3
+                                  py-1.5
+                                  text-base
+                                  font-normal
+                                  text-gray-700
+                                  bg-white bg-clip-padding bg-no-repeat
+                                  border border-solid border-gray-300
+                                  rounded
+                                  transition
+                                  ease-in-out
+                                  m-0
+                                  focus:text-gray-700
+                                  focus:bg-white
+                                  focus:border-blue-600
+                                  focus:outline-none
+                                "
+                                aria-label="Default select example"
+                                v-model="userInfo.maritalStatusId"
+                              >
+                                <option selected>
+                                  {{ userInfo.maritalStatus.name }}
+                                </option>
+                                <option value="1">Single</option>
+                                <option value="2">Married</option>
+                                <option value="3">Divorced</option>
+                                <option value="4">Widowed</option>
+                                <option value="5">Separated</option>
+                              </select>
+                            </div>
                           </div>
                         </div>
 
-                        <div class="grid grid-cols-2">
-                          <div
-                            class="px-4 py-2 text-base font-bold text-main-400"
-                          >
-                            Birthdate
-                          </div>
-                          <input
-                            type="date"
-                            v-model="userInfo.dateOfBirth"
-                            name="birthDay"
-                            id="birthDay"
-                            class="form-control"
-                          />
-                        </div>
-                        <div class="grid grid-cols-2">
-                          <div
-                            class="px-4 py-2 text-base font-bold text-main-400"
-                          >
-                            Martial Status
-                          </div>
-                          <div class="mb-3 xl:w-96">
-                            <select
+                        <div
+                          class="grid md:grid-cols-2 text-sm mt-4 border-t-2"
+                        >
+                          <div class="grid grid-cols-2 mt-4">
+                            <div
                               class="
-                                form-select
-                                appearance-none
-                                block
-                                w-full
-                                px-3
-                                py-1.5
+                                px-4
+                                py-2
                                 text-base
-                                font-normal
-                                text-gray-700
-                                bg-white bg-clip-padding bg-no-repeat
-                                border border-solid border-gray-300
-                                rounded
-                                transition
-                                ease-in-out
-                                m-0
-                                focus:text-gray-700
-                                focus:bg-white
-                                focus:border-blue-600
-                                focus:outline-none
+                                font-bold
+                                text-main-400
                               "
-                              aria-label="Default select example"
-                              v-model="userInfo.maritalStatusId"
                             >
-                              <option selected>
-                                {{ userInfo.maritalStatus.name }}
-                              </option>
-                              <option value="1">Single</option>
-                              <option value="2">Married</option>
-                              <option value="3">Divorced</option>
-                              <option value="4">Widowed</option>
-                              <option value="5">Separated</option>
-                            </select>
+                              Amharic First Name
+                            </div>
+                            <div class="mb-3 xl:w-96">
+                              <input
+                                type="text"
+                                class="
+                                  form-control
+                                  block
+                                  w-full
+                                  px-3
+                                  py-1.5
+                                  text-base
+                                  font-normal
+                                  text-gray-700
+                                  bg-white bg-clip-padding
+                                  border border-solid border-gray-300
+                                  rounded
+                                  transition
+                                  ease-in-out
+                                  m-0
+                                  focus:bg-white
+                                  focus:border-primary-600
+                                  focus:outline-none
+                                "
+                                id="firstName"
+                                placeholder="First name"
+                                v-model="userInfo.alternativeName"
+                              />
+                            </div>
+                          </div>
+                          <div class="grid grid-cols-2 mt-4">
+                            <div
+                              class="
+                                px-4
+                                py-2
+                                text-base
+                                font-bold
+                                text-main-400
+                              "
+                            >
+                              Amharic Last Name
+                            </div>
+                            <div class="mb-3 xl:w-96">
+                              <input
+                                type="text"
+                                class="
+                                  form-control
+                                  block
+                                  w-full
+                                  px-3
+                                  py-1.5
+                                  text-base
+                                  font-normal
+                                  text-gray-700
+                                  bg-white bg-clip-padding
+                                  border border-solid border-gray-300
+                                  rounded
+                                  transition
+                                  ease-in-out
+                                  m-0
+                                  focus:bg-white
+                                  focus:border-primary-600
+                                  focus:outline-none
+                                "
+                                id="fatherName"
+                                placeholder="Father Name"
+                                v-model="userInfo.alternativeFatherName"
+                              />
+                            </div>
+                          </div>
+                          <div class="grid grid-cols-2">
+                            <div
+                              class="
+                                px-4
+                                py-2
+                                text-base
+                                font-bold
+                                text-main-400
+                              "
+                            >
+                              Amharic Grandfather Name
+                            </div>
+                            <div class="mb-3 xl:w-96">
+                              <input
+                                type="text"
+                                class="
+                                  form-control
+                                  block
+                                  w-full
+                                  px-3
+                                  py-1.5
+                                  text-base
+                                  font-normal
+                                  text-gray-700
+                                  bg-white bg-clip-padding
+                                  border border-solid border-gray-300
+                                  rounded
+                                  transition
+                                  ease-in-out
+                                  m-0
+                                  focus:bg-white
+                                  focus:border-primary-600
+                                  focus:outline-none
+                                "
+                                id="grandFatherName"
+                                placeholder="Grand Father Name"
+                                v-model="userInfo.alternativeGrandFatherName"
+                              />
+                            </div>
                           </div>
                         </div>
                       </div>
-
-                      <div class="grid md:grid-cols-2 text-sm mt-4 border-t-2">
-                        <div class="grid grid-cols-2 mt-4">
-                          <div
-                            class="px-4 py-2 text-base font-bold text-main-400"
-                          >
-                            Amharic First Name
-                          </div>
-                          <div class="mb-3 xl:w-96">
-                            <input
-                              type="text"
-                              class="
-                                form-control
-                                block
-                                w-full
-                                px-3
-                                py-1.5
-                                text-base
-                                font-normal
-                                text-gray-700
-                                bg-white bg-clip-padding
-                                border border-solid border-gray-300
-                                rounded
-                                transition
-                                ease-in-out
-                                m-0
-                                focus:bg-white
-                                focus:border-primary-600
-                                focus:outline-none
-                              "
-                              id="firstName"
-                              placeholder="First name"
-                              v-model="userInfo.alternativeName"
-                            />
-                          </div>
-                        </div>
-                        <div class="grid grid-cols-2 mt-4">
-                          <div
-                            class="px-4 py-2 text-base font-bold text-main-400"
-                          >
-                            Amharic Last Name
-                          </div>
-                          <div class="mb-3 xl:w-96">
-                            <input
-                              type="text"
-                              class="
-                                form-control
-                                block
-                                w-full
-                                px-3
-                                py-1.5
-                                text-base
-                                font-normal
-                                text-gray-700
-                                bg-white bg-clip-padding
-                                border border-solid border-gray-300
-                                rounded
-                                transition
-                                ease-in-out
-                                m-0
-                                focus:bg-white
-                                focus:border-primary-600
-                                focus:outline-none
-                              "
-                              id="fatherName"
-                              placeholder="Father Name"
-                              v-model="userInfo.alternativeFatherName"
-                            />
-                          </div>
-                        </div>
-                        <div class="grid grid-cols-2">
-                          <div
-                            class="px-4 py-2 text-base font-bold text-main-400"
-                          >
-                            Amharic Grandfather Name
-                          </div>
-                          <div class="mb-3 xl:w-96">
-                            <input
-                              type="text"
-                              class="
-                                form-control
-                                block
-                                w-full
-                                px-3
-                                py-1.5
-                                text-base
-                                font-normal
-                                text-gray-700
-                                bg-white bg-clip-padding
-                                border border-solid border-gray-300
-                                rounded
-                                transition
-                                ease-in-out
-                                m-0
-                                focus:bg-white
-                                focus:border-primary-600
-                                focus:outline-none
-                              "
-                              id="grandFatherName"
-                              placeholder="Grand Father Name"
-                              v-model="userInfo.alternativeGrandFatherName"
-                            />
-                          </div>
-                        </div>
-                      </div>
                     </div>
-                  </div>
 
-                  <div class="bg-white p-3 shadow-xl rounded-sm">
-                    <div
-                      class="
-                        flex
-                        items-center
-                        space-x-2
-                        mb-4
-                        border-b-4
-                        text-main-400
-                        font-semibold
-                        text-gray-900
-                        leading-8
-                      "
-                    >
-                      <span clas="text-green-500">
-                        <i class="fa fa-phone text-main-400"></i>
-                      </span>
-                      <span class="tracking-wide text-main-400"
-                        >Contact Information</span
+                    <div class="bg-white p-3 shadow-xl rounded-sm">
+                      <div
+                        class="
+                          flex
+                          items-center
+                          space-x-2
+                          mb-4
+                          border-b-4
+                          text-main-400
+                          font-semibold
+                          text-gray-900
+                          leading-8
+                        "
                       >
-                    </div>
-                    <div class="text-gray-700">
-                      <div class="grid md:grid-cols-2 text-sm">
-                        <div class="grid grid-cols-2">
-                          <div
-                            class="px-4 py-2 text-base font-bold text-main-400"
-                          >
-                            Phone Number
-                          </div>
-                          <div class="mb-3 xl:w-96">
-                            <input
-                              type="text"
+                        <span clas="text-green-500">
+                          <i class="fa fa-phone text-main-400"></i>
+                        </span>
+                        <span class="tracking-wide text-main-400"
+                          >Contact Information</span
+                        >
+                      </div>
+                      <div class="text-gray-700">
+                        <div class="grid md:grid-cols-2 text-sm">
+                          <div class="grid grid-cols-2">
+                            <div
                               class="
-                                form-control
-                                block
-                                w-full
-                                px-3
-                                py-1.5
+                                px-4
+                                py-2
                                 text-base
-                                font-normal
-                                text-gray-700
-                                bg-white bg-clip-padding
-                                border border-solid border-gray-300
-                                rounded
-                                transition
-                                ease-in-out
-                                m-0
-                                focus:bg-white
-                                focus:border-primary-600
-                                focus:outline-none
+                                font-bold
+                                text-main-400
                               "
-                              id="phoneNumber"
-                              placeholder="Phone number"
-                              v-model="userInfo.user.phoneNumber"
-                            />
+                            >
+                              Phone Number
+                            </div>
+                            <div class="mb-3 xl:w-96">
+                              <input
+                                type="text"
+                                class="
+                                  form-control
+                                  block
+                                  w-full
+                                  px-3
+                                  py-1.5
+                                  text-base
+                                  font-normal
+                                  text-gray-700
+                                  bg-white bg-clip-padding
+                                  border border-solid border-gray-300
+                                  rounded
+                                  transition
+                                  ease-in-out
+                                  m-0
+                                  focus:bg-white
+                                  focus:border-primary-600
+                                  focus:outline-none
+                                "
+                                id="phoneNumber"
+                                placeholder="Phone number"
+                                v-model="userInfo.user.phoneNumber"
+                              />
+                            </div>
                           </div>
-                        </div>
-                        <div class="grid grid-cols-2">
-                          <div
-                            class="px-4 py-2 text-base font-bold text-main-400"
-                          >
-                            Address
-                          </div>
-                          <div class="mb-3 xl:w-96">
-                            <input
-                              type="text"
+                          <div class="grid grid-cols-2">
+                            <div
                               class="
-                                form-control
-                                block
-                                w-full
-                                px-3
-                                py-1.5
+                                px-4
+                                py-2
                                 text-base
-                                font-normal
-                                text-gray-700
-                                bg-white bg-clip-padding
-                                border border-solid border-gray-300
-                                rounded
-                                transition
-                                ease-in-out
-                                m-0
-                                focus:bg-white
-                                focus:border-primary-600
-                                focus:outline-none
+                                font-bold
+                                text-main-400
                               "
-                              id="address"
-                              placeholder="Address"
-                            />
+                            >
+                              Address
+                            </div>
+                            <div class="mb-3 xl:w-96">
+                              <input
+                                type="text"
+                                class="
+                                  form-control
+                                  block
+                                  w-full
+                                  px-3
+                                  py-1.5
+                                  text-base
+                                  font-normal
+                                  text-gray-700
+                                  bg-white bg-clip-padding
+                                  border border-solid border-gray-300
+                                  rounded
+                                  transition
+                                  ease-in-out
+                                  m-0
+                                  focus:bg-white
+                                  focus:border-primary-600
+                                  focus:outline-none
+                                "
+                                id="address"
+                                placeholder="Address"
+                              />
+                            </div>
                           </div>
-                        </div>
-                        <div class="grid grid-cols-2">
-                          <div
-                            class="px-4 py-2 text-base font-bold text-main-400"
-                          >
-                            Email
-                          </div>
-                          <div class="mb-3 xl:w-96">
-                            <input
-                              type="text"
+                          <div class="grid grid-cols-2">
+                            <div
                               class="
-                                form-control
-                                block
-                                w-full
-                                px-3
-                                py-1.5
+                                px-4
+                                py-2
                                 text-base
-                                font-normal
-                                text-gray-700
-                                bg-white bg-clip-padding
-                                border border-solid border-gray-300
-                                rounded
-                                transition
-                                ease-in-out
-                                m-0
-                                focus:bg-white
-                                focus:border-primary-600
-                                focus:outline-none
+                                font-bold
+                                text-main-400
                               "
-                              id="firstName"
-                              placeholder="Email"
-                              v-model="userInfo.user.emailAddress"
-                            />
+                            >
+                              Email
+                            </div>
+                            <div class="mb-3 xl:w-96">
+                              <input
+                                type="text"
+                                class="
+                                  form-control
+                                  block
+                                  w-full
+                                  px-3
+                                  py-1.5
+                                  text-base
+                                  font-normal
+                                  text-gray-700
+                                  bg-white bg-clip-padding
+                                  border border-solid border-gray-300
+                                  rounded
+                                  transition
+                                  ease-in-out
+                                  m-0
+                                  focus:bg-white
+                                  focus:border-primary-600
+                                  focus:outline-none
+                                "
+                                id="firstName"
+                                placeholder="Email"
+                                v-model="userInfo.user.emailAddress"
+                              />
+                            </div>
                           </div>
                         </div>
                       </div>
+                      <button
+                        type="submit"
+                        class="
+                          block
+                          w-full
+                          text-white
+                          bg-main-400
+                          text-base
+                          font-bold
+                          rounded-lg
+                          hover:bg-white hover:text-main-400 hover:shadow-2xl
+                          p-3
+                          my-4
+                        "
+                      >
+                        <i class="fa fa-save"></i>
+                        Update Profile
+                      </button>
                     </div>
-                    <button
-                      type="submit"
-                      class="
-                        block
-                        w-full
-                        text-white
-                        bg-main-400
-                        text-base
-                        font-bold
-                        rounded-lg
-                        hover:bg-white hover:text-main-400 hover:shadow-2xl
-                        p-3
-                        my-4
-                      "
-                    >
-                      <i class="fa fa-save"></i>
-                      Update Profile
-                    </button>
-                  </div>
-                  <!-- End of about section -->
-                </form>
+                    <!-- End of about section -->
+                  </form>
                 </div>
                 <!-- When education feature is added to reviewer  -->
                 <!-- Experience and education -->
@@ -733,7 +807,7 @@ export default {
     let isLoadingUserInfo = ref(false);
 
     const submit = () => {
-      isLoadingUserInfo.value=true;
+      isLoadingUserInfo.value = true;
       store.dispatch("profile/updateProfile", userInfo.value).then((res) => {
         if (res.data.status == "Success") {
           toast.success("Profile Updated successfuly", {
@@ -744,7 +818,7 @@ export default {
             icon: true,
           });
           getProfile();
-          isLoadingUserInfo.value=false;
+          isLoadingUserInfo.value = false;
         } else {
           toast.error("Please try again", {
             timeout: 5000,
@@ -753,7 +827,7 @@ export default {
             pauseOnHover: true,
             icon: true,
           });
-          isLoadingUserInfo.value=false;
+          isLoadingUserInfo.value = false;
         }
       });
     };
@@ -761,10 +835,12 @@ export default {
     const updateProfilePicture = () => {
       let formData = new FormData();
       formData.append("document", photoFile.value);
+     
       let payload = { document: formData, id: userId };
       store
         .dispatch("profile/updateProfilePicture", payload)
         .then((res) => {
+          console.log(res)
           if (res.status == 200) {
             toast.success("Profile Photo Updated successfuly", {
               timeout: 5000,
@@ -833,7 +909,9 @@ export default {
         } else {
           userInfo.value.dateOfBirth = "1900-01-01";
         }
-        userInfo.value.pic = googleApi + res.data.data.profilePicture.filePath;
+        userInfo.value.pic = res.data.data.profilePicture
+          ? googleApi + res.data.data.profilePicture.filePath
+          : "";
       });
 
       const actualBtn = document.getElementById("profilePicture");

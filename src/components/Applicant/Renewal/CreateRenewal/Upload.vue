@@ -126,7 +126,7 @@
                             <p class="">
                               {{ item.documentType.name }}
                               <b v-if="item.isRequired" class="text-red-300"
-                                >(*Required)</b
+                                >(*)</b
                               >
                             </p>
                           </div>
@@ -150,7 +150,7 @@
                           <input
                             type="file"
                             required
-                            :id="`files${item.id}`"
+                            id="common_files"
                             accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
                             :ref="`imageUploader${item.id}`"
                             class="custom-file-input"
@@ -160,21 +160,35 @@
                       </td>
 
                       <td class="px-6 py-4 text-center">
-                        <span
-                          data-bs-toggle="modal"
-                          data-bs-target="#filePreview"
-                          @click="
-                            previewFile(
-                              item.documentType.code,
-                              item.documentType.name
-                            )
+                        <a
+                          :id="
+                            'common_image_href' + item.documentType.id + item.id
                           "
+                          href=""
+                          :data-title="item.name ? item.name : '-----'"
+                          data-lightbox="example-2"
                         >
                           <i
-                            class="fa fa-eye cursor-pointer"
+                            :id="'common_icon' + item.documentType.id + item.id"
+                            class="
+                              fa fa-eye
+                              cursor-pointer
+                              text-main-400
+                              disabled
+                            "
                             aria-hidden="true"
-                          ></i>
-                        </span>
+                          >
+                            <img
+                              :id="
+                                'common_image_lightbox' +
+                                item.documentType.id +
+                                item.id
+                              "
+                              src=""
+                              class="w-full h-2 object-cover"
+                            />
+                          </i>
+                        </a>
                       </td>
                     </tr>
                   </tbody>
@@ -326,7 +340,7 @@
                             <p class="">
                               {{ item.documentType.name }}
                               <b v-if="item.isRequired" class="text-red-300"
-                                >(*Required)</b
+                                >(*)</b
                               >
                             </p>
                           </div>
@@ -361,21 +375,38 @@
                       </td>
 
                       <td class="px-6 py-4 text-center">
-                        <span
-                          data-bs-toggle="modal"
-                          data-bs-target="#filePreview"
-                          @click="
-                            previewFile(
-                              item.documentType.code,
-                              item.documentType.name
-                            )
+                        <a
+                          :id="
+                            'image_href_' +
+                            `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                           "
+                          href=""
+                          :data-title="item.name ? item.name : '-----'"
+                          data-lightbox="example-2"
                         >
                           <i
-                            class="fa fa-eye cursor-pointer"
+                            :id="
+                              'educational_icon_' +
+                              `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                            "
+                            class="
+                              fa fa-eye
+                              cursor-pointer
+                              text-main-400
+                              disabled
+                            "
                             aria-hidden="true"
-                          ></i>
-                        </span>
+                          >
+                            <img
+                              :id="
+                                'image_lightbox_' +
+                                `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                              "
+                              src=""
+                              class="w-full h-2 object-cover"
+                            />
+                          </i>
+                        </a>
                       </td>
                     </tr>
                   </tbody>
@@ -397,7 +428,7 @@
                               <b
                                 v-if="parentItem[0].isRequired"
                                 class="text-red-300"
-                                >(*Required)</b
+                                >(*)</b
                               >
                             </p>
                           </div>
@@ -434,21 +465,38 @@
                       </td>
 
                       <td class="px-6 py-4 text-center">
-                        <span
-                          data-bs-toggle="modal"
-                          data-bs-target="#filePreview"
-                          @click="
-                            previewFile(
-                              parentItem[0].documentType.code,
-                              parentItem[0].documentType.name
-                            )
+                        <a
+                          :id="
+                            'image_href_' +
+                            `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                           "
+                          href=""
+                          :data-title="parentItem[0].name ? item.name : '-----'"
+                          data-lightbox="example-2"
                         >
                           <i
-                            class="fa fa-eye cursor-pointer"
+                            :id="
+                              'educational_icon_' +
+                              `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                            "
+                            class="
+                              fa fa-eye
+                              cursor-pointer
+                              text-main-400
+                              disabled
+                            "
                             aria-hidden="true"
-                          ></i>
-                        </span>
+                          >
+                            <img
+                              :id="
+                                'image_lightbox_' +
+                                `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                              "
+                              src=""
+                              class="w-full h-2 object-cover"
+                            />
+                          </i>
+                        </a>
                       </td>
                     </tr>
                     <!-- if parent doc has more than 1 elements -->
@@ -466,7 +514,7 @@
                               <b
                                 v-if="parentItem[0].isRequired"
                                 class="text-red-300"
-                                >(*Required)</b
+                                >(*)</b
                               >
                             </p>
                           </div>
@@ -501,7 +549,7 @@
                           type="button"
                           @click="addMore(parentItem[0])"
                         >
-                          Upload
+                          Add
                         </button>
                       </td>
                     </tr>
@@ -557,7 +605,6 @@
                                   <div class="flex items-center ml-4">
                                     <div>
                                       <p class="">
-                                  
                                         {{ parentChildItem.documentType.name }}
                                       </p>
                                     </div>
@@ -600,9 +647,7 @@
                                       :required="parentChildItem.isRequired"
                                       :id="`files${parentChildItem.id}`"
                                       accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
-                                      :ref="
-                                        `imageUploader${parentChildItem.id}`
-                                      "
+                                      :ref="`imageUploader${parentChildItem.id}`"
                                       class="custom-file-input"
                                       v-on:change="
                                         handleFileUpload(
@@ -626,7 +671,7 @@
                                   <a
                                     :id="
                                       'image_href_' +
-                                        `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                      `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                                     "
                                     href=""
                                     :data-title="
@@ -637,7 +682,7 @@
                                     <i
                                       :id="
                                         'educational_icon_' +
-                                          `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                        `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                                       "
                                       class="
                                         fa fa-eye
@@ -650,7 +695,7 @@
                                       <img
                                         :id="
                                           'image_lightbox_' +
-                                            `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                          `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                                         "
                                         src=""
                                         class="w-full h-2 object-cover"
@@ -668,8 +713,8 @@
                 </table>
                 <small
                   >Note:-document names with
-                  <b class="text-red-300">(*Required)</b> must be uploaded in
-                  order to go forward with application process</small
+                  <b class="text-red-300">(*)</b> must be uploaded in order to
+                  go forward with application process</small
                 >
               </div>
             </div>
@@ -677,7 +722,7 @@
         </div>
       </div>
     </div>
-    <div class="flex justify-end mr-8">
+    <div class="flex justify-end mr-8 mb-8">
       <button
         class="
           mt-8
@@ -735,17 +780,19 @@
 <script>
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
-import MAX_FILE_SIZE from "../../../../composables/documentMessage";
-import filePreview from "@/sharedComponents/FilePreview";
-import { boolean } from "yargs";
 import { useToast } from "vue-toastification";
 
-export default {
-  components: { filePreview },
+import MAX_FILE_SIZE from "../../../../composables/documentMessage";
+import { boolean } from "yargs";
 
+export default {
+  components: {},
+
+  // eslint-disable-next-line vue/no-setup-props-destructure
   setup(props, { emit }) {
     let store = useStore();
     const toast = useToast();
+
     let documents = ref([]);
     let commonDocuments = ref([]);
     let imageUploader = ref(null);
@@ -758,9 +805,11 @@ export default {
       file: "",
       name: "",
     });
+    let existingDocs = [];
     let files = ref("");
     let maxFileSize = ref();
-    let parentDocs = ref([]);
+    let db;
+    let dbVersion = 1;
     let isImage = ref({});
     let isPdf = ref({});
     let fileSizeExceed = ref({});
@@ -773,7 +822,8 @@ export default {
     let documentUploaded = ref({});
     let documentToSave = ref({});
     let divId = ref(0);
-    let imageData = []; 
+    let imageData = [];
+    let formData = new FormData();
     let documentsUploaded = ref({});
     let renewalDocuments = ref([]);
     let errorDocuments = ref([
@@ -783,8 +833,6 @@ export default {
       },
     ]);
     let showNestedDocuments = ref({});
-    let formData = new FormData();
-    
 
     const previewFile = (code, name) => {
       filePreviewData.value.isImage = isImage.value[code];
@@ -822,12 +870,14 @@ export default {
               (el) => el.documenttype != data.documentType.name
             );
             imageData.push({
+              imageId: "common_image_lightbox_" + data.documentType.code,
               documenttype: data.documentType ? data.documentType.name : "",
               educationalLevel: data.educationalLevel
                 ? data.educationalLevel.name
                 : "",
               image: reader.result,
             });
+
             documentToSave.value[data.documentType.code] = reader.result;
           },
           false
@@ -861,6 +911,22 @@ export default {
         fileSizeExceed.value[data.documentType.code] = true;
         documentUploaded.value[data.documentType.code] = "";
       }
+      let icon = document.getElementById(
+        "common_icon" + data.documentType.id + data.id
+      );
+      icon.classList.toggle("disabled");
+      let output = document.getElementById(
+        "common_image_lightbox" + data.documentType.id + data.id
+      );
+
+      let outputHref = document.getElementById(
+        "common_image_href" + data.documentType.id + data.id
+      );
+      outputHref.href = URL.createObjectURL(event.target.files[0]);
+      output.src = URL.createObjectURL(event.target.files[0]);
+      output.onload = function () {
+        URL.revokeObjectURL(output.src); // free memory
+      };
     };
 
     const handleFileUpload = (data, event, pro) => {
@@ -892,6 +958,7 @@ export default {
             pro.professionType.code.toUpperCase()
         ] = event?.target?.files[0];
       }
+
       isImage.value[data.documentType.code] = true;
       let fileS = documentUploaded.value[data.documentType.code].size;
       if (fileS <= maxFileSize.value / 1000) {
@@ -912,9 +979,16 @@ export default {
 
             previewDocuments.value[data.documentType.code] = reader.result;
             imageData = imageData.filter(
-            (el) => el.documenttype != data.documentType.name
-          );
+              (el) => el.documenttype != data.documentType.name
+            );
             imageData.push({
+              imageId:
+                "image_lightbox_" +
+                data.documentType.code +
+                "_" +
+                pro.educationalLevel.code +
+                "_" +
+                pro.professionType.code,
               documenttype: data.documentType ? data.documentType.name : "",
               educationalLevel: data.educationalLevel
                 ? data.educationalLevel.name
@@ -953,10 +1027,39 @@ export default {
         fileSizeExceed.value[data.documentType.code] = true;
         documentUploaded.value[data.documentType.code] = "";
       }
+      let icon = document.getElementById(
+        "educational_icon_" +
+          data.documentType.code +
+          "_" +
+          pro.educationalLevel.code +
+          "_" +
+          pro.professionType.code
+      );
+      icon.classList.toggle("disabled");
+      let output = document.getElementById(
+        "image_lightbox_" +
+          data.documentType.code +
+          "_" +
+          pro.educationalLevel.code +
+          "_" +
+          pro.professionType.code
+      );
+      let outputHref = document.getElementById(
+        "image_href_" +
+          data.documentType.code +
+          "_" +
+          pro.educationalLevel.code +
+          "_" +
+          pro.professionType.code
+      );
+      outputHref.href = URL.createObjectURL(event.target.files[0]);
+      output.src = URL.createObjectURL(event.target.files[0]);
+      output.onload = function () {
+        URL.revokeObjectURL(output.src); // free memory
+      };
     };
+
     const checkDocuments = () => {
-      console.log(educationalDocs.value);
-      console.log(documentsUploaded.value);
       let temp = false;
       let CMtemp = false;
       let NSTemp = false;
@@ -1027,18 +1130,69 @@ export default {
       });
       return CMtemp && temp && NSTemp;
     };
-        const next = () => {
-          let documentValidation = checkDocuments();
+
+    const next = () => {
+      let documentValidation = checkDocuments();
       if (documentValidation) {
-              store.dispatch("renewal/setTempDocs", formData).then(() => {
-        window.localStorage.setItem(
-          "RNApplicationImageData",
-          JSON.stringify(imageData)
-        );
-        emit("changeActiveState");
-      });
-    }
-    else {
+        store.dispatch("renewal/setTempDocs", formData).then(() => {
+          let finalLocalData = {
+            created: new Date(),
+            data: [],
+          };
+          let db;
+          let request = indexedDB.open("RNdocumentUploads", dbVersion);
+          request.onsuccess = function () {
+            db = request.result;
+            let transaction = db.transaction(
+              ["RNdocumentUploads"],
+              "readwrite"
+            );
+            let tempStat = false;
+
+            if (existingDocs.length > 0) {
+              imageData.forEach((newImage) => {
+                existingDocs.forEach((existing) => {
+                  if (existing.imageId == newImage.imageId) {
+                    existing.image = newImage.image;
+                    finalLocalData.data.push(existing);
+                  } else {
+                    finalLocalData.data.push(existing);
+                    tempStat = true;
+                  }
+                });
+                if (tempStat == true) {
+                  finalLocalData.data.push(newImage);
+                }
+              });
+              finalLocalData.data.concat(imageData);
+            } else {
+              finalLocalData.data = imageData;
+            }
+            finalLocalData.data = [...new Set(finalLocalData.data)];
+
+            const objectStore = transaction.objectStore("RNdocumentUploads");
+
+            const objectStoreRequest = objectStore.clear();
+
+            objectStoreRequest.onsuccess = (event) => {
+              let addReq = transaction
+                .objectStore("RNdocumentUploads")
+                .put(finalLocalData);
+
+              addReq.onerror = function () {
+                console.log(
+                  "Error regarding your browser, please update your browser to the latest version"
+                );
+              };
+
+              transaction.oncomplete = function () {
+                console.log("data stored");
+                emit("changeActiveState");
+              };
+            };
+          };
+        });
+      } else {
         let errors = "";
         errorDocuments.value.forEach((element) => {
           if (!errors) {
@@ -1058,17 +1212,6 @@ export default {
             icon: true,
           }
         );
-      }
-    };
-    const addMore = (parentItem) => {
-      console.log(parentItem);
-      if (
-        showNestedDocuments.value[parentItem.documentType.code] == undefined
-      ) {
-        showNestedDocuments.value[parentItem.documentType.code] = 0;
-      } else {
-        showNestedDocuments.value[parentItem.documentType.code] =
-          showNestedDocuments.value[parentItem.documentType.code] + 1;
       }
     };
     const back = () => {
@@ -1116,20 +1259,58 @@ export default {
         document.getElementById(doc[0].id).appendChild(divElement);
       }
     };
+    const addMore = (parentItem) => {
+      if (
+        showNestedDocuments.value[parentItem.documentType.code] == undefined
+      ) {
+        showNestedDocuments.value[parentItem.documentType.code] = 0;
+      } else {
+        showNestedDocuments.value[parentItem.documentType.code] =
+          showNestedDocuments.value[parentItem.documentType.code] + 1;
+      }
+    };
 
- 
+    const initDb = () => {
+      let request = indexedDB.open("RNdocumentUploads", dbVersion);
+
+      request.onerror = function () {
+        console.error("Unable to open database.");
+      };
+
+      request.onsuccess = function () {
+        let db = request.result;
+        const tx = db.transaction("RNdocumentUploads", "readonly");
+        const store = tx.objectStore("RNdocumentUploads");
+        let getAllIDB = store.getAll();
+        getAllIDB.onsuccess = function (evt) {
+          existingDocs =
+            evt.target.result && evt.target.result[0]
+              ? evt.target.result[0].data
+              : {};
+        };
+      };
+
+      request.onupgradeneeded = function () {
+        let db = request.result;
+        db.createObjectStore("RNdocumentUploads", {
+          keyPath: "id",
+          autoIncrement: true,
+        });
+      };
+    };
+
     onMounted(() => {
       localData.value = window.localStorage.getItem("RNApplicationData")
         ? JSON.parse(window.localStorage.getItem("RNApplicationData"))
         : {};
-      if (Object.keys(localData.value).length != 0) {
+    
         generalInfo.value = localData.value;
 
         store.dispatch("renewal/getApplicationCategories").then((res) => {
           let categoryResults = res.data.data
             ? res.data.data.filter((ele) => ele.code == "NA")
             : "";
-          let educationLevels = generalInfo.value.multipleDepartment; 
+          let educationLevels = generalInfo.value.multipleDepartment;
           //Get department docs
           educationLevels.forEach((element) => {
             store
@@ -1139,11 +1320,13 @@ export default {
                 element.educationalLevel.id,
               ])
               .then((res) => {
+                console.log(res);
                 let resp = res.data.data;
                 renewalDocuments.value = res.data.data;
+
                 educationalDocs.value.push({
                   educationalLevel: element.educationalLevel,
-                  professionType: element.professionType,
+                  professionType: element.professionalType,
                   docs: resp.filter(
                     (element) => element.parentDocument == null
                   ),
@@ -1162,10 +1345,17 @@ export default {
               let result = res.data.data;
               commonDocuments.value = result;
             });
+
+          //Initialize indexdb for file storage
+          if (!("indexedDB" in window)) {
+            console.log("This browser doesn't support IndexedDB");
+            return;
+          } else {
+            initDb();
+          }
         });
-      }
+     
     });
-    // emit("changeActiveStateMinus");
 
     return {
       documents,
@@ -1176,7 +1366,8 @@ export default {
       showImage,
       previewDocuments,
       showPreview,
-      previewFile, 
+      existingDocs,
+      previewFile,
       handleCommonFileUpload,
       generalInfo,
       goToNext,
@@ -1201,15 +1392,19 @@ export default {
   border-radius: 5%;
   padding: 7px;
 }
+
 .shadow-lg {
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 34%), 0 2px 4px -1px rgb(0 0 0 / 6%);
 }
+
 .document-name {
   font-size: small;
 }
+
 .custom-file-input::-webkit-file-upload-button {
   visibility: hidden;
 }
+
 .custom-file-input::before {
   content: "Upload";
   display: inline-block;
@@ -1225,10 +1420,12 @@ export default {
   font-weight: 700;
   font-size: 14px;
 }
+
 .custom-file-input:hover::before {
   background: -webkit-linear-gradient(top, #1f677e, #1f677e);
   color: white;
 }
+
 .custom-file-input:active::before {
   background: -webkit-linear-gradient(top, #1f677e, #1f677e);
 }

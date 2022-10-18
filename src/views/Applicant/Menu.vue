@@ -365,7 +365,7 @@
                           data-bs-toggle="tooltip"
                         >
                           <i class="fa fa-arrow-right-long"></i>
-                          Authenticated Professional License 
+                          Authenticated Professional License
                         </li>
 
                         <li
@@ -814,8 +814,6 @@
                     </div>
                   </div>
                 </div>
-
-              
               </div>
             </div>
           </div>
@@ -1223,7 +1221,7 @@
                       >
                     </div>
                     <div class="p-6 mb-2" v-if="RNdocumentSpecs">
-                       <ul class="bg-white">
+                      <ul class="bg-white">
                         <li
                           class="
                             text-main-400 text-lg
@@ -1251,7 +1249,6 @@
                           <i class="fa fa-arrow-right-long"></i>
                           CPD Certificate
                         </li>
-               
 
                         <li
                           class="
@@ -1552,8 +1549,10 @@ export default {
     const getImage = (profile) => {
       if (!profile) {
         isFirstTime.value = true;
-      } else {
-        userInfo.value.pic = googleApi + profile.profilePicture.filePath;
+      } else { 
+        userInfo.value.pic = profile.profilePicture
+          ? googleApi + profile.profilePicture.filePath
+          : "";
       }
     };
     onMounted(() => {
@@ -1566,21 +1565,21 @@ export default {
               element.applicantType.code == "ETH" &&
               element.isRequired == true &&
               element.applicationCategory.code == "NA" &&
-              element.parentDocument == null  
+              element.parentDocument == null
           );
           NLdocumentSpecs.value.foreigner = res.data.data.filter(
             (element) =>
               element.applicantType.code == "FOR" &&
               element.isRequired == true &&
               element.applicationCategory.code == "NA" &&
-              element.parentDocument == null 
+              element.parentDocument == null
           );
           NLdocumentSpecs.value.ethiopianAbroad = res.data.data.filter(
             (element) =>
               element.applicantType.code == "ETHABRO" &&
               element.isRequired == true &&
               element.applicationCategory.code == "NA" &&
-              element.parentDocument == null 
+              element.parentDocument == null
           );
 
           // Renewal Section
@@ -1622,7 +1621,7 @@ export default {
               element.educationalLevel &&
               element.educationalLevel.code == "BACH"
           );
-        } 
+        }
       });
     });
     return { userInfo, NLdocumentSpecs, RNdocumentSpecs, GSdocumentSpecs };
