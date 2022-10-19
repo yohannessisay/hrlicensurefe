@@ -195,6 +195,32 @@
       </div>
       <!-- END Column -->
     </div>
+
+    <div
+      v-else
+      class="
+        bg-white
+        my-1
+        px-1
+        md:w-1/4
+        lg:w-1/4
+        mdlg:w-1/4
+        sm:w-full sm:mr-4
+        shadow-2xl
+        rounded-lg
+        transform
+        transition
+        duration-300
+        ease-in-out
+        hover:-translate-y-2
+      "
+    >
+      <!-- Article -->
+
+      <h2 class="text-main-400 border-b-2 text-xl p-2">
+        There are no returned applications currently.
+      </h2>
+    </div>
     <returned-detail :modalDataId="modalDataId"></returned-detail>
   </main-content>
 </template>
@@ -219,6 +245,7 @@ export default {
     onMounted(() => {
       isLoading.value = true;
       userInfo.value = JSON.parse(window.localStorage.getItem("personalInfo"));
+
       store.dispatch("newlicense/getNewLicense").then((res) => {
         const results = res.data.data;
 

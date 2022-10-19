@@ -217,6 +217,31 @@
           </router-link>
         </a>
       </li> -->
+
+      <li
+        :class="
+          $route.fullPath === '/Applicant/NewLicense/returned'
+            ? 'list active'
+            : 'list'
+        "
+      >
+        <b></b>
+        <b></b>
+        <a href="#">
+          <router-link class="link" to="/Applicant/NewLicense/returned">
+            <span class="icon"
+              ><i
+                :class="
+                  $route.fullPath === '/Applicant/NewLicense/returned'
+                    ? 'bx bx-arrow-back'
+                    : 'bx bx-arrow-back'
+                "
+              ></i
+            ></span>
+            <span class="text text-white font-bold">Returned</span>
+          </router-link>
+        </a>
+      </li>
     </ul>
   </div>
 </template>

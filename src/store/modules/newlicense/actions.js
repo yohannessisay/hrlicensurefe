@@ -65,7 +65,7 @@ import {
   SET_TEMP_DOCS,
 } from "./mutation-types";
 
-const userId = +localStorage.getItem("userId");
+const userId = +window.localStorage.getItem("userId");
 
 export default {
   setLicense({ commit }, license) {
