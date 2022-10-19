@@ -245,14 +245,20 @@ export default {
     onMounted(() => {
       isLoading.value = true;
       userInfo.value = JSON.parse(window.localStorage.getItem("personalInfo"));
+      let userId = JSON.parse(window.localStorage.getItem("userId"));
 
-      store.dispatch("newlicense/getNewLicense").then((res) => {
+      store.dispatch("newlicense/getNewLicenseByUser", userId).then((res) => {
         const results = res.data.data;
 
         if (results.length > 0) {
           userReturnedLicenses.value = results.filter((returnedLicense) => {
             return returnedLicense.applicationStatus.code === "RTN";
           });
+
+          if (userReturnedLicenses.value.length === 0) {
+            noData.value = true;
+          }
+
           isLoading.value = false;
         } else {
           noData.value = true;

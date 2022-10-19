@@ -1,46 +1,46 @@
 <template>
   <div
     class="
-        modal
-        fade
-        fixed
-        top-0
-        left-0
-        hidden
-        w-full
-        h-full
-        outline-none
-        overflow-x-hidden overflow-y-auto
-      "
-    id="returnedDetail"
+          modal
+          fade
+          fixed
+          top-0
+          left-0
+          hidden
+          w-full
+          h-full
+          outline-none
+          overflow-x-hidden overflow-y-auto
+        "
+    id="submittedModalInfo"
     data-bs-backdrop="static"
     data-bs-keyboard="false"
     tabindex="-1"
-    aria-labelledby="returnedDetailLabel"
+    aria-labelledby="submittedModalInfoLabel"
     aria-hidden="true"
   >
     <div
       class="
-        modal-dialog modal-dialog-centered modal-xl
-        relative
-        w-auto
-        pointer-events-none
-      "
+          modal-dialog modal-dialog-centered modal-xl
+          relative
+          w-auto
+          pointer-events-none
+        "
     >
       <div
         class="
-          modal-content
-          border-none
-          shadow-lg
-          relative
-          flex flex-col
-          w-full
-          pointer-events-auto
-          bg-white bg-clip-padding
-          rounded-md
-          outline-none
-          text-current
-        "
+            modal-content
+            border-none
+            shadow-lg
+            relative
+            flex flex-col
+            w-full
+            pointer-events-auto
+            bg-white bg-clip-padding
+            rounded-md
+            outline-none
+            text-current
+          "
       >
         <div
           class="modal-header flex flex-shrink-0 justify-end p-2 rounded-t-md"
@@ -48,26 +48,26 @@
           <button
             type="button"
             class="
-              px-6
-              text-white
-              bg-main-400
-              hover:text-main-400 hover:border
-              font-medium
-              text-xs
-              leading-tight
-              uppercase
-              rounded
-              shadow-lg
-              hover:bg-purple-700 hover:shadow-lg
-              focus:bg-purple-700
-              focus:shadow-lg
-              focus:outline-none
-              focus:ring-0
-              active:bg-purple-800 active:shadow-lg
-              transition
-              duration-150
-              ease-in-out
-            "
+                px-6
+                text-white
+                bg-main-400
+                hover:text-main-400 hover:border
+                font-medium
+                text-xs
+                leading-tight
+                uppercase
+                rounded
+                shadow-lg
+                hover:bg-purple-700 hover:shadow-lg
+                focus:bg-purple-700
+                focus:shadow-lg
+                focus:outline-none
+                focus:ring-0
+                active:bg-purple-800 active:shadow-lg
+                transition
+                duration-150
+                ease-in-out
+              "
             data-bs-dismiss="modal"
             aria-label="Close"
           >
@@ -87,7 +87,7 @@
                 <div class="flex justify-center border-b-4 text-main-400">
                   <div class="text-center lg:max-w-3xl md:max-w-xl">
                     <h2 class="text-2xl font-bold mb-8 px-6 text-main-400">
-                      Returned License Detail
+                      Submitted License Detail
                     </h2>
                   </div>
                 </div>
@@ -105,15 +105,15 @@
                       <article class="overflow-hidden rounded-lg shadow-xl ">
                         <header
                           class="
-                            flex
-                            items-center
-                            justify-between
-                            leading-tight
-                            p-2
-                            md:p-4
-                            border-b-4  
-                            text-main-400
-                          "
+                              flex
+                              items-center
+                              justify-between
+                              leading-tight
+                              p-2
+                              md:p-4
+                              border-b-4  
+                              text-main-400
+                            "
                         >
                           <h1 class="text-lg">
                             <a
@@ -135,17 +135,15 @@
                               {{
                                 licenseData && licenseData.profile
                                   ? licenseData.profile.name
-                                  : "-"
-                              }}
-                              {{
-                                licenseData && licenseData.profile
-                                  ? licenseData.profile.fatherName
-                                  : "-"
-                              }}
-                              {{
-                                licenseData && licenseData.profile
-                                  ? licenseData.profile.grandFatherName
-                                  : "-"
+                                  : "-" +
+                                  " " +
+                                  (licenseData && licenseData.profile
+                                    ? licenseData.profile.fatherName
+                                    : "-") +
+                                  " " +
+                                  (licenseData && licenseData.profile
+                                    ? licenseData.profile.grandFatherName
+                                    : "-")
                               }}
                             </div>
                           </div>
@@ -173,13 +171,13 @@
 
                         <footer
                           class="
-                            flex
-                            items-center
-                            justify-between
-                            leading-none
-                            p-2
-                            md:p-4
-                          "
+                              flex
+                              items-center
+                              justify-between
+                              leading-none
+                              p-2
+                              md:p-4
+                            "
                         ></footer>
                       </article>
                       <!-- END Article -->
@@ -194,15 +192,15 @@
                       <article class="overflow-hidden rounded-lg shadow-xl">
                         <header
                           class="
-                            flex
-                            items-center
-                            justify-between
-                            leading-tight
-                            p-2
-                            md:p-4
-                            border-b-4
-                            text-main-400
-                          "
+                              flex
+                              items-center
+                              justify-between
+                              leading-tight
+                              p-2
+                              md:p-4
+                              border-b-4
+                              text-main-400
+                            "
                         >
                           <h1 class="text-lg">
                             <a
@@ -224,7 +222,7 @@
                               {{
                                 licenseData && licenseData.licenseReviewer
                                   ? licenseData.licenseReviewer.reviewer.name
-                                  : "-"
+                                  : "Not Assigned Yet"
                               }}
                             </div>
                           </div>
@@ -235,7 +233,7 @@
                                 licenseData && licenseData.licenseReviewer
                                   ? licenseData.licenseReviewer.reviewer
                                       .phoneNumber
-                                  : "-"
+                                  : "Not Assigned Yet"
                               }}
                             </div>
                           </div>
@@ -249,7 +247,7 @@
                                 licenseData.licenseReviewer.reviewer.expertLevel
                                   ? licenseData.licenseReviewer.reviewer
                                       .expertLevel.name
-                                  : "-"
+                                  : "Not Assigned Yet"
                               }}
                             </div>
                           </div>
@@ -263,7 +261,7 @@
                                 licenseData.licenseReviewer.reviewer.region
                                   ? licenseData.licenseReviewer.reviewer.region
                                       .name
-                                  : "-"
+                                  : "Not Assigned Yet"
                               }}
                             </div>
                           </div>
@@ -271,13 +269,13 @@
 
                         <footer
                           class="
-                            flex
-                            items-center
-                            justify-between
-                            leading-none
-                            p-2
-                            md:p-4
-                          "
+                              flex
+                              items-center
+                              justify-between
+                              leading-none
+                              p-2
+                              md:p-4
+                            "
                         ></footer>
                       </article>
                       <!-- END Article -->
@@ -292,15 +290,15 @@
                       <article class="overflow-hidden rounded-lg shadow-xl">
                         <header
                           class="
-                            flex
-                            items-center
-                            justify-between
-                            leading-tight
-                            p-2
-                            md:p-4
-                            border-b-4
-                            text-main-400
-                          "
+                              flex
+                              items-center
+                              justify-between
+                              leading-tight
+                              p-2
+                              md:p-4
+                              border-b-4
+                              text-main-400
+                            "
                         >
                           <h1 class="text-lg">
                             <a
@@ -358,13 +356,13 @@
 
                         <footer
                           class="
-                            flex
-                            items-center
-                            justify-between
-                            leading-none
-                            p-2
-                            md:p-4
-                          "
+                              flex
+                              items-center
+                              justify-between
+                              leading-none
+                              p-2
+                              md:p-4
+                            "
                         ></footer>
                       </article>
                       <!-- END Article -->
@@ -380,15 +378,15 @@
                       <article class="overflow-hidden rounded-lg shadow-xl">
                         <header
                           class="
-                            flex
-                            items-center
-                            justify-between
-                            leading-tight
-                            p-2
-                            md:p-4
-                            border-b-4
-                            text-main-400
-                          "
+                              flex
+                              items-center
+                              justify-between
+                              leading-tight
+                              p-2
+                              md:p-4
+                              border-b-4
+                              text-main-400
+                            "
                         >
                           <h1 class="text-lg">
                             <a
@@ -459,13 +457,13 @@
 
                         <footer
                           class="
-                            flex
-                            items-center
-                            justify-between
-                            leading-none
-                            p-2
-                            md:p-4
-                          "
+                              flex
+                              items-center
+                              justify-between
+                              leading-none
+                              p-2
+                              md:p-4
+                            "
                         ></footer>
                       </article>
                       <!-- END Article -->
