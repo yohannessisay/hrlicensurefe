@@ -6,7 +6,25 @@
   <section class="home-section">
     <!-- Header -->
     <reviewer-nav-bar>
-      <h2 class="dashboard">Draft</h2>
+      <ol class="list-reset flex">
+          <li>
+            <router-link to="/admin/review"
+              ><span class="text-primary-600 text-base">Home</span></router-link
+            >
+          </li>
+          <li><span class="text-gray-500 mx-2">/</span></li>
+          <li>
+            <a href="#" class="hover:text-primary-600 text-grey-300"
+              >New License</a
+            >
+          </li>
+          <li><span class="text-gray-500 mx-2">/</span></li>
+          <li>
+            <a href="#" class="pointer-events-none text-lg text-grey-300"
+              >Draft</a
+            >
+          </li>
+        </ol>
     </reviewer-nav-bar>
     <!-- Header -->
 
@@ -263,8 +281,8 @@
 
 <script>
 import ReviewerSideNav from "../SharedComponents/sideNav.vue";
-import ReviewerNavBar from "../SharedComponents/navBar.vue";
-import NewLicenseMainContent from "../../../ApplicationTypes/NewLicense/MainComponents/draft.vue";
+import ReviewerNavBar from "../../../SharedComponents/navBar.vue";
+import NewLicenseMainContent from "../../../SharedComponents/draft.vue";
 import { ref, onMounted, computed } from "vue";
 import { useStore } from "vuex";
 
@@ -419,7 +437,7 @@ export default {
                   width: "10%",
                   display: function (row) {
                     return (
-                  '<button data-bs-toggle="modal" data-bs-target="#editUser" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
+                  '<button data-bs-toggle="modal" data-bs-target="#staticBackdropOthers" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
                   row.id +
                   '" ><i class="fa fa-eye"></i> View</button>'
                     );

@@ -1,5 +1,6 @@
 <template>
-  <div class="overflow-x-hidden overflow-y-scroll">
+
+  <div class="overflow-x-hidden overflow-y-scroll h-full">
     <Navigation />
     <div v-if="this.approvalModal == 0" class="w-screen h-screen bg-lightBlueB-200 flex items-center justify-center">
       <transition name="slide-fade-to-left">
@@ -8,15 +9,15 @@
         </Modal>
       </transition>
     </div>
-    <div class="w-screen h-full bg-lightBlueB-200 flex items-center justify-center" v-if="this.approvalModal != 0">
-      <div id="navg" class="flex flex-row justify-center mb-medium"></div>
+    <div class="w-screen h-full bg-lightBlueB-200 flex items-center justify-center  overflow-y-scroll" v-if="this.approvalModal != 0">
+     
       <transition name="fade" mode="out-in">
         <div v-if="this.activeState == 1">
           <PersonalInfo :activeState="1" @changeActiveState="activeState++" :approvalModal="this.approvalModal" />
         </div>
       </transition>
       <transition name="fade" mode="out-in">
-        <div v-if="this.activeState == 2">
+        <div v-if="this.activeState == 2" class="sm:w-full md:w-3/5 lg:w-3/5 xl:w-3/5 mdlg:w-3/5">
           <Preview :activeState="2" @changeActiveStatePrevious="activeState--" />
         </div>
       </transition>
@@ -85,4 +86,7 @@ export default {
 .fade-leave-active {
   transition: opacity 0.5s ease-out ease-in;
 }
+
+
+
 </style>

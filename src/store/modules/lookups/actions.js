@@ -6,6 +6,71 @@ export default {
   setEducationalLevel({ commit }, educationalLevel) {
     commit(SET_EDUCATION_LEVEL, educationalLevel);
   },
+  /***************************Get api calls*********************************/
+  async getProfessionalPrefix() {
+    try {
+      const resp = await ApiService.get(
+        baseUrl + "/lookups/professionalPrefixes"
+      );
+      return resp;
+    } catch (error) {
+      const resp = error;
+      return resp;
+    }
+  },
+  async getProfessionalType() {
+    try {
+      const resp = await ApiService.get(
+        baseUrl + "/lookups/professionalTypes"
+      );
+      return resp;
+    } catch (error) {
+      const resp = error;
+      return resp;
+    }
+  },
+
+  async getGovernment() {
+    try {
+      const resp = await ApiService.get(baseUrl + "/lookups/OccupationTypes");
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async getNativeLanguage() {
+    try {
+      const resp = await ApiService.get(baseUrl + "/lookups/NativeLanguages");
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async getEducationLevel() {
+    try {
+      const resp = await ApiService.get(baseUrl + "/lookups/educationalLevels");
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async getAllDocumentSpecs({ commit }) {
+    try {
+      const resp = await ApiService.get(baseUrl + "/documentSpecs");
+      commit(SET_ALL_DOCUMENT_SPECS, resp.data.data);
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async getDepartments() {
+    try {
+      const resp = await ApiService.get(baseUrl + "/lookups/departments");
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
   async getApplicantType() {
     try {
       const resp = await ApiService.get(baseUrl + "/lookups/applicantTypes");
@@ -17,44 +82,6 @@ export default {
   async getRegions() {
     try {
       const resp = await ApiService.get(baseUrl + "/lookups/regions");
-      return resp;
-    } catch (error) {
-      const resp = error;
-      return resp;
-    }
-  },
-
-  async addRegion(id, data) {
-    try {
-      const resp = await ApiService.post(baseUrl + "/lookups/addRegion", data);
-      return resp;
-    } catch (error) {
-      const resp = error;
-      return resp;
-    }
-  },
-  async getApplicationStatuses() {
-    try {
-      const resp = await ApiService.get(baseUrl + "/applicationStatuses/");
-      return resp;
-    } catch (error) {
-      const resp = error;
-      return resp;
-    }
-  },
-  
-  async addWoreda(id, data) {
-    try {
-      const resp = await ApiService.post(baseUrl + "/lookups/addWoreda", data);
-      return resp;
-    } catch (error) {
-      const resp = error;
-      return resp;
-    }
-  },
-  async addZone(id, data) {
-    try {
-      const resp = await ApiService.post(baseUrl + "/lookups/addZone", data);
       return resp;
     } catch (error) {
       const resp = error;
@@ -79,34 +106,192 @@ export default {
       return resp;
     }
   },
-  async getGovernment({ commit }, id) {
+  async getApplicationStatuses() {
     try {
-      const resp = await ApiService.get(baseUrl + "/lookups/OccupationTypes");
+      const resp = await ApiService.get(baseUrl + "/applicationStatuses");
+      return resp;
+    } catch (error) {
+      const resp = error;
+      return resp;
+    }
+  },
+  async getApplicantTitles() {
+    try {
+      const resp = await ApiService.get(baseUrl + "/applicantTitles");
+      return resp;
+    } catch (error) {
+      const resp = error;
+      return resp;
+    }
+  },
+  /***************************Add api calls*********************************/
+  async addRegion(id, data) {
+    try {
+      const resp = await ApiService.post(baseUrl + "/lookups/addRegion", data);
+      return resp;
+    } catch (error) {
+      const resp = error;
+      return resp;
+    }
+  },
+  async addWoreda(id, data) {
+    try {
+      const resp = await ApiService.post(baseUrl + "/lookups/addWoreda", data);
+      return resp;
+    } catch (error) {
+      const resp = error;
+      return resp;
+    }
+  },
+  async addZone(id, data) {
+    try {
+      const resp = await ApiService.post(baseUrl + "/lookups/addZone", data);
+      return resp;
+    } catch (error) {
+      const resp = error;
+      return resp;
+    }
+  },
+
+  async addDepartment(id, data) {
+    try {
+      const resp = await ApiService.post(
+        baseUrl + "/lookups/addDepartment",
+        data
+      );
       return resp;
     } catch (error) {
       return error;
     }
   },
-  async getNativeLanguage({ commit }, id) {
+  async addEducationLevel(id, data) {
     try {
-      const resp = await ApiService.get(baseUrl + "/lookups/NativeLanguages");
+      const resp = await ApiService.post(
+        baseUrl + "/lookups/addEducationLevel",
+        data
+      );
       return resp;
     } catch (error) {
       return error;
     }
   },
-  async getEducationalLevel({ commit }) {
+  async addProfessionalPrefix(id, data) {
     try {
-      const resp = await ApiService.get(baseUrl + "/lookups/educationalLevels");
+      const resp = await ApiService.post(
+        baseUrl + "/lookups/addprofessionalPrefix",
+        data
+      );
       return resp;
     } catch (error) {
       return error;
     }
   },
-  async getAllDocumentSpecs({ commit }) {
+  async addProfessionalType(id, data) {
     try {
-      const resp = await ApiService.get(baseUrl + "/documentSpecs/");
-      commit(SET_ALL_DOCUMENT_SPECS, resp.data.data);
+      const resp = await ApiService.post(
+        baseUrl + "/lookups/addProfessionalType",
+        data
+      );
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async addApplicantTitle(id, data) {
+    try {
+      const resp = await ApiService.post(
+        baseUrl + "/lookups/addApplicantTitle",
+        data
+      );
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  /***************************Update api calls*********************************/
+  async updateDepartment(id, data) {
+    try {
+      const resp = await ApiService.put(
+        baseUrl + "/lookups/department/" + data.id,
+        data
+      );
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async updateZone({ commit }, data) {
+    try {
+      const resp = await ApiService.put(
+        baseUrl + "/lookups/zones/" + data.id,
+        data
+      );
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async updateWoreda({ commit }, data) {
+    try {
+      const resp = await ApiService.put(
+        baseUrl + "/lookups/woredas/" + data.id,
+        data
+      );
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async updateRegion({ commit }, data) {
+    try {
+      const resp = await ApiService.put(
+        baseUrl + "/lookups/regions/" + data.id,
+        data
+      );
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async updateEducationLevel({ commit }, data) {
+    try {
+      const resp = await ApiService.put(
+        baseUrl + "/lookups/educationalLevel/" + data.id,
+        data
+      );
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async updateProfessionalType({ commit }, data) {
+    try {
+      const resp = await ApiService.put(
+        baseUrl + "/lookups/professionalType/" + data.id,
+        data
+      );
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async updateProfessionalPrefix({ commit }, data) {
+    try {
+      const resp = await ApiService.put(
+        baseUrl + "/lookups/professionalPrefix/" + data.id,
+        data
+      );
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async updateApplicantTitle({ commit }, data) {
+    try {
+      const resp = await ApiService.put(
+        baseUrl + "/lookups/applicantTitles/" + data.id,
+        data
+      );
       return resp;
     } catch (error) {
       return error;

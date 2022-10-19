@@ -110,7 +110,7 @@
                   Leave a Feedback
                 </li>
               </router-link>
-              <a @click="updateProfile()">
+              <a  href="/applicant/profile">
                 <li
                   class="
                   block

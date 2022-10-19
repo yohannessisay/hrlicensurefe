@@ -1,11 +1,11 @@
 <template>
   <div class="sidebar">
     <router-link to="/admin/review">
-      <div class="logo-details ml-4">
+       <div class="logo-details">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 39.082 39.096"
-          class="w-10 h-10"
+          class="w-10 h-10 ml-4"
         >
           <defs>
             <linearGradient
@@ -40,34 +40,122 @@
       <span class="text-md ml-4">Lookup Mgmt</span>
     </li>
     <ul class="nav-links">
-      <router-link to="lookupManagement">
-        <li :class="$route.fullPath === '/admin/lookupManagement' ? 'mb-2 active p-2' : ''">
+      <router-link to="/admin/lookupManagement">
+        <li
+          :class="
+            $route.fullPath === '/admin/lookupManagement'
+              ? 'mb-2 active p-2'
+              : ''
+          "
+        >
           <a href="#LocationManagement">
             <i class="bx bx-map"></i>
 
-            <span class="text-white" style=" word-break: break-all;">Locations</span>
+            <span class="links_name" style="word-break: break-all"
+              >Locations</span
+            >
+          </a>
+        </li>
+      </router-link>
+      <router-link to="/admin/lookupManagement/departments">
+        <li
+          :class="
+            $route.fullPath === '/admin/lookupManagement/departments'
+              ? 'mb-2 active p-2'
+              : ''
+          "
+        >
+          <a href="#DepartmentManagement">
+            <i class="bx bx-coin-stack"></i>
+
+            <span class="links_name" style="word-break: break-all"
+              >Departments</span
+            >
+          </a>
+        </li>
+      </router-link>
+
+      <router-link to="/admin/lookupManagement/applicantTitle">
+        <li
+          :class="
+            $route.fullPath === '/admin/lookupManagement/applicantTitle'
+              ? 'mb-2 active p-2'
+              : ''
+          "
+        >
+          <a href="#ApplicantTitleManagement">
+            <i class="bx bx-text"></i>
+
+            <span class="links_name" style="word-break: break-all"
+              >Applicant Title</span
+            >
+          </a>
+        </li>
+      </router-link>
+
+      <router-link to="/admin/lookupManagement/educationLevel">
+        <li
+          :class="
+            $route.fullPath === '/admin/lookupManagement/educationLevel'
+              ? 'mb-2 active p-2'
+              : ''
+          "
+        >
+          <a href="#EducationLevelManagement">
+            <i class="bx bx-paint"></i>
+
+            <span class="links_name" style="word-break: break-all"
+              >Education Level</span
+            >
+          </a>
+        </li>
+      </router-link>
+      <router-link to="/admin/lookupManagement/professionalPrefix">
+        <li
+          :class="
+            $route.fullPath === '/admin/lookupManagement/professionalPrefix'
+              ? 'mb-2 active p-2'
+              : ''
+          "
+        >
+          <a href="#ProfessionalPrefixManagement">
+            <i class="bx bx-glasses"></i>
+
+            <span class="links_name" style="word-break: break-all"
+              >Professional Prefix</span
+            >
+          </a>
+        </li>
+      </router-link>
+      <router-link to="/admin/lookupManagement/professionalType">
+        <li
+          :class="
+            $route.fullPath === '/admin/lookupManagement/professionalType'
+              ? 'mb-2 active p-2'
+              : ''
+          "
+        >
+          <a href="#ProfessionalTypeManagement">
+            <i class="bx bx-bookmarks"></i>
+
+            <span class="links_name" style="word-break: break-all"
+              >Professional Type</span
+            >
           </a>
         </li>
       </router-link>
     </ul>
-  <ul class="nav-links">
+    <ul class="nav-links">
       <div
         class="profile-details mb-8 ml-4"
-        style="
-          position: fixed;
-          bottom: 0;
-          width: 140px;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-        "
+     
       >
         <router-link to="/admin/review/">
-          <li>
+          <li  style="margin-top:100px;">
             <a href="" class="ml-6">
               <i class="bx bx-arrow-to-left text-white"></i>
 
-              <span class="links_name text-white mr-12">All Listing</span>
+              <span class="links_name text-white mr-12">Home</span>
             </a>
           </li>
         </router-link>

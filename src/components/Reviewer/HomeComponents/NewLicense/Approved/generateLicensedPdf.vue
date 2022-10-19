@@ -19,7 +19,6 @@
     aria-labelledby="generatePdfLabel"
     aria-hidden="true"
   >
-
     <div
       class="
         modal-dialog modal-dialog-centered modal-xl
@@ -368,25 +367,6 @@
                                               : ""
                                           }}
                                         </b>
-                                        <span class="text-sm ml-1 mr-1">
-                                          ከ
-                                        </span>
-                                        <b
-                                          class="
-                                            text-yellow-300
-                                            ml-1
-                                            text-sm
-                                            col-span-2
-                                          "
-                                          >{{
-                                            department.institution &&
-                                            department.institution.name
-                                              ? department.institution.name
-                                              : department.otherInstitution
-                                              ? department.otherInstitution
-                                              : ""
-                                          }}
-                                        </b>
                                       </div>
                                       ሙያ መዝግቦ ይህን የሙያ ስራ ፈቃድ ሰጥቷል።
                                     </h4>
@@ -423,25 +403,6 @@
                                               ? department.professionType.name
                                               : department.otherProfessionType
                                               ? department.otherProfessionType
-                                              : ""
-                                          }}
-                                        </b>
-                                        <span class="text-sm ml-1 mr-1">
-                                          From</span
-                                        >
-                                        <b
-                                          class="
-                                            text-yellow-300
-                                            ml-1
-                                            text-sm
-                                            col-span-2
-                                          "
-                                          >{{
-                                            department.institution &&
-                                            department.institution.name
-                                              ? department.institution.name
-                                              : department.otherInstitution
-                                              ? department.otherInstitution
                                               : ""
                                           }}
                                         </b>
@@ -557,7 +518,6 @@
                             : []
                         "
                       >
-                     
                         <div class="flex justify-center mb-4">
                           <h1>License 1</h1>
                         </div>
@@ -792,18 +752,18 @@
                                     <h4 class="underline">
                                       <b class="text-yellow-300"
                                         >{{
-                                          modalData?.profile?.name
-                                            ? modalData?.profile?.name
+                                          modalData && modalData.profile
+                                            ? modalData.profile.name
                                             : ""
                                         }}
                                         {{
-                                          modalData.profile?.fatherName
-                                            ? modalData.profile?.fatherName
+                                          modalData && modalData.profile
+                                            ? modalData.profile.fatherName
                                             : ""
                                         }}
                                         {{
-                                          modalData.profile?.grandFatherName
-                                            ? modalData.profile?.grandFatherName
+                                          modalData && modalData.profile
+                                            ? modalData.profile.grandFatherName
                                             : ""
                                         }}</b
                                       >
@@ -816,7 +776,7 @@
                                     <h4>
                                       ተገቢውን መስፈርት አሟልተው ስለተገኙ ሚኒስቴር መስሪያ ቤቱ
                                     </h4>
-                                    <h4  >
+                                    <h4>
                                       <!-- first profession -->
                                       <div
                                         class="
@@ -825,7 +785,6 @@
                                           border-b
                                         "
                                       >
-                                    
                                         <b
                                           class="
                                             text-yellow-300 text-sm
@@ -839,29 +798,14 @@
                                                     ? modalData.previousEducations
                                                     : []
                                                 )[0].professionType
-                                                  .amharicProfessionalType
-                                              : []
-                                          }}
-                                        </b>
-                                        <span class="text-sm ml-1 mr-1">
-                                          ከ
-                                        </span>
-                                        <b
-                                          class="
-                                            text-yellow-300
-                                            ml-1
-                                            text-sm
-                                            col-span-2
-                                          "
-                                        >
-                                          {{
-                                            modalData.newEducations
-                                              ? modalData.newEducations.concat(
-                                                  modalData &&
-                                                    modalData.previousEducations
-                                                    ? modalData.previousEducations
-                                                    : []
-                                                )[0].institution.name
+                                                ? modalData.newEducations.concat(
+                                                    modalData &&
+                                                      modalData.previousEducations
+                                                      ? modalData.previousEducations
+                                                      : []
+                                                  )[0].professionType
+                                                    .amharicProfessionalType
+                                                : ""
                                               : []
                                           }}
                                         </b>
@@ -888,29 +832,14 @@
                                                     ? modalData.previousEducations
                                                     : []
                                                 )[1].professionType
-                                                  .amharicProfessionalType
-                                              : []
-                                          }}
-                                        </b>
-                                        <span class="text-sm ml-1 mr-1">
-                                          ከ
-                                        </span>
-                                        <b
-                                          class="
-                                            text-yellow-300
-                                            ml-1
-                                            text-sm
-                                            col-span-2
-                                          "
-                                        >
-                                          {{
-                                            modalData.newEducations
-                                              ? modalData.newEducations.concat(
-                                                  modalData &&
-                                                    modalData.previousEducations
-                                                    ? modalData.previousEducations
-                                                    : []
-                                                )[1].institution.name
+                                                ? modalData.newEducations.concat(
+                                                    modalData &&
+                                                      modalData.previousEducations
+                                                      ? modalData.previousEducations
+                                                      : []
+                                                  )[1].professionType
+                                                    .amharicProfessionalType
+                                                : ""
                                               : []
                                           }}
                                         </b>
@@ -937,29 +866,14 @@
                                                     ? modalData.previousEducations
                                                     : []
                                                 )[2].professionType
-                                                  .amharicProfessionalType
-                                              : []
-                                          }}
-                                        </b>
-                                        <span class="text-sm ml-1 mr-1">
-                                          ከ
-                                        </span>
-                                        <b
-                                          class="
-                                            text-yellow-300
-                                            ml-1
-                                            text-sm
-                                            col-span-2
-                                          "
-                                        >
-                                          {{
-                                            modalData.newEducations
-                                              ? modalData.newEducations.concat(
-                                                  modalData &&
-                                                    modalData.previousEducations
-                                                    ? modalData.previousEducations
-                                                    : []
-                                                )[2].institution.name
+                                                ? modalData.newEducations.concat(
+                                                    modalData &&
+                                                      modalData.previousEducations
+                                                      ? modalData.previousEducations
+                                                      : []
+                                                  )[2].professionType
+                                                    .amharicProfessionalType
+                                                : ""
                                               : []
                                           }}
                                         </b>
@@ -976,9 +890,7 @@
                                       the Ministry
                                     </h4>
                                     <h4>hereby registered and licensed as</h4>
-                                    <h4 
-                                      class="mt-4"
-                                    >
+                                    <h4 class="mt-4">
                                       <!-- first profession -->
                                       <div
                                         class="
@@ -999,29 +911,14 @@
                                                     modalData.previousEducations
                                                     ? modalData.previousEducations
                                                     : []
-                                                )[0].professionType.name
-                                              : []
-                                          }}
-                                        </b>
-                                        <span class="text-sm ml-1 mr-1">
-                                          from
-                                        </span>
-                                        <b
-                                          class="
-                                            text-yellow-300
-                                            ml-1
-                                            text-sm
-                                            col-span-2
-                                          "
-                                        >
-                                          {{
-                                            modalData.newEducations
-                                              ? modalData.newEducations.concat(
-                                                  modalData &&
-                                                    modalData.previousEducations
-                                                    ? modalData.previousEducations
-                                                    : []
-                                                )[0].institution.name
+                                                )[0].professionType
+                                                ? modalData.newEducations.concat(
+                                                    modalData &&
+                                                      modalData.previousEducations
+                                                      ? modalData.previousEducations
+                                                      : []
+                                                  )[0].professionType.name
+                                                : ""
                                               : []
                                           }}
                                         </b>
@@ -1047,29 +944,14 @@
                                                     modalData.previousEducations
                                                     ? modalData.previousEducations
                                                     : []
-                                                )[1].professionType.name
-                                              : []
-                                          }}
-                                        </b>
-                                        <span class="text-sm ml-1 mr-1">
-                                          from
-                                        </span>
-                                        <b
-                                          class="
-                                            text-yellow-300
-                                            ml-1
-                                            text-sm
-                                            col-span-2
-                                          "
-                                        >
-                                          {{
-                                            modalData.newEducations
-                                              ? modalData.newEducations.concat(
-                                                  modalData &&
-                                                    modalData.previousEducations
-                                                    ? modalData.previousEducations
-                                                    : []
-                                                )[1].institution.name
+                                                )[1].professionType
+                                                ? modalData.newEducations.concat(
+                                                    modalData &&
+                                                      modalData.previousEducations
+                                                      ? modalData.previousEducations
+                                                      : []
+                                                  )[1].professionType.name
+                                                : ""
                                               : []
                                           }}
                                         </b>
@@ -1095,29 +977,14 @@
                                                     modalData.previousEducations
                                                     ? modalData.previousEducations
                                                     : []
-                                                )[2].professionType.name
-                                              : []
-                                          }}
-                                        </b>
-                                        <span class="text-sm ml-1 mr-1">
-                                          from
-                                        </span>
-                                        <b
-                                          class="
-                                            text-yellow-300
-                                            ml-1
-                                            text-sm
-                                            col-span-2
-                                          "
-                                        >
-                                          {{
-                                            modalData.newEducations
-                                              ? modalData.newEducations.concat(
-                                                  modalData &&
-                                                    modalData.previousEducations
-                                                    ? modalData.previousEducations
-                                                    : []
-                                                )[2].institution.name
+                                                )[2].professionType
+                                                ? modalData.newEducations.concat(
+                                                    modalData &&
+                                                      modalData.previousEducations
+                                                      ? modalData.previousEducations
+                                                      : []
+                                                  )[2].professionType.name
+                                                : ""
                                               : []
                                           }}
                                         </b>
@@ -1454,7 +1321,7 @@
                                       ተገቢውን መስፈርት አሟልተው ስለተገኙ ሚኒስቴር መስሪያ ቤቱ
                                     </h4>
                                     <!-- Amharic profession part -->
-                                    <h4  >
+                                    <h4>
                                       <!-- fourth profession -->
                                       <div
                                         class="
@@ -1635,7 +1502,7 @@
                                     </h4>
                                     <h4>hereby registered and licensed as</h4>
                                     <!-- English profession part -->
-                                    <h4  >
+                                    <h4>
                                       <!-- fourth profession -->
                                       <div
                                         class="
@@ -2010,7 +1877,7 @@ export default {
     };
 
     const editApplication = (req) => {
-      delete req.data.educations
+      delete req.data.educations;
       store
         .dispatch("reviewer/editNewLicense", req)
         .then((res) => {
@@ -2071,7 +1938,7 @@ export default {
         props.modalData && props.modalData.previousEducations
           ? props.modalData.previousEducations
           : []
-      ); 
+      );
       applicationStatus.value = props.modalData.data.applicationStatus.code;
       isLicenseGenerated.value = props.modalData.data.isLicenseGenerated;
       certificateDetail.value.licenseNumber =
@@ -2103,7 +1970,7 @@ export default {
       doc.setFontSize(17);
       doc2.setFontSize(17);
       doc.text(
-        190,
+        170,
         namePosition,
         `${certifiedUser.value.name} ${certifiedUser.value.fatherName} ${
           certifiedUser.value.grandFatherName
@@ -2112,7 +1979,7 @@ export default {
         }`
       );
       doc2.text(
-        190,
+        170,
         namePosition,
         `${certifiedUser.value.name} ${certifiedUser.value.fatherName} ${
           certifiedUser.value.grandFatherName
@@ -2128,9 +1995,13 @@ export default {
         for (let i = 0; i < certificateDetail.value.educations.length; i++) {
           let professionPrefix = `${
             certificateDetail.value.educations[i].prefix
-              ? certificateDetail.value.educations[i].prefix
+              ? certificateDetail.value.educations[i].prefix.name
               : ""
-          }  ${certificateDetail.value.educations[i].professionType.name}`;
+          }  ${
+            certificateDetail.value.educations[i].professionType
+              ? certificateDetail.value.educations[i].professionType.name
+              : certificateDetail.value.educations[i].otherProfessionType
+          }`;
           let getLength = doc.getTextWidth(professionPrefix);
           if (getLength > 125 && getLength <= 132) {
             if (!changeWidthTooSmall.value) {
@@ -2146,9 +2017,13 @@ export default {
         for (let i = 0; i < 3; i++) {
           let professionPrefix = `${
             certificateDetail.value.educations[i].prefix
-              ? certificateDetail.value.educations[i].prefix
+              ? certificateDetail.value.educations[i].prefix.name
               : ""
-          }  ${certificateDetail.value.educations[i].professionType.name}`;
+          }  ${
+            certificateDetail.value.educations[i].professionType
+              ? certificateDetail.value.educations[i].professionType.name
+              : certificateDetail.value.educations[i].otherProfessionType
+          }`;
           let getLength = doc.getTextWidth(professionPrefix);
           if (getLength > 125 && getLength <= 132) {
             if (!changeWidthTooSmall.value) {
@@ -2165,14 +2040,15 @@ export default {
       if (changeWidth.value) {
         doc.setFontSize(10);
         doc2.setFontSize(10);
-        xPosition.value = 167;
+        xPosition.value = 150;
       } else if (changeWidthTooSmall.value) {
         doc.setFontSize(10);
         doc2.setFontSize(10);
-        xPosition.value = 153;
+        xPosition.value = 45;
       } else {
-        doc.setFontSize(14);
-        doc2.setFontSize(14);
+        doc.setFontSize(10);
+        doc2.setFontSize(10);
+        xPosition.value = 150;
       }
 
       if (certificateDetail.value.educations.length <= 3) {
@@ -2183,10 +2059,14 @@ export default {
             `${
               certificateDetail.value.educations.length > 1 ? i + 1 + ". " : ""
             }${
-              certificateDetail.value.educations[i].professionType.name
+              certificateDetail.value.educations[i].professionType
+                ? certificateDetail.value.educations[i].professionType.name
+                : certificateDetail.value.educations[i].otherProfessionType
                 ? `${
                     certificateDetail.value.educations[i].prefix
-                      ? "(" + certificateDetail.value.educations[i].prefix + ")"
+                      ? "(" +
+                        certificateDetail.value.educations[i].prefix.name +
+                        ")"
                       : ""
                   }   ${
                     certificateDetail.value.educations[i].otherProfessionType
@@ -2209,10 +2089,14 @@ export default {
             `${
               certificateDetail.value.educations.length > 1 ? i + 1 + ". " : ""
             }${
-              certificateDetail.value.educations[i].professionType.name
+              certificateDetail.value.educations[i].professionType
+                ? certificateDetail.value.educations[i].professionType.name
+                : certificateDetail.value.educations[i].otherProfessionType
                 ? `${
                     certificateDetail.value.educations[i].prefix
-                      ? "(" + certificateDetail.value.educations[i].prefix + ")"
+                      ? "(" +
+                        certificateDetail.value.educations[i].prefix.name +
+                        ")"
                       : ""
                   }   ${
                     certificateDetail.value.educations[i].otherProfessionType
@@ -2226,13 +2110,12 @@ export default {
             }`
           );
         }
-
+        let newI = 0;
         for (let i = 3; i < 6; i++) {
-          let newI = 0;
           if (certificateDetail.value.educations[i]) {
             doc2.text(
               xPosition.value,
-              professionPossition + i * professionListGap,
+              professionPossition + newI * professionListGap,
               `${
                 certificateDetail.value.educations.length > 1
                   ? newI + 1 + ". "
@@ -2242,7 +2125,7 @@ export default {
                   ? `${
                       certificateDetail.value.educations[i].prefix
                         ? "(" +
-                          certificateDetail.value.educations[i].prefix +
+                          certificateDetail.value.educations[i].prefix.name +
                           ")"
                         : ""
                     }   ${
@@ -2256,8 +2139,8 @@ export default {
                   : ""
               }`
             );
-            newI++;
           }
+          newI += 1;
         }
       }
 
@@ -2307,7 +2190,7 @@ export default {
             : "Not Specified"
         }`
       );
-
+      //Amharic part for certificate
       // License Number for amharic
       doc.text(38, 58, `${certificateDetail.value.licenseNumber}`);
       doc2.text(38, 58, `${certificateDetail.value.licenseNumber}`);
@@ -2394,19 +2277,19 @@ export default {
       }
 
       if (changeWidth.value) {
-        doc.setFontSize(11);
-        doc2.setFontSize(11);
-        xPosition.value = 16;
+        doc.setFontSize(10);
+        doc2.setFontSize(10);
+        xPosition.value = 18;
       } else if (changeWidthTooSmall.value) {
-        doc.setFontSize(11);
-        doc2.setFontSize(11);
-        xPosition.value = 10;
+        doc.setFontSize(10);
+        doc2.setFontSize(10);
+        xPosition.value = 12;
       } else {
-        doc.setFontSize(14);
-        doc2.setFontSize(14);
-        xPosition.value = 28;
+        doc.setFontSize(10);
+        doc2.setFontSize(10);
+        xPosition.value = 30;
       }
-      if (certificateDetail.value.educations.length < 4) {
+      if (certificateDetail.value.educations.length <= 3) {
         for (let i = 0; i < certificateDetail.value.educations.length; i++) {
           doc.text(
             xPosition.value,
@@ -2415,12 +2298,8 @@ export default {
               certificateDetail.value.educations.length > 1 ? i + 1 + ". " : ""
             }${
               certificateDetail.value.educations[i].professionType
-                .amharicProfessionalType
                 ? certificateDetail.value.educations[i].professionType
-                    .amharicProfessionalType === "ሌላ"
-                  ? ""
-                  : certificateDetail.value.educations[i].professionType
-                      .amharicProfessionalType
+                    .amharicProfessionalType
                 : ""
             }`
           );
@@ -2434,34 +2313,27 @@ export default {
               certificateDetail.value.educations.length > 1 ? i + 1 + ". " : ""
             }${
               certificateDetail.value.educations[i].professionType
-                .amharicProfessionalType
                 ? certificateDetail.value.educations[i].professionType
-                    .amharicProfessionalType === "ሌላ"
-                  ? ""
-                  : certificateDetail.value.educations[i].professionType
-                      .amharicProfessionalType
+                    .amharicProfessionalType
                 : ""
             }`
           );
         }
+        let newI = 0;
         for (let i = 3; i < 6; i++) {
-          let newI = 0;
+         
           if (certificateDetail.value.educations[i]) {
             doc2.text(
               xPosition.value,
-              professionPossition + i * professionListGap,
+              professionPossition + newI * professionListGap,
               `${
                 certificateDetail.value.educations.length > 1
                   ? newI + 1 + ". "
                   : ""
               }${
                 certificateDetail.value.educations[i].professionType
-                  .amharicProfessionalType
                   ? certificateDetail.value.educations[i].professionType
-                      .amharicProfessionalType === "ሌላ"
-                    ? ""
-                    : certificateDetail.value.educations[i].professionType
-                        .amharicProfessionalType
+                      .amharicProfessionalType
                   : ""
               }`
             );
@@ -2469,7 +2341,7 @@ export default {
           }
         }
       }
-
+      //End of Amharic part for certificate
       doc.setFontSize(12);
       doc2.setFontSize(12);
       // doc.text(80)
@@ -2604,7 +2476,7 @@ export default {
         }
 
         doc.addImage(imageSrc.value, "JPG", 246, 14, 35, 35);
-        if (userImage !== null) {
+        if (userImage != null) {
           let path = {
             path: userImage,
           };
@@ -2754,3 +2626,10 @@ export default {
   },
 };
 </script>
+<style scoped>
+@media (min-width: 1200px) {
+  .modal-xl {
+    max-width: 1525px;
+  }
+}
+</style>

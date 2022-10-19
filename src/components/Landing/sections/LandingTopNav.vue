@@ -297,7 +297,7 @@
       </div>
     </div>
   </div>
-
+  <!-- Registration Part -->
   <div
     class="
       modal
@@ -338,33 +338,31 @@
         "
       >
         <div
-          class="
-            modal-header
-            flex flex-shrink-0
-            justify-center
-            items-center
-            p-4
-            border-b border-grey-100
-            rounded-t-md
-          "
+          class="modal-header flex flex-shrink-0 justify-end p-2 rounded-t-md"
         >
           <button
             type="button"
             class="
-              btn-close
-              box-content
-              h-small
-              text-black
-              border-none
-              rounded-sm
-              opacity-50
-              focus:shadow-none focus:outline-none focus:opacity-100
-              hover:text-black hover:opacity-100 hover:no-underline
+              text-white
+              bg-main-400
+              hover:text-main-400 hover:border
+              font-medium
+              text-xs
+              leading-tight
+              uppercase
+              rounded
+              hover:border-main-400
+              shadow-lg
+              hover:bg-purple-700 hover:shadow-lg
+              transition
+              duration-150
+              ease-in-out
             "
             data-bs-dismiss="modal"
             aria-label="Close"
-            style="min-height: 28px; min-width: 28px"
-          ></button>
+          >
+            <i class="fa fa-close fa-2x"></i>
+          </button>
         </div>
         <div class="modal-body relative p-2 flex justify-center">
           <div class="form-group mb-6 flex justify-center"></div>
@@ -391,38 +389,37 @@
                 registerCredentialsErrors.email
               }}</span>
             </div>
-            <div class="flex flex-col mb-medium w-full">
-              <label for="password" class="ml-4 text-main-400 font-bold"
+            <div class="flex flex-col mb-medium w-full ml-8">
+              <label for="phone" class="text-main-400 font-bold"
                 >Phone Number(+251)</label
               >
               <input
-                v-model="registerCredentials.phoneNumber"
-                id="phone"
                 name="phone"
-                class="
-                  w-full
-                  rounded-none
-                  sm:w-10/12 sm:ml-4
-                  border
-                  text-main-400
-                "
-                type="text"
-                autocomplete="current-number"
+                id="phone"
+                type="tel"
+                class="w-full rounded-none sm:w-10/12 border ml-4 text-main-400"
+                v-model="registerCredentials.phoneNumber"
                 required
+                @keyup="checkPhoneValidity()"
               />
+
+              <div
+                id="phoneError"
+                class="text-red-300 mt-3"
+                style="display: none"
+              ></div>
+              <div
+                id="validPhone"
+                class="text-green-200 mt-2"
+                style="display: none"
+              ></div>
 
               <span class="ml-4 text-sm" style="color: red">{{
                 registerCredentialsErrors.phoneNumber
                   ? registerCredentialsErrors.phoneNumber
                   : ""
               }}</span>
-              <span class="text-sm ml-4"
-                >Area code for phone is not needed, valid phone number
-                eg-912345678</span
-              >
-              <span v-if="phoneError" class="text-sm text-red-300"
-                >phone number must be exactly 9 digits, eg-912345678</span
-              >
+              <span class="text-sm">(Area code for phone is not needed)</span>
             </div>
             <div class="flex flex-col mb-medium w-full">
               <label class="ml-4 text-main-400 font-bold">Password</label>
@@ -437,6 +434,7 @@
                   rounded-none
                   sm:w-10/12 sm:ml-4
                   border
+                  mb-2
                   text-main-400
                 "
                 required
@@ -445,19 +443,21 @@
               <span class="ml-4 text-sm" style="color: red">{{
                 registerCredentialsErrors.password
               }}</span>
-              <password-meter :password="registerCredentials.password" />
+              <div class="ml-4"> 
+              <password-meter   :password="registerCredentials.password" />
               <div v-if="passwordStrengthDisplay">
-                <ul>
+                <ul class="text-sm">
                   Password should be:
-                  <div class="ml-16 pl-8">
-                    <li>Minimum of Eight Characters</li>
-                    <li>At least one Uppercase Character</li>
-                    <li>At least one Lowercase Character</li>
-                    <li>At least one Number</li>
-                    <li>At least one special Character</li>
+                  <div class="ml-12 pl-4">
+                    <li>Minimum of eight Characters</li>
+                    <li>At least one uppercase Character</li>
+                    <li>At least one lowercase Character</li>
+                    <li>At least one number</li>
+                    <li>At least one special character</li>
                   </div>
                 </ul>
               </div>
+            </div>
               <span class="ml-4" style="color: red">{{
                 registerCredentialsErrors.password
               }}</span>
@@ -484,7 +484,54 @@
               <span class="ml-4 text-sm" style="color: red">{{
                 registerCredentialsErrors.repassword
               }}</span>
-              <password-meter :password="registerCredentials.repassword" />
+              <div class="ml-4 mt-2">
+                <password-meter :password="registerCredentials.repassword" />
+              </div>
+             
+            </div>
+            <div class="flex justify-center pr-4 pl-4 w-full">
+              <button
+              type="button"
+                class="
+                  transition
+                  duration-200
+                  bg-main-400
+                  text-white
+                  hover:text-main-400 hover:bg-white
+                  w-full
+                  mb-4
+                  h-12
+                  rounded-lg
+                  text-md
+                  shadow-sm
+                  font-semibold
+                  text-center
+                "
+                @click="registerSubmit"
+              >
+                Register
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  class="h-4 inline-block"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M17 8l4 4m0 0l-4 4m4-4H3"
+                  />
+                </svg>
+                <vue-element-loading
+                  :active="show"
+                  spinner="ring"
+                  color="white"
+                  background-color="#ffffff00;"
+                  style="margin-left: 110px; margin-top: -3px"
+                />
+              </button>
             </div>
 
             <a
@@ -495,53 +542,6 @@
             </a>
           </form>
         </div>
-        <button
-          class="
-            transition
-            duration-200
-            bg-main-400
-            focus:bg-blue-700
-            focus:shadow-sm
-            focus:ring-4
-            focus:ring-blue-500
-            focus:ring-opacity-50
-            text-white
-            hover:text-main-400 hover:bg-white
-            w-full
-            ml-auto
-            mt-4
-            rounded-lg
-            text-md
-            shadow-sm
-            hover:shadow-md
-            font-semibold
-            text-center
-          "
-          @click="registerSubmit"
-        >
-          Register
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            class="h-4 inline-block"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M17 8l4 4m0 0l-4 4m4-4H3"
-            />
-          </svg>
-          <vue-element-loading
-            :active="show"
-            spinner="ring"
-            color="white"
-            background-color="#ffffff00;"
-            style="margin-left: 110px; margin-top: -3px"
-          />
-        </button>
       </div>
     </div>
   </div>
@@ -550,7 +550,7 @@
 import RenderIllustration from "@/sharedComponents/RenderIllustration";
 import VueElementLoading from "vue-element-loading";
 import { useStore } from "vuex";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useToast } from "vue-toastification";
 import PasswordMeter from "vue-simple-password-meter";
@@ -563,6 +563,8 @@ export default {
     const toast = useToast();
     let show = ref(false);
     let showLoading = ref(false);
+
+    let phoneInput;
     let message = ref({
       showFlash: false,
       showErrorFlash: false,
@@ -700,12 +702,14 @@ export default {
       }
     };
     const registerSubmit = () => {
+    
       show.value = true;
       let signup = {
         emailAddress: registerCredentials.value.emailAddress.toLowerCase(),
         phoneNumber: registerCredentials.value.phoneNumber,
         password: registerCredentials.value.password,
       };
+    
       registerCredentialsErrors.value = {};
       if (!validateRegisterForm(registerCredentials.value)) {
         registerMessage.value.showLoading = true;
@@ -724,7 +728,7 @@ export default {
           message:
             "Dear applicant you have successfully registered on eHPL for your license/s, please complete the process of creating your account by loging in to your account using the credentials you entered previously and fill remaining data, Thank you for using eHPL.",
         };
-
+       
         store.dispatch("user/signUp", signup).then((res) => {
           if (res.data.status == "Error") {
             show.value = false;
@@ -741,9 +745,7 @@ export default {
           } else if (res.data.status == "Success") {
             show.value = false;
             store.dispatch("sms/sendSms", smsData).then(() => {
-              document
-                .querySelector("#register")
-                .classList.remove("show");
+              document.querySelector("#register").classList.remove("show");
               document.querySelector("body").classList.remove("modal-open");
               const mdbackdrop = document.querySelector(".modal-backdrop");
               if (mdbackdrop) {
@@ -756,7 +758,6 @@ export default {
                 pauseOnHover: true,
                 icon: true,
               });
-         
             });
           } else {
             show.value = false;
@@ -798,6 +799,30 @@ export default {
         return false;
       return true;
     };
+    const checkPhoneValidity = () => {
+      const phoneNumber = phoneInput.getNumber();
+
+      let error = document.getElementById("phoneError");
+      let info = document.getElementById("validPhone");
+      info.style.display = "none";
+      error.style.display = "none";
+
+      if (phoneInput.isValidNumber()) {
+        info.style.display = "";
+        info.innerHTML = `Phone number \: <strong>${phoneNumber} is valid</strong>`;
+      } else {
+        error.style.display = "";
+        error.innerHTML = `Invalid phone number.`;
+      }
+    };
+    onMounted(() => {
+      const phoneInputField = document.getElementById("phone");
+      phoneInput = window.intlTelInput(phoneInputField, {
+        preferredCountries: ["et", "ke", "er", "ug"],
+        utilsScript:
+          "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+      });
+    });
 
     return {
       credentials,
@@ -809,7 +834,7 @@ export default {
       message,
       show,
       showLoading,
-
+      checkPhoneValidity,
       registerCredentials,
       registerCredentialsErrors,
       registerSubmit,

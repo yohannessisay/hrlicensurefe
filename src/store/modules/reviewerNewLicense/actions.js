@@ -643,6 +643,7 @@ export default {
     });
 
     commit(SET_NEW_LICENSE_ON_REVIEW, onReview);
+    return onReview;
   },
 
   async getNewLicenseRevoked({ commit }, revokeStatus) {
@@ -700,6 +701,7 @@ export default {
       );
     });
     commit(SET_NEW_LICENSE_OTHERS_ON_REVIEW, othersOnReview);
+    return  othersOnReview;
   },
   getNewLicenseOthersOnReviewSearched({ commit, getters }, searchKey) {
     if (getters.getNewLicenseOthersOnReview === undefined) {

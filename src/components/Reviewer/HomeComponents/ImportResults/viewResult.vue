@@ -49,7 +49,7 @@
           <button
             type="button"
             class="     
-              px-6
+                  px-6
               text-white
               bg-primary-600
               hover:text-primary-600 hover:border
@@ -58,6 +58,7 @@
               leading-tight
               uppercase
               rounded
+              hover:border-primary-600
               shadow-lg
               hover:bg-purple-700 hover:shadow-lg
               focus:bg-purple-700

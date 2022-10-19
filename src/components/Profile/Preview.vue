@@ -1,153 +1,219 @@
 <template>
-  <div v-if="message.showLoading2" class="h-screen mt-large pt-small">
-    <Spinner class="bg-lightBlueB-200" />
-  </div>
-  <div
-    style="width: 1000px"
-    class="bg-white mb-large rounded pr-20 pl-20 pb-12"
-  >
-    <div v-if="!message.showLoading2">
-      <div class="flex justify-center">
-        <Title message="Summary" />
-      </div>
-      <div class="flex justify-start flex-col mb-large mt-large">
-        <div class="flex justify-start mb-medium">
-          <Title message="Profile Picture" />
-        </div>
-        <div>
+  <div class="container my-12 mx-auto px-4 md:px-12 w-full">
+    <h2 class="text-main-400 font-bold text-display">Summary</h2>
+    <div class="flex flex-wrap -mx-1 lg:-mx-4">
+      <!-- Column -->
+      <div class="my-1 px-1 lg:px-4 w-full">
+        <!-- Article -->
+        <article class="overflow-hidden rounded-lg shadow-lg p-4">
+          <div class="flex justify-start flex-col mb-large">
+            <div class="flex justify-start">
+              <h2 class="text-main-400 font-bold text-lg">Profile Picture</h2>
+            </div>
+          </div>
+
           <picture>
             <img :src="profilePic" />
           </picture>
-        </div>
+        </article>
+        <!-- END Article -->
       </div>
-      <div class="flex justify-start">
-        <Title message="Personal Info" class="mb-small" />
-      </div>
-      <div class="flex flex-row">
-        <div>
-          <label class="ml-8 text-primary-300"> Full Name</label>
-          <h5 class="ml-8">
-            {{
-              personalInfo.name +
-              " " +
-              personalInfo.fatherName +
-              " " +
-              personalInfo.grandFatherName
-            }}
-          </h5>
-        </div>
-        <div>
-          <label class="ml-8 text-primary-300"> Full Alternative Name</label>
-          <h5 class="ml-8">
-            {{
-              personalInfo.alternativeName +
-              " " +
-              personalInfo.alternativeFatherName +
-              " " +
-              personalInfo.alternativeGrandFatherName
-            }}
-          </h5>
-        </div>
-        <div>
-          <label class="ml-8 text-primary-300"> Gender</label>
-          <h5 class="ml-8">{{ personalInfo.gender }}</h5>
-        </div>
-        <div>
-          <label class="ml-8 text-primary-300"> Nationality</label>
-          <h5 class="ml-8">{{ nationality }}</h5>
-        </div>
-        <div>
-          <label class="ml-8 text-primary-300"> Marital Status</label>
-          <h5 class="ml-8">{{ maritalStatus }}</h5>
-        </div>
-      </div>
-      <div class="flex justify-start">
-        <Title message="Address" class="mb-small" />
-      </div>
-      <div class="flex flex-row">
-        <div>
-          <label class="ml-8 text-primary-300"> PO Box</label>
-          <h5 class="ml-8">{{ personalInfo.poBox }}</h5>
-        </div>
-      </div>
-      <div class="flex justify-start">
-        <Title message="Contact" class="mb-small" />
-      </div>
-      <div class="flex flex-row">
-        <div>
-          <label class="ml-8 text-primary-300"> Email Address</label>
-          <h5 class="ml-8">{{ user.emailAddress }}</h5>
-        </div>
-        <div
-          v-if="
-            personalInfo.employeeId != null || personalInfo.employeeId != ''
-          "
-        >
-          <label class="ml-8 text-primary-300">HRA Employee Id</label>
-          <h5 class="ml-8">{{ personalInfo.employeeId }}</h5>
-        </div>
-        <div
-          v-if="
-            personalInfo.fileNumber != null || personalInfo.fileNumber != ''
-          "
-        >
-          <label class="ml-8 text-primary-300">HRA File Number</label>
-          <h5 class="ml-8">{{ personalInfo.fileNumber }}</h5>
-        </div>
-      </div>
-      <div class="mt-12 flex justify-center mb-medium">
-        <div>
-          <button
-            class="
-              inline-block
-              px-6
-              py-2.5
-              bg-blue-600
-              text-white
-              font-medium
-              text-xs
-              leading-tight
-              uppercase
-              rounded
-              shadow-lg
-              hover:bg-blue-600 hover:shadow-lg
-              focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
-              active:bg-blue-800 active:shadow-lg
-              transition
-              duration-150
-              ease-in-out
-            "
-            variant="outline"
-            type="button"
-            @click="prevStep"
-          >
-            Back
-          </button>
-        </div>
-        <div v-if="!message.showLoading">
-          <button
-            v-on:click="submit()"
-            variant="outline"
-            type="button"
-            class="p-1"
-          >
-            Save Profile
-          </button>
-        </div>
-      </div>
-      <div
-        class="flex justify-center justify-items-center mt-8 mb-12"
-        v-if="message.showLoading"
-      >
-        <Spinner />
-      </div>
+      <!-- END Column -->
     </div>
+  </div>
 
-    <div v-if="message.showFlash">
-      <FlashMessage message="Your profile is successfully created!!" />
+  <div class="container mx-auto px-4 md:px-12">
+    <div class="flex flex-wrap -mx-1 lg:-mx-4">
+      <!-- Column -->
+      <div class="my-1 px-1 lg:px-4 w-full">
+        <!-- Article -->
+        <article class="overflow-hidden rounded-lg shadow-lg p-4">
+          <div class="flex justify-start flex-col">
+            <div class="flex justify-start">
+              <h2 class="text-main-400 font-bold text-lg">
+                General Personal Info
+              </h2>
+            </div>
+          </div>
+
+          <div
+            class="
+              grid grid-rows-3
+              md:grid-cols-3
+              mdlg:grid-cols-3
+              lg:grid-cols-3
+              xl:grid-cols-3
+              sm:grid-rows-3
+            "
+          >
+            <div>
+              <label class="ml-8 text-main-400 font-semibold"> Full Name</label>
+              <h5 class="ml-8">
+                {{
+                  personalInfo.name +
+                  " " +
+                  personalInfo.fatherName +
+                  " " +
+                  personalInfo.grandFatherName
+                }}
+              </h5>
+            </div>
+            <div>
+              <label class="ml-8 text-main-400 font-semibold"
+                >Full Alternative Name</label
+              >
+              <h5 class="ml-8">
+                {{
+                  personalInfo.alternativeName +
+                  " " +
+                  personalInfo.alternativeFatherName +
+                  " " +
+                  personalInfo.alternativeGrandFatherName
+                }}
+              </h5>
+            </div>
+            <div>
+              <label class="ml-8 text-main-400 font-semibold"> Gender</label>
+              <h5 class="ml-8">{{ personalInfo.gender }}</h5>
+            </div>
+            <div>
+              <label class="ml-8 text-main-400 font-semibold"
+                >Nationality</label
+              >
+              <h5 class="ml-8">{{ nationality }}</h5>
+            </div>
+            <div>
+              <label class="ml-8 text-main-400 font-semibold">
+                Marital Status</label
+              >
+              <h5 class="ml-8">{{ maritalStatus }}</h5>
+            </div>
+          </div>
+          <div class="flex justify-start border-b-4 text-main-400 mt-4 mb-4">
+            <h2 class="text-main-400 font-bold text-lg">Address</h2>
+          </div>
+          <div class="flex flex-row">
+            <div>
+              <label class="ml-8 text-main-400 font-semibold">PO Box</label>
+              <h5 class="ml-8">{{ personalInfo.poBox }}</h5>
+            </div>
+          </div>
+          <div class="flex justify-start border-b-4 text-main-400 mt-4 mb-4">
+            <h2 class="text-main-400 font-bold text-lg">Contact Info</h2>
+          </div>
+          <div
+            class="
+              grid grid-rows-3
+              md:grid-cols-3
+              mdlg:grid-cols-3
+              lg:grid-cols-3
+              xl:grid-cols-3
+              sm:grid-rows-3
+            "
+          >
+            <div>
+              <label class="ml-8 text-main-400 font-semibold">
+                Email Address</label
+              >
+              <h5 class="ml-8">{{ user.emailAddress }}</h5>
+            </div>
+            <div
+              v-if="
+                personalInfo.employeeId != null || personalInfo.employeeId != ''
+              "
+            >
+              <label class="ml-8 text-main-400 font-semibold"
+                >HRA Employee Id</label
+              >
+              <h5 class="ml-8">{{ personalInfo.employeeId }}</h5>
+            </div>
+            <div
+              v-if="
+                personalInfo.fileNumber != null || personalInfo.fileNumber != ''
+              "
+            >
+              <label class="ml-8 text-main-400 font-semibold"
+                >HRA File Number</label
+              >
+              <h5 class="ml-8">{{ personalInfo.fileNumber }}</h5>
+            </div>
+          </div>
+        </article>
+        <!-- END Article -->
+      </div>
+      <!-- END Column -->
     </div>
-    <div v-if="message.showErrorFlash">
-      <ErrorFlashMessage message="Your profile creation failed!!" />
+  </div>
+  <div class="container my-12 mx-auto px-4 md:px-12">
+    <div class="flex flex-wrap -mx-1 lg:-mx-4">
+      <!-- Column -->
+      <div class="my-1 px-1 lg:px-4 w-full">
+        <!-- Article -->
+        <article class="overflow-hidden rounded-lg shadow-lg p-4">
+          <div class="mt-12 flex justify-center mb-medium">
+            <div>
+              <button
+                class="
+                  inline-block
+                  px-6
+                  py-2.5
+                  bg-main-400
+                  text-white
+                  font-medium
+                  text-xs
+                  leading-tight
+                  uppercase
+                  rounded
+                  shadow-lg
+                  hover:bg-white hover:shadow-lg hover:text-main-400
+                  transition
+                  duration-150
+                  ease-in-out
+                "
+                variant="outline"
+                type="button"
+                @click="prevStep"
+              >
+                Back
+              </button>
+            </div>
+            <div v-if="!message.showLoading">
+              <div
+                class="flex justify-center justify-items-center mt-8 mb-12"
+                v-if="message.showLoading"
+              >
+                <Spinner />
+              </div>
+              <button
+                v-on:click="submit()"
+                variant="outline"
+                type="button"
+                class="
+                  inline-block
+                  px-6
+                  py-2.5
+                  bg-main-400
+                  text-white
+                  font-medium
+                  text-xs
+                  leading-tight
+                  uppercase
+                  rounded
+                  shadow-lg
+                  hover:bg-white hover:shadow-lg hover:text-main-400
+                  transition
+                  duration-150
+                  ease-in-out
+                "
+              >
+                Save Profile
+              </button>
+            </div>
+          </div>
+        </article>
+        <!-- END Article -->
+      </div>
+      <!-- END Column -->
     </div>
   </div>
 </template>
@@ -272,8 +338,8 @@ export default {
               })
               .catch((err) => {});
 
-                  router.push({ path: "/menu" });
-  
+            router.push({ path: "/menu" });
+            window.location.reload();
           } else {
             message.value.showLoading = false;
             message.value.showFlash = false;

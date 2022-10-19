@@ -1,5 +1,5 @@
 <template>
-  <div class="side-navbar">
+  <div class="side-navbar ">
     <router-link class="link" to="/menu">
       <div
         class="flex justify-center p-4 cursor-pointer"
@@ -17,7 +17,7 @@
       </div>
     </router-link>
 
-    <ul class="mt-12">
+    <ul class="mt-2">
       <li class="list">
         <b></b>
         <b></b>
@@ -193,7 +193,7 @@
         </a>
       </li>
 
-      <li
+      <!-- <li
         :class="
           $route.fullPath === '/Applicant/NewLicense/pendingPayment'
             ? 'list active'
@@ -216,31 +216,7 @@
             <span class="text text-white font-bold">Pending Payment</span>
           </router-link>
         </a>
-      </li>
-      <li
-        :class="
-          $route.fullPath === '/Applicant/NewLicense/returned'
-            ? 'list active'
-            : 'list'
-        "
-      >
-        <b></b>
-        <b></b>
-        <a href="#Verification">
-          <router-link class="link" to="/Applicant/NewLicense/returned">
-            <span class="icon"
-              ><i
-                :class="
-                  $route.fullPath === '/Applicant/NewLicense/returned'
-                    ? 'bx bxs-paste'
-                    : 'bx bx-paste'
-                "
-              ></i
-            ></span>
-            <span class="text text-white font-bold">Returned</span>
-          </router-link>
-        </a>
-      </li>
+      </li> -->
     </ul>
   </div>
 </template>

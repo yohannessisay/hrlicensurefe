@@ -44,9 +44,9 @@ const routes = [
     component: () => import("../components/Profile/NewProfile.vue")
   },
   {
-    path: "/signup",
-    name: "Signup",
-    component: () => import("../views/Signup.vue")
+    path: "/verifyOTP",
+    name: "verifyOTP",
+    component: () => import("../components/Signup/verifyOTP.vue")
   },
   {
     path: "/login",
@@ -287,6 +287,16 @@ const routes = [
     component: () =>
       import("../components/Applicant/GoodStanding/draft/draft.vue")
   },
+
+    //Applicant Profile Management
+    {
+      path: "/applicant/profile",
+      name: "ApplicantProfileManagement",
+      component: () =>
+        import(
+          "../components/Applicant/Profile/profile.vue"
+        )
+    },
 
   /******************************************************************************************************************************************/
   /**************1-END OF APPLICANT SIDE ROUTES*****************/
@@ -637,9 +647,60 @@ const routes = [
     name: "LookupManagement",
     component: () =>
       import(
-        "../components/Reviewer/HomeComponents/LookupManagement/lookupManagement.vue"
+        "../components/Reviewer/HomeComponents/LookupManagement/location/location.vue"
       )
-  }
+  },
+  {
+    path: "/admin/lookupManagement/departments",
+    name: "DepartmentsLookupManagement",
+    component: () =>
+      import(
+        "../components/Reviewer/HomeComponents/LookupManagement/department/departments.vue"
+      )
+  },
+  {
+    path: "/admin/lookupManagement/applicantTitle",
+    name: "ApplicantTitleLookupManagement",
+    component: () =>
+      import(
+        "../components/Reviewer/HomeComponents/LookupManagement/applicantTitle/applicantTitle.vue"
+      )
+  },
+  {
+    path: "/admin/lookupManagement/educationLevel",
+    name: "EducationLevelLookupManagement",
+    component: () =>
+      import(
+        "../components/Reviewer/HomeComponents/LookupManagement/educationLevel/educationLevel.vue"
+      )
+  },
+  {
+    path: "/admin/lookupManagement/professionalPrefix",
+    name: "ProfessionalPrefixLookupManagement",
+    component: () =>
+      import(
+        "../components/Reviewer/HomeComponents/LookupManagement/professionalPrefix/professionalPrefix.vue"
+      )
+  },
+  {
+    path: "/admin/lookupManagement/professionalType",
+    name: "ProfessionalTypeLookupManagement",
+    component: () =>
+      import(
+        "../components/Reviewer/HomeComponents/LookupManagement/professionalType/professionalType.vue"
+      )
+  },
+
+  //Admin Profile Management
+  {
+    path: "/admin/profile",
+    name: "AdminProfileManagement",
+    component: () =>
+      import(
+        "../components/Reviewer/HomeComponents/Profile/profile.vue"
+      )
+  },
+  
   /******************************************************************************************************************************************/
   /**************End of routes*****************/
   /******************************************************************************************************************************************/
@@ -682,6 +743,7 @@ router.beforeEach(async (to, from, next) => {
     !auth &&
     to.path !== "/landing" &&
     to.path !== "/" &&
+    to.path !== "/verifyOTP" &&
     to.path !== "/admin" &&
     to.name !== "scannedCertifiedUser"
   )

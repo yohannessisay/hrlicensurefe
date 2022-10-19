@@ -5,7 +5,20 @@
   <!-- Sidebar -->
   <section class="home-section">
     <!-- Header -->
-    <reviewer-nav-bar><h2>Location Management</h2></reviewer-nav-bar>
+    <reviewer-nav-bar><ol class="list-reset flex">
+          <li>
+            <router-link to="/admin/review"
+              ><span class="text-primary-600 text-base">Home</span></router-link
+            >
+          </li>
+          <li><span class="text-gray-500 mx-2">/</span></li>
+     
+          <li>
+            <a href="#" class="pointer-events-none text-lg text-grey-300"
+              >Location Management</a
+            >
+          </li>
+        </ol></reviewer-nav-bar>
     <!-- Header -->
 
     <!-- Main Content -->
@@ -18,23 +31,22 @@
           </p>
           <p class="absolute right-0" v-if="showAddButton">
             <button
-            
-            class="
-            inline-block
-              px-6
-              text-white
-              bg-primary-700
-              font-medium
-              text-xs
-              leading-tight
-              uppercase
-              border 
-              rounded
-              shadow-lg
-              hover:bg-white hover:text-primary-600
-              transition
-              duration-150
-              ease-in-out
+              class="
+                inline-block
+                px-6
+                text-white
+                bg-primary-700
+                font-medium
+                text-xs
+                leading-tight
+                uppercase
+                border
+                rounded
+                shadow-lg
+                hover:bg-white hover:text-primary-600 hover:border-primary-600
+                transition
+                duration-150
+                ease-in-out
               "
               data-bs-toggle="modal"
               data-bs-target="#addModal"
@@ -72,7 +84,7 @@
                       role="tablist"
                     >
                       <li
-                        class="nav-item flex-grow text-center  mt-4 "
+                        class="nav-item flex-grow text-center mt-4"
                         role="presentation"
                       >
                         <a
@@ -91,7 +103,6 @@
                             hover:border-transparent hover:bg-gray-100
                             focus:border-transparent
                             active
-                           
                           "
                           id="tabs-home-tabVertical"
                           data-bs-toggle="pill"
@@ -162,7 +173,10 @@
                       </li>
                     </ul>
 
-                    <div class="tab-content shadow-xl" id="tabs-tabContentVertical">
+                    <div
+                      class="tab-content shadow-xl"
+                      id="tabs-tabContentVertical"
+                    >
                       <div
                         class="tab-pane fade show active"
                         id="tabs-homeVertical"
@@ -195,6 +209,8 @@
                               :rows="regionsTable.rows"
                               :total="regionsTable.totalRecordCount"
                               :sortable="regionsTable.sortable"
+                              @is-finished="regionTableLoadingFinish"
+                              @row-clicked="regionRowClicked"
                             ></vue-table-lite>
                           </div>
                         </div>
@@ -231,6 +247,8 @@
                               :rows="zonesTable.rows"
                               :total="zonesTable.totalRecordCount"
                               :sortable="zonesTable.sortable"
+                              @is-finished="zoneTableLoadingFinish"
+                              @row-clicked="zoneRowClicked"
                             ></vue-table-lite>
                           </div>
                         </div>
@@ -267,6 +285,8 @@
                               :rows="woredasTable.rows"
                               :total="woredasTable.totalRecordCount"
                               :sortable="woredasTable.sortable"
+                              @is-finished="woredaTableLoadingFinish"
+                              @row-clicked="woredaRowClicked"
                             ></vue-table-lite>
                           </div>
                         </div>
@@ -281,7 +301,7 @@
       </div>
     </div>
     <add-modal :modalData="modalData"></add-modal>
-
+    <edit-modal :editModalData="editModalData"></edit-modal>
     <!-- Main Content -->
   </section>
 </template>
@@ -291,11 +311,12 @@ import "@ocrv/vue-tailwind-pagination/dist/style.css";
 import { onMounted } from "@vue/runtime-core";
 import { useStore } from "vuex";
 import { ref } from "vue";
-import ReviewerNavBar from "./SharedComponents/navBar.vue";
-import ReviewerSideBar from "./SharedComponents/sideNav.vue";
+import ReviewerNavBar from "./../SharedComponents/navBar.vue";
+import ReviewerSideBar from "./../SharedComponents/sideNav.vue";
 import VueTableLite from "vue3-table-lite";
-import AddModal from "./Modals/addLocationModal.vue";
+import AddModal from "./addModal.vue";
 import "@ocrv/vue-tailwind-pagination/dist/style.css";
+import EditModal from "./editModal.vue";
 
 export default {
   components: {
@@ -303,6 +324,7 @@ export default {
     ReviewerSideBar,
     VueTableLite,
     AddModal,
+    EditModal,
   },
 
   setup() {
@@ -315,7 +337,8 @@ export default {
     let regionTableData = [];
     let woredaTableData = [];
     let zoneTableData = [];
-    let showAddButton=ref(false);
+    let showAddButton = ref(false);
+    let editModalData = ref({});
     const fetchRegions = () => {
       store.dispatch("lookups/getRegions").then((res) => {
         res.data.data.forEach((element) => {
@@ -324,6 +347,7 @@ export default {
             Name: element.name ? element.name : "",
             Code: element.code ? element.code : "",
             Status: element.status ? element.status : "",
+            type:'region',
             data: element ? element : {},
           });
         });
@@ -356,6 +380,18 @@ export default {
               width: "30%",
               sortable: true,
             },
+            {
+              label: "",
+              field: "quick",
+              width: "10%",
+              display: function (row) {
+                return (
+                  '<button data-bs-toggle="modal" data-bs-target="#editModal" class="edit-btn-region bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5 font-medium text-xs leading-tight uppercase rounded shadow-md hover:shadow-lg  transition duration-150 ease-in-out" data-id="' +
+                  row.id +
+                  '" ><i class="fa fa-eye"></i> View/Edit</button>'
+                );
+              },
+            },
           ],
           rows: regionTableData,
           totalRecordCount: regionTableData.length,
@@ -364,7 +400,7 @@ export default {
             sort: "asc",
           },
         };
-         showAddButton.value=true;
+        showAddButton.value = true;
       });
     };
 
@@ -379,6 +415,7 @@ export default {
               element.zone && element.zone.region
                 ? element.zone.region.name
                 : "",
+                type:'woreda',
             Status: element.status ? element.status : "",
           });
         });
@@ -418,6 +455,18 @@ export default {
               width: "10%",
               sortable: true,
             },
+            {
+              label: "",
+              field: "quick",
+              width: "10%",
+              display: function (row) {
+                return (
+                  '<button data-bs-toggle="modal" data-bs-target="#editModal" class="edit-btn-woreda bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5 font-medium text-xs leading-tight uppercase rounded shadow-md hover:shadow-lg  transition duration-150 ease-in-out" data-id="' +
+                  row.id +
+                  '" ><i class="fa fa-eye"></i> View/Edit</button>'
+                );
+              },
+            },
           ],
           rows: woredaTableData,
           totalRecordCount: woredaTableData.length,
@@ -426,7 +475,6 @@ export default {
             sort: "asc",
           },
         };
-        
       });
     };
 
@@ -438,10 +486,13 @@ export default {
             Name: element.name ? element.name : "",
             Region: element.region ? element.region.name : "",
             Status: element.status ? element.status : "",
+            type:'zone',
             data: element ? element : {},
           });
         });
+
         modalData.value.zone = zoneTableData;
+
         zonesTable.value = {
           isLoading: false,
           columns: [
@@ -470,6 +521,18 @@ export default {
               width: "10%",
               sortable: true,
             },
+            {
+              label: "",
+              field: "quick",
+              width: "10%",
+              display: function (row) {
+                return (
+                  '<button data-bs-toggle="modal" data-bs-target="#editModal" class="edit-btn-zone bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5 font-medium text-xs leading-tight uppercase rounded shadow-md hover:shadow-lg  transition duration-150 ease-in-out" data-id="' +
+                  row.id +
+                  '" ><i class="fa fa-eye"></i> View/Edit</button>'
+                );
+              },
+            },
           ],
           rows: zoneTableData,
           totalRecordCount: zoneTableData.length,
@@ -479,18 +542,62 @@ export default {
           },
         };
       });
-     
+    };
+
+    const regionTableLoadingFinish = () => {
+      regionsTable.value.isLoading = false;
+      let elements = document.getElementsByClassName("edit-btn-region");
+      Array.prototype.forEach.call(elements, function (element) {
+        if (element.classList.contains("edit-btn")) {
+          element.addEventListener("click", regionRowClicked());
+        }
+      });
+    };
+    const regionRowClicked = (row) => {
+      editModalData.value = row;
+    };
+
+    const zoneTableLoadingFinish = () => {
+      zonesTable.value.isLoading = false;
+      let elements = document.getElementsByClassName("edit-btn-zone");
+      Array.prototype.forEach.call(elements, function (element) {
+        if (element.classList.contains("edit-btn")) {
+          element.addEventListener("click", zoneRowClicked());
+        }
+      });
+    };
+    const zoneRowClicked = (row) => {
+      editModalData.value = row;
+    };
+
+    const woredaTableLoadingFinish = () => {
+      woredasTable.value.isLoading = false;
+      let elements = document.getElementsByClassName("edit-btn-woreda");
+      Array.prototype.forEach.call(elements, function (element) {
+        if (element.classList.contains("edit-btn")) {
+          element.addEventListener("click", woredaRowClicked());
+        }
+      });
+    };
+    const woredaRowClicked = (row) => {
+      editModalData.value = row;
     };
 
     onMounted(() => {
       fetchRegions();
       fetchWoredas();
       fetchZones();
-      
     });
     return {
       regionsTable,
+      woredaRowClicked,
+      zoneRowClicked,
+      regionRowClicked,
+      woredaTableLoadingFinish,
+      zoneTableLoadingFinish,
+      regionTableLoadingFinish,
       zonesTable,
+      editModalData,
       woredasTable,
       modalData,
       showAddButton,
@@ -501,17 +608,16 @@ export default {
 <style scoped>
 .tab-content > .active {
   padding-right: 5px;
-   padding-bottom: 5px;
+  padding-bottom: 5px;
   display: block;
   border-left: 6px solid #0d3552;
-   border-top: 1px solid #0d3552;
-   border-right: 1px solid #0d3552;
-   border-bottom: 1px solid #0d3552;
+  border-top: 1px solid #0d3552;
+  border-right: 1px solid #0d3552;
+  border-bottom: 1px solid #0d3552;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 10px;
-
 }
 
 .nav-tabs .nav-link.active {

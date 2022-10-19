@@ -273,6 +273,230 @@
                           border-b-4
                         "
                       >
+                        Ethiopian
+                      </h4>
+                    </div>
+                    <div class="pricing-amount transition-colors duration-300">
+                      <div>
+                        <span class="text-xl text-main-4oo font-semibold"
+                          >Attached Documents must be clear and visible.</span
+                        >
+                      </div>
+                      <small class="text-main-400 ml-2"
+                        >(hover over lists to see details)</small
+                      >
+                    </div>
+                    <div class="p-6 mb-2" v-if="NLdocumentSpecs">
+                      <ul class="bg-white">
+                        <li
+                          class="
+                            text-main-400 text-lg
+                            rounded-lg
+                            bg-white
+                            cursor-pointer
+                          "
+                          data-bs-toggle="tooltip"
+                        >
+                          <i class="fa fa-arrow-right-long"></i>
+                          Residence Id
+                        </li>
+                        <li
+                          class="
+                            text-main-400 text-lg
+                            rounded-lg
+                            bg-white
+                            cursor-pointer
+                          "
+                          data-bs-toggle="tooltip"
+                          title="For non english speaking countries only"
+                        >
+                          <i class="fa fa-arrow-right-long"></i>
+                          Medical Certificate
+                        </li>
+                        <li
+                          class="
+                            text-main-400 text-lg
+                            rounded-lg
+                            bg-white
+                            cursor-pointer
+                          "
+                          data-bs-toggle="tooltip"
+                          title="Only for diploma graduates"
+                        >
+                          <i class="fa fa-arrow-right-long"></i>
+                          COC Certificate
+                        </li>
+
+                        <li
+                          class="
+                            text-main-400 text-lg
+                            rounded-lg
+                            bg-white
+                            cursor-pointer
+                          "
+                          data-bs-toggle="tooltip"
+                          title=""
+                        >
+                          <i class="fa fa-arrow-right-long"></i>
+                          8th, 10th, 12th Grade Certificate
+                        </li>
+
+                        <li
+                          class="
+                            text-main-400 text-lg
+                            rounded-lg
+                            bg-white
+                            cursor-pointer
+                          "
+                          data-bs-toggle="tooltip"
+                          title="Diploma,transcript for both undergraduates and postgraduates"
+                        >
+                          <i class="fa fa-arrow-right-long"></i>
+                          Academic Document
+                        </li>
+
+                        <li
+                          class="
+                            text-main-400 text-lg
+                            rounded-lg
+                            bg-white
+                            cursor-pointer
+                          "
+                          data-bs-toggle="tooltip"
+                        >
+                          <i class="fa fa-arrow-right-long"></i>
+                          Authenticated Professional License
+                        </li>
+
+                        <li
+                          class="
+                            text-main-400 text-lg
+                            rounded-lg
+                            bg-white
+                            cursor-pointer
+                          "
+                          data-bs-toggle="tooltip"
+                          title=" "
+                        >
+                          <i class="fa fa-arrow-right-long"></i>
+                          9th - 10th Grade Transcript
+                        </li>
+
+                        <li
+                          class="
+                            text-main-400 text-lg
+                            rounded-lg
+                            bg-white
+                            cursor-pointer
+                          "
+                          data-bs-toggle="tooltip"
+                          title=""
+                        >
+                          <i class="fa fa-arrow-right-long"></i>
+                          11th - 12th Grade Transcript
+                        </li>
+
+                        <li
+                          class="
+                            text-main-400 text-lg
+                            rounded-lg
+                            bg-white
+                            cursor-pointer
+                          "
+                          data-bs-toggle="tooltip"
+                          title="Non-government Institutions"
+                        >
+                          <i class="fa fa-arrow-right-long"></i>
+                          Payroll Document
+                        </li>
+
+                        <li
+                          class="
+                            text-main-400 text-lg
+                            rounded-lg
+                            bg-white
+                            cursor-pointer
+                          "
+                          data-bs-toggle="tooltip"
+                          title="For those upgraded by the sponsorship of an Institution"
+                        >
+                          <i class="fa fa-arrow-right-long"></i>
+                          Support Letter from Sponsored Institution
+                        </li>
+
+                        <li
+                          class="
+                            text-main-400 text-lg
+                            rounded-lg
+                            bg-white
+                            cursor-pointer
+                          "
+                          data-bs-toggle="tooltip"
+                          title="Non-government Institutions"
+                        >
+                          <i class="fa fa-arrow-right-long"></i>
+                          Work Experience
+                        </li>
+
+                        <li
+                          class="
+                            text-main-400 text-lg
+                            rounded-lg
+                            bg-white
+                            cursor-pointer
+                          "
+                          data-bs-toggle="tooltip"
+                          title="Non-government Institutions"
+                        >
+                          <i class="fa fa-arrow-right-long"></i>
+                          Academic Transcript
+                        </li>
+                      </ul>
+                      <div class="mt-6 py-4">
+                        <a href="/Applicant/NewLicense">
+                          <button
+                            class="
+                              text-xl text-white
+                              py-2
+                              bg-main-400
+                              hover:text-main-400 hover:border hover:bg-white
+                              px-6
+                              rounded-sm
+                            "
+                          >
+                            Get Started
+                          </button>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="pricing-plan-wrap lg:w-1/3 my-4 md:my-6 mr-4">
+                  <div
+                    class="
+                      pricing-plan
+                      border-t-4 border-solid border-white
+                      bg-white
+                      rounded-lg
+                      shadow-2xl
+                      text-center
+                      max-w-full
+                      mx-auto
+                      hover:border-indigo-600
+                      transition-colors
+                      duration-300
+                    "
+                  >
+                    <div class="p-2 md:py-4">
+                      <h4
+                        class="
+                          font-medium
+                          text-main-400
+                          leading-tight
+                          text-2xl
+                          border-b-4
+                        "
+                      >
                         Foreign Applicants
                       </h4>
                     </div>
@@ -569,232 +793,6 @@
                         >
                           <i class="fa fa-arrow-right-long"></i>
                           Medical Certificate
-                        </li>
-                      </ul>
-                      <div class="mt-6 py-4">
-                        <a href="/Applicant/NewLicense">
-                          <button
-                            class="
-                              text-xl text-white
-                              py-2
-                              bg-main-400
-                              hover:text-main-400 hover:border hover:bg-white
-                              px-6
-                              rounded-sm
-                            "
-                          >
-                            Get Started
-                          </button>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="pricing-plan-wrap lg:w-1/3 my-4 md:my-6 mr-4">
-                  <div
-                    class="
-                      pricing-plan
-                      border-t-4 border-solid border-white
-                      bg-white
-                      rounded-lg
-                      shadow-2xl
-                      text-center
-                      max-w-full
-                      mx-auto
-                      hover:border-indigo-600
-                      transition-colors
-                      duration-300
-                    "
-                  >
-                    <div class="p-2 md:py-4">
-                      <h4
-                        class="
-                          font-medium
-                          text-main-400
-                          leading-tight
-                          text-2xl
-                          border-b-4
-                        "
-                      >
-                        Ethiopian
-                      </h4>
-                    </div>
-                    <div class="pricing-amount transition-colors duration-300">
-                      <div>
-                        <span class="text-xl text-main-4oo font-semibold"
-                          >Attached Documents must be clear and visible.</span
-                        >
-                      </div>
-                      <small class="text-main-400 ml-2"
-                        >(hover over lists to see details)</small
-                      >
-                    </div>
-                    <div class="p-6 mb-2" v-if="NLdocumentSpecs">
-                      <ul class="bg-white">
-                        <li
-                          class="
-                            text-main-400 text-lg
-                            rounded-lg
-                            bg-white
-                            cursor-pointer
-                          "
-                          data-bs-toggle="tooltip"
-                        >
-                          <i class="fa fa-arrow-right-long"></i>
-                          Residence Id
-                        </li>
-                        <li
-                          class="
-                            text-main-400 text-lg
-                            rounded-lg
-                            bg-white
-                            cursor-pointer
-                          "
-                          data-bs-toggle="tooltip"
-                          title="For non english speaking countries only"
-                        >
-                          <i class="fa fa-arrow-right-long"></i>
-                          Medical Certificate
-                        </li>
-                        <li
-                          class="
-                            text-main-400 text-lg
-                            rounded-lg
-                            bg-white
-                            cursor-pointer
-                          "
-                          data-bs-toggle="tooltip"
-                          title="Only for diploma graduates"
-                        >
-                          <i class="fa fa-arrow-right-long"></i>
-                          COC Certificate
-                        </li>
-
-                        <li
-                          class="
-                            text-main-400 text-lg
-                            rounded-lg
-                            bg-white
-                            cursor-pointer
-                          "
-                          data-bs-toggle="tooltip"
-                          title=""
-                        >
-                          <i class="fa fa-arrow-right-long"></i>
-                          8th, 10th, 12th Grade Certificate
-                        </li>
-
-                        <li
-                          class="
-                            text-main-400 text-lg
-                            rounded-lg
-                            bg-white
-                            cursor-pointer
-                          "
-                          data-bs-toggle="tooltip"
-                          title="Diploma,transcript for both undergraduates and postgraduates"
-                        >
-                          <i class="fa fa-arrow-right-long"></i>
-                          Academic Document
-                        </li>
-
-                        <li
-                          class="
-                            text-main-400 text-lg
-                            rounded-lg
-                            bg-white
-                            cursor-pointer
-                          "
-                          data-bs-toggle="tooltip"
-                        >
-                          <i class="fa fa-arrow-right-long"></i>
-                          Authenticated Professional License from Country of
-                          Origin
-                        </li>
-
-                        <li
-                          class="
-                            text-main-400 text-lg
-                            rounded-lg
-                            bg-white
-                            cursor-pointer
-                          "
-                          data-bs-toggle="tooltip"
-                          title=" "
-                        >
-                          <i class="fa fa-arrow-right-long"></i>
-                          9th - 10th Grade Transcript
-                        </li>
-
-                        <li
-                          class="
-                            text-main-400 text-lg
-                            rounded-lg
-                            bg-white
-                            cursor-pointer
-                          "
-                          data-bs-toggle="tooltip"
-                          title=""
-                        >
-                          <i class="fa fa-arrow-right-long"></i>
-                          11th - 12th Grade Transcript
-                        </li>
-
-                        <li
-                          class="
-                            text-main-400 text-lg
-                            rounded-lg
-                            bg-white
-                            cursor-pointer
-                          "
-                          data-bs-toggle="tooltip"
-                          title="Non-government Institutions"
-                        >
-                          <i class="fa fa-arrow-right-long"></i>
-                          Payroll Document
-                        </li>
-
-                        <li
-                          class="
-                            text-main-400 text-lg
-                            rounded-lg
-                            bg-white
-                            cursor-pointer
-                          "
-                          data-bs-toggle="tooltip"
-                          title="For those upgraded by the sponsorship of an Institution"
-                        >
-                          <i class="fa fa-arrow-right-long"></i>
-                          Support Letter from Sponsored Institution
-                        </li>
-
-                        <li
-                          class="
-                            text-main-400 text-lg
-                            rounded-lg
-                            bg-white
-                            cursor-pointer
-                          "
-                          data-bs-toggle="tooltip"
-                          title="Non-government Institutions"
-                        >
-                          <i class="fa fa-arrow-right-long"></i>
-                          Work Experience
-                        </li>
-
-                        <li
-                          class="
-                            text-main-400 text-lg
-                            rounded-lg
-                            bg-white
-                            cursor-pointer
-                          "
-                          data-bs-toggle="tooltip"
-                          title="Non-government Institutions"
-                        >
-                          <i class="fa fa-arrow-right-long"></i>
-                          Academic Transcript
                         </li>
                       </ul>
                       <div class="mt-6 py-4">
@@ -1223,7 +1221,7 @@
                       >
                     </div>
                     <div class="p-6 mb-2" v-if="RNdocumentSpecs">
-                       <ul class="bg-white">
+                      <ul class="bg-white">
                         <li
                           class="
                             text-main-400 text-lg
@@ -1251,7 +1249,6 @@
                           <i class="fa fa-arrow-right-long"></i>
                           CPD Certificate
                         </li>
-               
 
                         <li
                           class="
@@ -1552,8 +1549,10 @@ export default {
     const getImage = (profile) => {
       if (!profile) {
         isFirstTime.value = true;
-      } else {
-        userInfo.value.pic = googleApi + profile.profilePicture.filePath;
+      } else { 
+        userInfo.value.pic = profile.profilePicture
+          ? googleApi + profile.profilePicture.filePath
+          : "";
       }
     };
     onMounted(() => {
@@ -1566,27 +1565,21 @@ export default {
               element.applicantType.code == "ETH" &&
               element.isRequired == true &&
               element.applicationCategory.code == "NA" &&
-              element.parentDocument == null &&
-              element.educationalLevel &&
-              element.educationalLevel.code == "BACH"
+              element.parentDocument == null
           );
           NLdocumentSpecs.value.foreigner = res.data.data.filter(
             (element) =>
               element.applicantType.code == "FOR" &&
               element.isRequired == true &&
               element.applicationCategory.code == "NA" &&
-              element.parentDocument == null &&
-              element.educationalLevel &&
-              element.educationalLevel.code == "BACH"
+              element.parentDocument == null
           );
           NLdocumentSpecs.value.ethiopianAbroad = res.data.data.filter(
             (element) =>
               element.applicantType.code == "ETHABRO" &&
               element.isRequired == true &&
               element.applicationCategory.code == "NA" &&
-              element.parentDocument == null &&
-              element.educationalLevel &&
-              element.educationalLevel.code == "BACH"
+              element.parentDocument == null
           );
 
           // Renewal Section

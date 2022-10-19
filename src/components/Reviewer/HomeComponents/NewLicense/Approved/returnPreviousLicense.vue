@@ -48,7 +48,7 @@
           <button
             type="button"
             class="
-              px-6
+                  px-6
               text-white
               bg-primary-600
               hover:text-primary-600 hover:border
@@ -57,6 +57,7 @@
               leading-tight
               uppercase
               rounded
+              hover:border-primary-600
               shadow-lg
               hover:bg-purple-700 hover:shadow-lg
               focus:bg-purple-700
@@ -455,7 +456,7 @@
             type="button"
             class="
               inline-block
-              px-6
+                  px-6
               text-white
               bg-primary-600
               hover:text-primary-600 hover:border
@@ -464,6 +465,7 @@
               leading-tight
               uppercase
               rounded
+              hover:border-primary-600
               shadow-lg
               hover:bg-purple-700 hover:shadow-lg
               focus:bg-purple-700
@@ -483,7 +485,7 @@
             type="button"
             class="
               inline-block
-              px-6
+                  px-6
               text-white
               bg-primary-600
               hover:text-primary-600 hover:border
@@ -492,6 +494,7 @@
               leading-tight
               uppercase
               rounded
+              hover:border-primary-600
               shadow-lg
               hover:bg-purple-700 hover:shadow-lg
               focus:bg-purple-700
@@ -556,13 +559,17 @@ export default {
         .then((res) => {
           if (res.statusText == "Created") {
             isLoading.value = true;
-            toast.success("Application reviewed Successfully", {
+            toast.success("Application returned Successfully", {
               timeout: 5000,
               position: "bottom-center",
               pauseOnFocusLoss: true,
               pauseOnHover: true,
               icon: true,
             });
+            setTimeout(() => {
+              window.location.reload()
+            }, 3000);
+           
           } else {
             isLoading.value = true;
             toast.error("Please try again", {
@@ -572,6 +579,9 @@ export default {
               pauseOnHover: true,
               icon: true,
             });
+            setTimeout(() => {
+              window.location.reload()
+            }, 3000);
           }
         })
         .catch(() => {
@@ -583,6 +593,9 @@ export default {
             pauseOnHover: true,
             icon: true,
           });
+          setTimeout(() => {
+              window.location.reload()
+            }, 3000);
         });
     };
     watch(props.previousLicenseData, () => {

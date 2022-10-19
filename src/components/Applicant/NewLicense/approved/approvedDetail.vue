@@ -466,23 +466,17 @@
           <button
             type="button"
             class="
-              inline-block
+             inline-block
               px-6
               text-white
               bg-main-400
               hover:text-main-400 hover:border
-              font-medium
+              font-semibold
               text-xs
               leading-tight
               uppercase
               rounded
-              shadow-lg
-              hover:bg-purple-700 hover:shadow-lg
-              focus:bg-purple-700
-              focus:shadow-lg
-              focus:outline-none
-              focus:ring-0
-              active:bg-purple-800 active:shadow-lg
+              shadow-lg 
               transition
               duration-150
               ease-in-out

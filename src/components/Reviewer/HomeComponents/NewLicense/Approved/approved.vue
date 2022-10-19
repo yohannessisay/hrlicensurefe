@@ -6,7 +6,36 @@
   <section class="home-section">
     <!-- Header -->
     <reviewer-nav-bar>
-      <h2 class="dashboard">Approved</h2>
+      <div
+        class="
+          container-fluid
+          w-full
+          flex flex-wrap
+          items-center
+          justify-between
+          px-6
+        "
+      >
+        <ol class="list-reset flex">
+          <li>
+            <router-link to="/admin/review"
+              ><span class="text-primary-600 text-base">Home</span></router-link
+            >
+          </li>
+          <li><span class="text-gray-500 mx-2">/</span></li>
+          <li>
+            <a href="#" class="hover:text-primary-600 text-grey-300"
+              >New License</a
+            >
+          </li>
+          <li><span class="text-gray-500 mx-2">/</span></li>
+          <li>
+            <a href="#" class="pointer-events-none text-lg text-grey-300"
+              >Approved</a
+            >
+          </li>
+        </ol>
+      </div>
     </reviewer-nav-bar>
     <!-- Header -->
 
@@ -64,7 +93,7 @@
                     />
                     <button
                       class="
-                     inline-block
+                        inline-block
                         px-6
                         py-2
                         bg-primary-700
@@ -75,9 +104,7 @@
                         uppercase
                         rounded
                         shadow-md
-                        hover:bg-white
-                        hover:text-primary-600
-                        hover:border
+                        hover:bg-white hover:text-primary-600 hover:border
                         transition
                         duration-150
                         ease-in-out
@@ -180,7 +207,7 @@
                     />
                     <button
                       class="
-                     inline-block
+                        inline-block
                         px-6
                         py-2
                         bg-primary-700
@@ -191,9 +218,7 @@
                         uppercase
                         rounded
                         shadow-md
-                        hover:bg-white
-                        hover:text-primary-600
-                        hover:border
+                        hover:bg-white hover:text-primary-600 hover:border
                         transition
                         duration-150
                         ease-in-out
@@ -254,8 +279,8 @@
 
 <script>
 import ReviewerSideNav from "../SharedComponents/sideNav.vue";
-import ReviewerNavBar from "../SharedComponents/navBar.vue";
-import NewLicenseMainContent from "../../../ApplicationTypes/NewLicense/MainComponents/approved.vue";
+import ReviewerNavBar from "../../../SharedComponents/navBar.vue";
+import NewLicenseMainContent from "../../../SharedComponents/approved.vue";
 import { ref, onMounted, computed } from "vue";
 import { useStore } from "vuex";
 import VueTableLite from "vue3-table-lite";
@@ -313,7 +338,7 @@ export default {
 
     const approved = () => {
       store.dispatch("reviewerNewLicense/getNewLicenseApproved").then((res) => {
-        allInfo.value.assignApplication =res 
+        allInfo.value.assignApplication = res;
         for (let applicant in allInfo.value.assignApplication) {
           if (
             allInfo.value.assignApplication[applicant].applicationType ===
@@ -326,7 +351,10 @@ export default {
 
         JSON.parse(JSON.stringify(allInfo.value.assignApplication)).forEach(
           (element) => {
-            if (element.licenseReviewer&&element.licenseReviewer.reviewerId == adminId) {
+            if (
+              element.licenseReviewer &&
+              element.licenseReviewer.reviewerId == adminId
+            ) {
               toYouTableData.value.push({
                 id: element.id,
                 ApplicantName:

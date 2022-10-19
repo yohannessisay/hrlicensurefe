@@ -162,14 +162,17 @@ export default {
     let isFirstTime = ref(false);
     let userInfo = ref({});
     const logout = () => {
-      location.reload();
+   
       localStorage.removeItem("token");
       localStorage.removeItem("userId");
-      localStorage.removeItem("educationalLevel");
-      localStorage.removeItem("language");
-      localStorage.removeItem("payroll");
-      localStorage.removeItem("personalInfo");
+      localStorage.removeItem("GSApplicationData");
+      localStorage.removeItem("RNApplicationImageData");
+      localStorage.removeItem("NlApplicationImageData");
+      localStorage.removeItem("RNApplicationData");
+      localStorage.removeItem("NLApplicationData");
+      localStorage.removeItem("isApplicant");
       localStorage.removeItem("applicantTypeId");
+      location.reload();
       this.$router.push({ path: "/" });
     };
     const showDropDown = () => {

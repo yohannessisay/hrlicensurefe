@@ -42,19 +42,12 @@
           text-current
         "
       >
-   <div
-          class="
-            modal-header
-            flex flex-shrink-0
-           justify-end
-           
-            p-2
-            rounded-t-md
-          "
+        <div
+          class="modal-header flex flex-shrink-0 justify-end p-2 rounded-t-md"
         >
           <button
             type="button"
-            class="     
+            class="
               px-6
               text-white
               bg-primary-600
@@ -64,6 +57,7 @@
               leading-tight
               uppercase
               rounded
+              hover:border-primary-600
               shadow-lg
               hover:bg-purple-700 hover:shadow-lg
               focus:bg-purple-700
@@ -73,10 +67,13 @@
               active:bg-purple-800 active:shadow-lg
               transition
               duration-150
-              ease-in-out"
+              ease-in-out
+            "
             data-bs-dismiss="modal"
             aria-label="Close"
-          ><i class="fa fa-close fa-2x"></i></button>
+          >
+            <i class="fa fa-close fa-2x"></i>
+          </button>
         </div>
         <div class="vld-parent mt-4">
           <loading
@@ -195,8 +192,8 @@
                                   >Martial Status:</span
                                 >
                                 {{
-                                  modalData.martialStatus
-                                    ? modalData.martialStatus
+                                  modalData.maritalStatus
+                                    ? modalData.maritalStatus
                                     : ""
                                 }}
                               </p>
@@ -286,6 +283,9 @@
                                         text-white
                                         font-medium
                                         text-xs
+                                        mt-2
+                                        hover:border-primary-600
+                                        ml-1
                                         leading-tight
                                         uppercase
                                         rounded
@@ -468,7 +468,7 @@
           <button
             type="button"
             class="
-        inline-block
+              inline-block
               px-6
               text-white
               font-medium
@@ -477,9 +477,9 @@
               leading-tight
               uppercase
               rounded
+              hover:border-primary-600
               shadow-lg
-              hover:bg-white 
-              hover:text-primary-700
+              hover:bg-white hover:text-primary-700
               transition
               duration-150
               ease-in-out
@@ -521,7 +521,6 @@ export default {
     let assign = ref({
       reviewerId: "",
       goodStandingId: "",
-      createdByAdminId: "",
     });
     let role = ref({});
     let isLoadingStart = ref(true);
@@ -560,8 +559,8 @@ export default {
           ? modalData.value.name
             ? "Dear " +
               modalData.value.name +
-              " your applied renewal license for " +
-              modalData.value.department +
+              " your applied good standing letter for " +
+              modalData.value.department.name +
               " has been assigned a reviewer , after careful examination of your uploaded documents by our reviewers we will get back and notify you on each steps, Thank you for using eHPL. https://hrl.moh.gov.et/"
             : ""
           : "",
@@ -677,9 +676,9 @@ export default {
             modalData.value.dateOfBirth = result.profile
               ? result.profile.dateOfBirth
               : "-----";
-            modalData.value.martialStatus =
-              result.profile && result.profile.martialStatus
-                ? result.profile.martialStatus.name
+            modalData.value.maritalStatus =
+              result.profile && result.profile.maritalStatus
+                ? result.profile.maritalStatus.name
                 : "-----";
             modalData.value.mobileNumber = result.applicant
               ? result.applicant.phoneNumber

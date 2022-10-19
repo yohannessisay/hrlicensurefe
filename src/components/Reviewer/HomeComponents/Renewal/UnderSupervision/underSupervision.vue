@@ -6,7 +6,25 @@
   <section class="home-section">
     <!-- Header -->
     <reviewer-nav-bar>
-      <h2 class="dashboard">Under Supervision</h2>
+      <ol class="list-reset flex">
+          <li>
+            <router-link to="/admin/review"
+              ><span class="text-primary-600 text-base">Home</span></router-link
+            >
+          </li>
+          <li><span class="text-gray-500 mx-2">/</span></li>
+          <li>
+            <a href="#" class="hover:text-primary-600 text-grey-300"
+              >Renewal</a
+            >
+          </li>
+          <li><span class="text-gray-500 mx-2">/</span></li>
+          <li>
+            <a href="#" class="pointer-events-none text-lg text-grey-300"
+              >Under Supervision</a
+            >
+          </li>
+        </ol>
     </reviewer-nav-bar>
     <!-- Header -->
 
@@ -94,8 +112,8 @@
 
 <script>
 import ReviewerSideNav from "../SharedComponents/sideNav.vue";
-import ReviewerNavBar from "../SharedComponents/navBar.vue";
-import NewLicenseMainContent from "../../../ApplicationTypes/NewLicense/MainComponents/underSupervision.vue";
+import ReviewerNavBar from "../../../SharedComponents/navBar.vue";
+import NewLicenseMainContent from "../../../SharedComponents/underSupervision.vue";
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
 

@@ -415,6 +415,17 @@ export default {
       return error;
     }
   },
+  async updateDeclined({ commit }, payload) {
+    try {
+      const resp = await ApiService.put(
+        baseUrl + "/newLicenses/" + payload.licenseId,
+        payload.declinedData
+      );
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
   async getRegions() {
     try {
       const resp = await ApiService.get(baseUrl + "/lookups/regions");
@@ -444,10 +455,14 @@ export default {
       return resp;
     }
   },
-  async getProfessionalTypes(context, deptId) {
-    try {
+  async getProfessionalTypes({ commit }, professionDetail) {
+    try { 
       const resp = await ApiService.get(
-        baseUrl + "/lookups/professionalTypes/" + deptId
+        baseUrl +
+          "/lookups/professionalTypes/" +
+          professionDetail.departmentId +
+          "/" +
+          professionDetail.educationalLevelId
       );
       return resp;
     } catch (error) {

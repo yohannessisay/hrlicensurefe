@@ -578,8 +578,7 @@ export default {
     const changeAgrement = () => {
       agreed.value = !agreed.value;
       if (
-        generalInfo.value &&
-        generalInfo.value.feedback.length >= 4 &&
+        generalInfo.value && 
         agreed.value != false
       ) {
         allowSave.value = true;
@@ -589,8 +588,7 @@ export default {
     };
     const checkAgreement = () => {
       if (
-        generalInfo.value &&
-        generalInfo.value.feedback.length >= 4 &&
+        generalInfo.value && 
         agreed.value != false
       ) {
         allowSave.value = true;
@@ -602,7 +600,7 @@ export default {
       generalInfo.value.licenseFile = [];
       documents.value = localFileData.value;
 
-      if (agreed.value == true && generalInfo.value.feedback.length != 0) {
+      if (agreed.value == true  ) {
         let formData = new FormData();
         tempDocs.value.forEach((element, index) => {
           formData.append(index, element);

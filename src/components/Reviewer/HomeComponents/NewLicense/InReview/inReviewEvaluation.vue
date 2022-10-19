@@ -585,9 +585,15 @@
                                             ></i
                                             >Edit
                                           </span>
-                                          <div 
+                                          <div
                                             :id="education.department.id"
                                             class="flex justify-center"
+                                            v-if="
+                                              education.professionType &&
+                                              allowProfChange[
+                                                education.department.id
+                                              ]
+                                            "
                                           >
                                             <div class="mb-3 w-full">
                                               <select
@@ -641,6 +647,7 @@
                                               </select>
                                             </div>
                                           </div>
+                                          <!-- Other Profession  -->
                                           <div
                                             class="flex justify-center"
                                             v-if="
@@ -744,6 +751,104 @@
                                                 placeholder="Type amharic name"
                                               />
                                             </div>
+                                          </div>
+                                          <!-- Other Profession  -->
+                                        </div>
+                                      </div>
+
+                                      <div class="grid grid-cols-2 gap-4">
+                                        <p
+                                          class="
+                                            text-primary-600 text-base
+                                            font-bold
+                                          "
+                                        >
+                                          Prefix
+                                        </p>
+                                        <div
+                                          class="text-black text-base font-bold"
+                                        >
+                                          <button
+                                            class="
+                                              inline-block
+                                              px-6
+                                              text-white
+                                              bg-primary-600
+                                              font-medium
+                                              text-xs
+                                              leading-tight
+                                              uppercase
+                                              rounded
+                                              shadow-lg
+                                              hover:text-primary-600
+                                              hover:shadow-lg
+                                              focus:bg-purple-700
+                                              focus:shadow-lg
+                                              focus:outline-none
+                                              focus:ring-0
+                                              active:bg-purple-800
+                                              active:shadow-lg
+                                              transition
+                                              duration-150
+                                              ease-in-out
+                                            "
+                                            @click="
+                                              showPrefix(education.departmentId)
+                                            "
+                                          >
+                                            Add Prefix
+                                          </button>
+                                          <div
+                                            class="mb-3 w-full"
+                                            v-if="
+                                              showPrefixFor[
+                                                education.departmentId
+                                              ]
+                                            "
+                                          >
+                                            <select
+                                              class="
+                                                form-select
+                                                appearance-none
+                                                block
+                                                w-full
+                                                px-3
+                                                py-1.5
+                                                text-base
+                                                font-normal
+                                                text-gray-700
+                                                bg-white
+                                                bg-clip-padding
+                                                bg-no-repeat
+                                                border
+                                                border-solid
+                                                border-gray-300
+                                                rounded
+                                                transition
+                                                ease-in-out
+                                                m-0
+                                                focus:text-gray-700
+                                                focus:bg-white
+                                                focus:border-blue-600
+                                                focus:oProfessionutline-none
+                                              "
+                                              @click="changePrefix(education)"
+                                              v-model="
+                                                education.prefixId
+                                              "
+                                              aria-label="Default select example"
+                                            >
+                                              <option selected disabled>
+                                                Choose prefix
+                                              </option>
+                                              <option
+                                                v-for="prefix in prefixes"
+                                                :key="prefix.id"
+                                                :value="prefix.id"
+                                              >
+                                                {{ prefix.name }}
+                                              </option>
+                                            </select>
                                           </div>
                                         </div>
                                       </div>
@@ -1741,7 +1846,7 @@ import { useToast } from "vue-toastification";
 
 import moment from "moment";
 import ReviewerSideNav from "../SharedComponents/sideNav.vue";
-import ReviewerNavBar from "../SharedComponents/navBar.vue";
+import ReviewerNavBar from "../../../SharedComponents/navBar.vue";
 
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import Loading from "vue3-loading-overlay";
@@ -1775,6 +1880,8 @@ export default {
     let pdfFilePath = ref("");
     const completedSteps = ref(0);
     const totalSteps = ref(0);
+    let showPrefixFor = ref([]);
+
     let isGoodStanding = ref(false);
     let institutions = ref([]);
     let expirationDateExceedTodayError = ref(false);
@@ -1836,6 +1943,7 @@ export default {
     let width = ref("width:11.11111%");
     let accepted = ref([]);
     let rejected = ref([]);
+    let prefixes = ref({});
     let showTransferToAdminButton = ref(false);
     let rejectedObj = ref([]);
     let showButtons = ref(false);
@@ -1864,6 +1972,7 @@ export default {
     let instSearched = ref({ name: "" });
     let newProf = ref([]);
     let tempProf = ref({});
+    let tempPref = ref({});
     let tempEducation = [];
     let modifiedProfession = [];
     let allowOtherProfChange = ref({});
@@ -2066,7 +2175,7 @@ export default {
       completedSteps.value += 1;
       if (accepted.value.length > 0) {
         if (!accepted.value.includes(doc.documentTypeCode)) {
-          accepted.value.push(doc.documentTypeCode);
+          accepted.value.push(doc.fileName);
           if (index.value == docs.value.length - 1) {
             showButtons.value = true;
           } else {
@@ -2093,7 +2202,7 @@ export default {
           }
         }
       } else {
-        accepted.value.push(doc.documentTypeCode);
+        accepted.value.push(doc.fileName);
         if (index.value == docs.value.length - 1) {
           showButtons.value = true;
         } else {
@@ -2124,7 +2233,7 @@ export default {
 
       if (rejected.value.length > 0) {
         if (!rejected.value.includes(doc.documentTypeCode)) {
-          rejected.value.push(doc.documentTypeCode);
+          rejected.value.push(doc.fileName);
           rejectedObj.value.push(doc);
           if (index.value == docs.value.length - 1) {
             showButtons.value = true;
@@ -2151,7 +2260,7 @@ export default {
           }
         }
       } else {
-        rejected.value.push(doc.documentTypeCode);
+        rejected.value.push(doc.fileName);
         rejectedObj.value.push(doc);
         if (index.value == docs.value.length - 1) {
           showButtons.value = true;
@@ -2188,16 +2297,18 @@ export default {
       }
       if (type == "amharic") {
         if (others.value[id]) {
-          others.value[id]["otherProfessionTypeAmharic"] = event.target.value;
+          others.value[id]["otherProfessionAmharic"] = event.target.value;
         } else {
           others.value[id] = {};
-          others.value[id]["otherProfessionTypeAmharic"] = "";
-          others.value[id]["otherProfessionTypeAmharic"] = event.target.value;
+          others.value[id]["otherProfessionAmharic"] = "";
+          others.value[id]["otherProfessionAmharic"] = event.target.value;
         }
+        education.otherProfessionAmharic =
+          others.value[id]["otherProfessionAmharic"];
         modifiedProfession.forEach((element) => {
           if (element.department.id == education.department.id) {
             element.otherProfessionAmharic =
-              others.value[id]["otherProfessionTypeAmharic"];
+              others.value[id]["otherProfessionAmharic"];
           }
         });
       }
@@ -2281,7 +2392,7 @@ export default {
         ],
         message: smsMessage ? smsMessage : "",
       };
-
+ 
       if (applicationType.value == "New License") {
         isLoadingAction.value = true;
         store
@@ -2327,7 +2438,13 @@ export default {
           });
       }
     };
-
+    const changePrefix = (education) => { 
+      newLicense.value.educations.forEach((element) => {
+        if (element.departmentId == education.departmentId) {
+          element = education;
+        }
+      }); 
+    };
     const submitRemark = () => {
       showRemark.value = !showRemark.value;
       sendDeclinedData.value = true;
@@ -2335,22 +2452,10 @@ export default {
       action("DeclineEvent");
     };
 
-    const toggleModal = () => {
-      showRemark.value = !showRemark.value;
-    };
-
     const openPdfInNewTab = (pdfPath) => {
       pdfFilePath.value = pdfPath;
       window.open(googleApi + "" + pdfPath, "_blank");
     };
-
-    const toChangeProfession = () => {
-      isToChangeProfession.value = true;
-    };
-    const cancelProfessionChange = () => {
-      isToChangeProfession.value = false;
-    };
-    const changeProfession = () => {};
 
     const getProfessionalTypesByDepartmentId = async (id) => {
       await store
@@ -2359,12 +2464,7 @@ export default {
           newProf.value[id] = res.data.data;
         });
     };
-    const allowChangeName = () => {
-      canChangeName.value = true;
-    };
-    const disallowChangeName = () => {
-      canChangeName.value = false;
-    };
+
     const changeAmharicName = () => {
       isLoadingName.value = true;
       const id = profileInfo.value.id;
@@ -2407,50 +2507,7 @@ export default {
     };
 
     const checkResult = ref(false);
-    const checkBoxClicked = (profession, previousProfession, index, event) => {
-      checkResult.value = chkcontrol(index, previousProfession, event);
-      if (checkResult.value) {
-        if (event.target.checked) {
-          previousProfession
-            ? (newLicense.value.licenseProfessions[index].showPrefixLink = true)
-            : (professionalTypes.value[index].showPrefixLink = true);
-          previousProfession
-            ? professionalTypeIdss.value.push(profession.professionalTypes.id)
-            : professionalTypeIdss.value.push(profession.id);
-        } else {
-          previousProfession
-            ? (newLicense.value.licenseProfessions[
-                index
-              ].showPrefixLink = false)
-            : (professionalTypes.value[index].showPrefixLink = false);
-          previousProfession
-            ? professionalTypeIdss.value.splice(
-                professionalTypeIdss.value.indexOf(
-                  profession.professionalTypes.id
-                ),
-                1
-              )
-            : professionalTypeIdss.value.splice(
-                professionalTypeIdss.value.indexOf(profession.id),
-                1
-              );
 
-          if (previousProfession) {
-            professionalTypePrefixes.value =
-              professionalTypePrefixes.value.filter((data) => {
-                return (
-                  data.professionalTypeId != profession.professionalTypes.id
-                );
-              });
-          } else {
-            professionalTypePrefixes.value =
-              professionalTypePrefixes.value.filter((data) => {
-                return data.professionalTypeId != profession.id;
-              });
-          }
-        }
-      }
-    };
     let newEducation = [];
     const removeDepartment = (education) => {
       if (
@@ -2463,24 +2520,6 @@ export default {
         newEducation = tempEducation.filter((ed) => ed.id != education.id);
         showDepRemark.value = false;
       }
-    };
-    const chkcontrol = (j, previousProfession, event) => {
-      if (event.target.checked) {
-        if (professionalTypeIdss.value.length == 3) {
-          alert("You can only select 3 professional types.");
-          if (previousProfession) {
-            document.getElementsByName("ckb")[j].checked = false;
-            return false;
-          } else {
-            document.getElementsByName("nckb")[j].checked = false;
-            return false;
-          }
-        }
-
-        return true;
-      }
-
-      return true;
     };
 
     let countProLength = ref(0);
@@ -2567,7 +2606,15 @@ export default {
         return [];
       }
     };
-
+    const showPrefix = (id) => {
+      if (showPrefixFor.value[id] == undefined) {
+        showPrefixFor.value[id] = true;
+      } else if (showPrefixFor.value[id] && showPrefixFor.value[id] == true) {
+        showPrefixFor.value[id] = false;
+      } else {
+        showPrefixFor.value[id] = true;
+      }
+    };
     const supervise = () => {
       newLicense.value.superviseEndDate = endDate.value ? endDate.value : "";
       newLicense.value.superviseStartDate = startDate.value
@@ -2666,16 +2713,20 @@ export default {
       superviseAction.value = action;
     };
 
-    const checkForOther = (education) => {
+    const checkForOther = (education) => { 
       modifiedProfession.forEach((element, index) => {
         if (element.department.id == education.department.id) {
           modifiedProfession.splice(index, 1);
         }
       });
+
       if (
-        tempProf.value[education.department.id].id == education.professionTypeId
+        tempProf.value[education.department.id].id ==
+          education.professionTypeId &&
+        tempProf.value[education.department.id].departmentId ==
+          education.departmentId
       ) {
-        modifiedProfession = modifiedProfession.filter(
+        modifiedProfession = newLicense.value.educations.filter(
           (element) => element.oldProfessionTypeId != education.professionTypeId
         );
       } else if (
@@ -2691,34 +2742,20 @@ export default {
         });
       } else {
         education.oldProfessionTypeId = education.professionTypeId;
-
         education.professionTypeId = tempProf.value[education.department.id].id;
         modifiedProfession.push({
           ...education,
         });
         allowOtherProfChange.value[education.department.id] = false;
       }
-
-      for (let i = 0; i < newLicense.value.educations.length; i++) {
-        for (let j = 0; i < modifiedProfession.length; j++) {
-          if (
-            newLicense.value &&
-            newLicense.value.educations[i] &&
-            newLicense.value.educations[i].department &&
-            newLicense.value.educations[i].department.id ==
-              modifiedProfession[j].department.id
-          ) {
-            newLicense.value.educations[i] = modifiedProfession[j];
-          }
-        }
-      }
-
-      newLicense.value.educations = modifiedProfession;
     };
     onMounted(() => {
       created(route.params.id);
       store.dispatch("goodstanding/getInstitution").then((res) => {
         institutions.value = res.data.data.filter((elm) => elm.isLocal == true);
+      });
+      store.dispatch("lookups/getProfessionalPrefix").then((res) => {
+        prefixes.value = res.data.data;
       });
     });
     return {
@@ -2727,6 +2764,7 @@ export default {
       showDepRemark,
       index,
       docs,
+      prefixes,
       resultQuery,
       next,
       setInput,
@@ -2756,6 +2794,8 @@ export default {
       showTransferErrorMessage,
       reject,
       buttons,
+      tempPref,
+      changePrefix,
       action,
       allowProfessionChange,
       allowProfChange,
@@ -2764,6 +2804,7 @@ export default {
       isToChangeProfession,
       profileInfo,
       disableNext,
+      showPrefixFor,
       removeDepartment,
       changeAction,
       newProf,
@@ -2773,10 +2814,10 @@ export default {
       foundInRejected,
       foundInAcceptted,
       showRemark,
-      toggleModal,
       tempProf,
       activeClass,
       errorClass,
+      showPrefix,
       submitRemark,
       applicationType,
       showFlash,
@@ -2794,13 +2835,8 @@ export default {
       evaluateRoute,
       pdfFilePath,
       openPdfInNewTab,
-      toChangeProfession,
-      cancelProfessionChange,
-      changeProfession,
       professionalTypes,
       canChangeName,
-      allowChangeName,
-      disallowChangeName,
       changeAmharicName,
       showNameChangeFlash,
       showNameChangeErrorFlash,
@@ -2811,7 +2847,6 @@ export default {
       prefixList,
       prefix,
       professionalTypeIdss,
-      checkBoxClicked,
       addPrefix,
       options,
       editPersonalData,
@@ -2820,7 +2855,6 @@ export default {
       newSelectedOptions,
       modifiedProfession,
       showOtherProfessionError,
-      chkcontrol,
       checkResult,
       isProfessionalTypeChanged,
       checkProfessionChanged,

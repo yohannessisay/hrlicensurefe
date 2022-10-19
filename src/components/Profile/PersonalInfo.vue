@@ -145,46 +145,44 @@
     </div>
   </div>
 
-  <div
-    class="w-screen max-w-4xl mt-small overflow-y-scroll"
-    style="height:100vh;"
-    v-if="approveStatus == 2"
-  >
+  <div class="w-screen max-w-4xl mt-small mb-20 p-4" v-if="approveStatus == 2">
     <div
       class="
         flex flex-col
         mt-medium
         w-full
+        form_wrapper
         bg-white
         blue-box-shadow-light
         rounded
         mb-large
       "
     >
-      <div class="mt-large">
-        <TitleWithIllustration
-          illustration="PersonalInfo"
-          message="Personal Information"
-        />
+      <div class="mt-large flex justify-center">
+        <h1 class="text-main-400">Profile Management</h1>
       </div>
 
-      <form class="mx-auto max-w-3xl w-full mt-10" @submit.prevent="nextStep">
+      <form
+        class="mx-auto max-w-3xl w-full mt-10 p-2"
+        @submit.prevent="nextStep"
+      >
         <div class="flex justify-center">
           <span>
-            <h2>{{ photoFile.name }}</h2>
-            <h2>{{ fileSize }}</h2>
+            <h6 class="text-sm border-b-2 text-main-400">
+              File-{{ photoFile.name }}
+            </h6>
+            <h6 class="text-sm text-main-400">Size-{{ fileSize }}</h6>
           </span>
         </div>
-        <div class="flex mb-4 justify-center">
+        <div class="flex mb-12 justify-center">
           <span v-if="showUpload">
             <span>
-              <label class="text-primary-700 text-justify"
+              <label class="text-main-400 text-justify text-sm"
                 >Maximum size for profile picture is 3 MB
               </label>
             </span>
             <br />
-            <label class="text-primary-700 text-justify"
-              >Upload Profile Picture: (*)
+            <label class="text-primary-700 text-justify">
               <div class="dropbox ml-8">
                 <input
                   type="file"
@@ -200,15 +198,43 @@
                   or click to browse
                 </p>
               </div>
-              <div class="ml-8">
-                <span style="color: red">{{ personalInfoErrors.photo }}</span>
+              <div class="ml-8 mt-4">
+                <span
+                  v-if="personalInfoErrors.photo"
+                  class="mt-2 border p-2 text-sm text-red-300 ml-4"
+                  >{{ personalInfoErrors.photo }}</span
+                >
               </div>
             </label>
           </span>
           <picture v-if="!showUpload && isImage">
-            <p class="ml-4">
-              <a href="javascript:void(0)" @click="reset()">Upload again</a>
-            </p>
+            <div class="flex justify-center">
+              <span
+                @click="reset()"
+                class="
+                  ml-4
+                  mb-4
+                  cursor-pointer
+                  border
+                  text-white
+                  hover:text-main-400
+                  rounded-lg
+                  p-2
+                  hover:bg-white
+                  bg-main-400
+                "
+              >
+                <i
+                  class="
+                    fa fa-upload
+                    cursor-pointer
+                    hover:text-main-400
+                    text-white
+                  "
+                ></i
+                >Upload again
+              </span>
+            </div>
             <img v-bind:src="filePreview" v-show="showPreview" />
           </picture>
           <span v-if="photoSizeCheck" style="color: red"
@@ -218,323 +244,575 @@
             <img :src="filePreview" alt="" class="preview" />
           </span>
         </div>
-        <div class="flex">
-          <div class="flex flex-col mb-medium w-1/2 mr-6">
-            <label class="text-primary-700">First Name (*)</label>
-            <input
-              class="max-w-3xl"
-              type="text"
-              onkeypress="return /[a-zA-Z]/i.test(event.key)"
-              v-model="personalInfo.name"
-              :disabled="
-                isRegisterdHRAuser == true && searchResultData.firstname
-              "
-            />
-            <span style="color: red">{{ personalInfoErrors.name }}</span>
+
+        <!-- English Name Part -->
+        <h2 class="text-main-400">Name (English)</h2>
+        <div
+          class="
+            grid
+            lg:grid-cols-2
+            sm:grid-rows-1
+            mdlg:grid-rows-1
+            md:grid-rows-1
+          "
+        >
+          <div class="flex">
+            <div class="form-floating mb-3 xl:w-96">
+              <input
+                type="text"
+                class="
+                  form-control
+                  block
+                  w-full
+                  px-3
+                  sm:w-1/2
+                  md:w-1/2
+                  mdlg::w-1/2
+                  lg:w-full
+                  p-2
+                  h-14
+                  text-base
+                  font-normal
+                  text-gray-700
+                  bg-white bg-clip-padding
+                  border border-solid border-gray-300
+                  rounded
+                  transition
+                  ease-in-out
+                  m-2
+                  focus:text-gray-700
+                  focus:bg-white
+                  focus:border-blue-600
+                  focus:outline-none
+                "
+                onkeypress="return /[a-zA-Z]/i.test(event.key)"
+                v-model="personalInfo.name"
+                :disabled="
+                  isRegisterdHRAuser == true && searchResultData.firstname
+                "
+                id="floatingInput"
+                placeholder="First name"
+              />
+              <label for="floatingInput" class="text-gray-700">Name</label>
+              <span
+                v-if="personalInfoErrors.name"
+                class="mt-2 border p-2 text-sm text-red-300 ml-4"
+                >{{ personalInfoErrors.name }}</span
+              >
+            </div>
           </div>
-          <div class="flex flex-col mb-medium w-1/2 ml-12">
-            <label class="text-primary-700">Father Name (*)</label>
-            <input
-              class="max-w-3xl"
-              type="text"
-              onkeypress="return /[a-zA-Z]/i.test(event.key)"
-              v-model="personalInfo.fatherName"
-              :disabled="
-                isRegisterdHRAuser == true && searchResultData.middlename
-              "
-            />
-            <span style="color: red">{{ personalInfoErrors.fatherName }}</span>
-          </div>
-        </div>
-        <div class="flex">
-          <div class="flex flex-col mb-medium w-1/2 mr-6">
-            <label class="text-primary-700">GrandFather Name (*)</label>
-            <input
-              class="max-w-3xl"
-              type="text"
-              onkeypress="return /[a-zA-Z]/i.test(event.key)"
-              v-model="personalInfo.grandFatherName"
-              :disabled="
-                isRegisterdHRAuser == true && searchResultData.lastname
-              "
-            />
-            <span style="color: red">{{
-              personalInfoErrors.grandFatherName
-            }}</span>
-          </div>
-          <div class="flex flex-col mb-medium w-1/2 ml-12">
-            <label class="text-primary-700">ስም በአማርኛ (Name in Amharic)</label>
-            <input
-              class="max-w-3xl"
-              type="text"
-              onkeypress="return /[a-zA-Z]/i.test(event.key)"
-              v-model="personalInfo.alternativeName"
-            />
-            <!-- <span style="color: red">{{
-                personalInfoErrors.alternativeName
-            }}</span> -->
-          </div>
-        </div>
-        <div class="flex">
-          <div class="flex flex-col mb-medium w-1/2 mr-12">
-            <label class="text-primary-700"
-              >የአባት ስም በአማርኛ (Father's Name in Amharic)</label
-            >
-            <input
-              class="max-w-3xl"
-              type="text"
-              onkeypress="return /[a-zA-Z]/i.test(event.key)"
-              v-model="personalInfo.alternativeFatherName"
-            />
-            <!-- <span style="color: red">{{
-                personalInfoErrors.alternativeFatherName
-            }}</span> -->
-          </div>
-          <div class="flex flex-col mb-medium w-1/2 m1-12">
-            <label class="text-primary-700"
-              >የአያት ስም በአማርኛ (Grandfather's Name in Amharic)</label
-            >
-            <input
-              class="max-w-3xl"
-              type="text"
-              onkeypress="return
-            /[a-zA-Z]/i.test(event.key)"
-              v-model="personalInfo.alternativeGrandFatherName"
-            />
-            <!-- <span style="color: red">{{
-                personalInfoErrors.alternativeGrandFatherName
-            }}</span> -->
+          <div class="flex">
+            <div class="form-floating mb-3 xl:w-96">
+              <input
+                type="text"
+                class="
+                  form-control
+                  block
+                  w-full
+                  px-3
+                  p-2
+                  h-14
+                  text-base
+                  font-normal
+                  text-gray-700
+                  bg-white bg-clip-padding
+                  border border-solid border-gray-300
+                  rounded
+                  transition
+                  ease-in-out
+                  m-2
+                  sm:w-1/2
+                  md:w-1/2
+                  mdlg::w-1/2
+                  lg:w-full
+                  focus:text-gray-700
+                  focus:bg-white
+                  focus:border-blue-600
+                  focus:outline-none
+                "
+                onkeypress="return /[a-zA-Z]/i.test(event.key)"
+                v-model="personalInfo.fatherName"
+                :disabled="
+                  isRegisterdHRAuser == true && searchResultData.middlename
+                "
+                id="floatingInput"
+                placeholder="First name"
+              />
+              <label for="floatingInput" class="text-gray-700"
+                >Father Name</label
+              >
+              <span
+                v-if="personalInfoErrors.fatherName"
+                class="mt-2 border p-2 text-sm text-red-300 ml-4"
+                >{{ personalInfoErrors.fatherName }}</span
+              >
+            </div>
           </div>
         </div>
 
-        <div class="flex">
-          <div class="flex flex-col mb-medium w-1/2 mr-6">
-            <label class="text-primary-700">Nationality (*)</label>
-            <select
-              class="max-w-3xl"
-              v-model="personalInfo.nationalityId"
-              @change="fetchNationalities()"
-              :disabled="
-                isRegisterdHRAuser == true && searchResultData.nationality
-              "
-            >
-              <option
-                v-for="types in state.nationalities"
-                v-bind:key="types.name"
-                v-bind:value="types.id"
+        <div
+          class="
+            border-b-4
+            text-main-400
+            grid
+            lg:grid-cols-2
+            sm:grid-rows-1
+            mdlg:grid-rows-1
+            md:grid-rows-1
+          "
+        >
+          <div class="flex">
+            <div class="form-floating mb-3 xl:w-96">
+              <input
+                type="text"
+                class="
+                  form-control
+                  block
+                  w-full
+                  px-3
+                  sm:w-1/2
+                  md:w-1/2
+                  mdlg::w-1/2
+                  lg:w-full
+                  p-2
+                  h-14
+                  text-base
+                  font-normal
+                  text-gray-700
+                  bg-white bg-clip-padding
+                  border border-solid border-gray-300
+                  rounded
+                  transition
+                  ease-in-out
+                  m-2
+                  focus:border-main-400 focus:outline-none
+                "
+                onkeypress="return /[a-zA-Z]/i.test(event.key)"
+                v-model="personalInfo.grandFatherName"
+                :disabled="
+                  isRegisterdHRAuser == true && searchResultData.lastname
+                "
+                id="floatingInput"
+                placeholder="First name"
+              />
+              <label for="floatingInput" class="text-gray-700"
+                >Grandfather Name</label
               >
-                {{ types.name }}
-              </option>
-            </select>
-            <span style="color: red">{{
-              personalInfoErrors.nationalityId
-            }}</span>
-          </div>
-          <div class="flex flex-col mb-medium w-1/2 ml-12">
-            <label class="text-primary-700">PO Box(Optional)</label>
-            <input
-              class="max-w-3xl"
-              type="text"
-              v-model="personalInfo.poBox"
-              :disabled="isRegisterdHRAuser == true && searchResultData.pobox"
-            />
+              <span
+                v-if="personalInfoErrors.grandFatherName"
+                class="mt-2 border p-2 text-sm text-red-300 ml-4"
+                >{{ personalInfoErrors.grandFatherName }}</span
+              >
+            </div>
           </div>
         </div>
-        <div class="flex">
-          <div class="flex flex-col mb-medium w-1/2 mr-6">
-            <label class="text-primary-700">Date of birth (*)</label>
-            <input
-              class="max-w-3xl"
-              type="date"
-              v-model="personalInfo.dateOfBirth"
-              @change="validateDate(personalInfo.dateOfBirth)"
-              :disabled="
-                isRegisterdHRAuser == true && searchResultData.birthdate
-              "
-            />
-            <span style="color: red">{{ personalInfoErrors.dateOfBirth }}</span>
-            <span
-              v-if="invalidBirthDate"
-              style="color: red"
-              class="mt-2 text-lg"
-            >
-              Applicant must be at least 18.
-            </span>
+        <!-- End Of English Name Part -->
+
+        <!-- Amharic Name Part -->
+        <h2 class="text-main-400">Name (Amharic)</h2>
+        <div
+          class="
+            grid
+            lg:grid-cols-2
+            sm:grid-rows-1
+            mdlg:grid-rows-1
+            md:grid-rows-1
+          "
+        >
+          <div class="flex">
+            <div class="form-floating mb-3 xl:w-96">
+              <input
+                type="text"
+                class="
+                  form-control
+                  block
+                  w-full
+                  px-3
+                  sm:w-1/2
+                  md:w-1/2
+                  mdlg::w-1/2
+                  lg:w-full
+                  p-2
+                  h-14
+                  text-base
+                  font-normal
+                  text-gray-700
+                  bg-white bg-clip-padding
+                  border border-solid border-gray-300
+                  rounded
+                  transition
+                  ease-in-out
+                  m-2
+                  focus:text-gray-700
+                  focus:bg-white
+                  focus:border-blue-600
+                  focus:outline-none
+                "
+                onkeypress="return /[a-zA-Z]/i.test(event.key)"
+                v-model="personalInfo.alternativeName"
+                id="amhName"
+                placeholder="Amharic First name"
+              />
+              <label for="amhName" class="text-grey-700">ስም</label>
+            </div>
           </div>
-          <div class="flex flex-col mb-medium w-1/2 ml-12">
-            <div class="flex flex-col w-full">
-              <label class="text-primary-700">Gender</label>
-              <div class="flex w-full">
-                <div class="flex flex-col mb-small w-1/3">
-                  <div class="flex py-2">
-                    <input
-                      class="flex flex-col"
-                      type="radio"
-                      id="male"
-                      value="male"
-                      v-model="personalInfo.gender"
-                      :disabled="
-                        isRegisterdHRAuser == true && searchResultData.gender
-                      "
-                    />
-                    <label
-                      class="ml-tiny flex flex-col text-primary-700"
-                      for="male"
-                    >
-                      Male
-                    </label>
-                  </div>
-                </div>
-                <div class="flex w-1/3">
-                  <div class="flex flex-col w-1/3">
+          <div class="flex">
+            <div class="form-floating mb-3 xl:w-96">
+              <input
+                type="text"
+                class="
+                  form-control
+                  block
+                  w-full
+                  px-3
+                  p-2
+                  h-14
+                  text-base
+                  font-normal
+                  text-gray-700
+                  bg-white bg-clip-padding
+                  border border-solid border-gray-300
+                  rounded
+                  transition
+                  ease-in-out
+                  m-2
+                  sm:w-1/2
+                  md:w-1/2
+                  mdlg::w-1/2
+                  lg:w-full
+                  focus:text-gray-700
+                  focus:bg-white
+                  focus:border-blue-600
+                  focus:outline-none
+                "
+                onkeypress="return /[a-zA-Z]/i.test(event.key)"
+                v-model="personalInfo.alternativeFatherName"
+                id="amhFName"
+                placeholder="Amharic Fathers name"
+              />
+              <label for="amhFName" class="text-grey-700">የአባት ስም</label>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="
+            border-b-4
+            text-main-400
+            grid
+            lg:grid-cols-2
+            sm:grid-rows-1
+            mdlg:grid-rows-1
+            md:grid-rows-1
+          "
+        >
+          <div class="flex">
+            <div class="form-floating mb-3 xl:w-96">
+              <input
+                type="text"
+                class="
+                  form-control
+                  block
+                  w-full
+                  px-3
+                  sm:w-1/2
+                  md:w-1/2
+                  mdlg::w-1/2
+                  lg:w-full
+                  p-2
+                  h-14
+                  text-base
+                  font-normal
+                  text-gray-700
+                  bg-white bg-clip-padding
+                  border border-solid border-gray-300
+                  rounded
+                  transition
+                  ease-in-out
+                  m-2
+                  focus:border-main-400 focus:outline-none
+                "
+                onkeypress="return /[a-zA-Z]/i.test(event.key)"
+                v-model="personalInfo.alternativeGrandFatherName"
+                id="amhGName"
+                placeholder="Amharic Grand Father name"
+              />
+              <label for="amhGName" class="text-gray-700">የ ኣያት ስም</label>
+            </div>
+          </div>
+        </div>
+        <!-- End Of English Name Part -->
+
+        <!-- General personal info Part -->
+        <h2 class="text-main-400">General Information</h2>
+
+        <div
+          class="
+            grid
+            lg:grid-cols-2
+            sm:grid-rows-1
+            mdlg:grid-rows-1
+            md:grid-rows-1
+          "
+        >
+          <div class="flex">
+            <div class="flex justify-center">
+              <div class="mb-3 w-full ml-2">
+                <label for="">Nationality</label>
+                <select
+                  class="
+                    form-select
+                    appearance-none
+                    block
+                    w-full
+                    px-3
+                    text-base
+                    font-normal
+                    text-gray-700
+                    bg-white bg-clip-padding bg-no-repeat
+                    border border-solid border-gray-300
+                    rounded
+                    transition
+                    ease-in-out
+                    m-0
+                    mb-4
+                  "
+                  aria-label="Default select example"
+                  v-model="personalInfo.nationalityId"
+                  @change="fetchNationalities()"
+                  :disabled="
+                    isRegisterdHRAuser == true && searchResultData.nationality
+                  "
+                >
+                  <option
+                    v-for="types in state.nationalities"
+                    v-bind:key="types.name"
+                    v-bind:value="types.id"
+                  >
+                    {{ types.name }}
+                  </option>
+                </select>
+                <span
+                  v-if="personalInfoErrors.nationalityId"
+                  class="mt-2 border p-2 text-sm text-red-300 ml-4"
+                  >{{ personalInfoErrors.nationalityId }}</span
+                >
+              </div>
+            </div>
+          </div>
+          <div class="flex">
+            <div class="mb-3 w-full sm:ml-2 md:ml-2 mdlg:ml-2 ml-2">
+              <label for="">Marital Status</label>
+              <select
+                class="
+                  form-select
+                  appearance-none
+                  block
+                  w-full
+                  px-3
+                  py-1.5
+                  text-base
+                  font-normal
+                  text-gray-700
+                  bg-white bg-clip-padding bg-no-repeat
+                  border border-solid border-gray-300
+                  rounded
+                  transition
+                  ease-in-out
+                  m-0
+                  mb-4
+                "
+                aria-label="Default select example"
+                v-model="personalInfo.maritalStatusId"
+                :disabled="
+                  isRegisterdHRAuser == true && searchResultData.maritalStatus
+                "
+              >
+                >
+                <option value="1">Single</option>
+                <option value="2">Married</option>
+                <option value="3">Divorced</option>
+                <option value="4">Widowed</option>
+                <option value="5">Separated</option>
+              </select>
+              <span
+                v-if="personalInfoErrors.maritalStatus"
+                class="mt-2 border p-2 text-sm text-red-300 ml-4"
+                >{{ personalInfoErrors.maritalStatus }}</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="
+            text-main-400
+            grid
+            lg:grid-cols-2
+            sm:grid-rows-1
+            mdlg:grid-rows-1
+            md:grid-rows-1
+          "
+        >
+          <div class="flex">
+            <div class="form-floating mb-3 w-full mt-2">
+              <input
+                type="date"
+                class="
+                  form-control
+                  block
+                  w-full
+                  px-3
+                  sm:w-1/2
+                  md:w-1/2
+                  mdlg::w-1/2
+                  lg:w-full
+                  p-2
+                  h-14
+                  text-base
+                  font-normal
+                  text-gray-700
+                  bg-white bg-clip-padding
+                  border border-solid border-gray-300
+                  rounded
+                  transition
+                  ease-in-out
+                  m-2
+                  focus:border-main-400 focus:outline-none
+                "
+                :max="minimumBirthDate"
+                min='1899-01-01'
+                v-model="personalInfo.dateOfBirth"
+                @change="validateDate(personalInfo.dateOfBirth)"
+                :disabled="
+                  isRegisterdHRAuser == true && searchResultData.birthdate
+                "
+                id="birthDate"
+              />
+              <label for="birthDate" class="text-gray-700">Date of Birth</label>
+              <div
+                v-if="
+                  personalInfoErrors.dateOfBirth ||
+                  personalInfoErrors.invalidBirthDate
+                "
+                class="border p-2 text-sm text-red-300 mr-4"
+              >
+                <span class="mt-2 text-sm text-red-300 ml-4">{{
+                  personalInfoErrors.dateOfBirth
+                }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex">
+            <div class="flex flex-col mb-medium w-1/2 ml-2 mt-2">
+              <div class="flex flex-col w-full">
+                <label class="text-main-400">Gender</label>
+                <div class="flex w-full">
+                  <div class="flex flex-col mb-small w-full">
                     <div class="flex py-2">
                       <input
+                        class="flex flex-col"
                         type="radio"
-                        id="female"
-                        value="female"
+                        id="male"
+                        value="male"
                         v-model="personalInfo.gender"
                         :disabled="
                           isRegisterdHRAuser == true && searchResultData.gender
                         "
                       />
-                      <label class="ml-tiny text-primary-700" for="female">
-                        Female
+                      <label
+                        class="ml-tiny flex flex-col text-primary-700"
+                        for="male"
+                      >
+                        Male
                       </label>
-                    </div>
+                    </div> 
+                  </div>
+
+                  <div class="flex py-2 ml-4">
+                    <input
+                      type="radio"
+                      id="female"
+                      value="female"
+                      v-model="personalInfo.gender"
+                      :disabled="
+                        isRegisterdHRAuser == true && searchResultData.gender
+                      "
+                    />
+                    <label class="ml-tiny text-primary-700" for="female">
+                      Female
+                    </label>
                   </div>
                 </div>
+                <span
+                  v-if="personalInfoErrors.gender"
+                  class="border p-2 text-sm text-red-300 ml-4"
+                >
+                  {{ personalInfoErrors.gender }}</span
+                >
               </div>
-              <span style="color: red" class="mt-0">
-                {{ personalInfoErrors.gender }}</span
-              >
             </div>
           </div>
         </div>
+        <!-- General personal info Part -->
         <div class="flex">
-          <div class="flex w-1/2 mb-small m1-12">
-            <div class="flex flex-col w-full">
-              <label class="text-primary-700">Martial Status</label>
-              <div class="flex w-full">
-                <div class="flex flex-col w-1/3">
-                  <div class="flex py-2">
-                    <input
-                      class="flex flex-col"
-                      type="radio"
-                      id="single"
-                      value="1"
-                      v-model="personalInfo.maritalStatusId"
-                      :disabled="
-                        isRegisterdHRAuser == true &&
-                        searchResultData.maritalStatus
-                      "
-                    />
-                    <label
-                      class="ml-tiny flex flex-col text-primary-700"
-                      for="single"
-                    >
-                      Single
-                    </label>
-                  </div>
-                </div>
-                <div class="flex w-1/3">
-                  <div class="flex flex-col w-1/3">
-                    <div class="flex py-2">
-                      <input
-                        type="radio"
-                        id="married"
-                        value="2"
-                        v-model="personalInfo.maritalStatusId"
-                        :disabled="
-                          isRegisterdHRAuser == true &&
-                          searchResultData.maritalStatus
-                        "
-                      />
-                      <label class="ml-tiny text-primary-700" for="married">
-                        Married
-                      </label>
-                    </div>
-                  </div>
-                </div>
-                <div class="flex flex-col w-1/3">
-                  <div class="flex py-2">
-                    <input
-                      type="radio"
-                      id="divorced"
-                      value="3"
-                      v-model="personalInfo.maritalStatusId"
-                      :disabled="
-                        isRegisterdHRAuser == true &&
-                        searchResultData.maritalStatus
-                      "
-                    />
-                    <label class="ml-tiny text-primary-700" for="divorced">
-                      Divorced
-                    </label>
-                  </div>
-                </div>
-              </div>
-              <span style="color: red">{{
-                personalInfoErrors.maritalStatusId
-              }}</span>
-            </div>
+          <div class="form-floating mb-3 w-full">
+            <input
+              type="text"
+              class="
+                form-control
+                block
+                w-full
+                px-3
+                p-2
+                h-14
+                text-base
+                font-normal
+                text-gray-700
+                bg-white bg-clip-padding
+                border border-solid border-gray-300
+                rounded
+                transition
+                ease-in-out
+                m-2
+                sm:w-1/2
+                md:w-1/2
+                mdlg::w-1/2
+                lg:w-full
+                focus:text-gray-700
+                focus:bg-white
+                focus:border-blue-600
+                focus:outline-none
+              "
+              onkeypress="return /[a-zA-Z]/i.test(event.key)"
+              v-model="personalInfo.poBox"
+              :disabled="isRegisterdHRAuser == true && searchResultData.pobox"
+              id="pobox"
+              placeholder="Po-box"
+            />
+            <label for="pobox" class="text-grey-700">Po-box</label>
           </div>
-          <!-- 
-          <div class="flex w-1/2 mb-small m1-12 mt-8">
-            <div class="form-check">
-              <input
-                class="
-                  form-check-input
-                  appearance-none
-                  h-4
-                  w-4
-                  border border-gray-300
-                  rounded-sm
-                  bg-white
-                  checked:bg-blue-600 checked:border-blue-600
-                  focus:outline-none
-                  transition
-                  duration-200
-                  mt-1
-                  align-top
-                  bg-no-repeat bg-center bg-contain
-                  float-left
-                  mr-2
-                  cursor-pointer
-                "
-                type="checkbox"
-                id="flexCheckDefault"
-                v-model="hraUserStat"
-                @click="hraUser()"
-              />
-
-              <label
-                class="form-check-label inline-block text-gray-800"
-                for="flexCheckDefault"
-              >
-                Check here if you are registered on HRA
-              </label>
-              <br />
-              <div v-if="hraUserStat">
-                <label for="employeeId">Employee Id</label>
-                <input
-                  v-model="employeeId"
-                  type="text"
-                  id="employeeId"
-                  name="employeeId"
-                />
-              </div>
-            </div>
-          </div> -->
         </div>
 
-        <div class="flex mb-medium w-full mt-medium">
+        <div class="flex justify-center">
           <button
             class="
-              block
-              mx-auto
-              w-1/4
-              bg-lightBlue-500
-              hover:bg-lightBlue-600 hover:shadow-lg
+              transition
+              duration-200
+              bg-main-400
+              text-white
+              hover:text-main-400 hover:bg-white
+              w-full
+              ml-auto
+              mt-4
+              rounded-lg
+              text-md
+              shadow-sm
+              hover:shadow-md
+              font-semibold
+              text-center
+              inline-block
             "
           >
             Next
@@ -568,6 +846,8 @@ export default {
     let photoSizeCheck = ref(false);
     let fileSize = ref("");
     let nationality = ref("");
+    let minimumBirthDate =  
+      new Date(`${new Date().getFullYear()-18}`).toISOString().slice(0,10);
     let maritalStatus = ref("");
     let invalidBirthDate = ref(false);
     const hraUserStat = ref(false);
@@ -597,12 +877,10 @@ export default {
       name: "",
       fatherName: "",
       grandFatherName: "",
-      // alternativeName: "",
-      // alternativeFatherName: "",
-      // alternativeGrandFatherName: "",
       nationalityId: "",
       gender: "",
-      maritalStatusId: "",
+      maritalStatus: "",
+      dateOfBirth: "",
       photo: "",
     });
     let state = ref({
@@ -796,11 +1074,11 @@ export default {
       store.dispatch("profile/setNationality", nationality.value);
       store.dispatch("profile/setMaritalStatus", maritalStatus.value);
       let empty = isEmpty(personalInfoErrors.value);
-      if (empty == false) {
+
+      console.log(personalInfoErrors.value,empty)
+      if (empty == false || invalidBirthDate.value == true) {
         return;
-      }
-      if (empty == true) {
-        console.log(personalInfo);
+      } else if (empty == true) {
         store.dispatch("profile/setProfileInfo", personalInfo);
         store.dispatch("profile/setPhoto", photoFile.value);
         emit("changeActiveState");
@@ -818,19 +1096,32 @@ export default {
       }
       if (age < 18) {
         invalidBirthDate.value = true;
+        personalInfoErrors.value.dateOfBirth = "Applicant must be 18 or above";
       } else {
-        invalidBirthDate.value = false;
+        invalidBirthDate.value = false; 
       }
     };
     const validateForm = (formData) => {
       const errors = {};
-      if (!formData.photo) errors.photo = "Profile Picture Required";
-      if (!formData.name) errors.name = "First Name Required";
-      if (!formData.fatherName) errors.fatherName = "Father's Name Required";
+      if (!formData.photo) errors.photo = "Profile picture is required";
+      if (!formData.name) errors.name = "First name is required";
+      if (!formData.fatherName) errors.fatherName = "Father's name is required";
+      if (!formData.dateOfBirth)
+        errors.dateOfBirth = "Date of birth is required";
+      if (!formData.maritalStatusId)
+        errors.maritalStatus = "Marital status is required";
+      if (!formData.gender) errors.gender = "Gender is required";
       if (!formData.grandFatherName)
-        errors.grandFatherName = "Grandfather's Name Required";
+        errors.grandFatherName = "Grandfather's name is required";
       if (!formData.nationalityId)
-        errors.nationalityId = "Nationality Required";
+        errors.nationalityId = "Nationality is required";
+
+      let today = new Date().getFullYear();
+      let age = today - new Date(formData.dateOfBirth).getFullYear();
+    
+      if (age < 18) {
+        errors.dateOfBirth = "Applicant must be 18 or above";
+      }  
       return errors;
     };
     const isEmpty = (obj) => {
@@ -900,6 +1191,7 @@ export default {
       personalInfoErrors,
       photoSizeCheck,
       validateForm,
+      minimumBirthDate,
       nationality,
       searchResultData,
       maritalStatus,
@@ -966,5 +1258,163 @@ img {
   font-size: 1.2em;
   text-align: center;
   padding: 50px 0;
+}
+
+.form_wrapper {
+  background: #fff;
+  width: 800px;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 5px;
+  margin: 8% auto 0;
+  position: relative;
+  z-index: 1;
+  border-top: 5px solid #07677e;
+  -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+  -webkit-transform-origin: 50% 0%;
+  transform-origin: 50% 0%;
+  -webkit-transform: scale3d(1, 1, 1);
+  transform: scale3d(1, 1, 1);
+  -webkit-transition: none;
+  transition: none;
+  -webkit-animation: expand 0.8s 0.6s ease-out forwards;
+  animation: expand 0.8s 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+@-webkit-keyframes check {
+  0% {
+    height: 0;
+    width: 0;
+  }
+  25% {
+    height: 0;
+    width: 7px;
+  }
+  50% {
+    height: 20px;
+    width: 7px;
+  }
+}
+@keyframes check {
+  0% {
+    height: 0;
+    width: 0;
+  }
+  25% {
+    height: 0;
+    width: 7px;
+  }
+  50% {
+    height: 20px;
+    width: 7px;
+  }
+}
+@-webkit-keyframes expand {
+  0% {
+    -webkit-transform: scale3d(1, 0, 1);
+    opacity: 0;
+  }
+  25% {
+    -webkit-transform: scale3d(1, 1.2, 1);
+  }
+  50% {
+    -webkit-transform: scale3d(1, 0.85, 1);
+  }
+  75% {
+    -webkit-transform: scale3d(1, 1.05, 1);
+  }
+  100% {
+    -webkit-transform: scale3d(1, 1, 1);
+    opacity: 1;
+  }
+}
+@keyframes expand {
+  0% {
+    -webkit-transform: scale3d(1, 0, 1);
+    transform: scale3d(1, 0, 1);
+    opacity: 0;
+  }
+  25% {
+    -webkit-transform: scale3d(1, 1.2, 1);
+    transform: scale3d(1, 1.2, 1);
+  }
+  50% {
+    -webkit-transform: scale3d(1, 0.85, 1);
+    transform: scale3d(1, 0.85, 1);
+  }
+  75% {
+    -webkit-transform: scale3d(1, 1.05, 1);
+    transform: scale3d(1, 1.05, 1);
+  }
+  100% {
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+    opacity: 1;
+  }
+}
+@-webkit-keyframes bounce {
+  0% {
+    -webkit-transform: translate3d(0, -25px, 0);
+    opacity: 0;
+  }
+  25% {
+    -webkit-transform: translate3d(0, 10px, 0);
+  }
+  50% {
+    -webkit-transform: translate3d(0, -6px, 0);
+  }
+  75% {
+    -webkit-transform: translate3d(0, 2px, 0);
+  }
+  100% {
+    -webkit-transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+@keyframes bounce {
+  0% {
+    -webkit-transform: translate3d(0, -25px, 0);
+    transform: translate3d(0, -25px, 0);
+    opacity: 0;
+  }
+  25% {
+    -webkit-transform: translate3d(0, 10px, 0);
+    transform: translate3d(0, 10px, 0);
+  }
+  50% {
+    -webkit-transform: translate3d(0, -6px, 0);
+    transform: translate3d(0, -6px, 0);
+  }
+  75% {
+    -webkit-transform: translate3d(0, 2px, 0);
+    transform: translate3d(0, 2px, 0);
+  }
+  100% {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+@media (max-width: 600px) {
+  .form_wrapper .col_half {
+    width: 100%;
+    float: none;
+  }
+
+  .bottom_row .col_half {
+    width: 50%;
+    float: left;
+  }
+
+  .form_container .row .col_half.last {
+    border-left: none;
+  }
+
+  .remember_me {
+    padding-bottom: 20px;
+  }
 }
 </style>

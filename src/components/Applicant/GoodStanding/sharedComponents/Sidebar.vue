@@ -192,7 +192,7 @@
         </a>
       </li>
 
-      <li
+      <!-- <li
         :class="
           $route.fullPath === '/Applicant/GoodStanding/underSupervision'
             ? 'list active'
@@ -215,9 +215,9 @@
             <span class="text text-white font-bold">Under Supervision</span>
           </router-link>
         </a>
-      </li>
+      </li> -->
 
-      <li
+      <!-- <li
         :class="
           $route.fullPath === '/Applicant/GoodStanding/pendingPayment'
             ? 'list active'
@@ -240,7 +240,7 @@
             <span class="text text-white font-bold">Pending Payment</span>
           </router-link>
         </a>
-      </li>
+      </li> -->
     </ul>
   </div>
 </template>

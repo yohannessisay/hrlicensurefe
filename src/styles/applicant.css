@@ -120,9 +120,9 @@
   cursor: pointer; 
 }
 .content.active {
-  width: calc(100% - 60px);
-  left: 60px;
-  margin-left: 20px;
+  width: calc(100% - 80px);
+  left:80px;
+  
 }
 .side-navbar.active {
   width: 60px;
@@ -336,8 +336,8 @@ i.fa.fa-cog {
     order: -1;
   }
   .content.active {
-    width: calc(100% - 60px);
-    left: 60px;
+    width: calc(100% - 85px);
+    left: 85px;
   }
   .side-navbar.active {
     left: 0;

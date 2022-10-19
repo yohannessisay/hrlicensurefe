@@ -65,7 +65,7 @@
 <script>
 import { ref, onMounted } from "vue";
 import { useRouter } from 'vue-router';
-import ReviewerNavBar from "@/components/Reviewer/ReviewerNavBar";
+import ReviewerNavBar from "@/components/Reviewer/SharedComponents/navBar.vue";
 import Navigation from "@/views/Navigation";
 import Title from "@/sharedComponents/Title";
 import RenderIllustration from "@/sharedComponents/RenderIllustration";

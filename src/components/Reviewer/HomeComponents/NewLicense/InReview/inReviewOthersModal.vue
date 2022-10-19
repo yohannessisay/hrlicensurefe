@@ -55,7 +55,7 @@
           <button
             type="button"
             class="     
-              px-6
+                  px-6
               text-white
               bg-primary-600
               hover:text-primary-600 hover:border
@@ -64,6 +64,7 @@
               leading-tight
               uppercase
               rounded
+              hover:border-primary-600
               shadow-lg
               hover:bg-purple-700 hover:shadow-lg
               focus:bg-purple-700
@@ -170,13 +171,13 @@
                               <span class="font-semibold text-primary-700 mb-1"
                                 >Gender:</span
                               >
-                              {{ modalData.gender }}
+                              {{ modalData.gender?modalData.gender:'' }}
                             </p>
                             <p class="text-gray-500">
                               <span class="font-semibold text-primary-700 mb-1"
                                 >Nationality:</span
                               >
-                              {{ modalData.nationality }}
+                              {{ modalData.nationality?modalData.nationality.name:'' }}
                             </p>
                             <p class="text-gray-500">
                               <span class="font-semibold text-primary-700 mb-1"
@@ -192,7 +193,7 @@
                               <span class="font-semibold text-primary-700 mb-1"
                                 >Martial Status:</span
                               >
-                              {{ modalData.martialStatus }}
+                              {{ modalData.maritalStatus }}
                             </p>
                           </div>
                         </div>
@@ -244,58 +245,7 @@
                           </div>
                         </div>
                       </div>
-                      <div
-                        class="
-                          grow-0
-                          shrink-0
-                          basis-auto
-                          w-full
-                          lg:w-11/12
-                          px-3
-                          lg:px-6
-                        "
-                      >
-                        <div class="flex align-center">
-                          <div class="shrink-0">
-                            <div
-                              class="
-                                p-4
-                                bg-blue-600
-                                rounded-md
-                                shadow-lg
-                                w-48
-                                h-48
-                                flex
-                                items-center
-                                justify-center
-                              "
-                            >
-                              <i class="fa fa-building fa-4x"></i>
-                            </div>
-                          </div>
-                          <div class="grow ml-6">
-                            <h2 class="font-bold mb-1">Institution Info</h2>
-                            <p class="text-gray-500">
-                              <span class="font-medium text-primary-700 mb-1"
-                                >Institution Name:</span
-                              >
-                              {{ modalData.instName }}
-                            </p>
-                            <p class="text-gray-500">
-                              <span class="font-medium text-primary-700 mb-1"
-                                >Department:</span
-                              >
-                              {{ modalData.department }}
-                            </p>
-                            <p class="text-gray-500">
-                              <span class="font-medium text-primary-700 mb-1"
-                                >Institution Type:</span
-                              >
-                              {{ modalData.instType }}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
+                      
                       <div
                         class="
                           grow-0
@@ -325,7 +275,7 @@ import moment from "moment";
 import Loading from "vue3-loading-overlay";
 // Import stylesheet
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
-
+import { googleApi } from "@/composables/baseURL";
 export default {
   props: ["modalDataIdOthers"],
   components: {
@@ -352,7 +302,10 @@ export default {
 
     watch(props.modalDataIdOthers, () => {
       isLoading.value = true;
-      check();
+      if(props.modalDataIdOthers.id!=''){
+        check();
+      }
+   
     });
     const modalData = ref({});
     let result;
@@ -363,6 +316,7 @@ export default {
           props.modalDataIdOthers.id
         )
         .then((res) => {
+       
           if (res.data.status == "Success") {
             result = res.data.data;
             modalData.value.name =
@@ -380,8 +334,8 @@ export default {
             modalData.value.dateOfBirth = result.profile.dateOfBirth
               ? result.profile.dateOfBirth
               : "-----";
-            modalData.value.martialStatus = result.profile.martialStatus?.name
-              ? result.profile.martialStatus.name
+            modalData.value.maritalStatus = result.profile&&result.profile.maritalStatus
+              ? result.profile.maritalStatus.name
               : "-----";
             modalData.value.mobileNumber = result.applicant.phoneNumber
               ? result.applicant.phoneNumber
@@ -403,6 +357,7 @@ export default {
     };
     return {
       role,
+      googleApi,
       show,
       showModal,
       isLoading,

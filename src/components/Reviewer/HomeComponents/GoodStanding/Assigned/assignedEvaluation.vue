@@ -1680,7 +1680,7 @@ import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 
 import moment from "moment";
 import ReviewerSideNav from "../SharedComponents/sideNav.vue";
-import ReviewerNavBar from "../SharedComponents/navBar.vue";
+import ReviewerNavBar from "../../../SharedComponents/navBar.vue";
 import Loading from "vue3-loading-overlay";
 // Import stylesheet
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
@@ -2164,14 +2164,14 @@ export default {
       }
       if (actionValue === "ApproveEvent") {
         smsMessage = goodStanding.value
-          ? "Dear applicant your applied renewal of license number " +
+          ? "Dear applicant your applied letter of goodstanding with license number " +
             goodStanding.value.goodStandingCode +
             " has been approved after careful examination of your uploaded documents by our reviewers. Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
           : "";
       }
       if (actionValue == "DeclineEvent") {
         smsMessage = goodStanding.value
-          ? "Dear applicant your applied renewal of license number " +
+          ? "Dear applicant your applied letter of goodstanding with license number " +
             goodStanding.value.goodStandingCode +
             " has been declined after careful examination of your uploaded documents by our reviewers. Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
           : "";

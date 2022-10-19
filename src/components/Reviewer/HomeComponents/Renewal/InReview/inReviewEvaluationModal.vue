@@ -182,7 +182,7 @@
                                   <div v-if="editPersonalData">
                                     <input
                                       v-model="
-                                        renewal.profile.alternativeName
+                                      renewal.profile.alternativeName
                                       "
                                       class="w-48 mr-1"
                                       type="text"
@@ -191,7 +191,7 @@
                                   <div v-if="editPersonalData">
                                     <input
                                       v-model="
-                                        renewal.profile.alternativeFatherName
+                                      renewal.profile.alternativeFatherName
                                       "
                                       class="w-48 mr-1"
                                       type="text"
@@ -200,7 +200,7 @@
                                   <div v-if="editPersonalData">
                                     <input
                                       v-model="
-                                        renewal.profile
+                                      renewal.profile
                                           .alternativeGrandFatherName
                                       "
                                       class="w-48"
@@ -558,7 +558,12 @@
                                         >
                                           {{
                                             education.professionType
-                                              ? education.professionType.name != "Other"?education.professionType.name :education.otherProfessionType +"/" + education.otherProfessionAmharic 
+                                              ? education.professionType.name !=
+                                                "Other"
+                                                ? education.professionType.name
+                                                : education.otherProfessionType +
+                                                  "/" +
+                                                  education.otherProfessionAmharic
                                               : ""
                                           }}
                                           <span
@@ -642,6 +647,7 @@
                                               </select>
                                             </div>
                                           </div>
+                                          <!-- Other Profession  -->
                                           <div
                                             class="flex justify-center"
                                             v-if="
@@ -745,6 +751,104 @@
                                                 placeholder="Type amharic name"
                                               />
                                             </div>
+                                          </div>
+                                          <!-- Other Profession  -->
+                                        </div>
+                                      </div>
+
+                                      <div class="grid grid-cols-2 gap-4">
+                                        <p
+                                          class="
+                                            text-primary-600 text-base
+                                            font-bold
+                                          "
+                                        >
+                                          Prefix
+                                        </p>
+                                        <div
+                                          class="text-black text-base font-bold"
+                                        >
+                                          <button
+                                            class="
+                                              inline-block
+                                              px-6
+                                              text-white
+                                              bg-primary-600
+                                              font-medium
+                                              text-xs
+                                              leading-tight
+                                              uppercase
+                                              rounded
+                                              shadow-lg
+                                              hover:text-primary-600
+                                              hover:shadow-lg
+                                              focus:bg-purple-700
+                                              focus:shadow-lg
+                                              focus:outline-none
+                                              focus:ring-0
+                                              active:bg-purple-800
+                                              active:shadow-lg
+                                              transition
+                                              duration-150
+                                              ease-in-out
+                                            "
+                                            @click="
+                                              showPrefix(education.departmentId)
+                                            "
+                                          >
+                                            Add Prefix
+                                          </button>
+                                          <div
+                                            class="mb-3 w-full"
+                                            v-if="
+                                              showPrefixFor[
+                                                education.departmentId
+                                              ]
+                                            "
+                                          >
+                                            <select
+                                              class="
+                                                form-select
+                                                appearance-none
+                                                block
+                                                w-full
+                                                px-3
+                                                py-1.5
+                                                text-base
+                                                font-normal
+                                                text-gray-700
+                                                bg-white
+                                                bg-clip-padding
+                                                bg-no-repeat
+                                                border
+                                                border-solid
+                                                border-gray-300
+                                                rounded
+                                                transition
+                                                ease-in-out
+                                                m-0
+                                                focus:text-gray-700
+                                                focus:bg-white
+                                                focus:border-blue-600
+                                                focus:oProfessionutline-none
+                                              "
+                                              @click="changePrefix(education)"
+                                              v-model="
+                                                education.prefixId
+                                              "
+                                              aria-label="Default select example"
+                                            >
+                                              <option selected disabled>
+                                                Choose prefix
+                                              </option>
+                                              <option
+                                                v-for="prefix in prefixes"
+                                                :key="prefix.id"
+                                                :value="prefix.id"
+                                              >
+                                                {{ prefix.name }}
+                                              </option>
+                                            </select>
                                           </div>
                                         </div>
                                       </div>
@@ -1122,78 +1226,78 @@
                   :color="'#2F639D'"
                   :opacity="1"
                 ></loading>
-              <div
-                class="flex justify-center items-center mb-medium"
-                v-if="showButtons && !showLoadingButtons"
-              >
                 <div
-                  v-for="button in buttons"
-                  v-bind:key="button.name"
-                  v-bind:value="button.id"
+                  class="flex justify-center items-center mb-medium"
+                  v-if="showButtons && !showLoadingButtons"
                 >
-                  <button
-                    v-if="button.code != 'US'"
-                    class="
-                      inline-block
-                      px-6
-                      text-white
-                      bg-primary-600
-                      font-medium
-                      text-xs
-                      leading-tight
-                      uppercase
-                      rounded
-                      shadow-lg
-                      hover:bg-purple-700 hover:shadow-lg
-                      focus:bg-purple-700
-                      focus:shadow-lg
-                      focus:outline-none
-                      focus:ring-0
-                      active:bg-purple-800 active:shadow-lg
-                      transition
-                      duration-150
-                      hover:bg-primary-400 hover:text-white
-                      ease-in-out
-                    "
-                    @click="action(button.action)"
+                  <div
+                    v-for="button in buttons"
+                    v-bind:key="button.name"
+                    v-bind:value="button.id"
                   >
-                    {{ button.name }}
-                  </button>
-                  <button
-                    v-else
-                    class="
-                      inline-block
-                      px-6
-                      text-white
-                      bg-primary-600
-                      font-medium
-                      text-xs
-                      leading-tight
-                      uppercase
-                      rounded
-                      shadow-lg
-                      hover:bg-purple-700 hover:shadow-lg
-                      focus:bg-purple-700
-                      focus:shadow-lg
-                      focus:outline-none
-                      focus:ring-0
-                      active:bg-purple-800 active:shadow-lg
-                      transition
-                      duration-150
-                      hover:bg-yellow-300 hover:text-white
-                      ease-in-out
-                    "
-                    data-bs-toggle="modal"
-                    data-bs-target="#superviseModal"
-                    @click="changeAction(button.action)"
-                  >
-                    {{ button.name }}
-                  </button>
+                    <button
+                      v-if="button.code != 'US'"
+                      class="
+                        inline-block
+                        px-6
+                        text-white
+                        bg-primary-600
+                        font-medium
+                        text-xs
+                        leading-tight
+                        uppercase
+                        rounded
+                        shadow-lg
+                        hover:bg-purple-700 hover:shadow-lg
+                        focus:bg-purple-700
+                        focus:shadow-lg
+                        focus:outline-none
+                        focus:ring-0
+                        active:bg-purple-800 active:shadow-lg
+                        transition
+                        duration-150
+                        hover:bg-primary-400 hover:text-white
+                        ease-in-out
+                      "
+                      @click="action(button.action)"
+                    >
+                      {{ button.name }}
+                    </button>
+                    <button
+                      v-else
+                      class="
+                        inline-block
+                        px-6
+                        text-white
+                        bg-primary-600
+                        font-medium
+                        text-xs
+                        leading-tight
+                        uppercase
+                        rounded
+                        shadow-lg
+                        hover:bg-purple-700 hover:shadow-lg
+                        focus:bg-purple-700
+                        focus:shadow-lg
+                        focus:outline-none
+                        focus:ring-0
+                        active:bg-purple-800 active:shadow-lg
+                        transition
+                        duration-150
+                        hover:bg-yellow-300 hover:text-white
+                        ease-in-out
+                      "
+                      data-bs-toggle="modal"
+                      data-bs-target="#superviseModal"
+                      @click="changeAction(button.action)"
+                    >
+                      {{ button.name }}
+                    </button>
+                  </div>
                 </div>
               </div>
-              </div>
               <Modal v-if="showRemark">
-                <div>
+                <div class="h-screen overflow-y-scroll">
                   <div
                     class="
                       card-wrapper
@@ -1242,10 +1346,12 @@
                         </div>
                         <!--body-->
                         <div class="modalBody pb-xl">
-                          <div class="flex mt-medium justify-center"></div>
+                          <div class="flex mt-medium justify-center">
+                            <h2>Declined documents</h2>
+                          </div>
                           <div class="relative p-6 flex-auto w-full">
                             <div class="flex justify-center">
-                              <div class="">
+                              <div class="mt-12">
                                 <svg
                                   width="40"
                                   height="60"
@@ -1310,7 +1416,7 @@
                                 </div>
                               </div>
 
-                              <div>
+                              <div class="mt-12">
                                 <svg
                                   width="40"
                                   height="60"
@@ -1336,6 +1442,7 @@
                           </div>
                         </div>
                         <!--footer-->
+                        <label for="" class="ml-12">Remark</label>
                         <textarea
                           v-model="renewal.remark"
                           class="
@@ -1344,10 +1451,14 @@
                             border
                             rounded-md
                             flex
+                            ml-12
                             mb-small
                             w-full
                           "
                         ></textarea>
+                        <small class="text-red-300" v-if="showRemarkError"
+                          >Remark note must be more than 10 letters</small
+                        >
                         <div
                           class="
                             flex
@@ -1359,13 +1470,59 @@
                           "
                         >
                           <button
-                            class="md-danger"
+                            class="
+                              inline-block
+                              px-6
+                              text-white
+                              bg-primary-600
+                              font-medium
+                              text-xs
+                              leading-tight
+                              uppercase
+                              rounded
+                              shadow-lg
+                              hover:bg-purple-700 hover:shadow-lg
+                              focus:bg-purple-700
+                              focus:shadow-lg
+                              focus:outline-none
+                              focus:ring-0
+                              active:bg-purple-800 active:shadow-lg
+                              transition
+                              duration-150
+                              hover:bg-primary-400 hover:text-white
+                              ease-in-out
+                            "
                             type="button"
                             v-on:click="toggleModal()"
                           >
                             Close
                           </button>
-                          <button type="button" v-on:click="submitRemark()">
+                          <button
+                            type="button"
+                            class="
+                              inline-block
+                              px-6
+                              text-white
+                              bg-primary-600
+                              font-medium
+                              text-xs
+                              leading-tight
+                              uppercase
+                              rounded
+                              shadow-lg
+                              hover:bg-purple-700 hover:shadow-lg
+                              focus:bg-purple-700
+                              focus:shadow-lg
+                              focus:outline-none
+                              focus:ring-0
+                              active:bg-purple-800 active:shadow-lg
+                              transition
+                              duration-150
+                              hover:bg-primary-400 hover:text-white
+                              ease-in-out
+                            "
+                            v-on:click="submitRemark()"
+                          >
                             Submit
                           </button>
                         </div>
@@ -1631,7 +1788,7 @@
           <button
             type="button"
             class="
-             inline-block
+              inline-block
               px-6
               py-2.5
               bg-primary-700
@@ -1653,22 +1810,21 @@
           </button>
           <button
             class="
-               inline-block
-                                            px-6
-                                            py-2.5
-                                            bg-primary-700
-                                            text-white
-                                            font-medium
-                                            text-xs
-                                            leading-tight
-                                            uppercase
-                                            rounded
-                                            shadow-lg
-                                            hover:bg-white 
-                                            hover:text-primary-600
-                                            transition
-                                            duration-150
-                                            ease-in-out
+              inline-block
+              px-6
+              py-2.5
+              bg-primary-700
+              text-white
+              font-medium
+              text-xs
+              leading-tight
+              uppercase
+              rounded
+              shadow-lg
+              hover:bg-white hover:text-primary-600
+              transition
+              duration-150
+              ease-in-out
             "
             @click="supervise()"
           >
@@ -1690,7 +1846,7 @@ import { useToast } from "vue-toastification";
 
 import moment from "moment";
 import ReviewerSideNav from "../SharedComponents/sideNav.vue";
-import ReviewerNavBar from "../SharedComponents/navBar.vue";
+import ReviewerNavBar from "../../../SharedComponents/navBar.vue";
 
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import Loading from "vue3-loading-overlay";
@@ -1724,6 +1880,8 @@ export default {
     let pdfFilePath = ref("");
     const completedSteps = ref(0);
     const totalSteps = ref(0);
+    let showPrefixFor = ref([]);
+
     let isGoodStanding = ref(false);
     let institutions = ref([]);
     let expirationDateExceedTodayError = ref(false);
@@ -1785,6 +1943,7 @@ export default {
     let width = ref("width:11.11111%");
     let accepted = ref([]);
     let rejected = ref([]);
+    let prefixes = ref({});
     let showTransferToAdminButton = ref(false);
     let rejectedObj = ref([]);
     let showButtons = ref(false);
@@ -1798,6 +1957,7 @@ export default {
     let errorClass = ref("text-danger");
     let showRemark = ref(false);
     let applicationType = ref("");
+    let showRemarkError = ref(false);
     let showDateError = ref({ show: false, message: "" });
     let supervisor = ref("");
     let showFlash = ref(false);
@@ -1812,11 +1972,12 @@ export default {
     let instSearched = ref({ name: "" });
     let newProf = ref([]);
     let tempProf = ref({});
+    let tempPref = ref({});
     let tempEducation = [];
     let modifiedProfession = [];
     let allowOtherProfChange = ref({});
     let professionalTypes = ref([]);
-    let evaluateRoute = ref("/admin/evaluate/renewal" + route.params.id);
+    let evaluateRoute = ref("/admin/evaluate/Renewal" + route.params.id);
     const editPersonalData = ref(false);
     let others = ref({});
 
@@ -1840,26 +2001,22 @@ export default {
         .dispatch("reviewer/getRenewalApplication", applicationId)
         .then((res) => {
           renewal.value = res.data.data ? res.data.data : {};
-          // renewal.value.education.forEach(element =>
-          // {
-          //     tempProf.value[element.department.id] = professionalTypes.value.filter(pr=> pr.name == "Other")[0];
-          // })
           tempEducation =
             res.data.data && res.data.data.educations
               ? res.data.data.educations
               : "";
           profileInfo.value =
-            renewal.value && renewal.value.profile
+          renewal.value && renewal.value.profile
               ? renewal.value.profile
               : {};
           buttons.value =
-            renewal.value &&
-            renewal.value.applicationStatus &&
-            renewal.value.applicationStatus.buttons
+          renewal.value &&
+          renewal.value.applicationStatus &&
+          renewal.value.applicationStatus.buttons
               ? renewal.value.applicationStatus.buttons
               : {};
           docs.value =
-            renewal.value && renewal.value.documents
+          renewal.value && renewal.value.documents
               ? renewal.value.documents
               : {};
           totalSteps.value = docs.value ? docs.value.length : 0;
@@ -2018,7 +2175,7 @@ export default {
       completedSteps.value += 1;
       if (accepted.value.length > 0) {
         if (!accepted.value.includes(doc.documentTypeCode)) {
-          accepted.value.push(doc.documentTypeCode);
+          accepted.value.push(doc.fileName);
           if (index.value == docs.value.length - 1) {
             showButtons.value = true;
           } else {
@@ -2045,7 +2202,7 @@ export default {
           }
         }
       } else {
-        accepted.value.push(doc.documentTypeCode);
+        accepted.value.push(doc.fileName);
         if (index.value == docs.value.length - 1) {
           showButtons.value = true;
         } else {
@@ -2076,7 +2233,7 @@ export default {
 
       if (rejected.value.length > 0) {
         if (!rejected.value.includes(doc.documentTypeCode)) {
-          rejected.value.push(doc.documentTypeCode);
+          rejected.value.push(doc.fileName);
           rejectedObj.value.push(doc);
           if (index.value == docs.value.length - 1) {
             showButtons.value = true;
@@ -2103,7 +2260,7 @@ export default {
           }
         }
       } else {
-        rejected.value.push(doc.documentTypeCode);
+        rejected.value.push(doc.fileName);
         rejectedObj.value.push(doc);
         if (index.value == docs.value.length - 1) {
           showButtons.value = true;
@@ -2140,16 +2297,18 @@ export default {
       }
       if (type == "amharic") {
         if (others.value[id]) {
-          others.value[id]["otherProfessionTypeAmharic"] = event.target.value;
+          others.value[id]["otherProfessionAmharic"] = event.target.value;
         } else {
           others.value[id] = {};
-          others.value[id]["otherProfessionTypeAmharic"] = "";
-          others.value[id]["otherProfessionTypeAmharic"] = event.target.value;
+          others.value[id]["otherProfessionAmharic"] = "";
+          others.value[id]["otherProfessionAmharic"] = event.target.value;
         }
+        education.otherProfessionAmharic =
+          others.value[id]["otherProfessionAmharic"];
         modifiedProfession.forEach((element) => {
           if (element.department.id == education.department.id) {
             element.otherProfessionAmharic =
-              others.value[id]["otherProfessionTypeAmharic"];
+              others.value[id]["otherProfessionAmharic"];
           }
         });
       }
@@ -2159,8 +2318,8 @@ export default {
 
       if (actionValue === "ApproveEvent") {
         smsMessage = renewal.value
-          ? "Dear applicant your applied Renewal license of number " +
-            renewal.value.renewalCode +
+          ? "Dear applicant your applied renewal license of number " +
+          renewal.value.renewalCode +
             " has been approved after careful examination of your uploaded documents by our reviewers. Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
           : "";
         if (renewal.value.licenseExpirationDate === null) {
@@ -2188,15 +2347,18 @@ export default {
       }
 
       if (actionValue == "DeclineEvent" && renewal.value.remark == null) {
+        showRemarkError.value = true;
         smsMessage = renewal.value
           ? "Dear applicant your applied renewal license of number " +
-            renewal.value.renewalCode +
+          renewal.value.renewalCode +
             " has been declined after careful examination of your uploaded documents by our reviewers. Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
           : "";
-          showRemark.value = true;
+        showRemark.value = true;
         sendDeclinedData.value = false;
+        return;
       }
- 
+
+      showRemarkError.value = false;
       let checkProfessionResult = false;
       renewal.value.isProfessionChanged == false;
 
@@ -2208,7 +2370,6 @@ export default {
       if (checkProfessionResult) {
         renewal.value.isProfessionChanged == true;
       } else {
-     
         renewal.value.isProfessionChanged == false;
         if (fromModalSendDeclinedData.value == true) {
           sendDeclinedData.value = true;
@@ -2231,14 +2392,14 @@ export default {
         ],
         message: smsMessage ? smsMessage : "",
       };
-   
+
       if (applicationType.value == "Renewal") {
         isLoadingAction.value = true;
         store
           .dispatch("reviewer/editRenewal", req)
           .then((res) => {
-            isLoadingAction.value = false;
             showActionLoading.value = false;
+            isLoadingAction.value = false;
             if (res.statusText == "Created") {
               store.dispatch("sms/sendSms", smsData).then(() => {
                 toast.success("Application reviewed Successfully", {
@@ -2277,7 +2438,13 @@ export default {
           });
       }
     };
-
+    const changePrefix = (education) => { 
+      renewal.value.educations.forEach((element) => {
+        if (element.departmentId == education.departmentId) {
+          element = education;
+        }
+      }); 
+    };
     const submitRemark = () => {
       showRemark.value = !showRemark.value;
       sendDeclinedData.value = true;
@@ -2285,22 +2452,10 @@ export default {
       action("DeclineEvent");
     };
 
-    const toggleModal = () => {
-      showRemark.value = !showRemark.value;
-    };
-
     const openPdfInNewTab = (pdfPath) => {
       pdfFilePath.value = pdfPath;
       window.open(googleApi + "" + pdfPath, "_blank");
     };
-
-    const toChangeProfession = () => {
-      isToChangeProfession.value = true;
-    };
-    const cancelProfessionChange = () => {
-      isToChangeProfession.value = false;
-    };
-    const changeProfession = () => {};
 
     const getProfessionalTypesByDepartmentId = async (id) => {
       await store
@@ -2309,12 +2464,7 @@ export default {
           newProf.value[id] = res.data.data;
         });
     };
-    const allowChangeName = () => {
-      canChangeName.value = true;
-    };
-    const disallowChangeName = () => {
-      canChangeName.value = false;
-    };
+
     const changeAmharicName = () => {
       isLoadingName.value = true;
       const id = profileInfo.value.id;
@@ -2322,7 +2472,7 @@ export default {
         alternativeName: renewal.value.profile.alternativeName,
         alternativeFatherName: renewal.value.profile.alternativeFatherName,
         alternativeGrandFatherName:
-          renewal.value.profile.alternativeGrandFatherName,
+        renewal.value.profile.alternativeGrandFatherName,
       };
       const profileData = [id, newProfile];
       store
@@ -2357,50 +2507,7 @@ export default {
     };
 
     const checkResult = ref(false);
-    const checkBoxClicked = (profession, previousProfession, index, event) => {
-      checkResult.value = chkcontrol(index, previousProfession, event);
-      if (checkResult.value) {
-        if (event.target.checked) {
-          previousProfession
-            ? (renewal.value.licenseProfessions[index].showPrefixLink = true)
-            : (professionalTypes.value[index].showPrefixLink = true);
-          previousProfession
-            ? professionalTypeIdss.value.push(profession.professionalTypes.id)
-            : professionalTypeIdss.value.push(profession.id);
-        } else {
-          previousProfession
-            ? (renewal.value.licenseProfessions[
-                index
-              ].showPrefixLink = false)
-            : (professionalTypes.value[index].showPrefixLink = false);
-          previousProfession
-            ? professionalTypeIdss.value.splice(
-                professionalTypeIdss.value.indexOf(
-                  profession.professionalTypes.id
-                ),
-                1
-              )
-            : professionalTypeIdss.value.splice(
-                professionalTypeIdss.value.indexOf(profession.id),
-                1
-              );
 
-          if (previousProfession) {
-            professionalTypePrefixes.value =
-              professionalTypePrefixes.value.filter((data) => {
-                return (
-                  data.professionalTypeId != profession.professionalTypes.id
-                );
-              });
-          } else {
-            professionalTypePrefixes.value =
-              professionalTypePrefixes.value.filter((data) => {
-                return data.professionalTypeId != profession.id;
-              });
-          }
-        }
-      }
-    };
     let newEducation = [];
     const removeDepartment = (education) => {
       if (
@@ -2413,24 +2520,6 @@ export default {
         newEducation = tempEducation.filter((ed) => ed.id != education.id);
         showDepRemark.value = false;
       }
-    };
-    const chkcontrol = (j, previousProfession, event) => {
-      if (event.target.checked) {
-        if (professionalTypeIdss.value.length == 3) {
-          alert("You can only select 3 professional types.");
-          if (previousProfession) {
-            document.getElementsByName("ckb")[j].checked = false;
-            return false;
-          } else {
-            document.getElementsByName("nckb")[j].checked = false;
-            return false;
-          }
-        }
-
-        return true;
-      }
-
-      return true;
     };
 
     let countProLength = ref(0);
@@ -2517,14 +2606,22 @@ export default {
         return [];
       }
     };
-
+    const showPrefix = (id) => {
+      if (showPrefixFor.value[id] == undefined) {
+        showPrefixFor.value[id] = true;
+      } else if (showPrefixFor.value[id] && showPrefixFor.value[id] == true) {
+        showPrefixFor.value[id] = false;
+      } else {
+        showPrefixFor.value[id] = true;
+      }
+    };
     const supervise = () => {
       renewal.value.superviseEndDate = endDate.value ? endDate.value : "";
       renewal.value.superviseStartDate = startDate.value
         ? startDate.value
         : "";
-      renewal.value.supervisor = supervisor.value ? supervisor.value : "";
-      renewal.value.supervisingInstitutionId = instSearched.value
+        renewal.value.supervisor = supervisor.value ? supervisor.value : "";
+        renewal.value.supervisingInstitutionId = instSearched.value
         ? instSearched.value.id
         : "";
 
@@ -2557,7 +2654,7 @@ export default {
           ],
           message: renewal.value
             ? "Dear applicant your applied renewal license of number " +
-              renewal.value.renewalCode +
+            renewal.value.renewalCode +
               " has been set to be under supervison of MR/MRS:-" +
               renewal.value.supervisor +
               " at institution of " +
@@ -2567,8 +2664,9 @@ export default {
               " days  .Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
             : "",
         };
+
         store
-          .dispatch("reviewer/editrenewal", req)
+          .dispatch("reviewer/editRenewal", req)
           .then((res) => {
             showActionLoading.value = false;
             if (res.statusText == "Created") {
@@ -2615,16 +2713,20 @@ export default {
       superviseAction.value = action;
     };
 
-    const checkForOther = (education) => {
+    const checkForOther = (education) => { 
       modifiedProfession.forEach((element, index) => {
         if (element.department.id == education.department.id) {
           modifiedProfession.splice(index, 1);
         }
       });
+
       if (
-        tempProf.value[education.department.id].id == education.professionTypeId
+        tempProf.value[education.department.id].id ==
+          education.professionTypeId &&
+        tempProf.value[education.department.id].departmentId ==
+          education.departmentId
       ) {
-        modifiedProfession = modifiedProfession.filter(
+        modifiedProfession = renewal.value.educations.filter(
           (element) => element.oldProfessionTypeId != education.professionTypeId
         );
       } else if (
@@ -2640,31 +2742,20 @@ export default {
         });
       } else {
         education.oldProfessionTypeId = education.professionTypeId;
-
         education.professionTypeId = tempProf.value[education.department.id].id;
         modifiedProfession.push({
           ...education,
         });
         allowOtherProfChange.value[education.department.id] = false;
       }
-
-      for (let i = 0; i < renewal.value.educations.length; i++) {
-        for (let j = 0; i < modifiedProfession.length; j++) {
-          if (
-            renewal.value.educations[i].department.id ==
-            modifiedProfession[j].department.id
-          ) {
-            renewal.value.educations[i] = modifiedProfession[j];
-          }
-        }
-      }
-
-      renewal.value.educations = modifiedProfession;
     };
     onMounted(() => {
       created(route.params.id);
       store.dispatch("goodstanding/getInstitution").then((res) => {
         institutions.value = res.data.data.filter((elm) => elm.isLocal == true);
+      });
+      store.dispatch("lookups/getProfessionalPrefix").then((res) => {
+        prefixes.value = res.data.data;
       });
     });
     return {
@@ -2673,6 +2764,7 @@ export default {
       showDepRemark,
       index,
       docs,
+      prefixes,
       resultQuery,
       next,
       setInput,
@@ -2694,6 +2786,7 @@ export default {
       supervisor,
       showDateError,
       endDate,
+      isLoadingAction,
       accept,
       transferToFederal,
       showTransferToAdminButton,
@@ -2701,13 +2794,17 @@ export default {
       showTransferErrorMessage,
       reject,
       buttons,
+      tempPref,
+      changePrefix,
       action,
       allowProfessionChange,
       allowProfChange,
       showButtons,
+      showRemarkError,
       isToChangeProfession,
       profileInfo,
       disableNext,
+      showPrefixFor,
       removeDepartment,
       changeAction,
       newProf,
@@ -2717,11 +2814,10 @@ export default {
       foundInRejected,
       foundInAcceptted,
       showRemark,
-      toggleModal,
       tempProf,
-      isLoadingAction,
       activeClass,
       errorClass,
+      showPrefix,
       submitRemark,
       applicationType,
       showFlash,
@@ -2739,13 +2835,8 @@ export default {
       evaluateRoute,
       pdfFilePath,
       openPdfInNewTab,
-      toChangeProfession,
-      cancelProfessionChange,
-      changeProfession,
       professionalTypes,
       canChangeName,
-      allowChangeName,
-      disallowChangeName,
       changeAmharicName,
       showNameChangeFlash,
       showNameChangeErrorFlash,
@@ -2756,7 +2847,6 @@ export default {
       prefixList,
       prefix,
       professionalTypeIdss,
-      checkBoxClicked,
       addPrefix,
       options,
       editPersonalData,
@@ -2765,7 +2855,6 @@ export default {
       newSelectedOptions,
       modifiedProfession,
       showOtherProfessionError,
-      chkcontrol,
       checkResult,
       isProfessionalTypeChanged,
       checkProfessionChanged,
