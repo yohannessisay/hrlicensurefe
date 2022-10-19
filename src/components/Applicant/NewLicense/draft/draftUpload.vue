@@ -1237,10 +1237,6 @@ export default {
       let documentValidation = checkDocuments();
       if (documentValidation) {
         store.dispatch("newlicense/setTempDocs", formData).then(() => {
-          window.localStorage.setItem(
-            "NLApplicationImageData",
-            JSON.stringify(imageData)
-          );
           emit("changeActiveState");
         });
       } else {

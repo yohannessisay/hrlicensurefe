@@ -522,11 +522,6 @@ export default {
       localData.value = window.localStorage.getItem("NLApplicationData")
         ? JSON.parse(window.localStorage.getItem("NLApplicationData"))
         : {};
-      localFileData.value = window.localStorage.getItem(
-        "NLApplicationImageData"
-      )
-        ? JSON.parse(window.localStorage.getItem("NLApplicationImageData"))
-        : {};
 
       generalInfo.value = localData.value;
       generalInfo.value.feedback = "";
