@@ -97,8 +97,8 @@
           <router-link class="link" to="/Applicant/Renewal/inReview">
             <span class="icon"><i :class="
               $route.fullPath === '/Applicant/Renewal/inReview'
-                ? 'bx bxs-x-circle'
-                : 'bx bx-x-circle'
+                ? 'bx bx-refresh'
+                : 'bx bx-refresh'
             "></i></span>
             <span class="text text-white font-bold hover:text-black">In Review</span>
           </router-link>
@@ -173,8 +173,8 @@
           <router-link class="link" to="/Applicant/Renewal/returned">
             <span class="icon"><i :class="
               $route.fullPath === '/Applicant/Renewal/returned'
-                ? 'bx bx-glasses'
-                : 'bx bx-glasses'
+                ? 'bx bx-rotate-left'
+                : 'bx bx-rotate-left'
             "></i></span>
             <span class="text text-white font-bold">Returned</span>
           </router-link>
@@ -192,10 +192,29 @@
           <router-link class="link" to="/Applicant/Renewal/suspended">
             <span class="icon"><i :class="
               $route.fullPath === '/Applicant/Renewal/suspended'
-                ? 'bx bx-glasses'
-                : 'bx bx-glasses'
+                ? 'bx bx-stop-circle'
+                : 'bx bx-stop-circle'
             "></i></span>
             <span class="text text-white font-bold">Suspended</span>
+          </router-link>
+        </a>
+      </li>
+
+      <li :class="
+        $route.fullPath === '/Applicant/Renewal/revoked'
+          ? 'list active'
+          : 'list'
+      ">
+        <b></b>
+        <b></b>
+        <a href="#">
+          <router-link class="link" to="/Applicant/Renewal/revoked">
+            <span class="icon"><i :class="
+              $route.fullPath === '/Applicant/Renewal/revoked'
+                ? 'bx bx-trash-alt'
+                : 'bx bx-trash-alt'
+            "></i></span>
+            <span class="text text-white font-bold">Revoked</span>
           </router-link>
         </a>
       </li>
