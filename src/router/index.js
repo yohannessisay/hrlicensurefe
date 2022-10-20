@@ -171,6 +171,12 @@ const routes = [
     component: () =>
       import("../components/Applicant/NewLicense/suspended/suspended.vue")
   },
+  {
+    path: "/Applicant/NewLicense/revoked",
+    name: "ApplicantNewLicenseRevoked",
+    component: () =>
+      import("../components/Applicant/NewLicense/revoked/revoked.vue")
+  },
   //Applicant Side Renewal
   {
     path: "/Applicant/Renewal",

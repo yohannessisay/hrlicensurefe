@@ -224,6 +224,25 @@
           </router-link>
         </a>
       </li>
+
+      <li :class="
+        $route.fullPath === '/Applicant/NewLicense/revoked'
+          ? 'list active'
+          : 'list'
+      ">
+        <b></b>
+        <b></b>
+        <a href="#">
+          <router-link class="link" to="/Applicant/NewLicense/revoked">
+            <span class="icon"><i :class="
+              $route.fullPath === '/Applicant/NewLicense/revoked'
+                ? 'bx bx-stop-circle'
+                : 'bx bx-stop-circle'
+            "></i></span>
+            <span class="text text-white font-bold">Revoked</span>
+          </router-link>
+        </a>
+      </li>
     </ul>
   </div>
 </template>
