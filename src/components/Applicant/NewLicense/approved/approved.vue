@@ -17,7 +17,7 @@
         <!-- Column -->
 
         <div
-          v-for="license in newLicense"
+          v-for="license in approvedLicenses"
           :key="license.id"
           class="
             bg-white
@@ -53,14 +53,23 @@
                   </a>
                 </h1>
 
-                <ul
-                  v-for="eds in license.educations"
-                  :key="eds.id"
-                  class="text-black text-sm"
-                >
-                  <span class="text-black text-sm">
-                    {{ "*" + eds.department.name }}</span
+                <ul class="text-black text-sm">
+                  <li
+                    v-for="(education, index) in license.educations"
+                    :key="education.id"
+                    style="display: inline"
                   >
+                    <span class="text-black text-sm">
+                      {{
+                        education.department
+                          ? "*" + education.department.name
+                          : "-"
+                      }}
+                      <span v-if="index != license.educations.length - 1">
+                        ,
+                      </span></span
+                    >
+                  </li>
                 </ul>
               </div>
 
@@ -208,45 +217,56 @@
     <approved-detail :modalDataId="modalDataId"></approved-detail>
   </main-content>
 </template>
-  
-  <script>
+
+<script>
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
 import MainContent from "../sharedComponents/Menu.vue";
 import { googleApi } from "@/composables/baseURL";
 import approvedDetail from "./approvedDetail.vue";
+
 export default {
   components: { MainContent, approvedDetail },
   setup() {
     let store = useStore();
-    let newLicense = ref({});
+    let approvedLicenses = ref([]);
     let userInfo = ref({});
     let isLoading = ref(false);
     let noData = ref(false);
     let modalDataId = ref({ change: 0, id: "" });
+
     const changeLicenseId = (id) => {
       modalDataId.value.id = id;
       modalDataId.value.change++;
     };
+
     onMounted(() => {
       isLoading.value = true;
       userInfo.value = JSON.parse(window.localStorage.getItem("personalInfo"));
-      store.dispatch("newlicense/getNewLicense").then((res) => {
-        newLicense.value = res.data.data;
-        if (newLicense.value) {
-          newLicense.value = newLicense.value.filter(function (e) {
-            return e.applicationStatus.code.includes("APP");
+      let userId = JSON.parse(window.localStorage.getItem("userId"));
+
+      store.dispatch("newlicense/getNewLicenseByUser", userId).then((res) => {
+        const results = res.data.data;
+
+        if (results.length > 0) {
+          approvedLicenses.value = results.filter((approvedLicense) => {
+            return approvedLicense.applicationStatus.code === "APP";
           });
-          isLoading.value = false;
-          if (newLicense.value.length < 1) {
+
+          if (approvedLicenses.value.length === 0) {
             noData.value = true;
           }
+
+          isLoading.value = false;
+        } else {
+          noData.value = true;
+          isLoading.value = false;
         }
       });
     });
 
     return {
-      newLicense,
+      approvedLicenses,
       googleApi,
       userInfo,
       noData,
@@ -257,4 +277,3 @@ export default {
   },
 };
 </script>
-  

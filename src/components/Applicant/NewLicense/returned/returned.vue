@@ -63,9 +63,9 @@
                   >
                     <span class="text-black text-sm">
                       {{
-                        "*" + education.department
+                        education.department
                           ? education.department.name
-                            ? education.department.name
+                            ? "*" + education.department.name
                             : "-"
                           : "-"
                       }}
