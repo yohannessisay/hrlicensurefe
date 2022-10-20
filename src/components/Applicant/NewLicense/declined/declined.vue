@@ -17,7 +17,7 @@
         <!-- Column -->
 
         <div
-          v-for="license in newLicense"
+          v-for="license in declinedLicenses"
           :key="license.id"
           class="
             bg-white
@@ -56,24 +56,29 @@
                   md:p-2
                 "
               >
-              <h1 class="text-lg">
-                  <a
-                    class=" text-main-400 pointer-events-none"
-                    href="#"
-                  >
+                <h1 class="text-lg">
+                  <a class=" text-main-400 pointer-events-none" href="#">
                     Department
                   </a>
                 </h1>
 
-                <ul
-                  v-for="eds in license.educations"
-                  :key="eds.id"
-                  class="text-black text-sm"
-                >
-              
-                  <span class="text-black text-sm">
-                    {{ "*" + eds.department.name }}</span
+                <ul class="text-black text-sm">
+                  <li
+                    v-for="(education, index) in license.educations"
+                    :key="education.id"
+                    style="display: inline"
                   >
+                    <span class="text-black text-sm">
+                      {{
+                        education.department
+                          ? "*" + education.department.name
+                          : "-"
+                      }}
+                      <span v-if="index != license.educations.length - 1">
+                        ,
+                      </span></span
+                    >
+                  </li>
                 </ul>
               </div>
 
@@ -86,9 +91,7 @@
                   p-2
                   md:p-2
                 "
-              >
-         
-              </div>
+              ></div>
               <div
                 class="
                   flex
@@ -99,24 +102,29 @@
                   md:p-2
                 "
               >
-              <h1 class="text-lg">
-                  <a
-                  class=" text-main-400 pointer-events-none"
-                    href="#"
-                  >
+                <h1 class="text-lg">
+                  <a class=" text-main-400 pointer-events-none" href="#">
                     Profession
                   </a>
                 </h1>
 
-                <ul
-                  v-for="eds in license.educations"
-                  :key="eds.id"
-                  class="text-black text-sm"
-                >
-              
-                  <span class="text-black text-sm">
-                    {{ "*" + eds.professionType.name }}</span
+                <ul class="text-black text-sm">
+                  <li
+                    v-for="(education, index) in license.educations"
+                    :key="education.id"
+                    style="display: inline"
                   >
+                    <span class="text-black text-sm">
+                      {{
+                        "*" + education.professionType
+                          ? education.professionType.name
+                          : "-"
+                      }}
+                      <span v-if="index != license.educations.length - 1">
+                        ,
+                      </span></span
+                    >
+                  </li>
                 </ul>
               </div>
             </div>
@@ -211,8 +219,8 @@
     <approved-detail :modalDataId="modalDataId"></approved-detail>
   </main-content>
 </template>
-  
-  <script>
+
+<script>
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
 import MainContent from "../sharedComponents/Menu.vue";
@@ -222,36 +230,43 @@ export default {
   components: { MainContent, approvedDetail },
   setup() {
     let store = useStore();
-    let newLicense = ref({});
+    let declinedLicenses = ref([]);
     let userInfo = ref({});
     let isLoading = ref(false);
     let noData = ref(false);
     let modalDataId = ref({ change: 0, id: "" });
+
     const changeLicenseId = (id) => {
       modalDataId.value.id = id;
       modalDataId.value.change++;
     };
+
     onMounted(() => {
       isLoading.value = true;
       userInfo.value = JSON.parse(window.localStorage.getItem("personalInfo"));
-      store.dispatch("newlicense/getNewLicense").then((res) => {
-        newLicense.value = res.data.data; 
-        if (newLicense.value) {
-          newLicense.value = newLicense.value.filter(function (e) {
-            return (
-              e.applicationStatus.code.includes("DEC")  
-            );
+      let userId = JSON.parse(window.localStorage.getItem("userId"));
+
+      store.dispatch("newlicense/getNewLicenseByUser", userId).then((res) => {
+        const results = res.data.data;
+
+        if (results.length > 0) {
+          declinedLicenses.value = results.filter((declinedLicense) => {
+            return declinedLicense.applicationStatus.code === "DEC";
           });
-          isLoading.value = false;
-          if (newLicense.value.length < 1) {
+
+          if (declinedLicenses.value.length === 0) {
             noData.value = true;
           }
+          isLoading.value = false;
+        } else {
+          noData.value = true;
+          isLoading.value = false;
         }
       });
     });
 
     return {
-      newLicense,
+      declinedLicenses,
       googleApi,
       userInfo,
       noData,
@@ -262,4 +277,3 @@ export default {
   },
 };
 </script>
-  

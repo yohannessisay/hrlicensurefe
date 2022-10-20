@@ -137,15 +137,15 @@
                               {{
                                 (licenseData && licenseData.profile
                                   ? licenseData.profile.name
-                                  : "") +
-                                " " +
-                                (licenseData && licenseData.profile
-                                  ? licenseData.profile.fatherName
-                                  : "") +
-                                " " +
-                                (licenseData && licenseData.profile
-                                  ? licenseData.profile.grandFatherName
-                                  : "")
+                                  : "-") +
+                                  " " +
+                                  (licenseData && licenseData.profile
+                                    ? licenseData.profile.fatherName
+                                    : "-") +
+                                  " " +
+                                  (licenseData && licenseData.profile
+                                    ? licenseData.profile.grandFatherName
+                                    : "-")
                               }}
                             </div>
                           </div>
@@ -155,7 +155,7 @@
                               {{
                                 licenseData && licenseData.applicant
                                   ? licenseData.applicant.emailAddress
-                                  : ""
+                                  : "-"
                               }}
                             </div>
                           </div>
@@ -165,7 +165,7 @@
                               {{
                                 licenseData && licenseData.applicant
                                   ? "+251" + licenseData.applicant.phoneNumber
-                                  : ""
+                                  : "-"
                               }}
                             </div>
                           </div>
@@ -229,7 +229,7 @@
                                 licenseData.licenseReviewer.reviewer.expertLevel
                                   ? licenseData.licenseReviewer.reviewer
                                       .expertLevel.name
-                                  : ""
+                                  : "-"
                               }}
                             </div>
                           </div>
@@ -239,7 +239,7 @@
                               {{
                                 licenseData && licenseData.licenseReviewer
                                   ? licenseData.licenseReviewer.reviewer.name
-                                  : ""
+                                  : "-"
                               }}
                             </div>
                           </div>
@@ -250,7 +250,7 @@
                                 licenseData && licenseData.licenseReviewer
                                   ? licenseData.licenseReviewer.reviewer
                                       .phoneNumber
-                                  : ""
+                                  : "-"
                               }}
                             </div>
                           </div>
@@ -273,8 +273,6 @@
 
                     <!-- Column -->
                     <div
-                      v-for="education in licenseData.educations"
-                      :key="education ? education.id : ''"
                       class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
                     >
                       <!-- Article -->
@@ -302,14 +300,18 @@
                           <p class="text-main-400 text-sm">Active</p>
                         </header>
 
-                        <div class="grid grid-flow-row auto-rows-max">
+                        <div
+                          class="grid grid-flow-row auto-rows-max"
+                          v-for="(education, index) in licenseData.educations"
+                          :key="education ? education.id : ''"
+                        >
                           <div class="flex justify-between px-4 py-1">
                             <div>Department</div>
                             <div class="text-main-400 font-bold">
                               {{
                                 education && education.department
                                   ? education.department.name
-                                  : ""
+                                  : "-"
                               }}
                             </div>
                           </div>
@@ -319,7 +321,7 @@
                               {{
                                 education && education.institution
                                   ? education.institution.name
-                                  : ""
+                                  : "-"
                               }}
                             </div>
                           </div>
@@ -329,10 +331,16 @@
                               {{
                                 education && education.educationLevel
                                   ? education.educationLevel.name
-                                  : ""
+                                  : "-"
                               }}
                             </div>
                           </div>
+
+                          <hr
+                            class="mt-3 mb-3"
+                            style="color: lightgray"
+                            v-if="index != licenseData.educations.length - 1"
+                          />
                         </div>
 
                         <footer
@@ -387,7 +395,7 @@
                                 {{
                                   licenseData && licenseData.remark
                                     ? licenseData.remark
-                                    : ""
+                                    : "-"
                                 }}
                               </p>
                             </div>
@@ -477,7 +485,7 @@
                             <i
                               :id="
                                 're_educational_icon_' +
-                                `${document.documentTypeCode}`
+                                  `${document.documentTypeCode}`
                               "
                               class="
                                 fa fa-eye fa-2x
@@ -491,7 +499,7 @@
                               <img
                                 :id="
                                   're_image_lightbox_' +
-                                  `${document.documentTypeCode}`
+                                    `${document.documentTypeCode}`
                                 "
                                 src=""
                                 class="w-full h-2 object-cover"
@@ -613,8 +621,8 @@
     </div>
   </div>
 </template>
-  
-  <script>
+
+<script>
 import { ref, onMounted, watch } from "vue";
 import { useStore } from "vuex";
 import { googleApi } from "@/composables/baseURL";
@@ -687,7 +695,7 @@ export default {
         }
         reader.addEventListener(
           "load",
-          function () {
+          function() {
             showPreview.value = true;
             previewDocuments.value[data.documentType.code] = reader.result;
           },
@@ -733,7 +741,7 @@ export default {
       );
       outputHref.href = URL.createObjectURL(event.target.files[0]);
       output.src = URL.createObjectURL(event.target.files[0]);
-      output.onload = function () {
+      output.onload = function() {
         URL.revokeObjectURL(output.src); // free memory
       };
     };
@@ -787,8 +795,8 @@ export default {
               icon: true,
             });
             setTimeout(() => {
-                window.location.reload();
-              }, 3000);
+              window.location.reload();
+            }, 3000);
           });
       });
       console.log(formData);
@@ -836,4 +844,3 @@ export default {
   background: -webkit-linear-gradient(top, #1f677e, #1f677e);
 }
 </style>
-  
