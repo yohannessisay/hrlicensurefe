@@ -1,5 +1,5 @@
 <template>
-  <div class="container my-12 mx-auto px-4 md:px-12 w-full">
+  <div class="container my-12 mx-auto px-4 md:px-12 w-full mt-48">
     <h2 class="text-main-400 font-bold text-display">Summary</h2>
     <div class="flex flex-wrap -mx-1 lg:-mx-4">
       <!-- Column -->
@@ -285,6 +285,11 @@ export default {
       message.value.showLoading = true;
       message.value.showFlash = false;
       message.value.showErrorFlash = false;
+      let formData = new FormData();
+      let userId = +localStorage.getItem("userId");
+      formData.append("document", photoFormData);
+
+      let payload = { document: formData, id: userId };
 
       store
         .dispatch("profile/addProfile", {
@@ -313,37 +318,36 @@ export default {
         })
         .then((response) => {
           if (response.statusText == "Created") {
-            let userId = +localStorage.getItem("userId");
-            let formData = new FormData();
-
             formData.append("document", photoFormData);
             let payload = { document: formData, id: userId };
             store
+
               .dispatch("profile/uploadProfilePicture", payload)
               .then((res) => {
                 if (res.status == 200) {
-                  message.value.showFlash = !message.value.showFlash;
-                  message.value.showLoading = false;
-
-                  toast.success(response.data.message, {
+                  toast.success("Successfully updated profile information", {
                     timeout: 5000,
                     position: "bottom-center",
                     pauseOnFocusLoss: true,
                     pauseOnHover: true,
                     icon: true,
                   });
+                  router.push("/menu");
                 } else {
-                  message.value.showErrorFlash = !message.value.showErrorFlash;
+                  toast.error("Please try again", {
+                    timeout: 5000,
+                    position: "bottom-center",
+                    pauseOnFocusLoss: true,
+                    pauseOnHover: true,
+                    icon: true,
+                  });
+                  window.location.reload();
                 }
               })
-              .catch((err) => {});
-
-            router.push({ path: "/menu" });
-            window.location.reload();
+              .catch((err) => {
+                console.log(err);
+              });
           } else {
-            message.value.showLoading = false;
-            message.value.showFlash = false;
-            message.value.showErrorFlash = true;
             toast.error(response.data.message, {
               timeout: 5000,
               position: "bottom-center",
@@ -351,6 +355,7 @@ export default {
               pauseOnHover: true,
               icon: true,
             });
+            window.location.reload();
             setTimeout(() => {
               message.value.showErrorFlash = false;
             }, 3000);
@@ -363,7 +368,6 @@ export default {
         .dispatch("profile/getUserById", localStorage.getItem("userId"))
         .then((res) => {
           user.value = res.data.data;
-          console.log(user.value);
           message.value.showLoading2 = false;
         });
     };

@@ -39,8 +39,7 @@
           bg-white
           hover:-translate-y-2
         "
-        v-for="dep in localData.multipleDepartment
-"
+        v-for="dep in localData.multipleDepartment"
         :key="dep"
       >
         <div class="border-b-2 text-main-400 mb-4">
@@ -391,11 +390,10 @@ import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
 import { useRoute, useRouter } from "vue-router";
 export default {
-  setup() {
+  setup(props, { emit }) {
     const store = useStore();
     const toast = useToast();
     const router = useRouter();
-    const route = useRoute();
     let localData = ref({});
     let localFileData = ref({});
     let generalInfo = ref({});
@@ -403,14 +401,15 @@ export default {
     let documents = ref([]);
     let buttons = ref([]);
     let tempDocs = ref({});
-    let allowSave = ref(false);
     let savedData = ref({});
 
+    const route = useRoute();
+
+    let allowSave = ref(false);
     const changeAgrement = () => {
       agreed.value = !agreed.value;
       if (
-        generalInfo.value &&
-        generalInfo.value.feedback.length >= 4 &&
+        generalInfo.value && 
         agreed.value != false
       ) {
         allowSave.value = true;
@@ -420,8 +419,7 @@ export default {
     };
     const checkAgreement = () => {
       if (
-        generalInfo.value &&
-        generalInfo.value.feedback.length >= 4 &&
+        generalInfo.value && 
         agreed.value != false
       ) {
         allowSave.value = true;
@@ -433,7 +431,7 @@ export default {
       generalInfo.value.licenseFile = [];
       documents.value = localFileData.value;
 
-      if (agreed.value == true && generalInfo.value.feedback.length != 0) {
+      if (agreed.value == true  ) {
         let formData = new FormData();
         tempDocs.value.forEach((element, index) => {
           formData.append(index, element);
@@ -453,31 +451,31 @@ export default {
           licenseId: route.params.id,
           draftData: {
             action: action,
-            data: { ... savedData,
+            data: {
+              ...savedData,
               applicantTypeId:
-              generalInfo.value && generalInfo.value.applicantTypeSelected
-                ? generalInfo.value.applicantTypeSelected.id
+                generalInfo.value && generalInfo.value.applicantTypeSelected
+                  ? generalInfo.value.applicantTypeSelected.id
+                  : null,
+              residenceWoredaId:
+                generalInfo.value && generalInfo.value.woredaSelected
+                  ? generalInfo.value.woredaSelected.id
+                  : null,
+              educations: generalInfo.value ? generalInfo.value.educations : {},
+              occupationTypeId: generalInfo.value.occupationSelected
+                ? generalInfo.value.occupationSelected.id
                 : null,
-            residenceWoredaId:
-              generalInfo.value && generalInfo.value.woredaSelected
-                ? generalInfo.value.woredaSelected.id
+              nativeLanguageId: generalInfo.value.nativeLanguageSelected
+                ? generalInfo.value.nativeLanguageSelected.id
                 : null,
-            educations: generalInfo.value ? generalInfo.value.educations : {},
-            occupationTypeId: generalInfo.value.occupationSelected
-              ? generalInfo.value.occupationSelected.id
-              : null,
-            nativeLanguageId: generalInfo.value.nativeLanguageSelected
-              ? generalInfo.value.nativeLanguageSelected.id
-              : null,
-            expertLevelId: generalInfo.value.expertLevelId
-              ? generalInfo.value.expertLevelId
-              : null,
-            isLegal: true,
-            feedback: generalInfo.value.feedback
-              ? generalInfo.value.feedback
-              : "",
-            }
-          
+              expertLevelId: generalInfo.value.expertLevelId
+                ? generalInfo.value.expertLevelId
+                : null,
+              isLegal: true,
+              feedback: generalInfo.value.feedback
+                ? generalInfo.value.feedback
+                : "",
+            },
           },
         };
         store.dispatch("renewal/updateDraft", license).then((res) => {
@@ -517,21 +515,25 @@ export default {
         });
       }
     };
+    const back = () => {
+      emit("changeActiveStateMinus");
+    };
     onMounted(() => {
       store
-        .dispatch("newlicense/getNewLicenseApplication", route.params.id)
+        .dispatch("renewal/getRenewalApplication", route.params.id)
         .then((res) => {
           savedData = res.data.data;
         });
       buttons.value = store.getters["renewal/getButtons"];
+      buttons.value = buttons.value.filter((ele) => ele.code != "AT");
       tempDocs.value = store.getters["renewal/getTempDocs"];
-      localData.value = window.localStorage.getItem("RNApplicationData")
-        ? JSON.parse(window.localStorage.getItem("RNApplicationData"))
+      localData.value = window.localStorage.getItem("NLApplicationData")
+        ? JSON.parse(window.localStorage.getItem("NLApplicationData"))
         : {};
       localFileData.value = window.localStorage.getItem(
-        "RNApplicationImageData"
+        "NLApplicationImageData"
       )
-        ? JSON.parse(window.localStorage.getItem("RNApplicationImageData"))
+        ? JSON.parse(window.localStorage.getItem("NLApplicationImageData"))
         : {};
 
       generalInfo.value = localData.value;
@@ -559,6 +561,7 @@ export default {
       agreed,
       buttons,
       checkAgreement,
+      back,
       allowSave,
       checkFinalStatus,
       changeAgrement,

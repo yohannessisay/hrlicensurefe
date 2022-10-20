@@ -408,14 +408,20 @@ export default {
     let allowSave = ref(false);
     const changeAgrement = () => {
       agreed.value = !agreed.value;
-      if (generalInfo.value && agreed.value != false) {
+      if (
+        generalInfo.value && 
+        agreed.value != false
+      ) {
         allowSave.value = true;
       } else {
         allowSave.value = false;
       }
     };
     const checkAgreement = () => {
-      if (generalInfo.value && agreed.value != false) {
+      if (
+        generalInfo.value && 
+        agreed.value != false
+      ) {
         allowSave.value = true;
       } else {
         allowSave.value = false;
@@ -425,7 +431,7 @@ export default {
       generalInfo.value.licenseFile = [];
       documents.value = localFileData.value;
 
-      if (agreed.value == true && generalInfo.value.feedback.length != 0) {
+      if (agreed.value == true  ) {
         let formData = new FormData();
         tempDocs.value.forEach((element, index) => {
           formData.append(index, element);
@@ -520,7 +526,6 @@ export default {
         });
       buttons.value = store.getters["newlicense/getButtons"];
       buttons.value = buttons.value.filter((ele) => ele.code != "AT");
-
       tempDocs.value = store.getters["newlicense/getTempDocs"];
       localData.value = window.localStorage.getItem("NLApplicationData")
         ? JSON.parse(window.localStorage.getItem("NLApplicationData"))

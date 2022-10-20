@@ -813,7 +813,31 @@
         </div>
       </div>
     </div>
-    <div class="flex justify-end mr-8">
+    <div class="flex justify-end mr-8 mb-12">
+      <button
+        class="
+        mt-8
+          inline-block
+          px-6
+          py-2.5
+          bg-white
+          hover:bg-main-400 hover:text-white
+          text-main-400 text-xs
+          font-bold
+          leading-tight
+          uppercase
+          rounded
+          shadow-md
+          active:border-main-400
+          transition
+          duration-150
+          ease-in-out
+          border
+        "
+        @click="back()"
+      >
+        back
+      </button>
       <button
         class="
           mt-8
@@ -1388,7 +1412,9 @@ export default {
           }
         });
     });
-
+    const back = () => {
+      emit("changeActiveStateMinus");
+    };
     // emit("changeActiveStateMinus");
 
     return {
@@ -1405,6 +1431,7 @@ export default {
       previewFile,
       handleCommonFileUpload,
       generalInfo,
+      back,
       goToNext,
       educationalDocs,
       imageUploader,

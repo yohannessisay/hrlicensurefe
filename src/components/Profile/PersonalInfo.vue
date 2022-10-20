@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-screen max-w-4xl mt-small overflow-y-scroll"
+    class="w-screen max-w-4xl"
     v-if="approveStatus == 1"
   >
     <div
@@ -145,11 +145,11 @@
     </div>
   </div>
 
-  <div class="w-screen max-w-4xl mt-small mb-20 p-4" v-if="approveStatus == 2">
+  <div class="w-screen max-w-4xl mt-48  mb-20 p-4" v-if="approveStatus == 2">
     <div
       class="
         flex flex-col
-        mt-medium
+       
         w-full
         form_wrapper
         bg-white
@@ -158,8 +158,8 @@
         mb-large
       "
     >
-      <div class="mt-large flex justify-center">
-        <h1 class="text-main-400">Profile Management</h1>
+      <div class="  flex justify-center">
+        <h1 class="text-main-400">Complete profile data</h1>
       </div>
 
       <form
@@ -1257,7 +1257,7 @@ img {
 .dropbox p {
   font-size: 1.2em;
   text-align: center;
-  padding: 50px 0;
+ 
 }
 
 .form_wrapper {
@@ -1266,10 +1266,8 @@ img {
   max-width: 100%;
   box-sizing: border-box;
   padding: 5px;
-  margin: 8% auto 0;
-  position: relative;
-  z-index: 1;
-  border-top: 5px solid #07677e;
+  margin: 4% auto 0;
+  border-top: 2px solid #07677e;
   -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
   -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);

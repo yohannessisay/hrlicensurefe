@@ -1,24 +1,54 @@
 <template>
-
-  <div class="overflow-x-hidden overflow-y-scroll h-full">
+  <div class="   ">
     <Navigation />
-    <div v-if="this.approvalModal == 0" class="w-screen h-screen bg-lightBlueB-200 flex items-center justify-center">
+    <div
+      v-if="this.approvalModal == 0"
+      class="
+        w-screen
+        h-screen
+        bg-lightBlueB-200
+        flex
+        items-center
+        justify-center
+      "
+    >
       <transition name="slide-fade-to-left">
         <Modal>
           <ApprovedMessageModal @approvalModal="(n) => approverespone(n)" />
         </Modal>
       </transition>
     </div>
-    <div class="w-screen h-full bg-lightBlueB-200 flex items-center justify-center  overflow-y-scroll" v-if="this.approvalModal != 0">
-     
+    <div
+      class="
+        w-screen 
+       overflow-y-scroll
+        bg-lightBlueB-200
+        flex
+        items-center
+        justify-center
+        max-h-screen
+        
+      "
+      v-if="this.approvalModal != 0"
+    >
       <transition name="fade" mode="out-in">
-        <div v-if="this.activeState == 1">
-          <PersonalInfo :activeState="1" @changeActiveState="activeState++" :approvalModal="this.approvalModal" />
+        <div v-if="this.activeState == 1" class="mt-64">
+          <PersonalInfo
+            :activeState="1"
+            @changeActiveState="activeState++"
+            :approvalModal="this.approvalModal"
+          />
         </div>
       </transition>
       <transition name="fade" mode="out-in">
-        <div v-if="this.activeState == 2" class="sm:w-full md:w-3/5 lg:w-3/5 xl:w-3/5 mdlg:w-3/5">
-          <Preview :activeState="2" @changeActiveStatePrevious="activeState--" />
+        <div
+          v-if="this.activeState == 2"
+          class="sm:w-full md:w-3/5 lg:w-3/5 xl:w-3/5 mdlg:w-3/5"
+        >
+          <Preview
+            :activeState="2"
+            @changeActiveStatePrevious="activeState--"
+          />
         </div>
       </transition>
     </div>
@@ -37,20 +67,20 @@ export default {
   data: function () {
     return {
       activeState: 1,
-      approvalModal: 0
+      approvalModal: 0,
     };
   },
   methods: {
     approverespone: function (value) {
       this.approvalModal = value;
-    }
+    },
   },
   components: {
     PersonalInfo,
     Preview,
     ApprovedMessageModal,
-    Navigation
-  }
+    Navigation,
+  },
 };
 </script>
 <style>
@@ -86,7 +116,4 @@ export default {
 .fade-leave-active {
   transition: opacity 0.5s ease-out ease-in;
 }
-
-
-
 </style>
