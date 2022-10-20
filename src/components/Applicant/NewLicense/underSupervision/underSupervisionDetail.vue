@@ -12,11 +12,11 @@
       outline-none
       overflow-x-hidden overflow-y-auto
     "
-    id="approvedDetail"
+    id="undersupervisionDetail"
     data-bs-backdrop="static"
     data-bs-keyboard="false"
     tabindex="-1"
-    aria-labelledby="approvedDetailLabel"
+    aria-labelledby="undersupervisionDetailLabel"
     aria-hidden="true"
   >
     <div
@@ -85,18 +85,24 @@
             <div class="container px-6 mx-auto">
               <section class="text-gray-800">
                 <div class="flex justify-center border-b-4 text-main-400">
-                  <h4 class="text-black ml-8">Please bring required documents when coming to pick up your license</h4>
+                  <h4 class="text-black ml-8">
+                    Please bring required documents when coming to pick up your
+                    license
+                  </h4>
                 </div>
-            
+
                 <div class="flex justify-center border-b-4 text-main-400">
                   <div class="text-center lg:max-w-3xl md:max-w-xl">
                     <h2 class="text-2xl font-bold mb-8 px-6 text-main-400">
-                      Approved License Detail
+                      Under Supervision License Detail
                     </h2>
                   </div>
                 </div>
 
-                <div class="container my-12 mx-auto px-4 md:px-12 border-b" v-if="licenseData">
+                <div
+                  class="container my-12 mx-auto px-4 md:px-12 border-b"
+                  v-if="licenseData"
+                >
                   <div class="flex flex-wrap -mx-1 lg:-mx-4">
                     <!-- Column -->
                     <div
@@ -136,15 +142,15 @@
                               {{
                                 (licenseData && licenseData.profile
                                   ? licenseData.profile.name
-                                  : "") +
-                                " " +
-                                (licenseData && licenseData.profile
-                                  ? licenseData.profile.fatherName
-                                  : "") +
-                                " " +
-                                (licenseData && licenseData.profile
-                                  ? licenseData.profile.grandFatherName
-                                  : "")
+                                  : "-") +
+                                  " " +
+                                  (licenseData && licenseData.profile
+                                    ? licenseData.profile.fatherName
+                                    : "-") +
+                                  " " +
+                                  (licenseData && licenseData.profile
+                                    ? licenseData.profile.grandFatherName
+                                    : "-")
                               }}
                             </div>
                           </div>
@@ -154,7 +160,7 @@
                               {{
                                 licenseData && licenseData.applicant
                                   ? licenseData.applicant.emailAddress
-                                  : ""
+                                  : "-"
                               }}
                             </div>
                           </div>
@@ -164,7 +170,7 @@
                               {{
                                 licenseData && licenseData.applicant
                                   ? "+251" + licenseData.applicant.phoneNumber
-                                  : ""
+                                  : "-"
                               }}
                             </div>
                           </div>
@@ -228,7 +234,7 @@
                                 licenseData.licenseReviewer.reviewer.expertLevel
                                   ? licenseData.licenseReviewer.reviewer
                                       .expertLevel.name
-                                  : ""
+                                  : "-"
                               }}
                             </div>
                           </div>
@@ -238,7 +244,7 @@
                               {{
                                 licenseData && licenseData.licenseReviewer
                                   ? licenseData.licenseReviewer.reviewer.name
-                                  : ""
+                                  : "-"
                               }}
                             </div>
                           </div>
@@ -249,7 +255,7 @@
                                 licenseData && licenseData.licenseReviewer
                                   ? licenseData.licenseReviewer.reviewer
                                       .phoneNumber
-                                  : ""
+                                  : "-"
                               }}
                             </div>
                           </div>
@@ -272,8 +278,6 @@
 
                     <!-- Column -->
                     <div
-                      v-for="education in licenseData.educations"
-                      :key="education ? education.id : ''"
                       class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
                     >
                       <!-- Article -->
@@ -301,14 +305,18 @@
                           <p class="text-main-400 text-sm">Active</p>
                         </header>
 
-                        <div class="grid grid-flow-row auto-rows-max">
+                        <div
+                          class="grid grid-flow-row auto-rows-max"
+                          v-for="(education, index) in licenseData.educations"
+                          :key="education ? education.id : ''"
+                        >
                           <div class="flex justify-between px-4 py-1">
                             <div>Department</div>
                             <div class="text-main-400 font-bold">
                               {{
                                 education && education.department
                                   ? education.department.name
-                                  : ""
+                                  : "-"
                               }}
                             </div>
                           </div>
@@ -318,7 +326,7 @@
                               {{
                                 education && education.institution
                                   ? education.institution.name
-                                  : ""
+                                  : "-"
                               }}
                             </div>
                           </div>
@@ -328,10 +336,16 @@
                               {{
                                 education && education.educationLevel
                                   ? education.educationLevel.name
-                                  : ""
+                                  : "-"
                               }}
                             </div>
                           </div>
+
+                          <hr
+                            class="mt-3 mb-3"
+                            style="color: lightgray"
+                            v-if="index != licenseData.educations.length - 1"
+                          />
                         </div>
 
                         <footer
@@ -347,7 +361,7 @@
                       </article>
                       <!-- END Article -->
                     </div>
-                    
+
                     <!-- END Column -->
 
                     <!-- Column -->
@@ -386,7 +400,7 @@
                               {{
                                 licenseData && licenseData.applicantType
                                   ? licenseData.applicantType.name
-                                  : ""
+                                  : "-"
                               }}
                             </div>
                           </div>
@@ -396,7 +410,7 @@
                               {{
                                 licenseData && licenseData.applicationStatus
                                   ? licenseData.applicationStatus.name
-                                  : ""
+                                  : "-"
                               }}
                             </div>
                           </div>
@@ -416,7 +430,7 @@
                               {{
                                 licenseData && licenseData.applicationStatus
                                   ? licenseData.applicationStatus.name
-                                  : ""
+                                  : "-"
                               }}
                             </div>
                           </div>
@@ -426,7 +440,7 @@
                               {{
                                 licenseData && licenseData.applicationStatus
                                   ? licenseData.applicationStatus.name
-                                  : ""
+                                  : "-"
                               }}
                             </div>
                           </div>
@@ -462,7 +476,6 @@
             rounded-b-md
           "
         >
-      
           <button
             type="button"
             class="
@@ -490,28 +503,28 @@
     </div>
   </div>
 </template>
-  
-  <script>
-import { ref, onMounted,watch } from "vue";
+
+<script>
+import { ref, onMounted, watch } from "vue";
 import { useStore } from "vuex";
-import { googleApi } from "@/composables/baseURL"; 
+import { googleApi } from "@/composables/baseURL";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 export default {
-  props:['modalDataId'],
-  components: {Loading},
-  setup(props) { 
+  props: ["modalDataId"],
+  components: { Loading },
+  setup(props) {
     let store = useStore();
     let licenseData = ref({});
     let userInfo = ref({});
-    let isLoading=ref(false);
-    watch(props.modalDataId,()=>{
-    isLoading.value=true
+    let isLoading = ref(false);
+    watch(props.modalDataId, () => {
+      isLoading.value = true;
       store
         .dispatch("newlicense/getNewLicenseApplication", props.modalDataId.id)
         .then((res) => {
           licenseData.value = res.data.data;
-          isLoading.value=false
+          isLoading.value = false;
         });
     });
     onMounted(() => {
@@ -527,4 +540,3 @@ export default {
   },
 };
 </script>
-  

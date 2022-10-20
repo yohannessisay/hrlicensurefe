@@ -12,11 +12,11 @@
       outline-none
       overflow-x-hidden overflow-y-auto
     "
-    id="approvedDetail"
+    id="declinedDetail"
     data-bs-backdrop="static"
     data-bs-keyboard="false"
     tabindex="-1"
-    aria-labelledby="approvedDetailLabel"
+    aria-labelledby="declinedDetailLabel"
     aria-hidden="true"
   >
     <div

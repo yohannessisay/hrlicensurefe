@@ -177,7 +177,7 @@
                 "
                 @click="changeLicenseId(license.id)"
                 data-bs-toggle="modal"
-                data-bs-target="#approvedDetail"
+                data-bs-target="#declinedDetail"
               >
                 View Detail
               </button>
@@ -216,7 +216,7 @@
         There are no declined applications currently.
       </h2>
     </div>
-    <approved-detail :modalDataId="modalDataId"></approved-detail>
+    <declined-detail :modalDataId="modalDataId"></declined-detail>
   </main-content>
 </template>
 
@@ -225,9 +225,9 @@ import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
 import MainContent from "../sharedComponents/Menu.vue";
 import { googleApi } from "@/composables/baseURL";
-import approvedDetail from "./declinedDetail.vue";
+import declinedDetail from "./declinedDetail.vue";
 export default {
-  components: { MainContent, approvedDetail },
+  components: { MainContent, declinedDetail },
   setup() {
     let store = useStore();
     let declinedLicenses = ref([]);
