@@ -181,6 +181,25 @@
         </a>
       </li>
 
+      <li :class="
+        $route.fullPath === '/Applicant/Renewal/suspended'
+          ? 'list active'
+          : 'list'
+      ">
+        <b></b>
+        <b></b>
+        <a href="#">
+          <router-link class="link" to="/Applicant/Renewal/suspended">
+            <span class="icon"><i :class="
+              $route.fullPath === '/Applicant/Renewal/suspended'
+                ? 'bx bx-glasses'
+                : 'bx bx-glasses'
+            "></i></span>
+            <span class="text text-white font-bold">Suspended</span>
+          </router-link>
+        </a>
+      </li>
+
       <!-- <li
         :class="
           $route.fullPath === '/Applicant/Renewal/pendingPayment'

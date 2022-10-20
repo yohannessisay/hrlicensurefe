@@ -244,6 +244,11 @@ const routes = [
     name: "ApplicantRenewalReturned",
     component: () => import("../components/Applicant/Renewal/returned/returned.vue")
   },
+  {
+    path: "/Applicant/Renewal/suspended",
+    name: "ApplicantRenewalSuspended",
+    component: () => import("../components/Applicant/Renewal/suspended/suspended.vue")
+  },
   //Applicant Side Good Standing
   {
     path: "/Applicant/GoodStanding",
