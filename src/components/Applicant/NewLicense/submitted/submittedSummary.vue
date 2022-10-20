@@ -39,8 +39,7 @@
           bg-white
           hover:-translate-y-2
         "
-        v-for="dep in localData.multipleDepartment
-"
+        v-for="dep in localData.multipleDepartment"
         :key="dep"
       >
         <div class="border-b-2 text-main-400 mb-4">
@@ -410,8 +409,7 @@ export default {
     const changeAgrement = () => {
       agreed.value = !agreed.value;
       if (
-        generalInfo.value &&
-        generalInfo.value.feedback.length >= 4 &&
+        generalInfo.value && 
         agreed.value != false
       ) {
         allowSave.value = true;
@@ -421,8 +419,7 @@ export default {
     };
     const checkAgreement = () => {
       if (
-        generalInfo.value &&
-        generalInfo.value.feedback.length >= 4 &&
+        generalInfo.value && 
         agreed.value != false
       ) {
         allowSave.value = true;
@@ -434,7 +431,7 @@ export default {
       generalInfo.value.licenseFile = [];
       documents.value = localFileData.value;
 
-      if (agreed.value == true && generalInfo.value.feedback.length != 0) {
+      if (agreed.value == true  ) {
         let formData = new FormData();
         tempDocs.value.forEach((element, index) => {
           formData.append(index, element);
@@ -454,31 +451,31 @@ export default {
           licenseId: route.params.id,
           draftData: {
             action: action,
-            data: { ... savedData,
+            data: {
+              ...savedData,
               applicantTypeId:
-              generalInfo.value && generalInfo.value.applicantTypeSelected
-                ? generalInfo.value.applicantTypeSelected.id
+                generalInfo.value && generalInfo.value.applicantTypeSelected
+                  ? generalInfo.value.applicantTypeSelected.id
+                  : null,
+              residenceWoredaId:
+                generalInfo.value && generalInfo.value.woredaSelected
+                  ? generalInfo.value.woredaSelected.id
+                  : null,
+              educations: generalInfo.value ? generalInfo.value.educations : {},
+              occupationTypeId: generalInfo.value.occupationSelected
+                ? generalInfo.value.occupationSelected.id
                 : null,
-            residenceWoredaId:
-              generalInfo.value && generalInfo.value.woredaSelected
-                ? generalInfo.value.woredaSelected.id
+              nativeLanguageId: generalInfo.value.nativeLanguageSelected
+                ? generalInfo.value.nativeLanguageSelected.id
                 : null,
-            educations: generalInfo.value ? generalInfo.value.educations : {},
-            occupationTypeId: generalInfo.value.occupationSelected
-              ? generalInfo.value.occupationSelected.id
-              : null,
-            nativeLanguageId: generalInfo.value.nativeLanguageSelected
-              ? generalInfo.value.nativeLanguageSelected.id
-              : null,
-            expertLevelId: generalInfo.value.expertLevelId
-              ? generalInfo.value.expertLevelId
-              : null,
-            isLegal: true,
-            feedback: generalInfo.value.feedback
-              ? generalInfo.value.feedback
-              : "",
-            }
-          
+              expertLevelId: generalInfo.value.expertLevelId
+                ? generalInfo.value.expertLevelId
+                : null,
+              isLegal: true,
+              feedback: generalInfo.value.feedback
+                ? generalInfo.value.feedback
+                : "",
+            },
           },
         };
         store.dispatch("newlicense/updateDraft", license).then((res) => {
@@ -528,6 +525,7 @@ export default {
           savedData = res.data.data;
         });
       buttons.value = store.getters["newlicense/getButtons"];
+      buttons.value = buttons.value.filter((ele) => ele.code != "AT");
       tempDocs.value = store.getters["newlicense/getTempDocs"];
       localData.value = window.localStorage.getItem("NLApplicationData")
         ? JSON.parse(window.localStorage.getItem("NLApplicationData"))
