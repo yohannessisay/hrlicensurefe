@@ -9,8 +9,10 @@
         </li>
         <li><span class="text-gray-500 mx-2">/</span></li>
         <li>
-          <router-link to="/Applicant/NewLicense">
-            <a href="#" class="text-main-400 hover:text-blue-700">Renewal</a>
+          <router-link to="/Applicant/Renewal">
+            <a href="#" class="text-main-400 hover:text-blue-700"
+              >Renewal</a
+            >
           </router-link>
         </li>
         <li><span class="text-gray-500 mx-2">/</span></li>
@@ -43,8 +45,8 @@
           <!-- applican type -->
           <div
             class="
-              grid grid-cols-3
-              sm:grid-cols-1
+              grid grid-rows-3
+              sm:grid-rows-1
               lg:grid-cols-3
               mdlg:grid-cols-3
               md:grid-cols-3
@@ -53,6 +55,7 @@
           >
             <div class="mr-4">
               <label class="text-main-400">Applicant Type</label>
+
               <select
                 class="
                   form-select
@@ -60,7 +63,8 @@
                   block
                   xl:w-64
                   md:w-64
-                  sm:w-64
+                  sm:w-full
+                  w-full
                   px-3
                   py-1.5
                   text-base
@@ -80,6 +84,11 @@
                 aria-label="Default select example"
                 @change="applicantTypeChangeHandler()"
                 v-model="generalInfo.applicantType"
+                :disabled="
+                  generalInfo.multipleDepartment
+                    ? generalInfo.multipleDepartment.length > 0
+                    : 0
+                "
                 required
               >
                 <option
@@ -100,7 +109,8 @@
                   block
                   xl:w-64
                   md:w-64
-                  sm:w-64
+                  sm:w-full
+                  w-full
                   px-3
                   py-1.5
                   text-base
@@ -137,7 +147,8 @@
                   block
                   xl:w-64
                   md:w-64
-                  sm:w-64
+                  sm:w-full
+                  w-full
                   px-3
                   py-1.5
                   text-base
@@ -184,8 +195,8 @@
           <div class="flex">
             <div
               class="
-                grid grid-cols-3
-                sm:grid-cols-1
+                grid grid-rows-3
+                sm:grid-rows-1
                 lg:grid-cols-3
                 mdlg:grid-cols-3
                 md:grid-cols-3
@@ -201,7 +212,8 @@
                     block
                     xl:w-64
                     md:w-64
-                    sm:w-64
+                    sm:w-full
+                    w-full
                     px-3
                     py-1.5
                     text-base
@@ -218,6 +230,7 @@
                     focus:border-main-400
                     focus:outline-none
                   "
+                  disabled
                   v-model="generalInfo.regionSelected"
                   @change="regionChangeHandler()"
                   required
@@ -238,15 +251,13 @@
                     form-select
                     appearance-none
                     block
-                    xl:w-64
-                    md:w-64
-                    sm:w-64
+                    w-full
                     px-3
                     py-1.5
                     text-base
                     font-normal
                     text-gray-700
-                    hover:text-main-500 hover:border-main-500
+                    bg-white bg-clip-padding bg-no-repeat
                     border border-solid border-gray-300
                     rounded
                     transition
@@ -254,18 +265,16 @@
                     m-0
                     focus:text-gray-700
                     focus:bg-white
-                    focus:border-main-400
+                    focus:border-blue-600
                     focus:outline-none
                   "
+                  aria-label="Default select example
+                  "
+                  disabled
                   @change="zoneChangeHandler()"
-                  v-model="generalInfo.zoneSelected"
                 >
-                  <option
-                    v-for="zone in zones"
-                    v-bind:key="zone.name"
-                    v-bind:value="zone"
-                  >
-                    {{ zone.name }}
+                  <option selected>
+                    {{ generalInfo ? generalInfo.zoneSelected.name : "" }}
                   </option>
                 </select>
               </div>
@@ -277,15 +286,13 @@
                     form-select
                     appearance-none
                     block
-                    xl:w-64
-                    md:w-64
-                    sm:w-64
+                    w-full
                     px-3
                     py-1.5
                     text-base
                     font-normal
                     text-gray-700
-                    hover:text-main-500 hover:border-main-500
+                    bg-white bg-clip-padding bg-no-repeat
                     border border-solid border-gray-300
                     rounded
                     transition
@@ -293,28 +300,20 @@
                     m-0
                     focus:text-gray-700
                     focus:bg-white
-                    focus:border-main-400
+                    focus:border-blue-600
                     focus:outline-none
                   "
-                  v-model="generalInfo.woredaSelected"
+                  disabled
                   required
                 >
-                  <option
-                    v-for="woreda in woredas"
-                    v-bind:key="woreda.name"
-                    v-bind:value="woreda"
-                  >
-                    {{ woreda.name }}
+                  <option selected>
+                    {{ generalInfo ? generalInfo.woredaSelected.name : "" }}
                   </option>
                 </select>
               </div>
             </div>
           </div>
         </div>
-
-        <!-- end -->
-
-        <!-- language -->
 
         <!-- end -->
 
@@ -343,7 +342,10 @@
                       form-select
                       appearance-none
                       block
-                      max-w-3xl
+                      xl:w-64
+                      md:w-64
+                      sm:w-full
+                      w-full
                       px-3
                       py-1.5
                       text-base
@@ -357,7 +359,7 @@
                       m-0
                       focus:text-gray-700
                       focus:bg-white
-                      focus:border-blue-600
+                      focus:border-main-400
                       focus:outline-none
                     "
                     v-model="generalInfo.departmentSelected"
@@ -384,7 +386,10 @@
                       form-select
                       appearance-none
                       block
-                      max-w-3xl
+                      xl:w-64
+                      md:w-64
+                      sm:w-full
+                      w-full
                       px-3
                       py-1.5
                       text-base
@@ -398,9 +403,10 @@
                       m-0
                       focus:text-gray-700
                       focus:bg-white
-                      focus:border-blue-600
+                      focus:border-main-400
                       focus:outline-none
                     "
+                    :disabled="!isDepartmentSelected"
                     v-model="generalInfo.educationalLevelSelected"
                     @change="educationalLevelChange()"
                   >
@@ -429,10 +435,11 @@
                       form-select
                       appearance-none
                       block
-                      px-3
                       xl:w-64
                       md:w-64
-                      sm:w-64
+                      sm:w-full
+                      w-full
+                      px-3
                       py-1.5
                       text-base
                       font-normal
@@ -445,9 +452,10 @@
                       m-0
                       focus:text-gray-700
                       focus:bg-white
-                      focus:border-blue-600
+                      focus:border-main-400
                       focus:outline-none
                     "
+                    :disabled="!isEdLevelSelected"
                     v-model="generalInfo.professionalTypeSelected"
                     @change="ProfessionTypeChange(institution)"
                   >
@@ -484,12 +492,13 @@
 
                   <select
                     class="
-                      xl:w-64
-                      md:w-64
-                      sm:w-64
                       form-select
                       appearance-none
                       block
+                      xl:w-64
+                      md:w-64
+                      sm:w-full
+                      w-full
                       px-3
                       py-1.5
                       text-base
@@ -503,7 +512,7 @@
                       m-0
                       focus:text-gray-700
                       focus:bg-white
-                      focus:border-blue-600
+                      focus:border-main-400
                       focus:outline-none
                     "
                     v-model="generalInfo.institutionSelected"
@@ -596,7 +605,7 @@
                 <div class="overflow-hidden">
                   <div
                     class="flex justify-center"
-                    v-if="generalInfo.educations.length < 1"
+                    v-if="generalInfo.multipleDepartment.length < 1"
                   >
                     No Data
                   </div>
@@ -688,7 +697,7 @@
                               text-gray-900
                             "
                           >
-                            {{ item.department.name }}
+                            {{ item.department ? item.department.name : "" }}
                           </td>
                           <td
                             class="
@@ -698,7 +707,11 @@
                               whitespace-nowrap
                             "
                           >
-                            {{ item.educationLevel.name }}
+                            {{
+                              item.educationLevel
+                                ? item.educationLevel.name
+                                : ""
+                            }}
                           </td>
                           <td
                             class="
@@ -708,7 +721,7 @@
                               whitespace-nowrap
                             "
                           >
-                            {{ item.institution.name }}
+                            {{ item.institution ? item.institution.name : "" }}
                           </td>
                           <td
                             class="
@@ -718,7 +731,11 @@
                               whitespace-nowrap
                             "
                           >
-                            {{ item.professionType.name }}
+                            {{
+                              item.professionType
+                                ? item.professionType.name
+                                : ""
+                            }}
                           </td>
                           <td
                             class="
@@ -817,7 +834,7 @@
     </transition>
   </main-content>
 </template>
-  <script>
+<script>
 import { useStore } from "vuex";
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
@@ -849,6 +866,9 @@ export default {
     let showLocation = ref(false);
     let showOccupation = ref(false);
     let showLanguage = ref(false);
+    let isDepartmentSelected = ref(false);
+    let isEdLevelSelected = ref(false);
+    let isAppTypeSelected = ref(false);
     let languageSelected = ref({});
     let occupations = ref([]);
     let languages = ref([]);
@@ -863,6 +883,7 @@ export default {
     let multipleDepartmentError = ref(false);
     let multipleDepartmentMaxError = ref(false);
     let checkForAddedError = ref(false);
+    let withdrawData = ref({});
     let generalInfo = ref({
       educationalLevelSelected: "",
       applicantType: "",
@@ -878,41 +899,7 @@ export default {
     });
     let applicationStatuses = ref([]);
     let isLoading = ref(false);
-    let withdrawData = ref({});
-    const withdraw = () => {
-      isLoading.value = true;
-      let req = {
-        data: withdrawData.value,
-        action: "WithdrawEvent",
-      };
-      store
-        .dispatch("reviewer/editRenewal", req)
-        .then((res) => {
-          isLoading.value = false;
-          if (res.statusText == "Created") {
-            toast.success("Done", {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            });
-            router.push({ path: "/Applicant/Renewal/withdraw" });
-          } else {
-            toast.error(res.data.message, {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            });
-            router.push({ path: "/Applicant/Renewal/withdraw" });
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
+
     const fetchApplicantType = () => {
       store.dispatch("renewal/getApplicantType").then((res) => {
         const results = res.data.data;
@@ -953,6 +940,41 @@ export default {
         });
     };
 
+    const withdraw = () => {
+      isLoading.value = true;
+      let req = {
+        data: withdrawData.value,
+        action: "WithdrawEvent",
+      };
+      store
+        .dispatch("reviewer/editRenewal", req)
+        .then((res) => {
+          isLoading.value = false;
+          if (res.statusText == "Created") {
+            toast.success("Done", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+            router.push({ path: "/withdraw" });
+          } else {
+            toast.error(res.data.message, {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+            router.push({ path: "/withdraw" });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+
     const fetchWoredas = () => {
       store
         .dispatch("renewal/getWoredas", generalInfo.value.zoneSelected.id)
@@ -962,9 +984,15 @@ export default {
         });
     };
     const fetchProfessionalType = (departmentId, educationalLevelId) => {
-      store.dispatch("newlicense/getProfessionalTypes", departmentId, educationalLevelId).then((res) => {
-        professionalTypes.value = res.data.data;
-      });
+      let profession = {
+        departmentId: departmentId,
+        educationalLevelId: educationalLevelId,
+      };
+      store
+        .dispatch("renewal/getProfessionalTypes", profession)
+        .then((res) => {
+          professionalTypes.value = res.data.data;
+        });
     };
     const applicantTypeChangeHandler = async () => {
       if (generalInfo.value.applicantType.code == "ETH") {
@@ -996,19 +1024,9 @@ export default {
         }
       });
     };
-    const fetchApplicationStatuses = () => {
-      store.dispatch("newlicense/getApplicationStatuses").then((res) => {
-        const results = res.data.data;
-        applicationStatuses.value = results;
-
-        let status = applicationStatuses.value.filter(function (e) {
-          return e.code == "SUB";
-        });
-        store.dispatch("newlicense/setButtons", status[0].buttons);
-      });
-    };
     const departmentChange = () => {
-      // fetchProfessionalType(generalInfo.value.departmentSelected.id);
+      isDepartmentSelected.value = true;
+      generalInfo.value.educationalLevelSelected = "";
     };
     const institutionChange = () => {
       if (generalInfo.value.institutionSelected.code == "OTH") {
@@ -1039,8 +1057,10 @@ export default {
     };
     const removeDepartment = (index) => {
       generalInfo.value.multipleDepartment.splice(index, 1);
+      generalInfo.value.educations.splice(index, 1);
     };
     const addMultiple = () => {
+      console.log(generalInfo.value);
       if (
         generalInfo.value.departmentSelected &&
         generalInfo.value.educationalLevelSelected &&
@@ -1065,19 +1085,18 @@ export default {
               ) == false
             ) {
               checkForAddedError.value = false;
-
               generalInfo.value.multipleDepartment.push({
                 department: generalInfo.value.departmentSelected,
                 educationLevel: generalInfo.value.educationalLevelSelected,
                 institution: generalInfo.value.institutionSelected,
                 professionType: generalInfo.value.professionalTypeSelected,
+
                 otherEducationalInstitution:
                   generalInfo.value.otherEducationalInstitution,
-                otherProfessionalTypeAmharic:
+                otherProfessionTypeAmharic:
                   generalInfo.value.otherProfessionalTypeAmharic,
-                otherProfessionalType: generalInfo.value.otherProfessionalType,
+                otherProfessionType: generalInfo.value.otherProfessionalType,
               });
-
               generalInfo.value.educations.push({
                 departmentId: generalInfo.value.departmentSelected.id,
                 educationalLevelId:
@@ -1090,11 +1109,38 @@ export default {
                 otherProfessionType: generalInfo.value.otherProfessionalType,
               });
             }
+          } else {
+            checkForAddedError.value = false;
+            generalInfo.value.multipleDepartment.push({
+              department: generalInfo.value.departmentSelected,
+              educationLevel: generalInfo.value.educationalLevelSelected,
+              institution: generalInfo.value.institutionSelected,
+              professionType: generalInfo.value.professionalTypeSelected,
+
+              otherEducationalInstitution:
+                generalInfo.value.otherEducationalInstitution,
+              otherProfessionalTypeAmharic:
+                generalInfo.value.otherProfessionalTypeAmharic,
+              otherProfessionalType: generalInfo.value.otherProfessionalType,
+            });
+            generalInfo.value.educations.push({
+              departmentId: generalInfo.value.departmentSelected.id,
+              educationalLevelId: generalInfo.value.educationalLevelSelected.id,
+              institutionId: generalInfo.value.institutionSelected.id,
+              professionTypeId: generalInfo.value.professionalTypeSelected.id,
+              otherInstitution: generalInfo.value.otherEducationalInstitution,
+              otherProfessionTypeAmharic:
+                generalInfo.value.otherProfessionalTypeAmharic,
+              otherProfessionType: generalInfo.value.otherProfessionalType,
+            });
           }
           generalInfo.value.departmentSelected = "";
           generalInfo.value.educationalLevelSelected = "";
           generalInfo.value.institutionSelected = "";
           generalInfo.value.professionalTypeSelected = "";
+          generalInfo.value.otherProfessionalType = "";
+          generalInfo.value.otherProfessionalTypeAmharic = "";
+          generalInfo.value.otherEducationalInstitution = "";
         }
       } else {
         multipleDepartmentError.value = true;
@@ -1110,19 +1156,34 @@ export default {
     const apply = () => {
       let tempApplicationData = generalInfo.value;
       window.localStorage.setItem(
-        "RNApplicationData",
+        "NLApplicationData",
         JSON.stringify(tempApplicationData)
       );
-      store.dispatch("renewal/setGeneralInfo", generalInfo.value).then(() => {
-        emit("changeActiveState");
-        activeState.value += 1;
+      store
+        .dispatch("renewal/setGeneralInfo", generalInfo.value)
+        .then(() => {
+          emit("changeActiveState");
+          activeState.value += 1;
+        });
+    };
+    const fetchApplicationStatuses = () => {
+      store.dispatch("newlicense/getApplicationStatuses").then((res) => {
+        const results = res.data.data;
+        applicationStatuses.value = results;
+
+        let status = applicationStatuses.value.filter(function (e) {
+          return e.code == "DRA";
+        });
+        store.dispatch("renewal/setButtons", status[0].buttons);
       });
     };
-    const educationalLevelChange = () =>
-    {
-            fetchProfessionalType(generalInfo.value.departmentSelected.id,generalInfo.value.educationalLevelSelected.id,);
-
-    }
+    const educationalLevelChange = () => {
+      isEdLevelSelected.value = true;
+      fetchProfessionalType(
+        generalInfo.value.departmentSelected.id,
+        generalInfo.value.educationalLevelSelected.id
+      );
+    };
     onMounted(async () => {
       fetchApplicantType();
       fetchDepartments();
@@ -1131,10 +1192,10 @@ export default {
       fetchRegions();
       fetchOccupation();
       fetchApplicationStatuses();
+
       store
         .dispatch("renewal/getRenewalApplication", route.params.id)
         .then((res) => {
-         
           withdrawData.value = res.data.data;
           generalInfo.value = res.data.data;
           generalInfo.value.regionSelected =
@@ -1173,7 +1234,6 @@ export default {
             JSON.stringify(res.data.data.educations)
           );
           generalInfo.value.applicantTypeSelected = res.data.data.applicantType;
-          console.log(generalInfo.value);
         });
     });
     return {
@@ -1190,14 +1250,17 @@ export default {
       educationalLevelChange,
       showLocation,
       departments,
+      withdraw,
       institutions,
       educationalLevels,
       applicantTypes,
       regions,
       woredas,
+      isDepartmentSelected,
+      isAppTypeSelected,
+      isEdLevelSelected,
       checkForAddedError,
       zones,
-      isLoading,
       professionalTypes,
       showOccupation,
       showLanguage,
@@ -1205,6 +1268,7 @@ export default {
       languages,
       occupations,
       activeState,
+      isLoading,
       departmentSelected,
       professionalTypeSelected,
       otherEducationalInstitution,
@@ -1212,7 +1276,6 @@ export default {
       institutionSelected,
       showOtherProfession,
       otherProfessionalType,
-      withdraw,
       otherProfessionalTypeAmharic,
       educationalLevelSelected,
       multipleDepartmentError,
@@ -1222,7 +1285,7 @@ export default {
   },
 };
 </script>
-  <style>
+<style>
 #main {
   border: 1px solid #cccccc;
   border-radius: 5px;
@@ -1232,4 +1295,3 @@ export default {
   border-radius: 5px;
 }
 </style>
-  

@@ -1093,7 +1093,7 @@ export default {
 
                 otherEducationalInstitution:
                   generalInfo.value.otherEducationalInstitution,
-                  otherProfessionTypeAmharic:
+                otherProfessionTypeAmharic:
                   generalInfo.value.otherProfessionalTypeAmharic,
                 otherProfessionType: generalInfo.value.otherProfessionalType,
               });
@@ -1115,7 +1115,7 @@ export default {
               department: generalInfo.value.departmentSelected,
               educationLevel: generalInfo.value.educationalLevelSelected,
               institution: generalInfo.value.institutionSelected,
-              professionalType: generalInfo.value.professionalTypeSelected,
+              professionType: generalInfo.value.professionalTypeSelected,
 
               otherEducationalInstitution:
                 generalInfo.value.otherEducationalInstitution,
