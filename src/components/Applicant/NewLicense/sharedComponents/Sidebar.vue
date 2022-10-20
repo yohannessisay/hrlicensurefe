@@ -236,8 +236,8 @@
           <router-link class="link" to="/Applicant/NewLicense/revoked">
             <span class="icon"><i :class="
               $route.fullPath === '/Applicant/NewLicense/revoked'
-                ? 'bx bx-stop-circle'
-                : 'bx bx-stop-circle'
+                ? 'bx bx-trash-alt'
+                : 'bx bx-trash-alt'
             "></i></span>
             <span class="text text-white font-bold">Revoked</span>
           </router-link>
