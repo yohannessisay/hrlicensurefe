@@ -309,6 +309,14 @@ export default {
       return error;
     }
   },
+  async getRenewalsByUser({ commit }, id) {
+    try {
+      const resp = await ApiService.get(baseUrl + "/renewals/user/" + id);
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
   async getDraft({ commit }, id) {
     try {
       const resp = await ApiService.get(baseUrl + "/renewals/" + id);

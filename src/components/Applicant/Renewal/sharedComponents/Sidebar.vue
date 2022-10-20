@@ -120,6 +120,33 @@
 
       <li
         :class="
+          $route.fullPath === '/Applicant/Renewal/inReview'
+            ? 'list active'
+            : 'list'
+        "
+      >
+        <b></b>
+        <b></b>
+        <a href="#GoodStanding">
+          <router-link class="link" to="/Applicant/Renewal/inReview">
+            <span class="icon"
+              ><i
+                :class="
+                  $route.fullPath === '/Applicant/Renewal/inReview'
+                    ? 'bx bxs-x-circle'
+                    : 'bx bx-x-circle'
+                "
+              ></i
+            ></span>
+            <span class="text text-white font-bold hover:text-black"
+              >In Review</span
+            >
+          </router-link>
+        </a>
+      </li>
+
+      <li
+        :class="
           $route.fullPath === '/Applicant/Renewal/approved'
             ? 'list active'
             : 'list'
