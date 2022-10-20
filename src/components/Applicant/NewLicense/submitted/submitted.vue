@@ -78,9 +78,9 @@
                   >
                     <span class="text-black text-sm">
                       {{
-                        "*" + education.professionType
+                        education.professionType
                           ? education.professionType.name
-                            ? education.professionType.name
+                            ? "*" + education.professionType.name
                             : "-"
                           : "-"
                       }}
