@@ -87,14 +87,14 @@
                 <div class="flex justify-center border-b-4 text-main-400">
                   <div class="text-center lg:max-w-3xl md:max-w-xl">
                     <h2 class="text-2xl font-bold mb-8 px-6 text-main-400">
-                      Returned License Detail
+                      Returned Renewal Detail
                     </h2>
                   </div>
                 </div>
 
                 <div
                   class="container my-12 mx-auto px-4 md:px-12 border-b"
-                  v-if="licenseData"
+                  v-if="renewalData"
                 >
                   <div class="flex flex-wrap -mx-1 lg:-mx-4">
                     <!-- Column -->
@@ -133,17 +133,19 @@
                             <div>Applicant Name</div>
                             <div class="text-main-400 font-bold">
                               {{
-                                (licenseData && licenseData.profile
-                                  ? licenseData.profile.name
-                                  : "") +
-                                  " " +
-                                  (licenseData && licenseData.profile
-                                    ? licenseData.profile.fatherName
-                                    : "") +
-                                  " " +
-                                  (licenseData && licenseData.profile
-                                    ? licenseData.profile.grandFatherName
-                                    : "")
+                                renewalData && renewalData.profile
+                                  ? renewalData.profile.name
+                                  : "-"
+                              }}
+                              {{
+                                renewalData && renewalData.profile
+                                  ? renewalData.profile.fatherName
+                                  : "-"
+                              }}
+                              {{
+                                renewalData && renewalData.profile
+                                  ? renewalData.profile.grandFatherName
+                                  : "-"
                               }}
                             </div>
                           </div>
@@ -151,9 +153,9 @@
                             <div>Applicant Email</div>
                             <div class="text-main-400 font-bold">
                               {{
-                                licenseData && licenseData.applicant
-                                  ? licenseData.applicant.emailAddress
-                                  : ""
+                                renewalData && renewalData.applicant
+                                  ? renewalData.applicant.emailAddress
+                                  : "-"
                               }}
                             </div>
                           </div>
@@ -161,9 +163,9 @@
                             <div>Applicant Phone</div>
                             <div class="text-main-400 font-bold">
                               {{
-                                licenseData && licenseData.applicant
-                                  ? "+251" + licenseData.applicant.phoneNumber
-                                  : ""
+                                renewalData && renewalData.applicant
+                                  ? "+251" + renewalData.applicant.phoneNumber
+                                  : "-"
                               }}
                             </div>
                           </div>
@@ -220,9 +222,9 @@
                             <div>Reviewer Name</div>
                             <div class="text-main-400 font-bold">
                               {{
-                                licenseData && licenseData.licenseReviewer
-                                  ? licenseData.licenseReviewer.reviewer.name
-                                  : ""
+                                renewalData && renewalData.renewalReviewer
+                                  ? renewalData.renewalReviewer.reviewer.name
+                                  : "-"
                               }}
                             </div>
                           </div>
@@ -230,10 +232,10 @@
                             <div>Phone Number</div>
                             <div class="text-main-400 font-bold">
                               {{
-                                licenseData && licenseData.licenseReviewer
-                                  ? licenseData.licenseReviewer.reviewer
+                                renewalData && renewalData.renewalReviewer
+                                  ? renewalData.renewalReviewer.reviewer
                                       .phoneNumber
-                                  : ""
+                                  : "-"
                               }}
                             </div>
                           </div>
@@ -241,13 +243,13 @@
                             <div>Expert Level</div>
                             <div class="text-main-400 font-bold">
                               {{
-                                licenseData &&
-                                licenseData.licenseReviewer &&
-                                licenseData.licenseReviewer.reviewer &&
-                                licenseData.licenseReviewer.reviewer.expertLevel
-                                  ? licenseData.licenseReviewer.reviewer
+                                renewalData &&
+                                renewalData.renewalReviewer &&
+                                renewalData.renewalReviewer.reviewer &&
+                                renewalData.renewalReviewer.reviewer.expertLevel
+                                  ? renewalData.renewalReviewer.reviewer
                                       .expertLevel.name
-                                  : ""
+                                  : "-"
                               }}
                             </div>
                           </div>
@@ -255,12 +257,12 @@
                             <div>Region</div>
                             <div class="text-main-400 font-bold">
                               {{
-                                licenseData &&
-                                licenseData.licenseReviewer &&
-                                licenseData.licenseReviewer.reviewer &&
-                                licenseData.licenseReviewer.reviewer.region
-                                  ? licenseData.licenseReviewer.reviewer
-                                      .region.name
+                                renewalData &&
+                                renewalData.renewalReviewer &&
+                                renewalData.renewalReviewer.reviewer &&
+                                renewalData.renewalReviewer.reviewer.region
+                                  ? renewalData.renewalReviewer.reviewer.region
+                                      .name
                                   : "-"
                               }}
                             </div>
@@ -313,7 +315,7 @@
 
                         <div
                           class="grid grid-flow-row auto-rows-max"
-                          v-for="(education, index) in licenseData.educations"
+                          v-for="(education, index) in renewalData.educations"
                           :key="education ? education.id : ''"
                         >
                           <div class="flex justify-between px-4 py-1">
@@ -322,7 +324,7 @@
                               {{
                                 education && education.department
                                   ? education.department.name
-                                  : ""
+                                  : "-"
                               }}
                             </div>
                           </div>
@@ -332,7 +334,7 @@
                               {{
                                 education && education.institution
                                   ? education.institution.name
-                                  : ""
+                                  : "-"
                               }}
                             </div>
                           </div>
@@ -342,7 +344,7 @@
                               {{
                                 education && education.educationLevel
                                   ? education.educationLevel.name
-                                  : ""
+                                  : "-"
                               }}
                             </div>
                           </div>
@@ -350,7 +352,7 @@
                           <hr
                             class="mt-3 mb-3"
                             style="color: lightgray"
-                            v-if="index != licenseData.educations.length - 1"
+                            v-if="index != renewalData.educations.length - 1"
                           />
                         </div>
 
@@ -393,7 +395,7 @@
                               class="no-underline hover:underline text-black"
                               href="#"
                             >
-                              License Detail
+                              Renewal Detail
                             </a>
                           </h1>
                           <p class="text-main-400 text-sm">Active</p>
@@ -404,9 +406,9 @@
                             <div>Applicant Type</div>
                             <div class="text-main-400 font-bold">
                               {{
-                                licenseData && licenseData.applicantType
-                                  ? licenseData.applicantType.name
-                                  : ""
+                                renewalData && renewalData.applicantType
+                                  ? renewalData.applicantType.name
+                                  : "-"
                               }}
                             </div>
                           </div>
@@ -414,8 +416,8 @@
                             <div>Application Status</div>
                             <div class="text-main-400 font-bold">
                               {{
-                                licenseData && licenseData.applicationStatus
-                                  ? licenseData.applicationStatus.name
+                                renewalData && renewalData.applicationStatus
+                                  ? renewalData.applicationStatus.name
                                   : "-"
                               }}
                             </div>
@@ -424,7 +426,7 @@
                             <div>Certified Status</div>
                             <div class="text-main-400 font-bold">
                               {{
-                                licenseData && licenseData.certified
+                                renewalData && renewalData.certified
                                   ? "Certified"
                                   : "Not Certified"
                               }}
@@ -434,8 +436,8 @@
                             <div>Certified Date</div>
                             <div class="text-main-400 font-bold">
                               {{
-                                licenseData && licenseData.certifiedDate
-                                  ? licenseData.certifiedDate.slice(0, 10)
+                                renewalData && renewalData.certifiedDate
+                                  ? renewalData.certifiedDate.slice(0, 10)
                                   : "-"
                               }}
                             </div>
@@ -444,8 +446,11 @@
                             <div>Expiration Date</div>
                             <div class="text-main-400 font-bold">
                               {{
-                                licenseData && licenseData.licenseExpirationDate
-                                  ? licenseData.licenseExpirationDate.slice(0, 10)
+                                renewalData && renewalData.licenseExpirationDate
+                                  ? renewalData.licenseExpirationDate.slice(
+                                      0,
+                                      10
+                                    )
                                   : "-"
                               }}
                             </div>
@@ -491,14 +496,14 @@ export default {
     let store = useStore();
     let userInfo = ref({});
     let isLoading = ref(false);
-    let licenseData = ref({});
+    let renewalData = ref({});
 
     watch(props.modalDataId, () => {
       isLoading.value = true;
       store
         .dispatch("renewal/getRenewalApplication", props.modalDataId.id)
         .then((res) => {
-          licenseData.value = res.data.data;
+          renewalData.value = res.data.data;
           isLoading.value = false;
         });
     });
@@ -510,7 +515,7 @@ export default {
       userInfo,
       isLoading,
       googleApi,
-      licenseData,
+      renewalData,
     };
   },
 };
