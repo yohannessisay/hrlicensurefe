@@ -118,6 +118,25 @@
         </a>
       </li>
 
+      <li :class="
+          $route.fullPath === '/Applicant/NewLicense/inReview'
+            ? 'list active'
+            : 'list'
+        ">
+        <b></b>
+        <b></b>
+        <a href="#">
+          <router-link class="link" to="/Applicant/NewLicense/inReview">
+            <span class="icon"><i :class="
+                  $route.fullPath === '/Applicant/NewLicense/inReview'
+                    ? 'bx bxs-refresh'
+                    : 'bx bx-refresh'
+                "></i></span>
+            <span class="text text-white font-bold">In Review</span>
+          </router-link>
+        </a>
+      </li>
+
       <li
         :class="
           $route.fullPath === '/Applicant/NewLicense/approved'
@@ -233,8 +252,8 @@
               ><i
                 :class="
                   $route.fullPath === '/Applicant/NewLicense/returned'
-                    ? 'bx bx-arrow-back'
-                    : 'bx bx-arrow-back'
+                    ? 'bx bx-rotate-left'
+                    : 'bx bx-rotate-left'
                 "
               ></i
             ></span>
