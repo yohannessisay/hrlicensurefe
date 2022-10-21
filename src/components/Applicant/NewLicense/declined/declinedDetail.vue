@@ -751,7 +751,7 @@ export default {
         let licenseId = licenseData.value.id;
         let payload = { document: formData, id: licenseId };
         store
-          .dispatch("newlicense/uploadDocuments", payload)
+          .dispatch("newlicense/updateDocuments", payload)
           .then((res) => {
             if (res.data.status == "Success") {
               toast.success("Applied successfuly", {

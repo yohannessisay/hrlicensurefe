@@ -745,12 +745,11 @@
                               whitespace-nowrap
                             "
                           >
-                            <span
-                              @click="removeDepartment(index)"
-                              style="color: red"
-                              title="Delete"
+                          <span
+                              @click="removeDepartment(index)" 
+                              title="Remove"
                               ><i
-                                class="fa fa-trash bg-red-200 cursor-pointer"
+                                class="fa fa-trash text-red-300 cursor-pointer"
                               ></i
                             ></span>
                           </td>
@@ -1167,7 +1166,7 @@ export default {
         });
     };
     const fetchApplicationStatuses = () => {
-      store.dispatch("newlicense/getApplicationStatuses").then((res) => {
+      store.dispatch("renewal/getApplicationStatuses").then((res) => {
         const results = res.data.data;
         applicationStatuses.value = results;
 

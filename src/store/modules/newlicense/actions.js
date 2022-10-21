@@ -299,6 +299,22 @@ export default {
       return error;
     }
   },
+  async updateDocuments({ commit }, documents) {
+    try {
+      const resp = await ApiService.put(
+        baseUrl + "/documentUploads/licenseDocument/" + documents.id,
+        documents.document,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
   async getApplicantType() {
     try {
       const resp = await ApiService.get(baseUrl + "/lookups/applicantTypes");

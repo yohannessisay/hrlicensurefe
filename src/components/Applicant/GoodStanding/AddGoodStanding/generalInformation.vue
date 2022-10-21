@@ -34,7 +34,7 @@
     </div>
 
     <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-10">
-      <div class="mt-12 rounded-sm bg-white shadow-2xl mb-8">
+      <div class="mt-12 rounded-sm bg-white shadow-lg mb-8">
         <div class="container mx-auto">
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
             <div
@@ -128,24 +128,44 @@
             >
               <div>
                 <div class="overflow-hidden shadow-sm">
-                  <label for="" class="text-main-400 sm:ml-4"
-                    >Applicant Title</label
-                  >
+                  <label for="" class="text-main-400">Applicant Title</label>
 
-                  <input
-                    type="text"
-                    id="applicantTitle"
-                    v-model="generalInfo.applicantTitle"
+                  <select
                     class="
-                      w-full
-                      rounded-none
-                      sm:w-10/12 sm:ml-4
-                      border
-                      text-main-400
+                      form-select
+                      appearance-none
+                      block
+                      xl:w-64
+                      md:w-64
+                      sm:w-64
+                      px-3
+                      py-1.5
+                      text-base
+                      font-normal
+                      text-gray-700
+                      hover:text-main-500 hover:border-main-500
+                      border border-solid border-gray-300
+                      rounded
+                      transition
+                      ease-in-out
+                      m-0
+                      focus:text-gray-700
+                      focus:bg-white
+                      focus:border-main-400
+                      focus:outline-none
                     "
-                    autocomplete="off"
-                    placeholder="example-MR,MRS"
-                  />
+                    aria-label="Default select example"
+                    v-model="generalInfo.applicantTitleId"
+                    required
+                  >
+                    <option
+                      v-for="title in applicantTitle"
+                      :key="title.name"
+                      :value="title"
+                    >
+                      {{ title.name }}
+                    </option>
+                  </select>
                 </div>
               </div>
             </div>
@@ -164,7 +184,9 @@
                     form-select
                     appearance-none
                     block
-                    sm:w-3/4
+                    xl:w-64
+                    md:w-64
+                    sm:w-64
                     px-3
                     py-1.5
                     text-base
@@ -178,7 +200,7 @@
                     m-0
                     focus:text-gray-700
                     focus:bg-white
-                    focus:border-blue-600
+                    focus:border-main-400
                     focus:outline-none
                   "
                   v-model="generalInfo.departmentId"
@@ -199,13 +221,15 @@
               class="flex justify-center text-6xl rounded-xl p-2 bg-gray-100"
             >
               <div>
-                <label class="text-main-400">Profession</label>
+                <label class="text-main-400">Education Level</label>
                 <select
                   class="
-                    form-select
+                  form-select
                     appearance-none
                     block
-                    sm:w-3/4
+                    xl:w-64
+                    md:w-64
+                    sm:w-64
                     px-3
                     py-1.5
                     text-base
@@ -219,14 +243,62 @@
                     m-0
                     focus:text-gray-700
                     focus:bg-white
-                    focus:border-blue-600
+                    focus:border-main-400
                     focus:outline-none
                   "
+                  :disabled="!isDepartmentSelected"
+                  v-model="generalInfo.educationLevelId"
+                  @change="educationalLevelChange()"
+                  required
+                >
+                <option value="" disabled>
+                    Please select department first
+                  </option>
+                  <option
+                    v-for="edLevel in educationLevels"
+                    v-bind:key="edLevel.name"
+                    v-bind:value="edLevel"
+                  >
+                    {{ edLevel.name }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div
+              class="flex justify-center text-6xl rounded-xl p-2 bg-gray-100"
+            >
+              <div>
+                <label class="text-main-400">Profession</label>
+                <select
+                  class="
+                    form-select
+                    appearance-none
+                    block
+                    xl:w-64
+                    md:w-64
+                    sm:w-64
+                    px-3
+                    py-1.5
+                    text-base
+                    font-normal
+                    text-gray-700
+                    hover:text-main-500 hover:border-main-500
+                    border border-solid border-gray-300
+                    rounded
+                    transition
+                    ease-in-out
+                    m-0
+                    focus:text-gray-700
+                    focus:bg-white
+                    focus:border-main-400
+                    focus:outline-none
+                  "
+                  :disabled="!isEdLevelSelected"
                   v-model="generalInfo.professionTypeIds"
                   required
                 >
                   <option value="" disabled>
-                    Please select department first
+                    Please select education level first
                   </option>
                   <option
                     v-for="profession in professionalTypes"
@@ -245,7 +317,7 @@
       <!-- region -->
       <div
         v-if="showLocation"
-        class="pt-8 mt-12 border rounded bg-white shadow-2xl"
+        class="pt-8 mt-12   rounded bg-white shadow-lg"
       >
         <div class="flex">
           <div class="flex flex-col mb-medium w-2/5 ml-medium mr-12">
@@ -364,7 +436,7 @@
       <!-- end -->
 
       <!-- GS details -->
-      <div class="mt-12 rounded-sm bg-white shadow-2xl mb-8">
+      <div class="mt-12 rounded-sm bg-white shadow-lg mb-8">
         <div class="container mx-auto">
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
             <div
@@ -534,8 +606,7 @@ export default {
     let generalInfo = ref({
       applicantId: +localStorage.getItem("userId"),
       applicantTypeId: "",
-      residenceWoredaId: "",
-      applicantTitle: "",
+      residenceWoredaId: "", 
       whomGoodStandingFor: "",
       licenseIssuedDate: "",
       whoIssued: "",
@@ -544,7 +615,9 @@ export default {
       applicantPositionId: "",
       otherProfessionType: "",
       otherProfessionTypeAmharic: "",
+      applicantTitleId: "",
       applicationStatusId: "",
+      educationLevelId: "",
       regionSelected: "",
       zoneSelected: "",
       woredaSelected: "",
@@ -554,11 +627,15 @@ export default {
     });
     let localData = ref([]);
     let regions = ref([]);
+    let isDepartmentSelected = ref(false);
+    let isEdLevelSelected = ref(false);
+    let isAppTypeSelected = ref(false);
+    let educationLevels=ref([]);
     let zones = ref([]);
     let woredas = ref([]);
     let departments = ref([]);
     let applicationPositions = ref([]);
-
+    let applicantTitle = ref([]);
     let applicantTypes = ref([]);
     let showLocation = ref(false);
     let professionalTypes = ref([]);
@@ -583,9 +660,14 @@ export default {
     const regionChangeHandler = () => {
       fetchZones();
     };
-
+    const educationalLevelChange = () => {
+      isEdLevelSelected.value = true;
+      fetchProfessionalType(
+        generalInfo.value.departmentId.id,
+        generalInfo.value.educationLevelId.id
+      );
+    };
     const fetchZones = () => {
-     
       store
 
         .dispatch("newlicense/getZones", generalInfo.value.regionSelected.id)
@@ -601,6 +683,11 @@ export default {
     const fetchApplicantType = () => {
       store.dispatch("goodstanding/getApplicantType").then((res) => {
         applicantTypes.value = res.data.data;
+      });
+    };
+    const fetchApplicantTitle = () => {
+      store.dispatch("goodstanding/getApplicantTitle").then((res) => {
+        applicantTitle.value = res.data.data;
       });
     };
 
@@ -633,14 +720,21 @@ export default {
           woredas.value = res.data.data;
         });
     };
-    const fetchProfessionalType = (id) => {
-      professionalTypes.value = [];
-      generalInfo.value.professionalTypeId = [];
-      store.dispatch("goodstanding/getProfessionalTypes", id).then((res) => {
-        professionalTypes.value = res.data.data;
-      });
+    const fetchProfessionalType = (departmentId, educationalLevelId) => {
+      let profession = {
+        departmentId: departmentId,
+        educationalLevelId: educationalLevelId,
+      };
+      store
+        .dispatch("newlicense/getProfessionalTypes", profession)
+        .then((res) => {
+          professionalTypes.value = res.data.data;
+        });
     };
     const setDepartment = () => {
+      isDepartmentSelected.value=true;
+      generalInfo.value.educationLevelId="";
+      generalInfo.value.professionTypeIds=""
       fetchProfessionalType(generalInfo.value.departmentId.id);
     };
     const apply = () => {
@@ -662,13 +756,20 @@ export default {
         window.location.reload();
       }, 1000);
     };
+    const fetchEducationLevel = () => {
+      store.dispatch("lookups/getEducationLevel").then((res) => {
+        educationLevels.value = res.data.data;
+      });
+    };
     onMounted(async () => {
       fetchApplicantType();
       fetchDepartments();
       fetchProfessionalType();
+      fetchEducationLevel();
       fetchRegions();
       fetchZone();
       fetchWoredas();
+      fetchApplicantTitle();
       fetchApplicationPositions();
       localData.value = window.localStorage.getItem("GSApplicationData")
         ? JSON.parse(window.localStorage.getItem("GSApplicationData"))
@@ -683,9 +784,15 @@ export default {
       fetchProfessionalType,
       regionChangeHandler,
       zoneChangeHandler,
+      educationalLevelChange,
       setDepartment,
       apply,
       fetchZone,
+      applicantTitle,
+      isDepartmentSelected,
+      isEdLevelSelected,
+      isAppTypeSelected,
+      educationLevels,
       showLocation,
       regions,
       woredas,

@@ -12,7 +12,7 @@ export default {
       const profResp = await ApiService.get(
         baseUrl + "/profiles/user/" + resp.data.data["id"]
       );
-      console.log(profResp)
+    
       window.localStorage.setItem(
         "personalInfo",
         profResp.data.data
