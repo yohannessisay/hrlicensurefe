@@ -234,6 +234,26 @@ const routes = [
     name: "ApplicantRenewalDraft",
     component: () => import("../components/Applicant/Renewal/draft/draft.vue")
   },
+  {
+    path: "/Applicant/Renewal/inReview",
+    name: "ApplicantRenewalInReview",
+    component: () => import("../components/Applicant/Renewal/inReview/inReview.vue")
+  },
+  {
+    path: "/Applicant/Renewal/returned",
+    name: "ApplicantRenewalReturned",
+    component: () => import("../components/Applicant/Renewal/returned/returned.vue")
+  },
+  {
+    path: "/Applicant/Renewal/suspended",
+    name: "ApplicantRenewalSuspended",
+    component: () => import("../components/Applicant/Renewal/suspended/suspended.vue")
+  },
+  {
+    path: "/Applicant/Renewal/revoked",
+    name: "ApplicantRenewalRevoked",
+    component: () => import("../components/Applicant/Renewal/revoked/revoked.vue")
+  },
   //Applicant Side Good Standing
   {
     path: "/Applicant/GoodStanding",

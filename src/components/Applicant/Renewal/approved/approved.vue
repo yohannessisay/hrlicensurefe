@@ -16,10 +16,7 @@
       <div class="flex flex-wrap sm:-mx-1 lg:-mx-4">
         <!-- Column -->
 
-        <div
-          v-for="license in renewal"
-          :key="license.id"
-          class="
+        <div v-for="renewal in approvedRenewals" :key="renewal.id" class="
             bg-white
             my-1
             px-1
@@ -34,14 +31,13 @@
             duration-300
             ease-in-out
             hover:-translate-y-2
-          "
-        >
+          ">
           <!-- Article -->
           <div>
             <h2 class="text-main-400 border-b-2 text-xl p-2">
-              License Number-
+              Renewal Number -
               <span class="text-base text-main-400">{{
-                license.renewalCode
+              renewal.renewalCode
               }}</span>
             </h2>
 
@@ -53,102 +49,83 @@
                   </a>
                 </h1>
 
-                <ul
-                  v-for="eds in license.educations"
-                  :key="eds.id"
-                  class="text-black text-sm"
-                >
-                  <span class="text-black text-sm">
-                    {{ "*" + eds.department.name }}</span
-                  >
+                <ul class="text-black text-sm">
+                  <li v-for="(education, index) in renewal.educations" :key="education.id" style="display: inline">
+                    <span class="text-black text-sm">
+                      {{ education.department ? "*" + education.department.name : null }}
+                      <span v-if="index != renewal.educations.length - 1">
+                        ,
+                      </span></span>
+
+                  </li>
                 </ul>
               </div>
 
-              <div
-                class="
+              <div class="
                   flex
                   items-center
                   justify-between
                   leading-tight
                   p-2
                   md:p-2
-                "
-              >
+                ">
                 <h1 class="text-lg">
-                  <a
-                    class="no-underline hover:underline text-main-400"
-                    href="#"
-                  >
+                  <a class="no-underline hover:underline text-main-400" href="#">
                     Certified Date
                   </a>
                 </h1>
                 <p class="text-black text-sm">
                   {{
-                    license.certifiedDate
-                      ? license.certifiedDate.slice(0, 10)
-                      : "Waiting for review"
+                  renewal.certifiedDate
+                  ? renewal.certifiedDate.slice(0, 10)
+                  : "Waiting for review"
                   }}
                 </p>
               </div>
-              <div
-                class="
+              <div class="
                   flex
                   items-center
                   justify-between
                   leading-tight
                   p-2
                   md:p-2
-                "
-              >
+                ">
                 <h1 class="text-lg">
-                  <a
-                    class="no-underline hover:underline text-main-400"
-                    href="#"
-                  >
+                  <a class="no-underline hover:underline text-main-400" href="#">
                     Expiry Date
                   </a>
                 </h1>
                 <p class="text-black text-sm">
                   {{
-                    license.certifiedDate
-                      ? license.certifiedDate.slice(0, 10)
-                      : "Waiting for review"
+                  renewal.licenseExpirationDate
+                  ? renewal.licenseExpirationDate.slice(0, 10)
+                  : "Waiting for review"
                   }}
                 </p>
               </div>
             </div>
-            <footer
-              class="flex items-center justify-between leading-none p-2 md:p-4"
-            >
-              <a
-                class="
+            <footer class="flex items-center justify-between leading-none p-2 md:p-4">
+              <a class="
                   flex
                   items-center
                   no-underline
                   hover:underline
                   text-black
-                "
-                href="#"
-              >
-                <img
-                  alt="Placeholder"
-                  class="block rounded-full h-8"
-                  v-bind:src="
-                    userInfo.profilePicturePath
-                      ? googleApi + userInfo.profilePicturePath
-                      : ''
-                  "
-                />
+                " href="#">
+                <img alt="Placeholder" class="block rounded-full h-8" v-bind:src="
+                  userInfo.profilePicturePath
+                    ? googleApi + userInfo.profilePicturePath
+                    : ''
+                " />
                 <p class="ml-2 text-sm text-main-400">{{ userInfo.name }}</p>
               </a>
 
               <span class="text-main-400 text-sm">{{
-                license.createdAt.slice(0, 10)
+              renewal.createdAt.slice(0, 10)
               }}</span>
             </footer>
             <div class="flex justify-center">
-              <button
-                class="
+              <button class="
                   inline-block
                   px-6
                   text-white
@@ -163,11 +140,7 @@
                   transition
                   duration-150
                   ease-in-out
-                "
-                @click="changeLicenseId(license.id)"
-                data-bs-toggle="modal"
-                data-bs-target="#approvedDetail"
-              >
+                " @click="changedRenewalId(renewal.id)" data-bs-toggle="modal" data-bs-target="#approvedDetail">
                 View Detail
               </button>
             </div>
@@ -180,9 +153,7 @@
       </div>
       <!-- END Column -->
     </div>
-    <div
-      v-else
-      class="
+    <div v-else class="
         bg-white
         my-1
         px-1
@@ -197,8 +168,7 @@
         duration-300
         ease-in-out
         hover:-translate-y-2
-      "
-    >
+      ">
       <!-- Article -->
 
       <h2 class="text-main-400 border-b-2 text-xl p-2">
@@ -209,42 +179,47 @@
   </main-content>
 </template>
   
-  <script>
+<script>
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
 import MainContent from "../sharedComponents/Menu.vue";
 import { googleApi } from "@/composables/baseURL";
 import approvedDetail from "./approvedDetail.vue";
+
 export default {
   components: { MainContent, approvedDetail },
   setup() {
     let store = useStore();
-    let renewal = ref({});
+    let approvedRenewals = ref([]);
     let userInfo = ref({});
     let isLoading = ref(false);
     let noData = ref(false);
     let modalDataId = ref({ change: 0, id: "" });
-    const changeLicenseId = (id) => {
+
+    const changedRenewalId = (id) => {
       modalDataId.value.id = id;
       modalDataId.value.change++;
     };
+
     onMounted(() => {
       isLoading.value = true;
       userInfo.value = JSON.parse(window.localStorage.getItem("personalInfo"));
-      store.dispatch("renewal/getRenewalLicense").then((res) => {
-        renewal.value = res.data.data;
-        if (res.data.status != "Error") {
-          renewal.value = res.data.data;
+      let userId = JSON.parse(window.localStorage.getItem("userId"));
 
-          if (renewal.value) {
-            renewal.value = renewal.value.filter(function (e) {
-              return e.applicationStatus.code.includes("APP");
-            });
-            isLoading.value = false;
-            if (renewal.value.length < 1) {
-              noData.value = true;
-            }
+      store.dispatch("renewal/getRenewalsByUser", userId).then((res) => {
+        const results = res.data.data;
+
+        if (results.length > 0) {
+          approvedRenewals.value = results.filter(approvedRenewal => {
+            return (
+              approvedRenewal.applicationStatus.code === "APP"
+            );
+          });
+
+          if (approvedRenewals.value.length === 0) {
+            noData.value = true;
           }
+          isLoading.value = false;
         } else {
           isLoading.value = false;
           noData.value = true;
@@ -253,11 +228,11 @@ export default {
     });
 
     return {
-      renewal,
+      approvedRenewals,
       googleApi,
       userInfo,
       noData,
-      changeLicenseId,
+      changedRenewalId,
       isLoading,
       modalDataId,
     };

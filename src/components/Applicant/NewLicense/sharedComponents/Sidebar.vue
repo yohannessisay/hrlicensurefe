@@ -97,7 +97,7 @@
           <router-link class="link" to="/Applicant/NewLicense/inReview">
             <span class="icon"><i :class="
               $route.fullPath === '/Applicant/NewLicense/inReview'
-                ? 'bx bxs-refresh'
+                ? 'bx bx-refresh'
                 : 'bx bx-refresh'
             "></i></span>
             <span class="text text-white font-bold">In Review</span>
