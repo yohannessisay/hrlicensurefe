@@ -269,7 +269,7 @@ export default {
     Institution,
     Upload,
     LicenseSummary,
-    MultipleUpload,
+    // MultipleUpload,
     MainContent
   },
 
