@@ -1,6 +1,5 @@
 <template>
-  <div
-    class="
+  <div class="
       modal
       fade
       fixed
@@ -11,24 +10,15 @@
       h-full
       outline-none
       overflow-x-hidden overflow-y-auto
-    "
-    id="approvedDetail"
-    data-bs-backdrop="static"
-    data-bs-keyboard="false"
-    tabindex="-1"
-    aria-labelledby="approvedDetailLabel"
-    aria-hidden="true"
-  >
-    <div
-      class="
+    " id="declinedDetail" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="declinedDetailLabel" aria-hidden="true">
+    <div class="
         modal-dialog modal-dialog-centered modal-xl
         relative
         w-auto
         pointer-events-none
-      "
-    >
-      <div
-        class="
+      ">
+      <div class="
           modal-content
           border-none
           shadow-lg
@@ -40,14 +30,9 @@
           rounded-md
           outline-none
           text-current
-        "
-      >
-        <div
-          class="modal-header flex flex-shrink-0 justify-end p-2 rounded-t-md"
-        >
-          <button
-            type="button"
-            class="
+        ">
+        <div class="modal-header flex flex-shrink-0 justify-end p-2 rounded-t-md">
+          <button type="button" class="
               px-6
               text-white
               bg-main-400
@@ -67,45 +52,34 @@
               transition
               duration-150
               ease-in-out
-            "
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          >
+            " data-bs-dismiss="modal" aria-label="Close">
             <i class="fa fa-close fa-2x"></i>
           </button>
         </div>
         <div class="vld-parent mt-4">
-          <loading
-            :active="isLoading"
-            :is-full-page="false"
-            :color="'#07677e'"
-            :opacity="1"
-          ></loading>
+          <loading :active="isLoading" :is-full-page="false" :color="'#07677e'" :opacity="1"></loading>
           <div class="modal-body relative p-4">
             <div class="container px-6 mx-auto">
               <section class="text-gray-800">
                 <div class="flex justify-center border-b-4 text-main-400">
                   <h4 class="text-black ml-8">Please bring required documents when coming to pick up your license</h4>
                 </div>
-            
+
                 <div class="flex justify-center border-b-4 text-main-400">
                   <div class="text-center lg:max-w-3xl md:max-w-xl">
                     <h2 class="text-2xl font-bold mb-8 px-6 text-main-400">
-                      Approved License Detail
+                      Declines Renewal Detail
                     </h2>
                   </div>
                 </div>
 
-                <div class="container my-12 mx-auto px-4 md:px-12 border-b" v-if="licenseData">
+                <div class="container my-12 mx-auto px-4 md:px-12 border-b" v-if="renewalData">
                   <div class="flex flex-wrap -mx-1 lg:-mx-4">
                     <!-- Column -->
-                    <div
-                      class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
-                    >
+                    <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
                       <!-- Article -->
                       <article class="overflow-hidden rounded-lg shadow-xl ">
-                        <header
-                          class="
+                        <header class="
                             flex
                             items-center
                             justify-between
@@ -114,13 +88,9 @@
                             md:p-4
                             border-b-4  
                             text-main-400
-                          "
-                        >
+                          ">
                           <h1 class="text-lg">
-                            <a
-                              class="no-underline hover:underline text-black"
-                              href="#"
-                            >
+                            <a class="no-underline hover:underline text-black" href="#">
                               Applicant Profile
                             </a>
                           </h1>
@@ -134,17 +104,17 @@
                             <div>Applicant Name</div>
                             <div class="text-main-400 font-bold">
                               {{
-                                (licenseData && licenseData.profile
-                                  ? licenseData.profile.name
-                                  : "") +
-                                " " +
-                                (licenseData && licenseData.profile
-                                  ? licenseData.profile.fatherName
-                                  : "") +
-                                " " +
-                                (licenseData && licenseData.profile
-                                  ? licenseData.profile.grandFatherName
-                                  : "")
+                              (renewalData && renewalData.profile
+                              ? renewalData.profile.name
+                              : "-") +
+                              " " +
+                              (renewalData && renewalData.profile
+                              ? renewalData.profile.fatherName
+                              : "-") +
+                              " " +
+                              (renewalData && renewalData.profile
+                              ? renewalData.profile.grandFatherName
+                              : "-")
                               }}
                             </div>
                           </div>
@@ -152,9 +122,9 @@
                             <div>Applicant Email</div>
                             <div class="text-main-400 font-bold">
                               {{
-                                licenseData && licenseData.applicant
-                                  ? licenseData.applicant.emailAddress
-                                  : ""
+                              renewalData && renewalData.applicant
+                              ? renewalData.applicant.emailAddress
+                              : "-"
                               }}
                             </div>
                           </div>
@@ -162,37 +132,32 @@
                             <div>Applicant Phone</div>
                             <div class="text-main-400 font-bold">
                               {{
-                                licenseData && licenseData.applicant
-                                  ? "+251" + licenseData.applicant.phoneNumber
-                                  : ""
+                              renewalData && renewalData.applicant
+                              ? "+251" + renewalData.applicant.phoneNumber
+                              : "-"
                               }}
                             </div>
                           </div>
                         </div>
 
-                        <footer
-                          class="
+                        <footer class="
                             flex
                             items-center
                             justify-between
                             leading-none
                             p-2
                             md:p-4
-                          "
-                        ></footer>
+                          "></footer>
                       </article>
                       <!-- END Article -->
                     </div>
                     <!-- END Column -->
 
                     <!-- Column -->
-                    <div
-                      class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
-                    >
+                    <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
                       <!-- Article -->
                       <article class="overflow-hidden rounded-lg shadow-xl">
-                        <header
-                          class="
+                        <header class="
                             flex
                             items-center
                             justify-between
@@ -201,13 +166,9 @@
                             md:p-4
                             border-b-4
                             text-main-400
-                          "
-                        >
+                          ">
                           <h1 class="text-lg">
-                            <a
-                              class="no-underline hover:underline text-black"
-                              href="#"
-                            >
+                            <a class="no-underline hover:underline text-black" href="#">
                               Reviewer Detail
                             </a>
                           </h1>
@@ -222,13 +183,13 @@
                             <div>Reviewer Level</div>
                             <div class="text-main-400 font-bold">
                               {{
-                                licenseData &&
-                                licenseData.renewalReviewer &&
-                                licenseData.renewalReviewer.reviewer &&
-                                licenseData.renewalReviewer.reviewer.expertLevel
-                                  ? licenseData.renewalReviewer.reviewer
-                                      .expertLevel.name
-                                  : ""
+                              renewalData &&
+                              renewalData.renewalReviewer &&
+                              renewalData.renewalReviewer.reviewer &&
+                              renewalData.renewalReviewer.reviewer.expertLevel
+                              ? renewalData.renewalReviewer.reviewer
+                              .expertLevel.name
+                              : "-"
                               }}
                             </div>
                           </div>
@@ -236,9 +197,9 @@
                             <div>Reviewer Name</div>
                             <div class="text-main-400 font-bold">
                               {{
-                                licenseData && licenseData.renewalReviewer
-                                  ? licenseData.renewalReviewer.reviewer.name
-                                  : ""
+                              renewalData && renewalData.renewalReviewer
+                              ? renewalData.renewalReviewer.reviewer.name
+                              : "-"
                               }}
                             </div>
                           </div>
@@ -246,40 +207,33 @@
                             <div>Phone Number</div>
                             <div class="text-main-400 font-bold">
                               {{
-                                licenseData && licenseData.renewalReviewer
-                                  ? licenseData.renewalReviewer.reviewer
-                                      .phoneNumber
-                                  : ""
+                              renewalData && renewalData.renewalReviewer
+                              ? renewalData.renewalReviewer.reviewer
+                              .phoneNumber
+                              : "-"
                               }}
                             </div>
                           </div>
                         </div>
 
-                        <footer
-                          class="
+                        <footer class="
                             flex
                             items-center
                             justify-between
                             leading-none
                             p-2
                             md:p-4
-                          "
-                        ></footer>
+                          "></footer>
                       </article>
                       <!-- END Article -->
                     </div>
                     <!-- END Column -->
 
                     <!-- Column -->
-                    <div
-                      v-for="education in licenseData.educations"
-                      :key="education ? education.id : ''"
-                      class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
-                    >
+                    <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
                       <!-- Article -->
                       <article class="overflow-hidden rounded-lg shadow-xl">
-                        <header
-                          class="
+                        <header class="
                             flex
                             items-center
                             justify-between
@@ -288,27 +242,24 @@
                             md:p-4
                             border-b-4
                             text-main-400
-                          "
-                        >
+                          ">
                           <h1 class="text-lg">
-                            <a
-                              class="no-underline hover:underline text-black"
-                              href="#"
-                            >
+                            <a class="no-underline hover:underline text-black" href="#">
                               Applicants Education Detail
                             </a>
                           </h1>
                           <p class="text-main-400 text-sm">Active</p>
                         </header>
 
-                        <div class="grid grid-flow-row auto-rows-max">
+                        <div v-for="(education, index) in renewalData.educations" :key="education ? education.id : ''"
+                          class="grid grid-flow-row auto-rows-max">
                           <div class="flex justify-between px-4 py-1">
                             <div>Department</div>
                             <div class="text-main-400 font-bold">
                               {{
-                                education && education.department
-                                  ? education.department.name
-                                  : ""
+                              education && education.department
+                              ? education.department.name
+                              : "-"
                               }}
                             </div>
                           </div>
@@ -316,9 +267,9 @@
                             <div>Institution</div>
                             <div class="text-main-400 font-bold">
                               {{
-                                education && education.institution
-                                  ? education.institution.name
-                                  : ""
+                              education && education.institution
+                              ? education.institution.name
+                              : "-"
                               }}
                             </div>
                           </div>
@@ -326,38 +277,36 @@
                             <div>Education Level</div>
                             <div class="text-main-400 font-bold">
                               {{
-                                education && education.educationLevel
-                                  ? education.educationLevel.name
-                                  : ""
+                              education && education.educationLevel
+                              ? education.educationLevel.name
+                              : "-"
                               }}
                             </div>
                           </div>
+
+                          <hr class="mt-3 mb-3" style="color: lightgray"
+                            v-if="index != renewalData.educations.length - 1" />
                         </div>
 
-                        <footer
-                          class="
+                        <footer class="
                             flex
                             items-center
                             justify-between
                             leading-none
                             p-2
                             md:p-4
-                          "
-                        ></footer>
+                          "></footer>
                       </article>
                       <!-- END Article -->
                     </div>
-                    
+
                     <!-- END Column -->
 
                     <!-- Column -->
-                    <div
-                      class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
-                    >
+                    <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
                       <!-- Article -->
                       <article class="overflow-hidden rounded-lg shadow-xl">
-                        <header
-                          class="
+                        <header class="
                             flex
                             items-center
                             justify-between
@@ -366,14 +315,10 @@
                             md:p-4
                             border-b-4
                             text-main-400
-                          "
-                        >
+                          ">
                           <h1 class="text-lg">
-                            <a
-                              class="no-underline hover:underline text-black"
-                              href="#"
-                            >
-                              License Detail
+                            <a class="no-underline hover:underline text-black" href="#">
+                              Renewal Detail
                             </a>
                           </h1>
                           <p class="text-main-400 text-sm">Active</p>
@@ -384,9 +329,9 @@
                             <div>Applicant Type</div>
                             <div class="text-main-400 font-bold">
                               {{
-                                licenseData && licenseData.applicantType
-                                  ? licenseData.applicantType.name
-                                  : ""
+                              renewalData && renewalData.applicantType
+                              ? renewalData.applicantType.name
+                              : "-"
                               }}
                             </div>
                           </div>
@@ -394,9 +339,9 @@
                             <div>Application Status</div>
                             <div class="text-main-400 font-bold">
                               {{
-                                licenseData && licenseData.applicationStatus
-                                  ? licenseData.applicationStatus.name
-                                  : ""
+                              renewalData && renewalData.applicationStatus
+                              ? renewalData.applicationStatus.name
+                              : "-"
                               }}
                             </div>
                           </div>
@@ -404,9 +349,9 @@
                             <div>Certified Status</div>
                             <div class="text-main-400 font-bold">
                               {{
-                                licenseData && licenseData.certified
-                                  ? "Certified"
-                                  : "Not Certified"
+                              renewalData && renewalData.certified
+                              ? "Certified"
+                              : "Not Certified"
                               }}
                             </div>
                           </div>
@@ -414,9 +359,9 @@
                             <div>Certified Date</div>
                             <div class="text-main-400 font-bold">
                               {{
-                                licenseData && licenseData.applicationStatus
-                                  ? licenseData.applicationStatus.name
-                                  : ""
+                              renewalData && renewalData.certifiedDate
+                              ? renewalData.certifiedDate.slice(0, 10)
+                              : "-"
                               }}
                             </div>
                           </div>
@@ -424,24 +369,22 @@
                             <div>Expiration Date</div>
                             <div class="text-main-400 font-bold">
                               {{
-                                licenseData && licenseData.applicationStatus
-                                  ? licenseData.applicationStatus.name
-                                  : ""
+                              renewalData && renewalData.licenseExpirationDate
+                              ? renewalData.licenseExpirationDate.slice(0, 10)
+                              : "-"
                               }}
                             </div>
                           </div>
                         </div>
 
-                        <footer
-                          class="
+                        <footer class="
                             flex
                             items-center
                             justify-between
                             leading-none
                             p-2
                             md:p-4
-                          "
-                        ></footer>
+                          "></footer>
                       </article>
                       <!-- END Article -->
                     </div>
@@ -452,20 +395,16 @@
             </div>
           </div>
         </div>
-        <div
-          class="
+        <div class="
             modal-footer
             flex flex-shrink-0 flex-wrap
             items-center
             justify-end
             border-t border-grey-100
             rounded-b-md
-          "
-        >
-      
-          <button
-            type="button"
-            class="
+          ">
+
+          <button type="button" class="
              inline-block
               px-6
               text-white
@@ -480,9 +419,7 @@
               transition
               duration-150
               ease-in-out
-            "
-            data-bs-dismiss="modal"
-          >
+            " data-bs-dismiss="modal">
             Close
           </button>
         </div>
@@ -491,27 +428,27 @@
   </div>
 </template>
   
-  <script>
-import { ref, onMounted,watch } from "vue";
+<script>
+import { ref, onMounted, watch } from "vue";
 import { useStore } from "vuex";
-import { googleApi } from "@/composables/baseURL"; 
+import { googleApi } from "@/composables/baseURL";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 export default {
-  props:['modalDataId'],
-  components: {Loading},
-  setup(props) { 
+  props: ['modalDataId'],
+  components: { Loading },
+  setup(props) {
     let store = useStore();
-    let licenseData = ref({});
+    let renewalData = ref({});
     let userInfo = ref({});
-    let isLoading=ref(false);
-    watch(props.modalDataId,()=>{
-    isLoading.value=true
+    let isLoading = ref(false);
+    watch(props.modalDataId, () => {
+      isLoading.value = true
       store
         .dispatch("renewal/getRenewalApplication", props.modalDataId.id)
         .then((res) => {
-          licenseData.value = res.data.data;
-          isLoading.value=false
+          renewalData.value = res.data.data;
+          isLoading.value = false
         });
     });
     onMounted(() => {
@@ -519,7 +456,7 @@ export default {
     });
 
     return {
-      licenseData,
+      renewalData,
       isLoading,
       googleApi,
       userInfo,
