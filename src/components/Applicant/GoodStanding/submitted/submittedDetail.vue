@@ -9,9 +9,9 @@
         </li>
         <li><span class="text-gray-500 mx-2">/</span></li>
         <li>
-          <router-link to="/Applicant/GoodStanding">
+          <router-link to="/Applicant/NewLicense">
             <a href="#" class="text-main-400 hover:text-blue-700"
-              >Goodstanding</a
+              >New License</a
             >
           </router-link>
         </li>
@@ -45,8 +45,8 @@
           <!-- applican type -->
           <div
             class="
-              grid grid-cols-3
-              sm:grid-cols-1
+              grid grid-rows-3
+              sm:grid-rows-1
               lg:grid-cols-3
               mdlg:grid-cols-3
               md:grid-cols-3
@@ -55,6 +55,7 @@
           >
             <div class="mr-4">
               <label class="text-main-400">Applicant Type</label>
+
               <select
                 class="
                   form-select
@@ -62,7 +63,8 @@
                   block
                   xl:w-64
                   md:w-64
-                  sm:w-64
+                  sm:w-full
+                  w-full
                   px-3
                   py-1.5
                   text-base
@@ -82,6 +84,11 @@
                 aria-label="Default select example"
                 @change="applicantTypeChangeHandler()"
                 v-model="generalInfo.applicantType"
+                :disabled="
+                  generalInfo.multipleDepartment
+                    ? generalInfo.multipleDepartment.length > 0
+                    : 0
+                "
                 required
               >
                 <option
@@ -102,7 +109,8 @@
                   block
                   xl:w-64
                   md:w-64
-                  sm:w-64
+                  sm:w-full
+                  w-full
                   px-3
                   py-1.5
                   text-base
@@ -139,7 +147,8 @@
                   block
                   xl:w-64
                   md:w-64
-                  sm:w-64
+                  sm:w-full
+                  w-full
                   px-3
                   py-1.5
                   text-base
@@ -186,8 +195,8 @@
           <div class="flex">
             <div
               class="
-                grid grid-cols-3
-                sm:grid-cols-1
+                grid grid-rows-3
+                sm:grid-rows-1
                 lg:grid-cols-3
                 mdlg:grid-cols-3
                 md:grid-cols-3
@@ -203,7 +212,8 @@
                     block
                     xl:w-64
                     md:w-64
-                    sm:w-64
+                    sm:w-full
+                    w-full
                     px-3
                     py-1.5
                     text-base
@@ -220,6 +230,7 @@
                     focus:border-main-400
                     focus:outline-none
                   "
+                  disabled
                   v-model="generalInfo.regionSelected"
                   @change="regionChangeHandler()"
                   required
@@ -240,15 +251,13 @@
                     form-select
                     appearance-none
                     block
-                    xl:w-64
-                    md:w-64
-                    sm:w-64
+                    w-full
                     px-3
                     py-1.5
                     text-base
                     font-normal
                     text-gray-700
-                    hover:text-main-500 hover:border-main-500
+                    bg-white bg-clip-padding bg-no-repeat
                     border border-solid border-gray-300
                     rounded
                     transition
@@ -256,18 +265,16 @@
                     m-0
                     focus:text-gray-700
                     focus:bg-white
-                    focus:border-main-400
+                    focus:border-blue-600
                     focus:outline-none
                   "
+                  aria-label="Default select example
+                  "
+                  disabled
                   @change="zoneChangeHandler()"
-                  v-model="generalInfo.zoneSelected"
                 >
-                  <option
-                    v-for="zone in zones"
-                    v-bind:key="zone.name"
-                    v-bind:value="zone"
-                  >
-                    {{ zone.name }}
+                  <option selected>
+                    {{ generalInfo ? generalInfo.zoneSelected.name : "" }}
                   </option>
                 </select>
               </div>
@@ -279,15 +286,13 @@
                     form-select
                     appearance-none
                     block
-                    xl:w-64
-                    md:w-64
-                    sm:w-64
+                    w-full
                     px-3
                     py-1.5
                     text-base
                     font-normal
                     text-gray-700
-                    hover:text-main-500 hover:border-main-500
+                    bg-white bg-clip-padding bg-no-repeat
                     border border-solid border-gray-300
                     rounded
                     transition
@@ -295,28 +300,20 @@
                     m-0
                     focus:text-gray-700
                     focus:bg-white
-                    focus:border-main-400
+                    focus:border-blue-600
                     focus:outline-none
                   "
-                  v-model="generalInfo.woredaSelected"
+                  disabled
                   required
                 >
-                  <option
-                    v-for="woreda in woredas"
-                    v-bind:key="woreda.name"
-                    v-bind:value="woreda"
-                  >
-                    {{ woreda.name }}
+                  <option selected>
+                    {{ generalInfo ? generalInfo.woredaSelected.name : "" }}
                   </option>
                 </select>
               </div>
             </div>
           </div>
         </div>
-
-        <!-- end -->
-
-        <!-- language -->
 
         <!-- end -->
 
@@ -345,7 +342,10 @@
                       form-select
                       appearance-none
                       block
-                      max-w-3xl
+                      xl:w-64
+                      md:w-64
+                      sm:w-full
+                      w-full
                       px-3
                       py-1.5
                       text-base
@@ -359,7 +359,7 @@
                       m-0
                       focus:text-gray-700
                       focus:bg-white
-                      focus:border-blue-600
+                      focus:border-main-400
                       focus:outline-none
                     "
                     v-model="generalInfo.departmentSelected"
@@ -386,7 +386,10 @@
                       form-select
                       appearance-none
                       block
-                      max-w-3xl
+                      xl:w-64
+                      md:w-64
+                      sm:w-full
+                      w-full
                       px-3
                       py-1.5
                       text-base
@@ -400,10 +403,12 @@
                       m-0
                       focus:text-gray-700
                       focus:bg-white
-                      focus:border-blue-600
+                      focus:border-main-400
                       focus:outline-none
                     "
+                    :disabled="!isDepartmentSelected"
                     v-model="generalInfo.educationalLevelSelected"
+                    @change="educationalLevelChange()"
                   >
                     <option
                       v-for="educationalLevel in educationalLevels"
@@ -430,10 +435,11 @@
                       form-select
                       appearance-none
                       block
-                      px-3
                       xl:w-64
                       md:w-64
-                      sm:w-64
+                      sm:w-full
+                      w-full
+                      px-3
                       py-1.5
                       text-base
                       font-normal
@@ -446,9 +452,10 @@
                       m-0
                       focus:text-gray-700
                       focus:bg-white
-                      focus:border-blue-600
+                      focus:border-main-400
                       focus:outline-none
                     "
+                    :disabled="!isEdLevelSelected"
                     v-model="generalInfo.professionalTypeSelected"
                     @change="ProfessionTypeChange(institution)"
                   >
@@ -485,12 +492,13 @@
 
                   <select
                     class="
-                      xl:w-64
-                      md:w-64
-                      sm:w-64
                       form-select
                       appearance-none
                       block
+                      xl:w-64
+                      md:w-64
+                      sm:w-full
+                      w-full
                       px-3
                       py-1.5
                       text-base
@@ -504,7 +512,7 @@
                       m-0
                       focus:text-gray-700
                       focus:bg-white
-                      focus:border-blue-600
+                      focus:border-main-400
                       focus:outline-none
                     "
                     v-model="generalInfo.institutionSelected"
@@ -597,7 +605,7 @@
                 <div class="overflow-hidden">
                   <div
                     class="flex justify-center"
-                    v-if="generalInfo.educations.length < 1"
+                    v-if="generalInfo.multipleDepartment.length < 1"
                   >
                     No Data
                   </div>
@@ -689,7 +697,7 @@
                               text-gray-900
                             "
                           >
-                            {{ item.department.name }}
+                            {{ item.department ? item.department.name : "" }}
                           </td>
                           <td
                             class="
@@ -699,7 +707,11 @@
                               whitespace-nowrap
                             "
                           >
-                            {{ item.educationLevel.name }}
+                            {{
+                              item.educationLevel
+                                ? item.educationLevel.name
+                                : ""
+                            }}
                           </td>
                           <td
                             class="
@@ -709,7 +721,7 @@
                               whitespace-nowrap
                             "
                           >
-                            {{ item.institution.name }}
+                            {{ item.institution ? item.institution.name : "" }}
                           </td>
                           <td
                             class="
@@ -719,7 +731,11 @@
                               whitespace-nowrap
                             "
                           >
-                            {{ item.professionType.name }}
+                            {{
+                              item.professionType
+                                ? item.professionType.name
+                                : ""
+                            }}
                           </td>
                           <td
                             class="
@@ -730,11 +746,10 @@
                             "
                           >
                             <span
-                              @click="removeDepartment(index)"
-                              style="color: red"
-                              title="Delete"
+                              @click="removeDepartment(index)" 
+                              title="Remove"
                               ><i
-                                class="fa fa-trash bg-red-200 cursor-pointer"
+                                class="fa fa-trash text-red-300 cursor-pointer"
                               ></i
                             ></span>
                           </td>
@@ -818,7 +833,7 @@
     </transition>
   </main-content>
 </template>
-  <script>
+<script>
 import { useStore } from "vuex";
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
@@ -850,6 +865,9 @@ export default {
     let showLocation = ref(false);
     let showOccupation = ref(false);
     let showLanguage = ref(false);
+    let isDepartmentSelected = ref(false);
+    let isEdLevelSelected = ref(false);
+    let isAppTypeSelected = ref(false);
     let languageSelected = ref({});
     let occupations = ref([]);
     let languages = ref([]);
@@ -882,7 +900,7 @@ export default {
     let isLoading = ref(false);
 
     const fetchApplicantType = () => {
-      store.dispatch("goodstanding/getApplicantType").then((res) => {
+      store.dispatch("newlicense/getApplicantType").then((res) => {
         const results = res.data.data;
         applicantTypes.value = results;
       });
@@ -893,19 +911,19 @@ export default {
       });
     };
     const fetchInstitutions = (value) => {
-      store.dispatch("goodstanding/getInstitution", value).then((res) => {
+      store.dispatch("newlicense/getInstitution", value).then((res) => {
         const institution = res.data.data;
         institutions.value = institution;
       });
     };
     const fetchDepartments = () => {
-      store.dispatch("goodstanding/getDepartmentType").then((res) => {
+      store.dispatch("newlicense/getDepartmentType").then((res) => {
         const department = res.data.data;
         departments.value = department;
       });
     };
     const fetchRegions = () => {
-      store.dispatch("goodstanding/getRegions").then((res) => {
+      store.dispatch("newlicense/getRegions").then((res) => {
         const regionsResult = res.data.data;
         regions.value = regionsResult;
       });
@@ -914,7 +932,7 @@ export default {
     const fetchZones = () => {
       store
 
-        .dispatch("goodstanding/getZones", generalInfo.value.regionSelected.id)
+        .dispatch("newlicense/getZones", generalInfo.value.regionSelected.id)
         .then((res) => {
           const zonesResult = res.data.data;
           zones.value = zonesResult;
@@ -928,7 +946,7 @@ export default {
         action: "WithdrawEvent",
       };
       store
-        .dispatch("reviewer/editGoodStanding", req)
+        .dispatch("reviewer/editNewLicense", req)
         .then((res) => {
           isLoading.value = false;
           if (res.statusText == "Created") {
@@ -958,16 +976,22 @@ export default {
 
     const fetchWoredas = () => {
       store
-        .dispatch("goodstanding/getWoredas", generalInfo.value.zoneSelected.id)
+        .dispatch("newlicense/getWoredas", generalInfo.value.zoneSelected.id)
         .then((res) => {
           const woredasResult = res.data.data;
           woredas.value = woredasResult;
         });
     };
-    const fetchProfessionalType = (id) => {
-      store.dispatch("goodstanding/getProfessionalTypes", id).then((res) => {
-        professionalTypes.value = res.data.data;
-      });
+    const fetchProfessionalType = (departmentId, educationalLevelId) => {
+      let profession = {
+        departmentId: departmentId,
+        educationalLevelId: educationalLevelId,
+      };
+      store
+        .dispatch("newlicense/getProfessionalTypes", profession)
+        .then((res) => {
+          professionalTypes.value = res.data.data;
+        });
     };
     const applicantTypeChangeHandler = async () => {
       if (generalInfo.value.applicantType.code == "ETH") {
@@ -1000,7 +1024,8 @@ export default {
       });
     };
     const departmentChange = () => {
-      fetchProfessionalType(generalInfo.value.departmentSelected.id);
+      isDepartmentSelected.value = true;
+      generalInfo.value.educationalLevelSelected = "";
     };
     const institutionChange = () => {
       if (generalInfo.value.institutionSelected.code == "OTH") {
@@ -1031,8 +1056,10 @@ export default {
     };
     const removeDepartment = (index) => {
       generalInfo.value.multipleDepartment.splice(index, 1);
+      generalInfo.value.educations.splice(index, 1);
     };
     const addMultiple = () => {
+      console.log(generalInfo.value);
       if (
         generalInfo.value.departmentSelected &&
         generalInfo.value.educationalLevelSelected &&
@@ -1057,19 +1084,18 @@ export default {
               ) == false
             ) {
               checkForAddedError.value = false;
-
               generalInfo.value.multipleDepartment.push({
                 department: generalInfo.value.departmentSelected,
                 educationLevel: generalInfo.value.educationalLevelSelected,
                 institution: generalInfo.value.institutionSelected,
                 professionType: generalInfo.value.professionalTypeSelected,
+
                 otherEducationalInstitution:
                   generalInfo.value.otherEducationalInstitution,
-                otherProfessionalTypeAmharic:
+                otherProfessionTypeAmharic:
                   generalInfo.value.otherProfessionalTypeAmharic,
-                otherProfessionalType: generalInfo.value.otherProfessionalType,
+                otherProfessionType: generalInfo.value.otherProfessionalType,
               });
-
               generalInfo.value.educations.push({
                 departmentId: generalInfo.value.departmentSelected.id,
                 educationalLevelId:
@@ -1082,11 +1108,38 @@ export default {
                 otherProfessionType: generalInfo.value.otherProfessionalType,
               });
             }
+          } else {
+            checkForAddedError.value = false;
+            generalInfo.value.multipleDepartment.push({
+              department: generalInfo.value.departmentSelected,
+              educationLevel: generalInfo.value.educationalLevelSelected,
+              institution: generalInfo.value.institutionSelected,
+              professionType: generalInfo.value.professionalTypeSelected,
+
+              otherEducationalInstitution:
+                generalInfo.value.otherEducationalInstitution,
+              otherProfessionalTypeAmharic:
+                generalInfo.value.otherProfessionalTypeAmharic,
+              otherProfessionalType: generalInfo.value.otherProfessionalType,
+            });
+            generalInfo.value.educations.push({
+              departmentId: generalInfo.value.departmentSelected.id,
+              educationalLevelId: generalInfo.value.educationalLevelSelected.id,
+              institutionId: generalInfo.value.institutionSelected.id,
+              professionTypeId: generalInfo.value.professionalTypeSelected.id,
+              otherInstitution: generalInfo.value.otherEducationalInstitution,
+              otherProfessionTypeAmharic:
+                generalInfo.value.otherProfessionalTypeAmharic,
+              otherProfessionType: generalInfo.value.otherProfessionalType,
+            });
           }
           generalInfo.value.departmentSelected = "";
           generalInfo.value.educationalLevelSelected = "";
           generalInfo.value.institutionSelected = "";
           generalInfo.value.professionalTypeSelected = "";
+          generalInfo.value.otherProfessionalType = "";
+          generalInfo.value.otherProfessionalTypeAmharic = "";
+          generalInfo.value.otherEducationalInstitution = "";
         }
       } else {
         multipleDepartmentError.value = true;
@@ -1106,23 +1159,29 @@ export default {
         JSON.stringify(tempApplicationData)
       );
       store
-        .dispatch("goodstanding/setGeneralInfo", generalInfo.value)
+        .dispatch("newlicense/setGeneralInfo", generalInfo.value)
         .then(() => {
           emit("changeActiveState");
           activeState.value += 1;
-          console.log(activeState.value);
         });
     };
     const fetchApplicationStatuses = () => {
-      store.dispatch("goodstanding/getApplicationStatuses").then((res) => {
+      store.dispatch("newlicense/getApplicationStatuses").then((res) => {
         const results = res.data.data;
         applicationStatuses.value = results;
 
         let status = applicationStatuses.value.filter(function (e) {
-          return e.code == "SUB";
+          return e.code == "DRA";
         });
-        store.dispatch("goodstanding/setButtons", status[0].buttons);
+        store.dispatch("newlicense/setButtons", status[0].buttons);
       });
+    };
+    const educationalLevelChange = () => {
+      isEdLevelSelected.value = true;
+      fetchProfessionalType(
+        generalInfo.value.departmentSelected.id,
+        generalInfo.value.educationalLevelSelected.id
+      );
     };
     onMounted(async () => {
       fetchApplicantType();
@@ -1134,7 +1193,7 @@ export default {
       fetchApplicationStatuses();
 
       store
-        .dispatch("goodstanding/getGoodStandingLicense", route.params.id)
+        .dispatch("newlicense/getNewLicenseApplication", route.params.id)
         .then((res) => {
           withdrawData.value = res.data.data;
           generalInfo.value = res.data.data;
@@ -1174,7 +1233,6 @@ export default {
             JSON.stringify(res.data.data.educations)
           );
           generalInfo.value.applicantTypeSelected = res.data.data.applicantType;
-          console.log(generalInfo.value);
         });
     });
     return {
@@ -1188,6 +1246,7 @@ export default {
       removeDepartment,
       apply,
       fetchOccupation,
+      educationalLevelChange,
       showLocation,
       departments,
       withdraw,
@@ -1196,6 +1255,9 @@ export default {
       applicantTypes,
       regions,
       woredas,
+      isDepartmentSelected,
+      isAppTypeSelected,
+      isEdLevelSelected,
       checkForAddedError,
       zones,
       professionalTypes,
@@ -1222,7 +1284,7 @@ export default {
   },
 };
 </script>
-  <style>
+<style>
 #main {
   border: 1px solid #cccccc;
   border-radius: 5px;
@@ -1232,4 +1294,3 @@ export default {
   border-radius: 5px;
 }
 </style>
-  

@@ -259,28 +259,14 @@ const routes = [
     component: () =>
       import("../components/Applicant/GoodStanding/assigned/assigned.vue")
   },
-  {
-    path: "/Applicant/GoodStanding/undersupervision",
-    name: "ApplicantGoodStandingUnderSupervision",
-    component: () =>
-      import(
-        "../components/Applicant/GoodStanding/underSupervision/underSupervision.vue"
-      )
-  },
+ 
   {
     path: "/Applicant/GoodStanding/withdraw",
     name: "ApplicantGoodStandingWithdraw",
     component: () =>
       import("../components/Applicant/GoodStanding/withdraw/withdraw.vue")
   },
-  {
-    path: "/Applicant/GoodStanding/pendingPayment",
-    name: "ApplicantGoodStandingPendingPayment",
-    component: () =>
-      import(
-        "../components/Applicant/GoodStanding/pendingPayment/pendingPayment.vue"
-      )
-  },
+ 
   {
     path: "/Applicant/GoodStanding/declined",
     name: "ApplicantDeclined",

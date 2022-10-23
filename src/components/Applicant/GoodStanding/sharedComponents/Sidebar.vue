@@ -17,7 +17,7 @@
       </div>
     </router-link>
 
-    <ul class="mt-12">
+    <ul class="mt-2">
       <li class="list">
         <b></b>
         <b></b>

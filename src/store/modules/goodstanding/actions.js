@@ -189,6 +189,14 @@ export default {
       return error;
     }
   },
+  async getGoodStandingLicenseById({ commit }, id) {
+    try {
+      const resp = await ApiService.get(baseUrl + "/goodStandings/" + id);
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
   async getDraft({ commit }, id) {
     try {
       const resp = await ApiService.get(baseUrl + "/goodStandings/" + id);
@@ -247,7 +255,7 @@ export default {
   async getProfessionalTypes(context, deptId, eduId) {
     try {
       const resp = await ApiService.get(
-        baseUrl + "/lookups/professionalTypes/" + deptId + "/" +eduId
+        baseUrl + "/lookups/professionalTypes/" + deptId + "/" + eduId
       );
       return resp;
     } catch (error) {
@@ -265,11 +273,10 @@ export default {
       return resp;
     }
   },
-  async getCommonGSdocuments({commit},docsParam) {
+  async getCommonGSdocuments({ commit }, docsParam) {
     try {
       const resp = await ApiService.get(
-        baseUrl +
-          `/documentSpecs/common/${docsParam[0]}/${docsParam[1]}/true`
+        baseUrl + `/documentSpecs/common/${docsParam[0]}/${docsParam[1]}/true`
       );
       return resp;
     } catch (error) {
@@ -277,7 +284,7 @@ export default {
       return resp;
     }
   },
-  async getGSdocuments({commit},appCategory) {
+  async getGSdocuments({ commit }, appCategory) {
     try {
       const resp = await ApiService.get(
         baseUrl + `/documentSpecs/${appCategory}/`
@@ -288,5 +295,4 @@ export default {
       return resp;
     }
   },
- 
 };

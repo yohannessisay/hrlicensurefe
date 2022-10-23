@@ -5,7 +5,7 @@
         <li><a href="#" class="text-main-400 hover:text-blue-700">Home</a></li>
         <li><span class="text-gray-500 mx-2">/</span></li>
         <li>
-          <a href="#" class="text-main-400 hover:text-blue-700">Goodstanding</a>
+          <a href="#" class="text-main-400 hover:text-blue-700">New License</a>
         </li>
         <li><span class="text-gray-500 mx-2">/</span></li>
         <li class="text-gray-500">Withdraw</li>
@@ -17,7 +17,7 @@
         <!-- Column -->
 
         <div
-          v-for="license in newLicense"
+          v-for="license in withdrawnLicenses"
           :key="license.id"
           class="
             bg-white
@@ -48,22 +48,24 @@
             <div class="border-b-2 text-main-400">
               <div class="grid grid-rows-2 p-2 mb-2 border-b-2">
                 <h1 class="text-lg">
-                  <a
-                    class=" hover:underline underline text-main-400"
-                    href="#"
-                  >
+                  <a class=" hover:underline underline text-main-400" href="#">
                     Department
                   </a>
                 </h1>
 
-                <ul
-                  v-for="eds in license.educations"
-                  :key="eds.id"
-                  class="text-black text-sm"
-                >
-                  <span class="text-black text-sm">
-                    {{ "*" + eds.department.name }}</span
+                <ul class="text-black text-sm">
+                  <li
+                    v-for="(education, index) in license.educations"
+                    :key="education.id"
+                    style="display: inline"
                   >
+                    <span class="text-black text-sm">
+                      {{ education.department ? "*" + education.department.name : "-" }}</span
+                    >
+                    <span v-if="index != license.educations.length - 1">
+                      ,
+                    </span>
+                  </li>
                 </ul>
               </div>
 
@@ -169,7 +171,7 @@
                 "
                 @click="changeLicenseId(license.id)"
                 data-bs-toggle="modal"
-                data-bs-target="#approvedDetail"
+                data-bs-target="#withdrawnDetail"
               >
                 View Detail
               </button>
@@ -208,50 +210,58 @@
         There are no withdrawn applications currently.
       </h2>
     </div>
-    <approved-detail :modalDataId="modalDataId"></approved-detail>
+    <withdraw-detail :modalDataId="modalDataId"></withdraw-detail>
   </main-content>
 </template>
-  
-  <script>
+
+<script>
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
 import MainContent from "../sharedComponents/Menu.vue";
 import { googleApi } from "@/composables/baseURL";
-import approvedDetail from "./withdrawDetail.vue";
+import withdrawDetail from "./withdrawDetail.vue";
+
 export default {
-  components: { MainContent, approvedDetail },
+  components: { MainContent, withdrawDetail },
   setup() {
     let store = useStore();
-    let newLicense = ref({});
+    let withdrawnLicenses = ref([]);
     let userInfo = ref({});
     let isLoading = ref(false);
     let noData = ref(false);
     let modalDataId = ref({ change: 0, id: "" });
+
     const changeLicenseId = (id) => {
       modalDataId.value.id = id;
       modalDataId.value.change++;
     };
+
     onMounted(() => {
       isLoading.value = true;
-      userInfo.value = JSON.parse(window.localStorage.getItem("personalInfo"));
+      userInfo.value = JSON.parse(window.localStorage.getItem("personalInfo")); 
+
       store.dispatch("goodstanding/getGoodStandingLicense").then((res) => {
-        newLicense.value = res.data.data; 
-        if (newLicense.value) {
-          newLicense.value = newLicense.value.filter(function (e) {
-            return (
-              e.applicationStatus.code.includes("WD")  
-            );
+        const results = res.data.data;
+
+        if (results.length > 0) {
+          withdrawnLicenses.value = results.filter((withdrawnLicense) => {
+            return withdrawnLicense.applicationStatus.code === "WD";
           });
-          isLoading.value = false;
-          if (newLicense.value.length < 1) {
+
+          if (withdrawnLicenses.value.length === 0) {
             noData.value = true;
           }
+
+          isLoading.value = false;
+        } else {
+          noData.value = true;
+          isLoading.value = false;
         }
       });
     });
 
     return {
-      newLicense,
+      withdrawnLicenses,
       googleApi,
       userInfo,
       noData,
@@ -262,4 +272,3 @@ export default {
   },
 };
 </script>
-  

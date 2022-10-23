@@ -5,7 +5,7 @@
         <li><a href="#" class="text-main-400 hover:text-blue-700">Home</a></li>
         <li><span class="text-gray-500 mx-2">/</span></li>
         <li>
-          <a href="#" class="text-main-400 hover:text-blue-700">Goodstanding</a>
+          <a href="#" class="text-main-400 hover:text-blue-700">New License</a>
         </li>
         <li><span class="text-gray-500 mx-2">/</span></li>
         <li class="text-gray-500">Declined</li>
@@ -17,7 +17,7 @@
         <!-- Column -->
 
         <div
-          v-for="license in newLicense"
+          v-for="license in declinedLicenses"
           :key="license.id"
           class="
             bg-white
@@ -46,24 +46,39 @@
             </h2>
 
             <div class="border-b-2 text-main-400">
-              <div class="grid grid-rows-2 p-2 mb-2 border-b-2">
+              <div
+                class="
+                  flex
+                  items-center
+                  justify-between
+                  leading-tight
+                  p-2
+                  md:p-2
+                "
+              >
                 <h1 class="text-lg">
-                  <a
-                    class=" hover:underline underline text-main-400"
-                    href="#"
-                  >
+                  <a class=" text-main-400 pointer-events-none" href="#">
                     Department
                   </a>
                 </h1>
 
-                <ul
-                  v-for="eds in license.educations"
-                  :key="eds.id"
-                  class="text-black text-sm"
-                >
-                  <span class="text-black text-sm">
-                    {{ "*" + eds.department.name }}</span
+                <ul class="text-black text-sm">
+                  <li
+                    v-for="(education, index) in license.educations"
+                    :key="education.id"
+                    style="display: inline"
                   >
+                    <span class="text-black text-sm">
+                      {{
+                        education.department
+                          ? "*" + education.department.name
+                          : "-"
+                      }}
+                      <span v-if="index != license.educations.length - 1">
+                        ,
+                      </span></span
+                    >
+                  </li>
                 </ul>
               </div>
 
@@ -76,23 +91,7 @@
                   p-2
                   md:p-2
                 "
-              >
-                <h1 class="text-lg">
-                  <a
-                    class="no-underline hover:underline text-main-400"
-                    href="#"
-                  >
-                    Certified Date
-                  </a>
-                </h1>
-                <p class="text-black text-sm">
-                  {{
-                    license.certifiedDate
-                      ? license.certifiedDate.slice(0, 10)
-                      : "Waiting for review"
-                  }}
-                </p>
-              </div>
+              ></div>
               <div
                 class="
                   flex
@@ -104,20 +103,29 @@
                 "
               >
                 <h1 class="text-lg">
-                  <a
-                    class="no-underline hover:underline text-main-400"
-                    href="#"
-                  >
-                    Expiry Date
+                  <a class=" text-main-400 pointer-events-none" href="#">
+                    Profession
                   </a>
                 </h1>
-                <p class="text-black text-sm">
-                  {{
-                    license.certifiedDate
-                      ? license.certifiedDate.slice(0, 10)
-                      : "Waiting for review"
-                  }}
-                </p>
+
+                <ul class="text-black text-sm">
+                  <li
+                    v-for="(education, index) in license.educations"
+                    :key="education.id"
+                    style="display: inline"
+                  >
+                    <span class="text-black text-sm">
+                      {{
+                        "*" + education.professionType
+                          ? education.professionType.name
+                          : "-"
+                      }}
+                      <span v-if="index != license.educations.length - 1">
+                        ,
+                      </span></span
+                    >
+                  </li>
+                </ul>
               </div>
             </div>
             <footer
@@ -169,7 +177,7 @@
                 "
                 @click="changeLicenseId(license.id)"
                 data-bs-toggle="modal"
-                data-bs-target="#approvedDetail"
+                data-bs-target="#declinedDetail"
               >
                 View Detail
               </button>
@@ -208,51 +216,56 @@
         There are no declined applications currently.
       </h2>
     </div>
-    <approved-detail :modalDataId="modalDataId"></approved-detail>
+    <declined-detail :modalDataId="modalDataId"></declined-detail>
   </main-content>
 </template>
-  
-  <script>
+
+<script>
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
 import MainContent from "../sharedComponents/Menu.vue";
 import { googleApi } from "@/composables/baseURL";
-import approvedDetail from "./declinedDetail.vue";
+import declinedDetail from "./declinedDetail.vue";
 export default {
-  components: { MainContent, approvedDetail },
+  components: { MainContent, declinedDetail },
   setup() {
     let store = useStore();
-    let newLicense = ref({});
+    let declinedLicenses = ref([]);
     let userInfo = ref({});
     let isLoading = ref(false);
     let noData = ref(false);
     let modalDataId = ref({ change: 0, id: "" });
+
     const changeLicenseId = (id) => {
       modalDataId.value.id = id;
       modalDataId.value.change++;
     };
+
     onMounted(() => {
       isLoading.value = true;
-      userInfo.value = JSON.parse(window.localStorage.getItem("personalInfo"));
-      store.dispatch("goodstanding/getGoodStandingLicense").then((res) => {
-        newLicense.value = res.data.data;
-      
-        if (newLicense.value) {
-          newLicense.value = newLicense.value.filter(function (e) {
-            return (
-              e.applicationStatus.code.includes("DEC")  
-            );
+      userInfo.value = JSON.parse(window.localStorage.getItem("personalInfo")); 
+
+      store .dispatch("goodstanding/getGoodStandingLicense").then((res) => {
+        const results = res.data.data;
+
+        if (results.length > 0) {
+          declinedLicenses.value = results.filter((declinedLicense) => {
+            return declinedLicense.applicationStatus.code === "DEC";
           });
-          isLoading.value = false;
-          if (newLicense.value.length < 1) {
+
+          if (declinedLicenses.value.length === 0) {
             noData.value = true;
           }
+          isLoading.value = false;
+        } else {
+          noData.value = true;
+          isLoading.value = false;
         }
       });
     });
 
     return {
-      newLicense,
+      declinedLicenses,
       googleApi,
       userInfo,
       noData,
@@ -263,4 +276,3 @@ export default {
   },
 };
 </script>
-  
