@@ -3,7 +3,7 @@
     <!-- Heading start -->
     <header class="text-center mx-auto mb-12 lg:px-20">
       <h2 class="text-3xl leading-normal mb-2 font-bold text-main-400">
-        Summary For New License Application
+        Summary For Renewal Application
       </h2>
 
       <p class="text-black leading-relaxed font-light text-xl mx-auto pb-2">
@@ -138,7 +138,7 @@
           </div>
           <div>
             <span class="text-black sm:text-sm">
-              {{ dep.professionType.name }}</span
+              {{ dep.professionalType.name }}</span
             >
           </div>
         </div>
@@ -205,7 +205,9 @@
                 ease-in-out
                 hover:-translate-y-2
               "
-              v-for="localFileData in localFileData"
+              v-for="localFileData in localFileData[0]
+                ? localFileData[0].data
+                : {}"
               :key="localFileData.documenttype"
             >
               <div class="flex justify-center">
@@ -317,33 +319,33 @@
                 :color="'#2F639D'"
                 :opacity="1"
               ></loading>
-            <div class="mb-3 w-full flex justify-center">
-              <input
-                v-model="generalInfo.feedback"
-                @keyup="checkAgreement()"
-                class="
-                  form-control
-                  block
-                  w-full
-                  text-main-400
-                  px-3
-                  py-1.5
-                  text-base
-                  font-normal
-                  text-gray-700
-                  border border-solid border-gray-300
-                  rounded
-                  transition
-                  ease-in-out
-                  m-0
-                  focus:outline-none
-                "
-                id="feedback"
-                rows="6"
-                placeholder="Your feedback"
-                type="textarea"
-              />
-            </div>
+              <div class="mb-3 w-full flex justify-center">
+                <input
+                  v-model="generalInfo.feedback"
+                  @keyup="checkAgreement()"
+                  class="
+                    form-control
+                    block
+                    w-full
+                    text-main-400
+                    px-3
+                    py-1.5
+                    text-base
+                    font-normal
+                    text-gray-700
+                    border border-solid border-gray-300
+                    rounded
+                    transition
+                    ease-in-out
+                    m-0
+                    focus:outline-none
+                  "
+                  id="feedback"
+                  rows="6"
+                  placeholder="Your feedback"
+                  type="textarea"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -400,49 +402,46 @@ import { useRouter } from "vue-router";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 export default {
-  components:{Loading},
-  setup(props,{emit}) {
+  components: { Loading },
+  setup(props, { emit }) {
     const store = useStore();
     const toast = useToast();
     const router = useRouter();
+    let isLoading = ref(false);
     let localData = ref({});
     let localFileData = ref({});
     let generalInfo = ref({});
     let agreed = ref(false);
-    let isLoading=ref(false);
     let documents = ref([]);
     let buttons = ref([]);
     let tempDocs = ref({});
     let allowSave = ref(false);
     const changeAgrement = () => {
       agreed.value = !agreed.value;
-      if ( 
-        agreed.value != false
-      ) {
+      if (agreed.value != false) {
         allowSave.value = true;
       } else {
         allowSave.value = false;
       }
     };
     const checkAgreement = () => {
-      if ( 
-        agreed.value != false
-      ) {
+      if (agreed.value != false) {
         allowSave.value = true;
       } else {
         allowSave.value = false;
       }
     };
     const checkFinalStatus = (action) => {
+      console.log();
       generalInfo.value.licenseFile = [];
       documents.value = localFileData.value;
-
-      if (agreed.value == true  ) {
+      isLoading.value = true;
+      if (agreed.value == true) {
         let formData = new FormData();
         tempDocs.value.forEach((element, index) => {
           formData.append(index, element);
         });
-        isLoading.value=true;
+
         // let smsData = {
         //   recipients: [
         //     this.profileInfo.user.phoneNumber
@@ -452,19 +451,6 @@ export default {
         //   message:
         //     "Dear applicant you have successfully applied for a new license, after careful examination of your uploaded documents by our reviewers we will get back and notify you on each steps, Thank you for using eHPL.",
         // };
-        if (generalInfo.value.applicantTypeSelected.id == 1) {
-          store.dispatch("renewal/getExpertLevel").then((res) => {
-            generalInfo.value.expertLevels = res.data.data.filter(function (e) {
-              return e.code.includes("REG");
-            });
-          });
-        } else {
-          store.dispatch("renewal/getExpertLevel").then((res) => {
-            generalInfo.value.expertLevels = res.data.data.filter(function (e) {
-              return e.code.includes("FED");
-            });
-          });
-        }
 
         let license = {
           action: action,
@@ -493,14 +479,13 @@ export default {
               : "",
           },
         };
-
         store.dispatch("renewal/addRenewalLicense", license).then((res) => {
           let licenseId = res.data.data.id;
           let payload = { document: formData, id: licenseId };
           store
             .dispatch("renewal/uploadDocuments", payload)
             .then((res) => {
-              isLoading.value=false;
+              isLoading.value = false;
               if (res.data.status == "Success") {
                 toast.success("Applied successfuly", {
                   timeout: 5000,
@@ -509,7 +494,12 @@ export default {
                   pauseOnHover: true,
                   icon: true,
                 });
-                router.push({ path: "/Applicant/renewal/submitted" });
+
+                if (license.action == "DraftEvent") {
+                  router.push({ path: "/Applicant/Renewal/draft" });
+                } else {
+                  router.push({ path: "/Applicant/Renewal/submitted" });
+                }
               } else {
                 toast.error("Error occured, please try again", {
                   timeout: 5000,
@@ -541,11 +531,23 @@ export default {
       localData.value = window.localStorage.getItem("RNApplicationData")
         ? JSON.parse(window.localStorage.getItem("RNApplicationData"))
         : {};
-      localFileData.value = window.localStorage.getItem(
-        "RNApplicationImageData"
-      )
-        ? JSON.parse(window.localStorage.getItem("RNApplicationImageData"))
-        : {};
+
+      let request = indexedDB.open("RNdocumentUploads", 1);
+
+      request.onerror = function () {
+        console.error("Unable to open database.");
+      };
+
+      request.onsuccess = function () {
+        let db = request.result;
+        const tx = db.transaction("RNdocumentUploads", "readonly");
+        const store = tx.objectStore("RNdocumentUploads");
+        let getAllIDB = store.getAll();
+
+        getAllIDB.onsuccess = function (evt) {
+          localFileData.value = evt.target.result ? evt.target.result : {};
+        };
+      };
 
       generalInfo.value = localData.value;
       generalInfo.value.feedback = "";
@@ -572,9 +574,9 @@ export default {
       agreed,
       buttons,
       checkAgreement,
-      allowSave,
       back,
       isLoading,
+      allowSave,
       checkFinalStatus,
       changeAgrement,
     };

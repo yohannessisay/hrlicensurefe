@@ -498,7 +498,7 @@ export default {
                   icon: true,
                 });
 
-                router.push({ path: "/Applicant/Renewal/submitted" });
+                router.push({ path: "/Applicant/Renewal/draft" });
               } else {
                 toast.error("Error occured, please try again", {
                   timeout: 5000,
@@ -534,7 +534,7 @@ export default {
       buttons.value = store.getters["renewal/getButtons"];
 
       buttons.value = buttons.value.filter(
-        (ele) => ele.code != "AT" && ele.code != "DRA"
+        (ele) => ele.code != "AT" 
       );
       tempDocs.value = store.getters["renewal/getTempDocs"];
      

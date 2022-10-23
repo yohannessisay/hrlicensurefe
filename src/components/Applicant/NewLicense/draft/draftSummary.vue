@@ -498,7 +498,7 @@ export default {
                   icon: true,
                 });
 
-                router.push({ path: "/Applicant/NewLicense/submitted" });
+                router.push({ path: "/Applicant/NewLicense/draft" });
               } else {
                 toast.error("Error occured, please try again", {
                   timeout: 5000,
@@ -534,7 +534,7 @@ export default {
       buttons.value = store.getters["newlicense/getButtons"];
 
       buttons.value = buttons.value.filter(
-        (ele) => ele.code != "AT" && ele.code != "DRA"
+        (ele) => ele.code != "AT" 
       );
       tempDocs.value = store.getters["newlicense/getTempDocs"];
      

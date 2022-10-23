@@ -1303,58 +1303,55 @@ export default {
       localData.value = window.localStorage.getItem("RNApplicationData")
         ? JSON.parse(window.localStorage.getItem("RNApplicationData"))
         : {};
-    
-        generalInfo.value = localData.value;
 
-        store.dispatch("renewal/getApplicationCategories").then((res) => {
-          let categoryResults = res.data.data
-            ? res.data.data.filter((ele) => ele.code == "NA")
-            : "";
-          let educationLevels = generalInfo.value.multipleDepartment;
-          //Get department docs
-          educationLevels.forEach((element) => {
-            store
-              .dispatch("renewal/getRNdocuments", [
-                categoryResults[0].id,
-                generalInfo.value.applicantTypeSelected.id,
-                element.educationalLevel.id,
-              ])
-              .then((res) => {
-                console.log(res);
-                let resp = res.data.data;
-                renewalDocuments.value = res.data.data;
+      generalInfo.value = localData.value;
 
-                educationalDocs.value.push({
-                  educationalLevel: element.educationalLevel,
-                  professionType: element.professionalType,
-                  docs: resp.filter(
-                    (element) => element.parentDocument == null
-                  ),
-                  parentDoc: groupByKey(resp, "parentDocument"),
-                });
-              });
-          });
-          //Get Common Docs
-
+      store.dispatch("renewal/getApplicationCategories").then((res) => {
+        let categoryResults = res.data.data
+          ? res.data.data.filter((ele) => ele.code == "NA")
+          : "";
+        let educationLevels = generalInfo.value.multipleDepartment;
+        //Get department docs
+        educationLevels.forEach((element) => {
           store
-            .dispatch("renewal/getCommonRNdocuments", [
+            .dispatch("renewal/getRNdocuments", [
               categoryResults[0].id,
               generalInfo.value.applicantTypeSelected.id,
+              element.educationalLevel.id,
             ])
             .then((res) => {
-              let result = res.data.data;
-              commonDocuments.value = result;
-            });
+              console.log(res);
+              let resp = res.data.data;
+              renewalDocuments.value = res.data.data;
 
-          //Initialize indexdb for file storage
-          if (!("indexedDB" in window)) {
-            console.log("This browser doesn't support IndexedDB");
-            return;
-          } else {
-            initDb();
-          }
+              educationalDocs.value.push({
+                educationalLevel: element.educationalLevel,
+                professionType: element.professionalType,
+                docs: resp.filter((element) => element.parentDocument == null),
+                parentDoc: groupByKey(resp, "parentDocument"),
+              });
+            });
         });
-     
+        //Get Common Docs
+
+        store
+          .dispatch("renewal/getCommonRNdocuments", [
+            categoryResults[0].id,
+            generalInfo.value.applicantTypeSelected.id,
+          ])
+          .then((res) => {
+            let result = res.data.data;
+            commonDocuments.value = result;
+          });
+
+        //Initialize indexdb for file storage
+        if (!("indexedDB" in window)) {
+          console.log("This browser doesn't support IndexedDB");
+          return;
+        } else {
+          initDb();
+        }
+      });
     });
 
     return {

@@ -235,6 +235,12 @@ const routes = [
     component: () => import("../components/Applicant/Renewal/draft/draft.vue")
   },
   {
+    path: "/Applicant/Renewal/draft/detail/:id",
+    name: "ApplicantRenewalDraftDetail",
+    component: () =>
+      import("../components/Applicant/Renewal/draft/draftDetail.vue")
+  },
+  {
     path: "/Applicant/Renewal/inReview",
     name: "ApplicantRenewalInReview",
     component: () => import("../components/Applicant/Renewal/inReview/inReview.vue")

@@ -946,7 +946,7 @@ export default {
         action: "WithdrawEvent",
       };
       store
-        .dispatch("reviewer/editRenewal", req)
+        .dispatch("reviewer/editRenewalLicense", req)
         .then((res) => {
           isLoading.value = false;
           if (res.statusText == "Created") {

@@ -10,9 +10,7 @@
         <li><span class="text-gray-500 mx-2">/</span></li>
         <li>
           <router-link to="/Applicant/Renewal">
-            <a href="#" class="text-main-400 hover:text-blue-700"
-              >Renewal</a
-            >
+            <a href="#" class="text-main-400 hover:text-blue-700">Renewal</a>
           </router-link>
         </li>
         <li><span class="text-gray-500 mx-2">/</span></li>
@@ -746,7 +744,7 @@
                             "
                           >
                             <span
-                              @click="removeDepartment(index)" 
+                              @click="removeDepartment(index)"
                               title="Remove"
                               ><i
                                 class="fa fa-trash text-red-300 cursor-pointer"
@@ -946,7 +944,7 @@ export default {
         action: "WithdrawEvent",
       };
       store
-        .dispatch("reviewer/editRenewal", req)
+        .dispatch("reviewer/editRenewalLicense", req)
         .then((res) => {
           isLoading.value = false;
           if (res.statusText == "Created") {
@@ -987,11 +985,9 @@ export default {
         departmentId: departmentId,
         educationalLevelId: educationalLevelId,
       };
-      store
-        .dispatch("renewal/getProfessionalTypes", profession)
-        .then((res) => {
-          professionalTypes.value = res.data.data;
-        });
+      store.dispatch("renewal/getProfessionalTypes", profession).then((res) => {
+        professionalTypes.value = res.data.data;
+      });
     };
     const applicantTypeChangeHandler = async () => {
       if (generalInfo.value.applicantType.code == "ETH") {
@@ -1155,15 +1151,13 @@ export default {
     const apply = () => {
       let tempApplicationData = generalInfo.value;
       window.localStorage.setItem(
-        "RNApplicationData",
+        "NLApplicationData",
         JSON.stringify(tempApplicationData)
       );
-      store
-        .dispatch("renewal/setGeneralInfo", generalInfo.value)
-        .then(() => {
-          emit("changeActiveState");
-          activeState.value += 1;
-        });
+      store.dispatch("renewal/setGeneralInfo", generalInfo.value).then(() => {
+        emit("changeActiveState");
+        activeState.value += 1;
+      });
     };
     const fetchApplicationStatuses = () => {
       store.dispatch("renewal/getApplicationStatuses").then((res) => {

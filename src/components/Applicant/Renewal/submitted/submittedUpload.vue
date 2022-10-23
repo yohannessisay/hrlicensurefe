@@ -1235,25 +1235,25 @@ export default {
             data: [],
           };
           let db;
-          let request = indexedDB.open("RNdocumentUploads", 1);
+          let request = indexedDB.open("NLdocumentUploads", 1);
           request.onsuccess = function () {
             db = request.result;
             let transaction = db.transaction(
-              ["RNdocumentUploads"],
+              ["NLdocumentUploads"],
               "readwrite"
             );
 
             finalLocalData.data = imageData;
-
+          
             finalLocalData.data = [...new Set(finalLocalData.data)];
 
-            const objectStore = transaction.objectStore("RNdocumentUploads");
+            const objectStore = transaction.objectStore("NLdocumentUploads");
 
             const objectStoreRequest = objectStore.clear();
 
             objectStoreRequest.onsuccess = (event) => {
               let addReq = transaction
-                .objectStore("RNdocumentUploads")
+                .objectStore("NLdocumentUploads")
                 .put(finalLocalData);
 
               addReq.onerror = function () {
@@ -1347,7 +1347,7 @@ export default {
     // };
 
     const initDb = () => {
-      let request = indexedDB.open("RNdocumentUploads", 1);
+      let request = indexedDB.open("NLdocumentUploads", 1);
 
       request.onerror = function () {
         console.error("Unable to open database.");
@@ -1355,7 +1355,7 @@ export default {
 
       request.onupgradeneeded = function () {
         let db = request.result;
-        db.createObjectStore("RNdocumentUploads", {
+        db.createObjectStore("NLdocumentUploads", {
           keyPath: "id",
           autoIncrement: true,
         });
@@ -1428,7 +1428,7 @@ export default {
                 //Get Common Docs
 
                 store
-                  .dispatch("renewal/getCommonRNdocuments", [
+                  .dispatch("renewal/getCommonNLdocuments", [
                     categoryResults[0].id,
                     generalInfo.value.applicantType.id,
                   ])

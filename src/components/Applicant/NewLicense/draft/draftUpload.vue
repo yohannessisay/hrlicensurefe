@@ -1244,7 +1244,7 @@ export default {
             );
 
             finalLocalData.data = imageData;
-
+          
             finalLocalData.data = [...new Set(finalLocalData.data)];
 
             const objectStore = transaction.objectStore("NLdocumentUploads");
