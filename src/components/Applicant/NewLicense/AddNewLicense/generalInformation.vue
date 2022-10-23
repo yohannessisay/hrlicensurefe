@@ -400,45 +400,43 @@
 
       <!-- educational institution and department -->
       <div
-        class="mt-12 rounded-sm bg-primary-100 shadow-lg  "
+        class="mt-12 rounded-sm bg-primary-100 shadow-lg"
         v-if="generalInfo.multipleDepartment.length < 3"
       >
         <!-- Container -->
-        <div class="container mx-auto  px-4 sm:px-0 flex justify-center">
+        <div class="container mx-auto px-4 sm:px-0 flex justify-center">
           <!-- Wrapper -->
           <div class="flex flex-wrap">
             <!-- Column -->
             <div class="w-full sm:w-full md:w-1/2 lg:w-1/2 xl:w-1/2 px-2 mb-4">
               <!-- Column body -->
               <div class="mt-12">
-
-           
                 <label class="text-main-400 ml-12">Department</label>
                 <select
                   class="
-                  form-select
-                      appearance-none
-                      block
-                      xl:w-64
-                      md:w-64
-                      sm:w-64
-                      w-full
-                      mb-2
-                      px-3 
-                      py-1.5
-                      text-base
-                      font-normal
-                      text-gray-700
-                      hover:text-main-500 hover:border-main-500
-                      border border-solid border-gray-300
-                      rounded
-                      transition
-                      ease-in-out
-                      m-0
-                      focus:text-gray-700
-                      focus:bg-white
-                      focus:border-main-400
-                      focus:outline-none
+                    form-select
+                    appearance-none
+                    block
+                    xl:w-64
+                    md:w-64
+                    sm:w-64
+                    w-full
+                    mb-2
+                    px-3
+                    py-1.5
+                    text-base
+                    font-normal
+                    text-gray-700
+                    hover:text-main-500 hover:border-main-500
+                    border border-solid border-gray-300
+                    rounded
+                    transition
+                    ease-in-out
+                    m-0
+                    focus:text-gray-700
+                    focus:bg-white
+                    focus:border-main-400
+                    focus:outline-none
                   "
                   v-model="generalInfo.departmentSelected"
                   @change="departmentChange()"
@@ -459,37 +457,33 @@
             <!-- Column -->
             <div class="w-full sm:w-full md:w-1/2 lg:w-1/2 xl:w-1/2 px-2 mb-4">
               <!-- Column body -->
-              <div
-                class="
-                mt-12
-                "
-              >
+              <div class="mt-12">
                 <label class="text-main-400">Education Level </label>
                 <select
                   class="
-                  form-select
-                      appearance-none
-                      block
-                      xl:w-64
-                      md:w-64
-                      sm:w-64
-                      w-full
-                      mb-2
-                      px-3 
-                      py-1.5
-                      text-base
-                      font-normal
-                      text-gray-700
-                      hover:text-main-500 hover:border-main-500
-                      border border-solid border-gray-300
-                      rounded
-                      transition
-                      ease-in-out
-                      m-0
-                      focus:text-gray-700
-                      focus:bg-white
-                      focus:border-main-400
-                      focus:outline-none
+                    form-select
+                    appearance-none
+                    block
+                    xl:w-64
+                    md:w-64
+                    sm:w-64
+                    w-full
+                    mb-2
+                    px-3
+                    py-1.5
+                    text-base
+                    font-normal
+                    text-gray-700
+                    hover:text-main-500 hover:border-main-500
+                    border border-solid border-gray-300
+                    rounded
+                    transition
+                    ease-in-out
+                    m-0
+                    focus:text-gray-700
+                    focus:bg-white
+                    focus:border-main-400
+                    focus:outline-none
                   "
                   :disabled="!isDepartmentSelected"
                   v-model="generalInfo.educationalLevelSelected"
@@ -511,16 +505,12 @@
             <!-- Column -->
             <div class="w-full sm:w-full md:w-1/2 lg:w-1/2 xl:w-1/2 px-2 mb-4">
               <!-- Column body -->
-              <div
-                class="
-                mt-12
-                "
-              >
+              <div class="mt-12">
                 <div>
                   <label class="text-main-400 ml-12">Professional Types</label>
                   <select
                     class="
-                    form-select
+                      form-select
                       appearance-none
                       block
                       xl:w-64
@@ -528,7 +518,7 @@
                       sm:w-64
                       w-full
                       mb-2
-                      px-3 
+                      px-3
                       py-1.5
                       text-base
                       font-normal
@@ -579,15 +569,11 @@
             <!-- ./Column -->
 
             <!-- Column -->
-            <div class="w-full sm:w-full md:w-1/2 lg:w-1/2 xl:w-1/2 px-2 ">
+            <div class="w-full sm:w-full md:w-1/2 lg:w-1/2 xl:w-1/2 px-2">
               <!-- Column body -->
-              <div
-                class="
-                mt-12
-                "
-              >
+              <div class="mt-12">
                 <div>
-                  <label class="text-main-400 ">Educational Institution</label>
+                  <label class="text-main-400">Educational Institution</label>
 
                   <select
                     class="
@@ -599,7 +585,7 @@
                       sm:w-64
                       w-full
                       mb-2
-                      px-3 
+                      px-3
                       py-1.5
                       text-base
                       font-normal
@@ -643,8 +629,6 @@
           <!-- ./Wrapper -->
         </div>
         <!-- ./Container -->
-
-      
 
         <div class="text-right">
           <button
@@ -851,12 +835,9 @@
                             whitespace-nowrap
                           "
                         >
-                          <span
-                            @click="removeDepartment(index)"
-                            style="color: red"
-                            title="Delete"
+                          <span @click="removeDepartment(index)" title="Remove"
                             ><i
-                              class="fa fa-trash bg-red-200 cursor-pointer"
+                              class="fa fa-trash text-red-300 cursor-pointer"
                             ></i
                           ></span>
                         </td>

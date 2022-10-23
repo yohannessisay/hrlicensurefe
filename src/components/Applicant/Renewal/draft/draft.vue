@@ -5,19 +5,22 @@
         <li><a href="#" class="text-main-400 hover:text-blue-700">Home</a></li>
         <li><span class="text-gray-500 mx-2">/</span></li>
         <li>
-          <a href="#" class="text-main-400 hover:text-blue-700">New License</a>
+          <a href="#" class="text-main-400 hover:text-blue-700">Renewal</a>
         </li>
         <li><span class="text-gray-500 mx-2">/</span></li>
-        <li class="text-gray-500">Draft</li>
+        <li class="text-gray-500">Submitted</li>
       </ol>
     </nav>
     <h2 class="ml-8 mt-8" v-if="isLoading">Loading...</h2>
-    <div class="container my-12 mx-auto px-4 md:px-12" v-if="noData == false">
+    <div
+      class="container my-12 mx-auto px-4 md:px-12"
+      v-if="noData==false"
+    >
       <div class="flex flex-wrap sm:-mx-1 lg:-mx-4">
         <!-- Column -->
 
         <div
-          v-for="license in newLicense"
+          v-for="license in renewal"
           :key="license.id"
           class="
             bg-white
@@ -37,31 +40,48 @@
           "
         >
           <!-- Article -->
-          <div>
+          <router-link
+            :to="'/Applicant/Renewal/draft/detail/' + license.id"
+          >
             <h2 class="text-main-400 border-b-2 text-xl p-2">
               License Number-
               <span class="text-base text-main-400">{{
-                license.newLicenseCode
+                license.renewalCode
               }}</span>
             </h2>
 
+            <header
+              class="
+                flex
+                items-center
+                justify-between
+                leading-tight
+                p-2
+                md:p-2
+                mt-2
+              "
+            ></header>
+
             <div class="border-b-2 text-main-400">
-              <div class="grid grid-rows-2 p-2 mb-2 border-b-2">
+              <div class="grid grid-cols-2 p-2">
                 <h1 class="text-lg">
-                  <a class="hover:underline underline text-main-400" href="#">
-                    Department
+                  <a
+                    class="no-underline hover:underline text-main-400"
+                    href="#"
+                  >
+                    Profession Name
                   </a>
                 </h1>
 
-                <ul
+                <div
                   v-for="eds in license.educations"
                   :key="eds.id"
                   class="text-black text-sm"
                 >
-                  <span class="text-black text-sm">
-                    {{ "*" + eds.department.name }}</span
-                  >
-                </ul>
+                  <div class="grid grid-rows-1 text-black">
+                    {{ "*" + eds.professionType.name }}
+                  </div>
+                </div>
               </div>
 
               <div
@@ -85,7 +105,7 @@
                 <p class="text-black text-sm">
                   {{
                     license.certifiedDate
-                      ? license.certifiedDate.slice(0, 10)
+                      ? license.certifiedDate
                       : "Waiting for review"
                   }}
                 </p>
@@ -111,7 +131,7 @@
                 <p class="text-black text-sm">
                   {{
                     license.certifiedDate
-                      ? license.certifiedDate.slice(0, 10)
+                      ? license.certifiedDate
                       : "Waiting for review"
                   }}
                 </p>
@@ -146,32 +166,7 @@
                 license.createdAt.slice(0, 10)
               }}</span>
             </footer>
-            <div class="flex justify-center">
-              <button
-                class="
-                  inline-block
-                  px-6
-                  text-white
-                  bg-main-400
-                  hover:text-main-400 hover:border
-                  text-sm
-                  font-bold
-                  uppercase
-                  rounded
-                  shadow-lg
-                  mb-4
-                  transition
-                  duration-150
-                  ease-in-out
-                "
-                @click="changeLicenseId(license.id)"
-                data-bs-toggle="modal"
-                data-bs-target="#approvedDetail"
-              >
-                View Detail
-              </button>
-            </div>
-          </div>
+          </router-link>
 
           <!-- END Article -->
         </div>
@@ -202,10 +197,9 @@
       <!-- Article -->
 
       <h2 class="text-main-400 border-b-2 text-xl p-2">
-        There are no applications currently saved as draft.
+        There are no submitted applications currently.
       </h2>
     </div>
-    <approved-detail :modalDataId="modalDataId"></approved-detail>
   </main-content>
 </template>
   
@@ -214,51 +208,40 @@ import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
 import MainContent from "../sharedComponents/Menu.vue";
 import { googleApi } from "@/composables/baseURL";
-import approvedDetail from "./draftDetail.vue";
 export default {
-  components: { MainContent, approvedDetail },
+  components: { MainContent },
   setup() {
     let store = useStore();
-    let newLicense = ref({});
+    let renewal = ref({});
     let userInfo = ref({});
-    let isLoading = ref(false);
-    let noData = ref(false);
-    let modalDataId = ref({ change: 0, id: "" });
-    const changeLicenseId = (id) => {
-      modalDataId.value.id = id;
-      modalDataId.value.change++;
-    };
+    let isLoading = ref(true);
+    let noData=ref(false);
     onMounted(() => {
       isLoading.value = true;
       userInfo.value = JSON.parse(window.localStorage.getItem("personalInfo"));
-      store.dispatch("renewal/getRenewalLicense").then((res) => {
-        if (res.data.status != "Error") {
-          newLicense.value = res.data.data;
-
-          if (newLicense.value) {
-            newLicense.value = newLicense.value.filter(function (e) {
-              return e.applicationStatus.code.includes("DRA");
-            });
-            isLoading.value = false;
-            if (newLicense.value.length < 1) {
-              noData.value = true;
-            }
-          }
-        } else {
+     let userId = JSON.parse(window.localStorage.getItem("userId"));
+      store.dispatch("renewal/getRenewalByUser",userId).then((res) => {
+        renewal.value = res.data.data; 
+        if (renewal.value) {
+          renewal.value = renewal.value.filter(function (e) {
+            return (
+              e.applicationStatus.code.includes("DRA")  
+            );
+          });
           isLoading.value = false;
-          noData.value = true;
+          if(renewal.value.length<1){
+            noData.value=true;
+          }
         }
       });
     });
 
     return {
-      newLicense,
+      renewal,
       googleApi,
       userInfo,
       noData,
-      changeLicenseId,
       isLoading,
-      modalDataId,
     };
   },
 };

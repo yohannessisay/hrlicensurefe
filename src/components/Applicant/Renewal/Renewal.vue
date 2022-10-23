@@ -54,15 +54,14 @@
 </template>
 
 <script>
-import Institution from "./CreateRenewal/institution.vue";
+import Institution from "./CreateRenewal/generalInformation.vue";
 import Upload from "./CreateRenewal/Upload.vue";
 
-import LicenseSummary from "./CreateRenewal/LicenseSummary.vue";
-import MultipleUpload from "./CreateRenewal/MultipleUpload.vue";
+import LicenseSummary from "./CreateRenewal/LicenseSummary.vue"; 
 import MainContent from "./sharedComponents/Menu.vue";
 
 import { useStore } from "vuex";
-import { useRoute, useRouter } from "vue-router";
+import {  useRouter } from "vue-router";
 import { ref, onMounted } from "vue";
 
 export default {

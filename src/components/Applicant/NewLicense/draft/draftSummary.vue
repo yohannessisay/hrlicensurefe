@@ -39,8 +39,7 @@
           bg-white
           hover:-translate-y-2
         "
-        v-for="dep in localData.multipleDepartment
-"
+        v-for="dep in localData.multipleDepartment"
         :key="dep"
       >
         <div class="border-b-2 text-main-400 mb-4">
@@ -205,18 +204,18 @@
                 ease-in-out
                 hover:-translate-y-2
               "
-              v-for="localFileData in localFileData"
-              :key="localFileData.documenttype"
+              v-for="localFileImage in localFileImages"
+              :key="localFileImage.documenttype"
             >
               <div class="flex justify-center">
                 <div class="mt-large bg-white rounded-md">
                   <a
-                    :href="localFileData.image"
-                    :data-title="localFileData.documenttype"
+                    :href="localFileImage.image"
+                    :data-title="localFileImage.documenttype"
                     data-lightbox="example-2"
                   >
                     <img
-                      :src="localFileData.image"
+                      :src="localFileImage.image"
                       class="w-full h-48 object-cover"
                     />
                   </a>
@@ -224,7 +223,7 @@
                   <h4 class="text-main-400 font-bold border-b m-2">
                     Document Type
                   </h4>
-                  <h6 class="m-2">{{ localFileData.documenttype }}</h6>
+                  <h6 class="m-2">{{ localFileImage.documentName }}</h6>
                 </div>
               </div>
             </div>
@@ -310,33 +309,40 @@
                 <span class="text-red-200">(required*)</span>
               </label>
             </div>
-
-            <div class="mb-3 w-full flex justify-center">
-              <input
-                v-model="generalInfo.feedback"
-                @keyup="checkAgreement()"
-                class="
-                  form-control
-                  block
-                  w-full
-                  text-main-400
-                  px-3
-                  py-1.5
-                  text-base
-                  font-normal
-                  text-gray-700
-                  border border-solid border-gray-300
-                  rounded
-                  transition
-                  ease-in-out
-                  m-0
-                  focus:outline-none
-                "
-                id="feedback"
-                rows="6"
-                placeholder="Your feedback"
-                type="textarea"
-              />
+            <div class="vld-parent mt-4">
+              <loading
+                :active="isLoading"
+                :is-full-page="false"
+                :color="'#2F639D'"
+                :opacity="1"
+              ></loading>
+              <div class="mb-3 w-full flex justify-center">
+                <input
+                  v-model="generalInfo.feedback"
+                  @keyup="checkAgreement()"
+                  class="
+                    form-control
+                    block
+                    w-full
+                    text-main-400
+                    px-3
+                    py-1.5
+                    text-base
+                    font-normal
+                    text-gray-700
+                    border border-solid border-gray-300
+                    rounded
+                    transition
+                    ease-in-out
+                    m-0
+                    focus:outline-none
+                  "
+                  id="feedback"
+                  rows="6"
+                  placeholder="Your feedback"
+                  type="textarea"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -390,38 +396,36 @@ import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
 import { useRoute, useRouter } from "vue-router";
+import Loading from "vue3-loading-overlay";
+import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 export default {
+  components: { Loading },
   setup(props, { emit }) {
     const store = useStore();
     const toast = useToast();
     const router = useRouter();
     let localData = ref({});
-    let localFileData = ref({});
+    let localFileImages = ref({});
     let generalInfo = ref({});
     let agreed = ref(false);
-    let documents = ref([]);
+    let isLoading = ref(false);
     let buttons = ref([]);
     let tempDocs = ref({});
-    const route = useRoute();
     let savedData = ref({});
+
+    const route = useRoute();
 
     let allowSave = ref(false);
     const changeAgrement = () => {
       agreed.value = !agreed.value;
-      if (
-        generalInfo.value  &&
-        agreed.value != false
-      ) {
+      if (generalInfo.value && agreed.value != false) {
         allowSave.value = true;
       } else {
         allowSave.value = false;
       }
     };
     const checkAgreement = () => {
-      if (
-        generalInfo.value && 
-        agreed.value != false
-      ) {
+      if (generalInfo.value && agreed.value != false) {
         allowSave.value = true;
       } else {
         allowSave.value = false;
@@ -429,9 +433,9 @@ export default {
     };
     const checkFinalStatus = (action) => {
       generalInfo.value.licenseFile = [];
-      documents.value = localFileData.value;
 
-      if (agreed.value == true  ) {
+      if (agreed.value == true) {
+        isLoading.value = true;
         let formData = new FormData();
         tempDocs.value.forEach((element, index) => {
           formData.append(index, element);
@@ -451,39 +455,40 @@ export default {
           licenseId: route.params.id,
           draftData: {
             action: action,
-            data: { ... savedData,
+            data: {
+              ...savedData,
               applicantTypeId:
-              generalInfo.value && generalInfo.value.applicantTypeSelected
-                ? generalInfo.value.applicantTypeSelected.id
+                generalInfo.value && generalInfo.value.applicantTypeSelected
+                  ? generalInfo.value.applicantTypeSelected.id
+                  : null,
+              residenceWoredaId:
+                generalInfo.value && generalInfo.value.woredaSelected
+                  ? generalInfo.value.woredaSelected.id
+                  : null,
+              educations: generalInfo.value ? generalInfo.value.educations : {},
+              occupationTypeId: generalInfo.value.occupationSelected
+                ? generalInfo.value.occupationSelected.id
                 : null,
-            residenceWoredaId:
-              generalInfo.value && generalInfo.value.woredaSelected
-                ? generalInfo.value.woredaSelected.id
+              nativeLanguageId: generalInfo.value.nativeLanguageSelected
+                ? generalInfo.value.nativeLanguageSelected.id
                 : null,
-            educations: generalInfo.value ? generalInfo.value.educations : {},
-            occupationTypeId: generalInfo.value.occupationSelected
-              ? generalInfo.value.occupationSelected.id
-              : null,
-            nativeLanguageId: generalInfo.value.nativeLanguageSelected
-              ? generalInfo.value.nativeLanguageSelected.id
-              : null,
-            expertLevelId: generalInfo.value.expertLevelId
-              ? generalInfo.value.expertLevelId
-              : null,
-            isLegal: true,
-            feedback: generalInfo.value.feedback
-              ? generalInfo.value.feedback
-              : "",
-            }
-          
+              expertLevelId: generalInfo.value.expertLevelId
+                ? generalInfo.value.expertLevelId
+                : null,
+              isLegal: true,
+              feedback: generalInfo.value.feedback
+                ? generalInfo.value.feedback
+                : "",
+            },
           },
         };
         store.dispatch("newlicense/updateDraft", license).then((res) => {
           let licenseId = route.params.id;
           let payload = { document: formData, id: licenseId };
           store
-            .dispatch("newlicense/uploadDocuments", payload)
+            .dispatch("newlicense/updateDocuments", payload)
             .then((res) => {
+              isLoading.value = false;
               if (res.data.status == "Success") {
                 toast.success("Applied successfuly", {
                   timeout: 5000,
@@ -492,6 +497,7 @@ export default {
                   pauseOnHover: true,
                   icon: true,
                 });
+
                 router.push({ path: "/Applicant/NewLicense/submitted" });
               } else {
                 toast.error("Error occured, please try again", {
@@ -504,6 +510,7 @@ export default {
               }
             })
             .catch(() => {
+              isLoading.value = false;
               toast.error("Error occured, please try again", {
                 timeout: 5000,
                 position: "bottom-center",
@@ -525,14 +532,14 @@ export default {
           savedData = res.data.data;
         });
       buttons.value = store.getters["newlicense/getButtons"];
+
+      buttons.value = buttons.value.filter(
+        (ele) => ele.code != "AT" && ele.code != "DRA"
+      );
       tempDocs.value = store.getters["newlicense/getTempDocs"];
+     
       localData.value = window.localStorage.getItem("NLApplicationData")
         ? JSON.parse(window.localStorage.getItem("NLApplicationData"))
-        : {};
-      localFileData.value = window.localStorage.getItem(
-        "NLApplicationImageData"
-      )
-        ? JSON.parse(window.localStorage.getItem("NLApplicationImageData"))
         : {};
 
       generalInfo.value = localData.value;
@@ -552,13 +559,37 @@ export default {
           generalInfo.value.expertLevelId = expertLevel[0].id;
         });
       }
+      //Get images from indexed Db
+      let request = indexedDB.open("NLdocumentUploads", 1);
+
+      request.onerror = function () {
+        console.error("Unable to open database.");
+      };
+
+      request.onsuccess = function () {
+        let db = request.result;
+        const tx = db.transaction("NLdocumentUploads", "readonly");
+        const store = tx.objectStore("NLdocumentUploads");
+        let getAllIDB = store.getAll();
+
+        getAllIDB.onsuccess = function (evt) {
+          localFileImages.value = evt.target.result
+            ? JSON.parse(
+                JSON.stringify(
+                  evt.target.result[0] ? evt.target.result[0].data : {}
+                )
+              )
+            : {};
+        };
+      };
     });
     return {
       localData,
-      localFileData,
+      localFileImages,
       generalInfo,
       agreed,
       buttons,
+      isLoading,
       checkAgreement,
       back,
       allowSave,

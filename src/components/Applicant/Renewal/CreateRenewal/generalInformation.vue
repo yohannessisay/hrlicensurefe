@@ -835,14 +835,13 @@
                             whitespace-nowrap
                           "
                         >
-                          <span
-                            @click="removeDepartment(index)"
-                            style="color: red"
-                            title="Delete"
-                            ><i
-                              class="fa fa-trash bg-red-200 cursor-pointer"
-                            ></i
-                          ></span>
+                        <span
+                              @click="removeDepartment(index)" 
+                              title="Remove"
+                              ><i
+                                class="fa fa-trash text-red-300 cursor-pointer"
+                              ></i
+                            ></span>
                         </td>
                       </tr>
                     </tbody>

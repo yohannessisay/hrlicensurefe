@@ -41,7 +41,7 @@
         >
           <!-- Article -->
           <router-link
-            :to="'/Applicant/Renewal/submitted/detail/' + license.id"
+            :to="'/Applicant/Renewal/draft/detail/' + license.id"
           >
             <h2 class="text-main-400 border-b-2 text-xl p-2">
               License Number-
@@ -220,7 +220,7 @@ export default {
       isLoading.value = true;
       userInfo.value = JSON.parse(window.localStorage.getItem("personalInfo"));
      let userId = JSON.parse(window.localStorage.getItem("userId"));
-      store.dispatch("renewal/getRenewalLicense",userId).then((res) => {
+      store.dispatch("renewal/getRenewalByUser",userId).then((res) => {
         renewal.value = res.data.data; 
         if (renewal.value) {
           renewal.value = renewal.value.filter(function (e) {

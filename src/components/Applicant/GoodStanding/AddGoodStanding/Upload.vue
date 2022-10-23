@@ -40,16 +40,14 @@
         >
           <div class="accordion-body py-4 px-5">
             <div class="bg-red-800 py-5">
-              <div class="overflow-x-auto w-full">
+              <div class="overflow-x-auto w-full   rounded-lg">
                 <table
                   class="
                     max-w-4xl
                     w-full
                     whitespace-nowrap
-                    rounded-lg
                     bg-white
-                    divide-y
-                    overflow-hidden
+                    
                   "
                 >
                   <thead class="bg-lightMain-500">
@@ -118,7 +116,13 @@
                     <tr
                       v-for="item in documents"
                       :key="item.id"
-                      class="border-b text-main-400"
+                      :class="
+                        documentError[
+                          'file_upload_row_' + item.documentType.code
+                        ]
+                          ? 'border text-red-300'
+                          : 'border-b text-main-400'
+                      "
                     >
                       <td class="px-6 py-4">
                         <div class="flex items-center space-x-3">
@@ -230,15 +234,15 @@
 <script>
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
-import MAX_FILE_SIZE from "../../../../composables/documentMessage";
-import filePreview from "@/sharedComponents/FilePreview";
+import MAX_FILE_SIZE from "../../../../composables/documentMessage"; 
 import { boolean } from "yargs";
-
+import { useToast } from "vue-toastification";
 export default {
-  components: { filePreview },
+ 
 
   setup(props, { emit }) {
     let store = useStore();
+    let toast = useToast();
     let imageUploader = ref(null);
     let goToNext = ref(false);
     let departmentDocuments = [];
@@ -252,6 +256,7 @@ export default {
     });
     let localData = ref();
     let files = ref("");
+    let documentError = ref([]);
     let maxFileSize = ref();
     let imageData = [];
     let isImage = ref({});
@@ -271,48 +276,6 @@ export default {
       filePreviewData.value.name = name;
     };
     let formData = new FormData();
-    const handleCommonFileUpload = (code, event) => {
-      documentUploaded.value[code] = event?.target?.files[0];
-      let reader = new FileReader();
-      isImage.value[code] = true;
-      let fileS = documentUploaded.value[code].size;
-      if (fileS <= maxFileSize.value / 1000) {
-        fileSizeExceed.value[code] = false;
-        showImage.value = true;
-
-        if (fileS > 0 && fileS < 1000) {
-          fileSize.value += "B";
-        } else if (fileS > 1000 && fileS < 1000000) {
-          fileSize.value = fileS / 1000 + "kB";
-        } else {
-          fileSize.value = fileS / 1000000 + "MB";
-        }
-        reader.addEventListener(
-          "load",
-          function () {
-            showPreview.value = true;
-
-            previewDocuments.value[code] = reader.result;
-          },
-          false
-        );
-        if (documentUploaded.value[code]) {
-          if (/\.(jpe?g|png|gif)$/i.test(documentUploaded.value[code].name)) {
-            isImage.value[code] = true;
-            isPdf.value[code] = false;
-
-            reader.readAsDataURL(documentUploaded.value[code]);
-          } else if (/\.(pdf)$/i.test(documentUploaded.value[code].name)) {
-            isImage.value[code] = false;
-            isPdf.value[code] = true;
-            reader.readAsDataURL(documentUploaded.value[code]);
-          }
-        }
-      } else {
-        fileSizeExceed.value[code] = true;
-        documentUploaded.value[code] = "";
-      }
-    };
 
     const handleFileUpload = (data, event) => {
       documentUploaded.value[data.documentType.code] = event?.target?.files[0];
@@ -346,7 +309,6 @@ export default {
               : "",
             image: reader.result,
           });
-          console.log(imageData);
         });
         if (documentUploaded.value[data.documentType.code]) {
           if (
@@ -377,17 +339,54 @@ export default {
         documentUploaded.value[data.documentType.code] = "";
       }
     };
+
+    const checkDocuments = () => {
+      let temp = false;
+
+      documents.value
+        .filter((cd) => cd.isRequired)
+        .forEach((element) => {
+          temp = documentUploaded.value.hasOwnProperty(
+            element.documentType.code
+          );
+          if (!temp) {
+            documentError.value[
+              "file_upload_row_" + element.documentType.code
+            ] = true;
+          } else {
+            documentError.value[
+              "file_upload_row_" + element.documentType.code
+            ] = false;
+          }
+        });
+      return temp;
+    };
+
     const next = () => {
-      store.dispatch("goodstanding/setTempDocs", formData);
-      window.localStorage.setItem(
-        "GSApplicationData",
-        JSON.stringify(generalInfo.value)
-      );
-      window.localStorage.setItem(
-        "GSApplicationImageData",
-        JSON.stringify(imageData)
-      );
-      emit("changeActiveState");
+      let documentValidation = checkDocuments();
+      if (documentValidation) {
+        window.localStorage.setItem(
+          "GSApplicationData",
+          JSON.stringify(generalInfo.value)
+        );
+        window.localStorage.setItem(
+          "GSApplicationImageData",
+          JSON.stringify(imageData)
+        );
+        store.dispatch("goodstanding/setTempDocs", formData);
+        emit("changeActiveState");
+      } else {
+        toast.error(
+          "Please attach required documents outlined in red color ",
+          {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          }
+        );
+      }
     };
     const back = () => {
       emit("changeActiveStateMinus");
@@ -428,7 +427,7 @@ export default {
       previewDocuments,
       showPreview,
       previewFile,
-      handleCommonFileUpload,
+      documentError,
       generalInfo,
       goToNext,
       departmentDocuments,
