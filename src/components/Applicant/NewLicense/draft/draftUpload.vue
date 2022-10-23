@@ -721,7 +721,7 @@
                                         handleFileUpload(
                                           parentChildItem,
                                           $event,
-                                          table
+                                          table.professionType
                                         )
                                       "
                                     />
@@ -811,7 +811,31 @@
         </div>
       </div>
     </div>
-    <div class="flex justify-end mr-8">
+    <div class="flex justify-end mr-8 mb-12">
+      <button
+        class="
+          mt-8
+          inline-block
+          px-6
+          py-2.5
+          bg-white
+          hover:bg-main-400 hover:text-white
+          text-main-400 text-xs
+          font-bold
+          leading-tight
+          uppercase
+          rounded
+          shadow-md
+          active:border-main-400
+          transition
+          duration-150
+          ease-in-out
+          border
+        "
+        @click="back()"
+      >
+        back
+      </button>
       <button
         class="
           mt-8
@@ -870,7 +894,7 @@ export default {
       name: "",
     });
     let files = ref("");
-    let maxFileSize = ref();
+    let maxFileSize = ref(5000000);
     let parentDocs = ref([]);
     let isImage = ref({});
     let isPdf = ref({});
@@ -883,7 +907,6 @@ export default {
     let generalInfo = ref({});
     let documentUploaded = ref({});
     let documentToSave = ref({});
-    let divId = ref(0);
     let imageData = [];
     let formData = new FormData();
     let documentsSaved = ref({});
@@ -903,6 +926,7 @@ export default {
       documentUploaded.value[data.documentType.code] = "";
       documentUploaded.value[data.documentType.code] = event?.target?.files[0];
       formData.append(data.documentType.code, event?.target?.files[0]);
+
       documentsUploaded.value[data.documentType.code] = event?.target?.files[0];
       let reader = new FileReader();
       isImage.value[data.documentType.code] = true;
@@ -982,36 +1006,27 @@ export default {
     };
 
     const handleFileUpload = (data, event, pro) => {
+      let uniqueId =
+        data.documentType.code +
+        "_" +
+        data.educationalLevel.code.toUpperCase() +
+        "_" +
+        pro.code.toUpperCase();
       let reader = new FileReader();
-      formData.append(
-        data.documentType.code +
-          "_" +
-          data.educationalLevel.code.toUpperCase() +
-          "_" +
-          pro.code.toUpperCase(),
+      documentUploaded.value[uniqueId] = "";
+      documentUploaded.value[uniqueId] = event?.target?.files[0];
 
-        event?.target?.files[0]
-      );
+      formData.append(uniqueId, event?.target?.files[0]);
 
-      documentsUploaded.value[
-        data.documentType.code +
-          "_" +
-          data.educationalLevel.code.toUpperCase() +
-          "_" +
-          pro.code.toUpperCase()
-      ] = event?.target?.files[0];
+      documentsUploaded.value[uniqueId] = event?.target?.files[0];
+      isImage.value[uniqueId] = true;
+      //check file size
+      let fileS = documentsUploaded.value[uniqueId]
+        ? documentsUploaded.value[uniqueId].size
+        : 0;
 
-      isImage.value[data.documentType.code] = true;
-      let fileS =
-        documentUploaded.value[
-          data.documentType.code +
-            "_" +
-            data.educationalLevel.code.toUpperCase() +
-            "_" +
-            pro.code.toUpperCase()
-        ].size;
       if (fileS <= maxFileSize.value / 1000) {
-        fileSizeExceed.value[data.documentType.code] = false;
+        fileSizeExceed.value[uniqueId] = false;
         showImage.value = true;
 
         if (fileS > 0 && fileS < 1000) {
@@ -1021,91 +1036,67 @@ export default {
         } else {
           fileSize.value = fileS / 1000000 + "MB";
         }
+
         reader.addEventListener(
           "load",
           function () {
             showPreview.value = true;
 
-            previewDocuments.value[data.documentType.code] = reader.result;
-            imageData = imageData.filter(
-              (el) => el.documenttype != data.documentType.name
-            );
+            previewDocuments.value[uniqueId] = reader.result;
+
+            imageData = imageData.filter((el) => el.documenttype != uniqueId);
+
             imageData.push({
-              imageId:
-                "image_lightbox_" +
-                data.documentType.code +
-                "_" +
-                pro.educationalLevel.code +
-                "_" +
-                pro.code,
-              documenttype: data.documentType ? data.documentType.name : "",
+              imageId: "image_lightbox_" + uniqueId,
+              documenttype: uniqueId,
+              documentName: data.documentType.name,
               educationalLevel: data.educationalLevel
                 ? data.educationalLevel.name
                 : "",
               image: reader.result,
             });
-            // documentUploaded.value[data.documentType.code] = reader.result;
+
+            documentUploaded.value[uniqueId] = reader.result;
           },
           false
         );
-        if (documentUploaded.value[data.documentType.code]) {
+        if (documentUploaded.value[uniqueId]) {
           if (
-            /\.(jpe?g|png|gif)$/i.test(
-              documentUploaded.value[data.documentType.code].name
-            )
+            /\.(jpe?g|png|gif)$/i.test(documentUploaded.value[uniqueId].name)
           ) {
-            isImage.value[data.documentType.code] = true;
-            isPdf.value[data.documentType.code] = false;
+            isImage.value[uniqueId] = true;
+            isPdf.value[uniqueId] = false;
 
-            reader.readAsDataURL(
-              documentUploaded.value[data.documentType.code]
-            );
-          } else if (
-            /\.(pdf)$/i.test(
-              documentUploaded.value[data.documentType.code].name
-            )
-          ) {
-            isImage.value[data.documentType.code] = false;
-            isPdf.value[data.documentType.code] = true;
-            reader.readAsDataURL(
-              documentUploaded.value[data.documentType.code]
-            );
+            reader.readAsDataURL(documentUploaded.value[uniqueId]);
+          } else if (/\.(pdf)$/i.test(documentUploaded.value[uniqueId].name)) {
+            isImage.value[uniqueId] = false;
+            isPdf.value[uniqueId] = true;
+            reader.readAsDataURL(documentUploaded.value[uniqueId]);
           }
         }
       } else {
-        fileSizeExceed.value[data.documentType.code] = true;
-        documentUploaded.value[data.documentType.code] = "";
+        toast.error("Files size exceeded the allowed limit", {
+          timeout: 3000,
+          position: "bottom-center",
+          pauseOnFocusLoss: true,
+          pauseOnHover: true,
+          icon: true,
+        });
+        fileSizeExceed.value[uniqueId] = true;
+        documentUploaded.value[uniqueId] = "";
       }
-      let icon = document.getElementById(
-        "educational_icon_" +
-          data.documentType.code +
-          "_" +
-          pro.educationalLevel.code +
-          "_" +
-          pro.code
-      );
+      //end of check file size
+      let icon = document.getElementById("educational_icon_" + uniqueId);
       icon.classList.toggle("disabled");
-      let output = document.getElementById(
-        "image_lightbox_" +
-          data.documentType.code +
-          "_" +
-          pro.educationalLevel.code +
-          "_" +
-          pro.code
-      );
-      let outputHref = document.getElementById(
-        "image_href_" +
-          data.documentType.code +
-          "_" +
-          pro.educationalLevel.code +
-          "_" +
-          pro.code
-      );
+      let output = document.getElementById("image_lightbox_" + uniqueId);
+      let outputHref = document.getElementById("image_href_" + uniqueId);
       outputHref.href = URL.createObjectURL(event.target.files[0]);
-      output.src = URL.createObjectURL(event.target.files[0]);
-      output.onload = function () {
-        URL.revokeObjectURL(output.src); // free memory
-      };
+      if (output && output.src) {
+        output.src = URL.createObjectURL(event.target.files[0]);
+        output.onload = function () {
+          URL.revokeObjectURL(output.src); // free memory
+        };
+      }
     };
     const checkDocuments = () => {
       let temp = false;
@@ -1237,7 +1228,46 @@ export default {
       let documentValidation = checkDocuments();
       if (documentValidation) {
         store.dispatch("newlicense/setTempDocs", formData).then(() => {
-          emit("changeActiveState");
+          //Save images to indexed Db
+
+          let finalLocalData = {
+            created: new Date(),
+            data: [],
+          };
+          let db;
+          let request = indexedDB.open("NLdocumentUploads", 1);
+          request.onsuccess = function () {
+            db = request.result;
+            let transaction = db.transaction(
+              ["NLdocumentUploads"],
+              "readwrite"
+            );
+
+            finalLocalData.data = imageData;
+
+            finalLocalData.data = [...new Set(finalLocalData.data)];
+
+            const objectStore = transaction.objectStore("NLdocumentUploads");
+
+            const objectStoreRequest = objectStore.clear();
+
+            objectStoreRequest.onsuccess = (event) => {
+              let addReq = transaction
+                .objectStore("NLdocumentUploads")
+                .put(finalLocalData);
+
+              addReq.onerror = function () {
+                console.log(
+                  "Error regarding your browser, please update your browser to the latest version"
+                );
+              };
+
+              transaction.oncomplete = function () {
+                console.log("data stored");
+                emit("changeActiveState");
+              };
+            };
+          };
         });
       } else {
         let errors = "";
@@ -1281,42 +1311,64 @@ export default {
       }
     };
 
-    const addMoreFile = (doc) => {
-      //For future use on adding individual files, good luck
+    // const addMoreFile = (doc) => {
+    //   //For future use on adding individual files, good luck
 
-      divId.value == doc.length;
-      if (divId.value < doc.length) {
-        divId.value++;
-        let divElement = document.createElement("div");
-        divElement.classList.add("border-t-2");
-        divElement.classList.add("mt-4");
-        divElement.classList.add("mb-4");
-        let toBeAddedDoc = doc[divId.value];
-        let template =
-          '<tr id="parent_doc_' +
-          toBeAddedDoc.id +
-          '" class="p-4 text-gray-300"><td class="px-6 py-4"><div class="flex items-center ml-8"><div><p class="">' +
-          (toBeAddedDoc.documentType.name + "(optional)") +
-          '</p></div></div></td><td class="px-6 py-4"><div class="flex items-center ml-8"><div><p class="">' +
-          (toBeAddedDoc.documentType.description
-            ? toBeAddedDoc.documentType.description
-            : "") +
-          '</p></div></div></td><td class="px-6 py-4 "><p class="ml-8"><input type="file" :id="files' +
-          toBeAddedDoc.id +
-          '" accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg" :ref="imageUploader' +
-          toBeAddedDoc.id +
-          '" class="custom-file-input" v-on:change=" handleFileUpload(' +
-          toBeAddedDoc +
-          ', $event) " /></p></td><td><button id="remove_' +
-          toBeAddedDoc.id +
-          '" class="bg-main-400 mt-8 inline-block px-6 py-2.5 bg-main-400 hover:text-main-400 text-white text-xs font-bold leading-tight uppercase rounded shadow-md transition duration-150 ease-in-out " onclick="removeFileUpload()>Remove </button> </td>';
+    //   divId.value == doc.length;
+    //   if (divId.value < doc.length) {
+    //     divId.value++;
+    //     let divElement = document.createElement("div");
+    //     divElement.classList.add("border-t-2");
+    //     divElement.classList.add("mt-4");
+    //     divElement.classList.add("mb-4");
+    //     let toBeAddedDoc = doc[divId.value];
+    //     let template =
+    //       '<tr id="parent_doc_' +
+    //       toBeAddedDoc.id +
+    //       '" class="p-4 text-gray-300"><td class="px-6 py-4"><div class="flex items-center ml-8"><div><p class="">' +
+    //       (toBeAddedDoc.documentType.name + "(optional)") +
+    //       '</p></div></div></td><td class="px-6 py-4"><div class="flex items-center ml-8"><div><p class="">' +
+    //       (toBeAddedDoc.documentType.description
+    //         ? toBeAddedDoc.documentType.description
+    //         : "") +
+    //       '</p></div></div></td><td class="px-6 py-4 "><p class="ml-8"><input type="file" :id="files' +
+    //       toBeAddedDoc.id +
+    //       '" accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg" :ref="imageUploader' +
+    //       toBeAddedDoc.id +
+    //       '" class="custom-file-input" v-on:change=" handleFileUpload(' +
+    //       toBeAddedDoc +
+    //       ', $event) " /></p></td><td><button id="remove_' +
+    //       toBeAddedDoc.id +
+    //       '" class="bg-main-400 mt-8 inline-block px-6 py-2.5 bg-main-400 hover:text-main-400 text-white text-xs font-bold leading-tight uppercase rounded shadow-md transition duration-150 ease-in-out " onclick="removeFileUpload()>Remove </button> </td>';
 
-        divElement.innerHTML = template;
-        document.getElementById(doc[0].id).appendChild(divElement);
-      }
+    //     divElement.innerHTML = template;
+    //     document.getElementById(doc[0].id).appendChild(divElement);
+    //   }
+    // };
+
+    const initDb = () => {
+      let request = indexedDB.open("NLdocumentUploads", 1);
+
+      request.onerror = function () {
+        console.error("Unable to open database.");
+      };
+
+      request.onupgradeneeded = function () {
+        let db = request.result;
+        db.createObjectStore("NLdocumentUploads", {
+          keyPath: "id",
+          autoIncrement: true,
+        });
+      };
     };
-
     onMounted(() => {
+      //Initialize indexdb for file storage
+      if (!("indexedDB" in window)) {
+        console.log("This browser doesn't support IndexedDB");
+        return;
+      } else {
+        initDb();
+      }
       store
         .dispatch("newlicense/getNewLicenseApplication", route.params.id)
         .then((res) => {
@@ -1388,7 +1440,9 @@ export default {
           }
         });
     });
-
+    const back = () => {
+      emit("changeActiveStateMinus");
+    };
     // emit("changeActiveStateMinus");
 
     return {
@@ -1398,13 +1452,13 @@ export default {
       fileUploadError,
       errorDocuments,
       handleFileUpload,
-      addMoreFile,
       showImage,
       previewDocuments,
       showPreview,
       previewFile,
       handleCommonFileUpload,
       generalInfo,
+      back,
       goToNext,
       educationalDocs,
       imageUploader,

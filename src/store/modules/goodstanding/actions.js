@@ -170,6 +170,14 @@ export default {
       return error;
     }
   },
+  async getApplicantTitle({ commit }, id) {
+    try {
+      const resp = await ApiService.get(baseUrl + "/lookups/ApplicantTitles");
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
 
   async getGoodStandingLicense({ commit }) {
     try {
