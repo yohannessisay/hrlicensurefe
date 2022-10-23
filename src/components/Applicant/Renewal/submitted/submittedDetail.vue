@@ -745,7 +745,7 @@
                               whitespace-nowrap
                             "
                           >
-                          <span
+                            <span
                               @click="removeDepartment(index)" 
                               title="Remove"
                               ><i
@@ -1155,7 +1155,7 @@ export default {
     const apply = () => {
       let tempApplicationData = generalInfo.value;
       window.localStorage.setItem(
-        "NLApplicationData",
+        "RNApplicationData",
         JSON.stringify(tempApplicationData)
       );
       store

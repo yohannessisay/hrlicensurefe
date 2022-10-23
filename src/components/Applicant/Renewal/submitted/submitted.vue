@@ -41,7 +41,7 @@
         >
           <!-- Article -->
           <router-link
-            :to="'/Applicant/Renewal/submitted/detail/' + license.id"
+            :to="'/Applicant/Renewal/draft/detail/' + license.id"
           >
             <h2 class="text-main-400 border-b-2 text-xl p-2">
               License Number-
