@@ -12,11 +12,11 @@
           outline-none
           overflow-x-hidden overflow-y-auto
         "
-    id="submittedModalInfo"
+    id="draftModalInfo"
     data-bs-backdrop="static"
     data-bs-keyboard="false"
     tabindex="-1"
-    aria-labelledby="submittedModalInfoLabel"
+    aria-labelledby="draftModalInfoLabel"
     aria-hidden="true"
   >
     <div
@@ -87,7 +87,7 @@
                 <div class="flex justify-center border-b-4 text-main-400">
                   <div class="text-center lg:max-w-3xl md:max-w-xl">
                     <h2 class="text-2xl font-bold mb-8 px-6 text-main-400">
-                      Submitted License Detail
+                      Draft License Detail
                     </h2>
                   </div>
                 </div>

@@ -3,7 +3,7 @@
     <!-- Heading start -->
     <header class="text-center mx-auto mb-12 lg:px-20">
       <h2 class="text-3xl leading-normal mb-2 font-bold text-main-400">
-        Summary For New License Application
+        Summary For Goodstanding Application
       </h2>
 
       <p class="text-black leading-relaxed font-light text-xl mx-auto pb-2">
@@ -366,7 +366,7 @@
       </button>
       <button
         class="
-          inline-block
+          isine-block
           px-6
           text-main-400
           mt-4
@@ -482,11 +482,11 @@ export default {
             },
           },
         };
-        store.dispatch("newlicense/updateDraft", license).then((res) => {
+        store.dispatch("goodstanding/updateDraft", license).then((res) => {
           let licenseId = route.params.id;
           let payload = { document: formData, id: licenseId };
           store
-            .dispatch("newlicense/updateDocuments", payload)
+            .dispatch("goodstanding/updateDocuments", payload)
             .then((res) => {
               isLoading.value = false;
               if (res.data.status == "Success") {
@@ -498,7 +498,7 @@ export default {
                   icon: true,
                 });
 
-                router.push({ path: "/Applicant/NewLicense/submitted" });
+                router.push({ path: "/Applicant/GoodStanding/submitted" });
               } else {
                 toast.error("Error occured, please try again", {
                   timeout: 5000,
@@ -527,32 +527,32 @@ export default {
     };
     onMounted(() => {
       store
-        .dispatch("newlicense/getNewLicenseApplication", route.params.id)
+        .dispatch("goodstanding/getGoodStandingLicenseById", route.params.id)
         .then((res) => {
           savedData = res.data.data;
         });
-      buttons.value = store.getters["newlicense/getButtons"];
+      buttons.value = store.getters["goodstanding/getButtons"];
 
       buttons.value = buttons.value.filter(
         (ele) => ele.code != "AT" && ele.code != "DRA"
       );
-      tempDocs.value = store.getters["newlicense/getTempDocs"];
+      tempDocs.value = store.getters["goodstanding/getTempDocs"];
      
-      localData.value = window.localStorage.getItem("NLApplicationData")
-        ? JSON.parse(window.localStorage.getItem("NLApplicationData"))
+      localData.value = window.localStorage.getItem("GSApplicationData")
+        ? JSON.parse(window.localStorage.getItem("GSApplicationData"))
         : {};
 
       generalInfo.value = localData.value;
       generalInfo.value.feedback = "";
       if (generalInfo.value.applicantTypeSelected.id == 1) {
-        store.dispatch("newlicense/getExpertLevel").then((res) => {
+        store.dispatch("goodstanding/getExpertLevel").then((res) => {
           let expertLevel = res.data.data.filter(function (e) {
             return e.code.includes("REG");
           });
           generalInfo.value.expertLevelId = expertLevel[0].id;
         });
       } else {
-        store.dispatch("newlicense/getExpertLevel").then((res) => {
+        store.dispatch("goodstanding/getExpertLevel").then((res) => {
           let expertLevel = res.data.data.filter(function (e) {
             return e.code.includes("FED");
           });
@@ -560,7 +560,7 @@ export default {
         });
       }
       //Get images from indexed Db
-      let request = indexedDB.open("NLdocumentUploads", 1);
+      let request = indexedDB.open("GSdocumentUploads", 1);
 
       request.onerror = function () {
         console.error("Unable to open database.");
@@ -568,8 +568,8 @@ export default {
 
       request.onsuccess = function () {
         let db = request.result;
-        const tx = db.transaction("NLdocumentUploads", "readonly");
-        const store = tx.objectStore("NLdocumentUploads");
+        const tx = db.transaction("GSdocumentUploads", "readonly");
+        const store = tx.objectStore("GSdocumentUploads");
         let getAllIDB = store.getAll();
 
         getAllIDB.onsuccess = function (evt) {

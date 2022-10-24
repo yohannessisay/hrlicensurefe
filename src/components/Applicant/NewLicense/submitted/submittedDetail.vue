@@ -957,7 +957,7 @@ export default {
               pauseOnHover: true,
               icon: true,
             });
-            router.push({ path: "/withdraw" });
+            router.push({ path: "/Applicant/NewLicense/withdraw" });
           } else {
             toast.error(res.data.message, {
               timeout: 5000,
@@ -966,7 +966,7 @@ export default {
               pauseOnHover: true,
               icon: true,
             });
-            router.push({ path: "/withdraw" });
+            router.push({ path: "/Applicant/NewLicense/withdraw" });
           }
         })
         .catch((err) => {

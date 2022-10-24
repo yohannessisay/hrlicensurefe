@@ -213,603 +213,6 @@
           </div>
         </div>
       </div>
-      <div
-        class="
-          accordion-item
-          bg-white
-          border border-grey-200
-          p-4
-          mt-8
-          rounded-lg
-        "
-      >
-        <h2 class="accordion-header mb-0" id="headingTwo">
-          <button
-            class="
-              accordion-button
-              relative
-              flex
-              items-center
-              w-full
-              py-4
-              px-5
-              text-base text-gray-800 text-left
-              border-0
-              rounded-md
-              transition
-              focus:outline-none
-            "
-            style="background: #d8d8d8 !important; color: #27687e !important"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#departmentFilesAccordion"
-            aria-expanded="true"
-            aria-controls="departmentFilesAccordion"
-          >
-            Education Level Related Files
-          </button>
-        </h2>
-        <div
-          id="departmentFilesAccordion"
-          class="accordion-collapse collapse show"
-          aria-labelledby="departmentFilesAccordionheading"
-          data-bs-parent="#FilesAccordion"
-        >
-          <div class="accordion-body py-4 px-5">
-            <div
-              v-for="table in educationalDocs"
-              :key="table"
-              class="accordion-body py-4 px-5 rounded-lg"
-            >
-              <h4 class="text-main-400 font-bold">
-                {{ table.educationalLevel ? table.educationalLevel.name : "" }}
-                Related Files
-              </h4>
-
-              <div class="overflow-x-auto w-full p-4">
-                <table
-                  class="
-                    w-full
-                    p-4
-                    whitespace-nowrap
-                    rounded-lg
-                    bg-white
-                    shadow-lg
-                    divide-y divide-gray-300
-                    overflow-hidden
-                    table-auto
-                  "
-                >
-                  <thead class="bg-lightMain-500 p-4">
-                    <tr class="text-left">
-                      <th
-                        class="
-                          font-semibold
-                          text-sm
-                          uppercase
-                          px-6
-                          py-4
-                          text-white
-                        "
-                      >
-                        Document Name
-                      </th>
-                      <th
-                        class="
-                          font-semibold
-                          text-sm
-                          uppercase
-                          px-6
-                          py-4
-                          text-white
-                        "
-                      >
-                        Document Description
-                      </th>
-
-                      <th
-                        class="
-                          font-semibold
-                          text-sm
-                          uppercase
-                          px-6
-                          py-4
-                          text-left text-white
-                        "
-                      >
-                        Upload
-                      </th>
-                      <th
-                        class="
-                          font-semibold
-                          text-sm
-                          uppercase
-                          px-6
-                          py-4
-                          text-center text-white
-                        "
-                      >
-                        Upload Document
-                      </th>
-                      <th
-                        class="
-                          font-semibold
-                          text-sm
-                          uppercase
-                          px-6
-                          py-4
-                          text-white
-                        "
-                      ></th>
-                    </tr>
-                  </thead>
-                  <tbody class="p-4">
-                    <tr
-                      v-for="item in table.docs"
-                      :key="item.id"
-                      :class="
-                        fileUploadError[
-                          'file_upload_row_' +
-                            `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
-                        ]
-                          ? 'accordion-body py-4 px-5 border-2 border-red-300 rounded-lg'
-                          : 'accordion-body py-4 px-5 border-b  rounded-lg'
-                      "
-                    >
-                      <td class="px-6 py-4">
-                        <div class="flex items-center ml-4">
-                          <div>
-                            <p class="">
-                              {{ item.documentType.name }}
-                              <b v-if="item.isRequired" class="text-red-300"
-                                >(*)</b
-                              >
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="px-6 py-4">
-                        <div class="flex items-center ml-4">
-                          <div>
-                            <p class="">
-                              {{
-                                item.documentType.description
-                                  ? item.documentType.description
-                                  : "-----------------"
-                              }}
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-
-                      <td class="px-6 py-4">
-                        <p class="">
-                          <input
-                            type="file"
-                            :required="item.isRequired"
-                            :id="`files${item.id}`"
-                            accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
-                            :ref="`imageUploader${item.id}`"
-                            class="custom-file-input"
-                            v-on:change="
-                              handleFileUpload(
-                                item,
-                                $event,
-                                table.professionType
-                              )
-                            "
-                          />
-                        </p>
-                      </td>
-                      <td class="px-6 py-4">
-                        <span
-                          class="document-name"
-                          v-if="
-                            documentsSaved[
-                              `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
-                            ]?.name
-                          "
-                          >{{
-                            documentsSaved[
-                              `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
-                            ]?.name
-                          }}</span
-                        >
-                      </td>
-                      <td class="px-6 py-4 text-center">
-                        <a
-                          :id="
-                            'image_href_' +
-                            `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
-                          "
-                          :href="
-                            documentsSaved[
-                              `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
-                            ]?.path
-                          "
-                          :data-title="item.name ? item.name : '-----'"
-                          data-lightbox="example-2"
-                        >
-                          <i
-                            :id="
-                              'educational_icon_' +
-                              `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
-                            "
-                            class="fa fa-eye cursor-pointer text-main-400"
-                            aria-hidden="true"
-                          >
-                            <img
-                              :id="
-                                'image_lightbox_' +
-                                `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
-                              "
-                              :src="
-                                documentsSaved[
-                                  `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
-                                ]?.path
-                              "
-                              class="w-full h-2 object-cover"
-                            />
-                          </i>
-                        </a>
-                      </td>
-                    </tr>
-                  </tbody>
-
-                  <tbody
-                    class="divide-y p-4"
-                    v-for="parentItem in table.parentDoc"
-                    :key="parentItem.id"
-                  >
-                    <tr
-                      v-if="parentItem.length < 2"
-                      class="border-b text-main-400 bg-lightGrey-100"
-                    >
-                      <td class="px-6 py-4">
-                        <div class="flex items-center ml-4">
-                          <div>
-                            <p class="">
-                              {{ parentItem[0].documentType.name }}
-                              <b
-                                v-if="parentItem[0].isRequired"
-                                class="text-red-300"
-                                >(*)</b
-                              >
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="px-6 py-4">
-                        <div class="flex items-center ml-4">
-                          <div>
-                            <p class="">
-                              {{
-                                parentItem[0].documentType.description
-                                  ? parentItem[0].documentType.description
-                                  : "-----------------------"
-                              }}
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-
-                      <td class="px-6 py-4">
-                        <p class="">
-                          <input
-                            type="file"
-                            :required="parentItem[0].isRequired"
-                            :id="`files${parentItem[0].id}`"
-                            accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
-                            :ref="`imageUploader${parentItem[0].id}`"
-                            class="custom-file-input"
-                            v-on:change="
-                              handleFileUpload(
-                                parentItem[0],
-                                $event,
-                                table.professionType
-                              )
-                            "
-                          />
-                        </p>
-                      </td>
-                      <td class="px-6 py-4">
-                        <span
-                          class="document-name"
-                          v-if="
-                            documentsSaved[
-                              `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
-                            ]?.name
-                          "
-                          >{{
-                            documentsSaved[
-                              `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
-                            ]?.name
-                          }}</span
-                        >
-                      </td>
-                      <td class="px-6 py-4 text-center">
-                        <a
-                          :id="
-                            'image_href_' +
-                            `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
-                          "
-                          :href="
-                            documentsSaved[
-                              `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
-                            ]?.path
-                          "
-                          :data-title="
-                            parentItem[0].name ? parentItem[0].name : '-----'
-                          "
-                          data-lightbox="example-2"
-                        >
-                          <i
-                            :id="
-                              'educational_icon_' +
-                              `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
-                            "
-                            class="fa fa-eye cursor-pointer text-main-400"
-                            aria-hidden="true"
-                          >
-                            <img
-                              :id="
-                                'image_lightbox_' +
-                                `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
-                              "
-                              :src="
-                                documentsSaved[
-                                  `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
-                                ]?.path
-                              "
-                              class="w-full h-2 object-cover"
-                            />
-                          </i>
-                        </a>
-                      </td>
-                    </tr>
-                    <!-- if parent doc has more than 1 elements -->
-                    <tr v-else class="border-b text-main-400 bg-lightGrey-100">
-                      <td class="px-6">
-                        <div class="flex items-center ml-4">
-                          <div>
-                            <p class="">
-                              {{
-                                parentItem[0].documentType.name.slice(
-                                  0,
-                                  parentItem[0].documentType.name.length - 2
-                                )
-                              }}
-                              <b
-                                v-if="parentItem[0].isRequired"
-                                class="text-red-300"
-                                >(* )</b
-                              >
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="px-6"></td>
-
-                      <td class="px-6 py-4"></td>
-
-                      <td class="px-6 py-4 text-center"></td>
-
-                      <td class="px-6 text-center">
-                        <button
-                          class="
-                            inline-block
-                            px-6
-                            py-2.5
-                            bg-white
-                            hover:bg-main-400 hover:text-white
-                            text-main-400 text-xs
-                            font-bold
-                            leading-tight
-                            uppercase
-                            rounded
-                            shadow-md
-                            active:border-main-400
-                            transition
-                            duration-150
-                            ease-in-out
-                            border
-                          "
-                          type="button"
-                          @click="addMore(parentItem[0])"
-                        >
-                          Upload
-                        </button>
-                      </td>
-                    </tr>
-                    <!-- end table row -->
-
-                    <tr>
-                      <div
-                        v-if="
-                          showNestedDocuments[
-                            parentItem[0].documentType.code
-                          ] != null
-                        "
-                        class="accordion mt-4 mb-4"
-                        id="accordionExample"
-                        style="width: max-content"
-                      >
-                        <div
-                          class="
-                            shadow-lg
-                            w-full
-                            bg-white
-                            border border-grey-400
-                            ml-8
-                          "
-                        >
-                          <div
-                            :id="'docAccordion' + parentItem[0].documentType.id"
-                            class=""
-                            aria-labelledby="headingOne"
-                            data-bs-parent="#accordionExample"
-                          >
-                            <div class="accordion-body py-4 px-5">
-                              <div class="bg-lightMain-500 rounded-sm p-2">
-                                <small class="text-white"
-                                  >Only the first file upload is required, the
-                                  remaining ones are optional</small
-                                >
-                              </div>
-
-                              <tr
-                                v-for="(parentChildItem, index) in parentItem"
-                                :key="parentChildItem"
-                                class="border-b text-main-400 mt-4"
-                              >
-                                <td
-                                  v-if="
-                                    showNestedDocuments[
-                                      parentItem[0].documentType.code
-                                    ] >= index
-                                  "
-                                  class="px-6 py-4"
-                                >
-                                  <div class="flex items-center ml-4">
-                                    <div>
-                                      <p class="">
-                                        {{ parentChildItem.documentType.name }}
-                                      </p>
-                                    </div>
-                                  </div>
-                                </td>
-                                <td
-                                  v-if="
-                                    showNestedDocuments[
-                                      parentItem[0].documentType.code
-                                    ] >= index
-                                  "
-                                  class="px-6 py-4"
-                                >
-                                  <div class="flex items-center ml-4">
-                                    <div>
-                                      <p class="">
-                                        {{
-                                          parentChildItem.documentType
-                                            .description
-                                            ? parentChildItem.documentType
-                                                .description
-                                            : "- "
-                                        }}
-                                      </p>
-                                    </div>
-                                  </div>
-                                </td>
-
-                                <td
-                                  v-if="
-                                    showNestedDocuments[
-                                      parentItem[0].documentType.code
-                                    ] >= index
-                                  "
-                                  class="px-6 py-4"
-                                >
-                                  <p class="">
-                                    <input
-                                      type="file"
-                                      :required="parentChildItem.isRequired"
-                                      :id="`files${parentChildItem.id}`"
-                                      accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
-                                      :ref="`imageUploader${parentChildItem.id}`"
-                                      class="custom-file-input"
-                                      v-on:change="
-                                        handleFileUpload(
-                                          parentChildItem,
-                                          $event,
-                                          table.professionType
-                                        )
-                                      "
-                                    />
-                                  </p>
-                                </td>
-                                <td class="px-6 py-4">
-                                  <span
-                                    class="document-name"
-                                    v-if="
-                                      documentsSaved[
-                                        `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
-                                      ]?.name
-                                    "
-                                    >{{
-                                      documentsSaved[
-                                        `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
-                                      ]?.name
-                                    }}</span
-                                  >
-                                </td>
-                                <td
-                                  v-if="
-                                    showNestedDocuments[
-                                      parentItem[0].documentType.code
-                                    ] >= index
-                                  "
-                                  class="px-6 py-4 text-center"
-                                >
-                                  <a
-                                    :id="
-                                      'image_href_' +
-                                      `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
-                                    "
-                                    :href="
-                                      documentsSaved[
-                                        `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
-                                      ]?.path
-                                    "
-                                    :data-title="
-                                      parentChildItem.name ? item.name : '-----'
-                                    "
-                                    data-lightbox="example-2"
-                                  >
-                                    <i
-                                      :id="
-                                        'educational_icon_' +
-                                        `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
-                                      "
-                                      class="
-                                        fa fa-eye
-                                        cursor-pointer
-                                        text-main-400
-                                      "
-                                      aria-hidden="true"
-                                    >
-                                      <img
-                                        :id="
-                                          'image_lightbox_' +
-                                          `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
-                                        "
-                                        :src="
-                                          documentsSaved[
-                                            `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
-                                          ]?.path
-                                        "
-                                        class="w-full h-2 object-cover"
-                                      />
-                                    </i>
-                                  </a>
-                                </td>
-                              </tr>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </tr>
-                  </tbody>
-                </table>
-                <small
-                  >Note:-document names marked with
-                  <b class="text-red-300">(*)</b>must be uploaded in order to go
-                  forward with application process</small
-                >
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
     <div class="flex justify-end mr-8 mb-12">
       <button
@@ -911,7 +314,7 @@ export default {
     let formData = new FormData();
     let documentsSaved = ref({});
     let documentsUploaded = ref({});
-    let newLicenseDocuments = ref([]);
+    let renewalDocuments = ref([]);
     let errorDocuments = ref([]);
     let showNestedDocuments = ref({});
 
@@ -922,7 +325,7 @@ export default {
       filePreviewData.value.name = name;
     };
 
-    const handleCommonFileUpload = (data, event) => {
+    const handleFileUpload = (data, event) => {
       documentUploaded.value[data.documentType.code] = "";
       documentUploaded.value[data.documentType.code] = event?.target?.files[0];
       formData.append(data.documentType.code, event?.target?.files[0]);
@@ -1005,105 +408,10 @@ export default {
       };
     };
 
-    const handleFileUpload = (data, event, pro) => {
-      let uniqueId =
-        data.documentType.code +
-        "_" +
-        data.educationalLevel.code.toUpperCase() +
-        "_" +
-        pro.code.toUpperCase();
-      let reader = new FileReader();
-      documentUploaded.value[uniqueId] = "";
-      documentUploaded.value[uniqueId] = event?.target?.files[0];
-
-      formData.append(uniqueId, event?.target?.files[0]);
-
-      documentsUploaded.value[uniqueId] = event?.target?.files[0];
-      isImage.value[uniqueId] = true;
-      //check file size
-      let fileS = documentsUploaded.value[uniqueId]
-        ? documentsUploaded.value[uniqueId].size
-        : 0;
-
-      if (fileS <= maxFileSize.value / 1000) {
-        fileSizeExceed.value[uniqueId] = false;
-        showImage.value = true;
-
-        if (fileS > 0 && fileS < 1000) {
-          fileSize.value += "B";
-        } else if (fileS > 1000 && fileS < 1000000) {
-          fileSize.value = fileS / 1000 + "kB";
-        } else {
-          fileSize.value = fileS / 1000000 + "MB";
-        }
-
-        reader.addEventListener(
-          "load",
-          function () {
-            showPreview.value = true;
-
-            previewDocuments.value[uniqueId] = reader.result;
-
-            imageData = imageData.filter((el) => el.documenttype != uniqueId);
-
-            imageData.push({
-              imageId: "image_lightbox_" + uniqueId,
-              documenttype: uniqueId,
-              documentName: data.documentType.name,
-              educationalLevel: data.educationalLevel
-                ? data.educationalLevel.name
-                : "",
-              image: reader.result,
-            });
-
-            documentUploaded.value[uniqueId] = reader.result;
-          },
-          false
-        );
-        if (documentUploaded.value[uniqueId]) {
-          if (
-            /\.(jpe?g|png|gif)$/i.test(documentUploaded.value[uniqueId].name)
-          ) {
-            isImage.value[uniqueId] = true;
-            isPdf.value[uniqueId] = false;
-
-            reader.readAsDataURL(documentUploaded.value[uniqueId]);
-          } else if (/\.(pdf)$/i.test(documentUploaded.value[uniqueId].name)) {
-            isImage.value[uniqueId] = false;
-            isPdf.value[uniqueId] = true;
-            reader.readAsDataURL(documentUploaded.value[uniqueId]);
-          }
-        }
-      } else {
-        toast.error("Files size exceeded the allowed limit", {
-          timeout: 3000,
-          position: "bottom-center",
-          pauseOnFocusLoss: true,
-          pauseOnHover: true,
-          icon: true,
-        });
-        fileSizeExceed.value[uniqueId] = true;
-        documentUploaded.value[uniqueId] = "";
-      }
-      //end of check file size
-      let icon = document.getElementById("educational_icon_" + uniqueId);
-      icon.classList.toggle("disabled");
-      let output = document.getElementById("image_lightbox_" + uniqueId);
-      let outputHref = document.getElementById("image_href_" + uniqueId);
-      outputHref.href = URL.createObjectURL(event.target.files[0]);
-      if (output && output.src) {
-        output.src = URL.createObjectURL(event.target.files[0]);
-        output.onload = function () {
-          URL.revokeObjectURL(output.src); // free memory
-        };
-      }
-    };
     const checkDocuments = () => {
-      let temp = false;
       let CMtemp = false;
-      let NSTemp = false;
 
-      /// check common documents
+      /// check   documents
 
       commonDocuments.value
         .filter((cd) => cd.isRequired)
@@ -1127,107 +435,12 @@ export default {
           }
         });
 
-      educationalDocs.value.forEach((ed) => {
-        // check normal docs with no parents
-
-        ed.docs
-          .filter((docs) => docs.isRequired)
-          .forEach((single) => {
-            temp = documentsUploaded.value.hasOwnProperty(
-              single.documentType.code +
-                "_" +
-                ed.educationalLevel.code.toUpperCase() +
-                "_" +
-                ed.professionType.code.toUpperCase()
-            );
-            if (!temp) {
-              fileUploadError.value[
-                "file_upload_row_" +
-                  single.documentType.code +
-                  "_" +
-                  ed.educationalLevel.code.toUpperCase() +
-                  "_" +
-                  ed.professionType.code.toUpperCase()
-              ] = true;
-              errorDocuments.value.push({
-                name: single.documentType.name,
-                code:
-                  single.documentType.code +
-                  "_" +
-                  ed.educationalLevel.code.toUpperCase() +
-                  "_" +
-                  ed.professionType.code.toUpperCase(),
-              });
-            } else {
-              fileUploadError.value[
-                "file_upload_row_" +
-                  single.documentType.code +
-                  "_" +
-                  ed.educationalLevel.code.toUpperCase() +
-                  "_" +
-                  ed.professionType.code.toUpperCase()
-              ] = false;
-            }
-          });
-
-        //// check documetns with parents
-
-        if (ed.parentDoc) {
-          for (let childDocs in ed.parentDoc) {
-            NSTemp = documentsUploaded.value.hasOwnProperty(
-              ed.parentDoc[childDocs][0].documentType.code +
-                "_" +
-                ed.educationalLevel.code.toUpperCase() +
-                "_" +
-                ed.professionType.code.toUpperCase()
-            );
-            if (!temp) {
-              fileUploadError.value[
-                "file_upload_row_" +
-                  ed.parentDoc[childDocs][0].documentType.code +
-                  "_" +
-                  ed.educationalLevel.code.toUpperCase() +
-                  "_" +
-                  ed.professionType.code.toUpperCase()
-              ] = true;
-              errorDocuments.value.push({
-                name: ed.parentDoc[childDocs][0].documentType.name,
-                code:
-                  ed.parentDoc[childDocs][0].documentType.code +
-                  "_" +
-                  ed.educationalLevel.code.toUpperCase() +
-                  "_" +
-                  ed.professionType.code.toUpperCase(),
-              });
-            } else {
-              fileUploadError.value[
-                "file_upload_row_" +
-                  ed.parentDoc[childDocs][0].documentType.code +
-                  "_" +
-                  ed.educationalLevel.code.toUpperCase() +
-                  "_" +
-                  ed.professionType.code.toUpperCase()
-              ] = false;
-            }
-          }
-        }
-
-        // fileUploadError.value[
-        //         "file_upload_row_" +
-        //           single.documentType.code +
-        //           "_" +
-        //           ed.educationalLevel.code.toUpperCase() +
-        //           "_" +
-        //           ed.professionType.code.toUpperCase()
-        //       ] = true;
-      });
-
-      return CMtemp && temp && NSTemp;
+      return CMtemp;
     };
     const next = () => {
       let documentValidation = checkDocuments();
       if (documentValidation) {
-        store.dispatch("newlicense/setTempDocs", formData).then(() => {
+        store.dispatch("renewal/setTempDocs", formData).then(() => {
           //Save images to indexed Db
 
           let finalLocalData = {
@@ -1235,25 +448,25 @@ export default {
             data: [],
           };
           let db;
-          let request = indexedDB.open("NLdocumentUploads", 1);
+          let request = indexedDB.open("GSdocumentUploads", 1);
           request.onsuccess = function () {
             db = request.result;
             let transaction = db.transaction(
-              ["NLdocumentUploads"],
+              ["GSdocumentUploads"],
               "readwrite"
             );
 
             finalLocalData.data = imageData;
-          
+
             finalLocalData.data = [...new Set(finalLocalData.data)];
 
-            const objectStore = transaction.objectStore("NLdocumentUploads");
+            const objectStore = transaction.objectStore("GSdocumentUploads");
 
             const objectStoreRequest = objectStore.clear();
 
             objectStoreRequest.onsuccess = (event) => {
               let addReq = transaction
-                .objectStore("NLdocumentUploads")
+                .objectStore("GSdocumentUploads")
                 .put(finalLocalData);
 
               addReq.onerror = function () {
@@ -1347,7 +560,7 @@ export default {
     // };
 
     const initDb = () => {
-      let request = indexedDB.open("NLdocumentUploads", 1);
+      let request = indexedDB.open("GSdocumentUploads", 1);
 
       request.onerror = function () {
         console.error("Unable to open database.");
@@ -1355,7 +568,7 @@ export default {
 
       request.onupgradeneeded = function () {
         let db = request.result;
-        db.createObjectStore("NLdocumentUploads", {
+        db.createObjectStore("GSdocumentUploads", {
           keyPath: "id",
           autoIncrement: true,
         });
@@ -1370,7 +583,7 @@ export default {
         initDb();
       }
       store
-        .dispatch("newlicense/getNewLicenseApplication", route.params.id)
+        .dispatch("goodstanding/getGoodStandingLicenseById", route.params.id)
         .then((res) => {
           if (res.data.data) {
             generalInfo.value = res.data.data;
@@ -1384,17 +597,17 @@ export default {
             documentsUploaded.value = documentsSaved.value;
 
             store
-              .dispatch("newlicense/getApplicationCategories")
+              .dispatch("goodstanding/getApplicationCategories")
               .then((res) => {
                 let categoryResults = res.data.data
-                  ? res.data.data.filter((ele) => ele.code == "NA")
+                  ? res.data.data.filter((ele) => ele.code == "GS")
                   : "";
-                let educationLevels = generalInfo.value.educations;
-
+                let educationLevels = generalInfo.value.GSProfessionals;
+              
                 //Get department docs
                 educationLevels.forEach((element) => {
                   store
-                    .dispatch("newlicense/getNLdocuments", [
+                    .dispatch("goodstanding/getGSdocuments", [
                       categoryResults[0].id,
                       generalInfo.value.applicantType.id,
                       element.educationalLevel
@@ -1405,7 +618,7 @@ export default {
                     ])
                     .then((res) => {
                       let resp = res.data.data;
-                      newLicenseDocuments.value = res.data.data;
+                      renewalDocuments.value = res.data.data;
                       educationalDocs.value.push({
                         professionType:
                           element && element.professionType
@@ -1428,7 +641,7 @@ export default {
                 //Get Common Docs
 
                 store
-                  .dispatch("newlicense/getCommonNLdocuments", [
+                  .dispatch("goodstanding/getCommonGSdocuments", [
                     categoryResults[0].id,
                     generalInfo.value.applicantType.id,
                   ])
@@ -1456,7 +669,7 @@ export default {
       previewDocuments,
       showPreview,
       previewFile,
-      handleCommonFileUpload,
+      
       generalInfo,
       back,
       goToNext,

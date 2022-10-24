@@ -750,8 +750,7 @@ export default {
         });
     };
     const clearLocalData = () => {
-      window.localStorage.setItem("GSApplicationData", "");
-      window.localStorage.setItem("GSApplicationImageData", "");
+      window.localStorage.setItem("GSApplicationData", ""); 
       setTimeout(() => {
         window.location.reload();
       }, 1000);

@@ -5,7 +5,7 @@
         <li><a href="#" class="text-main-400 hover:text-blue-700">Home</a></li>
         <li><span class="text-gray-500 mx-2">/</span></li>
         <li>
-          <a href="#" class="text-main-400 hover:text-blue-700">New License</a>
+          <a href="#" class="text-main-400 hover:text-blue-700">Goodstanding</a>
         </li>
         <li><span class="text-gray-500 mx-2">/</span></li>
         <li class="text-gray-500">Submitted</li>
@@ -43,7 +43,7 @@
             <h2 class="text-main-400 border-b-2 text-xl p-2">
               License Number-
               <span class="text-base text-main-400">{{
-                license.newLicenseCode
+                license.goodStandingCode
               }}</span>
             </h2>
 
@@ -60,36 +60,27 @@
             ></header>
 
             <div class="border-b-2 text-main-400">
-              <div class="grid grid-cols-2 p-2">
+              <div
+                class="
+                  flex
+                  items-center
+                  justify-between
+                  leading-tight
+                  p-2
+                  md:p-2
+                "
+              >
                 <h1 class="text-lg">
                   <a
                     class="no-underline hover:underline text-main-400"
                     href="#"
                   >
-                    Profession Name
+                    Who Issued the letter
                   </a>
                 </h1>
-
-                <ul class="text-black text-sm">
-                  <li
-                    v-for="(education, index) in license.educations"
-                    :key="education.id"
-                    style="display: inline"
-                  >
-                    <span class="text-black text-sm">
-                      {{
-                        education.professionType
-                          ? education.professionType.name
-                            ? "*" + education.professionType.name
-                            : "-"
-                          : "-"
-                      }}
-                      <span v-if="index != license.educations.length - 1">
-                        ,
-                      </span>
-                    </span>
-                  </li>
-                </ul>
+                <p class="text-black text-sm">
+                  {{ license ? license.whoIssued : "Waiting for review" }}
+                </p>
               </div>
 
               <div
@@ -107,13 +98,13 @@
                     class="no-underline hover:underline text-main-400"
                     href="#"
                   >
-                    Certified Date
+                    License Registration Number
                   </a>
                 </h1>
                 <p class="text-black text-sm">
                   {{
-                    license.certifiedDate
-                      ? license.certifiedDate
+                    license
+                      ? license.licenseRegistrationNumber
                       : "Waiting for review"
                   }}
                 </p>
@@ -133,14 +124,12 @@
                     class="no-underline hover:underline text-main-400"
                     href="#"
                   >
-                    Expiry Date
+                    To whom the goodstanding is
                   </a>
                 </h1>
                 <p class="text-black text-sm">
                   {{
-                    license.certifiedDate
-                      ? license.certifiedDate
-                      : "Waiting for review"
+                    license ? license.whomGoodStandingFor : "Waiting for review"
                   }}
                 </p>
               </div>
@@ -178,21 +167,21 @@
             <div class="flex justify-center">
               <button
                 class="
-        inline-block
-        px-6
-        text-white
-        bg-main-400
-        hover:text-main-400 hover:border
-        text-sm
-        font-bold
-        uppercase
-        rounded
-        shadow-lg
-        mb-4
-        transition
-        duration-150
-        ease-in-out
-      "
+                  inline-block
+                  px-6
+                  text-white
+                  bg-main-400
+                  hover:text-main-400 hover:border
+                  text-sm
+                  font-bold
+                  uppercase
+                  rounded
+                  shadow-lg
+                  mb-4
+                  transition
+                  duration-150
+                  ease-in-out
+                "
                 @click="openSubmittedDetail(license.id)"
                 data-bs-toggle="modal"
                 data-bs-target="#submittedModalInfo"
@@ -201,25 +190,25 @@
               </button>
 
               <router-link
-                :to="'/Applicant/NewLicense/submitted/detail/' + license.id"
+                :to="'/Applicant/GoodStanding/submitted/detail/' + license.id"
               >
                 <button
                   class="
-        inline-block
-        px-6
-        text-white
-        bg-main-400
-        hover:text-main-400 hover:border
-        text-sm
-        font-bold
-        uppercase
-        rounded
-        shadow-lg
-        mb-4
-        transition
-        duration-150
-        ease-in-out
-      "
+                    inline-block
+                    px-6
+                    text-white
+                    bg-main-400
+                    hover:text-main-400 hover:border
+                    text-sm
+                    font-bold
+                    uppercase
+                    rounded
+                    shadow-lg
+                    mb-4
+                    transition
+                    duration-150
+                    ease-in-out
+                  "
                 >
                   Edit
                 </button>
@@ -282,7 +271,7 @@ export default {
 
     onMounted(() => {
       isLoading.value = true;
-      userInfo.value = JSON.parse(window.localStorage.getItem("personalInfo")); 
+      userInfo.value = JSON.parse(window.localStorage.getItem("personalInfo"));
 
       store.dispatch("goodstanding/getGoodStandingLicense").then((res) => {
         const results = res.data.data;
@@ -291,7 +280,8 @@ export default {
           userSubmittedLicenses.value = results.filter((submittedLicense) => {
             return (
               submittedLicense.applicationStatus.code === "UPD" ||
-              submittedLicense.applicationStatus.code === "SUB"
+              submittedLicense.applicationStatus.code === "SUB"||
+              submittedLicense.applicationStatus.code === "REVDRA"
             );
           });
 

@@ -40,16 +40,8 @@
         >
           <div class="accordion-body py-4 px-5">
             <div class="bg-red-800 py-5">
-              <div class="overflow-x-auto w-full   rounded-lg">
-                <table
-                  class="
-                    max-w-4xl
-                    w-full
-                    whitespace-nowrap
-                    bg-white
-                    
-                  "
-                >
+              <div class="overflow-x-auto w-full rounded-lg">
+                <table class="max-w-4xl w-full whitespace-nowrap bg-white">
                   <thead class="bg-lightMain-500">
                     <tr class="text-left">
                       <th
@@ -234,12 +226,10 @@
 <script>
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
-import MAX_FILE_SIZE from "../../../../composables/documentMessage"; 
+import MAX_FILE_SIZE from "../../../../composables/documentMessage";
 import { boolean } from "yargs";
 import { useToast } from "vue-toastification";
 export default {
- 
-
   setup(props, { emit }) {
     let store = useStore();
     let toast = useToast();
@@ -264,6 +254,7 @@ export default {
     let fileSizeExceed = ref({});
     let fileSize = ref("");
     let showImage = ref(false);
+    let existingDocs = [];
     let previewDocuments = ref({});
     let showPreview = ref("");
     maxFileSize.value = MAX_FILE_SIZE.MAX_FILE_SIZE;
@@ -362,30 +353,104 @@ export default {
       return temp;
     };
 
+    const initDb = () => {
+      let request = indexedDB.open("GSdocumentUploads", 1);
+
+      request.onerror = function () {
+        console.error("Unable to open database.");
+      };
+
+      request.onsuccess = function () {
+        let db = request.result;
+        const tx = db.transaction("GSdocumentUploads", "readwrite");
+        const store = tx.objectStore("GSdocumentUploads");
+        let getAllIDB = store.getAll();
+        getAllIDB.onsuccess = function (evt) {
+          existingDocs =
+            evt.target.result && evt.target.result[0]
+              ? evt.target.result[0].data
+              : {};
+        };
+      };
+
+      request.onupgradeneeded = function () {
+        let db = request.result;
+        db.createObjectStore("GSdocumentUploads", {
+          keyPath: "id",
+          autoIncrement: true,
+        });
+      };
+    };
+
     const next = () => {
       let documentValidation = checkDocuments();
       if (documentValidation) {
-        window.localStorage.setItem(
-          "GSApplicationData",
-          JSON.stringify(generalInfo.value)
-        );
-        window.localStorage.setItem(
-          "GSApplicationImageData",
-          JSON.stringify(imageData)
-        );
-        store.dispatch("goodstanding/setTempDocs", formData);
-        emit("changeActiveState");
+        store.dispatch("goodstanding/setTempDocs", formData).then(() => {
+          let finalLocalData = {
+            created: new Date(),
+            data: [],
+          };
+          let db;
+          let request = indexedDB.open("GSdocumentUploads", 1);
+          request.onsuccess = function () {
+            db = request.result;
+            let transaction = db.transaction(
+              ["GSdocumentUploads"],
+              "readwrite"
+            );
+            let tempStat = false;
+
+            if (existingDocs.length > 0) {
+              imageData.forEach((newImage) => {
+                existingDocs.forEach((existing) => {
+                  if (existing.imageId == newImage.imageId) {
+                    existing.image = newImage.image;
+                    finalLocalData.data.push(existing);
+                  } else {
+                    finalLocalData.data.push(existing);
+                    tempStat = true;
+                  }
+                });
+                if (tempStat == true) {
+                  finalLocalData.data.push(newImage);
+                }
+              });
+              finalLocalData.data.concat(imageData);
+            } else {
+              finalLocalData.data = imageData;
+            }
+            finalLocalData.data = [...new Set(finalLocalData.data)];
+
+            const objectStore = transaction.objectStore("GSdocumentUploads");
+
+            const objectStoreRequest = objectStore.clear();
+
+            objectStoreRequest.onsuccess = (event) => {
+              let addReq = transaction
+                .objectStore("GSdocumentUploads")
+                .put(finalLocalData);
+
+              addReq.onerror = function () {
+                console.log(
+                  "Error regarding your browser, please update your browser to the latest version"
+                );
+              };
+
+              transaction.oncomplete = function () {
+                console.log("data stored");
+                emit("changeActiveState");
+              };
+            };
+          };
+        });
       } else {
-        toast.error(
-          "Please attach required documents outlined in red color ",
-          {
-            timeout: 5000,
-            position: "bottom-center",
-            pauseOnFocusLoss: true,
-            pauseOnHover: true,
-            icon: true,
-          }
-        );
+        toast.error("Please attach the required documents ", {
+          timeout: 5000,
+          position: "bottom-center",
+          pauseOnFocusLoss: true,
+          pauseOnHover: true,
+          icon: true,
+        });
       }
     };
     const back = () => {
@@ -393,6 +458,13 @@ export default {
     };
 
     onMounted(() => {
+         //Initialize indexdb for file storage
+         if (!("indexedDB" in window)) {
+          console.log("This browser doesn't support IndexedDB");
+          return;
+        } else {
+          initDb();
+        }
       localData.value = window.localStorage.getItem("GSApplicationData")
         ? JSON.parse(window.localStorage.getItem("GSApplicationData"))
         : {};

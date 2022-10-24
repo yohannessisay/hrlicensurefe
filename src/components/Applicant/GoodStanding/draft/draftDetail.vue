@@ -9,9 +9,9 @@
         </li>
         <li><span class="text-gray-500 mx-2">/</span></li>
         <li>
-          <router-link to="/Applicant/NewLicense">
+          <router-link to="/Applicant/GoodStanding">
             <a href="#" class="text-main-400 hover:text-blue-700"
-              >New License</a
+              >Goodstanding</a
             >
           </router-link>
         </li>
@@ -900,7 +900,7 @@ export default {
     let isLoading = ref(false);
 
     const fetchApplicantType = () => {
-      store.dispatch("newlicense/getApplicantType").then((res) => {
+      store.dispatch("goodstanding/getApplicantType").then((res) => {
         const results = res.data.data;
         applicantTypes.value = results;
       });
@@ -911,19 +911,19 @@ export default {
       });
     };
     const fetchInstitutions = (value) => {
-      store.dispatch("newlicense/getInstitution", value).then((res) => {
+      store.dispatch("goodstanding/getInstitution", value).then((res) => {
         const institution = res.data.data;
         institutions.value = institution;
       });
     };
     const fetchDepartments = () => {
-      store.dispatch("newlicense/getDepartmentType").then((res) => {
+      store.dispatch("goodstanding/getDepartmentType").then((res) => {
         const department = res.data.data;
         departments.value = department;
       });
     };
     const fetchRegions = () => {
-      store.dispatch("newlicense/getRegions").then((res) => {
+      store.dispatch("goodstanding/getRegions").then((res) => {
         const regionsResult = res.data.data;
         regions.value = regionsResult;
       });
@@ -932,7 +932,7 @@ export default {
     const fetchZones = () => {
       store
 
-        .dispatch("newlicense/getZones", generalInfo.value.regionSelected.id)
+        .dispatch("goodstanding/getZones", generalInfo.value.regionSelected.id)
         .then((res) => {
           const zonesResult = res.data.data;
           zones.value = zonesResult;
@@ -946,7 +946,7 @@ export default {
         action: "WithdrawEvent",
       };
       store
-        .dispatch("reviewer/editNewLicense", req)
+        .dispatch("reviewer/editGoodstandingLicense", req)
         .then((res) => {
           isLoading.value = false;
           if (res.statusText == "Created") {
@@ -976,7 +976,7 @@ export default {
 
     const fetchWoredas = () => {
       store
-        .dispatch("newlicense/getWoredas", generalInfo.value.zoneSelected.id)
+        .dispatch("goodstanding/getWoredas", generalInfo.value.zoneSelected.id)
         .then((res) => {
           const woredasResult = res.data.data;
           woredas.value = woredasResult;
@@ -988,7 +988,7 @@ export default {
         educationalLevelId: educationalLevelId,
       };
       store
-        .dispatch("newlicense/getProfessionalTypes", profession)
+        .dispatch("goodstanding/getProfessionalTypes", profession)
         .then((res) => {
           professionalTypes.value = res.data.data;
         });
@@ -1155,25 +1155,25 @@ export default {
     const apply = () => {
       let tempApplicationData = generalInfo.value;
       window.localStorage.setItem(
-        "NLApplicationData",
+        "GSpplicationData",
         JSON.stringify(tempApplicationData)
       );
       store
-        .dispatch("newlicense/setGeneralInfo", generalInfo.value)
+        .dispatch("goodstanding/setGeneralInfo", generalInfo.value)
         .then(() => {
           emit("changeActiveState");
           activeState.value += 1;
         });
     };
     const fetchApplicationStatuses = () => {
-      store.dispatch("newlicense/getApplicationStatuses").then((res) => {
+      store.dispatch("goodstanding/getApplicationStatuses").then((res) => {
         const results = res.data.data;
         applicationStatuses.value = results;
 
         let status = applicationStatuses.value.filter(function (e) {
           return e.code == "DRA";
         });
-        store.dispatch("newlicense/setButtons", status[0].buttons);
+        store.dispatch("goodstanding/setButtons", status[0].buttons);
       });
     };
     const educationalLevelChange = () => {
@@ -1193,7 +1193,7 @@ export default {
       fetchApplicationStatuses();
 
       store
-        .dispatch("newlicense/getNewLicenseApplication", route.params.id)
+        .dispatch("goodstanding/getGoodStandingLicenseById", route.params.id)
         .then((res) => {
           withdrawData.value = res.data.data;
           generalInfo.value = res.data.data;

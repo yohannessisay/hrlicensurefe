@@ -84,8 +84,7 @@ export default {
             return e.code == "INIT";
           });
 
-          this.buttons = status[0]["buttons"];
-          console.log(this.buttons);
+          this.buttons = status[0]["buttons"]; 
           this.$store.dispatch("goodstanding/setButtons", this.buttons);
         });
     },

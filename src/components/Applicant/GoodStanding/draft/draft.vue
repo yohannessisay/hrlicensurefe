@@ -5,22 +5,21 @@
         <li><a href="#" class="text-main-400 hover:text-blue-700">Home</a></li>
         <li><span class="text-gray-500 mx-2">/</span></li>
         <li>
-          <a href="#" class="text-main-400 hover:text-blue-700">New License</a>
+          <a href="#" class="text-main-400 hover:text-blue-700">Goodstanding</a>
         </li>
         <li><span class="text-gray-500 mx-2">/</span></li>
-        <li class="text-gray-500">Submitted</li>
+        <li class="text-gray-500">Draft</li>
       </ol>
     </nav>
+
     <h2 class="ml-8 mt-8" v-if="isLoading">Loading...</h2>
-    <div
-      class="container my-12 mx-auto px-4 md:px-12"
-      v-if="noData==false"
-    >
+
+    <div class="container my-12 mx-auto px-4 md:px-12" v-if="noData == false">
       <div class="flex flex-wrap sm:-mx-1 lg:-mx-4">
         <!-- Column -->
 
         <div
-          v-for="license in newLicense"
+          v-for="license in userDraftLicenses"
           :key="license.id"
           class="
             bg-white
@@ -40,13 +39,11 @@
           "
         >
           <!-- Article -->
-          <router-link
-            :to="'/Applicant/NewLicense/draft/detail/' + license.id"
-          >
+          <div>
             <h2 class="text-main-400 border-b-2 text-xl p-2">
               License Number-
               <span class="text-base text-main-400">{{
-                license.newLicenseCode
+                license.goodStandingCode
               }}</span>
             </h2>
 
@@ -63,25 +60,27 @@
             ></header>
 
             <div class="border-b-2 text-main-400">
-              <div class="grid grid-cols-2 p-2">
+              <div
+                class="
+                  flex
+                  items-center
+                  justify-between
+                  leading-tight
+                  p-2
+                  md:p-2
+                "
+              >
                 <h1 class="text-lg">
                   <a
                     class="no-underline hover:underline text-main-400"
                     href="#"
                   >
-                    Profession Name
+                    Who Issued the letter
                   </a>
                 </h1>
-
-                <div
-                  v-for="eds in license.educations"
-                  :key="eds.id"
-                  class="text-black text-sm"
-                >
-                  <div class="grid grid-rows-1 text-black">
-                    {{ "*" + eds.professionType.name }}
-                  </div>
-                </div>
+                <p class="text-black text-sm">
+                  {{ license ? license.whoIssued : "Waiting for review" }}
+                </p>
               </div>
 
               <div
@@ -99,13 +98,13 @@
                     class="no-underline hover:underline text-main-400"
                     href="#"
                   >
-                    Certified Date
+                    License Registration Number
                   </a>
                 </h1>
                 <p class="text-black text-sm">
                   {{
-                    license.certifiedDate
-                      ? license.certifiedDate
+                    license
+                      ? license.licenseRegistrationNumber
                       : "Waiting for review"
                   }}
                 </p>
@@ -125,14 +124,12 @@
                     class="no-underline hover:underline text-main-400"
                     href="#"
                   >
-                    Expiry Date
+                    To whom the goodstanding is
                   </a>
                 </h1>
                 <p class="text-black text-sm">
                   {{
-                    license.certifiedDate
-                      ? license.certifiedDate
-                      : "Waiting for review"
+                    license ? license.whomGoodStandingFor : "Waiting for review"
                   }}
                 </p>
               </div>
@@ -166,7 +163,58 @@
                 license.createdAt.slice(0, 10)
               }}</span>
             </footer>
-          </router-link>
+
+            <div class="flex justify-center">
+              <button
+                class="
+                  inline-block
+                  px-6
+                  text-white
+                  bg-main-400
+                  hover:text-main-400 hover:border
+                  text-sm
+                  font-bold
+                  uppercase
+                  rounded
+                  shadow-lg
+                  mb-4
+                  transition
+                  duration-150
+                  ease-in-out
+                "
+                @click="openDraftDetail(license.id)"
+                data-bs-toggle="modal"
+                data-bs-target="#draftModalInfo"
+              >
+                View Detail
+              </button>
+
+              <router-link
+                :to="'/Applicant/GoodStanding/draft/detail/' + license.id"
+              >
+                <button
+                  class="
+                    inline-block
+                    px-6
+                    text-white
+                    bg-main-400
+                    hover:text-main-400 hover:border
+                    text-sm
+                    font-bold
+                    uppercase
+                    rounded
+                    shadow-lg
+                    mb-4
+                    transition
+                    duration-150
+                    ease-in-out
+                  "
+                >
+                  Edit
+                </button>
+              </router-link>
+            </div>
+          </div>
 
           <!-- END Article -->
         </div>
@@ -197,52 +245,70 @@
       <!-- Article -->
 
       <h2 class="text-main-400 border-b-2 text-xl p-2">
-        There are no submitted applications currently.
+        There are no drafted applications currently.
       </h2>
     </div>
+    <draft-modal-info :modalDataId="modalDataId"></draft-modal-info>
   </main-content>
 </template>
-  
-  <script>
+
+<script>
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
 import MainContent from "../sharedComponents/Menu.vue";
 import { googleApi } from "@/composables/baseURL";
+import draftModalInfo from "./draftModalInfo.vue";
+
 export default {
-  components: { MainContent },
+  components: { MainContent, draftModalInfo },
   setup() {
     let store = useStore();
-    let newLicense = ref({});
+    let userDraftLicenses = ref([]);
     let userInfo = ref({});
     let isLoading = ref(true);
-    let noData=ref(false);
+    let noData = ref(false);
+    let modalDataId = ref({ change: 0, id: "" });
+
     onMounted(() => {
       isLoading.value = true;
-      userInfo.value = JSON.parse(window.localStorage.getItem("personalInfo")); 
+      userInfo.value = JSON.parse(window.localStorage.getItem("personalInfo"));
+
       store.dispatch("goodstanding/getGoodStandingLicense").then((res) => {
-        newLicense.value = res.data.data; 
-        if (newLicense.value) {
-          newLicense.value = newLicense.value.filter(function (e) {
+        const results = res.data.data;
+
+        if (results.length > 0) {
+          userDraftLicenses.value = results.filter((draftLicense) => {
             return (
-              e.applicationStatus.code.includes("DRA")  
+              draftLicense.applicationStatus.code === "DRA" 
             );
           });
-          isLoading.value = false;
-          if(newLicense.value.length<1){
-            noData.value=true;
+
+          if (userDraftLicenses.value.length === 0) {
+            noData.value = true;
           }
+
+          isLoading.value = false;
+        } else {
+          noData.value = true;
+          isLoading.value = false;
         }
       });
     });
 
+    const openDraftDetail = (id) => {
+      modalDataId.value.id = id;
+      modalDataId.value.change++;
+    };
+
     return {
-      newLicense,
+      userDraftLicenses,
       googleApi,
       userInfo,
       noData,
       isLoading,
+      openDraftDetail,
+      modalDataId,
     };
   },
 };
 </script>
-  

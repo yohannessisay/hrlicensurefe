@@ -29,7 +29,7 @@
           mb-12
           bg-white
           mt-8
-          shadow-2xl
+          shadow-lg
           rounded-lg
           transform
           transition
@@ -170,7 +170,7 @@
           transition
           duration-300
           ease-in-out
-          shadow-2xl
+          shadow-lg
           hover:-translate-y-2
         "
       >
@@ -316,7 +316,7 @@
           hover:-translate-y-2
         "
       >
-        <div class="bg-white shadow-2xl rounded-lg p-2 mb-8">
+        <div class="bg-white shadow-lg rounded-lg p-2 mb-8">
           <div class="text-gray-900 mb-4 flex justify-center">
             <i class="fa fa-folder fa-3x text-main-400"></i>
           </div>
@@ -358,20 +358,21 @@
               lg:grid-cols-4
             "
           >
+        
             <div
               class="mt-4 mb-8 bg-white shadow-lg rounded-md p-4"
-              v-for="localFileData in localFileData"
-              :key="localFileData.documenttype"
+              v-for="localFile in localFileData"
+              :key="localFile.documenttype"
             >
               <div class="flex justify-center">
                 <div class="mt-large bg-white rounded-md">
                   <a
-                    :href="localFileData.image"
-                    :data-title="localFileData.documenttype"
+                    :href="localFile.image"
+                    :data-title="localFile.documenttype"
                     data-lightbox="example-2"
                   >
                     <img
-                      :src="localFileData.image"
+                      :src="localFile.image"
                       class="w-full h-48 object-cover"
                     />
                   </a>
@@ -379,7 +380,7 @@
                   <h4 class="text-main-400 font-bold border-b m-2">
                     Document Type
                   </h4>
-                  <h6 class="m-2">{{ localFileData.documenttype }}</h6>
+                  <h6 class="m-2">{{ localFile.documenttype }}</h6>
                 </div>
               </div>
             </div>
@@ -417,10 +418,8 @@
         "
       >
         <div class="mb-4">
-          <div class="text-gray-900 mb-4 flex justify-center">
-            <i class="fa fa-check fa-3x text-main-400"></i>
-          </div>
-          <div class="flex justify-center text-gray-900 mb-4 border-b">
+       
+          <div class="flex justify-center text-gray-900 mb-4 ">
             <div class="form-check">
               <input
                 class="
@@ -452,7 +451,7 @@
             <h3
               class="
                 text-black
-                mb-2
+                mb-2localFileData
                 sm:text-xs
                 lgmd:text-base
                 lg:text-base
@@ -472,39 +471,39 @@
             </label>
           </div>
           <div class="vld-parent mt-4">
-              <loading
-                :active="isLoading"
-                :is-full-page="false"
-                :color="'#2F639D'"
-                :opacity="1"
-              ></loading>
-          <div class="mb-3 w-full flex justify-center">
-            <input
-              v-model="generalInfo.feedback"
-              class="
-                form-control
-                block
-                w-full
-                px-3
-                py-1.5
-                text-base
-                font-normal
-                text-gray-700
-                border border-solid border-main-400
-                rounded
-                focus:border-main-400
-                transition
-                ease-in-out
-                m-0
-                focus:outline-none
-              "
-              @keyup="checkAgreement()"
-              id="feedback"
-              rows="6"
-              placeholder="Your feedback"
-              type="textarea"
-            />
-          </div>
+            <loading
+              :active="isLoading"
+              :is-full-page="false"
+              :color="'#2F639D'"
+              :opacity="1"
+            ></loading>
+            <div class="mb-3 w-full flex justify-center">
+              <input
+                v-model="generalInfo.feedback"
+                class="
+                  form-control
+                  block
+                  w-full
+                  px-3
+                  py-1.5
+                  text-base
+                  font-normal
+                  text-gray-700
+                  border border-solid border-main-400
+                  rounded
+                  focus:border-main-400
+                  transition
+                  ease-in-out
+                  m-0
+                  focus:outline-none
+                "
+                @keyup="checkAgreement()"
+                id="feedback"
+                rows="6"
+                placeholder="Your feedback"
+                type="textarea"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -561,14 +560,14 @@ import { useRouter } from "vue-router";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 export default {
-  components:{Loading},
+  components: { Loading },
   setup(props, { emit }) {
     const store = useStore();
     const toast = useToast();
     const router = useRouter();
     let localData = ref({});
     let localFileData = ref({});
-    let isLoading=ref(false)
+    let isLoading = ref(false);
     let generalInfo = ref({});
     let agreed = ref(false);
     let documents = ref([]);
@@ -577,20 +576,14 @@ export default {
     let allowSave = ref(false);
     const changeAgrement = () => {
       agreed.value = !agreed.value;
-      if (
-        generalInfo.value && 
-        agreed.value != false
-      ) {
+      if (generalInfo.value && agreed.value != false) {
         allowSave.value = true;
       } else {
         allowSave.value = false;
       }
     };
     const checkAgreement = () => {
-      if (
-        generalInfo.value && 
-        agreed.value != false
-      ) {
+      if (generalInfo.value && agreed.value != false) {
         allowSave.value = true;
       } else {
         allowSave.value = false;
@@ -600,12 +593,12 @@ export default {
       generalInfo.value.licenseFile = [];
       documents.value = localFileData.value;
 
-      if (agreed.value == true  ) {
+      if (agreed.value == true) {
         let formData = new FormData();
         tempDocs.value.forEach((element, index) => {
           formData.append(index, element);
         });
-        isLoading.value=true;
+        isLoading.value = true;
         // let smsData = {
         //   recipients: [
         //     this.profileInfo.user.phoneNumber
@@ -624,8 +617,8 @@ export default {
             residenceWoredaId: generalInfo.value.woredaSelected
               ? generalInfo.value.woredaSelected.id
               : null,
-            applicantTitle: generalInfo.value.applicantTitle
-              ? generalInfo.value.applicantTitle
+            applicantTitleId: generalInfo.value.applicantTitleId
+              ? generalInfo.value.applicantTitleId.id
               : "",
             whomGoodStandingFor: generalInfo.value.whomGoodStandingFor
               ? generalInfo.value.whomGoodStandingFor
@@ -662,6 +655,7 @@ export default {
               : "",
           },
         };
+        
         store
           .dispatch("goodstanding/addGoodstandingLicense", license)
           .then((res) => {
@@ -670,7 +664,7 @@ export default {
             store
               .dispatch("goodstanding/uploadDocuments", payload)
               .then((res) => {
-                isLoading.value=false;
+                isLoading.value = false;
                 if (res.data.status == "Success") {
                   toast.success("Applied successfuly", {
                     timeout: 5000,
@@ -711,11 +705,22 @@ export default {
       localData.value = window.localStorage.getItem("GSApplicationData")
         ? JSON.parse(window.localStorage.getItem("GSApplicationData"))
         : {};
-      localFileData.value = window.localStorage.getItem(
-        "GSApplicationImageData"
-      )
-        ? JSON.parse(window.localStorage.getItem("GSApplicationImageData"))
-        : {};
+      let request = indexedDB.open("GSdocumentUploads", 1);
+     
+      request.onerror = function () {
+        console.error("Unable to open database.");
+      };
+
+      request.onsuccess = function () {
+        let db = request.result;
+        const tx = db.transaction("GSdocumentUploads", "readonly");
+        const store = tx.objectStore("GSdocumentUploads");
+        let getAllIDB = store.getAll();
+       
+        getAllIDB.onsuccess = function (evt) {
+          localFileData.value = evt.target.result ? evt.target.result[0].data : {};
+        };
+      };
       generalInfo.value = localData.value;
       generalInfo.value.feedback = "";
       if (generalInfo.value.applicantTypeId.id == 1) {

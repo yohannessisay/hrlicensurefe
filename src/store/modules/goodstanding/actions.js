@@ -1,5 +1,6 @@
 import ApiService from "../../../services/api.service";
 import { baseUrl } from "../../../composables/baseURL";
+
 import {
   SET_APPLICATION_ID,
   SET_LICENSE,
@@ -22,6 +23,9 @@ export default {
   setApplicationId({ commit }, id) {
     commit(SET_APPLICATION_ID, id);
   },
+  setTempDocs({ commit }, docs) {
+    commit(SET_TEMP_DOCS, docs);
+  },
   setLicense({ commit }, license) {
     commit(SET_LICENSE, license);
   },
@@ -43,10 +47,6 @@ export default {
   async storeRemark({ commit }, remark) {
     commit(SET_REMARK, remark);
   },
-  async setTempDocs({ commit }, docs) {
-    commit(SET_TEMP_DOCS, docs);
-  },
-
   set_License_Copy({ commit }, licenseCopy) {
     commit(SET_LICENSE_COPY, licenseCopy);
   },
@@ -84,6 +84,22 @@ export default {
   async uploadDocuments({ commit }, documents) {
     try {
       const resp = await ApiService.post(
+        baseUrl + "/documentUploads/goodStandingDocument/" + documents.id,
+        documents.document,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async updateDocuments({ commit }, documents) {
+    try {
+      const resp = await ApiService.put(
         baseUrl + "/documentUploads/goodStandingDocument/" + documents.id,
         documents.document,
         {

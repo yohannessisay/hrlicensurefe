@@ -280,6 +280,12 @@ const routes = [
       import("../components/Applicant/GoodStanding/submitted/submitted.vue")
   },
   {
+    path: "/Applicant/GoodStanding/submitted/detail/:id",
+    name: "ApplicantGoodStandingSubmittedDetail",
+    component: () =>
+      import("../components/Applicant/GoodStanding/submitted/submittedDetail.vue")
+  },
+  {
     path: "/Applicant/GoodStanding/assigned",
     name: "ApplicantGoodStandingInReview",
     component: () =>
@@ -310,6 +316,12 @@ const routes = [
     name: "ApplicantGoodStandingDraft",
     component: () =>
       import("../components/Applicant/GoodStanding/draft/draft.vue")
+  },
+  {
+    path: "/Applicant/GoodStanding/draft/detail/:id",
+    name: "ApplicantGoodStandingDraftDetail",
+    component: () =>
+      import("../components/Applicant/GoodStanding/draft/draftDetail.vue")
   },
 
     //Applicant Profile Management

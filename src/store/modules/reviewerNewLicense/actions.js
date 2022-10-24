@@ -1463,13 +1463,5 @@ export default {
       return error;
     }
   },
-  async getNewLicenseReturned() {
-    try {
-      const url = baseUrl + "/newLicenses/returned";
-      const resp = await ApiService.get(url);
-      return resp;
-    } catch (error) {
-      return error;
-    }
-  },
+ 
 };

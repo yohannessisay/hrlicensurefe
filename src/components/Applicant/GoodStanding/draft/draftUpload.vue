@@ -911,7 +911,7 @@ export default {
     let formData = new FormData();
     let documentsSaved = ref({});
     let documentsUploaded = ref({});
-    let newLicenseDocuments = ref([]);
+    let GSDocuments = ref([]);
     let errorDocuments = ref([]);
     let showNestedDocuments = ref({});
 
@@ -1227,7 +1227,7 @@ export default {
     const next = () => {
       let documentValidation = checkDocuments();
       if (documentValidation) {
-        store.dispatch("newlicense/setTempDocs", formData).then(() => {
+        store.dispatch("goodstanding/setTempDocs", formData).then(() => {
           //Save images to indexed Db
 
           let finalLocalData = {
@@ -1235,25 +1235,25 @@ export default {
             data: [],
           };
           let db;
-          let request = indexedDB.open("NLdocumentUploads", 1);
+          let request = indexedDB.open("GSdocumentUploads", 1);
           request.onsuccess = function () {
             db = request.result;
             let transaction = db.transaction(
-              ["NLdocumentUploads"],
+              ["GSdocumentUploads"],
               "readwrite"
             );
 
             finalLocalData.data = imageData;
-
+          
             finalLocalData.data = [...new Set(finalLocalData.data)];
 
-            const objectStore = transaction.objectStore("NLdocumentUploads");
+            const objectStore = transaction.objectStore("GSdocumentUploads");
 
             const objectStoreRequest = objectStore.clear();
 
             objectStoreRequest.onsuccess = (event) => {
               let addReq = transaction
-                .objectStore("NLdocumentUploads")
+                .objectStore("GSdocumentUploads")
                 .put(finalLocalData);
 
               addReq.onerror = function () {
@@ -1347,7 +1347,7 @@ export default {
     // };
 
     const initDb = () => {
-      let request = indexedDB.open("NLdocumentUploads", 1);
+      let request = indexedDB.open("GSdocumentUploads", 1);
 
       request.onerror = function () {
         console.error("Unable to open database.");
@@ -1355,7 +1355,7 @@ export default {
 
       request.onupgradeneeded = function () {
         let db = request.result;
-        db.createObjectStore("NLdocumentUploads", {
+        db.createObjectStore("GSdocumentUploads", {
           keyPath: "id",
           autoIncrement: true,
         });
@@ -1370,7 +1370,7 @@ export default {
         initDb();
       }
       store
-        .dispatch("newlicense/getNewLicenseApplication", route.params.id)
+        .dispatch("goodstanding/getGoodStandingLicenseById", route.params.id)
         .then((res) => {
           if (res.data.data) {
             generalInfo.value = res.data.data;
@@ -1384,7 +1384,7 @@ export default {
             documentsUploaded.value = documentsSaved.value;
 
             store
-              .dispatch("newlicense/getApplicationCategories")
+              .dispatch("goodstanding/getApplicationCategories")
               .then((res) => {
                 let categoryResults = res.data.data
                   ? res.data.data.filter((ele) => ele.code == "NA")
@@ -1394,7 +1394,7 @@ export default {
                 //Get department docs
                 educationLevels.forEach((element) => {
                   store
-                    .dispatch("newlicense/getNLdocuments", [
+                    .dispatch("goodstanding/getGSdocuments", [
                       categoryResults[0].id,
                       generalInfo.value.applicantType.id,
                       element.educationalLevel
@@ -1405,7 +1405,7 @@ export default {
                     ])
                     .then((res) => {
                       let resp = res.data.data;
-                      newLicenseDocuments.value = res.data.data;
+                      GSDocuments.value = res.data.data;
                       educationalDocs.value.push({
                         professionType:
                           element && element.professionType
@@ -1428,7 +1428,7 @@ export default {
                 //Get Common Docs
 
                 store
-                  .dispatch("newlicense/getCommonNLdocuments", [
+                  .dispatch("goodstanding/getCommonGSdocuments", [
                     categoryResults[0].id,
                     generalInfo.value.applicantType.id,
                   ])
