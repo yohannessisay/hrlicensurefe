@@ -276,7 +276,7 @@ export default {
       store.dispatch("goodstanding/getGoodStandingLicense").then((res) => {
         const results = res.data.data;
 
-        if (results.length > 0) {
+        if (results&&results.length > 0) {
           userSubmittedLicenses.value = results.filter((submittedLicense) => {
             return (
               submittedLicense.applicationStatus.code === "UPD" ||

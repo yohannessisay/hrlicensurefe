@@ -224,7 +224,7 @@
                 <label class="text-main-400">Education Level</label>
                 <select
                   class="
-                  form-select
+                    form-select
                     appearance-none
                     block
                     xl:w-64
@@ -247,11 +247,11 @@
                     focus:outline-none
                   "
                   :disabled="!isDepartmentSelected"
-                  v-model="generalInfo.educationLevelId"
+                  v-model="generalInfo.professionType.educationLevelId"
                   @change="educationalLevelChange()"
                   required
                 >
-                <option value="" disabled>
+                  <option value="" disabled>
                     Please select department first
                   </option>
                   <option
@@ -265,9 +265,16 @@
               </div>
             </div>
             <div
-              class="flex justify-center text-6xl rounded-xl p-2 bg-gray-100"
+              class="
+                grid grid-rows-3
+                justify-center
+                text-6xl
+                rounded-xl
+                p-2
+                bg-gray-100
+              "
             >
-              <div>
+              <div class="mb-4">
                 <label class="text-main-400">Profession</label>
                 <select
                   class="
@@ -294,7 +301,8 @@
                     focus:outline-none
                   "
                   :disabled="!isEdLevelSelected"
-                  v-model="generalInfo.professionTypeIds"
+                  @change="checkOtherProfession()"
+                  v-model="generalInfo.professionType.professionTypeId"
                   required
                 >
                   <option value="" disabled>
@@ -307,7 +315,76 @@
                   >
                     {{ profession.name }}
                   </option>
+                  <option value=""></option>
                 </select>
+              </div>
+
+              <div v-show="showOtherProfession">
+                <label class="text-main-400">Other Profession</label>
+                <input
+                  type="text"
+                  id="applicantTitle"
+                  v-model="generalInfo.professionType.otherProfessionType"
+                  class="
+                    appearance-none
+                    block
+                    xl:w-64
+                    md:w-64
+                    sm:w-64
+                    px-3
+                    py-1.5
+                    text-base
+                    font-normal
+                    text-gray-700
+                    hover:text-main-500 hover:border-main-500
+                    border border-solid border-gray-300
+                    rounded
+                    transition
+                    ease-in-out
+                    m-0
+                    focus:text-gray-700
+                    focus:bg-white
+                    focus:border-main-400
+                    focus:outline-none
+                  "
+                  autocomplete="off"
+                  placeholder=""
+                  required
+                />
+              </div>
+
+              <div  v-show="showOtherProfession">
+                <label class="text-main-400">Other Profession Amharic</label>
+                <input
+                  type="text"
+                  id="applicantTitle"
+                  v-model="generalInfo.professionType.otherProfessionType"
+                  class="
+                    appearance-none
+                    block
+                    xl:w-64
+                    md:w-64
+                    sm:w-64
+                    px-3
+                    py-1.5
+                    text-base
+                    font-normal
+                    text-gray-700
+                    hover:text-main-500 hover:border-main-500
+                    border border-solid border-gray-300
+                    rounded
+                    transition
+                    ease-in-out
+                    m-0
+                    focus:text-gray-700
+                    focus:bg-white
+                    focus:border-main-400
+                    focus:outline-none
+                  "
+                  autocomplete="off"
+                  placeholder=""
+                  required
+                />
               </div>
             </div>
           </div>
@@ -315,10 +392,7 @@
       </div>
 
       <!-- region -->
-      <div
-        v-if="showLocation"
-        class="pt-8 mt-12   rounded bg-white shadow-lg"
-      >
+      <div v-if="showLocation" class="pt-8 mt-12 rounded bg-white shadow-lg">
         <div class="flex">
           <div class="flex flex-col mb-medium w-2/5 ml-medium mr-12">
             <label class="text-main-400">Region</label>
@@ -460,7 +534,28 @@
                     type="text"
                     id="applicantTitle"
                     v-model="generalInfo.whomGoodStandingFor"
-                    class="w-full px-3 py-2 rounded-none"
+                    class="
+                      appearance-none
+                      block
+                      xl:w-64
+                      md:w-64
+                      sm:w-64
+                      px-3
+                      py-1.5
+                      text-base
+                      font-normal
+                      text-gray-700
+                      hover:text-main-500 hover:border-main-500
+                      border border-solid border-gray-300
+                      rounded
+                      transition
+                      ease-in-out
+                      m-0
+                      focus:text-gray-700
+                      focus:bg-white
+                      focus:border-main-400
+                      focus:outline-none
+                    "
                     autocomplete="off"
                     placeholder=""
                     required
@@ -490,7 +585,28 @@
                     type="text"
                     id="applicantTitle"
                     v-model="generalInfo.whoIssued"
-                    class="w-full px-3 py-2 rounded-none"
+                    class="
+                      appearance-none
+                      block
+                      xl:w-64
+                      md:w-64
+                      sm:w-64
+                      px-3
+                      py-1.5
+                      text-base
+                      font-normal
+                      text-gray-700
+                      hover:text-main-500 hover:border-main-500
+                      border border-solid border-gray-300
+                      rounded
+                      transition
+                      ease-in-out
+                      m-0
+                      focus:text-gray-700
+                      focus:bg-white
+                      focus:border-main-400
+                      focus:outline-none
+                    "
                     autocomplete="off"
                     placeholder=""
                     required
@@ -525,7 +641,28 @@
                     type="text"
                     id="applicantTitle"
                     v-model="generalInfo.licenseRegistrationNumber"
-                    class="w-full px-3 py-2 rounded-none"
+                    class="
+                      appearance-none
+                      block
+                      xl:w-64
+                      md:w-64
+                      sm:w-64
+                      px-3
+                      py-1.5
+                      text-base
+                      font-normal
+                      text-gray-700
+                      hover:text-main-500 hover:border-main-500
+                      border border-solid border-gray-300
+                      rounded
+                      transition
+                      ease-in-out
+                      m-0
+                      focus:text-gray-700
+                      focus:bg-white
+                      focus:border-main-400
+                      focus:outline-none
+                    "
                     autocomplete="off"
                     placeholder=""
                     required
@@ -547,7 +684,28 @@
                     type="date"
                     id="applicantTitle"
                     v-model="generalInfo.licenseIssuedDate"
-                    class="w-full px-3 py-2 rounded-none"
+                    class="
+                      appearance-none
+                      block
+                      xl:w-64
+                      md:w-64
+                      sm:w-64
+                      px-3
+                      py-1.5
+                      text-base
+                      font-normal
+                      text-gray-700
+                      hover:text-main-500 hover:border-main-500
+                      border border-solid border-gray-300
+                      rounded
+                      transition
+                      ease-in-out
+                      m-0
+                      focus:text-gray-700
+                      focus:bg-white
+                      focus:border-main-400
+                      focus:outline-none
+                    "
                     autocomplete="off"
                     placeholder="example-MR,MRS"
                     required
@@ -606,12 +764,12 @@ export default {
     let generalInfo = ref({
       applicantId: +localStorage.getItem("userId"),
       applicantTypeId: "",
-      residenceWoredaId: "", 
+      residenceWoredaId: "",
       whomGoodStandingFor: "",
       licenseIssuedDate: "",
       whoIssued: "",
       licenseRegistrationNumber: "",
-      professionTypeIds: "",
+      professionType: { professionTypeId: "", educationLevelId: "" },
       applicantPositionId: "",
       otherProfessionType: "",
       otherProfessionTypeAmharic: "",
@@ -625,12 +783,13 @@ export default {
       expertLevelId: "",
       licenseFile: [],
     });
+    let showOtherProfession = ref(false);
     let localData = ref([]);
     let regions = ref([]);
     let isDepartmentSelected = ref(false);
     let isEdLevelSelected = ref(false);
     let isAppTypeSelected = ref(false);
-    let educationLevels=ref([]);
+    let educationLevels = ref([]);
     let zones = ref([]);
     let woredas = ref([]);
     let departments = ref([]);
@@ -639,7 +798,6 @@ export default {
     let applicantTypes = ref([]);
     let showLocation = ref(false);
     let professionalTypes = ref([]);
-    let showOtherProfession = ref(false);
 
     const checkApplicantType = (applicantType) => {
       generalInfo.value.regionId = null;
@@ -664,7 +822,7 @@ export default {
       isEdLevelSelected.value = true;
       fetchProfessionalType(
         generalInfo.value.departmentId.id,
-        generalInfo.value.educationLevelId.id
+        generalInfo.value.professionType.educationLevelId.id
       );
     };
     const fetchZones = () => {
@@ -676,8 +834,16 @@ export default {
           zones.value = zonesResult;
         });
     };
-    const checkOtherProfession = (profession, event) => {
-      showOtherProfession.value = true;
+    const checkOtherProfession = () => {
+      if (
+        generalInfo.value.professionType &&
+        generalInfo.value.professionType.professionTypeId &&
+        generalInfo.value.professionType.professionTypeId.code == "OTH"
+      ) {
+        showOtherProfession.value = true;
+      } else {
+        showOtherProfession.value = false;
+      }
     };
 
     const fetchApplicantType = () => {
@@ -732,9 +898,9 @@ export default {
         });
     };
     const setDepartment = () => {
-      isDepartmentSelected.value=true;
-      generalInfo.value.educationLevelId="";
-      generalInfo.value.professionTypeIds=""
+      isDepartmentSelected.value = true;
+      generalInfo.value.educationLevelId = "";
+      generalInfo.value.professionTypeIds = "";
       fetchProfessionalType(generalInfo.value.departmentId.id);
     };
     const apply = () => {
@@ -750,7 +916,7 @@ export default {
         });
     };
     const clearLocalData = () => {
-      window.localStorage.setItem("GSApplicationData", ""); 
+      window.localStorage.setItem("GSApplicationData", "");
       setTimeout(() => {
         window.location.reload();
       }, 1000);
@@ -787,6 +953,7 @@ export default {
       setDepartment,
       apply,
       fetchZone,
+      showOtherProfession,
       applicantTitle,
       isDepartmentSelected,
       isEdLevelSelected,
