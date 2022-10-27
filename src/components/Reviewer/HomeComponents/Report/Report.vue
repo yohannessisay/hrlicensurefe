@@ -828,8 +828,8 @@ export default {
         reportData.value.push(...res.data.data);
 
         res.data.data.forEach(element => {
-          let prof = element.licenseProfessionalTypes.map(prof => {
-            return prof.professionalTypes ? prof.professionalTypes.name : "";
+          let prof = element.educations.map(prof => {
+            return prof.professionType ? prof.professionType.name : "";
           });
           tableData.push({
             id: element.id ? element.id : "",
