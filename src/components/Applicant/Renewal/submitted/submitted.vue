@@ -19,7 +19,7 @@
         <!-- Column -->
 
         <div
-          v-for="license in userSubmittedLicenses"
+          v-for="license in userDraftLicenses"
           :key="license.id"
           class="
             bg-white
@@ -193,15 +193,15 @@
         duration-150
         ease-in-out
       "
-                @click="openSubmittedDetail(license.id)"
+                @click="openDraftDetail(license.id)"
                 data-bs-toggle="modal"
-                data-bs-target="#submittedModalInfo"
+                data-bs-target="#draftModalInfo"
               >
                 View Detail
               </button>
 
               <router-link
-                :to="'/Applicant/Renewal/submitted/detail/' + license.id"
+                :to="'/Applicant/Renewal/draft/detail/' + license.id"
               >
                 <button
                   class="
@@ -259,7 +259,7 @@
         There are no submitted applications currently.
       </h2>
     </div>
-    <submitted-modal-info :modalDataId="modalDataId"></submitted-modal-info>
+    <draft-modal-info :modalDataId="modalDataId"></draft-modal-info>
   </main-content>
 </template>
 
@@ -268,13 +268,13 @@ import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
 import MainContent from "../sharedComponents/Menu.vue";
 import { googleApi } from "@/composables/baseURL";
-import submittedModalInfo from "./submittedModalInfo.vue";
+import draftModalInfo from "./submittedModalInfo.vue";
 
 export default {
-  components: { MainContent, submittedModalInfo },
+  components: { MainContent, draftModalInfo },
   setup() {
     let store = useStore();
-    let userSubmittedLicenses = ref([]);
+    let userDraftLicenses = ref([]);
     let userInfo = ref({});
     let isLoading = ref(true);
     let noData = ref(false);
@@ -285,18 +285,19 @@ export default {
       userInfo.value = JSON.parse(window.localStorage.getItem("personalInfo"));
       let userId = JSON.parse(window.localStorage.getItem("userId"));
 
-      store.dispatch("renewal/getRenewalsByUser", userId).then((res) => {
+      store.dispatch("renewal/getRenewalLicense", userId).then((res) => {
         const results = res.data.data;
 
         if (results.length > 0) {
-          userSubmittedLicenses.value = results.filter((submittedLicense) => {
+          userDraftLicenses.value = results.filter((draftLicenses) => {
             return (
-              submittedLicense.applicationStatus.code === "UPD" ||
-              submittedLicense.applicationStatus.code === "SUB"
+              draftLicenses.applicationStatus.code === "UPD" ||
+              draftLicenses.applicationStatus.code === "SUB"  ||
+              draftLicenses.applicationStatus.code === "REVDRA"
             );
           });
 
-          if (userSubmittedLicenses.value.length === 0) {
+          if (userDraftLicenses.value.length === 0) {
             noData.value = true;
           }
 
@@ -308,18 +309,18 @@ export default {
       });
     });
 
-    const openSubmittedDetail = (id) => {
+    const openDraftDetail = (id) => {
       modalDataId.value.id = id;
       modalDataId.value.change++;
     };
 
     return {
-      userSubmittedLicenses,
+      userDraftLicenses,
       googleApi,
       userInfo,
       noData,
       isLoading,
-      openSubmittedDetail,
+      openDraftDetail,
       modalDataId,
     };
   },

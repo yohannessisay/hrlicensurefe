@@ -400,9 +400,14 @@
                                           >{{
                                             department.professionType &&
                                             department.professionType.name
-                                              ? department.professionType.name
-                                              : department.otherProfessionType
-                                              ? department.otherProfessionType
+                                              ? department.prefix
+                                                ? "(" +
+                                                  department.prefix.name +
+                                                  ")" +
+                                                  department.professionType.name
+                                                : department.otherProfessionType
+                                                ? department.otherProfessionType
+                                                : ""
                                               : ""
                                           }}
                                         </b>
@@ -912,7 +917,15 @@
                                                     ? modalData.previousEducations
                                                     : []
                                                 )[0].professionType
-                                                ? modalData.newEducations.concat(
+                                                ? +"( " +
+                                                  modalData.newEducations.concat(
+                                                    modalData &&
+                                                      modalData.previousEducations
+                                                      ? modalData.previousEducations
+                                                      : []
+                                                  )[20].prefix.name +
+                                                  " )" +
+                                                  modalData.newEducations.concat(
                                                     modalData &&
                                                       modalData.previousEducations
                                                       ? modalData.previousEducations
@@ -945,7 +958,15 @@
                                                     ? modalData.previousEducations
                                                     : []
                                                 )[1].professionType
-                                                ? modalData.newEducations.concat(
+                                                ? +"( " +
+                                                  modalData.newEducations.concat(
+                                                    modalData &&
+                                                      modalData.previousEducations
+                                                      ? modalData.previousEducations
+                                                      : []
+                                                  )[1].prefix.name +
+                                                  " )" +
+                                                  modalData.newEducations.concat(
                                                     modalData &&
                                                       modalData.previousEducations
                                                       ? modalData.previousEducations
@@ -978,7 +999,15 @@
                                                     ? modalData.previousEducations
                                                     : []
                                                 )[2].professionType
-                                                ? modalData.newEducations.concat(
+                                                ? +"( " +
+                                                  modalData.newEducations.concat(
+                                                    modalData &&
+                                                      modalData.previousEducations
+                                                      ? modalData.previousEducations
+                                                      : []
+                                                  )[2].prefix.name +
+                                                  " )" +
+                                                  modalData.newEducations.concat(
                                                     modalData &&
                                                       modalData.previousEducations
                                                       ? modalData.previousEducations
@@ -1337,35 +1366,21 @@
                                           "
                                           >{{
                                             modalData.newEducations
-                                              ? modalData.newEducations.concat(
+                                              ? +"( " +
+                                                modalData.newEducations.concat(
+                                                  modalData &&
+                                                    modalData.previousEducations
+                                                    ? modalData.previousEducations
+                                                    : []
+                                                )[3].prefix.name +
+                                                " )" +
+                                                modalData.newEducations.concat(
                                                   modalData &&
                                                     modalData.previousEducations
                                                     ? modalData.previousEducations
                                                     : []
                                                 )[3].professionType
                                                   .amharicProfessionalType
-                                              : []
-                                          }}
-                                        </b>
-                                        <span class="text-sm ml-1 mr-1">
-                                          ከ
-                                        </span>
-                                        <b
-                                          class="
-                                            text-yellow-300
-                                            ml-1
-                                            text-sm
-                                            col-span-2
-                                          "
-                                        >
-                                          {{
-                                            modalData.newEducations
-                                              ? modalData.newEducations.concat(
-                                                  modalData &&
-                                                    modalData.previousEducations
-                                                    ? modalData.previousEducations
-                                                    : []
-                                                )[3].institution.name
                                               : []
                                           }}
                                         </b>
@@ -1396,35 +1411,21 @@
                                           "
                                           >{{
                                             modalData.newEducations
-                                              ? modalData.newEducations.concat(
+                                              ? +"( " +
+                                                modalData.newEducations.concat(
+                                                  modalData &&
+                                                    modalData.previousEducations
+                                                    ? modalData.previousEducations
+                                                    : []
+                                                )[4].prefix.name +
+                                                " )" +
+                                                modalData.newEducations.concat(
                                                   modalData &&
                                                     modalData.previousEducations
                                                     ? modalData.previousEducations
                                                     : []
                                                 )[4].professionType
                                                   .amharicProfessionalType
-                                              : []
-                                          }}
-                                        </b>
-                                        <span class="text-sm ml-1 mr-1">
-                                          ከ
-                                        </span>
-                                        <b
-                                          class="
-                                            text-yellow-300
-                                            ml-1
-                                            text-sm
-                                            col-span-2
-                                          "
-                                        >
-                                          {{
-                                            modalData.newEducations
-                                              ? modalData.newEducations.concat(
-                                                  modalData &&
-                                                    modalData.previousEducations
-                                                    ? modalData.previousEducations
-                                                    : []
-                                                )[4].institution.name
                                               : []
                                           }}
                                         </b>
@@ -1455,35 +1456,21 @@
                                           "
                                           >{{
                                             modalData.newEducations
-                                              ? modalData.newEducations.concat(
+                                              ? +"( " +
+                                                modalData.newEducations.concat(
+                                                  modalData &&
+                                                    modalData.previousEducations
+                                                    ? modalData.previousEducations
+                                                    : []
+                                                )[5].prefix.name +
+                                                " )" +
+                                                modalData.newEducations.concat(
                                                   modalData &&
                                                     modalData.previousEducations
                                                     ? modalData.previousEducations
                                                     : []
                                                 )[5].professionType
                                                   .amharicProfessionalType
-                                              : []
-                                          }}
-                                        </b>
-                                        <span class="text-sm ml-1 mr-1">
-                                          ከ
-                                        </span>
-                                        <b
-                                          class="
-                                            text-yellow-300
-                                            ml-1
-                                            text-sm
-                                            col-span-2
-                                          "
-                                        >
-                                          {{
-                                            modalData.newEducations
-                                              ? modalData.newEducations.concat(
-                                                  modalData &&
-                                                    modalData.previousEducations
-                                                    ? modalData.previousEducations
-                                                    : []
-                                                )[5].institution.name
                                               : []
                                           }}
                                         </b>
@@ -1527,28 +1514,6 @@
                                               : []
                                           }}
                                         </b>
-                                        <span class="text-sm ml-1 mr-1">
-                                          from
-                                        </span>
-                                        <b
-                                          class="
-                                            text-yellow-300
-                                            ml-1
-                                            text-sm
-                                            col-span-2
-                                          "
-                                        >
-                                          {{
-                                            modalData.newEducations
-                                              ? modalData.newEducations.concat(
-                                                  modalData &&
-                                                    modalData.previousEducations
-                                                    ? modalData.previousEducations
-                                                    : []
-                                                )[3].institution.name
-                                              : []
-                                          }}
-                                        </b>
                                       </div>
                                       <!-- end -->
                                       <!-- fifth profession -->
@@ -1585,28 +1550,6 @@
                                               : []
                                           }}
                                         </b>
-                                        <span class="text-sm ml-1 mr-1">
-                                          from
-                                        </span>
-                                        <b
-                                          class="
-                                            text-yellow-300
-                                            ml-1
-                                            text-sm
-                                            col-span-2
-                                          "
-                                        >
-                                          {{
-                                            modalData.newEducations
-                                              ? modalData.newEducations.concat(
-                                                  modalData &&
-                                                    modalData.previousEducations
-                                                    ? modalData.previousEducations
-                                                    : []
-                                                )[4].institution.name
-                                              : []
-                                          }}
-                                        </b>
                                       </div>
                                       <!-- end -->
                                       <!-- sixth profession -->
@@ -1640,28 +1583,6 @@
                                                     ? modalData.previousEducations
                                                     : []
                                                 )[5].professionType.name
-                                              : []
-                                          }}
-                                        </b>
-                                        <span class="text-sm ml-1 mr-1">
-                                          from
-                                        </span>
-                                        <b
-                                          class="
-                                            text-yellow-300
-                                            ml-1
-                                            text-sm
-                                            col-span-2
-                                          "
-                                        >
-                                          {{
-                                            modalData.newEducations
-                                              ? modalData.newEducations.concat(
-                                                  modalData &&
-                                                    modalData.previousEducations
-                                                    ? modalData.previousEducations
-                                                    : []
-                                                )[5].institution.name
                                               : []
                                           }}
                                         </b>
@@ -1969,8 +1890,44 @@ export default {
     ) => {
       doc.setFontSize(17);
       doc2.setFontSize(17);
+  //Amharic name part
+  doc.text(
+        60,
+        namePosition - 5,
+        `${
+          certifiedUser.value.alternativeName
+            ? certifiedUser.value.alternativeName
+            : ""
+        } ${
+          certifiedUser.value.alternativeFatherName
+            ? certifiedUser.value.alternativeFatherName
+            : ""
+        } ${
+          certifiedUser.value.alternativeGrandFatherName
+            ? certifiedUser.value.alternativeGrandFatherName
+            : ""
+        }`
+      );
+      doc2.text(
+        60,
+        namePosition - 5,
+        `${
+          certifiedUser.value.alternativeName
+            ? certifiedUser.value.alternativeName
+            : ""
+        } ${
+          certifiedUser.value.alternativeFatherName
+            ? certifiedUser.value.alternativeFatherName
+            : ""
+        } ${
+          certifiedUser.value.alternativeGrandFatherName
+            ? certifiedUser.value.alternativeGrandFatherName
+            : ""
+        }`
+      );
+      //English name part
       doc.text(
-        170,
+        190,
         namePosition,
         `${certifiedUser.value.name} ${certifiedUser.value.fatherName} ${
           certifiedUser.value.grandFatherName
@@ -1979,7 +1936,7 @@ export default {
         }`
       );
       doc2.text(
-        170,
+        190,
         namePosition,
         `${certifiedUser.value.name} ${certifiedUser.value.fatherName} ${
           certifiedUser.value.grandFatherName
@@ -2040,15 +1997,14 @@ export default {
       if (changeWidth.value) {
         doc.setFontSize(10);
         doc2.setFontSize(10);
-        xPosition.value = 150;
+        xPosition.value = 167;
       } else if (changeWidthTooSmall.value) {
         doc.setFontSize(10);
         doc2.setFontSize(10);
-        xPosition.value = 45;
+        xPosition.value = 153;
       } else {
-        doc.setFontSize(10);
-        doc2.setFontSize(10);
-        xPosition.value = 150;
+        doc.setFontSize(14);
+        doc2.setFontSize(14);
       }
 
       if (certificateDetail.value.educations.length <= 3) {
@@ -2190,7 +2146,6 @@ export default {
             : "Not Specified"
         }`
       );
-      //Amharic part for certificate
       // License Number for amharic
       doc.text(38, 58, `${certificateDetail.value.licenseNumber}`);
       doc2.text(38, 58, `${certificateDetail.value.licenseNumber}`);
@@ -2204,89 +2159,23 @@ export default {
 
       doc.setFontSize(17);
       doc2.setFontSize(17);
-      if (code === "AA" || code == "FED") {
-        doc.text(
-          60,
-          namePosition - 5,
-          `${
-            certifiedUser.value.alternativeName
-              ? certifiedUser.value.alternativeName
-              : ""
-          } ${
-            certifiedUser.value.alternativeFatherName
-              ? certifiedUser.value.alternativeFatherName
-              : ""
-          } ${
-            certifiedUser.value.alternativeGrandFatherName
-              ? certifiedUser.value.alternativeGrandFatherName
-              : ""
-          }`
-        );
-        doc2.text(
-          60,
-          namePosition - 5,
-          `${
-            certifiedUser.value.alternativeName
-              ? certifiedUser.value.alternativeName
-              : ""
-          } ${
-            certifiedUser.value.alternativeFatherName
-              ? certifiedUser.value.alternativeFatherName
-              : ""
-          } ${
-            certifiedUser.value.alternativeGrandFatherName
-              ? certifiedUser.value.alternativeGrandFatherName
-              : ""
-          }`
-        );
-      } else {
-        doc.text(
-          60,
-          namePosition,
-          `${
-            certifiedUser.value.alternativeName
-              ? certifiedUser.value.alternativeName
-              : ""
-          } ${
-            certifiedUser.value.alternativeFatherName
-              ? certifiedUser.value.alternativeFatherName
-              : ""
-          } ${
-            certifiedUser.value.alternativeGrandFatherName
-              ? certifiedUser.value.alternativeGrandFatherName
-              : ""
-          }`
-        );
-        doc2.text(
-          60,
-          namePosition,
-          `${
-            certifiedUser.value.alternativeName
-              ? certifiedUser.value.alternativeName
-              : ""
-          } ${
-            certifiedUser.value.alternativeFatherName
-              ? certifiedUser.value.alternativeFatherName
-              : ""
-          } ${
-            certifiedUser.value.alternativeGrandFatherName
-              ? certifiedUser.value.alternativeGrandFatherName
-              : ""
-          }`
-        );
-      }
+
+
+      
+
+
 
       if (changeWidth.value) {
-        doc.setFontSize(10);
-        doc2.setFontSize(10);
+        doc.setFontSize(11);
+        doc2.setFontSize(11);
         xPosition.value = 18;
       } else if (changeWidthTooSmall.value) {
-        doc.setFontSize(10);
-        doc2.setFontSize(10);
+        doc.setFontSize(11);
+        doc2.setFontSize(11);
         xPosition.value = 12;
       } else {
-        doc.setFontSize(10);
-        doc2.setFontSize(10);
+        doc.setFontSize(14);
+        doc2.setFontSize(14);
         xPosition.value = 30;
       }
       if (certificateDetail.value.educations.length <= 3) {
@@ -2321,7 +2210,6 @@ export default {
         }
         let newI = 0;
         for (let i = 3; i < 6; i++) {
-         
           if (certificateDetail.value.educations[i]) {
             doc2.text(
               xPosition.value,

@@ -402,6 +402,7 @@
                         </p>
                       </td>
                       <td class="px-6 py-4">
+                     
                         <span
                           class="document-name"
                           v-if="
@@ -949,6 +950,7 @@ export default {
 
             previewDocuments.value[data.documentType.code] = reader.result;
             imageData.push({
+              commonDocCode: data.documentType ? data.documentType.code : "",
               documenttype: data.documentType ? data.documentType.name : "",
               educationalLevel: data.educationalLevel
                 ? data.educationalLevel.name
@@ -1235,25 +1237,25 @@ export default {
             data: [],
           };
           let db;
-          let request = indexedDB.open("NLdocumentUploads", 1);
+          let request = indexedDB.open("RNdocumentUploads", 1);
           request.onsuccess = function () {
             db = request.result;
             let transaction = db.transaction(
-              ["NLdocumentUploads"],
+              ["RNdocumentUploads"],
               "readwrite"
             );
 
             finalLocalData.data = imageData;
-          
+
             finalLocalData.data = [...new Set(finalLocalData.data)];
 
-            const objectStore = transaction.objectStore("NLdocumentUploads");
+            const objectStore = transaction.objectStore("RNdocumentUploads");
 
             const objectStoreRequest = objectStore.clear();
 
             objectStoreRequest.onsuccess = (event) => {
               let addReq = transaction
-                .objectStore("NLdocumentUploads")
+                .objectStore("RNdocumentUploads")
                 .put(finalLocalData);
 
               addReq.onerror = function () {
@@ -1347,7 +1349,7 @@ export default {
     // };
 
     const initDb = () => {
-      let request = indexedDB.open("NLdocumentUploads", 1);
+      let request = indexedDB.open("RNdocumentUploads", 1);
 
       request.onerror = function () {
         console.error("Unable to open database.");
@@ -1355,7 +1357,7 @@ export default {
 
       request.onupgradeneeded = function () {
         let db = request.result;
-        db.createObjectStore("NLdocumentUploads", {
+        db.createObjectStore("RNdocumentUploads", {
           keyPath: "id",
           autoIncrement: true,
         });
@@ -1382,7 +1384,7 @@ export default {
                 element.originalFileName;
             });
             documentsUploaded.value = documentsSaved.value;
-
+            console.log(documentsUploaded.value)
             store
               .dispatch("renewal/getApplicationCategories")
               .then((res) => {
@@ -1394,7 +1396,7 @@ export default {
                 //Get department docs
                 educationLevels.forEach((element) => {
                   store
-                    .dispatch("renewal/getNLdocuments", [
+                    .dispatch("renewal/getRNdocuments", [
                       categoryResults[0].id,
                       generalInfo.value.applicantType.id,
                       element.educationalLevel
@@ -1428,7 +1430,7 @@ export default {
                 //Get Common Docs
 
                 store
-                  .dispatch("renewal/getCommonNLdocuments", [
+                  .dispatch("renewal/getCommonRNdocuments", [
                     categoryResults[0].id,
                     generalInfo.value.applicantType.id,
                   ])

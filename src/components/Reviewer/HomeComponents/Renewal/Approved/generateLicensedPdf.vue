@@ -19,7 +19,6 @@
     aria-labelledby="generatePdfLabel"
     aria-hidden="true"
   >
-
     <div
       class="
         modal-dialog modal-dialog-centered modal-xl
@@ -368,25 +367,6 @@
                                               : ""
                                           }}
                                         </b>
-                                        <span class="text-sm ml-1 mr-1">
-                                          ከ
-                                        </span>
-                                        <b
-                                          class="
-                                            text-yellow-300
-                                            ml-1
-                                            text-sm
-                                            col-span-2
-                                          "
-                                          >{{
-                                            department.institution &&
-                                            department.institution.name
-                                              ? department.institution.name
-                                              : department.otherInstitution
-                                              ? department.otherInstitution
-                                              : ""
-                                          }}
-                                        </b>
                                       </div>
                                       ሙያ መዝግቦ ይህን የሙያ ስራ ፈቃድ ሰጥቷል።
                                     </h4>
@@ -420,28 +400,14 @@
                                           >{{
                                             department.professionType &&
                                             department.professionType.name
-                                              ? department.professionType.name
-                                              : department.otherProfessionType
-                                              ? department.otherProfessionType
-                                              : ""
-                                          }}
-                                        </b>
-                                        <span class="text-sm ml-1 mr-1">
-                                          From</span
-                                        >
-                                        <b
-                                          class="
-                                            text-yellow-300
-                                            ml-1
-                                            text-sm
-                                            col-span-2
-                                          "
-                                          >{{
-                                            department.institution &&
-                                            department.institution.name
-                                              ? department.institution.name
-                                              : department.otherInstitution
-                                              ? department.otherInstitution
+                                              ? department.prefix
+                                                ? " (" +
+                                                  department.prefix.name +
+                                                  ") " +
+                                                  department.professionType.name
+                                                : department.otherProfessionType
+                                                ? department.otherProfessionType
+                                                : ""
                                               : ""
                                           }}
                                         </b>
@@ -557,7 +523,6 @@
                             : []
                         "
                       >
-                     
                         <div class="flex justify-center mb-4">
                           <h1>License 1</h1>
                         </div>
@@ -816,7 +781,7 @@
                                     <h4>
                                       ተገቢውን መስፈርት አሟልተው ስለተገኙ ሚኒስቴር መስሪያ ቤቱ
                                     </h4>
-                                    <h4  >
+                                    <h4>
                                       <!-- first profession -->
                                       <div
                                         class="
@@ -825,7 +790,6 @@
                                           border-b
                                         "
                                       >
-                                    
                                         <b
                                           class="
                                             text-yellow-300 text-sm
@@ -840,28 +804,6 @@
                                                     : []
                                                 )[0].professionType
                                                   .amharicProfessionalType
-                                              : []
-                                          }}
-                                        </b>
-                                        <span class="text-sm ml-1 mr-1">
-                                          ከ
-                                        </span>
-                                        <b
-                                          class="
-                                            text-yellow-300
-                                            ml-1
-                                            text-sm
-                                            col-span-2
-                                          "
-                                        >
-                                          {{
-                                            modalData.newEducations
-                                              ? modalData.newEducations.concat(
-                                                  modalData &&
-                                                    modalData.previousEducations
-                                                    ? modalData.previousEducations
-                                                    : []
-                                                )[0].institution.name
                                               : []
                                           }}
                                         </b>
@@ -892,28 +834,6 @@
                                               : []
                                           }}
                                         </b>
-                                        <span class="text-sm ml-1 mr-1">
-                                          ከ
-                                        </span>
-                                        <b
-                                          class="
-                                            text-yellow-300
-                                            ml-1
-                                            text-sm
-                                            col-span-2
-                                          "
-                                        >
-                                          {{
-                                            modalData.newEducations
-                                              ? modalData.newEducations.concat(
-                                                  modalData &&
-                                                    modalData.previousEducations
-                                                    ? modalData.previousEducations
-                                                    : []
-                                                )[1].institution.name
-                                              : []
-                                          }}
-                                        </b>
                                       </div>
                                       <!-- end -->
                                       <!-- third profession -->
@@ -941,28 +861,6 @@
                                               : []
                                           }}
                                         </b>
-                                        <span class="text-sm ml-1 mr-1">
-                                          ከ
-                                        </span>
-                                        <b
-                                          class="
-                                            text-yellow-300
-                                            ml-1
-                                            text-sm
-                                            col-span-2
-                                          "
-                                        >
-                                          {{
-                                            modalData.newEducations
-                                              ? modalData.newEducations.concat(
-                                                  modalData &&
-                                                    modalData.previousEducations
-                                                    ? modalData.previousEducations
-                                                    : []
-                                                )[2].institution.name
-                                              : []
-                                          }}
-                                        </b>
                                       </div>
                                       <!-- end -->
                                       ሙያ መዝግቦ ይህን የሙያ ስራ ፈቃድ ሰጥቷል።
@@ -976,9 +874,7 @@
                                       the Ministry
                                     </h4>
                                     <h4>hereby registered and licensed as</h4>
-                                    <h4 
-                                      class="mt-4"
-                                    >
+                                    <h4 class="mt-4">
                                       <!-- first profession -->
                                       <div
                                         class="
@@ -994,34 +890,20 @@
                                           "
                                           >{{
                                             modalData.newEducations
-                                              ? modalData.newEducations.concat(
+                                              ? +"( " +
+                                                modalData.newEducations.concat(
+                                                  modalData &&
+                                                    modalData.previousEducations
+                                                    ? modalData.previousEducations
+                                                    : []
+                                                )[0].prefix.name +
+                                                " )" +
+                                                modalData.newEducations.concat(
                                                   modalData &&
                                                     modalData.previousEducations
                                                     ? modalData.previousEducations
                                                     : []
                                                 )[0].professionType.name
-                                              : []
-                                          }}
-                                        </b>
-                                        <span class="text-sm ml-1 mr-1">
-                                          from
-                                        </span>
-                                        <b
-                                          class="
-                                            text-yellow-300
-                                            ml-1
-                                            text-sm
-                                            col-span-2
-                                          "
-                                        >
-                                          {{
-                                            modalData.newEducations
-                                              ? modalData.newEducations.concat(
-                                                  modalData &&
-                                                    modalData.previousEducations
-                                                    ? modalData.previousEducations
-                                                    : []
-                                                )[0].institution.name
                                               : []
                                           }}
                                         </b>
@@ -1042,34 +924,20 @@
                                           "
                                           >{{
                                             modalData.newEducations
-                                              ? modalData.newEducations.concat(
+                                              ? +"( " +
+                                                modalData.newEducations.concat(
+                                                  modalData &&
+                                                    modalData.previousEducations
+                                                    ? modalData.previousEducations
+                                                    : []
+                                                )[1].prefix.name +
+                                                " )" +
+                                                modalData.newEducations.concat(
                                                   modalData &&
                                                     modalData.previousEducations
                                                     ? modalData.previousEducations
                                                     : []
                                                 )[1].professionType.name
-                                              : []
-                                          }}
-                                        </b>
-                                        <span class="text-sm ml-1 mr-1">
-                                          from
-                                        </span>
-                                        <b
-                                          class="
-                                            text-yellow-300
-                                            ml-1
-                                            text-sm
-                                            col-span-2
-                                          "
-                                        >
-                                          {{
-                                            modalData.newEducations
-                                              ? modalData.newEducations.concat(
-                                                  modalData &&
-                                                    modalData.previousEducations
-                                                    ? modalData.previousEducations
-                                                    : []
-                                                )[1].institution.name
                                               : []
                                           }}
                                         </b>
@@ -1090,34 +958,20 @@
                                           "
                                           >{{
                                             modalData.newEducations
-                                              ? modalData.newEducations.concat(
+                                              ? +"( " +
+                                                modalData.newEducations.concat(
+                                                  modalData &&
+                                                    modalData.previousEducations
+                                                    ? modalData.previousEducations
+                                                    : []
+                                                )[2].prefix.name +
+                                                " )" +
+                                                modalData.newEducations.concat(
                                                   modalData &&
                                                     modalData.previousEducations
                                                     ? modalData.previousEducations
                                                     : []
                                                 )[2].professionType.name
-                                              : []
-                                          }}
-                                        </b>
-                                        <span class="text-sm ml-1 mr-1">
-                                          from
-                                        </span>
-                                        <b
-                                          class="
-                                            text-yellow-300
-                                            ml-1
-                                            text-sm
-                                            col-span-2
-                                          "
-                                        >
-                                          {{
-                                            modalData.newEducations
-                                              ? modalData.newEducations.concat(
-                                                  modalData &&
-                                                    modalData.previousEducations
-                                                    ? modalData.previousEducations
-                                                    : []
-                                                )[2].institution.name
                                               : []
                                           }}
                                         </b>
@@ -1454,7 +1308,7 @@
                                       ተገቢውን መስፈርት አሟልተው ስለተገኙ ሚኒስቴር መስሪያ ቤቱ
                                     </h4>
                                     <!-- Amharic profession part -->
-                                    <h4  >
+                                    <h4>
                                       <!-- fourth profession -->
                                       <div
                                         class="
@@ -1470,35 +1324,21 @@
                                           "
                                           >{{
                                             modalData.newEducations
-                                              ? modalData.newEducations.concat(
+                                              ? +"( " +
+                                                modalData.newEducations.concat(
+                                                  modalData &&
+                                                    modalData.previousEducations
+                                                    ? modalData.previousEducations
+                                                    : []
+                                                )[3].prefix.name +
+                                                " )" +
+                                                modalData.newEducations.concat(
                                                   modalData &&
                                                     modalData.previousEducations
                                                     ? modalData.previousEducations
                                                     : []
                                                 )[3].professionType
                                                   .amharicProfessionalType
-                                              : []
-                                          }}
-                                        </b>
-                                        <span class="text-sm ml-1 mr-1">
-                                          ከ
-                                        </span>
-                                        <b
-                                          class="
-                                            text-yellow-300
-                                            ml-1
-                                            text-sm
-                                            col-span-2
-                                          "
-                                        >
-                                          {{
-                                            modalData.newEducations
-                                              ? modalData.newEducations.concat(
-                                                  modalData &&
-                                                    modalData.previousEducations
-                                                    ? modalData.previousEducations
-                                                    : []
-                                                )[3].institution.name
                                               : []
                                           }}
                                         </b>
@@ -1529,35 +1369,21 @@
                                           "
                                           >{{
                                             modalData.newEducations
-                                              ? modalData.newEducations.concat(
+                                              ? +"( " +
+                                                modalData.newEducations.concat(
+                                                  modalData &&
+                                                    modalData.previousEducations
+                                                    ? modalData.previousEducations
+                                                    : []
+                                                )[4].prefix.name +
+                                                " )" +
+                                                modalData.newEducations.concat(
                                                   modalData &&
                                                     modalData.previousEducations
                                                     ? modalData.previousEducations
                                                     : []
                                                 )[4].professionType
                                                   .amharicProfessionalType
-                                              : []
-                                          }}
-                                        </b>
-                                        <span class="text-sm ml-1 mr-1">
-                                          ከ
-                                        </span>
-                                        <b
-                                          class="
-                                            text-yellow-300
-                                            ml-1
-                                            text-sm
-                                            col-span-2
-                                          "
-                                        >
-                                          {{
-                                            modalData.newEducations
-                                              ? modalData.newEducations.concat(
-                                                  modalData &&
-                                                    modalData.previousEducations
-                                                    ? modalData.previousEducations
-                                                    : []
-                                                )[4].institution.name
                                               : []
                                           }}
                                         </b>
@@ -1588,35 +1414,21 @@
                                           "
                                           >{{
                                             modalData.newEducations
-                                              ? modalData.newEducations.concat(
+                                              ? +"( " +
+                                                modalData.newEducations.concat(
+                                                  modalData &&
+                                                    modalData.previousEducations
+                                                    ? modalData.previousEducations
+                                                    : []
+                                                )[5].prefix.name +
+                                                " )" +
+                                                modalData.newEducations.concat(
                                                   modalData &&
                                                     modalData.previousEducations
                                                     ? modalData.previousEducations
                                                     : []
                                                 )[5].professionType
                                                   .amharicProfessionalType
-                                              : []
-                                          }}
-                                        </b>
-                                        <span class="text-sm ml-1 mr-1">
-                                          ከ
-                                        </span>
-                                        <b
-                                          class="
-                                            text-yellow-300
-                                            ml-1
-                                            text-sm
-                                            col-span-2
-                                          "
-                                        >
-                                          {{
-                                            modalData.newEducations
-                                              ? modalData.newEducations.concat(
-                                                  modalData &&
-                                                    modalData.previousEducations
-                                                    ? modalData.previousEducations
-                                                    : []
-                                                )[5].institution.name
                                               : []
                                           }}
                                         </b>
@@ -1635,7 +1447,7 @@
                                     </h4>
                                     <h4>hereby registered and licensed as</h4>
                                     <!-- English profession part -->
-                                    <h4  >
+                                    <h4>
                                       <!-- fourth profession -->
                                       <div
                                         class="
@@ -1657,28 +1469,6 @@
                                                     ? modalData.previousEducations
                                                     : []
                                                 )[3].professionType.name
-                                              : []
-                                          }}
-                                        </b>
-                                        <span class="text-sm ml-1 mr-1">
-                                          from
-                                        </span>
-                                        <b
-                                          class="
-                                            text-yellow-300
-                                            ml-1
-                                            text-sm
-                                            col-span-2
-                                          "
-                                        >
-                                          {{
-                                            modalData.newEducations
-                                              ? modalData.newEducations.concat(
-                                                  modalData &&
-                                                    modalData.previousEducations
-                                                    ? modalData.previousEducations
-                                                    : []
-                                                )[3].institution.name
                                               : []
                                           }}
                                         </b>
@@ -1718,28 +1508,6 @@
                                               : []
                                           }}
                                         </b>
-                                        <span class="text-sm ml-1 mr-1">
-                                          from
-                                        </span>
-                                        <b
-                                          class="
-                                            text-yellow-300
-                                            ml-1
-                                            text-sm
-                                            col-span-2
-                                          "
-                                        >
-                                          {{
-                                            modalData.newEducations
-                                              ? modalData.newEducations.concat(
-                                                  modalData &&
-                                                    modalData.previousEducations
-                                                    ? modalData.previousEducations
-                                                    : []
-                                                )[4].institution.name
-                                              : []
-                                          }}
-                                        </b>
                                       </div>
                                       <!-- end -->
                                       <!-- sixth profession -->
@@ -1773,28 +1541,6 @@
                                                     ? modalData.previousEducations
                                                     : []
                                                 )[5].professionType.name
-                                              : []
-                                          }}
-                                        </b>
-                                        <span class="text-sm ml-1 mr-1">
-                                          from
-                                        </span>
-                                        <b
-                                          class="
-                                            text-yellow-300
-                                            ml-1
-                                            text-sm
-                                            col-span-2
-                                          "
-                                        >
-                                          {{
-                                            modalData.newEducations
-                                              ? modalData.newEducations.concat(
-                                                  modalData &&
-                                                    modalData.previousEducations
-                                                    ? modalData.previousEducations
-                                                    : []
-                                                )[5].institution.name
                                               : []
                                           }}
                                         </b>
@@ -2010,7 +1756,7 @@ export default {
     };
 
     const editApplication = (req) => {
-      delete req.data.educations
+      delete req.data.educations;
       store
         .dispatch("reviewer/editRenewal", req)
         .then((res) => {
@@ -2071,7 +1817,7 @@ export default {
         props.modalData && props.modalData.previousEducations
           ? props.modalData.previousEducations
           : []
-      ); 
+      );
       applicationStatus.value = props.modalData.data.applicationStatus.code;
       isLicenseGenerated.value = props.modalData.data.isLicenseGenerated;
       certificateDetail.value.licenseNumber =
@@ -2102,6 +1848,42 @@ export default {
     ) => {
       doc.setFontSize(17);
       doc2.setFontSize(17);
+      //Amharic name part
+      doc.text(
+        60,
+        namePosition - 5,
+        `${
+          certifiedUser.value.alternativeName
+            ? certifiedUser.value.alternativeName
+            : ""
+        } ${
+          certifiedUser.value.alternativeFatherName
+            ? certifiedUser.value.alternativeFatherName
+            : ""
+        } ${
+          certifiedUser.value.alternativeGrandFatherName
+            ? certifiedUser.value.alternativeGrandFatherName
+            : ""
+        }`
+      );
+      doc2.text(
+        60,
+        namePosition - 5,
+        `${
+          certifiedUser.value.alternativeName
+            ? certifiedUser.value.alternativeName
+            : ""
+        } ${
+          certifiedUser.value.alternativeFatherName
+            ? certifiedUser.value.alternativeFatherName
+            : ""
+        } ${
+          certifiedUser.value.alternativeGrandFatherName
+            ? certifiedUser.value.alternativeGrandFatherName
+            : ""
+        }`
+      );
+      //English name part
       doc.text(
         190,
         namePosition,
@@ -2128,7 +1910,7 @@ export default {
         for (let i = 0; i < certificateDetail.value.educations.length; i++) {
           let professionPrefix = `${
             certificateDetail.value.educations[i].prefix
-              ? certificateDetail.value.educations[i].prefix
+              ? certificateDetail.value.educations[i].prefix.name
               : ""
           }  ${certificateDetail.value.educations[i].professionType.name}`;
           let getLength = doc.getTextWidth(professionPrefix);
@@ -2146,7 +1928,7 @@ export default {
         for (let i = 0; i < 3; i++) {
           let professionPrefix = `${
             certificateDetail.value.educations[i].prefix
-              ? certificateDetail.value.educations[i].prefix
+              ? certificateDetail.value.educations[i].prefix.name
               : ""
           }  ${certificateDetail.value.educations[i].professionType.name}`;
           let getLength = doc.getTextWidth(professionPrefix);
@@ -2186,7 +1968,9 @@ export default {
               certificateDetail.value.educations[i].professionType.name
                 ? `${
                     certificateDetail.value.educations[i].prefix
-                      ? "(" + certificateDetail.value.educations[i].prefix + ")"
+                      ? "(" +
+                        certificateDetail.value.educations[i].prefix.name +
+                        ")"
                       : ""
                   }   ${
                     certificateDetail.value.educations[i].otherProfessionType
@@ -2212,7 +1996,9 @@ export default {
               certificateDetail.value.educations[i].professionType.name
                 ? `${
                     certificateDetail.value.educations[i].prefix
-                      ? "(" + certificateDetail.value.educations[i].prefix + ")"
+                      ? "(" +
+                        certificateDetail.value.educations[i].prefix.name +
+                        ")"
                       : ""
                   }   ${
                     certificateDetail.value.educations[i].otherProfessionType
@@ -2242,7 +2028,7 @@ export default {
                   ? `${
                       certificateDetail.value.educations[i].prefix
                         ? "(" +
-                          certificateDetail.value.educations[i].prefix +
+                          certificateDetail.value.educations[i].prefix.name +
                           ")"
                         : ""
                     }   ${
@@ -2321,90 +2107,19 @@ export default {
 
       doc.setFontSize(17);
       doc2.setFontSize(17);
-      if (code === "AA" || code == "FED") {
-        doc.text(
-          60,
-          namePosition - 5,
-          `${
-            certifiedUser.value.alternativeName
-              ? certifiedUser.value.alternativeName
-              : ""
-          } ${
-            certifiedUser.value.alternativeFatherName
-              ? certifiedUser.value.alternativeFatherName
-              : ""
-          } ${
-            certifiedUser.value.alternativeGrandFatherName
-              ? certifiedUser.value.alternativeGrandFatherName
-              : ""
-          }`
-        );
-        doc2.text(
-          60,
-          namePosition - 5,
-          `${
-            certifiedUser.value.alternativeName
-              ? certifiedUser.value.alternativeName
-              : ""
-          } ${
-            certifiedUser.value.alternativeFatherName
-              ? certifiedUser.value.alternativeFatherName
-              : ""
-          } ${
-            certifiedUser.value.alternativeGrandFatherName
-              ? certifiedUser.value.alternativeGrandFatherName
-              : ""
-          }`
-        );
-      } else {
-        doc.text(
-          60,
-          namePosition,
-          `${
-            certifiedUser.value.alternativeName
-              ? certifiedUser.value.alternativeName
-              : ""
-          } ${
-            certifiedUser.value.alternativeFatherName
-              ? certifiedUser.value.alternativeFatherName
-              : ""
-          } ${
-            certifiedUser.value.alternativeGrandFatherName
-              ? certifiedUser.value.alternativeGrandFatherName
-              : ""
-          }`
-        );
-        doc2.text(
-          60,
-          namePosition,
-          `${
-            certifiedUser.value.alternativeName
-              ? certifiedUser.value.alternativeName
-              : ""
-          } ${
-            certifiedUser.value.alternativeFatherName
-              ? certifiedUser.value.alternativeFatherName
-              : ""
-          } ${
-            certifiedUser.value.alternativeGrandFatherName
-              ? certifiedUser.value.alternativeGrandFatherName
-              : ""
-          }`
-        );
-      }
 
       if (changeWidth.value) {
         doc.setFontSize(11);
         doc2.setFontSize(11);
-        xPosition.value = 16;
+        xPosition.value = 22;
       } else if (changeWidthTooSmall.value) {
         doc.setFontSize(11);
         doc2.setFontSize(11);
-        xPosition.value = 10;
+        xPosition.value = 16;
       } else {
         doc.setFontSize(14);
         doc2.setFontSize(14);
-        xPosition.value = 28;
+        xPosition.value = 34;
       }
       if (certificateDetail.value.educations.length < 4) {
         for (let i = 0; i < certificateDetail.value.educations.length; i++) {

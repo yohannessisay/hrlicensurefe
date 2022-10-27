@@ -402,6 +402,7 @@
                         </p>
                       </td>
                       <td class="px-6 py-4">
+                     
                         <span
                           class="document-name"
                           v-if="
@@ -949,6 +950,7 @@ export default {
 
             previewDocuments.value[data.documentType.code] = reader.result;
             imageData.push({
+              commonDocCode: data.documentType ? data.documentType.code : "",
               documenttype: data.documentType ? data.documentType.name : "",
               educationalLevel: data.educationalLevel
                 ? data.educationalLevel.name
@@ -1244,7 +1246,7 @@ export default {
             );
 
             finalLocalData.data = imageData;
-          
+
             finalLocalData.data = [...new Set(finalLocalData.data)];
 
             const objectStore = transaction.objectStore("NLdocumentUploads");
@@ -1382,7 +1384,7 @@ export default {
                 element.originalFileName;
             });
             documentsUploaded.value = documentsSaved.value;
-
+            console.log(documentsUploaded.value)
             store
               .dispatch("newlicense/getApplicationCategories")
               .then((res) => {

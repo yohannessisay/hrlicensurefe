@@ -181,8 +181,15 @@
                                   </div>
                                   <div v-if="editPersonalData">
                                     <input
+                                      v-model="renewal.profile.alternativeName"
+                                      class="w-48 mr-1"
+                                      type="text"
+                                    />
+                                  </div>
+                                  <div v-if="editPersonalData">
+                                    <input
                                       v-model="
-                                      renewal.profile.alternativeName
+                                        renewal.profile.alternativeFatherName
                                       "
                                       class="w-48 mr-1"
                                       type="text"
@@ -191,16 +198,7 @@
                                   <div v-if="editPersonalData">
                                     <input
                                       v-model="
-                                      renewal.profile.alternativeFatherName
-                                      "
-                                      class="w-48 mr-1"
-                                      type="text"
-                                    />
-                                  </div>
-                                  <div v-if="editPersonalData">
-                                    <input
-                                      v-model="
-                                      renewal.profile
+                                        renewal.profile
                                           .alternativeGrandFatherName
                                       "
                                       class="w-48"
@@ -456,34 +454,6 @@
                                   :key="education.id"
                                 >
                                   <div>
-                                    <div class="form-check">
-                                      <input
-                                        class="
-                                          form-check-input
-                                          appearance-none
-                                          h-5
-                                          w-5
-                                          border border-gray-300
-                                          rounded-sm
-                                          bg-white
-                                          checked:bg-blue-600
-                                          checked:border-blue-600
-                                          focus:outline-none
-                                          transition
-                                          duration-200
-                                          mt-1
-                                          align-top
-                                          bg-no-repeat bg-center bg-contain
-                                          float-left
-                                          mr-2
-                                          cursor-pointer
-                                        "
-                                        @change="removeDepartment(education)"
-                                        checked
-                                        type="checkbox"
-                                        :id="education.id"
-                                      />
-                                    </div>
                                     <div
                                       class="flex flex-col mb-medium mr-12 ml-8"
                                     >
@@ -568,9 +538,7 @@
                                           }}
                                           <span
                                             @click="
-                                              allowProfessionChange(
-                                                education.department.id
-                                              )
+                                              allowProfessionChange(education)
                                             "
                                             class="
                                               cursor-pointer
@@ -833,9 +801,7 @@
                                                 focus:oProfessionutline-none
                                               "
                                               @click="changePrefix(education)"
-                                              v-model="
-                                                education.prefixId
-                                              "
+                                              v-model="education.prefixId"
                                               aria-label="Default select example"
                                             >
                                               <option selected disabled>
@@ -1984,14 +1950,14 @@ export default {
     const editPersonalInfo = () => {
       editPersonalData.value = !editPersonalData.value;
     };
-    const allowProfessionChange = (departmentId) => {
-      getProfessionalTypesByDepartmentId(departmentId);
-      allowProfChange.value[departmentId]
-        ? allowProfChange.value[departmentId]
+    const allowProfessionChange = (profType) => {
+      getProfessionalTypesByDepartmentId(profType);
+      allowProfChange.value[profType.department.id]
+        ? allowProfChange.value[profType.department.id]
         : false;
-      allowProfChange.value[departmentId] =
-        !allowProfChange.value[departmentId];
-      allowOtherProfChange.value[departmentId] = false;
+      allowProfChange.value[profType.department.id] =
+        !allowProfChange.value[profType.department.id];
+      allowOtherProfChange.value[profType.department.id] = false;
     };
 
     const created = async (applicationId) => {
@@ -2006,17 +1972,15 @@ export default {
               ? res.data.data.educations
               : "";
           profileInfo.value =
-          renewal.value && renewal.value.profile
-              ? renewal.value.profile
-              : {};
+            renewal.value && renewal.value.profile ? renewal.value.profile : {};
           buttons.value =
-          renewal.value &&
-          renewal.value.applicationStatus &&
-          renewal.value.applicationStatus.buttons
+            renewal.value &&
+            renewal.value.applicationStatus &&
+            renewal.value.applicationStatus.buttons
               ? renewal.value.applicationStatus.buttons
               : {};
           docs.value =
-          renewal.value && renewal.value.documents
+            renewal.value && renewal.value.documents
               ? renewal.value.documents
               : {};
           totalSteps.value = docs.value ? docs.value.length : 0;
@@ -2319,7 +2283,7 @@ export default {
       if (actionValue === "ApproveEvent") {
         smsMessage = renewal.value
           ? "Dear applicant your applied renewal license of number " +
-          renewal.value.renewalCode +
+            renewal.value.renewalCode +
             " has been approved after careful examination of your uploaded documents by our reviewers. Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
           : "";
         if (renewal.value.licenseExpirationDate === null) {
@@ -2350,7 +2314,7 @@ export default {
         showRemarkError.value = true;
         smsMessage = renewal.value
           ? "Dear applicant your applied renewal license of number " +
-          renewal.value.renewalCode +
+            renewal.value.renewalCode +
             " has been declined after careful examination of your uploaded documents by our reviewers. Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
           : "";
         showRemark.value = true;
@@ -2392,6 +2356,7 @@ export default {
         ],
         message: smsMessage ? smsMessage : "",
       };
+     
 
       if (applicationType.value == "Renewal") {
         isLoadingAction.value = true;
@@ -2438,12 +2403,12 @@ export default {
           });
       }
     };
-    const changePrefix = (education) => { 
+    const changePrefix = (education) => {
       renewal.value.educations.forEach((element) => {
         if (element.departmentId == education.departmentId) {
           element = education;
         }
-      }); 
+      });
     };
     const submitRemark = () => {
       showRemark.value = !showRemark.value;
@@ -2457,11 +2422,15 @@ export default {
       window.open(googleApi + "" + pdfPath, "_blank");
     };
 
-    const getProfessionalTypesByDepartmentId = async (id) => {
+    const getProfessionalTypesByDepartmentId = async (profType) => {
+      let profId = {
+        departmentId: profType.department.id,
+        educationalLevelId: profType.educationLevel.id,
+      };
       await store
-        .dispatch("reviewer/getProfessionalTypeByDepartmentId", id)
+        .dispatch("reviewer/getProfessionalTypeByDepartmentId", profId)
         .then((res) => {
-          newProf.value[id] = res.data.data;
+          newProf.value[profType.department.id] = res.data.data;
         });
     };
 
@@ -2472,7 +2441,7 @@ export default {
         alternativeName: renewal.value.profile.alternativeName,
         alternativeFatherName: renewal.value.profile.alternativeFatherName,
         alternativeGrandFatherName:
-        renewal.value.profile.alternativeGrandFatherName,
+          renewal.value.profile.alternativeGrandFatherName,
       };
       const profileData = [id, newProfile];
       store
@@ -2617,11 +2586,9 @@ export default {
     };
     const supervise = () => {
       renewal.value.superviseEndDate = endDate.value ? endDate.value : "";
-      renewal.value.superviseStartDate = startDate.value
-        ? startDate.value
-        : "";
-        renewal.value.supervisor = supervisor.value ? supervisor.value : "";
-        renewal.value.supervisingInstitutionId = instSearched.value
+      renewal.value.superviseStartDate = startDate.value ? startDate.value : "";
+      renewal.value.supervisor = supervisor.value ? supervisor.value : "";
+      renewal.value.supervisingInstitutionId = instSearched.value
         ? instSearched.value.id
         : "";
 
@@ -2654,7 +2621,7 @@ export default {
           ],
           message: renewal.value
             ? "Dear applicant your applied renewal license of number " +
-            renewal.value.renewalCode +
+              renewal.value.renewalCode +
               " has been set to be under supervison of MR/MRS:-" +
               renewal.value.supervisor +
               " at institution of " +
@@ -2713,7 +2680,7 @@ export default {
       superviseAction.value = action;
     };
 
-    const checkForOther = (education) => { 
+    const checkForOther = (education) => {
       modifiedProfession.forEach((element, index) => {
         if (element.department.id == education.department.id) {
           modifiedProfession.splice(index, 1);

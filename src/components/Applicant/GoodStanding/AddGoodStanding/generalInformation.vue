@@ -822,7 +822,7 @@ export default {
       isEdLevelSelected.value = true;
       fetchProfessionalType(
         generalInfo.value.departmentId.id,
-        generalInfo.value.professionType.educationLevelId.id
+        generalInfo.value.educationLevelId.id
       );
     };
     const fetchZones = () => {

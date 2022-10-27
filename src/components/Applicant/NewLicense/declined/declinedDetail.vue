@@ -769,10 +769,11 @@ export default {
                 pauseOnHover: true,
                 icon: true,
               });
-              router.push({ path: "/Applicant/NewLicense/submitted" });
               setTimeout(() => {
                 window.location.reload();
-              }, 3000);
+              }, 1000);
+              router.push({ path: "/Applicant/NewLicense/submitted" });
+         
             } else {
               toast.error("Error occured, please try again", {
                 timeout: 5000,

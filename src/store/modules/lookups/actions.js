@@ -223,7 +223,7 @@ export default {
   async updateZone({ commit }, data) {
     try {
       const resp = await ApiService.put(
-        baseUrl + "/lookups/zones/" + data.id,
+        baseUrl + "/lookups/zone/" + data.id,
         data
       );
       return resp;
@@ -234,7 +234,7 @@ export default {
   async updateWoreda({ commit }, data) {
     try {
       const resp = await ApiService.put(
-        baseUrl + "/lookups/woredas/" + data.id,
+        baseUrl + "/lookups/woreda/" + data.id,
         data
       );
       return resp;
@@ -245,7 +245,7 @@ export default {
   async updateRegion({ commit }, data) {
     try {
       const resp = await ApiService.put(
-        baseUrl + "/lookups/regions/" + data.id,
+        baseUrl + "/lookups/region/" + data.id,
         data
       );
       return resp;

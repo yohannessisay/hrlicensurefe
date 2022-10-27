@@ -456,34 +456,6 @@
                                   :key="education.id"
                                 >
                                   <div>
-                                    <div class="form-check">
-                                      <input
-                                        class="
-                                          form-check-input
-                                          appearance-none
-                                          h-5
-                                          w-5
-                                          border border-gray-300
-                                          rounded-sm
-                                          bg-white
-                                          checked:bg-blue-600
-                                          checked:border-blue-600
-                                          focus:outline-none
-                                          transition
-                                          duration-200
-                                          mt-1
-                                          align-top
-                                          bg-no-repeat bg-center bg-contain
-                                          float-left
-                                          mr-2
-                                          cursor-pointer
-                                        "
-                                        @change="removeDepartment(education)"
-                                        checked
-                                        type="checkbox"
-                                        :id="education.id"
-                                      />
-                                    </div>
                                     <div
                                       class="flex flex-col mb-medium mr-12 ml-8"
                                     >
@@ -568,9 +540,7 @@
                                           }}
                                           <span
                                             @click="
-                                              allowProfessionChange(
-                                                education.department.id
-                                              )
+                                              allowProfessionChange(education)
                                             "
                                             class="
                                               cursor-pointer
@@ -833,9 +803,7 @@
                                                 focus:oProfessionutline-none
                                               "
                                               @click="changePrefix(education)"
-                                              v-model="
-                                                education.prefixId
-                                              "
+                                              v-model="education.prefixId"
                                               aria-label="Default select example"
                                             >
                                               <option selected disabled>
@@ -1984,14 +1952,14 @@ export default {
     const editPersonalInfo = () => {
       editPersonalData.value = !editPersonalData.value;
     };
-    const allowProfessionChange = (departmentId) => {
-      getProfessionalTypesByDepartmentId(departmentId);
-      allowProfChange.value[departmentId]
-        ? allowProfChange.value[departmentId]
+    const allowProfessionChange = (profType) => {
+      getProfessionalTypesByDepartmentId(profType);
+      allowProfChange.value[profType.department.id]
+        ? allowProfChange.value[profType.department.id]
         : false;
-      allowProfChange.value[departmentId] =
-        !allowProfChange.value[departmentId];
-      allowOtherProfChange.value[departmentId] = false;
+      allowProfChange.value[profType.department.id] =
+        !allowProfChange.value[profType.department.id];
+      allowOtherProfChange.value[profType.department.id] = false;
     };
 
     const created = async (applicationId) => {
@@ -2392,7 +2360,8 @@ export default {
         ],
         message: smsMessage ? smsMessage : "",
       };
- 
+    
+
       if (applicationType.value == "New License") {
         isLoadingAction.value = true;
         store
@@ -2438,12 +2407,12 @@ export default {
           });
       }
     };
-    const changePrefix = (education) => { 
+    const changePrefix = (education) => {
       newLicense.value.educations.forEach((element) => {
         if (element.departmentId == education.departmentId) {
           element = education;
         }
-      }); 
+      });
     };
     const submitRemark = () => {
       showRemark.value = !showRemark.value;
@@ -2457,11 +2426,15 @@ export default {
       window.open(googleApi + "" + pdfPath, "_blank");
     };
 
-    const getProfessionalTypesByDepartmentId = async (id) => {
+    const getProfessionalTypesByDepartmentId = async (profType) => {
+      let profId = {
+        departmentId: profType.department.id,
+        educationalLevelId: profType.educationLevel.id,
+      };
       await store
-        .dispatch("reviewer/getProfessionalTypeByDepartmentId", id)
+        .dispatch("reviewer/getProfessionalTypeByDepartmentId", profId)
         .then((res) => {
-          newProf.value[id] = res.data.data;
+          newProf.value[profType.department.id] = res.data.data;
         });
     };
 
@@ -2713,7 +2686,7 @@ export default {
       superviseAction.value = action;
     };
 
-    const checkForOther = (education) => { 
+    const checkForOther = (education) => {
       modifiedProfession.forEach((element, index) => {
         if (element.department.id == education.department.id) {
           modifiedProfession.splice(index, 1);

@@ -123,8 +123,32 @@
           <div>
             <span class="text-black sm:text-sm">
               {{
-                localData && localData.professionTypeIds
-                  ? localData.professionTypeIds.name
+                localData && localData.professionType.professionTypeId
+                  ? localData.professionType.professionTypeId.name
+                  : ""
+              }}</span
+            >
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
+          <div>
+            <span
+              class="
+                text-main-400
+                font-bold
+                sm:text-sm
+                mdlg:text-base
+                lg:text-base
+                md:text-base
+              "
+              >Education Level</span
+            >
+          </div>
+          <div>
+            <span class="text-black sm:text-sm">
+              {{
+                localData && localData.professionType.educationLevelId
+                  ? localData.professionType.educationLevelId.name
                   : ""
               }}</span
             >
@@ -148,8 +172,8 @@
           <div>
             <span class="text-black sm:text-sm">
               {{
-                localData && localData.applicantTitle
-                  ? localData.applicantTitle
+                localData && localData.applicantTitleId
+                  ? localData.applicantTitleId.name
                   : ""
               }}</span
             >
@@ -633,8 +657,8 @@ export default {
               .licenseRegistrationNumber
               ? generalInfo.value.licenseRegistrationNumber
               : "",
-            professionalTypeIds: generalInfo.value.professionTypeIds.id
-              ? [generalInfo.value.professionTypeIds.id]
+            professionalType: generalInfo.value.professionType
+              ? [generalInfo.value.professionType]
               : null,
             expertLevelId: generalInfo.value.expertLevelId
               ? generalInfo.value.expertLevelId
