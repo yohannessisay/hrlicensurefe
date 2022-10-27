@@ -1320,10 +1320,15 @@ export default {
     }
   },
 
-  async getProfessionalTypeByDepartmentId({ commit }, id) {
-    try {
-      const url = baseUrl + "/lookups/professionalTypes/" + id;
-      const resp = await ApiService.get(url);
+  async getProfessionalTypeByDepartmentId({ commit }, profType) {
+    try { 
+      const resp = await ApiService.get(
+        baseUrl +
+          "/lookups/professionalTypes/" +
+          profType.departmentId +
+          "/" +
+          profType.educationalLevelId
+      );
       return resp;
     } catch (error) {
       return error;

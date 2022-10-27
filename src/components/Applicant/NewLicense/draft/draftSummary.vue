@@ -253,7 +253,7 @@
                     px-5
                     text-white
                     bg-grey-200
-                    hover:text-main-400 hover:bg-white 
+                    hover:text-main-400 hover:bg-white
                     transition
                     focus:outline-none
                     hover:border-main-400
@@ -274,6 +274,7 @@
                 aria-labelledby="headingOne"
                 data-bs-parent="#accordionExample"
               >
+             
                 <div class="accordion-body py-4 px-5">
                   <div
                     class="
@@ -290,6 +291,7 @@
                     "
                   >
                     <div
+                      v-if="!professionChanged"
                       class="
                         mt-4
                         mb-8
@@ -317,6 +319,43 @@
                           >
                             <img
                               :src="googleApi + prev.filePath"
+                              class="w-full h-48 object-cover"
+                            />
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                
+                    <div
+                      v-else
+                      class="
+                        mt-4
+                        mb-8
+                        bg-white
+                        shadow-xl
+                        rounded-md
+                        transform
+                        transition
+                        duration-300
+                        ease-in-out
+                        p-2
+                        hover:-translate-y-2
+                      "
+                      v-for="prev in prevDocs"
+                      :key="prev.docName"
+                    >
+                  
+                      <h4 class="text-main-400 font-bold m-2">Document Type</h4>
+                      <h6 class="m-2">{{ prev.documentType.name }}</h6>
+                      <div class="flex justify-center rounded-lg p-4">
+                        <div class="bg-white rounded-md p-2">
+                          <a
+                            :href="prev.path"
+                            :data-title="prev.docName"
+                            data-lightbox="example-2"
+                          >
+                            <img
+                              :src="prev.path"
                               class="w-full h-48 object-cover"
                             />
                           </a>
@@ -515,6 +554,7 @@ export default {
     let savedData = ref({});
     let changedDocs = ref([]);
     let prevDocs = ref([]);
+    let professionChanged = ref(false);
 
     const route = useRoute();
 
@@ -559,7 +599,9 @@ export default {
           draftData: {
             action: action,
             data: {
-              ...savedData,
+              applicationStatusId: generalInfo.value
+                ? generalInfo.value.applicationStatusId
+                : null,
               applicantTypeId:
                 generalInfo.value && generalInfo.value.applicantTypeSelected
                   ? generalInfo.value.applicantTypeSelected.id
@@ -585,6 +627,7 @@ export default {
             },
           },
         };
+
         store.dispatch("newlicense/updateDraft", license).then((res) => {
           let licenseId = route.params.id;
           let payload = { document: formData, id: licenseId };
@@ -601,7 +644,7 @@ export default {
                   icon: true,
                 });
 
-                router.push({ path: "/Applicant/NewLicense/draft" });
+                router.push({ path: "/Applicant/NewLicense/submitted" });
               } else {
                 toast.error("Error occured, please try again", {
                   timeout: 5000,
@@ -636,7 +679,7 @@ export default {
 
           buttons.value = store.getters["newlicense/getButtons"];
 
-          buttons.value = buttons.value.filter((ele) => ele.code != "AT");
+          buttons.value = buttons.value.filter((ele) => ele.code != "AT"&& ele.code != "DRA");
           tempDocs.value = store.getters["newlicense/getTempDocs"];
 
           localData.value = window.localStorage.getItem("NLApplicationData")
@@ -685,7 +728,11 @@ export default {
               if (localFileImages.value && savedData.value.documents) {
                 savedData.value.documents.forEach((ele) => {
                   localFileImages.value.forEach((newFile) => {
-                    if (newFile.documenttype == ele.fileName) {
+                    if (
+                      (newFile.commonDocCode &&
+                        newFile.commonDocCode == ele.fileName) ||
+                      newFile.documenttype == ele.fileName
+                    ) {
                       changedDocs.value.push({
                         docName: newFile.documentName,
                         prevFile: googleApi + ele.filePath,
@@ -697,7 +744,24 @@ export default {
                 });
               }
 
-              prevDocs.value = savedData.value.documents;
+              if (localData.value.professionChanged == true) {
+                professionChanged.value = true;
+                // prevDocs.value = localFileImages.value;
+                localFileImages.value.forEach((element) => {
+                
+                  if (!element.commonDocCode) {
+                    prevDocs.value.push({
+                      documentType: { name: element.documentName },
+                      docName: element.documenttype,
+                      path: element.image,
+                    });
+                  }
+                });
+               
+              } else {
+              
+                prevDocs.value = savedData.value.documents;
+              }
             };
           };
         });
@@ -705,6 +769,7 @@ export default {
     return {
       localData,
       localFileImages,
+      professionChanged,
       generalInfo,
       agreed,
       prevDocs,

@@ -10,7 +10,9 @@
         <li><span class="text-gray-500 mx-2">/</span></li>
         <li>
           <router-link to="/Applicant/Renewal">
-            <a href="#" class="text-main-400 hover:text-blue-700">Renewal</a>
+            <a href="#" class="text-main-400 hover:text-blue-700"
+              >Renewal</a
+            >
           </router-link>
         </li>
         <li><span class="text-gray-500 mx-2">/</span></li>
@@ -744,7 +746,7 @@
                             "
                           >
                             <span
-                              @click="removeDepartment(index)"
+                              @click="removeDepartment(index)" 
                               title="Remove"
                               ><i
                                 class="fa fa-trash text-red-300 cursor-pointer"
@@ -893,6 +895,7 @@ export default {
       occupationTypes: "",
       nativeLanguageSelected: "",
       educations: [],
+      professionChanged:false,
     });
     let applicationStatuses = ref([]);
     let isLoading = ref(false);
@@ -955,7 +958,7 @@ export default {
               pauseOnHover: true,
               icon: true,
             });
-            router.push({ path: "/Applicant/Renewal/withdraw" });
+            router.push({ path: "/withdraw" });
           } else {
             toast.error(res.data.message, {
               timeout: 5000,
@@ -964,7 +967,7 @@ export default {
               pauseOnHover: true,
               icon: true,
             });
-            router.push({ path: "/Applicant/Renewal/withdraw" });
+            router.push({ path: "/withdraw" });
           }
         })
         .catch((err) => {
@@ -985,9 +988,11 @@ export default {
         departmentId: departmentId,
         educationalLevelId: educationalLevelId,
       };
-      store.dispatch("renewal/getProfessionalTypes", profession).then((res) => {
-        professionalTypes.value = res.data.data;
-      });
+      store
+        .dispatch("renewal/getProfessionalTypes", profession)
+        .then((res) => {
+          professionalTypes.value = res.data.data;
+        });
     };
     const applicantTypeChangeHandler = async () => {
       if (generalInfo.value.applicantType.code == "ETH") {
@@ -1080,6 +1085,7 @@ export default {
               ) == false
             ) {
               checkForAddedError.value = false;
+              generalInfo.value.professionChanged=true
               generalInfo.value.multipleDepartment.push({
                 department: generalInfo.value.departmentSelected,
                 educationLevel: generalInfo.value.educationalLevelSelected,
@@ -1106,6 +1112,7 @@ export default {
             }
           } else {
             checkForAddedError.value = false;
+            generalInfo.value.professionChanged=true
             generalInfo.value.multipleDepartment.push({
               department: generalInfo.value.departmentSelected,
               educationLevel: generalInfo.value.educationalLevelSelected,
@@ -1151,13 +1158,15 @@ export default {
     const apply = () => {
       let tempApplicationData = generalInfo.value;
       window.localStorage.setItem(
-        "NLApplicationData",
+        "RNApplicationData",
         JSON.stringify(tempApplicationData)
       );
-      store.dispatch("renewal/setGeneralInfo", generalInfo.value).then(() => {
-        emit("changeActiveState");
-        activeState.value += 1;
-      });
+      store
+        .dispatch("renewal/setGeneralInfo", generalInfo.value)
+        .then(() => {
+          emit("changeActiveState");
+          activeState.value += 1;
+        });
     };
     const fetchApplicationStatuses = () => {
       store.dispatch("renewal/getApplicationStatuses").then((res) => {

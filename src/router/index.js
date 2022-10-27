@@ -761,11 +761,11 @@ router.beforeEach(async (to, from, next) => {
   }
   if (to.path != "/Applicant/Renewal") {
     window.localStorage.setItem("RNApplicationData", "");
-    window.localStorage.setItem("RNApplicationImageData", "");
+    window.indexedDB.deleteDatabase("RNdocumentUploads");
   }
   if (to.path != "/Applicant/GoodStanding") {
     window.localStorage.setItem("GSApplicationData", "");
-    window.localStorage.setItem("GSApplicationImageData", "");
+    window.indexedDB.deleteDatabase("GSdocumentUploads");
   }
 
   if (to.matched.some(record => record.meta.RedirectExternalUrl)) {

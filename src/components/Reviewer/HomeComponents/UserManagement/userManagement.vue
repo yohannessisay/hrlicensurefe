@@ -189,8 +189,7 @@
                 bg-primary-800
               "
             >
-              <vue-table-lite
-                :is-static-mode="true"
+              <vue-table-lite 
                 :is-loading="userTable.isLoading"
                 :columns="userTable.columns"
                 :rows="userTable.rows"

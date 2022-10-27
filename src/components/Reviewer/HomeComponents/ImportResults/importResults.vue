@@ -25,6 +25,87 @@
 
     <!-- Main Content -->
     <div class="home-content" id="mainContent">
+      <div class="bg-grey-200 p-4 rounded-sm">
+        <div class="m-2 grid grid-row-2 grid-flow-col">
+          <div class="rounded-lg">
+            <h1 class="mt-4 ml-2 text-white text-lg">
+              Import the required document and view the reults before finalizing
+              it and saving.(Allowed file types are files name ending wit .XLSX
+              and .CSV Eg-template.xlsx or template.csv)
+            </h1>
+            <label
+              class="
+                flex flex-col
+                items-center
+                mt-3
+                py-4
+                rounded-lg
+                shadow-md
+                uppercase
+                ease-linear
+                cursor-pointer 
+                bg-main-400
+                transition-all
+                duration-150
+              "
+            >
+              <i class="fas fa-cloud-upload-alt fa-2x text-white"
+                >Select a file</i
+              >
+
+              <input
+                type="file"
+                onclick="this.value=null;"
+                @change="importExcel"
+                id="upload"
+                class="hidden "
+                accept=".xlsx, .csv"
+              />
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <hr />
+      <div style="text-align: center; font-weight: bold; font-size: 24px">
+        OR
+      </div>
+
+      <hr />
+      <div class="bg-grey-200 p-4 rounded-sm mb-8">
+        <div class="m-2 grid grid-row-2 grid-flow-col">
+          <div class="bg-grey-200 rounded-lg">
+            <h1 class="mt-4 ml-2 text-white text-lg">
+              Download a template file and fill it with your data by following
+              the structure of the template file and come back here to upload
+              your final result.
+            </h1>
+            <a href="/template/importTemplate.xlsx" download>
+              <label
+                class="
+                  flex flex-col
+                  items-center
+                  mt-3
+                  py-4
+                  bg-primary-600
+                  rounded-lg
+                  cursor-pointer 
+                  shadow-md
+                  uppercase
+                  hover:bg-purple-600 hover:text-lightBlue-1000
+                  ease-linear
+                  transition-all
+                  duration-150
+                "
+              >
+                <i class="fas fa-cloud-download-alt fa-2x text-white"
+                  >Click to download a template</i
+                >
+              </label>
+            </a>
+          </div>
+        </div>
+      </div>
       <div
         class="
           p-4
@@ -37,88 +118,15 @@
         "
       >
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-          <div class="m-2 grid grid-row-2 grid-flow-col">
-            <div class="bg-grey-200 rounded-lg">
-              <h1 class="mt-4 ml-2 text-white text-lg">
-                Import the required document and view the reults before
-                finalizing it and saving.(Allowed file types are files name
-                ending wit .XLSX and .CSV Eg-template.xlsx or template.csv)
-              </h1>
-              <label
-                class="
-                  flex flex-col
-                  items-center
-                  mt-3
-                  py-4
-                  rounded-lg
-                  shadow-md
-                  uppercase
-                  ease-linear
-                  bg-main-400
-                  transition-all
-                  duration-150
-                "
-              >
-                <i class="fas fa-cloud-upload-alt fa-2x text-white"
-                  >Select a file</i
-                >
-
-                <input
-                  type="file"
-                  onclick="this.value=null;"
-                  @change="importExcel"
-                  id="upload"
-                  class="hidden"
-                  accept=".xlsx, .csv"
-                />
-              </label>
-            </div>
-          </div>
           <hr />
-          <div style="text-align: center; font-weight: bold; font-size: 24px">
-            OR
-          </div>
-
-          <hr />
-
-          <div class="m-2 grid grid-row-2 grid-flow-col">
-            <div class="bg-grey-200 rounded-lg">
-              <h1 class="mt-4 ml-2 text-white text-lg">
-                Download a template file and fill it with your data by following
-                the structure of the template file and come back here to upload
-                your final result.
-              </h1>
-              <a href="/template/importTemplate.xlsx" download>
-                <label
-                  class="
-                    flex flex-col
-                    items-center
-                    mt-3
-                    py-4
-                    bg-primary-600
-                    rounded-lg
-                    shadow-md
-                    uppercase
-                    hover:bg-purple-600 hover:text-lightBlue-1000
-                    ease-linear
-                    transition-all
-                    duration-150
-                  "
-                >
-                  <i class="fas fa-cloud-download-alt fa-2x text-white"
-                    >Click to download a template</i
-                  >
-                </label>
-              </a>
-            </div>
-          </div>
-
-          <hr />
-          <h1 class="ml-4 mt-4 text-xl">These are the previously added records</h1>
+          <h1 class="ml-4 mt-4 text-xl">
+            These are the previously added records
+          </h1>
 
           <div>
             <div class="grid lg:grid-cols-4 xl:gap-6 ml-4 mt-4">
               <div class="mb-3 xl:w-full">
+                <label for="" class="">Name or Institution</label>
                 <input
                   type="search"
                   class="
@@ -151,6 +159,7 @@
               </div>
 
               <div class="mb-3 xl:w-full">
+                <label for="" class="ml-4">Gender</label>
                 <select
                   class="
                     form-select
@@ -173,16 +182,18 @@
                     focus:border-blue-600
                     focus:outline-none
                   "
+                  v-model="genderFilterValue"
                   @change="filterGender($event.target.value)"
                   aria-label="Default select"
                 >
-                  <option selected value="Gender">Gender</option>
+                  <option selected value="all">All</option>
                   <option value="male">Male</option>
                   <option value="female">Female</option>
                 </select>
               </div>
 
               <div class="mb-3 xl:w-full">
+                <label for="" class="ml-4">Result</label>
                 <select
                   class="
                     form-select
@@ -205,10 +216,11 @@
                     focus:border-blue-600
                     focus:outline-none
                   "
+                  v-model="resultFilterValue"
                   @change="filterResult($event.target.value)"
                   aria-label="Default select"
                 >
-                  <option selected value="Result">Result</option>
+                  <option selected value="all">All</option>
                   <option value="pass">Pass</option>
                   <option value="fail">Fail</option>
                 </select>
@@ -217,7 +229,6 @@
           </div>
 
           <vue-table-lite
-            :is-static-mode="true"
             :is-loading="userTable.isLoading"
             :columns="userTable.columns"
             :rows="userTable.rows"
@@ -384,7 +395,6 @@
           >
             <i class="fas fa-times"></i> Close
           </button>
-     
         </div>
       </div>
     </div>
@@ -638,8 +648,7 @@
               bg-primary-600
               text-white
               rounded
-              hover:bg-white
-              hover:text-primary-600
+              hover:bg-white hover:text-primary-600
               mr-2
             "
             @click="addImported()"
@@ -711,7 +720,8 @@ export default {
     let result = ref("");
     let registrationNumber = ref("");
     let dateOfExamination = ref("");
-
+    let genderFilterValue = ref("all");
+    let resultFilterValue = ref("all");
     const getResults = () => {
       store.dispatch("reviewer/getProfessionalType").then((res) => {
         professions.value = res.data.data;
@@ -1108,66 +1118,184 @@ export default {
         }
       });
     };
-
+    //These filters all will be collected and made into a separate vue file in which all the other componenets will share them.
+    //One initial idea i have is to make an object holding a dynamic filter objects given through vue's props and these filters
+    //will be dynamically populated from the child or parent component upon mount and thus removing huge headache for report related tasks in the future
     const filterGender = (eventParam) => {
-      if (eventParam == "Gender") {
-        tableData = allData.value;
-        userTable.value.rows = computed(() => {
-          return tableData;
-        });
-      } else if (eventParam == "male") {
-        tableData = allData.value.filter((data) => {
-          return data.Sex
-            ? data.Sex.toLowerCase() == "male" ||
-                data.Sex.toLowerCase() == "Male" ||
-                data.Sex.toLowerCase() == "m" ||
-                data.Sex.toLowerCase() == "M"
-            : "";
-        });
-        userTable.value.rows = computed(() => {
-          return tableData;
-        });
+      //if results filter value is set to all
+      if (resultFilterValue.value == "all") {
+        if (eventParam == "all") {
+          tableData = allData.value;
+          userTable.value.rows = computed(() => {
+            return tableData;
+          });
+        } else if (eventParam == "male") {
+          tableData = allData.value.filter((data) => {
+            return data.Sex
+              ? data.Sex.toLowerCase() == "male" ||
+                  data.Sex.toLowerCase() == "Male" ||
+                  data.Sex.toLowerCase() == "m" ||
+                  data.Sex.toLowerCase() == "M"
+              : "";
+          });
+          userTable.value.rows = computed(() => {
+            return tableData;
+          });
+        } else {
+          tableData = allData.value.filter((data) => {
+            return data.Sex
+              ? data.Sex.toLowerCase() == "female" ||
+                  data.Sex.toLowerCase() == "Female" ||
+                  data.Sex.toLowerCase() == "f" ||
+                  data.Sex.toLowerCase() == "F"
+              : "";
+          });
+          userTable.value.rows = computed(() => {
+            return tableData;
+          });
+        }
+        //end
       } else {
-        tableData = allData.value.filter((data) => {
-          return data.Sex
-            ? data.Sex.toLowerCase() == "female" ||
-                data.Sex.toLowerCase() == "Female" ||
-                data.Sex.toLowerCase() == "f" ||
-                data.Sex.toLowerCase() == "F"
-            : "";
-        });
-        userTable.value.rows = computed(() => {
-          return tableData;
-        });
+        //if result is set to some value
+        if (eventParam == "all") {
+          tableData = allData.value.filter((data) => {
+            return data.Result
+              ? data.Result.toLowerCase() == resultFilterValue.value
+              : "";
+          });
+          userTable.value.rows = computed(() => {
+            return tableData;
+          });
+        } else if (eventParam == "male") {
+          tableData = allData.value.filter((data) => {
+            return data.Sex
+              ? data.Sex.toLowerCase() == "male" ||
+                  (data.Sex.toLowerCase() == "m" &&
+                    data.Result.toLowerCase() == resultFilterValue.value)
+              : "";
+          });
+          userTable.value.rows = computed(() => {
+            return tableData;
+          });
+        } else {
+          tableData = allData.value.filter((data) => {
+            return data.Sex
+              ? data.Sex.toLowerCase() == "female" ||
+                  (data.Sex.toLowerCase() == "f" &&
+                    data.Result.toLowerCase() == resultFilterValue.value)
+              : "";
+          });
+          userTable.value.rows = computed(() => {
+            return tableData;
+          });
+        }
+        //end
       }
     };
 
     const filterResult = (eventParam) => {
-      if (eventParam == "Result") {
-        tableData = allData.value;
-        userTable.value.rows = computed(() => {
-          return tableData;
-        });
-      } else if (eventParam == "pass") {
-        tableData = allData.value.filter((data) => {
-          return data.Result
-            ? data.Result.toLowerCase() == "Pass" ||
-                data.Result.toLowerCase() == "pass"
-            : "";
-        });
-        userTable.value.rows = computed(() => {
-          return tableData;
-        });
+      // if gender is set to default value( all)
+      if (genderFilterValue.value == "all") {
+        if (eventParam == "all") {
+          tableData = allData.value;
+          userTable.value.rows = computed(() => {
+            return tableData;
+          });
+        } else if (eventParam == "pass") {
+          tableData = allData.value.filter((data) => {
+            return data.Result ? data.Result.toLowerCase() == "pass" : "";
+          });
+          userTable.value.rows = computed(() => {
+            return tableData;
+          });
+        } else {
+          tableData = allData.value.filter((data) => {
+            return data.Result ? data.Result.toLowerCase() == "fail" : "";
+          });
+          userTable.value.rows = computed(() => {
+            return tableData;
+          });
+        }
+        //end
       } else {
-        tableData = allData.value.filter((data) => {
-          return data.Result
-            ? data.Result.toLowerCase() == "fail" ||
-                data.Result.toLowerCase() == "Fail"
-            : "";
-        });
-        userTable.value.rows = computed(() => {
-          return tableData;
-        });
+        // if gender is set to some value
+        if (eventParam == "all") {
+          if (genderFilterValue.value == "male") {
+            tableData = allData.value.filter((data) => {
+              return data.Result
+                ? data.Sex.toLowerCase() == genderFilterValue.value ||
+                    data.Sex.toLowerCase() == "m"
+                : "";
+            });
+            userTable.value.rows = computed(() => {
+              return tableData;
+            });
+          } else {
+            tableData = allData.value.filter((data) => {
+              return data.Result
+                ? data.Sex.toLowerCase() == genderFilterValue.value ||
+                    data.Sex.toLowerCase() == "f"
+                : "";
+            });
+            userTable.value.rows = computed(() => {
+              return tableData;
+            });
+          }
+        } else if (eventParam == "pass") {
+          //if it is pass and gender is male
+          if (genderFilterValue.value == "male") {
+            tableData = allData.value.filter((data) => {
+              return data.Result
+                ? data.Sex.toLowerCase() == genderFilterValue.value ||
+                    (data.Sex.toLowerCase() == "m" &&
+                      data.Result.toLowerCase() == "pass")
+                : "";
+            });
+            userTable.value.rows = computed(() => {
+              return tableData;
+            });
+          } else {
+            //if it is pass and gender is female
+            tableData = allData.value.filter((data) => {
+              console.log(data.Result.toLowerCase(), data.Sex.toLowerCase());
+              return data.Result
+                ? data.Sex.toLowerCase() == genderFilterValue.value ||
+                    (data.Sex.toLowerCase() == "f" &&
+                      data.Result.toLowerCase() == "pass")
+                : "";
+            });
+
+            userTable.value.rows = computed(() => {
+              return tableData;
+            });
+          }
+        } else {
+          //if it is fail and gender is male
+          if (genderFilterValue.value == "male") {
+            tableData = allData.value.filter((data) => {
+              return data.Result
+                ? (  data.Sex.toLowerCase() == genderFilterValue.value) ||
+                    data.Sex.toLowerCase() == "m"&&data.Result.toLowerCase() == "fail" 
+                  
+                : "";
+            });
+            userTable.value.rows = computed(() => {
+              return tableData;
+            });
+          } else {
+            //if it is fail and gender is female
+            tableData = allData.value.filter((data) => {
+              return data.Result
+                ? ( data.Sex.toLowerCase() == genderFilterValue.value) ||
+                    data.Sex.toLowerCase() == "f"&&data.Result.toLowerCase() == "fail" 
+                   
+                : "";
+            });
+            userTable.value.rows = computed(() => {
+              return tableData;
+            });
+          }
+        }
       }
     };
 
@@ -1178,6 +1306,8 @@ export default {
       searchData,
       isUserManager,
       userTable,
+      genderFilterValue,
+      resultFilterValue,
       tableLoadingFinish,
       searchTerm,
       expertLevels,

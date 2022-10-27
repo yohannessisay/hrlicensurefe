@@ -895,6 +895,7 @@ export default {
       occupationTypes: "",
       nativeLanguageSelected: "",
       educations: [],
+      professionChanged:false,
     });
     let applicationStatuses = ref([]);
     let isLoading = ref(false);
@@ -1084,6 +1085,7 @@ export default {
               ) == false
             ) {
               checkForAddedError.value = false;
+              generalInfo.value.professionChanged=true
               generalInfo.value.multipleDepartment.push({
                 department: generalInfo.value.departmentSelected,
                 educationLevel: generalInfo.value.educationalLevelSelected,
@@ -1110,6 +1112,7 @@ export default {
             }
           } else {
             checkForAddedError.value = false;
+            generalInfo.value.professionChanged=true
             generalInfo.value.multipleDepartment.push({
               department: generalInfo.value.departmentSelected,
               educationLevel: generalInfo.value.educationalLevelSelected,
