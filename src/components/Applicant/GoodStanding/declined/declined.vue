@@ -241,21 +241,25 @@ export default {
       modalDataId.value.change++;
     };
 
+
     onMounted(() => {
       isLoading.value = true;
-      userInfo.value = JSON.parse(window.localStorage.getItem("personalInfo")); 
+      userInfo.value = JSON.parse(window.localStorage.getItem("personalInfo"));
 
-      store .dispatch("goodstanding/getGoodStandingLicense").then((res) => {
+      store.dispatch("goodstanding/getGoodStandingLicense").then((res) => {
         const results = res.data.data;
 
-        if (results.length > 0) {
+        if (results&&results.length > 0) {
           declinedLicenses.value = results.filter((declinedLicense) => {
-            return declinedLicense.applicationStatus.code === "DEC";
+            return (
+              declinedLicense.applicationStatus.code === "DEC"  
+            );
           });
 
           if (declinedLicenses.value.length === 0) {
             noData.value = true;
           }
+
           isLoading.value = false;
         } else {
           noData.value = true;
