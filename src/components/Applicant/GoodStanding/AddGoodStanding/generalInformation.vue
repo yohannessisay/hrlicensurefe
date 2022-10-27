@@ -322,8 +322,7 @@
               <div v-show="showOtherProfession">
                 <label class="text-main-400">Other Profession</label>
                 <input
-                  type="text"
-                  id="applicantTitle"
+                  type="text" 
                   v-model="generalInfo.professionType.otherProfessionType"
                   class="
                     appearance-none
@@ -356,8 +355,7 @@
               <div  v-show="showOtherProfession">
                 <label class="text-main-400">Other Profession Amharic</label>
                 <input
-                  type="text"
-                  id="applicantTitle"
+                  type="text" 
                   v-model="generalInfo.professionType.otherProfessionType"
                   class="
                     appearance-none
@@ -470,7 +468,7 @@
         </div>
         <div class="flex">
           <div class="flex flex-col mb-medium w-2/5 ml-medium mr-12">
-            <label class="text-white">Woreda</label>
+            <label class="text-main-400">Woreda</label>
             <select
               class="
                 form-select
@@ -531,8 +529,7 @@
                   >
 
                   <input
-                    type="text"
-                    id="applicantTitle"
+                    type="text" 
                     v-model="generalInfo.whomGoodStandingFor"
                     class="
                       appearance-none
@@ -582,8 +579,7 @@
                   >
 
                   <input
-                    type="text"
-                    id="applicantTitle"
+                    type="text" 
                     v-model="generalInfo.whoIssued"
                     class="
                       appearance-none
@@ -638,8 +634,7 @@
                   >
 
                   <input
-                    type="text"
-                    id="applicantTitle"
+                    type="text" 
                     v-model="generalInfo.licenseRegistrationNumber"
                     class="
                       appearance-none
@@ -681,8 +676,7 @@
                   >
 
                   <input
-                    type="date"
-                    id="applicantTitle"
+                    type="date" 
                     v-model="generalInfo.licenseIssuedDate"
                     class="
                       appearance-none
@@ -820,6 +814,8 @@ export default {
     };
     const educationalLevelChange = () => {
       isEdLevelSelected.value = true;
+      console.log(   generalInfo.value.departmentId.id,
+        generalInfo.value.educationLevelId.id)
       fetchProfessionalType(
         generalInfo.value.departmentId.id,
         generalInfo.value.educationLevelId.id
@@ -898,9 +894,7 @@ export default {
         });
     };
     const setDepartment = () => {
-      isDepartmentSelected.value = true;
-      generalInfo.value.educationLevelId = "";
-      generalInfo.value.professionTypeIds = "";
+      isDepartmentSelected.value = true; 
       fetchProfessionalType(generalInfo.value.departmentId.id);
     };
     const apply = () => {

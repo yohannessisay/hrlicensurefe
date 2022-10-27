@@ -123,14 +123,14 @@
           <div>
             <span class="text-black sm:text-sm">
               {{
-                localData && localData.professionType.professionTypeId
+                localData && localData.professionType
                   ? localData.professionType.professionTypeId.name
                   : ""
-              }}</span
-            >
+              }}
+            </span>
           </div>
         </div>
-        <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
+        <!-- <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
           <div>
             <span
               class="
@@ -150,10 +150,12 @@
                 localData && localData.professionType.educationLevelId
                   ? localData.professionType.educationLevelId.name
                   : ""
-              }}</span
+              }}
+              
+              </span
             >
           </div>
-        </div>
+        </div> -->
         <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
           <div>
             <span
@@ -382,7 +384,6 @@
               lg:grid-cols-4
             "
           >
-        
             <div
               class="mt-4 mb-8 bg-white shadow-lg rounded-md p-4"
               v-for="localFile in localFileData"
@@ -442,8 +443,7 @@
         "
       >
         <div class="mb-4">
-       
-          <div class="flex justify-center text-gray-900 mb-4 ">
+          <div class="flex justify-center text-gray-900 mb-4">
             <div class="form-check">
               <input
                 class="
@@ -657,9 +657,14 @@ export default {
               .licenseRegistrationNumber
               ? generalInfo.value.licenseRegistrationNumber
               : "",
-            professionalType: generalInfo.value.professionType
-              ? [generalInfo.value.professionType]
-              : null,
+            professionType: {
+              professionTypeId: generalInfo.value.professionType
+                ? generalInfo.value.professionType.professionTypeId.id
+                : null,
+              educationLevelId: generalInfo.value.professionType
+                ? generalInfo.value.professionType.educationLevelId.id
+                : null,
+            },
             expertLevelId: generalInfo.value.expertLevelId
               ? generalInfo.value.expertLevelId
               : null,
@@ -679,7 +684,8 @@ export default {
               : "",
           },
         };
-        
+        console.log(license);
+
         store
           .dispatch("goodstanding/addGoodstandingLicense", license)
           .then((res) => {
@@ -730,7 +736,7 @@ export default {
         ? JSON.parse(window.localStorage.getItem("GSApplicationData"))
         : {};
       let request = indexedDB.open("GSdocumentUploads", 1);
-     
+
       request.onerror = function () {
         console.error("Unable to open database.");
       };
@@ -740,9 +746,11 @@ export default {
         const tx = db.transaction("GSdocumentUploads", "readonly");
         const store = tx.objectStore("GSdocumentUploads");
         let getAllIDB = store.getAll();
-       
+
         getAllIDB.onsuccess = function (evt) {
-          localFileData.value = evt.target.result ? evt.target.result[0].data : {};
+          localFileData.value = evt.target.result
+            ? evt.target.result[0].data
+            : {};
         };
       };
       generalInfo.value = localData.value;
