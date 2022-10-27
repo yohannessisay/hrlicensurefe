@@ -1142,9 +1142,7 @@ export default {
         reportData.value.push(...res.data.data);
 
         res.data.data.forEach(element => {
-          let prof = element.licenseProfessionalTypes.map(prof => {
-            return prof.professionalTypes ? prof.professionalTypes.name : "";
-          });
+          let prof = element.GSProfessionals.professionalTypes ? element.GSProfessionals.professionalTypes.name : "";
           tableData.push({
             id: element.id ? element.id : "",
             FirstName: element.name ? element.name : "",
@@ -1160,7 +1158,7 @@ export default {
               ? element.certifiedDate.slice(0, 10)
               : "",
 
-            ProfessionalType: prof ? prof.join(" , ") : "",
+            ProfessionalType: prof ? prof : "",
             Gender: element.gender ? element.gender : "",
             OrganizationalUnit: element.region ? element.region.name : "",
             data: element ? element : {}
