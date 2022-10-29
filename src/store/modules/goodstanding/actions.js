@@ -129,7 +129,22 @@ export default {
       return error;
     }
   },
-
+  async updateDeclined({ commit }, payload) {
+    try {
+      const resp = await ApiService.put(
+        baseUrl + "/goodStandings/" + payload.licenseId,
+        payload.declinedData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
   async getApplicantType() {
     try {
       const resp = await ApiService.get(baseUrl + "/lookups/applicantTypes");

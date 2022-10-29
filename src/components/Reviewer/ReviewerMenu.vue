@@ -53,7 +53,7 @@
 
       <router-link
         to="/admin/userManagement"
-        v-if="isUserRegional ? isUserRegional.regionId == null : ''"
+        v-if="adminData ? adminData.role.code == 'UM' : ''"
       >
         <li class="mb-2">
           <a href="#UserManagement">
@@ -90,7 +90,15 @@
         </li>
       </router-link>
 
-      <router-link to="/admin/lookupManagement">
+      <router-link
+        to="/admin/lookupManagement"
+        v-if="
+          adminData
+            ? adminData.role.code == 'ADM' &&
+              adminData.expertLevel.code == 'FED'
+            : ''
+        "
+      >
         <li class="mb-2">
           <a href="#LookupManagement">
             <i class="bx bx-desktop"></i>
@@ -129,7 +137,8 @@ export default {
   },
   setup() {
     const store = useStore();
-    const isUserRegional = JSON.parse(localStorage.getItem("allAdminData"));
+
+    const adminData = JSON.parse(localStorage.getItem("allAdminData"));
     store.dispatch("ReviewerSideNav/assignSelectedSideBar", "mainPage");
     let currentMenu = store.getters["ReviewerSideNav/getSelectedSideBar"];
 
@@ -139,7 +148,7 @@ export default {
     return {
       currentMenu,
       updateMenu,
-      isUserRegional,
+      adminData,
     };
   },
 };

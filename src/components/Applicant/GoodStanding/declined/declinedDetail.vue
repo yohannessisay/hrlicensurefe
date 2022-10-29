@@ -138,14 +138,14 @@
                                 (licenseData && licenseData.profile
                                   ? licenseData.profile.name
                                   : "-") +
-                                  " " +
-                                  (licenseData && licenseData.profile
-                                    ? licenseData.profile.fatherName
-                                    : "-") +
-                                  " " +
-                                  (licenseData && licenseData.profile
-                                    ? licenseData.profile.grandFatherName
-                                    : "-")
+                                " " +
+                                (licenseData && licenseData.profile
+                                  ? licenseData.profile.fatherName
+                                  : "-") +
+                                " " +
+                                (licenseData && licenseData.profile
+                                  ? licenseData.profile.grandFatherName
+                                  : "-")
                               }}
                             </div>
                           </div>
@@ -220,25 +220,11 @@
 
                         <div class="grid grid-flow-row auto-rows-max">
                           <div class="flex justify-between px-4 py-1">
-                            <div>Reviewer Level</div>
-                            <div class="text-main-400 font-bold">
-                              {{
-                                licenseData &&
-                                licenseData.licenseReviewer &&
-                                licenseData.licenseReviewer.reviewer &&
-                                licenseData.licenseReviewer.reviewer.expertLevel
-                                  ? licenseData.licenseReviewer.reviewer
-                                      .expertLevel.name
-                                  : "-"
-                              }}
-                            </div>
-                          </div>
-                          <div class="flex justify-between px-4 py-1">
                             <div>Reviewer Name</div>
                             <div class="text-main-400 font-bold">
                               {{
-                                licenseData && licenseData.licenseReviewer
-                                  ? licenseData.licenseReviewer.reviewer.name
+                                licenseData && licenseData.reviewer
+                                  ? licenseData.reviewer.name
                                   : "-"
                               }}
                             </div>
@@ -247,9 +233,8 @@
                             <div>Phone Number</div>
                             <div class="text-main-400 font-bold">
                               {{
-                                licenseData && licenseData.licenseReviewer
-                                  ? licenseData.licenseReviewer.reviewer
-                                      .phoneNumber
+                                licenseData && licenseData.reviewer
+                                  ? licenseData.reviewer.phoneNumber
                                   : "-"
                               }}
                             </div>
@@ -272,90 +257,6 @@
                     <!-- END Column -->
 
                     <!-- Column -->
-                    <div
-                      class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
-                    >
-                      <!-- Article -->
-                      <article class="overflow-hidden rounded-lg shadow-xl">
-                        <header
-                          class="
-                            flex
-                            items-center
-                            justify-between
-                            leading-tight
-                            p-2
-                            md:p-4
-                            border-b-4
-                            text-main-400
-                          "
-                        >
-                          <h1 class="text-lg">
-                            <a
-                              class="no-underline hover:underline text-black"
-                              href="#"
-                            >
-                              Applicants Education Detail
-                            </a>
-                          </h1>
-                          <p class="text-main-400 text-sm">Active</p>
-                        </header>
-
-                        <div
-                          class="grid grid-flow-row auto-rows-max"
-                          v-for="(education, index) in licenseData.educations"
-                          :key="education ? education.id : ''"
-                        >
-                          <div class="flex justify-between px-4 py-1">
-                            <div>Department</div>
-                            <div class="text-main-400 font-bold">
-                              {{
-                                education && education.department
-                                  ? education.department.name
-                                  : "-"
-                              }}
-                            </div>
-                          </div>
-                          <div class="flex justify-between px-4 py-1">
-                            <div>Institution</div>
-                            <div class="text-main-400 font-bold">
-                              {{
-                                education && education.institution
-                                  ? education.institution.name
-                                  : "-"
-                              }}
-                            </div>
-                          </div>
-                          <div class="flex justify-between px-4 py-1">
-                            <div>Education Level</div>
-                            <div class="text-main-400 font-bold">
-                              {{
-                                education && education.educationLevel
-                                  ? education.educationLevel.name
-                                  : "-"
-                              }}
-                            </div>
-                          </div>
-
-                          <hr
-                            class="mt-3 mb-3"
-                            style="color: lightgray"
-                            v-if="index != licenseData.educations.length - 1"
-                          />
-                        </div>
-
-                        <footer
-                          class="
-                            flex
-                            items-center
-                            justify-between
-                            leading-none
-                            p-2
-                            md:p-4
-                          "
-                        ></footer>
-                      </article>
-                      <!-- END Article -->
-                    </div>
 
                     <!-- END Column -->
 
@@ -477,15 +378,12 @@
                           <a
                             :id="'image_href_' + `${document.documentTypeCode}`"
                             href=""
-                            :data-title="
-                              document.name ? document.name : '-----'
-                            "
                             data-lightbox="example-2"
                           >
                             <i
                               :id="
                                 're_educational_icon_' +
-                                  `${document.documentTypeCode}`
+                                `${document.documentTypeCode}`
                               "
                               class="
                                 fa fa-eye fa-2x
@@ -499,7 +397,7 @@
                               <img
                                 :id="
                                   're_image_lightbox_' +
-                                    `${document.documentTypeCode}`
+                                  `${document.documentTypeCode}`
                                 "
                                 src=""
                                 class="w-full h-2 object-cover"
@@ -530,11 +428,6 @@
                             <div class="mt-large bg-white">
                               <a
                                 :href="googleApi + document.filePath"
-                                :data-title="
-                                  document.documentType
-                                    ? document.documentType.name
-                                    : ''
-                                "
                                 data-lightbox="example-2"
                               >
                                 <img
@@ -544,13 +437,7 @@
                               </a>
 
                               <h4 style="font-weight: bold">Document Type:-</h4>
-                              <h6>
-                                {{
-                                  document.documentType
-                                    ? document.documentType.name
-                                    : ""
-                                }}
-                              </h6>
+                              <h6></h6>
                             </div>
                           </div>
                         </div>
@@ -656,7 +543,10 @@ export default {
     watch(props.modalDataId, () => {
       isLoading.value = true;
       store
-        .dispatch("newlicense/getNewLicenseApplication", props.modalDataId.id)
+        .dispatch(
+          "goodstanding/getGoodStandingLicenseById",
+          props.modalDataId.id
+        )
         .then((res) => {
           licenseData.value = res.data.data;
           if (
@@ -665,7 +555,7 @@ export default {
           ) {
             licenseData.value.declinedFields.forEach((rejected) => {
               licenseData.value.documents.forEach((doc) => {
-                if (rejected == doc.fileName) {
+                if (rejected == doc.documentTypeCode) {
                   declinedDocuments.value.push(doc);
                 }
               });
@@ -695,7 +585,7 @@ export default {
         }
         reader.addEventListener(
           "load",
-          function() {
+          function () {
             showPreview.value = true;
             previewDocuments.value[data.documentType.code] = reader.result;
           },
@@ -741,7 +631,7 @@ export default {
       );
       outputHref.href = URL.createObjectURL(event.target.files[0]);
       output.src = URL.createObjectURL(event.target.files[0]);
-      output.onload = function() {
+      output.onload = function () {
         URL.revokeObjectURL(output.src); // free memory
       };
     };
@@ -754,12 +644,13 @@ export default {
           data: licenseData.value,
         },
       };
-
-      store.dispatch("newlicense/updateDeclined", license).then((res) => {
+     
+      store.dispatch("goodstanding/updateDeclined", license).then((res) => {
         let licenseId = licenseData.value.id;
         let payload = { document: formData, id: licenseId };
+     
         store
-          .dispatch("newlicense/updateDocuments", payload)
+          .dispatch("goodstanding/updateDocuments", payload)
           .then((res) => {
             if (res.data.status == "Success") {
               toast.success("Applied successfuly", {
@@ -769,7 +660,7 @@ export default {
                 pauseOnHover: true,
                 icon: true,
               });
-              router.push({ path: "/Applicant/NewLicense/submitted" });
+              router.push({ path: "/Applicant/GoodStanding/submitted" });
               setTimeout(() => {
                 window.location.reload();
               }, 3000);
@@ -799,7 +690,7 @@ export default {
             }, 3000);
           });
       });
-      console.log(formData);
+     
     };
     onMounted(() => {
       userInfo.value = JSON.parse(window.localStorage.getItem("personalInfo"));

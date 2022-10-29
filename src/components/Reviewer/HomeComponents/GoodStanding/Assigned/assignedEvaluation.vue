@@ -174,20 +174,6 @@
                                 >
                                   <h2 class="font-bold">
                                     Personal Information
-                                    <span
-                                      @click="
-                                        editPersonalData = !editPersonalData
-                                      "
-                                      ><i
-                                        class="
-                                          fa fa-pencil
-                                          cursor-pointer
-                                          ml-4
-                                          text-yellow-300
-                                        "
-                                      ></i
-                                      >Edit Amharic Name</span
-                                    >
                                   </h2>
                                   <i
                                     class="fa fa-user fa-2x text-primary-600"
@@ -557,7 +543,7 @@
                                   "
                                 >
                                   <h2 class="font-bold">
-                                    Professional Information
+                                    Profession Information
                                   </h2>
                                   <i
                                     class="
@@ -569,281 +555,267 @@
                                 </header>
                                 <hr class="text-grey-100 mb-2" />
                                 <div class="flex flex-row">
-                                  <div
-                                    v-if="
-                                      goodStanding.GSProfessionals?.length > 0
-                                    "
-                                  >
+                                  <div>
+                                    {{ goodStanding.education }}
                                     <div
                                       class="flex flex-col mb-medium mr-12 ml-8"
                                     >
-                                      <div
-                                        style="
-                                          background: lightgray;
-                                          padding: 8px;
-                                        "
-                                      >
-                                        <p style="color: blue">
-                                          Previous Professional Types
-                                        </p>
-                                      </div>
-
-                                      <ul
-                                        v-for="(
-                                          professionName, index
-                                        ) in goodStanding.GSProfessionals"
-                                        v-bind:key="
-                                          professionName.professionalTypeId
-                                        "
-                                        v-bind:value="
-                                          professionName.professionalTypeId
-                                        "
-                                      >
-                                        <div class="grid grid-cols-1">
-                                          <li>
-                                            <input
-                                              v-on:click="
-                                                checkBoxClicked(
-                                                  professionName,
-                                                  true,
-                                                  index,
-                                                  $event
-                                                )
-                                              "
-                                              type="checkbox"
-                                              class="form-checkbox"
-                                              name="ckb"
-                                              :checked="
-                                                professionName.showPrefixLink
-                                              "
-                                            />
-                                            {{
-                                              professionName.professionalTypes
-                                                .name
-                                            }}
-                                            |
-                                            {{
-                                              professionName.professionalTypes
-                                                .amharicProfessionalType
-                                            }}
-                                          </li>
-                                          <a
-                                            class="ml-5"
-                                            style="
-                                              text-decoration: underline;
-                                              font-style: italic;
-                                            "
-                                            @click="
-                                              professionName.showPrefix =
-                                                !professionName.showPrefix
-                                            "
-                                            v-show="
-                                              professionName.showPrefixLink
-                                            "
-                                            >{{
-                                              professionName.showPrefix
-                                                ? "Hide Prefix?"
-                                                : "Show Prefix?"
-                                            }}</a
-                                          >
-                                        </div>
+                                      <div>
                                         <div
                                           class="
-                                            grid grid-cols-2
-                                            gap-4
-                                            mb-4
+                                            flex flex-col
+                                            mb-medium
+                                            mr-12
                                             ml-8
-                                            mt-2
                                           "
                                         >
-                                          <div
-                                            style="
-                                              float: left;
-                                              border-right: 1px solid lightgray;
-                                            "
-                                            v-if="
-                                              professionName.professionalTypes
-                                                .name == 'Other'
-                                            "
-                                          >
-                                            <label style="display: block"
-                                              >Other professional Type
-                                              Name:</label
-                                            >
-                                            <input
-                                              style="display: block"
-                                              type="text"
-                                              v-model="
-                                                goodStanding.otherProfessionalType
+                                          <div class="grid grid-cols-2 gap-4">
+                                            <p
+                                              class="
+                                                text-primary-600 text-base
+                                                font-bold
                                               "
-                                            />
+                                            >
+                                              Department Name
+                                            </p>
+                                            <p
+                                              class="
+                                                text-black text-base
+                                                font-bold
+                                              "
+                                            >
+                                              {{
+                                                goodStanding.department
+                                                  ? goodStanding.department.name
+                                                  : ""
+                                              }}
+                                            </p>
                                           </div>
-                                          <div
-                                            style="float: left"
-                                            v-show="
-                                              professionName.showPrefixLink &&
-                                              professionName.showPrefix
-                                            "
-                                          >
-                                            <label style="display: block"
-                                              >Prefix:</label
-                                            >
-                                            <select
-                                              style="display: block"
-                                              class="select"
-                                              @change="
-                                                addPrefix(
-                                                  professionName.professionalTypeId,
-                                                  $event
-                                                )
-                                              "
-                                              :v-model="
-                                                selectedOption + `${index}`
-                                              "
-                                            >
-                                              <option
-                                                v-for="prefix in prefixList"
-                                                v-bind:key="prefix.id"
-                                                v-bind:value="prefix.name"
-                                              >
-                                                {{ prefix.name }}
-                                              </option>
-                                            </select>
-                                          </div>
-                                        </div>
-                                      </ul>
-                                      <div
-                                        style="
-                                          background: lightgray;
-                                          padding: 8px;
-                                        "
-                                      >
-                                        <p style="color: blue">
-                                          New Professional Types
-                                        </p>
-                                      </div>
 
-                                      <ul
-                                        v-for="(
-                                          newProfessionName, index
-                                        ) in professionalTypes"
-                                        v-bind:key="newProfessionName.id"
-                                        v-bind:value="newProfessionName.id"
-                                      >
-                                        <div class="grid grid-cols-1">
-                                          <li>
-                                            <input
-                                              v-on:click="
-                                                checkBoxClicked(
-                                                  newProfessionName,
-                                                  false,
-                                                  index,
-                                                  $event
-                                                )
-                                              "
-                                              type="checkbox"
-                                              class="form-checkbox"
-                                              name="nckb"
-                                            />
-                                            {{ newProfessionName.name }} |
-                                            {{
-                                              newProfessionName.amharicProfessionalType
-                                            }}
-                                          </li>
-                                          <a
-                                            class="ml-5"
-                                            style="
-                                              text-decoration: underline;
-                                              font-style: italic;
-                                            "
-                                            @click="
-                                              newProfessionName.showPrefix =
-                                                !newProfessionName.showPrefix
-                                            "
-                                            v-show="
-                                              newProfessionName.showPrefixLink
-                                            "
-                                            >{{
-                                              newProfessionName.showPrefix
-                                                ? "Hide Prefix?"
-                                                : "Show Prefix?"
-                                            }}</a
-                                          >
-                                        </div>
-                                        <div
-                                          class="
-                                            grid grid-cols-2
-                                            gap-4
-                                            mb-4
-                                            ml-8
-                                            mt-2
-                                          "
-                                        >
-                                          <div
-                                            style="
-                                              float: left;
-                                              border-right: 1px solid lightgray;
-                                            "
-                                            v-if="
-                                              newProfessionName.showPrefixLink &&
-                                              newProfessionName.name == 'Other'
-                                            "
-                                          >
-                                            <label style="display: block"
-                                              >Other profession name*</label
-                                            >
-                                            <input
-                                              style="display: block"
-                                              type="text"
-                                              v-model="
-                                                goodStanding.otherProfessionalType
-                                              "
-                                            />
-                                            <label style="display: block"
-                                              >Other profession name
-                                              (Amharic)*</label
-                                            >
-                                            <input
-                                              style="display: block"
-                                              type="text"
-                                              v-model="
-                                                goodStanding.otherProfessionalTypeAmharic
-                                              "
-                                            />
-                                          </div>
-                                          <div
-                                            style="float: left"
-                                            v-show="
-                                              newProfessionName.showPrefixLink &&
-                                              newProfessionName.showPrefix
-                                            "
-                                          >
-                                            <label style="display: block"
-                                              >Prefix:</label
-                                            >
-                                            <select
-                                              style="display: block"
-                                              @change="
-                                                addPrefix(
-                                                  newProfessionName.id,
-                                                  $event
-                                                )
-                                              "
-                                              :v-model="
-                                                newSelectedOptions + `${index}`
+                                          <div class="grid grid-cols-2 gap-4">
+                                            <p
+                                              class="
+                                                text-primary-600 text-base
+                                                font-bold
                                               "
                                             >
-                                              <option
-                                                v-for="prefix in prefixList"
-                                                v-bind:key="prefix.name"
-                                                v-bind:value="prefix.name"
+                                              Profession
+                                            </p>
+                                            <div
+                                              class="
+                                                text-black text-base
+                                                font-bold
+                                              "
+                                            >
+                                              {{
+                                                goodStanding.GSProfessionals
+                                                  .professionalTypes
+                                                  ? goodStanding.GSProfessionals
+                                                      .professionalTypes.name !=
+                                                    "Other"
+                                                    ? goodStanding
+                                                        .GSProfessionals
+                                                        .professionalTypes.name
+                                                    : goodStanding
+                                                        .GSProfessionals
+                                                        .otherProfessionType +
+                                                      "/" +
+                                                      goodStanding
+                                                        .GSProfessionals
+                                                        .otherProfessionTypeAmharic
+                                                  : ""
+                                              }}
+                                              <span
+                                                class="
+                                                  cursor-pointer
+                                                  text-primary-500
+                                                "
+                                                @click="
+                                                  allowProfessionChange(
+                                                    goodStanding.departmentId,
+                                                    goodStanding.GSProfessionals
+                                                  )
+                                                "
                                               >
-                                                {{ prefix.name }}
-                                              </option>
-                                            </select>
+                                                <i
+                                                  class="
+                                                    fa fa-pencil
+                                                    text-green-200
+                                                  "
+                                                ></i
+                                                >Edit
+                                              </span>
+
+                                              <div
+                                                :id="goodStanding.departmentId"
+                                                class="flex justify-center"
+                                                v-if="
+                                                  allowProfChange[
+                                                    goodStanding.departmentId
+                                                  ]
+                                                "
+                                              >
+                                                <div class="mb-3 w-full">
+                                                  <select
+                                                    class="
+                                                      form-select
+                                                      appearance-none
+                                                      block
+                                                      w-full
+                                                      px-3
+                                                      py-1.5
+                                                      text-base
+                                                      font-normal
+                                                      text-gray-700
+                                                      bg-white
+                                                      bg-clip-padding
+                                                      bg-no-repeat
+                                                      border
+                                                      border-solid
+                                                      border-gray-300
+                                                      rounded
+                                                      transition
+                                                      ease-in-out
+                                                      m-0
+                                                      focus:text-gray-700
+                                                      focus:bg-white
+                                                      focus:border-blue-600
+                                                      focus:oProfessionutline-none
+                                                    "
+                                                    @click="
+                                                      changeNewProfession(
+                                                        goodStanding.GSProfessionals
+                                                      )
+                                                    "
+                                                    v-model="
+                                                      goodStanding
+                                                        .GSProfessionals
+                                                        .professionalTypeId
+                                                    "
+                                                    aria-label="Default select example"
+                                                  >
+                                                    <option selected disabled>
+                                                      Choose new profession
+                                                    </option>
+                                                    <option
+                                                      v-for="prof in newProf[
+                                                        goodStanding
+                                                          .departmentId
+                                                      ]"
+                                                      :key="prof.id"
+                                                      :value="prof.id"
+                                                    >
+                                                      {{ prof.name }}
+                                                    </option>
+                                                  </select>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+
+                                          <div class="grid grid-cols-2 gap-4">
+                                            <p
+                                              class="
+                                                text-primary-600 text-base
+                                                font-bold
+                                              "
+                                            >
+                                              Prefix
+                                            </p>
+                                            <div
+                                              class="
+                                                text-black text-base
+                                                font-bold
+                                              "
+                                            >
+                                              <button
+                                                class="
+                                                  inline-block
+                                                  px-6
+                                                  text-white
+                                                  bg-primary-600
+                                                  font-medium
+                                                  text-xs
+                                                  leading-tight
+                                                  uppercase
+                                                  rounded
+                                                  shadow-lg
+                                                  hover:text-primary-600
+                                                  hover:shadow-lg
+                                                  focus:bg-purple-700
+                                                  focus:shadow-lg
+                                                  focus:outline-none
+                                                  focus:ring-0
+                                                  active:bg-purple-800
+                                                  active:shadow-lg
+                                                  transition
+                                                  duration-150
+                                                  ease-in-out
+                                                "
+                                                @click="
+                                                  showPrefix(
+                                                    goodStanding.departmentId
+                                                  )
+                                                "
+                                              >
+                                                Add Prefix
+                                              </button>
+                                              <div
+                                                class="mb-3 w-full"
+                                                v-if="
+                                                  showPrefixFor[
+                                                    goodStanding.departmentId
+                                                  ]
+                                                "
+                                              >
+                                                <select
+                                                  class="
+                                                    form-select
+                                                    appearance-none
+                                                    block
+                                                    w-full
+                                                    px-3
+                                                    py-1.5
+                                                    text-base
+                                                    font-normal
+                                                    text-gray-700
+                                                    bg-white
+                                                    bg-clip-padding
+                                                    bg-no-repeat
+                                                    border
+                                                    border-solid
+                                                    border-gray-300
+                                                    rounded
+                                                    transition
+                                                    ease-in-out
+                                                    m-0
+                                                    focus:text-gray-700
+                                                    focus:bg-white
+                                                    focus:border-blue-600
+                                                    focus:oProfessionutline-none
+                                                  "
+                                                  v-model="
+                                                    goodStanding.GSProfessionals
+                                                      .prefixId
+                                                  "
+                                                  aria-label="Default select example"
+                                                >
+                                                  <option selected disabled>
+                                                    Choose prefix
+                                                  </option>
+                                                  <option
+                                                    v-for="prefix in prefixes"
+                                                    :key="prefix.id"
+                                                    :value="prefix.id"
+                                                  >
+                                                    {{ prefix.name }}
+                                                  </option>
+                                                </select>
+                                              </div>
+                                            </div>
                                           </div>
                                         </div>
-                                      </ul>
+                                      </div>
                                     </div>
                                   </div>
                                 </div>
@@ -904,7 +876,7 @@
                       <div class="mt-medium" v-if="!showButtons">
                         <button
                           class="
-                          inline-block
+                            inline-block
                             px-6
                             py-2.5
                             bg-primary-700
@@ -926,7 +898,7 @@
                         </button>
                         <button
                           class="
-                          inline-block
+                            inline-block
                             px-6
                             py-2.5
                             bg-red-300
@@ -948,7 +920,7 @@
                         </button>
                         <button
                           class="
-                          inline-block
+                            inline-block
                             px-6
                             py-2.5
                             bg-yellow-300
@@ -971,7 +943,7 @@
                         <button
                           v-if="showTransferToAdminButton"
                           class="
-                          inline-block
+                            inline-block
                             px-6
                             py-2.5
                             bg-primary-700
@@ -1088,11 +1060,9 @@
                         rounded
                         shadow-lg
                         bg-primary-700
-                        hover:text-primary-600
-                        hover:border
+                        hover:text-primary-600 hover:border
                         transition
                         duration-150
-                      
                         ease-in-out
                       "
                       @click="action(button.action)"
@@ -1111,12 +1081,10 @@
                         uppercase
                         rounded
                         shadow-lg
-                        bg-yellow-300 
+                        bg-yellow-300
                         hover:border hover:text-yellow-300
-                     
                         transition
                         duration-150
-                      
                         ease-in-out
                       "
                       data-bs-toggle="modal"
@@ -1310,13 +1278,49 @@
                           "
                         >
                           <button
-                            class="md-danger"
+                            class="
+                              inline-block
+                              px-6
+                              py-2.5
+                              bg-primary-700
+                              text-white
+                              font-medium
+                              text-xs
+                              leading-tight
+                              uppercase
+                              rounded
+                              shadow-lg
+                              hover:bg-white hover:text-primary-600
+                              transition
+                              duration-150
+                              ease-in-out
+                            "
                             type="button"
                             v-on:click="toggleModal()"
                           >
                             Close
                           </button>
-                          <button type="button" v-on:click="submitRemark()">
+                          <button
+                            type="button"
+                            class="
+                              inline-block
+                              px-6
+                              py-2.5
+                              bg-primary-700
+                              text-white
+                              font-medium
+                              text-xs
+                              leading-tight
+                              uppercase
+                              rounded
+                              shadow-lg
+                              hover:bg-white hover:text-primary-600
+                              transition
+                              duration-150
+                              ease-in-out
+                            "
+                            v-on:click="submitRemark()"
+                          >
                             Submit
                           </button>
                         </div>
@@ -1332,26 +1336,13 @@
                   </div>
                 </div>
               </Modal>
-              <div v-if="showFlash">
-                <FlashMessage message="Operation Successful!" />
-              </div>
-              <div v-if="showErrorFlash">
-                <ErrorFlashMessage message="Operation Failed!" />
-              </div>
+
               <div v-if="showOtherProfessionError">
                 <ErrorFlashMessage
                   message="Please type other profession type in the input field"
                 />
               </div>
-              <div v-if="showNameChangeFlash">
-                <FlashMessage message="name change Successful!" />
-              </div>
-              <div v-if="showNameChangeErrorFlash">
-                <ErrorFlashMessage message="name change Failed!" />
-              </div>
-              <div v-if="showLicenseDateRequirementError">
-                <ErrorFlashMessage message="Please add Expiration date!" />
-              </div>
+
               <div v-if="showProfessionChangeError">
                 <ErrorFlashMessage
                   message="you can't change profession if you are not approving"
@@ -1617,7 +1608,7 @@
           <button
             type="button"
             class="
-             inline-block
+              inline-block
               px-6
               py-2.5
               bg-primary-700
@@ -1639,22 +1630,21 @@
           </button>
           <button
             class="
-               inline-block
-                                            px-6
-                                            py-2.5
-                                            bg-primary-700
-                                            text-white
-                                            font-medium
-                                            text-xs
-                                            leading-tight
-                                            uppercase
-                                            rounded
-                                            shadow-lg
-                                            hover:bg-white 
-                                            hover:text-primary-600
-                                            transition
-                                            duration-150
-                                            ease-in-out
+              inline-block
+              px-6
+              py-2.5
+              bg-primary-700
+              text-white
+              font-medium
+              text-xs
+              leading-tight
+              uppercase
+              rounded
+              shadow-lg
+              hover:bg-white hover:text-primary-600
+              transition
+              duration-150
+              ease-in-out
             "
             @click="supervise()"
           >
@@ -1670,7 +1660,6 @@ import { useStore } from "vuex";
 import { useRoute } from "vue-router";
 import { ref, onMounted } from "vue";
 
-import { useRouter } from "vue-router";
 import { googleApi } from "@/composables/baseURL";
 
 import { useToast } from "vue-toastification";
@@ -1702,7 +1691,7 @@ export default {
   setup() {
     const route = useRoute();
     const store = useStore();
-    const router = useRouter();
+    const toast = useToast();
 
     let startDate = ref("");
     let endDate = ref("");
@@ -1712,8 +1701,7 @@ export default {
     let showOptions = ref("");
     let superviseAction = ref("");
     let supervisor = ref("");
-
-    const toast = useToast();
+    let showPrefixFor = ref([]);
 
     const options = ref([0, 1, 2]);
     const selectedOptions = ref([0]);
@@ -1730,19 +1718,10 @@ export default {
     let otherProfessionalType = ref();
     let otherProfessionalTypeAmharic = ref();
     let showOtherProfessionError = ref(false);
-
+    let prefixes = ref({});
     let professionalTypeIds = ref([]);
     let professionalTypeIdss = ref([]);
-    let prefixList = ref([
-      { name: "None", id: 0 },
-      { name: "Consultant", id: 1 },
-      { name: "Expert", id: 2 },
-      { name: "Junior", id: 3 },
-      { name: "Senior", id: 4 },
-      { name: "Senior expert", id: 5 },
-      { name: "Chief", id: 6 },
-      { name: "Chief expert", id: 7 },
-    ]);
+
     let prefix = ref();
     let canChangeName = ref(false);
     let showProfessionChangeError = ref(false);
@@ -1803,15 +1782,18 @@ export default {
     let errorClass = ref("text-danger");
     let showRemark = ref(false);
     let applicationType = ref("");
-
+    let newProf = ref([]);
     let showFlash = ref(false);
     let showErrorFlash = ref(false);
     let showDeclineFlash = ref(false);
     let sendDeclinedData = ref(true);
     let fromModalSendDeclinedData = ref(false);
-
+    let allowProfChange = ref({});
+    let allowOtherProfChange = ref({});
     let showActionLoading = ref(false);
     let showLoadingButtons = ref(false);
+    let modifiedProfession = [];
+    let tempProf = ref([]);
 
     let professionalTypes = ref([]);
     let evaluateRoute = ref("/admin/evaluate/goodStanding" + route.params.id);
@@ -1824,7 +1806,6 @@ export default {
         .then((res) => {
           goodStanding.value = res.data.data;
           departmentId.value = goodStanding.value.department.id;
-          getProfessionalTypesByDepartmentId(departmentId.value);
           profileInfo.value = goodStanding.value.profile;
           buttons.value = res.data.data.applicationStatus.buttons;
           docs.value = res.data.data.documents;
@@ -1879,6 +1860,7 @@ export default {
 
       applicationType.value = route.params.applicationType;
     };
+
     const fetchDocumentTypes = async () => {
       store.dispatch("reviewer/getDocumentTypes").then((res) => {
         documentTypes.value = res.data.data;
@@ -2120,48 +2102,7 @@ export default {
 
     const action = (actionValue) => {
       let smsMessage = "";
-      showActionLoading.value = true;
-      showLoadingButtons.value = true;
-      if (professionalTypeIdss.value.length > 0) {
-        goodStanding.value.professionalTypeIds = professionalTypeIdss.value;
-        goodStanding.value.professionalTypePrefixes =
-          professionalTypePrefixes.value;
-      } else {
-        showProfessionChangeError.value = true;
-        setTimeout(() => {
-          showProfessionChangeError.value = false;
-        }, 4000);
-        professionalTypeIdss.value = [];
-        professionalTypePrefixes.value = [];
-        showActionLoading.value = false;
-        showLoadingButtons.value = false;
-        return;
-      }
 
-      let loopCounter = 0;
-
-      for (let i = 0; i < professionalTypeIdss.value.length; i++) {
-        let professionId = professionalTypeIdss.value[i];
-        for (
-          let j = 0;
-          j < goodStanding.value.professionalTypePrefixes.length;
-          j++
-        ) {
-          if (
-            goodStanding.value.professionalTypePrefixes[j].professionalTypeId !=
-            professionId
-          ) {
-            loopCounter++;
-          }
-        }
-        if (loopCounter == goodStanding.value.professionalTypePrefixes.length) {
-          goodStanding.value.professionalTypePrefixes.push({
-            professionalTypeId: professionId,
-            prefix: null,
-          });
-        }
-        loopCounter = 0;
-      }
       if (actionValue === "ApproveEvent") {
         smsMessage = goodStanding.value
           ? "Dear applicant your applied letter of goodstanding with license number " +
@@ -2175,55 +2116,26 @@ export default {
             goodStanding.value.goodStandingCode +
             " has been declined after careful examination of your uploaded documents by our reviewers. Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
           : "";
-        showActionLoading.value = false;
-        showLoadingButtons.value = false;
-        let checkProfessionResult = false;
-        goodStanding.value.isProfessionChanged == false
-          ? (checkProfessionResult = checkProfessionChanged(
-              goodStanding.value.GSProfessionals
-            ))
-          : (checkProfessionResult = true);
 
-        if (checkProfessionResult) {
-          showProfessionChangeError.value = true;
-          toast.error("Error occured", {
-            timeout: 5000,
-            position: "bottom-center",
-            pauseOnFocusLoss: true,
-            pauseOnHover: true,
-            icon: true,
-          });
-          return;
-        } else {
-          showRemark.value = true;
-          sendDeclinedData.value = false;
-          if (fromModalSendDeclinedData.value == true) {
-            sendDeclinedData.value = true;
-          }
+        showRemark.value = true;
+        sendDeclinedData.value = false;
+        if (fromModalSendDeclinedData.value == true) {
+          sendDeclinedData.value = true;
         }
+        return;
+      }else if (actionValue == "DeclineEventFinal") {
+        actionValue = "DeclineEvent";
       }
 
       if (actionValue == "ReviewerDraftEvent") {
-        let checkProfessionResult = false;
-        goodStanding.value.isProfessionChanged == false
-          ? (checkProfessionResult = checkProfessionChanged(
-              goodStanding.value.GSProfessionals
-            ))
-          : (checkProfessionResult = true);
-
-        if (checkProfessionResult) {
+        if (
+          goodStanding.value.GSProfessionals.professionalTypes.id !=
+          goodStanding.value.GSProfessionals.professionalTypeId
+        ) {
           goodStanding.value.isProfessionChanged = true;
         }
       }
 
-      if (prefix.value !== undefined) {
-        goodStanding.value.prefix = prefix.value;
-      }
-      if (professionalTypeIdss.value.length > 0) {
-        goodStanding.value.professionalTypeIds = professionalTypeIdss.value;
-        goodStanding.value.professionalTypePrefixes =
-          professionalTypePrefixes.value;
-      }
       goodStanding.value.declinedFields = rejected.value;
       goodStanding.value.acceptedFields = accepted.value;
       goodStanding.value.certified = true;
@@ -2254,9 +2166,9 @@ export default {
                 icon: true,
               });
             });
-                  setTimeout(() => {
-            window.location.reload();
-          }, 3000);
+            setTimeout(() => {
+              window.location.reload();
+            }, 3000);
           }
         })
         .catch(() => {
@@ -2274,7 +2186,7 @@ export default {
       showRemark.value = !showRemark.value;
       sendDeclinedData.value = true;
       fromModalSendDeclinedData.value = true;
-      action("DeclineEvent");
+      action("DeclineEventFinal");
     };
 
     const toggleModal = () => {
@@ -2285,7 +2197,15 @@ export default {
       pdfFilePath.value = pdfPath;
       window.open(googleApi + "" + pdfPath, "_blank");
     };
-
+    const showPrefix = (id) => {
+      if (showPrefixFor.value[id] == undefined) {
+        showPrefixFor.value[id] = true;
+      } else if (showPrefixFor.value[id] && showPrefixFor.value[id] == true) {
+        showPrefixFor.value[id] = false;
+      } else {
+        showPrefixFor.value[id] = true;
+      }
+    };
     const toChangeProfession = () => {
       isToChangeProfession.value = true;
     };
@@ -2294,31 +2214,15 @@ export default {
     };
     const changeProfession = () => {};
 
-    const getProfessionalTypesByDepartmentId = (id) => {
-      let professionSelected = ref(false);
-      store
-        .dispatch("reviewer/getProfessionalTypeByDepartmentId", id)
+    const getProfessionalTypesByDepartmentId = async (profType) => {
+      let profId = {
+        departmentId: profType.departmentId,
+        educationalLevelId: profType.educationLevelId,
+      };
+      await store
+        .dispatch("reviewer/getProfessionalTypeByDepartmentId", profId)
         .then((res) => {
-          res.data.data
-            .filter(function (e) {
-              for (let i in goodStanding.value.GSProfessionals) {
-                if (
-                  e.code ===
-                  goodStanding.value.GSProfessionals[i].professionalTypes.code
-                ) {
-                  professionSelected.value = true;
-                }
-              }
-              if (!professionSelected.value) {
-                professionalTypes.value.push(e);
-              }
-              professionSelected.value = false;
-            })
-            .map((mapData) => {
-              mapData.showPrefix = false;
-              mapData.showPrefixLink = false;
-              return mapData;
-            });
+          newProf.value[profType.departmentId] = res.data.data;
         });
     };
     const allowChangeName = () => {
@@ -2566,9 +2470,9 @@ export default {
                   pauseOnHover: true,
                   icon: true,
                 });
-                     setTimeout(() => {
-            window.location.reload();
-          }, 3000);
+                setTimeout(() => {
+                  window.location.reload();
+                }, 3000);
               });
             } else {
               toast.error("Please try again", {
@@ -2578,9 +2482,9 @@ export default {
                 pauseOnHover: true,
                 icon: true,
               });
-                   setTimeout(() => {
-            window.location.reload();
-          }, 3000);
+              setTimeout(() => {
+                window.location.reload();
+              }, 3000);
             }
           })
           .catch(() => {
@@ -2591,9 +2495,9 @@ export default {
               pauseOnHover: true,
               icon: true,
             });
-               setTimeout(() => {
-            window.location.reload();
-          }, 3000);
+            setTimeout(() => {
+              window.location.reload();
+            }, 3000);
           });
       }
     };
@@ -2623,10 +2527,31 @@ export default {
       }
     };
 
+    const allowProfessionChange = (depId, GS) => {
+      let profType = {
+        departmentId: depId,
+        educationLevelId: GS.professionalTypes.educationalLevelId,
+      };
+      getProfessionalTypesByDepartmentId(profType);
+
+      allowProfChange.value[depId] ? allowProfChange.value[depId] : false;
+      allowProfChange.value[depId] = !allowProfChange.value[depId];
+      allowOtherProfChange.value[depId] = false;
+
+      console.log(allowProfChange.value);
+    };
+
+    const changeNewProfession = (profession) => {
+      console.log(profession);
+    };
+
     onMounted(() => {
       created("Good Standing", route.params.id);
       store.dispatch("goodstanding/getInstitution").then((res) => {
         institutions.value = res.data.data.filter((elm) => elm.isLocal == true);
+      });
+      store.dispatch("lookups/getProfessionalPrefix").then((res) => {
+        prefixes.value = res.data.data;
       });
     });
     return {
@@ -2634,11 +2559,13 @@ export default {
       showDateError,
       endDate,
       startDate,
+      allowProfessionChange,
       supervisor,
       setInput,
       supervise,
       resultQuery,
       changeAction,
+      changeNewProfession,
       isPdf,
       goodStanding,
       index,
@@ -2650,21 +2577,28 @@ export default {
       amount,
       width,
       documentTypes,
+      allowProfChange,
+      allowOtherProfChange,
       findDocumentType,
       documentTypeName,
       accepted,
+      tempProf,
       rejected,
+      newProf,
+      showPrefix,
       accept,
       transferToFederal,
       showTransferToAdminButton,
       showTransferSuccessMessage,
       showTransferErrorMessage,
       reject,
+      prefixes,
       buttons,
       action,
       showButtons,
       isToChangeProfession,
       profileInfo,
+      showPrefixFor,
       disableNext,
       nextClickable,
       completedSteps,
@@ -2702,7 +2636,6 @@ export default {
       showLicenseDateRequirementError,
       professionalTypeIds,
       showProfessionChangeError,
-      prefixList,
       prefix,
       professionalTypeIdss,
       checkBoxClicked,

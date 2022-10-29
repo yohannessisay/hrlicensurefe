@@ -64,6 +64,7 @@
               right-0
               mt-1
               w-56
+              p-4
               rounded-md
               shadow-lg
               bg-white
@@ -73,16 +74,20 @@
             aria-orientation="vertical"
             aria-labelledby="options-menu"
           >
-          <div role="none">
+            <div role="none">
               <router-link to="/about">
                 <li
                   class="
                     block
+                    border-b
                     px-4
                     py-2
-                    text-sm text-main-400
-                    border-b
-                    hover:bg-gray-100 hover:text-gray-900
+                    p-2
+                    text-sm
+                     text-main-400
+                    font-bold
+                    hover:bg-grey-100 hover:text-gray-900
+                    cursor-pointer
                   "
                   role="menuitem"
                 >
@@ -95,12 +100,16 @@
               <router-link to="/google-form">
                 <li
                   class="
-                    block
+                  block
+                    border-b
                     px-4
                     py-2
-                    text-sm text-main-400
-                    border-b
-                    hover:bg-gray-100 hover:text-gray-900
+                    p-2
+                    text-sm
+                     text-main-400
+                    font-bold
+                    hover:bg-grey-100 hover:text-gray-900
+                    cursor-pointer
                   "
                   role="menuitem"
                 >
@@ -108,15 +117,19 @@
                   Leave a Feedback
                 </li>
               </router-link>
-              <a @click="updateProfile()">
+              <a  href="/applicant/profile">
                 <li
                   class="
-                    block
+                  block
+                    border-b
                     px-4
                     py-2
-                    text-sm text-main-400
-                    border-b
-                    hover:bg-gray-100 hover:text-gray-900
+                    p-2
+                    text-sm
+                     text-main-400
+                    font-bold
+                    hover:bg-grey-100 hover:text-gray-900
+                    cursor-pointer
                   "
                   role="menuitem"
                 >
@@ -127,12 +140,16 @@
               <a
                 @click="logout()"
                 class="
-                  block
-                  px-4
-                  py-2
-                  text-sm text-main-400
-                  border-b
-                  hover:bg-gray-100 hover:text-gray-900
+                block
+                    border-b
+                    px-4
+                    py-2
+                    p-2
+                    text-sm
+                     text-main-400
+                    font-bold
+                    hover:bg-grey-100 hover:text-gray-900
+                    cursor-pointer
                 "
                 role="menuitem"
                 id="logout"

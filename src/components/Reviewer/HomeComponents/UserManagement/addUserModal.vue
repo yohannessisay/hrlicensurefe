@@ -36,20 +36,13 @@
           text-current
         "
       >
-   <div
-          class="
-            modal-header
-            flex flex-shrink-0
-           justify-end
-           
-            p-2
-            rounded-t-md
-          "
+        <div
+          class="modal-header flex flex-shrink-0 justify-end p-2 rounded-t-md"
         >
           <button
             type="button"
-            class="     
-                  px-6
+            class="
+              px-6
               text-white
               bg-primary-600
               hover:text-primary-600 hover:border
@@ -68,10 +61,13 @@
               active:bg-purple-800 active:shadow-lg
               transition
               duration-150
-              ease-in-out"
+              ease-in-out
+            "
             data-bs-dismiss="modal"
             aria-label="Close"
-          ><i class="fa fa-close fa-2x"></i></button>
+          >
+            <i class="fa fa-close fa-2x"></i>
+          </button>
         </div>
 
         <div class="modal-body relative p-4">
@@ -435,7 +431,7 @@
                             transition
                             duration-150
                             ease-in-out
-                          " 
+                          "
                         >
                           Create User
                         </button>
@@ -572,8 +568,11 @@ export default {
     };
 
     const selectedExpertLevel = () => {
-      admin.expertLevelId = expertLevels.value.id;
-      admin.regionId = "";
+      if (expertLevels.value.code == "FED") {
+        admin.regionId = null;
+      } else {
+        admin.expertLevelId = expertLevels.value.id;
+      }
     };
 
     const selectedRegion = () => {
@@ -581,10 +580,11 @@ export default {
     };
 
     const registerAdmin = () => {
-      isLoading.value = true;
+      // isLoading.value = true;
       let isValidated = validateForm(admin);
       showLoading.value = true;
       showButtons.value = true;
+     
       if (isValidated) {
         state.value.validationErrors = isValidated;
         state.value.showErrorMessages = true;
@@ -599,10 +599,11 @@ export default {
           admin.grandfatherName;
 
         admin.email = admin.email.toLowerCase();
-        console.log(admin)
+
+        
         store
           .dispatch("admin/registerAdmin", admin)
-          .then((res) => { 
+          .then((res) => {
             showLoading.value = false;
             if (res.data.status == "Success") {
               toast.success("User added Successfully", {

@@ -5,7 +5,7 @@
         <li><a href="#" class="text-main-400 hover:text-blue-700">Home</a></li>
         <li><span class="text-gray-500 mx-2">/</span></li>
         <li>
-          <a href="#" class="text-main-400 hover:text-blue-700">New License</a>
+          <a href="#" class="text-main-400 hover:text-blue-700">GoodStanding</a>
         </li>
         <li><span class="text-gray-500 mx-2">/</span></li>
         <li class="text-gray-500">Declined</li>
@@ -41,7 +41,7 @@
             <h2 class="text-main-400 border-b-2 text-xl p-2">
               License Number-
               <span class="text-base text-main-400">{{
-                license.newLicenseCode
+                license.goodStandingCode
               }}</span>
             </h2>
 
@@ -57,27 +57,16 @@
                 "
               >
                 <h1 class="text-lg">
-                  <a class=" text-main-400 pointer-events-none" href="#">
-                    Department
+                  <a class="text-main-400 pointer-events-none" href="#">
+                    Who issued the letter
                   </a>
                 </h1>
 
                 <ul class="text-black text-sm">
-                  <li
-                    v-for="(education, index) in license.educations"
-                    :key="education.id"
-                    style="display: inline"
-                  >
+                  <li style="display: inline">
                     <span class="text-black text-sm">
-                      {{
-                        education.department
-                          ? "*" + education.department.name
-                          : "-"
-                      }}
-                      <span v-if="index != license.educations.length - 1">
-                        ,
-                      </span></span
-                    >
+                      {{ license.whoIssued ? license.whoIssued : "" }}
+                    </span>
                   </li>
                 </ul>
               </div>
@@ -103,27 +92,20 @@
                 "
               >
                 <h1 class="text-lg">
-                  <a class=" text-main-400 pointer-events-none" href="#">
-                    Profession
+                  <a class="text-main-400 pointer-events-none" href="#">
+                    License Registration Number
                   </a>
                 </h1>
 
                 <ul class="text-black text-sm">
-                  <li
-                    v-for="(education, index) in license.educations"
-                    :key="education.id"
-                    style="display: inline"
-                  >
+                  <li style="display: inline">
                     <span class="text-black text-sm">
                       {{
-                        "*" + education.professionType
-                          ? education.professionType.name
-                          : "-"
+                        license.licenseRegistrationNumber
+                          ? license.licenseRegistrationNumber
+                          : ""
                       }}
-                      <span v-if="index != license.educations.length - 1">
-                        ,
-                      </span></span
-                    >
+                    </span>
                   </li>
                 </ul>
               </div>
@@ -241,7 +223,6 @@ export default {
       modalDataId.value.change++;
     };
 
-
     onMounted(() => {
       isLoading.value = true;
       userInfo.value = JSON.parse(window.localStorage.getItem("personalInfo"));
@@ -249,11 +230,9 @@ export default {
       store.dispatch("goodstanding/getGoodStandingLicense").then((res) => {
         const results = res.data.data;
 
-        if (results&&results.length > 0) {
+        if (results && results.length > 0) {
           declinedLicenses.value = results.filter((declinedLicense) => {
-            return (
-              declinedLicense.applicationStatus.code === "DEC"  
-            );
+            return declinedLicense.applicationStatus.code === "DEC";
           });
 
           if (declinedLicenses.value.length === 0) {
