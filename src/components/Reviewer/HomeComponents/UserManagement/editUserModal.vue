@@ -654,8 +654,8 @@ export default {
 
       if (expertLevels.value.code == "FED") {
         admin.value.regionId = null;
-      } else {
-        showRegion.value = admin.value.expertLevelId;
+      } else { 
+        showRegion.value = 4;
         admin.value.expertLevelId = expertLevels.value.id;
       }
    
@@ -688,7 +688,8 @@ export default {
         editData.roleId = admin.value.roleId;
         editData.expertLevelId = admin.value.expertLevelId;
         editData.isActive = admin.value.isActive;
-       
+        editData.regionId=admin.value.regionId;
+      
         store
           .dispatch("admin/updateAdmin", admin.value)
           .then((res) => {

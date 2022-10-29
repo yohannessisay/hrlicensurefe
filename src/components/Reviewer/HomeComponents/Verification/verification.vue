@@ -5,19 +5,21 @@
 
   <section class="home-section">
     <!-- Header -->
-    <reviewer-nav-bar><ol class="list-reset flex">
-          <li>
-            <router-link to="/admin/review"
-              ><span class="text-primary-600 text-base">Home</span></router-link
-            >
-          </li>
-          <li><span class="text-gray-500 mx-2">/</span></li> 
-          <li>
-            <a href="#" class="pointer-events-none text-lg text-grey-300"
-              >Verification</a
-            >
-          </li>
-        </ol></reviewer-nav-bar>
+    <reviewer-nav-bar
+      ><ol class="list-reset flex">
+        <li>
+          <router-link to="/admin/review"
+            ><span class="text-primary-600 text-base">Home</span></router-link
+          >
+        </li>
+        <li><span class="text-gray-500 mx-2">/</span></li>
+        <li>
+          <a href="#" class="pointer-events-none text-lg text-grey-300"
+            >Verification</a
+          >
+        </li>
+      </ol></reviewer-nav-bar
+    >
     <!-- Header -->
 
     <!-- Main Content -->
@@ -95,9 +97,7 @@
     <!-- Main Content -->
   </section>
   <add-request></add-request>
-  <view-modal
-    :modalData="modalData"
-  ></view-modal>
+  <view-modal :modalData="modalData"></view-modal>
 </template>
 
 <script>
@@ -138,92 +138,89 @@ export default {
     };
     let tableData = ref([]);
     let tableDataTemp = ref([]);
+    let params = { url: "", id: "" };
 
     const getVerification = () => {
-      store
-        .dispatch(
-          "applicationVerification/getRequestsByRequester",
-          loggedInAdmin.id
-        )
-        .then((res) => {
-          allInfo.value.users = res.data.data;
-          allInfo.value.users.forEach((element) => {
-            tableData.value.push({
-              Number: element.id,
-              ApplicantName:
-                (element.profile.name ? element.profile.name : "") +
-                " " +
-                (element.profile.fatherName ? element.profile.fatherName : "") +
-                " " +
-                (element.profile.grandFatherName
-                  ? element.profile.grandFatherName
-                  : ""),
-              RequestedRegion: element.region.name,
-              LicenseCode: element.newLicense
-                ? element.newLicense.newLicenseCode
-                : element.renewal
-                ? element.renewal.renewalCode
-                : "-------",
-              IsVerified: element.isVerified?"Verified":"Not Verified",
-              data: element,
-            });
+     
+      store.dispatch(params.url, params.id).then((res) => {
+        allInfo.value.users = res.data.data;
+        allInfo.value.users.forEach((element) => {
+          tableData.value.push({
+            Number: element.id,
+            ApplicantName:
+              (element.profile.name ? element.profile.name : "") +
+              " " +
+              (element.profile.fatherName ? element.profile.fatherName : "") +
+              " " +
+              (element.profile.grandFatherName
+                ? element.profile.grandFatherName
+                : ""),
+            RequestedRegion: element.region.name,
+            LicenseCode: element.newLicense
+              ? element.newLicense.newLicenseCode
+              : element.renewal
+              ? element.renewal.renewalCode
+              : "-------",
+            IsVerified: element.isVerified ? "Verified" : "Not Verified",
+            data: element,
           });
-          tableDataTemp.value = tableData.value;
-          verificationTable.value = {
-            columns: [
-              {
-                label: "Number",
-                field: "Number",
-                width: "3%",
-                sortable: true,
-                isKey: true,
-              },
-              {
-                label: "Applicant Name",
-                field: "ApplicantName",
-                width: "20%",
-                sortable: true,
-              },
-              {
-                label: "Requested Region",
-                field: "RequestedRegion",
-                width: "20%",
-                sortable: true,
-              },
-              {
-                label: "License Code",
-                field: "LicenseCode",
-                width: "20%",
-                sortable: true,
-              },
-              {
-                label: "Verified",
-                field: "IsVerified",
-                width: "20%",
-                sortable: true,
-              },
-
-              {
-                label: "",
-                field: "quick",
-                width: "10%",
-                display: function (row) {
-                  return (
-                    '<button data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
-                    row.licenseNumber +
-                    '" >View</button>'
-                  );
-                },
-              },
-            ],
-            rows: JSON.parse(JSON.stringify(tableData.value)),
-            totalRecordCount: tableData.value.length,
-            sortable: {
-              order: "id",
-              sort: "asc",
-            },
-          };
         });
+        tableDataTemp.value = tableData.value;
+        verificationTable.value = {
+          columns: [
+            {
+              label: "Number",
+              field: "Number",
+              width: "3%",
+              sortable: true,
+              isKey: true,
+            },
+            {
+              label: "Applicant Name",
+              field: "ApplicantName",
+              width: "20%",
+              sortable: true,
+            },
+            {
+              label: "Requested Region",
+              field: "RequestedRegion",
+              width: "20%",
+              sortable: true,
+            },
+            {
+              label: "License Code",
+              field: "LicenseCode",
+              width: "20%",
+              sortable: true,
+            },
+            {
+              label: "Verified",
+              field: "IsVerified",
+              width: "20%",
+              sortable: true,
+            },
+
+            {
+              label: "",
+              field: "quick",
+              width: "10%",
+              display: function (row) {
+                return (
+                  '<button data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
+                  row.licenseNumber +
+                  '" >View</button>'
+                );
+              },
+            },
+          ],
+          rows: JSON.parse(JSON.stringify(tableData.value)),
+          totalRecordCount: tableData.value.length,
+          sortable: {
+            order: "id",
+            sort: "asc",
+          },
+        };
+      });
     };
 
     const tableLoadingFinish = () => {
@@ -238,6 +235,7 @@ export default {
     };
 
     const rowClicked = (row) => {
+     
       if (row != undefined) {
         row = JSON.parse(JSON.stringify(row));
         modalData.value = row ? row : {};
@@ -245,7 +243,20 @@ export default {
     };
 
     onMounted(() => {
+      if (loggedInAdmin.regionId) {
+        params = {
+          url: "applicationVerification/getRequestsByRegion",
+          id: loggedInAdmin.regionId,
+        };
+      } else {
+        params = {
+          url: "applicationVerification/getRequestsByRequester",
+          id: loggedInAdmin.id,
+        };
+      }
+      console.log(params)
       getVerification();
+ 
     });
 
     return {

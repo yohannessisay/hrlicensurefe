@@ -201,14 +201,19 @@
                       <input
                         :disabled="
                           modalData && modalData.data
-                            ? modalData.data.requesterId == loggedInAdmin.id
+                            ? modalData.data.requesterId == loggedInAdmin.id ||
+                              modalData.data.isVerified == true
                             : ''
                         "
                         @change="verifiedCheck()"
                         id="isVerified"
                         class="toggle-checkbox hidden cursor-pointer"
                         type="checkbox"
-                        :checked="isVerified"
+                        :checked="
+                          modalData && modalData.data
+                            ? modalData.data.isVerified == true
+                            : ''
+                        "
                       />
                       <label
                         for="isVerified"
@@ -224,7 +229,11 @@
                         "
                       ></label>
                       <span>
-                        {{ isVerified ? "Yes" : "No" }}
+                        {{ 
+                          modalData && modalData.data&&
+                             modalData.data.isVerified == true?'Yes'
+                            : 'No'
+                         }}
                       </span>
                     </div>
                   </div>
@@ -434,7 +443,6 @@ export default {
       if (isVerifiedComputed.value == true) {
         isVerified.value == true;
       }
-      console.log(isVerifiedComputed.value);
       editedData.value.isVerified = isVerified.value;
       editedData.value.remark = remark.value;
       editedData.value.malpracticeInfo = malpracticeInfo.value;
