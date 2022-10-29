@@ -171,7 +171,7 @@
                 "
                 @click="changeLicenseId(license.id)"
                 data-bs-toggle="modal"
-                data-bs-target="#withdrawnDetail"
+                data-bs-target="#withdrawModalInfo"
               >
                 View Detail
               </button>

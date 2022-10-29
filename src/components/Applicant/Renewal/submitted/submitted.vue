@@ -195,7 +195,7 @@
       "
                 @click="openDraftDetail(license.id)"
                 data-bs-toggle="modal"
-                data-bs-target="#draftModalInfo"
+                data-bs-target="#submittedModalInfo"
               >
                 View Detail
               </button>

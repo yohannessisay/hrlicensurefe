@@ -1,46 +1,46 @@
 <template>
   <div
     class="
-      modal
-      fade
-      fixed
-      top-0
-      left-0
-      hidden
-      w-full
-      h-full
-      outline-none
-      overflow-x-hidden overflow-y-auto
-    "
-    id="withdrawnDetail"
+          modal
+          fade
+          fixed
+          top-0
+          left-0
+          hidden
+          w-full
+          h-full
+          outline-none
+          overflow-x-hidden overflow-y-auto
+        "
+    id="withdrawModalInfo"
     data-bs-backdrop="static"
     data-bs-keyboard="false"
     tabindex="-1"
-    aria-labelledby="withdrawnDetailLabel"
+    aria-labelledby="withdrawModalInfoLabel"
     aria-hidden="true"
   >
     <div
       class="
-        modal-dialog modal-dialog-centered modal-xl
-        relative
-        w-auto
-        pointer-events-none
-      "
+          modal-dialog modal-dialog-centered modal-xl
+          relative
+          w-auto
+          pointer-events-none
+        "
     >
       <div
         class="
-          modal-content
-          border-none
-          shadow-lg
-          relative
-          flex flex-col
-          w-full
-          pointer-events-auto
-          bg-white bg-clip-padding
-          rounded-md
-          outline-none
-          text-current
-        "
+            modal-content
+            border-none
+            shadow-lg
+            relative
+            flex flex-col
+            w-full
+            pointer-events-auto
+            bg-white bg-clip-padding
+            rounded-md
+            outline-none
+            text-current
+          "
       >
         <div
           class="modal-header flex flex-shrink-0 justify-end p-2 rounded-t-md"
@@ -48,26 +48,26 @@
           <button
             type="button"
             class="
-              px-6
-              text-white
-              bg-main-400
-              hover:text-main-400 hover:border
-              font-medium
-              text-xs
-              leading-tight
-              uppercase
-              rounded
-              shadow-lg
-              hover:bg-purple-700 hover:shadow-lg
-              focus:bg-purple-700
-              focus:shadow-lg
-              focus:outline-none
-              focus:ring-0
-              active:bg-purple-800 active:shadow-lg
-              transition
-              duration-150
-              ease-in-out
-            "
+                px-6
+                text-white
+                bg-main-400
+                hover:text-main-400 hover:border
+                font-medium
+                text-xs
+                leading-tight
+                uppercase
+                rounded
+                shadow-lg
+                hover:bg-purple-700 hover:shadow-lg
+                focus:bg-purple-700
+                focus:shadow-lg
+                focus:outline-none
+                focus:ring-0
+                active:bg-purple-800 active:shadow-lg
+                transition
+                duration-150
+                ease-in-out
+              "
             data-bs-dismiss="modal"
             aria-label="Close"
           >
@@ -105,15 +105,15 @@
                       <article class="overflow-hidden rounded-lg shadow-xl ">
                         <header
                           class="
-                            flex
-                            items-center
-                            justify-between
-                            leading-tight
-                            p-2
-                            md:p-4
-                            border-b-4  
-                            text-main-400
-                          "
+                              flex
+                              items-center
+                              justify-between
+                              leading-tight
+                              p-2
+                              md:p-4
+                              border-b-4  
+                              text-main-400
+                            "
                         >
                           <h1 class="text-lg">
                             <a
@@ -133,9 +133,9 @@
                             <div>Applicant Name</div>
                             <div class="text-main-400 font-bold">
                               {{
-                                (licenseData && licenseData.profile
+                                licenseData && licenseData.profile
                                   ? licenseData.profile.name
-                                  : "-") +
+                                  : "-" +
                                   " " +
                                   (licenseData && licenseData.profile
                                     ? licenseData.profile.fatherName
@@ -171,13 +171,13 @@
 
                         <footer
                           class="
-                            flex
-                            items-center
-                            justify-between
-                            leading-none
-                            p-2
-                            md:p-4
-                          "
+                              flex
+                              items-center
+                              justify-between
+                              leading-none
+                              p-2
+                              md:p-4
+                            "
                         ></footer>
                       </article>
                       <!-- END Article -->
@@ -192,15 +192,15 @@
                       <article class="overflow-hidden rounded-lg shadow-xl">
                         <header
                           class="
-                            flex
-                            items-center
-                            justify-between
-                            leading-tight
-                            p-2
-                            md:p-4
-                            border-b-4
-                            text-main-400
-                          "
+                              flex
+                              items-center
+                              justify-between
+                              leading-tight
+                              p-2
+                              md:p-4
+                              border-b-4
+                              text-main-400
+                            "
                         >
                           <h1 class="text-lg">
                             <a
@@ -215,54 +215,32 @@
                             <i class="fa fa-thumbs-down"></i>
                           </p>
                         </header>
-
                         <div class="grid grid-flow-row auto-rows-max">
-                          <div class="flex justify-between px-4 py-1">
-                            <div>Reviewer Level</div>
-                            <div class="text-main-400 font-bold">
-                              {{
-                                licenseData &&
-                                licenseData.licenseReviewer &&
-                                licenseData.licenseReviewer.reviewer &&
-                                licenseData.licenseReviewer.reviewer.expertLevel
-                                  ? licenseData.licenseReviewer.reviewer
-                                      .expertLevel.name
-                                  : "-"
-                              }}
-                            </div>
-                          </div>
                           <div class="flex justify-between px-4 py-1">
                             <div>Reviewer Name</div>
                             <div class="text-main-400 font-bold">
-                              {{
-                                licenseData && licenseData.licenseReviewer
-                                  ? licenseData.licenseReviewer.reviewer.name
-                                  : "-"
-                              }}
+                            {{ licenseData.reviewer?licenseData.reviewer.name:'' }}
                             </div>
                           </div>
                           <div class="flex justify-between px-4 py-1">
                             <div>Phone Number</div>
                             <div class="text-main-400 font-bold">
-                              {{
-                                licenseData && licenseData.licenseReviewer
-                                  ? licenseData.licenseReviewer.reviewer
-                                      .phoneNumber
-                                  : "-"
-                              }}
+                              {{ licenseData.reviewer?licenseData.reviewer.phoneNumber:'' }}
                             </div>
                           </div>
+                       
+                          
                         </div>
 
                         <footer
                           class="
-                            flex
-                            items-center
-                            justify-between
-                            leading-none
-                            p-2
-                            md:p-4
-                          "
+                              flex
+                              items-center
+                              justify-between
+                              leading-none
+                              p-2
+                              md:p-4
+                            "
                         ></footer>
                       </article>
                       <!-- END Article -->
@@ -277,15 +255,15 @@
                       <article class="overflow-hidden rounded-lg shadow-xl">
                         <header
                           class="
-                            flex
-                            items-center
-                            justify-between
-                            leading-tight
-                            p-2
-                            md:p-4
-                            border-b-4
-                            text-main-400
-                          "
+                              flex
+                              items-center
+                              justify-between
+                              leading-tight
+                              p-2
+                              md:p-4
+                              border-b-4
+                              text-main-400
+                            "
                         >
                           <h1 class="text-lg">
                             <a
@@ -299,57 +277,35 @@
                         </header>
 
                         <div
-                          class="grid grid-flow-row auto-rows-max"
-                          v-for="(education, index) in licenseData.educations"
-                          :key="education ? education.id : ''"
+                          class="grid grid-flow-row auto-rows-max" 
                         >
                           <div class="flex justify-between px-4 py-1">
                             <div>Department</div>
                             <div class="text-main-400 font-bold">
-                              {{
-                                education && education.department
-                                  ? education.department.name
-                                  : "-"
-                              }}
+                              {{ licenseData.department?licenseData.department.name:'' }}
                             </div>
                           </div>
                           <div class="flex justify-between px-4 py-1">
-                            <div>Institution</div>
+                            <div>Profession</div>
                             <div class="text-main-400 font-bold">
-                              {{
-                                education && education.institution
-                                  ? education.institution.name
-                                  : "-"
+                              {{ 
+                                licenseData.GSProfessionals&&licenseData.GSProfessionals.professionalTypes?licenseData.GSProfessionals.professionalTypes.name:''
                               }}
                             </div>
                           </div>
-                          <div class="flex justify-between px-4 py-1">
-                            <div>Education Level</div>
-                            <div class="text-main-400 font-bold">
-                              {{
-                                education && education.educationLevel
-                                  ? education.educationLevel.name
-                                  : "-"
-                              }}
-                            </div>
-                          </div>
-
-                          <hr
-                            class="mt-3 mb-3"
-                            style="color: lightgray"
-                            v-if="index != licenseData.educations.length - 1"
-                          />
+                 
+ 
                         </div>
 
                         <footer
                           class="
-                            flex
-                            items-center
-                            justify-between
-                            leading-none
-                            p-2
-                            md:p-4
-                          "
+                              flex
+                              items-center
+                              justify-between
+                              leading-none
+                              p-2
+                              md:p-4
+                            "
                         ></footer>
                       </article>
                       <!-- END Article -->
@@ -365,15 +321,15 @@
                       <article class="overflow-hidden rounded-lg shadow-xl">
                         <header
                           class="
-                            flex
-                            items-center
-                            justify-between
-                            leading-tight
-                            p-2
-                            md:p-4
-                            border-b-4
-                            text-main-400
-                          "
+                              flex
+                              items-center
+                              justify-between
+                              leading-tight
+                              p-2
+                              md:p-4
+                              border-b-4
+                              text-main-400
+                            "
                         >
                           <h1 class="text-lg">
                             <a
@@ -407,47 +363,18 @@
                               }}
                             </div>
                           </div>
-                          <div class="flex justify-between px-4 py-1">
-                            <div>Certified Status</div>
-                            <div class="text-main-400 font-bold">
-                              {{
-                                licenseData && licenseData.certified
-                                  ? "Certified"
-                                  : "Not Certified"
-                              }}
-                            </div>
-                          </div>
-                          <div class="flex justify-between px-4 py-1">
-                            <div>Certified Date</div>
-                            <div class="text-main-400 font-bold">
-                              {{
-                                licenseData && licenseData.applicationStatus
-                                  ? licenseData.applicationStatus.name
-                                  : "-"
-                              }}
-                            </div>
-                          </div>
-                          <div class="flex justify-between px-4 py-1">
-                            <div>Expiration Date</div>
-                            <div class="text-main-400 font-bold">
-                              {{
-                                licenseData && licenseData.applicationStatus
-                                  ? licenseData.applicationStatus.name
-                                  : "-"
-                              }}
-                            </div>
-                          </div>
+                        
                         </div>
 
                         <footer
                           class="
-                            flex
-                            items-center
-                            justify-between
-                            leading-none
-                            p-2
-                            md:p-4
-                          "
+                              flex
+                              items-center
+                              justify-between
+                              leading-none
+                              p-2
+                              md:p-4
+                            "
                         ></footer>
                       </article>
                       <!-- END Article -->
@@ -458,39 +385,6 @@
               </section>
             </div>
           </div>
-        </div>
-        <div
-          class="
-            modal-footer
-            flex flex-shrink-0 flex-wrap
-            items-center
-            justify-end
-            border-t border-grey-100
-            rounded-b-md
-          "
-        >
-          <button
-            type="button"
-            class="
-             inline-block
-              px-6
-              text-white
-              bg-main-400
-              hover:text-main-400 hover:border
-              font-semibold
-              text-xs
-              leading-tight
-              uppercase
-              rounded
-              shadow-lg 
-              transition
-              duration-150
-              ease-in-out
-            "
-            data-bs-dismiss="modal"
-          >
-            Close
-          </button>
         </div>
       </div>
     </div>
@@ -503,18 +397,20 @@ import { useStore } from "vuex";
 import { googleApi } from "@/composables/baseURL";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
+
 export default {
   props: ["modalDataId"],
   components: { Loading },
   setup(props) {
     let store = useStore();
-    let licenseData = ref({});
     let userInfo = ref({});
     let isLoading = ref(false);
+    let licenseData = ref({});
+
     watch(props.modalDataId, () => {
       isLoading.value = true;
       store
-        .dispatch("newlicense/getNewLicenseApplication", props.modalDataId.id)
+        .dispatch("goodstanding/getGoodStandingLicenseById", props.modalDataId.id)
         .then((res) => {
           licenseData.value = res.data.data;
           isLoading.value = false;
@@ -525,10 +421,10 @@ export default {
     });
 
     return {
-      licenseData,
+      userInfo,
       isLoading,
       googleApi,
-      userInfo,
+      licenseData,
     };
   },
 };
