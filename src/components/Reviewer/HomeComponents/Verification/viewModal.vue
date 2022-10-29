@@ -199,6 +199,11 @@
                   <div class="m-4">
                     <div class="toggle slim colour">
                       <input
+                        :disabled="
+                          modalData && modalData.data
+                            ? modalData.data.requesterId == loggedInAdmin.id
+                            : ''
+                        "
                         @change="verifiedCheck()"
                         id="isVerified"
                         class="toggle-checkbox hidden cursor-pointer"
@@ -231,6 +236,7 @@
                   <label for="requestedRegion"
                     >Verification Requester Name</label
                   >
+
                   <input
                     disabled
                     :value="modalData.data ? modalData.data.requester.name : ''"
@@ -332,23 +338,12 @@
           <button
             type="button"
             @click="saveVerification()"
-            class="
-            inline-block
-              px-6
-              text-white
-              font-medium
-              text-xs
-              leading-tight
-              uppercase
-              rounded
-              shadow-md
-              bg-primary-700
-              hover:bg-whitehover:shadow-lg
-              hover:text-primary-600
-              hover:border
-              transition
-              duration-150
-              ease-in-out
+            :class="
+              modalData &&
+              modalData.data &&
+              modalData.data.requesterId == loggedInAdmin.id
+                ? 'pointer-events-none disabled inline-block px-6 text-white font-medium text-xs leading-tight uppercase rounded shadow-md bg-grey-300 hover:bg-whitehover:shadow-lg hover:text-primary-600 hover:border transition duration-150 ease-in-out'
+                : 'inline-block px-6 text-white font-medium text-xs leading-tight uppercase rounded shadow-md bg-primary-700 hover:bg-whitehover:shadow-lg hover:text-primary-600 hover:border transition duration-150 ease-in-out'
             "
           >
             Save
@@ -366,9 +361,7 @@
               rounded
               shadow-md
               bg-primary-700
-              hover:bg-whitehover:shadow-lg
-              hover:text-primary-600
-              hover:border
+              hover:bg-whitehover:shadow-lg hover:text-primary-600 hover:border
               transition
               duration-150
               ease-in-out
@@ -410,13 +403,15 @@ export default {
         ? props.modalData.data.renewal.id
         : null
     );
-    let isVerified = ref(props.modalData.data ? props.modalData.data.isVerified : false);
+    let isVerified = ref(
+      props.modalData.data ? props.modalData.data.isVerified : false
+    );
     let isVerifiedComputed = computed(() =>
       props.modalData.data ? props.modalData.data.isVerified : false
     );
-   if (isVerifiedComputed.value == true) {
-        isVerified.value == true;
-      }
+    if (isVerifiedComputed.value == true) {
+      isVerified.value == true;
+    }
 
     const applicantId = computed(() =>
       props.modalData.data ? props.modalData.data.applicant.id : null
@@ -439,9 +434,9 @@ export default {
       if (isVerifiedComputed.value == true) {
         isVerified.value == true;
       }
-      console.log(isVerifiedComputed.value)
-      editedData.value.isVerified =isVerified.value;
-      editedData.value.remark = remark.value ;
+      console.log(isVerifiedComputed.value);
+      editedData.value.isVerified = isVerified.value;
+      editedData.value.remark = remark.value;
       editedData.value.malpracticeInfo = malpracticeInfo.value;
       editedData.value.verifier = loggedInAdmin.name;
       editedData.value.applicantId = applicantId.value
@@ -480,7 +475,7 @@ export default {
               pauseOnHover: true,
               icon: true,
             });
-             setTimeout(() => {
+            setTimeout(() => {
               window.location.reload();
             }, 3000);
           }
@@ -502,6 +497,7 @@ export default {
       renewalId,
       isVerifiedComputed,
       isVerified,
+      loggedInAdmin,
       applicantId,
       verifiedCheck,
       licenseCode,
