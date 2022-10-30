@@ -22,7 +22,7 @@
   >
     <div
       class="
-        modal-dialog modal-dialog-centered modal-md
+        modal-dialog modal-dialog-centered modal-lg
         relative
         w-auto
         pointer-events-none
@@ -65,7 +65,7 @@
               <section class="text-gray-800">
                 <div class="flex justify-center border-b-2 mb-8">
                   <div class="text-center max-w-full">
-                    <h2 class="text-2xl font-bold">Edit Department</h2>
+                    <h2 class="text-2xl font-bold"></h2>
                   </div>
                 </div>
 
@@ -101,7 +101,7 @@
                                   duration-200
                                   ease-in-out
                                 "
-                                >Department Name</label
+                                >Location Name</label
                               >
                               <div class="relative flex items-center">
                                 <input
@@ -183,17 +183,247 @@
                                     duration-150
                                     ease-out
                                   "
-                                ></label>   
+                                ></label>
                                 <span
-                                :class="
+                                  :class="
                                     isActive
                                       ? 'text-green-200 font-bold'
                                       : 'text-yellow-300 font-bold'
-                                  ">
+                                  "
+                                >
                                   {{ isActive ? "Active" : "Inactive" }}
                                 </span>
                               </div>
                             </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div
+                        class="
+                          mb-12
+                          grow-0
+                          shrink-0
+                          basis-auto
+                          w-full
+                          lg:w-6/12
+                          px-3
+                          lg:px-6
+                        "
+                      >
+                        <div class="flex items-start">
+                          <div class="grow ml-6">
+                            <label class="block text-left">
+                              <div>
+                                <div class="w-full relative">
+                                  <div
+                                    class="group w-full md:full lg:w-full ml-4"
+                                  >
+                                    <label
+                                      for="region"
+                                      class="
+                                        inline-block
+                                        w-full
+                                        text-md
+                                        mb-1
+                                        text-primary-600
+                                        font-bold
+                                        text-gray-500
+                                        transition-all
+                                        duration-200
+                                        ease-in-out
+                                      "
+                                      >Region</label
+                                    >
+                                    <div class="relative flex items-center">
+                                      <input
+                                        id="region"
+                                        @keyup="showOptions = true"
+                                        v-model="regionDropDownSearch"
+                                        type="text"
+                                        class="
+                                          peer
+                                          relative
+                                          h-18
+                                          w-full
+                                          rounded-sm
+                                          pl-10
+                                          pr-4
+                                          outline-none
+                                          drop-shadow-sm
+                                          transition-all
+                                          duration-200
+                                          ease-in-out
+                                          focus:bg-white
+                                          focus:text-primary-600
+                                          focus:font-bold
+                                          focus:drop-shadow-lg
+                                        "
+                                        required
+                                        placeholder="Start Typing region name"
+                                      />
+
+                                      <i
+                                        class="
+                                          fa fa-map
+                                          ml-4
+                                          absolute
+                                          left-auto
+                                          text-primary-600
+                                        "
+                                      ></i>
+                                    </div>
+                                  </div>
+
+                                  <div
+                                    v-show="resultQuery().length && showOptions"
+                                    class="
+                                      w-full
+                                      bg-white
+                                      border border-gray-300
+                                      mt-2
+                                      ml-1
+                                      max-height-12
+                                      overflow-hidden overflow-y-scroll
+                                      rounded-lg
+                                      shadow-lg
+                                      text-left
+                                      dropdown-menu
+                                    "
+                                    style="height: 148px; border: none"
+                                  >
+                                    <ul class="py-1">
+                                      <li
+                                        v-for="value in resultQuery()"
+                                        :key="value.id"
+                                        @click="setInput(value)"
+                                        class="
+                                          dropdown-toggle
+                                          px-4
+                                          py-2
+                                          cursor-pointer
+                                          hover:bg-primary-700 hover:text-white
+                                        "
+                                      >
+                                        {{ value.Name }}
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </div>
+                            </label>
+                          </div>
+                        </div>
+
+                        <div class="flex items-start mt-8">
+                          <div class="grow ml-6">
+                            <label class="block text-left">
+                              <div>
+                                <div class="w-full relative">
+                                  <div
+                                    class="group w-full md:full lg:w-full ml-4"
+                                  >
+                                    <label
+                                      for="zone"
+                                      class="
+                                        inline-block
+                                        w-full
+                                        text-md
+                                        mb-2
+                                        text-primary-600
+                                        font-bold
+                                        text-gray-500
+                                        transition-all
+                                        duration-200
+                                        ease-in-out
+                                      "
+                                      >Zone</label
+                                    >
+                                    <div class="relative flex items-center">
+                                      <input
+                                        id="zone"
+                                        :disabled="!isRegionSelected"
+                                        @keyup="showOptionsZone = true"
+                                        v-model="zoneDropDownSearch"
+                                        type="text"
+                                        class="
+                                          peer
+                                          relative
+                                          h-18
+                                          w-full
+                                          rounded-sm
+                                          pl-10
+                                          pr-4
+                                          outline-none
+                                          drop-shadow-sm
+                                          transition-all
+                                          duration-200
+                                          ease-in-out
+                                          focus:bg-white
+                                          focus:text-primary-600
+                                          focus:font-bold
+                                          focus:drop-shadow-lg
+                                        "
+                                        required
+                                        :placeholder="
+                                          isRegionSelected
+                                            ? 'Start Typing zone name'
+                                            : 'Please select region first'
+                                        "
+                                      />
+
+                                      <i
+                                        class="
+                                          fa fa-map
+                                          ml-4
+                                          absolute
+                                          left-auto
+                                          text-primary-600
+                                        "
+                                      ></i>
+                                    </div>
+                                  </div>
+
+                                  <div
+                                    v-show="
+                                      resultQueryZone().length &&
+                                      showOptionsZone
+                                    "
+                                    class="
+                                      w-full
+                                      bg-white
+                                      border border-gray-300
+                                      mt-2
+                                      ml-1
+                                      max-height-12
+                                      overflow-hidden overflow-y-scroll
+                                      rounded-lg
+                                      shadow-lg
+                                      text-left
+                                      dropdown-menu
+                                    "
+                                    style="height: 148px; border: none"
+                                  >
+                                    <ul class="py-1">
+                                      <li
+                                        v-for="value in resultQueryZone()"
+                                        :key="value.id"
+                                        @click="setInputZone(value)"
+                                        class="
+                                          dropdown-toggle
+                                          px-4
+                                          py-2
+                                          cursor-pointer
+                                          hover:bg-primary-700 hover:text-white
+                                        "
+                                      >
+                                        {{ value.Name }}
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </div>
+                            </label>
                           </div>
                         </div>
                       </div>
@@ -232,7 +462,7 @@
               duration-150
               ease-in-out
             "
-            @click="saveDepartment()"
+            @click="saveLocation()"
           >
             <i class="fa fa-save"></i>
             Save
@@ -266,7 +496,7 @@
   </div>
 </template>
 <script>
-import { ref, computed } from "vue";
+import { ref, computed, watch } from "vue";
 import Loading from "vue3-loading-overlay";
 import { useStore } from "vuex";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
@@ -282,10 +512,23 @@ export default {
     let departmentNameError = ref("");
     let departmentNameFilled = ref(false);
     let saveData = ref({});
+    let regionDropDownSearch = ref("");
+    let regionDropDown = ref();
+    let zoneDropDown = ref();
+    let zoneDropDownSearch = ref("");
+    let newZoneDropDown = ref();
+    let selectedRegion = ref();
+    let selectedZone = ref();
+    let isRegionSelected = ref(false);
+    let showOptions = ref(false);
+    let showOptionsZone = ref(false);
     let editData = computed(() =>
       props.editModalData ? props.editModalData : { Name: "" }
     );
-    let isActive = editData.value&&editData.value.Status ? editData.value.Status : ref(false);
+    let isActive =
+      editData.value && editData.value.Status
+        ? editData.value.Status
+        : ref(false);
 
     const changeIsActive = () => {
       isActive.value = !isActive.value;
@@ -297,7 +540,68 @@ export default {
         departmentNameFilled.value = false;
       }
     };
-    const saveDepartment = () => {
+
+    const resultQuery = () => {
+      if (regionDropDownSearch.value) {
+        console.log(regionDropDown)
+        let data = regionDropDown.value
+          ? regionDropDown.value.filter((item) => {
+              return regionDropDownSearch.value
+                .toLowerCase()
+                .split(" ")
+                .every((v) => item.Name.toLowerCase().includes(v));
+            })
+          : "";
+
+        return data;
+      } else {
+        return [];
+      }
+    };
+
+    const resultQueryZone = () => {
+      if (zoneDropDownSearch.value) {
+        let data = newZoneDropDown.value
+          ? newZoneDropDown.value.filter((item) => {
+              return zoneDropDownSearch.value
+                .toLowerCase()
+                .split(" ")
+                .every((v) => item.Name.toLowerCase().includes(v));
+            })
+          : "";
+        return data;
+      } else {
+        return [];
+      }
+    };
+
+    const setInput = (value) => {
+      selectedRegion.value = {
+        id: value.id,
+        name: value.Name,
+        code: value.data.code,
+      };
+      isRegionSelected.value = true;
+
+      newZoneDropDown.value = zoneDropDown.value.filter(
+        (zone) => zone.data.regionId == value.id
+      );
+      regionDropDownSearch.value = value.Name;
+      showOptions.value = false;
+    };
+
+    const setInputZone = (value) => {
+      selectedZone.value = {
+        id: value.id,
+        name: value.Name,
+        code: value.data.code,
+      };
+
+      zoneDropDownSearch.value = value.Name;
+      showOptionsZone.value = false;
+    };
+
+    const saveLocation = () => {
       let today = new Date().getMilliseconds();
       isLoading.value = true;
 
@@ -345,13 +649,27 @@ export default {
           });
         }
       });
+
+      watch(props.editModalData, () => {
+        regionDropDown.value = props.editModalData.region;
+        zoneDropDown.value = props.editModalData.zone;
+      });
     };
     return {
       isLoading,
       editData,
-      saveDepartment,
+      saveLocation,
+      setInputZone,
+      setInput,
+      resultQueryZone,
+      resultQuery,
       enableSaveButton,
       departmentNameFilled,
+      showOptions,
+      showOptionsZone,
+      regionDropDownSearch,
+      zoneDropDownSearch,
+      isRegionSelected,
       showDepartmentNameError,
       departmentNameError,
       isActive,

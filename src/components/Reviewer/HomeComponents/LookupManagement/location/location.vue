@@ -352,6 +352,7 @@ export default {
           });
         });
         modalData.value.region = regionTableData;
+        editModalData.value.region = regionTableData;
         regionsTable.value = {
           isLoading: false,
           columns: [
@@ -492,6 +493,7 @@ export default {
         });
 
         modalData.value.zone = zoneTableData;
+        editModalData.value.zone = zoneTableData;
 
         zonesTable.value = {
           isLoading: false,
@@ -548,12 +550,15 @@ export default {
       regionsTable.value.isLoading = false;
       let elements = document.getElementsByClassName("edit-btn-region");
       Array.prototype.forEach.call(elements, function (element) {
-        if (element.classList.contains("edit-btn")) {
+        if (element.classList.contains("edit-btn-region")) {
           element.addEventListener("click", regionRowClicked());
         }
       });
     };
     const regionRowClicked = (row) => {
+      editModalData.value.isWoreda=false;
+      editModalData.value.isRegion=true;
+      editModalData.value.isZone=false;
       editModalData.value = row;
     };
 
@@ -561,12 +566,15 @@ export default {
       zonesTable.value.isLoading = false;
       let elements = document.getElementsByClassName("edit-btn-zone");
       Array.prototype.forEach.call(elements, function (element) {
-        if (element.classList.contains("edit-btn")) {
+        if (element.classList.contains("edit-btn-zone")) {
           element.addEventListener("click", zoneRowClicked());
         }
       });
     };
     const zoneRowClicked = (row) => {
+      editModalData.value.isWoreda=false;
+      editModalData.value.isRegion=false;
+      editModalData.value.isZone=true;
       editModalData.value = row;
     };
 
@@ -574,12 +582,15 @@ export default {
       woredasTable.value.isLoading = false;
       let elements = document.getElementsByClassName("edit-btn-woreda");
       Array.prototype.forEach.call(elements, function (element) {
-        if (element.classList.contains("edit-btn")) {
+        if (element.classList.contains("edit-btn-woreda")) {
           element.addEventListener("click", woredaRowClicked());
         }
       });
     };
     const woredaRowClicked = (row) => {
+      editModalData.value.isWoreda=true;
+      editModalData.value.isRegion=false;
+      editModalData.value.isZone=false;
       editModalData.value = row;
     };
 
