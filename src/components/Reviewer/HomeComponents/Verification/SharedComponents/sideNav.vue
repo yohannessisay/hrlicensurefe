@@ -51,7 +51,7 @@
         </li>
       </router-link>
     </ul>
-    <ul class="nav-links">
+    <ul class="nav-links" style="margin-top:100px;">
       <div
         class="profile-details mb-8 ml-4"
      
@@ -61,7 +61,7 @@
             <a href="" class="ml-6">
               <i class="bx bx-arrow-to-left text-white "></i>
 
-              <span class="links_name text-white mr-12" style="margin-top:100px;">Home</span>
+              <span class="links_name text-white mr-12" >Home</span>
             </a>
           </li>
         </router-link>

@@ -5,13 +5,15 @@
         <li><a href="#" class="text-main-400 hover:text-blue-700">Home</a></li>
         <li><span class="text-gray-500 mx-2">/</span></li>
         <li>
-          <a href="#" class="text-main-400 hover:text-blue-700">New License</a>
+          <a href="#" class="text-main-400 hover:text-blue-700">Goodstanding</a>
         </li>
         <li><span class="text-gray-500 mx-2">/</span></li>
         <li class="text-gray-500">Approved</li>
       </ol>
     </nav>
+
     <h2 class="ml-8 mt-8" v-if="isLoading">Loading...</h2>
+
     <div class="container my-12 mx-auto px-4 md:px-12" v-if="noData == false">
       <div class="flex flex-wrap sm:-mx-1 lg:-mx-4">
         <!-- Column -->
@@ -41,36 +43,44 @@
             <h2 class="text-main-400 border-b-2 text-xl p-2">
               License Number-
               <span class="text-base text-main-400">{{
-                license.newLicenseCode
+                license.goodStandingCode
               }}</span>
             </h2>
 
+            <header
+              class="
+                flex
+                items-center
+                justify-between
+                leading-tight
+                p-2
+                md:p-2
+                mt-2
+              "
+            ></header>
+
             <div class="border-b-2 text-main-400">
-              <div class="grid grid-rows-2 p-2 mb-2 border-b-2">
+              <div
+                class="
+                  flex
+                  items-center
+                  justify-between
+                  leading-tight
+                  p-2
+                  md:p-2
+                "
+              >
                 <h1 class="text-lg">
-                  <a class="hover:underline underline text-main-400" href="#">
-                    Department
+                  <a
+                    class="no-underline hover:underline text-main-400"
+                    href="#"
+                  >
+                    Who Issued the letter
                   </a>
                 </h1>
-
-                <ul class="text-black text-sm">
-                  <li
-                    v-for="(education, index) in license.educations"
-                    :key="education.id"
-                    style="display: inline"
-                  >
-                    <span class="text-black text-sm">
-                      {{
-                        education.department
-                          ? "*" + education.department.name
-                          : "-"
-                      }}
-                      <span v-if="index != license.educations.length - 1">
-                        ,
-                      </span></span
-                    >
-                  </li>
-                </ul>
+                <p class="text-black text-sm">
+                  {{ license ? license.whoIssued : "Waiting for review" }}
+                </p>
               </div>
 
               <div
@@ -88,13 +98,13 @@
                     class="no-underline hover:underline text-main-400"
                     href="#"
                   >
-                    Certified Date
+                    License Registration Number
                   </a>
                 </h1>
                 <p class="text-black text-sm">
                   {{
-                    license.certifiedDate
-                      ? license.certifiedDate.slice(0, 10)
+                    license
+                      ? license.licenseRegistrationNumber
                       : "Waiting for review"
                   }}
                 </p>
@@ -114,14 +124,12 @@
                     class="no-underline hover:underline text-main-400"
                     href="#"
                   >
-                    Expiry Date
+                    To whom the goodstanding is
                   </a>
                 </h1>
                 <p class="text-black text-sm">
                   {{
-                    license.certifiedDate
-                      ? license.certifiedDate.slice(0, 10)
-                      : "Waiting for review"
+                    license ? license.whomGoodStandingFor : "Waiting for review"
                   }}
                 </p>
               </div>
@@ -155,6 +163,7 @@
                 license.createdAt.slice(0, 10)
               }}</span>
             </footer>
+
             <div class="flex justify-center">
               <button
                 class="
@@ -173,9 +182,9 @@
                   duration-150
                   ease-in-out
                 "
-                @click="changeLicenseId(license.id)"
+                @click="openAssignedDetail(license.id)"
                 data-bs-toggle="modal"
-                data-bs-target="#approvedDetail"
+                data-bs-target="#approvedModalInfo"
               >
                 View Detail
               </button>
@@ -214,7 +223,7 @@
         There are no approved applications currently.
       </h2>
     </div>
-    <approved-detail :modalDataId="modalDataId"></approved-detail>
+    <approvedDetail :modalDataId="modalDataId"></approvedDetail>
   </main-content>
 </template>
 
@@ -234,11 +243,6 @@ export default {
     let isLoading = ref(false);
     let noData = ref(false);
     let modalDataId = ref({ change: 0, id: "" });
-
-    const changeLicenseId = (id) => {
-      modalDataId.value.id = id;
-      modalDataId.value.change++;
-    };
 
     onMounted(() => {
       isLoading.value = true;
@@ -264,15 +268,21 @@ export default {
       });
     });
 
+    const openApprovedDetail = (id) => {
+      modalDataId.value.id = id;
+      modalDataId.value.change++;
+    };
+
     return {
       approvedLicenses,
       googleApi,
       userInfo,
-      noData,
-      changeLicenseId,
       isLoading,
+      noData,
+      openApprovedDetail,
       modalDataId,
     };
   },
 };
 </script>
+  

@@ -438,6 +438,7 @@
                             >Region</label
                           >
                           <div>
+                           
                             <select
                               class="
                                 form-control
@@ -469,8 +470,8 @@
                                 {{
                                   modalData &&
                                   modalData.data &&
-                                  modalData.data.region
-                                    ? modalData.data.region.name
+                                  modalData.data.data.region
+                                    ? modalData.data.data.region.name
                                     : ""
                                 }}
                               </option>
@@ -650,9 +651,14 @@ export default {
     };
     let showRegion = ref("");
     const selectedExpertLevel = () => {
-      admin.value.expertLevelId = expertLevels.value.id;
-      showRegion.value = admin.value.expertLevelId;
-      admin.value.regionId = "";
+
+      if (expertLevels.value.code == "FED") {
+        admin.value.regionId = null;
+      } else { 
+        showRegion.value = 4;
+        admin.value.expertLevelId = expertLevels.value.id;
+      }
+   
     };
 
     const selectedRegion = () => {
@@ -682,9 +688,8 @@ export default {
         editData.roleId = admin.value.roleId;
         editData.expertLevelId = admin.value.expertLevelId;
         editData.isActive = admin.value.isActive;
-        if (admin.value.regionId == "REG") {
-          editData.regionId = admin.value.regionId;
-        }
+        editData.regionId=admin.value.regionId;
+      
         store
           .dispatch("admin/updateAdmin", admin.value)
           .then((res) => {
@@ -748,7 +753,7 @@ export default {
 
       if (!formData.expertLevelId && adminExpertId == 3)
         errors.expertLevel = "Expert Level is required";
-      if (!formData.regionId && formData.expertLevelId == 4)
+      if (!formData.regionId && formData.expertLevelId == 4) 
         errors.region = "Region is required";
       if (!formData.firstName) errors.firstName = "First name is Required";
       if (!formData.fatherName) errors.fatherName = "Father name is Required";
@@ -800,6 +805,10 @@ export default {
       admin.value.expertLevelId =
         props.modalData.data && props.modalData.data.data
           ? props.modalData.data.data.expertLevelId
+          : "";
+          admin.value.regionId =
+        props.modalData.data && props.modalData.data.data
+          ? props.modalData.data.data.regionId
           : "";
       showRegion.value =
         props.modalData.data && props.modalData.data.data
