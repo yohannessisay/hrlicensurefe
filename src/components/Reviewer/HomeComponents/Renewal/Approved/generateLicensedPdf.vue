@@ -1695,6 +1695,7 @@ import jsPDF from "jspdf";
 import backgroundImage from "../../../../../assets/Federal_Certificate.jpg";
 import oromiaCertificateBackground from "../../../../../assets/Oromia_Certificate.jpg";
 import addisAbabaCertificateBackground from "../../../../../assets/A_A_Certificate.jpg";
+import direDawaCertificateBackground from "../../../../../assets/DireDawa_Certificate.jpg";
 import AmharicFont from "../../../Configurations/amharicFont.js";
 import { toEthiopian } from "../../../Configurations/dateConvertor";
 import STATIC_CERTIFICATE_URL from "../../../../../sharedComponents/constants/message.js";
@@ -1848,10 +1849,16 @@ export default {
     ) => {
       doc.setFontSize(17);
       doc2.setFontSize(17);
+      let paddingAmharic=5;
+      let paddingEnglish=0; 
+      if(code=='DD'){
+        paddingAmharic=10;
+        paddingEnglish=10
+      }
       //Amharic name part
       doc.text(
         60,
-        namePosition - 5,
+        namePosition - paddingAmharic,
         `${
           certifiedUser.value.alternativeName
             ? certifiedUser.value.alternativeName
@@ -1868,7 +1875,7 @@ export default {
       );
       doc2.text(
         60,
-        namePosition - 5,
+        namePosition - paddingAmharic,
         `${
           certifiedUser.value.alternativeName
             ? certifiedUser.value.alternativeName
@@ -2317,6 +2324,22 @@ export default {
 
           handleRegionsLayout(doc, doc2, "AA", 110, 133, 4);
         }
+        else if (
+          certificateDetail.value.licenseReviewer.reviewer.region.code === "DD"
+        ) {
+          doc.addImage(
+            direDawaCertificateBackground,
+            "JPG",
+            0,
+            0,
+            298,
+            213,
+            undefined,
+            "FAST"
+          );
+
+          handleRegionsLayout(doc, doc2, "DD", 110, 120, 4);
+        }
 
         doc.addImage(imageSrc.value, "JPG", 246, 14, 35, 35);
         if (userImage !== null) {
@@ -2414,6 +2437,31 @@ export default {
             "FAST"
           );
           handleRegionsLayout(doc, doc2, "AA", 110, 133, 4);
+        }
+        else if (
+          certificateDetail.value.licenseReviewer.reviewer.region.code === "DD"
+        ) {
+          doc.addImage(
+            direDawaCertificateBackground,
+            "JPG",
+            0,
+            0,
+            298,
+            213,
+            undefined,
+            "FAST"
+          );
+          doc2.addImage(
+            direDawaCertificateBackground,
+            "JPG",
+            0,
+            0,
+            298,
+            213,
+            undefined,
+            "FAST"
+          );
+          handleRegionsLayout(doc, doc2, "DD", 110, 133, 4);
         }
 
         doc.addImage(imageSrc.value, "JPG", 246, 14, 35, 35);
