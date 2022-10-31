@@ -433,7 +433,7 @@
                             >{{ state.validationErrors.expertLevel }}</span
                           >
                         </div>
-                        <span v-show="showRegion == 4">
+                        <span v-show="showRegion != 4">
                           <label class="text-primary-600 font-bold ml-4"
                             >Region</label
                           >
@@ -491,7 +491,7 @@
                           >
                         </span>
                       </div>
-
+                      
                       <div
                         class="flex justify-center ml-4"
                         v-if="isUserManager"
