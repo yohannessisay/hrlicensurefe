@@ -1696,6 +1696,7 @@ import backgroundImage from "../../../../../assets/Federal_Certificate.jpg";
 import oromiaCertificateBackground from "../../../../../assets/Oromia_Certificate.jpg";
 import addisAbabaCertificateBackground from "../../../../../assets/A_A_Certificate.jpg";
 import direDawaCertificateBackground from "../../../../../assets/DireDawa_Certificate.jpg";
+import afarCertificateBackground from "../../../../../assets/Afar_Certificate.jpg";
 import AmharicFont from "../../../Configurations/amharicFont.js";
 import { toEthiopian } from "../../../Configurations/dateConvertor";
 import STATIC_CERTIFICATE_URL from "../../../../../sharedComponents/constants/message.js";
@@ -1849,11 +1850,11 @@ export default {
     ) => {
       doc.setFontSize(17);
       doc2.setFontSize(17);
-      let paddingAmharic=5;
-      let paddingEnglish=0; 
-      if(code=='DD'){
-        paddingAmharic=10;
-        paddingEnglish=10
+      let paddingAmharic = 5;
+      let paddingEnglish = 0;
+      if (code == "DD") {
+        paddingAmharic = 10;
+        paddingEnglish = 10;
       }
       //Amharic name part
       doc.text(
@@ -2274,30 +2275,68 @@ export default {
         filters: ["ASCIIHexEncode"],
       });
 
+      let defaultCode = "";
+      let defaultBackground = "";
+      let defaultNamePos = 0;
+      let defaultProfPos = 0;
+      let defaultProfGap = 0;
       if (
         certificateDetail.value.educations &&
         certificateDetail.value.educations.length <= 3
       ) {
         if (
-          certificateDetail.value.renewalReviewer.reviewer.expertLevel.code ===
-          "FED"
+          certificateDetail.value.educations &&
+          certificateDetail.value.educations.length <= 3
         ) {
+          if (
+            certificateDetail.value.licenseReviewer.reviewer.expertLevel
+              .code === "FED"
+          ) {
+            defaultBackground = backgroundImage;
+            defaultCode = "FED";
+            defaultNamePos = 100;
+            defaultProfPos = 125;
+            defaultProfGap = 7;
+          } else if (
+            certificateDetail.value.licenseReviewer.reviewer.region.code ===
+            "ORO"
+          ) {
+            defaultBackground = oromiaCertificateBackground;
+            defaultCode = "ORO";
+            defaultNamePos = 110;
+            defaultProfPos = 133;
+            defaultProfGap = 4;
+          } else if (
+            certificateDetail.value.licenseReviewer.reviewer.region.code ===
+            "AA"
+          ) {
+            defaultBackground = addisAbabaCertificateBackground;
+            defaultCode = "AA";
+            defaultNamePos = 110;
+            defaultProfPos = 133;
+            defaultProfGap = 4;
+          } else if (
+            certificateDetail.value.licenseReviewer.reviewer.region.code ===
+            "DD"
+          ) {
+            defaultBackground = direDawaCertificateBackground;
+            defaultCode = "DD";
+            defaultNamePos = 110;
+            defaultProfPos = 120;
+            defaultProfGap = 4;
+          } else if (
+            certificateDetail.value.licenseReviewer.reviewer.region.code ===
+            "AFA"
+          ) {
+            defaultBackground = afarCertificateBackground;
+            defaultCode = "AFA";
+            defaultNamePos = 105;
+            defaultProfPos = 130;
+            defaultProfGap = 4;
+          }
+
           doc.addImage(
-            backgroundImage,
-            "JPG",
-            0,
-            0,
-            298,
-            213,
-            undefined,
-            "FAST"
-          );
-          handleRegionsLayout(doc, doc2, "FED", 100, 125, 7);
-        } else if (
-          certificateDetail.value.renewalReviewer.reviewer.region.code === "ORO"
-        ) {
-          doc.addImage(
-            oromiaCertificateBackground,
+            defaultBackground,
             "JPG",
             0,
             0,
@@ -2307,162 +2346,115 @@ export default {
             "FAST"
           );
 
-          handleRegionsLayout(doc, doc2, "ORO", 110, 133, 4);
-        } else if (
-          certificateDetail.value.renewalReviewer.reviewer.region.code === "AA"
-        ) {
-          doc.addImage(
-            addisAbabaCertificateBackground,
-            "JPG",
-            0,
-            0,
-            298,
-            213,
-            undefined,
-            "FAST"
+          handleRegionsLayout(
+            doc,
+            doc2,
+            defaultCode,
+            defaultNamePos,
+            defaultProfPos,
+            defaultProfGap
           );
 
-          handleRegionsLayout(doc, doc2, "AA", 110, 133, 4);
-        }
-        else if (
-          certificateDetail.value.licenseReviewer.reviewer.region.code === "DD"
-        ) {
-          doc.addImage(
-            direDawaCertificateBackground,
-            "JPG",
-            0,
-            0,
-            298,
-            213,
-            undefined,
-            "FAST"
-          );
-
-          handleRegionsLayout(doc, doc2, "DD", 110, 120, 4);
-        }
-
-        doc.addImage(imageSrc.value, "JPG", 246, 14, 35, 35);
-        if (userImage !== null) {
-          let path = {
-            path: userImage,
-          };
-          store.dispatch("profile/converProfilePicture", path).then((res) => {
-            doc.addImage(res.data.data, "JPG", 33, 20, 30, 30);
+          doc.addImage(imageSrc.value, "JPG", 246, 14, 35, 35);
+          if (userImage != null) {
+            let path = {
+              path: userImage,
+            };
+            store.dispatch("profile/converProfilePicture", path).then((res) => {
+              doc.addImage(res.data.data, "JPG", 33, 20, 30, 30);
+              doc.setFontSize(10);
+              window.open(doc.output("bloburl"));
+              updateLicenseGenerated();
+            });
+          } else {
             doc.setFontSize(10);
             window.open(doc.output("bloburl"));
             updateLicenseGenerated();
-          });
-        } else {
-          doc.setFontSize(10);
-          window.open(doc.output("bloburl"));
-          updateLicenseGenerated();
+          }
         }
       }
-
       if (
         certificateDetail.value.educations &&
         certificateDetail.value.educations.length > 3
       ) {
+        let multipleBackground = "";
+        let multipleCode = "";
+        let multipleNamePos = 0;
+        let multipleProfPos = 0;
+        let multipleProfGap = 0;
+
         if (
-          certificateDetail.value.renewalReviewer.reviewer.expertLevel.code ===
+          certificateDetail.value.licenseReviewer.reviewer.expertLevel.code ===
           "FED"
         ) {
-          doc.addImage(
-            backgroundImage,
-            "JPG",
-            0,
-            0,
-            298,
-            213,
-            undefined,
-            "FAST"
-          );
-          doc2.addImage(
-            backgroundImage,
-            "JPG",
-            0,
-            0,
-            298,
-            213,
-            undefined,
-            "FAST"
-          );
-
-          handleRegionsLayout(doc, doc2, "FED", 100, 125, 7);
+          multipleBackground = backgroundImage;
+          multipleCode = "FED";
+          multipleNamePos = 100;
+          multipleProfPos = 125;
+          multipleProfGap = 7;
         } else if (
-          certificateDetail.value.renewalReviewer.reviewer.region.code === "ORO"
+          certificateDetail.value.licenseReviewer.reviewer.region.code === "ORO"
         ) {
-          doc.addImage(
-            oromiaCertificateBackground,
-            "JPG",
-            0,
-            0,
-            298,
-            213,
-            undefined,
-            "FAST"
-          );
-          doc2.addImage(
-            oromiaCertificateBackground,
-            "JPG",
-            0,
-            0,
-            298,
-            213,
-            undefined,
-            "FAST"
-          );
-          handleRegionsLayout(doc, doc2, "ORO", 110, 133, 4);
+          multipleBackground = oromiaCertificateBackground;
+          multipleCode = "ORO";
+          defaultNamePos = 110;
+          defaultProfPos = 133;
+          defaultProfGap = 4;
         } else if (
-          certificateDetail.value.renewalReviewer.reviewer.region.code === "AA"
+          certificateDetail.value.licenseReviewer.reviewer.region.code === "AA"
         ) {
-          doc.addImage(
-            addisAbabaCertificateBackground,
-            "JPG",
-            0,
-            0,
-            298,
-            213,
-            undefined,
-            "FAST"
-          );
-          doc2.addImage(
-            addisAbabaCertificateBackground,
-            "JPG",
-            0,
-            0,
-            298,
-            213,
-            undefined,
-            "FAST"
-          );
-          handleRegionsLayout(doc, doc2, "AA", 110, 133, 4);
-        }
-        else if (
+          multipleBackground = addisAbabaCertificateBackground;
+          multipleCode = "AA";
+          defaultNamePos = 110;
+          defaultProfPos = 133;
+          defaultProfGap = 4;
+        } else if (
           certificateDetail.value.licenseReviewer.reviewer.region.code === "DD"
         ) {
-          doc.addImage(
-            direDawaCertificateBackground,
-            "JPG",
-            0,
-            0,
-            298,
-            213,
-            undefined,
-            "FAST"
-          );
-          doc2.addImage(
-            direDawaCertificateBackground,
-            "JPG",
-            0,
-            0,
-            298,
-            213,
-            undefined,
-            "FAST"
-          );
-          handleRegionsLayout(doc, doc2, "DD", 110, 133, 4);
+          multipleBackground = direDawaCertificateBackground;
+          multipleCode = "DD";
+          defaultNamePos = 110;
+          defaultProfPos = 120;
+          defaultProfGap = 4;
+        } else if (
+          certificateDetail.value.licenseReviewer.reviewer.region.code === "AFA"
+        ) {
+          multipleBackground = afarCertificateBackground;
+          multipleCode = "AFA";
+          defaultNamePos = 105;
+          defaultProfPos = 130;
+          defaultProfGap = 4;
         }
+
+        doc.addImage(
+          multipleBackground,
+          "JPG",
+          0,
+          0,
+          298,
+          213,
+          undefined,
+          "FAST"
+        );
+        doc2.addImage(
+          multipleBackground,
+          "JPG",
+          0,
+          0,
+          298,
+          213,
+          undefined,
+          "FAST"
+        );
+
+        handleRegionsLayout(
+          doc,
+          doc2,
+          multipleCode,
+          multipleNamePos,
+          multipleProfPos,
+          multipleProfGap
+        );
 
         doc.addImage(imageSrc.value, "JPG", 246, 14, 35, 35);
         doc2.addImage(imageSrc.value, "JPG", 246, 14, 35, 35);
