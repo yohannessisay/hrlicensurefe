@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <side-nav></side-nav>
-    <div class="content">
+    <div class="content" id="mainContent">
       <top-nav :userInfo="userInfo"></top-nav>
       <div class="mt-8 ml-8 mr-8">
         <nav class="bg-grey-100 p-4 rounded-sm w-full shadow-lg">
@@ -14,6 +14,9 @@
         </nav>
 
         <div id="home" class="flex flex-row justify-center ml-4 mt-12">
+          <div class="float-container">
+            <a href="#" class="icon one"> </a>
+          </div>
           <div class="flex flex-col md:flex-row justify-center flex-wrap gap-2">
             <div class="mr-12 mb-8 overview-boxes rounded-xl">
               <div
@@ -1549,7 +1552,7 @@ export default {
     const getImage = (profile) => {
       if (!profile) {
         isFirstTime.value = true;
-      } else { 
+      } else {
         userInfo.value.pic = profile.profilePicture
           ? googleApi + profile.profilePicture.filePath
           : "";
@@ -1557,6 +1560,16 @@ export default {
     };
     onMounted(() => {
       getProfile();
+
+      if (JSON.parse(localStorage.getItem("nightMode")) == true) {
+        document.getElementById("mainContent").classList.add("dark-mode");
+        document.getElementById("activeMenu").classList.add("dark-mode");
+        document.getElementById("mainSideBar").classList.add("dark-mode");
+        document.getElementById("menu-icon").classList.add("dark-mode");
+        document.getElementById("home").classList.add("dark-mode");
+        document.querySelector("body").classList.add("dark-mode");
+        document.getElementById("options-menu").classList.add("dark-mode");
+      }
       store.dispatch("lookups/getAllDocumentSpecs").then((res) => {
         if (res.data.status == "Success") {
           // NewLicense Section
@@ -1636,5 +1649,116 @@ export default {
   padding: 15px 14px;
   border-radius: 12px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.884);
+}
+
+.float-container {
+  position: fixed;
+  top: 33%;
+  right: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-direction: column;
+  width: auto;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  -webkit-box-align: end;
+  -ms-flex-align: end;
+  align-items: flex-end;
+}
+
+.float-container a {
+  z-index: 99;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 110px;
+  height: 50px;
+  margin-right: -50px;
+  margin-bottom: 10px;
+  padding: 10px 20px;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  text-decoration: none;
+  color: white;
+  border-color: #46b8da;
+  border-radius: 100px;
+  background-color: #07677e;
+  -webkit-box-shadow: 0 2px 4px #7d7d7d;
+  box-shadow: 0 2px 4px #7d7d7d;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  font-family: sans-serif;
+}
+
+.float-container a:hover {
+  margin-right: -20px;
+  background-color: #07677e;
+  -webkit-box-shadow: 0 2px 4px #7d7d7d;
+  box-shadow: 0 2px 4px #7d7d7d;
+}
+
+/* Icon settings - remove if not needed*/
+.float-container .icon:before {
+  font-family: "Font Awesome 5 Free";
+  margin-right: 25px;
+  -webkit-transition: all 0.25s ease-in-out;
+  transition: all 0.25s ease-in-out;
+}
+
+.icon.one:before {
+  content: "\f186";
+}
+
+/* Media queries */
+@media screen and (max-width: 760px) {
+  .float-container {
+    position: fixed;
+    top: 88%;
+    right: 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    -webkit-box-align: end;
+    -ms-flex-align: end;
+    align-items: flex-end;
+  }
+  .float-container a {
+    z-index: 99;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    width: 70px;
+    height: 50px;
+    margin-right: -50px;
+    margin-bottom: 10px;
+    padding: 10px 20px;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    text-decoration: none;
+    color: white;
+    border-color: #46b8da;
+    border-radius: 100px;
+    background-color: #07677e;
+    -webkit-box-shadow: 0 2px 4px #313131;
+    box-shadow: 0 2px 4px #3f3f3f;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    font-family: sans-serif;
+  }
 }
 </style>
