@@ -14,9 +14,9 @@
         </nav>
 
         <div id="home" class="flex flex-row justify-center ml-4 mt-12">
-          <div class="float-container">
+          <!-- <div class="float-container">
             <a href="#" class="icon one"> </a>
-          </div>
+          </div> -->
           <div class="flex flex-col md:flex-row justify-center flex-wrap gap-2">
             <div class="mr-12 mb-8 overview-boxes rounded-xl">
               <div

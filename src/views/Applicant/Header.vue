@@ -6,7 +6,7 @@
     <div class="profile">
       <div class="flex items-center space-x-5">
        
-        <div class="m-4">
+        <!-- <div class="m-4">
           <div class="toggle slim colour">
             <input
               id="check4"
@@ -29,7 +29,7 @@
               "
             ></label>
           </div>
-        </div>
+        </div> -->
 
         <p class="text-main-400 font-bold" v-text="userInfo.fullName"></p>
         <div class="relative inline-block text-left" style="z-index: 1">
