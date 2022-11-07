@@ -1120,7 +1120,11 @@
           "
         >
           <button
-            v-if="isReprint == false"
+            v-if="
+              modalData && modalData.data
+                ? modalData.data.isReprint == false
+                : false
+            "
             type="button"
             class="
               inline-block
