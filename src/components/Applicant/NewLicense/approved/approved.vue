@@ -125,6 +125,33 @@
                   }}
                 </p>
               </div>
+
+              <div
+                class="
+                  flex
+                  items-center
+                  justify-between
+                  leading-tight
+                  p-2
+                  md:p-2
+                "
+              >
+                <h1 class="text-lg">
+                  <a
+                    class="no-underline hover:underline text-main-400"
+                    href="#"
+                  >
+                    Retrival Date
+                  </a>
+                </h1>
+                <p class="text-black text-sm">
+                  {{
+                    license.retrivalDate
+                      ? license.retrivalDate
+                      : "Print pending"
+                  }}
+                </p>
+              </div>
             </div>
             <footer
               class="flex items-center justify-between leading-none p-2 md:p-4"

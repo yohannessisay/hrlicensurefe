@@ -1,7 +1,7 @@
 <template>
-  <div class="main">
+  <div class="main" id="main">
     <side-nav></side-nav>
-    <div class="content h-screen overflow-y-scroll">
+    <div class="content" id="mainContent">
       <top-nav></top-nav>
       <div class="mt-8 ml-8">
       <slot></slot>
@@ -10,8 +10,7 @@
   </div>
 </template>
 
-<script>
-import { ref } from "vue";
+<script> 
 import SideNav from "./Sidebar.vue";
 import TopNav from "./Header.vue";
 import "../../../../styles/applicant.css";

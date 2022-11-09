@@ -1454,13 +1454,47 @@ export default {
           isLoading.value = false;
           if (res.statusText == "Created") {
             showGenerateModal.value = false;
-            toast.success("Done", {
+
+            let smsMessage = req.data
+              ? "Dear applicant your applied new license of number " +
+                req.data.newLicenseCode +
+                " is printed and ready. Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
+              : "";
+            let smsData = {
+              recipients: [
+                req.data && req.data.applicant
+                  ? "251" + req.data.applicant.phoneNumber
+                  : "",
+              ],
+              message: smsMessage ? smsMessage : "",
+            };
+
+            store
+              .dispatch("sms/sendSms", smsData)
+              .then(() => {
+
+                toast.success("Done", {
               timeout: 5000,
               position: "bottom-center",
               pauseOnFocusLoss: true,
               pauseOnHover: true,
               icon: true,
             });
+              })
+              .catch(() => {
+                toast.error("Sms is not sent", {
+                  timeout: 5000,
+                  position: "bottom-center",
+                  pauseOnFocusLoss: true,
+                  pauseOnHover: true,
+                  icon: true,
+                });
+                setTimeout(() => {
+                  window.location.reload();
+                }, 3000);
+              });
+
+        
           } else {
             showGenerateModal.value = false;
             toast.error(res.data.message, {

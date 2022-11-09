@@ -1,5 +1,5 @@
 <template>
-  <div class="main">
+  <div class="main" id="main">
     <side-nav></side-nav>
     <div class="content" id="mainContent">
       <top-nav :userInfo="userInfo"></top-nav>
@@ -311,7 +311,7 @@
                             cursor-pointer
                           "
                           data-bs-toggle="tooltip"
-                          title="For non english speaking countries only"
+                          title="not lasting three months"
                         >
                           <i class="fa fa-arrow-right-long"></i>
                           Medical Certificate
@@ -536,7 +536,7 @@
                             cursor-pointer
                           "
                           data-bs-toggle="tooltip"
-                          title="For non english speaking countries only"
+                          title="not lasting three months"
                         >
                           <i class="fa fa-arrow-right-long"></i>
                           Medical Certificate
@@ -792,7 +792,7 @@
                             cursor-pointer
                           "
                           data-bs-toggle="tooltip"
-                          title=" "
+                          title="not lasting three months"
                         >
                           <i class="fa fa-arrow-right-long"></i>
                           Medical Certificate
@@ -1561,7 +1561,7 @@ export default {
     onMounted(() => {
       getProfile();
 
-      if (JSON.parse(localStorage.getItem("nightMode")) == true) {
+      if (JSON.parse(localStorage.getItem("darkMode")) == true) {
         document.getElementById("mainContent").classList.add("dark-mode");
         document.getElementById("activeMenu").classList.add("dark-mode");
         document.getElementById("mainSideBar").classList.add("dark-mode");
@@ -1651,114 +1651,5 @@ export default {
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.884);
 }
 
-.float-container {
-  position: fixed;
-  top: 33%;
-  right: 0;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  flex-direction: column;
-  width: auto;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  -webkit-box-align: end;
-  -ms-flex-align: end;
-  align-items: flex-end;
-}
 
-.float-container a {
-  z-index: 99;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  width: 110px;
-  height: 50px;
-  margin-right: -50px;
-  margin-bottom: 10px;
-  padding: 10px 20px;
-  -webkit-transition: all 0.3s ease-in-out;
-  transition: all 0.3s ease-in-out;
-  text-decoration: none;
-  color: white;
-  border-color: #46b8da;
-  border-radius: 100px;
-  background-color: #07677e;
-  -webkit-box-shadow: 0 2px 4px #7d7d7d;
-  box-shadow: 0 2px 4px #7d7d7d;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-  font-family: sans-serif;
-}
-
-.float-container a:hover {
-  margin-right: -20px;
-  background-color: #07677e;
-  -webkit-box-shadow: 0 2px 4px #7d7d7d;
-  box-shadow: 0 2px 4px #7d7d7d;
-}
-
-/* Icon settings - remove if not needed*/
-.float-container .icon:before {
-  font-family: "Font Awesome 5 Free";
-  margin-right: 25px;
-  -webkit-transition: all 0.25s ease-in-out;
-  transition: all 0.25s ease-in-out;
-}
-
-.icon.one:before {
-  content: "\f186";
-}
-
-/* Media queries */
-@media screen and (max-width: 760px) {
-  .float-container {
-    position: fixed;
-    top: 88%;
-    right: 0;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    flex-direction: column;
-    width: auto;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: column;
-    -webkit-box-align: end;
-    -ms-flex-align: end;
-    align-items: flex-end;
-  }
-  .float-container a {
-    z-index: 99;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    width: 70px;
-    height: 50px;
-    margin-right: -50px;
-    margin-bottom: 10px;
-    padding: 10px 20px;
-    -webkit-transition: all 0.3s ease-in-out;
-    transition: all 0.3s ease-in-out;
-    text-decoration: none;
-    color: white;
-    border-color: #46b8da;
-    border-radius: 100px;
-    background-color: #07677e;
-    -webkit-box-shadow: 0 2px 4px #313131;
-    box-shadow: 0 2px 4px #3f3f3f;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    -webkit-box-pack: start;
-    -ms-flex-pack: start;
-    justify-content: flex-start;
-    font-family: sans-serif;
-  }
-}
 </style>

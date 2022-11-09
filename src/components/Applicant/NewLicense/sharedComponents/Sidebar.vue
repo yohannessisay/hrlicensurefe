@@ -1,5 +1,5 @@
 <template>
-  <div class="side-navbar ">
+  <div class="side-navbar" id="mainSideBar">
     <router-link class="link" to="/menu">
       <div class="flex justify-center p-4 cursor-pointer" style="border-bottom: 2px solid white;margin-top:-5px">
         <img src="../../../../assets/image.png" style="height: 40px; width: 40px" alt="" srcset="" />
@@ -20,7 +20,7 @@
       </li>
       <li :class="
         $route.fullPath === '/Applicant/NewLicense' ? 'list active' : 'list'
-      ">
+      " :id="  $route.fullPath === '/Applicant/NewLicense' ? 'activeMenu' : ''">
         <b></b>
         <b></b>
         <a href="#NewLicense">
@@ -35,7 +35,8 @@
         $route.fullPath === '/Applicant/NewLicense/submitted'
           ? 'list active'
           : 'list'
-      ">
+      "
+      :id="  $route.fullPath === '/Applicant/NewLicense/submitted' ? 'activeMenu' : ''">
         <b></b>
         <b></b>
         <a href="#Renewal">
@@ -53,7 +54,8 @@
         $route.fullPath === '/Applicant/NewLicense/draft'
           ? 'list active'
           : 'list'
-      ">
+      "
+      :id="  $route.fullPath === '/Applicant/NewLicense/draft' ? 'activeMenu' : ''">
         <b></b>
         <b></b>
         <a href="#Verification">
@@ -71,7 +73,8 @@
         $route.fullPath === '/Applicant/NewLicense/withdraw'
           ? 'list active'
           : 'list'
-      ">
+      "
+      :id="  $route.fullPath === '/Applicant/NewLicense/withdraw' ? 'activeMenu' : ''">
         <b></b>
         <b></b>
         <a href="#GoodStanding">
@@ -90,7 +93,8 @@
         $route.fullPath === '/Applicant/NewLicense/inReview'
           ? 'list active'
           : 'list'
-      ">
+      "
+      :id="  $route.fullPath === '/Applicant/NewLicense/inReview' ? 'activeMenu' : ''">
         <b></b>
         <b></b>
         <a href="#">
@@ -109,7 +113,8 @@
         $route.fullPath === '/Applicant/NewLicense/approved'
           ? 'list active'
           : 'list'
-      ">
+      "
+      :id="  $route.fullPath === '/Applicant/NewLicense/approved' ? 'activeMenu' : ''">
         <b></b>
         <b></b>
         <a href="#">
@@ -128,7 +133,7 @@
         $route.fullPath === '/Applicant/NewLicense/declined'
           ? 'list active'
           : 'list'
-      ">
+      " :id="  $route.fullPath === '/Applicant/NewLicense/declined' ? 'activeMenu' : ''">
         <b></b>
         <b></b>
         <a href="#">
@@ -147,7 +152,7 @@
         $route.fullPath === '/Applicant/NewLicense/underSupervision'
           ? 'list active'
           : 'list'
-      ">
+      " :id="  $route.fullPath === '/Applicant/NewLicense/underSupervision' ? 'activeMenu' : ''">
         <b></b>
         <b></b>
         <a href="#">
@@ -191,7 +196,7 @@
         $route.fullPath === '/Applicant/NewLicense/returned'
           ? 'list active'
           : 'list'
-      ">
+      " :id="  $route.fullPath === '/Applicant/NewLicense/returned' ? 'activeMenu' : ''">
         <b></b>
         <b></b>
         <a href="#">
@@ -210,7 +215,7 @@
         $route.fullPath === '/Applicant/NewLicense/suspended'
           ? 'list active'
           : 'list'
-      ">
+      " :id="  $route.fullPath === '/Applicant/NewLicense/suspended' ? 'activeMenu' : ''">
         <b></b>
         <b></b>
         <a href="#">
@@ -229,7 +234,7 @@
         $route.fullPath === '/Applicant/NewLicense/revoked'
           ? 'list active'
           : 'list'
-      ">
+      " :id="  $route.fullPath === '/Applicant/NewLicense/revoked' ? 'activeMenu' : ''">
         <b></b>
         <b></b>
         <a href="#">
@@ -248,4 +253,5 @@
 </template>
 
 <script>
+
 </script>
