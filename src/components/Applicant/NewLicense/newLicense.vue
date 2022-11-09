@@ -1,8 +1,9 @@
 <template>
-  <main-content>
+  <main-content >
     <transition name="fade" mode="out-in">
       <div v-if="this.activeState == 1">
         <Institution
+        class="overflow-y-scroll"
           @dark-mode="modeToggle()"
           :activeState="1"
           @changeActiveState="activeState++"
@@ -50,29 +51,10 @@ import Institution from "./AddNewLicense/generalInformation.vue";
 import Upload from "./AddNewLicense/Upload.vue";
 import MainContent from "./sharedComponents/Menu.vue";
 import LicenseSummary from "./AddNewLicense/LicenseSummary.vue";
+import { ref, onMounted } from "vue";
 
+import { useStore } from "vuex"; 
 export default {
-  mounted() {
-    this.initiateDarkMode();
-  },
-  data: () => ({
-    activeState: 1,
-    applicantType: 1,
-    applicationStatuses: "",
-    applicationCategories: "",
-    documentSpecs: "",
-    buttons: [],
-    draftStatus: "",
-    declinedFields: [],
-    acceptedFields: [],
-    remark: "",
-    applicationId: "",
-    darkMode: false,
-    draftId: "",
-    displayLanguageOption: false,
-    displayPayrollOption: false,
-    eduLevel: "",
-  }),
   components: {
     Institution,
     Upload,
@@ -80,12 +62,124 @@ export default {
     MainContent,
   },
 
-  methods: {
-    submit(n) {
-      this.activeState = n;
-    },
+  setup() {
 
-    dark() {
+let store = useStore(); 
+  let applicantType = ref(1);
+  let activeState = ref(1);
+  let applicationStatuses = ref("");
+  let applicationCategories = ref("");
+  let documentSpecs = ref("");
+  let buttons = ref([]);
+  let draftStatus = ref("");
+  let declinedFields = ref([]);
+  let acceptedFields = ref([]);
+  let remark = ref([]);
+  let applicationId = ref("");
+  let draftId = ref("");
+  let displayLanguageOption = ref(false);
+  let displayPayrollOption = ref(false);
+  let eduLevel = ref("");
+  let darkMode=ref(false)
+
+const submit=(n)=> {
+    activeState.value = n;
+  };
+
+  const fetchApplicationCategory = () => {
+      store.dispatch("renewal/getApplicationCategories").then((res) => { 
+        const results = res.data.data;
+        applicationCategories.value = results;
+        const renewalData = applicationCategories.value.filter((item) => {
+          return item.name == "Renewal Application";
+        });
+        applicationId.value = renewalData[0]["id"];
+        store.dispatch("renewal/setApplicationId", applicationId.value); 
+      });
+    };
+  const fetchApplicationStatuses = () => {
+    store.dispatch("renewal/getApplicationStatuses").then((res) => {
+      const results = res.data.data;
+      applicationStatuses.value = results;
+      if (draftId.value != undefined) {
+        if (draftStatus.value == "DRA") {
+          let status = applicationStatuses.value.filter(function(e) {
+            return e.code == "DRA";
+          });
+          buttons.value = status[0]["buttons"];
+
+          let temp2 = "";
+          temp2 = buttons.value[1];
+          buttons.value[1] = buttons.value[2];
+          buttons.value[2] = temp2;
+        }
+        if (draftStatus.value == "SUB") {
+          let status = applicationStatuses.value.filter(function(e) {
+            return e.code == "SUB";
+          });
+          buttons.value = status[0]["buttons"];
+        }
+        if (draftStatus.value == "USUP") {
+          let status = this.applicationStatuses.filter(function(e) {
+            return e.code == "USUP";
+          });
+          buttons.value = status[0]["buttons"];
+        }
+        if (draftStatus.value == "DEC") {
+          let status = applicationStatuses.value.filter(function(e) {
+            return e.code == "DEC";
+          });
+          buttons.value = status[0]["buttons"];
+          let temp3 = "";
+          temp3 = buttons.value[1];
+          buttons.value[1] = buttons.value[2];
+          buttons.value[2] = temp3;
+        }
+      } else {
+        let status = applicationStatuses.value.filter(function(e) {
+          return e.code == "INIT";
+        });
+        buttons.value = status[0]["buttons"];
+      }
+      store.dispatch("newlicense/setButtons", buttons.value);
+    });
+  };
+  onMounted( async () => {
+    {
+      initiateDarkMode();
+        fetchApplicationStatuses();
+        fetchApplicationCategory();
+      fetchApplicationCategory
+    }
+  });
+
+  const   dark=()=> {
+    document.getElementById("mainContent").classList.add("dark-mode");
+    document.getElementById("activeMenu")?.classList.add("dark-mode");
+    document.getElementById("mainSideBar")?.classList.add("dark-mode");
+    document.getElementById("options-menu")?.classList.add("dark-mode");
+    document.getElementById("topNav")?.classList.add("dark-mode");
+    document.getElementById("menu-icon")?.classList.add("dark-mode");
+    document.getElementById("generalInfoMain")?.classList.add("dark-mode");
+    
+    darkMode.value = true;
+    localStorage.setItem("darkMode", JSON.stringify( darkMode.value));
+  };
+
+  const light=()=> {
+    document.getElementById("mainContent").classList.remove("dark-mode");
+    document.getElementById("activeMenu")?.classList.remove("dark-mode");
+    document.getElementById("topNav")?.classList.remove("dark-mode");
+    document.getElementById("mainSideBar")?.classList.remove("dark-mode");
+    document.getElementById("options-menu")?.classList.remove("dark-mode");
+    document.getElementById("menu-icon")?.classList.remove("dark-mode");
+    document.getElementById("generalInfoMain")?.classList.remove("dark-mode");
+  
+    darkMode.value = false;
+    localStorage.setItem("darkMode", JSON.stringify( darkMode.value));
+  };
+  const  initiateDarkMode=()=> {
+    if (JSON.parse(localStorage.getItem("darkMode")) == true) {
       document.getElementById("mainContent").classList.add("dark-mode");
       document.getElementById("activeMenu")?.classList.add("dark-mode");
       document.getElementById("mainSideBar")?.classList.add("dark-mode");
@@ -94,54 +188,55 @@ export default {
       document.getElementById("menu-icon")?.classList.add("dark-mode");
       document.getElementById("generalInfoMain")?.classList.add("dark-mode");
       
-      this.darkMode = true;
-      localStorage.setItem("darkMode", JSON.stringify(this.darkMode));
-    },
-
-    light() {
+    } else {
       document.getElementById("mainContent").classList.remove("dark-mode");
       document.getElementById("activeMenu")?.classList.remove("dark-mode");
       document.getElementById("topNav")?.classList.remove("dark-mode");
       document.getElementById("mainSideBar")?.classList.remove("dark-mode");
       document.getElementById("options-menu")?.classList.remove("dark-mode");
       document.getElementById("menu-icon")?.classList.remove("dark-mode");
-      document.getElementById("generalInfoMain")?.classList.remove("dark-mode");
-     
-      this.darkMode = false;
-      localStorage.setItem("darkMode", JSON.stringify(this.darkMode));
-    },
-    initiateDarkMode() {
-      if (JSON.parse(localStorage.getItem("darkMode")) == true) {
-        document.getElementById("mainContent").classList.add("dark-mode");
-        document.getElementById("activeMenu")?.classList.add("dark-mode");
-        document.getElementById("mainSideBar")?.classList.add("dark-mode");
-        document.getElementById("options-menu")?.classList.add("dark-mode");
-        document.getElementById("topNav")?.classList.add("dark-mode");
-        document.getElementById("menu-icon")?.classList.add("dark-mode");
-        document.getElementById("generalInfoMain")?.classList.add("dark-mode");
-        
-      } else {
-        document.getElementById("mainContent").classList.remove("dark-mode");
-        document.getElementById("activeMenu")?.classList.remove("dark-mode");
-        document.getElementById("topNav")?.classList.remove("dark-mode");
-        document.getElementById("mainSideBar")?.classList.remove("dark-mode");
-        document.getElementById("options-menu")?.classList.remove("dark-mode");
-        document.getElementById("menu-icon")?.classList.remove("dark-mode");
-       
-      }
-    },
-    modeToggle() {
-      if (
-        localStorage.getItem("darkMode") == true ||
-        this.darkMode ||
-        document.getElementById("main")?.classList.contains("dark-mode")
-      ) {
-        this.light();
-      } else {
-        this.dark();
-      }
-    },
-  },
+    
+    }
+  };
+const  modeToggle=()=> {
+    if (
+      localStorage.getItem("darkMode") == true ||
+      darkMode.value ||
+      document.getElementById("main")?.classList.contains("dark-mode")
+    ) {
+      light();
+    } else {
+      dark();
+    }
+  };
+
+
+  return {
+      activeState,
+      applicantType,
+      applicationStatuses,
+      applicationCategories,
+      documentSpecs,
+      buttons,
+      submit,
+      modeToggle,
+      draftStatus,
+      declinedFields,
+      acceptedFields,
+      remark,
+      applicationId,
+      darkMode,
+      draftId,
+      displayLanguageOption,
+      displayPayrollOption,
+      eduLevel,
+    };
+
+  }
+  
+  
+
+
 };
 </script>
 <style>

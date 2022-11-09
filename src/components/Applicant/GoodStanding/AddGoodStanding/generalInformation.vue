@@ -322,7 +322,7 @@
               <div v-show="showOtherProfession">
                 <label class="text-main-400">Other Profession</label>
                 <input
-                  type="text" 
+                  type="text"
                   v-model="generalInfo.professionType.otherProfessionType"
                   class="
                     appearance-none
@@ -352,10 +352,10 @@
                 />
               </div>
 
-              <div  v-show="showOtherProfession">
+              <div v-show="showOtherProfession">
                 <label class="text-main-400">Other Profession Amharic</label>
                 <input
-                  type="text" 
+                  type="text"
                   v-model="generalInfo.professionType.otherProfessionType"
                   class="
                     appearance-none
@@ -383,6 +383,49 @@
                   placeholder=""
                   required
                 />
+              </div>
+            </div>
+
+            <div
+              class="flex justify-center text-6xl rounded-xl p-2 bg-gray-100"
+            >
+              <div>
+                <label class="text-main-400">Applicant Position</label>
+                <select
+                  class="
+                    form-select
+                    appearance-none
+                    block
+                    xl:w-64
+                    md:w-64
+                    sm:w-64
+                    px-3
+                    py-1.5
+                    text-base
+                    font-normal
+                    text-gray-700
+                    hover:text-main-500 hover:border-main-500
+                    border border-solid border-gray-300
+                    rounded
+                    transition
+                    ease-in-out
+                    m-0
+                    focus:text-gray-700
+                    focus:bg-white
+                    focus:border-main-400
+                    focus:outline-none
+                  "
+                  v-model="generalInfo.applicantPosition" 
+                  required
+                >
+                  <option
+                    v-for="position in applicationPositions"
+                    v-bind:key="position.id"
+                    v-bind:value="position"
+                  >
+                    {{ position.name }}
+                  </option>
+                </select>
               </div>
             </div>
           </div>
@@ -529,7 +572,7 @@
                   >
 
                   <input
-                    type="text" 
+                    type="text"
                     v-model="generalInfo.whomGoodStandingFor"
                     class="
                       appearance-none
@@ -579,7 +622,7 @@
                   >
 
                   <input
-                    type="text" 
+                    type="text"
                     v-model="generalInfo.whoIssued"
                     class="
                       appearance-none
@@ -634,7 +677,7 @@
                   >
 
                   <input
-                    type="text" 
+                    type="text"
                     v-model="generalInfo.licenseRegistrationNumber"
                     class="
                       appearance-none
@@ -676,7 +719,7 @@
                   >
 
                   <input
-                    type="date" 
+                    type="date"
                     v-model="generalInfo.licenseIssuedDate"
                     class="
                       appearance-none
@@ -769,6 +812,7 @@ export default {
       otherProfessionTypeAmharic: "",
       applicantTitleId: "",
       applicationStatusId: "",
+      applicantPosition:"", 
       educationLevelId: "",
       regionSelected: "",
       zoneSelected: "",
@@ -814,8 +858,10 @@ export default {
     };
     const educationalLevelChange = () => {
       isEdLevelSelected.value = true;
-      console.log(   generalInfo.value.departmentId.id,
-        generalInfo.value.educationLevelId.id)
+      console.log(
+        generalInfo.value.departmentId.id,
+        generalInfo.value.educationLevelId.id
+      );
       fetchProfessionalType(
         generalInfo.value.departmentId.id,
         generalInfo.value.educationLevelId.id
@@ -894,9 +940,10 @@ export default {
         });
     };
     const setDepartment = () => {
-      isDepartmentSelected.value = true; 
+      isDepartmentSelected.value = true;
       fetchProfessionalType(generalInfo.value.departmentId.id);
     };
+  
     const apply = () => {
       let tempApplicationData = generalInfo.value;
       window.localStorage.setItem(
@@ -952,6 +999,7 @@ export default {
       isDepartmentSelected,
       isEdLevelSelected,
       isAppTypeSelected,
+      applicationPositions,
       educationLevels,
       showLocation,
       regions,
@@ -960,7 +1008,7 @@ export default {
       professionalTypes,
       generalInfo,
       applicantTypes,
-      departments,
+      departments, 
       clearLocalData,
       localData,
     };

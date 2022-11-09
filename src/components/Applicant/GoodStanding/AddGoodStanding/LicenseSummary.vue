@@ -647,6 +647,9 @@ export default {
             whomGoodStandingFor: generalInfo.value.whomGoodStandingFor
               ? generalInfo.value.whomGoodStandingFor
               : "",
+            applicantPositionId: generalInfo.value.applicantPosition
+              ? generalInfo.value.applicantPosition.id
+              : null,
             licenseIssuedDate: generalInfo.value.licenseIssuedDate
               ? generalInfo.value.licenseIssuedDate
               : null,

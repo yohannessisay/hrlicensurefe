@@ -21,7 +21,7 @@
     </nav>
 
     <div
-    v-if="activeState == 1"
+      v-if="activeState == 1"
       class="
         block
         p-6
@@ -296,7 +296,7 @@
                       focus:border-main-400
                       focus:outline-none
                     "
-                    v-model="generalInfo.educationLevelId"
+                    v-model="generalInfo.GSProfessionals.educationLevelId"
                     @change="educationalLevelChange()"
                     required
                   >
@@ -339,24 +339,22 @@
                       focus:border-main-400
                       focus:outline-none
                     "
-                    v-model="generalInfo.professionTypeIds"
+                    v-model="generalInfo.GSProfessionals.professionalTypeId"
                     required
                   >
                     <option
                       selected
                       :value="
-                      generalInfo.education&&
-                        generalInfo.education[0] &&
-                        generalInfo.education[0].professionalTypes
-                          ? generalInfo.education[0].professionalTypes.id
+                        generalInfo.GSProfessionals &&
+                        generalInfo.GSProfessionals.professionalTypes
+                          ? generalInfo.GSProfessionals.professionalTypes.id
                           : ''
                       "
                     >
                       {{
-                        generalInfo.education&&
-                        generalInfo.education[0] &&
-                        generalInfo.education[0].professionalTypes
-                          ? generalInfo.education[0].professionalTypes.name
+                        generalInfo.GSProfessionals &&
+                        generalInfo.GSProfessionals.professionalTypes
+                          ? generalInfo.GSProfessionals.professionalTypes.name
                           : ""
                       }}
                     </option>
@@ -649,12 +647,11 @@
           </button>
           <button
             class="
-            float-right
+              float-right
               mt-8
               inline-block
               px-6
               py-2.5
-              
               bg-yellow-300
               text-white
               max-w-3xl
@@ -737,7 +734,7 @@ export default {
       woredaSelected: "",
       departmentId: "",
       expertLevelId: "",
-      licenseFile: []
+      licenseFile: [],
     });
     let localData = ref([]);
     let isLoading = ref(false);
@@ -758,7 +755,7 @@ export default {
     let showOtherProfession = ref(false);
     let withdrawData = ref([]);
 
-    const checkApplicantType = applicantType => {
+    const checkApplicantType = (applicantType) => {
       generalInfo.value.regionId = null;
       generalInfo.value.zoneId = null;
       generalInfo.value.woredaId = null;
@@ -788,7 +785,7 @@ export default {
       store
 
         .dispatch("newlicense/getZones", generalInfo.value.regionSelected.id)
-        .then(res => {
+        .then((res) => {
           const zonesResult = res.data.data;
           zones.value = zonesResult;
         });
@@ -798,53 +795,53 @@ export default {
     };
 
     const fetchApplicantType = () => {
-      store.dispatch("goodstanding/getApplicantType").then(res => {
+      store.dispatch("goodstanding/getApplicantType").then((res) => {
         applicantTypes.value = res.data.data;
       });
     };
     const fetchApplicantTitle = () => {
-      store.dispatch("goodstanding/getApplicantTitle").then(res => {
+      store.dispatch("goodstanding/getApplicantTitle").then((res) => {
         applicantTitle.value = res.data.data;
       });
     };
 
     const fetchDepartments = () => {
-      store.dispatch("goodstanding/getDepartmentType").then(res => {
+      store.dispatch("goodstanding/getDepartmentType").then((res) => {
         departments.value = res.data.data;
       });
     };
     const fetchApplicationPositions = () => {
-      store.dispatch("goodstanding/getApplicantPosition").then(res => {
+      store.dispatch("goodstanding/getApplicantPosition").then((res) => {
         applicationPositions.value = res.data.data;
       });
     };
     const fetchRegions = () => {
-      store.dispatch("goodstanding/getRegions").then(res => {
+      store.dispatch("goodstanding/getRegions").then((res) => {
         regions.value = res.data.data;
       });
     };
     const fetchZone = () => {
       store
         .dispatch("goodstanding/getZones", generalInfo.value.regionId)
-        .then(res => {
+        .then((res) => {
           zones.value = res.data.data;
         });
     };
     const fetchWoredas = () => {
       store
         .dispatch("goodstanding/getWoredas", generalInfo.value.zoneSelected.id)
-        .then(res => {
+        .then((res) => {
           woredas.value = res.data.data;
         });
     };
     const fetchProfessionalType = (departmentId, educationalLevelId) => {
       let profession = {
         departmentId: departmentId,
-        educationalLevelId: educationalLevelId
+        educationalLevelId: educationalLevelId,
       };
       store
         .dispatch("newlicense/getProfessionalTypes", profession)
-        .then(res => {
+        .then((res) => {
           professionalTypes.value = res.data.data;
         });
     };
@@ -856,7 +853,7 @@ export default {
     };
     const apply = () => {
       let tempApplicationData = generalInfo.value;
-     
+
       window.localStorage.setItem(
         "GSApplicationData",
         JSON.stringify(tempApplicationData)
@@ -864,7 +861,7 @@ export default {
       store
         .dispatch("goodstanding/setGeneralInfo", generalInfo.value)
         .then(() => {
-         activeState.value++;
+          activeState.value++;
         });
     };
     const clearLocalData = () => {
@@ -874,7 +871,7 @@ export default {
       }, 1000);
     };
     const fetchEducationLevel = () => {
-      store.dispatch("lookups/getEducationLevel").then(res => {
+      store.dispatch("lookups/getEducationLevel").then((res) => {
         educationLevels.value = res.data.data;
       });
     };
@@ -891,10 +888,11 @@ export default {
 
       store
         .dispatch("goodstanding/getGoodStandingLicenseById", route.params.id)
-        .then(res => {
+        .then((res) => {
           withdrawData.value = res.data.data;
           generalInfo.value = res.data.data;
-          generalInfo.value.licenseIssuedDate=generalInfo.value.licenseIssuedDate.slice(0,10)
+          generalInfo.value.licenseIssuedDate =
+            generalInfo.value.licenseIssuedDate.slice(0, 10);
           generalInfo.value.regionSelected =
             res.data.data && res.data.data.woreda
               ? res.data.data.woreda.zone.region
@@ -909,7 +907,7 @@ export default {
                   name: res.data.data.woreda.zone.name,
                   regionId: res.data.data.woreda.zone.regionId,
                   rowguid: res.data.data.woreda.zone.rowguid,
-                  updatedAt: res.data.data.woreda.zone.updatedAt
+                  updatedAt: res.data.data.woreda.zone.updatedAt,
                 }
               : "";
           generalInfo.value.woredaSelected =
@@ -921,7 +919,7 @@ export default {
                   name: res.data.data.woreda.name,
                   zoneId: res.data.data.woreda.zoneId,
                   rowguid: res.data.data.woreda.rowguid,
-                  updatedAt: res.data.data.woreda.updatedAt
+                  updatedAt: res.data.data.woreda.updatedAt,
                 }
               : "";
           generalInfo.value.education = JSON.parse(
@@ -935,11 +933,11 @@ export default {
       isLoading.value = true;
       let req = {
         data: withdrawData.value,
-        action: "WithdrawEvent"
+        action: "WithdrawEvent",
       };
       store
         .dispatch("reviewer/editGoodStanding", req)
-        .then(res => {
+        .then((res) => {
           isLoading.value = false;
           if (res.statusText == "Created") {
             toast.success("Done", {
@@ -947,7 +945,7 @@ export default {
               position: "bottom-center",
               pauseOnFocusLoss: true,
               pauseOnHover: true,
-              icon: true
+              icon: true,
             });
             router.push({ path: "/Applicant/GoodStanding/withdraw" });
           } else {
@@ -956,12 +954,12 @@ export default {
               position: "bottom-center",
               pauseOnFocusLoss: true,
               pauseOnHover: true,
-              icon: true
+              icon: true,
             });
             router.push({ path: "/Applicant/GoodStanding/withdraw" });
           }
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
         });
     };
@@ -991,9 +989,9 @@ export default {
       applicantTypes,
       departments,
       clearLocalData,
-      localData
+      localData,
     };
-  }
+  },
 };
 </script>
 <style>

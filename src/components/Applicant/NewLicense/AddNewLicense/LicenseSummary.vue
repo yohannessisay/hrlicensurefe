@@ -525,8 +525,20 @@ export default {
     const back = () => {
       emit("changeActiveStateMinus");
     };
+
+    const fetchApplicationStatuses = () => {
+      store.dispatch("renewal/getApplicationStatuses").then((res) => {
+        let results = res.data.data;
+
+        let status = results.filter(function (e) {
+          return e.code == "INIT";
+        });
+        buttons.value = status[0]["buttons"];
+      });
+    };
+    
     onMounted(() => {
-      buttons.value = store.getters["newlicense/getButtons"];
+      fetchApplicationStatuses();
       tempDocs.value = store.getters["newlicense/getTempDocs"];
       localData.value = window.localStorage.getItem("NLApplicationData")
         ? JSON.parse(window.localStorage.getItem("NLApplicationData"))
