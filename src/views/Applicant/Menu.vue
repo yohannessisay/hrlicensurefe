@@ -1632,9 +1632,9 @@ export default {
               element.applicationCategory.code == "GSL" &&
               element.parentDocument == null &&
               element.educationalLevel &&
-              element.educationalLevel.code == "BACH"
+              element.educationalLevel.id == 2
           );
-        }
+        } 
       });
     });
     return { userInfo, NLdocumentSpecs, RNdocumentSpecs, GSdocumentSpecs };
