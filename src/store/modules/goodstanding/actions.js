@@ -73,7 +73,7 @@ export default {
   async editGoodstandingLicense({ commit }, license) {
     try {
       const resp = await ApiService.put(
-        baseUrl + "/goodStandings/" + license.id,
+        baseUrl + "/goodStandings/" + license.data.id,
         license.data
       );
       return resp;

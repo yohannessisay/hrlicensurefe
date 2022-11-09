@@ -5,19 +5,21 @@
   <!-- Sidebar -->
   <section class="home-section">
     <!-- Header -->
-    <reviewer-nav-bar><ol class="list-reset flex">
-          <li>
-            <router-link to="/admin/review"
-              ><span class="text-primary-600 text-base">Home</span></router-link
-            >
-          </li>
-          <li><span class="text-gray-500 mx-2">/</span></li> 
-          <li>
-            <a href="#" class="pointer-events-none text-lg text-grey-300"
-              >User Management</a
-            >
-          </li>
-        </ol></reviewer-nav-bar>
+    <reviewer-nav-bar
+      ><ol class="list-reset flex">
+        <li>
+          <router-link to="/admin/review"
+            ><span class="text-primary-600 text-base">Home</span></router-link
+          >
+        </li>
+        <li><span class="text-gray-500 mx-2">/</span></li>
+        <li>
+          <a href="#" class="pointer-events-none text-lg text-grey-300"
+            >User Management</a
+          >
+        </li>
+      </ol></reviewer-nav-bar
+    >
     <!-- Header -->
 
     <!-- Main Content -->
@@ -40,8 +42,7 @@
                 uppercase
                 rounded
                 shadow-md
-                hover:bg-white
-                hover:text-primary-600
+                hover:bg-white hover:text-primary-600
                 transition
                 duration-150
                 ease-in-out
@@ -55,7 +56,7 @@
         <div class="py-8">
           <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 overflow-x-auto">
             <div class="flex justify-left">
-              <div class="mb-3 xl:w-full  ">
+              <div class="mb-3 xl:w-full">
                 <div
                   class="
                     input-group
@@ -189,7 +190,7 @@
                 bg-primary-800
               "
             >
-              <vue-table-lite 
+              <vue-table-lite
                 :is-loading="userTable.isLoading"
                 :columns="userTable.columns"
                 :rows="userTable.rows"
@@ -227,7 +228,7 @@ export default {
     ReviewerSideBar,
     VueTableLite,
     addUser,
-    editUser
+    editUser,
   },
   computed: {},
 
@@ -245,7 +246,7 @@ export default {
     ]);
 
     let userTable = ref({ isLoading: true });
-    let modalData=ref({change:0});
+    let modalData = ref({ change: 0 });
     let tableData = reactive([]);
     const searchTerm = ref("");
     const getAdmins = () => {
@@ -261,7 +262,7 @@ export default {
             Role: element.role ? element.role.name : "",
             PhoneNumber: element.phoneNumber ? element.phoneNumber : "",
             ExpertLevel: element.expertLevel ? element.expertLevel.name : "",
-            data:element?element:{}
+            data: element ? element : {},
           });
         });
         allData.value = tableData;
@@ -377,11 +378,11 @@ export default {
       });
     };
 
-        const rowClicked = (row) => {
+    const rowClicked = (row) => {
       if (row != undefined) {
         row = JSON.parse(JSON.stringify(row));
-           modalData.value.change++;
-        modalData.value.data = row ? row : {};
+        modalData.value.change++;
+        modalData.value.data = row ? row.data : {};
       }
     };
     onMounted(getAdmins);

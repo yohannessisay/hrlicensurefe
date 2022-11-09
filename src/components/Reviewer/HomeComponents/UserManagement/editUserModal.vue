@@ -36,20 +36,13 @@
           text-current
         "
       >
-   <div
-          class="
-            modal-header
-            flex flex-shrink-0
-           justify-end
-           
-            p-2
-            rounded-t-md
-          "
+        <div
+          class="modal-header flex flex-shrink-0 justify-end p-2 rounded-t-md"
         >
           <button
             type="button"
-            class="     
-                  px-6
+            class="
+              px-6
               text-white
               bg-primary-600
               hover:text-primary-600 hover:border
@@ -68,10 +61,13 @@
               active:bg-purple-800 active:shadow-lg
               transition
               duration-150
-              ease-in-out"
+              ease-in-out
+            "
             data-bs-dismiss="modal"
             aria-label="Close"
-          ><i class="fa fa-close fa-2x"></i></button>
+          >
+            <i class="fa fa-close fa-2x"></i>
+          </button>
         </div>
 
         <div class="modal-body relative p-4">
@@ -369,60 +365,44 @@
 
                           <select
                             class="
-                              form-control
-                              block
-                              w-full
-                              px-3
-                              py-1
-                              h-12
-                              text-base
-                              font-normal
-                              text-gray-700
-                              bg-white bg-clip-padding
-                              border border-solid border-gray-300
-                              rounded
-                              transition
-                              ease-in-out
-                              m-4
-                              mt-0
-                              focus:text-gray-700
-                              focus:bg-white
-                              focus:border-blue-600
-                              focus:outline-none
+                            form-control
+                                block
+                                w-full
+                                px-3
+                                ml-4
+                                py-1
+                                h-12
+                                text-base
+                                font-normal
+                                text-gray-700
+                                bg-white bg-clip-padding
+                                border border-solid border-gray-300
+                                rounded
+                                transition
+                                ease-in-out
+                                mt-0
+                                focus:text-gray-700
+                                focus:bg-white
+                                focus:border-blue-600
+                                focus:outline-none
                             "
-                            v-model="expertLevels.id"
+                            v-model="expertLevel"
                             @change="selectedExpertLevel"
                             :disabled="!isUserManager"
                           >
-                            <option
-                              class="bg-primary-700 text-white"
-                              selected
-                              :value="
-                                expertLevels &&
-                                expertLevels.find(
-                                  (exp) => exp.id == admin.expertLevelId
-                                )
-                                  ? expertLevels.find(
-                                      (exp) => exp.id == admin.expertLevelId
-                                    ).id
-                                  : ''
-                              "
-                            >
-                              {{
-                                expertLevels &&
-                                expertLevels.find(
-                                  (exp) => exp.id == admin.expertLevelId
-                                )
-                                  ? expertLevels.find(
-                                      (exp) => exp.id == admin.expertLevelId
-                                    ).name
-                                  : ""
-                              }}
-                            </option>
+                          <option selected>
+                                {{
+                                  modalData &&
+                                  modalData.data &&
+                                  modalData.data.expertLevel
+                                    ? modalData.data.expertLevel.name
+                                    : ""
+                                }}
+                              </option>
                             <option
                               v-for="expertLevel in expertLevels"
-                              :key="expertLevel.name"
-                              :value="expertLevel.id"
+                              :key="expertLevel.id"
+                              :value="expertLevel"
                             >
                               {{ expertLevel.name }}
                             </option>
@@ -433,12 +413,11 @@
                             >{{ state.validationErrors.expertLevel }}</span
                           >
                         </div>
-                        <span v-show="showRegion != 4">
+                        <span v-show="showRegion == 4">
                           <label class="text-primary-600 font-bold ml-4"
                             >Region</label
                           >
                           <div>
-                           
                             <select
                               class="
                                 form-control
@@ -462,7 +441,7 @@
                                 focus:border-blue-600
                                 focus:outline-none
                               "
-                              v-model="regions.id"
+                              v-model="region"
                               @change="selectedRegion"
                               :disabled="!isUserManager"
                             >
@@ -470,15 +449,15 @@
                                 {{
                                   modalData &&
                                   modalData.data &&
-                                  modalData.data.data.region
-                                    ? modalData.data.data.region.name
+                                  modalData.data.region
+                                    ? modalData.data.region.name
                                     : ""
                                 }}
                               </option>
                               <option
                                 v-for="region in regions"
-                                v-bind:key="region.name"
-                                v-bind:value="region.id"
+                                v-bind:key="region.id"
+                                v-bind:value="region"
                               >
                                 {{ region.name }}
                               </option>
@@ -490,8 +469,54 @@
                             >{{ state.validationErrors.region }}</span
                           >
                         </span>
+                        <span
+                          v-show="
+                            showRegion == 4 && region && region.code=='AMH'
+                          "
+                          class="mr-2 ml-2"
+                        >
+                          <label class="ml-2">Zone</label>
+                          <div>
+                            <select
+                              class="
+                                form-control
+                                block
+                                w-full
+                                h-12
+                                text-base
+                                font-normal
+                                text-gray-700
+                                bg-white bg-clip-padding
+                                border border-solid border-gray-300
+                                rounded
+                                transition
+                                ease-in-out
+                                ml-4
+                                mt-0
+                                focus:text-gray-700
+                                focus:bg-white
+                                focus:border-blue-600
+                                focus:outline-none
+                              "
+                              v-model="admin.zoneId"
+                            >
+                              <option
+                                v-for="zone in zones"
+                                v-bind:key="zone.id"
+                                v-bind:value="zone.id"
+                              >
+                                {{ zone.name }}
+                              </option>
+                            </select>
+                            <span
+                              class="text-red-300 ml-4 text-xs"
+                              v-if="state.showErrorMessages"
+                              >{{ state.validationErrors.zone }}</span
+                            >
+                          </div>
+                        </span>
                       </div>
-                      
+
                       <div
                         class="flex justify-center ml-4"
                         v-if="isUserManager"
@@ -537,10 +562,11 @@
             rounded-b-md
           "
         >
+        
           <button
             type="button"
             class="
-            inline-block
+              inline-block
               px-6
               text-white
               bg-primary-700
@@ -548,7 +574,7 @@
               text-xs
               leading-tight
               uppercase
-              border 
+              border
               rounded
               shadow-lg
               hover:bg-white hover:text-primary-600
@@ -596,28 +622,19 @@ export default {
       roleId: "",
       expertLevelId: "",
       regionId: "",
+      zoneId: null,
       isActive: true,
     });
 
     let showLoading = ref(false);
     let showButtons = ref(false);
 
-    let expertLevels = ref([
-      {
-        id: null,
-        name: null,
-        code: null,
-      },
-    ]);
-
-    let regions = ref([
-      {
-        id: null,
-        name: null,
-        code: null,
-      },
-    ]);
-
+    let expertLevels = ref([]);
+    let expertLevel = ref([]);
+    let regions = ref([]);
+    let region = ref([]);
+    let zones = ref([]);
+    let zone = ref([]);
     let state = ref({
       roles: [],
       showErrorMessages: false,
@@ -651,22 +668,29 @@ export default {
     };
     let showRegion = ref("");
     const selectedExpertLevel = () => {
-
-      if (expertLevels.value.code == "FED") {
+      if (expertLevel.value.code == "FED") {
+        showRegion.value == 3;
+        admin.value.expertLevelId = expertLevel.value.id;
         admin.value.regionId = null;
-      } else { 
+        admin.value.zoneId = null;
+      } else {
         showRegion.value = 4;
-        admin.value.expertLevelId = expertLevels.value.id;
+        admin.value.expertLevelId = expertLevel.value.id;
       }
-   
     };
 
     const selectedRegion = () => {
-      admin.value.regionId = regions.value.id;
+      admin.value.zoneId = null; 
+      admin.value.regionId = region.value.id; 
+      if (region.value.code == "AMH") {
+        store.dispatch("renewal/getZones", region.value.id).then((res) => {
+          zones.value = res.data.data;
+        });
+      }
     };
 
     const saveAdmin = () => {
-      isLoading.value = true;
+      isLoading.value = true; 
       let isValidated = validateForm(admin.value);
       showLoading.value = true;
       showButtons.value = true;
@@ -688,10 +712,10 @@ export default {
         editData.roleId = admin.value.roleId;
         editData.expertLevelId = admin.value.expertLevelId;
         editData.isActive = admin.value.isActive;
-        editData.regionId=admin.value.regionId;
-      
+        editData.regionId = admin.value.regionId;
+
         store
-          .dispatch("admin/updateAdmin", admin.value)
+          .dispatch("admin/updateAdmin", editData)
           .then((res) => {
             showLoading.value = false;
             if (res.data.status == "Success") {
@@ -725,7 +749,7 @@ export default {
           .catch(() => {
             isLoading.value = false;
             toast.error(
-              "Error regarding server, please try again after few minutes",
+              "Error , please try again after few minutes",
               {
                 timeout: 5000,
                 position: "bottom-center",
@@ -735,9 +759,9 @@ export default {
               }
             );
 
-            setTimeout(() => {
-              window.location.reload();
-            }, 3000);
+            // setTimeout(() => {
+            //   window.location.reload();
+            // }, 3000);
           });
       }
     };
@@ -750,11 +774,22 @@ export default {
       if (formData.email && !isValidEmail(formData.email)) {
         errors.email = "Invalid Email";
       }
-
-      if (!formData.expertLevelId && adminExpertId == 3)
+     
+      if (!formData.expertLevelId)
         errors.expertLevel = "Expert Level is required";
-      if (!formData.regionId && formData.expertLevelId == 4) 
+      if (!formData.regionId && formData.expertLevelId == 4)
         errors.region = "Region is required";
+      if (
+        (!formData.regionId &&
+          formData.expertLevelId == 4 &&
+          region.value.code == "AMH" &&
+          formData.zoneId == null) ||
+        (formData.regionId &&
+          formData.expertLevelId == 4 &&
+          region.value.code == "AMH" &&
+          formData.zoneId == null)
+      )
+        errors.zone = "Zone is required";
       if (!formData.firstName) errors.firstName = "First name is Required";
       if (!formData.fatherName) errors.fatherName = "Father name is Required";
       if (!formData.grandfatherName)
@@ -780,39 +815,42 @@ export default {
     };
     watch(props.modalData, () => {
       admin.value.id =
-        props.modalData.data && props.modalData.data.data
-          ? props.modalData.data.data.id
+        props.modalData.data && props.modalData.data
+          ? props.modalData.data.id
           : "";
       admin.value.firstName = props.modalData.data
-        ? props.modalData.data.FullName.split(" ")[0]
+        ? props.modalData.data.name.split(" ")[0]
         : "";
       admin.value.fatherName = props.modalData.data
-        ? props.modalData.data.FullName.split(" ")[1]
+        ? props.modalData.data.name.split(" ")[1]
         : "";
       admin.value.grandfatherName = props.modalData.data
-        ? props.modalData.data.FullName.split(" ")[2]
+        ? props.modalData.data.name.split(" ")[2]
         : "";
       admin.value.email = props.modalData.data
-        ? props.modalData.data.Email
+        ? props.modalData.data.email
         : "";
       admin.value.phoneNumber = props.modalData.data
-        ? props.modalData.data.PhoneNumber
+        ? props.modalData.data.phoneNumber
         : "";
       admin.value.roleId =
-        props.modalData.data && props.modalData.data.data
-          ? props.modalData.data.data.roleId
+        props.modalData.data && props.modalData.data
+          ? props.modalData.data.roleId
           : "";
-      admin.value.expertLevelId =
-        props.modalData.data && props.modalData.data.data
-          ? props.modalData.data.data.expertLevelId
+      admin.value.expertLevelId = props.modalData.data
+        ? props.modalData.data.expertLevelId
+        : "";
+      admin.value.regionId =
+        props.modalData.data && props.modalData.data
+          ? props.modalData.data.regionId
           : "";
-          admin.value.regionId =
-        props.modalData.data && props.modalData.data.data
-          ? props.modalData.data.data.regionId
+      admin.value.zoneId =
+        props.modalData.data && props.modalData.data
+          ? props.modalData.data.zoneId
           : "";
       showRegion.value =
-        props.modalData.data && props.modalData.data.data
-          ? props.modalData.data.data.expertLevelId
+        props.modalData.data && props.modalData.data
+          ? props.modalData.data.expertLevelId
           : "";
     });
     onMounted(() => {
@@ -840,6 +878,10 @@ export default {
       showButtons,
       isUserManager,
       isLoading,
+      region,
+      zones,
+      zone,
+      expertLevel,
     };
   },
 };

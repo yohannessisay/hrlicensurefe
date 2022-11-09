@@ -607,14 +607,17 @@ export default {
       });
     };
 
+    let showRegion = ref("");
     const selectedExpertLevel = () => {
-      if (expertLevel.value.code == "FED") {
-        admin.regionId = null;
-      } else {
-        admin.expertLevelId = expertLevel.value.id;
-      }
-    };
 
+      if (expertLevels.value.code == "FED") {
+        admin.value.regionId = null;
+      } else { 
+        showRegion.value = 4;
+        admin.value.expertLevelId = expertLevels.value.id;
+      }
+   
+    };
     const selectedRegion = () => {
       admin.zoneId=null;
       admin.regionId = region.value.id;
@@ -625,9 +628,7 @@ export default {
       }
     };
 
-    const registerAdmin = () => {
-      // isLoading.value = true;
-      console.log(admin);
+    const registerAdmin = () => { 
       let isValidated = validateForm(admin);
       showLoading.value = true;
       showButtons.value = true;
@@ -663,7 +664,7 @@ export default {
 
               setTimeout(() => {
                 window.location.reload();
-              }, 3000);
+              }, 2000);
             } else if (res.data.status == "Error") {
               toast.error(res.data.message, {
                 timeout: 5000,
@@ -676,7 +677,7 @@ export default {
 
               setTimeout(() => {
                 window.location.reload();
-              }, 3000);
+              }, 2000);
             }
           })
           .catch(() => {
@@ -706,9 +707,8 @@ export default {
         errors.phoneNumber = "Phone Number is Required";
       if (formData.email && !isValidEmail(formData.email)) {
         errors.email = "Invalid Email";
-      }
-
-      if (!formData.expertLevelId && adminExpertId == 3)
+      } 
+      if (!formData.expertLevelId )
         errors.expertLevel = "Expert Level is required";
       if (!formData.regionId && formData.expertLevelId == 4)
         errors.region = "Region is required";

@@ -296,7 +296,8 @@
                       focus:border-main-400
                       focus:outline-none
                     "
-                    v-model="generalInfo.GSProfessionals.educationLevelId"
+                    v-model="generalInfo.educationLevel
+                    "
                     @change="educationalLevelChange()"
                     required
                   >
@@ -339,7 +340,7 @@
                       focus:border-main-400
                       focus:outline-none
                     "
-                    v-model="generalInfo.GSProfessionals.professionalTypeId"
+                    v-model="generalInfo.professionalType"
                     required
                   >
                     <option
@@ -722,7 +723,8 @@ export default {
       licenseIssuedDate: "",
       whoIssued: "",
       licenseRegistrationNumber: "",
-      professionTypeIds: "",
+      professionTypeId: "",
+      educationLevel:"",
       applicantPositionId: "",
       otherProfessionType: "",
       otherProfessionTypeAmharic: "",
@@ -778,7 +780,7 @@ export default {
       isEdLevelSelected.value = true;
       fetchProfessionalType(
         generalInfo.value.departmentId.id,
-        generalInfo.value.educationLevelId.id
+        generalInfo.value.educationLevel.id
       );
     };
     const fetchZones = () => {
@@ -851,7 +853,7 @@ export default {
       generalInfo.value.professionTypeIds = "";
       fetchProfessionalType(generalInfo.value.departmentId.id);
     };
-    const apply = () => {
+    const apply = () => { 
       let tempApplicationData = generalInfo.value;
 
       window.localStorage.setItem(
@@ -889,7 +891,7 @@ export default {
       store
         .dispatch("goodstanding/getGoodStandingLicenseById", route.params.id)
         .then((res) => {
-          withdrawData.value = res.data.data;
+          withdrawData.value = res.data.data; 
           generalInfo.value = res.data.data;
           generalInfo.value.licenseIssuedDate =
             generalInfo.value.licenseIssuedDate.slice(0, 10);
