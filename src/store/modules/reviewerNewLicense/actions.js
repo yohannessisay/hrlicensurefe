@@ -15,10 +15,21 @@ export default {
     const url = baseUrl + "/newLicenses/status/" + statusId;
     const resp = await ApiService.get(url);
 
-    const unassignedApplications = resp.data.data;
+    const unassignedApplications = resp.data.data.filter((unassigned) => {
+      return unassigned.transferFromId == null;
+    }); 
     return unassignedApplications;
   },
+  async getNewLicenseFromOtherRegion(context, statusId) {
+   
+    const url = baseUrl + "/newLicenses/status/" + statusId;
+    const resp = await ApiService.get(url);
 
+    const transferdApplications = resp.data.data.filter((unassigned) => {
+      return unassigned.transferFromId != null;
+    }); 
+    return transferdApplications;
+  },
  
   async getNewLicenseUnfinished(context, adminStatus) {
     const url = baseUrl + "/newLicenses/status/" + adminStatus[0];
