@@ -45,7 +45,7 @@
           :class="$route.fullPath === '/admin/newLicense/' ? 'mb-2 active' : ''"
         >
           <a href="#Unassigned">
-            <i class="bx bx-certification bx-sm"></i>
+            <i class="bx bx-certification "></i>
 
             <span class="links_name"> Unassigned</span>
           </a>
@@ -60,7 +60,7 @@
           "
         >
           <a href="#inReview">
-            <i class="bx bx-refresh bx-sm"></i>
+            <i class="bx bx-refresh "></i>
             <span class="links_name">In Review</span>
           </a>
         </li>
@@ -72,7 +72,7 @@
           "
         >
           <a href="#Draft">
-            <i class="bx bx-pencil bx-sm"></i>
+            <i class="bx bx-pencil "></i>
             <span class="links_name">Draft</span>
           </a>
         </li>
@@ -86,7 +86,7 @@
           "
         >
           <a href="#Approved">
-            <i class="bx bx-badge bx-sm"></i>
+            <i class="bx bx-badge "></i>
             <span class="links_name">Approved</span>
           </a>
         </li>
@@ -100,7 +100,7 @@
           "
         >
           <a href="#Declined">
-            <i class="bx bx-error-alt bx-sm"></i>
+            <i class="bx bx-error-alt "></i>
             <span class="links_name">Declined</span>
           </a>
         </li>
@@ -114,7 +114,7 @@
           "
         >
           <a href="#Under Supervision">
-            <i class="bx bx-folder-open bx-sm"></i>
+            <i class="bx bx-folder-open "></i>
             <span class="links_name">Under Supervision</span>
           </a>
         </li>
@@ -158,7 +158,7 @@
           "
         >
           <a href="#Licensed">
-            <i class="bx bx-stop-circle bx-sm"></i>
+            <i class="bx bx-stop-circle "></i>
             <span class="links_name">Suspended</span>
           </a>
         </li>
@@ -173,7 +173,7 @@
           "
         >
           <a href="#Licensed">
-            <i class="bx bx-rotate-left bx-sm"></i>
+            <i class="bx bx-rotate-left "></i>
             <span class="links_name">Returned</span>
           </a>
         </li>

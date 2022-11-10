@@ -69,8 +69,15 @@
     border-radius: 10px;
 
   }
-  .sidebar .nav-links li.active a span.links_name {
+  .sidebar .nav-links li.active a span.links_name{
     font-weight: bold;
+    font-size: 18px;
+    color: #285180;
+  }
+  .sidebar .nav-links li.active a i
+   {
+    font-weight: bold;
+    font-size: 28px;
     color: #285180;
   }
   .sidebar .nav-links li.active a i {
@@ -105,7 +112,7 @@
 
   .sidebar .nav-links li a .links_name {
     color: #fff;
-    font-size: 15px;
+    font-size: 13px;
     font-weight: 400;
     white-space: nowrap;
   }

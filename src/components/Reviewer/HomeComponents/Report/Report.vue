@@ -8,11 +8,15 @@
     <reviewer-nav-bar>
       <ol class="list-reset flex">
         <li>
-          <router-link to="/admin/review"><span class="text-primary-600 text-base">Home</span></router-link>
+          <router-link to="/admin/review"
+            ><span class="text-primary-600 text-base">Home</span></router-link
+          >
         </li>
         <li><span class="text-gray-500 mx-2">/</span></li>
         <li>
-          <a href="#" class="pointer-events-none text-lg text-grey-300">Report</a>
+          <a href="#" class="pointer-events-none text-lg text-grey-300"
+            >Report</a
+          >
         </li>
       </ol>
     </reviewer-nav-bar>
@@ -26,24 +30,27 @@
             View reports for all applications
           </p>
           <p class="absolute right-0">
-            <button class="
-              px-6
-                      text-white
-                      bg-primary-600
-                      hover:text-primary-600
-                      font-medium
-                      text-xs
-                      leading-tight
-                      uppercase
-                      rounded
-                      shadow-md
-                      focus:shadow-lg focus:outline-none focus:ring-0
-                      transition
-                      duration-150
-                      mt-0
-                      ease-in-out
-                      text-right
-              " @click="exportTable()">
+            <button
+              class="
+                px-6
+                text-white
+                bg-primary-600
+                hover:text-primary-600
+                font-medium
+                text-xs
+                leading-tight
+                uppercase
+                rounded
+                shadow-md
+                focus:shadow-lg focus:outline-none focus:ring-0
+                transition
+                duration-150
+                mt-0
+                ease-in-out
+                text-right
+              "
+              @click="exportTable()"
+            >
               <i class="fa fa-file-excel text-xl"></i>
               Generate Report
             </button>
@@ -51,19 +58,61 @@
         </div>
         <div class="py-8">
           <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 overflow-x-auto">
+            <div class="mb-3 xl:w-full">
+              <label for="" class="ml-4">License Type</label>
+              <select
+                class="
+                  form-select
+                  appearance-none
+                  block
+                  w-full
+                  px-6
+                  ml-4
+                  py-2
+                  text-base
+                  font-normal
+                  text-gray-700
+                  bg-white bg-clip-padding bg-no-repeat
+                  border border-solid border-gray-300
+                  rounded
+                  transition
+                  ease-in-out
+                  focus:text-gray-700
+                  focus:bg-white
+                  focus:border-blue-600
+                  focus:outline-none
+                "
+                @change="handleFilterByApplication($event.target.value)"
+                aria-label="Default select example"
+              >
+                <option disabled>Application Type</option>
+                <option selected value="newLicense">
+                  New License Applications
+                </option>
+                <option value="goodStanding">Goodstanding Applications</option>
+                <option value="renewal">Renewed Applications</option>
+                <!-- <option value="verification">
+                        Verification Applications
+                      </option> -->
+              </select>
+            </div>
             <div class="flex justify-left">
               <div class="mb-3 xl:w-full">
-                <div class="
+                <label for="" class="ml-4">Search By Name</label>
+                <div
+                  class="
                     input-group
                     relative
                     flex flex-wrap
                     items-stretch
                     w-full
                     mb-4
-                    
-                  ">
-                  <input type="search" class="
-                    ml-4
+                  "
+                >
+                  <input
+                    type="search"
+                    class="
+                      ml-4
                       form-control
                       relative
                       flex-auto
@@ -84,9 +133,14 @@
                       focus:bg-white
                       focus:border-blue-600
                       focus:outline-none
-                    " placeholder="Start Searching For Name" aria-label="Search" aria-describedby="button-addon2"
-                    v-model="searchTermName" />
-                  <button class="
+                    "
+                    placeholder="Start Searching For Name"
+                    aria-label="Search"
+                    aria-describedby="button-addon2"
+                    v-model="searchTermName"
+                  />
+                  <button
+                    class="
                       inline-block
                       px-6
                       mr-4
@@ -109,11 +163,14 @@
                       duration-150
                       ease-in-out
                       items-center
-                    ">
+                    "
+                  >
                     <i class="fa fa-user fa-2x"></i>
                   </button>
 
-                  <input type="search" class="
+                  <input
+                    type="search"
+                    class="
                       form-control
                       relative
                       flex-auto
@@ -134,9 +191,15 @@
                       focus:bg-white
                       focus:border-blue-600
                       focus:outline-none
-                    " placeholder="Search for profession" aria-label="Search" aria-describedby="button-addon2"
-                    v-model="searchTermProf" />
-                  <button class="
+                    "
+                    placeholder="Search for profession"
+                    aria-label="Search"
+                    aria-describedby="button-addon2"
+                    v-model="searchTermProf"
+                  />
+
+                  <button
+                    class="
                       inline-block
                       px-6
                       py-2
@@ -158,49 +221,16 @@
                       duration-150
                       ease-in-out
                       items-center
-                    ">
+                    "
+                  >
                     <i class="fa fa-briefcase fa-2x"></i>
                   </button>
                 </div>
-                <div class="flex justify-center">
-                  <div class="mb-3 xl:w-full">
-                    <select class="
-                        form-select
-                        appearance-none
-                        block
-                        w-full
-                        px-6
-                        ml-4
-                        py-2
-                        text-base
-                        font-normal
-                        text-gray-700
-                        bg-white bg-clip-padding bg-no-repeat
-                        border border-solid border-gray-300
-                        rounded
-                        transition
-                        ease-in-out
-                        focus:text-gray-700
-                        focus:bg-white
-                        focus:border-blue-600
-                        focus:outline-none
-                      " @change="handleFilterByApplication($event.target.value)" aria-label="Default select example">
-                      <option disabled>Application Type</option>
-                      <option selected value="newLicense">
-                        New License Applications
-                      </option>
-                      <option value="goodStanding">
-                        Goodstanding Applications
-                      </option>
-                      <option value="renewal">Renewed Applications</option>
-                      <!-- <option value="verification">
-                        Verification Applications
-                      </option> -->
-                    </select>
-                  </div>
-
+                <div class="flex justify-left mt-8">
                   <div class="mb-3 xl:w-full ml-2">
-                    <select class="
+                    <label for="" class="ml-4">License Status</label>
+                    <select
+                      class="
                         form-select
                         appearance-none
                         block
@@ -220,17 +250,26 @@
                         focus:bg-white
                         focus:border-blue-600
                         focus:outline-none
-                      " v-model="searchTermStatus" aria-label="Default select example">
+                      "
+                      v-model="searchTermStatus"
+                      aria-label="Default select example"
+                    >
                       <option value="" disabled>Application Status</option>
                       <option>All</option>
-                      <option v-for="appStatus in applicationStatuses" :key="appStatus.id" :value="appStatus.name">
+                      <option
+                        v-for="appStatus in applicationStatuses"
+                        :key="appStatus.id"
+                        :value="appStatus.name"
+                      >
                         {{ appStatus.name }}
                       </option>
                     </select>
                   </div>
 
-                  <div class="mb-3 xl:w-full ml-2">
-                    <select class="
+                  <div class="mb-3 xl:w-full ml-4">
+                    <label for="" class="ml-4">Gender</label>
+                    <select
+                      class="
                         form-select
                         appearance-none
                         block
@@ -250,16 +289,21 @@
                         focus:bg-white
                         focus:border-blue-600
                         focus:outline-none
-                      " v-model="searchTermGender" aria-label="Default select example">
-                      <option value="" disabled>Gender</option>
-                      <option>All</option>
+                      "
+                      v-model="searchTermGender"
+                      aria-label="Default select example"
+                    >
+                      <option value="" disabled>All</option>
+
                       <option value="male">Male</option>
                       <option value="female">Female</option>
                     </select>
                   </div>
 
-                  <div class="mb-3 xl:w-full ml-2">
-                    <select class="
+                  <div class="mb-3 xl:w-full ml-4">
+                    <label for="" class="ml-4">Region</label>
+                    <select
+                      class="
                         form-select
                         appearance-none
                         block
@@ -279,79 +323,103 @@
                         focus:bg-white
                         focus:border-blue-600
                         focus:outline-none
-                      " v-model="searchTermRegion" aria-label="Default select example">
+                      "
+                      v-model="searchTermRegion"
+                      aria-label="Default select example"
+                    >
                       <option value="" disabled>Region</option>
-                      <option>All</option>
-                      <option v-for="region in regions" :value="region.name" :key="region.id">
+                      <option
+                        v-for="region in regions"
+                        :value="region.name"
+                        :key="region.id"
+                      >
                         {{ region.name }}
                       </option>
                     </select>
                   </div>
+
+                  <label for="" class="ml-8 mt-8">Certified Date</label>
+                  <div class="mb-3">
+                    <label for="" class="ml-4">From</label>
+                    <input
+                      v-model="searchTermFromDate"
+                      type="date"
+                      class="
+                        appearance-none
+                        block
+                        w-full
+                        px-6
+                        ml-4
+                        py-2
+                        text-base
+                        font-normal
+                        text-gray-700
+                        bg-white bg-clip-padding bg-no-repeat
+                        border border-solid border-gray-300
+                        rounded
+                        transition
+                        ease-in-out
+                        focus:text-gray-700
+                        focus:bg-white
+                        focus:border-blue-600
+                        focus:outline-none
+                      "
+                      aria-label="Default select example"
+                    />
+                  </div>
+                  <div class="mb-3 ml-2">
+                    <label for="" class="ml-4"> To</label>
+                    <input
+                      type="date"
+                      class="
+                        appearance-none
+                        block
+                        w-full
+                        px-6
+                        ml-4
+                        py-2
+                        text-base
+                        font-normal
+                        text-gray-700
+                        bg-white bg-clip-padding bg-no-repeat
+                        border border-solid border-gray-300
+                        rounded
+                        transition
+                        ease-in-out
+                        focus:text-gray-700
+                        focus:bg-white
+                        focus:border-blue-600
+                        focus:outline-none
+                      "
+                      v-model="searchTermToDate"
+                      aria-label="Default select example"
+                    />
+                  </div>
                 </div>
 
-                <div class="flex justify-left mt-2">
-                  <label for="" class="ml-4 mt-8">Certified Date</label>
-                  <div class="mb-3  ml-2">
-                    <label for="" class="ml-4">From</label>
-                    <input v-model="searchTermFromDate" type="date" class="
-                        appearance-none
-                        block
-                        w-full
-                        px-6
-                        ml-4
-                        py-2
-                        text-base
-                        font-normal
-                        text-gray-700
-                        bg-white bg-clip-padding bg-no-repeat
-                        border border-solid border-gray-300
-                        rounded
-                        transition
-                        ease-in-out
-                        focus:text-gray-700
-                        focus:bg-white
-                        focus:border-blue-600
-                        focus:outline-none
-                      " aria-label="Default select example" />
-                  </div>
-                  <div class="mb-3  ml-2">
-                    <label for="" class="ml-4"> To</label>
-                    <input type="date" class="
-                        appearance-none
-                        block
-                        w-full
-                        px-6
-                        ml-4
-                        py-2
-                        text-base
-                        font-normal
-                        text-gray-700
-                        bg-white bg-clip-padding bg-no-repeat
-                        border border-solid border-gray-300
-                        rounded
-                        transition
-                        ease-in-out
-                        focus:text-gray-700
-                        focus:bg-white
-                        focus:border-blue-600
-                        focus:outline-none
-                      " v-model="searchTermToDate" aria-label="Default select example" />
-                  </div>
-                </div>
+                <div class="flex justify-left mt-2"></div>
               </div>
             </div>
 
             <div class="bg-white p-6 rounded-lg shadow-lg overflow-x-scroll">
-              <div class="
+              <div
+                class="
                   inline-block
                   min-w-full
                   shadow-md
                   rounded-lg
                   overflow-hidden
                   bg-primary-800
-                ">
-                <vue-table-lite :is-static-mode="true" :is-loading="userTable.isLoading" :columns="userTable.columns"
-                  :rows="userTable.rows" :total="userTable.totalRecordCount" :sortable="userTable.sortable">
+                "
+              >
+                <vue-table-lite
+                  :is-static-mode="true"
+                  :is-loading="userTable.isLoading"
+                  :columns="userTable.columns"
+                  :rows="userTable.rows"
+                  :total="userTable.totalRecordCount"
+                  :sortable="userTable.sortable"
+                >
                 </vue-table-lite>
               </div>
             </div>
@@ -361,11 +429,16 @@
     </div>
     <!-- Main Content -->
 
-    <div id="printable" class="shadow-md rounded-lg min-w-full" style="display: none">
+    <div
+      id="printable"
+      class="shadow-md rounded-lg min-w-full"
+      style="display: none"
+    >
       <table class="w-full" id="myTable">
         <thead>
           <tr class="">
-            <th class="
+            <th
+              class="
                 px-5
                 py-3
                 border-b-2 border-gray-200
@@ -375,10 +448,12 @@
                 text-gray-700
                 uppercase
                 tracking-wider
-              ">
+              "
+            >
               First Name
             </th>
-            <th class="
+            <th
+              class="
                 px-5
                 py-3
                 border-b-2 border-gray-200
@@ -388,10 +463,12 @@
                 text-gray-700
                 uppercase
                 tracking-wider
-              ">
+              "
+            >
               Middle Name
             </th>
-            <th class="
+            <th
+              class="
                 px-5
                 py-3
                 border-b-2 border-gray-200
@@ -401,10 +478,12 @@
                 text-gray-700
                 uppercase
                 tracking-wider
-              ">
+              "
+            >
               Last Name
             </th>
-            <th class="
+            <th
+              class="
                 px-5
                 py-3
                 border-b-2 border-gray-200
@@ -414,10 +493,12 @@
                 text-gray-700
                 uppercase
                 tracking-wider
-              ">
+              "
+            >
               License Number
             </th>
-            <th class="
+            <th
+              class="
                 px-5
                 py-3
                 border-b-2 border-gray-200
@@ -427,11 +508,13 @@
                 text-gray-700
                 uppercase
                 tracking-wider
-              ">
+              "
+            >
               License Status
             </th>
 
-            <th class="
+            <th
+              class="
                 px-5
                 py-3
                 border-b-2 border-gray-200
@@ -441,11 +524,13 @@
                 text-gray-700
                 uppercase
                 tracking-wider
-              ">
+              "
+            >
               Professional Type
             </th>
 
-            <th class="
+            <th
+              class="
                 px-5
                 py-3
                 border-b-2 border-gray-200
@@ -455,11 +540,13 @@
                 text-gray-700
                 uppercase
                 tracking-wider
-              ">
+              "
+            >
               Issued Date
             </th>
 
-            <th class="
+            <th
+              class="
                 px-5
                 py-3
                 border-b-2 border-gray-200
@@ -469,11 +556,13 @@
                 text-gray-700
                 uppercase
                 tracking-wider
-              ">
+              "
+            >
               Gender
             </th>
 
-            <th class="
+            <th
+              class="
                 px-5
                 py-3
                 border-b-2 border-gray-200
@@ -483,7 +572,8 @@
                 text-gray-700
                 uppercase
                 tracking-wider
-              ">
+              "
+            >
               Organizational Unit
             </th>
           </tr>
@@ -599,7 +689,7 @@ export default {
   components: {
     ReviewerNavBar,
     ReviewerSideBar,
-    VueTableLite
+    VueTableLite,
   },
 
   setup() {
@@ -625,12 +715,12 @@ export default {
     let applicationStatuses = ref([]);
 
     const fetchNewLicenseReport = () => {
-      store.dispatch("report/getNewLicenseReport").then(res => {
+      store.dispatch("report/getNewLicenseReport").then((res) => {
         newLicenseData.value = res.data.data;
         reportData.value.push(...res.data.data);
 
-        res.data.data.forEach(element => {
-          let prof = element.educations.map(prof => {
+        res.data.data.forEach((element) => {
+          let prof = element.educations.map((prof) => {
             return prof.professionType ? prof.professionType.name : "";
           });
           tableData.push({
@@ -649,7 +739,7 @@ export default {
             ProfessionalType: prof ? prof.join(",") : "",
             Gender: element.gender ? element.gender : "",
             OrganizationalUnit: element.region ? element.region.name : "",
-            data: element ? element : {}
+            data: element ? element : {},
           });
         });
         allData.value = tableData;
@@ -660,103 +750,138 @@ export default {
               field: "id",
               width: "5%",
               sortable: true,
-              isKey: true
+              isKey: true,
             },
             {
               label: "First Name",
               field: "FirstName",
               width: "10%",
-              sortable: true
+              sortable: true,
             },
             {
               label: "Father Name",
               field: "MiddleName",
               width: "10%",
-              sortable: true
+              sortable: true,
             },
             {
               label: "Grandfather Name",
               field: "LastName",
               width: "10%",
-              sortable: true
+              sortable: true,
             },
             {
               label: "License Status",
               field: "LicenseStatus",
               width: "5%",
-              sortable: true
+              sortable: true,
             },
             {
               label: "Professional Type",
               field: "ProfessionalType",
               width: "35%",
-              sortable: true
+              sortable: true,
             },
             {
               label: "License Number",
               field: "LicenseNumber",
               width: "5%",
-              sortable: true
+              sortable: true,
             },
             {
               label: "Issued Date",
               field: "IssuedDate",
               width: "5%",
-              sortable: true
+              sortable: true,
             },
             {
               label: "Gender",
               field: "Gender",
               width: "5%",
-              sortable: true
+              sortable: true,
             },
             {
               label: "Organizational Unit",
               field: "OrganizationalUnit",
               width: "5%",
-              sortable: true
-            }
+              sortable: true,
+            },
           ],
           rows: computed(() => {
-            return allData.value.filter((x) =>
-              ((x.FirstName
-                ? x.FirstName.toLowerCase().includes(
-                  searchTermName.value.toLowerCase()
-                )
-                : "") ||
-                (x.MiddleName
-                  ? x.MiddleName.toLowerCase().includes(
-                    searchTermName.value.toLowerCase()
-                  )
+            return allData.value.filter(
+              (x) =>
+                ((x.FirstName
+                  ? x.FirstName.toLowerCase().includes(
+                      searchTermName.value.toLowerCase()
+                    )
                   : "") ||
-                (x.LastName
-                  ? x.LastName.toLowerCase().includes(
-                    searchTermName.value.toLowerCase()
-                  )
-                  : "")) &&
-              (x.ProfessionalType
-                ? x.ProfessionalType.toLowerCase().includes(
-                  searchTermProf.value.toLowerCase()
-                )
-                : "") &&
-              (searchTermStatus.value != "" && searchTermStatus.value != "All" ?
-                (x.LicenseStatus ? x.LicenseStatus.toLowerCase() == searchTermStatus.value.toLowerCase()
-                  : "") : (x.LicenseStatus || x.LicenseStatus == "" || x.LicenseStatus == null)
-              ) &&
-              (searchTermGender.value != "" && searchTermGender.value != "All" ?
-                (x.Gender ? x.Gender.toLowerCase() == searchTermGender.value.toLowerCase()
-                  : "") : (x.Gender || x.Gender == "" || x.Gender == null)) &&
-              (searchTermRegion.value != "" && searchTermRegion.value != "All" ?
-                (x.OrganizationalUnit ? x.OrganizationalUnit.toLowerCase() == searchTermRegion.value.toLowerCase()
-                  : "") : (x.OrganizationalUnit || x.OrganizationalUnit == "" || x.OrganizationalUnit == null)) &&
-              (searchTermFromDate.value != "" ? (x.IssuedDate
-                ? (searchTermToDate.value.length > 0 ? (moment(x.IssuedDate).isSameOrAfter(searchTermFromDate.value) &&
-                  moment(x.IssuedDate).isSameOrBefore(searchTermToDate.value)) : moment(x.IssuedDate).isSameOrAfter(searchTermFromDate.value))
-                : "") : (x.IssuedDate || x.IssuedDate == "" || x.IssuedDate == null)) &&
-              (searchTermToDate.value != "" ? (x.IssuedDate
-                ? (searchTermFromDate.value.length > 0 ? (moment(x.IssuedDate).isSameOrBefore(searchTermToDate.value) &&
-                  moment(x.IssuedDate).isSameOrAfter(searchTermFromDate.value)) : moment(x.IssuedDate).isSameOrBefore(searchTermToDate.value))
-                : "") : (x.IssuedDate || x.IssuedDate == "" || x.IssuedDate == null))
+                  (x.MiddleName
+                    ? x.MiddleName.toLowerCase().includes(
+                        searchTermName.value.toLowerCase()
+                      )
+                    : "") ||
+                  (x.LastName
+                    ? x.LastName.toLowerCase().includes(
+                        searchTermName.value.toLowerCase()
+                      )
+                    : "")) &&
+                (x.ProfessionalType
+                  ? x.ProfessionalType.toLowerCase().includes(
+                      searchTermProf.value.toLowerCase()
+                    )
+                  : "") &&
+                (searchTermStatus.value != "" && searchTermStatus.value != "All"
+                  ? x.LicenseStatus
+                    ? x.LicenseStatus.toLowerCase() ==
+                      searchTermStatus.value.toLowerCase()
+                    : ""
+                  : x.LicenseStatus ||
+                    x.LicenseStatus == "" ||
+                    x.LicenseStatus == null) &&
+                (searchTermGender.value != "" && searchTermGender.value != "All"
+                  ? x.Gender
+                    ? x.Gender.toLowerCase() ==
+                      searchTermGender.value.toLowerCase()
+                    : ""
+                  : x.Gender || x.Gender == "" || x.Gender == null) &&
+                (searchTermRegion.value != "" && searchTermRegion.value != "All"
+                  ? x.OrganizationalUnit
+                    ? x.OrganizationalUnit.toLowerCase() ==
+                      searchTermRegion.value.toLowerCase()
+                    : ""
+                  : x.OrganizationalUnit ||
+                    x.OrganizationalUnit == "" ||
+                    x.OrganizationalUnit == null) &&
+                (searchTermFromDate.value != ""
+                  ? x.IssuedDate
+                    ? searchTermToDate.value.length > 0
+                      ? moment(x.IssuedDate).isSameOrAfter(
+                          searchTermFromDate.value
+                        ) &&
+                        moment(x.IssuedDate).isSameOrBefore(
+                          searchTermToDate.value
+                        )
+                      : moment(x.IssuedDate).isSameOrAfter(
+                          searchTermFromDate.value
+                        )
+                    : ""
+                  : x.IssuedDate ||
+                    x.IssuedDate == "" ||
+                    x.IssuedDate == null) &&
+                (searchTermToDate.value != ""
+                  ? x.IssuedDate
+                    ? searchTermFromDate.value.length > 0
+                      ? moment(x.IssuedDate).isSameOrBefore(
+                          searchTermToDate.value
+                        ) &&
+                        moment(x.IssuedDate).isSameOrAfter(
+                          searchTermFromDate.value
+                        )
+                      : moment(x.IssuedDate).isSameOrBefore(
+                          searchTermToDate.value
+                        )
+                    : ""
+                  : x.IssuedDate || x.IssuedDate == "" || x.IssuedDate == null)
             );
           }),
           totalRecordCount: computed(() => {
@@ -764,18 +889,18 @@ export default {
           }),
           sortable: {
             order: "id",
-            sort: "asc"
-          }
+            sort: "asc",
+          },
         });
       });
       userTable.value.isLoading = false;
     };
 
-    const handleFilterByApplication = applicationType => {
+    const handleFilterByApplication = (applicationType) => {
       switch (applicationType) {
         case "newLicense": {
           userTable.value.isLoading = true;
-          userTable.value.rows = computed(() => { });
+          userTable.value.rows = computed(() => {});
           tableData = [];
           searchTermName.value = "";
           searchTermProf.value = "";
@@ -803,7 +928,7 @@ export default {
         // }
         case "renewal": {
           userTable.value.isLoading = true;
-          userTable.value.rows = computed(() => { });
+          userTable.value.rows = computed(() => {});
           tableData = [];
           searchTermName.value = "";
           searchTermProf.value = "";
@@ -817,7 +942,7 @@ export default {
         }
         case "goodStanding": {
           userTable.value.isLoading = true;
-          userTable.value.rows = computed(() => { });
+          userTable.value.rows = computed(() => {});
           tableData = [];
           searchTermName.value = "";
           searchTermProf.value = "";
@@ -833,12 +958,12 @@ export default {
     };
 
     const fetchRenewalReport = () => {
-      store.dispatch("report/getRenewalReport").then(res => {
+      store.dispatch("report/getRenewalReport").then((res) => {
         newLicenseData.value = res.data.data;
         reportData.value.push(...res.data.data);
 
-        res.data.data.forEach(element => {
-          let prof = element.educations.map(prof => {
+        res.data.data.forEach((element) => {
+          let prof = element.educations.map((prof) => {
             return prof.professionType ? prof.professionType.name : "";
           });
           tableData.push({
@@ -857,7 +982,7 @@ export default {
             ProfessionalType: prof ? prof.join(" , ") : "",
             Gender: element.gender ? element.gender : "",
             OrganizationalUnit: element.region ? element.region.name : "",
-            data: element ? element : {}
+            data: element ? element : {},
           });
         });
         allData.value = tableData;
@@ -868,103 +993,138 @@ export default {
               field: "id",
               width: "5%",
               sortable: true,
-              isKey: true
+              isKey: true,
             },
             {
               label: "First Name",
               field: "FirstName",
               width: "10%",
-              sortable: true
+              sortable: true,
             },
             {
               label: "Father Name",
               field: "MiddleName",
               width: "10%",
-              sortable: true
+              sortable: true,
             },
             {
               label: "Grandfather Name",
               field: "LastName",
               width: "10%",
-              sortable: true
+              sortable: true,
             },
             {
               label: "License Status",
               field: "LicenseStatus",
               width: "5%",
-              sortable: true
+              sortable: true,
             },
             {
               label: "Professional Type",
               field: "ProfessionalType",
               width: "35%",
-              sortable: true
+              sortable: true,
             },
             {
               label: "License Number",
               field: "LicenseNumber",
               width: "5%",
-              sortable: true
+              sortable: true,
             },
             {
               label: "Issued Date",
               field: "IssuedDate",
               width: "5%",
-              sortable: true
+              sortable: true,
             },
             {
               label: "Gender",
               field: "Gender",
               width: "5%",
-              sortable: true
+              sortable: true,
             },
             {
               label: "Organizational Unit",
               field: "OrganizationalUnit",
               width: "5%",
-              sortable: true
-            }
+              sortable: true,
+            },
           ],
           rows: computed(() => {
-            return allData.value.filter((x) =>
-              ((x.FirstName
-                ? x.FirstName.toLowerCase().includes(
-                  searchTermName.value.toLowerCase()
-                )
-                : "") ||
-                (x.MiddleName
-                  ? x.MiddleName.toLowerCase().includes(
-                    searchTermName.value.toLowerCase()
-                  )
+            return allData.value.filter(
+              (x) =>
+                ((x.FirstName
+                  ? x.FirstName.toLowerCase().includes(
+                      searchTermName.value.toLowerCase()
+                    )
                   : "") ||
-                (x.LastName
-                  ? x.LastName.toLowerCase().includes(
-                    searchTermName.value.toLowerCase()
-                  )
-                  : "")) &&
-              (x.ProfessionalType
-                ? x.ProfessionalType.toLowerCase().includes(
-                  searchTermProf.value.toLowerCase()
-                )
-                : "") &&
-              (searchTermStatus.value != "" && searchTermStatus.value != "All" ?
-                (x.LicenseStatus ? x.LicenseStatus.toLowerCase() == searchTermStatus.value.toLowerCase()
-                  : "") : (x.LicenseStatus || x.LicenseStatus == "" || x.LicenseStatus == null)
-              ) &&
-              (searchTermGender.value != "" && searchTermGender.value != "All" ?
-                (x.Gender ? x.Gender.toLowerCase() == searchTermGender.value.toLowerCase()
-                  : "") : (x.Gender || x.Gender == "" || x.Gender == null)) &&
-              (searchTermRegion.value != "" && searchTermRegion.value != "All" ?
-                (x.OrganizationalUnit ? x.OrganizationalUnit.toLowerCase() == searchTermRegion.value.toLowerCase()
-                  : "") : (x.OrganizationalUnit || x.OrganizationalUnit == "" || x.OrganizationalUnit == null)) &&
-              (searchTermFromDate.value != "" ? (x.IssuedDate
-                ? (searchTermToDate.value.length > 0 ? (moment(x.IssuedDate).isSameOrAfter(searchTermFromDate.value) &&
-                  moment(x.IssuedDate).isSameOrBefore(searchTermToDate.value)) : moment(x.IssuedDate).isSameOrAfter(searchTermFromDate.value))
-                : "") : (x.IssuedDate || x.IssuedDate == "" || x.IssuedDate == null)) &&
-              (searchTermToDate.value != "" ? (x.IssuedDate
-                ? (searchTermFromDate.value.length > 0 ? (moment(x.IssuedDate).isSameOrBefore(searchTermToDate.value) &&
-                  moment(x.IssuedDate).isSameOrAfter(searchTermFromDate.value)) : moment(x.IssuedDate).isSameOrBefore(searchTermToDate.value))
-                : "") : (x.IssuedDate || x.IssuedDate == "" || x.IssuedDate == null))
+                  (x.MiddleName
+                    ? x.MiddleName.toLowerCase().includes(
+                        searchTermName.value.toLowerCase()
+                      )
+                    : "") ||
+                  (x.LastName
+                    ? x.LastName.toLowerCase().includes(
+                        searchTermName.value.toLowerCase()
+                      )
+                    : "")) &&
+                (x.ProfessionalType
+                  ? x.ProfessionalType.toLowerCase().includes(
+                      searchTermProf.value.toLowerCase()
+                    )
+                  : "") &&
+                (searchTermStatus.value != "" && searchTermStatus.value != "All"
+                  ? x.LicenseStatus
+                    ? x.LicenseStatus.toLowerCase() ==
+                      searchTermStatus.value.toLowerCase()
+                    : ""
+                  : x.LicenseStatus ||
+                    x.LicenseStatus == "" ||
+                    x.LicenseStatus == null) &&
+                (searchTermGender.value != "" && searchTermGender.value != "All"
+                  ? x.Gender
+                    ? x.Gender.toLowerCase() ==
+                      searchTermGender.value.toLowerCase()
+                    : ""
+                  : x.Gender || x.Gender == "" || x.Gender == null) &&
+                (searchTermRegion.value != "" && searchTermRegion.value != "All"
+                  ? x.OrganizationalUnit
+                    ? x.OrganizationalUnit.toLowerCase() ==
+                      searchTermRegion.value.toLowerCase()
+                    : ""
+                  : x.OrganizationalUnit ||
+                    x.OrganizationalUnit == "" ||
+                    x.OrganizationalUnit == null) &&
+                (searchTermFromDate.value != ""
+                  ? x.IssuedDate
+                    ? searchTermToDate.value.length > 0
+                      ? moment(x.IssuedDate).isSameOrAfter(
+                          searchTermFromDate.value
+                        ) &&
+                        moment(x.IssuedDate).isSameOrBefore(
+                          searchTermToDate.value
+                        )
+                      : moment(x.IssuedDate).isSameOrAfter(
+                          searchTermFromDate.value
+                        )
+                    : ""
+                  : x.IssuedDate ||
+                    x.IssuedDate == "" ||
+                    x.IssuedDate == null) &&
+                (searchTermToDate.value != ""
+                  ? x.IssuedDate
+                    ? searchTermFromDate.value.length > 0
+                      ? moment(x.IssuedDate).isSameOrBefore(
+                          searchTermToDate.value
+                        ) &&
+                        moment(x.IssuedDate).isSameOrAfter(
+                          searchTermFromDate.value
+                        )
+                      : moment(x.IssuedDate).isSameOrBefore(
+                          searchTermToDate.value
+                        )
+                    : ""
+                  : x.IssuedDate || x.IssuedDate == "" || x.IssuedDate == null)
             );
           }),
           totalRecordCount: computed(() => {
@@ -972,8 +1132,8 @@ export default {
           }),
           sortable: {
             order: "id",
-            sort: "asc"
-          }
+            sort: "asc",
+          },
         };
       });
       userTable.value.isLoading = false;
@@ -1177,12 +1337,14 @@ export default {
     // };
 
     const fetchGoodstandingReport = () => {
-      store.dispatch("report/getGoodstandingReport").then(res => {
+      store.dispatch("report/getGoodstandingReport").then((res) => {
         newLicenseData.value = res.data.data;
         reportData.value.push(...res.data.data);
 
-        res.data.data.forEach(element => {
-          let prof = element.GSProfessionals.professionalTypes ? element.GSProfessionals.professionalTypes.name : "";
+        res.data.data.forEach((element) => {
+          let prof = element.GSProfessionals.professionalTypes
+            ? element.GSProfessionals.professionalTypes.name
+            : "";
           tableData.push({
             id: element.id ? +element.id : "",
             FirstName: element.name ? element.name : "",
@@ -1200,7 +1362,7 @@ export default {
             ProfessionalType: prof ? prof : "",
             Gender: element.gender ? element.gender : "",
             OrganizationalUnit: element.region ? element.region.name : "",
-            data: element ? element : {}
+            data: element ? element : {},
           });
         });
         allData.value = tableData;
@@ -1211,103 +1373,138 @@ export default {
               field: "id",
               width: "5%",
               sortable: true,
-              isKey: true
+              isKey: true,
             },
             {
               label: "First Name",
               field: "FirstName",
               width: "10%",
-              sortable: true
+              sortable: true,
             },
             {
               label: "Father Name",
               field: "MiddleName",
               width: "10%",
-              sortable: true
+              sortable: true,
             },
             {
               label: "Grandfather Name",
               field: "LastName",
               width: "10%",
-              sortable: true
+              sortable: true,
             },
             {
               label: "License Status",
               field: "LicenseStatus",
               width: "5%",
-              sortable: true
+              sortable: true,
             },
             {
               label: "Professional Type",
               field: "ProfessionalType",
               width: "35%",
-              sortable: true
+              sortable: true,
             },
             {
               label: "License Number",
               field: "LicenseNumber",
               width: "5%",
-              sortable: true
+              sortable: true,
             },
             {
               label: "Issued Date",
               field: "IssuedDate",
               width: "5%",
-              sortable: true
+              sortable: true,
             },
             {
               label: "Gender",
               field: "Gender",
               width: "5%",
-              sortable: true
+              sortable: true,
             },
             {
               label: "Organizational Unit",
               field: "OrganizationalUnit",
               width: "5%",
-              sortable: true
-            }
+              sortable: true,
+            },
           ],
           rows: computed(() => {
-            return allData.value.filter((x) =>
-              ((x.FirstName
-                ? x.FirstName.toLowerCase().includes(
-                  searchTermName.value.toLowerCase()
-                )
-                : "") ||
-                (x.MiddleName
-                  ? x.MiddleName.toLowerCase().includes(
-                    searchTermName.value.toLowerCase()
-                  )
+            return allData.value.filter(
+              (x) =>
+                ((x.FirstName
+                  ? x.FirstName.toLowerCase().includes(
+                      searchTermName.value.toLowerCase()
+                    )
                   : "") ||
-                (x.LastName
-                  ? x.LastName.toLowerCase().includes(
-                    searchTermName.value.toLowerCase()
-                  )
-                  : "")) &&
-              (x.ProfessionalType
-                ? x.ProfessionalType.toLowerCase().includes(
-                  searchTermProf.value.toLowerCase()
-                )
-                : "") &&
-              (searchTermStatus.value != "" && searchTermStatus.value != "All" ?
-                (x.LicenseStatus ? x.LicenseStatus.toLowerCase() == searchTermStatus.value.toLowerCase()
-                  : "") : (x.LicenseStatus || x.LicenseStatus == "" || x.LicenseStatus == null)
-              ) &&
-              (searchTermGender.value != "" && searchTermGender.value != "All" ?
-                (x.Gender ? x.Gender.toLowerCase() == searchTermGender.value.toLowerCase()
-                  : "") : (x.Gender || x.Gender == "" || x.Gender == null)) &&
-              (searchTermRegion.value != "" && searchTermRegion.value != "All" ?
-                (x.OrganizationalUnit ? x.OrganizationalUnit.toLowerCase() == searchTermRegion.value.toLowerCase()
-                  : "") : (x.OrganizationalUnit || x.OrganizationalUnit == "" || x.OrganizationalUnit == null)) &&
-              (searchTermFromDate.value != "" ? (x.IssuedDate
-                ? (searchTermToDate.value.length > 0 ? (moment(x.IssuedDate).isSameOrAfter(searchTermFromDate.value) &&
-                  moment(x.IssuedDate).isSameOrBefore(searchTermToDate.value)) : moment(x.IssuedDate).isSameOrAfter(searchTermFromDate.value))
-                : "") : (x.IssuedDate || x.IssuedDate == "" || x.IssuedDate == null)) &&
-              (searchTermToDate.value != "" ? (x.IssuedDate
-                ? (searchTermFromDate.value.length > 0 ? (moment(x.IssuedDate).isSameOrBefore(searchTermToDate.value) &&
-                  moment(x.IssuedDate).isSameOrAfter(searchTermFromDate.value)) : moment(x.IssuedDate).isSameOrBefore(searchTermToDate.value))
-                : "") : (x.IssuedDate || x.IssuedDate == "" || x.IssuedDate == null))
+                  (x.MiddleName
+                    ? x.MiddleName.toLowerCase().includes(
+                        searchTermName.value.toLowerCase()
+                      )
+                    : "") ||
+                  (x.LastName
+                    ? x.LastName.toLowerCase().includes(
+                        searchTermName.value.toLowerCase()
+                      )
+                    : "")) &&
+                (x.ProfessionalType
+                  ? x.ProfessionalType.toLowerCase().includes(
+                      searchTermProf.value.toLowerCase()
+                    )
+                  : "") &&
+                (searchTermStatus.value != "" && searchTermStatus.value != "All"
+                  ? x.LicenseStatus
+                    ? x.LicenseStatus.toLowerCase() ==
+                      searchTermStatus.value.toLowerCase()
+                    : ""
+                  : x.LicenseStatus ||
+                    x.LicenseStatus == "" ||
+                    x.LicenseStatus == null) &&
+                (searchTermGender.value != "" && searchTermGender.value != "All"
+                  ? x.Gender
+                    ? x.Gender.toLowerCase() ==
+                      searchTermGender.value.toLowerCase()
+                    : ""
+                  : x.Gender || x.Gender == "" || x.Gender == null) &&
+                (searchTermRegion.value != "" && searchTermRegion.value != "All"
+                  ? x.OrganizationalUnit
+                    ? x.OrganizationalUnit.toLowerCase() ==
+                      searchTermRegion.value.toLowerCase()
+                    : ""
+                  : x.OrganizationalUnit ||
+                    x.OrganizationalUnit == "" ||
+                    x.OrganizationalUnit == null) &&
+                (searchTermFromDate.value != ""
+                  ? x.IssuedDate
+                    ? searchTermToDate.value.length > 0
+                      ? moment(x.IssuedDate).isSameOrAfter(
+                          searchTermFromDate.value
+                        ) &&
+                        moment(x.IssuedDate).isSameOrBefore(
+                          searchTermToDate.value
+                        )
+                      : moment(x.IssuedDate).isSameOrAfter(
+                          searchTermFromDate.value
+                        )
+                    : ""
+                  : x.IssuedDate ||
+                    x.IssuedDate == "" ||
+                    x.IssuedDate == null) &&
+                (searchTermToDate.value != ""
+                  ? x.IssuedDate
+                    ? searchTermFromDate.value.length > 0
+                      ? moment(x.IssuedDate).isSameOrBefore(
+                          searchTermToDate.value
+                        ) &&
+                        moment(x.IssuedDate).isSameOrAfter(
+                          searchTermFromDate.value
+                        )
+                      : moment(x.IssuedDate).isSameOrBefore(
+                          searchTermToDate.value
+                        )
+                    : ""
+                  : x.IssuedDate || x.IssuedDate == "" || x.IssuedDate == null)
             );
           }),
           totalRecordCount: computed(() => {
@@ -1315,51 +1512,47 @@ export default {
           }),
           sortable: {
             order: "id",
-            sort: "asc"
-          }
+            sort: "asc",
+          },
         };
       });
       userTable.value.isLoading = false;
     };
 
     const fetchDepartmentType = () => {
-      store.dispatch("goodstanding/getDepartmentType").then(res => {
+      store.dispatch("goodstanding/getDepartmentType").then((res) => {
         departments.value = res.data.data;
       });
     };
 
     const fetchRegion = () => {
-      store.dispatch("report/getRegions").then(res => {
+      store.dispatch("report/getRegions").then((res) => {
         regions.value = res.data.data;
       });
     };
 
-    const fetchZones = regionID => {
-      store.dispatch("report/getZones", regionID).then(res => {
+    const fetchZones = (regionID) => {
+      store.dispatch("report/getZones", regionID).then((res) => {
         zones.value = res.data.data;
       });
     };
 
-    const fetchWoredas = zoneID => {
-      store.dispatch("report/getWoredas", zoneID).then(res => {
+    const fetchWoredas = (zoneID) => {
+      store.dispatch("report/getWoredas", zoneID).then((res) => {
         woredas.value = res.data.data;
       });
     };
 
     const fetchApplicationStatuses = () => {
-      store.dispatch("report/getapplicationStatuses").then(res => {
-        applicationStatuses.value = res.data.data.filter(application => {
+      store.dispatch("report/getapplicationStatuses").then((res) => {
+        applicationStatuses.value = res.data.data.filter((application) => {
           return (
             application.code == "APP" ||
             application.code == "DEC" ||
-            application.code == "CANC" ||
             application.code == "SUSP" ||
             application.code == "RTN" ||
             application.code == "USUP" ||
-            application.code == "RVK" ||
-            application.code == "PP" ||
-            application.code == "AP" ||
-            application.code == "DP"
+            application.code == "RVK"
           );
         });
       });
@@ -1367,8 +1560,7 @@ export default {
 
     const exportTable = () => {
       var blob = new Blob([document.getElementById("printable").innerHTML], {
-        type:
-          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8",
       });
       let date = new Date().toISOString();
       saveAs(blob, date.slice(0, 10) + " Report.xls");
@@ -1406,6 +1598,6 @@ export default {
       searchTermFromDate,
       searchTermToDate,
     };
-  }
+  },
 };
 </script>
