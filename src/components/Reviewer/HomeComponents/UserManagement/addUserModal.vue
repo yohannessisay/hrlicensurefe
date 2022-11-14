@@ -610,11 +610,12 @@ export default {
     let showRegion = ref("");
     const selectedExpertLevel = () => {
 
-      if (expertLevels.value.code == "FED") {
-        admin.value.regionId = null;
+      if (expertLevel.value.code == "FED") {
+        admin.regionId = null;
+        admin.expertLevelId = expertLevel.value.id;
       } else { 
         showRegion.value = 4;
-        admin.value.expertLevelId = expertLevels.value.id;
+        admin.expertLevelId = expertLevel.value.id;
       }
    
     };
