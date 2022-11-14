@@ -822,7 +822,7 @@
 <script>
 import { useStore } from "vuex";
 import { ref, onMounted } from "vue";
-import useToast from "vue-toastification";
+import { useToast } from "vue-toastification";
 export default {
   props: ["activeState"],
   components: {},

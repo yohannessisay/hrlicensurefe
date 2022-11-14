@@ -2,8 +2,7 @@
   <main-content >
     <transition name="fade" mode="out-in">
       <div v-if="this.activeState == 1">
-        <Institution
-        class="overflow-y-scroll"
+        <Institution 
           @dark-mode="modeToggle()"
           :activeState="1"
           @changeActiveState="activeState++"

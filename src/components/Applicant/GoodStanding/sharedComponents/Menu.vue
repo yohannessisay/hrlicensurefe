@@ -1,5 +1,5 @@
 <template>
-  <div class="main">
+  <div class="main ">
     <side-nav></side-nav>
     <div class="content h-screen overflow-y-scroll">
       <top-nav></top-nav>
