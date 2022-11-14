@@ -30,7 +30,7 @@
       </div>
     </transition>
     <transition name="fade" mode="out-in">
-      <div v-if="this.activeState == 3" class="h-screenoverflow-y-scroll">
+      <div v-if="this.activeState == 3"  >
         <LicenseSummary
           @dark-mode="modeToggle()"
           :activeState="3"

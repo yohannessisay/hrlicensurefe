@@ -358,38 +358,7 @@
                               <i class="fa fa-phone fa-4x"></i>
                             </div>
                           </div>
-                          <div
-                            class="grow ml-6"
-                            v-if="
-                              adminData.expertLevel.code == 'FED' &&
-                              adminData.role.code == 'ADM'
-                            "
-                          >
-                            <h2 class="font-bold mb-1">Action</h2>
-                            <button
-                              type="button"
-                              class="
-                                inline-block
-                                px-6
-                                text-white
-                                font-medium
-                                text-xs
-                                bg-yellow-300
-                                leading-tight
-                                uppercase
-                                rounded
-                                shadow-lg
-                                hover:bg-white hover:text-yellow-300
-                                transition
-                                duration-150
-                                ease-in-out
-                              "
-                              @click="release()"
-                            >
-                              <i class="fa fa-refresh"></i>
-                              Release
-                            </button>
-                          </div>
+                     
                         </div>
                       </div>
                       <div
@@ -595,58 +564,7 @@ export default {
           }
         });
     };
-    const release = () => {
-      isLoading.value=true;
-      let req = {
-        action: "ApproveEvent",
-        data: newLicense,
-      };
-      let smsData =
-        newLicense && newLicense.profile
-          ? "Dear " +
-            newLicense.profile.name +
-            newLicense.profile.fatherName +
-            ", Your license with license number " +
-            newLicense.newLicenseCode +
-            " has been released from revoked state. Thank you for using eHPEL,https://www.hrl.moh.gov.et"
-          : "";
-      store
-        .dispatch("reviewer/editNewLicense", req)
-        .then((res) => {
-          isLoading.value=false;
-          if (res.statusText == "Created") {
-            store.dispatch("sms/sendSms", smsData).then(() => {
-              toast.success("Application reviewed Successfully", {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true,
-              });
-             
-            });
-          } else {
-            toast.error("Please try again", {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            });
-           
-          }
-        })
-        .catch(() => {
-          toast.error("Please try again", {
-            timeout: 5000,
-            position: "bottom-center",
-            pauseOnFocusLoss: true,
-            pauseOnHover: true,
-            icon: true,
-          });
-         
-        });
-    };
+
     watch(props.modalDataId, () => {
       isLoading.value = true;
       check();
@@ -655,7 +573,6 @@ export default {
       showModal,
       show,
       check,
-      release,
       isLoading,
       showRes,
       showGenerateModal,

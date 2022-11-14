@@ -759,7 +759,7 @@
         <div class="flex">
           <div class="form-floating mb-3 w-full">
             <input
-              type="text"
+              type="number"
               class="
                 form-control
                 block
@@ -784,8 +784,7 @@
                 focus:bg-white
                 focus:border-blue-600
                 focus:outline-none
-              "
-              onkeypress="return /[a-zA-Z]/i.test(event.key)"
+              " 
               v-model="personalInfo.poBox"
               :disabled="isRegisterdHRAuser == true && searchResultData.pobox"
               id="pobox"

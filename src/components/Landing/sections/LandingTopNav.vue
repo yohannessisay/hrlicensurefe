@@ -317,7 +317,7 @@
     aria-labelledby="register"
     aria-hidden="true"
   >
-    <div class="modal-dialog relative pointer-events-none">
+    <div class="modal-dialog relative pointer-events-none w-full">
       <div
         class="
           modal-content
@@ -325,7 +325,7 @@
           shadow-lg
           relative
           flex flex-col
-          w-8/12
+          w-11/12
           md:w-9/12
           mdlg:w-9/12
           lg:w-10/12
@@ -365,18 +365,20 @@
           </button>
         </div>
         <div class="modal-body relative p-2 flex justify-center">
-          <div class="form-group mb-6 flex justify-center"></div>
-          <form class="flex flex-col justify-center items-center w-full mt-4">
+          <div class="form-group mb-4 flex justify-center"></div>
+          <form class="flex flex-col justify-center items-center w-full">
             <input type="hidden" name="remember" value="true" />
-            <div class="flex flex-col mb-medium w-full">
-              <label class="ml-4 text-main-400 font-bold">Email</label>
+            <div class="flex flex-col mb-4 w-full">
+              <label class="sm:ml-0 lg:ml-4 md:ml-4 text-main-400 font-bold"
+                >Email</label
+              >
               <input
                 v-model="registerCredentials.emailAddress"
                 id="email-address"
                 name="email"
                 class="
                   w-full
-                  rounded-none
+                  rounded-md
                   sm:w-10/12 sm:ml-4
                   border
                   text-main-400
@@ -389,123 +391,206 @@
                 registerCredentialsErrors.email
               }}</span>
             </div>
-            <div class="flex flex-col mb-medium w-full ml-8">
+            <div class="flex flex-col mb-4 w-full sm:ml-0 lg:ml-8 md:ml-8">
               <label for="phone" class="text-main-400 font-bold"
                 >Phone Number(+251)</label
               >
               <input
                 name="phone"
+                placeholder="912345678"
                 id="phone"
                 type="tel"
-                class="w-full rounded-none sm:w-10/12 border ml-4 text-main-400"
+                :disabled="showOtp == false"
+                class="w-full rounded-md sm:w-10/12 border ml-4 text-main-400"
                 v-model="registerCredentials.phoneNumber"
                 required
                 @keyup="checkPhoneValidity()"
               />
-
               <div
+                v-if="showOtp"
+                class="
+                  bg-main-400
+                  cursor-pointer
+                  p-1
+                  rounded-md
+                  w-full
+                  mt-1
+                  sm:w-10/12
+                  border
+                  flex
+                  justify-center
+                "
+                @click="sendSmsOtp()"
+              >
+                <i class="text-white fa fa-paper-plane mt-2"></i
+                ><span class="ml-4 text-white font-bold">Send OTP</span>
+              </div>
+              <span class="text-xs">(Area code for phone is not needed)</span>
+              <div
+                v-if="showOtp"
                 id="phoneError"
-                class="text-red-300 mt-3"
+                class="text-red-300 mt-1 text-xs"
                 style="display: none"
               ></div>
               <div
+                v-if="showOtp"
                 id="validPhone"
-                class="text-green-200 mt-2"
+                class="text-green-200 mt-1 text-xs"
                 style="display: none"
               ></div>
+              <div v-if="!showOtp" class="text-green-200 mt-1 text-xs">
+                Phone is verified
+              </div>
+              <span
+                v-if="enableVerification"
+                class="text-sm text-main-400 mt-2"
+              >
+                Verify Phone Number</span
+              >
+              <form v-if="enableVerification" action="" class="w-full">
+                <input
+                  class="otp"
+                  id="opt1"
+                  type="text"
+                  maxlength="1"
+                  v-model="otpInput.one"
+                />
+                <input
+                  class="otp"
+                  id="opt2"
+                  type="text"
+                  maxlength="1"
+                  v-model="otpInput.two"
+                />
+                <input
+                  class="otp"
+                  id="opt3"
+                  type="text"
+                  maxlength="1"
+                  v-model="otpInput.three"
+                />
+                <input
+                  class="otp"
+                  id="opt4"
+                  type="text"
+                  maxlength="1"
+                  v-model="otpInput.four"
+                />
+                <input
+                  id="opt5"
+                  class="otp"
+                  type="text"
+                  maxlength="1"
+                  v-model="otpInput.five"
+                />
+                <input
+                  class="otp"
+                  id="opt6"
+                  type="text"
+                  maxlength="1"
+                  :onkeyup="tabChange()"
+                  v-model="otpInput.six"
+                />
+
+                <span
+                  :class="
+                    enableVerification
+                      ? 'bg-main-400 cursor-pointer p-1 rounded-md'
+                      : 'bg-grey-200 pointer-events-none p-1 rounded-md'
+                  "
+                  @click="enableVerification ? verifySmsOtp() : ''"
+                >
+                  <i class="text-white fa fa-check mt-2"></i
+                ></span>
+              </form>
 
               <span class="ml-4 text-sm" style="color: red">{{
                 registerCredentialsErrors.phoneNumber
                   ? registerCredentialsErrors.phoneNumber
                   : ""
               }}</span>
-              <span class="text-sm">(Area code for phone is not needed)</span>
             </div>
-            <div class="flex flex-col mb-medium w-full">
-              <label class="ml-4 text-main-400 font-bold">Password</label>
-              <input
-                v-model="registerCredentials.password"
-                type="password"
-                id="registerpassword"
-                name="password"
-                autocomplete="current-password"
-                class="
-                  w-full
-                  rounded-none
-                  sm:w-10/12 sm:ml-4
-                  border
-                  mb-2
-                  text-main-400
-                "
-                required
-                v-on:keyup="showPasswordStrength(registerCredentials.password)"
-              />
-              <span class="ml-4 text-sm" style="color: red">{{
-                registerCredentialsErrors.password
-              }}</span>
-              <div class="ml-4"> 
-              <password-meter   :password="registerCredentials.password" />
-              <div v-if="passwordStrengthDisplay">
-                <ul class="text-sm">
-                  Password should be:
-                  <div class="ml-12 pl-4">
-                    <li>Minimum of eight Characters</li>
-                    <li>At least one uppercase Character</li>
-                    <li>At least one lowercase Character</li>
-                    <li>At least one number</li>
-                    <li>At least one special character</li>
-                  </div>
-                </ul>
-              </div>
-            </div>
-              <span class="ml-4" style="color: red">{{
-                registerCredentialsErrors.password
-              }}</span>
-            </div>
-            <div class="flex flex-col mb-medium w-full">
-              <label class="ml-4 text-main-400 font-bold"
-                >Re-type Password</label
+            <div class="border-main-400 border rounded-md p-1 mb-4">
+              <span v-if="showOtp" class="text-xs text-main-400"
+                >Please verify your phone first</span
               >
-              <input
-                v-model="registerCredentials.repassword"
-                type="password"
-                id="repassword"
-                name="password"
-                autocomplete="current-password"
-                class="
-                  w-full
-                  rounded-none
-                  sm:w-10/12 sm:ml-4
-                  border
-                  text-main-400
-                "
-                required
-              />
-              <span class="ml-4 text-sm" style="color: red">{{
-                registerCredentialsErrors.repassword
-              }}</span>
-              <div class="ml-4 mt-2">
-                <password-meter :password="registerCredentials.repassword" />
+              <div class="flex flex-col w-full">
+                <label class="sm:ml-0 lg:ml-4 md:ml-4 text-main-400 font-bold"
+                  >Password</label
+                >
+                <input
+                  v-model="registerCredentials.password"
+                  type="password"
+                  id="registerpassword"
+                  name="password"
+                  autocomplete="current-password"
+                  :disabled="isVerified == false"
+                  :class="
+                    !isVerified
+                      ? 'w-full rounded-md sm:w-10/12 sm:ml-4 border bg-grey-200 text-main-400'
+                      : 'w-full rounded-md sm:w-10/12 sm:ml-4 border text-main-400'
+                  "
+                  required
+                  v-on:keyup="
+                    showPasswordStrength(registerCredentials.password)
+                  "
+                />
+                <span class="ml-4 text-sm" style="color: red">{{
+                  registerCredentialsErrors.password
+                }}</span>
+                <div class="ml-4">
+                  <password-meter :password="registerCredentials.password" />
+                  <div v-if="passwordStrengthDisplay">
+                    <ul class="text-sm">
+                      Password should be:
+                      <div class="ml-12 pl-4">
+                        <li>Minimum of eight Characters</li>
+                        <li>At least one uppercase Character</li>
+                        <li>At least one lowercase Character</li>
+                        <li>At least one number</li>
+                        <li>At least one special character</li>
+                      </div>
+                    </ul>
+                  </div>
+                </div>
+                <span class="ml-4" style="color: red">{{
+                  registerCredentialsErrors.password
+                }}</span>
               </div>
-             
+
+              <div class="flex flex-col mb-4 w-full">
+                <label class="sm:ml-0 lg:ml-4 md:ml-4 text-main-400 font-bold"
+                  >Re-type Password</label
+                >
+                <input
+                  v-model="registerCredentials.repassword"
+                  type="password"
+                  id="repassword"
+                  name="password"
+                  autocomplete="current-password"
+                  :disabled="isVerified == false"
+                  :class="
+                    !isVerified
+                      ? 'w-full rounded-md sm:w-10/12 sm:ml-4 border bg-grey-200 text-main-400'
+                      : 'w-full rounded-md sm:w-10/12 sm:ml-4 border text-main-400'
+                  "
+                  required
+                />
+                <span class="ml-4 text-sm" style="color: red">{{
+                  registerCredentialsErrors.repassword
+                }}</span>
+                <div class="ml-4 mt-2">
+                  <password-meter :password="registerCredentials.repassword" />
+                </div>
+              </div>
             </div>
             <div class="flex justify-center pr-4 pl-4 w-full">
               <button
-              type="button"
-                class="
-                  transition
-                  duration-200
-                  bg-main-400
-                  text-white
-                  hover:text-main-400 hover:bg-white
-                  w-full
-                  mb-4
-                  h-12
-                  rounded-lg
-                  text-md
-                  shadow-sm
-                  font-semibold
-                  text-center
+                type="button"
+                :class="
+                  isVerified
+                    ? 'transition duration-200 bg-main-400 text-white hover:text-main-400 hover:bg-white w-full mb-4 h-12 rounded-md text-md font-semibold text-center shadow-xl'
+                    : 'pointer-events-none transition duration-200 bg-grey-200 text-white hover:text-main-400 hover:bg-white w-full mb-4 h-12 rounded-md text-md font-semibold text-center shadow-xl'
                 "
                 @click="registerSubmit"
               >
@@ -562,8 +647,19 @@ export default {
     const router = useRouter();
     const toast = useToast();
     let show = ref(false);
+    let isVerified = ref(false);
+    let enableVerification = ref(false);
     let showLoading = ref(false);
-
+    let showOtp = ref(true);
+    let showVerificationButton = ref(true);
+    let otpInput = ref({
+      one: "",
+      two: "",
+      three: "",
+      four: "",
+      five: "",
+      six: "",
+    });
     let phoneInput;
     let message = ref({
       showFlash: false,
@@ -586,6 +682,97 @@ export default {
         x.type = "text";
       } else {
         x.type = "password";
+      }
+    };
+
+    const tabChange = () => {
+      if (
+        otpInput.value &&
+        otpInput.value.six != "" &&
+        otpInput.value.five != "" &&
+        otpInput.value.four != "" &&
+        otpInput.value.three != "" &&
+        otpInput.value.two != "" &&
+        otpInput.value.one != ""
+      ) {
+        enableVerification.value = true;
+      }
+    };
+
+    const verifySmsOtp = () => {
+      let otpData = {
+        otp:
+          otpInput.value.one +
+          otpInput.value.two +
+          otpInput.value.three +
+          otpInput.value.four +
+          otpInput.value.five +
+          otpInput.value.six,
+        phone: registerCredentials.value.phoneNumber,
+        hash: localStorage.getItem("secretOtp"),
+      };
+
+      if (otpData && otpData.phone.length == 9) {
+        store
+          .dispatch("sms/verifySmsOtp", otpData)
+          .then((res) => {
+            if (res && res.status == "Success" && res.data == true) {
+              showOtp.value = false;
+              isVerified.value = true;
+              localStorage.removeItem("secretOtp");
+            } else {
+              toast.error("Verification failed, please try again", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
+            }
+          })
+          .catch((err) => console.log(err));
+      } else {
+        toast.error("Phone number digit must be 9", {
+          timeout: 5000,
+          position: "bottom-center",
+          pauseOnFocusLoss: true,
+          pauseOnHover: true,
+          icon: true,
+        });
+      }
+    };
+
+    const sendSmsOtp = () => {
+      let phone = registerCredentials.value
+        ? registerCredentials.value.phoneNumber
+        : "";
+
+      if (phone.length == 9) {
+        store
+          .dispatch("sms/sendSmsOtp", { phone: phone })
+          .then((res) => {
+            if (res && res.status == "Success") {
+              enableVerification.value = true;
+              localStorage.setItem("secretOtp", res.data.fullHash);
+            } else {
+              toast.error("Service error, please try again", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
+            }
+          })
+          .catch((err) => console.log(err));
+      } else {
+        toast.error("Phone number digit must be 9", {
+          timeout: 5000,
+          position: "bottom-center",
+          pauseOnFocusLoss: true,
+          pauseOnHover: true,
+          icon: true,
+        });
       }
     };
 
@@ -702,14 +889,13 @@ export default {
       }
     };
     const registerSubmit = () => {
-    
       show.value = true;
       let signup = {
         emailAddress: registerCredentials.value.emailAddress.toLowerCase(),
         phoneNumber: registerCredentials.value.phoneNumber,
         password: registerCredentials.value.password,
       };
-    
+
       registerCredentialsErrors.value = {};
       if (!validateRegisterForm(registerCredentials.value)) {
         registerMessage.value.showLoading = true;
@@ -728,7 +914,7 @@ export default {
           message:
             "Dear applicant you have successfully registered on eHPL for your license/s, please complete the process of creating your account by loging in to your account using the credentials you entered previously and fill remaining data, Thank you for using eHPL.",
         };
-       
+
         store.dispatch("user/signUp", signup).then((res) => {
           if (res.data.status == "Error") {
             show.value = false;
@@ -809,7 +995,7 @@ export default {
 
       if (phoneInput.isValidNumber()) {
         info.style.display = "";
-        info.innerHTML = `Phone number \: <strong>${phoneNumber} is valid</strong>`;
+        info.innerHTML = `Phone number : <strong>${phoneNumber} is valid</strong>`;
       } else {
         error.style.display = "";
         error.innerHTML = `Invalid phone number.`;
@@ -829,10 +1015,14 @@ export default {
       credentialsErrors,
       submit,
       isEmail,
+      tabChange,
       showVisibility,
       validateForm,
+      sendSmsOtp,
       message,
       show,
+      otpInput,
+      enableVerification,
       showLoading,
       checkPhoneValidity,
       registerCredentials,
@@ -841,7 +1031,11 @@ export default {
       validateRegisterForm,
       registerMessage,
       password,
+      showOtp,
+      showVerificationButton,
       phoneError,
+      isVerified,
+      verifySmsOtp,
       showPasswordStrength,
       passwordStrengthDisplay,
     };
@@ -849,10 +1043,11 @@ export default {
 };
 </script>
 <style lang="postcss" scoped>
-h3 {
-  -webkit-text-fill-color: transparent;
-  -webkit-box-decoration-break: clone;
-  background: linear-gradient(-70deg, #3674b9, #b5b173);
-  -webkit-background-clip: text;
+.otp {
+  display: inline-block;
+  width: 43px;
+  height: 43px;
+  margin: 5px;
+  text-align: center;
 }
 </style>
