@@ -507,7 +507,7 @@ export default {
                   pauseOnHover: true,
                   icon: true,
                 });
-
+                localStorage.removeItem('RNApplicationData');
                 if (license.action == "DraftEvent") {
                   router.push({ path: "/Applicant/Renewal/draft" });
                 } else {

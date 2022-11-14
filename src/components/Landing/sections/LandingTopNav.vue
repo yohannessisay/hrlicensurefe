@@ -400,7 +400,7 @@
                 placeholder="912345678"
                 id="phone"
                 type="tel"
-                :disabled="showOtp == false"
+              
                 class="w-full rounded-md sm:w-10/12 border ml-4 text-main-400"
                 v-model="registerCredentials.phoneNumber"
                 required
@@ -438,9 +438,9 @@
                 class="text-green-200 mt-1 text-xs"
                 style="display: none"
               ></div>
-              <div v-if="!showOtp" class="text-green-200 mt-1 text-xs">
+              <!-- <div v-if="!showOtp" class="text-green-200 mt-1 text-xs">
                 Phone is verified
-              </div>
+              </div> -->
               <span
                 v-if="enableVerification"
                 class="text-sm text-main-400 mt-2"
@@ -647,10 +647,10 @@ export default {
     const router = useRouter();
     const toast = useToast();
     let show = ref(false);
-    let isVerified = ref(false);
+    let isVerified = ref(true);
     let enableVerification = ref(false);
     let showLoading = ref(false);
-    let showOtp = ref(true);
+    let showOtp = ref(false);
     let showVerificationButton = ref(true);
     let otpInput = ref({
       one: "",

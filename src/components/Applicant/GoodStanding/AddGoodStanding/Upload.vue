@@ -242,7 +242,7 @@ export default {
       isImage: boolean,
       isPdf: boolean,
       file: "",
-      name: "",
+      name: ""
     });
     let localData = ref();
     let files = ref("");
@@ -286,19 +286,19 @@ export default {
         } else {
           fileSize.value = fileS / 1000000 + "MB";
         }
-        reader.addEventListener("load", function () {
+        reader.addEventListener("load", function() {
           showPreview.value = true;
 
           previewDocuments.value[data.documentType.code] = reader.result;
           imageData = imageData.filter(
-            (el) => el.documenttype != data.documentType.name
+            el => el.documenttype != data.documentType.name
           );
           imageData.push({
             documenttype: data.documentType ? data.documentType.name : "",
             educationalLevel: data.educationalLevel
               ? data.educationalLevel.name
               : "",
-            image: reader.result,
+            image: reader.result
           });
         });
         if (documentUploaded.value[data.documentType.code]) {
@@ -335,8 +335,8 @@ export default {
       let temp = false;
 
       documents.value
-        .filter((cd) => cd.isRequired)
-        .forEach((element) => {
+        .filter(cd => cd.isRequired)
+        .forEach(element => {
           temp = documentUploaded.value.hasOwnProperty(
             element.documentType.code
           );
@@ -356,16 +356,16 @@ export default {
     const initDb = () => {
       let request = indexedDB.open("GSdocumentUploads", 1);
 
-      request.onerror = function () {
+      request.onerror = function() {
         console.error("Unable to open database.");
       };
 
-      request.onsuccess = function () {
+      request.onsuccess = function() {
         let db = request.result;
         const tx = db.transaction("GSdocumentUploads", "readwrite");
         const store = tx.objectStore("GSdocumentUploads");
         let getAllIDB = store.getAll();
-        getAllIDB.onsuccess = function (evt) {
+        getAllIDB.onsuccess = function(evt) {
           existingDocs =
             evt.target.result && evt.target.result[0]
               ? evt.target.result[0].data
@@ -373,11 +373,11 @@ export default {
         };
       };
 
-      request.onupgradeneeded = function () {
+      request.onupgradeneeded = function() {
         let db = request.result;
         db.createObjectStore("GSdocumentUploads", {
           keyPath: "id",
-          autoIncrement: true,
+          autoIncrement: true
         });
       };
     };
@@ -388,11 +388,11 @@ export default {
         store.dispatch("goodstanding/setTempDocs", formData).then(() => {
           let finalLocalData = {
             created: new Date(),
-            data: [],
+            data: []
           };
           let db;
           let request = indexedDB.open("GSdocumentUploads", 1);
-          request.onsuccess = function () {
+          request.onsuccess = function() {
             db = request.result;
             let transaction = db.transaction(
               ["GSdocumentUploads"],
@@ -401,8 +401,8 @@ export default {
             let tempStat = false;
 
             if (existingDocs.length > 0) {
-              imageData.forEach((newImage) => {
-                existingDocs.forEach((existing) => {
+              imageData.forEach(newImage => {
+                existingDocs.forEach(existing => {
                   if (existing.imageId == newImage.imageId) {
                     existing.image = newImage.image;
                     finalLocalData.data.push(existing);
@@ -425,18 +425,18 @@ export default {
 
             const objectStoreRequest = objectStore.clear();
 
-            objectStoreRequest.onsuccess = (event) => {
+            objectStoreRequest.onsuccess = event => {
               let addReq = transaction
                 .objectStore("GSdocumentUploads")
                 .put(finalLocalData);
 
-              addReq.onerror = function () {
+              addReq.onerror = function() {
                 console.log(
                   "Error regarding your browser, please update your browser to the latest version"
                 );
               };
 
-              transaction.oncomplete = function () {
+              transaction.oncomplete = function() {
                 console.log("data stored");
                 emit("changeActiveState");
               };
@@ -449,7 +449,7 @@ export default {
           position: "bottom-center",
           pauseOnFocusLoss: true,
           pauseOnHover: true,
-          icon: true,
+          icon: true
         });
       }
     };
@@ -457,34 +457,129 @@ export default {
       emit("changeActiveStateMinus");
     };
 
-    onMounted(() => {
-         //Initialize indexdb for file storage
-         if (!("indexedDB" in window)) {
-          console.log("This browser doesn't support IndexedDB");
-          return;
-        } else {
-          initDb();
+    const saveDraft = action => {
+      generalInfo.value.licenseFile = [];
+
+      let license = {
+        action: action,
+        data: {
+          applicantId: generalInfo.value.applicantId,
+          applicantTypeId: generalInfo.value.applicantTypeId.id,
+          residenceWoredaId: generalInfo.value.woredaSelected
+            ? generalInfo.value.woredaSelected.id
+            : null,
+          applicantTitleId: generalInfo.value.applicantTitleId
+            ? generalInfo.value.applicantTitleId.id
+            : "",
+          whomGoodStandingFor: generalInfo.value.whomGoodStandingFor
+            ? generalInfo.value.whomGoodStandingFor
+            : "",
+          applicantPositionId: generalInfo.value.applicantPosition
+            ? generalInfo.value.applicantPosition.id
+            : null,
+          licenseIssuedDate: generalInfo.value.licenseIssuedDate
+            ? generalInfo.value.licenseIssuedDate
+            : null,
+          whoIssued: generalInfo.value.whoIssued
+            ? generalInfo.value.whoIssued
+            : "",
+          licenseRegistrationNumber: generalInfo.value.licenseRegistrationNumber
+            ? generalInfo.value.licenseRegistrationNumber
+            : "",
+          professionType: {
+            professionTypeId: generalInfo.value.professionType
+              ? generalInfo.value.professionType.professionTypeId.id
+              : null,
+            educationLevelId: generalInfo.value.professionType
+              ? generalInfo.value.professionType.educationLevelId.id
+              : null
+          },
+          expertLevelId: generalInfo.value.expertLevelId
+            ? generalInfo.value.expertLevelId
+            : null,
+          islegal: true,
+          otherProfessionalType: generalInfo.value.otherProfessionType
+            ? generalInfo.value.otherProfessionType
+            : "",
+          otherProfessionalTypeAmharic: generalInfo.value
+            .otherProfessionTypeAmharic
+            ? generalInfo.value.otherProfessionTypeAmharic
+            : "",
+          departmentId: generalInfo.value.departmentId.id
+            ? generalInfo.value.departmentId.id
+            : null,
+          feedback: generalInfo.value.feedback ? generalInfo.value.feedback : ""
         }
+      };
+
+      store
+        .dispatch("goodstanding/addGoodstandingLicense", license)
+        .then(res => {
+          let licenseId = res.data.data.id;
+          let payload = { document: formData, id: licenseId };
+          store
+            .dispatch("goodstanding/uploadDocuments", payload)
+            .then(res => {
+              if (res.data.status == "Success") {
+                toast.success("Applied successfuly", {
+                  timeout: 5000,
+                  position: "bottom-center",
+                  pauseOnFocusLoss: true,
+                  pauseOnHover: true,
+                  icon: true
+                });
+                localStorage.removeItem("GSApplicationData");
+                location.reload();
+              } else {
+                toast.error("Error occured, please try again", {
+                  timeout: 5000,
+                  position: "bottom-center",
+                  pauseOnFocusLoss: true,
+                  pauseOnHover: true,
+                  icon: true
+                });
+              }
+            })
+            .catch(() => {
+              toast.error("Error occured, please try again", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true
+              });
+            });
+        });
+    };
+
+    onMounted(() => {
+      //Initialize indexdb for file storage
+      if (!("indexedDB" in window)) {
+        console.log("This browser doesn't support IndexedDB");
+        return;
+      } else {
+        initDb();
+      }
       localData.value = window.localStorage.getItem("GSApplicationData")
         ? JSON.parse(window.localStorage.getItem("GSApplicationData"))
         : {};
       if (Object.keys(localData.value).length != 0) {
         generalInfo.value = localData.value;
-        store.dispatch("goodstanding/getApplicationCategories").then((res) => {
+        store.dispatch("goodstanding/getApplicationCategories").then(res => {
           let categoryResults = res.data.data
-            ? res.data.data.filter((ele) => ele.code == "GSL")
+            ? res.data.data.filter(ele => ele.code == "GSL")
             : "";
 
           store
             .dispatch("goodstanding/getGSdocuments", categoryResults[0].id)
-            .then((res) => {
+            .then(res => {
               let results = res.data.data;
 
               documents.value = results.filter(
-                (
-                  (set) => (f) =>
-                    !set.has(f.documentTypeId) && set.add(f.documentTypeId)
-                )(new Set())
+                (set => f =>
+                  !set.has(f.documentTypeId) && set.add(f.documentTypeId))(
+                  new Set()
+                )
               );
             });
         });
@@ -499,6 +594,7 @@ export default {
       previewDocuments,
       showPreview,
       previewFile,
+      saveDraft,
       documentError,
       generalInfo,
       goToNext,
@@ -507,9 +603,9 @@ export default {
       documents,
       filePreviewData,
       next,
-      back,
+      back
     };
-  },
+  }
 };
 </script>
 

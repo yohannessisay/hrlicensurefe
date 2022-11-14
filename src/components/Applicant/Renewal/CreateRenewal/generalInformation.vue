@@ -857,6 +857,17 @@
         <button
           :class="
             generalInfo.multipleDepartment.length > 0
+              ? 'px-6 mr-2 mb-2 py-2.5 bg-white text-main-400  border text-xs leading-tight font-bold uppercase rounded shadow-md hover:text-white hover:border-main-400 hover:bg-main-400 transition duration-150   ease-in-out'
+              : 'px-6 mr-2 mb-2 py-2.5 bg-white text-main-400 font-bold border text-xs leading-tight uppercase rounded shadow-md hover:text-white hover:border-main-400 hover:bg-main-400 transition duration-150   ease-in-out  disabled'
+          "
+          type="submit"
+          @click="saveDraft()"
+        >
+          Save as draft
+        </button>
+        <button
+          :class="
+            generalInfo.multipleDepartment.length > 0
               ? 'px-6 mr-2 mb-2 py-2.5 bg-white text-main-400 font-medium border text-xs leading-tight uppercase rounded shadow-md hover:text-white hover:border-main-400 hover:bg-main-400 transition duration-150   ease-in-out'
               : 'px-6 mr-2 mb-2 py-2.5 bg-white text-main-400 font-medium border text-xs leading-tight uppercase rounded shadow-md hover:text-white hover:border-main-400 hover:bg-main-400 transition duration-150   ease-in-out  disabled'
           "
@@ -1169,6 +1180,53 @@ export default {
         generalInfo.value.educationalLevelSelected.id
       );
     };
+
+    const saveDraft = () => {
+      generalInfo.value.licenseFile = [];
+
+      let license = {
+        action: "DraftEvent",
+        data: {
+          applicantTypeId:
+            generalInfo.value && generalInfo.value.applicantTypeSelected
+              ? generalInfo.value.applicantTypeSelected.id
+              : null,
+          residenceWoredaId:
+            generalInfo.value && generalInfo.value.woredaSelected
+              ? generalInfo.value.woredaSelected.id
+              : null,
+          educations: generalInfo.value ? generalInfo.value.education : {},
+          occupationTypeId: generalInfo.value.occupationSelected
+            ? generalInfo.value.occupationSelected.id
+            : null,
+          nativeLanguageId: generalInfo.value.nativeLanguageSelected
+            ? generalInfo.value.nativeLanguageSelected.id
+            : null,
+            isLegal:true,
+        }
+      };
+      store.dispatch("renewal/addRenewal", license).then(res => {
+        if (res.data.status == "Success") {
+          toast.success("Applied successfuly", {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true
+          });
+          localStorage.removeItem('RNApplicationData');
+          location.reload();
+        } else {
+          toast.error("Error occured, please try again", {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true
+          });
+        }
+      });
+    };
     onMounted(async () => {
       fetchApplicantType();
       fetchDepartments();
@@ -1193,6 +1251,7 @@ export default {
       addMultiple,
       removeDepartment,
       apply,
+      saveDraft,
       fetchOccupation,
       educationalLevelChange,
       showLocation,
@@ -1237,11 +1296,11 @@ export default {
 </script>
   <style>
 #main {
-  border: 1px solid #cccccc;
+  
   border-radius: 5px;
 }
 .table-multiple {
-  border: 1px solid #cccccc;
+  
   border-radius: 5px;
 }
 </style>

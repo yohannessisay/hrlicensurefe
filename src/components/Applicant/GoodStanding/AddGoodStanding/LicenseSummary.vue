@@ -698,8 +698,7 @@ export default {
               ? generalInfo.value.feedback
               : "",
           },
-        };
-        console.log(license);
+        }; 
 
         store
           .dispatch("goodstanding/addGoodstandingLicense", license)
@@ -718,6 +717,7 @@ export default {
                     pauseOnHover: true,
                     icon: true,
                   });
+                  localStorage.removeItem("GSApplicationData");
                   router.push({ path: "/Applicant/GoodStanding/submitted" });
                 } else {
                   toast.error("Error occured, please try again", {

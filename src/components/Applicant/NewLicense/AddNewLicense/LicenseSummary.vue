@@ -444,7 +444,7 @@ export default {
       }
     };
     const checkFinalStatus = (action) => {
-      console.log();
+   
       generalInfo.value.licenseFile = [];
       documents.value = localFileData.value;
       isLoading.value = true;
@@ -506,7 +506,7 @@ export default {
                   pauseOnHover: true,
                   icon: true,
                 });
-
+                localStorage.removeItem('NLApplicationData');
                 if (license.action == "DraftEvent") {
                   router.push({ path: "/Applicant/NewLicense/draft" });
                 } else {

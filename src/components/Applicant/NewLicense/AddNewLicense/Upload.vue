@@ -181,8 +181,8 @@
                             <img
                               :id="
                                 'common_image_lightbox' +
-                                  item.documentType.id +
-                                  item.id
+                                item.documentType.id +
+                                item.id
                               "
                               src=""
                               class="w-full h-2 object-cover"
@@ -378,7 +378,7 @@
                         <a
                           :id="
                             'image_href_' +
-                              `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                            `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                           "
                           href=""
                           :data-title="item.name ? item.name : '-----'"
@@ -387,7 +387,7 @@
                           <i
                             :id="
                               'educational_icon_' +
-                                `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                              `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                             "
                             class="
                               fa fa-eye
@@ -400,7 +400,7 @@
                             <img
                               :id="
                                 'image_lightbox_' +
-                                  `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                               "
                               src=""
                               class="w-full h-2 object-cover"
@@ -468,7 +468,7 @@
                         <a
                           :id="
                             'image_href_' +
-                              `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                            `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                           "
                           href=""
                           :data-title="parentItem[0].name ? item.name : '-----'"
@@ -477,7 +477,7 @@
                           <i
                             :id="
                               'educational_icon_' +
-                                `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                              `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                             "
                             class="
                               fa fa-eye
@@ -490,7 +490,7 @@
                             <img
                               :id="
                                 'image_lightbox_' +
-                                  `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                               "
                               src=""
                               class="w-full h-2 object-cover"
@@ -605,7 +605,6 @@
                                   <div class="flex items-center ml-4">
                                     <div>
                                       <p class="">
-                                       
                                         {{ parentChildItem.documentType.name }}
                                       </p>
                                     </div>
@@ -648,9 +647,7 @@
                                       :required="parentChildItem.isRequired"
                                       :id="`files${parentChildItem.id}`"
                                       accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
-                                      :ref="
-                                        `imageUploader${parentChildItem.id}`
-                                      "
+                                      :ref="`imageUploader${parentChildItem.id}`"
                                       class="custom-file-input"
                                       v-on:change="
                                         handleFileUpload(
@@ -674,7 +671,7 @@
                                   <a
                                     :id="
                                       'image_href_' +
-                                        `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                      `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                                     "
                                     href=""
                                     :data-title="
@@ -685,7 +682,7 @@
                                     <i
                                       :id="
                                         'educational_icon_' +
-                                          `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                        `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                                       "
                                       class="
                                         fa fa-eye
@@ -698,7 +695,7 @@
                                       <img
                                         :id="
                                           'image_lightbox_' +
-                                            `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                          `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                                         "
                                         src=""
                                         class="w-full h-2 object-cover"
@@ -716,8 +713,8 @@
                 </table>
                 <small
                   >Note:-document names with
-                  <b class="text-red-300">(*)</b> must be uploaded in
-                  order to go forward with application process</small
+                  <b class="text-red-300">(*)</b> must be uploaded in order to
+                  go forward with application process</small
                 >
               </div>
             </div>
@@ -726,6 +723,31 @@
       </div>
     </div>
     <div class="flex justify-end mr-8 mb-8">
+      <button
+        class="
+        mt-8
+          inline-block
+          px-6
+          py-2.5
+          bg-white
+          hover:bg-main-400 hover:text-white
+          text-main-400 text-xs
+          font-bold
+          leading-tight
+          uppercase
+          rounded
+          shadow-md
+          active:border-main-400
+          transition
+          duration-150
+          ease-in-out
+          border
+        "
+        type="submit"
+        @click="saveDraft()"
+      >
+        Save as draft
+      </button>
       <button
         class="
           mt-8
@@ -865,7 +887,7 @@ export default {
         }
         reader.addEventListener(
           "load",
-          function() {
+          function () {
             showPreview.value = true;
 
             previewDocuments.value[data.documentType.code] = reader.result;
@@ -927,7 +949,7 @@ export default {
       );
       outputHref.href = URL.createObjectURL(event.target.files[0]);
       output.src = URL.createObjectURL(event.target.files[0]);
-      output.onload = function() {
+      output.onload = function () {
         URL.revokeObjectURL(output.src); // free memory
       };
     };
@@ -977,7 +999,7 @@ export default {
         }
         reader.addEventListener(
           "load",
-          function() {
+          function () {
             showPreview.value = true;
 
             previewDocuments.value[data.documentType.code] = reader.result;
@@ -1057,13 +1079,12 @@ export default {
       );
       outputHref.href = URL.createObjectURL(event.target.files[0]);
       output.src = URL.createObjectURL(event.target.files[0]);
-      output.onload = function() {
+      output.onload = function () {
         URL.revokeObjectURL(output.src); // free memory
       };
     };
 
-    const checkDocuments = () => { 
-
+    const checkDocuments = () => {
       let temp = false;
       let CMtemp = false;
       let NSTemp = false;
@@ -1145,7 +1166,7 @@ export default {
           };
           let db;
           let request = indexedDB.open("NLdocumentUploads", dbVersion);
-          request.onsuccess = function() {
+          request.onsuccess = function () {
             db = request.result;
             let transaction = db.transaction(
               ["NLdocumentUploads"],
@@ -1183,13 +1204,13 @@ export default {
                 .objectStore("NLdocumentUploads")
                 .put(finalLocalData);
 
-              addReq.onerror = function() {
+              addReq.onerror = function () {
                 console.log(
                   "Error regarding your browser, please update your browser to the latest version"
                 );
               };
 
-              transaction.oncomplete = function() {
+              transaction.oncomplete = function () {
                 console.log("data stored");
                 emit("changeActiveState");
               };
@@ -1220,6 +1241,68 @@ export default {
     };
     const back = () => {
       emit("changeActiveStateMinus");
+    };
+
+    const saveDraft = () => {
+      generalInfo.value.licenseFile = [];
+
+      let license = {
+        action: "DraftEvent",
+        data: {
+          applicantTypeId:
+            localData.value && localData.value.applicantTypeSelected
+              ? localData.value.applicantTypeSelected.id
+              : null,
+          residenceWoredaId:
+            localData.value && localData.value.woredaSelected
+              ? localData.value.woredaSelected.id
+              : null,
+          educations: localData.value ? localData.value.education : {},
+          occupationTypeId: localData.value.occupationSelected
+            ? localData.value.occupationSelected.id
+            : null,
+          nativeLanguageId: localData.value.nativeLanguageSelected
+            ? localData.value.nativeLanguageSelected.id
+            : null,
+          isLegal: true,
+        },
+      };
+      store.dispatch("newlicense/addNewLicense", license).then((res) => {
+        let licenseId = res.data.data.id;
+        let payload = { document: formData, id: licenseId };
+        store
+          .dispatch("newlicense/uploadDocuments", payload)
+          .then((res) => {
+            if (res.data.status == "Success") {
+              toast.success("Applied successfuly", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
+              localStorage.removeItem('NLApplicationData');
+              location.reload();
+            } else {
+              toast.error("Error occured, please try again", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
+            }
+          })
+          .catch(() => {
+            toast.error("Error occured, please try again", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+          });
+      });
     };
 
     const groupByKey = (array, key) => {
@@ -1263,7 +1346,7 @@ export default {
         document.getElementById(doc[0].id).appendChild(divElement);
       }
     };
-    const addMore = (parentItem) => { 
+    const addMore = (parentItem) => {
       if (
         showNestedDocuments.value[parentItem.documentType.code] == undefined
       ) {
@@ -1277,16 +1360,16 @@ export default {
     const initDb = () => {
       let request = indexedDB.open("NLdocumentUploads", dbVersion);
 
-      request.onerror = function() {
+      request.onerror = function () {
         console.error("Unable to open database.");
       };
 
-      request.onsuccess = function() {
+      request.onsuccess = function () {
         let db = request.result;
         const tx = db.transaction("NLdocumentUploads", "readonly");
         const store = tx.objectStore("NLdocumentUploads");
         let getAllIDB = store.getAll();
-        getAllIDB.onsuccess = function(evt) {
+        getAllIDB.onsuccess = function (evt) {
           existingDocs =
             evt.target.result && evt.target.result[0]
               ? evt.target.result[0].data
@@ -1294,7 +1377,7 @@ export default {
         };
       };
 
-      request.onupgradeneeded = function() {
+      request.onupgradeneeded = function () {
         let db = request.result;
         db.createObjectStore("NLdocumentUploads", {
           keyPath: "id",
@@ -1324,7 +1407,6 @@ export default {
                 element.educationalLevel.id,
               ])
               .then((res) => {
-                console.log(res)
                 let resp = res.data.data;
                 newLicenseDocuments.value = res.data.data;
 
@@ -1375,6 +1457,7 @@ export default {
       handleCommonFileUpload,
       generalInfo,
       goToNext,
+      saveDraft,
       educationalDocs,
       imageUploader,
       filePreviewData,
