@@ -31,7 +31,7 @@
             <div v-if="userInfo != {}" class="w-12 h-12">
               <img
                 v-bind:src="
-                 userInfo.profilePicturePath
+                  userInfo.profilePicturePath
                     ? googleApi + userInfo.profilePicturePath
                     : ''
                 "
@@ -83,15 +83,14 @@
                     px-4
                     py-2
                     p-2
-                    text-sm
-                     text-main-400
+                    text-sm text-main-400
                     font-bold
                     hover:bg-grey-100 hover:text-gray-900
                     cursor-pointer
                   "
                   role="menuitem"
                 >
-                <i class="fa fa-info-circle"></i>
+                  <i class="fa fa-info-circle"></i>
                   About
                 </li>
               </router-link>
@@ -100,61 +99,58 @@
               <router-link to="/google-form">
                 <li
                   class="
-                  block
+                    block
                     border-b
                     px-4
                     py-2
                     p-2
-                    text-sm
-                     text-main-400
+                    text-sm text-main-400
                     font-bold
                     hover:bg-grey-100 hover:text-gray-900
                     cursor-pointer
                   "
                   role="menuitem"
                 >
-                <i class="fa fa-message"></i>
+                  <i class="fa fa-message"></i>
                   Leave a Feedback
                 </li>
               </router-link>
-              <a  href="/applicant/profile">
+              <a href="/applicant/profile">
                 <li
                   class="
-                  block
+                    block
                     border-b
                     px-4
                     py-2
                     p-2
-                    text-sm
-                     text-main-400
+                    text-sm text-main-400
                     font-bold
                     hover:bg-grey-100 hover:text-gray-900
                     cursor-pointer
                   "
                   role="menuitem"
                 >
-                <i class="fa fa-user"></i>
+                  <i class="fa fa-user"></i>
                   Profile
                 </li>
               </a>
               <a
                 @click="logout()"
                 class="
-                block
-                    border-b
-                    px-4
-                    py-2
-                    p-2
-                    text-sm
-                     text-main-400
-                    font-bold
-                    hover:bg-grey-100 hover:text-gray-900
-                    cursor-pointer
+                  block
+                  border-b
+                  px-4
+                  py-2
+                  p-2
+                  text-sm text-main-400
+                  font-bold
+                  hover:bg-grey-100 hover:text-gray-900
+                  cursor-pointer
                 "
                 role="menuitem"
                 id="logout"
               >
-              <i class="fa fa-sign-out"></i>
+                <i class="fa fa-sign-out"></i>
                 Sign Out
               </a>
             </div>
@@ -179,7 +175,6 @@ export default {
     let isFirstTime = ref(false);
     let userInfo = ref({});
     const logout = () => {
-   
       localStorage.removeItem("token");
       localStorage.removeItem("userId");
       localStorage.removeItem("GSApplicationData");
@@ -226,8 +221,9 @@ export default {
       };
     };
     onMounted(() => {
-      userInfo.value = JSON.parse(window.localStorage.getItem('personalInfo'));
-      
+      userInfo.value = window.localStorage.getItem("personalInfo")
+        ? JSON.parse(window.localStorage.getItem("personalInfo"))
+        : {};
     });
     return {
       showDropDown,

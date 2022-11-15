@@ -167,6 +167,18 @@ export default {
   async getProfileByUserId({ commit }, id) {
     try {
       const resp = await ApiService.get(baseUrl + "/profiles/user/" + id);
+      window.localStorage.setItem(
+        "personalInfo",
+        resp.data.data
+          ? JSON.stringify({
+              name: resp.data.data.name + " " + resp.data.data.fatherName,
+              gender: resp.data.data.gender,
+              profilePicturePath: resp.data.data.profilePicture
+                ? resp.data.data.profilePicture.filePath
+                : "",
+            })
+          : ""
+      );
       return resp;
     } catch (error) {
       return error;
