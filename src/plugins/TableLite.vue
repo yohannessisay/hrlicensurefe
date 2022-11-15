@@ -842,7 +842,7 @@ export default defineComponent({
 
 select {
   width: auto;
-  border: 1px solid #cccccc;
+  
   background-color: #ffffff;
   height: auto;
   padding: 0;

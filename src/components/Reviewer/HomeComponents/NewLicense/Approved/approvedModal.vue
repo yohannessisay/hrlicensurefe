@@ -615,8 +615,7 @@ export default {
             modalData.value.profileImage =
               result.profile && result.profile.profilePicture
                 ? googleApi + result.profile.profilePicture.filePath
-                : "";   
-                console.log(modalData.value)
+                : "";    
             isLoading.value = false;
           }
         });

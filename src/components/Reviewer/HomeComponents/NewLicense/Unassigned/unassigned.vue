@@ -152,6 +152,94 @@
                     </button>
                   </div>
                 </div>
+                <label for="" class="mt-8 text-primary-600 font-bold"
+                  >Applied Date</label
+                >
+                <div class="grid grid-cols-4">
+                  <div class="mb-3">
+                    <label for="" class="ml-2">From</label>
+                    <input
+                      v-model="searchTermFromDate"
+                      type="date"
+                      class="
+                        appearance-none
+                        block
+                        w-full
+                        px-6
+                        ml-2
+                        py-2
+                        text-base
+                        font-normal
+                        text-gray-700
+                        bg-white bg-clip-padding bg-no-repeat
+                        border border-solid border-gray-300
+                        rounded
+                        transition
+                        ease-in-out
+                        focus:text-gray-700
+                        focus:bg-white
+                        focus:border-blue-600
+                        focus:outline-none
+                      "
+                      aria-label="Default select example"
+                    />
+                  </div>
+                  <div class="mb-3 ml-2">
+                    <label for="" class="ml-4"> To</label>
+                    <input
+                      type="date"
+                      class="
+                        appearance-none
+                        block
+                        w-full
+                        px-6
+                        ml-4
+                        py-2
+                        text-base
+                        font-normal
+                        text-gray-700
+                        bg-white bg-clip-padding bg-no-repeat
+                        border border-solid border-gray-300
+                        rounded
+                        transition
+                        ease-in-out
+                        focus:text-gray-700
+                        focus:bg-white
+                        focus:border-blue-600
+                        focus:outline-none
+                      "
+                      v-model="searchTermToDate"
+                      aria-label="Default select example"
+                    />
+                  </div>
+                  <div class="ml-8 mt-4">
+                    <button
+                      type="button"
+                      class="
+                        inline-block
+                        px-6
+                        py-2
+                        mt-2
+                        border-2 border-primary-600
+                        text-primary-600
+                        font-medium
+                        text-xs
+                        leading-tight
+                        uppercase
+                        rounded
+                        hover:bg-primary-600 hover:bg-opacity-5 hover:text-white
+                        focus:outline-none focus:ring-0
+                        transition
+                        duration-150
+                        ease-in-out
+                      "
+                      @click="clearFilters()"
+                    >
+                      <i class="fa fa-close"></i>
+                      Clear Filters
+                    </button>
+                  </div>
+                </div>
                 <div
                   class="
                     inline-block
@@ -163,7 +251,6 @@
                   "
                 >
                   <vue-table-lite
-                    :is-static-mode="true"
                     :is-loading="unassignedTable.isLoading"
                     :columns="unassignedTable.columns"
                     :rows="unassignedTable.rows"
@@ -190,6 +277,42 @@
                 <h2 class="text-2xl font-semibold leading-tight">
                   Resubmitted Applications
                 </h2>
+
+                <input
+                  v-if="adminLevel.code != 'REG'"
+                  class="
+                    form-check-input
+                    appearance-none
+                    h-5
+                    w-5
+                    border border-gray-300
+                    rounded-sm
+                    bg-white
+                    checked:bg-blue-600 checked:border-blue-600
+                    focus:outline-none
+                    transition
+                    duration-200
+                    mt-2
+                    align-top
+                    bg-no-repeat bg-center bg-contain
+                    float-left
+                    mr-2
+                    cursor-pointer
+                  "
+                  @change="
+                    includeFromOthersResub((includeResub = !includeResub))
+                  "
+                  type="checkbox"
+                  value=""
+                  id="flexCheckDefault"
+                />
+                <h4
+                  v-if="adminLevel.code != 'REG'"
+                  class="form-check-label inline-block text-gray-800 mt-1"
+                  for="flexCheckDefault"
+                >
+                  Include From Other Regions
+                </h4>
               </div>
               <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
                 <div class="mb-3 xl:w-full">
@@ -270,6 +393,95 @@
                     </button>
                   </div>
                 </div>
+                <label for="" class="mt-8 text-primary-600 font-bold"
+                  >Applied Date</label
+                >
+                <div class="grid grid-cols-4">
+                  <div class="mb-3">
+                    <label for="" class="ml-2">From</label>
+                    <input
+                      v-model="searchTermFromDateResub"
+                      type="date"
+                      class="
+                        appearance-none
+                        block
+                        w-full
+                        px-6
+                        ml-2
+                        py-2
+                        text-base
+                        font-normal
+                        text-gray-700
+                        bg-white bg-clip-padding bg-no-repeat
+                        border border-solid border-gray-300
+                        rounded
+                        transition
+                        ease-in-out
+                        focus:text-gray-700
+                        focus:bg-white
+                        focus:border-blue-600
+                        focus:outline-none
+                      "
+                      aria-label="Default select example"
+                    />
+                  </div>
+                  <div class="mb-3 ml-2">
+                    <label for="" class="ml-4"> To</label>
+                    <input
+                      type="date"
+                      class="
+                        appearance-none
+                        block
+                        w-full
+                        px-6
+                        ml-4
+                        py-2
+                        text-base
+                        font-normal
+                        text-gray-700
+                        bg-white bg-clip-padding bg-no-repeat
+                        border border-solid border-gray-300
+                        rounded
+                        transition
+                        ease-in-out
+                        focus:text-gray-700
+                        focus:bg-white
+                        focus:border-blue-600
+                        focus:outline-none
+                      "
+                      v-model="searchTermToDateResub"
+                      aria-label="Default select example"
+                    />
+                  </div>
+                  <div class="ml-8 mt-4">
+                    <button
+                      type="button"
+                      class="
+                        inline-block
+                        px-6
+                        py-2
+                        mt-2
+                        border-2 border-primary-600
+                        text-primary-600
+                        font-medium
+                        text-xs
+                        leading-tight
+                        uppercase
+                        rounded
+                        hover:bg-primary-600 hover:bg-opacity-5 hover:text-white
+                        focus:outline-none focus:ring-0
+                        transition
+                        duration-150
+                        ease-in-out
+                      "
+                      @click="clearFiltersResub()"
+                    >
+                      <i class="fa fa-close"></i>
+                      Clear Filters
+                    </button>
+                  </div>
+                </div>
+
                 <div
                   class="
                     inline-block
@@ -317,7 +529,7 @@ import applicationStatus from "../../../Configurations/getApplicationStatus.js";
 import VueTableLite from "vue3-table-lite";
 import editModal from "./unassignedModal.vue";
 import editModalResubmitted from "./unassignedResubmittedModal.vue";
-
+import moment from "moment";
 export default {
   name: "home",
   components: {
@@ -334,8 +546,13 @@ export default {
     const showModalResubmitted = ref(true);
     const reviewers = ref([]);
     const include = ref(false);
+    const includeResub = ref(false);
     const searchTerm = ref("");
     const searchTermOthers = ref("");
+    let searchTermFromDate = ref("");
+    let searchTermToDate = ref("");
+    let searchTermFromDateResub = ref("");
+    let searchTermToDateResub = ref("");
     let searchedReviewer = ref("");
     const adminId = +localStorage.getItem("adminId");
     const adminLevel = JSON.parse(
@@ -350,7 +567,7 @@ export default {
       change: 0,
     });
 
-    let allInfo = ref({ });
+    let allInfo = ref({});
 
     const unassignedTable = ref({});
     const reSubmittedTable = ref([]);
@@ -362,8 +579,18 @@ export default {
     };
     let tableData = ref([]);
     let tableDataTemp = ref([]);
+    let tableDataTempResub = ref([]);
     let reTableData = ref([]);
-
+    const clearFilters = () => {
+      searchTerm.value = "";
+      searchTermFromDate.value = "";
+      searchTermToDate.value = "";
+    };
+    const clearFiltersResub = () => {
+      searchTermOthers.value = "";
+      searchTermFromDateResub.value = "";
+      searchTermToDateResub.value = "";
+    };
     const unassigned = () => {
       applicationStatus(store, "SUB").then((res) => {
         modalDataId.value.apStatusUnassigned = res;
@@ -378,11 +605,11 @@ export default {
                 tableData.value.push({
                   LicenseNumber: element.newLicenseCode,
                   ApplicantName:
-                    element.profile.name +
+                    (element.profile ? element.profile.name : "") +
                     " " +
-                    element.profile.fatherName +
+                    (element.profile ? element.profile.fatherName : "") +
                     " " +
-                    element.profile.grandFatherName,
+                    (element.profile ? element.profile.grandFatherName : ""),
                   ApplicantType: element.applicantType
                     ? element.applicantType.name
                     : "",
@@ -436,10 +663,41 @@ export default {
                 },
               ],
               rows: computed(() => {
-                return tableData.value.filter((x) =>
-                  x.ApplicantName.toLowerCase().includes(
-                    searchTerm.value.toLowerCase()
-                  )
+                return tableData.value.filter(
+                  (x) =>
+                    (x.ApplicantName
+                      ? x.ApplicantName.toLowerCase().includes(
+                          searchTerm.value.toLowerCase()
+                        )
+                      : "") &&
+                    (searchTermFromDate.value != ""
+                      ? x.Date
+                        ? searchTermToDate.value.length > 0
+                          ? moment(x.Date).isSameOrAfter(
+                              searchTermFromDate.value
+                            ) &&
+                            moment(x.Date).isSameOrBefore(
+                              searchTermToDate.value
+                            )
+                          : moment(x.Date).isSameOrAfter(
+                              searchTermFromDate.value
+                            )
+                        : ""
+                      : x.Date || x.Date == "" || x.Date == null) &&
+                    (searchTermToDate.value != ""
+                      ? x.Date
+                        ? searchTermFromDate.value.length > 0
+                          ? moment(x.Date).isSameOrBefore(
+                              searchTermToDate.value
+                            ) &&
+                            moment(x.Date).isSameOrAfter(
+                              searchTermFromDate.value
+                            )
+                          : moment(x.Date).isSameOrBefore(
+                              searchTermToDate.value
+                            )
+                        : ""
+                      : x.Date || x.Date == "" || x.Date == null)
                 );
               }),
               totalRecordCount: tableData.value.length,
@@ -456,41 +714,29 @@ export default {
       if (include.value === true) {
         unassignedTable.value.isLoading = true;
         applicationStatus(store, "SUB").then((res) => {
-          const statusId = res;
+          modalDataId.value.apStatusUnassigned = res;
+          let statusId = res;
           store
             .dispatch(
               "reviewerNewLicense/getNewLicenseFromOtherRegion",
               statusId
             )
             .then((res) => {
-              allInfo.value.assignApplication =
-                store.getters[
-                  "reviewerNewLicense/getNewLicenseFromOtherRegionSearched"
-                ];
-
-              for (let applicant in allInfo.value.assignApplication) {
-                if (
-                  allInfo.value.assignApplication[applicant].applicationType ===
-                  undefined
-                ) {
-                  allInfo.value.assignApplication[applicant].applicationType =
-                    allInfo.value.assignApplication[applicant].applicantType;
-                }
-              }
+              allInfo.value = res;
 
               tableData.value = [];
-              JSON.parse(
-                JSON.stringify(allInfo.value.assignApplication)
-              ).forEach((element) => {
+              JSON.parse(JSON.stringify(allInfo.value)).forEach((element) => {
                 tableData.value.push({
                   LicenseNumber: element.newLicenseCode,
                   ApplicantName:
-                    element.profile.name +
+                    (element.profile ? element.profile.name : "") +
                     " " +
-                    element.profile.fatherName +
+                    (element.profile ? element.profile.fatherName : "") +
                     " " +
-                    element.profile.grandFatherName,
-                  ApplicationType: element.newLicenseCode ? "New License" : "",
+                    (element.profile ? element.profile.grandFatherName : ""),
+                  ApplicantType: element.applicantType
+                    ? element.applicantType.name
+                    : "",
                   Date: new Date(element.createdAt)
                     .toJSON()
                     .slice(0, 10)
@@ -542,10 +788,41 @@ export default {
                   },
                 ],
                 rows: computed(() => {
-                  return tableData.value.filter((x) =>
-                    x.ApplicantName.toLowerCase().includes(
-                      searchTerm.value.toLowerCase()
-                    )
+                  return tableData.value.filter(
+                    (x) =>
+                      (x.ApplicantName
+                        ? x.ApplicantName.toLowerCase().includes(
+                            searchTerm.value.toLowerCase()
+                          )
+                        : "") &&
+                      (searchTermFromDate.value != ""
+                        ? x.Date
+                          ? searchTermToDate.value.length > 0
+                            ? moment(x.Date).isSameOrAfter(
+                                searchTermFromDate.value
+                              ) &&
+                              moment(x.Date).isSameOrBefore(
+                                searchTermToDate.value
+                              )
+                            : moment(x.Date).isSameOrAfter(
+                                searchTermFromDate.value
+                              )
+                          : ""
+                        : x.Date || x.Date == "" || x.Date == null) &&
+                      (searchTermToDate.value != ""
+                        ? x.Date
+                          ? searchTermFromDate.value.length > 0
+                            ? moment(x.Date).isSameOrBefore(
+                                searchTermToDate.value
+                              ) &&
+                              moment(x.Date).isSameOrAfter(
+                                searchTermFromDate.value
+                              )
+                            : moment(x.Date).isSameOrBefore(
+                                searchTermToDate.value
+                              )
+                          : ""
+                        : x.Date || x.Date == "" || x.Date == null)
                   );
                 }),
                 totalRecordCount: tableData.value.length,
@@ -558,64 +835,197 @@ export default {
         });
       }
       if (include.value === false) {
-        tableData.value = [];
-        tableData.value = tableDataTemp.value;
-        unassignedTable.value = {
-          isLoading: false,
-          columns: [
-            {
-              label: "License Number",
-              field: "LicenseNumber",
-              width: "3%",
-              sortable: true,
-              isKey: true,
-            },
-            {
-              label: "Applicant Name",
-              field: "ApplicantName",
-              width: "20%",
-              sortable: true,
-            },
-            {
-              label: "Applicant Type",
-              field: "ApplicationType",
-              width: "15%",
-              sortable: true,
-            },
-            {
-              label: "Date",
-              field: "Date",
-              width: "15%",
-              sortable: true,
-            },
-            {
-              label: "Actions",
-              field: "quick",
-              width: "10%",
-              display: function (row) {
-                return (
-                  '<button  data-set="' +
-                  row +
-                  '"  data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
-                  row.id +
-                  '" ><i class="fa fa-eye"></i>View/Edit</button>'
-                );
-              },
-            },
-          ],
-          rows: computed(() => {
-            return tableData.value.filter((x) =>
-              x.ApplicantName.toLowerCase().includes(
-                searchTerm.value.toLowerCase()
-              )
-            );
-          }),
-          totalRecordCount: tableData.value.length,
-          sortable: {
-            order: "id",
-            sort: "asc",
-          },
-        };
+        unassignedTable.value.rows = computed(() => {
+          return tableDataTemp.value.filter(
+            (x) =>
+              (x.ApplicantName
+                ? x.ApplicantName.toLowerCase().includes(
+                    searchTerm.value.toLowerCase()
+                  )
+                : "") &&
+              (searchTermFromDate.value != ""
+                ? x.Date
+                  ? searchTermToDate.value.length > 0
+                    ? moment(x.Date).isSameOrAfter(searchTermFromDate.value) &&
+                      moment(x.Date).isSameOrBefore(searchTermToDate.value)
+                    : moment(x.Date).isSameOrAfter(searchTermFromDate.value)
+                  : ""
+                : x.Date || x.Date == "" || x.Date == null) &&
+              (searchTermToDate.value != ""
+                ? x.Date
+                  ? searchTermFromDate.value.length > 0
+                    ? moment(x.Date).isSameOrBefore(searchTermToDate.value) &&
+                      moment(x.Date).isSameOrAfter(searchTermFromDate.value)
+                    : moment(x.Date).isSameOrBefore(searchTermToDate.value)
+                  : ""
+                : x.Date || x.Date == "" || x.Date == null)
+          );
+        });
+        unassignedTable.value.totalRecordCount = tableDataTemp.value.length;
+      }
+    };
+
+    const includeFromOthersResub = () => {
+      if (includeResub.value === true) {
+        reSubmittedTable.value.isLoading = true;
+        applicationStatus(store, "UPD").then((res) => {
+          modalDataId.value.apStatusUnassigned = res;
+          let statusId = res;
+          store
+            .dispatch(
+              "reviewerNewLicense/getNewLicenseFromOtherRegion",
+              statusId
+            )
+            .then((res) => {
+              allInfo.value = res;
+
+              reTableData.value = [];
+              JSON.parse(JSON.stringify(allInfo.value)).forEach((element) => {
+                reTableData.value.push({
+                  LicenseNumber: element.newLicenseCode,
+                  ApplicantName:
+                    (element.profile ? element.profile.name : "") +
+                    " " +
+                    (element.profile ? element.profile.fatherName : "") +
+                    " " +
+                    (element.profile ? element.profile.grandFatherName : ""),
+                  ApplicantType: element.applicantType
+                    ? element.applicantType.name
+                    : "",
+                  Date: new Date(element.createdAt)
+                    .toJSON()
+                    .slice(0, 10)
+                    .replace(/-/g, "/"),
+                  data: element,
+                });
+              });
+
+              reSubmittedTable.value = {
+                columns: [
+                  {
+                    label: "License Number",
+                    field: "LicenseNumber",
+                    width: "15%",
+                    sortable: true,
+                    isKey: true,
+                  },
+                  {
+                    label: "Applicant Name",
+                    field: "ApplicantName",
+                    width: "45%",
+                    sortable: true,
+                  },
+                  {
+                    label: "Application Type",
+                    field: "ApplicationType",
+                    width: "20%",
+                    sortable: true,
+                  },
+                  {
+                    label: "Date",
+                    field: "Date",
+                    width: "15%",
+                    sortable: true,
+                  },
+                  {
+                    label: "Actions",
+                    field: "quick",
+                    width: "10%",
+                    display: function (row) {
+                      return (
+                        '<button  data-set="' +
+                        row +
+                        '"  data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
+                        row.id +
+                        '" ><i class="fa fa-eye"></i> View/Edit</button>'
+                      );
+                    },
+                  },
+                ],
+                rows: computed(() => {
+                  return reTableData.value.filter(
+                    (x) =>
+                      (x.ApplicantName
+                        ? x.ApplicantName.toLowerCase().includes(
+                            searchTermOthers.value.toLowerCase()
+                          )
+                        : "") &&
+                      (searchTermFromDateResub.value != ""
+                        ? x.Date
+                          ? searchTermToDateResub.value.length > 0
+                            ? moment(x.Date).isSameOrAfter(
+                                searchTermFromDateResub.value
+                              ) &&
+                              moment(x.Date).isSameOrBefore(
+                                searchTermToDateResub.value
+                              )
+                            : moment(x.Date).isSameOrAfter(
+                                searchTermFromDateResub.value
+                              )
+                          : ""
+                        : x.Date || x.Date == "" || x.Date == null) &&
+                      (searchTermToDateResub.value != ""
+                        ? x.Date
+                          ? searchTermFromDateResub.value.length > 0
+                            ? moment(x.Date).isSameOrBefore(
+                                searchTermToDateResub.value
+                              ) &&
+                              moment(x.Date).isSameOrAfter(
+                                searchTermFromDateResub.value
+                              )
+                            : moment(x.Date).isSameOrBefore(
+                                searchTermToDateResub.value
+                              )
+                          : ""
+                        : x.Date || x.Date == "" || x.Date == null)
+                  );
+                }),
+                totalRecordCount: reTableData.value.length,
+                sortable: {
+                  order: "id",
+                  sort: "asc",
+                },
+              };
+            });
+        });
+      }
+      if (includeResub.value === false) {
+        reSubmittedTable.value.rows = computed(() => {
+          return tableDataTempResub.value.filter(
+            (x) =>
+              (x.ApplicantName
+                ? x.ApplicantName.toLowerCase().includes(
+                    searchTermOthers.value.toLowerCase()
+                  )
+                : "") &&
+              (searchTermFromDateResub.value != ""
+                ? x.Date
+                  ? searchTermToDateResub.value.length > 0
+                    ? moment(x.Date).isSameOrAfter(
+                        searchTermFromDateResub.value
+                      ) &&
+                      moment(x.Date).isSameOrBefore(searchTermToDateResub.value)
+                    : moment(x.Date).isSameOrAfter(
+                        searchTermFromDateResub.value
+                      )
+                  : ""
+                : x.Date || x.Date == "" || x.Date == null) &&
+              (searchTermToDateResub.value != ""
+                ? x.Date
+                  ? searchTermFromDateResub.value.length > 0
+                    ? moment(x.Date).isSameOrBefore(
+                        searchTermToDateResub.value
+                      ) &&
+                      moment(x.Date).isSameOrAfter(
+                        searchTermFromDateResub.value
+                      )
+                    : moment(x.Date).isSameOrBefore(searchTermToDateResub.value)
+                  : ""
+                : x.Date || x.Date == "" || x.Date == null)
+          );
+        });
+        reSubmittedTable.value.totalRecordCount =
+          tableDataTempResub.value.length;
       }
     };
 
@@ -627,39 +1037,26 @@ export default {
         store
           .dispatch("reviewerNewLicense/getNewLicenseReApply", adminStatus)
           .then((res) => {
-            allInfo.value.assignApplication =
-              store.getters["reviewerNewLicense/getNewLicenseReApplySearched"];
+            allInfo.value = res;
 
-            for (let applicant in allInfo.value.assignApplication) {
-              if (
-                allInfo.value.assignApplication[applicant].applicationType ===
-                undefined
-              ) {
-                allInfo.value.assignApplication[applicant].applicationType =
-                  allInfo.value.assignApplication[applicant].applicantType;
-              }
-            }
-
-            JSON.parse(JSON.stringify(allInfo.value.assignApplication)).forEach(
-              (element) => {
-                reTableData.value.push({
-                  LicenseNumber: element.newLicenseCode,
-                  ApplicantName:
-                    (element.profile ? element.profile.name : "") +
-                    " " +
-                    (element.profile ? element.profile.fatherName : "") +
-                    " " +
-                    (element.profile ? element.profile.grandFatherName : ""),
-                  ApplicationType: element ? element.applicantType.name : "",
-                  Date: new Date(element.createdAt)
-                    .toJSON()
-                    .slice(0, 10)
-                    .replace(/-/g, "/"),
-                  data: element,
-                });
-              }
-            );
-
+            JSON.parse(JSON.stringify(allInfo.value)).forEach((element) => {
+              reTableData.value.push({
+                LicenseNumber: element.newLicenseCode,
+                ApplicantName:
+                  (element.profile ? element.profile.name : "") +
+                  " " +
+                  (element.profile ? element.profile.fatherName : "") +
+                  " " +
+                  (element.profile ? element.profile.grandFatherName : ""),
+                ApplicationType: element ? element.applicantType.name : "",
+                Date: new Date(element.createdAt)
+                  .toJSON()
+                  .slice(0, 10)
+                  .replace(/-/g, "/"),
+                data: element,
+              });
+            });
+            tableDataTempResub.value = reTableData.value;
             reSubmittedTable.value = {
               columns: [
                 {
@@ -703,10 +1100,41 @@ export default {
                 },
               ],
               rows: computed(() => {
-                return reTableData.value.filter((x) =>
-                  x.ApplicantName.toLowerCase().includes(
-                    searchTermOthers.value.toLowerCase()
-                  )
+                return reTableData.value.filter(
+                  (x) =>
+                    (x.ApplicantName
+                      ? x.ApplicantName.toLowerCase().includes(
+                          searchTermOthers.value.toLowerCase()
+                        )
+                      : "") &&
+                    (searchTermFromDateResub.value != ""
+                      ? x.Date
+                        ? searchTermToDateResub.value.length > 0
+                          ? moment(x.Date).isSameOrAfter(
+                              searchTermFromDateResub.value
+                            ) &&
+                            moment(x.Date).isSameOrBefore(
+                              searchTermToDateResub.value
+                            )
+                          : moment(x.Date).isSameOrAfter(
+                              searchTermFromDateResub.value
+                            )
+                        : ""
+                      : x.Date || x.Date == "" || x.Date == null) &&
+                    (searchTermToDateResub.value != ""
+                      ? x.Date
+                        ? searchTermFromDateResub.value.length > 0
+                          ? moment(x.Date).isSameOrBefore(
+                              searchTermToDateResub.value
+                            ) &&
+                            moment(x.Date).isSameOrAfter(
+                              searchTermFromDateResub.value
+                            )
+                          : moment(x.Date).isSameOrBefore(
+                              searchTermToDateResub.value
+                            )
+                        : ""
+                      : x.Date || x.Date == "" || x.Date == null)
                 );
               }),
               totalRecordCount: reTableData.value.length,
@@ -774,6 +1202,13 @@ export default {
       reSubmittedTable,
       showModal,
       include,
+      includeResub,
+      clearFilters,
+      clearFiltersResub,
+      searchTermFromDate,
+      searchTermToDate,
+      searchTermFromDateResub,
+      searchTermToDateResub,
       reviewers,
       showModalResubmitted,
       searchedReviewer,
@@ -783,6 +1218,7 @@ export default {
       rowClicked,
       reSubmitted,
       includeFromOthers,
+      includeFromOthersResub,
       rowClickedResub,
       modalDataId,
       adminLevel,

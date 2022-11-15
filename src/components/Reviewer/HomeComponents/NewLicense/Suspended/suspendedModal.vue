@@ -49,7 +49,7 @@
           <button
             type="button"
             class="
-                  px-6
+              px-6
               text-white
               bg-primary-600
               hover:text-primary-600 hover:border
@@ -584,7 +584,7 @@
               </div>
               <div class="vld-parent">
                 <loading
-                  :active="isLoadingSuspend"
+                  :active="isLoadingExtend"
                   :can-cancel="true"
                   :is-full-page="true"
                   :color="'#2F639D'"
@@ -757,6 +757,7 @@ export default {
     let showGenerateModal = ref(true);
     let showOptions = ref(true);
     let isLoading = ref(true);
+    let isLoadingExtend = ref(false);
     let modalData = ref({});
     const toast = useToast();
     let extendedData = ref({});
@@ -808,33 +809,44 @@ export default {
     };
     const earlySuspension = () => {
       extendedData.value.suspEndDate = new Date().toISOString().slice(0, 10);
-      isLoading.value = true;
+      isLoadingSuspend.value = true;
       let req = {
         action: "ApproveEvent",
         data: extendedData.value,
       };
-      let smsData =
-        extendedData.value && extendedData.value.profile
-          ? "Dear " +
-            extendedData.value.profile.name +
-            extendedData.value.profile.fatherName +
-            ", Your license with license number " +
-            extendedData.value.newLicenseCode +
-            " has been released from suspension. Thank you for using eHPEL,https://www.hrl.moh.gov.et"
-          : "";
+      let smsData = {
+        recipients: [
+          extendedData.value && extendedData.value.applicant
+            ? "251" + extendedData.value.applicant.phoneNumber
+            : "",
+        ],
+        message:
+          extendedData.value && extendedData.value.profile
+            ? "Dear " +
+              extendedData.value.profile.name +
+              " " +
+              extendedData.value.profile.fatherName +
+              ", Your license with license number " +
+              extendedData.value.newLicenseCode +
+              " suspension has been extended . Thank you for using eHPEL,https://www.hrl.moh.gov.et"
+            : "",
+      };
       store
         .dispatch("reviewer/editNewLicense", req)
         .then((res) => {
-          isLoading.value = false;
-          if (res.statusText == "Created") {
+          isLoadingSuspend.value = false;
+          if (res.data.status == "Success") {
             store.dispatch("sms/sendSms", smsData).then(() => {
-              toast.success("Application released from suspension Successfully", {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true,
-              });
+              toast.success(
+                "Application released from suspension Successfully",
+                {
+                  timeout: 5000,
+                  position: "bottom-center",
+                  pauseOnFocusLoss: true,
+                  pauseOnHover: true,
+                  icon: true,
+                }
+              );
             });
           } else {
             toast.error("Please try again", {
@@ -857,27 +869,36 @@ export default {
         });
     };
     const extend = () => {
-      isLoading.value = true;
+      isLoadingExtend.value = true;
       let req = {
-        action: "ApproveEvent",
-        data: extendedData,
+        action: "",
+        data: extendedData.value,
       };
-      let smsData =
-        extendedData.value && extendedData.value.profile
-          ? "Dear " +
-            extendedData.value.profile.name +
-            extendedData.value.profile.fatherName +
-            ", Your license with license number " +
-            extendedData.value.newLicenseCode +
-            " has been extended . Thank you for using eHPEL,https://www.hrl.moh.gov.et"
-          : "";
+      let smsData = {
+        recipients: [
+          extendedData.value && extendedData.value.applicant
+            ? "251" + extendedData.value.applicant.phoneNumber
+            : "",
+        ],
+        message:
+          extendedData.value && extendedData.value.profile
+            ? "Dear " +
+              extendedData.value.profile.name +
+              " " +
+              extendedData.value.profile.fatherName +
+              ", Your license with license number " +
+              extendedData.value.newLicenseCode +
+              " suspension has been extended . Thank you for using eHPEL,https://www.hrl.moh.gov.et"
+            : "",
+      };
+
       store
         .dispatch("reviewer/editNewLicense", req)
         .then((res) => {
-          isLoading.value = false;
-          if (res.statusText == "Created") {
+          isLoadingExtend.value = false;
+          if (res.data.status == "Success") {
             store.dispatch("sms/sendSms", smsData).then(() => {
-              toast.success("Application reviewed Successfully", {
+              toast.success("Application Susupension Extended Successfully", {
                 timeout: 5000,
                 position: "bottom-center",
                 pauseOnFocusLoss: true,
@@ -920,6 +941,7 @@ export default {
       showGenerateModal,
       showOptions,
       extendedData,
+      isLoadingExtend,
       earlySuspension,
       googleApi,
       modalData,

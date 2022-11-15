@@ -562,7 +562,7 @@ export default {
             ? "Dear " +
               modalData.value.name +
               " your applied renewal license for " +
-              modalData.value.department +
+              licenseData.value.renewalCode +
               " has been assigned a reviewer , after careful examination of your uploaded documents by our reviewers we will get back and notify you on each steps, Thank you for using eHPL. https://hrl.moh.gov.et/"
             : ""
           : "",

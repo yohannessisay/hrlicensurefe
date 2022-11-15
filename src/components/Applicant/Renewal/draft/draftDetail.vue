@@ -1289,11 +1289,11 @@ export default {
 </script>
 <style>
 #main {
-  border: 1px solid #cccccc;
+  
   border-radius: 5px;
 }
 .table-multiple {
-  border: 1px solid #cccccc;
+  
   border-radius: 5px;
 }
 </style>

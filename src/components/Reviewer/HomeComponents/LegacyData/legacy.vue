@@ -5,20 +5,22 @@
   <!-- Sidebar -->
   <section class="home-section">
     <!-- Header -->
-    <reviewer-nav-bar><ol class="list-reset flex">
-          <li>
-            <router-link to="/admin/review"
-              ><span class="text-primary-600 text-base">Home</span></router-link
-            >
-          </li>
-          <li><span class="text-gray-500 mx-2">/</span></li>
-     
-          <li>
-            <a href="#" class="pointer-events-none text-lg text-grey-300"
-              >Legacy Data</a
-            >
-          </li>
-        </ol></reviewer-nav-bar>
+    <reviewer-nav-bar
+      ><ol class="list-reset flex">
+        <li>
+          <router-link to="/admin/review"
+            ><span class="text-primary-600 text-base">Home</span></router-link
+          >
+        </li>
+        <li><span class="text-gray-500 mx-2">/</span></li>
+
+        <li>
+          <a href="#" class="pointer-events-none text-lg text-grey-300"
+            >Legacy Data</a
+          >
+        </li>
+      </ol></reviewer-nav-bar
+    >
     <!-- Header -->
 
     <!-- Main Content -->
@@ -31,21 +33,21 @@
           <p class="absolute right-0">
             <button
               class="
-              inline-block
-              px-6
-              text-white
-              bg-primary-700
-              font-medium
-              text-xs
-              leading-tight
-              uppercase
-              border 
-              rounded
-              shadow-lg
-              hover:bg-white hover:text-primary-600
-              transition
-              duration-150
-              ease-in-out
+                inline-block
+                px-6
+                text-white
+                bg-primary-700
+                font-medium
+                text-xs
+                leading-tight
+                uppercase
+                border
+                rounded
+                shadow-lg
+                hover:bg-white hover:text-primary-600
+                transition
+                duration-150
+                ease-in-out
               "
               @click="exportTable()"
             >
@@ -93,6 +95,7 @@
                       focus:border-blue-600
                       focus:outline-none
                     "
+                    @keyup="searchByName"
                     placeholder="Start Searching For Name"
                     aria-label="Search"
                     aria-describedby="button-addon2"
@@ -100,21 +103,21 @@
                   />
                   <button
                     class="
-                    inline-block
-              px-6
-              text-white
-              bg-primary-700
-              font-medium
-              text-xs
-              leading-tight
-              uppercase
-              border 
-              rounded
-              shadow-lg
-              hover:bg-white hover:text-primary-600
-              transition
-              duration-150
-              ease-in-out
+                      inline-block
+                      px-6
+                      text-white
+                      bg-primary-700
+                      font-medium
+                      text-xs
+                      leading-tight
+                      uppercase
+                      border
+                      rounded
+                      shadow-lg
+                      hover:bg-white hover:text-primary-600
+                      transition
+                      duration-150
+                      ease-in-out
                     "
                   >
                     <i class="fa fa-user fa-2x"></i>
@@ -304,8 +307,7 @@
                   bg-primary-800
                 "
               >
-                <vue-table-lite
-                  :is-static-mode="true"
+                <vue-table-lite 
                   :columns="userTable.columns"
                   :rows="userTable.rows"
                   :total="userTable.totalRecordCount"
@@ -727,18 +729,18 @@ export default {
 
     const filterLicenseType = (licenseType) => {
       if (licenseType == "all") {
-        tableData = allData.value;
-        userTable.value.rows = computed(() => tableData);
+        userTable.value.rows = computed(() => allData.value);
       } else {
-        tableData = allData.value.filter((stat) => {
-          return stat.LicenseType.toLowerCase() == licenseType.toLowerCase();
-        });
-        userTable.value.rows = computed(() => tableData);
+        userTable.value.rows = computed(() =>
+          allData.value.filter((stat) => {
+            return stat.LicenseType.toLowerCase() != licenseType.toLowerCase();
+          })
+        );
       }
     };
 
     const exportTable = () => {
-      var blob = new Blob([document.getElementById("printable").innerHTML], {
+      var blob = new Blob([document.getElementById("myTable").innerHTML], {
         type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8",
       });
       let date = new Date().toISOString();
@@ -746,24 +748,20 @@ export default {
     };
 
     const searchByName = () => {
-      searchingState.value = true;
-      let filterByName = allData.value.filter((report) => {
-        return report.name.toLowerCase().includes(searchedValue.value) ||
-          report.fatherName.toLowerCase().includes(searchedValue.value) ||
-          report.grandFatherName.toLowerCase().includes(searchedValue.value) ||
-          report.goodStandingCode
-          ? report.goodStandingCode
-              .toLowerCase()
-              .includes(searchedValue.value.toLowerCase())
-          : report.renewalCode
-          ? report.renewalCode
-              .toLowerCase()
-              .includes(searchedValue.value.toLowerCase())
-          : report.newLicenseCode
-              .toLowerCase()
-              .includes(searchedValue.value.toLowerCase());
-      });
-      reportData.value = filterByName;
+      userTable.value.rows = computed(() =>
+        allData.value.filter((x) =>
+          x.FirstName
+            ? x.FirstName.toLowerCase().includes(searchTerm.value.toLowerCase())
+            : "" || 
+            x.MiddleName
+            ? x.MiddleName.toLowerCase().includes(
+                searchTerm.value.toLowerCase()
+              )
+            : "" || x.LastName
+            ? x.LastName.toLowerCase().includes(searchTerm.value.toLowerCase())
+            : ""
+        )
+      );
     };
 
     const filterDateFrom = (date) => {

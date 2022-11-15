@@ -147,21 +147,35 @@
                       </td>
 
                       <td class="px-6 py-4 text-center">
-                        <span
-                          data-bs-toggle="modal"
-                          data-bs-target="#filePreview"
-                          @click="
-                            previewFile(
-                              item.documentType.code,
-                              item.documentType.name
-                            )
+                        <a
+                          :id="
+                            'common_image_href' + item.documentType.id + item.id
                           "
+                          href=""
+                          :data-title="item.name ? item.name : '-----'"
+                          data-lightbox="example-2"
                         >
                           <i
-                            class="fa fa-eye cursor-pointer"
+                            :id="'common_icon' + item.documentType.id + item.id"
+                            class="
+                              fa fa-eye
+                              cursor-pointer
+                              text-main-400
+                              disabled
+                            "
                             aria-hidden="true"
-                          ></i>
-                        </span>
+                          >
+                            <img
+                              :id="
+                                'common_image_lightbox' +
+                                item.documentType.id +
+                                item.id
+                              "
+                              src=""
+                              class="w-full h-2 object-cover"
+                            />
+                          </i>
+                        </a>
                       </td>
                     </tr>
                   </tbody>
@@ -173,6 +187,31 @@
       </div>
     </div>
     <div class="flex justify-end mr-8">
+      <button
+        class="
+          mt-8
+          inline-block
+          px-6
+          py-2.5
+          bg-white
+          hover:bg-main-400 hover:text-white
+          text-main-400 text-xs
+          font-bold
+          leading-tight
+          uppercase
+          rounded
+          shadow-md
+          active:border-main-400
+          transition
+          duration-150
+          ease-in-out
+          border
+        "
+        type="submit"
+        @click="saveDraft()"
+      >
+        Save as draft
+      </button>
       <button
         class="
           mt-8
@@ -329,6 +368,30 @@ export default {
         fileSizeExceed.value[data.documentType.code] = true;
         documentUploaded.value[data.documentType.code] = "";
       }
+      let icon = document.getElementById(
+        "common_icon" + data.documentType.id + data.id
+      );
+      if (icon.classList.contains("disabled")) {
+        icon.classList.toggle("disabled");
+      }
+
+      let output = document.getElementById(
+        "common_image_lightbox" + data.documentType.id + data.id
+      );
+
+      let outputHref = document.getElementById(
+        "common_image_href" + data.documentType.id + data.id
+      );
+      outputHref.href = URL.createObjectURL(event.target.files[0]);
+      if (output && output.src) {
+        output.src = URL.createObjectURL(event.target.files[0]);
+      }
+
+      output
+        ? (output.onload = function () {
+            URL.revokeObjectURL(output.src); // free memory
+          })
+        : "";
     };
 
     const checkDocuments = () => {
@@ -457,14 +520,111 @@ export default {
       emit("changeActiveStateMinus");
     };
 
+    const saveDraft = (action) => {
+      generalInfo.value.licenseFile = [];
+
+      let license = {
+        action: action,
+        data: {
+          applicantId: generalInfo.value.applicantId,
+          applicantTypeId: generalInfo.value.applicantTypeId.id,
+          residenceWoredaId: generalInfo.value.woredaSelected
+            ? generalInfo.value.woredaSelected.id
+            : null,
+          applicantTitleId: generalInfo.value.applicantTitleId
+            ? generalInfo.value.applicantTitleId.id
+            : "",
+          whomGoodStandingFor: generalInfo.value.whomGoodStandingFor
+            ? generalInfo.value.whomGoodStandingFor
+            : "",
+          applicantPositionId: generalInfo.value.applicantPosition
+            ? generalInfo.value.applicantPosition.id
+            : null,
+          licenseIssuedDate: generalInfo.value.licenseIssuedDate
+            ? generalInfo.value.licenseIssuedDate
+            : null,
+          whoIssued: generalInfo.value.whoIssued
+            ? generalInfo.value.whoIssued
+            : "",
+          licenseRegistrationNumber: generalInfo.value.licenseRegistrationNumber
+            ? generalInfo.value.licenseRegistrationNumber
+            : "",
+          professionType: {
+            professionTypeId: generalInfo.value.professionType
+              ? generalInfo.value.professionType.professionTypeId.id
+              : null,
+            educationLevelId: generalInfo.value.professionType
+              ? generalInfo.value.professionType.educationLevelId.id
+              : null,
+          },
+          expertLevelId: generalInfo.value.expertLevelId
+            ? generalInfo.value.expertLevelId
+            : null,
+          islegal: true,
+          otherProfessionalType: generalInfo.value.otherProfessionType
+            ? generalInfo.value.otherProfessionType
+            : "",
+          otherProfessionalTypeAmharic: generalInfo.value
+            .otherProfessionTypeAmharic
+            ? generalInfo.value.otherProfessionTypeAmharic
+            : "",
+          departmentId: generalInfo.value.departmentId.id
+            ? generalInfo.value.departmentId.id
+            : null,
+          feedback: generalInfo.value.feedback
+            ? generalInfo.value.feedback
+            : "",
+        },
+      };
+
+      store
+        .dispatch("goodstanding/addGoodstandingLicense", license)
+        .then((res) => {
+          let licenseId = res.data.data.id;
+          let payload = { document: formData, id: licenseId };
+          store
+            .dispatch("goodstanding/uploadDocuments", payload)
+            .then((res) => {
+              if (res.data.status == "Success") {
+                toast.success("Applied successfuly", {
+                  timeout: 5000,
+                  position: "bottom-center",
+                  pauseOnFocusLoss: true,
+                  pauseOnHover: true,
+                  icon: true,
+                });
+                localStorage.removeItem("GSApplicationData");
+                location.reload();
+              } else {
+                toast.error("Error occured, please try again", {
+                  timeout: 5000,
+                  position: "bottom-center",
+                  pauseOnFocusLoss: true,
+                  pauseOnHover: true,
+                  icon: true,
+                });
+              }
+            })
+            .catch(() => {
+              toast.error("Error occured, please try again", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
+            });
+        });
+    };
+
     onMounted(() => {
-         //Initialize indexdb for file storage
-         if (!("indexedDB" in window)) {
-          console.log("This browser doesn't support IndexedDB");
-          return;
-        } else {
-          initDb();
-        }
+      //Initialize indexdb for file storage
+      if (!("indexedDB" in window)) {
+        console.log("This browser doesn't support IndexedDB");
+        return;
+      } else {
+        initDb();
+      }
       localData.value = window.localStorage.getItem("GSApplicationData")
         ? JSON.parse(window.localStorage.getItem("GSApplicationData"))
         : {};
@@ -499,6 +659,7 @@ export default {
       previewDocuments,
       showPreview,
       previewFile,
+      saveDraft,
       documentError,
       generalInfo,
       goToNext,

@@ -1102,8 +1102,7 @@ export default {
     };
     const checkDocuments = () => {
       let temp = false;
-      let CMtemp = false;
-      let NSTemp = false;
+      let CMtemp = false; 
 
       /// check common documents
 
@@ -1173,46 +1172,7 @@ export default {
           });
 
         //// check documetns with parents
-
-        if (ed.parentDoc) {
-          for (let childDocs in ed.parentDoc) {
-            NSTemp = documentsUploaded.value.hasOwnProperty(
-              ed.parentDoc[childDocs][0].documentType.code +
-                "_" +
-                ed.educationalLevel.code.toUpperCase() +
-                "_" +
-                ed.professionType.code.toUpperCase()
-            );
-            if (!temp) {
-              fileUploadError.value[
-                "file_upload_row_" +
-                  ed.parentDoc[childDocs][0].documentType.code +
-                  "_" +
-                  ed.educationalLevel.code.toUpperCase() +
-                  "_" +
-                  ed.professionType.code.toUpperCase()
-              ] = true;
-              errorDocuments.value.push({
-                name: ed.parentDoc[childDocs][0].documentType.name,
-                code:
-                  ed.parentDoc[childDocs][0].documentType.code +
-                  "_" +
-                  ed.educationalLevel.code.toUpperCase() +
-                  "_" +
-                  ed.professionType.code.toUpperCase(),
-              });
-            } else {
-              fileUploadError.value[
-                "file_upload_row_" +
-                  ed.parentDoc[childDocs][0].documentType.code +
-                  "_" +
-                  ed.educationalLevel.code.toUpperCase() +
-                  "_" +
-                  ed.professionType.code.toUpperCase()
-              ] = false;
-            }
-          }
-        }
+ 
 
         // fileUploadError.value[
         //         "file_upload_row_" +
@@ -1224,7 +1184,7 @@ export default {
         //       ] = true;
       });
 
-      return CMtemp && temp && NSTemp;
+      return CMtemp && temp;
     };
     const next = () => {
       let documentValidation = checkDocuments();

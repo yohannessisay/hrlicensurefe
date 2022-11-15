@@ -584,7 +584,7 @@ export default {
 
               .catch((err) => console.log(err));
 
-            modalData.value.name =
+              modalData.value.name =
               result.profile.name +
               " " +
               result.profile.fatherName +

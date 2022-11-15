@@ -1988,8 +1988,15 @@ export default {
               ? newLicense.value.documents
               : {};
           totalSteps.value = docs.value ? docs.value.length : 0;
-          fetchDocumentTypes();
 
+          fetchDocumentTypes();
+          if (
+            newLicense.value &&
+            newLicense.value.licenseReviewer &&
+            newLicense.value.licenseReviewer.regionId == null
+          ) {
+            showTransferToAdminButton.value = false;
+          }
           if (
             newLicense.value &&
             newLicense.value.applicationStatus.code == "REVDRA"
@@ -2033,11 +2040,6 @@ export default {
             ) {
               findDocumentType(documentTypes.value, docs.value[index.value]);
             }
-          } else if (
-            newLicense.value &&
-            newLicense.value.applicationStatus.code == "IRV"
-          ) {
-            showTransferToAdminButton.value = true;
           }
         });
 
@@ -2360,7 +2362,6 @@ export default {
         ],
         message: smsMessage ? smsMessage : "",
       };
-    
 
       if (applicationType.value == "New License") {
         isLoadingAction.value = true;

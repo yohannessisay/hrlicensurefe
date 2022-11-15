@@ -725,6 +725,31 @@
     <div class="flex justify-end mr-8 mb-8">
       <button
         class="
+        mt-8
+          inline-block
+          px-6
+          py-2.5
+          bg-white
+          hover:bg-main-400 hover:text-white
+          text-main-400 text-xs
+          font-bold
+          leading-tight
+          uppercase
+          rounded
+          shadow-md
+          active:border-main-400
+          transition
+          duration-150
+          ease-in-out
+          border
+        "
+        type="submit"
+        @click="saveDraft()"
+      >
+        Save as draft
+      </button>
+      <button
+        class="
           mt-8
           inline-block
           px-6
@@ -914,7 +939,9 @@ export default {
       let icon = document.getElementById(
         "common_icon" + data.documentType.id + data.id
       );
-      icon.classList.toggle("disabled");
+      if (icon.classList.contains("disabled")) {
+        icon.classList.toggle("disabled");
+      }
       let output = document.getElementById(
         "common_image_lightbox" + data.documentType.id + data.id
       );
@@ -923,10 +950,15 @@ export default {
         "common_image_href" + data.documentType.id + data.id
       );
       outputHref.href = URL.createObjectURL(event.target.files[0]);
-      output.src = URL.createObjectURL(event.target.files[0]);
-      output.onload = function () {
-        URL.revokeObjectURL(output.src); // free memory
-      };
+      if (output && output.src) {
+        output.src = URL.createObjectURL(event.target.files[0]);
+      }
+
+      output
+        ? (output.onload = function () {
+            URL.revokeObjectURL(output.src); // free memory
+          })
+        : "";
     };
 
     const handleFileUpload = (data, event, pro) => {
@@ -1035,7 +1067,9 @@ export default {
           "_" +
           pro.professionType.code
       );
-      icon.classList.toggle("disabled");
+      if (icon.classList.contains("disabled")) {
+        icon.classList.toggle("disabled");
+      }
       let output = document.getElementById(
         "image_lightbox_" +
           data.documentType.code +
@@ -1053,10 +1087,15 @@ export default {
           pro.professionType.code
       );
       outputHref.href = URL.createObjectURL(event.target.files[0]);
-      output.src = URL.createObjectURL(event.target.files[0]);
-      output.onload = function () {
-        URL.revokeObjectURL(output.src); // free memory
-      };
+      if (output && output.src) {
+        output.src = URL.createObjectURL(event.target.files[0]);
+      }
+
+      output
+        ? (output.onload = function () {
+            URL.revokeObjectURL(output.src); // free memory
+          })
+        : "";
     };
 
     const checkDocuments = () => {
@@ -1298,7 +1337,67 @@ export default {
         });
       };
     };
+    const saveDraft = () => {
+      generalInfo.value.licenseFile = [];
 
+      let license = {
+        action: "DraftEvent",
+        data: {
+          applicantTypeId:
+            localData.value && localData.value.applicantTypeSelected
+              ? localData.value.applicantTypeSelected.id
+              : null,
+          residenceWoredaId:
+            localData.value && localData.value.woredaSelected
+              ? localData.value.woredaSelected.id
+              : null,
+          educations: localData.value ? localData.value.education : {},
+          occupationTypeId: localData.value.occupationSelected
+            ? localData.value.occupationSelected.id
+            : null,
+          nativeLanguageId: localData.value.nativeLanguageSelected
+            ? localData.value.nativeLanguageSelected.id
+            : null,
+          isLegal: true,
+        },
+      };
+      store.dispatch("renewal/addRenewal", license).then((res) => {
+        let licenseId = res.data.data.id;
+        let payload = { document: formData, id: licenseId };
+        store
+          .dispatch("renewal/uploadDocuments", payload)
+          .then((res) => {
+            if (res.data.status == "Success") {
+              toast.success("Applied successfuly", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
+              localStorage.removeItem('RNApplicationData');
+              location.reload();
+            } else {
+              toast.error("Error occured, please try again", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
+            }
+          })
+          .catch(() => {
+            toast.error("Error occured, please try again", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+          });
+      });
+    };
     onMounted(() => {
       localData.value = window.localStorage.getItem("RNApplicationData")
         ? JSON.parse(window.localStorage.getItem("RNApplicationData"))
@@ -1374,6 +1473,7 @@ export default {
       next,
       back,
       addMore,
+      saveDraft,
       showNestedDocuments,
     };
   },

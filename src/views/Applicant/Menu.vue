@@ -1,7 +1,7 @@
 <template>
-  <div class="main">
+  <div class="main" id="main">
     <side-nav></side-nav>
-    <div class="content">
+    <div class="content" id="mainContent">
       <top-nav :userInfo="userInfo"></top-nav>
       <div class="mt-8 ml-8 mr-8">
         <nav class="bg-grey-100 p-4 rounded-sm w-full shadow-lg">
@@ -14,6 +14,9 @@
         </nav>
 
         <div id="home" class="flex flex-row justify-center ml-4 mt-12">
+          <!-- <div class="float-container">
+            <a href="#" class="icon one"> </a>
+          </div> -->
           <div class="flex flex-col md:flex-row justify-center flex-wrap gap-2">
             <div class="mr-12 mb-8 overview-boxes rounded-xl">
               <div
@@ -308,7 +311,7 @@
                             cursor-pointer
                           "
                           data-bs-toggle="tooltip"
-                          title="For non english speaking countries only"
+                          title="not lasting three months"
                         >
                           <i class="fa fa-arrow-right-long"></i>
                           Medical Certificate
@@ -533,7 +536,7 @@
                             cursor-pointer
                           "
                           data-bs-toggle="tooltip"
-                          title="For non english speaking countries only"
+                          title="not lasting three months"
                         >
                           <i class="fa fa-arrow-right-long"></i>
                           Medical Certificate
@@ -789,7 +792,7 @@
                             cursor-pointer
                           "
                           data-bs-toggle="tooltip"
-                          title=" "
+                          title="not lasting three months"
                         >
                           <i class="fa fa-arrow-right-long"></i>
                           Medical Certificate
@@ -1549,7 +1552,7 @@ export default {
     const getImage = (profile) => {
       if (!profile) {
         isFirstTime.value = true;
-      } else { 
+      } else {
         userInfo.value.pic = profile.profilePicture
           ? googleApi + profile.profilePicture.filePath
           : "";
@@ -1557,6 +1560,16 @@ export default {
     };
     onMounted(() => {
       getProfile();
+
+      if (JSON.parse(localStorage.getItem("darkMode")) == true) {
+        document.getElementById("mainContent").classList.add("dark-mode");
+        document.getElementById("activeMenu").classList.add("dark-mode");
+        document.getElementById("mainSideBar").classList.add("dark-mode");
+        document.getElementById("menu-icon").classList.add("dark-mode");
+        document.getElementById("home").classList.add("dark-mode");
+        document.querySelector("body").classList.add("dark-mode");
+        document.getElementById("options-menu").classList.add("dark-mode");
+      }
       store.dispatch("lookups/getAllDocumentSpecs").then((res) => {
         if (res.data.status == "Success") {
           // NewLicense Section
@@ -1619,9 +1632,9 @@ export default {
               element.applicationCategory.code == "GSL" &&
               element.parentDocument == null &&
               element.educationalLevel &&
-              element.educationalLevel.code == "BACH"
+              element.educationalLevel.id == 2
           );
-        }
+        } 
       });
     });
     return { userInfo, NLdocumentSpecs, RNdocumentSpecs, GSdocumentSpecs };
@@ -1637,4 +1650,6 @@ export default {
   border-radius: 12px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.884);
 }
+
+
 </style>

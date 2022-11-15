@@ -126,7 +126,7 @@
                             v-model="admin.firstName"
                           />
                           <span
-                            style="color: red"
+                            class="text-red-300 ml-4 text-xs"
                             v-if="state.showErrorMessages"
                             >{{ state.validationErrors.firstName }}</span
                           >
@@ -161,7 +161,7 @@
                             v-model="admin.fatherName"
                           />
                           <span
-                            style="color: red"
+                            class="text-red-300 ml-4 text-xs"
                             v-if="state.showErrorMessages"
                             >{{ state.validationErrors.fatherName }}</span
                           >
@@ -198,7 +198,7 @@
                             v-model="admin.grandfatherName"
                           />
                           <span
-                            style="color: red"
+                            class="text-red-300 ml-4 text-xs"
                             v-if="state.showErrorMessages"
                             >{{ state.validationErrors.grandfatherName }}</span
                           >
@@ -233,7 +233,7 @@
                             v-model="admin.email"
                           />
                           <span
-                            style="color: red"
+                            class="text-red-300 ml-4 text-xs"
                             v-if="state.showErrorMessages"
                             >{{ state.validationErrors.email }}</span
                           >
@@ -270,7 +270,7 @@
                             v-model="admin.phoneNumber"
                           />
                           <span
-                            style="color: red"
+                            class="text-red-300 ml-4 text-xs"
                             v-if="state.showErrorMessages"
                             >{{ state.validationErrors.phoneNumber }}</span
                           >
@@ -313,7 +313,7 @@
                             </option>
                           </select>
                           <span
-                            style="color: red"
+                            class="text-red-300 ml-4 text-xs"
                             v-if="state.showErrorMessages"
                             >{{ state.validationErrors.role }}</span
                           >
@@ -350,24 +350,24 @@
                               focus:border-blue-600
                               focus:outline-none
                             "
-                            v-model="expertLevels.id"
+                            v-model="expertLevel"
                             @change="selectedExpertLevel"
                           >
                             <option
                               v-for="expertLevel in expertLevels"
                               v-bind:key="expertLevel.name"
-                              v-bind:value="expertLevel.id"
+                              v-bind:value="expertLevel"
                             >
                               {{ expertLevel.name }}
                             </option>
                           </select>
                           <span
-                            style="color: red"
+                            class="text-red-300 ml-4 text-xs"
                             v-if="state.showErrorMessages"
                             >{{ state.validationErrors.expertLevel }}</span
                           >
                         </div>
-                        <span v-show="expertLevels.id == 4">
+                        <span v-show="expertLevel.id == 4">
                           <label class="ml-4">Region</label>
                           <div>
                             <select
@@ -393,23 +393,72 @@
                                 focus:border-blue-600
                                 focus:outline-none
                               "
-                              v-model="regions.id"
+                              v-model="region"
                               @change="selectedRegion"
                             >
                               <option
                                 v-for="region in regions"
                                 v-bind:key="region.name"
-                                v-bind:value="region.id"
+                                v-bind:value="region"
                               >
                                 {{ region.name }}
                               </option>
                             </select>
                           </div>
                           <span
-                            style="color: red"
+                            class="text-red-300 ml-4 text-xs"
                             v-if="state.showErrorMessages"
                             >{{ state.validationErrors.region }}</span
                           >
+                        </span>
+
+                        <span
+                          v-show="
+                            expertLevel.id == 4 &&
+                            region &&
+                            region.code == 'AMH'
+                          "
+                          class="mr-2 ml-2"
+                        >
+                          <label class="ml-2">Zone</label>
+                          <div>
+                            <select
+                              class="
+                                form-control
+                                block
+                                w-full
+                                h-12
+                                text-base
+                                font-normal
+                                text-gray-700
+                                bg-white bg-clip-padding
+                                border border-solid border-gray-300
+                                rounded
+                                transition
+                                ease-in-out
+                                ml-4
+                                mt-0
+                                focus:text-gray-700
+                                focus:bg-white
+                                focus:border-blue-600
+                                focus:outline-none
+                              "
+                              v-model="admin.zoneId"
+                            >
+                              <option
+                                v-for="zone in zones"
+                                v-bind:key="zone.id"
+                                v-bind:value="zone.id"
+                              >
+                                {{ zone.name }}
+                              </option>
+                            </select>
+                            <span
+                              class="text-red-300 ml-4 text-xs"
+                              v-if="state.showErrorMessages"
+                              >{{ state.validationErrors.zone }}</span
+                            >
+                          </div>
                         </span>
                       </div>
 
@@ -512,28 +561,19 @@ export default {
       roleId: null,
       expertLevelId: null,
       regionId: null,
+      zoneId: null,
       password: "password1",
       isActive: true,
     };
 
     let showLoading = ref(false);
     let showButtons = ref(false);
-
-    let expertLevels = ref([
-      {
-        id: null,
-        name: null,
-        code: null,
-      },
-    ]);
-
-    let regions = ref([
-      {
-        id: null,
-        name: null,
-        code: null,
-      },
-    ]);
+    let expertLevels = ref([]);
+    let expertLevel = ref([]);
+    let regions = ref([]);
+    let region = ref([]);
+    let zones = ref([]);
+    let zone = ref([]);
 
     let state = ref({
       roles: [],
@@ -567,24 +607,33 @@ export default {
       });
     };
 
+    let showRegion = ref("");
     const selectedExpertLevel = () => {
-      if (expertLevels.value.code == "FED") {
+
+      if (expertLevel.value.code == "FED") {
         admin.regionId = null;
-      } else {
-        admin.expertLevelId = expertLevels.value.id;
+        admin.expertLevelId = expertLevel.value.id;
+      } else { 
+        showRegion.value = 4;
+        admin.expertLevelId = expertLevel.value.id;
+      }
+   
+    };
+    const selectedRegion = () => {
+      admin.zoneId=null;
+      admin.regionId = region.value.id;
+      if (region.value.code == "AMH") {
+        store.dispatch("renewal/getZones", region.value.id).then((res) => {
+          zones.value = res.data.data;
+        });
       }
     };
 
-    const selectedRegion = () => {
-      admin.regionId = regions.value.id;
-    };
-
-    const registerAdmin = () => {
-      // isLoading.value = true;
+    const registerAdmin = () => { 
       let isValidated = validateForm(admin);
       showLoading.value = true;
       showButtons.value = true;
-     
+
       if (isValidated) {
         state.value.validationErrors = isValidated;
         state.value.showErrorMessages = true;
@@ -600,7 +649,6 @@ export default {
 
         admin.email = admin.email.toLowerCase();
 
-        
         store
           .dispatch("admin/registerAdmin", admin)
           .then((res) => {
@@ -617,7 +665,7 @@ export default {
 
               setTimeout(() => {
                 window.location.reload();
-              }, 3000);
+              }, 2000);
             } else if (res.data.status == "Error") {
               toast.error(res.data.message, {
                 timeout: 5000,
@@ -630,7 +678,7 @@ export default {
 
               setTimeout(() => {
                 window.location.reload();
-              }, 3000);
+              }, 2000);
             }
           })
           .catch(() => {
@@ -660,12 +708,22 @@ export default {
         errors.phoneNumber = "Phone Number is Required";
       if (formData.email && !isValidEmail(formData.email)) {
         errors.email = "Invalid Email";
-      }
-
-      if (!formData.expertLevelId && adminExpertId == 3)
+      } 
+      if (!formData.expertLevelId )
         errors.expertLevel = "Expert Level is required";
       if (!formData.regionId && formData.expertLevelId == 4)
         errors.region = "Region is required";
+      if (
+        (!formData.regionId &&
+          formData.expertLevelId == 4 &&
+          region.value.code == "AMH" &&
+          formData.zoneId == null) ||
+        (formData.regionId &&
+          formData.expertLevelId == 4 &&
+          region.value.code == "AMH" &&
+          formData.zoneId == null)
+      )
+        errors.zone = "Zone is required";
       if (!formData.firstName) errors.firstName = "First name is Required";
       if (!formData.fatherName) errors.fatherName = "Father name is Required";
       if (!formData.grandfatherName)
@@ -712,6 +770,10 @@ export default {
       selectedRegion,
       showButtons,
       isLoading,
+      region,
+      zones,
+      zone,
+      expertLevel,
     };
   },
 };

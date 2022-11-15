@@ -322,7 +322,7 @@
               <div v-show="showOtherProfession">
                 <label class="text-main-400">Other Profession</label>
                 <input
-                  type="text" 
+                  type="text"
                   v-model="generalInfo.professionType.otherProfessionType"
                   class="
                     appearance-none
@@ -352,10 +352,10 @@
                 />
               </div>
 
-              <div  v-show="showOtherProfession">
+              <div v-show="showOtherProfession">
                 <label class="text-main-400">Other Profession Amharic</label>
                 <input
-                  type="text" 
+                  type="text"
                   v-model="generalInfo.professionType.otherProfessionType"
                   class="
                     appearance-none
@@ -383,6 +383,49 @@
                   placeholder=""
                   required
                 />
+              </div>
+            </div>
+
+            <div
+              class="flex justify-center text-6xl rounded-xl p-2 bg-gray-100"
+            >
+              <div>
+                <label class="text-main-400">Applicant Position</label>
+                <select
+                  class="
+                    form-select
+                    appearance-none
+                    block
+                    xl:w-64
+                    md:w-64
+                    sm:w-64
+                    px-3
+                    py-1.5
+                    text-base
+                    font-normal
+                    text-gray-700
+                    hover:text-main-500 hover:border-main-500
+                    border border-solid border-gray-300
+                    rounded
+                    transition
+                    ease-in-out
+                    m-0
+                    focus:text-gray-700
+                    focus:bg-white
+                    focus:border-main-400
+                    focus:outline-none
+                  "
+                  v-model="generalInfo.applicantPosition"
+                  required
+                >
+                  <option
+                    v-for="position in applicationPositions"
+                    v-bind:key="position.id"
+                    v-bind:value="position"
+                  >
+                    {{ position.name }}
+                  </option>
+                </select>
               </div>
             </div>
           </div>
@@ -529,7 +572,7 @@
                   >
 
                   <input
-                    type="text" 
+                    type="text"
                     v-model="generalInfo.whomGoodStandingFor"
                     class="
                       appearance-none
@@ -579,7 +622,7 @@
                   >
 
                   <input
-                    type="text" 
+                    type="text"
                     v-model="generalInfo.whoIssued"
                     class="
                       appearance-none
@@ -634,7 +677,7 @@
                   >
 
                   <input
-                    type="text" 
+                    type="text"
                     v-model="generalInfo.licenseRegistrationNumber"
                     class="
                       appearance-none
@@ -676,7 +719,7 @@
                   >
 
                   <input
-                    type="date" 
+                    type="date"
                     v-model="generalInfo.licenseIssuedDate"
                     class="
                       appearance-none
@@ -738,6 +781,36 @@
             ease-in-out
           "
           type="submit"
+          @click="saveDraft()"
+        >
+          Save as draft
+        </button>
+        <button
+          class="
+            float-right
+            mt-8
+            inline-block
+            px-6
+            py-2.5
+            bg-blue-700
+            text-main-400
+            max-w-3xl
+            font-medium
+            text-xs
+            leading-tight
+            uppercase
+            rounded
+            shadow-md
+            bg-white
+            border
+            hover:text-white hover:border-main-500 hover:bg-main-400
+            focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
+            active:bg-blue-800 active:shadow-lg
+            transition
+            duration-150
+            ease-in-out
+          "
+          type="submit"
           @click="apply()"
         >
           Next
@@ -749,12 +822,14 @@
 <script>
 import { useStore } from "vuex";
 import { ref, onMounted } from "vue";
+import { useToast } from "vue-toastification";
 export default {
   props: ["activeState"],
   components: {},
 
   setup(props, { emit }) {
     const store = useStore();
+    const toast = useToast();
     let generalInfo = ref({
       applicantId: +localStorage.getItem("userId"),
       applicantTypeId: "",
@@ -769,6 +844,7 @@ export default {
       otherProfessionTypeAmharic: "",
       applicantTitleId: "",
       applicationStatusId: "",
+      applicantPosition: "",
       educationLevelId: "",
       regionSelected: "",
       zoneSelected: "",
@@ -814,8 +890,10 @@ export default {
     };
     const educationalLevelChange = () => {
       isEdLevelSelected.value = true;
-      console.log(   generalInfo.value.departmentId.id,
-        generalInfo.value.educationLevelId.id)
+      console.log(
+        generalInfo.value.departmentId.id,
+        generalInfo.value.educationLevelId.id
+      );
       fetchProfessionalType(
         generalInfo.value.departmentId.id,
         generalInfo.value.educationLevelId.id
@@ -894,9 +972,10 @@ export default {
         });
     };
     const setDepartment = () => {
-      isDepartmentSelected.value = true; 
+      isDepartmentSelected.value = true;
       fetchProfessionalType(generalInfo.value.departmentId.id);
     };
+
     const apply = () => {
       let tempApplicationData = generalInfo.value;
       window.localStorage.setItem(
@@ -919,6 +998,87 @@ export default {
       store.dispatch("lookups/getEducationLevel").then((res) => {
         educationLevels.value = res.data.data;
       });
+    };
+
+    const saveDraft = () => {
+      generalInfo.value.licenseFile = [];
+
+      let license = {
+        action: "DraftEvent",
+        data: {
+          applicantId: generalInfo.value.applicantId,
+          applicantTypeId: generalInfo.value.applicantTypeId.id,
+          residenceWoredaId: generalInfo.value.woredaSelected
+            ? generalInfo.value.woredaSelected.id
+            : null,
+          applicantTitleId: generalInfo.value.applicantTitleId
+            ? generalInfo.value.applicantTitleId.id
+            : "",
+          whomGoodStandingFor: generalInfo.value.whomGoodStandingFor
+            ? generalInfo.value.whomGoodStandingFor
+            : "",
+          applicantPositionId: generalInfo.value.applicantPosition
+            ? generalInfo.value.applicantPosition.id
+            : null,
+          licenseIssuedDate: generalInfo.value.licenseIssuedDate
+            ? generalInfo.value.licenseIssuedDate
+            : null,
+          whoIssued: generalInfo.value.whoIssued
+            ? generalInfo.value.whoIssued
+            : "",
+          licenseRegistrationNumber: generalInfo.value.licenseRegistrationNumber
+            ? generalInfo.value.licenseRegistrationNumber
+            : "",
+          professionType: {
+            professionTypeId: generalInfo.value.professionType
+              ? generalInfo.value.professionType.professionTypeId.id
+              : null,
+            educationLevelId: generalInfo.value.professionType
+              ? generalInfo.value.professionType.educationLevelId.id
+              : null,
+          },
+          expertLevelId: generalInfo.value.expertLevelId
+            ? generalInfo.value.expertLevelId
+            : null,
+          islegal: true,
+          otherProfessionalType: generalInfo.value.otherProfessionType
+            ? generalInfo.value.otherProfessionType
+            : "",
+          otherProfessionalTypeAmharic: generalInfo.value
+            .otherProfessionTypeAmharic
+            ? generalInfo.value.otherProfessionTypeAmharic
+            : "",
+          departmentId: generalInfo.value.departmentId.id
+            ? generalInfo.value.departmentId.id
+            : null,
+          feedback: generalInfo.value.feedback
+            ? generalInfo.value.feedback
+            : "",
+        },
+      };
+      store
+        .dispatch("goodstanding/addGoodstandingLicense", license)
+        .then((res) => {
+          if (res.data.status == "Success") {
+            toast.success("Applied successfuly", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+            localStorage.removeItem("GSApplicationData");
+            location.reload();
+          } else {
+            toast.error("Error occured, please try again", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+          }
+        });
     };
     onMounted(async () => {
       fetchApplicantType();
@@ -948,10 +1108,12 @@ export default {
       apply,
       fetchZone,
       showOtherProfession,
+      saveDraft,
       applicantTitle,
       isDepartmentSelected,
       isEdLevelSelected,
       isAppTypeSelected,
+      applicationPositions,
       educationLevels,
       showLocation,
       regions,
@@ -969,11 +1131,9 @@ export default {
 </script>
 <style>
 #main {
-  border: 1px solid #cccccc;
   border-radius: 5px;
 }
 .table-multiple {
-  border: 1px solid #cccccc;
   border-radius: 5px;
 }
 </style>

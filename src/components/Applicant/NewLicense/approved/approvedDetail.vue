@@ -275,97 +275,8 @@
                       <!-- END Article -->
                     </div>
                     <!-- END Column -->
-
-                    <!-- Column -->
-                    <div
-                      class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
-                    >
-                      <!-- Article -->
-                      <article class="overflow-hidden rounded-lg shadow-xl">
-                        <header
-                          class="
-                            flex
-                            items-center
-                            justify-between
-                            leading-tight
-                            p-2
-                            md:p-4
-                            border-b-4
-                            text-main-400
-                          "
-                        >
-                          <h1 class="text-lg">
-                            <a
-                              class="no-underline hover:underline text-black"
-                              href="#"
-                            >
-                              Applicants Education Detail
-                            </a>
-                          </h1>
-                          <p class="text-main-400 text-sm">Active</p>
-                        </header>
-
-                        <div
-                          class="grid grid-flow-row auto-rows-max"
-                          v-for="(education, index) in licenseData.educations"
-                          :key="education ? education.id : ''"
-                        >
-                          <div class="flex justify-between px-4 py-1">
-                            <div>Department</div>
-                            <div class="text-main-400 font-bold">
-                              {{
-                                education && education.department
-                                  ? education.department.name
-                                  : "-"
-                              }}
-                            </div>
-                          </div>
-                          <div class="flex justify-between px-4 py-1">
-                            <div>Institution</div>
-                            <div class="text-main-400 font-bold">
-                              {{
-                                education && education.institution
-                                  ? education.institution.name
-                                  : "-"
-                              }}
-                            </div>
-                          </div>
-                          <div class="flex justify-between px-4 py-1">
-                            <div>Education Level</div>
-                            <div class="text-main-400 font-bold">
-                              {{
-                                education && education.educationLevel
-                                  ? education.educationLevel.name
-                                  : "-"
-                              }}
-                            </div>
-                          </div>
-
-                          <hr
-                            class="mt-3 mb-3"
-                            style="color: lightgray"
-                            v-if="index != licenseData.educations.length - 1"
-                          />
-                        </div>
-
-                        <footer
-                          class="
-                            flex
-                            items-center
-                            justify-between
-                            leading-none
-                            p-2
-                            md:p-4
-                          "
-                        ></footer>
-                      </article>
-                      <!-- END Article -->
-                    </div>
-
-                    <!-- END Column -->
-
-                    <!-- Column -->
-                    <div
+       <!-- Column -->
+       <div
                       class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
                     >
                       <!-- Article -->
@@ -460,6 +371,95 @@
                       <!-- END Article -->
                     </div>
                     <!-- END Column -->
+                    <!-- Column -->
+                    <div
+                      class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
+                    >
+                      <!-- Article -->
+                      <article class="overflow-hidden rounded-lg shadow-xl">
+                        <header
+                          class="
+                            flex
+                            items-center
+                            justify-between
+                            leading-tight
+                            p-2
+                            md:p-4
+                            border-b-4
+                            text-main-400
+                          "
+                        >
+                          <h1 class="text-lg">
+                            <a
+                              class="no-underline hover:underline text-black"
+                              href="#"
+                            >
+                              Applicants Education Detail
+                            </a>
+                          </h1>
+                          <p class="text-main-400 text-sm">Active</p>
+                        </header>
+
+                        <div
+                          class="grid grid-flow-row auto-rows-max"
+                          v-for="(education, index) in licenseData.educations"
+                          :key="education ? education.id : ''"
+                        >
+                          <div class="flex justify-between px-4 py-1">
+                            <div>Department</div>
+                            <div class="text-main-400 font-bold">
+                              {{
+                                education && education.department
+                                  ? education.department.name
+                                  : "-"
+                              }}
+                            </div>
+                          </div>
+                          <div class="flex justify-between px-4 py-1">
+                            <div>Institution</div>
+                            <div class="text-main-400 font-bold">
+                              {{
+                                education && education.institution
+                                  ? education.institution.name
+                                  : "-"
+                              }}
+                            </div>
+                          </div>
+                          <div class="flex justify-between px-4 py-1">
+                            <div>Education Level</div>
+                            <div class="text-main-400 font-bold">
+                              {{
+                                education && education.educationLevel
+                                  ? education.educationLevel.name
+                                  : "-"
+                              }}
+                            </div>
+                          </div>
+
+                          <hr
+                            class="mt-3 mb-3"
+                            style="color: lightgray"
+                            v-if="index != licenseData.educations.length - 1"
+                          />
+                        </div>
+
+                        <footer
+                          class="
+                            flex
+                            items-center
+                            justify-between
+                            leading-none
+                            p-2
+                            md:p-4
+                          "
+                        ></footer>
+                      </article>
+                      <!-- END Article -->
+                    </div>
+
+                    <!-- END Column -->
+
+             
                   </div>
                 </div>
               </section>

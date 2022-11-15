@@ -128,6 +128,94 @@
                       </svg>
                     </button>
                   </div>
+                  <label for="" class="mt-8 text-primary-600 font-bold"
+                  >Applied Date</label
+                >
+                <div class="grid grid-cols-4">
+                  <div class="mb-3">
+                    <label for="" class="ml-2">From</label>
+                    <input
+                      v-model="searchTermFromDate"
+                      type="date"
+                      class="
+                        appearance-none
+                        block
+                        w-full
+                        px-6
+                        ml-2
+                        py-2
+                        text-base
+                        font-normal
+                        text-gray-700
+                        bg-white bg-clip-padding bg-no-repeat
+                        border border-solid border-gray-300
+                        rounded
+                        transition
+                        ease-in-out
+                        focus:text-gray-700
+                        focus:bg-white
+                        focus:border-blue-600
+                        focus:outline-none
+                      "
+                      aria-label="Default select example"
+                    />
+                  </div>
+                  <div class="mb-3 ml-2">
+                    <label for="" class="ml-4"> To</label>
+                    <input
+                      type="date"
+                      class="
+                        appearance-none
+                        block
+                        w-full
+                        px-6
+                        ml-4
+                        py-2
+                        text-base
+                        font-normal
+                        text-gray-700
+                        bg-white bg-clip-padding bg-no-repeat
+                        border border-solid border-gray-300
+                        rounded
+                        transition
+                        ease-in-out
+                        focus:text-gray-700
+                        focus:bg-white
+                        focus:border-blue-600
+                        focus:outline-none
+                      "
+                      v-model="searchTermToDate"
+                      aria-label="Default select example"
+                    />
+                  </div>
+                  <div class="ml-8 mt-4">
+                    <button
+                      type="button"
+                      class="
+                        inline-block
+                        px-6
+                        py-2
+                        mt-2
+                        border-2 border-primary-600
+                        text-primary-600
+                        font-medium
+                        text-xs
+                        leading-tight
+                        uppercase
+                        rounded
+                        hover:bg-primary-600 hover:bg-opacity-5 hover:text-white
+                        focus:outline-none focus:ring-0
+                        transition
+                        duration-150
+                        ease-in-out
+                      "
+                      @click="clearFilters()"
+                    >
+                      <i class="fa fa-close"></i>
+                      Clear Filters
+                    </button>
+                  </div>
+                </div>
                 </div>
                 <div
                   class="
@@ -139,8 +227,7 @@
                     bg-primary-800
                   "
                 >
-                  <vue-table-lite
-                    :is-static-mode="true"
+                  <vue-table-lite 
                     :is-loading="toYouTable.isLoading"
                     :columns="toYouTable.columns"
                     :rows="toYouTable.rows"
@@ -242,6 +329,94 @@
                       </svg>
                     </button>
                   </div>
+                  <label for="" class="mt-8 text-primary-600 font-bold"
+                  >Applied Date</label
+                >
+                <div class="grid grid-cols-4">
+                  <div class="mb-3">
+                    <label for="" class="ml-2">From</label>
+                    <input
+                      v-model="searchTermFromDateOth"
+                      type="date"
+                      class="
+                        appearance-none
+                        block
+                        w-full
+                        px-6
+                        ml-2
+                        py-2
+                        text-base
+                        font-normal
+                        text-gray-700
+                        bg-white bg-clip-padding bg-no-repeat
+                        border border-solid border-gray-300
+                        rounded
+                        transition
+                        ease-in-out
+                        focus:text-gray-700
+                        focus:bg-white
+                        focus:border-blue-600
+                        focus:outline-none
+                      "
+                      aria-label="Default select example"
+                    />
+                  </div>
+                  <div class="mb-3 ml-2">
+                    <label for="" class="ml-4"> To</label>
+                    <input
+                      type="date"
+                      class="
+                        appearance-none
+                        block
+                        w-full
+                        px-6
+                        ml-4
+                        py-2
+                        text-base
+                        font-normal
+                        text-gray-700
+                        bg-white bg-clip-padding bg-no-repeat
+                        border border-solid border-gray-300
+                        rounded
+                        transition
+                        ease-in-out
+                        focus:text-gray-700
+                        focus:bg-white
+                        focus:border-blue-600
+                        focus:outline-none
+                      "
+                      v-model="searchTermToDateOth"
+                      aria-label="Default select example"
+                    />
+                  </div>
+                  <div class="ml-8 mt-4">
+                    <button
+                      type="button"
+                      class="
+                        inline-block
+                        px-6
+                        py-2
+                        mt-2
+                        border-2 border-primary-600
+                        text-primary-600
+                        font-medium
+                        text-xs
+                        leading-tight
+                        uppercase
+                        rounded
+                        hover:bg-primary-600 hover:bg-opacity-5 hover:text-white
+                        focus:outline-none focus:ring-0
+                        transition
+                        duration-150
+                        ease-in-out
+                      "
+                      @click="clearFiltersOthers()"
+                    >
+                      <i class="fa fa-close"></i>
+                      Clear Filters
+                    </button>
+                  </div>
+                </div>
                 </div>
                 <div
                   class="
@@ -253,8 +428,7 @@
                     bg-primary-800
                   "
                 >
-                  <vue-table-lite
-                    :is-static-mode="true"
+                  <vue-table-lite 
                     :is-loading="toOthersTable.isLoading"
                     :columns="toOthersTable.columns"
                     :rows="toOthersTable.rows"
@@ -286,7 +460,7 @@ import { useStore } from "vuex";
 import VueTableLite from "vue3-table-lite";
 import editModal from "./approvedModal.vue";
 import editModalOthers from "./approvedModalOthers.vue";
-
+import moment from "moment";
 export default {
   name: "home",
   components: {
@@ -303,6 +477,10 @@ export default {
     const adminId = +localStorage.getItem("adminId");
     const searchTerm = ref("");
     const searchTermOthers = ref("");
+    let searchTermFromDate = ref("");
+    let searchTermToDate = ref("");
+    let searchTermFromDateOth = ref("");
+    let searchTermToDateOth = ref(""); 
     let modalDataId = ref({
       id: "",
       change: 0,
@@ -312,18 +490,7 @@ export default {
       change: 0,
     });
 
-    let allInfo = ref({
-      alreadyPushed: false,
-      searchByInput: false,
-      assignApplication: [],
-      message: {
-        showErrorFlash: false,
-      },
-      filteredByDate: [],
-      searchFromDate: "",
-      searchUpToDate: "",
-      app_type: "",
-    });
+    let allInfo = ref({});
 
     const toOthersTable = ref({});
     const toYouTable = ref({});
@@ -335,68 +502,70 @@ export default {
     toYouTable.value = {
       isLoading: true,
     };
-
+    const clearFilters = () => {
+      searchTerm.value = ""; 
+      searchTermFromDate.value = "";
+      searchTermToDate.value = ""; 
+    };
+    const clearFiltersOthers = () => { 
+      searchTermOthers.value = ""; 
+      searchTermFromDateOth.value = "";
+      searchTermToDateOth.value = ""; 
+    };
     const approved = () => {
       store.dispatch("reviewerNewLicense/getNewLicenseApproved").then((res) => {
-        allInfo.value.assignApplication = res;
-        for (let applicant in allInfo.value.assignApplication) {
-          if (
-            allInfo.value.assignApplication[applicant].applicationType ===
-            undefined
-          ) {
-            allInfo.value.assignApplication[applicant].applicationType =
-              allInfo.value.assignApplication[applicant].applicantType;
-          }
-        }
+        allInfo.value = res;
 
-        JSON.parse(JSON.stringify(allInfo.value.assignApplication)).forEach(
-          (element) => {
-            if (
-              element.licenseReviewer &&
-              element.licenseReviewer.reviewerId == adminId
-            ) {
-              toYouTableData.value.push({
-                id: element.id,
-                ApplicantName:
-                  (element.profile.name ? element.profile.name : "-----") +
-                  " " +
-                  (element.profile.fatherName
-                    ? element.profile.fatherName
-                    : "-----") +
-                  " " +
-                  (element.profile.grandFatherName
-                    ? element.profile.grandFatherName
-                    : "-----"),
-                ApplicationType: element.applicationType.name,
-                Date: new Date(element.createdAt)
-                  .toJSON()
-                  .slice(0, 10)
-                  .replace(/-/g, "/"),
-                data: element,
-              });
-            } else {
-              tableData.value.push({
-                id: element.id,
-                ApplicantName:
-                  (element.profile.name ? element.profile.name : "-----") +
-                  " " +
-                  (element.profile.fatherName
-                    ? element.profile.fatherName
-                    : "-----") +
-                  " " +
-                  (element.profile.grandFatherName
-                    ? element.profile.grandFatherName
-                    : "-----"),
-                ApplicationType: element.applicationType.name,
-                Date: new Date(element.createdAt)
-                  .toJSON()
-                  .slice(0, 10)
-                  .replace(/-/g, "/"),
-                data: element,
-              });
-            }
+        JSON.parse(JSON.stringify(allInfo.value)).forEach((element) => {
+          if (
+            element.licenseReviewer &&
+            element.licenseReviewer.reviewerId == adminId
+          ) {
+            toYouTableData.value.push({
+              id: element?element.id:'',
+              ApplicantName:
+                (element.profile.name ? element.profile.name : "-----") +
+                " " +
+                (element.profile.fatherName
+                  ? element.profile.fatherName
+                  : "-----") +
+                " " +
+                (element.profile.grandFatherName
+                  ? element.profile.grandFatherName
+                  : "-----"),
+                  ApplicationType: element.applicantType
+                ? element.applicantType.name
+                : "",
+              Date: new Date(element.createdAt)
+                .toJSON()
+                .slice(0, 10)
+                .replace(/-/g, "/"),
+              data: element,
+            });
+          } else {
+            tableData.value.push({
+              id: element?element.id:'',
+              ApplicantName:
+                (element.profile.name ? element.profile.name : "-----") +
+                " " +
+                (element.profile.fatherName
+                  ? element.profile.fatherName
+                  : "-----") +
+                " " +
+                (element.profile.grandFatherName
+                  ? element.profile.grandFatherName
+                  : "-----"),
+              ApplicationType: element.applicantType
+                ? element.applicantType.name
+                : "",
+              Date: new Date(element.createdAt)
+                .toJSON()
+                .slice(0, 10)
+                .replace(/-/g, "/"),
+              data: element,
+            });
           }
-        );
+        });
 
         toYouTable.value = {
           isLoading: false,
@@ -442,16 +611,43 @@ export default {
             },
           ],
           rows: computed(() => {
-            return toYouTableData.value.filter(
-              (x) =>
-                x.ApplicationType.toLowerCase().includes(
-                  searchTerm.value.toLowerCase()
-                ) ||
-                x.ApplicantName.toLowerCase().includes(
-                  searchTerm.value.toLowerCase()
-                )
-            );
-          }),
+                return toYouTableData.value.filter(
+                  (x) =>
+                    (x.ApplicantName
+                      ? x.ApplicantName.toLowerCase().includes(
+                          searchTerm.value.toLowerCase()
+                        )
+                      : "") &&
+                    (searchTermFromDate.value != ""
+                      ? x.Date
+                        ? searchTermToDate.value.length > 0
+                          ? moment(x.Date).isSameOrAfter(
+                              searchTermFromDate.value
+                            ) &&
+                            moment(x.Date).isSameOrBefore(
+                              searchTermToDate.value
+                            )
+                          : moment(x.Date).isSameOrAfter(
+                              searchTermFromDate.value
+                            )
+                        : ""
+                      : x.Date || x.Date == "" || x.Date == null) &&
+                    (searchTermToDate.value != ""
+                      ? x.Date
+                        ? searchTermFromDate.value.length > 0
+                          ? moment(x.Date).isSameOrBefore(
+                              searchTermToDate.value
+                            ) &&
+                            moment(x.Date).isSameOrAfter(
+                              searchTermFromDate.value
+                            )
+                          : moment(x.Date).isSameOrBefore(
+                              searchTermToDate.value
+                            )
+                        : ""
+                      : x.Date || x.Date == "" || x.Date == null)
+                );
+              }),
           totalRecordCount: toYouTableData.value.length,
           sortable: {
             order: "id",
@@ -495,7 +691,7 @@ export default {
                 return (
                   '<button  data-set="' +
                   row +
-                  '"  data-bs-toggle="modal" data-bs-target="#staticBackdropOthers" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
+                  '"  data-bs-toggle="modal" data-bs-target="#staticBackdropOthers" class="edit-btn-others bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
                   row.id +
                   '" ><i class="fa fa-eye"></i>View/Edit</button>'
                 );
@@ -503,16 +699,43 @@ export default {
             },
           ],
           rows: computed(() => {
-            return tableData.value.filter(
-              (x) =>
-                x.ApplicationType.toLowerCase().includes(
-                  searchTermOthers.value.toLowerCase()
-                ) ||
-                x.ApplicantName.toLowerCase().includes(
-                  searchTermOthers.value.toLowerCase()
-                )
-            );
-          }),
+                return tableData.value.filter(
+                  (x) =>
+                    (x.ApplicantName
+                      ? x.ApplicantName.toLowerCase().includes(
+                        searchTermOthers.value.toLowerCase()
+                        )
+                      : "") &&
+                    (searchTermFromDateOth.value != ""
+                      ? x.Date
+                        ? searchTermToDateOth.value.length > 0
+                          ? moment(x.Date).isSameOrAfter(
+                            searchTermFromDateOth.value
+                            ) &&
+                            moment(x.Date).isSameOrBefore(
+                              searchTermToDateOth.value
+                            )
+                          : moment(x.Date).isSameOrAfter(
+                            searchTermFromDateOth.value
+                            )
+                        : ""
+                      : x.Date || x.Date == "" || x.Date == null) &&
+                    (searchTermToDateOth.value != ""
+                      ? x.Date
+                        ? searchTermFromDateOth.value.length > 0
+                          ? moment(x.Date).isSameOrBefore(
+                            searchTermToDateOth.value
+                            ) &&
+                            moment(x.Date).isSameOrAfter(
+                              searchTermFromDateOth.value
+                            )
+                          : moment(x.Date).isSameOrBefore(
+                            searchTermFromDateOth.value
+                            )
+                        : ""
+                      : x.Date || x.Date == "" || x.Date == null)
+                );
+              }),
           totalRecordCount: tableData.value.length,
           sortable: {
             order: "id",
@@ -565,8 +788,14 @@ export default {
 
     return {
       allInfo,
+      clearFilters,
+      clearFiltersOthers,
       searchTerm,
       searchTermOthers,
+      searchTermFromDate,
+      searchTermToDate,
+      searchTermFromDateOth,
+      searchTermToDateOth,
       toOthersTable,
       toYouTable,
       showModal,

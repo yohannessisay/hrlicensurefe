@@ -399,8 +399,7 @@ export default {
       this.show = true;
     };
     const show = ref(true);
-    const showRes = ref(true);
-    const showGenerateModal = ref(true);
+    const showRes = ref(true); 
     const showOptions = ref(true);
     const isLoading = ref(true);
     const modalData = ref({});
@@ -458,8 +457,7 @@ export default {
       show,
       check,
       isLoading,
-      showRes,
-      showGenerateModal,
+      showRes, 
       showOptions,
       googleApi,
       modalData,
