@@ -1098,10 +1098,8 @@ export default {
         };
       }
     };
-    const checkDocuments = () => {
-      let temp = false;
-      let CMtemp = false;
-      let NSTemp = false;
+    const checkDocuments = () => { 
+      let CMtemp = false; 
 
       /// check common documents
 
@@ -1126,103 +1124,8 @@ export default {
             ] = false;
           }
         });
-
-      educationalDocs.value.forEach((ed) => {
-        // check normal docs with no parents
-
-        ed.docs
-          .filter((docs) => docs.isRequired)
-          .forEach((single) => {
-            temp = documentsUploaded.value.hasOwnProperty(
-              single.documentType.code +
-                "_" +
-                ed.educationalLevel.code.toUpperCase() +
-                "_" +
-                ed.professionType.code.toUpperCase()
-            );
-            if (!temp) {
-              fileUploadError.value[
-                "file_upload_row_" +
-                  single.documentType.code +
-                  "_" +
-                  ed.educationalLevel.code.toUpperCase() +
-                  "_" +
-                  ed.professionType.code.toUpperCase()
-              ] = true;
-              errorDocuments.value.push({
-                name: single.documentType.name,
-                code:
-                  single.documentType.code +
-                  "_" +
-                  ed.educationalLevel.code.toUpperCase() +
-                  "_" +
-                  ed.professionType.code.toUpperCase(),
-              });
-            } else {
-              fileUploadError.value[
-                "file_upload_row_" +
-                  single.documentType.code +
-                  "_" +
-                  ed.educationalLevel.code.toUpperCase() +
-                  "_" +
-                  ed.professionType.code.toUpperCase()
-              ] = false;
-            }
-          });
-
-        //// check documetns with parents
-
-        if (ed.parentDoc) {
-          for (let childDocs in ed.parentDoc) {
-            NSTemp = documentsUploaded.value.hasOwnProperty(
-              ed.parentDoc[childDocs][0].documentType.code +
-                "_" +
-                ed.educationalLevel.code.toUpperCase() +
-                "_" +
-                ed.professionType.code.toUpperCase()
-            );
-            if (!temp) {
-              fileUploadError.value[
-                "file_upload_row_" +
-                  ed.parentDoc[childDocs][0].documentType.code +
-                  "_" +
-                  ed.educationalLevel.code.toUpperCase() +
-                  "_" +
-                  ed.professionType.code.toUpperCase()
-              ] = true;
-              errorDocuments.value.push({
-                name: ed.parentDoc[childDocs][0].documentType.name,
-                code:
-                  ed.parentDoc[childDocs][0].documentType.code +
-                  "_" +
-                  ed.educationalLevel.code.toUpperCase() +
-                  "_" +
-                  ed.professionType.code.toUpperCase(),
-              });
-            } else {
-              fileUploadError.value[
-                "file_upload_row_" +
-                  ed.parentDoc[childDocs][0].documentType.code +
-                  "_" +
-                  ed.educationalLevel.code.toUpperCase() +
-                  "_" +
-                  ed.professionType.code.toUpperCase()
-              ] = false;
-            }
-          }
-        }
-
-        // fileUploadError.value[
-        //         "file_upload_row_" +
-        //           single.documentType.code +
-        //           "_" +
-        //           ed.educationalLevel.code.toUpperCase() +
-        //           "_" +
-        //           ed.professionType.code.toUpperCase()
-        //       ] = true;
-      });
-
-      return CMtemp && temp && NSTemp;
+ 
+      return CMtemp;
     };
     const next = () => {
       let documentValidation = checkDocuments();

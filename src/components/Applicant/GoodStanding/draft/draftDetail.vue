@@ -85,8 +85,8 @@
                 @change="applicantTypeChangeHandler()"
                 v-model="generalInfo.applicantType"
                 :disabled="
-                  generalInfo.multipleDepartment
-                    ? generalInfo.multipleDepartment.length > 0
+                  generalInfo.educations
+                    ? generalInfo.educations.length > 0
                     : 0
                 "
                 required
@@ -605,7 +605,7 @@
                 <div class="overflow-hidden">
                   <div
                     class="flex justify-center"
-                    v-if="generalInfo.multipleDepartment.length < 1"
+                    v-if="generalInfo.educations.length < 1"
                   >
                     No Data
                   </div>
@@ -682,11 +682,7 @@
                       <tbody></tbody>
                       <tbody>
                         <tr
-                          class="border-b border-main-400 p-4"
-                          v-for="(
-                            item, index
-                          ) in generalInfo.multipleDepartment"
-                          :key="item.id"
+                          class="border-b border-main-400 p-4" 
                         >
                           <td
                             class="
@@ -697,7 +693,7 @@
                               text-gray-900
                             "
                           >
-                            {{ item.department ? item.department.name : "" }}
+                            {{ generalInfo.department ? generalInfo.department.name : "" }}
                           </td>
                           <td
                             class="
@@ -708,8 +704,8 @@
                             "
                           >
                             {{
-                              item.educationLevel
-                                ? item.educationLevel.name
+                              generalInfo.educations.educationLevel
+                                ? generalInfo.educations.educationLevel.name
                                 : ""
                             }}
                           </td>
@@ -890,8 +886,7 @@ export default {
       regionSelected: "",
       zoneSelected: "",
       woredaSelected: "",
-      languageSelected: "",
-      multipleDepartment: [],
+      languageSelected: "", 
       occupationTypes: "",
       nativeLanguageSelected: "",
       educations: [],
@@ -1044,8 +1039,8 @@ export default {
 
     const checkForAdded = (data) => {
       let tempStatus = false;
-      if (generalInfo.value.multipleDepartment) {
-        generalInfo.value.multipleDepartment.forEach((element) => {
+      if (generalInfo.value.educations) {
+        generalInfo.value.educations.forEach((element) => {
           if (element.department.code == data.code) {
             checkForAddedError.value = true;
             tempStatus = true;
@@ -1055,7 +1050,7 @@ export default {
       }
     };
     const removeDepartment = (index) => {
-      generalInfo.value.multipleDepartment.splice(index, 1);
+      generalInfo.value.educations.splice(index, 1);
       generalInfo.value.educations.splice(index, 1);
     };
     const addMultiple = () => {
@@ -1066,15 +1061,15 @@ export default {
         generalInfo.value.institutionSelected &&
         generalInfo.value.professionalTypeSelected
       ) {
-        if (generalInfo.value.multipleDepartment.length > 3) {
+        if (generalInfo.value.educations.length > 3) {
           multipleDepartmentMaxError.value = true;
         } else {
           multipleDepartmentMaxError.value = false;
           multipleDepartmentError.value = false;
 
           if (
-            generalInfo.value.multipleDepartment.length > 0 &&
-            generalInfo.value.multipleDepartment.length <= 3
+            generalInfo.value.educations.length > 0 &&
+            generalInfo.value.educations.length <= 3
           ) {
             if (
               checkForAdded(
@@ -1084,7 +1079,7 @@ export default {
               ) == false
             ) {
               checkForAddedError.value = false;
-              generalInfo.value.multipleDepartment.push({
+              generalInfo.value.educations.push({
                 department: generalInfo.value.departmentSelected,
                 educationLevel: generalInfo.value.educationalLevelSelected,
                 institution: generalInfo.value.institutionSelected,
@@ -1110,7 +1105,7 @@ export default {
             }
           } else {
             checkForAddedError.value = false;
-            generalInfo.value.multipleDepartment.push({
+            generalInfo.value.educations.push({
               department: generalInfo.value.departmentSelected,
               educationLevel: generalInfo.value.educationalLevelSelected,
               institution: generalInfo.value.institutionSelected,
@@ -1194,7 +1189,7 @@ export default {
 
       store
         .dispatch("goodstanding/getGoodStandingLicenseById", route.params.id)
-        .then((res) => {
+        .then((res) => { 
           withdrawData.value = res.data.data;
           generalInfo.value = res.data.data;
           generalInfo.value.regionSelected =
@@ -1229,8 +1224,8 @@ export default {
           applicantTypeChangeHandler();
           regionChangeHandler();
           zoneChangeHandler();
-          generalInfo.value.multipleDepartment = JSON.parse(
-            JSON.stringify(res.data.data.educations)
+          generalInfo.value.educations = JSON.parse(
+            JSON.stringify(res.data.data.GSProfessionals)
           );
           generalInfo.value.applicantTypeSelected = res.data.data.applicantType;
         });

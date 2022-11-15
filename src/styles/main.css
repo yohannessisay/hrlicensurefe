@@ -112,11 +112,10 @@
 
   .sidebar .nav-links li a .links_name {
     color: #fff;
-    font-size: 13px;
-    font-weight: 400;
+    font-size: 16px;
+    font-weight: 700;
     white-space: nowrap;
   }
-
   .sidebar .nav-links .log_out {
     position: absolute;
     bottom: 0;

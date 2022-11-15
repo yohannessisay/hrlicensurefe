@@ -536,7 +536,7 @@
     <div class="flex justify-end w-1/2 mb-8">
       <span v-for="button in buttons" :key="button.id">
         <button
-          v-if="button.action!='DraftEvent'"
+          v-if="button.action != 'DraftEvent'"
           type="button"
           :class="
             allowSave
@@ -549,15 +549,33 @@
           {{ button.name }}
         </button>
         <button
-          v-if="button.action=='DraftEvent'"
+          v-if="button.action == 'DraftEvent'"
           type="button"
-          class="inline-block px-6 border text-main-400 hover:bg-main-400 hober:border-main-400 hover:text-white  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded shadow-lg transition  duration-150 ease-in-out"
+          class="
+            inline-block
+            px-6
+            border
+            text-main-400
+            hover:bg-main-400
+            hober:border-main-400
+            hover:text-white
+            mt-4
+            bg-white
+            font-medium
+            text-xs
+            leading-tight
+            uppercase
+            rounded
+            shadow-lg
+            transition
+            duration-150
+            ease-in-out
+          "
           @click="checkFinalStatus(button.action)"
         >
           <i class="fa fa-save"></i>
           {{ button.name }}
         </button>
-
       </span>
 
       <button
@@ -629,7 +647,7 @@ export default {
       generalInfo.value.licenseFile = [];
       documents.value = localFileData.value;
 
-      if (agreed.value == true) {
+      if (agreed.value == true || action == "DraftEvent") {
         let formData = new FormData();
         tempDocs.value.forEach((element, index) => {
           formData.append(index, element);
@@ -698,8 +716,7 @@ export default {
               ? generalInfo.value.feedback
               : "",
           },
-        }; 
-
+        };
         store
           .dispatch("goodstanding/addGoodstandingLicense", license)
           .then((res) => {
@@ -710,6 +727,7 @@ export default {
               .then((res) => {
                 isLoading.value = false;
                 if (res.data.status == "Success") {
+                  localStorage.removeItem("GSApplicationData");
                   toast.success("Applied successfuly", {
                     timeout: 5000,
                     position: "bottom-center",
@@ -717,8 +735,11 @@ export default {
                     pauseOnHover: true,
                     icon: true,
                   });
-                  localStorage.removeItem("GSApplicationData");
-                  router.push({ path: "/Applicant/GoodStanding/submitted" });
+                  if (action == "DraftEvent") {
+                    router.push({ path: "/Applicant/GoodStanding/draft" });
+                  } else {
+                    router.push({ path: "/Applicant/GoodStanding/submitted" });
+                  }
                 } else {
                   toast.error("Error occured, please try again", {
                     timeout: 5000,

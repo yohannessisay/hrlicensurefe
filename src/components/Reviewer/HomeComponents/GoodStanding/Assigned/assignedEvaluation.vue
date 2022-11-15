@@ -728,38 +728,6 @@
                                                 font-bold
                                               "
                                             >
-                                              <button
-                                                class="
-                                                  inline-block
-                                                  px-6
-                                                  text-white
-                                                  bg-primary-600
-                                                  font-medium
-                                                  text-xs
-                                                  leading-tight
-                                                  uppercase
-                                                  rounded
-                                                  shadow-lg
-                                                  hover:text-primary-600
-                                                  hover:shadow-lg
-                                                  focus:bg-purple-700
-                                                  focus:shadow-lg
-                                                  focus:outline-none
-                                                  focus:ring-0
-                                                  active:bg-purple-800
-                                                  active:shadow-lg
-                                                  transition
-                                                  duration-150
-                                                  ease-in-out
-                                                "
-                                                @click="
-                                                  showPrefix(
-                                                    goodStanding.departmentId
-                                                  )
-                                                "
-                                              >
-                                                Add Prefix
-                                              </button>
                                               <div
                                                 class="mb-3 w-full"
                                                 v-if="
@@ -1066,30 +1034,6 @@
                         ease-in-out
                       "
                       @click="action(button.action)"
-                    >
-                      {{ button.name }}
-                    </button>
-                    <button
-                      v-else
-                      class="
-                        inline-block
-                        px-6
-                        text-white
-                        font-medium
-                        text-xs
-                        leading-tight
-                        uppercase
-                        rounded
-                        shadow-lg
-                        bg-yellow-300
-                        hover:border hover:text-yellow-300
-                        transition
-                        duration-150
-                        ease-in-out
-                      "
-                      data-bs-toggle="modal"
-                      data-bs-target="#superviseModal"
-                      @click="changeAction(button.action)"
                     >
                       {{ button.name }}
                     </button>
@@ -1657,7 +1601,7 @@
 </template>
 <script>
 import { useStore } from "vuex";
-import { useRoute } from "vue-router";
+import { useRoute,useRouter } from "vue-router";
 import { ref, onMounted } from "vue";
 
 import { googleApi } from "@/composables/baseURL";
@@ -1692,6 +1636,7 @@ export default {
     const route = useRoute();
     const store = useStore();
     const toast = useToast();
+    const router = useRouter();
 
     let startDate = ref("");
     let endDate = ref("");
@@ -1732,6 +1677,7 @@ export default {
     let showTransferSuccessMessage = ref(false);
     let showLicenseDateRequirementError = ref(false);
     let departmentId = ref(0);
+    let admin = localStorage.getItem("allAdminData");
     let adminId = localStorage.getItem("adminId");
 
     const completedSteps = ref(0);
@@ -1792,8 +1738,8 @@ export default {
     let allowOtherProfChange = ref({});
     let showActionLoading = ref(false);
     let showLoadingButtons = ref(false);
-    let modifiedProfession = [];
     let tempProf = ref([]);
+    
 
     let professionalTypes = ref([]);
     let evaluateRoute = ref("/admin/evaluate/goodStanding" + route.params.id);
@@ -1853,8 +1799,10 @@ export default {
                 findDocumentType(documentTypes.value, docs.value[index.value]);
               }
             }
-          } else if (goodStanding.value.applicationStatus.code == "IRV") {
-            showTransferToAdminButton.value = true;
+          }
+
+          if (admin && admin.expertLevelId == 3) {
+            showTransferToAdminButton.value = false;
           }
         });
 
@@ -2123,7 +2071,7 @@ export default {
           sendDeclinedData.value = true;
         }
         return;
-      }else if (actionValue == "DeclineEventFinal") {
+      } else if (actionValue == "DeclineEventFinal") {
         actionValue = "DeclineEvent";
       }
 
@@ -2166,9 +2114,7 @@ export default {
                 icon: true,
               });
             });
-            setTimeout(() => {
-              window.location.reload();
-            }, 3000);
+            router.push({ name: "GoodStandingAssigned" });
           }
         })
         .catch(() => {

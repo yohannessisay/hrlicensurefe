@@ -448,7 +448,7 @@ export default {
       generalInfo.value.licenseFile = [];
       documents.value = localFileData.value;
       isLoading.value = true;
-      if (agreed.value == true) {
+      if (agreed.value == true||action=='DraftEvent') {
         let formData = new FormData();
         tempDocs.value.forEach((element, index) => {
           formData.append(index, element);
@@ -499,6 +499,7 @@ export default {
             .then((res) => {
               isLoading.value = false;
               if (res.data.status == "Success") {
+                localStorage.removeItem('NLApplicationData');
                 toast.success("Applied successfuly", {
                   timeout: 5000,
                   position: "bottom-center",
@@ -506,7 +507,7 @@ export default {
                   pauseOnHover: true,
                   icon: true,
                 });
-                localStorage.removeItem('NLApplicationData');
+             
                 if (license.action == "DraftEvent") {
                   router.push({ path: "/Applicant/NewLicense/draft" });
                 } else {

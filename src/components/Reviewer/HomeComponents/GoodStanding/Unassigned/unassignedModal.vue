@@ -560,7 +560,7 @@ export default {
             ? "Dear " +
               modalData.value.name +
               " your applied good standing letter for " +
-              modalData.value.department.name +
+              licenseData.value.goodStandingCode+
               " has been assigned a reviewer , after careful examination of your uploaded documents by our reviewers we will get back and notify you on each steps, Thank you for using eHPL. https://hrl.moh.gov.et/"
             : ""
           : "",

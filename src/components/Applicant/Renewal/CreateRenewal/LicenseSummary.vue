@@ -444,12 +444,11 @@ export default {
         allowSave.value = false;
       }
     };
-    const checkFinalStatus = (action) => {
-      console.log();
+    const checkFinalStatus = (action) => { 
       generalInfo.value.licenseFile = [];
       documents.value = localFileData.value;
       isLoading.value = true;
-      if (agreed.value == true) {
+      if (agreed.value == true||action=='DraftEvent') {
         let formData = new FormData();
         tempDocs.value.forEach((element, index) => {
           formData.append(index, element);
@@ -500,6 +499,7 @@ export default {
             .then((res) => {
               isLoading.value = false;
               if (res.data.status == "Success") {
+                localStorage.removeItem('RNApplicationData');
                 toast.success("Applied successfuly", {
                   timeout: 5000,
                   position: "bottom-center",
@@ -507,7 +507,7 @@ export default {
                   pauseOnHover: true,
                   icon: true,
                 });
-                localStorage.removeItem('RNApplicationData');
+               
                 if (license.action == "DraftEvent") {
                   router.push({ path: "/Applicant/Renewal/draft" });
                 } else {
