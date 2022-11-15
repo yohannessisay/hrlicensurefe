@@ -725,7 +725,7 @@
     <div class="flex justify-end mr-8 mb-8">
       <button
         class="
-        mt-8
+          mt-8
           inline-block
           px-6
           py-2.5
@@ -939,7 +939,10 @@ export default {
       let icon = document.getElementById(
         "common_icon" + data.documentType.id + data.id
       );
-      icon.classList.toggle("disabled");
+      if (icon.classList.contains("disabled")) {
+        icon.classList.toggle("disabled");
+      }
+
       let output = document.getElementById(
         "common_image_lightbox" + data.documentType.id + data.id
       );
@@ -948,10 +951,15 @@ export default {
         "common_image_href" + data.documentType.id + data.id
       );
       outputHref.href = URL.createObjectURL(event.target.files[0]);
-      output.src = URL.createObjectURL(event.target.files[0]);
-      output.onload = function () {
-        URL.revokeObjectURL(output.src); // free memory
-      };
+      if (output && output.src) {
+        output.src = URL.createObjectURL(event.target.files[0]);
+      }
+
+      output
+        ? (output.onload = function () {
+            URL.revokeObjectURL(output.src); // free memory
+          })
+        : "";
     };
 
     const handleFileUpload = (data, event, pro) => {
@@ -1060,7 +1068,10 @@ export default {
           "_" +
           pro.professionType.code
       );
-      icon.classList.toggle("disabled");
+      if (icon.classList.contains("disabled")) {
+        icon.classList.toggle("disabled");
+      }
+
       let output = document.getElementById(
         "image_lightbox_" +
           data.documentType.code +
@@ -1078,10 +1089,15 @@ export default {
           pro.professionType.code
       );
       outputHref.href = URL.createObjectURL(event.target.files[0]);
-      output.src = URL.createObjectURL(event.target.files[0]);
-      output.onload = function () {
-        URL.revokeObjectURL(output.src); // free memory
-      };
+      if (output && output.src) {
+        output.src = URL.createObjectURL(event.target.files[0]);
+      }
+
+      output
+        ? (output.onload = function () {
+            URL.revokeObjectURL(output.src); // free memory
+          })
+        : "";
     };
 
     const checkDocuments = () => {
@@ -1281,7 +1297,7 @@ export default {
                 pauseOnHover: true,
                 icon: true,
               });
-              localStorage.removeItem('NLApplicationData');
+              localStorage.removeItem("NLApplicationData");
               location.reload();
             } else {
               toast.error("Error occured, please try again", {
