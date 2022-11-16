@@ -190,11 +190,14 @@
                                 focus:border-blue-600
                                 focus:outline-none
                               "
+                              v-model="userInfo.gender"
                               aria-label="Default select example"
                             >
-                              <option selected>Gender</option>
-                              <option value="1">Male</option>
-                              <option value="2">Female</option>
+                              <option selected :value="userInfo.gender">
+                                {{ userInfo.gender }}
+                              </option>
+                              <option value="male">Male</option>
+                              <option value="female">Female</option>
                             </select>
                           </div>
                         </div>
@@ -290,11 +293,14 @@
                           </div>
                         </div>
                         <div class="grid grid-cols-2">
-                          <div class="px-4 py-2 font-semibold">Birthday</div>
+                          <div class="px-4 py-2 font-semibold">Birthdate</div>
                           <input
+                          :max="minimumBirthDate"
+                min='1899-01-01'
+                            v-model="userInfo.birthDate"
                             type="date"
-                            name="birthDay"
-                            id="birthDay"
+                            name="birthDate"
+                            id="birthDate"
                             class="form-control"
                           />
                         </div>
@@ -454,7 +460,8 @@ export default {
     let userInfo = ref({ firstName: "", fatherName: "", grandFatherName: "" });
     let userId = +window.localStorage.getItem("adminId");
     let isLoadingUserInfo = ref(true);
-
+    let minimumBirthDate =  
+      new Date(`${new Date().getFullYear()-18}`).toISOString().slice(0,10);
     const updateUserInfo = () => {
       isLoadingUserInfo.value = true;
       userInfo.value.name =
@@ -484,11 +491,10 @@ export default {
           });
           getProfile();
           isLoadingUserInfo.value = false;
- 
         }
       });
     };
-    const getProfile=()=>{
+    const getProfile = () => {
       store.dispatch("admin/getAdminById", userId).then((res) => {
         userInfo.value = res.data.data;
         if (userInfo.value) {
@@ -496,16 +502,16 @@ export default {
           userInfo.value.fatherName = userInfo.value.name.split(" ")[1];
           userInfo.value.grandFatherName = userInfo.value.name.split(" ")[2];
           isLoadingUserInfo.value = false;
-        }  
+        }
       });
-    }
+    };
     onMounted(() => {
-   
       getProfile();
     });
     return {
       display,
       isLoadingUserInfo,
+      minimumBirthDate,
       userInfo,
       updateUserInfo,
     };

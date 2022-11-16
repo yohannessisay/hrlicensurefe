@@ -292,8 +292,7 @@ export default {
           userDraftLicenses.value = results.filter((draftLicenses) => {
             return (
               draftLicenses.applicationStatus.code === "UPD" ||
-              draftLicenses.applicationStatus.code === "SUB"  ||
-              draftLicenses.applicationStatus.code === "REVDRA"
+              draftLicenses.applicationStatus.code === "SUB" 
             );
           });
 

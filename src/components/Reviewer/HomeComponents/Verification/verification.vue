@@ -34,9 +34,9 @@
           <div class="container mx-auto px-4 sm:px-8">
             <div class="py-8">
               <div class="grid grid-cols-2">
-                <h2 class="text-2xl text-left mt-1 font-semibold leading-tight">
-                  Verification For Licenses
-                </h2>
+                <h2
+                  class="text-2xl text-left mt-1 font-semibold leading-tight"
+                ></h2>
                 <div class="flex justify-end ...">
                   <button
                     type="button"
@@ -66,27 +66,79 @@
                 </div>
               </div>
 
-              <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
-                <div
-                  class="
-                    inline-block
-                    min-w-full
-                    shadow-md
-                    rounded-lg
-                    overflow-hidden
-                    bg-primary-800
-                  "
+              <div class="tabs-wrapper mt-40">
+                <input
+                  type="radio"
+                  name="tab"
+                  id="tab1"
+                  checked="checked"
+                  class="tab-head"
+                />
+                <label for="tab1" class="tabs_wrapper_label"
+                  >Verifications Initiated By You</label
                 >
-                  <vue-table-lite
-                    :is-static-mode="true"
-                    :is-loading="verificationTable.isLoading"
-                    :columns="verificationTable.columns"
-                    :rows="verificationTable.rows"
-                    :total="verificationTable.totalRecordCount"
-                    :sortable="verificationTable.sortable"
-                    @is-finished="tableLoadingFinish"
-                    @row-clicked="rowClicked"
-                  ></vue-table-lite>
+                <input type="radio" name="tab" id="tab2" class="tab-head" />
+                <label for="tab2" class="tabs_wrapper_label"
+                  >Initiated By Others</label
+                >
+
+                <div class="tab-body-wrapper">
+                  <div id="tab-body-1" class="tab-body">
+                    <slot name="toyou">
+                      <div
+                        class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto"
+                      >
+                        <div
+                          class="
+                            inline-block
+                            min-w-full
+                            shadow-md
+                            rounded-lg
+                            overflow-hidden
+                            bg-primary-800
+                          "
+                        >
+                          <vue-table-lite
+                            :is-loading="verificationTable.isLoading"
+                            :columns="verificationTable.columns"
+                            :rows="verificationTable.rows"
+                            :total="verificationTable.totalRecordCount"
+                            :sortable="verificationTable.sortable"
+                            @is-finished="tableLoadingFinish"
+                            @row-clicked="rowClicked"
+                          ></vue-table-lite>
+                        </div>
+                      </div>
+                    </slot>
+                  </div>
+                  <div id="tab-body-2" class="tab-body">
+                    <slot name="to_others">
+                      <div
+                        class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto"
+                      >
+                        <div
+                          class="
+                            inline-block
+                            min-w-full
+                            shadow-md
+                            rounded-lg
+                            overflow-hidden
+                            bg-primary-800
+                          "
+                        >
+                          <vue-table-lite
+                            :is-loading="verificationTableOthers.isLoading"
+                            :columns="verificationTableOthers.columns"
+                            :rows="verificationTableOthers.rows"
+                            :total="verificationTableOthers.totalRecordCount"
+                            :sortable="verificationTableOthers.sortable"
+                            @is-finished="tableLoadingFinishOthers"
+                            @row-clicked="rowClickedOthers"
+                          ></vue-table-lite>
+                        </div>
+                      </div>
+                    </slot>
+                  </div>
                 </div>
               </div>
             </div>
@@ -98,6 +150,7 @@
   </section>
   <add-request></add-request>
   <view-modal :modalData="modalData"></view-modal>
+  <view-modal-others :modalDataOthers="modalDataOthers"></view-modal-others>
 </template>
 
 <script>
@@ -107,6 +160,7 @@ import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
 import VueTableLite from "vue3-table-lite";
 import viewModal from "./viewModal.vue";
+import viewModalOthers from "./viewModalOthers.vue";
 import addRequest from "./addRequestModal.vue";
 
 export default {
@@ -117,6 +171,7 @@ export default {
     VueTableLite,
     viewModal,
     addRequest,
+    viewModalOthers,
   },
   setup() {
     const store = useStore();
@@ -125,26 +180,33 @@ export default {
     let loading = ref(false);
 
     let modalData = ref({});
+    let modalDataOthers = ref({});
 
     let allInfo = ref({
       users: [],
     });
+    let isRegional = ref(false);
 
     const verificationTable = ref({});
+    const verificationTableOthers = ref({});
     let loggedInAdmin = JSON.parse(localStorage.getItem("allAdminData"));
 
     verificationTable.value = {
       isLoading: true,
     };
+    verificationTableOthers.value = {
+      isLoading: true,
+    };
     let tableData = ref([]);
+    let tableDataOthers = ref([]);
     let tableDataTemp = ref([]);
+    let tableDataTempOthers = ref([]);
     let params = { url: "", id: "" };
 
     const getVerification = () => {
-     
-      store.dispatch(params.url, params.id).then((res) => {
-        allInfo.value.users = res.data.data;
-        allInfo.value.users.forEach((element) => {
+      store.dispatch(params.url, params.id ? params.id : "").then((res) => {
+        allInfo.value = res;
+        allInfo.value.byReviewer.forEach((element) => {
           tableData.value.push({
             Number: element.id,
             ApplicantName:
@@ -166,6 +228,29 @@ export default {
           });
         });
         tableDataTemp.value = tableData.value;
+        allInfo.value.byRegion.forEach((element) => {
+          tableDataOthers.value.push({
+            Number: element.id,
+            ApplicantName:
+              (element.profile.name ? element.profile.name : "") +
+              " " +
+              (element.profile.fatherName ? element.profile.fatherName : "") +
+              " " +
+              (element.profile.grandFatherName
+                ? element.profile.grandFatherName
+                : ""),
+            RequestedRegion: element.region.name,
+            LicenseCode: element.newLicense
+              ? element.newLicense.newLicenseCode
+              : element.renewal
+              ? element.renewal.renewalCode
+              : "-------",
+            IsVerified: element.isVerified ? "Verified" : "Not Verified",
+            data: element,
+          });
+        });
+        tableDataTempOthers.value = tableData.value;
+
         verificationTable.value = {
           columns: [
             {
@@ -220,6 +305,60 @@ export default {
             sort: "asc",
           },
         };
+        verificationTableOthers.value = {
+          columns: [
+            {
+              label: "Number",
+              field: "Number",
+              width: "3%",
+              sortable: true,
+              isKey: true,
+            },
+            {
+              label: "Applicant Name",
+              field: "ApplicantName",
+              width: "20%",
+              sortable: true,
+            },
+            {
+              label: "Requested Region",
+              field: "RequestedRegion",
+              width: "20%",
+              sortable: true,
+            },
+            {
+              label: "License Code",
+              field: "LicenseCode",
+              width: "20%",
+              sortable: true,
+            },
+            {
+              label: "Verified",
+              field: "IsVerified",
+              width: "20%",
+              sortable: true,
+            },
+
+            {
+              label: "",
+              field: "quick",
+              width: "10%",
+              display: function (row) {
+                return (
+                  '<button data-bs-toggle="modal" data-bs-target="#staticBackdropOthers" class="edit-btn-others bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
+                  row.licenseNumber +
+                  '" >View</button>'
+                );
+              },
+            },
+          ],
+          rows: JSON.parse(JSON.stringify(tableDataOthers.value)),
+          totalRecordCount: tableDataOthers.value.length,
+          sortable: {
+            order: "id",
+            sort: "asc",
+          },
+        };
       });
     };
 
@@ -233,12 +372,27 @@ export default {
       });
       verificationTable.value.isLoading = false;
     };
+    const tableLoadingFinishOthers = () => {
+      let elements = document.getElementsByClassName("edit-btn-others");
+
+      Array.prototype.forEach.call(elements, function (element) {
+        if (element.classList.contains("edit-btn-others")) {
+          element.addEventListener("click", rowClicked());
+        }
+      });
+      verificationTableOthers.value.isLoading = false;
+    };
 
     const rowClicked = (row) => {
-     
       if (row != undefined) {
         row = JSON.parse(JSON.stringify(row));
         modalData.value = row ? row : {};
+      }
+    };
+    const rowClickedOthers = (row) => {
+      if (row != undefined) {
+        row = JSON.parse(JSON.stringify(row));
+        modalDataOthers.value = row ? row : {};
       }
     };
 
@@ -246,28 +400,31 @@ export default {
       if (loggedInAdmin.regionId) {
         params = {
           url: "applicationVerification/getRequestsByRegion",
-          id: loggedInAdmin.regionId,
+          id: { adminId: loggedInAdmin.id, regionId: loggedInAdmin.regionId },
         };
+        isRegional.value = true;
       } else {
         params = {
-          url: "applicationVerification/getRequestsByRequester",
+          url: "applicationVerification/getRequestsForFederal",
           id: loggedInAdmin.id,
         };
       }
-      console.log(params)
       getVerification();
- 
     });
 
     return {
       allInfo,
       loading,
       verificationTable,
+      verificationTableOthers,
       showModal,
       tableLoadingFinish,
+      rowClickedOthers,
+      tableLoadingFinishOthers,
       rowClicked,
       getVerification,
       modalData,
+      modalDataOthers,
     };
   },
 };

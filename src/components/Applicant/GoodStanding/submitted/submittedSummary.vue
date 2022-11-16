@@ -328,84 +328,211 @@
         sm:grid-cols-1
       "
     >
-      <div
-        class="
-          py-8
-          px-12
-          mb-12
-          bg-gray-50
-          border-b border-white
-          transform
-          transition
-          duration-300
-          ease-in-out
-          hover:-translate-y-2
-        "
-      >
-        <div class="bg-white shadow-lg rounded-lg p-2 mb-8">
-          <div class="text-gray-900 mb-4 flex justify-center">
-            <i class="fa fa-folder fa-3x text-main-400"></i>
-          </div>
-          <div
-            class="
-              flex
-              justify-center
-              text-gray-900
-              mb-4
-              border-b-2
-              text-main-400
-            "
-          >
-            <h3
-              class="
-                text-lg text-main-400
-                leading-normal
-                mb-2
-                border-b-2
-                font-semibold
-                text-black
-              "
+      <div class="bg-white flex-shrink px-4 w-full rounded-md shadow-xl">
+        <div class="py-8 px-12 mb-12 bg-gray-50 border-b border-white">
+          <div class="border-b-2 text-main-400 mb-4">
+            <div class="text-gray-900 mb-4 flex justify-center">
+              <i class="fa fa-folder fa-3x -text-main-400"></i>
+            </div>
+            <div class="flex justify-center text-gray-900 mb-4">
+              <h3
+                class="
+                  text-3xl text-main-400
+                  leading-normal
+                  mb-2
+                  font-semibold
+                  text-black
+                "
+              >
+                Files Uploaded
+              </h3>
+            </div>
+            <span class="text-lg" v-if="changedDocs && changedDocs.length > 0">
+              New files</span
             >
-              Files Uploaded
-            </h3>
           </div>
+
           <div
-            class="
-              grid grid-cols-4
-              gap-4
-              mt-4
-              ml-4
-              sm:w-full sm:grid-cols-1
-              md:w-full
-              mdlg:grid-cols-2
-              lg:w-full
-              md:grid-cols-4
-              mdlg:w-full
-              lg:grid-cols-4
+            :class="
+              changedDocs && changedDocs.length > 0
+                ? ' border-b mb-12 grid grid-cols-4 gap-4 ml-4 sm:w-full sm:grid-cols-1 md:w-full mdlg:grid-cols-2 lg:w-full md:grid-cols-4 mdlg:w-full lg:grid-cols-4'
+                : ' mb-12 grid grid-cols-4 gap-4 ml-4 sm:w-full sm:grid-cols-1 md:w-full mdlg:grid-cols-2 lg:w-full md:grid-cols-4 mdlg:w-full lg:grid-cols-4'
             "
           >
             <div
-              class="mt-4 mb-8 bg-white shadow-lg rounded-md p-4"
-              v-for="localFile in localFileData"
-              :key="localFile.documenttype"
+              class="
+                mt-4
+                mb-8
+                bg-white
+                border-4
+                text-main-400
+                shadow-xl
+                rounded-md
+                transform
+                transition
+                duration-300
+                ease-in-out
+                p-2
+                hover:-translate-y-2
+              "
+              v-for="changed in changedDocs"
+              :key="changed.id"
             >
-              <div class="flex justify-center">
-                <div class="mt-large bg-white rounded-md">
+              <h4 class="text-main-400 font-bold m-2">Document Type</h4>
+              <h6 class="m-2">{{ changed.docName }}</h6>
+              <div class="flex justify-center rounded-lg p-4">
+                <div class="bg-white rounded-md border p-2">
+                  Previous
                   <a
-                    :href="localFile.image"
-                    :data-title="localFile.documenttype"
+                    :href="changed.prevFile"
+                    :data-title="changed.docName"
                     data-lightbox="example-2"
                   >
                     <img
-                      :src="localFile.image"
+                      :src="changed.prevFile"
                       class="w-full h-48 object-cover"
                     />
                   </a>
+                </div>
 
-                  <h4 class="text-main-400 font-bold border-b m-2">
-                    Document Type
-                  </h4>
-                  <h6 class="m-2">{{ localFile.documenttype }}</h6>
+                <div class="bg-main-400 rounded-md ml-2 border p-2">
+                  <span class="text-white"> New</span>
+                  <a
+                    :href="changed.newFile"
+                    :data-title="changed.docName"
+                    data-lightbox="example-2"
+                  >
+                    <img
+                      :src="changed.newFile"
+                      class="w-full h-48 object-cover rounded-lg"
+                    />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion" id="accordionExample">
+            <div class="accordion-item bg-white">
+              <h2 class="accordion-header mb-0" id="headingOne">
+                <button
+                  class="
+                    relative
+                    flex
+                    items-center
+                    w-full
+                    py-4
+                    px-5
+                    text-white
+                    bg-grey-200
+                    hover:text-main-400 hover:bg-white
+                    transition
+                    focus:outline-none
+                    hover:border-main-400
+                    rounded-md
+                  "
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapseOne"
+                  aria-expanded="true"
+                  aria-controls="collapseOne"
+                >
+                  Previously uploaded files
+                </button>
+              </h2>
+              <div
+                id="collapseOne"
+                class="accordion-collapse collapse show"
+                aria-labelledby="headingOne"
+                data-bs-parent="#accordionExample"
+              >
+                <div class="accordion-body py-4 px-5">
+                  <div
+                    class="
+                      grid grid-cols-4
+                      gap-4
+                      ml-4
+                      sm:w-full sm:grid-cols-1
+                      md:w-full
+                      mdlg:grid-cols-2
+                      lg:w-full
+                      md:grid-cols-4
+                      mdlg:w-full
+                      lg:grid-cols-4
+                    "
+                  >
+                    <div
+                      v-if="!professionChanged"
+                      class="
+                        mt-4
+                        mb-8
+                        bg-white
+                        shadow-xl
+                        rounded-md
+                        transform
+                        transition
+                        duration-300
+                        ease-in-out
+                        p-2
+                        hover:-translate-y-2
+                      "
+                      v-for="prev in prevDocs"
+                      :key="prev.id"
+                    >
+                      <h4 class="text-main-400 font-bold m-2">Document Type</h4>
+                      <h6 class="m-2">{{ prev.documentType.name }}</h6>
+                      <div class="flex justify-center rounded-lg p-4">
+                        <div class="bg-white rounded-md p-2">
+                          <a
+                            :href="googleApi + prev.filePath"
+                            :data-title="prev.docName"
+                            data-lightbox="example-2"
+                          >
+                            <img
+                              :src="googleApi + prev.filePath"
+                              class="w-full h-48 object-cover"
+                            />
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div
+                      v-else
+                      class="
+                        mt-4
+                        mb-8
+                        bg-white
+                        shadow-xl
+                        rounded-md
+                        transform
+                        transition
+                        duration-300
+                        ease-in-out
+                        p-2
+                        hover:-translate-y-2
+                      "
+                      v-for="prev in prevDocs"
+                      :key="prev.docName"
+                    >
+                      <h4 class="text-main-400 font-bold m-2">Document Type</h4>
+                      <h6 class="m-2">{{ prev.documentType.name }}</h6>
+                      <div class="flex justify-center rounded-lg p-4">
+                        <div class="bg-white rounded-md p-2">
+                          <a
+                            :href="prev.path"
+                            :data-title="prev.docName"
+                            data-lightbox="example-2"
+                          >
+                            <img
+                              :src="prev.path"
+                              class="w-full h-48 object-cover"
+                            />
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -533,21 +660,51 @@
       </div>
     </div>
 
-    <div class="flex justify-end w-1/2">
-      <button
-        v-for="button in buttons"
-        :key="button.id"
-        type="button"
-        :class="
-          allowSave
-            ? 'inline-block px-6 text-main-400  hover:bg-main-400 hover:text-white  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded shadow-lg transition  duration-150 ease-in-out'
-            : 'inline-block px-6 disabled text-main-400  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded shadow-lg transition  duration-150 ease-in-out'
-        "
-        @click="checkFinalStatus(button.action)"
-      >
-        <i class="fa fa-save"></i>
-        {{ button.name }}
-      </button>
+    <div class="flex justify-end w-1/2 mb-8">
+      <span v-for="button in buttons" :key="button.id">
+        <button
+          v-if="button.action != 'DraftEvent'"
+          type="button"
+          :class="
+            allowSave
+              ? 'inline-block px-6 border text-main-400 hover:bg-main-400 hober:border-main-400 hover:text-white  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded shadow-lg transition  duration-150 ease-in-out'
+              : 'inline-block px-6 disabled text-main-400  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded shadow-lg transition  duration-150 ease-in-out'
+          "
+          @click="checkFinalStatus(button.action)"
+        >
+          <i class="fa fa-save"></i>
+          {{ button.name }}
+        </button>
+        <button
+          v-if="button.action == 'DraftEvent'"
+          type="button"
+          class="
+            inline-block
+            px-6
+            border
+            text-main-400
+            hover:bg-main-400
+            hober:border-main-400
+            hover:text-white
+            mt-4
+            bg-white
+            font-medium
+            text-xs
+            leading-tight
+            uppercase
+            rounded
+            shadow-lg
+            transition
+            duration-150
+            ease-in-out
+          "
+          @click="checkFinalStatus(button.action)"
+        >
+          <i class="fa fa-save"></i>
+          {{ button.name }}
+        </button>
+      </span>
+
       <button
         class="
           inline-block
@@ -579,9 +736,10 @@
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
-import { useRouter } from "vue-router";
-
+import { useRouter, useRoute } from "vue-router";
+import { googleApi } from "@/composables/baseURL";
 import Loading from "vue3-loading-overlay";
+
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 export default {
   components: { Loading },
@@ -589,8 +747,10 @@ export default {
     const store = useStore();
     const toast = useToast();
     const router = useRouter();
+    const route = useRoute();
     let localData = ref({});
     let localFileData = ref({});
+    let localFileImages = ref({});
     let isLoading = ref(false);
     let generalInfo = ref({});
     let agreed = ref(false);
@@ -598,6 +758,10 @@ export default {
     let buttons = ref([]);
     let tempDocs = ref({});
     let allowSave = ref(false);
+    let savedData = ref({});
+    let changedDocs = ref([]);
+    let prevDocs = ref([]);
+    let professionChanged = ref(false);
     const changeAgrement = () => {
       agreed.value = !agreed.value;
       if (generalInfo.value && agreed.value != false) {
@@ -617,7 +781,7 @@ export default {
       generalInfo.value.licenseFile = [];
       documents.value = localFileData.value;
 
-      if (agreed.value == true) {
+      if (agreed.value == true || action == "DraftEvent") {
         let formData = new FormData();
         tempDocs.value.forEach((element, index) => {
           formData.append(index, element);
@@ -636,39 +800,21 @@ export default {
         let license = {
           action: action,
           data: {
-        
-
-            id:generalInfo.value.id,
+            id: generalInfo.value ? generalInfo.value.id : null,
             applicantId: generalInfo.value.applicantId,
-            applicantTypeId:
-              generalInfo.value.applicantTypeId &&
-              generalInfo.value.applicantTypeId.id
-                ? generalInfo.value.applicantTypeId.id
-                : generalInfo.value.applicantTypeId
-                ? generalInfo.value.applicantTypeId
-                : null,
+            applicantTypeId: generalInfo.value.applicantTypeId.id,
             residenceWoredaId: generalInfo.value.woredaSelected
               ? generalInfo.value.woredaSelected.id
-              : generalInfo.value.residenceWoredaId
-              ? generalInfo.value.residenceWoredaId
               : null,
-            applicantTitleId:
-              generalInfo.value.applicantTitleId &&
-              generalInfo.value.applicantTitleId.id
-                ? generalInfo.value.applicantTitleId.id
-                : generalInfo.value.applicantTitleId
-                ? generalInfo.value.applicantTitleId
-                : null,
+            applicantTitleId: generalInfo.value.applicantTitleId
+              ? generalInfo.value.applicantTitleId.id
+              : "",
             whomGoodStandingFor: generalInfo.value.whomGoodStandingFor
               ? generalInfo.value.whomGoodStandingFor
               : "",
-            applicantPositionId:
-              generalInfo.value.applicantPosition &&
-              generalInfo.value.applicantPosition.id
-                ? generalInfo.value.applicantPosition.id
-                : generalInfo.value.applicantPositionId
-                ? generalInfo.value.applicantPositionId
-                : null,
+            applicantPositionId: generalInfo.value.applicantPosition
+              ? generalInfo.value.applicantPosition.id
+              : null,
             licenseIssuedDate: generalInfo.value.licenseIssuedDate
               ? generalInfo.value.licenseIssuedDate
               : null,
@@ -679,26 +825,25 @@ export default {
               .licenseRegistrationNumber
               ? generalInfo.value.licenseRegistrationNumber
               : "",
-            GSProfessionals: {
-              professionTypeId:
-                generalInfo.value.professionType &&
-                generalInfo.value.professionType.professionTypeId
-                  ? generalInfo.value.professionType.professionTypeId.id
-                  : generalInfo.value.GSProfessionals
-                  ? generalInfo.value.GSProfessionals.professionalTypeId
-                  : null,
-              educationLevelId:
-                generalInfo.value.professionType &&
-                generalInfo.value.professionType.educationLevelId
-                  ? generalInfo.value.professionType.educationLevelId.id
-                  : generalInfo.value.GSProfessionals
-                  ? generalInfo.value.GSProfessionals.educationLevelId
-                  : null,
+            professionType: {
+              professionTypeId: generalInfo.value.professionType
+                ? generalInfo.value.professionType.professionTypeId.id
+                : generalInfo.value.GSProfessionals
+                ? generalInfo.value.GSProfessionals.professionalTypeId
+                : null,
+              educationLevelId: generalInfo.value.professionType
+                ? generalInfo.value.professionType.educationLevelId.id
+                : generalInfo.value.GSProfessionals
+                ? generalInfo.value.GSProfessionals.educationLevelId
+                : null,
             },
             expertLevelId: generalInfo.value.expertLevelId
               ? generalInfo.value.expertLevelId
               : null,
             islegal: true,
+            applicationStatusId: generalInfo.value.applicationStatusId
+              ? generalInfo.value.applicationStatusId
+              : null,
             otherProfessionalType: generalInfo.value.otherProfessionType
               ? generalInfo.value.otherProfessionType
               : "",
@@ -706,31 +851,25 @@ export default {
               .otherProfessionTypeAmharic
               ? generalInfo.value.otherProfessionTypeAmharic
               : "",
-            departmentId: generalInfo.value.departmentId.id
-              ? generalInfo.value.departmentId.id
-              : generalInfo.value.departmentId
+            departmentId: generalInfo.value.departmentId
               ? generalInfo.value.departmentId
               : null,
             feedback: generalInfo.value.feedback
               ? generalInfo.value.feedback
               : "",
-
-
-              
           },
         };
-       
-
         store
           .dispatch("goodstanding/editGoodstandingLicense", license)
-          .then((res) => {
-            let licenseId = res.data.data.id;
+          .then(() => {
+            let licenseId = route.params.id;
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("goodstanding/updateDocuments", payload)
               .then((res) => {
                 isLoading.value = false;
                 if (res.data.status == "Success") {
+                  localStorage.removeItem("GSApplicationData");
                   toast.success("Applied successfuly", {
                     timeout: 5000,
                     position: "bottom-center",
@@ -738,7 +877,11 @@ export default {
                     pauseOnHover: true,
                     icon: true,
                   });
-                  router.push({ path: "/Applicant/GoodStanding/submitted" });
+                  if (action == "DraftEvent") {
+                    router.push({ path: "/Applicant/GoodStanding/draft" });
+                  } else {
+                    router.push({ path: "/Applicant/GoodStanding/submitted" });
+                  }
                 } else {
                   toast.error("Error occured, please try again", {
                     timeout: 5000,
@@ -769,54 +912,102 @@ export default {
         let results = res.data.data;
 
         let status = results.filter(function (e) {
-          return e.code == "UPD" || e.code == "SUB";
+          return e.code == "DRA";
         });
-        buttons.value = status[0]["buttons"]
-          ? status[0]["buttons"].filter((e) => e.code != "AT")
-          : [];
+        buttons.value = status[0]["buttons"];
       });
     };
     onMounted(() => {
       fetchApplicationStatuses();
-      tempDocs.value = store.getters["goodstanding/getTempDocs"];
-      localData.value = window.localStorage.getItem("GSApplicationData")
-        ? JSON.parse(window.localStorage.getItem("GSApplicationData"))
-        : {};
-      let request = indexedDB.open("GSdocumentUploads", 1);
+      store
+        .dispatch("goodstanding/getGoodStandingLicenseById", route.params.id)
+        .then((res) => {
+          savedData.value = res.data.data;
 
-      request.onerror = function () {
-        console.error("Unable to open database.");
-      };
+          buttons.value = buttons.value.filter(
+            (ele) => ele.code != "AT" && ele.code != "DRA"
+          );
+          tempDocs.value = store.getters["goodstanding/getTempDocs"];
 
-      request.onsuccess = function () {
-        let db = request.result;
-        const tx = db.transaction("GSdocumentUploads", "readonly");
-        const store = tx.objectStore("GSdocumentUploads");
-        let getAllIDB = store.getAll();
-
-        getAllIDB.onsuccess = function (evt) {
-          localFileData.value = evt.target.result
-            ? evt.target.result[0].data
+          localData.value = window.localStorage.getItem("GSApplicationData")
+            ? JSON.parse(window.localStorage.getItem("GSApplicationData"))
             : {};
-        };
-      };
-      generalInfo.value = localData.value;
-      generalInfo.value.feedback = "";
-      if (generalInfo.value && generalInfo.value.applicantTypeId.id == 1) {
-        store.dispatch("goodstanding/getExpertLevel").then((res) => {
-          let expertLevel = res.data.data.filter(function (e) {
-            return e.code.includes("REG");
-          });
-          generalInfo.value.expertLevelId = expertLevel[0].id;
+
+          generalInfo.value = localData.value;
+          generalInfo.value.feedback = "";
+          if (generalInfo.value.applicantTypeSelected.id == 1) {
+            store.dispatch("newlicense/getExpertLevel").then((res) => {
+              let expertLevel = res.data.data.filter(function (e) {
+                return e.code.includes("REG");
+              });
+              generalInfo.value.expertLevelId = expertLevel[0].id;
+            });
+          } else {
+            store.dispatch("newlicense/getExpertLevel").then((res) => {
+              let expertLevel = res.data.data.filter(function (e) {
+                return e.code.includes("FED");
+              });
+              generalInfo.value.expertLevelId = expertLevel[0].id;
+            });
+          }
+          //Get images from indexed Db
+          let request = indexedDB.open("GSdocumentUploads", 1);
+
+          request.onerror = function () {
+            console.error("Unable to open database.");
+          };
+
+          request.onsuccess = function () {
+            let db = request.result;
+            const tx = db.transaction("GSdocumentUploads", "readonly");
+            const store = tx.objectStore("GSdocumentUploads");
+            let getAllIDB = store.getAll();
+
+            getAllIDB.onsuccess = function (evt) {
+              localFileImages.value = evt.target.result
+                ? JSON.parse(
+                    JSON.stringify(
+                      evt.target.result[0] ? evt.target.result[0].data : {}
+                    )
+                  )
+                : {};
+
+              if (localFileImages.value && savedData.value.documents) {
+                savedData.value.documents.forEach((ele) => {
+                  localFileImages.value.forEach((newFile) => {
+                    if (
+                      newFile.documentCode &&
+                      newFile.documentCode == ele.documentTypeCode
+                    ) {
+                      changedDocs.value.push({
+                        docName: newFile.documentName,
+                        prevFile: googleApi + ele.filePath,
+                        newFile: newFile.image,
+                        id: newFile.documentCode,
+                      });
+                    }
+                  });
+                });
+              }
+
+              if (localData.value.professionChanged == true) {
+                professionChanged.value = true;
+                // prevDocs.value = localFileImages.value;
+                localFileImages.value.forEach((element) => {
+                  if (!element.commonDocCode) {
+                    prevDocs.value.push({
+                      documentType: { name: element.documentName },
+                      docName: element.documenttype,
+                      path: element.image,
+                    });
+                  }
+                });
+              } else {
+                prevDocs.value = savedData.value.documents;
+              }
+            };
+          };
         });
-      } else {
-        store.dispatch("goodstanding/getExpertLevel").then((res) => {
-          let expertLevel = res.data.data.filter(function (e) {
-            return e.code.includes("FED");
-          });
-          generalInfo.value.expertLevelId = expertLevel[0].id;
-        });
-      }
     });
     return {
       localData,
@@ -830,6 +1021,11 @@ export default {
       checkAgreement,
       back,
       allowSave,
+      localFileImages,
+      professionChanged,
+      prevDocs,
+      changedDocs,
+      googleApi,
     };
   },
 };

@@ -280,8 +280,7 @@ export default {
           userSubmittedLicenses.value = results.filter((submittedLicense) => {
             return (
               submittedLicense.applicationStatus.code === "UPD" ||
-              submittedLicense.applicationStatus.code === "SUB"||
-              submittedLicense.applicationStatus.code === "REVDRA"
+              submittedLicense.applicationStatus.code === "SUB"
             );
           });
 

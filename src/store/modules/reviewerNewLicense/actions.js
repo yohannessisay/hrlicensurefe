@@ -13,8 +13,7 @@ export default {
   },
   async getNewLicenseUnassigned(context, statusId) {
     const url = baseUrl + "/newLicenses/status/" + statusId;
-    const resp = await ApiService.get(url);
-
+    const resp = await ApiService.get(url); 
     const unassignedApplications = resp.data.data.filter((unassigned) => {
       return unassigned.transferFromId == null;
     }); 

@@ -1344,8 +1344,7 @@ export default {
               documentsSaved.value[element.fileName].name =
                 element.originalFileName;
             });
-            documentsUploaded.value = documentsSaved.value;
-            console.log(documentsUploaded.value);
+            documentsUploaded.value = documentsSaved.value; 
             store
               .dispatch("newlicense/getApplicationCategories")
               .then((res) => {
