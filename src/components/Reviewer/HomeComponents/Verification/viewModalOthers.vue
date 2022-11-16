@@ -13,11 +13,11 @@
       outline-none
       overflow-x-hidden overflow-y-auto
     "
-    id="staticBackdrop"
+    id="staticBackdropOthers"
     data-bs-backdrop="static"
     data-bs-keyboard="false"
     tabindex="-1"
-    aria-labelledby="staticBackdropLabel"
+    aria-labelledby="staticBackdropOthersLabel"
     aria-hidden="true"
   >
     <div class="modal-dialog modal-xl relative w-auto pointer-events-none">
@@ -57,14 +57,7 @@
           <div class="container px-6 mx-auto">
             <section class="text-gray-800">
               <div class="flex justify-center">
-                <div class="text-center lg:max-w-3xl md:max-w-xl">
-                  <h2 class="text-2xl font-bold mb-8 px-6">
-                    Showing Verification Data For
-                    <span class="text-2xl font-bold px-6">
-                      {{ applicantName }}</span
-                    >
-                  </h2>
-                </div>
+                <div class="text-center lg:max-w-3xl md:max-w-xl"></div>
               </div>
 
               <div class="grid grid-cols-3 gap-4">
@@ -74,7 +67,9 @@
                     disabled
                     readonly
                     :value="
-                      modalData.ApplicantName ? modalData.ApplicantName : ''
+                      modalDataOthers && modalDataOthers.ApplicantName
+                        ? modalDataOthers.ApplicantName
+                        : ''
                     "
                     type="text"
                     class="
@@ -102,7 +97,9 @@
                   <input
                     disabled
                     :value="
-                      modalData.RequestedRegion ? modalData.RequestedRegion : ''
+                      modalDataOthers && modalDataOthers.RequestedRegion
+                        ? modalDataOthers.RequestedRegion
+                        : ''
                     "
                     type="text"
                     class="
@@ -129,7 +126,11 @@
                   <label for="requestedRegion">License Code</label>
                   <input
                     disabled
-                    :value="modalData.LicenseCode ? modalData.LicenseCode : ''"
+                    :value="
+                      modalDataOthers && modalDataOthers.LicenseCode
+                        ? modalDataOthers.LicenseCode
+                        : ''
+                    "
                     type="text"
                     class="
                       form-control
@@ -164,8 +165,10 @@
                   <input
                     disabled
                     :value="
-                      modalData.data && modalData.data.verifier
-                        ? modalData.data.verifier.name
+                      modalDataOthers &&
+                      modalDataOthers.data &&
+                      modalDataOthers.data.verifier
+                        ? modalDataOthers.data.verifier.name
                         : ''
                     "
                     type="text"
@@ -199,16 +202,23 @@
                   <div class="m-4">
                     <div class="toggle slim colour">
                       <input
-                        disabled  
+                        :disabled="
+                          modalDataOthers && modalDataOthers.data
+                            ? modalDataOthers.data.isVerified == true
+                            : false
+                        "
+                        v-model="isVerified"
+                        id="isVerified"
                         class="toggle-checkbox hidden cursor-pointer"
                         type="checkbox"
                         :checked="
-                          modalData && modalData.data
-                            ? modalData.data.isVerified == true
+                          modalDataOthers && modalDataOthers.data
+                            ? modalDataOthers.data.isVerified == true
                             : false
                         "
                       />
-                      <label 
+                      <label
+                        for="isVerified"
                         class="
                           toggle-label
                           block
@@ -222,9 +232,9 @@
                       ></label>
                       <span>
                         {{
-                          modalData &&
-                          modalData.data &&
-                          modalData.data.isVerified == true
+                          modalDataOthers &&
+                          modalDataOthers.data &&
+                          modalDataOthers.data.isVerified == true
                             ? "Yes"
                             : "No"
                         }}
@@ -242,7 +252,11 @@
 
                   <input
                     disabled
-                    :value="modalData.data ? modalData.data.requester.name : ''"
+                    :value="
+                      modalDataOthers && modalDataOthers.data
+                        ? modalDataOthers.data.requester.name
+                        : ''
+                    "
                     type="text"
                     class="
                       form-control
@@ -272,6 +286,11 @@
                 <div class="form-group mb-4">
                   <label for="firstName">Remark</label>
                   <textarea
+                    :disabled="
+                      modalDataOthers && modalDataOthers.data
+                        ? modalDataOthers.data.remark
+                        : ''
+                    "
                     type="textarea"
                     rows="4"
                     class="
@@ -292,8 +311,8 @@
                     "
                     id="remark"
                     placeholder="Remark note "
-                    :value="remark"
-                    disabled
+                    v-model="remark"
+                    required
                   />
                 </div>
 
@@ -319,10 +338,15 @@
                       dark:focus:border-blue-500
                     "
                     placeholder="Information regarding malpractice"
-                    :value="malpracticeInfo"
+                    v-model="malpracticeInfo"
                     type="textarea"
-                    disabled
                     id="malpracticeInfo"
+                    required
+                    :disabled="
+                      modalDataOthers && modalDataOthers.data
+                        ? modalDataOthers.data.malpracticeInfo
+                        : ''
+                    "
                   />
                 </div>
               </div>
@@ -340,7 +364,24 @@
             rounded-b-md
           "
         >
-        
+          <button
+            v-if="
+              modalDataOthers &&
+              modalDataOthers.data &&
+              modalDataOthers.data.requesterId != loggedInAdmin.id
+            "
+            type="button"
+            @click="saveVerification()"
+            :class="
+              modalDataOthers &&
+              modalDataOthers.data &&
+              modalDataOthers.data.isVerified == true
+                ? 'pointer-events-none disabled inline-block px-6 text-white font-medium text-xs leading-tight uppercase rounded shadow-md bg-grey-300 hover:bg-whitehover:shadow-lg hover:text-primary-600 hover:border transition duration-150 ease-in-out'
+                : 'inline-block px-6 text-white font-medium text-xs leading-tight uppercase rounded shadow-md bg-primary-700 hover:bg-whitehover:shadow-lg hover:text-primary-600 hover:border transition duration-150 ease-in-out'
+            "
+          >
+            Save
+          </button>
           <button
             type="button"
             class="
@@ -373,77 +414,60 @@ import { ref, computed } from "vue";
 import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
 export default {
-  props: ["modalData"],
+  props: ["modalDataOthers"],
   setup(props) {
     const store = useStore();
     const toast = useToast();
-    const remark = ref(props.modalData.data ? props.modalData.data.remark : "");
     let loggedInAdmin = JSON.parse(localStorage.getItem("allAdminData"));
-    const malpracticeInfo = ref(
-      props.modalData.data ? props.modalData.data.malpracticeInfo : ""
-    );
-    const issuedInGoodStanding = computed(() =>
-      props.modalData.data ? props.modalData.data.issuedInGoodStanding : null
-    );
-    const regionId = computed(() =>
-      props.modalData.data ? props.modalData.data.region.id : null
-    );
-    const verificationId = computed(() =>
-      props.modalData ? props.modalData.Number : null
-    );
-    const renewalId = ref(
-      props.modalData.data && props.modalData.data.renewal
-        ? props.modalData.data.renewal.id
-        : null
-    );
-    let isVerified = ref(
-      props.modalData.data ? props.modalData.data.isVerified : false
-    );
-    let isVerifiedComputed = computed(() =>
-      props.modalData.data ? props.modalData.data.isVerified : false
-    );
-    if (isVerifiedComputed.value == true) {
-      isVerified.value == true;
-    }
 
-    const applicantId = computed(() =>
-      props.modalData.data ? props.modalData.data.applicant.id : null
+    let isVerified = ref(
+      props.modalDataOthers && props.modalDataOthers.data
+        ? props.modalDataOthers.data.isVerified
+        : false
     );
-    const licenseCode = computed(() =>
-      props.modalData.data && props.modalData.data.newLicense
-        ? props.modalData.data.newLicense.id
-        : null
+    let remark = computed(() =>
+      props.modalDataOthers && props.modalDataOthers.data
+        ? props.modalDataOthers.data.remark
+        : ""
     );
-    const requestedRegion = computed(() => props.modalData.RequestedRegion);
-    const verifiedBy = computed(() =>
-      props.modalData.data ? props.modalData.data.verifier.name : null
+    let malpracticeInfo = computed(() =>
+      props.modalDataOthers && props.modalDataOthers.data
+        ? props.modalDataOthers.data.malpracticeInfo
+        : ""
     );
-    const requester = computed(() =>
-      props.modalData.data ? props.modalData.data.requester.name : null
-    );
-    const applicantName = computed(() => props.modalData.ApplicantName);
     const editedData = ref({});
     const saveVerification = () => {
-      if (isVerifiedComputed.value == true) {
-        isVerified.value == true;
-      }
-      editedData.value.isVerified = isVerified.value;
-      editedData.value.remark = remark.value;
-      editedData.value.malpracticeInfo = malpracticeInfo.value;
+      editedData.value.isVerified = isVerified.value ? isVerified.value : null;
+      editedData.value.remark = remark.value ? remark.value : null;
+      editedData.value.malpracticeInfo = malpracticeInfo.value
+        ? malpracticeInfo.value
+        : null;
       editedData.value.verifier = loggedInAdmin.name;
-      editedData.value.applicantId = applicantId.value
-        ? applicantId.value
-        : null;
-      editedData.value.issuedInGoodStanding = issuedInGoodStanding.value
-        ? issuedInGoodStanding.value
-        : null;
-      editedData.value.regionId = regionId.value ? regionId.value : null;
+      (editedData.value.applicantId =
+        props.modalDataOthers && props.modalDataOthers.data
+          ? props.modalDataOthers.data.applicantId
+          : null),
+        (editedData.value.issuedInGoodStanding =
+          props.modalDataOthers && props.modalDataOthers.data
+            ? props.modalDataOthers.data.issuedInGoodStanding
+            : null),
+        (editedData.value.regionId =
+          props.modalDataOthers && props.modalDataOthers.data
+            ? props.modalDataOthers.data.regionId
+            : null);
       editedData.value.verifiedById = loggedInAdmin.id;
-      editedData.value.renewalId = renewalId.value ? renewalId.value : null;
-      editedData.value.licenseId = licenseCode.value ? licenseCode.value : null;
-      editedData.value.verificationId = verificationId.value
-        ? verificationId.value
-        : null;
+      editedData.value.renewalId =
+        props.modalDataOthers && props.modalDataOthers.data
+          ? props.modalDataOthers.data.renewalId
+          : null;
+      editedData.value.licenseId =
+        props.modalDataOthers && props.modalDataOthers.data
+          ? props.modalDataOthers.data.licenseId
+          : null;
+      editedData.value.verificationId =
+        props.modalDataOthers && props.modalDataOthers.data
+          ? props.modalDataOthers.data.id
+          : null;
 
       store
         .dispatch("applicationVerification/saveResponse", editedData.value)
@@ -456,9 +480,6 @@ export default {
               pauseOnHover: true,
               icon: true,
             });
-            setTimeout(() => {
-              window.location.reload();
-            }, 3000);
           } else {
             toast.error(res.data.message, {
               timeout: 5000,
@@ -467,35 +488,16 @@ export default {
               pauseOnHover: true,
               icon: true,
             });
-            setTimeout(() => {
-              window.location.reload();
-            }, 3000);
           }
         });
     };
 
-    const verifiedCheck = () => {
-      isVerified.value = !isVerified.value;
-    };
-
     return {
       saveVerification,
-      applicantName,
       remark,
       malpracticeInfo,
-      issuedInGoodStanding,
-      regionId,
-      verificationId,
-      renewalId,
-      isVerifiedComputed,
       isVerified,
       loggedInAdmin,
-      applicantId,
-      verifiedCheck,
-      licenseCode,
-      requestedRegion,
-      verifiedBy,
-      requester,
     };
   },
 };
