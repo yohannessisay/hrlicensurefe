@@ -737,8 +737,10 @@ export default {
                   });
                   if (action == "DraftEvent") {
                     router.push({ path: "/Applicant/GoodStanding/draft" });
+                    location.reload();
                   } else {
                     router.push({ path: "/Applicant/GoodStanding/submitted" });
+                    location.reload();
                   }
                 } else {
                   toast.error("Error occured, please try again", {

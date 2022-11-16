@@ -74,7 +74,7 @@ export default {
     try {
       const resp = await ApiService.put(
         baseUrl + "/goodStandings/" + license.data.id,
-        license.data
+        license
       );
       return resp;
     } catch (error) {
@@ -222,7 +222,7 @@ export default {
   },
   async getGoodStandingLicenseById({ commit }, id) {
     try {
-      const resp = await ApiService.get(baseUrl + "/goodStandings/" + id);
+      const resp = await ApiService.get(baseUrl + "/goodStandings/" + id); 
       return resp;
     } catch (error) {
       return error;
@@ -318,7 +318,7 @@ export default {
   async getGSdocuments({ commit }, appCategory) {
     try {
       const resp = await ApiService.get(
-        baseUrl + `/documentSpecs/${appCategory}/`
+        baseUrl + `/documentSpecs/${appCategory}`
       );
       return resp;
     } catch (error) {

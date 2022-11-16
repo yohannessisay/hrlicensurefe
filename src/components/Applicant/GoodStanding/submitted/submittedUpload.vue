@@ -145,23 +145,42 @@
                           />
                         </p>
                       </td>
-
-                      <td class="px-6 py-4 text-center">
+                      <td class="px-6 py-4">
                         <span
-                          data-bs-toggle="modal"
-                          data-bs-target="#filePreview"
-                          @click="
-                            previewFile(
-                              item.documentType.code,
-                              item.documentType.name
-                            )
+                          class="document-name"
+                          v-if="documentsSaved[item.documentType.code]"
+                          >{{
+                            documentsSaved[item.documentType.code].name
+                          }}</span
+                        >
+                      </td>
+                      <td class="px-6 py-4 text-center">
+                        <a
+                          :id="
+                            'common_image_href' + item.documentType.id + item.id
                           "
+                          :href="documentsSaved[item.documentType.code]?.path"
+                          :data-title="item.name ? item.name : '-----'"
+                          data-lightbox="example-2"
                         >
                           <i
-                            class="fa fa-eye cursor-pointer"
+                            :id="'common_icon' + item.documentType.id + item.id"
+                            class="fa fa-eye cursor-pointer text-main-400"
                             aria-hidden="true"
-                          ></i>
-                        </span>
+                          >
+                            <img
+                              :id="
+                                'common_image_lightbox' +
+                                item.documentType.id +
+                                item.id
+                              "
+                              v-bind:src="
+                                documentsSaved[item.documentType.code]
+                              "
+                              class="w-full h-2 object-cover"
+                            />
+                          </i>
+                        </a>
                       </td>
                     </tr>
                   </tbody>
@@ -173,6 +192,31 @@
       </div>
     </div>
     <div class="flex justify-end mr-8">
+      <button
+        class="
+          mt-8
+          inline-block
+          px-6
+          py-2.5
+          bg-white
+          hover:bg-main-400 hover:text-white
+          text-main-400 text-xs
+          font-bold
+          leading-tight
+          uppercase
+          rounded
+          shadow-md
+          active:border-main-400
+          transition
+          duration-150
+          ease-in-out
+          border
+        "
+        type="submit"
+        @click="saveDraft()"
+      >
+        Save as draft
+      </button>
       <button
         class="
           mt-8
@@ -229,10 +273,13 @@ import { useStore } from "vuex";
 import MAX_FILE_SIZE from "../../../../composables/documentMessage";
 import { boolean } from "yargs";
 import { useToast } from "vue-toastification";
+import { googleApi } from "@/composables/baseURL";
+import { useRoute } from "vue-router";
 export default {
   setup(props, { emit }) {
     let store = useStore();
     let toast = useToast();
+    let route = useRoute();
     let imageUploader = ref(null);
     let goToNext = ref(false);
     let departmentDocuments = [];
@@ -250,12 +297,14 @@ export default {
     let maxFileSize = ref();
     let imageData = [];
     let isImage = ref({});
+    let documentsSaved = ref([]);
     let isPdf = ref({});
     let fileSizeExceed = ref({});
     let fileSize = ref("");
     let showImage = ref(false);
     let existingDocs = [];
     let previewDocuments = ref({});
+    let documentsUploaded = ref([]);
     let showPreview = ref("");
     maxFileSize.value = MAX_FILE_SIZE.MAX_FILE_SIZE;
     let generalInfo = ref({});
@@ -295,6 +344,7 @@ export default {
           );
           imageData.push({
             documenttype: data.documentType ? data.documentType.name : "",
+            documentCode:data.documentType ? data.documentType.code : "",
             educationalLevel: data.educationalLevel
               ? data.educationalLevel.name
               : "",
@@ -329,28 +379,30 @@ export default {
         fileSizeExceed.value[data.documentType.code] = true;
         documentUploaded.value[data.documentType.code] = "";
       }
-    };
+      let icon = document.getElementById(
+        "common_icon" + data.documentType.id + data.id
+      );
+      if (icon.classList.contains("disabled")) {
+        icon.classList.toggle("disabled");
+      }
 
-    const checkDocuments = () => {
-      let temp = false;
+      let output = document.getElementById(
+        "common_image_lightbox" + data.documentType.id + data.id
+      );
 
-      documents.value
-        .filter((cd) => cd.isRequired)
-        .forEach((element) => {
-          temp = documentUploaded.value.hasOwnProperty(
-            element.documentType.code
-          );
-          if (!temp) {
-            documentError.value[
-              "file_upload_row_" + element.documentType.code
-            ] = true;
-          } else {
-            documentError.value[
-              "file_upload_row_" + element.documentType.code
-            ] = false;
-          }
-        });
-      return temp;
+      let outputHref = document.getElementById(
+        "common_image_href" + data.documentType.id + data.id
+      );
+      outputHref.href = URL.createObjectURL(event.target.files[0]);
+      if (output && output.src) {
+        output.src = URL.createObjectURL(event.target.files[0]);
+      }
+
+      output
+        ? (output.onload = function () {
+            URL.revokeObjectURL(output.src); // free memory
+          })
+        : "";
     };
 
     const initDb = () => {
@@ -383,78 +435,161 @@ export default {
     };
 
     const next = () => {
-      let documentValidation = checkDocuments();
-      if (documentValidation) {
-        store.dispatch("goodstanding/setTempDocs", formData).then(() => {
-          let finalLocalData = {
-            created: new Date(),
-            data: [],
-          };
-          let db;
-          let request = indexedDB.open("GSdocumentUploads", 1);
-          request.onsuccess = function () {
-            db = request.result;
-            let transaction = db.transaction(
-              ["GSdocumentUploads"],
-              "readwrite"
-            );
-            let tempStat = false;
+      store.dispatch("goodstanding/setTempDocs", formData).then(() => {
+        let finalLocalData = {
+          created: new Date(),
+          data: [],
+        };
+        let db;
+        let request = indexedDB.open("GSdocumentUploads", 1);
+        request.onsuccess = function () {
+          db = request.result;
+          let transaction = db.transaction(["GSdocumentUploads"], "readwrite");
+          let tempStat = false;
 
-            if (existingDocs.length > 0) {
-              imageData.forEach((newImage) => {
-                existingDocs.forEach((existing) => {
-                  if (existing.imageId == newImage.imageId) {
-                    existing.image = newImage.image;
-                    finalLocalData.data.push(existing);
-                  } else {
-                    finalLocalData.data.push(existing);
-                    tempStat = true;
-                  }
-                });
-                if (tempStat == true) {
-                  finalLocalData.data.push(newImage);
+          if (existingDocs.length > 0) {
+            imageData.forEach((newImage) => {
+              existingDocs.forEach((existing) => {
+                if (existing.imageId == newImage.imageId) {
+                  existing.image = newImage.image;
+                  finalLocalData.data.push(existing);
+                } else {
+                  finalLocalData.data.push(existing);
+                  tempStat = true;
                 }
               });
-              finalLocalData.data.concat(imageData);
-            } else {
-              finalLocalData.data = imageData;
-            }
-            finalLocalData.data = [...new Set(finalLocalData.data)];
+              if (tempStat == true) {
+                finalLocalData.data.push(newImage);
+              }
+            });
+            finalLocalData.data.concat(imageData);
+          } else {
+            finalLocalData.data = imageData;
+          }
+          finalLocalData.data = [...new Set(finalLocalData.data)];
 
-            const objectStore = transaction.objectStore("GSdocumentUploads");
+          const objectStore = transaction.objectStore("GSdocumentUploads");
 
-            const objectStoreRequest = objectStore.clear();
+          const objectStoreRequest = objectStore.clear();
 
-            objectStoreRequest.onsuccess = (event) => {
-              let addReq = transaction
-                .objectStore("GSdocumentUploads")
-                .put(finalLocalData);
+          objectStoreRequest.onsuccess = (event) => {
+            let addReq = transaction
+              .objectStore("GSdocumentUploads")
+              .put(finalLocalData);
 
-              addReq.onerror = function () {
-                console.log(
-                  "Error regarding your browser, please update your browser to the latest version"
-                );
-              };
+            addReq.onerror = function () {
+              console.log(
+                "Error regarding your browser, please update your browser to the latest version"
+              );
+            };
 
-              transaction.oncomplete = function () {
-                console.log("data stored");
-                emit("changeActiveState");
-              };
+            transaction.oncomplete = function () {
+              console.log("data stored");
+              emit("changeActiveState");
             };
           };
-        });
-      } else {
-        toast.error("Please attach the required documents ", {
-          timeout: 5000,
-          position: "bottom-center",
-          pauseOnFocusLoss: true,
-          pauseOnHover: true,
-          icon: true,
-        });
-      }
+        };
+      });
     };
     const back = () => {
       emit("changeActiveStateMinus");
+    };
+
+    const saveDraft = (action) => {
+      generalInfo.value.licenseFile = [];
+
+      let license = {
+        action: action,
+        data: {
+          applicantId: generalInfo.value.applicantId,
+          applicantTypeId: generalInfo.value.applicantTypeId.id,
+          residenceWoredaId: generalInfo.value.woredaSelected
+            ? generalInfo.value.woredaSelected.id
+            : null,
+          applicantTitleId: generalInfo.value.applicantTitleId
+            ? generalInfo.value.applicantTitleId.id
+            : "",
+          whomGoodStandingFor: generalInfo.value.whomGoodStandingFor
+            ? generalInfo.value.whomGoodStandingFor
+            : "",
+          applicantPositionId: generalInfo.value.applicantPosition
+            ? generalInfo.value.applicantPosition.id
+            : null,
+          licenseIssuedDate: generalInfo.value.licenseIssuedDate
+            ? generalInfo.value.licenseIssuedDate
+            : null,
+          whoIssued: generalInfo.value.whoIssued
+            ? generalInfo.value.whoIssued
+            : "",
+          licenseRegistrationNumber: generalInfo.value.licenseRegistrationNumber
+            ? generalInfo.value.licenseRegistrationNumber
+            : "",
+          professionType: {
+            professionTypeId: generalInfo.value.professionType
+              ? generalInfo.value.professionType.professionTypeId.id
+              : null,
+            educationLevelId: generalInfo.value.professionType
+              ? generalInfo.value.professionType.educationLevelId.id
+              : null,
+          },
+          expertLevelId: generalInfo.value.expertLevelId
+            ? generalInfo.value.expertLevelId
+            : null,
+          islegal: true,
+          otherProfessionalType: generalInfo.value.otherProfessionType
+            ? generalInfo.value.otherProfessionType
+            : "",
+          otherProfessionalTypeAmharic: generalInfo.value
+            .otherProfessionTypeAmharic
+            ? generalInfo.value.otherProfessionTypeAmharic
+            : "",
+          departmentId: generalInfo.value.departmentId.id
+            ? generalInfo.value.departmentId.id
+            : null,
+          feedback: generalInfo.value.feedback
+            ? generalInfo.value.feedback
+            : "",
+        },
+      };
+
+      store
+        .dispatch("goodstanding/addGoodstandingLicense", license)
+        .then((res) => {
+          let licenseId = res.data.data.id;
+          let payload = { document: formData, id: licenseId };
+          store
+            .dispatch("goodstanding/uploadDocuments", payload)
+            .then((res) => {
+              if (res.data.status == "Success") {
+                toast.success("Applied successfuly", {
+                  timeout: 5000,
+                  position: "bottom-center",
+                  pauseOnFocusLoss: true,
+                  pauseOnHover: true,
+                  icon: true,
+                });
+                localStorage.removeItem("GSApplicationData");
+                location.reload();
+              } else {
+                toast.error("Error occured, please try again", {
+                  timeout: 5000,
+                  position: "bottom-center",
+                  pauseOnFocusLoss: true,
+                  pauseOnHover: true,
+                  icon: true,
+                });
+              }
+            })
+            .catch(() => {
+              toast.error("Error occured, please try again", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
+            });
+        });
     };
 
     onMounted(() => {
@@ -465,30 +600,44 @@ export default {
       } else {
         initDb();
       }
+
+      store
+        .dispatch("goodstanding/getGoodStandingLicenseById", route.params.id)
+        .then((res) => {
+          generalInfo.value = res.data.data;
+          generalInfo.value?.documents.forEach((element) => {
+            documentsSaved.value[element.documentTypeCode] = {};
+            documentsSaved.value[element.documentTypeCode].path =
+              googleApi + element.filePath;
+            documentsSaved.value[element.documentTypeCode].name =
+              element.originalFileName;
+          });
+          documentsUploaded.value = documentsSaved.value;
+        });
+
       localData.value = window.localStorage.getItem("GSApplicationData")
         ? JSON.parse(window.localStorage.getItem("GSApplicationData"))
         : {};
-      if (Object.keys(localData.value).length != 0) {
-        generalInfo.value = localData.value;
-        store.dispatch("goodstanding/getApplicationCategories").then((res) => {
-          let categoryResults = res.data.data
-            ? res.data.data.filter((ele) => ele.code == "GSL")
-            : "";
 
-          store
-            .dispatch("goodstanding/getGSdocuments", categoryResults[0].id)
-            .then((res) => {
-              let results = res.data.data;
+      generalInfo.value = localData.value;
+      store.dispatch("goodstanding/getApplicationCategories").then((res) => {
+        let categoryResults = res.data.data
+          ? res.data.data.filter((ele) => ele.code == "GSL")
+          : "";
 
-              documents.value = results.filter(
-                (
-                  (set) => (f) =>
-                    !set.has(f.documentTypeId) && set.add(f.documentTypeId)
-                )(new Set())
-              );
-            });
-        });
-      }
+        store
+          .dispatch("goodstanding/getGSdocuments", categoryResults[0].id)
+          .then((res) => {
+            let results = res.data.data;
+
+            documents.value = results.filter(
+              (
+                (set) => (f) =>
+                  !set.has(f.documentTypeId) && set.add(f.documentTypeId)
+              )(new Set())
+            );
+          });
+      });
     });
 
     return {
@@ -498,7 +647,10 @@ export default {
       showImage,
       previewDocuments,
       showPreview,
+      documentsSaved,
+      documentsUploaded,
       previewFile,
+      saveDraft,
       documentError,
       generalInfo,
       goToNext,

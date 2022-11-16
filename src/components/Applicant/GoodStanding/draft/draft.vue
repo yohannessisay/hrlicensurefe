@@ -276,11 +276,9 @@ export default {
       store.dispatch("goodstanding/getGoodStandingLicense").then((res) => {
         const results = res.data.data;
 
-        if (results&&results.length > 0) {
+        if (results && results.length > 0) {
           userDraftLicenses.value = results.filter((draftLicense) => {
-            return (
-              draftLicense.applicationStatus.code === "DRA" 
-            );
+            return draftLicense.applicationStatus.code === "DRA";
           });
 
           if (userDraftLicenses.value.length === 0) {

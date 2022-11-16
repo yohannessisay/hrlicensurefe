@@ -356,7 +356,7 @@
                 <label class="text-main-400">Other Profession Amharic</label>
                 <input
                   type="text"
-                  v-model="generalInfo.professionType.otherProfessionType"
+                  v-model="generalInfo.professionType.otherProfessionTypeAmharic"
                   class="
                     appearance-none
                     block
@@ -890,13 +890,10 @@ export default {
     };
     const educationalLevelChange = () => {
       isEdLevelSelected.value = true;
-      console.log(
-        generalInfo.value.departmentId.id,
-        generalInfo.value.educationLevelId.id
-      );
+    
       fetchProfessionalType(
         generalInfo.value.departmentId.id,
-        generalInfo.value.educationLevelId.id
+        generalInfo.value.professionType.educationLevelId.id
       );
     };
     const fetchZones = () => {

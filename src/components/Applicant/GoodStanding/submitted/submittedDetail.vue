@@ -9,7 +9,7 @@
         </li>
         <li><span class="text-gray-500 mx-2">/</span></li>
         <li>
-          <router-link to="/Applicant/NewLicense">
+          <router-link to="/Applicant/GoodStanding">
             <a href="#" class="text-main-400 hover:text-blue-700"
               >Goodstanding</a
             >
@@ -37,6 +37,7 @@
       <div class="mt-small flex justify-center">
         <h2 class="text-main-400 text-3xl font-bold">General Information</h2>
       </div>
+
       <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-10">
         <div class="mt-12 rounded-sm bg-white shadow-lg mb-8">
           <div class="container mx-auto">
@@ -78,7 +79,6 @@
                       focus:border-main-400
                       focus:outline-none
                     "
-                    disabled
                     aria-label="Default select example"
                     @change="checkApplicantType(generalInfo.applicantTypeId)"
                     v-model="generalInfo.applicantTypeId"
@@ -86,17 +86,19 @@
                   >
                     <option
                       :value="
-                        generalInfo.applicantType
-                          ? generalInfo.applicantType.id
-                          : ''
+                        generalInfo && generalInfo.applicantTypeId
+                          ? generalInfo.applicantTypeId
+                          : null
                       "
+                      selected
                     >
                       {{
-                        generalInfo.applicantType
+                        generalInfo && generalInfo.applicantType
                           ? generalInfo.applicantType.name
                           : ""
                       }}
                     </option>
+
                     <option
                       v-for="applicant in applicantTypes"
                       :key="applicant.name"
@@ -105,39 +107,6 @@
                       {{ applicant.name }}
                     </option>
                   </select>
-                  <button
-                    v-show="Object.keys(localData).length != 0"
-                    class="
-                      mt-8
-                      inline-block
-                      px-6
-                      py-2.5
-                      bg-white
-                      text-main-400
-                      max-w-3xl
-                      border
-                      hover:bg-main-400 hover:text-white
-                      font-medium
-                      text-xs
-                      leading-tight
-                      uppercase
-                      rounded
-                      shadow-md
-                      hover:border-main-500
-                      focus:bg-blue-700
-                      focus:shadow-lg
-                      focus:outline-none
-                      focus:ring-0
-                      active:bg-blue-800 active:shadow-lg
-                      transition
-                      duration-150
-                      ease-in-out
-                    "
-                    @click="clearLocalData()"
-                  >
-                    <i class="fa fa-close"></i>
-                    Clear Form
-                  </button>
                 </div>
               </div>
 
@@ -185,13 +154,14 @@
                     >
                       <option
                         :value="
-                          generalInfo.applicantTitle
-                            ? generalInfo.applicantTitle.id
-                            : ''
+                          generalInfo && generalInfo.applicantTitleId
+                            ? generalInfo.applicantTitleId
+                            : null
                         "
+                        selected
                       >
                         {{
-                          generalInfo.applicantTitle
+                          generalInfo && generalInfo.applicantTitle
                             ? generalInfo.applicantTitle.name
                             : ""
                         }}
@@ -242,17 +212,18 @@
                       focus:outline-none
                     "
                     v-model="generalInfo.departmentId"
-                    @change="setDepartment()"
-                    required
+                    @change="setDepartment()" 
                   >
                     <option
-                      selected
                       :value="
-                        generalInfo.department ? generalInfo.department.id : ''
+                        generalInfo && generalInfo.departmentId
+                          ? generalInfo.departmentId
+                          : null
                       "
+                      selected
                     >
                       {{
-                        generalInfo.department
+                        generalInfo && generalInfo.department
                           ? generalInfo.department.name
                           : ""
                       }}
@@ -296,11 +267,24 @@
                       focus:border-main-400
                       focus:outline-none
                     "
-                    v-model="generalInfo.educationLevel
-                    "
-                    @change="educationalLevelChange()"
-                    required
+                    v-model="generalInfo.GSProfessionals.educationLevelId"
+                    @change="educationalLevelChange()" 
                   >
+                    <option
+                      :value="
+                        generalInfo && generalInfo.GSProfessionals
+                          ? generalInfo.GSProfessionals.educationLevelId
+                          : null
+                      "
+                      selected
+                    >
+                      {{
+                        generalInfo && generalInfo.GSProfessionals
+                          ? generalInfo.GSProfessionals.educationLevelId
+                          : ""
+                      }}
+                    </option>
+
                     <option
                       v-for="edLevel in educationLevels"
                       v-bind:key="edLevel.name"
@@ -312,9 +296,16 @@
                 </div>
               </div>
               <div
-                class="flex justify-center text-6xl rounded-xl p-2 bg-gray-100"
+                class="
+                  grid grid-rows-3
+                  justify-center
+                  text-6xl
+                  rounded-xl
+                  p-2
+                  bg-gray-100
+                "
               >
-                <div>
+                <div class="mb-4">
                   <label class="text-main-400">Profession</label>
                   <select
                     class="
@@ -340,19 +331,19 @@
                       focus:border-main-400
                       focus:outline-none
                     "
-                    v-model="generalInfo.professionalType"
-                    required
+                    @change="checkOtherProfession()"
+                    v-model="generalInfo.GSProfessionals.professionTypeId" 
                   >
                     <option
-                      selected
                       :value="
-                        generalInfo.GSProfessionals &&
-                        generalInfo.GSProfessionals.professionalTypes
-                          ? generalInfo.GSProfessionals.professionalTypes.id
-                          : ''
+                        generalInfo && generalInfo.GSProfessionals
+                          ? generalInfo.GSProfessionals.professionalTypeId
+                          : null
                       "
+                      selected
                     >
                       {{
+                        generalInfo &&
                         generalInfo.GSProfessionals &&
                         generalInfo.GSProfessionals.professionalTypes
                           ? generalInfo.GSProfessionals.professionalTypes.name
@@ -365,6 +356,132 @@
                       v-bind:value="profession"
                     >
                       {{ profession.name }}
+                    </option>
+                    <option value=""></option>
+                  </select>
+                </div>
+
+                <div v-show="showOtherProfession">
+                  <label class="text-main-400">Other Profession</label>
+                  <input
+                    type="text"
+                    v-model="generalInfo.GSProfessionals.otherProfessionType"
+                    class="
+                      appearance-none
+                      block
+                      xl:w-64
+                      md:w-64
+                      sm:w-64
+                      px-3
+                      py-1.5
+                      text-base
+                      font-normal
+                      text-gray-700
+                      hover:text-main-500 hover:border-main-500
+                      border border-solid border-gray-300
+                      rounded
+                      transition
+                      ease-in-out
+                      m-0
+                      focus:text-gray-700
+                      focus:bg-white
+                      focus:border-main-400
+                      focus:outline-none
+                    "
+                    autocomplete="off"
+                    placeholder=""
+                    required
+                  />
+                </div>
+
+                <div v-show="showOtherProfession">
+                  <label class="text-main-400">Other Profession Amharic</label>
+                  <input
+                    type="text"
+                    v-model="
+                      generalInfo.GSProfessionals.otherProfessionTypeAmharic
+                    "
+                    class="
+                      appearance-none
+                      block
+                      xl:w-64
+                      md:w-64
+                      sm:w-64
+                      px-3
+                      py-1.5
+                      text-base
+                      font-normal
+                      text-gray-700
+                      hover:text-main-500 hover:border-main-500
+                      border border-solid border-gray-300
+                      rounded
+                      transition
+                      ease-in-out
+                      m-0
+                      focus:text-gray-700
+                      focus:bg-white
+                      focus:border-main-400
+                      focus:outline-none
+                    "
+                    autocomplete="off"
+                    placeholder=""
+                    required
+                  />
+                </div>
+              </div>
+
+              <div
+                class="flex justify-center text-6xl rounded-xl p-2 bg-gray-100"
+              >
+                <div>
+                  <label class="text-main-400">Applicant Position</label>
+                  <select
+                    class="
+                      form-select
+                      appearance-none
+                      block
+                      xl:w-64
+                      md:w-64
+                      sm:w-64
+                      px-3
+                      py-1.5
+                      text-base
+                      font-normal
+                      text-gray-700
+                      hover:text-main-500 hover:border-main-500
+                      border border-solid border-gray-300
+                      rounded
+                      transition
+                      ease-in-out
+                      m-0
+                      focus:text-gray-700
+                      focus:bg-white
+                      focus:border-main-400
+                      focus:outline-none
+                    "
+                    v-model="generalInfo.applicantPosition"
+                    required
+                  >
+                    <option
+                      :value="
+                        generalInfo && generalInfo.applicantPositionId
+                          ? generalInfo.applicantPositionId
+                          : null
+                      "
+                      selected
+                    >
+                      {{
+                        generalInfo && generalInfo.applicantPosition
+                          ? generalInfo.applicantPosition.name
+                          : ""
+                      }}
+                    </option>
+                    <option
+                      v-for="position in applicationPositions"
+                      v-bind:key="position.id"
+                      v-bind:value="position"
+                    >
+                      {{ position.name }}
                     </option>
                   </select>
                 </div>
@@ -405,6 +522,20 @@
                 required
               >
                 <option
+                  :value="
+                    generalInfo && generalInfo.regionSelected
+                      ? generalInfo.regionSelected.id
+                      : null
+                  "
+                  selected
+                >
+                  {{
+                    generalInfo && generalInfo.regionSelected
+                      ? generalInfo.regionSelected.name
+                      : ""
+                  }}
+                </option>
+                <option
                   v-for="region in regions"
                   v-bind:key="region.name"
                   v-bind:value="region"
@@ -441,6 +572,20 @@
                 v-model="generalInfo.zoneSelected"
               >
                 <option
+                  :value="
+                    generalInfo && generalInfo.zoneSelected
+                      ? generalInfo.zoneSelected.id
+                      : null
+                  "
+                  selected
+                >
+                  {{
+                    generalInfo && generalInfo.zoneSelected
+                      ? generalInfo.zoneSelected.name
+                      : ""
+                  }}
+                </option>
+                <option
                   v-for="zone in zones"
                   v-bind:key="zone.name"
                   v-bind:value="zone"
@@ -452,7 +597,7 @@
           </div>
           <div class="flex">
             <div class="flex flex-col mb-medium w-2/5 ml-medium mr-12">
-              <label class="text-white">Woreda</label>
+              <label class="text-main-400">Woreda</label>
               <select
                 class="
                   form-select
@@ -478,6 +623,20 @@
                 v-model="generalInfo.woredaSelected"
                 required
               >
+                <option
+                  :value="
+                    generalInfo && generalInfo.woredaSelected
+                      ? generalInfo.woredaSelected.id
+                      : null
+                  "
+                  selected
+                >
+                  {{
+                    generalInfo && generalInfo.woredaSelected
+                      ? generalInfo.woredaSelected.name
+                      : ""
+                  }}
+                </option>
                 <option
                   v-for="woreda in woredas"
                   v-bind:key="woreda.name"
@@ -514,9 +673,29 @@
 
                     <input
                       type="text"
-                      id="applicantTitle"
                       v-model="generalInfo.whomGoodStandingFor"
-                      class="w-full px-3 py-2 rounded-none"
+                      class="
+                        appearance-none
+                        block
+                        xl:w-64
+                        md:w-64
+                        sm:w-64
+                        px-3
+                        py-1.5
+                        text-base
+                        font-normal
+                        text-gray-700
+                        hover:text-main-500 hover:border-main-500
+                        border border-solid border-gray-300
+                        rounded
+                        transition
+                        ease-in-out
+                        m-0
+                        focus:text-gray-700
+                        focus:bg-white
+                        focus:border-main-400
+                        focus:outline-none
+                      "
                       autocomplete="off"
                       placeholder=""
                       required
@@ -544,9 +723,29 @@
 
                     <input
                       type="text"
-                      id="applicantTitle"
                       v-model="generalInfo.whoIssued"
-                      class="w-full px-3 py-2 rounded-none"
+                      class="
+                        appearance-none
+                        block
+                        xl:w-64
+                        md:w-64
+                        sm:w-64
+                        px-3
+                        py-1.5
+                        text-base
+                        font-normal
+                        text-gray-700
+                        hover:text-main-500 hover:border-main-500
+                        border border-solid border-gray-300
+                        rounded
+                        transition
+                        ease-in-out
+                        m-0
+                        focus:text-gray-700
+                        focus:bg-white
+                        focus:border-main-400
+                        focus:outline-none
+                      "
                       autocomplete="off"
                       placeholder=""
                       required
@@ -579,9 +778,29 @@
 
                     <input
                       type="text"
-                      id="applicantTitle"
                       v-model="generalInfo.licenseRegistrationNumber"
-                      class="w-full px-3 py-2 rounded-none"
+                      class="
+                        appearance-none
+                        block
+                        xl:w-64
+                        md:w-64
+                        sm:w-64
+                        px-3
+                        py-1.5
+                        text-base
+                        font-normal
+                        text-gray-700
+                        hover:text-main-500 hover:border-main-500
+                        border border-solid border-gray-300
+                        rounded
+                        transition
+                        ease-in-out
+                        m-0
+                        focus:text-gray-700
+                        focus:bg-white
+                        focus:border-main-400
+                        focus:outline-none
+                      "
                       autocomplete="off"
                       placeholder=""
                       required
@@ -601,9 +820,29 @@
 
                     <input
                       type="date"
-                      id="applicantTitle"
                       v-model="generalInfo.licenseIssuedDate"
-                      class="w-full px-3 py-2 rounded-none"
+                      class="
+                        appearance-none
+                        block
+                        xl:w-64
+                        md:w-64
+                        sm:w-64
+                        px-3
+                        py-1.5
+                        text-base
+                        font-normal
+                        text-gray-700
+                        hover:text-main-500 hover:border-main-500
+                        border border-solid border-gray-300
+                        rounded
+                        transition
+                        ease-in-out
+                        m-0
+                        focus:text-gray-700
+                        focus:bg-white
+                        focus:border-main-400
+                        focus:outline-none
+                      "
                       autocomplete="off"
                       placeholder="example-MR,MRS"
                       required
@@ -642,9 +881,9 @@
               ease-in-out
             "
             type="submit"
-            @click="apply()"
+            @click="saveDraft()"
           >
-            Next
+            Save as draft
           </button>
           <button
             class="
@@ -653,8 +892,8 @@
               inline-block
               px-6
               py-2.5
-              bg-yellow-300
-              text-white
+              bg-blue-700
+              text-main-400
               max-w-3xl
               font-medium
               text-xs
@@ -662,7 +901,9 @@
               uppercase
               rounded
               shadow-md
-              hover:text-yellow-300 hover:border-yellow-300 hover:bg-white
+              bg-white
+              border
+              hover:text-white hover:border-main-500 hover:bg-main-400
               focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
               active:bg-blue-800 active:shadow-lg
               transition
@@ -670,9 +911,9 @@
               ease-in-out
             "
             type="submit"
-            @click="withdraw()"
+            @click="apply()"
           >
-            Withdraw
+            Next
           </button>
         </div>
       </form>
@@ -701,20 +942,22 @@
 <script>
 import { useStore } from "vuex";
 import { ref, onMounted } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { useRoute } from "vue-router";
 import LicenseSummary from "./submittedSummary.vue";
 import Upload from "./submittedUpload.vue";
 import MainContent from "../sharedComponents/Menu.vue";
 import { useToast } from "vue-toastification";
 import Loading from "vue3-loading-overlay";
+import { useRouter } from "vue-router";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 export default {
+  props: ["activeState"],
   components: { MainContent, LicenseSummary, Upload, Loading },
+
   setup(props, { emit }) {
     const store = useStore();
-    const route = useRoute();
     const toast = useToast();
-    const router = useRouter();
+    const route = useRoute();
     let generalInfo = ref({
       applicantId: +localStorage.getItem("userId"),
       applicantTypeId: "",
@@ -723,13 +966,16 @@ export default {
       licenseIssuedDate: "",
       whoIssued: "",
       licenseRegistrationNumber: "",
-      professionTypeId: "",
-      educationLevel:"",
+      GSProfessionals: {
+        professionTypeId: "",
+        educationLevelId: "",
+        otherProfessionType: "",
+        otherProfessionTypeAmharic: "",
+      },
       applicantPositionId: "",
-      otherProfessionType: "",
-      otherProfessionTypeAmharic: "",
       applicantTitleId: "",
       applicationStatusId: "",
+      applicantPosition: "",
       educationLevelId: "",
       regionSelected: "",
       zoneSelected: "",
@@ -738,9 +984,11 @@ export default {
       expertLevelId: "",
       licenseFile: [],
     });
+
+    let languages = ref([]);
+    let withdrawData = ref({});
+    let showOtherProfession = ref(false);
     let localData = ref([]);
-    let isLoading = ref(false);
-    let activeState = ref(1);
     let regions = ref([]);
     let isDepartmentSelected = ref(false);
     let isEdLevelSelected = ref(false);
@@ -754,8 +1002,9 @@ export default {
     let applicantTypes = ref([]);
     let showLocation = ref(false);
     let professionalTypes = ref([]);
-    let showOtherProfession = ref(false);
-    let withdrawData = ref([]);
+    let activeState = ref(1);
+    let showOccupation = ref(false);
+    let showLanguage = ref(false);
 
     const checkApplicantType = (applicantType) => {
       generalInfo.value.regionId = null;
@@ -780,7 +1029,7 @@ export default {
       isEdLevelSelected.value = true;
       fetchProfessionalType(
         generalInfo.value.departmentId.id,
-        generalInfo.value.educationLevel.id
+        generalInfo.value.professionType.educationLevelId.id
       );
     };
     const fetchZones = () => {
@@ -792,8 +1041,16 @@ export default {
           zones.value = zonesResult;
         });
     };
-    const checkOtherProfession = (profession, event) => {
-      showOtherProfession.value = true;
+    const checkOtherProfession = () => {
+      if (
+        generalInfo.value.professionType &&
+        generalInfo.value.professionType.professionTypeId &&
+        generalInfo.value.professionType.professionTypeId.code == "OTH"
+      ) {
+        showOtherProfession.value = true;
+      } else {
+        showOtherProfession.value = false;
+      }
     };
 
     const fetchApplicantType = () => {
@@ -849,13 +1106,11 @@ export default {
     };
     const setDepartment = () => {
       isDepartmentSelected.value = true;
-      generalInfo.value.educationLevelId = "";
-      generalInfo.value.professionTypeIds = "";
       fetchProfessionalType(generalInfo.value.departmentId.id);
     };
-    const apply = () => { 
-      let tempApplicationData = generalInfo.value;
 
+    const apply = () => {
+      let tempApplicationData = generalInfo.value;
       window.localStorage.setItem(
         "GSApplicationData",
         JSON.stringify(tempApplicationData)
@@ -863,7 +1118,7 @@ export default {
       store
         .dispatch("goodstanding/setGeneralInfo", generalInfo.value)
         .then(() => {
-          activeState.value++;
+         activeState.value++;
         });
     };
     const clearLocalData = () => {
@@ -877,6 +1132,110 @@ export default {
         educationLevels.value = res.data.data;
       });
     };
+
+    const saveDraft = () => {
+      generalInfo.value.licenseFile = [];
+
+      let license = {
+        action: "DraftEvent",
+        data: {
+          applicantId: generalInfo.value.applicantId,
+          applicantTypeId: generalInfo.value.applicantTypeId.id,
+          residenceWoredaId: generalInfo.value.woredaSelected
+            ? generalInfo.value.woredaSelected.id
+            : null,
+          applicantTitleId: generalInfo.value.applicantTitleId
+            ? generalInfo.value.applicantTitleId.id
+            : "",
+          whomGoodStandingFor: generalInfo.value.whomGoodStandingFor
+            ? generalInfo.value.whomGoodStandingFor
+            : "",
+          applicantPositionId: generalInfo.value.applicantPosition
+            ? generalInfo.value.applicantPosition.id
+            : null,
+          licenseIssuedDate: generalInfo.value.licenseIssuedDate
+            ? generalInfo.value.licenseIssuedDate
+            : null,
+          whoIssued: generalInfo.value.whoIssued
+            ? generalInfo.value.whoIssued
+            : "",
+          licenseRegistrationNumber: generalInfo.value.licenseRegistrationNumber
+            ? generalInfo.value.licenseRegistrationNumber
+            : "",
+          professionType: {
+            professionTypeId: generalInfo.value.professionType
+              ? generalInfo.value.professionType.professionTypeId.id
+              : null,
+            educationLevelId: generalInfo.value.professionType
+              ? generalInfo.value.professionType.educationLevelId.id
+              : null,
+          },
+          expertLevelId: generalInfo.value.expertLevelId
+            ? generalInfo.value.expertLevelId
+            : null,
+          islegal: true,
+          otherProfessionalType: generalInfo.value.otherProfessionType
+            ? generalInfo.value.otherProfessionType
+            : "",
+          otherProfessionalTypeAmharic: generalInfo.value
+            .otherProfessionTypeAmharic
+            ? generalInfo.value.otherProfessionTypeAmharic
+            : "",
+          departmentId: generalInfo.value.departmentId.id
+            ? generalInfo.value.departmentId.id
+            : null,
+          feedback: generalInfo.value.feedback
+            ? generalInfo.value.feedback
+            : "",
+        },
+      };
+      store
+        .dispatch("goodstanding/addGoodstandingLicense", license)
+        .then((res) => {
+          if (res.data.status == "Success") {
+            toast.success("Applied successfuly", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+            localStorage.removeItem("GSApplicationData");
+            location.reload();
+          } else {
+            toast.error("Error occured, please try again", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+          }
+        });
+    };
+    const fetchLanguages = () => {
+      store.dispatch("lookups/getNativeLanguage").then((res) => {
+        if (res.data.status == "Success") {
+          languages.value = res.data.data;
+        }
+      });
+    };
+    const applicantTypeChangeHandler = async () => {
+      if (generalInfo.value.applicantType.code == "ETH") {
+        showLocation.value = true;
+        showOccupation.value = true;
+      } else {
+        showLocation.value = false;
+        showOccupation.value = false;
+      }
+      if (generalInfo.value.applicantType.code == "FOR") {
+        fetchLanguages();
+        showLanguage.value = true;
+      } else {
+        showLanguage.value = false;
+      }
+    };
+
     onMounted(async () => {
       fetchApplicantType();
       fetchDepartments();
@@ -887,14 +1246,13 @@ export default {
       fetchWoredas();
       fetchApplicantTitle();
       fetchApplicationPositions();
-
       store
         .dispatch("goodstanding/getGoodStandingLicenseById", route.params.id)
         .then((res) => {
-          withdrawData.value = res.data.data; 
+          withdrawData.value = res.data.data;
           generalInfo.value = res.data.data;
           generalInfo.value.licenseIssuedDate =
-            generalInfo.value.licenseIssuedDate.slice(0, 10);
+            res.data.data.licenseIssuedDate.slice(0, 10);
           generalInfo.value.regionSelected =
             res.data.data && res.data.data.woreda
               ? res.data.data.woreda.zone.region
@@ -924,67 +1282,38 @@ export default {
                   updatedAt: res.data.data.woreda.updatedAt,
                 }
               : "";
+          applicantTypeChangeHandler();
+          regionChangeHandler();
+          zoneChangeHandler();
           generalInfo.value.education = JSON.parse(
             JSON.stringify(res.data.data.GSProfessionals)
           );
-          generalInfo.value.applicantTypeSelected = res.data.data.applicantType;
+          generalInfo.value.applicantTypeSelected = res.data.data.applicantType; 
         });
     });
-
-    const withdraw = () => {
-      isLoading.value = true;
-      let req = {
-        data: withdrawData.value,
-        action: "WithdrawEvent",
-      };
-      store
-        .dispatch("reviewer/editGoodStanding", req)
-        .then((res) => {
-          isLoading.value = false;
-          if (res.statusText == "Created") {
-            toast.success("Done", {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            });
-            router.push({ path: "/Applicant/GoodStanding/withdraw" });
-          } else {
-            toast.error(res.data.message, {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            });
-            router.push({ path: "/Applicant/GoodStanding/withdraw" });
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
     return {
       checkApplicantType,
       checkOtherProfession,
       fetchProfessionalType,
       regionChangeHandler,
+      applicantTypeChangeHandler,
       zoneChangeHandler,
       educationalLevelChange,
       setDepartment,
       apply,
       fetchZone,
-      withdraw,
+      showOtherProfession,
+      saveDraft,
       applicantTitle,
       isDepartmentSelected,
       isEdLevelSelected,
       isAppTypeSelected,
+      applicationPositions,
       educationLevels,
       showLocation,
       regions,
-      activeState,
       woredas,
+      activeState,
       zones,
       professionalTypes,
       generalInfo,
@@ -998,11 +1327,9 @@ export default {
 </script>
 <style>
 #main {
-  
   border-radius: 5px;
 }
 .table-multiple {
-  
   border-radius: 5px;
 }
 </style>
