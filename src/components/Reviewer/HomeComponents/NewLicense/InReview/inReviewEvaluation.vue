@@ -2461,9 +2461,8 @@ export default {
             icon: true,
           });
           isLoadingName.value = false;
-          setTimeout(() => {
-            window.location.reload();
-          }, 3000);
+          editPersonalData.value=false;
+          created(route.params.id);
         })
         .catch(() => {
           toast.error("Error Occured", {
@@ -2474,9 +2473,7 @@ export default {
             icon: true,
           });
           isLoadingName.value = false;
-          setTimeout(() => {
-            window.location.reload();
-          }, 3000);
+       
         });
     };
 
