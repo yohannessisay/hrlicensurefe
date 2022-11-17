@@ -604,24 +604,32 @@ export default {
       });
 
       isLoading.value = false;
-      renewal.declinedFields = []; 
+      renewal.declinedFields = [];
       let req = {
         action: "ApproveEvent",
         data: renewal,
       };
-      let smsData =
-      renewal && renewal.profile
-          ? "Dear " +
-          renewal.profile.name +
-          renewal.profile.fatherName +
-            ", Your license with license number " +
-            renewal.renewalCode +
-            " has been released from a declined state. Thank you for using eHPEL,https://www.hrl.moh.gov.et"
-          : "";
+      let smsData = {
+        recipients: [
+          renewal.value && renewal.value.applicant
+            ? "251" + renewal.value.applicant.phoneNumber
+            : "",
+        ],
+        message:
+          renewal && renewal.profile
+            ? "Dear " +
+              renewal.profile.name +
+              renewal.profile.fatherName +
+              ", Your license with license number " +
+              renewal.renewalCode +
+              " has been released from a declined state. Thank you for using eHPEL,https://www.hrl.moh.gov.et"
+            : "",
+      };
+
       store
         .dispatch("reviewer/editRenewal", req)
         .then((res) => {
-          isLoading.value=false;
+          isLoading.value = false;
           if (res.statusText == "Created") {
             store.dispatch("sms/sendSms", smsData).then(() => {
               toast.success("Application approved Successfully", {
@@ -631,7 +639,9 @@ export default {
                 pauseOnHover: true,
                 icon: true,
               });
-
+              setTimeout(() => {
+                window.location.reload();
+              }, 3000);
             });
           } else {
             toast.error("Please try again", {
@@ -641,7 +651,6 @@ export default {
               pauseOnHover: true,
               icon: true,
             });
-
           }
         })
         .catch(() => {
@@ -652,7 +661,6 @@ export default {
             pauseOnHover: true,
             icon: true,
           });
-
         });
     };
     watch(props.modalDataId, () => {

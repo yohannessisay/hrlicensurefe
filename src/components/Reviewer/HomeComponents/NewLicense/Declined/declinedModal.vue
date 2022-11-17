@@ -604,24 +604,32 @@ export default {
       });
 
       isLoading.value = false;
-      newLicense.declinedFields = []; 
+      newLicense.declinedFields = [];
       let req = {
         action: "ApproveEvent",
         data: newLicense,
       };
-      let smsData =
-        newLicense && newLicense.profile
-          ? "Dear " +
-            newLicense.profile.name +
-            newLicense.profile.fatherName +
-            ", Your license with license number " +
-            newLicense.newLicenseCode +
-            " has been released from a declined state. Thank you for using eHPEL,https://www.hrl.moh.gov.et"
-          : "";
+      let smsData = {
+        recipients: [
+          newLicense.value && newLicense.value.applicant
+            ? "251" + newLicense.value.applicant.phoneNumber
+            : "",
+        ],
+        message:
+          newLicense && newLicense.profile
+            ? "Dear " +
+              newLicense.profile.name +
+              newLicense.profile.fatherName +
+              ", Your license with license number " +
+              newLicense.newLicenseCode +
+              " has been released from a declined state. Thank you for using eHPEL,https://www.hrl.moh.gov.et"
+            : "",
+      };
+
       store
         .dispatch("reviewer/editNewLicense", req)
         .then((res) => {
-          isLoading.value=false;
+          isLoading.value = false;
           if (res.statusText == "Created") {
             store.dispatch("sms/sendSms", smsData).then(() => {
               toast.success("Application approved Successfully", {
@@ -631,7 +639,9 @@ export default {
                 pauseOnHover: true,
                 icon: true,
               });
-
+              setTimeout(() => {
+                window.location.reload();
+              }, 3000);
             });
           } else {
             toast.error("Please try again", {
@@ -641,7 +651,6 @@ export default {
               pauseOnHover: true,
               icon: true,
             });
-
           }
         })
         .catch(() => {
@@ -652,7 +661,6 @@ export default {
             pauseOnHover: true,
             icon: true,
           });
-
         });
     };
     watch(props.modalDataId, () => {
