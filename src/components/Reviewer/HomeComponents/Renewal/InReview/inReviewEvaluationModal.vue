@@ -1091,7 +1091,7 @@
                           Save as Draft
                         </button>
                         <button
-                          v-if="showTransferToAdminButton"
+                          v-if="showTransferToFederal == true"
                           class="
                             inline-block
                             px-6
@@ -1910,7 +1910,7 @@ export default {
     let accepted = ref([]);
     let rejected = ref([]);
     let prefixes = ref({});
-    let showTransferToAdminButton = ref(false);
+    let showTransferToFederal = ref(false);
     let rejectedObj = ref([]);
     let showButtons = ref(false);
     let disableNext = ref(true);
@@ -1984,60 +1984,13 @@ export default {
               ? renewal.value.documents
               : {};
           totalSteps.value = docs.value ? docs.value.length : 0;
+          renewal.value &&
+          renewal.value.renewalReviewer &&
+          renewal.value.renewalReviewer.reviewer.regionId != null
+            ? (showTransferToFederal.value = true)
+            : (showTransferToFederal.value = false);
           fetchDocumentTypes();
-
-          if (
-            renewal.value &&
-            renewal.value.applicationStatus.code == "REVDRA"
-          ) {
-            rejected.value = renewal.value.declinedFields;
-            for (let i in renewal.value.documents) {
-              for (let j in rejected.value) {
-                if (
-                  renewal.value.documents[i].documentTypeCode ==
-                  rejected.value[j]
-                ) {
-                  rejectedObj.value.push(renewal.value.documents[i]);
-                  break;
-                }
-              }
-            }
-            if (rejected.value > 0) {
-              for (let i = 0; i < buttons.value.length; i++) {
-                if (buttons.value[i].code === "APP") {
-                  buttons.value.splice(i, 1);
-                  i--;
-                }
-              }
-            }
-
-            accepted.value = renewal.value.acceptedFields;
-            completedSteps.value = accepted.value.length;
-            index.value = rejected.value.length + accepted.value.length;
-            if (index.value == docs.value.length) {
-              index.value -= 1;
-            }
-            amount.value = ((index.value + 1) / docs.value.length) * 100;
-            width.value = "width:" + amount.value + "%";
-            if (
-              accepted.value.includes(
-                docs.value[index.value - 1].documentTypeCode
-              ) ||
-              rejected.value.includes(
-                docs.value[index.value - 1].documentTypeCode
-              )
-            ) {
-              findDocumentType(documentTypes.value, docs.value[index.value]);
-            }
-          } else if (
-            renewal.value &&
-            renewal.value.applicationStatus.code == "IRV"
-          ) {
-            showTransferToAdminButton.value = true;
-          }
         });
-
-      applicationType.value = "Renewal";
     };
     const fetchDocumentTypes = async () => {
       store.dispatch("reviewer/getDocumentTypes").then((res) => {
@@ -2356,7 +2309,6 @@ export default {
         ],
         message: smsMessage ? smsMessage : "",
       };
-     
 
       if (applicationType.value == "Renewal") {
         isLoadingAction.value = true;
@@ -2456,7 +2408,7 @@ export default {
             icon: true,
           });
           isLoadingName.value = false;
-          editPersonalData.value=false;
+          editPersonalData.value = false;
           created(route.params.id);
         })
         .catch(() => {
@@ -2468,7 +2420,6 @@ export default {
             icon: true,
           });
           isLoadingName.value = false;
-          
         });
     };
 
@@ -2753,7 +2704,7 @@ export default {
       isLoadingAction,
       accept,
       transferToFederal,
-      showTransferToAdminButton,
+      showTransferToFederal,
       showTransferSuccessMessage,
       showTransferErrorMessage,
       reject,
