@@ -675,34 +675,6 @@
           <i class="fa fa-save"></i>
           {{ button.name }}
         </button>
-        <button
-          v-if="button.action == 'DraftEvent'"
-          type="button"
-          class="
-            inline-block
-            px-6
-            border
-            text-main-400
-            hover:bg-main-400
-            hober:border-main-400
-            hover:text-white
-            mt-4
-            bg-white
-            font-medium
-            text-xs
-            leading-tight
-            uppercase
-            rounded
-            shadow-lg
-            transition
-            duration-150
-            ease-in-out
-          "
-          @click="checkFinalStatus(button.action)"
-        >
-          <i class="fa fa-save"></i>
-          {{ button.name }}
-        </button>
       </span>
 
       <button
@@ -800,19 +772,27 @@ export default {
         let license = {
           action: action,
           data: {
-            id: generalInfo.value ? generalInfo.value.id : null,
             applicantId: generalInfo.value.applicantId,
-            applicantTypeId: generalInfo.value.applicantTypeId.id,
+            applicantTypeId: generalInfo.value.applicantTypeId
+              ? generalInfo.value.applicantTypeId
+              : generalInfo.value.applicantType
+              ? generalInfo.value.applicantType.id
+              : null,
+            applicationStatusId: generalInfo.value.applicationStatusId,
             residenceWoredaId: generalInfo.value.woredaSelected
               ? generalInfo.value.woredaSelected.id
               : null,
             applicantTitleId: generalInfo.value.applicantTitleId
-              ? generalInfo.value.applicantTitleId.id
-              : "",
+              ? generalInfo.value.applicantTitleId
+              : generalInfo.value.applicantTitle
+              ? generalInfo.value.applicantTitle.id
+              : null,
             whomGoodStandingFor: generalInfo.value.whomGoodStandingFor
               ? generalInfo.value.whomGoodStandingFor
               : "",
-            applicantPositionId: generalInfo.value.applicantPosition
+            applicantPositionId: generalInfo.value.applicantPositionId
+              ? generalInfo.value.applicantPositionId
+              : generalInfo.value.applicantPosition
               ? generalInfo.value.applicantPosition.id
               : null,
             licenseIssuedDate: generalInfo.value.licenseIssuedDate
@@ -826,24 +806,25 @@ export default {
               ? generalInfo.value.licenseRegistrationNumber
               : "",
             professionType: {
-              professionTypeId: generalInfo.value.professionType
-                ? generalInfo.value.professionType.professionTypeId.id
-                : generalInfo.value.GSProfessionals
-                ? generalInfo.value.GSProfessionals.professionalTypeId
-                : null,
-              educationLevelId: generalInfo.value.professionType
-                ? generalInfo.value.professionType.educationLevelId.id
-                : generalInfo.value.GSProfessionals
-                ? generalInfo.value.GSProfessionals.educationLevelId
-                : null,
+              professionTypeId:
+                generalInfo.value.GSProfessionals &&
+                generalInfo.value.GSProfessionals.professionType
+                  ? generalInfo.value.GSProfessionals.professionType.id
+                  : generalInfo.value.GSProfessionals.professionalTypeId
+                  ? generalInfo.value.GSProfessionals.professionalTypeId
+                  : null,
+              educationLevelId:
+                generalInfo.value.GSProfessionals &&
+                generalInfo.value.GSProfessionals.educationLevel
+                  ? generalInfo.value.GSProfessionals.educationLevel.id
+                  : generalInfo.value.GSProfessionals.educationLevelId
+                  ? generalInfo.value.GSProfessionals.educationLevelId
+                  : null,
             },
             expertLevelId: generalInfo.value.expertLevelId
               ? generalInfo.value.expertLevelId
               : null,
             islegal: true,
-            applicationStatusId: generalInfo.value.applicationStatusId
-              ? generalInfo.value.applicationStatusId
-              : null,
             otherProfessionalType: generalInfo.value.otherProfessionType
               ? generalInfo.value.otherProfessionType
               : "",
@@ -851,12 +832,15 @@ export default {
               .otherProfessionTypeAmharic
               ? generalInfo.value.otherProfessionTypeAmharic
               : "",
-            departmentId: generalInfo.value.departmentId
+            departmentId: generalInfo.value.department
+              ? generalInfo.value.department.id
+              : generalInfo.value.departmentId
               ? generalInfo.value.departmentId
               : null,
             feedback: generalInfo.value.feedback
               ? generalInfo.value.feedback
               : "",
+            id: route.params.id,
           },
         };
         store
@@ -924,9 +908,7 @@ export default {
         .then((res) => {
           savedData.value = res.data.data;
 
-          buttons.value = buttons.value.filter(
-            (ele) => ele.code != "AT" && ele.code != "DRA"
-          );
+          buttons.value = buttons.value.filter((ele) => ele.code != "AT");
           tempDocs.value = store.getters["goodstanding/getTempDocs"];
 
           localData.value = window.localStorage.getItem("GSApplicationData")

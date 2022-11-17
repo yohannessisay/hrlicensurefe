@@ -215,7 +215,7 @@
         type="submit"
         @click="saveDraft()"
       >
-        Save as draft
+        Save
       </button>
       <button
         class="
@@ -495,24 +495,33 @@ export default {
       emit("changeActiveStateMinus");
     };
 
-    const saveDraft = (action) => {
+    const saveDraft = () => {
       generalInfo.value.licenseFile = [];
 
       let license = {
-        action: action,
+        action: 'SubmitEvent',
         data: {
           applicantId: generalInfo.value.applicantId,
-          applicantTypeId: generalInfo.value.applicantTypeId.id,
+          applicantTypeId: generalInfo.value.applicantTypeId
+            ? generalInfo.value.applicantTypeId
+            : generalInfo.value.applicantType
+            ? generalInfo.value.applicantType.id
+            : null,
+          applicationStatusId: generalInfo.value.applicationStatusId,
           residenceWoredaId: generalInfo.value.woredaSelected
             ? generalInfo.value.woredaSelected.id
             : null,
           applicantTitleId: generalInfo.value.applicantTitleId
-            ? generalInfo.value.applicantTitleId.id
-            : "",
+            ? generalInfo.value.applicantTitleId
+            : generalInfo.value.applicantTitle
+            ? generalInfo.value.applicantTitle.id
+            : null,
           whomGoodStandingFor: generalInfo.value.whomGoodStandingFor
             ? generalInfo.value.whomGoodStandingFor
             : "",
-          applicantPositionId: generalInfo.value.applicantPosition
+          applicantPositionId: generalInfo.value.applicantPositionId
+            ? generalInfo.value.applicantPositionId
+            : generalInfo.value.applicantPosition
             ? generalInfo.value.applicantPosition.id
             : null,
           licenseIssuedDate: generalInfo.value.licenseIssuedDate
@@ -525,12 +534,20 @@ export default {
             ? generalInfo.value.licenseRegistrationNumber
             : "",
           professionType: {
-            professionTypeId: generalInfo.value.professionType
-              ? generalInfo.value.professionType.professionTypeId.id
-              : null,
-            educationLevelId: generalInfo.value.professionType
-              ? generalInfo.value.professionType.educationLevelId.id
-              : null,
+            professionTypeId:
+              generalInfo.value.GSProfessionals &&
+              generalInfo.value.GSProfessionals.professionType
+                ? generalInfo.value.GSProfessionals.professionType.id
+                : generalInfo.value.GSProfessionals.professionalTypeId
+                ? generalInfo.value.GSProfessionals.professionalTypeId
+                : null,
+            educationLevelId:
+              generalInfo.value.GSProfessionals &&
+              generalInfo.value.GSProfessionals.educationLevel
+                ? generalInfo.value.GSProfessionals.educationLevel.id
+                : generalInfo.value.GSProfessionals.educationLevelId
+                ? generalInfo.value.GSProfessionals.educationLevelId
+                : null,
           },
           expertLevelId: generalInfo.value.expertLevelId
             ? generalInfo.value.expertLevelId
@@ -543,19 +560,22 @@ export default {
             .otherProfessionTypeAmharic
             ? generalInfo.value.otherProfessionTypeAmharic
             : "",
-          departmentId: generalInfo.value.departmentId.id
-            ? generalInfo.value.departmentId.id
+          departmentId: generalInfo.value.department
+            ? generalInfo.value.department.id
+            : generalInfo.value.departmentId
+            ? generalInfo.value.departmentId
             : null,
           feedback: generalInfo.value.feedback
             ? generalInfo.value.feedback
             : "",
+          id: route.params.id,
         },
       };
-
+     
       store
-        .dispatch("goodstanding/addGoodstandingLicense", license)
+        .dispatch("goodstanding/editGoodstandingLicense", license)
         .then((res) => {
-          let licenseId = res.data.data.id;
+          let licenseId = route.params.id;
           let payload = { document: formData, id: licenseId };
           store
             .dispatch("goodstanding/uploadDocuments", payload)

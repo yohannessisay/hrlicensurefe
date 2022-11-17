@@ -80,8 +80,8 @@
                       focus:outline-none
                     "
                     aria-label="Default select example"
-                    @change="checkApplicantType(generalInfo.applicantTypeId)"
-                    v-model="generalInfo.applicantTypeId"
+                    @change="checkApplicantType(generalInfo.applicantType)"
+                    v-model="generalInfo.applicantType"
                     required
                   >
                     <option
@@ -149,7 +149,7 @@
                         focus:outline-none
                       "
                       aria-label="Default select example"
-                      v-model="generalInfo.applicantTitleId"
+                      v-model="generalInfo.applicantTitle"
                       required
                     >
                       <option
@@ -158,7 +158,6 @@
                             ? generalInfo.applicantTitleId
                             : null
                         "
-                        selected
                       >
                         {{
                           generalInfo && generalInfo.applicantTitle
@@ -211,8 +210,8 @@
                       focus:border-main-400
                       focus:outline-none
                     "
-                    v-model="generalInfo.departmentId"
-                    @change="setDepartment()" 
+                    v-model="generalInfo.department"
+                    @change="setDepartment()"
                   >
                     <option
                       :value="
@@ -220,7 +219,6 @@
                           ? generalInfo.departmentId
                           : null
                       "
-                      selected
                     >
                       {{
                         generalInfo && generalInfo.department
@@ -267,8 +265,8 @@
                       focus:border-main-400
                       focus:outline-none
                     "
-                    v-model="generalInfo.GSProfessionals.educationLevelId"
-                    @change="educationalLevelChange()" 
+                    v-model="generalInfo.GSProfessionals.educationLevel"
+                    @change="educationalLevelChange()"
                   >
                     <option
                       :value="
@@ -279,8 +277,10 @@
                       selected
                     >
                       {{
-                        generalInfo && generalInfo.GSProfessionals
-                          ? generalInfo.GSProfessionals.educationLevelId
+                        generalInfo &&
+                        generalInfo.GSProfessionals &&
+                        generalInfo.GSProfessionals.educationLevel
+                          ? generalInfo.GSProfessionals.educationLevel.name
                           : ""
                       }}
                     </option>
@@ -332,12 +332,13 @@
                       focus:outline-none
                     "
                     @change="checkOtherProfession()"
-                    v-model="generalInfo.GSProfessionals.professionTypeId" 
+                    v-model="generalInfo.GSProfessionals.professionType"
                   >
                     <option
                       :value="
-                        generalInfo && generalInfo.GSProfessionals
-                          ? generalInfo.GSProfessionals.professionalTypeId
+                        generalInfo &&
+                        generalInfo.GSProfessionals.professionalTypes
+                          ? generalInfo.GSProfessionals.professionalTypes.id
                           : null
                       "
                       selected
@@ -883,7 +884,7 @@
             type="submit"
             @click="saveDraft()"
           >
-            Save as draft
+            Save
           </button>
           <button
             class="
@@ -947,14 +948,11 @@ import LicenseSummary from "./submittedSummary.vue";
 import Upload from "./submittedUpload.vue";
 import MainContent from "../sharedComponents/Menu.vue";
 import { useToast } from "vue-toastification";
-import Loading from "vue3-loading-overlay";
-import { useRouter } from "vue-router";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 export default {
-  props: ["activeState"],
-  components: { MainContent, LicenseSummary, Upload, Loading },
+  components: { MainContent, LicenseSummary, Upload },
 
-  setup(props, { emit }) {
+  setup() {
     const store = useStore();
     const toast = useToast();
     const route = useRoute();
@@ -1028,8 +1026,8 @@ export default {
     const educationalLevelChange = () => {
       isEdLevelSelected.value = true;
       fetchProfessionalType(
-        generalInfo.value.departmentId.id,
-        generalInfo.value.professionType.educationLevelId.id
+        generalInfo.value.department.id,
+        generalInfo.value.GSProfessionals.educationLevel.id
       );
     };
     const fetchZones = () => {
@@ -1105,8 +1103,8 @@ export default {
         });
     };
     const setDepartment = () => {
+      console.log(generalInfo.value);
       isDepartmentSelected.value = true;
-      fetchProfessionalType(generalInfo.value.departmentId.id);
     };
 
     const apply = () => {
@@ -1118,7 +1116,7 @@ export default {
       store
         .dispatch("goodstanding/setGeneralInfo", generalInfo.value)
         .then(() => {
-         activeState.value++;
+          activeState.value++;
         });
     };
     const clearLocalData = () => {
@@ -1137,20 +1135,29 @@ export default {
       generalInfo.value.licenseFile = [];
 
       let license = {
-        action: "DraftEvent",
+        action: "SubmitEvent",
         data: {
           applicantId: generalInfo.value.applicantId,
-          applicantTypeId: generalInfo.value.applicantTypeId.id,
+          applicantTypeId: generalInfo.value.applicantTypeId
+            ? generalInfo.value.applicantTypeId
+            : generalInfo.value.applicantType
+            ? generalInfo.value.applicantType.id
+            : null,
+          applicationStatusId: generalInfo.value.applicationStatusId,
           residenceWoredaId: generalInfo.value.woredaSelected
             ? generalInfo.value.woredaSelected.id
             : null,
           applicantTitleId: generalInfo.value.applicantTitleId
-            ? generalInfo.value.applicantTitleId.id
-            : "",
+            ? generalInfo.value.applicantTitleId
+            : generalInfo.value.applicantTitle
+            ? generalInfo.value.applicantTitle.id
+            : null,
           whomGoodStandingFor: generalInfo.value.whomGoodStandingFor
             ? generalInfo.value.whomGoodStandingFor
             : "",
-          applicantPositionId: generalInfo.value.applicantPosition
+          applicantPositionId: generalInfo.value.applicantPositionId
+            ? generalInfo.value.applicantPositionId
+            : generalInfo.value.applicantPosition
             ? generalInfo.value.applicantPosition.id
             : null,
           licenseIssuedDate: generalInfo.value.licenseIssuedDate
@@ -1163,12 +1170,20 @@ export default {
             ? generalInfo.value.licenseRegistrationNumber
             : "",
           professionType: {
-            professionTypeId: generalInfo.value.professionType
-              ? generalInfo.value.professionType.professionTypeId.id
-              : null,
-            educationLevelId: generalInfo.value.professionType
-              ? generalInfo.value.professionType.educationLevelId.id
-              : null,
+            professionTypeId:
+              generalInfo.value.GSProfessionals &&
+              generalInfo.value.GSProfessionals.professionType
+                ? generalInfo.value.GSProfessionals.professionType.id
+                : generalInfo.value.GSProfessionals.professionalTypeId
+                ? generalInfo.value.GSProfessionals.professionalTypeId
+                : null,
+            educationLevelId:
+              generalInfo.value.GSProfessionals &&
+              generalInfo.value.GSProfessionals.educationLevel
+                ? generalInfo.value.GSProfessionals.educationLevel.id
+                : generalInfo.value.GSProfessionals.educationLevelId
+                ? generalInfo.value.GSProfessionals.educationLevelId
+                : null,
           },
           expertLevelId: generalInfo.value.expertLevelId
             ? generalInfo.value.expertLevelId
@@ -1181,16 +1196,20 @@ export default {
             .otherProfessionTypeAmharic
             ? generalInfo.value.otherProfessionTypeAmharic
             : "",
-          departmentId: generalInfo.value.departmentId.id
-            ? generalInfo.value.departmentId.id
+          departmentId: generalInfo.value.department
+            ? generalInfo.value.department.id
+            : generalInfo.value.departmentId
+            ? generalInfo.value.departmentId
             : null,
           feedback: generalInfo.value.feedback
             ? generalInfo.value.feedback
             : "",
+          id: route.params.id,
         },
       };
+
       store
-        .dispatch("goodstanding/addGoodstandingLicense", license)
+        .dispatch("goodstanding/editGoodstandingLicense", license)
         .then((res) => {
           if (res.data.status == "Success") {
             toast.success("Applied successfuly", {
@@ -1201,7 +1220,6 @@ export default {
               icon: true,
             });
             localStorage.removeItem("GSApplicationData");
-            location.reload();
           } else {
             toast.error("Error occured, please try again", {
               timeout: 5000,
@@ -1288,7 +1306,7 @@ export default {
           generalInfo.value.education = JSON.parse(
             JSON.stringify(res.data.data.GSProfessionals)
           );
-          generalInfo.value.applicantTypeSelected = res.data.data.applicantType; 
+          generalInfo.value.applicantTypeSelected = res.data.data.applicantType;
         });
     });
     return {
