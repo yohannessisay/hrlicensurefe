@@ -259,6 +259,7 @@
                               "
                               id="address"
                               placeholder="Address"
+                              v-model="userInfo.address"
                             />
                           </div>
                         </div>
@@ -295,8 +296,8 @@
                         <div class="grid grid-cols-2">
                           <div class="px-4 py-2 font-semibold">Birthdate</div>
                           <input
-                          :max="minimumBirthDate"
-                min='1899-01-01'
+                            :max="minimumBirthDate"
+                            min="1899-01-01"
                             v-model="userInfo.birthDate"
                             type="date"
                             name="birthDate"
@@ -460,8 +461,9 @@ export default {
     let userInfo = ref({ firstName: "", fatherName: "", grandFatherName: "" });
     let userId = +window.localStorage.getItem("adminId");
     let isLoadingUserInfo = ref(true);
-    let minimumBirthDate =  
-      new Date(`${new Date().getFullYear()-18}`).toISOString().slice(0,10);
+    let minimumBirthDate = new Date(`${new Date().getFullYear() - 18}`)
+      .toISOString()
+      .slice(0, 10);
     const updateUserInfo = () => {
       isLoadingUserInfo.value = true;
       userInfo.value.name =
