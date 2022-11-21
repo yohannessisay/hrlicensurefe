@@ -184,8 +184,9 @@ export default {
       localStorage.removeItem("NLApplicationData");
       localStorage.removeItem("isApplicant");
       localStorage.removeItem("applicantTypeId");
-      location.reload();
+
       this.$router.push({ path: "/" });
+      location.reload();
     };
     const showDropDown = () => {
       showNotificationDropDown.value = false;

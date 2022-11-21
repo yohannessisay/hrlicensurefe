@@ -34,7 +34,7 @@
     </div>
 
     <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-10">
-      <div class="mt-12 rounded-sm bg-white shadow-lg mb-8">
+      <div class="mt-12 rounded-sm bg-primaryDark shadow-lg mb-8">
         <div class="container mx-auto">
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
             <div
@@ -356,7 +356,9 @@
                 <label class="text-main-400">Other Profession Amharic</label>
                 <input
                   type="text"
-                  v-model="generalInfo.professionType.otherProfessionTypeAmharic"
+                  v-model="
+                    generalInfo.professionType.otherProfessionTypeAmharic
+                  "
                   class="
                     appearance-none
                     block
@@ -890,7 +892,7 @@ export default {
     };
     const educationalLevelChange = () => {
       isEdLevelSelected.value = true;
-    
+
       fetchProfessionalType(
         generalInfo.value.departmentId.id,
         generalInfo.value.professionType.educationLevelId.id

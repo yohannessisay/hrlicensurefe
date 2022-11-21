@@ -14,7 +14,7 @@
         </nav>
 
         <div id="home" class="flex flex-row justify-center ml-4 mt-12">
-          <!-- <div class="float-container">
+          <!-- <div class="float-container" @click="modeToggle()">
             <a href="#" class="icon one"> </a>
           </div> -->
           <div class="flex flex-col md:flex-row justify-center flex-wrap gap-2">
@@ -174,18 +174,10 @@
   >
     <div class="modal-dialog modal-xl relative w-auto pointer-events-none">
       <div
-        class="
-          modal-content
-          border-none
-          shadow-lg
-          relative
-          flex flex-col
-          w-full
-          pointer-events-auto
-          bg-white bg-clip-padding
-          rounded-md
-          outline-none
-          text-current
+        :class="
+          isDarkMode
+            ? 'modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-secondaryyDark bg-clip-padding rounded-md outline-none text-current'
+            : 'modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current'
         "
       >
         <div
@@ -199,7 +191,11 @@
             rounded-t-md
           "
         >
-          <h2 class="text-xl font-bold leading-normal text-main-400">
+          <h2
+            :class="
+              isDarkMode ? 'text-white xl:mx-12' : 'text-main-400 xl:mx-12'
+            "
+          >
             Document specification for new License
           </h2>
           <button
@@ -228,7 +224,13 @@
           </button>
         </div>
         <div class="modal-body relative p-4">
-          <div class="bg-white rounded-lg py-6 md:py-12">
+          <div
+            :class="
+              isDarkMode
+                ? 'bg-primaryDark rounded-lg p-4 md:py-12'
+                : 'bg-white rounded-lg p-4 md:py-12'
+            "
+          >
             <div class="container mx-auto px-4">
               <div class="max-w-3xl mx-auto text-center">
                 <h1
@@ -244,36 +246,23 @@
                 >
                   Required Documents for New License
                 </h1>
-                <p class="text-main-400 xl:mx-12">
-                  Attached Documents must be clear and visible.
-                </p>
               </div>
 
               <div class="lg:flex lg:-mx-4 mt-6 md:mt-12">
                 <div class="pricing-plan-wrap lg:w-1/3 my-4 md:my-6 mr-4">
                   <div
-                    class="
-                      pricing-plan
-                      border-t-4 border-solid border-white
-                      bg-white
-                      rounded-lg
-                      shadow-2xl
-                      text-center
-                      max-w-full
-                      mx-auto
-                      hover:border-indigo-600
-                      transition-colors
-                      duration-300
+                    :class="
+                      isDarkMode
+                        ? 'pricing-plan border-t-4 border-solid  bg-secondaryyDark rounded-lg shadow-2xl text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
+                        : 'pricing-plan border-t-4 border-solid border-white bg-white rounded-lg shadow-2xl text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
                     "
                   >
                     <div class="p-2 md:py-4">
                       <h4
-                        class="
-                          font-medium
-                          text-main-400
-                          leading-tight
-                          text-2xl
-                          border-b-4
+                        :class="
+                          isDarkMode
+                            ? 'font-medium text-white leading-tight text-2xl border-b-4'
+                            : 'font-medium text-main-400 leading-tight text-2xl border-b-4'
                         "
                       >
                         Ethiopian
@@ -281,177 +270,247 @@
                     </div>
                     <div class="pricing-amount transition-colors duration-300">
                       <div>
-                        <span class="text-xl text-main-4oo font-semibold"
+                        <span
+                          :class="
+                            isDarkMode
+                              ? 'text-xl text-white font-semibold'
+                              : 'text-xl text-main-4oo font-semibold'
+                          "
                           >Attached Documents must be clear and visible.</span
                         >
                       </div>
-                      <small class="text-main-400 ml-2"
+                      <small
+                        :class="
+                          isDarkMode ? 'text-white ml-2' : 'text-main-400 ml-2'
+                        "
                         >(hover over lists to see details)</small
                       >
                     </div>
                     <div class="p-6 mb-2" v-if="NLdocumentSpecs">
-                      <ul class="bg-white">
+                      <ul
+                        :class="isDarkMode ? 'bg-secondaryyDark' : 'bg-white'"
+                      >
                         <li
-                          class="
-                            text-main-400 text-lg
-                            rounded-lg
-                            bg-white
-                            cursor-pointer
+                          :class="
+                            isDarkMode
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
                         >
-                          <i class="fa fa-arrow-right-long"></i>
+                          <i
+                            :class="
+                              isDarkMode
+                                ? 'text-white  fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long'
+                            "
+                          ></i>
                           Residence Id
                         </li>
                         <li
-                          class="
-                            text-main-400 text-lg
-                            rounded-lg
-                            bg-white
-                            cursor-pointer
+                          :class="
+                            isDarkMode
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
                           title="not lasting three months"
                         >
-                          <i class="fa fa-arrow-right-long"></i>
+                          <i
+                            :class="
+                              isDarkMode
+                                ? 'text-white  fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long'
+                            "
+                          ></i>
                           Medical Certificate
                         </li>
                         <li
-                          class="
-                            text-main-400 text-lg
-                            rounded-lg
-                            bg-white
-                            cursor-pointer
+                          :class="
+                            isDarkMode
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
                           title="Only for diploma graduates"
                         >
-                          <i class="fa fa-arrow-right-long"></i>
+                          <i
+                            :class="
+                              isDarkMode
+                                ? 'text-white  fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long'
+                            "
+                          ></i>
                           COC Certificate
                         </li>
 
                         <li
-                          class="
-                            text-main-400 text-lg
-                            rounded-lg
-                            bg-white
-                            cursor-pointer
+                          :class="
+                            isDarkMode
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
                           title=""
                         >
-                          <i class="fa fa-arrow-right-long"></i>
+                          <i
+                            :class="
+                              isDarkMode
+                                ? 'text-white  fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long'
+                            "
+                          ></i>
                           8th, 10th, 12th Grade Certificate
                         </li>
 
                         <li
-                          class="
-                            text-main-400 text-lg
-                            rounded-lg
-                            bg-white
-                            cursor-pointer
+                          :class="
+                            isDarkMode
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
                           title="Diploma,transcript for both undergraduates and postgraduates"
                         >
-                          <i class="fa fa-arrow-right-long"></i>
+                          <i
+                            :class="
+                              isDarkMode
+                                ? 'text-white  fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long'
+                            "
+                          ></i>
                           Academic Document
                         </li>
 
                         <li
-                          class="
-                            text-main-400 text-lg
-                            rounded-lg
-                            bg-white
-                            cursor-pointer
+                          :class="
+                            isDarkMode
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
                         >
-                          <i class="fa fa-arrow-right-long"></i>
+                          <i
+                            :class="
+                              isDarkMode
+                                ? 'text-white  fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long'
+                            "
+                          ></i>
                           Authenticated Professional License
                         </li>
 
                         <li
-                          class="
-                            text-main-400 text-lg
-                            rounded-lg
-                            bg-white
-                            cursor-pointer
+                          :class="
+                            isDarkMode
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
                           title=" "
                         >
-                          <i class="fa fa-arrow-right-long"></i>
+                          <i
+                            :class="
+                              isDarkMode
+                                ? 'text-white  fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long'
+                            "
+                          ></i>
                           9th - 10th Grade Transcript
                         </li>
 
                         <li
-                          class="
-                            text-main-400 text-lg
-                            rounded-lg
-                            bg-white
-                            cursor-pointer
+                          :class="
+                            isDarkMode
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
                           title=""
                         >
-                          <i class="fa fa-arrow-right-long"></i>
+                          <i
+                            :class="
+                              isDarkMode
+                                ? 'text-white  fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long'
+                            "
+                          ></i>
                           11th - 12th Grade Transcript
                         </li>
 
                         <li
-                          class="
-                            text-main-400 text-lg
-                            rounded-lg
-                            bg-white
-                            cursor-pointer
+                          :class="
+                            isDarkMode
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
                           title="Non-government Institutions"
                         >
-                          <i class="fa fa-arrow-right-long"></i>
+                          <i
+                            :class="
+                              isDarkMode
+                                ? 'text-white  fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long'
+                            "
+                          ></i>
                           Payroll Document
                         </li>
 
                         <li
-                          class="
-                            text-main-400 text-lg
-                            rounded-lg
-                            bg-white
-                            cursor-pointer
+                          :class="
+                            isDarkMode
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
                           title="For those upgraded by the sponsorship of an Institution"
                         >
-                          <i class="fa fa-arrow-right-long"></i>
+                          <i
+                            :class="
+                              isDarkMode
+                                ? 'text-white  fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long'
+                            "
+                          ></i>
                           Support Letter from Sponsored Institution
                         </li>
 
                         <li
-                          class="
-                            text-main-400 text-lg
-                            rounded-lg
-                            bg-white
-                            cursor-pointer
+                          :class="
+                            isDarkMode
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
                           title="Non-government Institutions"
                         >
-                          <i class="fa fa-arrow-right-long"></i>
+                          <i
+                            :class="
+                              isDarkMode
+                                ? 'text-white  fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long'
+                            "
+                          ></i>
                           Work Experience
                         </li>
 
                         <li
-                          class="
-                            text-main-400 text-lg
-                            rounded-lg
-                            bg-white
-                            cursor-pointer
+                          :class="
+                            isDarkMode
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
                           title="Non-government Institutions"
                         >
-                          <i class="fa fa-arrow-right-long"></i>
+                          <i
+                            :class="
+                              isDarkMode
+                                ? 'text-white  fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long'
+                            "
+                          ></i>
                           Academic Transcript
                         </li>
                       </ul>
@@ -476,28 +535,18 @@
                 </div>
                 <div class="pricing-plan-wrap lg:w-1/3 my-4 md:my-6 mr-4">
                   <div
-                    class="
-                      pricing-plan
-                      border-t-4 border-solid border-white
-                      bg-white
-                      rounded-lg
-                      shadow-2xl
-                      text-center
-                      max-w-full
-                      mx-auto
-                      hover:border-indigo-600
-                      transition-colors
-                      duration-300
+                    :class="
+                      isDarkMode
+                        ? 'pricing-plan border-t-4 border-solid  bg-secondaryyDark rounded-lg shadow-2xl text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
+                        : 'pricing-plan border-t-4 border-solid border-white bg-white rounded-lg shadow-2xl text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
                     "
                   >
                     <div class="p-2 md:py-4">
                       <h4
-                        class="
-                          font-medium
-                          text-main-400
-                          leading-tight
-                          text-2xl
-                          border-b-4
+                        :class="
+                          isDarkMode
+                            ? 'font-medium text-white leading-tight text-2xl border-b-4'
+                            : 'font-medium text-main-400 leading-tight text-2xl border-b-4'
                         "
                       >
                         Foreign Applicants
@@ -505,137 +554,192 @@
                     </div>
                     <div class="pricing-amount transition-colors duration-300">
                       <div>
-                        <span class="text-xl text-main-4oo font-semibold"
+                        <span
+                          :class="
+                            isDarkMode
+                              ? 'text-xl text-white font-semibold'
+                              : 'text-xl text-main-4oo font-semibold'
+                          "
                           >Attached Documents must be clear and visible.</span
                         >
                       </div>
-                      <small class="text-main-400 ml-2"
+                      <small
+                        :class="
+                          isDarkMode ? 'text-white ml-2' : 'text-main-400 ml-2'
+                        "
                         >(hover over lists to see details)</small
                       >
                     </div>
 
                     <div class="p-6 mb-2" v-if="NLdocumentSpecs">
-                      <ul class="bg-white">
+                      <ul
+                        :class="isDarkMode ? 'bg-secondaryyDark' : 'bg-white'"
+                      >
                         <li
-                          class="
-                            text-main-400 text-lg
-                            rounded-lg
-                            bg-white
-                            cursor-pointer
+                          :class="
+                            isDarkMode
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
                         >
-                          <i class="fa fa-arrow-right-long"></i>
+                          <i
+                            :class="
+                              isDarkMode
+                                ? 'text-white  fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long'
+                            "
+                          ></i>
                           Passport
                         </li>
                         <li
-                          class="
-                            text-main-400 text-lg
-                            rounded-lg
-                            bg-white
-                            cursor-pointer
+                          :class="
+                            isDarkMode
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
                           title="not lasting three months"
                         >
-                          <i class="fa fa-arrow-right-long"></i>
+                          <i
+                            :class="
+                              isDarkMode
+                                ? 'text-white  fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long'
+                            "
+                          ></i>
                           Medical Certificate
                         </li>
                         <li
-                          class="
-                            text-main-400 text-lg
-                            rounded-lg
-                            bg-white
-                            cursor-pointer
+                          :class="
+                            isDarkMode
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
                           title="For non english speaking countries only"
                         >
-                          <i class="fa fa-arrow-right-long"></i>
+                          <i
+                            :class="
+                              isDarkMode
+                                ? 'text-white  fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long'
+                            "
+                          ></i>
                           English Language Proficiency Certificate
                         </li>
 
                         <li
-                          class="
-                            text-main-400 text-lg
-                            rounded-lg
-                            bg-white
-                            cursor-pointer
+                          :class="
+                            isDarkMode
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
                           title="Equivalence letter"
                         >
-                          <i class="fa fa-arrow-right-long"></i>
+                          <i
+                            :class="
+                              isDarkMode
+                                ? 'text-white  fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long'
+                            "
+                          ></i>
                           Higher Education Relevance and Quality Agency
                         </li>
 
                         <li
-                          class="
-                            text-main-400 text-lg
-                            rounded-lg
-                            bg-white
-                            cursor-pointer
+                          :class="
+                            isDarkMode
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
                           title="Diploma,transcript for both undergraduates and postgraduates"
                         >
-                          <i class="fa fa-arrow-right-long"></i>
+                          <i
+                            :class="
+                              isDarkMode
+                                ? 'text-white  fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long'
+                            "
+                          ></i>
                           Authenticated Academic Document
                         </li>
 
                         <li
-                          class="
-                            text-main-400 text-lg
-                            rounded-lg
-                            bg-white
-                            cursor-pointer
+                          :class="
+                            isDarkMode
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
                         >
-                          <i class="fa fa-arrow-right-long"></i>
+                          <i
+                            :class="
+                              isDarkMode
+                                ? 'text-white  fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long'
+                            "
+                          ></i>
                           Authenticated Professional License from Country of
                           Origin
                         </li>
 
                         <li
-                          class="
-                            text-main-400 text-lg
-                            rounded-lg
-                            bg-white
-                            cursor-pointer
+                          :class="
+                            isDarkMode
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
                           title="More than two years"
                         >
-                          <i class="fa fa-arrow-right-long"></i>
+                          <i
+                            :class="
+                              isDarkMode
+                                ? 'text-white  fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long'
+                            "
+                          ></i>
                           Current Work Experience / Goodstanding Letter
                         </li>
 
                         <li
-                          class="
-                            text-main-400 text-lg
-                            rounded-lg
-                            bg-white
-                            cursor-pointer
+                          :class="
+                            isDarkMode
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
                           title="Foun in ethiopia"
                         >
-                          <i class="fa fa-arrow-right-long"></i>
+                          <i
+                            :class="
+                              isDarkMode
+                                ? 'text-white  fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long'
+                            "
+                          ></i>
                           Renewed License of Health FacilityFound in Ethiopia
                         </li>
 
                         <li
-                          class="
-                            text-main-400 text-lg
-                            rounded-lg
-                            bg-white
-                            cursor-pointer
+                          :class="
+                            isDarkMode
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
                           title="Foun in ethiopia"
                         >
-                          <i class="fa fa-arrow-right-long"></i>
+                          <i
+                            :class="
+                              isDarkMode
+                                ? 'text-white  fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long'
+                            "
+                          ></i>
                           Request Letter from Hiring Health Facility
                         </li>
                       </ul>
@@ -661,28 +765,18 @@
 
                 <div class="pricing-plan-wrap lg:w-1/3 my-4 md:my-6 mr-4">
                   <div
-                    class="
-                      pricing-plan
-                      border-t-4 border-solid border-white
-                      bg-white
-                      rounded-lg
-                      shadow-2xl
-                      text-center
-                      max-w-full
-                      mx-auto
-                      hover:border-indigo-600
-                      transition-colors
-                      duration-300
+                    :class="
+                      isDarkMode
+                        ? 'pricing-plan border-t-4 border-solid  bg-secondaryyDark rounded-lg shadow-2xl text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
+                        : 'pricing-plan border-t-4 border-solid border-white bg-white rounded-lg shadow-2xl text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
                     "
                   >
                     <div class="p-2 md:py-4">
                       <h4
-                        class="
-                          font-medium
-                          text-main-400
-                          leading-tight
-                          text-2xl
-                          border-b-4
+                        :class="
+                          isDarkMode
+                            ? 'font-medium text-white leading-tight text-2xl border-b-4'
+                            : 'font-medium text-main-400 leading-tight text-2xl border-b-4'
                         "
                       >
                         Ethiopian From Abroad
@@ -690,111 +784,156 @@
                     </div>
                     <div class="pricing-amount transition-colors duration-300">
                       <div>
-                        <span class="text-xl text-main-4oo font-semibold"
+                        <span
+                          :class="
+                            isDarkMode
+                              ? 'text-xl text-white font-semibold'
+                              : 'text-xl text-main-4oo font-semibold'
+                          "
                           >Attached Documents must be clear and visible.</span
                         >
                       </div>
-                      <small class="text-main-400 ml-2"
+                      <small
+                        :class="
+                          isDarkMode ? 'text-white ml-2' : 'text-main-400 ml-2'
+                        "
                         >(hover over lists to see details)</small
                       >
                     </div>
                     <div class="p-6 mb-2" v-if="NLdocumentSpecs">
-                      <ul class="bg-white">
+                      <ul
+                        :class="isDarkMode ? 'bg-secondaryyDark' : 'bg-white'"
+                      >
                         <li
-                          class="
-                            text-main-400 text-lg
-                            rounded-lg
-                            bg-white
-                            cursor-pointer
+                          :class="
+                            isDarkMode
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
                           title="Equivalence letter"
                         >
-                          <i class="fa fa-arrow-right-long"></i>
+                          <i
+                            :class="
+                              isDarkMode
+                                ? 'text-white  fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long'
+                            "
+                          ></i>
                           Higher Education Relevance and Quality Agency
                         </li>
 
                         <li
-                          class="
-                            text-main-400 text-lg
-                            rounded-lg
-                            bg-white
-                            cursor-pointer
+                          :class="
+                            isDarkMode
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
                           title="Diploma,transcript for both undergraduates and postgraduates"
                         >
-                          <i class="fa fa-arrow-right-long"></i>
+                          <i
+                            :class="
+                              isDarkMode
+                                ? 'text-white  fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long'
+                            "
+                          ></i>
                           Authenticated Academic Document
                         </li>
 
                         <li
-                          class="
-                            text-main-400 text-lg
-                            rounded-lg
-                            bg-white
-                            cursor-pointer
+                          :class="
+                            isDarkMode
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
                           title="Proof of Ethiopian decent"
                         >
-                          <i class="fa fa-arrow-right-long"></i>
+                          <i
+                            :class="
+                              isDarkMode
+                                ? 'text-white  fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long'
+                            "
+                          ></i>
                           Residence ID or Passport or Yellow Card
                         </li>
 
                         <li
-                          class="
-                            text-main-400 text-lg
-                            rounded-lg
-                            bg-white
-                            cursor-pointer
+                          :class="
+                            isDarkMode
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
                           title=" "
                         >
-                          <i class="fa fa-arrow-right-long"></i>
+                          <i
+                            :class="
+                              isDarkMode
+                                ? 'text-white  fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long'
+                            "
+                          ></i>
                           Authenticated Professional License from Country of
                           Origin
                         </li>
 
                         <li
-                          class="
-                            text-main-400 text-lg
-                            rounded-lg
-                            bg-white
-                            cursor-pointer
+                          :class="
+                            isDarkMode
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
                           title="More than two years"
                         >
-                          <i class="fa fa-arrow-right-long"></i>
+                          <i
+                            :class="
+                              isDarkMode
+                                ? 'text-white  fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long'
+                            "
+                          ></i>
                           Current Work Experience/ Goodstanding Letter
                         </li>
 
                         <li
-                          class="
-                            text-main-400 text-lg
-                            rounded-lg
-                            bg-white
-                            cursor-pointer
+                          :class="
+                            isDarkMode
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
                           title=" "
                         >
-                          <i class="fa fa-arrow-right-long"></i>
+                          <i
+                            :class="
+                              isDarkMode
+                                ? 'text-white  fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long'
+                            "
+                          ></i>
                           Support Letter from Sponsored Institution
                         </li>
                         <li
-                          class="
-                            text-main-400 text-lg
-                            rounded-lg
-                            bg-white
-                            cursor-pointer
+                          :class="
+                            isDarkMode
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
                           title="not lasting three months"
                         >
-                          <i class="fa fa-arrow-right-long"></i>
+                          <i
+                            :class="
+                              isDarkMode
+                                ? 'text-white  fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long'
+                            "
+                          ></i>
                           Medical Certificate
                         </li>
                       </ul>
@@ -846,18 +985,10 @@
   >
     <div class="modal-dialog modal-xl relative w-auto pointer-events-none">
       <div
-        class="
-          modal-content
-          border-none
-          shadow-lg
-          relative
-          flex flex-col
-          w-full
-          pointer-events-auto
-          bg-white bg-clip-padding
-          rounded-md
-          outline-none
-          text-current
+        :class="
+          isDarkMode
+            ? 'modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-secondaryyDark bg-clip-padding rounded-md outline-none text-current'
+            : 'modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current'
         "
       >
         <div
@@ -900,7 +1031,13 @@
           </button>
         </div>
         <div class="modal-body relative p-4 overflow-y-scroll">
-          <div class="bg-white rounded-lg py-6 md:py-12">
+          <div
+            :class="
+              isDarkMode
+                ? 'bg-primaryDark  rounded-lg p-4 md:py-12'
+                : 'bg-white rounded-lg p-4 md:py-12'
+            "
+          >
             <div class="container mx-auto px-4">
               <div class="max-w-3xl mx-auto text-center">
                 <h1
@@ -916,36 +1053,23 @@
                 >
                   Required Documents for License Renewal
                 </h1>
-                <p class="text-main-400 xl:mx-12">
-                  Attached Documents must be clear and visible.
-                </p>
               </div>
 
               <div class="lg:flex lg:-mx-4 mt-6 md:mt-12">
                 <div class="pricing-plan-wrap lg:w-1/3 my-4 md:my-6 mr-4">
                   <div
-                    class="
-                      pricing-plan
-                      border-t-4 border-solid border-white
-                      bg-white
-                      rounded-lg
-                      shadow-2xl
-                      text-center
-                      max-w-full
-                      mx-auto
-                      hover:border-indigo-600
-                      transition-colors
-                      duration-300
+                    :class="
+                      isDarkMode
+                        ? 'pricing-plan border-t-4 border-solid  bg-secondaryyDark rounded-lg shadow-2xl text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
+                        : 'pricing-plan border-t-4 border-solid border-white bg-white rounded-lg shadow-2xl text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
                     "
                   >
                     <div class="p-2 md:py-4">
                       <h4
-                        class="
-                          font-medium
-                          text-main-400
-                          leading-tight
-                          text-2xl
-                          border-b-4
+                        :class="
+                          isDarkMode
+                            ? 'font-medium text-white leading-tight text-2xl border-b-4'
+                            : 'font-medium text-main-400 leading-tight text-2xl border-b-4'
                         "
                       >
                         Ethiopian Applicants
@@ -953,97 +1077,137 @@
                     </div>
                     <div class="pricing-amount transition-colors duration-300">
                       <div>
-                        <span class="text-xl text-main-4oo font-semibold"
+                        <span
+                          :class="
+                            isDarkMode
+                              ? 'text-xl text-white font-semibold'
+                              : 'text-xl text-main-4oo font-semibold'
+                          "
                           >Attached Documents must be clear and visible.</span
                         >
                       </div>
-                      <small class="text-main-400 ml-2"
+                      <small
+                        :class="
+                          isDarkMode ? 'text-white ml-2' : 'text-main-400 ml-2'
+                        "
                         >(hover over lists to see details)</small
                       >
                     </div>
                     <div class="p-6 mb-2" v-if="RNdocumentSpecs">
-                      <ul class="bg-white">
+                      <ul
+                        :class="isDarkMode ? 'bg-secondaryyDark' : 'bg-white'"
+                      >
                         <li
-                          class="
-                            text-main-400 text-lg
-                            rounded-lg
-                            bg-white
-                            cursor-pointer
+                          :class="
+                            isDarkMode
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
                           title=""
                         >
-                          <i class="fa fa-arrow-right-long"></i>
+                          <i
+                            :class="
+                              isDarkMode
+                                ? 'text-white  fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long'
+                            "
+                          ></i>
                           Health Exam Certificate
                         </li>
 
                         <li
-                          class="
-                            text-main-400 text-lg
-                            rounded-lg
-                            bg-white
-                            cursor-pointer
+                          :class="
+                            isDarkMode
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
                           title="Found in Ethiopia"
                         >
-                          <i class="fa fa-arrow-right-long"></i>
+                          <i
+                            :class="
+                              isDarkMode
+                                ? 'text-white  fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long'
+                            "
+                          ></i>
                           Letter from Hiring Organization
                         </li>
 
                         <li
-                          class="
-                            text-main-400 text-lg
-                            rounded-lg
-                            bg-white
-                            cursor-pointer
+                          :class="
+                            isDarkMode
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
                           title=" "
                         >
-                          <i class="fa fa-arrow-right-long"></i>
+                          <i
+                            :class="
+                              isDarkMode
+                                ? 'text-white  fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long'
+                            "
+                          ></i>
                           Previous License
                         </li>
 
                         <li
-                          class="
-                            text-main-400 text-lg
-                            rounded-lg
-                            bg-white
-                            cursor-pointer
+                          :class="
+                            isDarkMode
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
                           title=" "
                         >
-                          <i class="fa fa-arrow-right-long"></i>
+                          <i
+                            :class="
+                              isDarkMode
+                                ? 'text-white  fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long'
+                            "
+                          ></i>
                           CPD Certificate
                         </li>
 
                         <li
-                          class="
-                            text-main-400 text-lg
-                            rounded-lg
-                            bg-white
-                            cursor-pointer
+                          :class="
+                            isDarkMode
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
                           title="More than two years"
                         >
-                          <i class="fa fa-arrow-right-long"></i>
+                          <i
+                            :class="
+                              isDarkMode
+                                ? 'text-white  fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long'
+                            "
+                          ></i>
                           Work Experience
                         </li>
 
                         <li
-                          class="
-                            text-main-400 text-lg
-                            rounded-lg
-                            bg-white
-                            cursor-pointer
+                          :class="
+                            isDarkMode
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
                           title=" "
                         >
-                          <i class="fa fa-arrow-right-long"></i>
+                          <i
+                            :class="
+                              isDarkMode
+                                ? 'text-white  fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long'
+                            "
+                          ></i>
                           Renewed License of Health Facility
                         </li>
                       </ul>
@@ -1069,28 +1233,18 @@
 
                 <div class="pricing-plan-wrap lg:w-1/3 my-4 md:my-6 mr-4">
                   <div
-                    class="
-                      pricing-plan
-                      border-t-4 border-solid border-white
-                      bg-white
-                      rounded-lg
-                      shadow-2xl
-                      text-center
-                      max-w-full
-                      mx-auto
-                      hover:border-indigo-600
-                      transition-colors
-                      duration-300
+                    :class="
+                      isDarkMode
+                        ? 'pricing-plan border-t-4 border-solid  bg-secondaryyDark rounded-lg shadow-2xl text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
+                        : 'pricing-plan border-t-4 border-solid border-white bg-white rounded-lg shadow-2xl text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
                     "
                   >
                     <div class="p-2 md:py-4">
                       <h4
-                        class="
-                          font-medium
-                          text-main-400
-                          leading-tight
-                          text-2xl
-                          border-b-4
+                        :class="
+                          isDarkMode
+                            ? 'font-medium text-white leading-tight text-2xl border-b-4'
+                            : 'font-medium text-main-400 leading-tight text-2xl border-b-4'
                         "
                       >
                         Ethiopian From Abroad
@@ -1098,69 +1252,99 @@
                     </div>
                     <div class="pricing-amount transition-colors duration-300">
                       <div>
-                        <span class="text-xl text-main-4oo font-semibold"
+                        <span
+                          :class="
+                            isDarkMode
+                              ? 'text-xl text-white font-semibold'
+                              : 'text-xl text-main-4oo font-semibold'
+                          "
                           >Attached Documents must be clear and visible.</span
                         >
                       </div>
-                      <small class="text-main-400 ml-2"
+                      <small
+                        :class="
+                          isDarkMode ? 'text-white ml-2' : 'text-main-400 ml-2'
+                        "
                         >(hover over lists to see details)</small
                       >
                     </div>
                     <div class="p-6 mb-2" v-if="RNdocumentSpecs">
-                      <ul class="bg-white">
+                      <ul
+                        :class="isDarkMode ? 'bg-secondaryyDark' : 'bg-white'"
+                      >
                         <li
-                          class="
-                            text-main-400 text-lg
-                            rounded-lg
-                            bg-white
-                            cursor-pointer
+                          :class="
+                            isDarkMode
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
                           title=""
                         >
-                          <i class="fa fa-arrow-right-long"></i>
+                          <i
+                            :class="
+                              isDarkMode
+                                ? 'text-white  fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long'
+                            "
+                          ></i>
                           Health Exam Certificate
                         </li>
 
                         <li
-                          class="
-                            text-main-400 text-lg
-                            rounded-lg
-                            bg-white
-                            cursor-pointer
+                          :class="
+                            isDarkMode
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
                           title=" "
                         >
-                          <i class="fa fa-arrow-right-long"></i>
+                          <i
+                            :class="
+                              isDarkMode
+                                ? 'text-white  fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long'
+                            "
+                          ></i>
                           CPD Certificate
                         </li>
 
                         <li
-                          class="
-                            text-main-400 text-lg
-                            rounded-lg
-                            bg-white
-                            cursor-pointer
+                          :class="
+                            isDarkMode
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
                           title=" "
                         >
-                          <i class="fa fa-arrow-right-long"></i>
+                          <i
+                            :class="
+                              isDarkMode
+                                ? 'text-white  fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long'
+                            "
+                          ></i>
                           Previous License
                         </li>
 
                         <li
-                          class="
-                            text-main-400 text-lg
-                            rounded-lg
-                            bg-white
-                            cursor-pointer
+                          :class="
+                            isDarkMode
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
                           title=" "
                         >
-                          <i class="fa fa-arrow-right-long"></i>
+                          <i
+                            :class="
+                              isDarkMode
+                                ? 'text-white  fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long'
+                            "
+                          ></i>
                           Work Experience
                         </li>
                       </ul>
@@ -1186,28 +1370,18 @@
 
                 <div class="pricing-plan-wrap lg:w-1/3 my-4 md:my-6 mr-4">
                   <div
-                    class="
-                      pricing-plan
-                      border-t-4 border-solid border-white
-                      bg-white
-                      rounded-lg
-                      shadow-2xl
-                      text-center
-                      max-w-full
-                      mx-auto
-                      hover:border-indigo-600
-                      transition-colors
-                      duration-300
+                    :class="
+                      isDarkMode
+                        ? 'pricing-plan border-t-4 border-solid  bg-secondaryyDark rounded-lg shadow-2xl text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
+                        : 'pricing-plan border-t-4 border-solid border-white bg-white rounded-lg shadow-2xl text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
                     "
                   >
                     <div class="p-2 md:py-4">
                       <h4
-                        class="
-                          font-medium
-                          text-main-400
-                          leading-tight
-                          text-2xl
-                          border-b-4
+                        :class="
+                          isDarkMode
+                            ? 'font-medium text-white leading-tight text-2xl border-b-4'
+                            : 'font-medium text-main-400 leading-tight text-2xl border-b-4'
                         "
                       >
                         Foreign Applicants
@@ -1215,69 +1389,99 @@
                     </div>
                     <div class="pricing-amount transition-colors duration-300">
                       <div>
-                        <span class="text-xl text-main-4oo font-semibold"
+                        <span
+                          :class="
+                            isDarkMode
+                              ? 'text-xl text-white font-semibold'
+                              : 'text-xl text-main-4oo font-semibold'
+                          "
                           >Attached Documents must be clear and visible.</span
                         >
                       </div>
-                      <small class="text-main-400 ml-2"
+                      <small
+                        :class="
+                          isDarkMode ? 'text-white ml-2' : 'text-main-400 ml-2'
+                        "
                         >(hover over lists to see details)</small
                       >
                     </div>
                     <div class="p-6 mb-2" v-if="RNdocumentSpecs">
-                      <ul class="bg-white">
+                      <ul
+                        :class="isDarkMode ? 'bg-secondaryyDark' : 'bg-white'"
+                      >
                         <li
-                          class="
-                            text-main-400 text-lg
-                            rounded-lg
-                            bg-white
-                            cursor-pointer
+                          :class="
+                            isDarkMode
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
                           title=""
                         >
-                          <i class="fa fa-arrow-right-long"></i>
+                          <i
+                            :class="
+                              isDarkMode
+                                ? 'text-white  fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long'
+                            "
+                          ></i>
                           Health Exam Certificate
                         </li>
 
                         <li
-                          class="
-                            text-main-400 text-lg
-                            rounded-lg
-                            bg-white
-                            cursor-pointer
+                          :class="
+                            isDarkMode
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
                           title=" "
                         >
-                          <i class="fa fa-arrow-right-long"></i>
+                          <i
+                            :class="
+                              isDarkMode
+                                ? 'text-white  fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long'
+                            "
+                          ></i>
                           CPD Certificate
                         </li>
 
                         <li
-                          class="
-                            text-main-400 text-lg
-                            rounded-lg
-                            bg-white
-                            cursor-pointer
+                          :class="
+                            isDarkMode
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
                           title=" "
                         >
-                          <i class="fa fa-arrow-right-long"></i>
+                          <i
+                            :class="
+                              isDarkMode
+                                ? 'text-white  fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long'
+                            "
+                          ></i>
                           Previous License
                         </li>
 
                         <li
-                          class="
-                            text-main-400 text-lg
-                            rounded-lg
-                            bg-white
-                            cursor-pointer
+                          :class="
+                            isDarkMode
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
                           title=" "
                         >
-                          <i class="fa fa-arrow-right-long"></i>
+                          <i
+                            :class="
+                              isDarkMode
+                                ? 'text-white  fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long'
+                            "
+                          ></i>
                           Work Experience
                         </li>
                       </ul>
@@ -1330,18 +1534,10 @@
   >
     <div class="modal-dialog modal-xl relative w-auto pointer-events-none">
       <div
-        class="
-          modal-content
-          border-none
-          shadow-lg
-          relative
-          flex flex-col
-          w-full
-          pointer-events-auto
-          bg-white bg-clip-padding
-          rounded-md
-          outline-none
-          text-current
+        :class="
+          isDarkMode
+            ? 'modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-secondaryyDark bg-clip-padding rounded-md outline-none text-current'
+            : 'modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current'
         "
       >
         <div
@@ -1384,7 +1580,13 @@
           </button>
         </div>
         <div class="modal-body relative p-4">
-          <div class="bg-white rounded-lg py-6 md:py-12">
+          <div
+            :class="
+              isDarkMode
+                ? 'bg-primaryDark  rounded-lg p-4 md:py-12'
+                : 'bg-white rounded-lg p-4 md:py-12'
+            "
+          >
             <div class="container mx-auto px-4">
               <div class="max-w-3xl mx-auto text-center">
                 <h1
@@ -1399,37 +1601,23 @@
                 >
                   Required Documents for Goodstanding letter
                 </h1>
-                <p class="text-main-400 xl:mx-4">
-                  Attached Documents must be clear and visible.
-                </p>
               </div>
 
               <div class="lg:flex lg:-mx-4 mt-6 md:mt-12 justify-center">
                 <div class="pricing-plan-wrap lg:w-1/2 my-4 md:my-6">
                   <div
-                    class="
-                      pricing-plan
-                      border-t-4 border-solid border-white
-                      bg-white
-                      rounded-sm
-                      shadow-2xl
-                      text-center
-                      max-w-full
-                      mx-auto
-                      hover:border-indigo-600
-                      transition-colors
-                      duration-300
+                    :class="
+                      isDarkMode
+                        ? 'pricing-plan border-t-4 border-solid  bg-secondaryyDark rounded-lg shadow-2xl text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
+                        : 'pricing-plan border-t-4 border-solid border-white bg-white rounded-lg shadow-2xl text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
                     "
                   >
                     <div class="p-6 md:py-8">
                       <h4
-                        class="
-                          font-medium
-                          text-main-400
-                          leading-tight
-                          text-2xl
-                          border-b-4
-                          mb-2
+                        :class="
+                          isDarkMode
+                            ? '  font-medium text-white leading-tight text-2xl border-b-4 mb-2'
+                            : '  font-medium text-main-400 leading-tight text-2xl border-b-4 mb-2'
                         "
                       >
                         For all applicants
@@ -1445,11 +1633,19 @@
                       "
                     >
                       <div>
-                        <span class="text-2xl text-black font-semibold"
+                        <span
+                          :class="
+                            isDarkMode
+                              ? 'text-2xl text-white font-semibold'
+                              : 'text-2xl text-black font-semibold'
+                          "
                           >Attached Documents must be clear and visible.</span
                         >
                       </div>
-                      <small class="text-main-400 ml-2"
+                      <small
+                        :class="
+                          isDarkMode ? 'text-white ml-2' : 'text-main-400 ml-2'
+                        "
                         >(hover over lists to see details)</small
                       >
                     </div>
@@ -1460,12 +1656,10 @@
                         class="leading-loose"
                       >
                         <li
-                          class="
-                            text-main-400 text-lg
-                            mb-2
-                            bg-white
-                            p-2
-                            cursor-pointer
+                          :class="
+                            isDarkMode
+                              ? '   text-main-400 text-lg mb-2 bg-secondaryyDark p-2 cursor-pointer'
+                              : 'text-main-400 text-lg mb-2 bg-white p-2 cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
                           :title="
@@ -1474,7 +1668,13 @@
                               : ''
                           "
                         >
-                          <i class="fa fa-arrow-right-long"></i>
+                          <i
+                            :class="
+                              isDarkMode
+                                ? 'text-white  fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long'
+                            "
+                          ></i>
                           {{
                             doc && doc.documentType ? doc.documentType.name : ""
                           }}
@@ -1509,7 +1709,7 @@
 </template>
 
 <script>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, getCurrentInstance } from "vue";
 import SideNav from "./Sidebar.vue";
 import TopNav from "./Header.vue";
 import { googleApi } from "@/composables/baseURL";
@@ -1517,11 +1717,12 @@ import "../../styles/applicant.css";
 import { useStore } from "vuex";
 export default {
   components: { SideNav, TopNav },
-  setup() {
+  setup(props, { emit }) {
     const store = useStore();
     const id = +localStorage.getItem("userId");
     let isFirstTime = ref(false);
     let userInfo = ref({});
+    let isDarkMode = ref(JSON.parse(localStorage.getItem("darkMode")));
 
     let NLdocumentSpecs = ref({
       ethiopian: {},
@@ -1560,7 +1761,7 @@ export default {
     };
     onMounted(() => {
       getProfile();
-
+      initiateDarkMode();
       if (JSON.parse(localStorage.getItem("darkMode")) == true) {
         document.getElementById("mainContent").classList.add("dark-mode");
         document.getElementById("activeMenu").classList.add("dark-mode");
@@ -1634,10 +1835,58 @@ export default {
               element.educationalLevel &&
               element.educationalLevel.id == 2
           );
-        } 
+        }
       });
     });
-    return { userInfo, NLdocumentSpecs, RNdocumentSpecs, GSdocumentSpecs };
+    const dark = () => {
+      document.getElementById("mainContent").classList.add("dark-mode");
+      document.getElementById("activeMenu").classList.add("dark-mode");
+      document.getElementById("mainSideBar").classList.add("dark-mode");
+      document.getElementById("menu-icon").classList.add("dark-mode");
+      document.getElementById("home").classList.add("dark-mode");
+      document.querySelector("body").classList.add("dark-mode");
+      document.getElementById("options-menu").classList.add("dark-mode");
+      isDarkMode.value = true;
+      localStorage.setItem("darkMode", JSON.stringify(isDarkMode.value));
+    };
+
+    const light = () => {
+      document.getElementById("mainContent").classList.remove("dark-mode");
+      document.getElementById("activeMenu").classList.remove("dark-mode");
+      document.getElementById("mainSideBar").classList.remove("dark-mode");
+      document.getElementById("menu-icon").classList.remove("dark-mode");
+      document.getElementById("home").classList.remove("dark-mode");
+      document.querySelector("body").classList.remove("dark-mode");
+      document.getElementById("options-menu").classList.remove("dark-mode");
+      isDarkMode.value = false;
+      localStorage.setItem("darkMode", JSON.stringify(isDarkMode.value));
+    };
+    const initiateDarkMode = () => {
+      if (JSON.parse(localStorage.getItem("darkMode")) == true) {
+        dark();
+      } else {
+        light();
+      }
+    };
+    const modeToggle = () => {
+      if (
+        localStorage.getItem("darkMode") == true ||
+        isDarkMode.value ||
+        document.getElementById("main")?.classList.contains("dark-mode")
+      ) {
+        light();
+      } else {
+        dark();
+      }
+    };
+    return {
+      userInfo,
+      NLdocumentSpecs,
+      RNdocumentSpecs,
+      GSdocumentSpecs,
+      modeToggle,
+      isDarkMode,
+    };
   },
 };
 </script>
@@ -1650,6 +1899,4 @@ export default {
   border-radius: 12px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.884);
 }
-
-
 </style>
