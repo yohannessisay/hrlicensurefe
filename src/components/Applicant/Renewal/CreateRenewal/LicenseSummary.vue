@@ -352,7 +352,7 @@
       </div>
     </div>
 
-    <div class="flex justify-end w-1/2 mb-8">
+    <div class="flex justify-center w-full mb-8">
       <span v-for="button in buttons" :key="button.id">
         <button
           v-if="button.action!='DraftEvent'"
@@ -443,6 +443,16 @@ export default {
       } else {
         allowSave.value = false;
       }
+    };
+    const fetchApplicationStatuses = () => {
+      store.dispatch("renewal/getApplicationStatuses").then((res) => {
+        let results = res.data.data;
+
+        let status = results.filter(function (e) {
+          return e.code == "INIT";
+        });
+        buttons.value = status[0]["buttons"];
+      });
     };
     const checkFinalStatus = (action) => { 
       generalInfo.value.licenseFile = [];
@@ -539,7 +549,7 @@ export default {
       emit("changeActiveStateMinus");
     };
     onMounted(() => {
-      buttons.value = store.getters["renewal/getButtons"];
+      fetchApplicationStatuses();
       tempDocs.value = store.getters["renewal/getTempDocs"];
       localData.value = window.localStorage.getItem("RNApplicationData")
         ? JSON.parse(window.localStorage.getItem("RNApplicationData"))

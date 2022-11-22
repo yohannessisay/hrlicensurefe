@@ -1,5 +1,5 @@
 <template>
-  <div class="main" id="main">
+  <div class="main " id="main">
     <side-nav></side-nav>
     <div class="content" id="mainContent">
       <top-nav :userInfo="userInfo"></top-nav>

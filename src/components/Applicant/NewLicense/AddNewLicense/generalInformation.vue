@@ -54,7 +54,7 @@
     :class="
       isDarkMode && isDarkMode == true
         ? '    block p-6 rounded-lg shadow-lg darkModeSecondLayer max-w-full mr-8 mb-8 sm:p-4'
-        : '   block p-6 rounded-lg shadow-lg bg-primary-200 max-w-full mr-8 mb-8 sm:p-4'
+        : '   block p-6 rounded-lg shadow-lg bg-primary-200 max-w-full mr-8 mb-8 sm:p-4 '
     "
   >
     <div class="mt-small flex justify-center">

@@ -90,6 +90,7 @@
                       >
                         Upload
                       </th>
+
                       <th
                         class="
                           font-semibold
@@ -158,8 +159,49 @@
                           />
                         </p>
                       </td>
-
-                      <td class="px-6 py-4 text-center">
+                      <td class="px-6 py-4" v-if="item && item.fileName">
+                        <div class="flex items-center p-4">
+                          <div>
+                            <p class="">
+                              {{
+                                item.fileName
+                                  ? item.fileName
+                                  : "---------------"
+                              }}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        class="px-6 py-4 text-center"
+                        v-if="item && item.existingFile"
+                      >
+                        <a
+                          :id="
+                            'common_image_href' + item.documentType.id + item.id
+                          "
+                          :href="item.existingFile"
+                          :data-title="item.name ? item.name : '-----'"
+                          data-lightbox="example-2"
+                        >
+                          <i
+                            :id="'common_icon' + item.documentType.id + item.id"
+                            class="fa fa-eye cursor-pointer text-main-400"
+                            aria-hidden="true"
+                          >
+                            <img
+                              :id="
+                                'common_image_lightbox' +
+                                item.documentType.id +
+                                item.id
+                              "
+                              :src="item.existingFile"
+                              class="w-full h-2 object-cover"
+                            />
+                          </i>
+                        </a>
+                      </td>
+                      <td class="px-6 py-4 text-center" v-else>
                         <a
                           :id="
                             'common_image_href' + item.documentType.id + item.id
@@ -250,7 +292,7 @@
                 {{ table.educationalLevel ? table.educationalLevel.name : "" }}
                 Related Files
               </h4>
-
+              <h5 v-if="existingDocs">Images are saved, only upload files you want to change</h5>
               <div class="overflow-x-auto w-full p-4">
                 <table
                   class="
@@ -373,7 +415,7 @@
                           />
                         </p>
                       </td>
-
+              
                       <td class="px-6 py-4 text-center">
                         <a
                           :id="
@@ -900,6 +942,7 @@ export default {
               educationalLevel: data.educationalLevel
                 ? data.educationalLevel.name
                 : "",
+              fileName: event?.target?.files[0].name,
               image: reader.result,
             });
 
@@ -1026,6 +1069,7 @@ export default {
               educationalLevel: data.educationalLevel
                 ? data.educationalLevel.name
                 : "",
+              fileName: event?.target?.files[0].name,
               image: reader.result,
             });
             // documentUploaded.value[data.documentType.code] = reader.result;
@@ -1173,7 +1217,13 @@ export default {
     };
 
     const next = () => {
-      let documentValidation = checkDocuments();
+      let documentValidation = false;
+      if (existingDocs.length > 0) {
+        documentValidation = true;
+      } else {
+        documentValidation = checkDocuments();
+      }
+
       if (documentValidation) {
         store.dispatch("newlicense/setTempDocs", formData).then(() => {
           let finalLocalData = {
@@ -1188,29 +1238,22 @@ export default {
               ["NLdocumentUploads"],
               "readwrite"
             );
-            let tempStat = false;
 
             if (existingDocs.length > 0) {
-              imageData.forEach((newImage) => {
-                existingDocs.forEach((existing) => {
+              existingDocs.forEach((existing) => {
+                imageData.forEach((newImage) => {
                   if (existing.imageId == newImage.imageId) {
                     existing.image = newImage.image;
-                    finalLocalData.data.push(existing);
-                  } else {
-                    finalLocalData.data.push(existing);
-                    tempStat = true;
+                    existing.fileName = newImage.fileName;
                   }
                 });
-                if (tempStat == true) {
-                  finalLocalData.data.push(newImage);
-                }
               });
-              finalLocalData.data.concat(imageData);
+              finalLocalData.data = existingDocs;
             } else {
               finalLocalData.data = imageData;
             }
             finalLocalData.data = [...new Set(finalLocalData.data)];
-
+            console.log(finalLocalData);
             const objectStore = transaction.objectStore("NLdocumentUploads");
 
             const objectStoreRequest = objectStore.clear();
@@ -1403,10 +1446,16 @@ export default {
     };
 
     onMounted(() => {
-      localData.value = window.localStorage.getItem("NLApplicationData")
-        ? JSON.parse(window.localStorage.getItem("NLApplicationData"))
-        : {};
-      if (Object.keys(localData.value).length != 0) {
+      //Initialize indexdb for file storage
+      if (!("indexedDB" in window)) {
+        alert("This browser doesn't support Temporary storage please update your browser to the latest version");
+        window.location.reload();
+      } else {
+        initDb();
+        localData.value = window.localStorage.getItem("NLApplicationData")
+          ? JSON.parse(window.localStorage.getItem("NLApplicationData"))
+          : {};
+
         generalInfo.value = localData.value;
 
         store.dispatch("newlicense/getApplicationCategories").then((res) => {
@@ -1436,6 +1485,8 @@ export default {
                 });
               });
           });
+ 
+
           //Get Common Docs
 
           store
@@ -1446,15 +1497,27 @@ export default {
             .then((res) => {
               let result = res.data.data;
               commonDocuments.value = result;
+              if (
+                existingDocs &&
+                existingDocs.length > 0 &&
+                result &&
+                result.length > 0
+              ) {
+                existingDocs.forEach((existing) => {
+                  result.forEach((Cd) => {
+                    if (
+                      existing.imageId ==
+                      "common_image_lightbox_" + Cd.documentType.code
+                    ) {
+                      Cd.existingFile = existing.image;
+                      Cd.fileName = existing.fileName;
+                    }
+                  });
+                });
+              } else {
+                commonDocuments.value = result;
+              }
             });
-
-          //Initialize indexdb for file storage
-          if (!("indexedDB" in window)) {
-            console.log("This browser doesn't support IndexedDB");
-            return;
-          } else {
-            initDb();
-          }
         });
       }
     });

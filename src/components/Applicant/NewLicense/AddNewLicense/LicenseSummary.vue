@@ -352,7 +352,7 @@
       </div>
     </div>
 
-    <div class="flex justify-end w-1/2 mb-8">
+    <div class="flex justify-center w-full mb-8">
       <span v-for="button in buttons" :key="button.id">
         <button
           v-if="button.action!='DraftEvent'"

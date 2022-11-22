@@ -757,7 +757,7 @@ router.beforeEach(async (to, from, next) => {
   }
   if (to.path != "/Applicant/NewLicense") {
     window.localStorage.setItem("NLApplicationData", ""); 
-    window.indexedDB.deleteDatabase("NLdocumentUploads");
+    window.indexedDB.deleteDatabase("NLdocumentUploads"); 
   }
   if (to.path != "/Applicant/Renewal") {
     window.localStorage.setItem("RNApplicationData", "");

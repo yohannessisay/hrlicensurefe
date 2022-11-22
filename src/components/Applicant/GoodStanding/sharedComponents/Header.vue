@@ -187,6 +187,9 @@ export default {
       localStorage.removeItem("payroll");
       localStorage.removeItem("personalInfo");
       localStorage.removeItem("applicantTypeId");
+      window.indexedDB.deleteDatabase("NLdocumentUploads");
+      window.indexedDB.deleteDatabase("RNdocumentUploads");
+      window.indexedDB.deleteDatabase("GSdocumentUploads");
       this.$router.push({ path: "/" });
     };
     const showDropDown = () => {

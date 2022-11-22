@@ -230,6 +230,9 @@ export default {
       localStorage.removeItem("isApplicant");
       localStorage.removeItem("applicantTypeId");
       this.$router.push({ path: "/" });
+      window.indexedDB.deleteDatabase("NLdocumentUploads");
+      window.indexedDB.deleteDatabase("RNdocumentUploads");
+      window.indexedDB.deleteDatabase("GSdocumentUploads");
     },
     showDropDown() {
       this.showNotificationDropDown = false;
