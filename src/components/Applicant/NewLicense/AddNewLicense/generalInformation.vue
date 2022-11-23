@@ -781,10 +781,7 @@
               Add
             </button>
           </div>
-        </div>
-        <!-- ./Container -->
-
-        <span v-if="multipleDepartmentError" class="ml-8 text-red-300"
+          <span v-if="multipleDepartmentError" class="text-red-300"
           >Please fill in all fields</span
         >
         <span v-if="checkForAddedError" class="ml-8 text-red-300"
@@ -793,6 +790,10 @@
         <span v-if="multipleDepartmentMaxError" class="ml-8 text-red-300"
           >Only three departments can be selected</span
         >
+        </div>
+        <!-- ./Container -->
+
+    
       </div>
       <!-- Table for selected departments data -->
       <div

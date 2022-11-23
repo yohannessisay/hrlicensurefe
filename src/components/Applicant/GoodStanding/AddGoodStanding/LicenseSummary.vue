@@ -691,24 +691,25 @@ export default {
               ? generalInfo.value.licenseRegistrationNumber
               : "",
             professionType: {
-              professionTypeId: generalInfo.value.professionType
-                ? generalInfo.value.professionType.professionTypeId.id
+              professionTypeId: generalInfo.value
+                ? generalInfo.value.professionTypeId.id
                 : null,
-              educationLevelId: generalInfo.value.professionType
-                ? generalInfo.value.professionType.educationLevelId.id
+              educationLevelId: generalInfo.value
+                ? generalInfo.value.educationLevelId.id
                 : null,
+              otherProfessionType: generalInfo.value.otherProfessionType
+                ? generalInfo.value.otherProfessionType
+                : "",
+              otherProfessionTypeAmharic: generalInfo.value
+                .otherProfessionTypeAmharic
+                ? generalInfo.value.otherProfessionTypeAmharic
+                : "",
             },
             expertLevelId: generalInfo.value.expertLevelId
               ? generalInfo.value.expertLevelId
               : null,
             islegal: true,
-            otherProfessionalType: generalInfo.value.otherProfessionType
-              ? generalInfo.value.otherProfessionType
-              : "",
-            otherProfessionalTypeAmharic: generalInfo.value
-              .otherProfessionTypeAmharic
-              ? generalInfo.value.otherProfessionTypeAmharic
-              : "",
+
             departmentId: generalInfo.value.departmentId.id
               ? generalInfo.value.departmentId.id
               : null,

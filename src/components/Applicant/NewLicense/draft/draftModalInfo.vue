@@ -1,17 +1,17 @@
 <template>
   <div
     class="
-          modal
-          fade
-          fixed
-          top-0
-          left-0
-          hidden
-          w-full
-          h-full
-          outline-none
-          overflow-x-hidden overflow-y-auto
-        "
+      modal
+      fade
+      fixed
+      top-0
+      left-0
+      hidden
+      w-full
+      h-full
+      outline-none
+      overflow-x-hidden overflow-y-auto
+    "
     id="draftModalInfo"
     data-bs-backdrop="static"
     data-bs-keyboard="false"
@@ -21,26 +21,18 @@
   >
     <div
       class="
-          modal-dialog modal-dialog-centered modal-xl
-          relative
-          w-auto
-          pointer-events-none
-        "
+        modal-dialog modal-dialog-centered modal-xl
+        relative
+        w-auto
+        pointer-events-none
+      "
     >
       <div
-        class="
-            modal-content
-            border-none
-            shadow-lg
-            relative
-            flex flex-col
-            w-full
-            pointer-events-auto
-            bg-white bg-clip-padding
-            rounded-md
-            outline-none
-            text-current
-          "
+        :class="
+          isDarkMode
+            ? 'modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-secondaryDark bg-clip-padding rounded-md outline-none text-current'
+            : 'modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current'
+        "
       >
         <div
           class="modal-header flex flex-shrink-0 justify-end p-2 rounded-t-md"
@@ -48,26 +40,26 @@
           <button
             type="button"
             class="
-                px-6
-                text-white
-                bg-main-400
-                hover:text-main-400 hover:border
-                font-medium
-                text-xs
-                leading-tight
-                uppercase
-                rounded
-                shadow-lg
-                hover:bg-purple-700 hover:shadow-lg
-                focus:bg-purple-700
-                focus:shadow-lg
-                focus:outline-none
-                focus:ring-0
-                active:bg-purple-800 active:shadow-lg
-                transition
-                duration-150
-                ease-in-out
-              "
+              px-6
+              text-white
+              bg-main-400
+              hover:text-main-400 hover:border
+              font-medium
+              text-xs
+              leading-tight
+              uppercase
+              rounded
+              shadow-lg
+              hover:bg-purple-700 hover:shadow-lg
+              focus:bg-purple-700
+              focus:shadow-lg
+              focus:outline-none
+              focus:ring-0
+              active:bg-purple-800 active:shadow-lg
+              transition
+              duration-150
+              ease-in-out
+            "
             data-bs-dismiss="modal"
             aria-label="Close"
           >
@@ -79,14 +71,14 @@
             :active="isLoading"
             :is-full-page="false"
             :color="'#07677e'"
-            :opacity="1"
+            :opacity="isDarkMode ? 0.3 : 1"
           ></loading>
           <div class="modal-body relative p-4">
             <div class="container px-6 mx-auto">
               <section class="text-gray-800">
                 <div class="flex justify-center border-b-4 text-main-400">
                   <div class="text-center lg:max-w-3xl md:max-w-xl">
-                    <h2 class="text-2xl font-bold mb-8 px-6 text-main-400">
+                    <h2 :class="isDarkMode?'text-2xl font-bold mb-8 px-6 text-white':'text-2xl font-bold mb-8 px-6 text-main-400'">
                       Draft License Detail
                     </h2>
                   </div>
@@ -102,22 +94,26 @@
                       class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
                     >
                       <!-- Article -->
-                      <article class="overflow-hidden rounded-lg shadow-xl ">
+                      <article class="overflow-hidden rounded-lg shadow-xl">
                         <header
                           class="
-                              flex
-                              items-center
-                              justify-between
-                              leading-tight
-                              p-2
-                              md:p-4
-                              border-b-4  
-                              text-main-400
-                            "
+                            flex
+                            items-center
+                            justify-between
+                            leading-tight
+                            p-2
+                            md:p-4
+                            border-b-4
+                            text-main-400
+                          "
                         >
                           <h1 class="text-lg">
                             <a
-                              class="no-underline hover:underline text-black"
+                              :class="
+                                isDarkMode
+                                  ? 'no-underline hover:underline text-white'
+                                  : 'no-underline hover:underline text-black'
+                              "
                               href="#"
                             >
                               Applicant Profile
@@ -129,27 +125,43 @@
                         </header>
 
                         <div class="grid grid-flow-row auto-rows-max">
-                          <div class="flex justify-between px-4 py-1 ">
-                            <div>Applicant Name</div>
-                            <div class="text-main-400 font-bold">
+                          <div class="flex justify-between px-4 py-1">
+                            <div :class="isDarkMode ? 'text-main-400' : ''">
+                              Applicant Name
+                            </div>
+                            <div
+                              :class="
+                                isDarkMode
+                                  ? 'text-white font-bold'
+                                  : 'text-main-400 font-bold'
+                              "
+                            >
                               {{
                                 licenseData && licenseData.profile
                                   ? licenseData.profile.name
                                   : "-" +
-                                  " " +
-                                  (licenseData && licenseData.profile
-                                    ? licenseData.profile.fatherName
-                                    : "-") +
-                                  " " +
-                                  (licenseData && licenseData.profile
-                                    ? licenseData.profile.grandFatherName
-                                    : "-")
+                                    " " +
+                                    (licenseData && licenseData.profile
+                                      ? licenseData.profile.fatherName
+                                      : "-") +
+                                    " " +
+                                    (licenseData && licenseData.profile
+                                      ? licenseData.profile.grandFatherName
+                                      : "-")
                               }}
                             </div>
                           </div>
                           <div class="flex justify-between px-4 py-1">
-                            <div>Applicant Email</div>
-                            <div class="text-main-400 font-bold">
+                            <div :class="isDarkMode ? 'text-main-400' : ''">
+                              Applicant Email
+                            </div>
+                            <div
+                              :class="
+                                isDarkMode
+                                  ? 'text-white font-bold'
+                                  : 'text-main-400 font-bold'
+                              "
+                            >
                               {{
                                 licenseData && licenseData.applicant
                                   ? licenseData.applicant.emailAddress
@@ -158,8 +170,16 @@
                             </div>
                           </div>
                           <div class="flex justify-between px-4 py-1">
-                            <div>Applicant Phone</div>
-                            <div class="text-main-400 font-bold">
+                            <div :class="isDarkMode ? 'text-main-400' : ''">
+                              Applicant Phone
+                            </div>
+                            <div
+                              :class="
+                                isDarkMode
+                                  ? 'text-white font-bold'
+                                  : 'text-main-400 font-bold'
+                              "
+                            >
                               {{
                                 licenseData && licenseData.applicant
                                   ? "+251" + licenseData.applicant.phoneNumber
@@ -171,13 +191,13 @@
 
                         <footer
                           class="
-                              flex
-                              items-center
-                              justify-between
-                              leading-none
-                              p-2
-                              md:p-4
-                            "
+                            flex
+                            items-center
+                            justify-between
+                            leading-none
+                            p-2
+                            md:p-4
+                          "
                         ></footer>
                       </article>
                       <!-- END Article -->
@@ -192,19 +212,23 @@
                       <article class="overflow-hidden rounded-lg shadow-xl">
                         <header
                           class="
-                              flex
-                              items-center
-                              justify-between
-                              leading-tight
-                              p-2
-                              md:p-4
-                              border-b-4
-                              text-main-400
-                            "
+                            flex
+                            items-center
+                            justify-between
+                            leading-tight
+                            p-2
+                            md:p-4
+                            border-b-4
+                            text-main-400
+                          "
                         >
                           <h1 class="text-lg">
                             <a
-                              class="no-underline hover:underline text-black"
+                              :class="
+                                isDarkMode
+                                  ? 'no-underline hover:underline text-white'
+                                  : 'no-underline hover:underline text-black'
+                              "
                               href="#"
                             >
                               Reviewer Detail
@@ -217,8 +241,16 @@
                         </header>
                         <div class="grid grid-flow-row auto-rows-max">
                           <div class="flex justify-between px-4 py-1">
-                            <div>Reviewer Name</div>
-                            <div class="text-main-400 font-bold">
+                            <div :class="isDarkMode ? 'text-main-400' : ''">
+                              Reviewer Name
+                            </div>
+                            <div
+                              :class="
+                                isDarkMode
+                                  ? 'text-white font-bold'
+                                  : 'text-main-400 font-bold'
+                              "
+                            >
                               {{
                                 licenseData && licenseData.licenseReviewer
                                   ? licenseData.licenseReviewer.reviewer.name
@@ -227,8 +259,16 @@
                             </div>
                           </div>
                           <div class="flex justify-between px-4 py-1">
-                            <div>Phone Number</div>
-                            <div class="text-main-400 font-bold">
+                            <div :class="isDarkMode ? 'text-main-400' : ''">
+                              Phone Number
+                            </div>
+                            <div
+                              :class="
+                                isDarkMode
+                                  ? 'text-white font-bold'
+                                  : 'text-main-400 font-bold'
+                              "
+                            >
                               {{
                                 licenseData && licenseData.licenseReviewer
                                   ? licenseData.licenseReviewer.reviewer
@@ -238,8 +278,16 @@
                             </div>
                           </div>
                           <div class="flex justify-between px-4 py-1">
-                            <div>Expert Level</div>
-                            <div class="text-main-400 font-bold">
+                            <div :class="isDarkMode ? 'text-main-400' : ''">
+                              Expert Level
+                            </div>
+                            <div
+                              :class="
+                                isDarkMode
+                                  ? 'text-white font-bold'
+                                  : 'text-main-400 font-bold'
+                              "
+                            >
                               {{
                                 licenseData &&
                                 licenseData.licenseReviewer &&
@@ -252,8 +300,16 @@
                             </div>
                           </div>
                           <div class="flex justify-between px-4 py-1">
-                            <div>Region</div>
-                            <div class="text-main-400 font-bold">
+                            <div :class="isDarkMode ? 'text-main-400' : ''">
+                              Region
+                            </div>
+                            <div
+                              :class="
+                                isDarkMode
+                                  ? 'text-white font-bold'
+                                  : 'text-main-400 font-bold'
+                              "
+                            >
                               {{
                                 licenseData &&
                                 licenseData.licenseReviewer &&
@@ -269,13 +325,13 @@
 
                         <footer
                           class="
-                              flex
-                              items-center
-                              justify-between
-                              leading-none
-                              p-2
-                              md:p-4
-                            "
+                            flex
+                            items-center
+                            justify-between
+                            leading-none
+                            p-2
+                            md:p-4
+                          "
                         ></footer>
                       </article>
                       <!-- END Article -->
@@ -290,19 +346,23 @@
                       <article class="overflow-hidden rounded-lg shadow-xl">
                         <header
                           class="
-                              flex
-                              items-center
-                              justify-between
-                              leading-tight
-                              p-2
-                              md:p-4
-                              border-b-4
-                              text-main-400
-                            "
+                            flex
+                            items-center
+                            justify-between
+                            leading-tight
+                            p-2
+                            md:p-4
+                            border-b-4
+                            text-main-400
+                          "
                         >
                           <h1 class="text-lg">
                             <a
-                              class="no-underline hover:underline text-black"
+                              :class="
+                                isDarkMode
+                                  ? 'no-underline hover:underline text-white'
+                                  : 'no-underline hover:underline text-black'
+                              "
                               href="#"
                             >
                               Applicants Education Detail
@@ -317,8 +377,16 @@
                           :key="education ? education.id : ''"
                         >
                           <div class="flex justify-between px-4 py-1">
-                            <div>Department</div>
-                            <div class="text-main-400 font-bold">
+                            <div :class="isDarkMode ? 'text-main-400' : ''">
+                              Department
+                            </div>
+                            <div
+                              :class="
+                                isDarkMode
+                                  ? 'text-white font-bold'
+                                  : 'text-main-400 font-bold'
+                              "
+                            >
                               {{
                                 education && education.department
                                   ? education.department.name
@@ -327,8 +395,16 @@
                             </div>
                           </div>
                           <div class="flex justify-between px-4 py-1">
-                            <div>Institution</div>
-                            <div class="text-main-400 font-bold">
+                            <div :class="isDarkMode ? 'text-main-400' : ''">
+                              Institution
+                            </div>
+                            <div
+                              :class="
+                                isDarkMode
+                                  ? 'text-white font-bold'
+                                  : 'text-main-400 font-bold'
+                              "
+                            >
                               {{
                                 education && education.institution
                                   ? education.institution.name
@@ -337,8 +413,16 @@
                             </div>
                           </div>
                           <div class="flex justify-between px-4 py-1">
-                            <div>Education Level</div>
-                            <div class="text-main-400 font-bold">
+                            <div :class="isDarkMode ? 'text-main-400' : ''">
+                              Education Level
+                            </div>
+                            <div
+                              :class="
+                                isDarkMode
+                                  ? 'text-white font-bold'
+                                  : 'text-main-400 font-bold'
+                              "
+                            >
                               {{
                                 education && education.educationLevel
                                   ? education.educationLevel.name
@@ -356,13 +440,13 @@
 
                         <footer
                           class="
-                              flex
-                              items-center
-                              justify-between
-                              leading-none
-                              p-2
-                              md:p-4
-                            "
+                            flex
+                            items-center
+                            justify-between
+                            leading-none
+                            p-2
+                            md:p-4
+                          "
                         ></footer>
                       </article>
                       <!-- END Article -->
@@ -378,19 +462,23 @@
                       <article class="overflow-hidden rounded-lg shadow-xl">
                         <header
                           class="
-                              flex
-                              items-center
-                              justify-between
-                              leading-tight
-                              p-2
-                              md:p-4
-                              border-b-4
-                              text-main-400
-                            "
+                            flex
+                            items-center
+                            justify-between
+                            leading-tight
+                            p-2
+                            md:p-4
+                            border-b-4
+                            text-main-400
+                          "
                         >
                           <h1 class="text-lg">
                             <a
-                              class="no-underline hover:underline text-black"
+                              :class="
+                                isDarkMode
+                                  ? 'no-underline hover:underline text-white'
+                                  : 'no-underline hover:underline text-black'
+                              "
                               href="#"
                             >
                               License Detail
@@ -401,8 +489,16 @@
 
                         <div class="grid grid-flow-row auto-rows-max">
                           <div class="flex justify-between px-4 py-1">
-                            <div>Applicant Type</div>
-                            <div class="text-main-400 font-bold">
+                            <div :class="isDarkMode ? 'text-main-400' : ''">
+                              Applicant Type
+                            </div>
+                            <div
+                              :class="
+                                isDarkMode
+                                  ? 'text-white font-bold'
+                                  : 'text-main-400 font-bold'
+                              "
+                            >
                               {{
                                 licenseData && licenseData.applicantType
                                   ? licenseData.applicantType.name
@@ -411,8 +507,16 @@
                             </div>
                           </div>
                           <div class="flex justify-between px-4 py-1">
-                            <div>Application Status</div>
-                            <div class="text-main-400 font-bold">
+                            <div :class="isDarkMode ? 'text-main-400' : ''">
+                              Application Status
+                            </div>
+                            <div
+                              :class="
+                                isDarkMode
+                                  ? 'text-white font-bold'
+                                  : 'text-main-400 font-bold'
+                              "
+                            >
                               {{
                                 licenseData && licenseData.applicationStatus
                                   ? licenseData.applicationStatus.name
@@ -421,8 +525,16 @@
                             </div>
                           </div>
                           <div class="flex justify-between px-4 py-1">
-                            <div>Certified Status</div>
-                            <div class="text-main-400 font-bold">
+                            <div :class="isDarkMode ? 'text-main-400' : ''">
+                              Certified Status
+                            </div>
+                            <div
+                              :class="
+                                isDarkMode
+                                  ? 'text-white font-bold'
+                                  : 'text-main-400 font-bold'
+                              "
+                            >
                               {{
                                 licenseData && licenseData.certified
                                   ? "Certified"
@@ -431,8 +543,16 @@
                             </div>
                           </div>
                           <div class="flex justify-between px-4 py-1">
-                            <div>Certified Date</div>
-                            <div class="text-main-400 font-bold">
+                            <div :class="isDarkMode ? 'text-main-400' : ''">
+                              Certified Date
+                            </div>
+                            <div
+                              :class="
+                                isDarkMode
+                                  ? 'text-white font-bold'
+                                  : 'text-main-400 font-bold'
+                              "
+                            >
                               {{
                                 licenseData && licenseData.certifiedDate
                                   ? licenseData.certifiedDate.slice(0, 10)
@@ -441,8 +561,16 @@
                             </div>
                           </div>
                           <div class="flex justify-between px-4 py-1">
-                            <div>Expiration Date</div>
-                            <div class="text-main-400 font-bold">
+                            <div :class="isDarkMode ? 'text-main-400' : ''">
+                              Expiration Date
+                            </div>
+                            <div
+                              :class="
+                                isDarkMode
+                                  ? 'text-white font-bold'
+                                  : 'text-main-400 font-bold'
+                              "
+                            >
                               {{
                                 licenseData && licenseData.licenseExpirationDate
                                   ? licenseData.licenseExpirationDate.slice(
@@ -457,13 +585,13 @@
 
                         <footer
                           class="
-                              flex
-                              items-center
-                              justify-between
-                              leading-none
-                              p-2
-                              md:p-4
-                            "
+                            flex
+                            items-center
+                            justify-between
+                            leading-none
+                            p-2
+                            md:p-4
+                          "
                         ></footer>
                       </article>
                       <!-- END Article -->
@@ -488,7 +616,7 @@ import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 
 export default {
-  props: ["modalDataId"],
+  props: ["modalDataId", "isDarkMode"],
   components: { Loading },
   setup(props) {
     let store = useStore();

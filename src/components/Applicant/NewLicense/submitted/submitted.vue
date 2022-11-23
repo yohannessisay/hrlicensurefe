@@ -2,40 +2,37 @@
   <main-content>
     <nav class="bg-gray-100 px-5 py-3 rounded-md w-full">
       <ol class="list-reset flex">
-        <li><a href="#" class="text-main-400 hover:text-blue-700">Home</a></li>
-        <li><span class="text-gray-500 mx-2">/</span></li>
         <li>
-          <a href="#" class="text-main-400 hover:text-blue-700">New License</a>
+          <a href="#" :class="isDarkMode ? 'text-white' : 'text-main-400'"
+            >Home</a
+          >
         </li>
         <li><span class="text-gray-500 mx-2">/</span></li>
-        <li class="text-gray-500">Submitted</li>
+        <li>
+          <a href="#" :class="isDarkMode ? 'text-white' : 'text-main-400'"
+            >New License</a
+          >
+        </li>
+        <li><span class="text-gray-500 mx-2">/</span></li>
+        <li href="#" :class="isDarkMode ? 'text-main-400' : 'text-grey-400'">Submitted</li>
       </ol>
     </nav>
 
     <h2 class="ml-8 mt-8" v-if="isLoading">Loading...</h2>
-
-    <div class="container my-12 mx-auto px-4 md:px-12" v-if="noData == false">
+    <!-- <div class="float-container" @click="modeToggle()">
+      <a href="#" class="icon one"> </a>
+    </div> -->
+    <div class="container my-12 mx-auto px-4 md:px-12 " v-if="noData == false">
       <div class="flex flex-wrap sm:-mx-1 lg:-mx-4">
         <!-- Column -->
 
         <div
           v-for="license in userSubmittedLicenses"
           :key="license.id"
-          class="
-            bg-white
-            my-1
-            px-1
-            md:w-1/4
-            lg:w-1/4
-            mdlg:w-1/4
-            sm:w-full sm:mr-4
-            shadow-2xl
-            rounded-lg
-            transform
-            transition
-            duration-300
-            ease-in-out
-            hover:-translate-y-2
+          :class="
+            isDarkMode
+              ? 'bg-secondaryDark my-1 px-1 md:w-1/4 lg:w-1/4 mdlg:w-1/4 sm:w-full sm:mr-4 shadow-2xl rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2'
+              : 'bg-white my-1 px-1 md:w-1/4 lg:w-1/4 mdlg:w-1/4 sm:w-full sm:mr-4 shadow-2xl rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2'
           "
         >
           <!-- Article -->
@@ -178,21 +175,21 @@
             <div class="flex justify-center">
               <button
                 class="
-        inline-block
-        px-6
-        text-white
-        bg-main-400
-        hover:text-main-400 hover:border
-        text-sm
-        font-bold
-        uppercase
-        rounded
-        shadow-lg
-        mb-4
-        transition
-        duration-150
-        ease-in-out
-      "
+                  inline-block
+                  px-6
+                  text-white
+                  bg-main-400
+                  hover:text-main-400 hover:border
+                  text-sm
+                  font-bold
+                  uppercase
+                  rounded
+                  shadow-lg
+                  mb-4
+                  transition
+                  duration-150
+                  ease-in-out
+                "
                 @click="openSubmittedDetail(license.id)"
                 data-bs-toggle="modal"
                 data-bs-target="#submittedModalInfo"
@@ -205,21 +202,21 @@
               >
                 <button
                   class="
-        inline-block
-        px-6
-        text-white
-        bg-main-400
-        hover:text-main-400 hover:border
-        text-sm
-        font-bold
-        uppercase
-        rounded
-        shadow-lg
-        mb-4
-        transition
-        duration-150
-        ease-in-out
-      "
+                    inline-block
+                    px-6
+                    text-white
+                    bg-main-400
+                    hover:text-main-400 hover:border
+                    text-sm
+                    font-bold
+                    uppercase
+                    rounded
+                    shadow-lg
+                    mb-4
+                    transition
+                    duration-150
+                    ease-in-out
+                  "
                 >
                   Edit
                 </button>
@@ -279,8 +276,53 @@ export default {
     let isLoading = ref(true);
     let noData = ref(false);
     let modalDataId = ref({ change: 0, id: "" });
+    let isDarkMode = ref(JSON.parse(localStorage.getItem("darkMode")));
+    let darkMode = ref(false);
+    const dark = () => {
+      document.getElementById("mainContent").classList.add("dark-mode");
+      document.getElementById("activeMenu")?.classList.add("dark-mode");
+      document.getElementById("mainSideBar")?.classList.add("dark-mode");
+      document.getElementById("options-menu")?.classList.add("dark-mode");
+      document.getElementById("topNav")?.classList.add("dark-mode");
+      document.getElementById("menu-icon")?.classList.add("dark-mode");
+      document.getElementById("generalInfoMain")?.classList.add("dark-mode");
 
+      darkMode.value = true;
+      localStorage.setItem("darkMode", JSON.stringify(darkMode.value));
+    };
+
+    const light = () => {
+      document.getElementById("mainContent").classList.remove("dark-mode");
+      document.getElementById("activeMenu")?.classList.remove("dark-mode");
+      document.getElementById("topNav")?.classList.remove("dark-mode");
+      document.getElementById("mainSideBar")?.classList.remove("dark-mode");
+      document.getElementById("options-menu")?.classList.remove("dark-mode");
+      document.getElementById("menu-icon")?.classList.remove("dark-mode");
+      document.getElementById("generalInfoMain")?.classList.remove("dark-mode");
+
+      darkMode.value = false;
+      localStorage.setItem("darkMode", JSON.stringify(darkMode.value));
+    };
+    const initiateDarkMode = () => {
+      if (JSON.parse(localStorage.getItem("darkMode")) == true) {
+        dark();
+      } else {
+        light();
+      }
+    };
+    const modeToggle = () => {
+      if (
+        localStorage.getItem("darkMode") == true ||
+        darkMode.value ||
+        document.getElementById("main")?.classList.contains("dark-mode")
+      ) {
+        light();
+      } else {
+        dark();
+      }
+    };
     onMounted(() => {
+      initiateDarkMode();
       isLoading.value = true;
       userInfo.value = JSON.parse(window.localStorage.getItem("personalInfo"));
       let userId = JSON.parse(window.localStorage.getItem("userId"));
@@ -317,10 +359,12 @@ export default {
       userSubmittedLicenses,
       googleApi,
       userInfo,
+      isDarkMode,
       noData,
       isLoading,
       openSubmittedDetail,
       modalDataId,
+      modeToggle
     };
   },
 };

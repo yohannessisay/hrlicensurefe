@@ -268,10 +268,12 @@ import { useStore } from "vuex";
 import MAX_FILE_SIZE from "../../../../composables/documentMessage";
 import { boolean } from "yargs";
 import { useToast } from "vue-toastification";
+import { useRouter } from "vue-router";
 export default {
   setup(props, { emit }) {
     let store = useStore();
     let toast = useToast();
+    const router = useRouter();
     let imageUploader = ref(null);
     let goToNext = ref(false);
     let departmentDocuments = [];
@@ -520,11 +522,11 @@ export default {
       emit("changeActiveStateMinus");
     };
 
-    const saveDraft = (action) => {
+    const saveDraft = () => {
       generalInfo.value.licenseFile = [];
 
       let license = {
-        action: action,
+        action: "DraftEvent",
         data: {
           applicantId: generalInfo.value.applicantId,
           applicantTypeId: generalInfo.value.applicantTypeId.id,
@@ -550,24 +552,25 @@ export default {
             ? generalInfo.value.licenseRegistrationNumber
             : "",
           professionType: {
-            professionTypeId: generalInfo.value.professionType
-              ? generalInfo.value.professionType.professionTypeId.id
+            professionTypeId: generalInfo.value
+              ? generalInfo.value.professionTypeId.id
               : null,
-            educationLevelId: generalInfo.value.professionType
-              ? generalInfo.value.professionType.educationLevelId.id
+            educationLevelId: generalInfo.value
+              ? generalInfo.value.educationLevelId.id
               : null,
+            otherProfessionalType: generalInfo.value.otherProfessionType
+              ? generalInfo.value.otherProfessionType
+              : "",
+            otherProfessionalTypeAmharic: generalInfo.value
+              .otherProfessionTypeAmharic
+              ? generalInfo.value.otherProfessionTypeAmharic
+              : "",
           },
           expertLevelId: generalInfo.value.expertLevelId
             ? generalInfo.value.expertLevelId
             : null,
           islegal: true,
-          otherProfessionalType: generalInfo.value.otherProfessionType
-            ? generalInfo.value.otherProfessionType
-            : "",
-          otherProfessionalTypeAmharic: generalInfo.value
-            .otherProfessionTypeAmharic
-            ? generalInfo.value.otherProfessionTypeAmharic
-            : "",
+
           departmentId: generalInfo.value.departmentId.id
             ? generalInfo.value.departmentId.id
             : null,
@@ -583,7 +586,7 @@ export default {
           let licenseId = res.data.data.id;
           let payload = { document: formData, id: licenseId };
           store
-            .dispatch("goodstanding/uploadDocuments", payload)
+            .dispatch("goodstanding/updateDocuments", payload)
             .then((res) => {
               if (res.data.status == "Success") {
                 toast.success("Applied successfuly", {
@@ -594,7 +597,7 @@ export default {
                   icon: true,
                 });
                 localStorage.removeItem("GSApplicationData");
-                location.reload();
+                router.push({ path: "/Applicant/GoodStanding/draft" });
               } else {
                 toast.error("Error occured, please try again", {
                   timeout: 5000,

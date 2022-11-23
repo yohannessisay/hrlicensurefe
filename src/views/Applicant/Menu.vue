@@ -176,7 +176,7 @@
       <div
         :class="
           isDarkMode
-            ? 'modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-secondaryyDark bg-clip-padding rounded-md outline-none text-current'
+            ? 'modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-secondaryDark bg-clip-padding rounded-md outline-none text-current'
             : 'modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current'
         "
       >
@@ -253,7 +253,7 @@
                   <div
                     :class="
                       isDarkMode
-                        ? 'pricing-plan border-t-4 border-solid  bg-secondaryyDark rounded-lg shadow-2xl text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
+                        ? 'pricing-plan border-t-4 border-solid  bg-secondaryDark rounded-lg shadow-2xl text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
                         : 'pricing-plan border-t-4 border-solid border-white bg-white rounded-lg shadow-2xl text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
                     "
                   >
@@ -288,12 +288,12 @@
                     </div>
                     <div class="p-6 mb-2" v-if="NLdocumentSpecs">
                       <ul
-                        :class="isDarkMode ? 'bg-secondaryyDark' : 'bg-white'"
+                        :class="isDarkMode ? 'bg-secondaryDark' : 'bg-white'"
                       >
                         <li
                           :class="
                             isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
                               : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
@@ -310,7 +310,7 @@
                         <li
                           :class="
                             isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
                               : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
@@ -328,7 +328,7 @@
                         <li
                           :class="
                             isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
                               : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
@@ -347,7 +347,7 @@
                         <li
                           :class="
                             isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
                               : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
@@ -366,7 +366,7 @@
                         <li
                           :class="
                             isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
                               : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
@@ -385,7 +385,7 @@
                         <li
                           :class="
                             isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
                               : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
@@ -403,7 +403,7 @@
                         <li
                           :class="
                             isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
                               : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
@@ -422,7 +422,7 @@
                         <li
                           :class="
                             isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
                               : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
@@ -441,7 +441,7 @@
                         <li
                           :class="
                             isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
                               : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
@@ -460,7 +460,7 @@
                         <li
                           :class="
                             isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
                               : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
@@ -479,7 +479,7 @@
                         <li
                           :class="
                             isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
                               : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
@@ -498,7 +498,7 @@
                         <li
                           :class="
                             isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
                               : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
@@ -537,7 +537,7 @@
                   <div
                     :class="
                       isDarkMode
-                        ? 'pricing-plan border-t-4 border-solid  bg-secondaryyDark rounded-lg shadow-2xl text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
+                        ? 'pricing-plan border-t-4 border-solid  bg-secondaryDark rounded-lg shadow-2xl text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
                         : 'pricing-plan border-t-4 border-solid border-white bg-white rounded-lg shadow-2xl text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
                     "
                   >
@@ -573,12 +573,12 @@
 
                     <div class="p-6 mb-2" v-if="NLdocumentSpecs">
                       <ul
-                        :class="isDarkMode ? 'bg-secondaryyDark' : 'bg-white'"
+                        :class="isDarkMode ? 'bg-secondaryDark' : 'bg-white'"
                       >
                         <li
                           :class="
                             isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
                               : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
@@ -595,7 +595,7 @@
                         <li
                           :class="
                             isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
                               : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
@@ -613,7 +613,7 @@
                         <li
                           :class="
                             isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
                               : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
@@ -632,7 +632,7 @@
                         <li
                           :class="
                             isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
                               : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
@@ -651,7 +651,7 @@
                         <li
                           :class="
                             isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
                               : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
@@ -670,7 +670,7 @@
                         <li
                           :class="
                             isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
                               : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
@@ -689,7 +689,7 @@
                         <li
                           :class="
                             isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
                               : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
@@ -708,7 +708,7 @@
                         <li
                           :class="
                             isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
                               : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
@@ -727,7 +727,7 @@
                         <li
                           :class="
                             isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
                               : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
@@ -767,7 +767,7 @@
                   <div
                     :class="
                       isDarkMode
-                        ? 'pricing-plan border-t-4 border-solid  bg-secondaryyDark rounded-lg shadow-2xl text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
+                        ? 'pricing-plan border-t-4 border-solid  bg-secondaryDark rounded-lg shadow-2xl text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
                         : 'pricing-plan border-t-4 border-solid border-white bg-white rounded-lg shadow-2xl text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
                     "
                   >
@@ -802,12 +802,12 @@
                     </div>
                     <div class="p-6 mb-2" v-if="NLdocumentSpecs">
                       <ul
-                        :class="isDarkMode ? 'bg-secondaryyDark' : 'bg-white'"
+                        :class="isDarkMode ? 'bg-secondaryDark' : 'bg-white'"
                       >
                         <li
                           :class="
                             isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
                               : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
@@ -826,7 +826,7 @@
                         <li
                           :class="
                             isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
                               : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
@@ -845,7 +845,7 @@
                         <li
                           :class="
                             isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
                               : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
@@ -864,7 +864,7 @@
                         <li
                           :class="
                             isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
                               : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
@@ -884,7 +884,7 @@
                         <li
                           :class="
                             isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
                               : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
@@ -903,7 +903,7 @@
                         <li
                           :class="
                             isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
                               : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
@@ -921,7 +921,7 @@
                         <li
                           :class="
                             isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
                               : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
@@ -987,7 +987,7 @@
       <div
         :class="
           isDarkMode
-            ? 'modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-secondaryyDark bg-clip-padding rounded-md outline-none text-current'
+            ? 'modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-secondaryDark bg-clip-padding rounded-md outline-none text-current'
             : 'modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current'
         "
       >
@@ -1060,7 +1060,7 @@
                   <div
                     :class="
                       isDarkMode
-                        ? 'pricing-plan border-t-4 border-solid  bg-secondaryyDark rounded-lg shadow-2xl text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
+                        ? 'pricing-plan border-t-4 border-solid  bg-secondaryDark rounded-lg shadow-2xl text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
                         : 'pricing-plan border-t-4 border-solid border-white bg-white rounded-lg shadow-2xl text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
                     "
                   >
@@ -1095,12 +1095,12 @@
                     </div>
                     <div class="p-6 mb-2" v-if="RNdocumentSpecs">
                       <ul
-                        :class="isDarkMode ? 'bg-secondaryyDark' : 'bg-white'"
+                        :class="isDarkMode ? 'bg-secondaryDark' : 'bg-white'"
                       >
                         <li
                           :class="
                             isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
                               : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
@@ -1119,7 +1119,7 @@
                         <li
                           :class="
                             isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
                               : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
@@ -1138,7 +1138,7 @@
                         <li
                           :class="
                             isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
                               : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
@@ -1157,7 +1157,7 @@
                         <li
                           :class="
                             isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
                               : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
@@ -1176,7 +1176,7 @@
                         <li
                           :class="
                             isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
                               : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
@@ -1195,7 +1195,7 @@
                         <li
                           :class="
                             isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
                               : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
@@ -1235,7 +1235,7 @@
                   <div
                     :class="
                       isDarkMode
-                        ? 'pricing-plan border-t-4 border-solid  bg-secondaryyDark rounded-lg shadow-2xl text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
+                        ? 'pricing-plan border-t-4 border-solid  bg-secondaryDark rounded-lg shadow-2xl text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
                         : 'pricing-plan border-t-4 border-solid border-white bg-white rounded-lg shadow-2xl text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
                     "
                   >
@@ -1270,12 +1270,12 @@
                     </div>
                     <div class="p-6 mb-2" v-if="RNdocumentSpecs">
                       <ul
-                        :class="isDarkMode ? 'bg-secondaryyDark' : 'bg-white'"
+                        :class="isDarkMode ? 'bg-secondaryDark' : 'bg-white'"
                       >
                         <li
                           :class="
                             isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
                               : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
@@ -1294,7 +1294,7 @@
                         <li
                           :class="
                             isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
                               : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
@@ -1313,7 +1313,7 @@
                         <li
                           :class="
                             isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
                               : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
@@ -1332,7 +1332,7 @@
                         <li
                           :class="
                             isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
                               : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
@@ -1372,7 +1372,7 @@
                   <div
                     :class="
                       isDarkMode
-                        ? 'pricing-plan border-t-4 border-solid  bg-secondaryyDark rounded-lg shadow-2xl text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
+                        ? 'pricing-plan border-t-4 border-solid  bg-secondaryDark rounded-lg shadow-2xl text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
                         : 'pricing-plan border-t-4 border-solid border-white bg-white rounded-lg shadow-2xl text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
                     "
                   >
@@ -1407,12 +1407,12 @@
                     </div>
                     <div class="p-6 mb-2" v-if="RNdocumentSpecs">
                       <ul
-                        :class="isDarkMode ? 'bg-secondaryyDark' : 'bg-white'"
+                        :class="isDarkMode ? 'bg-secondaryDark' : 'bg-white'"
                       >
                         <li
                           :class="
                             isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
                               : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
@@ -1431,7 +1431,7 @@
                         <li
                           :class="
                             isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
                               : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
@@ -1450,7 +1450,7 @@
                         <li
                           :class="
                             isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
                               : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
@@ -1469,7 +1469,7 @@
                         <li
                           :class="
                             isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryyDark cursor-pointer'
+                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
                               : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
                           "
                           data-bs-toggle="tooltip"
@@ -1536,7 +1536,7 @@
       <div
         :class="
           isDarkMode
-            ? 'modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-secondaryyDark bg-clip-padding rounded-md outline-none text-current'
+            ? 'modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-secondaryDark bg-clip-padding rounded-md outline-none text-current'
             : 'modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current'
         "
       >
@@ -1608,7 +1608,7 @@
                   <div
                     :class="
                       isDarkMode
-                        ? 'pricing-plan border-t-4 border-solid  bg-secondaryyDark rounded-lg shadow-2xl text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
+                        ? 'pricing-plan border-t-4 border-solid  bg-secondaryDark rounded-lg shadow-2xl text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
                         : 'pricing-plan border-t-4 border-solid border-white bg-white rounded-lg shadow-2xl text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
                     "
                   >
@@ -1658,7 +1658,7 @@
                         <li
                           :class="
                             isDarkMode
-                              ? '   text-main-400 text-lg mb-2 bg-secondaryyDark p-2 cursor-pointer'
+                              ? '   text-main-400 text-lg mb-2 bg-secondaryDark p-2 cursor-pointer'
                               : 'text-main-400 text-lg mb-2 bg-white p-2 cursor-pointer'
                           "
                           data-bs-toggle="tooltip"

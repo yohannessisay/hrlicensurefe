@@ -884,7 +884,7 @@
             type="submit"
             @click="saveDraft()"
           >
-            Save
+            Update
           </button>
           <button
             class="
@@ -1220,6 +1220,7 @@ export default {
               icon: true,
             });
             localStorage.removeItem("GSApplicationData");
+            location.reload();
           } else {
             toast.error("Error occured, please try again", {
               timeout: 5000,

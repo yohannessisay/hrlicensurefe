@@ -1,9 +1,9 @@
 <template>
-  <div class="side-navbar">
+  <div class="side-navbar" id="mainSideBar">
     <router-link class="link" to="/menu">
       <div
         class="flex justify-center p-4 cursor-pointer"
-        style="border-bottom: 2px solid white;margin-top:-5px"
+        style="border-bottom: 2px solid white; margin-top: -5px"
       >
         <img
           src="../../../../assets/image.png"
@@ -32,13 +32,14 @@
         :class="
           $route.fullPath === '/Applicant/GoodStanding' ? 'list active' : 'list'
         "
+        :id="$route.fullPath === '/Applicant/GoodStanding' ? 'activeMenu' : ''"
       >
         <b></b>
         <b></b>
         <a href="#GoodStanding">
           <router-link class="link" to="/Applicant/GoodStanding">
             <span class="icon"><i class="bx bx-certification"></i></span>
-            <span class="text text-white font-bold">Good Standing</span>
+            <span class="text text-white font-bold">GoodStanding</span>
           </router-link>
         </a>
       </li>
@@ -49,10 +50,15 @@
             ? 'list active'
             : 'list'
         "
+        :id="
+          $route.fullPath === '/Applicant/GoodStanding/submitted'
+            ? 'activeMenu'
+            : ''
+        "
       >
         <b></b>
         <b></b>
-        <a href="#GoodStandingSubmitted">
+        <a href="#GoodStanding">
           <router-link class="link" to="/Applicant/GoodStanding/submitted">
             <span class="icon"
               ><i
@@ -69,38 +75,17 @@
       </li>
       <li
         :class="
-          $route.fullPath === '/Applicant/GoodStanding/assigned'
-            ? 'list active'
-            : 'list'
-        "
-      >
-        <b></b>
-        <b></b>
-        <a href="#GoodStandingAssigned">
-          <router-link class="link" to="/Applicant/GoodStanding/assigned">
-            <span class="icon"
-              ><i
-                :class="
-                  $route.fullPath === '/Applicant/GoodStanding/assigned'
-                    ? 'bx bxs-save'
-                    : 'bx bx-save'
-                "
-              ></i
-            ></span>
-            <span class="text text-white font-bold">Assigned</span>
-          </router-link>
-        </a>
-      </li>
-      <li
-        :class="
           $route.fullPath === '/Applicant/GoodStanding/draft'
             ? 'list active'
             : 'list'
         "
+        :id="
+          $route.fullPath === '/Applicant/GoodStanding/draft' ? 'activeMenu' : ''
+        "
       >
         <b></b>
         <b></b>
-        <a href="#GoodStandingDraft">
+        <a href="#Verification">
           <router-link class="link" to="/Applicant/GoodStanding/draft">
             <span class="icon"
               ><i
@@ -121,10 +106,15 @@
             ? 'list active'
             : 'list'
         "
+        :id="
+          $route.fullPath === '/Applicant/GoodStanding/withdraw'
+            ? 'activeMenu'
+            : ''
+        "
       >
         <b></b>
         <b></b>
-        <a href="#GoodStandingWithdraw">
+        <a href="#GoodStanding">
           <router-link class="link" to="/Applicant/GoodStanding/withdraw">
             <span class="icon"
               ><i
@@ -136,8 +126,38 @@
               ></i
             ></span>
             <span class="text text-white font-bold hover:text-black"
-              >Withdrawn</span
+              >Withdraw</span
             >
+          </router-link>
+        </a>
+      </li>
+
+      <li
+        :class="
+          $route.fullPath === '/Applicant/GoodStanding/inReview'
+            ? 'list active'
+            : 'list'
+        "
+        :id="
+          $route.fullPath === '/Applicant/GoodStanding/inReview'
+            ? 'activeMenu'
+            : ''
+        "
+      >
+        <b></b>
+        <b></b>
+        <a href="#">
+          <router-link class="link" to="/Applicant/GoodStanding/assigned">
+            <span class="icon"
+              ><i
+                :class="
+                  $route.fullPath === '/Applicant/GoodStanding/assigned'
+                    ? 'bx bx-refresh'
+                    : 'bx bx-refresh'
+                "
+              ></i
+            ></span>
+            <span class="text text-white font-bold">Assigned</span>
           </router-link>
         </a>
       </li>
@@ -148,10 +168,15 @@
             ? 'list active'
             : 'list'
         "
+        :id="
+          $route.fullPath === '/Applicant/GoodStanding/approved'
+            ? 'activeMenu'
+            : ''
+        "
       >
         <b></b>
         <b></b>
-        <a href="#GoodStandingApproved">
+        <a href="#">
           <router-link class="link" to="/Applicant/GoodStanding/approved">
             <span class="icon"
               ><i
@@ -173,10 +198,15 @@
             ? 'list active'
             : 'list'
         "
+        :id="
+          $route.fullPath === '/Applicant/GoodStanding/declined'
+            ? 'activeMenu'
+            : ''
+        "
       >
         <b></b>
         <b></b>
-        <a href="#GoodStandingDeclined">
+        <a href="#">
           <router-link class="link" to="/Applicant/GoodStanding/declined">
             <span class="icon"
               ><i
@@ -192,55 +222,9 @@
         </a>
       </li>
 
-      <!-- <li
-        :class="
-          $route.fullPath === '/Applicant/GoodStanding/underSupervision'
-            ? 'list active'
-            : 'list'
-        "
-      >
-        <b></b>
-        <b></b>
-        <a href="#GoodStandingUnderSuperVision">
-          <router-link class="link" to="/Applicant/GoodStanding/underSupervision">
-            <span class="icon"
-              ><i
-                :class="
-                  $route.fullPath === '/Applicant/GoodStanding/underSupervision'
-                    ? 'bx bx-glasses'
-                    : 'bx bx-glasses'
-                "
-              ></i
-            ></span>
-            <span class="text text-white font-bold">Under Supervision</span>
-          </router-link>
-        </a>
-      </li> -->
+   
 
-      <!-- <li
-        :class="
-          $route.fullPath === '/Applicant/GoodStanding/pendingPayment'
-            ? 'list active'
-            : 'list'
-        "
-      >
-        <b></b>
-        <b></b>
-        <a href="GoodStandingPendingPayment">
-          <router-link class="link" to="/Applicant/GoodStanding/pendingPayment">
-            <span class="icon"
-              ><i
-                :class="
-                  $route.fullPath === '/Applicant/GoodStanding/pendingPayment'
-                    ? 'bx bx-loader'
-                    : 'bx bx-loader'
-                "
-              ></i
-            ></span>
-            <span class="text text-white font-bold">Pending Payment</span>
-          </router-link>
-        </a>
-      </li> -->
+      
     </ul>
   </div>
 </template>

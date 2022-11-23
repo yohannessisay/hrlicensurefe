@@ -1,7 +1,7 @@
 <template>
-  <div class="main ">
+  <div class="main " id="main">
     <side-nav></side-nav>
-    <div class="content h-screen overflow-y-scroll">
+    <div class="content" id="mainContent">
       <top-nav></top-nav>
       <div class="mt-8 ml-8">
       <slot></slot>

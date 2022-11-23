@@ -1,8 +1,8 @@
 <template>
-  <main-content >
+  <main-content>
     <transition name="fade" mode="out-in">
       <div v-if="this.activeState == 1">
-        <Institution 
+        <Institution
           @dark-mode="modeToggle()"
           :activeState="1"
           @changeActiveState="activeState++"
@@ -29,7 +29,7 @@
       </div>
     </transition>
     <transition name="fade" mode="out-in">
-      <div v-if="this.activeState == 3"  >
+      <div v-if="this.activeState == 3">
         <LicenseSummary
           @dark-mode="modeToggle()"
           :activeState="3"
@@ -52,7 +52,7 @@ import MainContent from "./sharedComponents/Menu.vue";
 import LicenseSummary from "./AddNewLicense/LicenseSummary.vue";
 import { ref, onMounted } from "vue";
 
-import { useStore } from "vuex"; 
+import { useStore } from "vuex";
 export default {
   components: {
     Institution,
@@ -62,144 +62,137 @@ export default {
   },
 
   setup() {
+    let store = useStore();
+    let applicantType = ref(1);
+    let activeState = ref(1);
+    let applicationStatuses = ref("");
+    let applicationCategories = ref("");
+    let documentSpecs = ref("");
+    let buttons = ref([]);
+    let draftStatus = ref("");
+    let declinedFields = ref([]);
+    let acceptedFields = ref([]);
+    let remark = ref([]);
+    let applicationId = ref("");
+    let draftId = ref("");
+    let displayLanguageOption = ref(false);
+    let displayPayrollOption = ref(false);
+    let eduLevel = ref("");
+    let darkMode = ref(false);
 
-let store = useStore(); 
-  let applicantType = ref(1);
-  let activeState = ref(1);
-  let applicationStatuses = ref("");
-  let applicationCategories = ref("");
-  let documentSpecs = ref("");
-  let buttons = ref([]);
-  let draftStatus = ref("");
-  let declinedFields = ref([]);
-  let acceptedFields = ref([]);
-  let remark = ref([]);
-  let applicationId = ref("");
-  let draftId = ref("");
-  let displayLanguageOption = ref(false);
-  let displayPayrollOption = ref(false);
-  let eduLevel = ref("");
-  let darkMode=ref(false)
+    const submit = (n) => {
+      activeState.value = n;
+    };
 
-const submit=(n)=> {
-    activeState.value = n;
-  };
-
-  const fetchApplicationCategory = () => {
-      store.dispatch("renewal/getApplicationCategories").then((res) => { 
+    const fetchApplicationCategory = () => {
+      store.dispatch("renewal/getApplicationCategories").then((res) => {
         const results = res.data.data;
         applicationCategories.value = results;
         const renewalData = applicationCategories.value.filter((item) => {
           return item.name == "Renewal Application";
         });
         applicationId.value = renewalData[0]["id"];
-        store.dispatch("renewal/setApplicationId", applicationId.value); 
+        store.dispatch("renewal/setApplicationId", applicationId.value);
       });
     };
-  const fetchApplicationStatuses = () => {
-    store.dispatch("renewal/getApplicationStatuses").then((res) => {
-      const results = res.data.data;
-      applicationStatuses.value = results;
-      if (draftId.value != undefined) {
-        if (draftStatus.value == "DRA") {
-          let status = applicationStatuses.value.filter(function(e) {
-            return e.code == "DRA";
-          });
-          buttons.value = status[0]["buttons"];
+    const fetchApplicationStatuses = () => {
+      store.dispatch("renewal/getApplicationStatuses").then((res) => {
+        const results = res.data.data;
+        applicationStatuses.value = results;
+        if (draftId.value != undefined) {
+          if (draftStatus.value == "DRA") {
+            let status = applicationStatuses.value.filter(function (e) {
+              return e.code == "DRA";
+            });
+            buttons.value = status[0]["buttons"];
 
-          let temp2 = "";
-          temp2 = buttons.value[1];
-          buttons.value[1] = buttons.value[2];
-          buttons.value[2] = temp2;
-        }
-        if (draftStatus.value == "SUB") {
-          let status = applicationStatuses.value.filter(function(e) {
-            return e.code == "SUB";
+            let temp2 = "";
+            temp2 = buttons.value[1];
+            buttons.value[1] = buttons.value[2];
+            buttons.value[2] = temp2;
+          }
+          if (draftStatus.value == "SUB") {
+            let status = applicationStatuses.value.filter(function (e) {
+              return e.code == "SUB";
+            });
+            buttons.value = status[0]["buttons"];
+          }
+          if (draftStatus.value == "USUP") {
+            let status = this.applicationStatuses.filter(function (e) {
+              return e.code == "USUP";
+            });
+            buttons.value = status[0]["buttons"];
+          }
+          if (draftStatus.value == "DEC") {
+            let status = applicationStatuses.value.filter(function (e) {
+              return e.code == "DEC";
+            });
+            buttons.value = status[0]["buttons"];
+            let temp3 = "";
+            temp3 = buttons.value[1];
+            buttons.value[1] = buttons.value[2];
+            buttons.value[2] = temp3;
+          }
+        } else {
+          let status = applicationStatuses.value.filter(function (e) {
+            return e.code == "INIT";
           });
           buttons.value = status[0]["buttons"];
         }
-        if (draftStatus.value == "USUP") {
-          let status = this.applicationStatuses.filter(function(e) {
-            return e.code == "USUP";
-          });
-          buttons.value = status[0]["buttons"];
-        }
-        if (draftStatus.value == "DEC") {
-          let status = applicationStatuses.value.filter(function(e) {
-            return e.code == "DEC";
-          });
-          buttons.value = status[0]["buttons"];
-          let temp3 = "";
-          temp3 = buttons.value[1];
-          buttons.value[1] = buttons.value[2];
-          buttons.value[2] = temp3;
-        }
-      } else {
-        let status = applicationStatuses.value.filter(function(e) {
-          return e.code == "INIT";
-        });
-        buttons.value = status[0]["buttons"];
-      }
-      store.dispatch("newlicense/setButtons", buttons.value);
-    });
-  };
-  onMounted( async () => {
-    {
+        store.dispatch("newlicense/setButtons", buttons.value);
+      });
+    };
+    onMounted(async () => {
       initiateDarkMode();
-        fetchApplicationStatuses();
-        fetchApplicationCategory();
-      fetchApplicationCategory
-    }
-  });
+      fetchApplicationStatuses();
+      fetchApplicationCategory();
+    });
 
-  const   dark=()=> {
-    document.getElementById("mainContent").classList.add("dark-mode");
-    document.getElementById("activeMenu")?.classList.add("dark-mode");
-    document.getElementById("mainSideBar")?.classList.add("dark-mode");
-    document.getElementById("options-menu")?.classList.add("dark-mode");
-    document.getElementById("topNav")?.classList.add("dark-mode");
-    document.getElementById("menu-icon")?.classList.add("dark-mode");
-    document.getElementById("generalInfoMain")?.classList.add("dark-mode");
-    
-    darkMode.value = true;
-    localStorage.setItem("darkMode", JSON.stringify( darkMode.value));
-  };
+    const dark = () => {
+      document.getElementById("mainContent").classList.add("dark-mode");
+      document.getElementById("activeMenu")?.classList.add("dark-mode");
+      document.getElementById("mainSideBar")?.classList.add("dark-mode");
+      document.getElementById("options-menu")?.classList.add("dark-mode");
+      document.getElementById("topNav")?.classList.add("dark-mode");
+      document.getElementById("menu-icon")?.classList.add("dark-mode");
+      document.getElementById("generalInfoMain")?.classList.add("dark-mode");
 
-  const light=()=> {
-    document.getElementById("mainContent").classList.remove("dark-mode");
-    document.getElementById("activeMenu")?.classList.remove("dark-mode");
-    document.getElementById("topNav")?.classList.remove("dark-mode");
-    document.getElementById("mainSideBar")?.classList.remove("dark-mode");
-    document.getElementById("options-menu")?.classList.remove("dark-mode");
-    document.getElementById("menu-icon")?.classList.remove("dark-mode");
-    document.getElementById("generalInfoMain")?.classList.remove("dark-mode");
-  
-    darkMode.value = false;
-    localStorage.setItem("darkMode", JSON.stringify( darkMode.value));
-  };
-  const  initiateDarkMode=()=> {
-    if (JSON.parse(localStorage.getItem("darkMode")) == true) {
-      dark();
-      
-    } else {
-      light();
-    
-    }
-  };
-const  modeToggle=()=> {
-    if (
-      localStorage.getItem("darkMode") == true ||
-      darkMode.value ||
-      document.getElementById("main")?.classList.contains("dark-mode")
-    ) {
-      light();
-    } else {
-      dark();
-    }
-  };
+      darkMode.value = true;
+      localStorage.setItem("darkMode", JSON.stringify(darkMode.value));
+    };
 
+    const light = () => {
+      document.getElementById("mainContent").classList.remove("dark-mode");
+      document.getElementById("activeMenu")?.classList.remove("dark-mode");
+      document.getElementById("topNav")?.classList.remove("dark-mode");
+      document.getElementById("mainSideBar")?.classList.remove("dark-mode");
+      document.getElementById("options-menu")?.classList.remove("dark-mode");
+      document.getElementById("menu-icon")?.classList.remove("dark-mode");
+      document.getElementById("generalInfoMain")?.classList.remove("dark-mode");
 
-  return {
+      darkMode.value = false;
+      localStorage.setItem("darkMode", JSON.stringify(darkMode.value));
+    };
+    const initiateDarkMode = () => {
+      if (JSON.parse(localStorage.getItem("darkMode")) == true) {
+        dark();
+      } else {
+        light();
+      }
+    };
+    const modeToggle = () => {
+      if (
+        localStorage.getItem("darkMode") == true ||
+        darkMode.value ||
+        document.getElementById("main")?.classList.contains("dark-mode")
+      ) {
+        light();
+      } else {
+        dark();
+      }
+    };
+
+    return {
       activeState,
       applicantType,
       applicationStatuses,
@@ -219,12 +212,7 @@ const  modeToggle=()=> {
       displayPayrollOption,
       eduLevel,
     };
-
-  }
-  
-  
-
-
+  },
 };
 </script>
 <style>

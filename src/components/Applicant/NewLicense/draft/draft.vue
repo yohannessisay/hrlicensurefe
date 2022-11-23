@@ -2,17 +2,28 @@
   <main-content>
     <nav class="bg-gray-100 px-5 py-3 rounded-md w-full">
       <ol class="list-reset flex">
-        <li><a href="#" class="text-main-400 hover:text-blue-700">Home</a></li>
-        <li><span class="text-gray-500 mx-2">/</span></li>
         <li>
-          <a href="#" class="text-main-400 hover:text-blue-700">New License</a>
+          <a href="#" :class="isDarkMode ? 'text-white' : 'text-main-400'"
+            >Home</a
+          >
         </li>
         <li><span class="text-gray-500 mx-2">/</span></li>
-        <li class="text-gray-500">Draft</li>
+        <li>
+          <a href="#" :class="isDarkMode ? 'text-white' : 'text-main-400'"
+            >New License</a
+          >
+        </li>
+        <li><span class="text-gray-500 mx-2">/</span></li>
+        <li href="#" :class="isDarkMode ? 'text-main-400' : 'text-grey-400'">
+          Draft
+        </li>
       </ol>
     </nav>
 
     <h2 class="ml-8 mt-8" v-if="isLoading">Loading...</h2>
+    <!-- <div class="float-container" @click="modeToggle()">
+      <a href="#" class="icon one"> </a>
+    </div> -->
 
     <div class="container my-12 mx-auto px-4 md:px-12" v-if="noData == false">
       <div class="flex flex-wrap sm:-mx-1 lg:-mx-4">
@@ -21,43 +32,31 @@
         <div
           v-for="license in userDraftLicenses"
           :key="license.id"
-          class="
-            bg-white
-            my-1
-            px-1
-            md:w-1/4
-            lg:w-1/4
-            mdlg:w-1/4
-            sm:w-full sm:mr-4
-            shadow-2xl
-            rounded-lg
-            transform
-            transition
-            duration-300
-            ease-in-out
-            hover:-translate-y-2
+          :class="
+            isDarkMode
+              ? 'bg-secondaryDark my-1 px-1 md:w-1/4 lg:w-1/4 mdlg:w-1/4 sm:w-full sm:mr-4 shadow-2xl rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2'
+              : 'bg-white my-1 px-1 md:w-1/4 lg:w-1/4 mdlg:w-1/4 sm:w-full sm:mr-4 shadow-2xl rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2'
           "
         >
           <!-- Article -->
           <div>
-            <h2 class="text-main-400 border-b-2 text-xl p-2">
-              License Number-
-              <span class="text-base text-main-400">{{
-                license.newLicenseCode
-              }}</span>
-            </h2>
-
-            <header
-              class="
-                flex
-                items-center
-                justify-between
-                leading-tight
-                p-2
-                md:p-2
-                mt-2
+            <h2
+              :class="
+                isDarkMode
+                  ? 'text-white border-b-2 text-xl p-2'
+                  : 'text-main-400 border-b-2 text-xl p-2'
               "
-            ></header>
+            >
+              License Number-
+              <span
+                :class="
+                  isDarkMode
+                    ? 'text-base text-white'
+                    : 'text-base text-main-400'
+                "
+                >{{ license.newLicenseCode }}</span
+              >
+            </h2>
 
             <div class="border-b-2 text-main-400">
               <div class="grid grid-cols-2 p-2">
@@ -70,13 +69,21 @@
                   </a>
                 </h1>
 
-                <ul class="text-black text-sm">
+                <ul
+                  :class="
+                    isDarkMode ? 'text-white text-sm' : 'text-black text-sm'
+                  "
+                >
                   <li
                     v-for="(education, index) in license.educations"
                     :key="education.id"
                     style="display: inline"
                   >
-                    <span class="text-black text-sm">
+                    <span
+                      :class="
+                        isDarkMode ? 'text-white text-sm' : 'text-black text-sm'
+                      "
+                    >
                       {{
                         education.professionType
                           ? education.professionType.name
@@ -110,7 +117,11 @@
                     Certified Date
                   </a>
                 </h1>
-                <p class="text-black text-sm">
+                <p
+                  :class="
+                    isDarkMode ? 'text-white text-sm' : 'text-black text-sm'
+                  "
+                >
                   {{
                     license.certifiedDate
                       ? license.certifiedDate
@@ -136,7 +147,11 @@
                     Expiry Date
                   </a>
                 </h1>
-                <p class="text-black text-sm">
+                <p
+                  :class="
+                    isDarkMode ? 'text-white text-sm' : 'text-black text-sm'
+                  "
+                >
                   {{
                     license.certifiedDate
                       ? license.certifiedDate
@@ -170,29 +185,34 @@
                 <p class="ml-2 text-sm text-main-400">{{ userInfo.name }}</p>
               </a>
 
-              <span class="text-main-400 text-sm">{{
-                license.createdAt.slice(0, 10)
-              }}</span>
+              <span
+                :class="
+                  isDarkMode
+                    ? 'text-white ml-2 text-sm'
+                    : 'text-black ml-2 text-sm'
+                "
+                >{{ license.createdAt.slice(0, 10) }}</span
+              >
             </footer>
 
             <div class="flex justify-center">
               <button
                 class="
-        inline-block
-        px-6
-        text-white
-        bg-main-400
-        hover:text-main-400 hover:border
-        text-sm
-        font-bold
-        uppercase
-        rounded
-        shadow-lg
-        mb-4
-        transition
-        duration-150
-        ease-in-out
-      "
+                  inline-block
+                  px-6
+                  text-white
+                  bg-main-400
+                  hover:text-main-400 hover:border
+                  text-sm
+                  font-bold
+                  uppercase
+                  rounded
+                  shadow-lg
+                  mb-4
+                  transition
+                  duration-150
+                  ease-in-out
+                "
                 @click="openDraftDetail(license.id)"
                 data-bs-toggle="modal"
                 data-bs-target="#draftModalInfo"
@@ -205,21 +225,21 @@
               >
                 <button
                   class="
-        inline-block
-        px-6
-        text-white
-        bg-main-400
-        hover:text-main-400 hover:border
-        text-sm
-        font-bold
-        uppercase
-        rounded
-        shadow-lg
-        mb-4
-        transition
-        duration-150
-        ease-in-out
-      "
+                    inline-block
+                    px-6
+                    text-white
+                    bg-main-400
+                    hover:text-main-400 hover:border
+                    text-sm
+                    font-bold
+                    uppercase
+                    rounded
+                    shadow-lg
+                    mb-4
+                    transition
+                    duration-150
+                    ease-in-out
+                  "
                 >
                   Edit
                 </button>
@@ -255,16 +275,22 @@
     >
       <!-- Article -->
 
-      <h2 class="text-main-400 border-b-2 text-xl p-2">
+      <h2
+        :class="
+          isDarkMode
+            ? 'text-white border-b-2 text-xl p-2'
+            : 'text-main-400 border-b-2 text-xl p-2'
+        "
+      >
         There are no drafted applications currently.
       </h2>
     </div>
-    <draft-modal-info :modalDataId="modalDataId"></draft-modal-info>
+    <draft-modal-info :modalDataId="modalDataId" :isDarkMode="isDarkMode"></draft-modal-info>
   </main-content>
 </template>
 
 <script>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, getCurrentInstance } from "vue";
 import { useStore } from "vuex";
 import MainContent from "../sharedComponents/Menu.vue";
 import { googleApi } from "@/composables/baseURL";
@@ -272,15 +298,59 @@ import draftModalInfo from "./draftModalInfo.vue";
 
 export default {
   components: { MainContent, draftModalInfo },
-  setup() {
+  setup(props, { emit }) {
     let store = useStore();
     let userDraftLicenses = ref([]);
     let userInfo = ref({});
     let isLoading = ref(true);
     let noData = ref(false);
     let modalDataId = ref({ change: 0, id: "" });
+    let isDarkMode = ref(JSON.parse(localStorage.getItem("darkMode")))
+      ? ref(JSON.parse(localStorage.getItem("darkMode")))
+      : ref(false);
 
+    const dark = () => {
+      document.getElementById("mainContent")?.classList.add("dark-mode");
+      document.getElementById("activeMenu")?.classList.add("dark-mode");
+      document.getElementById("mainSideBar")?.classList.add("dark-mode");
+      document.getElementById("options-menu")?.classList.add("dark-mode");
+      document.getElementById("topNav")?.classList.add("dark-mode");
+      document.getElementById("menu-icon")?.classList.add("dark-mode");
+      document.getElementById("generalInfoMain")?.classList.add("dark-mode");
+      isDarkMode.value = true;
+      localStorage.setItem("darkMode", true);
+    };
+
+    const light = () => {
+      document.getElementById("mainContent")?.classList.remove("dark-mode");
+      document.getElementById("activeMenu")?.classList.remove("dark-mode");
+      document.getElementById("topNav")?.classList.remove("dark-mode");
+      document.getElementById("mainSideBar")?.classList.remove("dark-mode");
+      document.getElementById("options-menu")?.classList.remove("dark-mode");
+      document.getElementById("menu-icon")?.classList.remove("dark-mode");
+      document.getElementById("generalInfoMain")?.classList.remove("dark-mode");
+      isDarkMode.value = false;
+      localStorage.setItem("darkMode", false);
+    };
+    const initiateDarkMode = () => {
+      if (JSON.parse(localStorage.getItem("darkMode")) == true) {
+        dark();
+      } else {
+        light();
+      }
+    };
+    const modeToggle = () => {
+      const instance = getCurrentInstance(); 
+      if (isDarkMode.value && isDarkMode.value == true) {
+        light();
+      } else {
+        dark();
+      }
+      instance?.proxy?.forceUpdate();
+    };
     onMounted(() => {
+      console.log(typeof isDarkMode.value)
+      initiateDarkMode();
       isLoading.value = true;
       userInfo.value = JSON.parse(window.localStorage.getItem("personalInfo"));
       let userId = JSON.parse(window.localStorage.getItem("userId"));
@@ -290,9 +360,7 @@ export default {
 
         if (results.length > 0) {
           userDraftLicenses.value = results.filter((draftLicenses) => {
-            return (
-              draftLicenses.applicationStatus.code === "DRA"  
-            );
+            return draftLicenses.applicationStatus.code === "DRA";
           });
 
           if (userDraftLicenses.value.length === 0) {
@@ -317,9 +385,11 @@ export default {
       googleApi,
       userInfo,
       noData,
+      isDarkMode,
       isLoading,
       openDraftDetail,
       modalDataId,
+      modeToggle,
     };
   },
 };
