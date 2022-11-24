@@ -264,10 +264,10 @@
                                     <div>
                                       <button
                                         class="
-                                          inline-block
+                                            inline-block
                                           px-6
                                           py-2.5
-                                          bg-blue-600
+                                          bg-primary-600
                                           text-white
                                           font-medium
                                           text-xs
@@ -275,12 +275,10 @@
                                           uppercase
                                           rounded
                                           shadow-lg
-                                          hover:bg-blue-700 hover:shadow-lg
-                                          focus:bg-blue-700
-                                          focus:shadow-lg
-                                          focus:outline-none
-                                          focus:ring-0
-                                          active:bg-blue-800 active:shadow-lg
+                                          mt-4
+                                          ml-1
+                                          hover:bg-white hover:shadow-lg
+                                          hover:text-primary-600
                                           transition
                                           duration-150
                                           ease-in-out

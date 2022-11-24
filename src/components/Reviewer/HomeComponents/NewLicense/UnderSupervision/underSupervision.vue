@@ -517,7 +517,7 @@ export default {
 
         store
           .dispatch(
-            "reviewerNewLicense/getNewLicenseOthersDeclined",
+            "reviewerNewLicense/getNewLicenseOthersUnderSuperVision",
             adminStatus
           )
           .then((res) => {
@@ -558,19 +558,19 @@ export default {
                 {
                   label: "Applicant Name",
                   field: "ApplicantName",
-                  width: "20%",
+                  width: "45%",
                   sortable: true,
                 },
                 {
                   label: "Applicant Type",
                   field: "ApplicationType",
-                  width: "15%",
+                  width: "20%",
                   sortable: true,
                 },
                 {
                   label: "Date",
                   field: "Date",
-                  width: "15%",
+                  width: "20%",
                   sortable: true,
                 },
                 {
@@ -687,7 +687,7 @@ export default {
                 {
                   label: "Applied Date",
                   field: "Date",
-                  width: "15%",
+                  width: "20%",
                   sortable: true,
                 },
                 {

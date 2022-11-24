@@ -216,7 +216,7 @@
                     bg-primary-800
                   "
                 >
-                  <vue-table-lite 
+                  <vue-table-lite
                     :is-loading="toYouTable.isLoading"
                     :columns="toYouTable.columns"
                     :rows="toYouTable.rows"
@@ -421,7 +421,7 @@
                     bg-primary-800
                   "
                 >
-                  <vue-table-lite 
+                  <vue-table-lite
                     :is-loading="toOthersTable.isLoading"
                     :columns="toOthersTable.columns"
                     :rows="toOthersTable.rows"
@@ -481,14 +481,14 @@ export default {
       id: "",
       change: 0,
     });
-    let allInfo = ref({ });
+    let allInfo = ref({});
     const reviewers = ref([]);
     const searchTerm = ref("");
     const searchTermOthers = ref("");
     let searchTermFromDate = ref("");
     let searchTermToDate = ref("");
     let searchTermFromDateOth = ref("");
-    let searchTermToDateOth = ref(""); 
+    let searchTermToDateOth = ref("");
     const toOthersTable = ref({});
     const toYouTable = ref({});
     let tableData = ref([]);
@@ -501,29 +501,50 @@ export default {
     };
 
     const clearFilters = () => {
-      searchTerm.value = ""; 
+      searchTerm.value = "";
       searchTermFromDate.value = "";
-      searchTermToDate.value = ""; 
+      searchTermToDate.value = "";
     };
-    const clearFiltersOthers = () => { 
-      searchTermOthers.value = ""; 
+    const clearFiltersOthers = () => {
+      searchTermOthers.value = "";
       searchTermFromDateOth.value = "";
-      searchTermToDateOth.value = ""; 
+      searchTermToDateOth.value = "";
     };
-    const declineAssignedToOthers = () => {
+
+
+    const declinedApplications = () => {
       applicationStatus(store, "DEC").then((res) => {
         let statusId = res;
         let adminStatus = [statusId, adminId];
 
         store
-          .dispatch(
-            "reviewerNewLicense/getNewLicenseOthersDeclined",
-            adminStatus
-          )
+          .dispatch("reviewerNewLicense/getNewLicenseDeclined", adminStatus)
           .then((res) => {
             allInfo.value = res;
-
-            JSON.parse(JSON.stringify(allInfo.value)).forEach((element) => {
+            JSON.parse(
+              JSON.stringify(allInfo.value ? allInfo.value.byYou : [])
+            ).forEach((element) => {
+              toYouTableData.value.push({
+                LicenseNumber: element.newLicenseCode,
+                ApplicantName:
+                  element.profile.name +
+                  " " +
+                  element.profile.fatherName +
+                  " " +
+                  element.profile.grandFatherName,
+                ApplicantType: element.applicantType
+                  ? element.applicantType.name
+                  : "",
+                Date: new Date(element.createdAt)
+                  .toJSON()
+                  .slice(0, 10)
+                  .replace(/-/g, "/"),
+                data: element,
+              });
+            });
+            JSON.parse(
+              JSON.stringify(allInfo.value ? allInfo.value.byOthers : [])
+            ).forEach((element) => {
               tableData.value.push({
                 LicenseNumber: element ? element.newLicenseCode : "",
                 ApplicantName:
@@ -536,8 +557,8 @@ export default {
                   (element.profile.grandFatherName
                     ? element.profile.grandFatherName
                     : "------"),
-                ApplicationType: element.applicationType
-                  ? element.applicationType.name
+                ApplicationType: element.applicantType
+                  ? element.applicantType.name
                   : "",
                 Date: new Date(element.createdAt)
                   .toJSON()
@@ -558,7 +579,7 @@ export default {
                 {
                   label: "Applicant Name",
                   field: "ApplicantName",
-                  width: "20%",
+                  width: "45%",
                   sortable: true,
                 },
                 {
@@ -570,7 +591,7 @@ export default {
                 {
                   label: "Date",
                   field: "Date",
-                  width: "15%",
+                  width: "25%",
                   sortable: true,
                 },
                 {
@@ -591,20 +612,20 @@ export default {
                   (x) =>
                     (x.ApplicantName
                       ? x.ApplicantName.toLowerCase().includes(
-                        searchTermOthers.value.toLowerCase()
+                          searchTermOthers.value.toLowerCase()
                         )
                       : "") &&
                     (searchTermFromDateOth.value != ""
                       ? x.Date
                         ? searchTermToDateOth.value.length > 0
                           ? moment(x.Date).isSameOrAfter(
-                            searchTermFromDateOth.value
+                              searchTermFromDateOth.value
                             ) &&
                             moment(x.Date).isSameOrBefore(
                               searchTermToDateOth.value
                             )
                           : moment(x.Date).isSameOrAfter(
-                            searchTermFromDateOth.value
+                              searchTermFromDateOth.value
                             )
                         : ""
                       : x.Date || x.Date == "" || x.Date == null) &&
@@ -612,13 +633,13 @@ export default {
                       ? x.Date
                         ? searchTermFromDateOth.value.length > 0
                           ? moment(x.Date).isSameOrBefore(
-                            searchTermToDateOth.value
+                              searchTermToDateOth.value
                             ) &&
                             moment(x.Date).isSameOrAfter(
                               searchTermFromDateOth.value
                             )
                           : moment(x.Date).isSameOrBefore(
-                            searchTermFromDateOth.value
+                              searchTermFromDateOth.value
                             )
                         : ""
                       : x.Date || x.Date == "" || x.Date == null)
@@ -630,39 +651,6 @@ export default {
                 sort: "asc",
               },
             };
-          });
-      });
-    };
-
-    const declinedAssignedToYou = () => {
-      applicationStatus(store, "DEC").then((res) => {
-        let statusId = res;
-        let adminStatus = [statusId, adminId];
-
-        store
-        .dispatch("reviewerNewLicense/getNewLicenseDeclined", adminStatus)
-          .then((res) => {
-            allInfo.value = res;
-            JSON.parse(JSON.stringify(allInfo.value)).forEach((element) => {
-              toYouTableData.value.push({
-                LicenseNumber: element.newLicenseCode,
-                ApplicantName:
-                  element.profile.name +
-                  " " +
-                  element.profile.fatherName +
-                  " " +
-                  element.profile.grandFatherName,
-                ApplicantType: element.applicantType
-                  ? element.applicantType.name
-                  : "",
-                Date: new Date(element.createdAt)
-                  .toJSON()
-                  .slice(0, 10)
-                  .replace(/-/g, "/"),
-                data: element,
-              });
-            });
-
             toYouTable.value = {
               columns: [
                 {
@@ -703,7 +691,7 @@ export default {
                   },
                 },
               ],
-              
+
               rows: computed(() => {
                 return toYouTableData.value.filter(
                   (x) =>
@@ -780,7 +768,7 @@ export default {
         });
 
         row = JSON.parse(JSON.stringify(row));
-     
+
         modalDataId.value.id = row.data ? row.data.id : "-----";
         modalDataId.value.change++;
       }
@@ -793,8 +781,7 @@ export default {
       }
     };
     onMounted(() => {
-      declinedAssignedToYou();
-      declineAssignedToOthers();
+      declinedApplications();
     });
 
     return {

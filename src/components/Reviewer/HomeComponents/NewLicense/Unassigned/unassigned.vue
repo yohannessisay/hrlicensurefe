@@ -646,7 +646,7 @@ export default {
                 {
                   label: "Applied Date",
                   field: "Date",
-                  width: "15%",
+                  width: "20%",
                   sortable: true,
                 },
                 {
@@ -1062,14 +1062,14 @@ export default {
                 {
                   label: "License Number",
                   field: "LicenseNumber",
-                  width: "3%",
+                  width: "20%",
                   sortable: true,
                   isKey: true,
                 },
                 {
                   label: "Applicant Name",
                   field: "ApplicantName",
-                  width: "20%",
+                  width: "45%",
                   sortable: true,
                 },
                 {
@@ -1081,7 +1081,7 @@ export default {
                 {
                   label: "Date",
                   field: "Date",
-                  width: "15%",
+                  width: "20%",
                   sortable: true,
                 },
                 {
