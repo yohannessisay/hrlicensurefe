@@ -138,7 +138,7 @@
                             type="file"
                             required
                             :id="`files${item.id}`"
-                            accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
+                            accept=".jpeg, .jpg, .pdf"
                             :ref="`imageUploader${item.id}`"
                             class="custom-file-input"
                             v-on:change="handleFileUpload(item, $event)"
@@ -215,7 +215,7 @@
         type="submit"
         @click="saveDraft()"
       >
-        Save
+        Update
       </button>
       <button
         class="

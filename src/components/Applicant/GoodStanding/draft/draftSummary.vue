@@ -386,7 +386,7 @@
                   <a
                     :href="changed.prevFile"
                     :data-title="changed.docName"
-                    data-lightbox="example-2"
+                    data-lightbox="example-1"
                   >
                     <img
                       :src="changed.prevFile"
@@ -486,7 +486,7 @@
                           <a
                             :href="googleApi + prev.filePath"
                             :data-title="prev.docName"
-                            data-lightbox="example-2"
+                            data-lightbox="example-3"
                           >
                             <img
                               :src="googleApi + prev.filePath"
@@ -522,7 +522,7 @@
                           <a
                             :href="prev.path"
                             :data-title="prev.docName"
-                            data-lightbox="example-2"
+                            data-lightbox="example-4"
                           >
                             <img
                               :src="prev.path"

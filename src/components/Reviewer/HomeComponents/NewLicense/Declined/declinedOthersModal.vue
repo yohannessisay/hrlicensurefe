@@ -347,7 +347,9 @@
                             (adminData.expertLevel.code == 'FED' &&
                               adminData.role.code == 'ADM') ||
                             (adminData.expertLevel.code == 'REG' &&
-                              adminData.role.code == 'ADM')
+                              adminData.role.code == 'ADM')||
+                            (adminData.expertLevel.code == 'REG' &&
+                              adminData.role.code == 'TL')
                           "
                           type="button"
                           class="

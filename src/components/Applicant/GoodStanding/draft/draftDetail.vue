@@ -548,6 +548,7 @@
             <div class="flex flex-col mb-medium w-2/5 mr-12">
               <label class="text-main-400">Zone</label>
               <select
+                id="zoneSelect"
                 class="
                   form-select
                   appearance-none
@@ -564,15 +565,11 @@
                   transition
                   ease-in-out
                   m-0
-                  focus:text-gray-700
-                  focus:bg-white
-                  focus:border-blue-600
-                  focus:outline-none
                 "
-                @change="zoneChangeHandler()"
-                v-model="generalInfo.zoneSelected"
+                @change="fetchWoredas(this)"
               >
                 <option
+                  class="bg-main-400 text-white"
                   :value="
                     generalInfo && generalInfo.zoneSelected
                       ? generalInfo.zoneSelected.id
@@ -1003,7 +1000,7 @@ export default {
     let activeState = ref(1);
     let showOccupation = ref(false);
     let showLanguage = ref(false);
-
+    let tempZone = "";
     const checkApplicantType = (applicantType) => {
       generalInfo.value.regionId = null;
       generalInfo.value.zoneId = null;
@@ -1017,9 +1014,7 @@ export default {
         showLocation.value = false;
       }
     };
-    const zoneChangeHandler = () => {
-      fetchWoredas();
-    };
+
     const regionChangeHandler = () => {
       fetchZones();
     };
@@ -1084,12 +1079,16 @@ export default {
           zones.value = res.data.data;
         });
     };
-    const fetchWoredas = () => {
-      store
-        .dispatch("goodstanding/getWoredas", generalInfo.value.zoneSelected.id)
-        .then((res) => {
+    const fetchWoredas = (sel) => {
+      var e = document.getElementById("zoneSelect");
+
+      tempZone = e ? e.value : 1;
+      console.log(tempZone,e);
+      if (tempZone && tempZone.options) {
+        store.dispatch("goodstanding/getWoredas", tempZone).then((res) => {
           woredas.value = res.data.data;
         });
+      }
     };
     const fetchProfessionalType = (departmentId, educationalLevelId) => {
       let profession = {
@@ -1303,7 +1302,6 @@ export default {
               : "";
           applicantTypeChangeHandler();
           regionChangeHandler();
-          zoneChangeHandler();
           generalInfo.value.education = JSON.parse(
             JSON.stringify(res.data.data.GSProfessionals)
           );
@@ -1316,7 +1314,7 @@ export default {
       fetchProfessionalType,
       regionChangeHandler,
       applicantTypeChangeHandler,
-      zoneChangeHandler,
+      fetchWoredas,
       educationalLevelChange,
       setDepartment,
       apply,

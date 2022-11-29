@@ -364,7 +364,9 @@
                               (adminData.expertLevel.code == 'FED' &&
                                 adminData.role.code == 'ADM') ||
                               (adminData.expertLevel.code == 'REG' &&
-                                adminData.role.code == 'ADM')
+                                adminData.role.code == 'ADM')||
+                            (adminData.expertLevel.code == 'REG' &&
+                              adminData.role.code == 'TL')
                             "
                           >
                             <h2 class="font-bold mb-1">Action</h2>

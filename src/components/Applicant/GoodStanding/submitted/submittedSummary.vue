@@ -663,7 +663,7 @@
     <div class="flex justify-end w-1/2 mb-8">
       <span v-for="button in buttons" :key="button.id">
         <button
-          v-if="button.action != 'DraftEvent'"
+          v-if="button.action != 'WithdrawEvent'"
           type="button"
           :class="
             allowSave
@@ -673,6 +673,32 @@
           @click="checkFinalStatus(button.action)"
         >
           <i class="fa fa-save"></i>
+          {{ button.name && button.code == "SUB" ? "Update" : button.name }}
+        </button>
+        <button
+          v-if="button.action == 'WithdrawEvent'"
+          class="
+            inline-block
+            px-6
+            border
+            text-main-400
+            hover:bg-main-400
+            hober:border-main-400
+            hover:text-white
+            mt-4
+            bg-white
+            font-medium
+            text-xs
+            leading-tight
+            uppercase
+            rounded
+            shadow-lg
+            transition
+            duration-150
+            ease-in-out
+          "
+          @click="checkFinalStatus(button.action)"
+        >
           {{ button.name }}
         </button>
       </span>
@@ -899,6 +925,7 @@ export default {
           return e.code == "DRA";
         });
         buttons.value = status[0]["buttons"];
+        buttons.value = buttons.value.filter((but) => but.code != "DRA");
       });
     };
     onMounted(() => {
