@@ -457,7 +457,9 @@
                                 >
                                   <div class="flex justify-center">
                                     <div>
+                                      <label for="" class="font-bold text-red-300">Remove</label>
                                       <div class="form-check">
+                                        
                                         <input
                                           class="
                                             form-check-input
@@ -470,6 +472,9 @@
                                             transition
                                             duration-200
                                             my-1
+                                            focus:text-red-300
+                                              btn-check:bg-white
+                                            focus:outline-none
                                             align-top
                                             bg-no-repeat bg-center bg-contain
                                             float-left
@@ -1939,7 +1944,7 @@ export default {
       applicationType.value = "Renewal";
 
       store
-        .dispatch("reviewer/getrenewalApplication", applicationId)
+        .dispatch("reviewer/getRenewalApplication", applicationId)
         .then((res) => {
           renewal.value = res.data.data ? res.data.data : {}; 
           profileInfo.value =

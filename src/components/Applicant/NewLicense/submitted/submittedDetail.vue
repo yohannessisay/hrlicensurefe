@@ -230,7 +230,11 @@
                     focus:border-main-400
                     focus:outline-none
                   "
-                  disabled
+                  :disabled="
+                  generalInfo.multipleDepartment
+                    ? generalInfo.multipleDepartment.length > 0
+                    : 0
+                "
                   v-model="generalInfo.regionSelected"
                   @change="regionChangeHandler()"
                   required
@@ -245,7 +249,6 @@
                 </select>
               </div>
               <div class="mr-4">
-            
                 <label class="text-main-400">Zone</label>
                 <select
                   class="
@@ -271,11 +274,22 @@
                   "
                   aria-label="Default select example
                   "
-                  v-model="generalInfo.zoneSelected"
-                  disabled
+                  :disabled="
+                  generalInfo.multipleDepartment
+                    ? generalInfo.multipleDepartment.length > 0
+                    : 0
+                "
+                v-model="generalInfo.zoneSelected"
                   @change="zoneChangeHandler()"
                 >
-                  <option :value="generalInfo.zoneSelected.id" selected>
+                <option
+                    v-for="zone in zones"
+                    v-bind:key="zone.name"
+                    v-bind:value="zone"
+                  >
+                    {{ zone.name }}
+                  </option>
+                  <option selected>
                     {{ generalInfo ? generalInfo.zoneSelected.name : "" }}
                   </option>
                 </select>
@@ -305,10 +319,20 @@
                     focus:border-blue-600
                     focus:outline-none
                   "
-                  disabled
-                  v-model="generalInfo.woredaSelected"
+                  :disabled="
+                  generalInfo.multipleDepartment
+                    ? generalInfo.multipleDepartment.length > 0
+                    : 0
+                "
                   required
                 >
+                <option
+                    v-for="woreda in woredas"
+                    v-bind:key="woreda.name"
+                    v-bind:value="woreda"
+                  >
+                    {{ woreda.name }}
+                  </option>
                   <option selected>
                     {{ generalInfo ? generalInfo.woredaSelected.name : "" }}
                   </option>
@@ -1062,8 +1086,7 @@ export default {
       generalInfo.value.multipleDepartment.splice(index, 1);
       generalInfo.value.educations.splice(index, 1);
     };
-    const addMultiple = () => {
-      console.log(generalInfo.value);
+    const addMultiple = () => { 
       if (
         generalInfo.value.departmentSelected &&
         generalInfo.value.educationalLevelSelected &&

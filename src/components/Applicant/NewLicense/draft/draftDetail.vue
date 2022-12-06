@@ -230,7 +230,11 @@
                     focus:border-main-400
                     focus:outline-none
                   "
-                  disabled
+                  :disabled="
+                  generalInfo.multipleDepartment
+                    ? generalInfo.multipleDepartment.length > 0
+                    : 0
+                "
                   v-model="generalInfo.regionSelected"
                   @change="regionChangeHandler()"
                   required
@@ -270,9 +274,21 @@
                   "
                   aria-label="Default select example
                   "
-                  disabled
+                  :disabled="
+                  generalInfo.multipleDepartment
+                    ? generalInfo.multipleDepartment.length > 0
+                    : 0
+                "
+                v-model="generalInfo.zoneSelected"
                   @change="zoneChangeHandler()"
                 >
+                <option
+                    v-for="zone in zones"
+                    v-bind:key="zone.name"
+                    v-bind:value="zone"
+                  >
+                    {{ zone.name }}
+                  </option>
                   <option selected>
                     {{ generalInfo ? generalInfo.zoneSelected.name : "" }}
                   </option>
@@ -303,9 +319,20 @@
                     focus:border-blue-600
                     focus:outline-none
                   "
-                  disabled
+                  :disabled="
+                  generalInfo.multipleDepartment
+                    ? generalInfo.multipleDepartment.length > 0
+                    : 0
+                "
                   required
                 >
+                <option
+                    v-for="woreda in woredas"
+                    v-bind:key="woreda.name"
+                    v-bind:value="woreda"
+                  >
+                    {{ woreda.name }}
+                  </option>
                   <option selected>
                     {{ generalInfo ? generalInfo.woredaSelected.name : "" }}
                   </option>
@@ -976,6 +1003,7 @@ export default {
     };
 
     const fetchWoredas = () => {
+      console.log(generalInfo.value.zoneSelected)
       store
         .dispatch("newlicense/getWoredas", generalInfo.value.zoneSelected.id)
         .then((res) => {
