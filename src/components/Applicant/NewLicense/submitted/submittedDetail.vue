@@ -245,6 +245,7 @@
                 </select>
               </div>
               <div class="mr-4">
+            
                 <label class="text-main-400">Zone</label>
                 <select
                   class="
@@ -270,10 +271,11 @@
                   "
                   aria-label="Default select example
                   "
+                  v-model="generalInfo.zoneSelected"
                   disabled
                   @change="zoneChangeHandler()"
                 >
-                  <option selected>
+                  <option :value="generalInfo.zoneSelected.id" selected>
                     {{ generalInfo ? generalInfo.zoneSelected.name : "" }}
                   </option>
                 </select>
@@ -304,6 +306,7 @@
                     focus:outline-none
                   "
                   disabled
+                  v-model="generalInfo.woredaSelected"
                   required
                 >
                   <option selected>
@@ -887,15 +890,15 @@ export default {
       educationalLevelSelected: "",
       applicantType: "",
       applicantPositionId: "",
-      regionSelected: "",
-      zoneSelected: "",
-      woredaSelected: "",
+      regionSelected: {},
+      zoneSelected: {},
+      woredaSelected: {},
       languageSelected: "",
       multipleDepartment: [],
       occupationTypes: "",
       nativeLanguageSelected: "",
       educations: [],
-      professionChanged:false
+      professionChanged:false,
     });
     let applicationStatuses = ref([]);
     let isLoading = ref(false);

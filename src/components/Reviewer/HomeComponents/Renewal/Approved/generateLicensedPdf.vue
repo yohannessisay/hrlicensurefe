@@ -1553,6 +1553,11 @@ export default {
           ? props.modalData.previousEducations
           : []
       );
+      certificateDetail.value.educations = certificateDetail.value.educations
+        ? certificateDetail.value.educations.filter(
+            (edu) => edu.isDropped != true
+          )
+        : {};
       applicationStatus.value = props.modalData.data.applicationStatus.code;
       isLicenseGenerated.value = props.modalData.data.isLicenseGenerated;
       certificateDetail.value.licenseNumber =

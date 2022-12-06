@@ -394,6 +394,153 @@
                     </div>
 
                     <!-- END Column -->
+
+
+                         <!-- Column -->
+                         <div
+                      v-if="droppedEducations && droppedEducations.length > 0"
+                      class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
+                    >
+                      <!-- Article -->
+                      <article class="overflow-hidden rounded-lg shadow-xl">
+                        <header
+                          class="
+                            flex
+                            items-center
+                            justify-between
+                            leading-tight
+                            p-2
+                            md:p-4
+                            border-b-4
+                            text-main-400
+                          "
+                        >
+                          <h1 class="text-lg">
+                            <a
+                              class="no-underline hover:underline text-black"
+                              href="#"
+                            >
+                              Dropped Education Detail
+                            </a>
+                          </h1>
+                        </header>
+
+                        <div
+                          class="grid grid-flow-row auto-rows-max"
+                          v-for="(education, index) in droppedEducations"
+                          :key="education ? education.id : ''"
+                        >
+                          <div class="flex justify-between px-4 py-1">
+                            <div>Department</div>
+                            <div class="text-main-400 font-bold">
+                              {{
+                                education && education.department
+                                  ? education.department.name
+                                  : "-"
+                              }}
+                            </div>
+                          </div>
+                          <div class="flex justify-between px-4 py-1">
+                            <div>Institution</div>
+                            <div class="text-main-400 font-bold">
+                              {{
+                                education && education.institution
+                                  ? education.institution.name
+                                  : "-"
+                              }}
+                            </div>
+                          </div>
+                          <div class="flex justify-between px-4 py-1">
+                            <div>Education Level</div>
+                            <div class="text-main-400 font-bold">
+                              {{
+                                education && education.educationLevel
+                                  ? education.educationLevel.name
+                                  : "-"
+                              }}
+                            </div>
+                          </div>
+
+                          <hr
+                            class="mt-3 mb-3"
+                            style="color: lightgray"
+                            v-if="index != droppedEducations.length - 1"
+                          />
+                        </div>
+
+                        <footer
+                          class="
+                            flex
+                            items-center
+                            justify-between
+                            leading-none
+                            border-t-2
+                            p-2
+                            md:p-4
+                          "
+                        >
+                          <div class="grid grid-rows-2">
+                            <h4 class="text-main-400 font-bold">Reason</h4>
+                            <p
+                              class="
+                                border
+                                rounded-md
+                                p-1
+                                break-all
+                                tracking-wider
+                              "
+                            >
+                              {{ renewalData.remark }}
+                            </p>
+                          </div>
+                        </footer>
+                      </article>
+                      <!-- END Article -->
+                    </div>
+
+                    <!-- END Column -->
+
+                    <!-- Column -->
+                    <div
+                      class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
+                    >
+                      <!-- Article -->
+                      <article class="overflow-hidden rounded-lg shadow-xl">
+                        <header
+                          class="
+                            flex
+                            items-center
+                            justify-between
+                            leading-tight
+                            p-2
+                            md:p-4
+                            border-b-4
+                            text-main-400
+                          "
+                        >
+                          <h1 class="text-lg">
+                            <a
+                              class="no-underline hover:underline text-black"
+                              href="#"
+                            >
+                            Retrival Date
+                            </a>
+                          </h1>
+                        </header>
+
+                        <div class="grid grid-flow-row auto-rows-max">
+                          <div class="flex justify-between px-4 py-1">
+                            <div> Retrival Date</div>
+                            <div class="text-main-400 font-bold">
+                            {{ renewalData.retrivalDate }}
+                            </div>
+                          </div>
+                        </div>
+                      </article>
+                      <!-- END Article -->
+                    </div>
+
+                    <!-- END Column -->
                   </div>
                 </div>
               </section>
@@ -446,6 +593,7 @@ export default {
     let store = useStore();
     let renewalData = ref({});
     let userInfo = ref({});
+    let droppedEducations = ref([]);
     let isLoading = ref(false);
     watch(props.modalDataId, () => {
       isLoading.value = true
@@ -453,6 +601,14 @@ export default {
         .dispatch("renewal/getRenewalApplication", props.modalDataId.id)
         .then((res) => {
           renewalData.value = res.data.data;
+          renewalData.value && renewalData.value.educations
+            ? renewalData.value.educations.forEach((element) => {
+                if (element.isDropped == true) {
+                  droppedEducations.value.push(element);
+                  return;
+                }
+              })
+            : false;
           isLoading.value = false
         });
     });
@@ -462,6 +618,7 @@ export default {
 
     return {
       renewalData,
+      droppedEducations,
       isLoading,
       googleApi,
       userInfo,

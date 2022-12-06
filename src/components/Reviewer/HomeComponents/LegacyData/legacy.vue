@@ -95,7 +95,6 @@
                       focus:border-blue-600
                       focus:outline-none
                     "
-                    @keyup="searchByName"
                     placeholder="Start Searching For Name"
                     aria-label="Search"
                     aria-describedby="button-addon2"
@@ -123,8 +122,9 @@
                     <i class="fa fa-user fa-2x"></i>
                   </button>
                 </div>
-                <div class="grid grid-cols-3">
+                <div class="grid grid-cols-6 w-full">
                   <div class="mb-3 xl:w-full">
+                    <label for="" class="ml-4">License Type</label>
                     <select
                       class="
                         form-select
@@ -147,8 +147,8 @@
                         focus:border-blue-600
                         focus:outline-none
                       "
-                      aria-label="Default select example"
-                      @change="filterLicenseType($event.target.value)"
+                     
+                      v-model="licenseTypeFilter"
                     >
                       <option selected disabled>License Type</option>
                       <option :value="'all'">All</option>
@@ -163,6 +163,7 @@
                   </div>
 
                   <div class="mb-3 xl:w-full ml-2">
+                    <label for="" class="ml-4">License Prefix</label>
                     <select
                       class="
                         form-select
@@ -185,11 +186,10 @@
                         focus:border-blue-600
                         focus:outline-none
                       "
-                      @change="filterPrefix($event.target.value)"
-                      aria-label="Default select example"
-                    >
-                      <option selected disabled>License Prefix</option>
-                      <option value="all">All</option>
+                      v-model="licensePrefixesFilter"
+                     
+                    > 
+                      <option value="all" selected>All</option>
                       <option
                         v-for="prefix in [...new Set(licensePrefixes)]"
                         :key="prefix"
@@ -201,6 +201,7 @@
                   </div>
 
                   <div class="mb-3 xl:w-full ml-2">
+                    <label for="" class="ml-4">Gender</label>
                     <select
                       class="
                         form-select
@@ -223,8 +224,8 @@
                         focus:border-blue-600
                         focus:outline-none
                       "
-                      @change="filterGender($event.target.value)"
-                      aria-label="Default select example"
+                      v-model="genderFilter"
+                     
                     >
                       <option selected disabled>Gender</option>
                       <option value="all">All</option>
@@ -232,11 +233,8 @@
                       <option value="female">Female</option>
                     </select>
                   </div>
-                </div>
 
-                <div class="grid grid-cols-3 mt-2">
-                  <label for="" class="ml-4 mt-8">Certified Date</label>
-                  <div class="mb-3 ml-2">
+                  <div class="ml-8 mb-3 ml-2">
                     <label for="" class="ml-4">From</label>
                     <input
                       v-model="fromDate"
@@ -260,8 +258,7 @@
                         focus:border-blue-600
                         focus:outline-none
                       "
-                      @change="filterDateFrom($event.target.value)"
-                      aria-label="Default select example"
+                     
                     />
                   </div>
                   <div class="mb-3 ml-2">
@@ -288,9 +285,36 @@
                         focus:border-blue-600
                         focus:outline-none
                       "
-                      @change="filterDateTo($event.target.value)"
-                      aria-label="Default select example"
+                      v-model="toDate"
+                     
                     />
+                  </div>
+                  <div class="ml-8 mt-4">
+                    <button
+                      type="button"
+                      class="
+                        inline-block
+                        px-6
+                        py-2
+                        mt-2
+                        border-2 border-primary-600
+                        text-primary-600
+                        font-medium
+                        text-xs
+                        leading-tight
+                        uppercase
+                        rounded
+                        hover:bg-primary-600 hover:bg-opacity-5 hover:text-white
+                        focus:outline-none focus:ring-0
+                        transition
+                        duration-150
+                        ease-in-out
+                      "
+                      @click="clearFilters()"
+                    >
+                      <i class="fa fa-close"></i>
+                      Clear Filters
+                    </button>
                   </div>
                 </div>
               </div>
@@ -307,11 +331,13 @@
                   bg-primary-800
                 "
               >
-                <vue-table-lite 
-                  :columns="userTable.columns"
-                  :rows="userTable.rows"
-                  :total="userTable.totalRecordCount"
-                  :sortable="userTable.sortable"
+                <vue-table-lite
+                  :is-loading="reportTable.isLoading"
+                  :columns="reportTable.columns"
+                  :rows="reportTable.rows"
+                  :total="reportTable.totalRecordCount"
+                  :sortable="reportTable.sortable"
+                  @do-search="doSearch"
                 ></vue-table-lite>
               </div>
             </div>
@@ -438,7 +464,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="item in userTable.rows" :key="item">
+          <tr v-for="item in reportTable.rows" :key="item">
             <td class="px-5 py-5 border-gray-200 bg-white text-sm">
               <div class="flex">
                 <div class="ml-3">
@@ -515,12 +541,12 @@
 
 <script>
 import "@ocrv/vue-tailwind-pagination/dist/style.css";
-import { ref, reactive, computed } from "@vue/reactivity";
+import { ref, computed } from "@vue/reactivity";
 import { onMounted } from "@vue/runtime-core";
 import { useStore } from "vuex";
 import ReviewerNavBar from "./SharedComponents/navBar.vue";
 import ReviewerSideBar from "./SharedComponents/sideNav.vue";
-import VueTableLite from "./SharedComponents/TableLiteCustom.vue";
+import VueTableLite from "vue3-table-lite";
 
 import moment from "moment";
 import { saveAs } from "file-saver";
@@ -538,8 +564,8 @@ export default {
     let allData = ref([]);
     let searchData = ref();
 
-    let userTable = ref({ isLoading: true });
-    let tableData = reactive([]);
+    let reportTable = ref({ isLoading: false });
+    let tableData = ref([]);
     const searchTerm = ref("");
     let fromDate = ref("");
     let toDate = ref("");
@@ -548,21 +574,18 @@ export default {
     let totalCount = ref();
     let report = ref([]);
 
-    let searchedValue = ref("");
+    let licenseTypeFilter = ref("");
+    let licensePrefixesFilter = ref("");
+    let genderFilter = ref("");
 
-    let reportData = ref([]);
-
-    let newLicenseData = ref([]);
     let licenseTypes = ref([]);
 
     let licensePrefixes = ref([]);
 
-    const fetchLicenseReport = () => {
-      let apiParameters = [1, 10];
+    const fetchLicenseReport = (apiParameters) => {
       store.dispatch("reviewer/getLegacyData", apiParameters).then((res) => {
-        newLicenseData.value = res.rows;
-        reportData.value.push(...res.rows);
-
+        tableData = [];
+        reportTable.value.isLoading = true;
         res.rows.forEach((element) => {
           licenseTypes.value.push(
             element.license_type_id ? element.license_type_id : ""
@@ -605,7 +628,8 @@ export default {
           });
         });
         allData.value = tableData;
-        userTable.value = {
+        reportTable.value = {
+          isLoading: false,
           columns: [
             {
               label: "Employee Id",
@@ -702,41 +726,54 @@ export default {
             },
           ],
           rows: computed(() => {
-            return tableData.filter((x) =>
-              x.FirstName
-                ? x.FirstName.toLowerCase().includes(
-                    searchTerm.value.toLowerCase()
-                  )
-                : "" || x.MiddleName
-                ? x.MiddleName.toLowerCase().includes(
-                    searchTerm.value.toLowerCase()
-                  )
-                : "" || x.LastName
-                ? x.LastName.toLowerCase().includes(
-                    searchTerm.value.toLowerCase()
-                  )
-                : ""
+            return tableData.filter(
+              (curRow) =>
+                (curRow.FirstName
+                  ? curRow.FirstName.toLowerCase().includes(
+                      searchTerm.value.toLowerCase()
+                    )
+                  : "" || curRow.MiddleName
+                  ? curRow.MiddleName.toLowerCase().includes(
+                      searchTerm.value.toLowerCase()
+                    )
+                  : "" || curRow.LastName
+                  ? curRow.LastName.toLowerCase().includes(
+                      searchTerm.value.toLowerCase()
+                    )
+                  : "") &&
+                (licenseTypeFilter.value &&
+                licenseTypeFilter.value != "all" &&
+                licenseTypeFilter.value != ""
+                  ? curRow.LicenseType.toLowerCase() ==
+                    licenseTypeFilter.value.toLowerCase()
+                  : curRow.LicenseType ||
+                    curRow.LicenseType == null ||
+                    curRow.LicenseType == "") &&
+                (genderFilter.value &&
+                genderFilter.value != "all" &&
+                genderFilter.value != ""
+                  ? curRow.Gender.toLowerCase() ==
+                    genderFilter.value.toLowerCase()
+                  : curRow.Gender ||
+                    curRow.Gender == null ||
+                    curRow.Gender == "") &&
+                (licensePrefixesFilter.value &&
+                licensePrefixesFilter.value != "all" &&
+                licensePrefixesFilter.value != ""
+                  ? curRow.LicensePrefix.toLowerCase() ==
+                    licensePrefixesFilter.value.toLowerCase()
+                  : curRow.LicensePrefix ||
+                    curRow.LicensePrefix == null ||
+                    curRow.LicensePrefix == "")
             );
           }),
-          totalRecordCount: res.count ? res.count : 0,
+          totalRecordCount: res ? res.count : 0,
           sortable: {
             order: "EmployeeId",
             sort: "asc",
           },
         };
       });
-    };
-
-    const filterLicenseType = (licenseType) => {
-      if (licenseType == "all") {
-        userTable.value.rows = computed(() => allData.value);
-      } else {
-        userTable.value.rows = computed(() =>
-          allData.value.filter((stat) => {
-            return stat.LicenseType.toLowerCase() != licenseType.toLowerCase();
-          })
-        );
-      }
     };
 
     const exportTable = () => {
@@ -747,96 +784,45 @@ export default {
       saveAs(blob, date.slice(0, 10) + " Report.xls");
     };
 
-    const searchByName = () => {
-      userTable.value.rows = computed(() =>
-        allData.value.filter((x) =>
-          x.FirstName
-            ? x.FirstName.toLowerCase().includes(searchTerm.value.toLowerCase())
-            : "" || 
-            x.MiddleName
-            ? x.MiddleName.toLowerCase().includes(
-                searchTerm.value.toLowerCase()
-              )
-            : "" || x.LastName
-            ? x.LastName.toLowerCase().includes(searchTerm.value.toLowerCase())
-            : ""
-        )
-      );
+    const clearFilters = () => {
+      genderFilter.value = "";
+      licensePrefixesFilter.value = "";
+      licenseTypeFilter.value = "";
+      searchTerm.value = "";
     };
+    const doSearch = (offset, limit, order, sort) => {
+      reportTable.value.isLoading = true;
 
-    const filterDateFrom = (date) => {
-      fromDate.value = date;
-      if (toDate.value.length > 0) {
-        tableData = allData.value.filter((stat) => {
-          return (
-            moment(stat.IssuedDate).isSameOrAfter(fromDate.value) &&
-            moment(stat.IssuedDate).isSameOrBefore(toDate.value)
-          );
-        });
-        userTable.value.rows = computed(() => tableData);
-      } else
-        tableData = allData.value.filter((stat) => {
-          return moment(stat.IssuedDate).isSameOrAfter(fromDate.value);
-        });
-      userTable.value.rows = computed(() => tableData);
+      setTimeout(() => {
+        reportTable.value.isReSearch = offset == undefined ? true : false;
+        offset = offset / 10 + 1;
+        if (sort == "asc") {
+          fetchLicenseReport([offset, limit]);
+        } else {
+          fetchLicenseReport([offset, limit]);
+        }
+        reportTable.value.sortable.order = order;
+        reportTable.value.sortable.sort = sort;
+      }, 600);
     };
-
-    const filterDateTo = (date) => {
-      toDate.value = date;
-      if (fromDate.value.length > 0) {
-        tableData = allData.value.filter((stat) => {
-          return (
-            moment(stat.IssuedDate).isSameOrBefore(toDate.value) &&
-            moment(stat.IssuedDate).isSameOrAfter(fromDate.value)
-          );
-        });
-        userTable.value.rows = computed(() => tableData);
-      }
-    };
-
-    const filterPrefix = (prefix) => {
-      if (prefix == "all") {
-        tableData = allData.value;
-        userTable.value.rows = computed(() => tableData);
-      } else {
-        tableData = allData.value.filter((stat) => {
-          return stat.LicensePrefix.toLowerCase() == prefix.toLowerCase();
-        });
-        userTable.value.rows = computed(() => tableData);
-      }
-    };
-
-    const filterGender = (status) => {
-      if (status == "all") {
-        tableData = allData.value;
-        userTable.value.rows = computed(() => tableData);
-      } else {
-        tableData = allData.value.filter((stat) => {
-          return stat.Gender.toLowerCase() == status.toLowerCase();
-        });
-        userTable.value.rows = computed(() => tableData);
-      }
-    };
-
     onMounted(() => {
-      fetchLicenseReport();
+      fetchLicenseReport([1, 10]);
     });
     return {
       report,
       exportTable,
-      filterDateFrom,
-      filterDateTo,
-      filterLicenseType,
+      clearFilters,
+      licenseTypeFilter,
+      licensePrefixesFilter,
+      genderFilter,
       fromDate,
       toDate,
-      filterGender,
-      filterPrefix,
       currentPage,
       totalCount,
       licenseTypes,
-      searchByName,
+      doSearch,
       searchData,
-      userTable,
+      reportTable,
       searchTerm,
       licensePrefixes,
     };

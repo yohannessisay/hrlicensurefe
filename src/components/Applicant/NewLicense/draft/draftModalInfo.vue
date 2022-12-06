@@ -66,19 +66,25 @@
             <i class="fa fa-close fa-2x"></i>
           </button>
         </div>
-        <div class="vld-parent mt-4">
+        <div class="vld-parent mt-1">
           <loading
             :active="isLoading"
             :is-full-page="false"
             :color="'#07677e'"
-            :opacity="isDarkMode ? 0.3 : 1"
+            :opacity="isDarkMode ? 0.2 : 1"
           ></loading>
           <div class="modal-body relative p-4">
             <div class="container px-6 mx-auto">
               <section class="text-gray-800">
                 <div class="flex justify-center border-b-4 text-main-400">
                   <div class="text-center lg:max-w-3xl md:max-w-xl">
-                    <h2 :class="isDarkMode?'text-2xl font-bold mb-8 px-6 text-white':'text-2xl font-bold mb-8 px-6 text-main-400'">
+                    <h2
+                      :class="
+                        isDarkMode
+                          ? 'text-2xl font-bold mb-8 px-6 text-white'
+                          : 'text-2xl font-bold mb-8 px-6 text-main-400'
+                      "
+                    >
                       Draft License Detail
                     </h2>
                   </div>
@@ -94,7 +100,13 @@
                       class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
                     >
                       <!-- Article -->
-                      <article class="overflow-hidden rounded-lg shadow-xl">
+                      <article
+                        :class="
+                          isDarkMode
+                            ? 'overflow-hidden  bg-primaryDark rounded-lg shadow-2xl'
+                            : 'overflow-hidden rounded-lg shadow-xl'
+                        "
+                      >
                         <header
                           class="
                             flex
@@ -209,7 +221,13 @@
                       class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
                     >
                       <!-- Article -->
-                      <article class="overflow-hidden rounded-lg shadow-xl">
+                      <article
+                        :class="
+                          isDarkMode
+                            ? 'overflow-hidden  bg-primaryDark rounded-lg shadow-2xl'
+                            : 'overflow-hidden rounded-lg shadow-xl'
+                        "
+                      >
                         <header
                           class="
                             flex
@@ -343,7 +361,13 @@
                       class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
                     >
                       <!-- Article -->
-                      <article class="overflow-hidden rounded-lg shadow-xl">
+                      <article
+                        :class="
+                          isDarkMode
+                            ? 'overflow-hidden  bg-primaryDark rounded-lg shadow-2xl'
+                            : 'overflow-hidden rounded-lg shadow-xl'
+                        "
+                      >
                         <header
                           class="
                             flex
@@ -459,7 +483,13 @@
                       class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
                     >
                       <!-- Article -->
-                      <article class="overflow-hidden rounded-lg shadow-xl">
+                      <article
+                        :class="
+                          isDarkMode
+                            ? 'overflow-hidden  bg-primaryDark rounded-lg shadow-2xl'
+                            : 'overflow-hidden rounded-lg shadow-xl'
+                        "
+                      >
                         <header
                           class="
                             flex

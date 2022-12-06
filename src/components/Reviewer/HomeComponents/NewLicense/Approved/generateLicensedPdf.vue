@@ -1472,14 +1472,13 @@ export default {
             store
               .dispatch("sms/sendSms", smsData)
               .then(() => {
-
                 toast.success("Done", {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            });
+                  timeout: 5000,
+                  position: "bottom-center",
+                  pauseOnFocusLoss: true,
+                  pauseOnHover: true,
+                  icon: true,
+                });
               })
               .catch(() => {
                 toast.error("Sms is not sent", {
@@ -1493,8 +1492,6 @@ export default {
                   window.location.reload();
                 }, 3000);
               });
-
-        
           } else {
             showGenerateModal.value = false;
             toast.error(res.data.message, {
@@ -1556,6 +1553,11 @@ export default {
           ? props.modalData.previousEducations
           : []
       );
+      certificateDetail.value.educations = certificateDetail.value.educations
+        ? certificateDetail.value.educations.filter(
+            (edu) => edu.isDropped != true
+          )
+        : {};
       applicationStatus.value = props.modalData.data.applicationStatus.code;
       isLicenseGenerated.value = props.modalData.data.isLicenseGenerated;
       certificateDetail.value.licenseNumber =

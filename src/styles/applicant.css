@@ -47,8 +47,8 @@
   border-bottom: 2px solid #eceff5;
   border-top: 2px solid #eceff5;
   border-left: 2px solid #eceff5;
-  border-top-left-radius: 50px;
-  border-bottom-left-radius: 50px;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
 
 
 }
@@ -103,7 +103,7 @@
   position: absolute;
   width: calc(100% - 260px);
   left: 260px;
-  overflow-y: scroll;
+  overflow-y: auto;
   height: -webkit-fill-available;
   transition: 0.5s ease;
   background-color: rgb(236, 236, 236);
@@ -374,8 +374,8 @@ body.dark-mode {
   background: #02020294;
   transition: background-color 0.5s ease;
   color: white;
-  border-top-left-radius: 20px;
-  border-bottom-left-radius: 20px;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
 }
 
 #activeMenu.dark-mode>a>a>span.icon {

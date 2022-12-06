@@ -422,7 +422,6 @@
                   "
                 >
                   <vue-table-lite
-                    
                     :is-loading="toOthersTable.isLoading"
                     :columns="toOthersTable.columns"
                     :rows="toOthersTable.rows"
@@ -430,6 +429,7 @@
                     :sortable="toOthersTable.sortable"
                     @is-finished="tableLoadingFinishOthers"
                     @row-clicked="rowClickedOthers"
+                 
                   ></vue-table-lite>
 
                   <edit-modal-others
@@ -546,6 +546,7 @@ export default {
             JSON.stringify(allInfo.value ? allInfo.value.byOthers : [])
           ).forEach((element) => {
             tableData.value.push({
+              id: element ? element.id : "",
               LicenseNumber: element ? element.newLicenseCode : "",
               ApplicantName:
                 (element.profile ? element.profile.name : "------") +
@@ -639,18 +640,24 @@ export default {
               );
             }),
             totalRecordCount: toYouTableData.value.length,
-            
           };
 
           toOthersTable.value = {
             columns: [
+              {
+                label: "ID",
+                field: "id",
+
+                width: "3%",
+                sortable: true,
+                isKey: true,
+              },
               {
                 label: "License Number",
                 field: "LicenseNumber",
 
                 width: "3%",
                 sortable: true,
-                isKey: true,
               },
               {
                 label: "Applicant Name",
@@ -724,7 +731,10 @@ export default {
               );
             }),
             totalRecordCount: tableData.value.length,
-         
+            sortable: {
+              order: "id",
+              sort: "asc",
+            },
           };
         });
     };
@@ -769,6 +779,8 @@ export default {
         modalDataIdOthers.value.change++;
       }
     };
+
+
     onMounted(() => {
       licensed();
     });
@@ -786,6 +798,7 @@ export default {
       searchTermToDateOth,
       toYouTable,
       showModal,
+      doSearch,
       reviewers,
       tableLoadingFinish,
       tableLoadingFinishOthers,
