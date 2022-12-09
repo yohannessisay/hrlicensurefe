@@ -7,18 +7,30 @@ import {
   ADD_ADMIN_ERROR,
   SET_APPLICATION_STATUSES,
 } from "./mutation-types";
- 
+
 export default {
   async login({ commit }, admin) {
     commit(ADD_ADMIN_LOADING);
     try {
       const resp = await ApiService.post(baseUrl + "/admins/login", admin, {});
-      window.localStorage.setItem("token", resp.data["token"]);
-      window.localStorage.setItem("adminId", resp.data.data["id"]);
-      window.localStorage.setItem("role", resp.data.data["role"]["code"]);
-      window.localStorage.setItem("adminEmail", resp.data.data["email"]);
-      window.localStorage.setItem("allAdminData", JSON.stringify(resp.data.data))
-      
+      window.localStorage.setItem("token", JSON.stringify(resp.data["token"]));
+      window.localStorage.setItem(
+        "adminId",
+        JSON.stringify(resp.data.data["id"])
+      );
+      window.localStorage.setItem(
+        "role",
+        JSON.stringify(resp.data.data["role"]["code"])
+      );
+      window.localStorage.setItem(
+        "adminEmail",
+        JSON.stringify(resp.data.data["email"])
+      );
+      window.localStorage.setItem(
+        "allAdminData",
+        JSON.stringify(resp.data.data)
+      );
+
       commit(SET_ADMIN, resp.data.data);
       commit(ADD_ADMIN_SUCCESS);
       return resp;
@@ -27,15 +39,17 @@ export default {
     }
   },
 
-  logout({commit}) {
+  logout({ commit }) {
     commit(SET_ADMIN, undefined);
+    
   },
-  async getApplicationStatus({commit}) {
+  async getApplicationStatus({ commit }) {
     try {
-      const AppStatuses = await ApiService.get(baseUrl+"/applicationStatuses");
-      commit(SET_APPLICATION_STATUSES, AppStatuses.data.data)
-    } catch(error) {
-    }
+      const AppStatuses = await ApiService.get(
+        baseUrl + "/applicationStatuses"
+      );
+      commit(SET_APPLICATION_STATUSES, AppStatuses.data.data);
+    } catch (error) {}
   },
   async getRole({ commit }) {
     // commit(ADD_ADMIN_LOADING);
@@ -50,7 +64,11 @@ export default {
   async registerAdmin({ commit }, admin) {
     commit(ADD_ADMIN_LOADING);
     try {
-      const resp = await ApiService.post(baseUrl + "/admins/register", admin, {});
+      const resp = await ApiService.post(
+        baseUrl + "/admins/register",
+        admin,
+        {}
+      );
       commit(ADD_ADMIN_SUCCESS);
       return resp;
     } catch (error) {
@@ -78,9 +96,12 @@ export default {
   },
   async changePassword({ commit }, newPassword) {
     try {
-      const resp = await ApiService.post(baseUrl+"/admins/changePassword", newPassword)
+      const resp = await ApiService.post(
+        baseUrl + "/admins/changePassword",
+        newPassword
+      );
       return resp;
-    } catch(error) {
+    } catch (error) {
       return error;
     }
   },
@@ -93,9 +114,9 @@ export default {
       return resp;
     }
   },
-  async getAdminById(context,adminId) {
+  async getAdminById(context, adminId) {
     try {
-      const resp = await ApiService.get(baseUrl + "/admins/"+adminId);
+      const resp = await ApiService.get(baseUrl + "/admins/" + adminId);
       return resp;
     } catch (error) {
       const resp = error;
@@ -104,9 +125,9 @@ export default {
   },
   async updateAdmin({ commit }, data) {
     try {
-      const resp = await ApiService.put(baseUrl+`/admins/${data.id}`, data)
+      const resp = await ApiService.put(baseUrl + `/admins/${data.id}`, data);
       return resp;
-    } catch(error) {
+    } catch (error) {
       return error;
     }
   },
