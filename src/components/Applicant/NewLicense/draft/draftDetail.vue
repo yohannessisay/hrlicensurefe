@@ -1236,27 +1236,30 @@ export default {
           generalInfo.value.zoneSelected =
             res.data.data && res.data.data.woreda
               ? {
-                  code: res.data.data.woreda.zone.code,
-                  createdAt: res.data.data.woreda.zone.createdAt,
                   id: res.data.data.woreda.zone.id,
                   name: res.data.data.woreda.zone.name,
+                  code: res.data.data.woreda.zone.code,
                   regionId: res.data.data.woreda.zone.regionId,
                   rowguid: res.data.data.woreda.zone.rowguid,
+                  status: res.data.data.woreda.zone.status,
+                  createdAt: res.data.data.woreda.zone.createdAt,
                   updatedAt: res.data.data.woreda.zone.updatedAt,
                 }
               : "";
           generalInfo.value.woredaSelected =
             res.data.data && res.data.data.woreda
               ? {
-                  code: res.data.data.woreda.code,
-                  createdAt: res.data.data.woreda.createdAt,
                   id: res.data.data.woreda.id,
                   name: res.data.data.woreda.name,
+                  code: res.data.data.woreda.code,
                   zoneId: res.data.data.woreda.zoneId,
                   rowguid: res.data.data.woreda.rowguid,
+                  status: res.data.data.woreda.zone.status,
+                  createdAt: res.data.data.woreda.createdAt,
                   updatedAt: res.data.data.woreda.updatedAt,
                 }
               : "";
+              isAppTypeSelected.value=true; 
           applicantTypeChangeHandler();
           regionChangeHandler();
           zoneChangeHandler();

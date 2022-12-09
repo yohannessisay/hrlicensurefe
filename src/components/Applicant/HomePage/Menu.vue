@@ -50,7 +50,7 @@
                   "
                 >
                   <img
-                    src="../../assets/applicant/newLicense.png"
+                    src="../../../assets/applicant/newLicense.png"
                     alt=""
                     style="height: 100px; width: 100px"
                   />
@@ -92,7 +92,7 @@
                   "
                 >
                   <img
-                    src="../../assets/applicant/renewal.png"
+                    src="../../../assets/applicant/renewal.png"
                     alt=""
                     style="height: 100px; width: 100px"
                   />
@@ -134,7 +134,7 @@
                   "
                 >
                   <img
-                    src="../../assets/applicant/goodStanding.png"
+                    src="../../../assets/applicant/goodStanding.png"
                     alt=""
                     style="height: 100px; width: 100px"
                   />
@@ -1709,11 +1709,11 @@
 </template>
 
 <script>
-import { ref, onMounted, getCurrentInstance } from "vue";
+import { ref, onMounted } from "vue";
 import SideNav from "./Sidebar.vue";
 import TopNav from "./Header.vue";
 import { googleApi } from "@/composables/baseURL";
-import "../../styles/applicant.css";
+import "../../../styles/applicant.css";
 import { useStore } from "vuex";
 export default {
   components: { SideNav, TopNav },

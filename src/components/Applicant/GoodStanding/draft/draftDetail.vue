@@ -305,7 +305,7 @@
                   bg-gray-100
                 "
               >
-                <div class="mb-4">
+                <div class="mb-4"> 
                   <label class="text-main-400">Profession</label>
                   <select
                     class="
@@ -332,7 +332,7 @@
                       focus:outline-none
                     "
                     @change="checkOtherProfession()"
-                    v-model="generalInfo.GSProfessionals.professionType"
+                    v-model="generalInfo.GSProfessionals.professionalTypes"
                   >
                     <option
                       :value="
@@ -548,7 +548,6 @@
             <div class="flex flex-col mb-medium w-2/5 mr-12">
               <label class="text-main-400">Zone</label>
               <select
-                id="zoneSelect"
                 class="
                   form-select
                   appearance-none
@@ -565,11 +564,15 @@
                   transition
                   ease-in-out
                   m-0
+                  focus:text-gray-700
+                  focus:bg-white
+                  focus:border-blue-600
+                  focus:outline-none
                 "
-                @change="fetchWoredas(this)"
+                @change="zoneChangeHandler()"
+                v-model="generalInfo.zoneSelected"
               >
                 <option
-                  class="bg-main-400 text-white"
                   :value="
                     generalInfo && generalInfo.zoneSelected
                       ? generalInfo.zoneSelected.id
@@ -963,6 +966,7 @@ export default {
       licenseRegistrationNumber: "",
       GSProfessionals: {
         professionTypeId: "",
+        professionalTypes: {},
         educationLevelId: "",
         otherProfessionType: "",
         otherProfessionTypeAmharic: "",
@@ -1000,7 +1004,7 @@ export default {
     let activeState = ref(1);
     let showOccupation = ref(false);
     let showLanguage = ref(false);
-    let tempZone = "";
+
     const checkApplicantType = (applicantType) => {
       generalInfo.value.regionId = null;
       generalInfo.value.zoneId = null;
@@ -1014,7 +1018,9 @@ export default {
         showLocation.value = false;
       }
     };
-
+    const zoneChangeHandler = () => {
+      fetchWoredas();
+    };
     const regionChangeHandler = () => {
       fetchZones();
     };
@@ -1079,16 +1085,12 @@ export default {
           zones.value = res.data.data;
         });
     };
-    const fetchWoredas = (sel) => {
-      var e = document.getElementById("zoneSelect");
-
-      tempZone = e ? e.value : 1;
-      console.log(tempZone,e);
-      if (tempZone && tempZone.options) {
-        store.dispatch("goodstanding/getWoredas", tempZone).then((res) => {
+    const fetchWoredas = () => {
+      store
+        .dispatch("goodstanding/getWoredas", generalInfo.value.zoneSelected.id)
+        .then((res) => {
           woredas.value = res.data.data;
         });
-      }
     };
     const fetchProfessionalType = (departmentId, educationalLevelId) => {
       let profession = {
@@ -1101,8 +1103,7 @@ export default {
           professionalTypes.value = res.data.data;
         });
     };
-    const setDepartment = () => {
-      console.log(generalInfo.value);
+    const setDepartment = () => { 
       isDepartmentSelected.value = true;
     };
 
@@ -1116,10 +1117,11 @@ export default {
         .dispatch("goodstanding/setGeneralInfo", generalInfo.value)
         .then(() => {
           activeState.value++;
+         
         });
     };
     const clearLocalData = () => {
-      window.localStorage.setItem("GSApplicationData", "");
+      window.localStorage.removeItem("GSApplicationData");
       setTimeout(() => {
         window.location.reload();
       }, 1000);
@@ -1171,8 +1173,8 @@ export default {
           professionType: {
             professionTypeId:
               generalInfo.value.GSProfessionals &&
-              generalInfo.value.GSProfessionals.professionType
-                ? generalInfo.value.GSProfessionals.professionType.id
+              generalInfo.value.GSProfessionals.professionalTypes
+                ? generalInfo.value.GSProfessionals.professionalTypes.id
                 : generalInfo.value.GSProfessionals.professionalTypeId
                 ? generalInfo.value.GSProfessionals.professionalTypeId
                 : null,
@@ -1259,6 +1261,7 @@ export default {
       fetchDepartments();
       fetchProfessionalType();
       fetchEducationLevel();
+     
       fetchRegions();
       fetchZone();
       fetchWoredas();
@@ -1275,37 +1278,42 @@ export default {
             res.data.data && res.data.data.woreda
               ? res.data.data.woreda.zone.region
               : "";
-
+   
           generalInfo.value.zoneSelected =
             res.data.data && res.data.data.woreda
               ? {
-                  code: res.data.data.woreda.zone.code,
-                  createdAt: res.data.data.woreda.zone.createdAt,
                   id: res.data.data.woreda.zone.id,
                   name: res.data.data.woreda.zone.name,
+                  code: res.data.data.woreda.zone.code,
                   regionId: res.data.data.woreda.zone.regionId,
                   rowguid: res.data.data.woreda.zone.rowguid,
+                  status: res.data.data.woreda.zone.status,
+                  createdAt: res.data.data.woreda.zone.createdAt,
                   updatedAt: res.data.data.woreda.zone.updatedAt,
                 }
               : "";
           generalInfo.value.woredaSelected =
             res.data.data && res.data.data.woreda
               ? {
-                  code: res.data.data.woreda.code,
-                  createdAt: res.data.data.woreda.createdAt,
                   id: res.data.data.woreda.id,
                   name: res.data.data.woreda.name,
+                  code: res.data.data.woreda.code,
                   zoneId: res.data.data.woreda.zoneId,
                   rowguid: res.data.data.woreda.rowguid,
+                  status: res.data.data.woreda.zone.status,
+                  createdAt: res.data.data.woreda.createdAt,
                   updatedAt: res.data.data.woreda.updatedAt,
                 }
               : "";
           applicantTypeChangeHandler();
           regionChangeHandler();
+          zoneChangeHandler();
           generalInfo.value.education = JSON.parse(
             JSON.stringify(res.data.data.GSProfessionals)
           );
+  
           generalInfo.value.applicantTypeSelected = res.data.data.applicantType;
+          educationalLevelChange();
         });
     });
     return {
@@ -1314,7 +1322,7 @@ export default {
       fetchProfessionalType,
       regionChangeHandler,
       applicantTypeChangeHandler,
-      fetchWoredas,
+      zoneChangeHandler,
       educationalLevelChange,
       setDepartment,
       apply,

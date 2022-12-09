@@ -1,5 +1,6 @@
 <template>
-  <div class="
+  <div
+    class="
       modal
       fade
       fixed
@@ -10,15 +11,24 @@
       h-full
       outline-none
       overflow-x-hidden overflow-y-auto
-    " id="approvedDetail" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="approvedDetailLabel" aria-hidden="true">
-    <div class="
+    "
+    id="approvedDetail"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    tabindex="-1"
+    aria-labelledby="approvedDetailLabel"
+    aria-hidden="true"
+  >
+    <div
+      class="
         modal-dialog modal-dialog-centered modal-xl
         relative
         w-auto
         pointer-events-none
-      ">
-      <div class="
+      "
+    >
+      <div
+        class="
           modal-content
           border-none
           shadow-lg
@@ -30,9 +40,14 @@
           rounded-md
           outline-none
           text-current
-        ">
-        <div class="modal-header flex flex-shrink-0 justify-end p-2 rounded-t-md">
-          <button type="button" class="
+        "
+      >
+        <div
+          class="modal-header flex flex-shrink-0 justify-end p-2 rounded-t-md"
+        >
+          <button
+            type="button"
+            class="
               px-6
               text-white
               bg-main-400
@@ -52,17 +67,29 @@
               transition
               duration-150
               ease-in-out
-            " data-bs-dismiss="modal" aria-label="Close">
+            "
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          >
             <i class="fa fa-close fa-2x"></i>
           </button>
         </div>
         <div class="vld-parent mt-4">
-          <loading :active="isLoading" :is-full-page="false" :color="'#07677e'" :opacity="1"></loading>
+          <loading
+            :active="isLoading"
+            :is-full-page="false"
+            :color="'#07677e'"
+            :opacity="1"
+          ></loading>
           <div class="modal-body relative p-4">
             <div class="container px-6 mx-auto">
               <section class="text-gray-800">
-                <div class="flex justify-center border-b-4 text-main-400">
-                  <h4 class="text-black ml-8">Please bring required documents when coming to pick up your license</h4>
+                <div class="flex justify-center border-b-4 text-main-400 message_container">
+                  <h4 class="ml-8"   data-title="** Please bring required documents when coming to pick up your
+                    license **">
+                    ** Please bring required documents when coming to pick up
+                    your license **
+                  </h4>
                 </div>
 
                 <div class="flex justify-center border-b-4 text-main-400">
@@ -73,24 +100,34 @@
                   </div>
                 </div>
 
-                <div class="container my-12 mx-auto px-4 md:px-12 border-b" v-if="renewalData">
+                <div
+                  class="container my-12 mx-auto px-4 md:px-12 border-b"
+                  v-if="renewalData"
+                >
                   <div class="flex flex-wrap -mx-1 lg:-mx-4">
                     <!-- Column -->
-                    <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
+                    <div
+                      class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
+                    >
                       <!-- Article -->
-                      <article class="overflow-hidden rounded-lg shadow-xl ">
-                        <header class="
+                      <article class="overflow-hidden rounded-lg shadow-xl">
+                        <header
+                          class="
                             flex
                             items-center
                             justify-between
                             leading-tight
                             p-2
                             md:p-4
-                            border-b-4  
+                            border-b-4
                             text-main-400
-                          ">
+                          "
+                        >
                           <h1 class="text-lg">
-                            <a class="no-underline hover:underline text-black" href="#">
+                            <a
+                              class="no-underline hover:underline text-black"
+                              href="#"
+                            >
                               Applicant Profile
                             </a>
                           </h1>
@@ -100,21 +137,21 @@
                         </header>
 
                         <div class="grid grid-flow-row auto-rows-max">
-                          <div class="flex justify-between px-4 py-1 ">
+                          <div class="flex justify-between px-4 py-1">
                             <div>Applicant Name</div>
                             <div class="text-main-400 font-bold">
                               {{
-                              (renewalData && renewalData.profile
-                              ? renewalData.profile.name
-                              : "-") +
-                              " " +
-                              (renewalData && renewalData.profile
-                              ? renewalData.profile.fatherName
-                              : "-") +
-                              " " +
-                              (renewalData && renewalData.profile
-                              ? renewalData.profile.grandFatherName
-                              : "-")
+                                (renewalData && renewalData.profile
+                                  ? renewalData.profile.name
+                                  : "-") +
+                                " " +
+                                (renewalData && renewalData.profile
+                                  ? renewalData.profile.fatherName
+                                  : "-") +
+                                " " +
+                                (renewalData && renewalData.profile
+                                  ? renewalData.profile.grandFatherName
+                                  : "-")
                               }}
                             </div>
                           </div>
@@ -122,9 +159,9 @@
                             <div>Applicant Email</div>
                             <div class="text-main-400 font-bold">
                               {{
-                              renewalData && renewalData.applicant
-                              ? renewalData.applicant.emailAddress
-                              : "-"
+                                renewalData && renewalData.applicant
+                                  ? renewalData.applicant.emailAddress
+                                  : "-"
                               }}
                             </div>
                           </div>
@@ -132,32 +169,37 @@
                             <div>Applicant Phone</div>
                             <div class="text-main-400 font-bold">
                               {{
-                              renewalData && renewalData.applicant
-                              ? "+251" + renewalData.applicant.phoneNumber
-                              : "-"
+                                renewalData && renewalData.applicant
+                                  ? "+251" + renewalData.applicant.phoneNumber
+                                  : "-"
                               }}
                             </div>
                           </div>
                         </div>
 
-                        <footer class="
+                        <footer
+                          class="
                             flex
                             items-center
                             justify-between
                             leading-none
                             p-2
                             md:p-4
-                          "></footer>
+                          "
+                        ></footer>
                       </article>
                       <!-- END Article -->
                     </div>
                     <!-- END Column -->
 
                     <!-- Column -->
-                    <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
+                    <div
+                      class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
+                    >
                       <!-- Article -->
                       <article class="overflow-hidden rounded-lg shadow-xl">
-                        <header class="
+                        <header
+                          class="
                             flex
                             items-center
                             justify-between
@@ -166,9 +208,13 @@
                             md:p-4
                             border-b-4
                             text-main-400
-                          ">
+                          "
+                        >
                           <h1 class="text-lg">
-                            <a class="no-underline hover:underline text-black" href="#">
+                            <a
+                              class="no-underline hover:underline text-black"
+                              href="#"
+                            >
                               Reviewer Detail
                             </a>
                           </h1>
@@ -183,13 +229,13 @@
                             <div>Reviewer Level</div>
                             <div class="text-main-400 font-bold">
                               {{
-                              renewalData &&
-                              renewalData.renewalReviewer &&
-                              renewalData.renewalReviewer.reviewer &&
-                              renewalData.renewalReviewer.reviewer.expertLevel
-                              ? renewalData.renewalReviewer.reviewer
-                              .expertLevel.name
-                              : "-"
+                                renewalData &&
+                                renewalData.renewalReviewer &&
+                                renewalData.renewalReviewer.reviewer &&
+                                renewalData.renewalReviewer.reviewer.expertLevel
+                                  ? renewalData.renewalReviewer.reviewer
+                                      .expertLevel.name
+                                  : "-"
                               }}
                             </div>
                           </div>
@@ -197,9 +243,9 @@
                             <div>Reviewer Name</div>
                             <div class="text-main-400 font-bold">
                               {{
-                              renewalData && renewalData.renewalReviewer
-                              ? renewalData.renewalReviewer.reviewer.name
-                              : "-"
+                                renewalData && renewalData.renewalReviewer
+                                  ? renewalData.renewalReviewer.reviewer.name
+                                  : "-"
                               }}
                             </div>
                           </div>
@@ -207,35 +253,38 @@
                             <div>Phone Number</div>
                             <div class="text-main-400 font-bold">
                               {{
-                              renewalData && renewalData.renewalReviewer
-                              ? renewalData.renewalReviewer.reviewer
-                              .phoneNumber
-                              : "-"
+                                renewalData && renewalData.renewalReviewer
+                                  ? renewalData.renewalReviewer.reviewer
+                                      .phoneNumber
+                                  : "-"
                               }}
                             </div>
                           </div>
                         </div>
 
-                        <footer class="
+                        <footer
+                          class="
                             flex
                             items-center
                             justify-between
                             leading-none
                             p-2
                             md:p-4
-                          "></footer>
+                          "
+                        ></footer>
                       </article>
                       <!-- END Article -->
                     </div>
                     <!-- END Column -->
 
-           
-
                     <!-- Column -->
-                    <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
+                    <div
+                      class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
+                    >
                       <!-- Article -->
                       <article class="overflow-hidden rounded-lg shadow-xl">
-                        <header class="
+                        <header
+                          class="
                             flex
                             items-center
                             justify-between
@@ -244,9 +293,13 @@
                             md:p-4
                             border-b-4
                             text-main-400
-                          ">
+                          "
+                        >
                           <h1 class="text-lg">
-                            <a class="no-underline hover:underline text-black" href="#">
+                            <a
+                              class="no-underline hover:underline text-black"
+                              href="#"
+                            >
                               Renewal Detail
                             </a>
                           </h1>
@@ -258,9 +311,9 @@
                             <div>Applicant Type</div>
                             <div class="text-main-400 font-bold">
                               {{
-                              renewalData && renewalData.applicantType
-                              ? renewalData.applicantType.name
-                              : "-"
+                                renewalData && renewalData.applicantType
+                                  ? renewalData.applicantType.name
+                                  : "-"
                               }}
                             </div>
                           </div>
@@ -268,9 +321,9 @@
                             <div>Application Status</div>
                             <div class="text-main-400 font-bold">
                               {{
-                              renewalData && renewalData.applicationStatus
-                              ? renewalData.applicationStatus.name
-                              : "-"
+                                renewalData && renewalData.applicationStatus
+                                  ? renewalData.applicationStatus.name
+                                  : "-"
                               }}
                             </div>
                           </div>
@@ -278,9 +331,9 @@
                             <div>Certified Status</div>
                             <div class="text-main-400 font-bold">
                               {{
-                              renewalData && renewalData.certified
-                              ? "Certified"
-                              : "Not Certified"
+                                renewalData && renewalData.certified
+                                  ? "Certified"
+                                  : "Not Certified"
                               }}
                             </div>
                           </div>
@@ -288,9 +341,9 @@
                             <div>Certified Date</div>
                             <div class="text-main-400 font-bold">
                               {{
-                              renewalData && renewalData.certifiedDate
-                              ? renewalData.certifiedDate.slice(0, 10)
-                              : "-"
+                                renewalData && renewalData.certifiedDate
+                                  ? renewalData.certifiedDate.slice(0, 10)
+                                  : "-"
                               }}
                             </div>
                           </div>
@@ -298,35 +351,40 @@
                             <div>Expiration Date</div>
                             <div class="text-main-400 font-bold">
                               {{
-                              renewalData && renewalData.licenseExpirationDate
-                              ? renewalData.licenseExpirationDate.slice(
+                                renewalData && renewalData.licenseExpirationDate
+                                  ? renewalData.licenseExpirationDate.slice(
                                       0,
                                       10
                                     )
-                              : "-"
+                                  : "-"
                               }}
                             </div>
                           </div>
                         </div>
 
-                        <footer class="
+                        <footer
+                          class="
                             flex
                             items-center
                             justify-between
                             leading-none
                             p-2
                             md:p-4
-                          "></footer>
+                          "
+                        ></footer>
                       </article>
                       <!-- END Article -->
                     </div>
                     <!-- END Column -->
 
-                             <!-- Column -->
-                             <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
+                    <!-- Column -->
+                    <div
+                      class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
+                    >
                       <!-- Article -->
                       <article class="overflow-hidden rounded-lg shadow-xl">
-                        <header class="
+                        <header
+                          class="
                             flex
                             items-center
                             justify-between
@@ -335,24 +393,31 @@
                             md:p-4
                             border-b-4
                             text-main-400
-                          ">
+                          "
+                        >
                           <h1 class="text-lg">
-                            <a class="no-underline hover:underline text-black" href="#">
+                            <a
+                              class="no-underline hover:underline text-black"
+                              href="#"
+                            >
                               Applicants Education Detail
                             </a>
                           </h1>
                           <p class="text-main-400 text-sm">Active</p>
                         </header>
 
-                        <div class="grid grid-flow-row auto-rows-max"
-                          v-for="(education, index) in renewalData.educations" :key="education ? education.id : ''">
+                        <div
+                          class="grid grid-flow-row auto-rows-max"
+                          v-for="(education, index) in renewalData.educations"
+                          :key="education ? education.id : ''"
+                        >
                           <div class="flex justify-between px-4 py-1">
                             <div>Department</div>
                             <div class="text-main-400 font-bold">
                               {{
-                              education && education.department
-                              ? education.department.name
-                              : "-"
+                                education && education.department
+                                  ? education.department.name
+                                  : "-"
                               }}
                             </div>
                           </div>
@@ -360,9 +425,9 @@
                             <div>Institution</div>
                             <div class="text-main-400 font-bold">
                               {{
-                              education && education.institution
-                              ? education.institution.name
-                              : "-"
+                                education && education.institution
+                                  ? education.institution.name
+                                  : "-"
                               }}
                             </div>
                           </div>
@@ -370,34 +435,38 @@
                             <div>Education Level</div>
                             <div class="text-main-400 font-bold">
                               {{
-                              education && education.educationLevel
-                              ? education.educationLevel.name
-                              : "-"
+                                education && education.educationLevel
+                                  ? education.educationLevel.name
+                                  : "-"
                               }}
                             </div>
                           </div>
 
-                          <hr class="mt-3 mb-3" style="color: lightgray"
-                            v-if="index != renewalData.educations.length - 1" />
+                          <hr
+                            class="mt-3 mb-3"
+                            style="color: lightgray"
+                            v-if="index != renewalData.educations.length - 1"
+                          />
                         </div>
 
-                        <footer class="
+                        <footer
+                          class="
                             flex
                             items-center
                             justify-between
                             leading-none
                             p-2
                             md:p-4
-                          "></footer>
+                          "
+                        ></footer>
                       </article>
                       <!-- END Article -->
                     </div>
 
                     <!-- END Column -->
 
-
-                         <!-- Column -->
-                         <div
+                    <!-- Column -->
+                    <div
                       v-if="droppedEducations && droppedEducations.length > 0"
                       class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
                     >
@@ -523,16 +592,16 @@
                               class="no-underline hover:underline text-black"
                               href="#"
                             >
-                            Retrival Date
+                              Retrival Date
                             </a>
                           </h1>
                         </header>
 
                         <div class="grid grid-flow-row auto-rows-max">
                           <div class="flex justify-between px-4 py-1">
-                            <div> Retrival Date</div>
+                            <div>Retrival Date</div>
                             <div class="text-main-400 font-bold">
-                            {{ renewalData.retrivalDate }}
+                              {{ renewalData.retrivalDate }}
                             </div>
                           </div>
                         </div>
@@ -547,17 +616,20 @@
             </div>
           </div>
         </div>
-        <div class="
+        <div
+          class="
             modal-footer
             flex flex-shrink-0 flex-wrap
             items-center
             justify-end
             border-t border-grey-100
             rounded-b-md
-          ">
-
-          <button type="button" class="
-             inline-block
+          "
+        >
+          <button
+            type="button"
+            class="
+              inline-block
               px-6
               text-white
               bg-main-400
@@ -567,11 +639,13 @@
               leading-tight
               uppercase
               rounded
-              shadow-lg 
+              shadow-lg
               transition
               duration-150
               ease-in-out
-            " data-bs-dismiss="modal">
+            "
+            data-bs-dismiss="modal"
+          >
             Close
           </button>
         </div>
@@ -587,7 +661,7 @@ import { googleApi } from "@/composables/baseURL";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 export default {
-  props: ['modalDataId'],
+  props: ["modalDataId"],
   components: { Loading },
   setup(props) {
     let store = useStore();
@@ -596,7 +670,7 @@ export default {
     let droppedEducations = ref([]);
     let isLoading = ref(false);
     watch(props.modalDataId, () => {
-      isLoading.value = true
+      isLoading.value = true;
       store
         .dispatch("renewal/getRenewalApplication", props.modalDataId.id)
         .then((res) => {
@@ -609,7 +683,7 @@ export default {
                 }
               })
             : false;
-          isLoading.value = false
+          isLoading.value = false;
         });
     });
     onMounted(() => {
@@ -626,4 +700,42 @@ export default {
   },
 };
 </script>
-  
+<style scoped>
+.message {
+  font-size: 2rem;
+  color: transparent;
+  font-size: 2rem;
+  display: inline-block;
+  border-radius: 3px;
+  background-color: #1d3557;
+  position: relative;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+.message:before {
+  content: attr(data-title);
+  background: linear-gradient(90deg, #19b4db 0%, #049611 51%, #049611 100%);
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  background-clip: text;
+  -webkit-background-clip: text;
+  transition: all 1s ease-in-out;
+  animation: text-animation 3s infinite;
+}
+
+@keyframes text-animation {
+  0% {
+    width: 0;
+  }
+  50% {
+    width: 100%;
+  }
+  100% {
+    width: 0;
+  }
+}
+</style>

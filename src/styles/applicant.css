@@ -151,17 +151,31 @@
 
 .content.active {
   width: calc(100% - 80px);
-  left: 80px;
+  left: 100px;
 
 }
 
 .side-navbar.active {
-  width: 60px;
-  margin: 10px;
-  border-radius: 10px;
+  width: 80px;
+  margin: 13px;
+  border-radius: 5px;
   
 }
-
+#mainSideBar > ul > li:nth-child(1) > a > a > span.icon > i,
+#mainSideBar > ul > li:nth-child(2) > a > a > span.icon > i,
+#mainSideBar > ul > li:nth-child(3) > a > a > span.icon > i,
+#mainSideBar > ul > li:nth-child(4) > a > a > span.icon > i,
+#mainSideBar > ul > li:nth-child(5) > a > a > span.icon > i,
+#mainSideBar > ul > li:nth-child(6) > a > a > span.icon > i,
+#mainSideBar > ul > li:nth-child(7) > a > a > span.icon > i,
+#mainSideBar > ul > li:nth-child(8) > a > a > span.icon > i,
+#mainSideBar > ul > li:nth-child(9) > a > a > span.icon > i,
+#mainSideBar > ul > li:nth-child(10) > a > a > span.icon > i,
+#mainSideBar > ul > li:nth-child(11) > a > a > span.icon > i,
+#mainSideBar > ul > li:nth-child(12) > a > a > span.icon > i
+{
+  font-size: 28px;
+}
 
 .side-navbar ul li b.left-curve {
   position: absolute;

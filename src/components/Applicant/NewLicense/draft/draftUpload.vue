@@ -864,6 +864,7 @@
   </div>
   <filePreview :modalData="filePreviewData"> </filePreview>
 </template>
+
 <script>
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
@@ -1101,7 +1102,7 @@ export default {
     };
     const checkDocuments = () => {
       let temp = false;
-      let CMtemp = false; 
+      let CMtemp = false;
 
       /// check common documents
 
@@ -1172,8 +1173,6 @@ export default {
 
         //// check documetns with parents
 
-  
-
         // fileUploadError.value[
         //         "file_upload_row_" +
         //           single.documentType.code +
@@ -1184,75 +1183,48 @@ export default {
         //       ] = true;
       });
 
-      return CMtemp && temp ;
+      return CMtemp && temp;
     };
     const next = () => {
-      let documentValidation = checkDocuments();
-      if (documentValidation) {
-        store.dispatch("newlicense/setTempDocs", formData).then(() => {
-          //Save images to indexed Db
+      store.dispatch("newlicense/setTempDocs", formData).then(() => {
+        //Save images to indexed Db
 
-          let finalLocalData = {
-            created: new Date(),
-            data: [],
-          };
-          let db;
-          let request = indexedDB.open("NLdocumentUploads", 1);
-          request.onsuccess = function () {
-            db = request.result;
-            let transaction = db.transaction(
-              ["NLdocumentUploads"],
-              "readwrite"
-            );
+        let finalLocalData = {
+          created: new Date(),
+          data: [],
+        };
+        let db;
+        let request = indexedDB.open("NLdocumentUploads", 1);
+        request.onsuccess = function () {
+          db = request.result;
+          let transaction = db.transaction(["NLdocumentUploads"], "readwrite");
 
-            finalLocalData.data = imageData;
+          finalLocalData.data = imageData;
 
-            finalLocalData.data = [...new Set(finalLocalData.data)];
+          finalLocalData.data = [...new Set(finalLocalData.data)];
 
-            const objectStore = transaction.objectStore("NLdocumentUploads");
+          const objectStore = transaction.objectStore("NLdocumentUploads");
 
-            const objectStoreRequest = objectStore.clear();
+          const objectStoreRequest = objectStore.clear();
 
-            objectStoreRequest.onsuccess = (event) => {
-              let addReq = transaction
-                .objectStore("NLdocumentUploads")
-                .put(finalLocalData);
+          objectStoreRequest.onsuccess = (event) => {
+            let addReq = transaction
+              .objectStore("NLdocumentUploads")
+              .put(finalLocalData);
 
-              addReq.onerror = function () {
-                console.log(
-                  "Error regarding your browser, please update your browser to the latest version"
-                );
-              };
+            addReq.onerror = function () {
+              console.log(
+                "Error regarding your browser, please update your browser to the latest version"
+              );
+            };
 
-              transaction.oncomplete = function () {
-                console.log("data stored");
-                emit("changeActiveState");
-              };
+            transaction.oncomplete = function () {
+              console.log("data stored");
+              emit("changeActiveState");
             };
           };
-        });
-      } else {
-        let errors = "";
-
-        errorDocuments.value.forEach((element) => {
-          if (!errors) {
-            errors = element.name;
-          } else {
-            errors = errors + " , " + element.name;
-          }
-        });
-
-        toast.error(
-          "Please attach the following required documents " + errors,
-          {
-            timeout: 5000,
-            position: "bottom-center",
-            pauseOnFocusLoss: true,
-            pauseOnHover: true,
-            icon: true,
-          }
-        );
-      }
+        };
+      });
     };
 
     const groupByKey = (array, key) => {
@@ -1344,7 +1316,7 @@ export default {
               documentsSaved.value[element.fileName].name =
                 element.originalFileName;
             });
-            documentsUploaded.value = documentsSaved.value; 
+            documentsUploaded.value = documentsSaved.value;
             store
               .dispatch("newlicense/getApplicationCategories")
               .then((res) => {

@@ -1286,7 +1286,7 @@ export default {
     };
     const apply = () => {
       let tempComparision = [];
-      if (existingLicense.value && generalInfo.value.education) {
+      if (existingLicense.value && generalInfo.value.education&&existingLicense.value.length>0) {
         existingLicense.value.forEach(element => {
           if (element.educations) {
             tempComparision.push({
@@ -1338,7 +1338,7 @@ export default {
       }
     };
     const clearLocalData = () => {
-      window.localStorage.setItem("NLApplicationData", "");
+      window.localStorage.removeItem("NLApplicationData");
       setTimeout(() => {
         window.location.reload();
       }, 1000);
@@ -1410,6 +1410,8 @@ export default {
         : {};
       if (Object.keys(localData.value).length != 0) {
         generalInfo.value = localData.value;
+        isAppTypeSelected.value=true;
+        applicantTypeChangeHandler();
       }
       let userId = JSON.parse(window.localStorage.getItem("userId"));
       store.dispatch("newlicense/getNewLicenseByUser", userId).then(res => {

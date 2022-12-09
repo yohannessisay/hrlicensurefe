@@ -85,9 +85,13 @@
             <div class="container px-6 mx-auto">
               <section class="text-gray-800">
                 <div class="flex justify-center border-b-4 text-main-400">
-                  <h4 class="text-black ml-8">
-                    Please bring required documents when coming to pick up your
-                    license
+                  <h4
+                    class="message ml-8"
+                    data-title="** Please bring required documents when coming to pick up your
+                    license **"
+                  >
+                    ** Please bring required documents when coming to pick up
+                    your license **
                   </h4>
                 </div>
 
@@ -339,8 +343,8 @@
                             <div>Certified Date</div>
                             <div class="text-main-400 font-bold">
                               {{
-                                licenseData && licenseData.applicationStatus
-                                  ? licenseData.applicationStatus.name
+                                licenseData && licenseData.certifiedDate
+                                  ? licenseData.certifiedDate.slice(0, 10)
                                   : "-"
                               }}
                             </div>
@@ -349,8 +353,11 @@
                             <div>Expiration Date</div>
                             <div class="text-main-400 font-bold">
                               {{
-                                licenseData && licenseData.applicationStatus
-                                  ? licenseData.applicationStatus.name
+                                licenseData && licenseData.licenseExpirationDate
+                                  ? licenseData.licenseExpirationDate.slice(
+                                      0,
+                                      10
+                                    )
                                   : "-"
                               }}
                             </div>
@@ -595,16 +602,16 @@
                               class="no-underline hover:underline text-black"
                               href="#"
                             >
-                            Retrival Date
+                              Retrival Date
                             </a>
                           </h1>
                         </header>
 
                         <div class="grid grid-flow-row auto-rows-max">
                           <div class="flex justify-between px-4 py-1">
-                            <div> Retrival Date</div>
+                            <div>Retrival Date</div>
                             <div class="text-main-400 font-bold">
-                            {{ licenseData.retrivalDate }}
+                              {{ licenseData.retrivalDate }}
                             </div>
                           </div>
                         </div>
@@ -703,3 +710,42 @@ export default {
   },
 };
 </script>
+<style scoped>
+.message {
+  font-size: 2rem;
+  color: transparent;
+  font-size: 2rem;
+  display: inline-block;
+  border-radius: 3px;
+  background-color: #1d3557;
+  position: relative;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+.message:before {
+  content: attr(data-title);
+  background: linear-gradient(90deg, #19b4db 0%, #049611 51%, #049611 100%);
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  background-clip: text;
+  -webkit-background-clip: text;
+  transition: all 1s ease-in-out;
+  animation: text-animation 3s infinite;
+}
+
+@keyframes text-animation {
+  0% {
+    width: 0;
+  }
+  50% {
+    width: 100%;
+  }
+  100% {
+    width: 0;
+  }
+}
+</style>

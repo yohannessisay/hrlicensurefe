@@ -80,7 +80,7 @@ const routes = [
   {
     path: "/menu",
     name: "Menu",
-    component: () => import("../views/Applicant/Menu.vue")
+    component: () => import("../components/Applicant/HomePage/Menu.vue")
   },
 
   //Applicant Side New License
@@ -756,15 +756,15 @@ router.beforeEach(async (to, from, next) => {
     next("/admin/list");
   }
   if (to.path != "/Applicant/NewLicense") {
-    window.localStorage.setItem("NLApplicationData", ""); 
+    window.localStorage.removeItem("NLApplicationData"); 
     window.indexedDB.deleteDatabase("NLdocumentUploads"); 
   }
   if (to.path != "/Applicant/Renewal") {
-    window.localStorage.setItem("RNApplicationData", "");
+    window.localStorage.removeItem("RNApplicationData");
     window.indexedDB.deleteDatabase("RNdocumentUploads");
   }
   if (to.path != "/Applicant/GoodStanding") {
-    window.localStorage.setItem("GSApplicationData", "");
+    window.localStorage.removeItem("GSApplicationData");
     window.indexedDB.deleteDatabase("GSdocumentUploads");
   }
 

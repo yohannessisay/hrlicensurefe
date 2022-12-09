@@ -834,8 +834,8 @@ export default {
             professionType: {
               professionTypeId:
                 generalInfo.value.GSProfessionals &&
-                generalInfo.value.GSProfessionals.professionType
-                  ? generalInfo.value.GSProfessionals.professionType.id
+                generalInfo.value.GSProfessionals.professionalTypes
+                  ? generalInfo.value.GSProfessionals.professionalTypes.id
                   : generalInfo.value.GSProfessionals.professionalTypeId
                   ? generalInfo.value.GSProfessionals.professionalTypeId
                   : null,

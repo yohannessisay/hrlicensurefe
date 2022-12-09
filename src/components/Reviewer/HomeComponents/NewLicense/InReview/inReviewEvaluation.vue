@@ -436,6 +436,10 @@
                                   <h2 class="font-bold">
                                     Department Information
                                   </h2>
+                                  <small class="font-bold"
+                                    >Uncheck departments if you want to remove
+                                    them</small
+                                  >
                                   <i
                                     class="
                                       fa fa-briefcase
@@ -446,20 +450,27 @@
                                 </header>
 
                                 <div
-                                  class="
-                                    flex flex-row
-                                    border-b-2
-                                    text-grey-400
-                                    m-2
+                                  :class="
+                                    education && education.isDropped == false
+                                      ? 'flex flex-row border-b-2 text-grey-400 m-2'
+                                      : 'flex flex-row border text-red-300 m-2 p-2 rounded-md'
                                   "
                                   v-for="education in newLicense.educations"
                                   :key="education.id"
                                 >
                                   <div class="flex justify-center">
                                     <div>
-                                      <label for="" class="font-bold text-red-300">Remove</label>
+                                      <label
+                                        for=""
+                                        class="font-bold text-red-300"
+                                        >{{
+                                          education &&
+                                          education.isDropped == false
+                                            ? ""
+                                            : "Removed"
+                                        }}</label
+                                      >
                                       <div class="form-check">
-                                        
                                         <input
                                           class="
                                             form-check-input
@@ -468,18 +479,18 @@
                                             w-8
                                             border border-gray-300
                                             rounded-md
-                                            bg-white
+                                            bg-red-300
                                             transition
                                             duration-200
                                             my-1
-                                            focus:text-red-300
-                                              btn-check:bg-white
+                                            btn-check:bg-white
                                             focus:outline-none
                                             align-top
                                             bg-no-repeat bg-center bg-contain
                                             float-left
                                             cursor-pointer
                                           "
+                                          checked
                                           type="checkbox"
                                           @change="
                                             education &&
@@ -1290,13 +1301,16 @@
                             outline-none
                             cursor-pointer
                           "
-                          v-on:click="toggleModal()"
+                          v-on:click="showRemark = false"
                         >
                           <span class="text-3xl"> × </span>
                         </div>
                       </div>
                       <!--body-->
-                      <div class="modalBody pb-xl">
+                      <div
+                        class="modalBody pb-xl"
+                        v-if="nothingDropped == true"
+                      >
                         <div class="flex mt-medium justify-center">
                           <h2>Declined documents</h2>
                         </div>
@@ -1389,7 +1403,11 @@
                         </div>
                       </div>
                       <!--footer-->
-                      <label for="" class="ml-12">Remark</label>
+                      <label for="" class="ml-2">{{
+                        nothingDropped
+                          ? "Remark on why you are declining the license"
+                          : "Remark on why you have dropped the department/s"
+                      }}</label>
                       <textarea
                         v-model="newLicense.remark"
                         class="
@@ -1439,7 +1457,7 @@
                             ease-in-out
                           "
                           type="button"
-                          v-on:click="toggleModal()"
+                          v-on:click="showRemark = false"
                         >
                           Close
                         </button>
@@ -1818,6 +1836,7 @@ export default {
     const store = useStore();
     const toast = useToast();
     let declineAction = ref("DeclineEvent");
+    let nothingDropped = ref(true);
     const options = ref([0, 1, 2]);
     const selectedOptions = ref([0]);
     const newSelectedOptions = ref([0]);
@@ -1918,15 +1937,14 @@ export default {
     let instSearched = ref({ name: "" });
     let newProf = ref([]);
     let tempProf = ref({});
-    let tempPref = ref({}); 
+    let tempPref = ref({});
     let modifiedProfession = [];
     let allowOtherProfChange = ref({});
     let professionalTypes = ref([]);
     let evaluateRoute = ref("/admin/evaluate/NewLicense" + route.params.id);
     const editPersonalData = ref(false);
     let others = ref({});
-    let droppedDepartments = ref([]);
-    let hasDropped = ref(false);
+    let droppedDepartments = ref([]); 
     const editPersonalInfo = () => {
       editPersonalData.value = !editPersonalData.value;
     };
@@ -1946,7 +1964,7 @@ export default {
       store
         .dispatch("reviewer/getNewLicenseApplication", applicationId)
         .then((res) => {
-          newLicense.value = res.data.data ? res.data.data : {}; 
+          newLicense.value = res.data.data ? res.data.data : {};
           profileInfo.value =
             newLicense.value && newLicense.value.profile
               ? newLicense.value.profile
@@ -2247,6 +2265,7 @@ export default {
 
       if (actionValue == "DeclineEvent" && newLicense.value.remark == null) {
         showRemarkError.value = true;
+        nothingDropped.value == true
         smsMessage = newLicense.value
           ? "Dear applicant your applied new license of number " +
             newLicense.value.newLicenseCode +
@@ -2255,11 +2274,10 @@ export default {
         showRemark.value = true;
         sendDeclinedData.value = false;
         return;
-      } else if (hasDropped.value == true) {
+      }else if (nothingDropped.value == false) {
         showRemarkError.value = true;
         showRemark.value = true;
-        sendDeclinedData.value = false;
-        hasDropped.value = false;
+        sendDeclinedData.value = false; 
         return;
       } else showRemarkError.value = false;
       let checkProfessionResult = false;
@@ -2295,7 +2313,7 @@ export default {
         ],
         message: smsMessage ? smsMessage : "",
       };
-    
+
       if (applicationType.value == "New License") {
         isLoadingAction.value = true;
         store
@@ -2358,11 +2376,15 @@ export default {
       droppedDepartments.value.push(education);
       droppedDepartments.value = [...new Set(droppedDepartments.value)];
       if (droppedDepartments.value && droppedDepartments.value.length > 0) {
-        hasDropped.value = true;
         declineAction.value = "ApproveEvent";
+        if (rejected.value && rejected.value.length == 0) {
+          nothingDropped.value = false;
+        }
       } else {
-        hasDropped.value = false;
         declineAction.value = "DeclineEvent";
+        if (rejected.value && rejected.value.length == 0) {
+          nothingDropped.value = true;
+        }
       }
     };
     const openPdfInNewTab = (pdfPath) => {
@@ -2673,8 +2695,7 @@ export default {
       nextRemark,
       previousRemark,
       droppedDepartment,
-      droppedDepartments,
-      hasDropped,
+      droppedDepartments, 
       amount,
       supervise,
       showOptions,
@@ -2691,6 +2712,7 @@ export default {
       showDateError,
       endDate,
       isLoadingAction,
+      nothingDropped,
       accept,
       transferToFederal,
       showTransferToFederal,

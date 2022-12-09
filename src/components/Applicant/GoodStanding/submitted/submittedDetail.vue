@@ -305,7 +305,7 @@
                   bg-gray-100
                 "
               >
-                <div class="mb-4">
+                <div class="mb-4"> 
                   <label class="text-main-400">Profession</label>
                   <select
                     class="
@@ -332,7 +332,7 @@
                       focus:outline-none
                     "
                     @change="checkOtherProfession()"
-                    v-model="generalInfo.GSProfessionals.professionType"
+                    v-model="generalInfo.GSProfessionals.professionalTypes"
                   >
                     <option
                       :value="
@@ -966,6 +966,7 @@ export default {
       licenseRegistrationNumber: "",
       GSProfessionals: {
         professionTypeId: "",
+        professionalTypes: {},
         educationLevelId: "",
         otherProfessionType: "",
         otherProfessionTypeAmharic: "",
@@ -1120,7 +1121,7 @@ export default {
         });
     };
     const clearLocalData = () => {
-      window.localStorage.setItem("GSApplicationData", "");
+      window.localStorage.removeItem("GSApplicationData");
       setTimeout(() => {
         window.location.reload();
       }, 1000);
@@ -1172,8 +1173,8 @@ export default {
           professionType: {
             professionTypeId:
               generalInfo.value.GSProfessionals &&
-              generalInfo.value.GSProfessionals.professionType
-                ? generalInfo.value.GSProfessionals.professionType.id
+              generalInfo.value.GSProfessionals.professionalTypes
+                ? generalInfo.value.GSProfessionals.professionalTypes.id
                 : generalInfo.value.GSProfessionals.professionalTypeId
                 ? generalInfo.value.GSProfessionals.professionalTypeId
                 : null,
@@ -1260,6 +1261,7 @@ export default {
       fetchDepartments();
       fetchProfessionalType();
       fetchEducationLevel();
+     
       fetchRegions();
       fetchZone();
       fetchWoredas();
@@ -1276,28 +1278,30 @@ export default {
             res.data.data && res.data.data.woreda
               ? res.data.data.woreda.zone.region
               : "";
-
+   
           generalInfo.value.zoneSelected =
             res.data.data && res.data.data.woreda
               ? {
-                  code: res.data.data.woreda.zone.code,
-                  createdAt: res.data.data.woreda.zone.createdAt,
                   id: res.data.data.woreda.zone.id,
                   name: res.data.data.woreda.zone.name,
+                  code: res.data.data.woreda.zone.code,
                   regionId: res.data.data.woreda.zone.regionId,
                   rowguid: res.data.data.woreda.zone.rowguid,
+                  status: res.data.data.woreda.zone.status,
+                  createdAt: res.data.data.woreda.zone.createdAt,
                   updatedAt: res.data.data.woreda.zone.updatedAt,
                 }
               : "";
           generalInfo.value.woredaSelected =
             res.data.data && res.data.data.woreda
               ? {
-                  code: res.data.data.woreda.code,
-                  createdAt: res.data.data.woreda.createdAt,
                   id: res.data.data.woreda.id,
                   name: res.data.data.woreda.name,
+                  code: res.data.data.woreda.code,
                   zoneId: res.data.data.woreda.zoneId,
                   rowguid: res.data.data.woreda.rowguid,
+                  status: res.data.data.woreda.zone.status,
+                  createdAt: res.data.data.woreda.createdAt,
                   updatedAt: res.data.data.woreda.updatedAt,
                 }
               : "";
@@ -1307,7 +1311,9 @@ export default {
           generalInfo.value.education = JSON.parse(
             JSON.stringify(res.data.data.GSProfessionals)
           );
+  
           generalInfo.value.applicantTypeSelected = res.data.data.applicantType;
+          educationalLevelChange();
         });
     });
     return {

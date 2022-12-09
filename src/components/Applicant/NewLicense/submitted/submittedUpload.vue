@@ -1185,8 +1185,8 @@ export default {
       return CMtemp && temp;
     };
     const next = () => {
-      let documentValidation = checkDocuments();
-      if (documentValidation) {
+     
+     
         store.dispatch("newlicense/setTempDocs", formData).then(() => {
           //Save images to indexed Db
 
@@ -1229,28 +1229,7 @@ export default {
             };
           };
         });
-      } else {
-        let errors = "";
-
-        errorDocuments.value.forEach((element) => {
-          if (!errors) {
-            errors = element.name;
-          } else {
-            errors = errors + " , " + element.name;
-          }
-        });
-
-        toast.error(
-          "Please attach the following required documents " + errors,
-          {
-            timeout: 5000,
-            position: "bottom-center",
-            pauseOnFocusLoss: true,
-            pauseOnHover: true,
-            icon: true,
-          }
-        );
-      }
+   
     };
 
     const groupByKey = (array, key) => {

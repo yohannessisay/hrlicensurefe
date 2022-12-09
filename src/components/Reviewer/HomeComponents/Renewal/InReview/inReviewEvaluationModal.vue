@@ -181,9 +181,7 @@
                                   </div>
                                   <div v-if="editPersonalData">
                                     <input
-                                      v-model="
-                                        renewal.profile.alternativeName
-                                      "
+                                      v-model="renewal.profile.alternativeName"
                                       class="w-48 mr-1"
                                       type="text"
                                     />
@@ -457,9 +455,12 @@
                                 >
                                   <div class="flex justify-center">
                                     <div>
-                                      <label for="" class="font-bold text-red-300">Remove</label>
+                                      <label
+                                        for=""
+                                        class="font-bold text-red-300"
+                                        >Remove</label
+                                      >
                                       <div class="form-check">
-                                        
                                         <input
                                           class="
                                             form-check-input
@@ -473,7 +474,7 @@
                                             duration-200
                                             my-1
                                             focus:text-red-300
-                                              btn-check:bg-white
+                                            btn-check:bg-white
                                             focus:outline-none
                                             align-top
                                             bg-no-repeat bg-center bg-contain
@@ -1290,13 +1291,16 @@
                             outline-none
                             cursor-pointer
                           "
-                          v-on:click="toggleModal()"
+                          v-on:click="showRemark = false"
                         >
                           <span class="text-3xl"> × </span>
                         </div>
                       </div>
                       <!--body-->
-                      <div class="modalBody pb-xl">
+                      <div
+                        class="modalBody pb-xl"
+                        v-if="nothingDropped == true"
+                      >
                         <div class="flex mt-medium justify-center">
                           <h2>Declined documents</h2>
                         </div>
@@ -1389,9 +1393,13 @@
                         </div>
                       </div>
                       <!--footer-->
-                      <label for="" class="ml-12">Remark</label>
+                      <label for="" class="ml-2">{{
+                        nothingDropped
+                          ? "Remark on why you are declining the license"
+                          : "Remark on why you have dropped the department/s"
+                      }}</label>
                       <textarea
-                        v-model="renewal.remark"
+                        v-model="newLicense.remark"
                         class="
                           resize-none
                           tArea
@@ -1439,7 +1447,7 @@
                             ease-in-out
                           "
                           type="button"
-                          v-on:click="toggleModal()"
+                          v-on:click="showRemark = false"
                         >
                           Close
                         </button>
@@ -1818,6 +1826,7 @@ export default {
     const store = useStore();
     const toast = useToast();
     let declineAction = ref("DeclineEvent");
+    let nothingDropped = ref(true);
     const options = ref([0, 1, 2]);
     const selectedOptions = ref([0]);
     const newSelectedOptions = ref([0]);
@@ -1918,7 +1927,7 @@ export default {
     let instSearched = ref({ name: "" });
     let newProf = ref([]);
     let tempProf = ref({});
-    let tempPref = ref({}); 
+    let tempPref = ref({});
     let modifiedProfession = [];
     let allowOtherProfChange = ref({});
     let professionalTypes = ref([]);
@@ -1926,7 +1935,6 @@ export default {
     const editPersonalData = ref(false);
     let others = ref({});
     let droppedDepartments = ref([]);
-    let hasDropped = ref(false);
     const editPersonalInfo = () => {
       editPersonalData.value = !editPersonalData.value;
     };
@@ -1946,11 +1954,9 @@ export default {
       store
         .dispatch("reviewer/getRenewalApplication", applicationId)
         .then((res) => {
-          renewal.value = res.data.data ? res.data.data : {}; 
+          renewal.value = res.data.data ? res.data.data : {};
           profileInfo.value =
-            renewal.value && renewal.value.profile
-              ? renewal.value.profile
-              : {};
+            renewal.value && renewal.value.profile ? renewal.value.profile : {};
           buttons.value =
             renewal.value &&
             renewal.value.applicationStatus &&
@@ -1971,7 +1977,6 @@ export default {
 
           fetchDocumentTypes();
         });
- 
     };
     const fetchDocumentTypes = async () => {
       store.dispatch("reviewer/getDocumentTypes").then((res) => {
@@ -2246,6 +2251,7 @@ export default {
 
       if (actionValue == "DeclineEvent" && renewal.value.remark == null) {
         showRemarkError.value = true;
+        nothingDropped.value == true
         smsMessage = renewal.value
           ? "Dear applicant your applied renewal of number " +
             renewal.value.renewalCode +
@@ -2254,11 +2260,10 @@ export default {
         showRemark.value = true;
         sendDeclinedData.value = false;
         return;
-      } else if (hasDropped.value == true) {
+      } else if (nothingDropped.value == false) {
         showRemarkError.value = true;
         showRemark.value = true;
-        sendDeclinedData.value = false;
-        hasDropped.value = false;
+        sendDeclinedData.value = false; 
         return;
       } else showRemarkError.value = false;
       let checkProfessionResult = false;
@@ -2294,7 +2299,7 @@ export default {
         ],
         message: smsMessage ? smsMessage : "",
       };
-    
+
       if (applicationType.value == "Renewal") {
         isLoadingAction.value = true;
         store
@@ -2357,11 +2362,15 @@ export default {
       droppedDepartments.value.push(education);
       droppedDepartments.value = [...new Set(droppedDepartments.value)];
       if (droppedDepartments.value && droppedDepartments.value.length > 0) {
-        hasDropped.value = true;
         declineAction.value = "ApproveEvent";
+        if (rejected.value && rejected.value.length == 0) {
+          nothingDropped.value = false;
+        }
       } else {
-        hasDropped.value = false;
         declineAction.value = "DeclineEvent";
+        if (rejected.value && rejected.value.length == 0) {
+          nothingDropped.value = true;
+        }
       }
     };
     const openPdfInNewTab = (pdfPath) => {
@@ -2515,9 +2524,7 @@ export default {
     };
     const supervise = () => {
       renewal.value.superviseEndDate = endDate.value ? endDate.value : "";
-      renewal.value.superviseStartDate = startDate.value
-        ? startDate.value
-        : "";
+      renewal.value.superviseStartDate = startDate.value ? startDate.value : "";
       renewal.value.supervisor = supervisor.value ? supervisor.value : "";
       renewal.value.supervisingInstitutionId = instSearched.value
         ? instSearched.value.id
@@ -2673,7 +2680,6 @@ export default {
       previousRemark,
       droppedDepartment,
       droppedDepartments,
-      hasDropped,
       amount,
       supervise,
       showOptions,
@@ -2731,6 +2737,7 @@ export default {
       fromModalSendDeclinedData,
       rejectedObj,
       completedSteps,
+      nothingDropped,
       totalSteps,
       ind,
       modalDocumentTypeName,
