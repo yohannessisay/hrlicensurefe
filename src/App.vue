@@ -17,9 +17,7 @@ export default {
     },
   },
 
-  created: function () {
-    this.$store.dispatch("applicationStatuses/getAppStatuses").then(() => {});
-  },
+ 
 };
 </script>
 

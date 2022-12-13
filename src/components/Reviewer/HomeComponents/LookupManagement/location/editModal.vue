@@ -103,6 +103,7 @@
                                 "
                                 >Location Name</label
                               >
+
                               <div class="relative flex items-center">
                                 <input
                                   id="depName"
@@ -127,7 +128,7 @@
                                   "
                                   required
                                   placeholder="Enter name"
-                                  v-model="editData.Name"
+                                  v-model="editData.selectedLocation.name"
                                 />
 
                                 <i
@@ -162,14 +163,20 @@
                                   ease-in-out
                                   mb-2
                                 "
-                                >Department Status</label
+                                >Location Status</label
                               >
+
                               <div class="toggle slim colour">
                                 <input
-                                  @change="changeIsActive()"
+                                  v-model="editData.selectedLocation.status"
                                   id="isVerified"
                                   class="toggle-checkbox hidden cursor-pointer"
                                   type="checkbox"
+                                  :checked="
+                                    editData && editData.selectedLocation
+                                      ? editData.selectedLocation.status == true
+                                      : false
+                                  "
                                 />
                                 <label
                                   for="isVerified"
@@ -186,12 +193,20 @@
                                 ></label>
                                 <span
                                   :class="
-                                    isActive
+                                    editData &&
+                                    editData.selectedLocation &&
+                                    editData.selectedLocation.status == true
                                       ? 'text-green-200 font-bold'
                                       : 'text-yellow-300 font-bold'
                                   "
                                 >
-                                  {{ isActive ? "Active" : "Inactive" }}
+                                  {{
+                                    editData &&
+                                    editData.selectedLocation &&
+                                    editData.selectedLocation.status == true
+                                      ? "Active"
+                                      : "Inactive"
+                                  }}
                                 </span>
                               </div>
                             </div>
@@ -210,6 +225,9 @@
                           px-3
                           lg:px-6
                         "
+                        v-if="
+                          editData.isZone == true || editData.isWoreda == true
+                        "
                       >
                         <div class="flex items-start">
                           <div class="grow ml-6">
@@ -220,12 +238,11 @@
                                     class="group w-full md:full lg:w-full ml-4"
                                   >
                                     <label
-                                      for="region"
                                       class="
                                         inline-block
                                         w-full
                                         text-md
-                                        mb-1
+                                        mb-2
                                         text-primary-600
                                         font-bold
                                         text-gray-500
@@ -235,79 +252,37 @@
                                       "
                                       >Region</label
                                     >
-                                    <div class="relative flex items-center">
-                                      <input
-                                        id="region"
-                                        @keyup="showOptions = true"
-                                        v-model="regionDropDownSearch"
-                                        type="text"
-                                        class="
-                                          peer
-                                          relative
-                                          h-18
-                                          w-full
-                                          rounded-sm
-                                          pl-10
-                                          pr-4
-                                          outline-none
-                                          drop-shadow-sm
-                                          transition-all
-                                          duration-200
-                                          ease-in-out
-                                          focus:bg-white
-                                          focus:text-primary-600
-                                          focus:font-bold
-                                          focus:drop-shadow-lg
-                                        "
-                                        required
-                                        placeholder="Start Typing region name"
-                                      />
 
-                                      <i
-                                        class="
-                                          fa fa-map
-                                          ml-4
-                                          absolute
-                                          left-auto
-                                          text-primary-600
-                                        "
-                                      ></i>
-                                    </div>
-                                  </div>
-
-                                  <div
-                                    v-show="resultQuery().length && showOptions"
-                                    class="
-                                      w-full
-                                      bg-white
-                                      border border-gray-300
-                                      mt-2
-                                      ml-1
-                                      max-height-12
-                                      overflow-hidden overflow-y-scroll
-                                      rounded-lg
-                                      shadow-lg
-                                      text-left
-                                      dropdown-menu
-                                    "
-                                    style="height: 148px; border: none"
-                                  >
-                                    <ul class="py-1">
-                                      <li
-                                        v-for="value in resultQuery()"
-                                        :key="value.id"
-                                        @click="setInput(value)"
-                                        class="
-                                          dropdown-toggle
-                                          px-4
-                                          py-2
-                                          cursor-pointer
-                                          hover:bg-primary-700 hover:text-white
-                                        "
+                                    <select
+                                      class="
+                                        peer
+                                        relative
+                                        h-10
+                                        w-full
+                                        rounded-sm
+                                        p-2
+                                        outline-none
+                                        drop-shadow-sm
+                                        transition-all
+                                        duration-200
+                                        ease-in-out
+                                        focus:bg-white
+                                        focus:text-primary-600
+                                        focus:font-bold
+                                        focus:drop-shadow-lg
+                                      "
+                                      aria-label="Default select example"
+                                      v-model="editData.selectedRegion"
+                                      required
+                                    >
+                                      <option
+                                        v-for="region in editData.regions"
+                                        :key="region.name"
+                                        :value="region"
                                       >
-                                        {{ value.Name }}
-                                      </li>
-                                    </ul>
+                                        {{ region.name }}
+                                      </option>
+                                    </select>
                                   </div>
                                 </div>
                               </div>
@@ -315,7 +290,10 @@
                           </div>
                         </div>
 
-                        <div class="flex items-start mt-8">
+                        <div
+                          class="flex items-start mt-8"
+                          v-if="editData.isWoreda == true"
+                        >
                           <div class="grow ml-6">
                             <label class="block text-left">
                               <div>
@@ -324,7 +302,6 @@
                                     class="group w-full md:full lg:w-full ml-4"
                                   >
                                     <label
-                                      for="zone"
                                       class="
                                         inline-block
                                         w-full
@@ -339,87 +316,40 @@
                                       "
                                       >Zone</label
                                     >
-                                    <div class="relative flex items-center">
-                                      <input
-                                        id="zone"
-                                        :disabled="!isRegionSelected"
-                                        @keyup="showOptionsZone = true"
-                                        v-model="zoneDropDownSearch"
-                                        type="text"
-                                        class="
-                                          peer
-                                          relative
-                                          h-18
-                                          w-full
-                                          rounded-sm
-                                          pl-10
-                                          pr-4
-                                          outline-none
-                                          drop-shadow-sm
-                                          transition-all
-                                          duration-200
-                                          ease-in-out
-                                          focus:bg-white
-                                          focus:text-primary-600
-                                          focus:font-bold
-                                          focus:drop-shadow-lg
-                                        "
-                                        required
-                                        :placeholder="
-                                          isRegionSelected
-                                            ? 'Start Typing zone name'
-                                            : 'Please select region first'
-                                        "
-                                      />
-
-                                      <i
-                                        class="
-                                          fa fa-map
-                                          ml-4
-                                          absolute
-                                          left-auto
-                                          text-primary-600
-                                        "
-                                      ></i>
-                                    </div>
-                                  </div>
-
-                                  <div
-                                    v-show="
-                                      resultQueryZone().length &&
-                                      showOptionsZone
-                                    "
-                                    class="
-                                      w-full
-                                      bg-white
-                                      border border-gray-300
-                                      mt-2
-                                      ml-1
-                                      max-height-12
-                                      overflow-hidden overflow-y-scroll
-                                      rounded-lg
-                                      shadow-lg
-                                      text-left
-                                      dropdown-menu
-                                    "
-                                    style="height: 148px; border: none"
-                                  >
-                                    <ul class="py-1">
-                                      <li
-                                        v-for="value in resultQueryZone()"
-                                        :key="value.id"
-                                        @click="setInputZone(value)"
-                                        class="
-                                          dropdown-toggle
-                                          px-4
-                                          py-2
-                                          cursor-pointer
-                                          hover:bg-primary-700 hover:text-white
-                                        "
+                                    <select
+                                      class="
+                                        peer
+                                        relative
+                                        h-10
+                                        w-full
+                                        rounded-sm
+                                        p-2
+                                        outline-none
+                                        drop-shadow-sm
+                                        transition-all
+                                        duration-200
+                                        ease-in-out
+                                        focus:bg-white
+                                        focus:text-primary-600
+                                        focus:font-bold
+                                        focus:drop-shadow-lg
+                                      "
+                                      aria-label="Default select example"
+                                      v-model="editData.selectedZone"
+                                      required
+                                    >
+                                      <option
+                                        v-for="zone in editData.zones.filter(
+                                          (zn) =>
+                                            zn.regionId ==
+                                            editData.selectedRegion.id
+                                        )"
+                                        :key="zone.name"
+                                        :value="zone"
                                       >
-                                        {{ value.Name }}
-                                      </li>
-                                    </ul>
+                                        {{ zone.name }}
+                                      </option>
+                                    </select>
                                   </div>
                                 </div>
                               </div>
@@ -496,7 +426,7 @@
   </div>
 </template>
 <script>
-import { ref, computed, watch } from "vue";
+import { ref, computed } from "vue";
 import Loading from "vue3-loading-overlay";
 import { useStore } from "vuex";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
@@ -522,6 +452,8 @@ export default {
     let isRegionSelected = ref(false);
     let showOptions = ref(false);
     let showOptionsZone = ref(false);
+    let regionSelected = ref("");
+    let zoneSelected = ref("");
     let editData = computed(() =>
       props.editModalData ? props.editModalData : { Name: "" }
     );
@@ -543,7 +475,6 @@ export default {
 
     const resultQuery = () => {
       if (regionDropDownSearch.value) {
-        console.log(regionDropDown)
         let data = regionDropDown.value
           ? regionDropDown.value.filter((item) => {
               return regionDropDownSearch.value
@@ -610,26 +541,36 @@ export default {
       showDepartmentNameError.value = false;
       let finalUrl = "";
       saveData.value = {
-        id: editData.value.id,
-        name: editData.value.Name ? editData.value.Name : "",
-        code: editData.value.Name
-          ? "DP_" + editData.value.Name.slice(0, 4).toUpperCase() + "_" + today
+        id: editData.value.selectedLocation.id,
+        name: editData.value.selectedLocation.name
+          ? editData.value.selectedLocation.name
           : "",
-        status: isActive.value,
+        code: editData.value.selectedLocation
+          ? "LO_" +
+            editData.value.selectedLocation.name.slice(0, 4).toUpperCase() +
+            "_" +
+            today
+          : "",
+        status: editData.value.selectedLocation.status,
       };
+      if (editData.value.isZone == true) {
+        saveData.value.regionId = editData.value.selectedRegion.id;
+      } else if (editData.value.isWoreda == true) {
+        saveData.value.zoneId = editData.value.selectedZone.id;
+      }
       finalUrl =
-        editData.value && editData.value.type == "region"
+        editData.value && editData.value.isRegion == true
           ? "updateRegion"
-          : editData.value && editData.value.type == "woreda"
+          : editData.value && editData.value.isWoreda == true
           ? "updateWoreda"
-          : editData.value && editData.value.type == "zone"
+          : editData.value && editData.value.isZone == true
           ? "updateZone"
           : "";
-
+    
       store.dispatch("lookups/" + finalUrl, saveData.value).then((res) => {
         isLoading.value = false;
         if (res.data.status == "Success") {
-          toast.success("Created Successfully", {
+          toast.success("Updated Successfully", {
             timeout: 5000,
             position: "bottom-center",
             pauseOnFocusLoss: true,
@@ -638,7 +579,7 @@ export default {
           });
           setTimeout(() => {
             window.location.reload();
-          }, 3000);
+          }, 1000);
         } else {
           toast.error(res.data.message, {
             timeout: 5000,
@@ -648,11 +589,6 @@ export default {
             icon: true,
           });
         }
-      });
-
-      watch(props.editModalData, () => {
-        regionDropDown.value = props.editModalData.region;
-        zoneDropDown.value = props.editModalData.zone;
       });
     };
     return {
@@ -666,6 +602,8 @@ export default {
       enableSaveButton,
       departmentNameFilled,
       showOptions,
+      zoneSelected,
+      regionSelected,
       showOptionsZone,
       regionDropDownSearch,
       zoneDropDownSearch,
