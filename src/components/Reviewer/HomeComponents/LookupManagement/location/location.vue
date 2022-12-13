@@ -791,11 +791,5 @@ export default {
   color: white;
   font-weight: 800;
 }
-.inactiveElement {
-  background: rgb(218, 0, 0);
-  border-radius: 20px;
-  padding: 4px;
-  color: white;
-  font-weight: 800;
-}
+ 
 </style>

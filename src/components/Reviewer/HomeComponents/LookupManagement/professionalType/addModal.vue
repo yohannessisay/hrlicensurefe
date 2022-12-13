@@ -427,7 +427,7 @@ export default {
       saveData.value = {
         name: professionalTypeName.value ? professionalTypeName.value : "",
         code: professionalTypeName.value
-          ? "DP_" +
+          ? "PT_" +
             professionalTypeName.value.slice(0, 4).toUpperCase() +
             "_" +
             today

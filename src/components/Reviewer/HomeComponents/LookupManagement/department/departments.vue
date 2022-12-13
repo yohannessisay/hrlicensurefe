@@ -5,20 +5,22 @@
   <!-- Sidebar -->
   <section class="home-section">
     <!-- Header -->
-    <reviewer-nav-bar><ol class="list-reset flex">
-          <li>
-            <router-link to="/admin/review"
-              ><span class="text-primary-600 text-base">Home</span></router-link
-            >
-          </li>
-          <li><span class="text-gray-500 mx-2">/</span></li>
-     
-          <li>
-            <a href="#" class="pointer-events-none text-lg text-grey-300"
-              >Department Management</a
-            >
-          </li>
-        </ol></reviewer-nav-bar>
+    <reviewer-nav-bar
+      ><ol class="list-reset flex">
+        <li>
+          <router-link to="/admin/review"
+            ><span class="text-primary-600 text-base">Home</span></router-link
+          >
+        </li>
+        <li><span class="text-gray-500 mx-2">/</span></li>
+
+        <li>
+          <a href="#" class="pointer-events-none text-lg text-grey-300"
+            >Department Management</a
+          >
+        </li>
+      </ol></reviewer-nav-bar
+    >
     <!-- Header -->
 
     <!-- Main Content -->
@@ -103,7 +105,7 @@ export default {
     let departmentsTable = ref({ isLoading: true });
     let departmentsTableData = [];
     let showAddButton = ref(false);
-    let editModalData = ref({});
+    let editModalData = ref({ finalStatus: false, Name: "" });
     const fetchDepartments = () => {
       store.dispatch("lookups/getDepartments").then((res) => {
         res.data.data.forEach((element) => {
@@ -111,7 +113,8 @@ export default {
             id: element.id ? element.id : "",
             Name: element.name ? element.name : "",
             Code: element.code ? element.code : "",
-            Status: element.status ? element.status : "",
+            Status: element && element.status == true ? "Active" : "Inactive",
+            finalStatus: element.status,
           });
         });
         departmentsTable.value = {
@@ -139,7 +142,14 @@ export default {
             {
               label: "Status",
               field: "Status",
-              width: "25%",
+              width: "30%",
+              display: function (row) {
+                return row.Status && row.Status == "Active"
+                  ? '<span  class="activeElement" >  ' + row.Status + " </span>"
+                  : '<span  class="bg-red-300 rounded-3xl p-1 text-white font-bold" >' +
+                      row.Status +
+                      " </span>";
+              },
               sortable: true,
             },
             {
@@ -166,7 +176,6 @@ export default {
       });
     };
 
-
     const tableLoadingFinish = () => {
       departmentsTable.value.isLoading = false;
       let elements = document.getElementsByClassName("edit-btn");
@@ -176,11 +185,10 @@ export default {
         }
       });
     };
-    const rowClicked = (row) => { 
+    const rowClicked = (row) => {
       editModalData.value = row;
     };
     onMounted(() => {
-     
       fetchDepartments();
     });
     return {
@@ -219,5 +227,14 @@ export default {
   margin-right: -16px;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
+}
+</style>
+<style>
+.activeElement {
+  background: green;
+  border-radius: 20px;
+  padding: 4px;
+  color: white;
+  font-weight: 800;
 }
 </style>

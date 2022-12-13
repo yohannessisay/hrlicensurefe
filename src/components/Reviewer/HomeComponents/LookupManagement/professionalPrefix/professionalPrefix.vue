@@ -5,8 +5,8 @@
   <!-- Sidebar -->
   <section class="home-section">
     <!-- Header -->
-    <reviewer-nav-bar>
-      <ol class="list-reset flex">
+    <reviewer-nav-bar
+      ><ol class="list-reset flex">
         <li>
           <router-link to="/admin/review"
             ><span class="text-primary-600 text-base">Home</span></router-link
@@ -16,7 +16,7 @@
 
         <li>
           <a href="#" class="pointer-events-none text-lg text-grey-300"
-            >Professional Prefix</a
+            >Professional Prefix Management</a
           >
         </li>
       </ol></reviewer-nav-bar
@@ -61,11 +61,11 @@
         <div class="w-full mt-8 rounded-xl">
           <vue-table-lite
             :is-static-mode="true"
-            :is-loading="professionalPrefixTable.isLoading"
-            :columns="professionalPrefixTable.columns"
-            :rows="professionalPrefixTable.rows"
-            :total="professionalPrefixTable.totalRecordCount"
-            :sortable="professionalPrefixTable.sortable"
+            :is-loading="proPrefixTable.isLoading"
+            :columns="proPrefixTable.columns"
+            :rows="proPrefixTable.rows"
+            :total="proPrefixTable.totalRecordCount"
+            :sortable="proPrefixTable.sortable"
             @is-finished="tableLoadingFinish"
             @row-clicked="rowClicked"
           ></vue-table-lite>
@@ -102,21 +102,22 @@ export default {
   setup() {
     const store = useStore();
 
-    let professionalPrefixTable = ref({ isLoading: true });
-    let professionalPrefixTableData = [];
+    let proPrefixTable = ref({ isLoading: true });
+    let proPrefixTableData = [];
     let showAddButton = ref(false);
-    let editModalData = ref({});
-    const fetchProfessionalPrefix = () => {
+    let editModalData = ref({ finalStatus: false, Name: "" });
+    const fetchPrefixes = () => {
       store.dispatch("lookups/getProfessionalPrefix").then((res) => {
         res.data.data.forEach((element) => {
-          professionalPrefixTableData.push({
+          proPrefixTableData.push({
             id: element.id ? element.id : "",
             Name: element.name ? element.name : "",
             Code: element.code ? element.code : "",
-            Status: element.status ? element.status : "",
+            Status: element && element.status == true ? "Active" : "Inactive",
+            finalStatus: element.status,
           });
         });
-        professionalPrefixTable.value = {
+        proPrefixTable.value = {
           isLoading: false,
           columns: [
             {
@@ -141,7 +142,14 @@ export default {
             {
               label: "Status",
               field: "Status",
-              width: "25%",
+              width: "30%",
+              display: function (row) {
+                return row.Status && row.Status == "Active"
+                  ? '<span  class="activeElement" >  ' + row.Status + " </span>"
+                  : '<span  class="bg-red-300 rounded-3xl p-1 text-white font-bold" >' +
+                      row.Status +
+                      " </span>";
+              },
               sortable: true,
             },
             {
@@ -157,8 +165,8 @@ export default {
               },
             },
           ],
-          rows: professionalPrefixTableData,
-          totalRecordCount: professionalPrefixTableData.length,
+          rows: proPrefixTableData,
+          totalRecordCount: proPrefixTableData.length,
           sortable: {
             order: "id",
             sort: "asc",
@@ -169,7 +177,7 @@ export default {
     };
 
     const tableLoadingFinish = () => {
-      professionalPrefixTable.value.isLoading = false;
+      proPrefixTable.value.isLoading = false;
       let elements = document.getElementsByClassName("edit-btn");
       Array.prototype.forEach.call(elements, function (element) {
         if (element.classList.contains("edit-btn")) {
@@ -181,10 +189,10 @@ export default {
       editModalData.value = row;
     };
     onMounted(() => {
-      fetchProfessionalPrefix();
+      fetchPrefixes();
     });
     return {
-      professionalPrefixTable,
+      proPrefixTable,
       showAddButton,
       editModalData,
       rowClicked,
@@ -219,5 +227,14 @@ export default {
   margin-right: -16px;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
+}
+</style>
+<style>
+.activeElement {
+  background: green;
+  border-radius: 20px;
+  padding: 4px;
+  color: white;
+  font-weight: 800;
 }
 </style>

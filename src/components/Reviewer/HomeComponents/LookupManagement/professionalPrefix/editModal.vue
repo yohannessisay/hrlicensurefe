@@ -65,7 +65,7 @@
               <section class="text-gray-800">
                 <div class="flex justify-center border-b-2 mb-8">
                   <div class="text-center max-w-full">
-                    <h2 class="text-2xl font-bold">Edit Professional Prefix</h2>
+                    <h2 class="text-2xl font-bold">Edit Prefix</h2>
                   </div>
                 </div>
 
@@ -101,7 +101,7 @@
                                   duration-200
                                   ease-in-out
                                 "
-                                >Professional Prefix Name</label
+                                >Prefix Name</label
                               >
                               <div class="relative flex items-center">
                                 <input
@@ -142,9 +142,9 @@
                               </div>
 
                               <small
-                                v-if="showProfessionalPrefixNameError"
+                                v-if="showPrefixNameError"
                                 class="text-red-300"
-                                >{{ professionalPrefixNameError }}</small
+                                >{{ prefixNameError }}</small
                               >
                             </div>
 
@@ -162,17 +162,22 @@
                                   ease-in-out
                                   mb-2
                                 "
-                                >Professional Prefix Status</label
+                                >Prefix Status</label
                               >
                               <div class="toggle slim colour">
                                 <input
-                                  @change="changeIsActive()"
-                                  id="isActive"
+                                  v-model="editData.finalStatus"
+                                  id="isVerified"
                                   class="toggle-checkbox hidden cursor-pointer"
                                   type="checkbox"
+                                  :checked="
+                                    editData && editData.finalStatus == true
+                                      ? true
+                                      : false
+                                  "
                                 />
                                 <label
-                                  for="isActive"
+                                  for="isVerified"
                                   class="
                                     toggle-label
                                     block
@@ -186,12 +191,14 @@
                                 ></label>
                                 <span
                                   :class="
-                                    isActive
+                                    editData && editData.finalStatus == true
                                       ? 'text-green-200 font-bold'
                                       : 'text-yellow-300 font-bold'
                                   "
-                                  > 
-                                  {{ isActive ? "Active" : "Inactive" }}
+                                >
+                                  {{
+                                    editData.finalStatus ? "Active" : "Inactive"
+                                  }}
                                 </span>
                               </div>
                             </div>
@@ -233,7 +240,7 @@
               duration-150
               ease-in-out
             "
-            @click="saveProfessionalPrefix()"
+            @click="savePrefix()"
           >
             <i class="fa fa-save"></i>
             Save
@@ -280,76 +287,83 @@ export default {
     const toast = useToast();
     let isLoading = ref(false);
 
-    let showProfessionalPrefixNameError = ref(false);
-    let professionalPrefixNameError = ref("");
-    let professionalPrefixNameFilled = ref(false);
+    let showPrefixNameError = ref(false);
+    let prefixNameError = ref("");
+    let prefixNameFilled = ref(false);
     let saveData = ref({});
     let editData = computed(() =>
       props.editModalData ? props.editModalData : { Name: "" }
     );
-    let isActive = editData.value&&editData.value.Status ? editData.value.Status : ref(false);
+    let isActive =
+      editData.value && editData.value.Status
+        ? editData.value.Status
+        : ref(false);
 
-    const changeIsActive = () => {
+    const changeverified = () => {
       isActive.value = !isActive.value;
     };
     const enableSaveButton = () => {
       if (editData.value.Name.length > 3) {
-        professionalPrefixNameFilled.value = true;
+        prefixNameFilled.value = true;
       } else {
-        professionalPrefixNameFilled.value = false;
+        prefixNameFilled.value = false;
       }
     };
-    const saveProfessionalPrefix = () => {
+    const savePrefix = () => {
       let today = new Date().getMilliseconds();
       isLoading.value = true;
 
       //Validation of input
 
-      showProfessionalPrefixNameError.value = false;
+      showPrefixNameError.value = false;
 
       saveData.value = {
         id: editData.value.id,
         name: editData.value.Name ? editData.value.Name : "",
-        code: editData.value.Name
-          ? "DP_" + editData.value.Name.slice(0, 4).toUpperCase() + "_" + today
+        code: editData.value
+          ? editData.value.Code
+          : editData.value.Name
+          ? "PP_" + editData.value.Name.slice(0, 4).toUpperCase() + "_" + today
           : "",
-        status: isActive.value,
+        status: editData.value.finalStatus,
       };
 
-      store.dispatch("lookups/updateProfessionalPrefix", saveData.value).then((res) => {
-        isLoading.value = false;
-        if (res.data.status == "Success") {
-          toast.success("Created Successfully", {
-            timeout: 5000,
-            position: "bottom-center",
-            pauseOnFocusLoss: true,
-            pauseOnHover: true,
-            icon: true,
-          });
-          setTimeout(() => {
-            window.location.reload();
-          }, 3000);
-        } else {
-          toast.error(res.data.message, {
-            timeout: 5000,
-            position: "bottom-center",
-            pauseOnFocusLoss: true,
-            pauseOnHover: true,
-            icon: true,
-          });
-        }
-      });
+      store
+        .dispatch("lookups/updateProfessionalPrefix", saveData.value)
+        .then((res) => {
+          isLoading.value = false;
+          if (res.data.status == "Success") {
+            toast.success("Updated Successfully", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+            setTimeout(() => {
+              window.location.reload();
+            }, 1000);
+          } else {
+            toast.error(res.data.message, {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+          }
+        });
     };
     return {
       isLoading,
       editData,
-      saveProfessionalPrefix,
+      savePrefix,
       enableSaveButton,
-      professionalPrefixNameFilled,
-      showProfessionalPrefixNameError,
-      professionalPrefixNameError,
+      prefixNameFilled,
+      showPrefixNameError,
+      prefixNameError,
       isActive,
-      changeIsActive,
+      changeverified,
     };
   },
 };

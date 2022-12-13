@@ -545,7 +545,9 @@ export default {
         name: editData.value.selectedLocation.name
           ? editData.value.selectedLocation.name
           : "",
-        code: editData.value.selectedLocation
+        code:  editData.value
+          ? editData.value.Code
+          :editData.value.selectedLocation
           ? "LO_" +
             editData.value.selectedLocation.name.slice(0, 4).toUpperCase() +
             "_" +
