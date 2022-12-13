@@ -143,6 +143,9 @@ export default {
     const store = useStore();
     const showModal = ref(true);
     const adminId = +localStorage.getItem("adminId");
+    const adminRegion = JSON.parse(
+      localStorage.getItem("allAdminData")
+    ).regionId;
     let modalDataId = ref({
       id: "",
       change: 0,
@@ -175,33 +178,20 @@ export default {
     toYouTable.value = {
       isLoading: true,
     };
-    const assignedToOthers = () => {
+    const assigned = () => {
       applicationStatus(store, "IRV").then((res) => {
         let statusId = res;
         let adminStatus = [statusId, adminId];
 
         store
           .dispatch(
-            "reviewerGoodStanding/getGoodStandingOthersAssigned",
+            "reviewerGoodStanding/getGoodStandingAssigned",
             adminStatus
           )
           .then((res) => {
-            allInfo.value.assignApplication =
-              store.getters[
-                "reviewerGoodStanding/getGoodStandingAssignedToOthersSearched"
-              ];
+            allInfo.value = res;
 
-            for (let applicant in allInfo.value.assignApplication) {
-              if (
-                allInfo.value.assignApplication[applicant].applicationType ===
-                undefined
-              ) {
-                allInfo.value.assignApplication[applicant].applicationType =
-                  allInfo.value.assignApplication[applicant].applicantType;
-              }
-            }
-
-            JSON.parse(JSON.stringify(allInfo.value.assignApplication)).forEach(
+            JSON.parse(JSON.stringify(allInfo.value.assignedToOthers)).forEach(
               (element) => {
                 tableData.value.push({
                   id: element.id,
@@ -215,8 +205,8 @@ export default {
                     (element.profile.grandFatherName
                       ? element.profile.grandFatherName
                       : "------"),
-                  ApplicationType: element.applicationType
-                    ? element.applicationType.name
+                  ApplicantType: element.applicantType
+                    ? element.applicantType.name
                     : "",
                   Date: new Date(element.createdAt)
                     .toJSON()
@@ -226,81 +216,7 @@ export default {
                 });
               }
             );
-
-            toOthersTable.value = {
-              columns: [
-                {
-                  label: "ID",
-                  field: "id",
-                  width: "3%",
-                  sortable: true,
-                  isKey: true,
-                },
-                {
-                  label: "Applicant Name",
-                  field: "ApplicantName",
-                  width: "20%",
-                  sortable: true,
-                },
-                {
-                  label: "Applicant Type",
-                  field: "ApplicationType",
-                  width: "15%",
-                  sortable: true,
-                },
-                {
-                  label: "Date",
-                  field: "Date",
-                  width: "15%",
-                  sortable: true,
-                },
-                {
-                  label: "",
-                  field: "quick",
-                  width: "10%",
-                  display: function (row) {
-                    return (
-                      '<button data-bs-toggle="modal" data-bs-target="#editUser" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
-                      row.id +
-                      '" ><i class="fa fa-eye"></i> View</button>'
-                    );
-                  },
-                },
-              ],
-              rows: JSON.parse(JSON.stringify(tableData.value)),
-              totalRecordCount: tableData.value.length,
-              sortable: {
-                order: "id",
-                sort: "asc",
-              },
-            };
-          });
-      });
-    };
-
-    const assignedToYou = () => {
-      applicationStatus(store, "IRV").then((res) => {
-        let statusId = res;
-        let adminStatus = [statusId, adminId];
-
-        store
-          .dispatch("reviewerGoodStanding/getGoodStandingAssigned", adminStatus)
-          .then((res) => {
-            allInfo.value.assignApplication =
-              store.getters[
-                "reviewerGoodStanding/getGoodStandingAssignedToYouSearched"
-              ];
-
-            for (let applicant in allInfo.value.assignApplication) {
-              if (
-                allInfo.value.assignApplication[applicant].applicationType ===
-                undefined
-              ) {
-                allInfo.value.assignApplication[applicant].applicationType =
-                  allInfo.value.assignApplication[applicant].applicantType;
-              }
-            }
-            JSON.parse(JSON.stringify(allInfo.value.assignApplication)).forEach(
+            JSON.parse(JSON.stringify(allInfo.value.assignedToMe)).forEach(
               (element) => {
                 toYouTableData.value.push({
                   id: element.id,
@@ -314,7 +230,7 @@ export default {
                     (element.profile.grandFatherName
                       ? element.profile.grandFatherName
                       : "------"),
-                  ApplicationType: element.applicantType
+                  ApplicantType: element.applicantType
                     ? element.applicantType.name
                     : "",
                   Date: new Date(element.createdAt)
@@ -325,7 +241,6 @@ export default {
                 });
               }
             );
-
             toYouTable.value = {
               columns: [
                 {
@@ -343,7 +258,7 @@ export default {
                 },
                 {
                   label: "Applicant Type",
-                  field: "ApplicationType",
+                  field: "ApplicantType",
                   width: "15%",
                   sortable: true,
                 },
@@ -375,6 +290,53 @@ export default {
                 sort: "asc",
               },
             };
+            toOthersTable.value = {
+              columns: [
+                {
+                  label: "ID",
+                  field: "id",
+                  width: "3%",
+                  sortable: true,
+                  isKey: true,
+                },
+                {
+                  label: "Applicant Name",
+                  field: "ApplicantName",
+                  width: "20%",
+                  sortable: true,
+                },
+                {
+                  label: "Applicant Type",
+                  field: "ApplicantType",
+                  width: "15%",
+                  sortable: true,
+                },
+                {
+                  label: "Date",
+                  field: "Date",
+                  width: "15%",
+                  sortable: true,
+                },
+                {
+                  label: "",
+                  field: "quick",
+                  width: "10%",
+                  display: function (row) {
+                    return (
+                      '<button data-bs-toggle="modal" data-bs-target="#othersModal" class="edit-btn-others bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
+                      row.id +
+                      '" ><i class="fa fa-eye"></i> View</button>'
+                    );
+                  },
+                },
+              ],
+              rows: JSON.parse(JSON.stringify(tableData.value)),
+              totalRecordCount: tableData.value.length,
+              sortable: {
+                order: "id",
+                sort: "asc",
+              },
+            };
           });
       });
     };
@@ -400,13 +362,6 @@ export default {
     };
     const rowClicked = (row) => {
       if (row != undefined) {
-        store.dispatch("reviewer/getAdmins").then((res) => {
-          console.log(res);
-          reviewers.value = res?.data?.data.filter((e) => {
-            return e.role.code !== "UM";
-          });
-        });
-
         row = JSON.parse(JSON.stringify(row));
         modalDataId.value.id = row.id ? row.id : "-----";
         modalDataId.value.change++;
@@ -420,8 +375,12 @@ export default {
       }
     };
     onMounted(() => {
-      assignedToYou();
-      assignedToOthers();
+      assigned();
+      store.dispatch("reviewer/getAdminsByRegion", adminRegion).then((res) => {
+        reviewers.value = res.data.data.filter((e) => {
+          return e.role.code !== "UM";
+        });
+      });
     });
 
     return {

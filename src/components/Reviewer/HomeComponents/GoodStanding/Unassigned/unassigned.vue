@@ -5,25 +5,27 @@
 
   <section class="home-section">
     <!-- Header -->
-    <reviewer-nav-bar><ol class="list-reset flex">
-          <li>
-            <router-link to="/admin/review"
-              ><span class="text-primary-600 text-base">Home</span></router-link
-            >
-          </li>
-          <li><span class="text-gray-500 mx-2">/</span></li>
-          <li>
-            <a href="#" class="hover:text-primary-600 text-grey-300"
-              >Good Standing</a
-            >
-          </li>
-          <li><span class="text-gray-500 mx-2">/</span></li>
-          <li>
-            <a href="#" class="pointer-events-none text-lg text-grey-300"
-              >Unassigned</a
-            >
-          </li>
-        </ol></reviewer-nav-bar>
+    <reviewer-nav-bar
+      ><ol class="list-reset flex">
+        <li>
+          <router-link to="/admin/review"
+            ><span class="text-primary-600 text-base">Home</span></router-link
+          >
+        </li>
+        <li><span class="text-gray-500 mx-2">/</span></li>
+        <li>
+          <a href="#" class="hover:text-primary-600 text-grey-300"
+            >Good Standing</a
+          >
+        </li>
+        <li><span class="text-gray-500 mx-2">/</span></li>
+        <li>
+          <a href="#" class="pointer-events-none text-lg text-grey-300"
+            >Unassigned</a
+          >
+        </li>
+      </ol></reviewer-nav-bar
+    >
     <!-- Header -->
 
     <!-- Main Content -->
@@ -36,7 +38,40 @@
                 <h2 class="text-2xl font-semibold leading-tight">
                   Unassigned Applications
                 </h2>
-                
+                <!-- <input
+                  v-if="adminLevel.code != 'REG'"
+                  class="
+                    form-check-input
+                    appearance-none
+                    h-5
+                    w-5
+                    border border-gray-300
+                    rounded-sm
+                    bg-white
+                    checked:bg-blue-600 checked:border-blue-600
+                    focus:outline-none
+                    transition
+                    duration-200
+                    mt-2
+                    align-top
+                    bg-no-repeat bg-center bg-contain
+                    float-left
+                    mr-2
+                    cursor-pointer
+                  "
+                  @change="includeFromOthers()"
+                  v-model="includeOthers"
+                  type="checkbox"
+                  value=""
+                  id="flexCheckDefault"
+                />
+                <h4
+                  v-if="adminLevel.code != 'REG'"
+                  class="form-check-label inline-block text-gray-800 mt-1"
+                  for="flexCheckDefault"
+                >
+                  Include From Other Regions
+                </h4> -->
               </div>
               <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
                 <div
@@ -143,7 +178,12 @@ export default {
     const showModalResubmitted = ref(true);
     const reviewers = ref([]);
     const include = ref(false);
-
+    const adminRegion = JSON.parse(
+      localStorage.getItem("allAdminData")
+    ).regionId;
+    const adminLevel = JSON.parse(
+      localStorage.getItem("allAdminData")
+    ).expertLevel;
     let searchedReviewer = ref("");
     const adminId = +localStorage.getItem("adminId");
     let modalDataId = ref({
@@ -155,19 +195,8 @@ export default {
       change: 0,
     });
 
-    let allInfo = ref({
-      alreadyPushed: false,
-      searchByInput: false,
-      assignApplication: [],
-      message: {
-        showErrorFlash: false,
-      },
-      filteredByDate: [],
-      searchFromDate: "",
-      searchUpToDate: "",
-      app_type: "",
-    });
-
+    let allInfo = ref({});
+    let includeOthers=ref(false);
     const unassignedTable = ref({});
     const reSubmittedTable = ref([]);
     unassignedTable.value = {
@@ -177,52 +206,40 @@ export default {
       isLoading: true,
     };
     let tableData = ref([]);
+    let tableDataOthers = ref([]);
     let tableDataTemp = ref([]);
     let reTableData = ref([]);
 
     const unassigned = () => {
       applicationStatus(store, "SUB").then((res) => {
         modalDataId.value.apStatusUnassigned = res;
-        let statusId = res;
+        let statusId = res; 
 
         store
           .dispatch("reviewerGoodStanding/getUnassignedGoodStanding", statusId)
           .then((res) => {
-            allInfo.value.assignApplication = res;
+            allInfo.value = res; 
+            JSON.parse(JSON.stringify(allInfo.value)).forEach((element) => {
+              tableData.value.push({
+                LicenseNumber: element.goodStandingCode
+                  ? element.goodStandingCode
+                  : "",
+                ApplicantName:
+                  (element.profile ? element.profile.name : "") +
+                  " " +
+                  (element.profile ? element.profile.fatherName : "") +
+                  " " +
+                  (element.profile ? element.profile.grandFatherName : ""),
+                  ApplicantType: element?element.applicantType.name :'',
+                Date: new Date(element.createdAt)
+                  .toJSON()
+                  .slice(0, 10)
+                  .replace(/-/g, "/"),
+                data: element,
+              });
+            });
 
-            for (let applicant in allInfo.value.assignApplication) {
-              if (
-                allInfo.value.assignApplication[applicant].applicationType ===
-                undefined
-              ) {
-                allInfo.value.assignApplication[applicant].applicationType =
-                  allInfo.value.assignApplication[applicant].applicantType;
-              }
-            }
-
-            JSON.parse(JSON.stringify(allInfo.value.assignApplication)).forEach(
-              (element) => {
-                tableData.value.push({
-                  LicenseNumber: element.goodStandingCode
-                    ? element.goodStandingCode
-                    : "",
-                  ApplicantName:
-                    (element.profile ? element.profile.name : "") +
-                    " " +
-                    (element.profile ? element.profile.fatherName : "") +
-                    " " +
-                    (element.profile ? element.profile.grandFatherName : ""),
-                  ApplicationType: element.applicationType
-                    ? element.applicationType.name
-                    : "",
-                  Date: new Date(element.createdAt)
-                    .toJSON()
-                    .slice(0, 10)
-                    .replace(/-/g, "/"),
-                  data: element,
-                });
-              }
-            );
+          
 
             tableDataTemp.value = tableData.value;
             unassignedTable.value = {
@@ -241,8 +258,8 @@ export default {
                   sortable: true,
                 },
                 {
-                  label: "Application Type",
-                  field: "ApplicationType",
+                  label: "Applicant Type",
+                  field: "ApplicantType",
                   width: "15%",
                   sortable: true,
                 },
@@ -276,161 +293,7 @@ export default {
       });
     };
 
-    const includeFromOthers = () => {
-      if (include.value === true) {
-        unassignedTable.value.isLoading = true;
-        applicationStatus(store, "SUB").then((res) => {
-          const statusId = res;
-          store
-            .dispatch(
-              "reviewerNewLicense/getNewLicenseFromOtherRegion",
-              statusId
-            )
-            .then((res) => {
-              allInfo.value.assignApplication =
-                store.getters[
-                  "reviewerNewLicense/getNewLicenseFromOtherRegionSearched"
-                ];
-
-              for (let applicant in allInfo.value.assignApplication) {
-                if (
-                  allInfo.value.assignApplication[applicant].applicationType ===
-                  undefined
-                ) {
-                  allInfo.value.assignApplication[applicant].applicationType =
-                    allInfo.value.assignApplication[applicant].applicantType;
-                }
-              }
-
-              tableData.value = [];
-              JSON.parse(
-                JSON.stringify(allInfo.value.assignApplication)
-              ).forEach((element) => {
-                tableData.value.push({
-                  LicenseNumber: element.newLicenseCode,
-                  ApplicantName:
-                    element.profile.name +
-                    " " +
-                    element.profile.fatherName +
-                    " " +
-                    element.profile.grandFatherName,
-                  ApplicationType: element.newLicenseCode ? "New License" : "",
-                  Date: new Date(element.createdAt)
-                    .toJSON()
-                    .slice(0, 10)
-                    .replace(/-/g, "/"),
-                  data: element,
-                });
-              });
-
-              unassignedTable.value = {
-                columns: [
-                  {
-                    label: "ID",
-                    field: "id",
-                    width: "3%",
-                    sortable: true,
-                    isKey: true,
-                  },
-                  {
-                    label: "Applicant Name",
-                    field: "ApplicantName",
-                    width: "20%",
-                    sortable: true,
-                  },
-
-                  {
-                    label: "Applicant Type",
-                    field: "ApplicationType",
-                    width: "15%",
-                    sortable: true,
-                  },
-                  {
-                    label: "Date",
-                    field: "Date",
-                    width: "15%",
-                    sortable: true,
-                  },
-                  {
-                    label: "",
-                    field: "quick",
-                    width: "10%",
-                    display: function (row) {
-                      return (
-                        '<button  data-set="' +
-                        row +
-                        '"  data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
-                        row.id +
-                        '" ><i class="fa fa-eye"></i> View/Edit</button>'
-                      );
-                    },
-                  },
-                ],
-                rows: JSON.parse(JSON.stringify(tableData.value)),
-                totalRecordCount: tableData.value.length,
-                sortable: {
-                  order: "id",
-                  sort: "asc",
-                },
-              };
-            });
-        });
-      }
-      if (include.value === false) {
-        tableData.value = [];
-        tableData.value = tableDataTemp.value;
-        unassignedTable.value = {
-          isLoading: false,
-          columns: [
-            {
-              label: "License Number",
-              field: "LicenseNumber",
-              width: "3%",
-              sortable: true,
-              isKey: true,
-            },
-            {
-              label: "Applicant Name",
-              field: "ApplicantName",
-              width: "20%",
-              sortable: true,
-            },
-            {
-              label: "Applicant Type",
-              field: "ApplicationType",
-              width: "15%",
-              sortable: true,
-            },
-            {
-              label: "Date",
-              field: "Date",
-              width: "15%",
-              sortable: true,
-            },
-            {
-              label: "",
-              field: "quick",
-              width: "10%",
-              display: function (row) {
-                return (
-                  '<button  data-set="' +
-                  row +
-                  '"  data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
-                  row.id +
-                  '" ><i class="fa fa-eye"></i>View/Edit</button>'
-                );
-              },
-            },
-          ],
-          rows: JSON.parse(JSON.stringify(tableData.value)),
-          totalRecordCount: tableData.value.length,
-          sortable: {
-            order: "id",
-            sort: "asc",
-          },
-        };
-      }
-    };
+  
 
     const reSubmitted = () => {
       applicationStatus(store, "UPD").then((res) => {
@@ -438,40 +301,27 @@ export default {
         const adminStatus = [statusId, adminId];
         modalDataId.value.apStatusResub = statusId;
         store
-          .dispatch("reviewerNewLicense/getNewLicenseReApply", adminStatus)
+          .dispatch("reviewerGoodStanding/getGoodStandingReApply", adminStatus)
           .then((res) => {
-            allInfo.value.assignApplication =
-              store.getters["reviewerNewLicense/getNewLicenseReApplySearched"];
+            allInfo.value = res;
 
-            for (let applicant in allInfo.value.assignApplication) {
-              if (
-                allInfo.value.assignApplication[applicant].applicationType ===
-                undefined
-              ) {
-                allInfo.value.assignApplication[applicant].applicationType =
-                  allInfo.value.assignApplication[applicant].applicantType;
-              }
-            }
-
-            JSON.parse(JSON.stringify(allInfo.value.assignApplication)).forEach(
-              (element) => {
-                reTableData.value.push({
-                  LicenseNumber: element.newLicenseCode,
-                  ApplicantName:
-                    element.profile.name +
-                    " " +
-                    element.profile.fatherName +
-                    " " +
-                    element.profile.grandFatherName,
-                  ApplicationType: element.newLicenseCode ? "New License" : "",
-                  Date: new Date(element.createdAt)
-                    .toJSON()
-                    .slice(0, 10)
-                    .replace(/-/g, "/"),
-                  data: element,
-                });
-              }
-            );
+            JSON.parse(JSON.stringify(allInfo.value)).forEach((element) => {
+              reTableData.value.push({
+                LicenseNumber: element.goodStandingCode,
+                ApplicantName:
+                  element.profile.name +
+                  " " +
+                  element.profile.fatherName +
+                  " " +
+                  element.profile.grandFatherName,
+                ApplicantType: element?element.applicantType.name :'',
+                Date: new Date(element.createdAt)
+                  .toJSON()
+                  .slice(0, 10)
+                  .replace(/-/g, "/"),
+                data: element,
+              });
+            });
 
             reSubmittedTable.value = {
               columns: [
@@ -489,8 +339,8 @@ export default {
                   sortable: true,
                 },
                 {
-                  label: "Application Type",
-                  field: "ApplicationType",
+                  label: "Applicant Type",
+                  field: "ApplicantType",
                   width: "15%",
                   sortable: true,
                 },
@@ -525,7 +375,14 @@ export default {
           });
       });
     };
-
+    const includeFromOthers=()=>{
+      if(includeOthers.value==true){
+        unassignedTable.value.rows=tableDataOthers.value;
+      }else{
+        unassignedTable.value.rows=tableData.value;
+      }
+      
+    }
     const tableLoadingFinish = () => {
       let elements = document.getElementsByClassName("edit-btn");
       Array.prototype.forEach.call(elements, function (element) {
@@ -566,7 +423,7 @@ export default {
     onMounted(() => {
       unassigned();
       reSubmitted();
-      store.dispatch("reviewer/getAdmins").then((res) => {
+      store.dispatch("reviewer/getAdminsByRegion", adminRegion).then((res) => {
         reviewers.value = res.data.data.filter((e) => {
           return e.role.code !== "UM";
         });
@@ -578,19 +435,19 @@ export default {
       unassignedTable,
       reSubmittedTable,
       showModal,
+      adminLevel,
       include,
       reviewers,
       showModalResubmitted,
       searchedReviewer,
       tableLoadingFinish,
-      tableLoadingFinishResub,
-      unassigned,
-      rowClicked,
-      reSubmitted,
+      tableLoadingFinishResub, 
+      rowClicked, 
       includeFromOthers,
       rowClickedResub,
       modalDataId,
       modalDataIdResub,
+      includeOthers,
     };
   },
 };

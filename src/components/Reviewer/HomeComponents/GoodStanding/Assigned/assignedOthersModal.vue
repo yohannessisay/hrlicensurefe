@@ -12,11 +12,11 @@
       outline-none
       overflow-x-hidden overflow-y-auto
     "
-    id="staticBackdropOthers"
+    id="othersModal"
     data-bs-backdrop="static"
     data-bs-keyboard="false"
     tabindex="-1"
-    aria-labelledby="staticBackdropLabel"
+    aria-labelledby="othersModalLabel"
     aria-hidden="true"
   >
     <div
@@ -42,20 +42,13 @@
           text-current
         "
       >
-   <div
-          class="
-            modal-header
-            flex flex-shrink-0
-           justify-end
-           
-            p-2
-            rounded-t-md
-          "
+        <div
+          class="modal-header flex flex-shrink-0 justify-end p-2 rounded-t-md"
         >
           <button
             type="button"
-            class="     
-                  px-6
+            class="
+              px-6
               text-white
               bg-primary-600
               hover:text-primary-600 hover:border
@@ -74,12 +67,15 @@
               active:bg-purple-800 active:shadow-lg
               transition
               duration-150
-              ease-in-out"
+              ease-in-out
+            "
             data-bs-dismiss="modal"
             aria-label="Close"
-          ><i class="fa fa-close fa-2x"></i></button>
+          >
+            <i class="fa fa-close fa-2x"></i>
+          </button>
         </div>
-        <div class="vld-parent  mt-4">
+        <div class="vld-parent mt-4">
           <loading
             :active="isLoading"
             :can-cancel="true"
@@ -133,18 +129,8 @@
                                 justify-center
                               "
                             >
-                                 <picture>
-                                <source
-                                  :srcset="
-                                    modalData.profile &&
-                                    modalData.profile.profilePicture
-                                      ? googleApi +
-                                        modalData.profile.profilePicture
-                                          .filePath
-                                      : ''
-                                  "
-                                  type="image/jpg"
-                                />
+                              <picture>
+                           
 
                                 <img
                                   src="../../../../../assets/showLicense/profile.png"
@@ -359,7 +345,7 @@ export default {
     let result;
     const check = () => {
       store
-.dispatch("reviewer/getGoodStandingApplication", props.modalDataId.id)
+        .dispatch("reviewer/getGoodStandingApplication", props.modalDataIdOthers.id)
         .then((res) => {
           if (res.data.status == "Success") {
             result = res.data.data;
@@ -373,7 +359,7 @@ export default {
               ? result.profile.gender
               : "-----";
             modalData.value.nationality = result.profile.nationality
-              ? result.profile.nationality
+              ? result.profile.nationality.name
               : "-----";
             modalData.value.dateOfBirth = result.profile.dateOfBirth
               ? result.profile.dateOfBirth
@@ -387,7 +373,7 @@ export default {
             modalData.value.email = result.applicant.emailAddress
               ? result.applicant.emailAddress
               : "-----";
-     
+
             modalData.value.profile = result.profile;
             modalData.value.professionalTypes = result.licenseProfessions;
             modalData.value.certifiedDate = result.certifiedDate;

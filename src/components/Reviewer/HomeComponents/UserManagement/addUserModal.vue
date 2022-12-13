@@ -551,7 +551,7 @@ export default {
       localStorage.getItem("allAdminData")
     ).expertLevelId;
     let errorMessage = ref("");
-
+    const adminRole = JSON.parse(localStorage.getItem("allAdminData")).role;
     let admin = {
       firstName: null,
       fatherName: null,
@@ -588,10 +588,15 @@ export default {
 
     const fetchRole = () => {
       store.dispatch("admin/getRole").then((res) => {
-        const rolesResponse = res.data.data.filter((data) => {
-          return data.code !== "APP";
-        });
-        state.value.roles = rolesResponse;
+        if (adminRole && adminRole.code == "SA") {
+          state.value.roles = res.data.data.filter((data) => {
+            return data.code !== "APP";
+          });
+        } else {
+          state.value.roles = res.data.data.filter((data) => {
+            return data.code !== "APP" && data.code !== "SA";
+          });
+        }
       });
     };
 

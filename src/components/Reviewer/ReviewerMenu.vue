@@ -2,7 +2,10 @@
   <!-- Sidebar -->
   <reviewer-side-bar>
     <ul class="nav-links">
-      <router-link to="/admin/dashboard">
+      <router-link
+        to="/admin/dashboard"
+        v-if="adminData ? adminData.role.code != 'SA' : ''"
+      >
         <li class="mb-2">
           <a href="#Dashboard">
             <i class="bx bx-chart"></i>
@@ -10,7 +13,10 @@
           </a>
         </li>
       </router-link>
-      <router-link to="/admin/newLicense/">
+      <router-link
+        to="/admin/newLicense/"
+        v-if="adminData ? adminData.role.code != 'SA' : ''"
+      >
         <li class="mb-2">
           <a href="#NewLicense">
             <i class="bx bx-certification"></i>
@@ -18,7 +24,10 @@
           </a>
         </li>
       </router-link>
-      <router-link to="/admin/renewal/">
+      <router-link
+        to="/admin/renewal/"
+        v-if="adminData ? adminData.role.code != 'SA' : ''"
+      >
         <li class="mb-2">
           <a href="#Renewal">
             <i class="bx bx-refresh"></i>
@@ -26,7 +35,10 @@
           </a>
         </li>
       </router-link>
-      <router-link to="/admin/verification/">
+      <router-link
+        to="/admin/verification/"
+        v-if="adminData ? adminData.role.code != 'SA' : ''"
+      >
         <li class="mb-2">
           <a href="#Verification">
             <i class="bx bx-message-check"></i>
@@ -34,7 +46,10 @@
           </a>
         </li>
       </router-link>
-      <router-link to="/admin/goodStanding/">
+      <router-link
+        to="/admin/goodStanding/"
+        v-if="adminData ? adminData.role.code != 'SA' : ''"
+      >
         <li class="mb-2">
           <a href="#GoodStanding">
             <i class="bx bx-mail-send"></i>
@@ -42,7 +57,10 @@
           </a>
         </li>
       </router-link>
-      <router-link to="/admin/cpdCertified">
+      <router-link
+        to="/admin/cpdCertified"
+        v-if="adminData ? adminData.role.code != 'SA' : ''"
+      >
         <li class="mb-2">
           <a href="#CpdCertified">
             <i class="bx bx-badge-check"></i>
@@ -53,7 +71,7 @@
 
       <router-link
         to="/admin/userManagement"
-        v-if="adminData ? adminData.role.code == 'UM' : ''"
+        v-if="adminData ? adminData.role.code == 'UM'||adminData.role.code == 'SA'  : ''"
       >
         <li class="mb-2">
           <a href="#UserManagement">
@@ -72,7 +90,10 @@
         </li>
       </router-link>
 
-      <router-link to="/admin/importResults">
+      <router-link
+        to="/admin/importResults"
+        v-if="adminData ? adminData.role.code != 'SA' : ''"
+      >
         <li class="mb-2">
           <a href="#ImportResults">
             <i class="bx bx-import"></i>
@@ -81,7 +102,10 @@
         </li>
       </router-link>
 
-      <router-link to="/admin/legacyData">
+      <router-link
+        to="/admin/legacyData"
+        v-if="adminData ? adminData.role.code != 'SA' : ''"
+      >
         <li class="mb-2">
           <a href="#LegacyData">
             <i class="bx bx-skip-previous-circle"></i>
@@ -94,8 +118,7 @@
         to="/admin/lookupManagement"
         v-if="
           adminData
-            ? adminData.role.code == 'ADM' &&
-              adminData.expertLevel.code == 'FED'
+            ? adminData.role.code == 'SA' && adminData.expertLevel.code == 'FED'
             : ''
         "
       >

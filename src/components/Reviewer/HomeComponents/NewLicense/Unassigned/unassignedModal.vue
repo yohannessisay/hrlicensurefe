@@ -633,8 +633,7 @@ export default {
         .catch((err) => console.log(err));
     };
 
-    watch(props.modalDataId, () => {
-      console.log(props.modalDataId.id)
+    watch(props.modalDataId, () => { 
       if (props.modalDataId.id != '') {
         isLoadingStart.value = true;
         check();

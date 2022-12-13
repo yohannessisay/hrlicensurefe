@@ -558,6 +558,9 @@ export default {
     const adminLevel = JSON.parse(
       localStorage.getItem("allAdminData")
     ).expertLevel;
+    const adminRegion = JSON.parse(
+      localStorage.getItem("allAdminData")
+    ).regionId;
     let modalDataId = ref({
       id: "",
       change: 0,
@@ -1187,7 +1190,7 @@ export default {
     onMounted(() => {
       unassigned();
       reSubmitted();
-      store.dispatch("reviewer/getAdmins").then((res) => {
+      store.dispatch("reviewer/getAdminsByRegion",adminRegion).then((res) => {
         reviewers.value = res.data.data.filter((e) => {
           return e.role.code !== "UM";
         });

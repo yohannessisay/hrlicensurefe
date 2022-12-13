@@ -473,6 +473,9 @@ export default {
     const store = useStore();
     const showModal = ref(true);
     const adminId = +localStorage.getItem("adminId");
+    const adminRegion = JSON.parse(
+      localStorage.getItem("allAdminData")
+    ).regionId;
     let modalDataId = ref({
       id: "",
       change: 0,
@@ -773,11 +776,7 @@ export default {
     };
     const rowClicked = (row) => {
       if (row != undefined) {
-        store.dispatch("reviewer/getAdmins").then((res) => {
-          reviewers.value = res?.data?.data.filter((e) => {
-            return e.role.code !== "UM";
-          });
-        });
+     
 
         row = JSON.parse(JSON.stringify(row));
      
@@ -795,6 +794,11 @@ export default {
     onMounted(() => {
       inReviewAssignedToYou();
       inReviewAssignedToOthers();
+      store.dispatch("reviewer/getAdminsByRegion",adminRegion).then((res) => {
+        reviewers.value = res.data.data.filter((e) => {
+          return e.role.code !== "UM";
+        });
+      });
     });
 
     return {
