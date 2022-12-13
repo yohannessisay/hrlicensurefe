@@ -703,6 +703,14 @@ const routes = [
       )
   },
   {
+    path: "/admin/lookupManagement/applicantPosition",
+    name: "ApplicantPositionLookupManagement",
+    component: () =>
+      import(
+        "../components/Reviewer/HomeComponents/LookupManagement/applicantPosition/applicantPosition.vue"
+      )
+  },
+  {
     path: "/admin/lookupManagement/educationLevel",
     name: "EducationLevelLookupManagement",
     component: () =>

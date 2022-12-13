@@ -144,6 +144,23 @@
           </a>
         </li>
       </router-link>
+      <router-link to="/admin/lookupManagement/applicantPosition">
+        <li
+          :class="
+            $route.fullPath === '/admin/lookupManagement/applicantPosition'
+              ? 'mb-2 active p-2'
+              : ''
+          "
+        >
+          <a href="#ApplicantPositionManagement">
+            <i class="bx bx-map"></i>
+
+            <span class="links_name" style="word-break: break-all"
+              >Applicant Position</span
+            >
+          </a>
+        </li>
+      </router-link>
     </ul>
     <ul class="nav-links">
       <div

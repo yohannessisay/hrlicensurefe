@@ -65,7 +65,7 @@
               <section class="text-gray-800">
                 <div class="flex justify-center border-b-2 mb-8">
                   <div class="text-center max-w-full">
-                    <h2 class="text-2xl font-bold">Edit Application Title</h2>
+                    <h2 class="text-2xl font-bold">Edit Application Position</h2>
                   </div>
                 </div>
 
@@ -101,7 +101,7 @@
                                   duration-200
                                   ease-in-out
                                 "
-                                >Applicant Title Name</label
+                                >Applicant Position Name</label
                               >
                               <div class="relative flex items-center">
                                 <input
@@ -142,9 +142,9 @@
                               </div>
 
                               <small
-                                v-if="showApTitleNameError"
+                                v-if="showapPositionNameError"
                                 class="text-red-300"
-                                >{{ apTitleNameError }}</small
+                                >{{ apPositionNameError }}</small
                               >
                             </div>
 
@@ -238,7 +238,7 @@
               duration-150
               ease-in-out
             "
-            @click="saveTitle()"
+            @click="savePosition()"
           >
             <i class="fa fa-save"></i>
             Save
@@ -285,9 +285,9 @@ export default {
     const toast = useToast();
     let isLoading = ref(false);
 
-    let showApTitleNameError = ref(false);
-    let apTitleNameError = ref("");
-    let apTitleNameFilled = ref(false);
+    let showapPositionNameError = ref(false);
+    let apPositionNameError = ref("");
+    let apPositionNameFilled = ref(false);
     let saveData = ref({});
     let editData = computed(() =>
       props.editModalData ? props.editModalData : { Name: "" }
@@ -299,18 +299,18 @@ export default {
     };
     const enableSaveButton = () => {
       if (editData.value.Name.length > 3) {
-        apTitleNameFilled.value = true;
+        apPositionNameFilled.value = true;
       } else {
-        apTitleNameFilled.value = false;
+        apPositionNameFilled.value = false;
       }
     };
-    const saveTitle = () => {
+    const savePosition = () => {
       let today = new Date().getMilliseconds();
       isLoading.value = true;
 
       //Validation of input
 
-      showApTitleNameError.value = false;
+      showapPositionNameError.value = false;
 
       saveData.value = {
         id: editData.value.id,
@@ -323,7 +323,7 @@ export default {
         status: editData.value.finalStatus,
       };
 
-      store.dispatch("lookups/updateApplicantTitle", saveData.value).then((res) => {
+      store.dispatch("lookups/updateApplicantPosition", saveData.value).then((res) => {
         isLoading.value = false;
         if (res.data.status == "Success") {
           toast.success("Updated Successfully", {
@@ -350,11 +350,11 @@ export default {
     return {
       isLoading,
       editData,
-      saveTitle,
+      savePosition,
       enableSaveButton,
-      apTitleNameFilled,
-      showApTitleNameError,
-      apTitleNameError,
+      apPositionNameFilled,
+      showapPositionNameError,
+      apPositionNameError,
       isActive,
       changeverified,
     };

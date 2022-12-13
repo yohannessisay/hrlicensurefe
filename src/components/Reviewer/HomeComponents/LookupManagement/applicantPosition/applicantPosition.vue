@@ -16,7 +16,7 @@
 
         <li>
           <a href="#" class="pointer-events-none text-lg text-grey-300"
-            >Applicant Titles Management</a
+            >Applicant Position Management</a
           >
         </li>
       </ol></reviewer-nav-bar
@@ -28,7 +28,7 @@
       <div class="container px-4 sm:px-8">
         <div class="relative py-4">
           <p class="absolute left-0 text-2xl font-semibold leading-tight">
-            View and manage applicant titles found throughout the system
+            View and manage applicant position found throughout the system
           </p>
           <p class="absolute right-0" v-if="showAddButton">
             <button
@@ -53,7 +53,7 @@
               data-bs-target="#addModal"
             >
               <i class="fa fa-plus text-xl"></i>
-              Add Applicant Title
+              Add Applicant Position
             </button>
           </p>
         </div>
@@ -61,11 +61,11 @@
         <div class="w-full mt-8 rounded-xl">
           <vue-table-lite
             :is-static-mode="true"
-            :is-loading="apTitleTable.isLoading"
-            :columns="apTitleTable.columns"
-            :rows="apTitleTable.rows"
-            :total="apTitleTable.totalRecordCount"
-            :sortable="apTitleTable.sortable"
+            :is-loading="apPositionTable.isLoading"
+            :columns="apPositionTable.columns"
+            :rows="apPositionTable.rows"
+            :total="apPositionTable.totalRecordCount"
+            :sortable="apPositionTable.sortable"
             @is-finished="tableLoadingFinish"
             @row-clicked="rowClicked"
           ></vue-table-lite>
@@ -102,14 +102,14 @@ export default {
   setup() {
     const store = useStore();
 
-    let apTitleTable = ref({ isLoading: true });
-    let apTitleTableData = [];
+    let apPositionTable = ref({ isLoading: true });
+    let apPositionTableData = [];
     let showAddButton = ref(false);
     let editModalData = ref({ finalStatus: false, Name: "" });
-    const fetchApplicantTitles = () => {
-      store.dispatch("lookups/getApplicantTitles").then((res) => {
+    const fetchApplicantPositions = () => {
+      store.dispatch("lookups/getApplicantPositions").then((res) => {
         res.data.data.forEach((element) => {
-          apTitleTableData.push({
+          apPositionTableData.push({
             id: element.id ? element.id : "",
             Name: element.name ? element.name : "",
             Code: element.code ? element.code : "",
@@ -117,7 +117,7 @@ export default {
             finalStatus: element.status,
           });
         });
-        apTitleTable.value = {
+        apPositionTable.value = {
           isLoading: false,
           columns: [
             {
@@ -165,8 +165,8 @@ export default {
               },
             },
           ],
-          rows: apTitleTableData,
-          totalRecordCount: apTitleTableData.length,
+          rows: apPositionTableData,
+          totalRecordCount: apPositionTableData.length,
           sortable: {
             order: "id",
             sort: "asc",
@@ -177,7 +177,7 @@ export default {
     };
 
     const tableLoadingFinish = () => {
-      apTitleTable.value.isLoading = false;
+      apPositionTable.value.isLoading = false;
       let elements = document.getElementsByClassName("edit-btn");
       Array.prototype.forEach.call(elements, function (element) {
         if (element.classList.contains("edit-btn")) {
@@ -189,10 +189,10 @@ export default {
       editModalData.value = row;
     };
     onMounted(() => {
-      fetchApplicantTitles();
+      fetchApplicantPositions();
     });
     return {
-      apTitleTable,
+      apPositionTable,
       showAddButton,
       editModalData,
       rowClicked,
