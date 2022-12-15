@@ -64,6 +64,7 @@ pipelines:
             - export IMAGE_NAME=$DOCKER_GCR_REPO_URL/$GCLOUD_PROJECT_ID/$BITBUCKET_REPO_SLUG:${BITBUCKET_COMMIT}-${BITBUCKET_BUILD_NUMBER}-${BITBUCKET_BRANCH}
             - export PORT=80
             - export TLS=${DEPLOYNAME}-$BITBUCKET_BRANCH-${BITBUCKET_BUILD_NUMBER}-tls
+            - export USE_GKE_GCLOUD_AUTH_PLUGIN=True
             - gcloud container clusters get-credentials $K8s_CLUSTER_NAME --zone=$GCLOUD_ZONE --project $GCLOUD_PROJECT_ID
             - sed -i "s|{{image}}|$IMAGE_NAME|g" deployment.yml
             - sed -i "s|{{dns}}|$DNS|g" deployment.yml
