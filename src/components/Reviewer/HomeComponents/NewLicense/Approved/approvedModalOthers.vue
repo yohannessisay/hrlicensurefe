@@ -36,20 +36,13 @@
           text-current
         "
       >
-   <div
-          class="
-            modal-header
-            flex flex-shrink-0
-           justify-end
-           
-            p-2
-            rounded-t-md
-          "
+        <div
+          class="modal-header flex flex-shrink-0 justify-end p-2 rounded-t-md"
         >
           <button
             type="button"
-            class="     
-                  px-6
+            class="
+              px-6
               text-white
               bg-primary-600
               hover:text-primary-600 hover:border
@@ -68,10 +61,13 @@
               active:bg-purple-800 active:shadow-lg
               transition
               duration-150
-              ease-in-out"
+              ease-in-out
+            "
             data-bs-dismiss="modal"
             aria-label="Close"
-          ><i class="fa fa-close fa-2x"></i></button>
+          >
+            <i class="fa fa-close fa-2x"></i>
+          </button>
         </div>
         <div class="vld-parent mt-4">
           <loading
@@ -125,7 +121,7 @@
                                 justify-center
                               "
                             >
-                                 <picture>
+                              <picture>
                                 <source
                                   :srcset="
                                     modalData.profile &&
@@ -191,8 +187,6 @@
                         </div>
                       </div>
 
-                   
-
                       <div
                         class="
                           grow-0
@@ -251,14 +245,108 @@
                           lg:px-6
                         "
                       >
+                        <div class="flex items-start">
+                          <div class="shrink-0">
+                            <div
+                              class="
+                                p-4
+                                bg-blue-600
+                                rounded-md
+                                shadow-lg
+                                w-48
+                                h-64
+                                flex
+                                items-center
+                                justify-center
+                              "
+                            >
+                              <i class="fa fa-building fa-4x"></i>
+                            </div>
+                          </div>
+                          <div class="grow ml-6 mb-4">
+                            <h2 class="font-bold mb-1">Education Detail</h2>
+
+                            <div
+                              class="
+                                border-2
+                                p-2
+                                rounded-lg
+                                m-1
+                                shadow-md
+                                text-primary-500
+                              "
+                              v-for="education in modalData.data
+                                ? modalData.data.educations
+                                : []"
+                              :key="education.id"
+                            >
+                              <p class="text-gray-500">
+                                <span
+                                  class="font-semibold text-primary-700 mb-1"
+                                  >Department:</span
+                                >
+                                {{
+                                  education.department
+                                    ? education.department.name
+                                    : ""
+                                }}
+                              </p>
+                              <p class="text-gray-500">
+                                <span
+                                  class="font-semibold text-primary-700 mb-1"
+                                  >Education Level:</span
+                                >
+                                {{
+                                  education.educationLevel
+                                    ? education.educationLevel.name
+                                    : ""
+                                }}
+                              </p>
+                              <p class="text-gray-500">
+                                <span
+                                  class="font-semibold text-primary-700 mb-1"
+                                  >Profession:</span
+                                >
+                                {{
+                                  education.professionType
+                                    ? education.professionType.name
+                                    : ""
+                                }}
+                              </p>
+                              <p class="text-gray-500">
+                                <span
+                                  class="font-semibold text-primary-700 mb-1"
+                                  >Institution:</span
+                                >
+                                {{
+                                  education.institution
+                                    ? education.institution.name
+                                    : ""
+                                }}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div
+                        class="
+                          grow-0
+                          shrink-0
+                          basis-auto
+                          w-full
+                          lg:w-6/12
+                          px-3
+                          lg:px-6
+                        "
+                      >
                         <button
                           class="
-                         inline-block
+                            inline-block
                             px-6
                             py-2.5
                             bg-blue-600
-                            hover:text-primary-600
-                            hover:border
+                            hover:text-primary-600 hover:border
                             text-white
                             font-medium
                             text-xs
@@ -303,7 +391,11 @@
                               <div class="mt-large bg-white">
                                 <a
                                   :href="googleApi + document.filePath"
-                                  :data-title="document.documentType?document.documentType.name:''"
+                                  :data-title="
+                                    document.documentType
+                                      ? document.documentType.name
+                                      : ''
+                                  "
                                   data-lightbox="example-2"
                                 >
                                   <img
@@ -312,10 +404,14 @@
                                   />
                                 </a>
 
-                                <h4 style="font-weight: bold">
-                                  Document Type
-                                </h4>
-                                <h5 class="text-primary-500">{{ document.documentType?document.documentType.name:'' }}</h5>
+                                <h4 style="font-weight: bold">Document Type</h4>
+                                <h5 class="text-primary-500">
+                                  {{
+                                    document.documentType
+                                      ? document.documentType.name
+                                      : ""
+                                  }}
+                                </h5>
                               </div>
                             </div>
                           </div>
@@ -341,7 +437,7 @@
           <button
             type="button"
             class="
-         inline-block
+              inline-block
               px-6
               text-white
               font-medium
@@ -352,8 +448,7 @@
               rounded
               hover:border-primary-600
               shadow-lg
-              hover:bg-white 
-              hover:text-primary-700
+              hover:bg-white hover:text-primary-700
               transition
               duration-150
               ease-in-out
@@ -394,7 +489,7 @@ export default {
     const showModal = () => {
       show.value = true;
     };
- 
+
     const modalData = ref({});
     let result = {};
 
@@ -435,14 +530,15 @@ export default {
             modalData.value.email = result.applicant.emailAddress
               ? result.applicant.emailAddress
               : "-----";
-     
+
             modalData.value.profile = result.profile;
             modalData.value.professionalTypes = result.licenseProfessions;
             modalData.value.certifiedDate = result.certifiedDate;
             modalData.value.licenseExpirationDate =
               result.licenseExpirationDate;
+            modalData.value.data = result;
             modalData.value.documents = result.documents;
-            isLoading.value=false
+            isLoading.value = false;
           }
         });
     };
@@ -457,9 +553,9 @@ export default {
       reviewerAdminId,
       showModal,
       check,
-      isLoading, 
+      isLoading,
       modalData,
-      googleApi
+      googleApi,
     };
   },
 };
