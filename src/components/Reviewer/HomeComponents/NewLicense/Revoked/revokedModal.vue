@@ -49,7 +49,7 @@
           <button
             type="button"
             class="
-                  px-6
+              px-6
               text-white
               bg-primary-600
               hover:text-primary-600 hover:border
@@ -100,15 +100,15 @@
 
                 <div class="flex flex-wrap">
                   <div class="grow-0 shrink-0 basis-auto w-full lg:w-11/12">
-                    <div class="flex flex-wrap">
+                    <div class="flex flex-wrap     ">
                       <div
                         class="
                           grow-0
                           shrink-0
                           basis-auto
-                          w-full
+                          w-full 
                           lg:w-6/12
-                          px-3
+                          
                           lg:px-6
                         "
                       >
@@ -138,12 +138,12 @@
                                           .filePath
                                       : ''
                                   "
-                                  style="    height: 177px;"
+                                  style="height: 177px"
                                   type="image/jpg"
                                 />
 
                                 <img
-                                style="    height: 177px;"
+                                  style="height: 177px"
                                   src="../../../../../assets/showLicense/profile.png"
                                 />
                               </picture>
@@ -284,7 +284,7 @@
                           shrink-0
                           basis-auto
                           w-full
-                          lg:w-6/12
+                          lg:w-6/12 
                           px-3
                           lg:px-6
                         "
@@ -329,25 +329,28 @@
                         </div>
                       </div>
 
+                   
                       <div
                         class="
+                          shadow-lg
                           grow-0
                           shrink-0
                           basis-auto
-                          w-full
-                          lg:w-6/12
-                          px-3
+                          w-full 
+                          rounded-lg
+                          p-2
+                          text-primary-600
+                          mt-12
                           lg:px-6
                         "
                       >
-                        <div class="flex items-start">
+                        <div class="flex items-start m-2">
                           <div class="shrink-0">
                             <div
                               class="
                                 p-4
                                 bg-blue-600
-                                rounded-md
-                                shadow-lg
+                                rounded-md 
                                 w-48
                                 h-48
                                 flex
@@ -355,23 +358,75 @@
                                 justify-center
                               "
                             >
-                              <i class="fa fa-phone fa-4x"></i>
+                              <i class="fa fa-building fa-4x"></i>
                             </div>
                           </div>
-                     
+                          <div class="grow ml-6 mb-4">
+                            <h2 class="font-bold mb-1">Education Detail</h2>
+                            <div class="grid grid-cols-3 w-full">
+                              <div
+                                class="
+                                  border-2
+                                  p-2
+                                  rounded-lg
+                                  w-full
+                                  shadow-md
+                                  text-primary-500
+                                "
+                                v-for="education in modalData.data
+                                  ? modalData.data.educations
+                                  : []"
+                                :key="education.id"
+                              >
+                                <p class="text-gray-500">
+                                  <span
+                                    class="font-semibold text-primary-700 mb-1"
+                                    >Department:</span
+                                  >
+                                  {{
+                                    education.department
+                                      ? education.department.name
+                                      : ""
+                                  }}
+                                </p>
+                                <p class="text-gray-500">
+                                  <span
+                                    class="font-semibold text-primary-700 mb-1"
+                                    >Education Level:</span
+                                  >
+                                  {{
+                                    education.educationLevel
+                                      ? education.educationLevel.name
+                                      : ""
+                                  }}
+                                </p>
+                                <p class="text-gray-500">
+                                  <span
+                                    class="font-semibold text-primary-700 mb-1"
+                                    >Profession:</span
+                                  >
+                                  {{
+                                    education.professionType
+                                      ? education.professionType.name
+                                      : ""
+                                  }}
+                                </p>
+                                <p class="text-gray-500">
+                                  <span
+                                    class="font-semibold text-primary-700 mb-1"
+                                    >Institution:</span
+                                  >
+                                  {{
+                                    education.institution
+                                      ? education.institution.name
+                                      : ""
+                                  }}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
                         </div>
                       </div>
-                      <div
-                        class="
-                          grow-0
-                          shrink-0
-                          basis-auto
-                          w-full
-                          lg:w-6/12
-                          px-3
-                          lg:px-6
-                        "
-                      ></div>
                     </div>
 
                     <div class="collapse mt-12" id="collapseExample">
@@ -496,15 +551,13 @@ import { ref, watch } from "vue";
 import { useStore } from "vuex";
 import Loading from "vue3-loading-overlay";
 // Import stylesheet
-import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
-import { useToast } from "vue-toastification";
+import "vue3-loading-overlay/dist/vue3-loading-overlay.css"; 
 export default {
   name: "Modal",
   components: { Loading },
   props: ["modalDataId"],
   setup(props) {
-    const store = useStore();
-    const toast = useToast();
+    const store = useStore(); 
     const showModal = () => {
       this.show = true;
     };
@@ -515,8 +568,7 @@ export default {
     const isLoading = ref(true);
     const modalData = ref({});
     let adminData = JSON.parse(localStorage.getItem("allAdminData"));
-    let result = {};
-    let newLicense = {};
+    let result = {}; 
     const check = () => {
       store
         .dispatch("reviewer/getNewLicenseApplication", props.modalDataId.id)
@@ -559,7 +611,7 @@ export default {
             modalData.value.documents = result.documents;
             modalData.value.remark = result ? result.remark : "";
             modalData.value.id = result.id;
-            newLicense = result ? result : {};
+            modalData.value.data = result; 
             isLoading.value = false;
           }
         });

@@ -100,13 +100,9 @@
                         font-normal
                         text-gray-700
                         bg-white bg-clip-padding
-                        border border-solid border-gray-300
                         rounded
                         transition
                         ease-in-out
-                        focus:text-gray-700
-                        focus:bg-white
-                        focus:border-blue-600
                         focus:outline-none
                       "
                       placeholder="Start Searching For Name"
@@ -131,6 +127,7 @@
                         transition
                         duration-150
                         ease-in-out
+                       
                         items-center
                       "
                     >
@@ -1190,7 +1187,7 @@ export default {
     onMounted(() => {
       unassigned();
       reSubmitted();
-      store.dispatch("reviewer/getAdminsByRegion",adminRegion).then((res) => {
+      store.dispatch("reviewer/getAdminsByRegion", adminRegion).then((res) => {
         reviewers.value = res.data.data.filter((e) => {
           return e.role.code !== "UM";
         });

@@ -259,100 +259,116 @@
                         </div>
                       </div>
                       <div
-                      class="
-                        grow-0
-                        shrink-0
-                        basis-auto
-                        w-full
-                        lg:w-6/12
-                        px-3
-                        lg:px-6
-                      "
-                    >
-                      <div class="flex items-start">
-                        <div class="shrink-0">
-                          <div
-                            class="
-                              p-4
-                              bg-blue-600
-                              rounded-md
-                              shadow-lg
-                              w-48
-                              h-64
-                              flex
-                              items-center
-                              justify-center
-                            "
-                          >
-                            <i class="fa fa-building fa-4x"></i>
+                        class="
+                          grow-0
+                          shrink-0
+                          basis-auto
+                          w-full
+                          lg:w-6/12
+                          px-3
+                          lg:px-6
+                        "
+                      >
+                        <div class="flex items-start">
+                          <div class="shrink-0">
+                            <div
+                              class="
+                                p-4
+                                bg-blue-600
+                                rounded-md
+                                shadow-lg
+                                w-48
+                                h-64
+                                flex
+                                items-center
+                                justify-center
+                              "
+                            >
+                              <i class="fa fa-building fa-4x"></i>
+                            </div>
                           </div>
-                        </div>
-                        <div class="grow ml-6 mb-4">
-                          <h2 class="font-bold mb-1">Education Detail</h2>
+                          <div class="grow ml-6 mb-4">
+                            <h2 class="font-bold mb-1">Education Detail</h2>
 
-                          <div
-                            class="
-                              border-2
-                              p-2
-                              rounded-lg
-                              m-1
-                              shadow-md
-                              text-primary-500
-                            "
-                            v-for="education in modalData.data
-                              ? modalData.data.educations
-                              : []"
-                            :key="education.id"
-                          >
-                            <p class="text-gray-500">
-                              <span
-                                class="font-bold text-xl text-primary-700 mb-1"
-                                >Department:</span
-                              >
-                              {{
-                                education.department
-                                  ? education.department.name
-                                  : ""
-                              }}
-                            </p>
-                            <p class="text-gray-500">
-                              <span
-                                class="font-bold text-xl text-primary-700 mb-1"
-                                >Education Level:</span
-                              >
-                              {{
-                                education.educationLevel
-                                  ? education.educationLevel.name
-                                  : ""
-                              }}
-                            </p>
-                            <p class="text-gray-500">
-                              <span
-                                class="font-bold text-xl text-primary-700 mb-1"
-                                >Profession:</span
-                              >
-                              {{
-                                education.professionType
-                                  ? education.professionType.name
-                                  : ""
-                              }}
-                            </p>
-                            <p class="text-gray-500">
-                              <span
-                                class="font-bold text-xl text-primary-700 mb-1"
-                                >Institution:</span
-                              >
-                              {{
-                                education.institution
-                                  ? education.institution.name
-                                  : ""
-                              }}
-                            </p>
+                            <div
+                              class="
+                                border-2
+                                p-2
+                                rounded-lg
+                                m-1
+                                shadow-md
+                                text-primary-500
+                              "
+                              v-for="education in modalData.data
+                                ? modalData.data.educations
+                                : []"
+                              :key="education.id"
+                            >
+                              <p class="text-gray-500">
+                                <span
+                                  class="
+                                    font-bold
+                                    text-xl text-primary-700
+                                    mb-1
+                                  "
+                                  >Department:</span
+                                >
+                                {{
+                                  education.department
+                                    ? education.department.name
+                                    : ""
+                                }}
+                              </p>
+                              <p class="text-gray-500">
+                                <span
+                                  class="
+                                    font-bold
+                                    text-xl text-primary-700
+                                    mb-1
+                                  "
+                                  >Education Level:</span
+                                >
+                                {{
+                                  education.educationLevel
+                                    ? education.educationLevel.name
+                                    : ""
+                                }}
+                              </p>
+                              <p class="text-gray-500">
+                                <span
+                                  class="
+                                    font-bold
+                                    text-xl text-primary-700
+                                    mb-1
+                                  "
+                                  >Profession:</span
+                                >
+                                {{
+                                  education.professionType
+                                    ? education.professionType.name
+                                    : ""
+                                }}
+                              </p>
+                              <p class="text-gray-500">
+                                <span
+                                  class="
+                                    font-bold
+                                    text-xl text-primary-700
+                                    mb-1
+                                  "
+                                  >Institution:</span
+                                >
+                                {{
+                                  education.institution
+                                    ? education.institution.name
+                                    : ""
+                                }}
+                              </p>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                    <div
+                      <div
                         class="
                           grow-0
                           shrink-0
@@ -384,54 +400,63 @@
                           <div class="grow ml-6">
                             <h2 class="font-bold mb-1">License Detail</h2>
                             <p class="text-gray-500">
-                              <span class="font-bold text-xl text-primary-700 mb-1"
+                              <span
+                                class="font-bold text-xl text-primary-700 mb-1"
                                 >Certified Date:</span
                               >
                               {{
-                                modalData && modalData.data&&modalData.data.certifiedDate
+                                modalData &&
+                                modalData.data &&
+                                modalData.data.certifiedDate
                                   ? modalData.data.certifiedDate.slice(0, 10)
                                   : ""
                               }}
                             </p>
                             <p class="text-gray-500">
-                              <span class="font-bold text-xl text-primary-700 mb-1"
+                              <span
+                                class="font-bold text-xl text-primary-700 mb-1"
                                 >Expiration Date:</span
                               >
                               {{
-                                modalData && modalData.data&& modalData.licenseExpirationDate
-                                  ? modalData.data.licenseExpirationDate.slice(0, 10)
+                                modalData &&
+                                modalData.data &&
+                                modalData.licenseExpirationDate
+                                  ? modalData.data.licenseExpirationDate.slice(
+                                      0,
+                                      10
+                                    )
                                   : ""
                               }}
                             </p>
                             <p class="text-gray-500">
-                              <span class="font-bold text-xl text-primary-700 mb-1"
+                              <span
+                                class="font-bold text-xl text-primary-700 mb-1"
                                 >Reviewer Name:</span
                               >
                               {{
-                                modalData && 
-                                modalData.reviewer 
+                                modalData && modalData.reviewer
                                   ? modalData.reviewer.reviewer.name
                                   : ""
                               }}
                             </p>
                             <p class="text-gray-500">
-                              <span class="font-bold text-xl text-primary-700 mb-1"
+                              <span
+                                class="font-bold text-xl text-primary-700 mb-1"
                                 >Reviewer Phone:</span
                               >
                               {{
-                                modalData && 
-                                modalData.reviewer 
+                                modalData && modalData.reviewer
                                   ? modalData.reviewer.reviewer.phoneNumber
                                   : ""
                               }}
                             </p>
                             <p class="text-gray-500">
-                              <span class="font-bold text-xl text-primary-700 mb-1"
+                              <span
+                                class="font-bold text-xl text-primary-700 mb-1"
                                 >Reviewer Email:</span
                               >
                               {{
-                                modalData && 
-                                modalData.reviewer 
+                                modalData && modalData.reviewer
                                   ? modalData.reviewer.reviewer.email
                                   : ""
                               }}
@@ -440,8 +465,6 @@
                         </div>
                       </div>
                     </div>
-
-               
 
                     <div class="collapse mt-12" id="collapseExample">
                       <div class="block p-6 rounded-lg shadow-lg bg-white">
