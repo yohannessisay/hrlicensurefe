@@ -450,7 +450,7 @@ export default {
           if (existingDocs.length > 0) {
             imageData.forEach((newImage) => {
               existingDocs.forEach((existing) => {
-                if (existing.imageId == newImage.imageId) {
+                if (existing.documentCode == newImage.documentCode) {
                   existing.image = newImage.image;
                   finalLocalData.data.push(existing);
                 } else {

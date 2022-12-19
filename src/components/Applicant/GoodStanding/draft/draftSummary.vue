@@ -73,9 +73,10 @@
           </div>
           <div>
             <span class="text-black sm:text-sm">
+           
               {{
-                localData && localData.applicantTypeId
-                  ? localData.applicantTypeId.name
+                localData && localData.applicantType
+                  ? localData.applicantType.name
                   : ""
               }}</span
             >
@@ -99,8 +100,8 @@
           <div>
             <span class="text-black sm:text-sm">
               {{
-                localData && localData.departmentId
-                  ? localData.departmentId.name
+                localData && localData.department
+                  ? localData.department.name
                   : ""
               }}</span
             >
@@ -123,14 +124,14 @@
           <div>
             <span class="text-black sm:text-sm">
               {{
-                localData && localData.professionType
-                  ? localData.professionType.professionTypeId.name
+                localData && localData.GSProfessionals
+                  ? localData.GSProfessionals.professionalTypes.name
                   : ""
               }}
             </span>
           </div>
         </div>
-        <!-- <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
+        <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
           <div>
             <span
               class="
@@ -147,15 +148,13 @@
           <div>
             <span class="text-black sm:text-sm">
               {{
-                localData && localData.professionType.educationLevelId
-                  ? localData.professionType.educationLevelId.name
+                localData && localData.GSProfessionals
+                  ? localData.GSProfessionals.educationLevel.name
                   : ""
               }}
-              
-              </span
-            >
+            </span>
           </div>
-        </div> -->
+        </div>
         <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
           <div>
             <span
@@ -174,8 +173,8 @@
           <div>
             <span class="text-black sm:text-sm">
               {{
-                localData && localData.applicantTitleId
-                  ? localData.applicantTitleId.name
+                localData && localData.applicantTitle
+                  ? localData.applicantTitle.name
                   : ""
               }}</span
             >
@@ -353,6 +352,7 @@
           </div>
 
           <div
+        
             :class="
               changedDocs && changedDocs.length > 0
                 ? ' border-b mb-12 grid grid-cols-4 gap-4 ml-4 sm:w-full sm:grid-cols-1 md:w-full mdlg:grid-cols-2 lg:w-full md:grid-cols-4 mdlg:w-full lg:grid-cols-4'
@@ -412,6 +412,8 @@
             </div>
           </div>
 
+          
+
           <div class="accordion" id="accordionExample">
             <div class="accordion-item bg-white">
               <h2 class="accordion-header mb-0" id="headingOne">
@@ -437,7 +439,7 @@
                   aria-expanded="true"
                   aria-controls="collapseOne"
                 >
-                  Previously uploaded files
+                <span v-if="changedDocs && changedDocs.length > 0">  Previously</span> uploaded files
                 </button>
               </h2>
               <div
@@ -462,7 +464,7 @@
                     "
                   >
                     <div
-                      v-if="!professionChanged"
+                    v-if="changedDocs && changedDocs.length > 0"
                       class="
                         mt-4
                         mb-8
@@ -512,20 +514,20 @@
                         p-2
                         hover:-translate-y-2
                       "
-                      v-for="prev in prevDocs"
+                      v-for="prev in localFileImages"
                       :key="prev.docName"
                     >
                       <h4 class="text-main-400 font-bold m-2">Document Type</h4>
-                      <h6 class="m-2">{{ prev.documentType.name }}</h6>
+                      <h6 class="m-2">{{ prev.documenttype }}</h6>
                       <div class="flex justify-center rounded-lg p-4">
                         <div class="bg-white rounded-md p-2">
                           <a
-                            :href="prev.path"
-                            :data-title="prev.docName"
+                            :href="prev.image"
+                            :data-title="prev.documenttype"
                             data-lightbox="example-4"
                           >
                             <img
-                              :src="prev.path"
+                              :src="prev.image"
                               class="w-full h-48 object-cover"
                             />
                           </a>
@@ -954,7 +956,11 @@ export default {
                   )
                 : {};
 
-              if (localFileImages.value && savedData.value.documents) {
+              if (
+                localFileImages.value &&
+                savedData.value.documents &&
+                savedData.value.documents.length > 0
+              ) {
                 savedData.value.documents.forEach((ele) => {
                   localFileImages.value.forEach((newFile) => {
                     if (
