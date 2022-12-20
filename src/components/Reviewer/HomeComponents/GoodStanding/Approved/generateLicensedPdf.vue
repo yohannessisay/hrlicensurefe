@@ -101,11 +101,14 @@
                                   class="ml-8 mr-8 mb-12"
                                 >
                                   <div class="mt-large bg-white">
-                            
-
-                                    <h2 class="ml-4 mt-8">To: {{  modalData
+                                    <h2 class="ml-4 mt-8">
+                                      To:
+                                      {{
+                                        modalData
                                           ? modalData.whomGoodStandingFor
-                                          : "" }}.</h2>
+                                          : ""
+                                      }}.
+                                    </h2>
                                     <h3 class="ml-64 mb-8">
                                       LETTER OF GOOD STANDING
                                     </h3>
@@ -123,14 +126,15 @@
                                           (modalData && modalData.profile
                                             ? modalData.profile.name
                                             : "") +
-                                          " " +
-                                          (modalData && modalData.profile
-                                            ? modalData.profile.fatherName
-                                            : "") +
-                                          " " +
-                                          (modalData && modalData.profile
-                                            ? modalData.profile.grandFatherName
-                                            : "")
+                                            " " +
+                                            (modalData && modalData.profile
+                                              ? modalData.profile.fatherName
+                                              : "") +
+                                            " " +
+                                            (modalData && modalData.profile
+                                              ? modalData.profile
+                                                  .grandFatherName
+                                              : "")
                                         }}
                                       </span>
                                       .
@@ -233,9 +237,8 @@
                                       class="flex justify-start"
                                       v-if="expertLevelId != 3"
                                     >
-                                     <h3 class="font-bold">Address</h3>
+                                      <h3 class="font-bold">Address</h3>
                                     </div>
-                               
 
                                     <div
                                       class="flex justify-start flex-wrap"
@@ -268,7 +271,7 @@
           <button
             type="button"
             class="
-         inline-block
+              inline-block
               px-6
               text-white
               font-medium
@@ -279,8 +282,7 @@
               rounded
               hover:border-primary-600
               shadow-lg
-              hover:bg-white 
-              hover:text-primary-700
+              hover:bg-white hover:text-primary-700
               transition
               duration-150
               ease-in-out
@@ -293,7 +295,7 @@
           <button
             type="button"
             class="
-         inline-block
+              inline-block
               px-6
               text-white
               font-medium
@@ -304,8 +306,7 @@
               rounded
               hover:border-primary-600
               shadow-lg
-              hover:bg-white 
-              hover:text-primary-700
+              hover:bg-white hover:text-primary-700
               transition
               duration-150
               ease-in-out
@@ -333,19 +334,17 @@ export default {
   props: ["modalDataGenerate"],
   components: { Loading },
   computed: {
-    moment: () => moment,
+    moment: () => moment
   },
   setup(props) {
     const store = useStore();
     const toast = useToast();
     let myRegion = ref(true);
-    const expertLevelId = JSON.parse(
-      localStorage.getItem("allAdminData")
-    ).expertLevelId;
+    const expertLevelId = JSON.parse(localStorage.getItem("allAdminData"))
+      .expertLevelId;
 
-    const adminRegionId = JSON.parse(
-      localStorage.getItem("allAdminData")
-    ).regionId;
+    const adminRegionId = JSON.parse(localStorage.getItem("allAdminData"))
+      .regionId;
 
     let show = ref(false);
 
@@ -364,7 +363,7 @@ export default {
       email: "",
       maritalStatus: "",
       nationality: "",
-      dateOfBirth: "",
+      dateOfBirth: ""
     });
     let applicantPosition = ref("-");
 
@@ -374,7 +373,7 @@ export default {
     let applicantTypeId = ref("");
     let education = ref({
       departmentId: "",
-      institutionId: "",
+      institutionId: ""
     });
     let licenseId = ref("");
     let activeClass = ref("active");
@@ -393,7 +392,7 @@ export default {
         license.value.applicationStatus.code !== "AP" &&
         license.value.applicationStatus.code !== "APP"
       ) {
-        console.log(license.value)
+        console.log(license.value);
         // if user is not approved don't generate a good standing letter
         return;
       }
@@ -516,21 +515,21 @@ export default {
       doc.text(40, 185, "With best regards");
 
       license.value.isLicenseGenerated = true;
-          let req = {
-        data: { ...license.value, isLicenseGenerated: true },
+      let req = {
+        data: { ...license.value, isLicenseGenerated: true }
       };
       store
         .dispatch("reviewer/editGoodStanding", req)
-        .then((res) => {
+        .then(res => {
           if (res.statusText == "Created") {
             toast.success("Done", {
               timeout: 5000,
               position: "bottom-center",
               pauseOnFocusLoss: true,
               pauseOnHover: true,
-              icon: true,
+              icon: true
             });
-                setTimeout(() => {
+            setTimeout(() => {
               window.location.reload();
             }, 3000);
           } else {
@@ -539,18 +538,18 @@ export default {
               position: "bottom-center",
               pauseOnFocusLoss: true,
               pauseOnHover: true,
-              icon: true,
+              icon: true
             });
-                setTimeout(() => {
+            setTimeout(() => {
               window.location.reload();
             }, 3000);
           }
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
-              setTimeout(() => {
-              window.location.reload();
-            }, 3000);
+          setTimeout(() => {
+            window.location.reload();
+          }, 3000);
         });
 
       window.open(doc.output("bloburl"));
@@ -638,9 +637,9 @@ export default {
       GenerateLetter,
       myRegion,
       modalData,
-      expertLevelId,
+      expertLevelId
     };
-  },
+  }
 };
 </script>
 <style>

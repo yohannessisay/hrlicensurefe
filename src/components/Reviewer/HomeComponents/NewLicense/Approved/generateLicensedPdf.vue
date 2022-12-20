@@ -1384,7 +1384,7 @@ export default {
     moment: () => moment,
     AmharicFont: () => AmharicFont,
     toEthiopian: () => toEthiopian,
-    STATIC_CERTIFICATE_URL: () => STATIC_CERTIFICATE_URL,
+    STATIC_CERTIFICATE_URL: () => STATIC_CERTIFICATE_URL
   },
   props: ["modalData"],
   components: { Loading },
@@ -1407,9 +1407,8 @@ export default {
     let today = new Date().toISOString().split("T")[0];
     let retrivalDate = ref("");
 
-    const adminRegionId = JSON.parse(
-      localStorage.getItem("allAdminData")
-    ).regionId;
+    const adminRegionId = JSON.parse(localStorage.getItem("allAdminData"))
+      .regionId;
 
     const expertLevelCode = JSON.parse(localStorage.getItem("allAdminData"))
       .expertLevel.code;
@@ -1440,17 +1439,17 @@ export default {
 
       let req = {
         action: null,
-        data: { ...finalData.value.data },
+        data: { ...finalData.value.data }
       };
 
       editApplication(req);
     };
 
-    const editApplication = (req) => {
+    const editApplication = req => {
       delete req.data.educations;
       store
         .dispatch("reviewer/editNewLicense", req)
-        .then((res) => {
+        .then(res => {
           isLoading.value = false;
           if (res.statusText == "Created") {
             showGenerateModal.value = false;
@@ -1464,9 +1463,9 @@ export default {
               recipients: [
                 req.data && req.data.applicant
                   ? "251" + req.data.applicant.phoneNumber
-                  : "",
+                  : ""
               ],
-              message: smsMessage ? smsMessage : "",
+              message: smsMessage ? smsMessage : ""
             };
 
             store
@@ -1477,8 +1476,11 @@ export default {
                   position: "bottom-center",
                   pauseOnFocusLoss: true,
                   pauseOnHover: true,
-                  icon: true,
+                  icon: true
                 });
+                setTimeout(() => {
+                  window.location.reload();
+                }, 3000);
               })
               .catch(() => {
                 toast.error("Sms is not sent", {
@@ -1486,7 +1488,7 @@ export default {
                   position: "bottom-center",
                   pauseOnFocusLoss: true,
                   pauseOnHover: true,
-                  icon: true,
+                  icon: true
                 });
                 setTimeout(() => {
                   window.location.reload();
@@ -1499,11 +1501,11 @@ export default {
               position: "bottom-center",
               pauseOnFocusLoss: true,
               pauseOnHover: true,
-              icon: true,
+              icon: true
             });
           }
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     };
@@ -1520,13 +1522,13 @@ export default {
         staticUrl + "/" + applicationType + "/" + userId + "/" + applicationId;
       store
         .dispatch("reviewer/getQrCode", qrParam)
-        .then((res) => {
+        .then(res => {
           imageSrc.value = res.data.data;
         })
         .finally(() => {
           downloadPdf();
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     };
@@ -1540,7 +1542,7 @@ export default {
           position: "bottom-center",
           pauseOnFocusLoss: true,
           pauseOnHover: true,
-          icon: true,
+          icon: true
         });
       }
     };
@@ -1555,7 +1557,7 @@ export default {
       );
       certificateDetail.value.educations = certificateDetail.value.educations
         ? certificateDetail.value.educations.filter(
-            (edu) => edu.isDropped != true
+            edu => edu.isDropped != true
           )
         : {};
       applicationStatus.value = props.modalData.data.applicationStatus.code;
@@ -2005,11 +2007,11 @@ export default {
         : null;
       const doc = new jsPDF({
         orientation: "landscape",
-        filters: ["ASCIIHexEncode"],
+        filters: ["ASCIIHexEncode"]
       });
       const doc2 = new jsPDF({
         orientation: "landscape",
-        filters: ["ASCIIHexEncode"],
+        filters: ["ASCIIHexEncode"]
       });
       let defaultCode = "";
       let defaultBackground = "";
@@ -2094,9 +2096,9 @@ export default {
           doc.addImage(imageSrc.value, "JPG", 246, 14, 35, 35);
           if (userImage != null) {
             let path = {
-              path: userImage,
+              path: userImage
             };
-            store.dispatch("profile/converProfilePicture", path).then((res) => {
+            store.dispatch("profile/converProfilePicture", path).then(res => {
               doc.addImage(res.data.data, "JPG", 33, 20, 30, 30);
               doc.setFontSize(10);
               window.open(doc.output("bloburl"));
@@ -2197,9 +2199,9 @@ export default {
         doc2.addImage(imageSrc.value, "JPG", 246, 14, 35, 35);
         if (userImage !== null) {
           let path = {
-            path: userImage,
+            path: userImage
           };
-          store.dispatch("profile/converProfilePicture", path).then((res) => {
+          store.dispatch("profile/converProfilePicture", path).then(res => {
             doc.addImage(res.data.data, "JPG", 33, 20, 30, 30);
             doc2.addImage(res.data.data, "JPG", 33, 20, 30, 30);
             doc.setFontSize(10);
@@ -2244,9 +2246,9 @@ export default {
       isReprint,
       retrivalDate,
       generateRetrival,
-      today,
+      today
     };
-  },
+  }
 };
 </script>
 <style scoped>
