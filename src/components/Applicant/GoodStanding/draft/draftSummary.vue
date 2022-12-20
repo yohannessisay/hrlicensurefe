@@ -73,7 +73,6 @@
           </div>
           <div>
             <span class="text-black sm:text-sm">
-           
               {{
                 localData && localData.applicantType
                   ? localData.applicantType.name
@@ -352,7 +351,6 @@
           </div>
 
           <div
-        
             :class="
               changedDocs && changedDocs.length > 0
                 ? ' border-b mb-12 grid grid-cols-4 gap-4 ml-4 sm:w-full sm:grid-cols-1 md:w-full mdlg:grid-cols-2 lg:w-full md:grid-cols-4 mdlg:w-full lg:grid-cols-4'
@@ -412,8 +410,6 @@
             </div>
           </div>
 
-          
-
           <div class="accordion" id="accordionExample">
             <div class="accordion-item bg-white">
               <h2 class="accordion-header mb-0" id="headingOne">
@@ -439,7 +435,10 @@
                   aria-expanded="true"
                   aria-controls="collapseOne"
                 >
-                <span v-if="changedDocs && changedDocs.length > 0">  Previously</span> uploaded files
+                  <span v-if="changedDocs && changedDocs.length > 0">
+                    Previously</span
+                  >
+                  uploaded files
                 </button>
               </h2>
               <div
@@ -464,7 +463,7 @@
                     "
                   >
                     <div
-                    v-if="changedDocs && changedDocs.length > 0"
+                      v-if="changedDocs && changedDocs.length > 0"
                       class="
                         mt-4
                         mb-8
@@ -958,6 +957,7 @@ export default {
 
               if (
                 localFileImages.value &&
+                localFileImages.value.length > 0 &&
                 savedData.value.documents &&
                 savedData.value.documents.length > 0
               ) {
@@ -982,7 +982,7 @@ export default {
                 professionChanged.value = true;
                 // prevDocs.value = localFileImages.value;
                 localFileImages.value.forEach((element) => {
-                  if (!element.commonDocCode) {
+                  if (!element.documentTypeCode) {
                     prevDocs.value.push({
                       documentType: { name: element.documentName },
                       docName: element.documenttype,
@@ -991,7 +991,9 @@ export default {
                   }
                 });
               } else {
+           
                 prevDocs.value = savedData.value.documents;
+             
               }
             };
           };

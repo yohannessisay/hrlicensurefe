@@ -578,7 +578,11 @@ export default {
           let licenseId = route.params.id;
           let payload = { document: formData, id: licenseId };
           store
-            .dispatch("goodstanding/updateDocuments", payload)
+            .dispatch(      generalInfo.value &&
+                generalInfo.value.documents &&
+                generalInfo.value.documents.length > 0
+                ? "goodstanding/updateDocuments"
+                : "goodstanding/uploadDocuments", payload)
             .then((res) => {
               if (res.data.status == "Success") {
                 toast.success("Applied successfuly", {

@@ -215,7 +215,7 @@
         type="submit"
         @click="saveDraft()"
       >
-       Update
+        Update
       </button>
       <button
         class="
@@ -344,7 +344,7 @@ export default {
           );
           imageData.push({
             documenttype: data.documentType ? data.documentType.name : "",
-            documentCode:data.documentType ? data.documentType.code : "",
+            documentCode: data.documentType ? data.documentType.code : "",
             educationalLevel: data.educationalLevel
               ? data.educationalLevel.name
               : "",
@@ -499,7 +499,7 @@ export default {
       generalInfo.value.licenseFile = [];
 
       let license = {
-        action: 'DraftEvent',
+        action: "DraftEvent",
         data: {
           applicantId: generalInfo.value.applicantId,
           applicantTypeId: generalInfo.value.applicantTypeId
@@ -571,14 +571,22 @@ export default {
           id: route.params.id,
         },
       };
-     
+
       store
         .dispatch("goodstanding/editGoodstandingLicense", license)
         .then((res) => {
           let licenseId = route.params.id;
           let payload = { document: formData, id: licenseId };
+
           store
-            .dispatch("goodstanding/updateDocuments", payload)
+            .dispatch(
+              generalInfo.value &&
+                generalInfo.value.documents &&
+                generalInfo.value.documents.length > 0
+                ? "goodstanding/updateDocuments"
+                : "goodstanding/uploadDocuments",
+              payload
+            )
             .then((res) => {
               if (res.data.status == "Success") {
                 toast.success("Applied successfuly", {
