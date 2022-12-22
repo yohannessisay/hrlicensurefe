@@ -7,6 +7,8 @@
 
 <script>
 import ModalIdle from "./sharedComponents/ModalIdle";
+import { onMounted } from "vue";
+import { useRouter } from "vue-router";
 export default {
   components: {
     ModalIdle,
@@ -16,8 +18,19 @@ export default {
       return this.$store.state.idleVue.isIdle;
     },
   },
-
- 
+  setup() {
+    const router = useRouter();
+    onMounted(() => {
+      console.log(window.navigator.onLine, window.location.hostname);
+      if (
+        (window.navigator.onLine == false &&
+          window.location.hostname != "localhost") ||
+        window.location.hostname != "127.0.0.1"
+      ) {
+        router.push({ path: "/404" });
+      }
+    });
+  },
 };
 </script>
 
