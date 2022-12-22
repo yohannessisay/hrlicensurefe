@@ -21,12 +21,7 @@ export default {
   setup() {
     const router = useRouter();
     onMounted(() => {
-      console.log(window.navigator.onLine, window.location.hostname);
-      if (
-        (window.navigator.onLine == false &&
-          window.location.hostname != "localhost") ||
-        window.location.hostname != "127.0.0.1"
-      ) {
+      if (window.navigator.onLine == false) {
         router.push({ path: "/404" });
       }
     });
