@@ -535,7 +535,7 @@ const routes = [
     name: "RenewalEvaluate",
     component: () =>
       import(
-        "../components/Reviewer/HomeComponents/Renewal/InReview/inReviewEvaluationModal.vue"
+        "../components/Reviewer/HomeComponents/Renewal/InReview/inReviewEvaluation.vue"
       )
   },
 

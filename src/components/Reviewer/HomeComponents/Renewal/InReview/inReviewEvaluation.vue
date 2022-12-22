@@ -181,7 +181,9 @@
                                   </div>
                                   <div v-if="editPersonalData">
                                     <input
-                                      v-model="renewal.profile.alternativeName"
+                                      v-model="
+                                        renewal.profile.alternativeName
+                                      "
                                       class="w-48 mr-1"
                                       type="text"
                                     />
@@ -434,6 +436,10 @@
                                   <h2 class="font-bold">
                                     Department Information
                                   </h2>
+                                  <small class="font-bold"
+                                    >Uncheck departments if you want to remove
+                                    them</small
+                                  >
                                   <i
                                     class="
                                       fa fa-briefcase
@@ -444,11 +450,10 @@
                                 </header>
 
                                 <div
-                                  class="
-                                    flex flex-row
-                                    border-b-2
-                                    text-grey-400
-                                    m-2
+                                  :class="
+                                    education && education.isDropped == false
+                                      ? 'flex flex-row border-b-2 text-grey-400 m-2'
+                                      : 'flex flex-row border text-red-300 m-2 p-2 rounded-md'
                                   "
                                   v-for="education in renewal.educations"
                                   :key="education.id"
@@ -458,7 +463,12 @@
                                       <label
                                         for=""
                                         class="font-bold text-red-300"
-                                        >Remove</label
+                                        >{{
+                                          education &&
+                                          education.isDropped == false
+                                            ? ""
+                                            : "Removed"
+                                        }}</label
                                       >
                                       <div class="form-check">
                                         <input
@@ -469,11 +479,10 @@
                                             w-8
                                             border border-gray-300
                                             rounded-md
-                                            bg-white
+                                            bg-red-300
                                             transition
                                             duration-200
                                             my-1
-                                            focus:text-red-300
                                             btn-check:bg-white
                                             focus:outline-none
                                             align-top
@@ -481,6 +490,7 @@
                                             float-left
                                             cursor-pointer
                                           "
+                                          checked
                                           type="checkbox"
                                           @change="
                                             education &&
@@ -1399,7 +1409,7 @@
                           : "Remark on why you have dropped the department/s"
                       }}</label>
                       <textarea
-                        v-model="newLicense.remark"
+                        v-model="renewal.remark"
                         class="
                           resize-none
                           tArea
@@ -1931,10 +1941,10 @@ export default {
     let modifiedProfession = [];
     let allowOtherProfChange = ref({});
     let professionalTypes = ref([]);
-    let evaluateRoute = ref("/admin/evaluate/renewal" + route.params.id);
+    let evaluateRoute = ref("/admin/evaluate/Renewal" + route.params.id);
     const editPersonalData = ref(false);
     let others = ref({});
-    let droppedDepartments = ref([]);
+    let droppedDepartments = ref([]); 
     const editPersonalInfo = () => {
       editPersonalData.value = !editPersonalData.value;
     };
@@ -1956,7 +1966,9 @@ export default {
         .then((res) => {
           renewal.value = res.data.data ? res.data.data : {};
           profileInfo.value =
-            renewal.value && renewal.value.profile ? renewal.value.profile : {};
+            renewal.value && renewal.value.profile
+              ? renewal.value.profile
+              : {};
           buttons.value =
             renewal.value &&
             renewal.value.applicationStatus &&
@@ -1970,13 +1982,15 @@ export default {
           totalSteps.value = docs.value ? docs.value.length : 0;
 
           renewal.value &&
-          renewal.value.renewalReviewer &&
-          renewal.value.renewalReviewer.reviewer.regionId != null
+          renewal.value.licenseReviewer &&
+          renewal.value.licenseReviewer.reviewer.regionId != null
             ? (showTransferToFederal.value = true)
             : (showTransferToFederal.value = false);
 
           fetchDocumentTypes();
         });
+
+      applicationType.value = "Renewal";
     };
     const fetchDocumentTypes = async () => {
       store.dispatch("reviewer/getDocumentTypes").then((res) => {
@@ -2221,7 +2235,7 @@ export default {
 
       if (actionValue === "ApproveEvent") {
         smsMessage = renewal.value
-          ? "Dear applicant your applied renewal of number " +
+          ? "Dear applicant your applied renewal license of number " +
             renewal.value.renewalCode +
             " has been approved after careful examination of your uploaded documents by our reviewers. Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
           : "";
@@ -2253,14 +2267,14 @@ export default {
         showRemarkError.value = true;
         nothingDropped.value == true
         smsMessage = renewal.value
-          ? "Dear applicant your applied renewal of number " +
+          ? "Dear applicant your applied renewal licnese of number " +
             renewal.value.renewalCode +
             " has been declined after careful examination of your uploaded documents by our reviewers. Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
           : "";
         showRemark.value = true;
         sendDeclinedData.value = false;
         return;
-      } else if (nothingDropped.value == false) {
+      }else if (nothingDropped.value == false) {
         showRemarkError.value = true;
         showRemark.value = true;
         sendDeclinedData.value = false; 
@@ -2303,7 +2317,7 @@ export default {
       if (applicationType.value == "Renewal") {
         isLoadingAction.value = true;
         store
-          .dispatch("reviewer/editrenewal", req)
+          .dispatch("reviewer/editRenewal", req)
           .then((res) => {
             showActionLoading.value = false;
             isLoadingAction.value = false;
@@ -2316,7 +2330,7 @@ export default {
                   pauseOnHover: true,
                   icon: true,
                 });
-                router.push({ name: "AdminrenewalInReview" });
+                router.push({ name: "AdminRenewalInReview" });
               });
             } else {
               toast.error("Please try again", {
@@ -2524,7 +2538,9 @@ export default {
     };
     const supervise = () => {
       renewal.value.superviseEndDate = endDate.value ? endDate.value : "";
-      renewal.value.superviseStartDate = startDate.value ? startDate.value : "";
+      renewal.value.superviseStartDate = startDate.value
+        ? startDate.value
+        : "";
       renewal.value.supervisor = supervisor.value ? supervisor.value : "";
       renewal.value.supervisingInstitutionId = instSearched.value
         ? instSearched.value.id
@@ -2558,7 +2574,7 @@ export default {
               : "",
           ],
           message: renewal.value
-            ? "Dear applicant your applied renewal of number " +
+            ? "Dear applicant your applied renewal license of number " +
               renewal.value.renewalCode +
               " has been set to be under supervison of MR/MRS:-" +
               renewal.value.supervisor +
@@ -2571,7 +2587,7 @@ export default {
         };
 
         store
-          .dispatch("reviewer/editrenewal", req)
+          .dispatch("reviewer/editRenewal", req)
           .then((res) => {
             showActionLoading.value = false;
             if (res.statusText == "Created") {
@@ -2679,7 +2695,7 @@ export default {
       nextRemark,
       previousRemark,
       droppedDepartment,
-      droppedDepartments,
+      droppedDepartments, 
       amount,
       supervise,
       showOptions,
@@ -2696,6 +2712,7 @@ export default {
       showDateError,
       endDate,
       isLoadingAction,
+      nothingDropped,
       accept,
       transferToFederal,
       showTransferToFederal,
@@ -2737,7 +2754,6 @@ export default {
       fromModalSendDeclinedData,
       rejectedObj,
       completedSteps,
-      nothingDropped,
       totalSteps,
       ind,
       modalDocumentTypeName,
