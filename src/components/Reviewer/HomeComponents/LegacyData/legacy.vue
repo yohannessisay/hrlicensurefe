@@ -585,7 +585,7 @@ export default {
     const fetchLicenseReport = (apiParameters) => {
       store.dispatch("reviewer/getLegacyData", apiParameters).then((res) => {
         tableData = [];
-        reportTable.value.isLoading = true;
+      
         res.rows.forEach((element) => {
           licenseTypes.value.push(
             element.license_type_id ? element.license_type_id : ""
@@ -629,7 +629,7 @@ export default {
         });
         allData.value = tableData;
         reportTable.value = {
-          isLoading: false,
+         
           columns: [
             {
               label: "Employee Id",
@@ -806,6 +806,7 @@ export default {
       }, 600);
     };
     onMounted(() => {
+      reportTable.value.isLoading = true;
       fetchLicenseReport([1, 10]);
     });
     return {

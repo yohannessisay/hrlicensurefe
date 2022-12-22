@@ -220,6 +220,7 @@ export default {
     };
 
     onMounted(() => {
+      cpdTable.value.isLoading = true;
       getCpdUsers();
     });
 
