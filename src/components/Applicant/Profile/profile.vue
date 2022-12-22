@@ -130,7 +130,18 @@
                       <div class="text-gray-700">
                         <div class="grid md:grid-cols-2 text-sm">
                           <div class="grid grid-cols-2">
-                            <div class="form-floating mb-3 xl:w-96">
+                            <div
+                              class="
+                                px-4
+                                py-2
+                                text-base
+                                font-bold
+                                text-main-400
+                              "
+                            >
+                              First Name
+                            </div>
+                            <div class="mb-3 xl:w-96">
                               <input
                                 type="text"
                                 class="
@@ -138,8 +149,7 @@
                                   block
                                   w-full
                                   px-3
-                                  p-2
-                                  h-14
+                                  py-1.5
                                   text-base
                                   font-normal
                                   text-gray-700
@@ -148,26 +158,16 @@
                                   rounded
                                   transition
                                   ease-in-out
-                                  m-2
-                                  sm:w-1/2
-                                  md:w-1/2
-                                  mdlg::w-1/2
-                                  lg:w-full
-                                  focus:text-gray-700
+                                  m-0
                                   focus:bg-white
-                                  focus:border-blue-600
+                                  focus:border-primary-600
                                   focus:outline-none
                                 "
                                 id="firstName"
                                 placeholder="First name"
                                 v-model="userInfo.name"
                               />
-                              <label for="floatingInput" class=" text-lg text-main-400"
-                                >Father Name</label
-                              >
                             </div>
-                           
-                             
                           </div>
                           <div class="grid grid-cols-2">
                             <div
@@ -835,12 +835,12 @@ export default {
     const updateProfilePicture = () => {
       let formData = new FormData();
       formData.append("document", photoFile.value);
-
+     
       let payload = { document: formData, id: userId };
       store
         .dispatch("profile/updateProfilePicture", payload)
         .then((res) => {
-          console.log(res);
+          console.log(res)
           if (res.status == 200) {
             toast.success("Profile Photo Updated successfuly", {
               timeout: 5000,
