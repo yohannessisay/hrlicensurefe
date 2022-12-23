@@ -1485,7 +1485,12 @@
                             hover:bg-primary-400 hover:text-white
                             ease-in-out
                           "
-                          v-on:click="submitRemark(declineAction)"
+                          v-on:click="
+                            submitRemark(
+                              declineAction,
+                              nothingDropped == false ? 'approve' : ''
+                            )
+                          "
                         >
                           Submit
                         </button>
@@ -1944,7 +1949,7 @@ export default {
     let evaluateRoute = ref("/admin/evaluate/NewLicense" + route.params.id);
     const editPersonalData = ref(false);
     let others = ref({});
-    let droppedDepartments = ref([]); 
+    let droppedDepartments = ref([]);
     const editPersonalInfo = () => {
       editPersonalData.value = !editPersonalData.value;
     };
@@ -2265,7 +2270,7 @@ export default {
 
       if (actionValue == "DeclineEvent" && newLicense.value.remark == null) {
         showRemarkError.value = true;
-        nothingDropped.value == true
+        nothingDropped.value == true;
         smsMessage = newLicense.value
           ? "Dear applicant your applied new license of number " +
             newLicense.value.newLicenseCode +
@@ -2274,10 +2279,10 @@ export default {
         showRemark.value = true;
         sendDeclinedData.value = false;
         return;
-      }else if (nothingDropped.value == false) {
+      } else if (nothingDropped.value == false) {
         showRemarkError.value = true;
         showRemark.value = true;
-        sendDeclinedData.value = false; 
+        sendDeclinedData.value = false;
         return;
       } else showRemarkError.value = false;
       let checkProfessionResult = false;
@@ -2366,10 +2371,14 @@ export default {
         }
       });
     };
-    const submitRemark = (finalAction) => {
+    const submitRemark = (finalAction, type) => {
+      if(type=='approve'){
+        nothingDropped.value=true;
+      }
       showRemarkError.value = false;
       showRemark.value = false;
       sendDeclinedData.value = true;
+     
       action(finalAction);
     };
     const droppedDepartment = (education) => {
@@ -2695,7 +2704,7 @@ export default {
       nextRemark,
       previousRemark,
       droppedDepartment,
-      droppedDepartments, 
+      droppedDepartments,
       amount,
       supervise,
       showOptions,
