@@ -181,9 +181,7 @@
                                   </div>
                                   <div v-if="editPersonalData">
                                     <input
-                                      v-model="
-                                        renewal.profile.alternativeName
-                                      "
+                                      v-model="renewal.profile.alternativeName"
                                       class="w-48 mr-1"
                                       type="text"
                                     />
@@ -1485,7 +1483,12 @@
                             hover:bg-primary-400 hover:text-white
                             ease-in-out
                           "
-                          v-on:click="submitRemark(declineAction)"
+                          v-on:click="
+                            submitRemark(
+                              declineAction,
+                              nothingDropped == false ? 'approve' : ''
+                            )
+                          "
                         >
                           Submit
                         </button>
@@ -1944,7 +1947,7 @@ export default {
     let evaluateRoute = ref("/admin/evaluate/Renewal" + route.params.id);
     const editPersonalData = ref(false);
     let others = ref({});
-    let droppedDepartments = ref([]); 
+    let droppedDepartments = ref([]);
     const editPersonalInfo = () => {
       editPersonalData.value = !editPersonalData.value;
     };
@@ -1966,9 +1969,7 @@ export default {
         .then((res) => {
           renewal.value = res.data.data ? res.data.data : {};
           profileInfo.value =
-            renewal.value && renewal.value.profile
-              ? renewal.value.profile
-              : {};
+            renewal.value && renewal.value.profile ? renewal.value.profile : {};
           buttons.value =
             renewal.value &&
             renewal.value.applicationStatus &&
@@ -2265,7 +2266,7 @@ export default {
 
       if (actionValue == "DeclineEvent" && renewal.value.remark == null) {
         showRemarkError.value = true;
-        nothingDropped.value == true
+        nothingDropped.value == true;
         smsMessage = renewal.value
           ? "Dear applicant your applied renewal licnese of number " +
             renewal.value.renewalCode +
@@ -2274,10 +2275,10 @@ export default {
         showRemark.value = true;
         sendDeclinedData.value = false;
         return;
-      }else if (nothingDropped.value == false) {
+      } else if (nothingDropped.value == false) {
         showRemarkError.value = true;
         showRemark.value = true;
-        sendDeclinedData.value = false; 
+        sendDeclinedData.value = false;
         return;
       } else showRemarkError.value = false;
       let checkProfessionResult = false;
@@ -2366,10 +2367,14 @@ export default {
         }
       });
     };
-    const submitRemark = (finalAction) => {
+    const submitRemark = (finalAction, type) => {
+      if (type == "approve") {
+        nothingDropped.value = true;
+      }
       showRemarkError.value = false;
       showRemark.value = false;
       sendDeclinedData.value = true;
+
       action(finalAction);
     };
     const droppedDepartment = (education) => {
@@ -2538,9 +2543,7 @@ export default {
     };
     const supervise = () => {
       renewal.value.superviseEndDate = endDate.value ? endDate.value : "";
-      renewal.value.superviseStartDate = startDate.value
-        ? startDate.value
-        : "";
+      renewal.value.superviseStartDate = startDate.value ? startDate.value : "";
       renewal.value.supervisor = supervisor.value ? supervisor.value : "";
       renewal.value.supervisingInstitutionId = instSearched.value
         ? instSearched.value.id
@@ -2695,7 +2698,7 @@ export default {
       nextRemark,
       previousRemark,
       droppedDepartment,
-      droppedDepartments, 
+      droppedDepartments,
       amount,
       supervise,
       showOptions,
