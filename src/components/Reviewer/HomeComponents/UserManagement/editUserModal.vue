@@ -365,40 +365,31 @@
 
                           <select
                             class="
-                            form-control
-                                block
-                                w-full
-                                px-3
-                                ml-4
-                                py-1
-                                h-12
-                                text-base
-                                font-normal
-                                text-gray-700
-                                bg-white bg-clip-padding
-                                border border-solid border-gray-300
-                                rounded
-                                transition
-                                ease-in-out
-                                mt-0
-                                focus:text-gray-700
-                                focus:bg-white
-                                focus:border-blue-600
-                                focus:outline-none
+                              form-control
+                              block
+                              w-full
+                              px-3
+                              ml-4
+                              py-1
+                              h-12
+                              text-base
+                              font-normal
+                              text-gray-700
+                              bg-white bg-clip-padding
+                              border border-solid border-gray-300
+                              rounded
+                              transition
+                              ease-in-out
+                              mt-0
+                              focus:text-gray-700
+                              focus:bg-white
+                              focus:border-blue-600
+                              focus:outline-none
                             "
-                            v-model="expertLevel"
-                            @change="selectedExpertLevel"
+                            v-model="admin.expertLevel"
+                            @change="selectedExpertLevel()"
                             :disabled="!isUserManager"
                           >
-                          <option selected>
-                                {{
-                                  modalData &&
-                                  modalData.data &&
-                                  modalData.data.expertLevel
-                                    ? modalData.data.expertLevel.name
-                                    : ""
-                                }}
-                              </option>
                             <option
                               v-for="expertLevel in expertLevels"
                               :key="expertLevel.id"
@@ -441,19 +432,10 @@
                                 focus:border-blue-600
                                 focus:outline-none
                               "
-                              v-model="region"
-                              @change="selectedRegion"
+                              v-model="admin.region"
+                              @change="selectedRegion()"
                               :disabled="!isUserManager"
                             >
-                              <option selected>
-                                {{
-                                  modalData &&
-                                  modalData.data &&
-                                  modalData.data.region
-                                    ? modalData.data.region.name
-                                    : ""
-                                }}
-                              </option>
                               <option
                                 v-for="region in regions"
                                 v-bind:key="region.id"
@@ -471,7 +453,9 @@
                         </span>
                         <span
                           v-show="
-                            showRegion == 4 && region && region.code=='AMH'
+                            showRegion == 4 &&
+                            admin.region &&
+                            admin.region.code == 'AMH'
                           "
                           class="mr-2 ml-2"
                         >
@@ -562,7 +546,6 @@
             rounded-b-md
           "
         >
-        
           <button
             type="button"
             class="
@@ -610,9 +593,11 @@ export default {
     const adminExpertId = JSON.parse(
       localStorage.getItem("allAdminData")
     ).expertLevelId;
-    const isUserManager = localStorage.getItem("role") == "UM";
+    const isUserManager =
+      localStorage.getItem("role") == "UM" ||
+      localStorage.getItem("role") == "SA";
+    const adminRole = JSON.parse(localStorage.getItem("allAdminData")).role;
     let errorMessage = ref("");
-
     let admin = ref({
       firstName: "",
       fatherName: "",
@@ -620,8 +605,8 @@ export default {
       email: "",
       phoneNumber: "",
       roleId: "",
-      expertLevelId: "",
-      regionId: "",
+      expertLevel: "",
+      region: "",
       zoneId: null,
       isActive: true,
     });
@@ -648,10 +633,15 @@ export default {
 
     const fetchRole = () => {
       store.dispatch("admin/getRole").then((res) => {
-        const rolesResponse = res.data.data.filter((data) => {
-          return data.code !== "APP";
-        });
-        state.value.roles = rolesResponse;
+        if (adminRole && adminRole.code == "SA") {
+          state.value.roles = res.data.data.filter((data) => {
+            return data.code !== "APP";
+          });
+        } else {
+          state.value.roles = res.data.data.filter((data) => {
+            return data.code !== "APP" && data.code !== "SA";
+          });
+        }
       });
     };
 
@@ -668,29 +658,28 @@ export default {
     };
     let showRegion = ref("");
     const selectedExpertLevel = () => {
-      if (expertLevel.value.code == "FED") {
+      if (admin.value.expertLevel.code == "FED") {
         showRegion.value == 3;
-        admin.value.expertLevelId = expertLevel.value.id;
         admin.value.regionId = null;
         admin.value.zoneId = null;
       } else {
         showRegion.value = 4;
-        admin.value.expertLevelId = expertLevel.value.id;
       }
     };
 
     const selectedRegion = () => {
-      admin.value.zoneId = null; 
-      admin.value.regionId = region.value.id; 
-      if (region.value.code == "AMH") {
-        store.dispatch("renewal/getZones", region.value.id).then((res) => {
-          zones.value = res.data.data;
-        });
+      admin.value.zoneId = null;
+      if (admin.value.region.code == "AMH") {
+        store
+          .dispatch("renewal/getZones", admin.value.region.id)
+          .then((res) => {
+            zones.value = res.data.data;
+          });
       }
     };
 
     const saveAdmin = () => {
-      isLoading.value = true; 
+      isLoading.value = true;
       let isValidated = validateForm(admin.value);
       showLoading.value = true;
       showButtons.value = true;
@@ -710,9 +699,9 @@ export default {
         editData.phoneNumber = admin.value.phoneNumber;
         editData.email = admin.value.email;
         editData.roleId = admin.value.roleId;
-        editData.expertLevelId = admin.value.expertLevelId;
+        editData.expertLevelId = admin.value.expertLevel.id;
         editData.isActive = admin.value.isActive;
-        editData.regionId = admin.value.regionId;
+        editData.regionId = admin.value.region.id;
 
         store
           .dispatch("admin/updateAdmin", editData)
@@ -748,16 +737,13 @@ export default {
           })
           .catch(() => {
             isLoading.value = false;
-            toast.error(
-              "Error , please try again after few minutes",
-              {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true,
-              }
-            );
+            toast.error("Error , please try again after few minutes", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
 
             // setTimeout(() => {
             //   window.location.reload();
@@ -774,18 +760,18 @@ export default {
       if (formData.email && !isValidEmail(formData.email)) {
         errors.email = "Invalid Email";
       }
-     
-      if (!formData.expertLevelId)
+
+      if (!formData.expertLevel.id)
         errors.expertLevel = "Expert Level is required";
-      if (!formData.regionId && formData.expertLevelId == 4)
+      if (!formData.region.id && formData.expertLevel.id == 4)
         errors.region = "Region is required";
       if (
-        (!formData.regionId &&
-          formData.expertLevelId == 4 &&
+        (!formData.region.id &&
+          formData.expertLevel.id == 4 &&
           region.value.code == "AMH" &&
           formData.zoneId == null) ||
-        (formData.regionId &&
-          formData.expertLevelId == 4 &&
+        (formData.region.id &&
+          formData.expertLevel.id == 4 &&
           region.value.code == "AMH" &&
           formData.zoneId == null)
       )
@@ -837,12 +823,12 @@ export default {
         props.modalData.data && props.modalData.data
           ? props.modalData.data.roleId
           : "";
-      admin.value.expertLevelId = props.modalData.data
-        ? props.modalData.data.expertLevelId
+      admin.value.expertLevel = props.modalData.data
+        ? props.modalData.data.expertLevel
         : "";
-      admin.value.regionId =
+      admin.value.region =
         props.modalData.data && props.modalData.data
-          ? props.modalData.data.regionId
+          ? props.modalData.data.region
           : "";
       admin.value.zoneId =
         props.modalData.data && props.modalData.data

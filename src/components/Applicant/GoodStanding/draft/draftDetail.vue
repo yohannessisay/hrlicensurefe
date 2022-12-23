@@ -80,8 +80,8 @@
                       focus:outline-none
                     "
                     aria-label="Default select example"
-                    @change="checkApplicantType(generalInfo.applicantTypeId)"
-                    v-model="generalInfo.applicantTypeId"
+                    @change="checkApplicantType(generalInfo.applicantType)"
+                    v-model="generalInfo.applicantType"
                     required
                   >
                     <option
@@ -149,7 +149,7 @@
                         focus:outline-none
                       "
                       aria-label="Default select example"
-                      v-model="generalInfo.applicantTitleId"
+                      v-model="generalInfo.applicantTitle"
                       required
                     >
                       <option
@@ -158,7 +158,6 @@
                             ? generalInfo.applicantTitleId
                             : null
                         "
-                        selected
                       >
                         {{
                           generalInfo && generalInfo.applicantTitle
@@ -211,8 +210,8 @@
                       focus:border-main-400
                       focus:outline-none
                     "
-                    v-model="generalInfo.departmentId"
-                    @change="setDepartment()" 
+                    v-model="generalInfo.department"
+                    @change="setDepartment()"
                   >
                     <option
                       :value="
@@ -220,7 +219,6 @@
                           ? generalInfo.departmentId
                           : null
                       "
-                      selected
                     >
                       {{
                         generalInfo && generalInfo.department
@@ -267,8 +265,8 @@
                       focus:border-main-400
                       focus:outline-none
                     "
-                    v-model="generalInfo.GSProfessionals.educationLevelId"
-                    @change="educationalLevelChange()" 
+                    v-model="generalInfo.GSProfessionals.educationLevel"
+                    @change="educationalLevelChange()"
                   >
                     <option
                       :value="
@@ -279,8 +277,10 @@
                       selected
                     >
                       {{
-                        generalInfo && generalInfo.GSProfessionals
-                          ? generalInfo.GSProfessionals.educationLevelId
+                        generalInfo &&
+                        generalInfo.GSProfessionals &&
+                        generalInfo.GSProfessionals.educationLevel
+                          ? generalInfo.GSProfessionals.educationLevel.name
                           : ""
                       }}
                     </option>
@@ -305,7 +305,7 @@
                   bg-gray-100
                 "
               >
-                <div class="mb-4">
+                <div class="mb-4"> 
                   <label class="text-main-400">Profession</label>
                   <select
                     class="
@@ -332,12 +332,13 @@
                       focus:outline-none
                     "
                     @change="checkOtherProfession()"
-                    v-model="generalInfo.GSProfessionals.professionTypeId" 
+                    v-model="generalInfo.GSProfessionals.professionalTypes"
                   >
                     <option
                       :value="
-                        generalInfo && generalInfo.GSProfessionals
-                          ? generalInfo.GSProfessionals.professionalTypeId
+                        generalInfo &&
+                        generalInfo.GSProfessionals.professionalTypes
+                          ? generalInfo.GSProfessionals.professionalTypes.id
                           : null
                       "
                       selected
@@ -883,7 +884,7 @@
             type="submit"
             @click="saveDraft()"
           >
-            Save as draft
+            Update
           </button>
           <button
             class="
@@ -947,14 +948,11 @@ import LicenseSummary from "./draftSummary.vue";
 import Upload from "./draftUpload.vue";
 import MainContent from "../sharedComponents/Menu.vue";
 import { useToast } from "vue-toastification";
-import Loading from "vue3-loading-overlay";
-import { useRouter } from "vue-router";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 export default {
-  props: ["activeState"],
-  components: { MainContent, LicenseSummary, Upload, Loading },
+  components: { MainContent, LicenseSummary, Upload },
 
-  setup(props, { emit }) {
+  setup() {
     const store = useStore();
     const toast = useToast();
     const route = useRoute();
@@ -968,6 +966,7 @@ export default {
       licenseRegistrationNumber: "",
       GSProfessionals: {
         professionTypeId: "",
+        professionalTypes: {},
         educationLevelId: "",
         otherProfessionType: "",
         otherProfessionTypeAmharic: "",
@@ -1028,8 +1027,8 @@ export default {
     const educationalLevelChange = () => {
       isEdLevelSelected.value = true;
       fetchProfessionalType(
-        generalInfo.value.departmentId.id,
-        generalInfo.value.professionType.educationLevelId.id
+        generalInfo.value.department.id,
+        generalInfo.value.GSProfessionals.educationLevel.id
       );
     };
     const fetchZones = () => {
@@ -1104,9 +1103,8 @@ export default {
           professionalTypes.value = res.data.data;
         });
     };
-    const setDepartment = () => {
+    const setDepartment = () => { 
       isDepartmentSelected.value = true;
-      fetchProfessionalType(generalInfo.value.departmentId.id);
     };
 
     const apply = () => {
@@ -1118,11 +1116,12 @@ export default {
       store
         .dispatch("goodstanding/setGeneralInfo", generalInfo.value)
         .then(() => {
-         activeState.value++;
+          activeState.value++;
+         
         });
     };
     const clearLocalData = () => {
-      window.localStorage.setItem("GSApplicationData", "");
+      window.localStorage.removeItem("GSApplicationData");
       setTimeout(() => {
         window.location.reload();
       }, 1000);
@@ -1140,17 +1139,26 @@ export default {
         action: "DraftEvent",
         data: {
           applicantId: generalInfo.value.applicantId,
-          applicantTypeId: generalInfo.value.applicantTypeId.id,
+          applicantTypeId: generalInfo.value.applicantTypeId
+            ? generalInfo.value.applicantTypeId
+            : generalInfo.value.applicantType
+            ? generalInfo.value.applicantType.id
+            : null,
+          applicationStatusId: generalInfo.value.applicationStatusId,
           residenceWoredaId: generalInfo.value.woredaSelected
             ? generalInfo.value.woredaSelected.id
             : null,
           applicantTitleId: generalInfo.value.applicantTitleId
-            ? generalInfo.value.applicantTitleId.id
-            : "",
+            ? generalInfo.value.applicantTitleId
+            : generalInfo.value.applicantTitle
+            ? generalInfo.value.applicantTitle.id
+            : null,
           whomGoodStandingFor: generalInfo.value.whomGoodStandingFor
             ? generalInfo.value.whomGoodStandingFor
             : "",
-          applicantPositionId: generalInfo.value.applicantPosition
+          applicantPositionId: generalInfo.value.applicantPositionId
+            ? generalInfo.value.applicantPositionId
+            : generalInfo.value.applicantPosition
             ? generalInfo.value.applicantPosition.id
             : null,
           licenseIssuedDate: generalInfo.value.licenseIssuedDate
@@ -1163,12 +1171,20 @@ export default {
             ? generalInfo.value.licenseRegistrationNumber
             : "",
           professionType: {
-            professionTypeId: generalInfo.value.professionType
-              ? generalInfo.value.professionType.professionTypeId.id
-              : null,
-            educationLevelId: generalInfo.value.professionType
-              ? generalInfo.value.professionType.educationLevelId.id
-              : null,
+            professionTypeId:
+              generalInfo.value.GSProfessionals &&
+              generalInfo.value.GSProfessionals.professionalTypes
+                ? generalInfo.value.GSProfessionals.professionalTypes.id
+                : generalInfo.value.GSProfessionals.professionalTypeId
+                ? generalInfo.value.GSProfessionals.professionalTypeId
+                : null,
+            educationLevelId:
+              generalInfo.value.GSProfessionals &&
+              generalInfo.value.GSProfessionals.educationLevel
+                ? generalInfo.value.GSProfessionals.educationLevel.id
+                : generalInfo.value.GSProfessionals.educationLevelId
+                ? generalInfo.value.GSProfessionals.educationLevelId
+                : null,
           },
           expertLevelId: generalInfo.value.expertLevelId
             ? generalInfo.value.expertLevelId
@@ -1181,16 +1197,20 @@ export default {
             .otherProfessionTypeAmharic
             ? generalInfo.value.otherProfessionTypeAmharic
             : "",
-          departmentId: generalInfo.value.departmentId.id
-            ? generalInfo.value.departmentId.id
+          departmentId: generalInfo.value.department
+            ? generalInfo.value.department.id
+            : generalInfo.value.departmentId
+            ? generalInfo.value.departmentId
             : null,
           feedback: generalInfo.value.feedback
             ? generalInfo.value.feedback
             : "",
+          id: route.params.id,
         },
       };
+
       store
-        .dispatch("goodstanding/addGoodstandingLicense", license)
+        .dispatch("goodstanding/editGoodstandingLicense", license)
         .then((res) => {
           if (res.data.status == "Success") {
             toast.success("Applied successfuly", {
@@ -1241,6 +1261,7 @@ export default {
       fetchDepartments();
       fetchProfessionalType();
       fetchEducationLevel();
+     
       fetchRegions();
       fetchZone();
       fetchWoredas();
@@ -1257,28 +1278,30 @@ export default {
             res.data.data && res.data.data.woreda
               ? res.data.data.woreda.zone.region
               : "";
-
+   
           generalInfo.value.zoneSelected =
             res.data.data && res.data.data.woreda
               ? {
-                  code: res.data.data.woreda.zone.code,
-                  createdAt: res.data.data.woreda.zone.createdAt,
                   id: res.data.data.woreda.zone.id,
                   name: res.data.data.woreda.zone.name,
+                  code: res.data.data.woreda.zone.code,
                   regionId: res.data.data.woreda.zone.regionId,
                   rowguid: res.data.data.woreda.zone.rowguid,
+                  status: res.data.data.woreda.zone.status,
+                  createdAt: res.data.data.woreda.zone.createdAt,
                   updatedAt: res.data.data.woreda.zone.updatedAt,
                 }
               : "";
           generalInfo.value.woredaSelected =
             res.data.data && res.data.data.woreda
               ? {
-                  code: res.data.data.woreda.code,
-                  createdAt: res.data.data.woreda.createdAt,
                   id: res.data.data.woreda.id,
                   name: res.data.data.woreda.name,
+                  code: res.data.data.woreda.code,
                   zoneId: res.data.data.woreda.zoneId,
                   rowguid: res.data.data.woreda.rowguid,
+                  status: res.data.data.woreda.zone.status,
+                  createdAt: res.data.data.woreda.createdAt,
                   updatedAt: res.data.data.woreda.updatedAt,
                 }
               : "";
@@ -1288,7 +1311,9 @@ export default {
           generalInfo.value.education = JSON.parse(
             JSON.stringify(res.data.data.GSProfessionals)
           );
-          generalInfo.value.applicantTypeSelected = res.data.data.applicantType; 
+  
+          generalInfo.value.applicantTypeSelected = res.data.data.applicantType;
+          educationalLevelChange();
         });
     });
     return {

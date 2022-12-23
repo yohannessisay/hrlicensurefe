@@ -230,7 +230,11 @@
                     focus:border-main-400
                     focus:outline-none
                   "
-                  disabled
+                  :disabled="
+                    generalInfo.multipleDepartment
+                      ? generalInfo.multipleDepartment.length > 0
+                      : 0
+                  "
                   v-model="generalInfo.regionSelected"
                   @change="regionChangeHandler()"
                   required
@@ -251,13 +255,16 @@
                     form-select
                     appearance-none
                     block
+                    xl:w-64
+                    md:w-64
+                    sm:w-full
                     w-full
                     px-3
                     py-1.5
                     text-base
                     font-normal
                     text-gray-700
-                    bg-white bg-clip-padding bg-no-repeat
+                    hover:text-main-500 hover:border-main-500
                     border border-solid border-gray-300
                     rounded
                     transition
@@ -265,16 +272,31 @@
                     m-0
                     focus:text-gray-700
                     focus:bg-white
-                    focus:border-blue-600
+                    focus:border-main-400
                     focus:outline-none
                   "
-                  aria-label="Default select example
+                  :disabled="
+                    generalInfo.multipleDepartment
+                      ? generalInfo.multipleDepartment.length > 0
+                      : 0
                   "
-                  disabled
+                  v-model="generalInfo.zoneSelected"
                   @change="zoneChangeHandler()"
+                  required
                 >
-                  <option selected>
-                    {{ generalInfo ? generalInfo.zoneSelected.name : "" }}
+                  <option
+                    :value="generalInfo.zoneSelected.id"
+                    :key="generalInfo.zoneSelected.id"
+                    selected
+                  >
+                    {{ generalInfo.zoneSelected.name }}
+                  </option>
+                  <option
+                    v-for="zone in zones"
+                    v-bind:key="zone.name"
+                    v-bind:value="zone"
+                  >
+                    {{ zone.name }}
                   </option>
                 </select>
               </div>
@@ -303,9 +325,21 @@
                     focus:border-blue-600
                     focus:outline-none
                   "
-                  disabled
+                  :disabled="
+                    generalInfo.multipleDepartment
+                      ? generalInfo.multipleDepartment.length > 0
+                      : 0
+                  "
+                  v-model="generalInfo.woredaSelected"
                   required
                 >
+                  <option
+                    v-for="woreda in woredas"
+                    v-bind:key="woreda.name"
+                    v-bind:value="woreda"
+                  >
+                    {{ woreda.name }}
+                  </option>
                   <option selected>
                     {{ generalInfo ? generalInfo.woredaSelected.name : "" }}
                   </option>
@@ -746,7 +780,7 @@
                             "
                           >
                             <span
-                              @click="removeDepartment(index)" 
+                              @click="removeDepartment(index)"
                               title="Remove"
                               ><i
                                 class="fa fa-trash text-red-300 cursor-pointer"
@@ -887,15 +921,16 @@ export default {
       educationalLevelSelected: "",
       applicantType: "",
       applicantPositionId: "",
-      regionSelected: "",
-      zoneSelected: "",
-      woredaSelected: "",
+      regionSelected: {},
+      selectedRegion: {},
+      zoneSelected: {},
+      woredaSelected: {},
       languageSelected: "",
       multipleDepartment: [],
       occupationTypes: "",
       nativeLanguageSelected: "",
       educations: [],
-      professionChanged:false
+      professionChanged: false,
     });
     let applicationStatuses = ref([]);
     let isLoading = ref(false);
@@ -979,8 +1014,7 @@ export default {
       store
         .dispatch("newlicense/getWoredas", generalInfo.value.zoneSelected.id)
         .then((res) => {
-          const woredasResult = res.data.data;
-          woredas.value = woredasResult;
+          woredas.value = res.data && res.data.data ? res.data.data : [];
         });
     };
     const fetchProfessionalType = (departmentId, educationalLevelId) => {
@@ -1060,7 +1094,6 @@ export default {
       generalInfo.value.educations.splice(index, 1);
     };
     const addMultiple = () => {
-      console.log(generalInfo.value);
       if (
         generalInfo.value.departmentSelected &&
         generalInfo.value.educationalLevelSelected &&
@@ -1085,7 +1118,7 @@ export default {
               ) == false
             ) {
               checkForAddedError.value = false;
-              generalInfo.value.professionChanged=true
+              generalInfo.value.professionChanged = true;
               generalInfo.value.multipleDepartment.push({
                 department: generalInfo.value.departmentSelected,
                 educationLevel: generalInfo.value.educationalLevelSelected,
@@ -1112,7 +1145,7 @@ export default {
             }
           } else {
             checkForAddedError.value = false;
-            generalInfo.value.professionChanged=true
+            generalInfo.value.professionChanged = true;
             generalInfo.value.multipleDepartment.push({
               department: generalInfo.value.departmentSelected,
               educationLevel: generalInfo.value.educationalLevelSelected,
@@ -1192,6 +1225,7 @@ export default {
       fetchInstitutions();
       fetchEducationLevel();
       fetchRegions();
+      fetchZones();
       fetchOccupation();
       fetchApplicationStatuses();
 
@@ -1208,27 +1242,30 @@ export default {
           generalInfo.value.zoneSelected =
             res.data.data && res.data.data.woreda
               ? {
-                  code: res.data.data.woreda.zone.code,
-                  createdAt: res.data.data.woreda.zone.createdAt,
                   id: res.data.data.woreda.zone.id,
                   name: res.data.data.woreda.zone.name,
+                  code: res.data.data.woreda.zone.code,
                   regionId: res.data.data.woreda.zone.regionId,
                   rowguid: res.data.data.woreda.zone.rowguid,
+                  status: res.data.data.woreda.zone.status,
+                  createdAt: res.data.data.woreda.zone.createdAt,
                   updatedAt: res.data.data.woreda.zone.updatedAt,
                 }
               : "";
           generalInfo.value.woredaSelected =
             res.data.data && res.data.data.woreda
               ? {
-                  code: res.data.data.woreda.code,
-                  createdAt: res.data.data.woreda.createdAt,
                   id: res.data.data.woreda.id,
                   name: res.data.data.woreda.name,
+                  code: res.data.data.woreda.code,
                   zoneId: res.data.data.woreda.zoneId,
                   rowguid: res.data.data.woreda.rowguid,
+                  status: res.data.data.woreda.zone.status,
+                  createdAt: res.data.data.woreda.createdAt,
                   updatedAt: res.data.data.woreda.updatedAt,
                 }
               : "";
+          isAppTypeSelected.value = true;
           applicantTypeChangeHandler();
           regionChangeHandler();
           zoneChangeHandler();
@@ -1289,11 +1326,9 @@ export default {
 </script>
 <style>
 #main {
-  
   border-radius: 5px;
 }
 .table-multiple {
-  
   border-radius: 5px;
 }
 </style>

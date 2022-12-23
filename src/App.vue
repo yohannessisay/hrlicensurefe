@@ -7,6 +7,8 @@
 
 <script>
 import ModalIdle from "./sharedComponents/ModalIdle";
+import { onMounted } from "vue";
+import { useRouter } from "vue-router";
 export default {
   components: {
     ModalIdle,
@@ -16,9 +18,13 @@ export default {
       return this.$store.state.idleVue.isIdle;
     },
   },
-
-  created: function () {
-    this.$store.dispatch("applicationStatuses/getAppStatuses").then(() => {});
+  setup() {
+    const router = useRouter();
+    onMounted(() => {
+      if (window.navigator.onLine == false) {
+        router.push({ path: "/404" });
+      }
+    });
   },
 };
 </script>

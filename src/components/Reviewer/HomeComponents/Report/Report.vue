@@ -83,7 +83,6 @@
                   focus:outline-none
                 "
                 @change="handleFilterByApplication($event.target.value)"
-                aria-label="Default select example"
               >
                 <option disabled>Application Type</option>
                 <option selected value="newLicense">
@@ -413,12 +412,12 @@
                 "
               >
                 <vue-table-lite
-                  :is-static-mode="true"
-                  :is-loading="userTable.isLoading"
-                  :columns="userTable.columns"
-                  :rows="userTable.rows"
-                  :total="userTable.totalRecordCount"
-                  :sortable="userTable.sortable"
+                  @do-search="doSearch"
+                  :is-loading="reportTable.isLoading"
+                  :columns="reportTable.columns"
+                  :rows="reportTable.rows"
+                  :total="reportTable.totalRecordCount"
+                  :sortable="reportTable.sortable"
                 >
                 </vue-table-lite>
               </div>
@@ -579,7 +578,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="item in userTable.rows" :key="item">
+          <tr v-for="item in reportTable.rows" :key="item">
             <td class="px-5 py-5 border-gray-200 bg-white text-sm">
               <div class="flex">
                 <div class="ml-3">
@@ -695,7 +694,7 @@ export default {
   setup() {
     const store = useStore();
     let allData = reactive([]);
-    let userTable = ref({ isLoading: true, rows: [] });
+    let reportTable = ref({ isLoading: true, rows: [] });
     let tableData = reactive([]);
     const searchTermName = ref("");
     const searchTermProf = ref("");
@@ -704,9 +703,7 @@ export default {
     const searchTermRegion = ref("");
     const searchTermFromDate = ref("");
     const searchTermToDate = ref("");
-    let reportData = ref([]);
-    let newLicenseData = ref([]);
-
+    let applicationTypeSearch = ref("NewLicense");
     let departments = ref([]);
     let professions = ref([]);
     let regions = ref([]);
@@ -714,255 +711,240 @@ export default {
     let woredas = ref([]);
     let applicationStatuses = ref([]);
 
-    const fetchNewLicenseReport = () => {
-      store.dispatch("report/getNewLicenseReport").then((res) => {
-        newLicenseData.value = res.data.data;
-        reportData.value.push(...res.data.data);
+    const fetchNewLicenseReport = (apiParameters) => {
+      store
+        .dispatch("report/getNewLicenseReport", apiParameters)
+        .then((res) => {
+          tableData = [];
+          allData.value = [];
+          res.data.data.rows.forEach((element) => {
+            let prof = element.educations.map((prof) => {
+              return prof.professionType ? prof.professionType.name : "";
+            });
 
-        res.data.data.forEach((element) => {
-          let prof = element.educations.map((prof) => {
-            return prof.professionType ? prof.professionType.name : "";
-          });
-          tableData.push({
-            id: element.id ? +element.id : "",
-            FirstName: element.name ? element.name : "",
-            MiddleName: element.fatherName ? element.fatherName : "",
-            LastName: element.grandFatherName ? element.grandFatherName : "",
-            LicenseStatus: element.applicationStatus
-              ? element.applicationStatus.name
-              : "",
-            LicenseNumber: element.newLicenseCode ? element.newLicenseCode : "",
-            IssuedDate: element.certifiedDate
-              ? element.certifiedDate.slice(0, 10)
-              : "",
+            tableData.push({
+              id: element.id ? +element.id : "",
+              FirstName: element.name ? element.name : "",
+              MiddleName: element.fatherName ? element.fatherName : "",
+              LastName: element.grandFatherName ? element.grandFatherName : "",
+              LicenseStatus: element.applicationStatus
+                ? element.applicationStatus.name
+                : "",
+              LicenseNumber: element.newLicenseCode
+                ? element.newLicenseCode
+                : "",
+              IssuedDate: element.certifiedDate
+                ? element.certifiedDate.slice(0, 10)
+                : "",
 
-            ProfessionalType: prof ? prof.join(",") : "",
-            Gender: element.gender ? element.gender : "",
-            OrganizationalUnit: element.region ? element.region.name : "",
-            data: element ? element : {},
+              ProfessionalType: prof ? prof.join(",") : "",
+              Gender: element.gender ? element.gender : "",
+              OrganizationalUnit: element.region ? element.region.name : "",
+              data: element ? element : {},
+            });
           });
-        });
-        allData.value = tableData;
-        userTable.value = reactive({
-          columns: [
-            {
-              label: "ID",
-              field: "id",
-              width: "5%",
-              sortable: true,
-              isKey: true,
-            },
-            {
-              label: "First Name",
-              field: "FirstName",
-              width: "10%",
-              sortable: true,
-            },
-            {
-              label: "Father Name",
-              field: "MiddleName",
-              width: "10%",
-              sortable: true,
-            },
-            {
-              label: "Grandfather Name",
-              field: "LastName",
-              width: "10%",
-              sortable: true,
-            },
-            {
-              label: "License Status",
-              field: "LicenseStatus",
-              width: "5%",
-              sortable: true,
-            },
-            {
-              label: "Professional Type",
-              field: "ProfessionalType",
-              width: "35%",
-              sortable: true,
-            },
-            {
-              label: "License Number",
-              field: "LicenseNumber",
-              width: "5%",
-              sortable: true,
-            },
-            {
-              label: "Issued Date",
-              field: "IssuedDate",
-              width: "5%",
-              sortable: true,
-            },
-            {
-              label: "Gender",
-              field: "Gender",
-              width: "5%",
-              sortable: true,
-            },
-            {
-              label: "Organizational Unit",
-              field: "OrganizationalUnit",
-              width: "5%",
-              sortable: true,
-            },
-          ],
-          rows: computed(() => {
-            return allData.value.filter(
-              (x) =>
-                ((x.FirstName
-                  ? x.FirstName.toLowerCase().includes(
-                      searchTermName.value.toLowerCase()
-                    )
-                  : "") ||
-                  (x.MiddleName
-                    ? x.MiddleName.toLowerCase().includes(
+          allData.value = tableData;
+          reportTable.value = reactive({
+            columns: [
+              {
+                label: "ID",
+                field: "id",
+                width: "5%",
+                sortable: true,
+                isKey: true,
+              },
+              {
+                label: "First Name",
+                field: "FirstName",
+                width: "10%",
+                sortable: true,
+              },
+              {
+                label: "Father Name",
+                field: "MiddleName",
+                width: "10%",
+                sortable: true,
+              },
+              {
+                label: "Grandfather Name",
+                field: "LastName",
+                width: "10%",
+                sortable: true,
+              },
+              {
+                label: "License Status",
+                field: "LicenseStatus",
+                width: "5%",
+                sortable: true,
+              },
+              {
+                label: "Professional Type",
+                field: "ProfessionalType",
+                width: "35%",
+                sortable: true,
+              },
+              {
+                label: "License Number",
+                field: "LicenseNumber",
+                width: "5%",
+                sortable: true,
+              },
+              {
+                label: "Issued Date",
+                field: "IssuedDate",
+                width: "5%",
+                sortable: true,
+              },
+              {
+                label: "Gender",
+                field: "Gender",
+                width: "5%",
+                sortable: true,
+              },
+              {
+                label: "Organizational Unit",
+                field: "OrganizationalUnit",
+                width: "5%",
+                sortable: true,
+              },
+            ],
+            rows: computed(() => {
+              return allData.value.filter(
+                (x) =>
+                  ((x.FirstName
+                    ? x.FirstName.toLowerCase().includes(
                         searchTermName.value.toLowerCase()
                       )
                     : "") ||
-                  (x.LastName
-                    ? x.LastName.toLowerCase().includes(
-                        searchTermName.value.toLowerCase()
+                    (x.MiddleName
+                      ? x.MiddleName.toLowerCase().includes(
+                          searchTermName.value.toLowerCase()
+                        )
+                      : "") ||
+                    (x.LastName
+                      ? x.LastName.toLowerCase().includes(
+                          searchTermName.value.toLowerCase()
+                        )
+                      : "")) &&
+                  (x.ProfessionalType
+                    ? x.ProfessionalType.toLowerCase().includes(
+                        searchTermProf.value.toLowerCase()
                       )
-                    : "")) &&
-                (x.ProfessionalType
-                  ? x.ProfessionalType.toLowerCase().includes(
-                      searchTermProf.value.toLowerCase()
-                    )
-                  : "") &&
-                (searchTermStatus.value != "" && searchTermStatus.value != "All"
-                  ? x.LicenseStatus
-                    ? x.LicenseStatus.toLowerCase() ==
-                      searchTermStatus.value.toLowerCase()
-                    : ""
-                  : x.LicenseStatus ||
-                    x.LicenseStatus == "" ||
-                    x.LicenseStatus == null) &&
-                (searchTermGender.value != "" && searchTermGender.value != "All"
-                  ? x.Gender
-                    ? x.Gender.toLowerCase() ==
-                      searchTermGender.value.toLowerCase()
-                    : ""
-                  : x.Gender || x.Gender == "" || x.Gender == null) &&
-                (searchTermRegion.value != "" && searchTermRegion.value != "All"
-                  ? x.OrganizationalUnit
-                    ? x.OrganizationalUnit.toLowerCase() ==
-                      searchTermRegion.value.toLowerCase()
-                    : ""
-                  : x.OrganizationalUnit ||
-                    x.OrganizationalUnit == "" ||
-                    x.OrganizationalUnit == null) &&
-                (searchTermFromDate.value != ""
-                  ? x.IssuedDate
-                    ? searchTermToDate.value.length > 0
-                      ? moment(x.IssuedDate).isSameOrAfter(
-                          searchTermFromDate.value
-                        ) &&
-                        moment(x.IssuedDate).isSameOrBefore(
-                          searchTermToDate.value
-                        )
-                      : moment(x.IssuedDate).isSameOrAfter(
-                          searchTermFromDate.value
-                        )
-                    : ""
-                  : x.IssuedDate ||
-                    x.IssuedDate == "" ||
-                    x.IssuedDate == null) &&
-                (searchTermToDate.value != ""
-                  ? x.IssuedDate
-                    ? searchTermFromDate.value.length > 0
-                      ? moment(x.IssuedDate).isSameOrBefore(
-                          searchTermToDate.value
-                        ) &&
-                        moment(x.IssuedDate).isSameOrAfter(
-                          searchTermFromDate.value
-                        )
-                      : moment(x.IssuedDate).isSameOrBefore(
-                          searchTermToDate.value
-                        )
-                    : ""
-                  : x.IssuedDate || x.IssuedDate == "" || x.IssuedDate == null)
-            );
-          }),
-          totalRecordCount: computed(() => {
-            return userTable.value.rows.length;
-          }),
-          sortable: {
-            order: "id",
-            sort: "asc",
-          },
+                    : "") &&
+                  (searchTermStatus.value != "" &&
+                  searchTermStatus.value != "All"
+                    ? x.LicenseStatus
+                      ? x.LicenseStatus.toLowerCase() ==
+                        searchTermStatus.value.toLowerCase()
+                      : ""
+                    : x.LicenseStatus ||
+                      x.LicenseStatus == "" ||
+                      x.LicenseStatus == null) &&
+                  (searchTermGender.value != "" &&
+                  searchTermGender.value != "All"
+                    ? x.Gender
+                      ? x.Gender.toLowerCase() ==
+                        searchTermGender.value.toLowerCase()
+                      : ""
+                    : x.Gender || x.Gender == "" || x.Gender == null) &&
+                  (searchTermRegion.value != "" &&
+                  searchTermRegion.value != "All"
+                    ? x.OrganizationalUnit
+                      ? x.OrganizationalUnit.toLowerCase() ==
+                        searchTermRegion.value.toLowerCase()
+                      : ""
+                    : x.OrganizationalUnit ||
+                      x.OrganizationalUnit == "" ||
+                      x.OrganizationalUnit == null) &&
+                  (searchTermFromDate.value != ""
+                    ? x.IssuedDate
+                      ? searchTermToDate.value.length > 0
+                        ? moment(x.IssuedDate).isSameOrAfter(
+                            searchTermFromDate.value
+                          ) &&
+                          moment(x.IssuedDate).isSameOrBefore(
+                            searchTermToDate.value
+                          )
+                        : moment(x.IssuedDate).isSameOrAfter(
+                            searchTermFromDate.value
+                          )
+                      : ""
+                    : x.IssuedDate ||
+                      x.IssuedDate == "" ||
+                      x.IssuedDate == null) &&
+                  (searchTermToDate.value != ""
+                    ? x.IssuedDate
+                      ? searchTermFromDate.value.length > 0
+                        ? moment(x.IssuedDate).isSameOrBefore(
+                            searchTermToDate.value
+                          ) &&
+                          moment(x.IssuedDate).isSameOrAfter(
+                            searchTermFromDate.value
+                          )
+                        : moment(x.IssuedDate).isSameOrBefore(
+                            searchTermToDate.value
+                          )
+                      : ""
+                    : x.IssuedDate ||
+                      x.IssuedDate == "" ||
+                      x.IssuedDate == null)
+              );
+            }),
+            totalRecordCount: res.data.data.count,
+            sortable: {
+              order: "id",
+              sort: "asc",
+            },
+          });
         });
-      });
-      userTable.value.isLoading = false;
     };
 
     const handleFilterByApplication = (applicationType) => {
       switch (applicationType) {
         case "newLicense": {
-          userTable.value.isLoading = true;
-          userTable.value.rows = computed(() => {});
+          applicationTypeSearch.value = "NewLicense";
           tableData = [];
-          searchTermName.value = "";
-          searchTermProf.value = "";
-          searchTermStatus.value = "";
-          searchTermGender.value = "";
-          searchTermRegion.value = "";
-          searchTermFromDate.value = "";
-          searchTermToDate.value = "";
-          fetchNewLicenseReport();
+          allData.value = [];
+          nullifySearchTerms();
+          fetchNewLicenseReport([0, 10]);
           break;
         }
         // case "verification": {
-        //   userTable.value.isLoading = true;
-        //   userTable.value.rows = computed(() => { });
         //   tableData = [];
-        //   searchTermName.value = "";
-        //   searchTermProf.value = "";
-        //   searchTermStatus.value = "";
-        //   searchTermGender.value = "";
-        //   searchTermRegion.value = "";
-        //   searchTermFromDate.value = "";
-        //   searchTermToDate.value = "";
+        // nullifySearchTerms();
         //   fetchVerificationReport();
         //   break;
         // }
         case "renewal": {
-          userTable.value.isLoading = true;
-          userTable.value.rows = computed(() => {});
+          applicationTypeSearch.value = "Renewal";
           tableData = [];
-          searchTermName.value = "";
-          searchTermProf.value = "";
-          searchTermStatus.value = "";
-          searchTermGender.value = "";
-          searchTermRegion.value = "";
-          searchTermFromDate.value = "";
-          searchTermToDate.value = "";
-          fetchRenewalReport();
+          nullifySearchTerms();
+          fetchRenewalReport([0, 10]);
           break;
         }
         case "goodStanding": {
-          userTable.value.isLoading = true;
-          userTable.value.rows = computed(() => {});
+          applicationTypeSearch.value = "Goodstanding";
+          nullifySearchTerms();
           tableData = [];
-          searchTermName.value = "";
-          searchTermProf.value = "";
-          searchTermStatus.value = "";
-          searchTermGender.value = "";
-          searchTermRegion.value = "";
-          searchTermFromDate.value = "";
-          searchTermToDate.value = "";
-          fetchGoodstandingReport();
+          fetchGoodstandingReport([0, 10]);
           break;
         }
       }
     };
-
-    const fetchRenewalReport = () => {
-      store.dispatch("report/getRenewalReport").then((res) => {
-        newLicenseData.value = res.data.data;
-        reportData.value.push(...res.data.data);
-
-        res.data.data.forEach((element) => {
+    const nullifySearchTerms = () => {
+      searchTermName.value = "";
+      searchTermProf.value = "";
+      searchTermStatus.value = "";
+      searchTermGender.value = "";
+      searchTermRegion.value = "";
+      searchTermFromDate.value = "";
+      searchTermToDate.value = "";
+    };
+    const fetchRenewalReport = (apiParameters) => {
+      store.dispatch("report/getRenewalReport", apiParameters).then((res) => {
+        tableData = [];
+        allData.value = [];
+        res.data.data.rows.forEach((element) => {
           let prof = element.educations.map((prof) => {
             return prof.professionType ? prof.professionType.name : "";
           });
@@ -986,7 +968,7 @@ export default {
           });
         });
         allData.value = tableData;
-        userTable.value = {
+        reportTable.value = {
           columns: [
             {
               label: "ID",
@@ -1127,23 +1109,21 @@ export default {
                   : x.IssuedDate || x.IssuedDate == "" || x.IssuedDate == null)
             );
           }),
-          totalRecordCount: computed(() => {
-            return userTable.value.rows.length;
-          }),
+          totalRecordCount: res.data.data.count,
           sortable: {
             order: "id",
             sort: "asc",
           },
         };
       });
-      userTable.value.isLoading = false;
+      reportTable.value.isLoading = false;
     };
 
     //uncomment when verification is done
     // const fetchVerificationReport = () => {
     //   store.dispatch("report/getVerificationReport").then(res => {
     //     if (res.data.message == "No verifications found!") {
-    //       userTable.value = {
+    //       reportTable.value = {
     //         columns: [
     //           {
     //             label: "ID",
@@ -1215,8 +1195,6 @@ export default {
     //         }
     //       };
     //     } else {
-    //       newLicenseData.value = res.data.data;
-    //       reportData.value.push(...res.data.data);
     //       res.data.data.forEach(element => {
     //         tableData.push({
     //           id: element.id ? element.id : "",
@@ -1245,7 +1223,7 @@ export default {
     //         });
     //       });
     //       allData.value = tableData;
-    //       userTable.value = {
+    //       reportTable.value = {
     //         columns: [
     //           {
     //             label: "ID",
@@ -1336,187 +1314,191 @@ export default {
     //   });
     // };
 
-    const fetchGoodstandingReport = () => {
-      store.dispatch("report/getGoodstandingReport").then((res) => {
-        newLicenseData.value = res.data.data;
-        reportData.value.push(...res.data.data);
-
-        res.data.data.forEach((element) => {
-          let prof = element.GSProfessionals.professionalTypes
-            ? element.GSProfessionals.professionalTypes.name
-            : "";
-          tableData.push({
-            id: element.id ? +element.id : "",
-            FirstName: element.name ? element.name : "",
-            MiddleName: element.fatherName ? element.fatherName : "",
-            LastName: element.grandFatherName ? element.grandFatherName : "",
-            LicenseStatus: element.applicationStatus
-              ? element.applicationStatus.name
-              : "",
-            LicenseNumber: element.goodStandingCode
-              ? element.goodStandingCode
-              : "",
-            IssuedDate: element.certifiedDate
-              ? element.certifiedDate.slice(0, 10)
-              : "",
-            ProfessionalType: prof ? prof : "",
-            Gender: element.gender ? element.gender : "",
-            OrganizationalUnit: element.region ? element.region.name : "",
-            data: element ? element : {},
+    const fetchGoodstandingReport = (apiParameters) => {
+      store
+        .dispatch("report/getGoodstandingReport", apiParameters)
+        .then((res) => {
+          tableData = [];
+          allData.value = [];
+          res.data.data.rows.forEach((element) => {
+            let prof = element.GSProfessionals.professionalTypes
+              ? element.GSProfessionals.professionalTypes.name
+              : "";
+            tableData.push({
+              id: element.id ? +element.id : "",
+              FirstName: element.name ? element.name : "",
+              MiddleName: element.fatherName ? element.fatherName : "",
+              LastName: element.grandFatherName ? element.grandFatherName : "",
+              LicenseStatus: element.applicationStatus
+                ? element.applicationStatus.name
+                : "",
+              LicenseNumber: element.goodStandingCode
+                ? element.goodStandingCode
+                : "",
+              IssuedDate: element.certifiedDate
+                ? element.certifiedDate.slice(0, 10)
+                : "",
+              ProfessionalType: prof ? prof : "",
+              Gender: element.gender ? element.gender : "",
+              OrganizationalUnit: element.region ? element.region.name : "",
+              data: element ? element : {},
+            });
           });
-        });
-        allData.value = tableData;
-        userTable.value = {
-          columns: [
-            {
-              label: "ID",
-              field: "id",
-              width: "5%",
-              sortable: true,
-              isKey: true,
-            },
-            {
-              label: "First Name",
-              field: "FirstName",
-              width: "10%",
-              sortable: true,
-            },
-            {
-              label: "Father Name",
-              field: "MiddleName",
-              width: "10%",
-              sortable: true,
-            },
-            {
-              label: "Grandfather Name",
-              field: "LastName",
-              width: "10%",
-              sortable: true,
-            },
-            {
-              label: "License Status",
-              field: "LicenseStatus",
-              width: "5%",
-              sortable: true,
-            },
-            {
-              label: "Professional Type",
-              field: "ProfessionalType",
-              width: "35%",
-              sortable: true,
-            },
-            {
-              label: "License Number",
-              field: "LicenseNumber",
-              width: "5%",
-              sortable: true,
-            },
-            {
-              label: "Issued Date",
-              field: "IssuedDate",
-              width: "5%",
-              sortable: true,
-            },
-            {
-              label: "Gender",
-              field: "Gender",
-              width: "5%",
-              sortable: true,
-            },
-            {
-              label: "Organizational Unit",
-              field: "OrganizationalUnit",
-              width: "5%",
-              sortable: true,
-            },
-          ],
-          rows: computed(() => {
-            return allData.value.filter(
-              (x) =>
-                ((x.FirstName
-                  ? x.FirstName.toLowerCase().includes(
-                      searchTermName.value.toLowerCase()
-                    )
-                  : "") ||
-                  (x.MiddleName
-                    ? x.MiddleName.toLowerCase().includes(
+          allData.value = tableData;
+          reportTable.value = {
+            columns: [
+              {
+                label: "ID",
+                field: "id",
+                width: "5%",
+                sortable: true,
+                isKey: true,
+              },
+              {
+                label: "First Name",
+                field: "FirstName",
+                width: "10%",
+                sortable: true,
+              },
+              {
+                label: "Father Name",
+                field: "MiddleName",
+                width: "10%",
+                sortable: true,
+              },
+              {
+                label: "Grandfather Name",
+                field: "LastName",
+                width: "10%",
+                sortable: true,
+              },
+              {
+                label: "License Status",
+                field: "LicenseStatus",
+                width: "5%",
+                sortable: true,
+              },
+              {
+                label: "Professional Type",
+                field: "ProfessionalType",
+                width: "35%",
+                sortable: true,
+              },
+              {
+                label: "License Number",
+                field: "LicenseNumber",
+                width: "5%",
+                sortable: true,
+              },
+              {
+                label: "Issued Date",
+                field: "IssuedDate",
+                width: "5%",
+                sortable: true,
+              },
+              {
+                label: "Gender",
+                field: "Gender",
+                width: "5%",
+                sortable: true,
+              },
+              {
+                label: "Organizational Unit",
+                field: "OrganizationalUnit",
+                width: "5%",
+                sortable: true,
+              },
+            ],
+            rows: computed(() => {
+              return allData.value.filter(
+                (x) =>
+                  ((x.FirstName
+                    ? x.FirstName.toLowerCase().includes(
                         searchTermName.value.toLowerCase()
                       )
                     : "") ||
-                  (x.LastName
-                    ? x.LastName.toLowerCase().includes(
-                        searchTermName.value.toLowerCase()
+                    (x.MiddleName
+                      ? x.MiddleName.toLowerCase().includes(
+                          searchTermName.value.toLowerCase()
+                        )
+                      : "") ||
+                    (x.LastName
+                      ? x.LastName.toLowerCase().includes(
+                          searchTermName.value.toLowerCase()
+                        )
+                      : "")) &&
+                  (x.ProfessionalType
+                    ? x.ProfessionalType.toLowerCase().includes(
+                        searchTermProf.value.toLowerCase()
                       )
-                    : "")) &&
-                (x.ProfessionalType
-                  ? x.ProfessionalType.toLowerCase().includes(
-                      searchTermProf.value.toLowerCase()
-                    )
-                  : "") &&
-                (searchTermStatus.value != "" && searchTermStatus.value != "All"
-                  ? x.LicenseStatus
-                    ? x.LicenseStatus.toLowerCase() ==
-                      searchTermStatus.value.toLowerCase()
-                    : ""
-                  : x.LicenseStatus ||
-                    x.LicenseStatus == "" ||
-                    x.LicenseStatus == null) &&
-                (searchTermGender.value != "" && searchTermGender.value != "All"
-                  ? x.Gender
-                    ? x.Gender.toLowerCase() ==
-                      searchTermGender.value.toLowerCase()
-                    : ""
-                  : x.Gender || x.Gender == "" || x.Gender == null) &&
-                (searchTermRegion.value != "" && searchTermRegion.value != "All"
-                  ? x.OrganizationalUnit
-                    ? x.OrganizationalUnit.toLowerCase() ==
-                      searchTermRegion.value.toLowerCase()
-                    : ""
-                  : x.OrganizationalUnit ||
-                    x.OrganizationalUnit == "" ||
-                    x.OrganizationalUnit == null) &&
-                (searchTermFromDate.value != ""
-                  ? x.IssuedDate
-                    ? searchTermToDate.value.length > 0
-                      ? moment(x.IssuedDate).isSameOrAfter(
-                          searchTermFromDate.value
-                        ) &&
-                        moment(x.IssuedDate).isSameOrBefore(
-                          searchTermToDate.value
-                        )
-                      : moment(x.IssuedDate).isSameOrAfter(
-                          searchTermFromDate.value
-                        )
-                    : ""
-                  : x.IssuedDate ||
-                    x.IssuedDate == "" ||
-                    x.IssuedDate == null) &&
-                (searchTermToDate.value != ""
-                  ? x.IssuedDate
-                    ? searchTermFromDate.value.length > 0
-                      ? moment(x.IssuedDate).isSameOrBefore(
-                          searchTermToDate.value
-                        ) &&
-                        moment(x.IssuedDate).isSameOrAfter(
-                          searchTermFromDate.value
-                        )
-                      : moment(x.IssuedDate).isSameOrBefore(
-                          searchTermToDate.value
-                        )
-                    : ""
-                  : x.IssuedDate || x.IssuedDate == "" || x.IssuedDate == null)
-            );
-          }),
-          totalRecordCount: computed(() => {
-            return userTable.value.rows.length;
-          }),
-          sortable: {
-            order: "id",
-            sort: "asc",
-          },
-        };
-      });
-      userTable.value.isLoading = false;
+                    : "") &&
+                  (searchTermStatus.value != "" &&
+                  searchTermStatus.value != "All"
+                    ? x.LicenseStatus
+                      ? x.LicenseStatus.toLowerCase() ==
+                        searchTermStatus.value.toLowerCase()
+                      : ""
+                    : x.LicenseStatus ||
+                      x.LicenseStatus == "" ||
+                      x.LicenseStatus == null) &&
+                  (searchTermGender.value != "" &&
+                  searchTermGender.value != "All"
+                    ? x.Gender
+                      ? x.Gender.toLowerCase() ==
+                        searchTermGender.value.toLowerCase()
+                      : ""
+                    : x.Gender || x.Gender == "" || x.Gender == null) &&
+                  (searchTermRegion.value != "" &&
+                  searchTermRegion.value != "All"
+                    ? x.OrganizationalUnit
+                      ? x.OrganizationalUnit.toLowerCase() ==
+                        searchTermRegion.value.toLowerCase()
+                      : ""
+                    : x.OrganizationalUnit ||
+                      x.OrganizationalUnit == "" ||
+                      x.OrganizationalUnit == null) &&
+                  (searchTermFromDate.value != ""
+                    ? x.IssuedDate
+                      ? searchTermToDate.value.length > 0
+                        ? moment(x.IssuedDate).isSameOrAfter(
+                            searchTermFromDate.value
+                          ) &&
+                          moment(x.IssuedDate).isSameOrBefore(
+                            searchTermToDate.value
+                          )
+                        : moment(x.IssuedDate).isSameOrAfter(
+                            searchTermFromDate.value
+                          )
+                      : ""
+                    : x.IssuedDate ||
+                      x.IssuedDate == "" ||
+                      x.IssuedDate == null) &&
+                  (searchTermToDate.value != ""
+                    ? x.IssuedDate
+                      ? searchTermFromDate.value.length > 0
+                        ? moment(x.IssuedDate).isSameOrBefore(
+                            searchTermToDate.value
+                          ) &&
+                          moment(x.IssuedDate).isSameOrAfter(
+                            searchTermFromDate.value
+                          )
+                        : moment(x.IssuedDate).isSameOrBefore(
+                            searchTermToDate.value
+                          )
+                      : ""
+                    : x.IssuedDate ||
+                      x.IssuedDate == "" ||
+                      x.IssuedDate == null)
+              );
+            }),
+            totalRecordCount: res.data.data.count,
+            sortable: {
+              order: "id",
+              sort: "asc",
+            },
+          };
+        });
+      reportTable.value.isLoading = false;
     };
 
     const fetchDepartmentType = () => {
@@ -1528,7 +1510,9 @@ export default {
     const fetchRegion = () => {
       store.dispatch("report/getRegions").then((res) => {
         regions.value = res.data.data;
+        regions.value.unshift({name:'All'});
       });
+  
     };
 
     const fetchZones = (regionID) => {
@@ -1565,9 +1549,27 @@ export default {
       let date = new Date().toISOString();
       saveAs(blob, date.slice(0, 10) + " Report.xls");
     };
-
+    const doSearch = (offset, limit, order, sort) => {
+      reportTable.value.isLoading = true; 
+      setTimeout(() => {
+        reportTable.value.isReSearch = offset == undefined ? true : false;
+        offset = offset / 10 + 1;
+        if (sort == "asc" && applicationTypeSearch.value == "NewLicense") {
+          fetchNewLicenseReport([offset, limit]);
+        } else if (sort == "asc" && applicationTypeSearch.value == "Renewal") {
+          fetchRenewalReport([offset, limit]);
+        } else if (
+          sort == "asc" &&
+          applicationTypeSearch.value == "Goodstanding"
+        ) {
+          fetchGoodstandingReport([offset, limit]);
+        }
+        reportTable.value.sortable.order = order;
+        reportTable.value.sortable.sort = sort;
+      }, 600);
+    };
     onMounted(() => {
-      fetchNewLicenseReport();
+      fetchNewLicenseReport([0, 10]);
       fetchRegion();
       fetchApplicationStatuses();
       fetchDepartmentType();
@@ -1580,6 +1582,7 @@ export default {
       fetchGoodstandingReport,
       fetchRegion,
       fetchZones,
+      doSearch,
       fetchWoredas,
       fetchApplicationStatuses,
       professions,
@@ -1589,7 +1592,7 @@ export default {
       applicationStatuses,
       handleFilterByApplication,
       departments,
-      userTable,
+      reportTable,
       searchTermName,
       searchTermProf,
       searchTermStatus,

@@ -90,6 +90,7 @@
                       >
                         Upload
                       </th>
+
                       <th
                         class="
                           font-semibold
@@ -118,7 +119,13 @@
                     <tr
                       v-for="item in commonDocuments"
                       :key="item.id"
-                      class="border-b text-main-400"
+                      :class="
+                        fileUploadError[
+                          `file_upload_row_${item.documentType.code}`
+                        ]
+                          ? 'accordion-body py-4 px-5 border-2 border-red-300 rounded-lg'
+                          : 'accordion-body py-4 px-5 border-b rounded-lg'
+                      "
                     >
                       <td class="px-6 py-4">
                         <div class="flex items-center p-4">
@@ -158,8 +165,49 @@
                           />
                         </p>
                       </td>
-
-                      <td class="px-6 py-4 text-center">
+                      <td class="px-6 py-4" v-if="item && item.fileName">
+                        <div class="flex items-center p-4">
+                          <div>
+                            <p class="">
+                              {{
+                                item.fileName
+                                  ? item.fileName
+                                  : "---------------"
+                              }}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        class="px-6 py-4 text-center"
+                        v-if="item && item.existingFile"
+                      >
+                        <a
+                          :id="
+                            'common_image_href' + item.documentType.id + item.id
+                          "
+                          :href="item.existingFile"
+                          :data-title="item.name ? item.name : '-----'"
+                          data-lightbox="example-2"
+                        >
+                          <i
+                            :id="'common_icon' + item.documentType.id + item.id"
+                            class="fa fa-eye cursor-pointer text-main-400"
+                            aria-hidden="true"
+                          >
+                            <img
+                              :id="
+                                'common_image_lightbox' +
+                                item.documentType.id +
+                                item.id
+                              "
+                              :src="item.existingFile"
+                              class="w-full h-2 object-cover"
+                            />
+                          </i>
+                        </a>
+                      </td>
+                      <td class="px-6 py-4 text-center" v-else>
                         <a
                           :id="
                             'common_image_href' + item.documentType.id + item.id
@@ -250,7 +298,9 @@
                 {{ table.educationalLevel ? table.educationalLevel.name : "" }}
                 Related Files
               </h4>
-
+              <h5 v-if="existingDocs && existingDocs.length > 0">
+                Images are saved, only upload files you want to change
+              </h5>
               <div class="overflow-x-auto w-full p-4">
                 <table
                   class="
@@ -332,7 +382,14 @@
                     <tr
                       v-for="item in table.docs"
                       :key="item.id"
-                      class="border-b text-main-400"
+                      :class="
+                        fileUploadError[
+                          'file_upload_row_' +
+                            `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                        ]
+                          ? 'accordion-body py-4 px-5 border-2 border-red-300 rounded-lg'
+                          : 'accordion-body py-4 px-5 border-b  rounded-lg'
+                      "
                     >
                       <td class="px-6 py-4">
                         <div class="flex items-center ml-4">
@@ -418,7 +475,14 @@
                   >
                     <tr
                       v-if="parentItem.length < 2"
-                      class="border-b text-main-400 bg-lightGrey-100"
+                      :class="
+                        fileUploadError[
+                          'file_upload_row_' +
+                            `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                        ]
+                          ? 'accordion-body py-4 px-5 border-2 border-red-300 rounded-lg'
+                          : 'accordion-body py-4 px-5 border-b  rounded-lg'
+                      "
                     >
                       <td class="px-6 py-4">
                         <div class="flex items-center ml-4">
@@ -563,7 +627,7 @@
                           ] != null
                         "
                         class="accordion"
-                        id="accordionExample"
+                        :id="`accordion_${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`"
                         style="width: max-content"
                       >
                         <div
@@ -576,10 +640,13 @@
                           "
                         >
                           <div
-                            :id="'docAccordion' + parentItem[0].documentType.id"
+                            :id="
+                              'docAccordion_' +
+                              `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                            "
                             class=""
-                            aria-labelledby="headingOne"
-                            data-bs-parent="#accordionExample"
+                            :aria-labelledby="`headingOne_${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`"
+                            :data-bs-parent="`#accordion_${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`"
                           >
                             <div class="accordion-body py-4 px-5">
                               <div class="bg-lightMain-500 rounded-sm p-2">
@@ -592,7 +659,14 @@
                               <tr
                                 v-for="(parentChildItem, index) in parentItem"
                                 :key="parentChildItem"
-                                class="border-b text-main-400 mt-4"
+                                :class="
+                                  fileUploadError[
+                                    'file_upload_row_' +
+                                      `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                  ]
+                                    ? 'accordion-body py-4 px-5 border-2 border-red-300 rounded-lg'
+                                    : 'accordion-body py-4 px-5 border-b  rounded-lg'
+                                "
                               >
                                 <td
                                   v-if="
@@ -846,7 +920,7 @@ export default {
     let generalInfo = ref({});
     let documentUploaded = ref({});
     let documentToSave = ref({});
-    let divId = ref(0);
+    let fileUploadError = ref([]);
     let imageData = [];
     let formData = new FormData();
     let documentsUploaded = ref({});
@@ -900,6 +974,7 @@ export default {
               educationalLevel: data.educationalLevel
                 ? data.educationalLevel.name
                 : "",
+              fileName: event?.target?.files[0].name,
               image: reader.result,
             });
 
@@ -963,7 +1038,13 @@ export default {
     };
 
     const handleFileUpload = (data, event, pro) => {
-      documentUploaded.value[data.documentType.code] = event?.target?.files[0];
+      documentUploaded.value[
+        data.documentType.code +
+          "_" +
+          data.educationalLevel.code.toUpperCase() +
+          "_" +
+          pro.professionType.code.toUpperCase()
+      ] = event?.target?.files[0];
       let reader = new FileReader();
       formData.append(
         data.documentType.code +
@@ -976,11 +1057,11 @@ export default {
       );
       if (data.parentDocument) {
         documentsUploaded.value[
-          data.educationalLevel.code.toUpperCase() +
+          data.documentType.code +
             "_" +
-            pro.professionType.code.toUpperCase() +
+            data.educationalLevel.code.toUpperCase() +
             "_" +
-            data.parentDocument
+            pro.professionType.code.toUpperCase()
         ] = event?.target?.files[0];
       } else {
         documentsUploaded.value[
@@ -992,10 +1073,29 @@ export default {
         ] = event?.target?.files[0];
       }
 
-      isImage.value[data.documentType.code] = true;
-      let fileS = documentUploaded.value[data.documentType.code].size;
+      isImage.value[
+        data.documentType.code +
+          "_" +
+          data.educationalLevel.code.toUpperCase() +
+          "_" +
+          pro.professionType.code.toUpperCase()
+      ] = true;
+      let fileS =
+        documentUploaded.value[
+          data.documentType.code +
+            "_" +
+            data.educationalLevel.code.toUpperCase() +
+            "_" +
+            pro.professionType.code.toUpperCase()
+        ].size;
       if (fileS <= maxFileSize.value / 1000) {
-        fileSizeExceed.value[data.documentType.code] = false;
+        fileSizeExceed.value[
+          data.documentType.code +
+            "_" +
+            data.educationalLevel.code.toUpperCase() +
+            "_" +
+            pro.professionType.code.toUpperCase()
+        ] = false;
         showImage.value = true;
 
         if (fileS > 0 && fileS < 1000) {
@@ -1005,15 +1105,20 @@ export default {
         } else {
           fileSize.value = fileS / 1000000 + "MB";
         }
+
         reader.addEventListener(
           "load",
           function () {
             showPreview.value = true;
 
-            previewDocuments.value[data.documentType.code] = reader.result;
-            imageData = imageData.filter(
-              (el) => el.documenttype != data.documentType.name
-            );
+            previewDocuments.value[
+              data.documentType.code +
+                "_" +
+                data.educationalLevel.code.toUpperCase() +
+                "_" +
+                pro.professionType.code.toUpperCase()
+            ] = reader.result;
+
             imageData.push({
               imageId:
                 "image_lightbox_" +
@@ -1023,42 +1128,118 @@ export default {
                 "_" +
                 pro.professionType.code,
               documenttype: data.documentType ? data.documentType.name : "",
+              documentCode:
+                data.documentType.code +
+                "_" +
+                data.educationalLevel.code.toUpperCase() +
+                "_" +
+                pro.professionType.code.toUpperCase(),
               educationalLevel: data.educationalLevel
                 ? data.educationalLevel.name
                 : "",
+              fileName: event?.target?.files[0].name,
               image: reader.result,
             });
             // documentUploaded.value[data.documentType.code] = reader.result;
           },
           false
         );
-        if (documentUploaded.value[data.documentType.code]) {
+
+        if (
+          documentUploaded.value[
+            data.documentType.code +
+              "_" +
+              data.educationalLevel.code.toUpperCase() +
+              "_" +
+              pro.professionType.code.toUpperCase()
+          ]
+        ) {
           if (
             /\.(jpe?g|png|gif)$/i.test(
-              documentUploaded.value[data.documentType.code].name
+              documentUploaded.value[
+                data.documentType.code +
+                  "_" +
+                  data.educationalLevel.code.toUpperCase() +
+                  "_" +
+                  pro.professionType.code.toUpperCase()
+              ].name
             )
           ) {
-            isImage.value[data.documentType.code] = true;
-            isPdf.value[data.documentType.code] = false;
+            isImage.value[
+              data.documentType.code +
+                "_" +
+                data.educationalLevel.code.toUpperCase() +
+                "_" +
+                pro.professionType.code.toUpperCase()
+            ] = true;
+            isPdf.value[
+              data.documentType.code +
+                "_" +
+                data.educationalLevel.code.toUpperCase() +
+                "_" +
+                pro.professionType.code.toUpperCase()
+            ] = false;
 
             reader.readAsDataURL(
-              documentUploaded.value[data.documentType.code]
+              documentUploaded.value[
+                data.documentType.code +
+                  "_" +
+                  data.educationalLevel.code.toUpperCase() +
+                  "_" +
+                  pro.professionType.code.toUpperCase()
+              ]
             );
           } else if (
             /\.(pdf)$/i.test(
-              documentUploaded.value[data.documentType.code].name
+              documentUploaded.value[
+                data.documentType.code +
+                  "_" +
+                  data.educationalLevel.code.toUpperCase() +
+                  "_" +
+                  pro.professionType.code.toUpperCase()
+              ].name
             )
           ) {
-            isImage.value[data.documentType.code] = false;
-            isPdf.value[data.documentType.code] = true;
+            isImage.value[
+              data.documentType.code +
+                "_" +
+                data.educationalLevel.code.toUpperCase() +
+                "_" +
+                pro.professionType.code.toUpperCase()
+            ] = false;
+            isPdf.value[
+              data.documentType.code +
+                "_" +
+                data.educationalLevel.code.toUpperCase() +
+                "_" +
+                pro.professionType.code.toUpperCase()
+            ] = true;
             reader.readAsDataURL(
-              documentUploaded.value[data.documentType.code]
+              documentUploaded.value[
+                data.documentType.code +
+                  "_" +
+                  data.educationalLevel.code.toUpperCase() +
+                  "_" +
+                  pro.professionType.code.toUpperCase()
+              ]
             );
           }
         }
       } else {
-        fileSizeExceed.value[data.documentType.code] = true;
-        documentUploaded.value[data.documentType.code] = "";
+        fileSizeExceed.value[
+          data.documentType.code +
+            "_" +
+            data.educationalLevel.code.toUpperCase() +
+            "_" +
+            pro.professionType.code.toUpperCase()
+        ] = true;
+        documentUploaded.value[
+          data.documentType.code +
+            "_" +
+            data.educationalLevel.code.toUpperCase() +
+            "_" +
+            pro.professionType.code.toUpperCase()
+        ] = "";
       }
       let icon = document.getElementById(
         "educational_icon_" +
@@ -1103,10 +1284,8 @@ export default {
     const checkDocuments = () => {
       let temp = false;
       let CMtemp = false;
-      let NSTemp = false;
 
       /// check common documents
-
       commonDocuments.value
         .filter((cd) => cd.isRequired)
         .forEach((element) => {
@@ -1114,10 +1293,18 @@ export default {
             element.documentType.code
           );
           if (!CMtemp) {
+            fileUploadError.value[
+              "file_upload_row_" + element.documentType.code
+            ] = true;
             errorDocuments.value.push({
+              isCommon: true,
               name: element.documentType.name,
               code: element.documentType.code,
             });
+          } else {
+            fileUploadError.value[
+              "file_upload_row_" + element.documentType.code
+            ] = false;
           }
         });
 
@@ -1135,6 +1322,14 @@ export default {
                 ed.professionType.code.toUpperCase()
             );
             if (!temp) {
+              fileUploadError.value[
+                "file_upload_row_" +
+                  single.documentType.code +
+                  "_" +
+                  ed.educationalLevel.code.toUpperCase() +
+                  "_" +
+                  ed.professionType.code.toUpperCase()
+              ] = true;
               errorDocuments.value.push({
                 name: single.documentType.name,
                 code:
@@ -1144,36 +1339,25 @@ export default {
                   "_" +
                   ed.professionType.code.toUpperCase(),
               });
+            } else {
+              fileUploadError.value[
+                "file_upload_row_" +
+                  single.documentType.code +
+                  "_" +
+                  ed.educationalLevel.code.toUpperCase() +
+                  "_" +
+                  ed.professionType.code.toUpperCase()
+              ] = false;
             }
           });
-        //// check documetns with parents
-        for (var pd in ed.parentDoc) {
-          if (
-            newLicenseDocuments.value.filter(
-              (nld) => nld.parentDocument == pd && nld.isRequired
-            ).length > 0
-          ) {
-            NSTemp = documentsUploaded.value.hasOwnProperty(
-              ed.educationalLevel.code.toUpperCase() +
-                "_" +
-                ed.professionType.code.toUpperCase() +
-                "_" +
-                pd
-            );
-            if (!NSTemp) {
-              errorDocuments.value.push({
-                name: pd,
-                code: pd,
-              });
-            }
-          }
-        }
       });
-      return CMtemp && temp && NSTemp;
+
+      return CMtemp && temp;
     };
 
     const next = () => {
       let documentValidation = checkDocuments();
+
       if (documentValidation) {
         store.dispatch("newlicense/setTempDocs", formData).then(() => {
           let finalLocalData = {
@@ -1188,24 +1372,17 @@ export default {
               ["NLdocumentUploads"],
               "readwrite"
             );
-            let tempStat = false;
 
             if (existingDocs.length > 0) {
-              imageData.forEach((newImage) => {
-                existingDocs.forEach((existing) => {
+              existingDocs.forEach((existing) => {
+                imageData.forEach((newImage) => {
                   if (existing.imageId == newImage.imageId) {
-                    existing.image = newImage.image;
-                    finalLocalData.data.push(existing);
-                  } else {
-                    finalLocalData.data.push(existing);
-                    tempStat = true;
+                    newImage.image = existing.image;
+                    existing.fileName = newImage.fileName;
                   }
                 });
-                if (tempStat == true) {
-                  finalLocalData.data.push(newImage);
-                }
               });
-              finalLocalData.data.concat(imageData);
+              finalLocalData.data = imageData;
             } else {
               finalLocalData.data = imageData;
             }
@@ -1244,7 +1421,7 @@ export default {
         });
 
         toast.error(
-          "Please attach the following required documents " + errors,
+          "Please attach documents marked with red border and this icon (*) next to their name to proceed",
           {
             timeout: 5000,
             position: "bottom-center",
@@ -1330,38 +1507,6 @@ export default {
       }, {});
     };
 
-    const addMoreFile = (doc) => {
-      divId.value == doc.length;
-      if (divId.value < doc.length) {
-        divId.value++;
-        let divElement = document.createElement("div");
-        divElement.classList.add("border-t-2");
-        divElement.classList.add("mt-4");
-        divElement.classList.add("mb-4");
-        let toBeAddedDoc = doc[divId.value];
-        let template =
-          '<tr id="parent_doc_' +
-          toBeAddedDoc.id +
-          '" class="p-4 text-gray-300"><td class="px-6 py-4"><div class="flex items-center ml-8"><div><p class="">' +
-          (toBeAddedDoc.documentType.name + "(optional)") +
-          '</p></div></div></td><td class="px-6 py-4"><div class="flex items-center ml-8"><div><p class="">' +
-          (toBeAddedDoc.documentType.description
-            ? toBeAddedDoc.documentType.description
-            : "") +
-          '</p></div></div></td><td class="px-6 py-4 "><p class="ml-8"><input type="file" :id="files' +
-          toBeAddedDoc.id +
-          '" accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg" :ref="imageUploader' +
-          toBeAddedDoc.id +
-          '" class="custom-file-input" v-on:change=" handleFileUpload(' +
-          toBeAddedDoc +
-          ', $event) " /></p></td><td><button id="remove_' +
-          toBeAddedDoc.id +
-          '" class="bg-main-400 mt-8 inline-block px-6 py-2.5 bg-main-400 hover:text-main-400 text-white text-xs font-bold leading-tight uppercase rounded shadow-md transition duration-150 ease-in-out " onclick="removeFileUpload()>Remove </button> </td>';
-
-        divElement.innerHTML = template;
-        document.getElementById(doc[0].id).appendChild(divElement);
-      }
-    };
     const addMore = (parentItem) => {
       if (
         showNestedDocuments.value[parentItem.documentType.code] == undefined
@@ -1403,10 +1548,18 @@ export default {
     };
 
     onMounted(() => {
-      localData.value = window.localStorage.getItem("NLApplicationData")
-        ? JSON.parse(window.localStorage.getItem("NLApplicationData"))
-        : {};
-      if (Object.keys(localData.value).length != 0) {
+      //Initialize indexdb for file storage
+      if (!("indexedDB" in window)) {
+        alert(
+          "This browser doesn't support Temporary storage please update your browser to the latest version"
+        );
+        window.location.reload();
+      } else {
+        initDb();
+        localData.value = window.localStorage.getItem("NLApplicationData")
+          ? JSON.parse(window.localStorage.getItem("NLApplicationData"))
+          : {};
+
         generalInfo.value = localData.value;
 
         store.dispatch("newlicense/getApplicationCategories").then((res) => {
@@ -1436,6 +1589,7 @@ export default {
                 });
               });
           });
+
           //Get Common Docs
 
           store
@@ -1446,15 +1600,27 @@ export default {
             .then((res) => {
               let result = res.data.data;
               commonDocuments.value = result;
+              if (
+                existingDocs &&
+                existingDocs.length > 0 &&
+                result &&
+                result.length > 0
+              ) {
+                existingDocs.forEach((existing) => {
+                  result.forEach((Cd) => {
+                    if (
+                      existing.imageId ==
+                      "common_image_lightbox_" + Cd.documentType.code
+                    ) {
+                      Cd.existingFile = existing.image;
+                      Cd.fileName = existing.fileName;
+                    }
+                  });
+                });
+              } else {
+                commonDocuments.value = result;
+              }
             });
-
-          //Initialize indexdb for file storage
-          if (!("indexedDB" in window)) {
-            console.log("This browser doesn't support IndexedDB");
-            return;
-          } else {
-            initDb();
-          }
         });
       }
     });
@@ -1464,11 +1630,11 @@ export default {
       commonDocuments,
       files,
       handleFileUpload,
-      addMoreFile,
       showImage,
       previewDocuments,
       showPreview,
       existingDocs,
+      fileUploadError,
       previewFile,
       handleCommonFileUpload,
       generalInfo,

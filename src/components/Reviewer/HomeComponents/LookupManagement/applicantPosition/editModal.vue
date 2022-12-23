@@ -65,7 +65,7 @@
               <section class="text-gray-800">
                 <div class="flex justify-center border-b-2 mb-8">
                   <div class="text-center max-w-full">
-                    <h2 class="text-2xl font-bold">Edit Prefix</h2>
+                    <h2 class="text-2xl font-bold">Edit Application Position</h2>
                   </div>
                 </div>
 
@@ -101,7 +101,7 @@
                                   duration-200
                                   ease-in-out
                                 "
-                                >Prefix Name</label
+                                >Applicant Position Name</label
                               >
                               <div class="relative flex items-center">
                                 <input
@@ -142,9 +142,9 @@
                               </div>
 
                               <small
-                                v-if="showPrefixNameError"
+                                v-if="showapPositionNameError"
                                 class="text-red-300"
-                                >{{ prefixNameError }}</small
+                                >{{ apPositionNameError }}</small
                               >
                             </div>
 
@@ -162,7 +162,7 @@
                                   ease-in-out
                                   mb-2
                                 "
-                                >Prefix Status</label
+                                >Department Status</label
                               >
                               <div class="toggle slim colour">
                                 <input
@@ -171,7 +171,7 @@
                                   class="toggle-checkbox hidden cursor-pointer"
                                   type="checkbox"
                                   :checked="
-                                    editData && editData.finalStatus == true
+                                    editData &&editData.finalStatus == true 
                                       ? true
                                       : false
                                   "
@@ -191,14 +191,12 @@
                                 ></label>
                                 <span
                                   :class="
-                                    editData && editData.finalStatus == true
+                                  editData&&editData.finalStatus==true
                                       ? 'text-green-200 font-bold'
                                       : 'text-yellow-300 font-bold'
                                   "
-                                >
-                                  {{
-                                    editData.finalStatus ? "Active" : "Inactive"
-                                  }}
+                                  > 
+                                  {{ editData.finalStatus?'Active':'Inactive'  }}
                                 </span>
                               </div>
                             </div>
@@ -240,7 +238,7 @@
               duration-150
               ease-in-out
             "
-            @click="savePrefix()"
+            @click="savePosition()"
           >
             <i class="fa fa-save"></i>
             Save
@@ -287,81 +285,76 @@ export default {
     const toast = useToast();
     let isLoading = ref(false);
 
-    let showPrefixNameError = ref(false);
-    let prefixNameError = ref("");
-    let prefixNameFilled = ref(false);
+    let showapPositionNameError = ref(false);
+    let apPositionNameError = ref("");
+    let apPositionNameFilled = ref(false);
     let saveData = ref({});
     let editData = computed(() =>
       props.editModalData ? props.editModalData : { Name: "" }
     );
-    let isActive =
-      editData.value && editData.value.Status
-        ? editData.value.Status
-        : ref(false);
+    let isActive = editData.value&&editData.value.Status ? editData.value.Status : ref(false);
 
     const changeverified = () => {
       isActive.value = !isActive.value;
     };
     const enableSaveButton = () => {
       if (editData.value.Name.length > 3) {
-        prefixNameFilled.value = true;
+        apPositionNameFilled.value = true;
       } else {
-        prefixNameFilled.value = false;
+        apPositionNameFilled.value = false;
       }
     };
-    const savePrefix = () => {
+    const savePosition = () => {
       let today = new Date().getMilliseconds();
       isLoading.value = true;
 
       //Validation of input
 
-      showPrefixNameError.value = false;
+      showapPositionNameError.value = false;
 
       saveData.value = {
         id: editData.value.id,
         name: editData.value.Name ? editData.value.Name : "",
-        code: editData.value
+        code:  editData.value
           ? editData.value.Code
-          : editData.value.Name
-          ? "PP_" + editData.value.Name.slice(0, 4).toUpperCase() + "_" + today
+          :editData.value.Name
+          ? "DP_" + editData.value.Name.slice(0, 4).toUpperCase() + "_" + today
           : "",
         status: editData.value.finalStatus,
       };
 
-      store
-        .dispatch("lookups/updateProfessionalPrefix", saveData.value)
-        .then((res) => {
-          isLoading.value = false;
-          if (res.data.status == "Success") {
-            toast.success("Updated Successfully", {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            });
-            setTimeout(() => {
-              window.location.reload();
-            }, 1000);
-          } else {
-            toast.error(res.data.message, {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            });
-          }
-        });
+      store.dispatch("lookups/updateApplicantPosition", saveData.value).then((res) => {
+        isLoading.value = false;
+        if (res.data.status == "Success") {
+          toast.success("Updated Successfully", {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          });
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
+        } else {
+          toast.error(res.data.message, {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          });
+        }
+      });
     };
     return {
       isLoading,
       editData,
-      savePrefix,
+      savePosition,
       enableSaveButton,
-      prefixNameFilled,
-      showPrefixNameError,
-      prefixNameError,
+      apPositionNameFilled,
+      showapPositionNameError,
+      apPositionNameError,
       isActive,
       changeverified,
     };

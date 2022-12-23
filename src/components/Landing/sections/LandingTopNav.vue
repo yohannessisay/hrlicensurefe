@@ -753,7 +753,7 @@ export default {
           .then((res) => {
             if (res && res.status == "Success") {
               enableVerification.value = true;
-              localStorage.setItem("secretOtp", res.data.fullHash);
+              localStorage.setItem("secretOtp", JSON.stringify(res.data.fullHash));
             } else {
               toast.error("Service error, please try again", {
                 timeout: 5000,

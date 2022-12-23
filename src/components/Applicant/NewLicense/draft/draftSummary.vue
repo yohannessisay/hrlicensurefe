@@ -274,7 +274,6 @@
                 aria-labelledby="headingOne"
                 data-bs-parent="#accordionExample"
               >
-             
                 <div class="accordion-body py-4 px-5">
                   <div
                     class="
@@ -325,7 +324,7 @@
                         </div>
                       </div>
                     </div>
-                
+
                     <div
                       v-else
                       class="
@@ -344,7 +343,6 @@
                       v-for="prev in prevDocs"
                       :key="prev.docName"
                     >
-                  
                       <h4 class="text-main-400 font-bold m-2">Document Type</h4>
                       <h6 class="m-2">{{ prev.documentType.name }}</h6>
                       <div class="flex justify-center rounded-lg p-4">
@@ -603,7 +601,9 @@ export default {
                 ? generalInfo.value.applicationStatusId
                 : null,
               applicantTypeId:
-                generalInfo.value && generalInfo.value.applicantTypeSelected
+                generalInfo.value && generalInfo.value.applicantType
+                  ? generalInfo.value.applicantType.id
+                  : generalInfo.value && generalInfo.value.applicantTypeSelected
                   ? generalInfo.value.applicantTypeSelected.id
                   : null,
               residenceWoredaId:
@@ -679,7 +679,9 @@ export default {
 
           buttons.value = store.getters["newlicense/getButtons"];
 
-          buttons.value = buttons.value.filter((ele) => ele.code != "AT"&& ele.code != "DRA");
+          buttons.value = buttons.value.filter(
+            (ele) => ele.code != "AT" && ele.code != "DRA"
+          );
           tempDocs.value = store.getters["newlicense/getTempDocs"];
 
           localData.value = window.localStorage.getItem("NLApplicationData")
@@ -748,7 +750,6 @@ export default {
                 professionChanged.value = true;
                 // prevDocs.value = localFileImages.value;
                 localFileImages.value.forEach((element) => {
-                
                   if (!element.commonDocCode) {
                     prevDocs.value.push({
                       documentType: { name: element.documentName },
@@ -757,9 +758,7 @@ export default {
                     });
                   }
                 });
-               
               } else {
-              
                 prevDocs.value = savedData.value.documents;
               }
             };

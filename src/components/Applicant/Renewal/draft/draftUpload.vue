@@ -402,7 +402,6 @@
                         </p>
                       </td>
                       <td class="px-6 py-4">
-                     
                         <span
                           class="document-name"
                           v-if="
@@ -865,6 +864,7 @@
   </div>
   <filePreview :modalData="filePreviewData"> </filePreview>
 </template>
+
 <script>
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
@@ -1102,7 +1102,7 @@ export default {
     };
     const checkDocuments = () => {
       let temp = false;
-      let CMtemp = false; 
+      let CMtemp = false;
 
       /// check common documents
 
@@ -1172,7 +1172,6 @@ export default {
           });
 
         //// check documetns with parents
- 
 
         // fileUploadError.value[
         //         "file_upload_row_" +
@@ -1187,71 +1186,45 @@ export default {
       return CMtemp && temp;
     };
     const next = () => {
-      let documentValidation = checkDocuments();
-      if (documentValidation) {
-        store.dispatch("renewal/setTempDocs", formData).then(() => {
-          //Save images to indexed Db
+      store.dispatch("renewal/setTempDocs", formData).then(() => {
+        //Save images to indexed Db
 
-          let finalLocalData = {
-            created: new Date(),
-            data: [],
-          };
-          let db;
-          let request = indexedDB.open("RNdocumentUploads", 1);
-          request.onsuccess = function () {
-            db = request.result;
-            let transaction = db.transaction(
-              ["RNdocumentUploads"],
-              "readwrite"
-            );
+        let finalLocalData = {
+          created: new Date(),
+          data: [],
+        };
+        let db;
+        let request = indexedDB.open("RNdocumentUploads", 1);
+        request.onsuccess = function () {
+          db = request.result;
+          let transaction = db.transaction(["RNdocumentUploads"], "readwrite");
 
-            finalLocalData.data = imageData;
+          finalLocalData.data = imageData;
 
-            finalLocalData.data = [...new Set(finalLocalData.data)];
+          finalLocalData.data = [...new Set(finalLocalData.data)];
 
-            const objectStore = transaction.objectStore("RNdocumentUploads");
+          const objectStore = transaction.objectStore("RNdocumentUploads");
 
-            const objectStoreRequest = objectStore.clear();
+          const objectStoreRequest = objectStore.clear();
 
-            objectStoreRequest.onsuccess = (event) => {
-              let addReq = transaction
-                .objectStore("RNdocumentUploads")
-                .put(finalLocalData);
+          objectStoreRequest.onsuccess = (event) => {
+            let addReq = transaction
+              .objectStore("RNdocumentUploads")
+              .put(finalLocalData);
 
-              addReq.onerror = function () {
-                console.log(
-                  "Error regarding your browser, please update your browser to the latest version"
-                );
-              };
+            addReq.onerror = function () {
+              console.log(
+                "Error regarding your browser, please update your browser to the latest version"
+              );
+            };
 
-              transaction.oncomplete = function () {
-                console.log("data stored");
-                emit("changeActiveState");
-              };
+            transaction.oncomplete = function () {
+              console.log("data stored");
+              emit("changeActiveState");
             };
           };
-        });
-      } else {
-        let errors = "";
-
-        errorDocuments.value.forEach((element) => {
-          if (!errors) {
-            errors = element.name;
-          } else {
-            errors = errors + " , " + element.name;
-          }
-        });
-        toast.error(
-          "Please attach the following required documents " + errors,
-          {
-            timeout: 5000,
-            position: "bottom-center",
-            pauseOnFocusLoss: true,
-            pauseOnHover: true,
-            icon: true,
-          }
-        );
-      }
+        };
+      });
     };
 
     const groupByKey = (array, key) => {
@@ -1344,61 +1317,58 @@ export default {
                 element.originalFileName;
             });
             documentsUploaded.value = documentsSaved.value;
-            console.log(documentsUploaded.value)
-            store
-              .dispatch("renewal/getApplicationCategories")
-              .then((res) => {
-                let categoryResults = res.data.data
-                  ? res.data.data.filter((ele) => ele.code == "NA")
-                  : "";
-                let educationLevels = generalInfo.value.educations;
+            store.dispatch("renewal/getApplicationCategories").then((res) => {
+              let categoryResults = res.data.data
+                ? res.data.data.filter((ele) => ele.code == "NA")
+                : "";
+              let educationLevels = generalInfo.value.educations;
 
-                //Get department docs
-                educationLevels.forEach((element) => {
-                  store
-                    .dispatch("renewal/getRNdocuments", [
-                      categoryResults[0].id,
-                      generalInfo.value.applicantType.id,
-                      element.educationalLevel
-                        ? element.educationalLevel.id
-                        : element.educationLevel
-                        ? element.educationLevel.id
-                        : "",
-                    ])
-                    .then((res) => {
-                      let resp = res.data.data;
-                      renewalDocuments.value = res.data.data;
-                      educationalDocs.value.push({
-                        professionType:
-                          element && element.professionType
-                            ? element.professionType
-                            : element
-                            ? element.professionTypeId
-                            : "",
-                        educationalLevel: element.educationalLevel
-                          ? element.educationalLevel
-                          : element.educationLevel
-                          ? element.educationLevel
-                          : "",
-                        docs: resp.filter(
-                          (element) => element.parentDocument == null
-                        ),
-                        parentDoc: groupByKey(resp, "parentDocument"),
-                      });
-                    });
-                });
-                //Get Common Docs
-
+              //Get department docs
+              educationLevels.forEach((element) => {
                 store
-                  .dispatch("renewal/getCommonRNdocuments", [
+                  .dispatch("renewal/getRNdocuments", [
                     categoryResults[0].id,
                     generalInfo.value.applicantType.id,
+                    element.educationalLevel
+                      ? element.educationalLevel.id
+                      : element.educationLevel
+                      ? element.educationLevel.id
+                      : "",
                   ])
                   .then((res) => {
-                    let result = res.data.data;
-                    commonDocuments.value = result;
+                    let resp = res.data.data;
+                    renewalDocuments.value = res.data.data;
+                    educationalDocs.value.push({
+                      professionType:
+                        element && element.professionType
+                          ? element.professionType
+                          : element
+                          ? element.professionTypeId
+                          : "",
+                      educationalLevel: element.educationalLevel
+                        ? element.educationalLevel
+                        : element.educationLevel
+                        ? element.educationLevel
+                        : "",
+                      docs: resp.filter(
+                        (element) => element.parentDocument == null
+                      ),
+                      parentDoc: groupByKey(resp, "parentDocument"),
+                    });
                   });
               });
+              //Get Common Docs
+
+              store
+                .dispatch("renewal/getCommonRNdocuments", [
+                  categoryResults[0].id,
+                  generalInfo.value.applicantType.id,
+                ])
+                .then((res) => {
+                  let result = res.data.data;
+                  commonDocuments.value = result;
+                });
+            });
           }
         });
     });

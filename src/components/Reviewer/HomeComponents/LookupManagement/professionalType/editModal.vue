@@ -106,11 +106,12 @@
                                 "
                                 >Professional Type Department</label
                               >
+
                               <div class="group w-full md:full lg:w-full">
                                 <div class="relative flex items-center">
                                   <select
                                     class="
-                                    form-select
+                                      form-select
                                       appearance-none
                                       block
                                       w-full
@@ -131,36 +132,16 @@
                                       focus:outline-none
                                     "
                                     aria-label="Default select example"
-                                    v-model="selectedDepartment"
+                                    v-model="editData.selectedDepartment"
                                   >
-                                  
-                                    <option
-                                    class="bg-primary-600 text-white font-bold"  
-                                      :value="
-                                        editData &&
-                                        editData.data &&
-                                        editData.data.department
-                                          ? editData.data.department
-                                          : ''
-                                      "
-                                    >
-                                      {{
-                                        editData &&
-                                        editData.data &&
-                                        editData.data.department
-                                          ? editData.data.department.name
-                                          : ""
-                                      }}✓ 
-                                    </option>
                                     <option
                                       v-for="department in departments"
                                       :key="department.id"
-                                      :value="department.id"
+                                      :value="department"
                                     >
                                       {{ department.name }}
                                     </option>
                                   </select>
-                                 
                                 </div>
                               </div>
                             </div>
@@ -183,6 +164,7 @@
                                 "
                                 >Professional Type Education Level</label
                               >
+
                               <div class="relative flex items-center">
                                 <select
                                   class="
@@ -206,33 +188,13 @@
                                     focus:border-blue-600
                                     focus:outline-none
                                   "
-                                  v-model="selectedEducationLevel"
+                                  v-model="editData.selectedEdLevel"
                                   aria-label="Default select example"
                                 >
                                   <option
-                                    selected
-                                    class="bg-primary-600 text-white font-bold"  
-                                    :value="
-                                      editModalData &&
-                                      editModalData.data &&
-                                      editModalData.data.educationalLevel
-                                        ? editModalData.data.educationalLevel.id
-                                        : ''
-                                    "
-                                  >
-                                    {{
-                                      editModalData &&
-                                      editModalData.data &&
-                                      editModalData.data.educationalLevel
-                                        ? editModalData.data.educationalLevel
-                                            .name
-                                        : ""
-                                    }} ✓ 
-                                  </option>
-                                  <option
                                     v-for="education in educationLevels"
                                     :key="education.id"
-                                    :value="education.id"
+                                    :value="education"
                                   >
                                     {{ education.name }}
                                   </option>
@@ -361,6 +323,61 @@
                               </div>
                             </div>
                             <!-- Professional Type Amharic Name -->
+
+                            <div class="form-group ml-5 mb-2 mt-8">
+                              <label
+                                for=""
+                                class="
+                                  inline-block
+                                  w-full
+                                  text-md text-primary-600
+                                  font-bold
+                                  text-gray-500
+                                  transition-all
+                                  duration-200
+                                  ease-in-out
+                                  mb-2
+                                "
+                                >Prefix Status</label
+                              >
+                              <div class="toggle slim colour">
+                                <input
+                                  v-model="editData.finalStatus"
+                                  id="isVerified"
+                                  class="toggle-checkbox hidden cursor-pointer"
+                                  type="checkbox"
+                                  :checked="
+                                    editData && editData.finalStatus == true
+                                      ? true
+                                      : false
+                                  "
+                                />
+                                <label
+                                  for="isVerified"
+                                  class="
+                                    toggle-label
+                                    block
+                                    w-12
+                                    h-4
+                                    rounded-full
+                                    transition-color
+                                    duration-150
+                                    ease-out
+                                  "
+                                ></label>
+                                <span
+                                  :class="
+                                    editData && editData.finalStatus == true
+                                      ? 'text-green-200 font-bold'
+                                      : 'text-yellow-300 font-bold'
+                                  "
+                                >
+                                  {{
+                                    editData.finalStatus ? "Active" : "Inactive"
+                                  }}
+                                </span>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -468,26 +485,30 @@ export default {
       saveData.value = {
         id: editData.value ? editData.value.id : "",
         name: editData.value ? editData.value.Name : "",
-        departmentId: selectedDepartment.value
-          ? selectedDepartment.value
-          : editData.value && editData.value.data
-          ? editData.value.data.departmentId
+        departmentId:
+          editData.value && editData.value.selectedDepartment
+            ? editData.value.selectedDepartment.id
+            : "",
+            code: editData.value
+          ? editData.value.Code
+          : editData.value.Name
+          ? "PT_" + editData.value.Name.slice(0, 4).toUpperCase() + "_" + today
           : "",
-        educationalLevelId: selectedEducationLevel.value
-          ? selectedEducationLevel.value
-          : editData.value && editData.value.data
-          ? editData.value.data.educationalLevelId
-          : "",
+        educationalLevelId:
+          editData.value && editData.value.selectedEdLevel
+            ? editData.value.selectedEdLevel.id
+            : "",
         amharicProfessionalType: editData.value.amharicProfessionalType
           ? editData.value.amharicProfessionalType
           : "",
+        status: editData.value.finalStatus,
       };
       store
         .dispatch("lookups/updateProfessionalType", saveData.value)
         .then((res) => {
           isLoading.value = false;
           if (res.data.status == "Success") {
-            toast.success("Created Successfully", {
+            toast.success("Updated Successfully", {
               timeout: 5000,
               position: "bottom-center",
               pauseOnFocusLoss: true,
@@ -496,7 +517,7 @@ export default {
             });
             setTimeout(() => {
               window.location.reload();
-            }, 3000);
+            }, 1000);
           } else {
             toast.error(res.data.message, {
               timeout: 5000,

@@ -36,20 +36,13 @@
           text-current
         "
       >
-   <div
-          class="
-            modal-header
-            flex flex-shrink-0
-           justify-end
-           
-            p-2
-            rounded-t-md
-          "
+        <div
+          class="modal-header flex flex-shrink-0 justify-end p-2 rounded-t-md"
         >
           <button
             type="button"
-            class="     
-                  px-6
+            class="
+              px-6
               text-white
               bg-primary-600
               hover:text-primary-600 hover:border
@@ -68,10 +61,13 @@
               active:bg-purple-800 active:shadow-lg
               transition
               duration-150
-              ease-in-out"
+              ease-in-out
+            "
             data-bs-dismiss="modal"
             aria-label="Close"
-          ><i class="fa fa-close fa-2x"></i></button>
+          >
+            <i class="fa fa-close fa-2x"></i>
+          </button>
         </div>
         <div class="vld-parent mt-4">
           <loading
@@ -96,7 +92,7 @@
                 </div>
 
                 <div class="flex flex-wrap">
-                  <div class="grow-0 shrink-0 basis-auto w-full">
+                  <div class="grow-0 shrink-0 basis-auto w-full lg:w-11/12">
                     <div class="flex flex-wrap">
                       <div
                         class="
@@ -157,19 +153,19 @@
                                 "
                                 >Full Name:</span
                               >
-                              {{ modalData.name }}
+                              {{ modalData ? modalData.name : "" }}
                             </p>
                             <p class="text-gray-500">
                               <span class="font-semibold text-primary-700 mb-1"
                                 >Gender:</span
                               >
-                              {{ modalData.gender }}
+                              {{ modalData ? modalData.gender : "" }}
                             </p>
                             <p class="text-gray-500">
                               <span class="font-semibold text-primary-700 mb-1"
                                 >Nationality:</span
                               >
-                              {{ modalData.nationality }}
+                              {{ modalData ? modalData.nationality : "" }}
                             </p>
                             <p class="text-gray-500">
                               <span class="font-semibold text-primary-700 mb-1"
@@ -185,60 +181,7 @@
                               <span class="font-semibold text-primary-700 mb-1"
                                 >Martial Status:</span
                               >
-                              {{ modalData.maritalStatus }}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div
-                        class="
-                          grow-0
-                          shrink-0
-                          basis-auto
-                          w-full
-                          lg:w-6/12
-                          px-3
-                          lg:px-6
-                        "
-                      >
-                        <div class="flex align-center">
-                          <div class="shrink-0">
-                            <div
-                              class="
-                                p-4
-                                bg-blue-600
-                                rounded-md
-                                shadow-lg
-                                w-40
-                                h-40
-                                flex
-                                items-center
-                                justify-center
-                              "
-                            >
-                              <i class="fa fa-building fa-4x"></i>
-                            </div>
-                          </div>
-                          <div class="grow ml-6">
-                            <h2 class="font-bold mb-1">Institution Info</h2>
-                            <p class="text-gray-500">
-                              <span class="font-medium text-primary-700 mb-1"
-                                >Institution Name:</span
-                              >
-                              {{ modalData.instName }}
-                            </p>
-                            <p class="text-gray-500">
-                              <span class="font-medium text-primary-700 mb-1"
-                                >Department:</span
-                              >
-                              {{ modalData.department }}
-                            </p>
-                            <p class="text-gray-500">
-                              <span class="font-medium text-primary-700 mb-1"
-                                >Institution Type:</span
-                              >
-                              {{ modalData.instType }}
+                              {{ modalData ? modalData.maritalStatus : "" }}
                             </p>
                           </div>
                         </div>
@@ -290,6 +233,97 @@
                           </div>
                         </div>
                       </div>
+                      <div
+                        class="
+                          grow-0
+                          shrink-0
+                          basis-auto
+                          w-full
+                          lg:w-6/12
+                          px-3
+                          lg:px-6
+                        "
+                      >
+                        <div class="flex items-start">
+                          <div class="shrink-0">
+                            <div
+                              class="
+                                p-4
+                                bg-blue-600
+                                rounded-md
+                                shadow-lg
+                                w-48
+                                h-64
+                                flex
+                                items-center
+                                justify-center
+                              "
+                            >
+                              <i class="fa fa-building fa-4x"></i>
+                            </div>
+                          </div>
+                          <div class="grow ml-6 mb-4">
+                            <h2 class="font-bold mb-1">Education Detail</h2>
+
+                            <div
+                              class="
+                                border-2
+                                p-2
+                                rounded-lg
+                                m-1
+                                shadow-md
+                                text-primary-500
+                              "
+                            >
+                              <p class="text-gray-500">
+                                <span
+                                  class="font-semibold text-primary-700 mb-1"
+                                  >Department:</span
+                                >
+                                {{
+                                  modalData &&
+                                  modalData.data &&
+                                  modalData.data.department
+                                    ? modalData.data.department.name
+                                    : ""
+                                }}
+                              </p>
+                              <p class="text-gray-500">
+                                <span
+                                  class="font-semibold text-primary-700 mb-1"
+                                  >Education Level:</span
+                                >
+
+                                {{
+                                  modalData &&
+                                  modalData.data &&
+                                  modalData.data.GSProfessionals &&
+                                  modalData.data.GSProfessionals.educationLevel
+                                    ? modalData.data.GSProfessionals
+                                        .educationLevel.name
+                                    : ""
+                                }}
+                              </p>
+                              <p class="text-gray-500">
+                                <span
+                                  class="font-semibold text-primary-700 mb-1"
+                                  >Profession:</span
+                                >
+                                {{
+                                  modalData &&
+                                  modalData.data &&
+                                  modalData.data.GSProfessionals &&
+                                  modalData.data.GSProfessionals
+                                    .professionalTypes
+                                    ? modalData.data.GSProfessionals
+                                        .professionalTypes.name
+                                    : ""
+                                }}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
 
                       <div
                         class="
@@ -302,14 +336,47 @@
                           lg:px-6
                         "
                       >
+                        <h2 class="text-primary-600 text-xl font-bold">
+                          Actions
+                        </h2>
+                        <button
+                          v-if="
+                            (adminData.expertLevel.code == 'FED' &&
+                              adminData.role.code == 'ADM') ||
+                            (adminData.expertLevel.code == 'REG' &&
+                              adminData.role.code == 'ADM') ||
+                            (adminData.expertLevel.code == 'REG' &&
+                              adminData.role.code == 'TL')
+                          "
+                          type="button"
+                          class="
+                            inline-block
+                            px-6
+                            text-white
+                            font-medium
+                            text-xs
+                            bg-main-400
+                            leading-tight
+                            uppercase
+                            rounded
+                            shadow-lg
+                            hover:bg-white hover:text-main-400
+                            transition
+                            duration-150
+                            ease-in-out
+                          "
+                          @click="release()"
+                        >
+                          <i class="fa fa-refresh"></i>
+                          Approve
+                        </button>
                         <button
                           class="
-                         inline-block
+                            inline-block
                             px-6
                             py-2.5
                             bg-blue-600
-                            hover:text-primary-600
-                            hover:border
+                            hover:text-primary-600 hover:border
                             text-white
                             font-medium
                             text-xs
@@ -357,7 +424,7 @@
                                   :data-title="
                                     document.documentType
                                       ? document.documentType.name
-                                      : '-----'
+                                      : ''
                                   "
                                   data-lightbox="example-2"
                                 >
@@ -372,7 +439,7 @@
                                   {{
                                     document.documentType
                                       ? document.documentType.name
-                                      : "------"
+                                      : ""
                                   }}
                                 </h5>
                               </div>
@@ -400,7 +467,7 @@
           <button
             type="button"
             class="
-         inline-block
+              inline-block
               px-6
               text-white
               font-medium
@@ -411,8 +478,7 @@
               rounded
               hover:border-primary-600
               shadow-lg
-              hover:bg-white 
-              hover:text-primary-700
+              hover:bg-white hover:text-primary-700
               transition
               duration-150
               ease-in-out
@@ -433,7 +499,7 @@ import moment from "moment";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 import { googleApi } from "@/composables/baseURL";
-
+import { useToast } from "vue-toastification";
 export default {
   props: ["modalDataId"],
   components: {
@@ -444,14 +510,13 @@ export default {
   },
   setup(props) {
     const store = useStore();
-
+    const toast = useToast();
     let show = ref(true);
     let adminId = +localStorage.getItem("adminId");
-
-    let isLoading = ref(false);
-    const licenseData = ref({});
+    let goodstanding = {};
+    const isLoading = ref(true);
     let reviewerAdminId = ref(0);
-
+    let adminData = JSON.parse(localStorage.getItem("allAdminData"));
     const showModal = () => {
       show.value = true;
     };
@@ -466,22 +531,24 @@ export default {
       store
         .dispatch("reviewer/getGoodStandingApplication", props.modalDataId.id)
         .then((res) => {
-          console.log(res);
-          if (res.data.status == "Success") {
+          if (
+            res.data.status == "Success" &&
+            res.data.message !=
+              "Goodstanding total count retrieved successfully!"
+          ) {
             result = res.data.data;
-
             modalData.value.name =
-              result.profile.name +
+              (result && result.profile ? result.profile.name : "") +
               " " +
-              result.profile.fatherName +
+              (result && result.profile ? result.profile.fatherName : "") +
               "  " +
-              result.profile.grandFatherName;
+              (result && result.profile ? result.profile.grandFatherName : "");
             modalData.value.gender = result.profile.gender
               ? result.profile.gender
               : "-----";
             modalData.value.nationality = result.profile.nationality?.name
               ? result.profile.nationality?.name
-              : "-----";
+              : "-----"; 
             modalData.value.dateOfBirth = result.profile.dateOfBirth
               ? result.profile.dateOfBirth
               : "-----";
@@ -494,33 +561,87 @@ export default {
             modalData.value.email = result.applicant.emailAddress
               ? result.applicant.emailAddress
               : "-----";
-            modalData.value.instName =
-              result.education && result.education.institution
-                ? result.education.institution?.name
-                : "-----";
-            modalData.value.instType =
-              result.education &&
-              result.education.institution &&
-              result.education.institution?.institutionType
-                ? result.education.institution?.institutionType.name
-                : "-----";
-            modalData.value.department =
-              result.education && result.education.department
-                ? result.education.department.name
-                : "-----";
+
             modalData.value.profile = result.profile;
             modalData.value.professionalTypes = result.licenseProfessions;
             modalData.value.certifiedDate = result.certifiedDate;
             modalData.value.licenseExpirationDate =
               result.licenseExpirationDate;
-
-            licenseData.value = result;
             modalData.value.documents = result.documents;
+            goodstanding = result ? result : {};
+            modalData.value.data = result;
             isLoading.value = false;
           }
         });
     };
+    const release = () => {
+      isLoading.value = true;
+      goodstanding.acceptedFields = [];
 
+      goodstanding.documents.forEach((element) => {
+        goodstanding.acceptedFields.push(element.fileName);
+      });
+
+      isLoading.value = false;
+      goodstanding.declinedFields = [];
+      let req = {
+        action: "ApproveEvent",
+        data: goodstanding,
+      };
+      let smsData = {
+        recipients: [
+          goodstanding.value && goodstanding.value.applicant
+            ? "251" + goodstanding.value.applicant.phoneNumber
+            : "",
+        ],
+        message:
+          goodstanding && goodstanding.profile
+            ? "Dear " +
+              goodstanding.profile.name +
+              goodstanding.profile.fatherName +
+              ", Your license with license number " +
+              goodstanding.goodStandingCode +
+              " has been released from a declined state. Thank you for using eHPEL,https://www.hrl.moh.gov.et"
+            : "",
+      };
+
+      store
+        .dispatch("reviewer/editGoodStanding", req)
+        .then((res) => {
+          isLoading.value = false;
+          if (res.statusText == "Created") {
+            store.dispatch("sms/sendSms", smsData).then(() => {
+              toast.success("Application approved Successfully", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
+              setTimeout(() => {
+                window.location.reload();
+              }, 3000);
+            });
+          } else {
+            toast.error("Please try again", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+          }
+        })
+        .catch(() => {
+          toast.error("Please try again", {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          });
+        });
+    };
     watch(props.modalDataId, () => {
       isLoading.value = true;
       check();
@@ -528,11 +649,13 @@ export default {
 
     return {
       adminId,
+      release,
       reviewerAdminId,
       showModal,
       check,
       isLoading,
       onCancel,
+      adminData,
       modalData,
       googleApi,
     };

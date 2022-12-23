@@ -1015,8 +1015,14 @@ export default {
     }
   },
   async getAdminsByRegion(context, id) {
-    try {
-      const url = baseUrl + "/admins/region/" + id;
+    let url = "";
+    try { 
+      if (id != null) {
+        url = baseUrl + "/admins/region/" + id;
+      } else {
+        url = baseUrl + "/admins";
+      }
+
       const resp = await ApiService.get(url);
 
       return resp;
@@ -1314,7 +1320,7 @@ export default {
   },
 
   async getProfessionalTypeByDepartmentId({ commit }, profType) {
-    try { 
+    try {
       const resp = await ApiService.get(
         baseUrl +
           "/lookups/professionalTypes/" +

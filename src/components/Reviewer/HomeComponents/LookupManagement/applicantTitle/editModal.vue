@@ -65,7 +65,7 @@
               <section class="text-gray-800">
                 <div class="flex justify-center border-b-2 mb-8">
                   <div class="text-center max-w-full">
-                    <h2 class="text-2xl font-bold">Edit Department</h2>
+                    <h2 class="text-2xl font-bold">Edit Application Title</h2>
                   </div>
                 </div>
 
@@ -101,7 +101,7 @@
                                   duration-200
                                   ease-in-out
                                 "
-                                >Department Name</label
+                                >Applicant Title Name</label
                               >
                               <div class="relative flex items-center">
                                 <input
@@ -142,9 +142,9 @@
                               </div>
 
                               <small
-                                v-if="showDepartmentNameError"
+                                v-if="showApTitleNameError"
                                 class="text-red-300"
-                                >{{ departmentNameError }}</small
+                                >{{ apTitleNameError }}</small
                               >
                             </div>
 
@@ -166,10 +166,15 @@
                               >
                               <div class="toggle slim colour">
                                 <input
-                                  @change="changeverified()"
+                                  v-model="editData.finalStatus"
                                   id="isVerified"
                                   class="toggle-checkbox hidden cursor-pointer"
                                   type="checkbox"
+                                  :checked="
+                                    editData &&editData.finalStatus == true 
+                                      ? true
+                                      : false
+                                  "
                                 />
                                 <label
                                   for="isVerified"
@@ -186,12 +191,12 @@
                                 ></label>
                                 <span
                                   :class="
-                                    isActive
+                                  editData&&editData.finalStatus==true
                                       ? 'text-green-200 font-bold'
                                       : 'text-yellow-300 font-bold'
                                   "
                                   > 
-                                  {{ isActive ? "Active" : "Inactive" }}
+                                  {{ editData.finalStatus?'Active':'Inactive'  }}
                                 </span>
                               </div>
                             </div>
@@ -233,7 +238,7 @@
               duration-150
               ease-in-out
             "
-            @click="saveDepartment()"
+            @click="saveTitle()"
           >
             <i class="fa fa-save"></i>
             Save
@@ -280,9 +285,9 @@ export default {
     const toast = useToast();
     let isLoading = ref(false);
 
-    let showDepartmentNameError = ref(false);
-    let departmentNameError = ref("");
-    let departmentNameFilled = ref(false);
+    let showApTitleNameError = ref(false);
+    let apTitleNameError = ref("");
+    let apTitleNameFilled = ref(false);
     let saveData = ref({});
     let editData = computed(() =>
       props.editModalData ? props.editModalData : { Name: "" }
@@ -294,32 +299,34 @@ export default {
     };
     const enableSaveButton = () => {
       if (editData.value.Name.length > 3) {
-        departmentNameFilled.value = true;
+        apTitleNameFilled.value = true;
       } else {
-        departmentNameFilled.value = false;
+        apTitleNameFilled.value = false;
       }
     };
-    const saveDepartment = () => {
+    const saveTitle = () => {
       let today = new Date().getMilliseconds();
       isLoading.value = true;
 
       //Validation of input
 
-      showDepartmentNameError.value = false;
+      showApTitleNameError.value = false;
 
       saveData.value = {
         id: editData.value.id,
         name: editData.value.Name ? editData.value.Name : "",
-        code: editData.value.Name
+        code:  editData.value
+          ? editData.value.Code
+          :editData.value.Name
           ? "DP_" + editData.value.Name.slice(0, 4).toUpperCase() + "_" + today
           : "",
-        status: isActive.value,
+        status: editData.value.finalStatus,
       };
 
-      store.dispatch("lookups/updateDepartment", saveData.value).then((res) => {
+      store.dispatch("lookups/updateApplicantTitle", saveData.value).then((res) => {
         isLoading.value = false;
         if (res.data.status == "Success") {
-          toast.success("Created Successfully", {
+          toast.success("Updated Successfully", {
             timeout: 5000,
             position: "bottom-center",
             pauseOnFocusLoss: true,
@@ -328,7 +335,7 @@ export default {
           });
           setTimeout(() => {
             window.location.reload();
-          }, 3000);
+          }, 1000);
         } else {
           toast.error(res.data.message, {
             timeout: 5000,
@@ -343,11 +350,11 @@ export default {
     return {
       isLoading,
       editData,
-      saveDepartment,
+      saveTitle,
       enableSaveButton,
-      departmentNameFilled,
-      showDepartmentNameError,
-      departmentNameError,
+      apTitleNameFilled,
+      showApTitleNameError,
+      apTitleNameError,
       isActive,
       changeverified,
     };

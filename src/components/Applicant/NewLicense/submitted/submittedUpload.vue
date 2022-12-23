@@ -402,7 +402,6 @@
                         </p>
                       </td>
                       <td class="px-6 py-4">
-                     
                         <span
                           class="document-name"
                           v-if="
@@ -1103,7 +1102,6 @@ export default {
     const checkDocuments = () => {
       let temp = false;
       let CMtemp = false;
-      let NSTemp = false;
 
       /// check common documents
 
@@ -1174,46 +1172,6 @@ export default {
 
         //// check documetns with parents
 
-        if (ed.parentDoc) {
-          for (let childDocs in ed.parentDoc) {
-            NSTemp = documentsUploaded.value.hasOwnProperty(
-              ed.parentDoc[childDocs][0].documentType.code +
-                "_" +
-                ed.educationalLevel.code.toUpperCase() +
-                "_" +
-                ed.professionType.code.toUpperCase()
-            );
-            if (!temp) {
-              fileUploadError.value[
-                "file_upload_row_" +
-                  ed.parentDoc[childDocs][0].documentType.code +
-                  "_" +
-                  ed.educationalLevel.code.toUpperCase() +
-                  "_" +
-                  ed.professionType.code.toUpperCase()
-              ] = true;
-              errorDocuments.value.push({
-                name: ed.parentDoc[childDocs][0].documentType.name,
-                code:
-                  ed.parentDoc[childDocs][0].documentType.code +
-                  "_" +
-                  ed.educationalLevel.code.toUpperCase() +
-                  "_" +
-                  ed.professionType.code.toUpperCase(),
-              });
-            } else {
-              fileUploadError.value[
-                "file_upload_row_" +
-                  ed.parentDoc[childDocs][0].documentType.code +
-                  "_" +
-                  ed.educationalLevel.code.toUpperCase() +
-                  "_" +
-                  ed.professionType.code.toUpperCase()
-              ] = false;
-            }
-          }
-        }
-
         // fileUploadError.value[
         //         "file_upload_row_" +
         //           single.documentType.code +
@@ -1224,11 +1182,11 @@ export default {
         //       ] = true;
       });
 
-      return CMtemp && temp && NSTemp;
+      return CMtemp && temp;
     };
     const next = () => {
-      let documentValidation = checkDocuments();
-      if (documentValidation) {
+     
+     
         store.dispatch("newlicense/setTempDocs", formData).then(() => {
           //Save images to indexed Db
 
@@ -1271,27 +1229,7 @@ export default {
             };
           };
         });
-      } else {
-        let errors = "";
-
-        errorDocuments.value.forEach((element) => {
-          if (!errors) {
-            errors = element.name;
-          } else {
-            errors = errors + " , " + element.name;
-          }
-        });
-        toast.error(
-          "Please attach the following required documents " + errors,
-          {
-            timeout: 5000,
-            position: "bottom-center",
-            pauseOnFocusLoss: true,
-            pauseOnHover: true,
-            icon: true,
-          }
-        );
-      }
+   
     };
 
     const groupByKey = (array, key) => {
@@ -1384,7 +1322,6 @@ export default {
                 element.originalFileName;
             });
             documentsUploaded.value = documentsSaved.value;
-            console.log(documentsUploaded.value)
             store
               .dispatch("newlicense/getApplicationCategories")
               .then((res) => {

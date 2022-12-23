@@ -230,7 +230,11 @@
                     focus:border-main-400
                     focus:outline-none
                   "
-                  disabled
+                  :disabled="
+                  generalInfo.multipleDepartment
+                    ? generalInfo.multipleDepartment.length > 0
+                    : 0
+                "
                   v-model="generalInfo.regionSelected"
                   @change="regionChangeHandler()"
                   required
@@ -270,9 +274,21 @@
                   "
                   aria-label="Default select example
                   "
-                  disabled
+                  :disabled="
+                  generalInfo.multipleDepartment
+                    ? generalInfo.multipleDepartment.length > 0
+                    : 0
+                "
+                v-model="generalInfo.zoneSelected"
                   @change="zoneChangeHandler()"
                 >
+                <option
+                    v-for="zone in zones"
+                    v-bind:key="zone.name"
+                    v-bind:value="zone"
+                  >
+                    {{ zone.name }}
+                  </option>
                   <option selected>
                     {{ generalInfo ? generalInfo.zoneSelected.name : "" }}
                   </option>
@@ -303,9 +319,20 @@
                     focus:border-blue-600
                     focus:outline-none
                   "
-                  disabled
+                  :disabled="
+                  generalInfo.multipleDepartment
+                    ? generalInfo.multipleDepartment.length > 0
+                    : 0
+                "
                   required
                 >
+                <option
+                    v-for="woreda in woredas"
+                    v-bind:key="woreda.name"
+                    v-bind:value="woreda"
+                  >
+                    {{ woreda.name }}
+                  </option>
                   <option selected>
                     {{ generalInfo ? generalInfo.woredaSelected.name : "" }}
                   </option>
@@ -895,10 +922,10 @@ export default {
       occupationTypes: "",
       nativeLanguageSelected: "",
       educations: [],
-      professionChanged:false,
     });
     let applicationStatuses = ref([]);
     let isLoading = ref(false);
+    let professionChanged=ref(false)
 
     const fetchApplicantType = () => {
       store.dispatch("renewal/getApplicantType").then((res) => {
@@ -947,7 +974,7 @@ export default {
         action: "WithdrawEvent",
       };
       store
-        .dispatch("reviewer/editRenewalLicense", req)
+        .dispatch("reviewer/editRenewal", req)
         .then((res) => {
           isLoading.value = false;
           if (res.statusText == "Created") {
@@ -976,6 +1003,7 @@ export default {
     };
 
     const fetchWoredas = () => {
+      console.log(generalInfo.value.zoneSelected)
       store
         .dispatch("renewal/getWoredas", generalInfo.value.zoneSelected.id)
         .then((res) => {
@@ -1158,7 +1186,7 @@ export default {
     const apply = () => {
       let tempApplicationData = generalInfo.value;
       window.localStorage.setItem(
-        "RNApplicationData",
+        "NLApplicationData",
         JSON.stringify(tempApplicationData)
       );
       store
@@ -1208,27 +1236,30 @@ export default {
           generalInfo.value.zoneSelected =
             res.data.data && res.data.data.woreda
               ? {
-                  code: res.data.data.woreda.zone.code,
-                  createdAt: res.data.data.woreda.zone.createdAt,
                   id: res.data.data.woreda.zone.id,
                   name: res.data.data.woreda.zone.name,
+                  code: res.data.data.woreda.zone.code,
                   regionId: res.data.data.woreda.zone.regionId,
                   rowguid: res.data.data.woreda.zone.rowguid,
+                  status: res.data.data.woreda.zone.status,
+                  createdAt: res.data.data.woreda.zone.createdAt,
                   updatedAt: res.data.data.woreda.zone.updatedAt,
                 }
               : "";
           generalInfo.value.woredaSelected =
             res.data.data && res.data.data.woreda
               ? {
-                  code: res.data.data.woreda.code,
-                  createdAt: res.data.data.woreda.createdAt,
                   id: res.data.data.woreda.id,
                   name: res.data.data.woreda.name,
+                  code: res.data.data.woreda.code,
                   zoneId: res.data.data.woreda.zoneId,
                   rowguid: res.data.data.woreda.rowguid,
+                  status: res.data.data.woreda.zone.status,
+                  createdAt: res.data.data.woreda.createdAt,
                   updatedAt: res.data.data.woreda.updatedAt,
                 }
               : "";
+              isAppTypeSelected.value=true; 
           applicantTypeChangeHandler();
           regionChangeHandler();
           zoneChangeHandler();

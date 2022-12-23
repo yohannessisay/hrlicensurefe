@@ -6,7 +6,7 @@
         style="border-bottom: 2px solid white; margin-top: -5px"
       >
         <img
-          src="../../assets/image.png"
+          src="../../../assets/image.png"
           style="height: 40px; width: 40px"
           alt=""
           class="mr-4"

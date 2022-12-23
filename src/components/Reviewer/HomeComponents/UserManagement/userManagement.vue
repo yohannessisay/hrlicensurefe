@@ -198,6 +198,7 @@
                 :sortable="userTable.sortable"
                 @is-finished="tableLoadingFinish"
                 @row-clicked="rowClicked"
+                @do-search="doSearch"
               ></vue-table-lite>
               <addUser></addUser>
             </div>
@@ -238,7 +239,7 @@ export default {
     let allData = ref([]);
     let searchData = ref();
     let expertLevelFilter = ref();
-    const isUserManager = localStorage.getItem("role") == "UM";
+    const isUserManager = localStorage.getItem("role") == "UM"||localStorage.getItem("role") == "SA";
     let expertLevels = ref([
       { name: "All", code: "all" },
       { name: "Federal", code: "FED" },
@@ -249,9 +250,10 @@ export default {
     let modalData = ref({ change: 0 });
     let tableData = reactive([]);
     const searchTerm = ref("");
-    const getAdmins = () => {
-      store.dispatch("admin/getAdmins").then((res) => {
-        res.data.data.forEach((element) => {
+    const getAdmins = (apiParameters) => {
+      store.dispatch("admin/getAllAdmins", apiParameters).then((res) => {
+        tableData = [];
+        res.rows.forEach((element) => {
           tableData.push({
             id: element.id ? element.id : "",
             FullName: element.name ? element.name : "",
@@ -330,7 +332,7 @@ export default {
                 )
             );
           }),
-          totalRecordCount: allData.value.length,
+          totalRecordCount: res.count,
           sortable: {
             order: "id",
             sort: "asc",
@@ -385,10 +387,27 @@ export default {
         modalData.value.data = row ? row.data : {};
       }
     };
-    onMounted(getAdmins);
+    const doSearch = (offset, limit, order, sort) => {
+      userTable.value.isLoading = true;
+
+      setTimeout(() => {
+        userTable.value.isReSearch = offset == undefined ? true : false;
+        offset = offset / 10 + 1;
+        if (sort == "asc") {
+          getAdmins([offset, limit]);
+        } else {
+          getAdmins([offset, limit]);
+        }
+        userTable.value.sortable.order = order;
+        userTable.value.sortable.sort = sort;
+      }, 600);
+    };
+    onMounted(() => {
+      getAdmins([0, 10]);
+    });
 
     return {
-      getAdmins,
+      doSearch,
       searchData,
       isUserManager,
       userTable,

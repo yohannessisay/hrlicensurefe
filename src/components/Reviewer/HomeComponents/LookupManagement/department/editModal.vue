@@ -166,10 +166,15 @@
                               >
                               <div class="toggle slim colour">
                                 <input
-                                  @change="changeverified()"
+                                  v-model="editData.finalStatus"
                                   id="isVerified"
                                   class="toggle-checkbox hidden cursor-pointer"
                                   type="checkbox"
+                                  :checked="
+                                    editData &&editData.finalStatus == true 
+                                      ? true
+                                      : false
+                                  "
                                 />
                                 <label
                                   for="isVerified"
@@ -186,12 +191,12 @@
                                 ></label>
                                 <span
                                   :class="
-                                    isActive
+                                  editData&&editData.finalStatus==true
                                       ? 'text-green-200 font-bold'
                                       : 'text-yellow-300 font-bold'
                                   "
                                   > 
-                                  {{ isActive ? "Active" : "Inactive" }}
+                                  {{ editData.finalStatus?'Active':'Inactive'  }}
                                 </span>
                               </div>
                             </div>
@@ -310,16 +315,18 @@ export default {
       saveData.value = {
         id: editData.value.id,
         name: editData.value.Name ? editData.value.Name : "",
-        code: editData.value.Name
+        code:  editData.value
+          ? editData.value.Code
+          :editData.value.Name
           ? "DP_" + editData.value.Name.slice(0, 4).toUpperCase() + "_" + today
           : "",
-        status: isActive.value,
+        status: editData.value.finalStatus,
       };
 
       store.dispatch("lookups/updateDepartment", saveData.value).then((res) => {
         isLoading.value = false;
         if (res.data.status == "Success") {
-          toast.success("Created Successfully", {
+          toast.success("Updated Successfully", {
             timeout: 5000,
             position: "bottom-center",
             pauseOnFocusLoss: true,
@@ -328,7 +335,7 @@ export default {
           });
           setTimeout(() => {
             window.location.reload();
-          }, 3000);
+          }, 1000);
         } else {
           toast.error(res.data.message, {
             timeout: 5000,

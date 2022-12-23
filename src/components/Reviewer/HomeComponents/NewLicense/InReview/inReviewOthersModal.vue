@@ -42,20 +42,13 @@
           text-current
         "
       >
-   <div
-          class="
-            modal-header
-            flex flex-shrink-0
-           justify-end
-           
-            p-2
-            rounded-t-md
-          "
+        <div
+          class="modal-header flex flex-shrink-0 justify-end p-2 rounded-t-md"
         >
           <button
             type="button"
-            class="     
-                  px-6
+            class="
+              px-6
               text-white
               bg-primary-600
               hover:text-primary-600 hover:border
@@ -74,12 +67,15 @@
               active:bg-purple-800 active:shadow-lg
               transition
               duration-150
-              ease-in-out"
+              ease-in-out
+            "
             data-bs-dismiss="modal"
             aria-label="Close"
-          ><i class="fa fa-close fa-2x"></i></button>
+          >
+            <i class="fa fa-close fa-2x"></i>
+          </button>
         </div>
-        <div class="vld-parent  mt-4">
+        <div class="vld-parent mt-4">
           <loading
             :active="isLoading"
             :can-cancel="true"
@@ -133,7 +129,7 @@
                                 justify-center
                               "
                             >
-                                 <picture>
+                              <picture>
                                 <source
                                   :srcset="
                                     modalData.profile &&
@@ -171,13 +167,17 @@
                               <span class="font-semibold text-primary-700 mb-1"
                                 >Gender:</span
                               >
-                              {{ modalData.gender?modalData.gender:'' }}
+                              {{ modalData.gender ? modalData.gender : "" }}
                             </p>
                             <p class="text-gray-500">
                               <span class="font-semibold text-primary-700 mb-1"
                                 >Nationality:</span
                               >
-                              {{ modalData.nationality?modalData.nationality.name:'' }}
+                              {{
+                                modalData.nationality
+                                  ? modalData.nationality.name
+                                  : ""
+                              }}
                             </p>
                             <p class="text-gray-500">
                               <span class="font-semibold text-primary-700 mb-1"
@@ -245,18 +245,103 @@
                           </div>
                         </div>
                       </div>
-                      
+
                       <div
                         class="
                           grow-0
                           shrink-0
                           basis-auto
                           w-full
-                          lg:w-6/12
+                          lg:w-full
                           px-3
                           lg:px-6
                         "
-                      ></div>
+                      >
+                        <h2 class="font-bold mb-1">Education Detail</h2>
+                        <div class="flex items-start">
+                          <div class="shrink-0">
+                            <div
+                              class="
+                                p-4
+                                bg-blue-600
+                                rounded-md
+                                shadow-lg
+                                w-48
+                                mt-2
+                                h-48
+                                flex
+                                items-center
+                                justify-center
+                              "
+                            >
+                              <i class="fa fa-building fa-4x"></i>
+                            </div>
+                          </div>
+
+                          <div class="grow ml-6 grid grid-cols-4">
+                            <div
+                              class="
+                                border-2
+                                p-2
+                                rounded-lg
+                                m-2
+                                w-full
+                                shadow-md
+                                text-primary-500
+                              "
+                              v-for="education in modalData.data
+                              ? modalData.data.educations
+                              : []"
+                              :key="education.id"
+                            >
+                              <p class="text-gray-500">
+                                <span
+                                  class="font-semibold text-primary-700 mb-1"
+                                  >Department:</span
+                                >
+                                {{
+                                  education.department
+                                    ? education.department.name
+                                    : ""
+                                }}
+                              </p>
+                              <p class="text-gray-500">
+                                <span
+                                  class="font-semibold text-primary-700 mb-1"
+                                  >Education Level:</span
+                                >
+                                {{
+                                  education.educationLevel
+                                    ? education.educationLevel.name
+                                    : ""
+                                }}
+                              </p>
+                              <p class="text-gray-500">
+                                <span
+                                  class="font-semibold text-primary-700 mb-1"
+                                  >Profession:</span
+                                >
+                                {{
+                                  education.professionType
+                                    ? education.professionType.name
+                                    : ""
+                                }}
+                              </p>
+                              <p class="text-gray-500">
+                                <span
+                                  class="font-semibold text-primary-700 mb-1"
+                                  >Institution:</span
+                                >
+                                {{
+                                  education.institution
+                                    ? education.institution.name
+                                    : ""
+                                }}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -302,10 +387,9 @@ export default {
 
     watch(props.modalDataIdOthers, () => {
       isLoading.value = true;
-      if(props.modalDataIdOthers.id!=''){
+      if (props.modalDataIdOthers.id != "") {
         check();
       }
-   
     });
     const modalData = ref({});
     let result;
@@ -316,7 +400,6 @@ export default {
           props.modalDataIdOthers.id
         )
         .then((res) => {
-       
           if (res.data.status == "Success") {
             result = res.data.data;
             modalData.value.name =
@@ -334,16 +417,17 @@ export default {
             modalData.value.dateOfBirth = result.profile.dateOfBirth
               ? result.profile.dateOfBirth
               : "-----";
-            modalData.value.maritalStatus = result.profile&&result.profile.maritalStatus
-              ? result.profile.maritalStatus.name
-              : "-----";
+            modalData.value.maritalStatus =
+              result.profile && result.profile.maritalStatus
+                ? result.profile.maritalStatus.name
+                : "-----";
             modalData.value.mobileNumber = result.applicant.phoneNumber
               ? result.applicant.phoneNumber
               : "-----";
             modalData.value.email = result.applicant.emailAddress
               ? result.applicant.emailAddress
               : "-----";
-     
+
             modalData.value.profile = result.profile;
             modalData.value.professionalTypes = result.licenseProfessions;
             modalData.value.certifiedDate = result.certifiedDate;

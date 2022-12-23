@@ -5,7 +5,6 @@
     </div>
     <div class="profile">
       <div class="flex items-center space-x-5">
-       
         <!-- <div class="m-4">
           <div class="toggle slim colour">
             <input
@@ -191,17 +190,23 @@ export default {
     let showDD = ref(false);
     let darkMode = ref(false);
     let showNotificationDropDown = ref(false);
-    let isDarkMode=JSON.parse(localStorage.getItem("nightMode"));
+    let isDarkMode = JSON.parse(localStorage.getItem("nightMode"));
     const logout = () => {
-      location.reload();
       localStorage.removeItem("token");
       localStorage.removeItem("userId");
-      localStorage.removeItem("educationalLevel");
-      localStorage.removeItem("language");
+      localStorage.removeItem("GSApplicationData");
+      localStorage.removeItem("RNApplicationData");
+      localStorage.removeItem("NLApplicationData");
       localStorage.removeItem("personalInfo");
-      localStorage.removeItem("payroll");
       localStorage.removeItem("applicantTypeId");
-      this.$router.push({ path: "/" });
+      localStorage.removeItem("isApplicant");
+      window.indexedDB.deleteDatabase("NLdocumentUploads");
+      window.indexedDB.deleteDatabase("RNdocumentUploads");
+      window.indexedDB.deleteDatabase("GSdocumentUploads");
+
+      window.setTimeout(() => {
+        location.reload();
+      }, 1000);
     };
     const showDropDown = () => {
       showNotificationDropDown.value = false;
@@ -242,9 +247,9 @@ export default {
       document.getElementById("activeMenu").classList.add("dark-mode");
       document.getElementById("mainSideBar").classList.add("dark-mode");
       document.getElementById("options-menu").classList.add("dark-mode");
-      document.getElementById("home").classList.add("dark-mode"); 
-      document.getElementById("menu-icon").classList.add("dark-mode"); 
-      document.querySelector("body").classList.add("dark-mode"); 
+      document.getElementById("home").classList.add("dark-mode");
+      document.getElementById("menu-icon").classList.add("dark-mode");
+      document.querySelector("body").classList.add("dark-mode");
       darkMode.value = true;
       localStorage.setItem("nightMode", JSON.stringify(darkMode.value));
     };
@@ -254,9 +259,9 @@ export default {
       document.getElementById("activeMenu").classList.remove("dark-mode");
       document.getElementById("mainSideBar").classList.remove("dark-mode");
       document.getElementById("options-menu").classList.remove("dark-mode");
-      document.getElementById("menu-icon").classList.remove("dark-mode"); 
-      document.getElementById("home").classList.remove("dark-mode"); 
-      document.querySelector("body").classList.remove("dark-mode"); 
+      document.getElementById("menu-icon").classList.remove("dark-mode");
+      document.getElementById("home").classList.remove("dark-mode");
+      document.querySelector("body").classList.remove("dark-mode");
       darkMode.value = false;
       localStorage.setItem("nightMode", JSON.stringify(darkMode.value));
     };
@@ -329,7 +334,7 @@ export default {
   background-color: #000000;
 }
 .toggle.colour .toggle-checkbox:checked + .toggle-label {
-  background-color: #07677e;;
+  background-color: #07677e;
 }
 </style>
   

@@ -429,6 +429,7 @@
                     :sortable="toOthersTable.sortable"
                     @is-finished="tableLoadingFinishOthers"
                     @row-clicked="rowClickedOthers"
+                 
                   ></vue-table-lite>
 
                   <edit-modal-others
@@ -510,11 +511,14 @@ export default {
       searchTermToDateOth.value = "";
     };
     const licensed = () => {
-      store.dispatch("reviewerNewLicense/getNewLicenseLicensed").then((res) => {
-        allInfo.value = res;
+      store
+        .dispatch("reviewerNewLicense/getNewLicenseLicensed", adminId)
+        .then((res) => {
+          allInfo.value = res;
 
-        JSON.parse(JSON.stringify(allInfo.value)).forEach((element) => {
-          if (element.licenseReviewer.reviewerId == adminId) {
+          JSON.parse(
+            JSON.stringify(allInfo.value ? allInfo.value.byYou : [])
+          ).forEach((element) => {
             toYouTableData.value.push({
               LicenseNumber: element ? element.newLicenseCode : "",
               ApplicantName:
@@ -536,8 +540,13 @@ export default {
                 .replace(/-/g, "/"),
               data: element,
             });
-          } else {
+          });
+
+          JSON.parse(
+            JSON.stringify(allInfo.value ? allInfo.value.byOthers : [])
+          ).forEach((element) => {
             tableData.value.push({
+              id: element ? element.id : "",
               LicenseNumber: element ? element.newLicenseCode : "",
               ApplicantName:
                 (element.profile ? element.profile.name : "------") +
@@ -558,170 +567,176 @@ export default {
                 .replace(/-/g, "/"),
               data: element,
             });
-          }
+          });
+
+          toYouTable.value = {
+            columns: [
+              {
+                label: "License Number",
+                field: "LicenseNumber",
+                width: "3%",
+                sortable: true,
+                isKey: true,
+              },
+              {
+                label: "Applicant Name",
+                field: "ApplicantName",
+                width: "20%",
+                sortable: true,
+              },
+              {
+                label: "Applicant Type",
+                field: "ApplicationType",
+                width: "15%",
+                sortable: true,
+              },
+              {
+                label: "Date",
+                field: "Date",
+                width: "15%",
+                sortable: true,
+              },
+              {
+                label: "",
+                field: "quick",
+                width: "10%",
+                display: function (row) {
+                  return (
+                    '<button data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
+                    row.id +
+                    '" ><i class="fa fa-eye"></i>View</button>'
+                  );
+                },
+              },
+            ],
+            rows: computed(() => {
+              return toYouTableData.value.filter(
+                (x) =>
+                  (x.ApplicantName
+                    ? x.ApplicantName.toLowerCase().includes(
+                        searchTerm.value.toLowerCase()
+                      )
+                    : "") &&
+                  (searchTermFromDate.value != ""
+                    ? x.Date
+                      ? searchTermToDate.value.length > 0
+                        ? moment(x.Date).isSameOrAfter(
+                            searchTermFromDate.value
+                          ) &&
+                          moment(x.Date).isSameOrBefore(searchTermToDate.value)
+                        : moment(x.Date).isSameOrAfter(searchTermFromDate.value)
+                      : ""
+                    : x.Date || x.Date == "" || x.Date == null) &&
+                  (searchTermToDate.value != ""
+                    ? x.Date
+                      ? searchTermFromDate.value.length > 0
+                        ? moment(x.Date).isSameOrBefore(
+                            searchTermToDate.value
+                          ) &&
+                          moment(x.Date).isSameOrAfter(searchTermFromDate.value)
+                        : moment(x.Date).isSameOrBefore(searchTermToDate.value)
+                      : ""
+                    : x.Date || x.Date == "" || x.Date == null)
+              );
+            }),
+            totalRecordCount: toYouTableData.value.length,
+          };
+
+          toOthersTable.value = {
+            columns: [
+              {
+                label: "ID",
+                field: "id",
+
+                width: "3%",
+                sortable: true,
+                isKey: true,
+              },
+              {
+                label: "License Number",
+                field: "LicenseNumber",
+
+                width: "3%",
+                sortable: true,
+              },
+              {
+                label: "Applicant Name",
+                field: "ApplicantName",
+                width: "20%",
+                sortable: true,
+              },
+              {
+                label: "Applicant Type",
+                field: "ApplicationType",
+                width: "15%",
+                sortable: true,
+              },
+              {
+                label: "Date",
+                field: "Date",
+                width: "15%",
+                sortable: true,
+              },
+              {
+                label: "",
+                field: "quick",
+                width: "10%",
+                display: function (row) {
+                  return (
+                    '<button  data-set="' +
+                    row +
+                    '"  data-bs-toggle="modal" data-bs-target="#staticBackdropOthers" class="edit-btn-others bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
+                    row.id +
+                    '" ><i class="fa fa-eye"></i>View</button>'
+                  );
+                },
+              },
+            ],
+            rows: computed(() => {
+              return tableData.value.filter(
+                (x) =>
+                  (x.ApplicantName
+                    ? x.ApplicantName.toLowerCase().includes(
+                        searchTermOthers.value.toLowerCase()
+                      )
+                    : "") &&
+                  (searchTermFromDateOth.value != ""
+                    ? x.Date
+                      ? searchTermToDateOth.value.length > 0
+                        ? moment(x.Date).isSameOrAfter(
+                            searchTermFromDateOth.value
+                          ) &&
+                          moment(x.Date).isSameOrBefore(
+                            searchTermToDateOth.value
+                          )
+                        : moment(x.Date).isSameOrAfter(
+                            searchTermFromDateOth.value
+                          )
+                      : ""
+                    : x.Date || x.Date == "" || x.Date == null) &&
+                  (searchTermToDateOth.value != ""
+                    ? x.Date
+                      ? searchTermFromDateOth.value.length > 0
+                        ? moment(x.Date).isSameOrBefore(
+                            searchTermToDateOth.value
+                          ) &&
+                          moment(x.Date).isSameOrAfter(
+                            searchTermFromDateOth.value
+                          )
+                        : moment(x.Date).isSameOrBefore(
+                            searchTermFromDateOth.value
+                          )
+                      : ""
+                    : x.Date || x.Date == "" || x.Date == null)
+              );
+            }),
+            totalRecordCount: tableData.value.length,
+            sortable: {
+              order: "id",
+              sort: "asc",
+            },
+          };
         });
-
-        toYouTable.value = {
-          columns: [
-            {
-              label: "License Number",
-              field: "LicenseNumber",
-              width: "3%",
-              sortable: true,
-              isKey: true,
-            },
-            {
-              label: "Applicant Name",
-              field: "ApplicantName",
-              width: "20%",
-              sortable: true,
-            },
-            {
-              label: "Applicant Type",
-              field: "ApplicationType",
-              width: "15%",
-              sortable: true,
-            },
-            {
-              label: "Date",
-              field: "Date",
-              width: "15%",
-              sortable: true,
-            },
-            {
-              label: "",
-              field: "quick",
-              width: "10%",
-              display: function (row) {
-                return (
-                  '<button data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
-                  row.id +
-                  '" ><i class="fa fa-eye"></i>View/Edit</button>'
-                );
-              },
-            },
-          ],
-          rows: computed(() => {
-            return toYouTableData.value.filter(
-              (x) =>
-                (x.ApplicantName
-                  ? x.ApplicantName.toLowerCase().includes(
-                      searchTerm.value.toLowerCase()
-                    )
-                  : "") &&
-                (searchTermFromDate.value != ""
-                  ? x.Date
-                    ? searchTermToDate.value.length > 0
-                      ? moment(x.Date).isSameOrAfter(
-                          searchTermFromDate.value
-                        ) &&
-                        moment(x.Date).isSameOrBefore(searchTermToDate.value)
-                      : moment(x.Date).isSameOrAfter(searchTermFromDate.value)
-                    : ""
-                  : x.Date || x.Date == "" || x.Date == null) &&
-                (searchTermToDate.value != ""
-                  ? x.Date
-                    ? searchTermFromDate.value.length > 0
-                      ? moment(x.Date).isSameOrBefore(searchTermToDate.value) &&
-                        moment(x.Date).isSameOrAfter(searchTermFromDate.value)
-                      : moment(x.Date).isSameOrBefore(searchTermToDate.value)
-                    : ""
-                  : x.Date || x.Date == "" || x.Date == null)
-            );
-          }),
-          totalRecordCount: toYouTableData.value.length,
-          sortable: {
-            order: "id",
-            sort: "asc",
-          },
-        };
-
-        toOthersTable.value = {
-          columns: [
-            {
-              label: "License Number",
-              field: "LicenseNumber",
-
-              width: "3%",
-              sortable: true,
-              isKey: true,
-            },
-            {
-              label: "Applicant Name",
-              field: "ApplicantName",
-              width: "20%",
-              sortable: true,
-            },
-            {
-              label: "Applicant Type",
-              field: "ApplicationType",
-              width: "15%",
-              sortable: true,
-            },
-            {
-              label: "Date",
-              field: "Date",
-              width: "15%",
-              sortable: true,
-            },
-            {
-              label: "",
-              field: "quick",
-              width: "10%",
-              display: function (row) {
-                return (
-                  '<button  data-set="' +
-                  row +
-                  '"  data-bs-toggle="modal" data-bs-target="#staticBackdropOthers" class="edit-btn-others bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
-                  row.id +
-                  '" ><i class="fa fa-eye"></i>View/Edit</button>'
-                );
-              },
-            },
-          ],
-          rows: computed(() => {
-            return tableData.value.filter(
-              (x) =>
-                (x.ApplicantName
-                  ? x.ApplicantName.toLowerCase().includes(
-                      searchTermOthers.value.toLowerCase()
-                    )
-                  : "") &&
-                (searchTermFromDateOth.value != ""
-                  ? x.Date
-                    ? searchTermToDateOth.value.length > 0
-                      ? moment(x.Date).isSameOrAfter(
-                          searchTermFromDateOth.value
-                        ) &&
-                        moment(x.Date).isSameOrBefore(searchTermToDateOth.value)
-                      : moment(x.Date).isSameOrAfter(
-                          searchTermFromDateOth.value
-                        )
-                    : ""
-                  : x.Date || x.Date == "" || x.Date == null) &&
-                (searchTermToDateOth.value != ""
-                  ? x.Date
-                    ? searchTermFromDateOth.value.length > 0
-                      ? moment(x.Date).isSameOrBefore(
-                          searchTermToDateOth.value
-                        ) &&
-                        moment(x.Date).isSameOrAfter(
-                          searchTermFromDateOth.value
-                        )
-                      : moment(x.Date).isSameOrBefore(
-                          searchTermFromDateOth.value
-                        )
-                    : ""
-                  : x.Date || x.Date == "" || x.Date == null)
-            );
-          }),
-          totalRecordCount: tableData.value.length,
-          sortable: {
-            order: "id",
-            sort: "asc",
-          },
-        };
-      });
     };
 
     const tableLoadingFinish = () => {
@@ -764,6 +779,8 @@ export default {
         modalDataIdOthers.value.change++;
       }
     };
+
+
     onMounted(() => {
       licensed();
     });
@@ -780,7 +797,7 @@ export default {
       searchTermFromDateOth,
       searchTermToDateOth,
       toYouTable,
-      showModal,
+      showModal, 
       reviewers,
       tableLoadingFinish,
       tableLoadingFinishOthers,

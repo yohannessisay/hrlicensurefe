@@ -54,7 +54,7 @@
     :class="
       isDarkMode && isDarkMode == true
         ? '    block p-6 rounded-lg shadow-lg darkModeSecondLayer max-w-full mr-8 mb-8 sm:p-4'
-        : '   block p-6 rounded-lg shadow-lg bg-primary-200 max-w-full mr-8 mb-8 sm:p-4'
+        : '   block p-6 rounded-lg shadow-lg bg-primary-200 max-w-full mr-8 mb-8 sm:p-4 '
     "
   >
     <div class="mt-small flex justify-center">
@@ -781,10 +781,7 @@
               Add
             </button>
           </div>
-        </div>
-        <!-- ./Container -->
-
-        <span v-if="multipleDepartmentError" class="ml-8 text-red-300"
+          <span v-if="multipleDepartmentError" class="text-red-300"
           >Please fill in all fields</span
         >
         <span v-if="checkForAddedError" class="ml-8 text-red-300"
@@ -793,6 +790,10 @@
         <span v-if="multipleDepartmentMaxError" class="ml-8 text-red-300"
           >Only three departments can be selected</span
         >
+        </div>
+        <!-- ./Container -->
+
+    
       </div>
       <!-- Table for selected departments data -->
       <div
@@ -1285,7 +1286,7 @@ export default {
     };
     const apply = () => {
       let tempComparision = [];
-      if (existingLicense.value && generalInfo.value.education) {
+      if (existingLicense.value && generalInfo.value.education&&existingLicense.value.length>0) {
         existingLicense.value.forEach(element => {
           if (element.educations) {
             tempComparision.push({
@@ -1337,7 +1338,7 @@ export default {
       }
     };
     const clearLocalData = () => {
-      window.localStorage.setItem("NLApplicationData", "");
+      window.localStorage.removeItem("NLApplicationData");
       setTimeout(() => {
         window.location.reload();
       }, 1000);
@@ -1409,6 +1410,8 @@ export default {
         : {};
       if (Object.keys(localData.value).length != 0) {
         generalInfo.value = localData.value;
+        isAppTypeSelected.value=true;
+        applicantTypeChangeHandler();
       }
       let userId = JSON.parse(window.localStorage.getItem("userId"));
       store.dispatch("newlicense/getNewLicenseByUser", userId).then(res => {

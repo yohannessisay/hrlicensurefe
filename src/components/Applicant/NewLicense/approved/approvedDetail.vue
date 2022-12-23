@@ -85,9 +85,13 @@
             <div class="container px-6 mx-auto">
               <section class="text-gray-800">
                 <div class="flex justify-center border-b-4 text-main-400">
-                  <h4 class="text-black ml-8">
-                    Please bring required documents when coming to pick up your
-                    license
+                  <h4
+                    class="message ml-8"
+                    data-title="** Please bring required documents when coming to pick up your
+                    license **"
+                  >
+                    ** Please bring required documents when coming to pick up
+                    your license **
                   </h4>
                 </div>
 
@@ -109,7 +113,7 @@
                       class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
                     >
                       <!-- Article -->
-                      <article class="overflow-hidden rounded-lg shadow-xl ">
+                      <article class="overflow-hidden rounded-lg shadow-xl">
                         <header
                           class="
                             flex
@@ -118,7 +122,7 @@
                             leading-tight
                             p-2
                             md:p-4
-                            border-b-4  
+                            border-b-4
                             text-main-400
                           "
                         >
@@ -136,21 +140,21 @@
                         </header>
 
                         <div class="grid grid-flow-row auto-rows-max">
-                          <div class="flex justify-between px-4 py-1 ">
+                          <div class="flex justify-between px-4 py-1">
                             <div>Applicant Name</div>
                             <div class="text-main-400 font-bold">
                               {{
                                 (licenseData && licenseData.profile
                                   ? licenseData.profile.name
                                   : "-") +
-                                  " " +
-                                  (licenseData && licenseData.profile
-                                    ? licenseData.profile.fatherName
-                                    : "-") +
-                                  " " +
-                                  (licenseData && licenseData.profile
-                                    ? licenseData.profile.grandFatherName
-                                    : "-")
+                                " " +
+                                (licenseData && licenseData.profile
+                                  ? licenseData.profile.fatherName
+                                  : "-") +
+                                " " +
+                                (licenseData && licenseData.profile
+                                  ? licenseData.profile.grandFatherName
+                                  : "-")
                               }}
                             </div>
                           </div>
@@ -275,8 +279,8 @@
                       <!-- END Article -->
                     </div>
                     <!-- END Column -->
-       <!-- Column -->
-       <div
+                    <!-- Column -->
+                    <div
                       class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
                     >
                       <!-- Article -->
@@ -339,8 +343,8 @@
                             <div>Certified Date</div>
                             <div class="text-main-400 font-bold">
                               {{
-                                licenseData && licenseData.applicationStatus
-                                  ? licenseData.applicationStatus.name
+                                licenseData && licenseData.certifiedDate
+                                  ? licenseData.certifiedDate.slice(0, 10)
                                   : "-"
                               }}
                             </div>
@@ -349,8 +353,11 @@
                             <div>Expiration Date</div>
                             <div class="text-main-400 font-bold">
                               {{
-                                licenseData && licenseData.applicationStatus
-                                  ? licenseData.applicationStatus.name
+                                licenseData && licenseData.licenseExpirationDate
+                                  ? licenseData.licenseExpirationDate.slice(
+                                      0,
+                                      10
+                                    )
                                   : "-"
                               }}
                             </div>
@@ -405,6 +412,103 @@
                           v-for="(education, index) in licenseData.educations"
                           :key="education ? education.id : ''"
                         >
+                          <div
+                            class="flex justify-between px-4 py-1"
+                            v-if="education && education.isDropped != true"
+                          >
+                            <div>Department</div>
+                            <div class="text-main-400 font-bold">
+                              {{
+                                education && education.department
+                                  ? education.department.name
+                                  : "-"
+                              }}
+                            </div>
+                          </div>
+                          <div
+                            class="flex justify-between px-4 py-1"
+                            v-if="education && education.isDropped != true"
+                          >
+                            <div>Institution</div>
+                            <div class="text-main-400 font-bold">
+                              {{
+                                education && education.institution
+                                  ? education.institution.name
+                                  : "-"
+                              }}
+                            </div>
+                          </div>
+                          <div
+                            class="flex justify-between px-4 py-1"
+                            v-if="education && education.isDropped != true"
+                          >
+                            <div>Education Level</div>
+                            <div class="text-main-400 font-bold">
+                              {{
+                                education && education.educationLevel
+                                  ? education.educationLevel.name
+                                  : "-"
+                              }}
+                            </div>
+                          </div>
+
+                          <hr
+                            class="mt-3 mb-3"
+                            style="color: lightgray"
+                            v-if="index != licenseData.educations.length - 1"
+                          />
+                        </div>
+
+                        <footer
+                          class="
+                            flex
+                            items-center
+                            justify-between
+                            leading-none
+                            p-2
+                            md:p-4
+                          "
+                        ></footer>
+                      </article>
+                      <!-- END Article -->
+                    </div>
+
+                    <!-- END Column -->
+
+                    <!-- Column -->
+                    <div
+                      v-if="droppedEducations && droppedEducations.length > 0"
+                      class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
+                    >
+                      <!-- Article -->
+                      <article class="overflow-hidden rounded-lg shadow-xl">
+                        <header
+                          class="
+                            flex
+                            items-center
+                            justify-between
+                            leading-tight
+                            p-2
+                            md:p-4
+                            border-b-4
+                            text-main-400
+                          "
+                        >
+                          <h1 class="text-lg">
+                            <a
+                              class="no-underline hover:underline text-black"
+                              href="#"
+                            >
+                              Dropped Education Detail
+                            </a>
+                          </h1>
+                        </header>
+
+                        <div
+                          class="grid grid-flow-row auto-rows-max"
+                          v-for="(education, index) in droppedEducations"
+                          :key="education ? education.id : ''"
+                        >
                           <div class="flex justify-between px-4 py-1">
                             <div>Department</div>
                             <div class="text-main-400 font-bold">
@@ -439,7 +543,7 @@
                           <hr
                             class="mt-3 mb-3"
                             style="color: lightgray"
-                            v-if="index != licenseData.educations.length - 1"
+                            v-if="index != droppedEducations.length - 1"
                           />
                         </div>
 
@@ -449,17 +553,73 @@
                             items-center
                             justify-between
                             leading-none
+                            border-t-2
                             p-2
                             md:p-4
                           "
-                        ></footer>
+                        >
+                          <div class="grid grid-rows-2">
+                            <h4 class="text-main-400 font-bold">Reason</h4>
+                            <p
+                              class="
+                                border
+                                rounded-md
+                                p-1
+                                break-all
+                                tracking-wider
+                              "
+                            >
+                              {{ licenseData.remark }}
+                            </p>
+                          </div>
+                        </footer>
                       </article>
                       <!-- END Article -->
                     </div>
 
                     <!-- END Column -->
 
-             
+                    <!-- Column -->
+                    <div
+                      class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
+                    >
+                      <!-- Article -->
+                      <article class="overflow-hidden rounded-lg shadow-xl">
+                        <header
+                          class="
+                            flex
+                            items-center
+                            justify-between
+                            leading-tight
+                            p-2
+                            md:p-4
+                            border-b-4
+                            text-main-400
+                          "
+                        >
+                          <h1 class="text-lg">
+                            <a
+                              class="no-underline hover:underline text-black"
+                              href="#"
+                            >
+                              Retrival Date
+                            </a>
+                          </h1>
+                        </header>
+
+                        <div class="grid grid-flow-row auto-rows-max">
+                          <div class="flex justify-between px-4 py-1">
+                            <div>Retrival Date</div>
+                            <div class="text-main-400 font-bold">
+                              {{ licenseData.retrivalDate }}
+                            </div>
+                          </div>
+                        </div>
+                      </article>
+                      <!-- END Article -->
+                    </div>
+
+                    <!-- END Column -->
                   </div>
                 </div>
               </section>
@@ -479,7 +639,7 @@
           <button
             type="button"
             class="
-             inline-block
+              inline-block
               px-6
               text-white
               bg-main-400
@@ -489,7 +649,7 @@
               leading-tight
               uppercase
               rounded
-              shadow-lg 
+              shadow-lg
               transition
               duration-150
               ease-in-out
@@ -517,6 +677,7 @@ export default {
     let store = useStore();
     let licenseData = ref({});
     let userInfo = ref({});
+    let droppedEducations = ref([]);
     let isLoading = ref(false);
     watch(props.modalDataId, () => {
       isLoading.value = true;
@@ -524,6 +685,14 @@ export default {
         .dispatch("newlicense/getNewLicenseApplication", props.modalDataId.id)
         .then((res) => {
           licenseData.value = res.data.data;
+          licenseData.value && licenseData.value.educations
+            ? licenseData.value.educations.forEach((element) => {
+                if (element.isDropped == true) {
+                  droppedEducations.value.push(element);
+                  return;
+                }
+              })
+            : false;
           isLoading.value = false;
         });
     });
@@ -533,6 +702,7 @@ export default {
 
     return {
       licenseData,
+      droppedEducations,
       isLoading,
       googleApi,
       userInfo,
@@ -540,3 +710,42 @@ export default {
   },
 };
 </script>
+<style scoped>
+.message {
+  font-size: 2rem;
+  color: transparent;
+  font-size: 2rem;
+  display: inline-block;
+  border-radius: 3px;
+  background-color: #1d3557;
+  position: relative;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+.message:before {
+  content: attr(data-title);
+  background: linear-gradient(90deg, #19b4db 0%, #049611 51%, #049611 100%);
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  background-clip: text;
+  -webkit-background-clip: text;
+  transition: all 1s ease-in-out;
+  animation: text-animation 3s infinite;
+}
+
+@keyframes text-animation {
+  0% {
+    width: 0;
+  }
+  50% {
+    width: 100%;
+  }
+  100% {
+    width: 0;
+  }
+}
+</style>

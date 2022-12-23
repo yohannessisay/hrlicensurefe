@@ -5,26 +5,28 @@
   <!-- Sidebar -->
   <section class="home-section">
     <!-- Header -->
-    <reviewer-nav-bar><ol class="list-reset flex">
-          <li>
-            <router-link to="/admin/review"
-              ><span class="text-primary-600 text-base">Home</span></router-link
-            >
-          </li>
-          <li><span class="text-gray-500 mx-2">/</span></li>
-     
-          <li>
-            <a href="#" class="pointer-events-none text-lg text-grey-300"
-              >Location Management</a
-            >
-          </li>
-        </ol></reviewer-nav-bar>
+    <reviewer-nav-bar
+      ><ol class="list-reset flex">
+        <li>
+          <router-link to="/admin/review"
+            ><span class="text-primary-600 text-base">Home</span></router-link
+          >
+        </li>
+        <li><span class="text-gray-500 mx-2">/</span></li>
+
+        <li>
+          <a href="#" class="pointer-events-none text-lg text-grey-300"
+            >Location Management</a
+          >
+        </li>
+      </ol></reviewer-nav-bar
+    >
     <!-- Header -->
 
     <!-- Main Content -->
     <div class="home-content">
       <div class="container mx-auto px-4 sm:px-8">
-        <div class="relative py-4">
+        <div class="relative py-4 w-8/12">
           <p class="absolute left-0 text-2xl font-semibold leading-tight">
             View and manage regions,zones and woredas found throughout the
             system
@@ -41,7 +43,7 @@
                 leading-tight
                 uppercase
                 border
-                rounded
+                rounded-md
                 shadow-lg
                 hover:bg-white hover:text-primary-600 hover:border-primary-600
                 transition
@@ -59,7 +61,7 @@
         <div class="py-8">
           <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 overflow-x-auto">
             <div class="flex justify-left">
-              <div class="mb-3 xl:w-full">
+              <div class="mb-3 w-full">
                 <div
                   class="
                     input-group
@@ -70,7 +72,7 @@
                     mb-4
                   "
                 >
-                  <div class="flex items-start">
+                  <div class="flex items-start w-4/5">
                     <ul
                       class="
                         nav nav-tabs
@@ -174,11 +176,11 @@
                     </ul>
 
                     <div
-                      class="tab-content shadow-xl"
+                      class="tab-content shadow-xl w-4/5"
                       id="tabs-tabContentVertical"
                     >
                       <div
-                        class="tab-pane fade show active"
+                        class="tab-pane fade show active w-full"
                         id="tabs-homeVertical"
                         role="tabpanel"
                         aria-labelledby="tabs-home-tabVertical"
@@ -315,7 +317,6 @@ import ReviewerNavBar from "./../SharedComponents/navBar.vue";
 import ReviewerSideBar from "./../SharedComponents/sideNav.vue";
 import VueTableLite from "vue3-table-lite";
 import AddModal from "./addModal.vue";
-import "@ocrv/vue-tailwind-pagination/dist/style.css";
 import EditModal from "./editModal.vue";
 
 export default {
@@ -338,21 +339,33 @@ export default {
     let woredaTableData = [];
     let zoneTableData = [];
     let showAddButton = ref(false);
-    let editModalData = ref({});
+    let editModalData = ref({
+      Name: "",
+      isWoreda: false,
+      isRegion: false,
+      isZone: false,
+      regions: [],
+      zones: [],
+      selectedRegion: {},
+      selectedZone: {},
+      selectedWoreda: {},
+      selectedLocation: { status: true, name: "" },
+    });
     const fetchRegions = () => {
       store.dispatch("lookups/getRegions").then((res) => {
+        editModalData.value.regions = res.data.data;
+
         res.data.data.forEach((element) => {
           regionTableData.push({
             id: element.id ? element.id : "",
             Name: element.name ? element.name : "",
             Code: element.code ? element.code : "",
-            Status: element.status ? element.status : "",
-            type:'region',
+            Status: element && element.status == true ? "Active" : "Inactive",
+            type: "region",
             data: element ? element : {},
           });
         });
         modalData.value.region = regionTableData;
-        editModalData.value.region = regionTableData;
         regionsTable.value = {
           isLoading: false,
           columns: [
@@ -379,8 +392,16 @@ export default {
               label: "Status",
               field: "Status",
               width: "30%",
+              display: function (row) {
+                return row.Status && row.Status == "Active"
+                  ? '<span  class="activeElement" >  ' + row.Status + " </span>"
+                  : '<span  class="bg-red-300 rounded-3xl p-1 text-white font-bold" >' +
+                      row.Status +
+                      " </span>";
+              },
               sortable: true,
             },
+
             {
               label: "",
               field: "quick",
@@ -416,8 +437,9 @@ export default {
               element.zone && element.zone.region
                 ? element.zone.region.name
                 : "",
-                type:'woreda',
-            Status: element.status ? element.status : "",
+            type: "woreda",
+            Status: element && element.status == true ? "Active" : "Inactive",
+            data: element ? element : {},
           });
         });
 
@@ -453,7 +475,14 @@ export default {
             {
               label: "Status",
               field: "Status",
-              width: "10%",
+              width: "30%",
+              display: function (row) {
+                return row.Status && row.Status == "Active"
+                  ? '<span  class="activeElement" >  ' + row.Status + " </span>"
+                  : '<span  class="bg-red-300 rounded-3xl p-1 text-white font-bold" >' +
+                      row.Status +
+                      " </span>";
+              },
               sortable: true,
             },
             {
@@ -481,19 +510,19 @@ export default {
 
     const fetchZones = () => {
       store.dispatch("lookups/getZones").then((res) => {
+        editModalData.value.zones = res.data.data;
         res.data.data.forEach((element) => {
           zoneTableData.push({
             id: element.id ? element.id : "",
             Name: element.name ? element.name : "",
             Region: element.region ? element.region.name : "",
-            Status: element.status ? element.status : "",
-            type:'zone',
+            Status: element && element.status == true ? "Active" : "Inactive",
+            type: "zone",
             data: element ? element : {},
           });
         });
 
         modalData.value.zone = zoneTableData;
-        editModalData.value.zone = zoneTableData;
 
         zonesTable.value = {
           isLoading: false,
@@ -520,7 +549,14 @@ export default {
             {
               label: "Status",
               field: "Status",
-              width: "10%",
+              width: "30%",
+              display: function (row) {
+                return row.Status && row.Status == "Active"
+                  ? '<span  class="activeElement" >  ' + row.Status + " </span>"
+                  : '<span  class="bg-red-300 rounded-3xl p-1 text-white font-bold" >' +
+                      row.Status +
+                      " </span>";
+              },
               sortable: true,
             },
             {
@@ -556,10 +592,31 @@ export default {
       });
     };
     const regionRowClicked = (row) => {
-      editModalData.value.isWoreda=false;
-      editModalData.value.isRegion=true;
-      editModalData.value.isZone=false;
-      editModalData.value = row;
+      editModalData.value ? (editModalData.value.isWoreda = false) : "";
+      editModalData.value ? (editModalData.value.isRegion = true) : "";
+      editModalData.value ? (editModalData.value.isZone = false) : "";
+      editModalData.value.selectedLocation = row
+        ? {
+            code: row.data.code,
+            createdAt: row.data.createdAt,
+            id: row.data.id,
+            name: row.data.name,
+            rowguid: row.data.rowguid,
+            status: row.data.status,
+            updatedAt: row.data.updatedAt,
+          }
+        : {};
+      editModalData.value.selectedRegion = row
+        ? {
+            code: row.data.code,
+            createdAt: row.data.createdAt,
+            id: row.data.id,
+            name: row.data.name,
+            rowguid: row.data.rowguid,
+            status: row.data.status,
+            updatedAt: row.data.updatedAt,
+          }
+        : {};
     };
 
     const zoneTableLoadingFinish = () => {
@@ -572,10 +629,44 @@ export default {
       });
     };
     const zoneRowClicked = (row) => {
-      editModalData.value.isWoreda=false;
-      editModalData.value.isRegion=false;
-      editModalData.value.isZone=true;
-      editModalData.value = row;
+      editModalData.value ? (editModalData.value.isWoreda = false) : "";
+      editModalData.value ? (editModalData.value.isRegion = false) : "";
+      editModalData.value ? (editModalData.value.isZone = true) : "";
+      editModalData.value.selectedLocation = row
+        ? {
+            code: row.data.code,
+            createdAt: row.data.createdAt,
+            id: row.data.id,
+            name: row.data.name,
+            rowguid: row.data.rowguid,
+            status: row.data.status,
+            updatedAt: row.data.updatedAt,
+            regionId: row.data.regionId,
+          }
+        : {};
+      editModalData.value.selectedZone = row
+        ? {
+            code: row.data.code,
+            createdAt: row.data.createdAt,
+            id: row.data.id,
+            name: row.data.name,
+            rowguid: row.data.rowguid,
+            status: row.data.status,
+            updatedAt: row.data.updatedAt,
+            regionId: row.data.regionId,
+          }
+        : {};
+      editModalData.value.selectedRegion = row
+        ? {
+            code: row.data.region.code,
+            createdAt: row.data.region.createdAt,
+            id: row.data.region.id,
+            name: row.data.region.name,
+            rowguid: row.data.region.rowguid,
+            status: row.data.region.status,
+            updatedAt: row.data.region.updatedAt,
+          }
+        : {};
     };
 
     const woredaTableLoadingFinish = () => {
@@ -588,10 +679,58 @@ export default {
       });
     };
     const woredaRowClicked = (row) => {
-      editModalData.value.isWoreda=true;
-      editModalData.value.isRegion=false;
-      editModalData.value.isZone=false;
-      editModalData.value = row;
+      editModalData.value ? (editModalData.value.isWoreda = true) : "";
+      editModalData.value ? (editModalData.value.isRegion = false) : "";
+      editModalData.value ? (editModalData.value.isZone = false) : "";
+      editModalData.value.selectedLocation = row
+        ? {
+            code: row.data.code,
+            createdAt: row.data.createdAt,
+            id: row.data.id,
+            name: row.data.name,
+            rowguid: row.data.rowguid,
+            status: row.data.status,
+            updatedAt: row.data.updatedAt,
+            zoneId: row.data.zoneId,
+          }
+        : {};
+      editModalData.value.selectedWoreda = row
+        ? {
+            code: row.data.code,
+            createdAt: row.data.createdAt,
+            id: row.data.id,
+            name: row.data.name,
+            rowguid: row.data.rowguid,
+            status: row.data.status,
+            updatedAt: row.data.updatedAt,
+            zoneId: row.data.zoneId,
+          }
+        : {};
+      editModalData.value.selectedZone =
+        row && row.data.zone
+          ? {
+              code: row.data.zone.code,
+              createdAt: row.data.zone.createdAt,
+              id: row.data.zone.id,
+              name: row.data.zone.name,
+              regionId: row.data.zone.regionId,
+              rowguid: row.data.zone.rowguid,
+              status: row.data.zone.status,
+              updatedAt: row.data.zone.updatedAt,
+            }
+          : {};
+      editModalData.value.selectedRegion =
+        row && row.data.zone
+          ? {
+              code: row.data.zone.region.code,
+              createdAt: row.data.zone.region.createdAt,
+              id: row.data.zone.region.id,
+              name: row.data.zone.region.name,
+              rowguid: row.data.zone.region.rowguid,
+              status: row.data.zone.region.status,
+              updatedAt: row.data.zone.region.updatedAt,
+            }
+          : {};
     };
 
     onMounted(() => {
@@ -643,4 +782,14 @@ export default {
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
 }
+</style>
+<style>
+.activeElement {
+  background: green;
+  border-radius: 20px;
+  padding: 4px;
+  color: white;
+  font-weight: 800;
+}
+ 
 </style>

@@ -36,6 +36,7 @@
           aria-labelledby="commonFilesAccordionheading"
           data-bs-parent="#FilesAccordion"
         >
+          {{ existingDocs }}
           <div class="accordion-body py-4 px-5">
             <div class="bg-red-800 py-5">
               <div class="overflow-x-auto w-full p-4">
@@ -90,6 +91,7 @@
                       >
                         Upload
                       </th>
+
                       <th
                         class="
                           font-semibold
@@ -158,8 +160,49 @@
                           />
                         </p>
                       </td>
-
-                      <td class="px-6 py-4 text-center">
+                      <td class="px-6 py-4" v-if="item && item.fileName">
+                        <div class="flex items-center p-4">
+                          <div>
+                            <p class="">
+                              {{
+                                item.fileName
+                                  ? item.fileName
+                                  : "---------------"
+                              }}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        class="px-6 py-4 text-center"
+                        v-if="item && item.existingFile"
+                      >
+                        <a
+                          :id="
+                            'common_image_href' + item.documentType.id + item.id
+                          "
+                          :href="item.existingFile"
+                          :data-title="item.name ? item.name : '-----'"
+                          data-lightbox="example-2"
+                        >
+                          <i
+                            :id="'common_icon' + item.documentType.id + item.id"
+                            class="fa fa-eye cursor-pointer text-main-400"
+                            aria-hidden="true"
+                          >
+                            <img
+                              :id="
+                                'common_image_lightbox' +
+                                  item.documentType.id +
+                                  item.id
+                              "
+                              :src="item.existingFile"
+                              class="w-full h-2 object-cover"
+                            />
+                          </i>
+                        </a>
+                      </td>
+                      <td class="px-6 py-4 text-center" v-else>
                         <a
                           :id="
                             'common_image_href' + item.documentType.id + item.id
@@ -181,8 +224,8 @@
                             <img
                               :id="
                                 'common_image_lightbox' +
-                                item.documentType.id +
-                                item.id
+                                  item.documentType.id +
+                                  item.id
                               "
                               src=""
                               class="w-full h-2 object-cover"
@@ -250,7 +293,9 @@
                 {{ table.educationalLevel ? table.educationalLevel.name : "" }}
                 Related Files
               </h4>
-
+              <h5 v-if="existingDocs">
+                Images are saved, only upload files you want to change
+              </h5>
               <div class="overflow-x-auto w-full p-4">
                 <table
                   class="
@@ -378,7 +423,7 @@
                         <a
                           :id="
                             'image_href_' +
-                            `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                              `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                           "
                           href=""
                           :data-title="item.name ? item.name : '-----'"
@@ -387,7 +432,7 @@
                           <i
                             :id="
                               'educational_icon_' +
-                              `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                             "
                             class="
                               fa fa-eye
@@ -400,7 +445,7 @@
                             <img
                               :id="
                                 'image_lightbox_' +
-                                `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                  `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                               "
                               src=""
                               class="w-full h-2 object-cover"
@@ -468,7 +513,7 @@
                         <a
                           :id="
                             'image_href_' +
-                            `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                              `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                           "
                           href=""
                           :data-title="parentItem[0].name ? item.name : '-----'"
@@ -477,7 +522,7 @@
                           <i
                             :id="
                               'educational_icon_' +
-                              `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                             "
                             class="
                               fa fa-eye
@@ -490,7 +535,7 @@
                             <img
                               :id="
                                 'image_lightbox_' +
-                                `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                  `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                               "
                               src=""
                               class="w-full h-2 object-cover"
@@ -647,7 +692,9 @@
                                       :required="parentChildItem.isRequired"
                                       :id="`files${parentChildItem.id}`"
                                       accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
-                                      :ref="`imageUploader${parentChildItem.id}`"
+                                      :ref="
+                                        `imageUploader${parentChildItem.id}`
+                                      "
                                       class="custom-file-input"
                                       v-on:change="
                                         handleFileUpload(
@@ -671,7 +718,7 @@
                                   <a
                                     :id="
                                       'image_href_' +
-                                      `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                        `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                                     "
                                     href=""
                                     :data-title="
@@ -682,7 +729,7 @@
                                     <i
                                       :id="
                                         'educational_icon_' +
-                                        `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                          `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                                       "
                                       class="
                                         fa fa-eye
@@ -695,7 +742,7 @@
                                       <img
                                         :id="
                                           'image_lightbox_' +
-                                          `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                            `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                                         "
                                         src=""
                                         class="w-full h-2 object-cover"
@@ -725,7 +772,7 @@
     <div class="flex justify-end mr-8 mb-8">
       <button
         class="
-        mt-8
+          mt-8
           inline-block
           px-6
           py-2.5
@@ -828,7 +875,7 @@ export default {
       isImage: boolean,
       isPdf: boolean,
       file: "",
-      name: "",
+      name: ""
     });
     let existingDocs = [];
     let files = ref("");
@@ -854,8 +901,8 @@ export default {
     let errorDocuments = ref([
       {
         name: "",
-        code: "",
-      },
+        code: ""
+      }
     ]);
     let showNestedDocuments = ref({});
 
@@ -887,12 +934,12 @@ export default {
         }
         reader.addEventListener(
           "load",
-          function () {
+          function() {
             showPreview.value = true;
 
             previewDocuments.value[data.documentType.code] = reader.result;
             imageData = imageData.filter(
-              (el) => el.documenttype != data.documentType.name
+              el => el.documenttype != data.documentType.name
             );
             imageData.push({
               imageId: "common_image_lightbox_" + data.documentType.code,
@@ -900,7 +947,8 @@ export default {
               educationalLevel: data.educationalLevel
                 ? data.educationalLevel.name
                 : "",
-              image: reader.result,
+              fileName: event?.target?.files[0].name,
+              image: reader.result
             });
 
             documentToSave.value[data.documentType.code] = reader.result;
@@ -942,6 +990,7 @@ export default {
       if (icon.classList.contains("disabled")) {
         icon.classList.toggle("disabled");
       }
+
       let output = document.getElementById(
         "common_image_lightbox" + data.documentType.id + data.id
       );
@@ -955,7 +1004,7 @@ export default {
       }
 
       output
-        ? (output.onload = function () {
+        ? (output.onload = function() {
             URL.revokeObjectURL(output.src); // free memory
           })
         : "";
@@ -1006,12 +1055,12 @@ export default {
         }
         reader.addEventListener(
           "load",
-          function () {
+          function() {
             showPreview.value = true;
 
             previewDocuments.value[data.documentType.code] = reader.result;
             imageData = imageData.filter(
-              (el) => el.documenttype != data.documentType.name
+              el => el.documenttype != data.documentType.name
             );
             imageData.push({
               imageId:
@@ -1025,7 +1074,8 @@ export default {
               educationalLevel: data.educationalLevel
                 ? data.educationalLevel.name
                 : "",
-              image: reader.result,
+              fileName: event?.target?.files[0].name,
+              image: reader.result
             });
             // documentUploaded.value[data.documentType.code] = reader.result;
           },
@@ -1070,6 +1120,7 @@ export default {
       if (icon.classList.contains("disabled")) {
         icon.classList.toggle("disabled");
       }
+
       let output = document.getElementById(
         "image_lightbox_" +
           data.documentType.code +
@@ -1092,7 +1143,7 @@ export default {
       }
 
       output
-        ? (output.onload = function () {
+        ? (output.onload = function() {
             URL.revokeObjectURL(output.src); // free memory
           })
         : "";
@@ -1106,25 +1157,25 @@ export default {
       /// check common documents
 
       commonDocuments.value
-        .filter((cd) => cd.isRequired)
-        .forEach((element) => {
+        .filter(cd => cd.isRequired)
+        .forEach(element => {
           CMtemp = documentsUploaded.value.hasOwnProperty(
             element.documentType.code
           );
           if (!CMtemp) {
             errorDocuments.value.push({
               name: element.documentType.name,
-              code: element.documentType.code,
+              code: element.documentType.code
             });
           }
         });
 
-      educationalDocs.value.forEach((ed) => {
+      educationalDocs.value.forEach(ed => {
         // check normal docs with no parents
 
         ed.docs
-          .filter((docs) => docs.isRequired)
-          .forEach((single) => {
+          .filter(docs => docs.isRequired)
+          .forEach(single => {
             temp = documentsUploaded.value.hasOwnProperty(
               single.documentType.code +
                 "_" +
@@ -1140,7 +1191,7 @@ export default {
                   "_" +
                   ed.educationalLevel.code.toUpperCase() +
                   "_" +
-                  ed.professionType.code.toUpperCase(),
+                  ed.professionType.code.toUpperCase()
               });
             }
           });
@@ -1148,7 +1199,7 @@ export default {
         for (var pd in ed.parentDoc) {
           if (
             renewalDocuments.value.filter(
-              (nld) => nld.parentDocument == pd && nld.isRequired
+              nld => nld.parentDocument == pd && nld.isRequired
             ).length > 0
           ) {
             NSTemp = documentsUploaded.value.hasOwnProperty(
@@ -1161,7 +1212,7 @@ export default {
             if (!NSTemp) {
               errorDocuments.value.push({
                 name: pd,
-                code: pd,
+                code: pd
               });
             }
           }
@@ -1171,60 +1222,59 @@ export default {
     };
 
     const next = () => {
-      let documentValidation = checkDocuments();
+      let documentValidation = false;
+      if (existingDocs.length > 0) {
+        documentValidation = true;
+      } else {
+        documentValidation = checkDocuments();
+      }
+
       if (documentValidation) {
         store.dispatch("renewal/setTempDocs", formData).then(() => {
           let finalLocalData = {
             created: new Date(),
-            data: [],
+            data: []
           };
           let db;
           let request = indexedDB.open("RNdocumentUploads", dbVersion);
-          request.onsuccess = function () {
+          request.onsuccess = function() {
             db = request.result;
             let transaction = db.transaction(
               ["RNdocumentUploads"],
               "readwrite"
             );
-            let tempStat = false;
 
             if (existingDocs.length > 0) {
-              imageData.forEach((newImage) => {
-                existingDocs.forEach((existing) => {
+              existingDocs.forEach(existing => {
+                imageData.forEach(newImage => {
                   if (existing.imageId == newImage.imageId) {
                     existing.image = newImage.image;
-                    finalLocalData.data.push(existing);
-                  } else {
-                    finalLocalData.data.push(existing);
-                    tempStat = true;
+                    existing.fileName = newImage.fileName;
                   }
                 });
-                if (tempStat == true) {
-                  finalLocalData.data.push(newImage);
-                }
               });
-              finalLocalData.data.concat(imageData);
+              finalLocalData.data = existingDocs;
             } else {
               finalLocalData.data = imageData;
             }
             finalLocalData.data = [...new Set(finalLocalData.data)];
-
+            console.log(finalLocalData);
             const objectStore = transaction.objectStore("RNdocumentUploads");
 
             const objectStoreRequest = objectStore.clear();
 
-            objectStoreRequest.onsuccess = (event) => {
+            objectStoreRequest.onsuccess = event => {
               let addReq = transaction
                 .objectStore("RNdocumentUploads")
                 .put(finalLocalData);
 
-              addReq.onerror = function () {
+              addReq.onerror = function() {
                 console.log(
                   "Error regarding your browser, please update your browser to the latest version"
                 );
               };
 
-              transaction.oncomplete = function () {
+              transaction.oncomplete = function() {
                 console.log("data stored");
                 emit("changeActiveState");
               };
@@ -1233,7 +1283,7 @@ export default {
         });
       } else {
         let errors = "";
-        errorDocuments.value.forEach((element) => {
+        errorDocuments.value.forEach(element => {
           if (!errors) {
             errors = element.name;
           } else {
@@ -1248,7 +1298,7 @@ export default {
             position: "bottom-center",
             pauseOnFocusLoss: true,
             pauseOnHover: true,
-            icon: true,
+            icon: true
           }
         );
       }
@@ -1257,16 +1307,78 @@ export default {
       emit("changeActiveStateMinus");
     };
 
+    const saveDraft = () => {
+      generalInfo.value.licenseFile = [];
+
+      let license = {
+        action: "DraftEvent",
+        data: {
+          applicantTypeId:
+            localData.value && localData.value.applicantTypeSelected
+              ? localData.value.applicantTypeSelected.id
+              : null,
+          residenceWoredaId:
+            localData.value && localData.value.woredaSelected
+              ? localData.value.woredaSelected.id
+              : null,
+          educations: localData.value ? localData.value.education : {},
+          occupationTypeId: localData.value.occupationSelected
+            ? localData.value.occupationSelected.id
+            : null,
+          nativeLanguageId: localData.value.nativeLanguageSelected
+            ? localData.value.nativeLanguageSelected.id
+            : null,
+          isLegal: true
+        }
+      };
+      store.dispatch("renewal/addRenewal", license).then(res => {
+        let licenseId = res.data.data.id;
+        let payload = { document: formData, id: licenseId };
+        store
+          .dispatch("renewal/uploadDocuments", payload)
+          .then(res => {
+            if (res.data.status == "Success") {
+              toast.success("Applied successfuly", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true
+              });
+              localStorage.removeItem("RNApplicationData");
+              location.reload();
+            } else {
+              toast.error("Error occured, please try again", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true
+              });
+            }
+          })
+          .catch(() => {
+            toast.error("Error occured, please try again", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true
+            });
+          });
+      });
+    };
+
     const groupByKey = (array, key) => {
       return array.reduce((hash, obj) => {
         if (obj[key] === undefined || obj[key] == null) return hash;
         return Object.assign(hash, {
-          [obj[key]]: (hash[obj[key]] || []).concat(obj),
+          [obj[key]]: (hash[obj[key]] || []).concat(obj)
         });
       }, {});
     };
 
-    const addMoreFile = (doc) => {
+    const addMoreFile = doc => {
       divId.value == doc.length;
       if (divId.value < doc.length) {
         divId.value++;
@@ -1298,7 +1410,7 @@ export default {
         document.getElementById(doc[0].id).appendChild(divElement);
       }
     };
-    const addMore = (parentItem) => {
+    const addMore = parentItem => {
       if (
         showNestedDocuments.value[parentItem.documentType.code] == undefined
       ) {
@@ -1312,16 +1424,16 @@ export default {
     const initDb = () => {
       let request = indexedDB.open("RNdocumentUploads", dbVersion);
 
-      request.onerror = function () {
+      request.onerror = function() {
         console.error("Unable to open database.");
       };
 
-      request.onsuccess = function () {
+      request.onsuccess = function() {
         let db = request.result;
-        const tx = db.transaction("RNdocumentUploads", "readonly");
+        const tx = db.transaction("RNdocumentUploads", "readwrite");
         const store = tx.objectStore("RNdocumentUploads");
         let getAllIDB = store.getAll();
-        getAllIDB.onsuccess = function (evt) {
+        getAllIDB.onsuccess = function(evt) {
           existingDocs =
             evt.target.result && evt.target.result[0]
               ? evt.target.result[0].data
@@ -1329,128 +1441,91 @@ export default {
         };
       };
 
-      request.onupgradeneeded = function () {
+      request.onupgradeneeded = function() {
         let db = request.result;
         db.createObjectStore("RNdocumentUploads", {
           keyPath: "id",
-          autoIncrement: true,
+          autoIncrement: true
         });
       };
     };
-    const saveDraft = () => {
-      generalInfo.value.licenseFile = [];
 
-      let license = {
-        action: "DraftEvent",
-        data: {
-          applicantTypeId:
-            localData.value && localData.value.applicantTypeSelected
-              ? localData.value.applicantTypeSelected.id
-              : null,
-          residenceWoredaId:
-            localData.value && localData.value.woredaSelected
-              ? localData.value.woredaSelected.id
-              : null,
-          educations: localData.value ? localData.value.education : {},
-          occupationTypeId: localData.value.occupationSelected
-            ? localData.value.occupationSelected.id
-            : null,
-          nativeLanguageId: localData.value.nativeLanguageSelected
-            ? localData.value.nativeLanguageSelected.id
-            : null,
-          isLegal: true,
-        },
-      };
-      store.dispatch("renewal/addRenewal", license).then((res) => {
-        let licenseId = res.data.data.id;
-        let payload = { document: formData, id: licenseId };
-        store
-          .dispatch("renewal/uploadDocuments", payload)
-          .then((res) => {
-            if (res.data.status == "Success") {
-              toast.success("Applied successfuly", {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true,
-              });
-              localStorage.removeItem('RNApplicationData');
-              location.reload();
-            } else {
-              toast.error("Error occured, please try again", {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true,
-              });
-            }
-          })
-          .catch(() => {
-            toast.error("Error occured, please try again", {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            });
-          });
-      });
-    };
     onMounted(() => {
-      localData.value = window.localStorage.getItem("RNApplicationData")
-        ? JSON.parse(window.localStorage.getItem("RNApplicationData"))
-        : {};
+      //Initialize indexdb for file storage
+      if (!("indexedDB" in window)) {
+        alert(
+          "This browser doesn't support Temporary storage please update your browser to the latest version"
+        );
+        window.location.reload();
+        return;
+      } else {
+        initDb();
+       
+        localData.value = window.localStorage.getItem("RNApplicationData")
+          ? JSON.parse(window.localStorage.getItem("RNApplicationData"))
+          : {};
 
-      generalInfo.value = localData.value;
+        generalInfo.value = localData.value;
 
-      store.dispatch("renewal/getApplicationCategories").then((res) => {
-        let categoryResults = res.data.data
-          ? res.data.data.filter((ele) => ele.code == "NA")
-          : "";
-        let educationLevels = generalInfo.value.multipleDepartment;
-        //Get department docs
-        educationLevels.forEach((element) => {
-          store
-            .dispatch("renewal/getRNdocuments", [
-              categoryResults[0].id,
-              generalInfo.value.applicantTypeSelected.id,
-              element.educationalLevel.id,
-            ])
-            .then((res) => {
-              console.log(res);
-              let resp = res.data.data;
-              renewalDocuments.value = res.data.data;
+        store.dispatch("newlicense/getApplicationCategories").then(res => {
+          let categoryResults = res.data.data
+            ? res.data.data.filter(ele => ele.code == "NA")
+            : "";
+          let educationLevels = generalInfo.value.multipleDepartment;
+          //Get department docs
+          educationLevels.forEach(element => {
+            store
+              .dispatch("renewal/getRNdocuments", [
+                categoryResults[0].id,
+                generalInfo.value.applicantTypeSelected.id,
+                element.educationalLevel.id
+              ])
+              .then(res => {
+                let resp = res.data.data;
+                renewalDocuments.value = res.data.data;
 
-              educationalDocs.value.push({
-                educationalLevel: element.educationalLevel,
-                professionType: element.professionalType,
-                docs: resp.filter((element) => element.parentDocument == null),
-                parentDoc: groupByKey(resp, "parentDocument"),
+                educationalDocs.value.push({
+                  educationalLevel: element.educationalLevel,
+                  professionType: element.professionalType,
+                  docs: resp.filter(element => element.parentDocument == null),
+                  parentDoc: groupByKey(resp, "parentDocument")
+                });
               });
-            });
-        });
-        //Get Common Docs
-
-        store
-          .dispatch("renewal/getCommonRNdocuments", [
-            categoryResults[0].id,
-            generalInfo.value.applicantTypeSelected.id,
-          ])
-          .then((res) => {
-            let result = res.data.data;
-            commonDocuments.value = result;
           });
 
-        //Initialize indexdb for file storage
-        if (!("indexedDB" in window)) {
-          console.log("This browser doesn't support IndexedDB");
-          return;
-        } else {
-          initDb();
-        }
-      });
+          //Get Common Docs
+
+          store
+            .dispatch("renewal/getCommonRNdocuments", [
+              categoryResults[0].id,
+              generalInfo.value.applicantTypeSelected.id
+            ])
+            .then(res => {
+              let result = res.data.data;
+              commonDocuments.value = result;
+              if (
+                existingDocs &&
+                existingDocs.length > 0 &&
+                result &&
+                result.length > 0
+              ) {
+                existingDocs.forEach(existing => {
+                  result.forEach(Cd => {
+                    if (
+                      existing.imageId ==
+                      "common_image_lightbox_" + Cd.documentType.code
+                    ) {
+                      Cd.existingFile = existing.image;
+                      Cd.fileName = existing.fileName;
+                    }
+                  });
+                });
+              } else {
+                commonDocuments.value = result;
+              }
+            });
+        });
+      }
     });
 
     return {
@@ -1467,16 +1542,16 @@ export default {
       handleCommonFileUpload,
       generalInfo,
       goToNext,
+      saveDraft,
       educationalDocs,
       imageUploader,
       filePreviewData,
       next,
       back,
       addMore,
-      saveDraft,
-      showNestedDocuments,
+      showNestedDocuments
     };
-  },
+  }
 };
 </script>
 

@@ -199,7 +199,7 @@
                       </select>
                     </div>
                     <div class="form-group mb-6">
-                      <label for="users" class="ml-4">License Id</label>
+                      <label for="users" class="ml-4">License Code</label>
                       <input
                         type="text"
                         class="
@@ -225,7 +225,7 @@
                           focus:outline-none
                         "
                         id="lNumber"
-                        placeholder="License Id"
+                        placeholder="License Code"
                         v-model="licenseNumber"
                       />
                     </div>

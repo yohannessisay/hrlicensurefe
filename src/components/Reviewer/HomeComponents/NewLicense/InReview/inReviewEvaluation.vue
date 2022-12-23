@@ -436,6 +436,10 @@
                                   <h2 class="font-bold">
                                     Department Information
                                   </h2>
+                                  <small class="font-bold"
+                                    >Uncheck departments if you want to remove
+                                    them</small
+                                  >
                                   <i
                                     class="
                                       fa fa-briefcase
@@ -446,336 +450,164 @@
                                 </header>
 
                                 <div
-                                  class="
-                                    flex flex-row
-                                    border-b-2
-                                    text-grey-400
-                                    m-2
+                                  :class="
+                                    education && education.isDropped == false
+                                      ? 'flex flex-row border-b-2 text-grey-400 m-2'
+                                      : 'flex flex-row border text-red-300 m-2 p-2 rounded-md'
                                   "
                                   v-for="education in newLicense.educations"
                                   :key="education.id"
                                 >
-                                  <div>
-                                    <div
-                                      class="flex flex-col mb-medium mr-12 ml-8"
-                                    >
-                                      <div class="grid grid-cols-2 gap-4">
-                                        <p
+                                  <div class="flex justify-center">
+                                    <div>
+                                      <label
+                                        for=""
+                                        class="font-bold text-red-300"
+                                        >{{
+                                          education &&
+                                          education.isDropped == false
+                                            ? ""
+                                            : "Removed"
+                                        }}</label
+                                      >
+                                      <div class="form-check">
+                                        <input
                                           class="
-                                            text-primary-600 text-base
-                                            font-bold
+                                            form-check-input
+                                            appearance-none
+                                            h-8
+                                            w-8
+                                            border border-gray-300
+                                            rounded-md
+                                            bg-red-300
+                                            transition
+                                            duration-200
+                                            my-1
+                                            btn-check:bg-white
+                                            focus:outline-none
+                                            align-top
+                                            bg-no-repeat bg-center bg-contain
+                                            float-left
+                                            cursor-pointer
                                           "
-                                        >
-                                          Department Name
-                                        </p>
-                                        <p
-                                          class="text-black text-base font-bold"
-                                        >
-                                          {{
-                                            education.department
-                                              ? education.department.name
-                                              : ""
-                                          }}
-                                        </p>
+                                          checked
+                                          type="checkbox"
+                                          @change="
+                                            education &&
+                                            education.isDropped == false
+                                              ? (education.isDropped = true)
+                                              : (education.isDropped = false),
+                                              droppedDepartment(education)
+                                          "
+                                          v-model="
+                                            education.department.isDropped
+                                          "
+                                          :id="education.id"
+                                        />
                                       </div>
-                                      <div class="grid grid-cols-2 gap-4">
-                                        <p
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="flex flex-col mb-medium mr-12 ml-8"
+                                  >
+                                    <div class="grid grid-cols-2 gap-4">
+                                      <p
+                                        class="
+                                          text-primary-600 text-base
+                                          font-bold
+                                        "
+                                      >
+                                        Department Name
+                                      </p>
+                                      <p class="text-black text-base font-bold">
+                                        {{
+                                          education.department
+                                            ? education.department.name
+                                            : ""
+                                        }}
+                                      </p>
+                                    </div>
+                                    <div class="grid grid-cols-2 gap-4">
+                                      <p
+                                        class="
+                                          text-primary-600 text-base
+                                          font-bold
+                                        "
+                                      >
+                                        Education Level
+                                      </p>
+                                      <p class="text-black text-base font-bold">
+                                        {{
+                                          education.educationLevel
+                                            ? education.educationLevel.name
+                                            : ""
+                                        }}
+                                      </p>
+                                    </div>
+                                    <div class="grid grid-cols-2 gap-4">
+                                      <p
+                                        class="
+                                          text-primary-600 text-base
+                                          font-bold
+                                        "
+                                      >
+                                        Institution
+                                      </p>
+                                      <p class="text-black text-base font-bold">
+                                        {{
+                                          education.institution
+                                            ? education.institution.name
+                                            : ""
+                                        }}
+                                      </p>
+                                    </div>
+                                    <div class="grid grid-cols-2 gap-4">
+                                      <p
+                                        class="
+                                          text-primary-600 text-base
+                                          font-bold
+                                        "
+                                      >
+                                        Profession
+                                      </p>
+                                      <div
+                                        class="text-black text-base font-bold"
+                                      >
+                                        {{
+                                          education.professionType
+                                            ? education.professionType.name !=
+                                              "Other"
+                                              ? education.professionType.name
+                                              : education.otherProfessionType +
+                                                "/" +
+                                                education.otherProfessionAmharic
+                                            : ""
+                                        }}
+                                        <span
+                                          @click="
+                                            allowProfessionChange(education)
+                                          "
                                           class="
-                                            text-primary-600 text-base
-                                            font-bold
+                                            cursor-pointer
+                                            text-primary-500
                                           "
                                         >
-                                          Education Level
-                                        </p>
-                                        <p
-                                          class="text-black text-base font-bold"
-                                        >
-                                          {{
-                                            education.educationLevel
-                                              ? education.educationLevel.name
-                                              : ""
-                                          }}
-                                        </p>
-                                      </div>
-                                      <div class="grid grid-cols-2 gap-4">
-                                        <p
-                                          class="
-                                            text-primary-600 text-base
-                                            font-bold
-                                          "
-                                        >
-                                          Institution
-                                        </p>
-                                        <p
-                                          class="text-black text-base font-bold"
-                                        >
-                                          {{
-                                            education.institution
-                                              ? education.institution.name
-                                              : ""
-                                          }}
-                                        </p>
-                                      </div>
-                                      <div class="grid grid-cols-2 gap-4">
-                                        <p
-                                          class="
-                                            text-primary-600 text-base
-                                            font-bold
-                                          "
-                                        >
-                                          Profession
-                                        </p>
+                                          <i
+                                            class="fa fa-pencil text-green-200"
+                                          ></i
+                                          >Edit
+                                        </span>
                                         <div
-                                          class="text-black text-base font-bold"
-                                        >
-                                          {{
-                                            education.professionType
-                                              ? education.professionType.name !=
-                                                "Other"
-                                                ? education.professionType.name
-                                                : education.otherProfessionType +
-                                                  "/" +
-                                                  education.otherProfessionAmharic
-                                              : ""
-                                          }}
-                                          <span
-                                            @click="
-                                              allowProfessionChange(education)
-                                            "
-                                            class="
-                                              cursor-pointer
-                                              text-primary-500
-                                            "
-                                          >
-                                            <i
-                                              class="
-                                                fa fa-pencil
-                                                text-green-200
-                                              "
-                                            ></i
-                                            >Edit
-                                          </span>
-                                          <div
-                                            :id="education.department.id"
-                                            class="flex justify-center"
-                                            v-if="
-                                              education.professionType &&
-                                              allowProfChange[
-                                                education.department.id
-                                              ]
-                                            "
-                                          >
-                                            <div class="mb-3 w-full">
-                                              <select
-                                                class="
-                                                  form-select
-                                                  appearance-none
-                                                  block
-                                                  w-full
-                                                  px-3
-                                                  py-1.5
-                                                  text-base
-                                                  font-normal
-                                                  text-gray-700
-                                                  bg-white
-                                                  bg-clip-padding
-                                                  bg-no-repeat
-                                                  border
-                                                  border-solid
-                                                  border-gray-300
-                                                  rounded
-                                                  transition
-                                                  ease-in-out
-                                                  m-0
-                                                  focus:text-gray-700
-                                                  focus:bg-white
-                                                  focus:border-blue-600
-                                                  focus:oProfessionutline-none
-                                                "
-                                                @click="
-                                                  checkForOther(education)
-                                                "
-                                                v-model="
-                                                  tempProf[
-                                                    education.department.id
-                                                  ]
-                                                "
-                                                aria-label="Default select example"
-                                              >
-                                                <option selected disabled>
-                                                  Choose new profession
-                                                </option>
-                                                <option
-                                                  v-for="prof in newProf[
-                                                    education.department.id
-                                                  ]"
-                                                  :key="prof.id"
-                                                  :value="prof"
-                                                >
-                                                  {{ prof.name }}
-                                                </option>
-                                              </select>
-                                            </div>
-                                          </div>
-                                          <!-- Other Profession  -->
-                                          <div
-                                            class="flex justify-center"
-                                            v-if="
-                                              allowOtherProfChange[
-                                                education.department.id
-                                              ] && education.professionType
-                                            "
-                                          >
-                                            <div class="mb-3 xl:w-96">
-                                              <label
-                                                for="exampleFormControlInput1"
-                                                class="
-                                                  form-label
-                                                  inline-block
-                                                  mb-2
-                                                  text-gray-700
-                                                "
-                                                >Other Profession</label
-                                              >
-                                              <input
-                                                type="text"
-                                                @input="
-                                                  setOtherProfession(
-                                                    education,
-                                                    education.department.id,
-                                                    $event,
-                                                    'english'
-                                                  )
-                                                "
-                                                class="
-                                                  form-control
-                                                  block
-                                                  w-full
-                                                  px-3
-                                                  py-1.5
-                                                  text-base
-                                                  font-normal
-                                                  text-gray-700
-                                                  bg-white bg-clip-padding
-                                                  border
-                                                  border-solid
-                                                  border-gray-300
-                                                  rounded
-                                                  transition
-                                                  ease-in-out
-                                                  m-0
-                                                  focus:text-gray-700
-                                                  focus:bg-white
-                                                  focus:border-blue-600
-                                                  focus:outline-none
-                                                "
-                                                id="exampleFormControlInput1"
-                                                placeholder="Type name"
-                                              />
-                                            </div>
-                                            <div class="mb-3 xl:w-96">
-                                              <label
-                                                for="exampleFormControlInput1"
-                                                class="
-                                                  form-label
-                                                  inline-block
-                                                  mb-2
-                                                  text-gray-700
-                                                "
-                                                >Other Profession Amharic
-                                                Name</label
-                                              >
-                                              <input
-                                                type="text"
-                                                @input="
-                                                  setOtherProfession(
-                                                    education,
-                                                    education.department.id,
-                                                    $event,
-                                                    'amharic'
-                                                  )
-                                                "
-                                                class="
-                                                  form-control
-                                                  block
-                                                  w-full
-                                                  px-3
-                                                  py-1.5
-                                                  text-base
-                                                  font-normal
-                                                  text-gray-700
-                                                  bg-white bg-clip-padding
-                                                  border
-                                                  border-solid
-                                                  border-gray-300
-                                                  rounded
-                                                  transition
-                                                  ease-in-out
-                                                  m-0
-                                                  focus:text-gray-700
-                                                  focus:bg-white
-                                                  focus:border-blue-600
-                                                  focus:outline-none
-                                                "
-                                                id="exampleFormControlInput1"
-                                                placeholder="Type amharic name"
-                                              />
-                                            </div>
-                                          </div>
-                                          <!-- Other Profession  -->
-                                        </div>
-                                      </div>
-
-                                      <div class="grid grid-cols-2 gap-4">
-                                        <p
-                                          class="
-                                            text-primary-600 text-base
-                                            font-bold
+                                          :id="education.department.id"
+                                          class="flex justify-center"
+                                          v-if="
+                                            education.professionType &&
+                                            allowProfChange[
+                                              education.department.id
+                                            ]
                                           "
                                         >
-                                          Prefix
-                                        </p>
-                                        <div
-                                          class="text-black text-base font-bold"
-                                        >
-                                          <button
-                                            class="
-                                              inline-block
-                                              px-6
-                                              text-white
-                                              bg-primary-600
-                                              font-medium
-                                              text-xs
-                                              leading-tight
-                                              uppercase
-                                              rounded
-                                              shadow-lg
-                                              hover:text-primary-600
-                                              hover:shadow-lg
-                                              focus:bg-purple-700
-                                              focus:shadow-lg
-                                              focus:outline-none
-                                              focus:ring-0
-                                              active:bg-purple-800
-                                              active:shadow-lg
-                                              transition
-                                              duration-150
-                                              ease-in-out
-                                            "
-                                            @click="
-                                              showPrefix(education.departmentId)
-                                            "
-                                          >
-                                            Add Prefix
-                                          </button>
-                                          <div
-                                            class="mb-3 w-full"
-                                            v-if="
-                                              showPrefixFor[
-                                                education.departmentId
-                                              ]
-                                            "
-                                          >
+                                          <div class="mb-3 w-full">
                                             <select
                                               class="
                                                 form-select
@@ -802,68 +634,231 @@
                                                 focus:border-blue-600
                                                 focus:oProfessionutline-none
                                               "
-                                              @click="changePrefix(education)"
-                                              v-model="education.prefixId"
+                                              @click="checkForOther(education)"
+                                              v-model="
+                                                tempProf[
+                                                  education.department.id
+                                                ]
+                                              "
                                               aria-label="Default select example"
                                             >
                                               <option selected disabled>
-                                                Choose prefix
+                                                Choose new profession
                                               </option>
                                               <option
-                                                v-for="prefix in prefixes"
-                                                :key="prefix.id"
-                                                :value="prefix.id"
+                                                v-for="prof in newProf[
+                                                  education.department.id
+                                                ]"
+                                                :key="prof.id"
+                                                :value="prof"
                                               >
-                                                {{ prefix.name }}
+                                                {{ prof.name }}
                                               </option>
                                             </select>
                                           </div>
                                         </div>
+                                        <!-- Other Profession  -->
+                                        <div
+                                          class="flex justify-center"
+                                          v-if="
+                                            allowOtherProfChange[
+                                              education.department.id
+                                            ] && education.professionType
+                                          "
+                                        >
+                                          <div class="mb-3 xl:w-96">
+                                            <label
+                                              for="exampleFormControlInput1"
+                                              class="
+                                                form-label
+                                                inline-block
+                                                mb-2
+                                                text-gray-700
+                                              "
+                                              >Other Profession</label
+                                            >
+                                            <input
+                                              type="text"
+                                              @input="
+                                                setOtherProfession(
+                                                  education,
+                                                  education.department.id,
+                                                  $event,
+                                                  'english'
+                                                )
+                                              "
+                                              class="
+                                                form-control
+                                                block
+                                                w-full
+                                                px-3
+                                                py-1.5
+                                                text-base
+                                                font-normal
+                                                text-gray-700
+                                                bg-white bg-clip-padding
+                                                border
+                                                border-solid
+                                                border-gray-300
+                                                rounded
+                                                transition
+                                                ease-in-out
+                                                m-0
+                                                focus:text-gray-700
+                                                focus:bg-white
+                                                focus:border-blue-600
+                                                focus:outline-none
+                                              "
+                                              id="exampleFormControlInput1"
+                                              placeholder="Type name"
+                                            />
+                                          </div>
+                                          <div class="mb-3 xl:w-96">
+                                            <label
+                                              for="exampleFormControlInput1"
+                                              class="
+                                                form-label
+                                                inline-block
+                                                mb-2
+                                                text-gray-700
+                                              "
+                                              >Other Profession Amharic
+                                              Name</label
+                                            >
+                                            <input
+                                              type="text"
+                                              @input="
+                                                setOtherProfession(
+                                                  education,
+                                                  education.department.id,
+                                                  $event,
+                                                  'amharic'
+                                                )
+                                              "
+                                              class="
+                                                form-control
+                                                block
+                                                w-full
+                                                px-3
+                                                py-1.5
+                                                text-base
+                                                font-normal
+                                                text-gray-700
+                                                bg-white bg-clip-padding
+                                                border
+                                                border-solid
+                                                border-gray-300
+                                                rounded
+                                                transition
+                                                ease-in-out
+                                                m-0
+                                                focus:text-gray-700
+                                                focus:bg-white
+                                                focus:border-blue-600
+                                                focus:outline-none
+                                              "
+                                              id="exampleFormControlInput1"
+                                              placeholder="Type amharic name"
+                                            />
+                                          </div>
+                                        </div>
+                                        <!-- Other Profession  -->
                                       </div>
                                     </div>
-                                  </div>
-                                  <div
-                                    class="flex justify-center"
-                                    v-if="showDepRemark"
-                                  >
-                                    <div class="mb-3 xl:w-96">
-                                      <label
-                                        for="exampleFormControlTextarea1"
+
+                                    <div class="grid grid-cols-2 gap-4">
+                                      <p
                                         class="
-                                          form-label
-                                          inline-block
-                                          mb-2
-                                          text-gray-700
+                                          text-primary-600 text-base
+                                          font-bold
                                         "
-                                        >Remark on why you removed the
-                                        department</label
                                       >
-                                      <textarea
-                                        v-model="newLicense.remark"
-                                        class="
-                                          form-control
-                                          block
-                                          w-full
-                                          px-3
-                                          py-1.5
-                                          text-base
-                                          font-normal
-                                          text-gray-700
-                                          bg-white bg-clip-padding
-                                          border border-solid border-gray-300
-                                          rounded
-                                          transition
-                                          ease-in-out
-                                          m-0
-                                          focus:text-gray-700
-                                          focus:bg-white
-                                          focus:border-blue-600
-                                          focus:outline-none
-                                        "
-                                        id="exampleFormControlTextarea1"
-                                        rows="3"
-                                        placeholder="Remark note"
-                                      ></textarea>
+                                        Prefix
+                                      </p>
+                                      <div
+                                        class="text-black text-base font-bold"
+                                      >
+                                        <button
+                                          class="
+                                            inline-block
+                                            px-6
+                                            text-white
+                                            bg-primary-600
+                                            font-medium
+                                            text-xs
+                                            leading-tight
+                                            uppercase
+                                            rounded
+                                            shadow-lg
+                                            hover:text-primary-600
+                                            hover:shadow-lg
+                                            focus:bg-purple-700
+                                            focus:shadow-lg
+                                            focus:outline-none
+                                            focus:ring-0
+                                            active:bg-purple-800
+                                            active:shadow-lg
+                                            transition
+                                            duration-150
+                                            ease-in-out
+                                          "
+                                          @click="
+                                            showPrefix(education.departmentId)
+                                          "
+                                        >
+                                          Add Prefix
+                                        </button>
+                                        <div
+                                          class="mb-3 w-full"
+                                          v-if="
+                                            showPrefixFor[
+                                              education.departmentId
+                                            ]
+                                          "
+                                        >
+                                          <select
+                                            class="
+                                              form-select
+                                              appearance-none
+                                              block
+                                              w-full
+                                              px-3
+                                              py-1.5
+                                              text-base
+                                              font-normal
+                                              text-gray-700
+                                              bg-white
+                                              bg-clip-padding
+                                              bg-no-repeat
+                                              border
+                                              border-solid
+                                              border-gray-300
+                                              rounded
+                                              transition
+                                              ease-in-out
+                                              m-0
+                                              focus:text-gray-700
+                                              focus:bg-white
+                                              focus:border-blue-600
+                                              focus:oProfessionutline-none
+                                            "
+                                            @click="changePrefix(education)"
+                                            v-model="education.prefixId"
+                                            aria-label="Default select example"
+                                          >
+                                            <option selected disabled>
+                                              Choose prefix
+                                            </option>
+                                            <option
+                                              v-for="prefix in prefixes"
+                                              :key="prefix.id"
+                                              :value="prefix.id"
+                                            >
+                                              {{ prefix.name }}
+                                            </option>
+                                          </select>
+                                        </div>
+                                      </div>
                                     </div>
                                   </div>
                                 </div>
@@ -1092,8 +1087,9 @@
                         >
                           Save as Draft
                         </button>
+
                         <button
-                          v-if="showTransferToAdminButton"
+                          v-if="showTransferToFederal == true"
                           class="
                             inline-block
                             px-6
@@ -1265,7 +1261,7 @@
                 </div>
               </div>
               <Modal v-if="showRemark">
-                <div class="h-screen overflow-y-scroll">
+                <div class="h-screen overflow-y-hidden">
                   <div
                     class="
                       card-wrapper
@@ -1275,225 +1271,224 @@
                       flex
                       justify-center
                       relative
-                      mb-xl
-                      mt-large
+                      mt-20
                     "
                   >
-                    <div class="">
-                      <!--content-->
-                      <div class="w-full">
-                        <!--header-->
+                    <!--content-->
+                    <div class="w-full">
+                      <!--header-->
+                      <div
+                        class="
+                          flex
+                          items-start
+                          justify-between
+                          border-b border-solid border-grey-100
+                          m-4
+                          rounded-t
+                        "
+                      >
+                        <h3 class="text-3xl font-semibold">Remark</h3>
                         <div
                           class="
-                            flex
-                            items-start
-                            justify-between
-                            border-b border-solid border-grey-100
-                            mt-medium
-                            rounded-t
+                            bg-transparent
+                            border-0
+                            text-black
+                            opacity-5
+                            float-right
+                            text-3xl
+                            leading-none
+                            font-semibold
+                            outline-none
+                            cursor-pointer
                           "
+                          v-on:click="showRemark = false"
                         >
-                          <h3 class="text-3xl font-semibold">Remark</h3>
-                          <div
-                            class="
-                              bg-transparent
-                              border-0
-                              text-black
-                              opacity-5
-                              float-right
-                              text-3xl
-                              leading-none
-                              font-semibold
-                              outline-none
-                              focus:outline-none
-                            "
-                            v-on:click="toggleModal()"
-                          >
-                            <span class="text-3xl"> × </span>
-                          </div>
+                          <span class="text-3xl"> × </span>
                         </div>
-                        <!--body-->
-                        <div class="modalBody pb-xl">
-                          <div class="flex mt-medium justify-center">
-                            <h2>Declined documents</h2>
-                          </div>
-                          <div class="relative p-6 flex-auto w-full">
-                            <div class="flex justify-center">
-                              <div class="mt-12">
-                                <svg
-                                  width="40"
-                                  height="60"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  version="1.1"
-                                  @click="previousRemark()"
-                                  v-if="ind != 0"
-                                >
-                                  <polyline
-                                    points="30 10 10 30 30 50"
-                                    stroke="rgba(103,128,159,1)"
-                                    stroke-width="3"
-                                    stroke-linecap="butt"
-                                    fill="none"
-                                    stroke-linejoin="round"
-                                  >
-                                    &gt;
-                                  </polyline>
-                                </svg>
-                              </div>
-
-                              <div
-                                class="
-                                  flex flex-col
-                                  justify-center
-                                  items-center
-                                "
+                      </div>
+                      <!--body-->
+                      <div
+                        class="modalBody pb-xl"
+                        v-if="nothingDropped == true"
+                      >
+                        <div class="flex mt-medium justify-center">
+                          <h2>Declined documents</h2>
+                        </div>
+                        <div class="relative p-6 flex-auto w-full">
+                          <div class="flex justify-center">
+                            <div class="mt-12">
+                              <svg
+                                width="40"
+                                height="60"
+                                xmlns="http://www.w3.org/2000/svg"
+                                version="1.1"
+                                @click="previousRemark()"
+                                v-if="ind != 0"
                               >
-                                <div class="mt-8">
-                                  <label
-                                    class="
-                                      justify-center
-                                      items-center
-                                      text-grey-200 text-2xl
-                                    "
+                                <polyline
+                                  points="30 10 10 30 30 50"
+                                  stroke="rgba(103,128,159,1)"
+                                  stroke-width="3"
+                                  stroke-linecap="butt"
+                                  fill="none"
+                                  stroke-linejoin="round"
+                                >
+                                  &gt;
+                                </polyline>
+                              </svg>
+                            </div>
+
+                            <div
+                              class="flex flex-col justify-center items-center"
+                            >
+                              <div class="mt-8">
+                                <label
+                                  class="
+                                    justify-center
+                                    items-center
+                                    text-grey-200 text-2xl
+                                  "
+                                >
+                                  {{ modalDocumentTypeName }}
+                                </label>
+                                <div
+                                  class="
+                                    flex
+                                    justify-center
+                                    flex-wrap
+                                    max-w-sm
+                                    rounded
+                                    overflow-hidden
+                                  "
+                                >
+                                  <picture
+                                    class="imageViewer"
+                                    v-if="rejectedObj.length > 0"
                                   >
-                                    {{ modalDocumentTypeName }}
-                                  </label>
-                                  <div
-                                    class="
-                                      flex
-                                      justify-center
-                                      flex-wrap
-                                      max-w-sm
-                                      rounded
-                                      overflow-hidden
-                                    "
-                                  >
-                                    <picture
-                                      class="imageViewer"
-                                      v-if="rejectedObj.length > 0"
-                                    >
-                                      <img
-                                        v-bind:src="
-                                          googleApi +
-                                          '' +
-                                          rejectedObj[ind].filePath
-                                        "
-                                      />
-                                    </picture>
-                                  </div>
+                                    <img
+                                      v-bind:src="
+                                        googleApi +
+                                        '' +
+                                        rejectedObj[ind].filePath
+                                      "
+                                    />
+                                  </picture>
                                 </div>
                               </div>
+                            </div>
 
-                              <div class="mt-12">
-                                <svg
-                                  width="40"
-                                  height="60"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  version="1.1"
-                                  @click="nextRemark()"
-                                  v-if="ind != rejected.length - 1"
-                                  class="hover:text-primary-60"
+                            <div class="mt-12">
+                              <svg
+                                width="40"
+                                height="60"
+                                xmlns="http://www.w3.org/2000/svg"
+                                version="1.1"
+                                @click="nextRemark()"
+                                v-if="ind != rejected.length - 1"
+                                class="hover:text-primary-60"
+                              >
+                                <polyline
+                                  points="10 10 30 30 10 50"
+                                  stroke="rgba(103,128,159,1)"
+                                  stroke-width="3"
+                                  stroke-linecap="butt"
+                                  fill="none"
+                                  stroke-linejoin="round"
                                 >
-                                  <polyline
-                                    points="10 10 30 30 10 50"
-                                    stroke="rgba(103,128,159,1)"
-                                    stroke-width="3"
-                                    stroke-linecap="butt"
-                                    fill="none"
-                                    stroke-linejoin="round"
-                                  >
-                                    &gt;
-                                  </polyline>
-                                </svg>
-                              </div>
+                                  &gt;
+                                </polyline>
+                              </svg>
                             </div>
                           </div>
                         </div>
-                        <!--footer-->
-                        <label for="" class="ml-12">Remark</label>
-                        <textarea
-                          v-model="newLicense.remark"
+                      </div>
+                      <!--footer-->
+                      <label for="" class="ml-2">{{
+                        nothingDropped
+                          ? "Remark on why you are declining the license"
+                          : "Remark on why you have dropped the department/s"
+                      }}</label>
+                      <textarea
+                        v-model="newLicense.remark"
+                        class="
+                          resize-none
+                          tArea
+                          border
+                          rounded-sm
+                          flex
+                          m-4
+                          w-full
+                        "
+                      ></textarea>
+                      <small class="text-red-300 ml-8" v-if="showRemarkError"
+                        >Remark note must be more than 10 letters</small
+                      >
+                      <div
+                        class="
+                          flex
+                          items-center
+                          justify-center
+                          p-6
+                          border-t border-solid border-blueGray-200
+                          rounded-b
+                        "
+                      >
+                        <button
                           class="
-                            resize-none
-                            tArea
-                            border
-                            rounded-md
-                            flex
-                            ml-12
-                            mb-small
-                            w-full
+                            inline-block
+                            px-6
+                            text-white
+                            bg-primary-600
+                            font-medium
+                            text-xs
+                            leading-tight
+                            uppercase
+                            rounded
+                            shadow-lg
+                            hover:bg-purple-700 hover:shadow-lg
+                            focus:bg-purple-700
+                            focus:shadow-lg
+                            focus:outline-none
+                            focus:ring-0
+                            active:bg-purple-800 active:shadow-lg
+                            transition
+                            duration-150
+                            hover:bg-primary-400 hover:text-white
+                            ease-in-out
                           "
-                        ></textarea>
-                        <small class="text-red-300" v-if="showRemarkError"
-                          >Remark note must be more than 10 letters</small
+                          type="button"
+                          v-on:click="showRemark = false"
                         >
-                        <div
+                          Close
+                        </button>
+                        <button
+                          type="button"
                           class="
-                            flex
-                            items-center
-                            justify-center
-                            p-6
-                            border-t border-solid border-blueGray-200
-                            rounded-b
+                            inline-block
+                            px-6
+                            text-white
+                            bg-primary-600
+                            font-medium
+                            text-xs
+                            leading-tight
+                            uppercase
+                            rounded
+                            shadow-lg
+                            hover:bg-purple-700 hover:shadow-lg
+                            focus:bg-purple-700
+                            focus:shadow-lg
+                            focus:outline-none
+                            focus:ring-0
+                            active:bg-purple-800 active:shadow-lg
+                            transition
+                            duration-150
+                            hover:bg-primary-400 hover:text-white
+                            ease-in-out
                           "
+                          v-on:click="submitRemark(declineAction)"
                         >
-                          <button
-                            class="
-                              inline-block
-                              px-6
-                              text-white
-                              bg-primary-600
-                              font-medium
-                              text-xs
-                              leading-tight
-                              uppercase
-                              rounded
-                              shadow-lg
-                              hover:bg-purple-700 hover:shadow-lg
-                              focus:bg-purple-700
-                              focus:shadow-lg
-                              focus:outline-none
-                              focus:ring-0
-                              active:bg-purple-800 active:shadow-lg
-                              transition
-                              duration-150
-                              hover:bg-primary-400 hover:text-white
-                              ease-in-out
-                            "
-                            type="button"
-                            v-on:click="toggleModal()"
-                          >
-                            Close
-                          </button>
-                          <button
-                            type="button"
-                            class="
-                              inline-block
-                              px-6
-                              text-white
-                              bg-primary-600
-                              font-medium
-                              text-xs
-                              leading-tight
-                              uppercase
-                              rounded
-                              shadow-lg
-                              hover:bg-purple-700 hover:shadow-lg
-                              focus:bg-purple-700
-                              focus:shadow-lg
-                              focus:outline-none
-                              focus:ring-0
-                              active:bg-purple-800 active:shadow-lg
-                              transition
-                              duration-150
-                              hover:bg-primary-400 hover:text-white
-                              ease-in-out
-                            "
-                            v-on:click="submitRemark()"
-                          >
-                            Submit
-                          </button>
-                        </div>
+                          Submit
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -1837,9 +1832,11 @@ export default {
   },
   setup() {
     const route = useRoute();
+    const router = useRouter();
     const store = useStore();
     const toast = useToast();
-    const router = useRouter();
+    let declineAction = ref("DeclineEvent");
+    let nothingDropped = ref(true);
     const options = ref([0, 1, 2]);
     const selectedOptions = ref([0]);
     const newSelectedOptions = ref([0]);
@@ -1849,7 +1846,7 @@ export default {
     const completedSteps = ref(0);
     const totalSteps = ref(0);
     let showPrefixFor = ref([]);
-
+    let dropedDepartment = ref({});
     let isGoodStanding = ref(false);
     let institutions = ref([]);
     let expirationDateExceedTodayError = ref(false);
@@ -1912,7 +1909,7 @@ export default {
     let accepted = ref([]);
     let rejected = ref([]);
     let prefixes = ref({});
-    let showTransferToAdminButton = ref(false);
+    let showTransferToFederal = ref(false);
     let rejectedObj = ref([]);
     let showButtons = ref(false);
     let disableNext = ref(true);
@@ -1941,14 +1938,13 @@ export default {
     let newProf = ref([]);
     let tempProf = ref({});
     let tempPref = ref({});
-    let tempEducation = [];
     let modifiedProfession = [];
     let allowOtherProfChange = ref({});
     let professionalTypes = ref([]);
     let evaluateRoute = ref("/admin/evaluate/NewLicense" + route.params.id);
     const editPersonalData = ref(false);
     let others = ref({});
-
+    let droppedDepartments = ref([]); 
     const editPersonalInfo = () => {
       editPersonalData.value = !editPersonalData.value;
     };
@@ -1969,10 +1965,6 @@ export default {
         .dispatch("reviewer/getNewLicenseApplication", applicationId)
         .then((res) => {
           newLicense.value = res.data.data ? res.data.data : {};
-          tempEducation =
-            res.data.data && res.data.data.educations
-              ? res.data.data.educations
-              : "";
           profileInfo.value =
             newLicense.value && newLicense.value.profile
               ? newLicense.value.profile
@@ -1989,58 +1981,13 @@ export default {
               : {};
           totalSteps.value = docs.value ? docs.value.length : 0;
 
-          fetchDocumentTypes();
-          if (
-            newLicense.value &&
-            newLicense.value.licenseReviewer &&
-            newLicense.value.licenseReviewer.regionId == null
-          ) {
-            showTransferToAdminButton.value = false;
-          }
-          if (
-            newLicense.value &&
-            newLicense.value.applicationStatus.code == "REVDRA"
-          ) {
-            rejected.value = newLicense.value.declinedFields;
-            for (let i in newLicense.value.documents) {
-              for (let j in rejected.value) {
-                if (
-                  newLicense.value.documents[i].documentTypeCode ==
-                  rejected.value[j]
-                ) {
-                  rejectedObj.value.push(newLicense.value.documents[i]);
-                  break;
-                }
-              }
-            }
-            if (rejected.value > 0) {
-              for (let i = 0; i < buttons.value.length; i++) {
-                if (buttons.value[i].code === "APP") {
-                  buttons.value.splice(i, 1);
-                  i--;
-                }
-              }
-            }
+          newLicense.value &&
+          newLicense.value.licenseReviewer &&
+          newLicense.value.licenseReviewer.reviewer.regionId != null
+            ? (showTransferToFederal.value = true)
+            : (showTransferToFederal.value = false);
 
-            accepted.value = newLicense.value.acceptedFields;
-            completedSteps.value = accepted.value.length;
-            index.value = rejected.value.length + accepted.value.length;
-            if (index.value == docs.value.length) {
-              index.value -= 1;
-            }
-            amount.value = ((index.value + 1) / docs.value.length) * 100;
-            width.value = "width:" + amount.value + "%";
-            if (
-              accepted.value.includes(
-                docs.value[index.value - 1].documentTypeCode
-              ) ||
-              rejected.value.includes(
-                docs.value[index.value - 1].documentTypeCode
-              )
-            ) {
-              findDocumentType(documentTypes.value, docs.value[index.value]);
-            }
-          }
+          fetchDocumentTypes();
         });
 
       applicationType.value = "New License";
@@ -2318,6 +2265,7 @@ export default {
 
       if (actionValue == "DeclineEvent" && newLicense.value.remark == null) {
         showRemarkError.value = true;
+        nothingDropped.value == true
         smsMessage = newLicense.value
           ? "Dear applicant your applied new license of number " +
             newLicense.value.newLicenseCode +
@@ -2326,9 +2274,12 @@ export default {
         showRemark.value = true;
         sendDeclinedData.value = false;
         return;
-      }
-
-      showRemarkError.value = false;
+      }else if (nothingDropped.value == false) {
+        showRemarkError.value = true;
+        showRemark.value = true;
+        sendDeclinedData.value = false; 
+        return;
+      } else showRemarkError.value = false;
       let checkProfessionResult = false;
       newLicense.value.isProfessionChanged == false;
 
@@ -2415,13 +2366,27 @@ export default {
         }
       });
     };
-    const submitRemark = () => {
-      showRemark.value = !showRemark.value;
+    const submitRemark = (finalAction) => {
+      showRemarkError.value = false;
+      showRemark.value = false;
       sendDeclinedData.value = true;
-      fromModalSendDeclinedData.value = true;
-      action("DeclineEvent");
+      action(finalAction);
     };
-
+    const droppedDepartment = (education) => {
+      droppedDepartments.value.push(education);
+      droppedDepartments.value = [...new Set(droppedDepartments.value)];
+      if (droppedDepartments.value && droppedDepartments.value.length > 0) {
+        declineAction.value = "ApproveEvent";
+        if (rejected.value && rejected.value.length == 0) {
+          nothingDropped.value = false;
+        }
+      } else {
+        declineAction.value = "DeclineEvent";
+        if (rejected.value && rejected.value.length == 0) {
+          nothingDropped.value = true;
+        }
+      }
+    };
     const openPdfInNewTab = (pdfPath) => {
       pdfFilePath.value = pdfPath;
       window.open(googleApi + "" + pdfPath, "_blank");
@@ -2461,9 +2426,8 @@ export default {
             icon: true,
           });
           isLoadingName.value = false;
-          setTimeout(() => {
-            window.location.reload();
-          }, 3000);
+          editPersonalData.value = false;
+          created(route.params.id);
         })
         .catch(() => {
           toast.error("Error Occured", {
@@ -2474,27 +2438,10 @@ export default {
             icon: true,
           });
           isLoadingName.value = false;
-          setTimeout(() => {
-            window.location.reload();
-          }, 3000);
         });
     };
 
     const checkResult = ref(false);
-
-    let newEducation = [];
-    const removeDepartment = (education) => {
-      if (
-        newEducation.filter((ed) => ed.id == education.id).length == 0 &&
-        newEducation.length != 0
-      ) {
-        showDepRemark.value = true;
-        newEducation.push(education);
-      } else {
-        newEducation = tempEducation.filter((ed) => ed.id != education.id);
-        showDepRemark.value = false;
-      }
-    };
 
     let countProLength = ref(0);
     const addPrefix = (professionId, event) => {
@@ -2723,6 +2670,7 @@ export default {
         allowOtherProfChange.value[education.department.id] = false;
       }
     };
+
     onMounted(() => {
       created(route.params.id);
       store.dispatch("goodstanding/getInstitution").then((res) => {
@@ -2739,12 +2687,15 @@ export default {
       index,
       docs,
       prefixes,
+      dropedDepartment,
       resultQuery,
       next,
       setInput,
       previous,
       nextRemark,
       previousRemark,
+      droppedDepartment,
+      droppedDepartments, 
       amount,
       supervise,
       showOptions,
@@ -2761,9 +2712,10 @@ export default {
       showDateError,
       endDate,
       isLoadingAction,
+      nothingDropped,
       accept,
       transferToFederal,
-      showTransferToAdminButton,
+      showTransferToFederal,
       showTransferSuccessMessage,
       showTransferErrorMessage,
       reject,
@@ -2779,7 +2731,6 @@ export default {
       profileInfo,
       disableNext,
       showPrefixFor,
-      removeDepartment,
       changeAction,
       newProf,
       checkForOther,
@@ -2790,6 +2741,7 @@ export default {
       showRemark,
       tempProf,
       activeClass,
+      declineAction,
       errorClass,
       showPrefix,
       submitRemark,

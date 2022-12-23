@@ -80,7 +80,7 @@ const routes = [
   {
     path: "/menu",
     name: "Menu",
-    component: () => import("../views/Applicant/Menu.vue")
+    component: () => import("../components/Applicant/HomePage/Menu.vue")
   },
 
   //Applicant Side New License
@@ -535,7 +535,7 @@ const routes = [
     name: "RenewalEvaluate",
     component: () =>
       import(
-        "../components/Reviewer/HomeComponents/Renewal/InReview/inReviewEvaluationModal.vue"
+        "../components/Reviewer/HomeComponents/Renewal/InReview/inReviewEvaluation.vue"
       )
   },
 
@@ -703,6 +703,14 @@ const routes = [
       )
   },
   {
+    path: "/admin/lookupManagement/applicantPosition",
+    name: "ApplicantPositionLookupManagement",
+    component: () =>
+      import(
+        "../components/Reviewer/HomeComponents/LookupManagement/applicantPosition/applicantPosition.vue"
+      )
+  },
+  {
     path: "/admin/lookupManagement/educationLevel",
     name: "EducationLevelLookupManagement",
     component: () =>
@@ -756,15 +764,15 @@ router.beforeEach(async (to, from, next) => {
     next("/admin/list");
   }
   if (to.path != "/Applicant/NewLicense") {
-    window.localStorage.setItem("NLApplicationData", ""); 
-    window.indexedDB.deleteDatabase("NLdocumentUploads");
+    window.localStorage.removeItem("NLApplicationData"); 
+    window.indexedDB.deleteDatabase("NLdocumentUploads"); 
   }
   if (to.path != "/Applicant/Renewal") {
-    window.localStorage.setItem("RNApplicationData", "");
+    window.localStorage.removeItem("RNApplicationData");
     window.indexedDB.deleteDatabase("RNdocumentUploads");
   }
   if (to.path != "/Applicant/GoodStanding") {
-    window.localStorage.setItem("GSApplicationData", "");
+    window.localStorage.removeItem("GSApplicationData");
     window.indexedDB.deleteDatabase("GSdocumentUploads");
   }
 

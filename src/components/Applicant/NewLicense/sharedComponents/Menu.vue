@@ -1,9 +1,9 @@
 <template>
-  <div class="main" id="main">
+  <div class="main " id="main">
     <side-nav></side-nav>
-    <div class="content" id="mainContent">
+    <div class="content  " id="mainContent">
       <top-nav></top-nav>
-      <div class="mt-8 ml-8  overflow-y-scroll">
+      <div class="mt-8 ml-8  ">
       <slot></slot>
       </div>
     </div>

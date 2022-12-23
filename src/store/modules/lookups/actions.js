@@ -117,7 +117,16 @@ export default {
   },
   async getApplicantTitles() {
     try {
-      const resp = await ApiService.get(baseUrl + "/applicantTitles");
+      const resp = await ApiService.get(baseUrl + "/lookups/applicantTitles");
+      return resp;
+    } catch (error) {
+      const resp = error;
+      return resp;
+    }
+  },
+  async getApplicantPositions() {
+    try {
+      const resp = await ApiService.get(baseUrl + "/lookups/applicantPositions");
       return resp;
     } catch (error) {
       const resp = error;
@@ -200,7 +209,18 @@ export default {
   async addApplicantTitle(id, data) {
     try {
       const resp = await ApiService.post(
-        baseUrl + "/lookups/addApplicantTitle",
+        baseUrl + "/lookups/lookups/addApplicantTitle",
+        data
+      );
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async addApplicantPosition(id, data) {
+    try {
+      const resp = await ApiService.post(
+        baseUrl + "/lookups/addApplicantPosition",
         data
       );
       return resp;
@@ -289,7 +309,18 @@ export default {
   async updateApplicantTitle({ commit }, data) {
     try {
       const resp = await ApiService.put(
-        baseUrl + "/lookups/applicantTitles/" + data.id,
+        baseUrl + "/lookups/applicantTitle/" + data.id,
+        data
+      );
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async updateApplicantPosition({ commit }, data) {
+    try {
+      const resp = await ApiService.put(
+        baseUrl + "/lookups/applicantPosition/" + data.id,
         data
       );
       return resp;

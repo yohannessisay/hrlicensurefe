@@ -5,22 +5,22 @@
   <!-- Sidebar -->
   <section class="home-section">
     <!-- Header -->
-    <reviewer-nav-bar> 
-    
-      <ol class="list-reset flex">
-          <li>
-            <router-link to="/admin/review"
-              ><span class="text-primary-600 text-base">Home</span></router-link
-            >
-          </li>
-          <li><span class="text-gray-500 mx-2">/</span></li>
-    
-          <li>
-            <a href="#" class="pointer-events-none text-lg text-grey-300"
-              >Applicant Title Management</a
-            >
-          </li>
-        </ol></reviewer-nav-bar>
+    <reviewer-nav-bar
+      ><ol class="list-reset flex">
+        <li>
+          <router-link to="/admin/review"
+            ><span class="text-primary-600 text-base">Home</span></router-link
+          >
+        </li>
+        <li><span class="text-gray-500 mx-2">/</span></li>
+
+        <li>
+          <a href="#" class="pointer-events-none text-lg text-grey-300"
+            >Applicant Titles Management</a
+          >
+        </li>
+      </ol></reviewer-nav-bar
+    >
     <!-- Header -->
 
     <!-- Main Content -->
@@ -53,7 +53,7 @@
               data-bs-target="#addModal"
             >
               <i class="fa fa-plus text-xl"></i>
-              Add Department
+              Add Applicant Title
             </button>
           </p>
         </div>
@@ -61,11 +61,11 @@
         <div class="w-full mt-8 rounded-xl">
           <vue-table-lite
             :is-static-mode="true"
-            :is-loading="departmentsTable.isLoading"
-            :columns="departmentsTable.columns"
-            :rows="departmentsTable.rows"
-            :total="departmentsTable.totalRecordCount"
-            :sortable="departmentsTable.sortable"
+            :is-loading="apTitleTable.isLoading"
+            :columns="apTitleTable.columns"
+            :rows="apTitleTable.rows"
+            :total="apTitleTable.totalRecordCount"
+            :sortable="apTitleTable.sortable"
             @is-finished="tableLoadingFinish"
             @row-clicked="rowClicked"
           ></vue-table-lite>
@@ -102,21 +102,22 @@ export default {
   setup() {
     const store = useStore();
 
-    let departmentsTable = ref({ isLoading: true });
-    let departmentsTableData = [];
+    let apTitleTable = ref({ isLoading: true });
+    let apTitleTableData = [];
     let showAddButton = ref(false);
-    let editModalData = ref({});
-    const fetchDepartments = () => {
+    let editModalData = ref({ finalStatus: false, Name: "" });
+    const fetchApplicantTitles = () => {
       store.dispatch("lookups/getApplicantTitles").then((res) => {
         res.data.data.forEach((element) => {
-          departmentsTableData.push({
+          apTitleTableData.push({
             id: element.id ? element.id : "",
             Name: element.name ? element.name : "",
             Code: element.code ? element.code : "",
-            Status: element.status ? element.status : "",
+            Status: element && element.status == true ? "Active" : "Inactive",
+            finalStatus: element.status,
           });
         });
-        departmentsTable.value = {
+        apTitleTable.value = {
           isLoading: false,
           columns: [
             {
@@ -141,7 +142,14 @@ export default {
             {
               label: "Status",
               field: "Status",
-              width: "25%",
+              width: "30%",
+              display: function (row) {
+                return row.Status && row.Status == "Active"
+                  ? '<span  class="activeElement" >  ' + row.Status + " </span>"
+                  : '<span  class="bg-red-300 rounded-3xl p-1 text-white font-bold" >' +
+                      row.Status +
+                      " </span>";
+              },
               sortable: true,
             },
             {
@@ -157,8 +165,8 @@ export default {
               },
             },
           ],
-          rows: departmentsTableData,
-          totalRecordCount: departmentsTableData.length,
+          rows: apTitleTableData,
+          totalRecordCount: apTitleTableData.length,
           sortable: {
             order: "id",
             sort: "asc",
@@ -168,9 +176,8 @@ export default {
       });
     };
 
-
     const tableLoadingFinish = () => {
-      departmentsTable.value.isLoading = false;
+      apTitleTable.value.isLoading = false;
       let elements = document.getElementsByClassName("edit-btn");
       Array.prototype.forEach.call(elements, function (element) {
         if (element.classList.contains("edit-btn")) {
@@ -178,15 +185,14 @@ export default {
         }
       });
     };
-    const rowClicked = (row) => { 
+    const rowClicked = (row) => {
       editModalData.value = row;
     };
     onMounted(() => {
-     
-      fetchDepartments();
+      fetchApplicantTitles();
     });
     return {
-      departmentsTable,
+      apTitleTable,
       showAddButton,
       editModalData,
       rowClicked,
@@ -221,5 +227,14 @@ export default {
   margin-right: -16px;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
+}
+</style>
+<style>
+.activeElement {
+  background: green;
+  border-radius: 20px;
+  padding: 4px;
+  color: white;
+  font-weight: 800;
 }
 </style>

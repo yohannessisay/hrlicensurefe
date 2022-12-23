@@ -1,5 +1,5 @@
 import ApiService from "../../../services/api.service";
-import { baseUrl } from "../../../composables/baseURL"; 
+import { baseUrl } from "../../../composables/baseURL";
 export default {
   async getNewLicenseReport() {
     try {
@@ -13,23 +13,22 @@ export default {
   },
   async getNewLicenseUnassigned(context, statusId) {
     const url = baseUrl + "/newLicenses/status/" + statusId;
-    const resp = await ApiService.get(url); 
+    const resp = await ApiService.get(url);
     const unassignedApplications = resp.data.data.filter((unassigned) => {
       return unassigned.transferFromId == null;
-    }); 
+    });
     return unassignedApplications;
   },
   async getNewLicenseFromOtherRegion(context, statusId) {
-   
     const url = baseUrl + "/newLicenses/status/" + statusId;
     const resp = await ApiService.get(url);
 
     const transferdApplications = resp.data.data.filter((unassigned) => {
       return unassigned.transferFromId != null;
-    }); 
+    });
     return transferdApplications;
   },
- 
+
   async getNewLicenseUnfinished(context, adminStatus) {
     const url = baseUrl + "/newLicenses/status/" + adminStatus[0];
 
@@ -91,22 +90,15 @@ export default {
 
     const declined = resp.data.data.filter(function(e) {
       return (
-        e.licenseReviewer && e.licenseReviewer.reviewerId === adminStatus[1]
+        e.licenseReviewer && e.licenseReviewer.reviewerId == adminStatus[1]
       );
     });
-    return declined;
-  },
-
-  async getNewLicenseOthersDeclined(context, adminStatus) {
-    const url = baseUrl + "/newLicenses/status/" + adminStatus[0];
-    const resp = await ApiService.get(url);
-
     const othersDeclined = resp.data.data.filter(function(e) {
       return (
-        e.licenseReviewer && e.licenseReviewer.reviewerId !== adminStatus[1]
+        e.licenseReviewer && e.licenseReviewer.reviewerId != adminStatus[1]
       );
     });
-    return othersDeclined;
+    return { byYou: declined, byOthers: othersDeclined };
   },
 
   async getNewLicenseUnderSuperVision(context, adminStatus) {
@@ -131,7 +123,6 @@ export default {
     return othersUnderSuperVision;
   },
 
- 
   async getNewLicenseOnReview(context, adminStatus) {
     const url = baseUrl + "/newlicenses/status/" + adminStatus[0];
     const resp = await ApiService.get(url);
@@ -181,10 +172,16 @@ export default {
     return othersOnReview;
   },
 
-  async getNewLicenseLicensed() {
+  async getNewLicenseLicensed(context, adminId) {
     const url = baseUrl + "/newlicenses/all/licensed";
     const resp = await ApiService.get(url);
-    return resp.data.data;
+    const byYou = resp.data.data.filter(function(e) {
+      return e.licenseReviewer && e.licenseReviewer.reviewerId == adminId;
+    });
+    const licensed = resp.data.data.filter(function(e) {
+      return e.licenseReviewer && e.licenseReviewer.reviewerId != adminId;
+    });
+    return { byYou: byYou, byOthers: licensed };
   },
 
   async getNewLicenseReApply(context, adminStatus) {

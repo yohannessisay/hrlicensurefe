@@ -166,10 +166,11 @@
 import { useStore } from "vuex";
 import { ref, onMounted } from "vue";
 import { googleApi } from "@/composables/baseURL";
-
+import { useRouter } from "vue-router";
 export default {
   setup() {
     const store = useStore();
+    const router = useRouter();
     let showDD = ref(false);
     let showNotificationDropDown = ref(false);
     let isFirstTime = ref(false);
@@ -178,14 +179,19 @@ export default {
       localStorage.removeItem("token");
       localStorage.removeItem("userId");
       localStorage.removeItem("GSApplicationData");
-      localStorage.removeItem("RNApplicationImageData");
-      localStorage.removeItem("NlApplicationImageData");
       localStorage.removeItem("RNApplicationData");
       localStorage.removeItem("NLApplicationData");
-      localStorage.removeItem("isApplicant");
+      localStorage.removeItem("personalInfo");
       localStorage.removeItem("applicantTypeId");
-      location.reload();
-      this.$router.push({ path: "/" });
+      localStorage.removeItem("isApplicant");
+      window.indexedDB.deleteDatabase("NLdocumentUploads");
+      window.indexedDB.deleteDatabase("RNdocumentUploads");
+      window.indexedDB.deleteDatabase("GSdocumentUploads");
+
+      router.push({ path: "/" });
+      window.setTimeout(() => {
+        location.reload();
+      }, 1000);
     };
     const showDropDown = () => {
       showNotificationDropDown.value = false;

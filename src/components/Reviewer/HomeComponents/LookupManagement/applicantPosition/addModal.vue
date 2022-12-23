@@ -13,11 +13,11 @@
       outline-none
       overflow-x-hidden overflow-y-auto
     "
-    id="editModal"
+    id="addModal"
     data-bs-backdrop="static"
     data-bs-keyboard="false"
     tabindex="-1"
-    aria-labelledby="editModalLabel"
+    aria-labelledby="addModalLabel"
     aria-hidden="true"
   >
     <div
@@ -63,9 +63,11 @@
           <div class="modal-body relative">
             <div class="container">
               <section class="text-gray-800">
-                <div class="flex justify-center border-b-2 mb-8">
+                <div class="flex justify-center border-b-2 mb-4">
                   <div class="text-center max-w-full">
-                    <h2 class="text-2xl font-bold">Edit Prefix</h2>
+                    <h2 class="text-2xl font-bold">
+                      Add New Applicant Position
+                    </h2>
                   </div>
                 </div>
 
@@ -101,7 +103,7 @@
                                   duration-200
                                   ease-in-out
                                 "
-                                >Prefix Name</label
+                                >Applicant Position Name</label
                               >
                               <div class="relative flex items-center">
                                 <input
@@ -125,9 +127,10 @@
                                     focus:font-bold
                                     focus:drop-shadow-lg
                                   "
+                                  @keyup="enableSaveButton()"
                                   required
                                   placeholder="Enter name"
-                                  v-model="editData.Name"
+                                  v-model="applicantPositionName"
                                 />
 
                                 <i
@@ -142,65 +145,10 @@
                               </div>
 
                               <small
-                                v-if="showPrefixNameError"
+                                v-if="showApplicantPositionNameError"
                                 class="text-red-300"
-                                >{{ prefixNameError }}</small
+                                >{{ applicantPositionNameError }}</small
                               >
-                            </div>
-
-                            <div class="form-group ml-4 mb-2 mt-8">
-                              <label
-                                for=""
-                                class="
-                                  inline-block
-                                  w-full
-                                  text-md text-primary-600
-                                  font-bold
-                                  text-gray-500
-                                  transition-all
-                                  duration-200
-                                  ease-in-out
-                                  mb-2
-                                "
-                                >Prefix Status</label
-                              >
-                              <div class="toggle slim colour">
-                                <input
-                                  v-model="editData.finalStatus"
-                                  id="isVerified"
-                                  class="toggle-checkbox hidden cursor-pointer"
-                                  type="checkbox"
-                                  :checked="
-                                    editData && editData.finalStatus == true
-                                      ? true
-                                      : false
-                                  "
-                                />
-                                <label
-                                  for="isVerified"
-                                  class="
-                                    toggle-label
-                                    block
-                                    w-12
-                                    h-4
-                                    rounded-full
-                                    transition-color
-                                    duration-150
-                                    ease-out
-                                  "
-                                ></label>
-                                <span
-                                  :class="
-                                    editData && editData.finalStatus == true
-                                      ? 'text-green-200 font-bold'
-                                      : 'text-yellow-300 font-bold'
-                                  "
-                                >
-                                  {{
-                                    editData.finalStatus ? "Active" : "Inactive"
-                                  }}
-                                </span>
-                              </div>
                             </div>
                           </div>
                         </div>
@@ -216,31 +164,20 @@
           class="
             modal-footer
             flex
-            p-2
             justify-center
+            p-2
             border-t border-grey-100
             rounded-b-md
           "
         >
           <button
             type="button"
-            class="
-              inline-block
-              px-6
-              text-white
-              bg-primary-700
-              font-medium
-              text-xs
-              leading-tight
-              uppercase
-              rounded
-              shadow-lg
-              hover:bg-white hover:text-primary-600 hover:border-primary-600
-              transition
-              duration-150
-              ease-in-out
+            :class="
+              applicantPositionNameFilled
+                ? 'inline-block px-6 text-white bg-primary-700 font-medium text-xs leading-tight uppercase  rounded shadow-lg hover:bg-white hover:text-primary-600 hover:border-primary-600 transition duration-150 ease-in-out'
+                : 'inline-block px-6 text-white bg-primary-700 font-medium text-xs leading-tight uppercase  rounded shadow-lg hover:bg-white hover:text-primary-600 hover:border-primary-600 transition duration-150 ease-in-out pointer-events-none opacity-75'
             "
-            @click="savePrefix()"
+            @click="saveapplicantPosition()"
           >
             <i class="fa fa-save"></i>
             Save
@@ -274,66 +211,53 @@
   </div>
 </template>
 <script>
-import { ref, computed } from "vue";
+import { ref } from "vue";
 import Loading from "vue3-loading-overlay";
 import { useStore } from "vuex";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 import { useToast } from "vue-toastification";
 export default {
   components: { Loading },
-  props: ["editModalData"],
-  setup(props) {
+  setup() {
     const store = useStore();
     const toast = useToast();
     let isLoading = ref(false);
-
-    let showPrefixNameError = ref(false);
-    let prefixNameError = ref("");
-    let prefixNameFilled = ref(false);
+    let applicantPositionName = ref("");
+    let showApplicantPositionNameError = ref(false);
+    let applicantPositionNameError = ref("");
+    let applicantPositionNameFilled = ref(false);
     let saveData = ref({});
-    let editData = computed(() =>
-      props.editModalData ? props.editModalData : { Name: "" }
-    );
-    let isActive =
-      editData.value && editData.value.Status
-        ? editData.value.Status
-        : ref(false);
-
-    const changeverified = () => {
-      isActive.value = !isActive.value;
-    };
     const enableSaveButton = () => {
-      if (editData.value.Name.length > 3) {
-        prefixNameFilled.value = true;
+      if (applicantPositionName.value.length > 3) {
+        applicantPositionNameFilled.value = true;
       } else {
-        prefixNameFilled.value = false;
+        applicantPositionNameFilled.value = false;
       }
     };
-    const savePrefix = () => {
+    const saveapplicantPosition = () => {
       let today = new Date().getMilliseconds();
       isLoading.value = true;
 
       //Validation of input
 
-      showPrefixNameError.value = false;
+      showApplicantPositionNameError.value = false;
 
       saveData.value = {
-        id: editData.value.id,
-        name: editData.value.Name ? editData.value.Name : "",
-        code: editData.value
-          ? editData.value.Code
-          : editData.value.Name
-          ? "PP_" + editData.value.Name.slice(0, 4).toUpperCase() + "_" + today
+        name: applicantPositionName.value ? applicantPositionName.value : "",
+        code: applicantPositionName.value
+          ? "AP_" +
+            applicantPositionName.value.slice(0, 4).toUpperCase() +
+            "_" +
+            today
           : "",
-        status: editData.value.finalStatus,
       };
 
       store
-        .dispatch("lookups/updateProfessionalPrefix", saveData.value)
+        .dispatch("lookups/addApplicantPosition", saveData.value)
         .then((res) => {
           isLoading.value = false;
           if (res.data.status == "Success") {
-            toast.success("Updated Successfully", {
+            toast.success("Created Successfully", {
               timeout: 5000,
               position: "bottom-center",
               pauseOnFocusLoss: true,
@@ -342,7 +266,7 @@ export default {
             });
             setTimeout(() => {
               window.location.reload();
-            }, 1000);
+            }, 3000);
           } else {
             toast.error(res.data.message, {
               timeout: 5000,
@@ -356,14 +280,12 @@ export default {
     };
     return {
       isLoading,
-      editData,
-      savePrefix,
+      saveapplicantPosition,
       enableSaveButton,
-      prefixNameFilled,
-      showPrefixNameError,
-      prefixNameError,
-      isActive,
-      changeverified,
+      applicantPositionNameFilled,
+      showApplicantPositionNameError,
+      applicantPositionName,
+      applicantPositionNameError,
     };
   },
 };

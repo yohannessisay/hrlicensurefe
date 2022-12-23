@@ -62,7 +62,7 @@
             <a href="" class="ml-6">
               <i class="bx bx-arrow-to-left text-white "></i>
 
-              <span class="links_name text-white mr-12" style="margin-top:100px;">Home</span>
+              <span class="links_name text-white mr-12"  >Home</span>
             </a>
           </li>
         </router-link>

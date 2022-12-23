@@ -1,64 +1,51 @@
 <template>
-    <main-content>
-  <transition name="fade" mode="out-in">
-    <div v-if="this.activeState == 1"  >
-      <Institution
-        :activeState="1"
-        @changeActiveState="activeState++"
-        @changeActiveStateMinus="activeState--"
-        @applicantTypeValue="applicantTypeSet"
-        @nativeLanguageSet="nativeLanguage"
-        @payrollDocumentSet="payrollDocumentSet"
-        @diplomaSet="diplomaSet"
-      />
-    </div>
-  </transition>
-  <transition name="fade" mode="out-in">
-    <div v-if="this.activeState == 2"  >
-      <Upload
-        :activeState="2"
-        @changeActiveState="activeState++"
-        @changeActiveStateMinus="activeState--"
-        @applicantTypeValue="applicantTypeSet"
-        @nativeLanguageSet="nativeLanguage"
-        @payrollDocumentSet="payrollDocumentSet"
-        @diplomaSet="diplomaSet"
-      />
-    </div>
-  </transition>
-  <transition name="fade" mode="out-in">
-    <div v-if="this.activeState == 3"  >
-      <LicenseSummary
-        :activeState="3"
-        @changeActiveState="activeState++"
-        @changeActiveStateMinus="activeState--"
-        @applicantTypeValue="applicantTypeSet"
-        @nativeLanguageSet="nativeLanguage"
-        @payrollDocumentSet="payrollDocumentSet"
-        @diplomaSet="diplomaSet"
-      />
-    </div>
- 
-  </transition>
-</main-content>
+  <main-content>
+    <transition name="fade" mode="out-in">
+      <div v-if="this.activeState == 1">
+        <Institution
+          @dark-mode="modeToggle()"
+          :activeState="1"
+          @changeActiveState="activeState++"
+          @changeActiveStateMinus="activeState--"
+        />
+      </div>
+    </transition>
+    <transition name="fade" mode="out-in">
+      <div v-if="this.activeState == 2">
+        <Upload
+          @dark-mode="modeToggle()"
+          :activeState="2"
+          @changeActiveState="activeState++"
+          @changeActiveStateMinus="activeState--"
+        />
+      </div>
+    </transition>
+    <transition name="fade" mode="out-in">
+      <div v-if="this.activeState == 3">
+        <LicenseSummary
+          @dark-mode="modeToggle()"
+          :activeState="3"
+          @changeActiveState="activeState++"
+          @changeActiveStateMinus="activeState--"
+        />
+      </div>
+    </transition>
+  </main-content>
 </template>
 
 <script>
 import Institution from "./CreateRenewal/generalInformation.vue";
 import Upload from "./CreateRenewal/Upload.vue";
 
-import LicenseSummary from "./CreateRenewal/LicenseSummary.vue"; 
+import LicenseSummary from "./CreateRenewal/LicenseSummary.vue";
 import MainContent from "./sharedComponents/Menu.vue";
 
 import { useStore } from "vuex";
-import {  useRouter } from "vue-router";
 import { ref, onMounted } from "vue";
 
 export default {
-
-  setup() {
+  setup({ emit }) {
     let store = useStore();
-    let route = useRouter();
     let applicantType = ref(1);
     let activeState = ref(1);
     let applicationStatuses = ref("");
@@ -74,6 +61,8 @@ export default {
     let displayLanguageOption = ref(false);
     let displayPayrollOption = ref(false);
     let eduLevel = ref("");
+
+    let darkMode = ref(false);
     const applicantTypeSet = (params) => {
       if (params == null || params == undefined || params == "") {
         applicantType.value = 3;
@@ -102,16 +91,16 @@ export default {
     };
     const diplomaSet = (params) => {
       if (params == 1) {
-       eduLevel.value = "diploma";
+        eduLevel.value = "diploma";
       }
       if (params == 2) {
-       eduLevel.value = "degree";
+        eduLevel.value = "degree";
       }
       if (params == 3) {
-       eduLevel.value = "masters";
+        eduLevel.value = "masters";
       }
       if (params == 4) {
-       eduLevel.value = "phd";
+        eduLevel.value = "phd";
       }
     };
     const submit = (n) => {
@@ -123,7 +112,7 @@ export default {
         applicationStatuses.value = results;
         if (draftId.value != undefined) {
           if (draftStatus.value == "DRA") {
-            let status = applicationStatuses.value.filter(function(e) {
+            let status = applicationStatuses.value.filter(function (e) {
               return e.code == "DRA";
             });
             buttons.value = status[0]["buttons"];
@@ -134,7 +123,7 @@ export default {
             buttons.value[2] = temp2;
           }
           if (draftStatus.value == "SUB") {
-            let status = applicationStatuses.value.filter(function(e) {
+            let status = applicationStatuses.value.filter(function (e) {
               return e.code == "SUB";
             });
             buttons.value = status[0]["buttons"];
@@ -148,13 +137,13 @@ export default {
             // this.buttons[2] = temp2;
           }
           if (draftStatus.value == "USUP") {
-            let status = this.applicationStatuses.filter(function(e) {
+            let status = this.applicationStatuses.filter(function (e) {
               return e.code == "USUP";
             });
             buttons.value = status[0]["buttons"];
           }
           if (draftStatus.value == "DEC") {
-            let status = applicationStatuses.value.filter(function(e) {
+            let status = applicationStatuses.value.filter(function (e) {
               return e.code == "DEC";
             });
             buttons.value = status[0]["buttons"];
@@ -164,7 +153,7 @@ export default {
             buttons.value[2] = temp3;
           }
         } else {
-          let status = applicationStatuses.value.filter(function(e) {
+          let status = applicationStatuses.value.filter(function (e) {
             return e.code == "INIT";
           });
           buttons.value = status[0]["buttons"];
@@ -173,7 +162,7 @@ export default {
       });
     };
     const fetchApplicationCategory = () => {
-      store.dispatch("renewal/getApplicationCategories").then((res) => { 
+      store.dispatch("renewal/getApplicationCategories").then((res) => {
         const results = res.data.data;
         applicationCategories.value = results;
         const renewalData = applicationCategories.value.filter((item) => {
@@ -187,7 +176,7 @@ export default {
     const fetchDocumentSpec = () => {
       store
         .dispatch("renewal/getDocumentSpecs", applicationId.value)
-        .then((res) => { 
+        .then((res) => {
           const results = res.data.data;
           documentSpecs.value = results;
           store
@@ -217,16 +206,53 @@ export default {
         store.dispatch("renewal/storeRemark", remark.value);
       });
     };
-    onMounted( async () => {
-      {
-        draftId.value = route.params?.id;
-        draftStatus.value = route.params?.status;
-        if (draftId.value != undefined) {
-          fetchDraft(draftId.value);
-        }
-        await fetchApplicationStatuses();
-        await fetchApplicationCategory();
+    const dark = () => { 
+      document.getElementById("mainContent").classList.add("dark-mode");
+      document.getElementById("activeMenu")?.classList.add("dark-mode");
+      document.getElementById("mainSideBar")?.classList.add("dark-mode");
+      document.getElementById("options-menu")?.classList.add("dark-mode");
+      document.getElementById("topNav")?.classList.add("dark-mode");
+      document.getElementById("menu-icon")?.classList.add("dark-mode");
+      document.getElementById("generalInfoMain")?.classList.add("dark-mode");
+
+      darkMode.value = true;
+      localStorage.setItem("darkMode", JSON.stringify(darkMode.value));
+    };
+
+    const light = () => {
+      document.getElementById("mainContent").classList.remove("dark-mode");
+      document.getElementById("activeMenu")?.classList.remove("dark-mode");
+      document.getElementById("topNav")?.classList.remove("dark-mode");
+      document.getElementById("mainSideBar")?.classList.remove("dark-mode");
+      document.getElementById("options-menu")?.classList.remove("dark-mode");
+      document.getElementById("menu-icon")?.classList.remove("dark-mode");
+      document.getElementById("generalInfoMain")?.classList.remove("dark-mode");
+
+      darkMode.value = false;
+      localStorage.setItem("darkMode", JSON.stringify(darkMode.value));
+    };
+    const initiateDarkMode = () => {
+      if (JSON.parse(localStorage.getItem("darkMode")) == true) {
+        dark();
+      } else {
+      light();
       }
+    };
+    const modeToggle = () => {
+      if (
+        localStorage.getItem("darkMode") == true ||
+        darkMode.value ||
+        document.getElementById("main")?.classList.contains("dark-mode")
+      ) {
+        light();
+      } else {
+        dark();
+      }
+    };
+    onMounted(async () => {
+      fetchApplicationStatuses();
+      fetchApplicationCategory();
+      initiateDarkMode();
     });
     return {
       applicantType,
@@ -248,6 +274,7 @@ export default {
       nativeLanguage,
       payrollDocumentSet,
       diplomaSet,
+      modeToggle,
       submit,
       fetchApplicationStatuses,
       fetchApplicationCategory,
@@ -258,11 +285,9 @@ export default {
   components: {
     Institution,
     Upload,
-    LicenseSummary, 
-    MainContent
+    LicenseSummary,
+    MainContent,
   },
-
- 
 };
 </script>
 <style>

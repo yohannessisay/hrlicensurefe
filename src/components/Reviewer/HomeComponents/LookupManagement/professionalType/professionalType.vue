@@ -122,7 +122,10 @@ export default {
               : "",
             Department:
               element && element.department ? element.department.name : "",
-            Status: element.status ? element.status : "",
+            Status: element && element.status == true ? "Active" : "Inactive",
+            finalStatus: element.status,
+            selectedDepartment:element ? element.department : {},
+            selectedEdLevel:element ? element.educationalLevel : {},
             data: element ? element : {},
           });
         });
@@ -157,7 +160,14 @@ export default {
             {
               label: "Status",
               field: "Status",
-              width: "15%",
+              width: "30%",
+              display: function (row) {
+                return row.Status && row.Status == "Active"
+                  ? '<span  class="activeElement" >  ' + row.Status + " </span>"
+                  : '<span  class="bg-red-300 rounded-3xl p-1 text-white font-bold" >' +
+                      row.Status +
+                      " </span>";
+              },
               sortable: true,
             },
             {
@@ -258,5 +268,14 @@ export default {
   margin-right: -16px;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
+}
+</style>
+<style>
+.activeElement {
+  background: green;
+  border-radius: 20px;
+  padding: 4px;
+  color: white;
+  font-weight: 800;
 }
 </style>

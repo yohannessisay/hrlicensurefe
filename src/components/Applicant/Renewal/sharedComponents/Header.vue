@@ -1,51 +1,15 @@
 <template>
-  <div class="top-navbar">
-    <div class="bx bx-menu text-main-400" id="menu-icon"></div>
+  <div class="top-navbar flex justify-items-center">
+    <div id="menu-icon">
+      <i class="bx bx-menu text-main-400" @click="sidebarMenu()"></i>
+    </div>
     <div class="profile">
       <div class="flex items-center space-x-5">
-        <div class="relative inline-block text-left">
-          <a
-            id="options-menu"
-            aria-expanded="true"
-            aria-haspopup="true"
-            v-on:click="showNotification()"
-          >
-          </a>
-          <div
-            v-if="showNotificationDropDown == true"
-            class="
-              origin-top-right
-              absolute
-              right-0
-              w-64
-              rounded-md
-              shadow-lg
-              bg-white
-              focus:outline-none
-            "
-            role="menu"
-            aria-orientation="vertical"
-            aria-labelledby="options-menu"
-          >
-            <div role="none">
-              <li
-                class="
-                  block
-                  px-4
-                  py-2
-                  text-sm text-main-400
-                  hover:bg-gray-100 hover:text-gray-900
-                "
-                role="menuitem"
-              >
-                Your license is about to expire.
-              </li>
-            </div>
-          </div>
-        </div>
-
-        <p class="text-main-400 font-bold" v-text="name.fullName"></p>
-        <div class="relative inline-block text-left">
+        <p
+          class="text-main-400 font-bold"
+          v-text="userInfo ? userInfo.name : ''"
+        ></p>
+        <div class="relative inline-block text-left" style="z-index: 1">
           <a
             class="
               focus:outline-none
@@ -64,10 +28,18 @@
             aria-haspopup="true"
             v-on:click="showDropDown()"
           >
-            <div v-if="!isFirstTime" class="w-12 h-12">
-              <img v-bind:src="pic" alt="image here" class="w-20 h-12" />
+            <div v-if="userInfo != {}" class="w-12 h-12">
+              <img
+                v-bind:src="
+                 userInfo.profilePicturePath
+                    ? googleApi + userInfo.profilePicturePath
+                    : ''
+                "
+                alt="image here"
+                class="w-20 h-12"
+              />
             </div>
-            <div v-if="isFirstTime">
+            <div v-if="userInfo == {}">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="w-12 h-12"
@@ -198,91 +170,56 @@
 import { useStore } from "vuex";
 import { ref, onMounted } from "vue";
 import { googleApi } from "@/composables/baseURL";
-
+import { useRouter } from "vue-router";
 export default {
-  data() {
-    return {
-      auth: false,
-      token: "",
-      showDD: false,
-      showNotificationDropDown: false,
-    };
-  },
-  created() {
-    this.token = localStorage.getItem("token");
-    if (this.token != undefined) this.auth = true;
-  },
-  methods: {
-    updateProfile() {
-      const id = +localStorage.getItem("userId");
-      const url = "/update-profile/:" + id;
-      this.$router.push(url);
-    },
-    logout() {
-      location.reload();
+  setup() {
+    const store = useStore();
+    const router = useRouter();
+    let showDD = ref(false);
+    let showNotificationDropDown = ref(false);
+    let isFirstTime = ref(false);
+    let userInfo = ref({});
+    const logout = () => {
       localStorage.removeItem("token");
       localStorage.removeItem("userId");
       localStorage.removeItem("GSApplicationData");
-      localStorage.removeItem("RNApplicationImageData");
-      localStorage.removeItem("NlApplicationImageData");
       localStorage.removeItem("RNApplicationData");
       localStorage.removeItem("NLApplicationData");
-      localStorage.removeItem("isApplicant");
+      localStorage.removeItem("personalInfo");
       localStorage.removeItem("applicantTypeId");
-      this.$router.push({ path: "/" });
-    },
-    showDropDown() {
-      this.showNotificationDropDown = false;
-      this.showDD = !this.showDD;
-    },
-    showNotification() {
-      this.showNotificationDropDown = !this.showNotificationDropDown;
-      this.showDD = false;
-    },
-    selectMenu(menu) {
+      localStorage.removeItem("isApplicant");
+      window.indexedDB.deleteDatabase("NLdocumentUploads");
+      window.indexedDB.deleteDatabase("RNdocumentUploads");
+      window.indexedDB.deleteDatabase("GSdocumentUploads");
+
+      router.push({ path: "/" });
+      window.setTimeout(() => {
+        location.reload();
+      }, 1000);
+    };
+    const showDropDown = () => {
+      showNotificationDropDown.value = false;
+      showDD.value = !showDD.value;
+    };
+    const showNotification = () => {
+      showNotificationDropDown.value = !showNotificationDropDown.value;
+      showDD.value = false;
+    };
+    const selectMenu = (menu) => {
       if (this.$route.name != "Menu") {
         this.$router.push({ path: "/menu" });
       } else {
         this.$emit("changeDisplay", menu);
       }
-    },
-  },
-  computed() {
-    if (this.token != undefined) {
-      this.auth = true;
-    } else {
-      this.auth = false;
-    }
-  },
-  setup() {
-    const store = useStore();
-    const id = +localStorage.getItem("userId");
-    let name = ref({
-      fullName: "",
-    });
-    let isFirstTime = ref(false);
-    let pic = ref();
-    let blob = ref();
-    const getProfile = () => {
-      store.dispatch("profile/getProfileByUserId", id).then((res) => {
-        getImage(res.data.data);
-        getName(res.data.data);
-      });
     };
 
-    const getImage = (profile) => {
-      if (!profile) {
-        isFirstTime.value = true;
-      } else { 
-        pic.value = googleApi + profile.profilePicture.filePath;
-      }
+    const updateProfile = () => {
+      let id = +localStorage.getItem("userId");
+      let url = "/update-profile/:" + id;
+      this.$router.push(url);
     };
-    const getName = (profile) => {
-      if (profile) {
-        name.value.fullName = profile.name + " " + profile.fatherName;
-      }
-    };
-    onMounted(() => {
+
+    const sidebarMenu = () => {
       let menu = document.querySelector("#menu-icon");
       let sidenavbar = document.querySelector(".side-navbar");
       let content = document.querySelector(".content");
@@ -292,14 +229,22 @@ export default {
         content.classList.toggle("active");
         sidenavbarHeader.classList.toggle("disable-header-text");
       };
-      getProfile();
+    };
+    onMounted(() => {
+      userInfo.value = JSON.parse(window.localStorage.getItem('personalInfo'));
+      
     });
     return {
-      name,
-      getImage,
-      pic,
-      blob,
+      showDropDown,
+      showNotification,
+      selectMenu,
       isFirstTime,
+      googleApi,
+      showDD,
+      userInfo,
+      sidebarMenu,
+      updateProfile,
+      logout,
     };
   },
 };

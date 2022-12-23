@@ -74,8 +74,8 @@
           <div>
             <span class="text-black sm:text-sm">
               {{
-                localData && localData.applicantTypeId
-                  ? localData.applicantTypeId.name
+                localData && localData.applicantType
+                  ? localData.applicantType.name
                   : ""
               }}</span
             >
@@ -99,8 +99,8 @@
           <div>
             <span class="text-black sm:text-sm">
               {{
-                localData && localData.departmentId
-                  ? localData.departmentId.name
+                localData && localData.department
+                  ? localData.department.name
                   : ""
               }}</span
             >
@@ -123,14 +123,14 @@
           <div>
             <span class="text-black sm:text-sm">
               {{
-                localData && localData.professionType
-                  ? localData.professionType.professionTypeId.name
+                localData && localData.GSProfessionals
+                  ? localData.GSProfessionals.professionalTypes.name
                   : ""
               }}
             </span>
           </div>
         </div>
-        <!-- <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
+        <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
           <div>
             <span
               class="
@@ -147,15 +147,13 @@
           <div>
             <span class="text-black sm:text-sm">
               {{
-                localData && localData.professionType.educationLevelId
-                  ? localData.professionType.educationLevelId.name
+                localData && localData.GSProfessionals
+                  ? localData.GSProfessionals.educationLevel.name
                   : ""
               }}
-              
-              </span
-            >
+            </span>
           </div>
-        </div> -->
+        </div>
         <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
           <div>
             <span
@@ -174,8 +172,8 @@
           <div>
             <span class="text-black sm:text-sm">
               {{
-                localData && localData.applicantTitleId
-                  ? localData.applicantTitleId.name
+                localData && localData.applicantTitle
+                  ? localData.applicantTitle.name
                   : ""
               }}</span
             >
@@ -386,7 +384,7 @@
                   <a
                     :href="changed.prevFile"
                     :data-title="changed.docName"
-                    data-lightbox="example-2"
+                    data-lightbox="example-1"
                   >
                     <img
                       :src="changed.prevFile"
@@ -437,7 +435,10 @@
                   aria-expanded="true"
                   aria-controls="collapseOne"
                 >
-                  Previously uploaded files
+                  <span v-if="changedDocs && changedDocs.length > 0">
+                    Previously</span
+                  >
+                  uploaded files
                 </button>
               </h2>
               <div
@@ -462,7 +463,7 @@
                     "
                   >
                     <div
-                      v-if="!professionChanged"
+                      v-if="changedDocs && changedDocs.length > 0"
                       class="
                         mt-4
                         mb-8
@@ -486,7 +487,7 @@
                           <a
                             :href="googleApi + prev.filePath"
                             :data-title="prev.docName"
-                            data-lightbox="example-2"
+                            data-lightbox="example-3"
                           >
                             <img
                               :src="googleApi + prev.filePath"
@@ -512,20 +513,20 @@
                         p-2
                         hover:-translate-y-2
                       "
-                      v-for="prev in prevDocs"
+                      v-for="prev in localFileImages"
                       :key="prev.docName"
                     >
                       <h4 class="text-main-400 font-bold m-2">Document Type</h4>
-                      <h6 class="m-2">{{ prev.documentType.name }}</h6>
+                      <h6 class="m-2">{{ prev.documenttype }}</h6>
                       <div class="flex justify-center rounded-lg p-4">
                         <div class="bg-white rounded-md p-2">
                           <a
-                            :href="prev.path"
-                            :data-title="prev.docName"
-                            data-lightbox="example-2"
+                            :href="prev.image"
+                            :data-title="prev.documenttype"
+                            data-lightbox="example-4"
                           >
                             <img
-                              :src="prev.path"
+                              :src="prev.image"
                               class="w-full h-48 object-cover"
                             />
                           </a>
@@ -675,34 +676,6 @@
           <i class="fa fa-save"></i>
           {{ button.name }}
         </button>
-        <button
-          v-if="button.action == 'DraftEvent'"
-          type="button"
-          class="
-            inline-block
-            px-6
-            border
-            text-main-400
-            hover:bg-main-400
-            hober:border-main-400
-            hover:text-white
-            mt-4
-            bg-white
-            font-medium
-            text-xs
-            leading-tight
-            uppercase
-            rounded
-            shadow-lg
-            transition
-            duration-150
-            ease-in-out
-          "
-          @click="checkFinalStatus(button.action)"
-        >
-          <i class="fa fa-save"></i>
-          {{ button.name }}
-        </button>
       </span>
 
       <button
@@ -800,19 +773,27 @@ export default {
         let license = {
           action: action,
           data: {
-            id: generalInfo.value ? generalInfo.value.id : null,
             applicantId: generalInfo.value.applicantId,
-            applicantTypeId: generalInfo.value.applicantTypeId.id,
+            applicantTypeId: generalInfo.value.applicantTypeId
+              ? generalInfo.value.applicantTypeId
+              : generalInfo.value.applicantType
+              ? generalInfo.value.applicantType.id
+              : null,
+            applicationStatusId: generalInfo.value.applicationStatusId,
             residenceWoredaId: generalInfo.value.woredaSelected
               ? generalInfo.value.woredaSelected.id
               : null,
             applicantTitleId: generalInfo.value.applicantTitleId
-              ? generalInfo.value.applicantTitleId.id
-              : "",
+              ? generalInfo.value.applicantTitleId
+              : generalInfo.value.applicantTitle
+              ? generalInfo.value.applicantTitle.id
+              : null,
             whomGoodStandingFor: generalInfo.value.whomGoodStandingFor
               ? generalInfo.value.whomGoodStandingFor
               : "",
-            applicantPositionId: generalInfo.value.applicantPosition
+            applicantPositionId: generalInfo.value.applicantPositionId
+              ? generalInfo.value.applicantPositionId
+              : generalInfo.value.applicantPosition
               ? generalInfo.value.applicantPosition.id
               : null,
             licenseIssuedDate: generalInfo.value.licenseIssuedDate
@@ -826,24 +807,25 @@ export default {
               ? generalInfo.value.licenseRegistrationNumber
               : "",
             professionType: {
-              professionTypeId: generalInfo.value.professionType
-                ? generalInfo.value.professionType.professionTypeId.id
-                : generalInfo.value.GSProfessionals
-                ? generalInfo.value.GSProfessionals.professionalTypeId
-                : null,
-              educationLevelId: generalInfo.value.professionType
-                ? generalInfo.value.professionType.educationLevelId.id
-                : generalInfo.value.GSProfessionals
-                ? generalInfo.value.GSProfessionals.educationLevelId
-                : null,
+              professionTypeId:
+                generalInfo.value.GSProfessionals &&
+                generalInfo.value.GSProfessionals.professionalTypes
+                  ? generalInfo.value.GSProfessionals.professionalTypes.id
+                  : generalInfo.value.GSProfessionals.professionalTypeId
+                  ? generalInfo.value.GSProfessionals.professionalTypeId
+                  : null,
+              educationLevelId:
+                generalInfo.value.GSProfessionals &&
+                generalInfo.value.GSProfessionals.educationLevel
+                  ? generalInfo.value.GSProfessionals.educationLevel.id
+                  : generalInfo.value.GSProfessionals.educationLevelId
+                  ? generalInfo.value.GSProfessionals.educationLevelId
+                  : null,
             },
             expertLevelId: generalInfo.value.expertLevelId
               ? generalInfo.value.expertLevelId
               : null,
             islegal: true,
-            applicationStatusId: generalInfo.value.applicationStatusId
-              ? generalInfo.value.applicationStatusId
-              : null,
             otherProfessionalType: generalInfo.value.otherProfessionType
               ? generalInfo.value.otherProfessionType
               : "",
@@ -851,12 +833,15 @@ export default {
               .otherProfessionTypeAmharic
               ? generalInfo.value.otherProfessionTypeAmharic
               : "",
-            departmentId: generalInfo.value.departmentId
+            departmentId: generalInfo.value.department
+              ? generalInfo.value.department.id
+              : generalInfo.value.departmentId
               ? generalInfo.value.departmentId
               : null,
             feedback: generalInfo.value.feedback
               ? generalInfo.value.feedback
               : "",
+            id: route.params.id,
           },
         };
         store
@@ -924,9 +909,7 @@ export default {
         .then((res) => {
           savedData.value = res.data.data;
 
-          buttons.value = buttons.value.filter(
-            (ele) => ele.code != "AT" && ele.code != "DRA"
-          );
+          buttons.value = buttons.value.filter((ele) => ele.code != "AT");
           tempDocs.value = store.getters["goodstanding/getTempDocs"];
 
           localData.value = window.localStorage.getItem("GSApplicationData")
@@ -972,7 +955,12 @@ export default {
                   )
                 : {};
 
-              if (localFileImages.value && savedData.value.documents) {
+              if (
+                localFileImages.value &&
+                localFileImages.value.length > 0 &&
+                savedData.value.documents &&
+                savedData.value.documents.length > 0
+              ) {
                 savedData.value.documents.forEach((ele) => {
                   localFileImages.value.forEach((newFile) => {
                     if (
@@ -994,7 +982,7 @@ export default {
                 professionChanged.value = true;
                 // prevDocs.value = localFileImages.value;
                 localFileImages.value.forEach((element) => {
-                  if (!element.commonDocCode) {
+                  if (!element.documentTypeCode) {
                     prevDocs.value.push({
                       documentType: { name: element.documentName },
                       docName: element.documenttype,
@@ -1003,7 +991,9 @@ export default {
                   }
                 });
               } else {
+           
                 prevDocs.value = savedData.value.documents;
+             
               }
             };
           };

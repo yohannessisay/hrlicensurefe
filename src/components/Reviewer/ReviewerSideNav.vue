@@ -1,6 +1,6 @@
 <template>
   <div class="sidebar">
-    <div class="logo-details ">
+    <div class="logo-details">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 39.082 39.096"
@@ -32,24 +32,9 @@
   </div>
 </template>
 <script>
-import { useStore } from "vuex";
-import router from "../../router";
-
 export default {
-  emits: ["menuChange"],
-  setup(props, { emit }) {
-    let mainContent = false;
-    const store = useStore();
-    store.dispatch("ReviewerSideNav/assignSelectedSideBar", "mainPage");
-    const menuChange = (menu) => {
-      emit("menuChange", menu);
-      store.dispatch("ReviewerSideNav/assignSelectedSideBar", menu);
-      router.push("/admin/newLicense");
-    };
-    return {
-      menuChange,
-      mainContent,
-    };
+  setup() {
+    return {};
   },
 };
 </script>
