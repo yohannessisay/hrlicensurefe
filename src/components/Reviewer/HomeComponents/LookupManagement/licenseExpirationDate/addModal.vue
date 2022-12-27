@@ -66,7 +66,7 @@
                 <div class="flex justify-center border-b-2 mb-4">
                   <div class="text-center max-w-full">
                     <h2 class="text-2xl font-bold">
-                      Add New Professional Prefix
+                      Add New License Expiration Date
                     </h2>
                   </div>
                 </div>
@@ -90,7 +90,7 @@
                           <div class="grow ml-6">
                             <div class="group w-full md:full lg:w-full ml-4">
                               <label
-                                for="depName"
+                                for="licenseExpDate"
                                 class="
                                   inline-block
                                   w-full
@@ -103,12 +103,12 @@
                                   duration-200
                                   ease-in-out
                                 "
-                                >Professional Prefix Name</label
+                                >License Expiration Date Duration</label
                               >
                               <div class="relative flex items-center">
                                 <input
-                                  id="depName"
-                                  type="text"
+                                  id="licenseExpDate"
+                                  type="number"
                                   class="
                                     peer
                                     relative
@@ -127,15 +127,14 @@
                                     focus:font-bold
                                     focus:drop-shadow-lg
                                   "
-                                  @keyup="enableSaveButton()"
                                   required
-                                  placeholder="Enter name"
-                                  v-model="professionalPrefixName"
+                                  placeholder="Enter Value"
+                                  v-model="licenseExpDateYear"
                                 />
 
                                 <i
                                   class="
-                                    fa fa-text-width
+                                    fa fa-hashtag
                                     ml-4
                                     absolute
                                     left-auto
@@ -145,9 +144,9 @@
                               </div>
 
                               <small
-                                v-if="showProfessionalPrefixNameError"
+                                v-if="showlicenseExpDateYearError"
                                 class="text-red-300"
-                                >{{ professionalPrefixNameError }}</small
+                                >{{ licenseExpDateYearError }}</small
                               >
                             </div>
                           </div>
@@ -155,6 +154,64 @@
 
                         <div class="flex items-start mt-4">
                           <div class="grow ml-6">
+                            <!-- Region -->
+                            <div class="group w-full md:full lg:w-full ml-4">
+                              <label
+                                for="region"
+                                class="
+                                  inline-block
+                                  w-full
+                                  text-md
+                                  mb-2
+                                  text-primary-600
+                                  font-bold
+                                  text-gray-500
+                                  transition-all
+                                  duration-200
+                                  ease-in-out
+                                "
+                                >Region</label
+                              >
+                              <div class="group w-full md:full lg:w-full">
+                                <div class="relative flex items-center">
+                                  <select
+                                    class="
+                                      form-select
+                                      appearance-none
+                                      block
+                                      w-full
+                                      px-6
+                                      mb-8
+                                      py-2
+                                      text-base
+                                      font-normal
+                                      text-gray-700
+                                      bg-white bg-clip-padding bg-no-repeat
+                                      border border-solid border-gray-300
+                                      rounded
+                                      transition
+                                      ease-in-out
+                                      focus:text-gray-700
+                                      focus:bg-white
+                                      focus:border-blue-600
+                                      focus:outline-none
+                                    "
+                                    aria-label="Default select example"
+                                    v-model="selectedRegion"
+                                    @change="setCode()"
+                                  >
+                                    <option
+                                      v-for="region in regions"
+                                      :key="region.id"
+                                      :value="region"
+                                    >
+                                      {{ region.name }}
+                                    </option>
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                            <!-- Region -->
                             <div class="group w-full md:full lg:w-full ml-4">
                               <label
                                 for="depName"
@@ -170,7 +227,7 @@
                                   duration-200
                                   ease-in-out
                                 "
-                                >Professional Prefix Code</label
+                                >License Expiration Date Code</label
                               >
                               <div class="relative flex items-center">
                                 <input
@@ -194,14 +251,14 @@
                                     focus:font-bold
                                     focus:drop-shadow-lg
                                   "
+                                  disabled
                                   required
-                                  placeholder="Enter name"
-                                  v-model="professionalPrefixCode"
+                                  v-model="licenseExpDateCode"
                                 />
 
                                 <i
                                   class="
-                                    fa fa-text-width
+                                    fa fa-hashtag
                                     ml-4
                                     absolute
                                     left-auto
@@ -233,11 +290,11 @@
           <button
             type="button"
             :class="
-              professionalPrefixNameFilled
+              licenseExpDateYearFilled
                 ? 'inline-block px-6 text-white bg-primary-700 font-medium text-xs leading-tight uppercase  rounded shadow-lg hover:bg-white hover:text-primary-600 hover:border-primary-600 transition duration-150 ease-in-out'
                 : 'inline-block px-6 text-white bg-primary-700 font-medium text-xs leading-tight uppercase  rounded shadow-lg hover:bg-white hover:text-primary-600 hover:border-primary-600 transition duration-150 ease-in-out pointer-events-none opacity-75'
             "
-            @click="saveProfessionalPrefix()"
+            @click="saveLicenseExpDate()"
           >
             <i class="fa fa-save"></i>
             Save
@@ -271,56 +328,61 @@
   </div>
 </template>
 <script>
-import { ref } from "vue";
+import { ref,computed } from "vue";
 import Loading from "vue3-loading-overlay";
 import { useStore } from "vuex";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 import { useToast } from "vue-toastification";
 export default {
   components: { Loading },
-  setup() {
+  props:['modalRegions'],
+  setup(props) {
     const store = useStore();
     const toast = useToast();
     let isLoading = ref(false);
-    let professionalPrefixName = ref("");
-    let professionalPrefixCode = ref("");
-    let showProfessionalPrefixNameError = ref(false);
-    let professionalPrefixNameError = ref("");
-    let professionalPrefixNameFilled = ref(false);
+    let selectedRegion = ref("");
+    let regions = computed(()=>props.modalRegions?props.modalRegions:[]);
+    let licenseExpDateYear = ref("");
+    let licenseExpDateCode = ref("");
+    let showlicenseExpDateYearError = ref(false);
+    let licenseExpDateYearError = ref("");
+    let licenseExpDateYearFilled = ref(false);
     let saveData = ref({});
-    let todayCode = new Date().getMilliseconds();
-    const enableSaveButton = () => {
-      professionalPrefixCode.value =
-        "PP_" +
-        professionalPrefixName.value.slice(0, 4).toUpperCase() +
+    let today = new Date().getMilliseconds();
+    const setCode = () => {
+      licenseExpDateCode.value =
+        "LE_" +
+        selectedRegion.value.name.slice(0, 4).toUpperCase() +
         "_" +
-        todayCode;
-      if (professionalPrefixName.value.length > 3) {
-        professionalPrefixNameFilled.value = true;
+        today;
+      if (licenseExpDateYear.value) {
+        licenseExpDateYearFilled.value = true;
       } else {
-        professionalPrefixNameFilled.value = false;
+        licenseExpDateYearFilled.value = false;
       }
     };
-    const saveProfessionalPrefix = () => {
+    const saveLicenseExpDate = () => {
       let today = new Date().getMilliseconds();
       isLoading.value = true;
 
       //Validation of input
 
-      showProfessionalPrefixNameError.value = false;
+      showlicenseExpDateYearError.value = false;
 
       saveData.value = {
-        name: professionalPrefixName.value ? professionalPrefixName.value : "",
-        code: professionalPrefixName.value
-          ? "PP_" +
-            professionalPrefixName.value.slice(0, 4).toUpperCase() +
+        years: licenseExpDateYear.value ? licenseExpDateYear.value : "",
+        code: licenseExpDateYear.value
+          ? "LE_" +
+            selectedRegion.value.name.slice(0, 4).toUpperCase() +
             "_" +
             today
           : "",
+        status: true,
+        regionId: selectedRegion.value ? selectedRegion.value.id : "",
       };
 
       store
-        .dispatch("lookups/addProfessionalPrefix", saveData.value)
+        .dispatch("lookups/addLicenseExpirationDate", saveData.value)
         .then((res) => {
           isLoading.value = false;
           if (res.data.status == "Success") {
@@ -345,15 +407,19 @@ export default {
           }
         });
     };
+
+   
     return {
       isLoading,
-      saveProfessionalPrefix,
-      enableSaveButton,
-      professionalPrefixCode,
-      professionalPrefixNameFilled,
-      showProfessionalPrefixNameError,
-      professionalPrefixName,
-      professionalPrefixNameError,
+      regions,
+      selectedRegion,
+      saveLicenseExpDate,
+      setCode,
+      licenseExpDateCode,
+      licenseExpDateYearFilled,
+      showlicenseExpDateYearError,
+      licenseExpDateYear,
+      licenseExpDateYearError,
     };
   },
 };

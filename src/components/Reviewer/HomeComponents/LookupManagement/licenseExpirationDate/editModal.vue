@@ -88,7 +88,7 @@
                           <div class="grow ml-6">
                             <div class="group w-full md:full lg:w-full ml-4">
                               <label
-                                for="depName"
+                                for="licenseExpDate"
                                 class="
                                   inline-block
                                   w-full
@@ -101,12 +101,12 @@
                                   duration-200
                                   ease-in-out
                                 "
-                                >Prefix Name</label
+                                >License Expiration Date Duration</label
                               >
                               <div class="relative flex items-center">
                                 <input
-                                  id="depName"
-                                  type="text"
+                                  id="licenseExpDate"
+                                  type="number"
                                   class="
                                     peer
                                     relative
@@ -126,13 +126,13 @@
                                     focus:drop-shadow-lg
                                   "
                                   required
-                                  placeholder="Enter name"
-                                  v-model="editData.Name"
+                                  placeholder="Enter Value"
+                                  v-model="editData.Years"
                                 />
 
                                 <i
                                   class="
-                                    fa fa-text-width
+                                    fa fa-hashtag
                                     ml-4
                                     absolute
                                     left-auto
@@ -142,66 +142,74 @@
                               </div>
 
                               <small
-                                v-if="showPrefixNameError"
+                                v-if="showlicenseExpDateYearError"
                                 class="text-red-300"
-                                >{{ prefixNameError }}</small
+                                >{{ licenseExpDateYearError }}</small
                               >
                             </div>
+                          </div>
+                        </div>
 
-                            <div class="form-group ml-4 mb-2 mt-8">
+                        <div class="flex items-start mt-4">
+                          <div class="grow ml-6">
+                            <!-- Region -->
+                            <div class="group w-full md:full lg:w-full ml-4">
                               <label
-                                for=""
+                                for="region"
                                 class="
                                   inline-block
                                   w-full
-                                  text-md text-primary-600
+                                  text-md
+                                  mb-2
+                                  text-primary-600
                                   font-bold
                                   text-gray-500
                                   transition-all
                                   duration-200
                                   ease-in-out
-                                  mb-2
                                 "
-                                >Prefix Status</label
+                                >Region</label
                               >
-                              <div class="toggle slim colour">
-                                <input
-                                  v-model="editData.finalStatus"
-                                  id="isVerified"
-                                  class="toggle-checkbox hidden cursor-pointer"
-                                  type="checkbox"
-                                  :checked="
-                                    editData && editData.finalStatus == true
-                                      ? true
-                                      : false
-                                  "
-                                />
-                                <label
-                                  for="isVerified"
-                                  class="
-                                    toggle-label
-                                    block
-                                    w-12
-                                    h-4
-                                    rounded-full
-                                    transition-color
-                                    duration-150
-                                    ease-out
-                                  "
-                                ></label>
-                                <span
-                                  :class="
-                                    editData && editData.finalStatus == true
-                                      ? 'text-green-200 font-bold'
-                                      : 'text-yellow-300 font-bold'
-                                  "
-                                >
-                                  {{
-                                    editData.finalStatus ? "Active" : "Inactive"
-                                  }}
-                                </span>
+                              <div class="group w-full md:full lg:w-full">
+                                <div class="relative flex items-center">
+                                  <select
+                                    class="
+                                      form-select
+                                      appearance-none
+                                      block
+                                      w-full
+                                      px-6
+                                      mb-8
+                                      py-2
+                                      text-base
+                                      font-normal
+                                      text-gray-700
+                                      bg-white bg-clip-padding bg-no-repeat
+                                      border border-solid border-gray-300
+                                      rounded
+                                      transition
+                                      ease-in-out
+                                      focus:text-gray-700
+                                      focus:bg-white
+                                      focus:border-blue-600
+                                      focus:outline-none
+                                    "
+                                    aria-label="Default select example"
+                                    v-model="editData.SelectedRegion"
+                                    @change="setCode()"
+                                  >
+                                    <option
+                                      v-for="region in regions"
+                                      :key="region.id"
+                                      :value="region"
+                                    >
+                                      {{ region.name }}
+                                    </option>
+                                  </select>
+                                </div>
                               </div>
                             </div>
+                            <!-- Region -->
                           </div>
                         </div>
                       </div>
@@ -240,7 +248,7 @@
               duration-150
               ease-in-out
             "
-            @click="savePrefix()"
+            @click="saveLicenseExpDate()"
           >
             <i class="fa fa-save"></i>
             Save
@@ -281,15 +289,18 @@ import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 import { useToast } from "vue-toastification";
 export default {
   components: { Loading },
-  props: ["editModalData"],
+  props: ["editModalData", "modalRegions"],
   setup(props) {
     const store = useStore();
     const toast = useToast();
     let isLoading = ref(false);
-
-    let showPrefixNameError = ref(false);
-    let prefixNameError = ref("");
-    let prefixNameFilled = ref(false);
+    let regions = computed(() =>
+      props.modalRegions ? props.modalRegions : []
+    );
+    let selectedRegion = ref("");
+    let showlicenseExpDateYearError = ref(false);
+    let licenseExpDateNameError = ref("");
+    let licenseExpDatepreFilled = ref(false);
     let saveData = ref({});
     let editData = computed(() =>
       props.editModalData ? props.editModalData : { Name: "" }
@@ -304,32 +315,35 @@ export default {
     };
     const enableSaveButton = () => {
       if (editData.value.Name.length > 3) {
-        prefixNameFilled.value = true;
+        licenseExpDatepreFilled.value = true;
       } else {
-        prefixNameFilled.value = false;
+        licenseExpDatepreFilled.value = false;
       }
     };
-    const savePrefix = () => {
+    const saveLicenseExpDate = () => {
       let today = new Date().getMilliseconds();
       isLoading.value = true;
 
       //Validation of input
 
-      showPrefixNameError.value = false;
+      showlicenseExpDateYearError.value = false;
 
       saveData.value = {
         id: editData.value.id,
-        name: editData.value.Name ? editData.value.Name : "",
+        years: editData.value.Years ? editData.value.Years : "",
         code: editData.value
           ? editData.value.Code
           : editData.value.Name
-          ? "PP_" + editData.value.Name.slice(0, 4).toUpperCase() + "_" + today
+          ? "LE_" +
+            editData.value.selectedRegion.name.slice(0, 4).toUpperCase() +
+            "_" +
+            today
           : "",
         status: editData.value.finalStatus,
       };
 
       store
-        .dispatch("lookups/updateProfessionalPrefix", saveData.value)
+        .dispatch("lookups/updateLicenseExpirationDate", saveData.value)
         .then((res) => {
           isLoading.value = false;
           if (res.data.status == "Success") {
@@ -357,11 +371,13 @@ export default {
     return {
       isLoading,
       editData,
-      savePrefix,
+      regions,
+      selectedRegion,
+      saveLicenseExpDate,
       enableSaveButton,
-      prefixNameFilled,
-      showPrefixNameError,
-      prefixNameError,
+      licenseExpDatepreFilled,
+      showlicenseExpDateYearError,
+      licenseExpDateNameError,
       isActive,
       changeverified,
     };

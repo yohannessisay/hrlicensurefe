@@ -18,6 +18,17 @@ export default {
       return resp;
     }
   },
+  async getLicenseExpirationDates() {
+    try {
+      const resp = await ApiService.get(
+        baseUrl + "/lookups/licenseExpirationDates"
+      );
+      return resp;
+    } catch (error) {
+      const resp = error;
+      return resp;
+    }
+  },
   async getProfessionalType() {
     try {
       const resp = await ApiService.get(
@@ -161,7 +172,15 @@ export default {
       return resp;
     }
   },
-
+  async addLicenseExpirationDate(id, data) {
+    try {
+      const resp = await ApiService.post(baseUrl + "/lookups/addLicenseExpirationDate", data);
+      return resp;
+    } catch (error) {
+      const resp = error;
+      return resp;
+    }
+  },
   async addDepartment(id, data) {
     try {
       const resp = await ApiService.post(
@@ -233,6 +252,17 @@ export default {
     try {
       const resp = await ApiService.put(
         baseUrl + "/lookups/department/" + data.id,
+        data
+      );
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async updateLicenseExpirationDate(id, data) {
+    try {
+      const resp = await ApiService.put(
+        baseUrl + "/lookups/licenseExpirationDate/" + data.id,
         data
       );
       return resp;
