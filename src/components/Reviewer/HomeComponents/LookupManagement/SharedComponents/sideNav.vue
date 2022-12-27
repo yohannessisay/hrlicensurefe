@@ -161,6 +161,24 @@
           </a>
         </li>
       </router-link>
+
+      <router-link to="/admin/lookupManagement/licenseExpirationDate">
+        <li
+          :class="
+            $route.fullPath === '/admin/lookupManagement/licenseExpirationDate'
+              ? 'mb-2 active p-2'
+              : ''
+          "
+        >
+          <a href="#LicenseExpirationDateManagement">
+            <i class="bx bx-map"></i>
+
+            <span class="links_name" style="word-break: break-all"
+              >License ExpirationDate</span
+            >
+          </a>
+        </li>
+      </router-link>
     </ul>
     <ul class="nav-links">
       <div

@@ -395,7 +395,7 @@ export default {
               display: function (row) {
                 return row.Status && row.Status == "Active"
                   ? '<span  class="activeElement" >  ' + row.Status + " </span>"
-                  : '<span  class="bg-red-300 rounded-3xl p-1 text-white font-bold" >' +
+                  : '<span  class="bg-red-300 rounded-md p-1 text-white font-bold" >' +
                       row.Status +
                       " </span>";
               },
@@ -479,7 +479,7 @@ export default {
               display: function (row) {
                 return row.Status && row.Status == "Active"
                   ? '<span  class="activeElement" >  ' + row.Status + " </span>"
-                  : '<span  class="bg-red-300 rounded-3xl p-1 text-white font-bold" >' +
+                  : '<span  class="bg-red-300 rounded-md p-1 text-white font-bold" >' +
                       row.Status +
                       " </span>";
               },
@@ -553,7 +553,7 @@ export default {
               display: function (row) {
                 return row.Status && row.Status == "Active"
                   ? '<span  class="activeElement" >  ' + row.Status + " </span>"
-                  : '<span  class="bg-red-300 rounded-3xl p-1 text-white font-bold" >' +
+                  : '<span  class="bg-red-300 rounded-md p-1 text-white font-bold" >' +
                       row.Status +
                       " </span>";
               },
@@ -786,7 +786,7 @@ export default {
 <style>
 .activeElement {
   background: green;
-  border-radius: 20px;
+  border-radius: 5px;
   padding: 4px;
   color: white;
   font-weight: 800;

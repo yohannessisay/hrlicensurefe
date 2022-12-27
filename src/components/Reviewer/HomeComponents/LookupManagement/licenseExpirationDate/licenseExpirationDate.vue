@@ -16,7 +16,7 @@
 
         <li>
           <a href="#" class="pointer-events-none text-lg text-grey-300"
-            >Education Levels Management</a
+            >License Expiration Management</a
           >
         </li>
       </ol></reviewer-nav-bar
@@ -28,7 +28,7 @@
       <div class="container px-4 sm:px-8">
         <div class="relative py-4">
           <p class="absolute left-0 text-2xl font-semibold leading-tight">
-            View and manage educational levels found throughout the system
+            View and manage license expiration dates found throughout the system
           </p>
           <p class="absolute right-0" v-if="showAddButton">
             <button
@@ -53,7 +53,7 @@
               data-bs-target="#addModal"
             >
               <i class="fa fa-plus text-xl"></i>
-              Add Educational Level
+              Add Professional Prefix
             </button>
           </p>
         </div>
@@ -61,11 +61,11 @@
         <div class="w-full mt-8 rounded-xl">
           <vue-table-lite
             :is-static-mode="true"
-            :is-loading="edLevelsTable.isLoading"
-            :columns="edLevelsTable.columns"
-            :rows="edLevelsTable.rows"
-            :total="edLevelsTable.totalRecordCount"
-            :sortable="edLevelsTable.sortable"
+            :is-loading="proPrefixTable.isLoading"
+            :columns="proPrefixTable.columns"
+            :rows="proPrefixTable.rows"
+            :total="proPrefixTable.totalRecordCount"
+            :sortable="proPrefixTable.sortable"
             @is-finished="tableLoadingFinish"
             @row-clicked="rowClicked"
           ></vue-table-lite>
@@ -102,14 +102,14 @@ export default {
   setup() {
     const store = useStore();
 
-    let edLevelsTable = ref({ isLoading: true });
-    let edLevelsTableData = [];
+    let proPrefixTable = ref({ isLoading: true });
+    let proPrefixTableData = [];
     let showAddButton = ref(false);
     let editModalData = ref({ finalStatus: false, Name: "" });
-    const fetchEdLevels = () => {
-      store.dispatch("lookups/getEducationLevel").then((res) => {
+    const fetchPrefixes = () => {
+      store.dispatch("lookups/getProfessionalPrefix").then((res) => {
         res.data.data.forEach((element) => {
-          edLevelsTableData.push({
+          proPrefixTableData.push({
             id: element.id ? element.id : "",
             Name: element.name ? element.name : "",
             Code: element.code ? element.code : "",
@@ -117,7 +117,7 @@ export default {
             finalStatus: element.status,
           });
         });
-        edLevelsTable.value = {
+        proPrefixTable.value = {
           isLoading: false,
           columns: [
             {
@@ -165,8 +165,8 @@ export default {
               },
             },
           ],
-          rows: edLevelsTableData,
-          totalRecordCount: edLevelsTableData.length,
+          rows: proPrefixTableData,
+          totalRecordCount: proPrefixTableData.length,
           sortable: {
             order: "id",
             sort: "asc",
@@ -177,7 +177,7 @@ export default {
     };
 
     const tableLoadingFinish = () => {
-      edLevelsTable.value.isLoading = false;
+      proPrefixTable.value.isLoading = false;
       let elements = document.getElementsByClassName("edit-btn");
       Array.prototype.forEach.call(elements, function (element) {
         if (element.classList.contains("edit-btn")) {
@@ -189,10 +189,10 @@ export default {
       editModalData.value = row;
     };
     onMounted(() => {
-      fetchEdLevels();
+      fetchPrefixes();
     });
     return {
-      edLevelsTable,
+      proPrefixTable,
       showAddButton,
       editModalData,
       rowClicked,
