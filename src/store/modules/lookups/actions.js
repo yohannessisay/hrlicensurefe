@@ -29,6 +29,17 @@ export default {
       return resp;
     }
   },
+  async getLicenseExpirationDateByRegionId(context,regionId) {
+    try {
+      const resp = await ApiService.get(
+        baseUrl + "/lookups/licenseExpirationDates/byRegionId/"+regionId
+      );
+      return resp;
+    } catch (error) {
+      const resp = error;
+      return resp;
+    }
+  },
   async getProfessionalType() {
     try {
       const resp = await ApiService.get(

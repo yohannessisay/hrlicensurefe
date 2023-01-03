@@ -71,7 +71,11 @@
 
       <router-link
         to="/admin/userManagement"
-        v-if="adminData ? adminData.role.code == 'UM'||adminData.role.code == 'SA'  : ''"
+        v-if="
+          adminData
+            ? adminData.role.code == 'UM' || adminData.role.code == 'SA'
+            : ''
+        "
       >
         <li class="mb-2">
           <a href="#UserManagement">
@@ -124,6 +128,23 @@
       >
         <li class="mb-2">
           <a href="#LookupManagement">
+            <i class="bx bx-desktop"></i>
+            <span class="links_name">Lookup Management</span>
+          </a>
+        </li>
+      </router-link>
+
+      <router-link
+        to="/admin/lookupManagement/regional/licenseExpirationDate"
+        v-if="
+          adminData
+            ? adminData.role.code == 'ADM' &&
+              adminData.expertLevel.code == 'REG'
+            : ''
+        "
+      >
+        <li class="mb-2">
+          <a href="#LookupManagementRegional">
             <i class="bx bx-desktop"></i>
             <span class="links_name">Lookup Management</span>
           </a>

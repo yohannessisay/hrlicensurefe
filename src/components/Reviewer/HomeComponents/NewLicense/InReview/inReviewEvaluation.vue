@@ -497,7 +497,7 @@
                                             education.isDropped == false
                                               ? (education.isDropped = true)
                                               : (education.isDropped = false),
-                                              droppedDepartment(education)
+                                              droppedDepartment()
                                           "
                                           v-model="
                                             education.department.isDropped
@@ -906,45 +906,27 @@
                                     md:p-4
                                   "
                                 >
-                                  <input
+                                  <span
                                     class="
-                                      form-control
-                                      block
-                                      w-full
-                                      px-3
-                                      py-1.5
-                                      text-base
-                                      font-normal
-                                      text-gray-700
-                                      bg-white bg-clip-padding
-                                      border border-solid border-gray-300
-                                      rounded
-                                      transition
-                                      ease-in-out
-                                      m-0
-                                      focus:text-gray-700
-                                      focus:bg-white
-                                      focus:border-blue-600
-                                      focus:outline-none
+                                      font-bold
+                                      text-xl
+                                      ml-8
+                                      bg-grey-300
+                                      text-white
+                                      p-2
+                                      rounded-lg
                                     "
-                                    type="date"
-                                    v-model="newLicense.licenseExpirationDate"
-                                  />
+                                  >
+                                    <i class="fa fa-calendar"></i>
+                                    {{
+                                      licenseExpirationDate +
+                                      " (After " +
+                                      expirationDateYear +
+                                      " years)"
+                                    }}</span
+                                  >
                                 </div>
                                 <hr class="text-grey-100" />
-                                <footer
-                                  class="
-                                    flex
-                                    items-center
-                                    justify-center
-                                    leading-none
-                                    p-2
-                                    md:p-4
-                                  "
-                                >
-                                  License Expiration date minimum value should
-                                  be set after today
-                                </footer>
                               </article>
                               <!-- END Article -->
                             </div>
@@ -1200,28 +1182,11 @@
                     v-bind:value="button.id"
                   >
                     <button
-                      v-if="button.code != 'US'"
-                      class="
-                        inline-block
-                        px-6
-                        text-white
-                        bg-primary-600
-                        font-medium
-                        text-xs
-                        leading-tight
-                        uppercase
-                        rounded
-                        shadow-lg
-                        hover:bg-purple-700 hover:shadow-lg
-                        focus:bg-purple-700
-                        focus:shadow-lg
-                        focus:outline-none
-                        focus:ring-0
-                        active:bg-purple-800 active:shadow-lg
-                        transition
-                        duration-150
-                        hover:bg-primary-400 hover:text-white
-                        ease-in-out
+                      v-if="button.code == 'DEC'"
+                      :class="
+                        declineButtonStatus
+                          ? 'inline-block px-6 text-white bg-primary-600 font-medium text-xs leading-tight uppercase rounded shadow-lg hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 hover:bg-primary-400 hover:text-white ease-in-out'
+                          : 'inline-block px-6 text-white bg-grey-300 font-medium text-xs leading-tight uppercase rounded shadow-lg hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 hover:bg-primary-400 hover:text-white ease-in-out pointer-events-none'
                       "
                       @click="action(button.action)"
                     >
@@ -1248,12 +1213,14 @@
                         active:bg-purple-800 active:shadow-lg
                         transition
                         duration-150
-                        hover:bg-yellow-300 hover:text-white
+                        hover:bg-primary-400 hover:text-white
                         ease-in-out
                       "
-                      data-bs-toggle="modal"
-                      data-bs-target="#superviseModal"
-                      @click="changeAction(button.action)"
+                      :data-bs-toggle="button.code == 'US' ? 'modal' : ''"
+                      :data-bs-target="
+                        button.code == 'US' ? '#superviseModal' : ''
+                      "
+                      @click="button.code == 'US' ?'()'  : action(button.action)"
                     >
                       {{ button.name }}
                     </button>
@@ -1410,6 +1377,7 @@
                       }}</label>
                       <textarea
                         v-model="newLicense.remark"
+                        @keyup="isremarkFilled()"
                         class="
                           resize-none
                           tArea
@@ -1463,46 +1431,17 @@
                         </button>
                         <button
                           type="button"
-                          class="
-                            inline-block
-                            px-6
-                            text-white
-                            bg-primary-600
-                            font-medium
-                            text-xs
-                            leading-tight
-                            uppercase
-                            rounded
-                            shadow-lg
-                            hover:bg-purple-700 hover:shadow-lg
-                            focus:bg-purple-700
-                            focus:shadow-lg
-                            focus:outline-none
-                            focus:ring-0
-                            active:bg-purple-800 active:shadow-lg
-                            transition
-                            duration-150
-                            hover:bg-primary-400 hover:text-white
-                            ease-in-out
+                          :class="
+                            remarkFilled == false
+                              ? 'inline-block px-6 text-white bg-grey-300 font-medium text-xs leading-tight uppercase rounded shadow-lg hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 hover:bg-primary-400 hover:text-white ease-in-out pointer-events-none'
+                              : 'inline-block px-6 text-white bg-primary-600 font-medium text-xs leading-tight uppercase rounded shadow-lg hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 hover:bg-primary-400 hover:text-white ease-in-out '
                           "
-                          v-on:click="
-                            submitRemark(
-                              declineAction,
-                              nothingDropped == false ? 'approve' : ''
-                            )
-                          "
+                          v-on:click="submitRemark()"
                         >
                           Submit
                         </button>
                       </div>
                     </div>
-                  </div>
-
-                  <div v-if="showDeclineFlash">
-                    <FlashMessage message="Operation Successful!" />
-                  </div>
-                  <div v-if="showErrorFlash">
-                    <ErrorFlashMessage message="Operation Failed!" />
                   </div>
                 </div>
               </Modal>
@@ -1815,12 +1754,9 @@ import { useToast } from "vue-toastification";
 import moment from "moment";
 import ReviewerSideNav from "../SharedComponents/sideNav.vue";
 import ReviewerNavBar from "../../../SharedComponents/navBar.vue";
-
-import FlashMessage from "@/sharedComponents/FlashMessage";
 import Loading from "vue3-loading-overlay";
 // Import stylesheet
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
-import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import RadialProgressBar from "vue3-radial-progress";
 export default {
   components: {
@@ -1828,9 +1764,7 @@ export default {
     Loading,
     ReviewerSideNav,
     ReviewerNavBar,
-    FlashMessage,
     RadialProgressBar,
-    ErrorFlashMessage,
   },
   computed: {
     moment: () => moment,
@@ -1838,6 +1772,7 @@ export default {
   setup() {
     const route = useRoute();
     const router = useRouter();
+    let remarkFilled = ref(false);
     const store = useStore();
     const toast = useToast();
     let declineAction = ref("DeclineEvent");
@@ -1859,19 +1794,12 @@ export default {
     let startDate = ref("");
     let endDate = ref("");
     let showOtherProfessionError = ref(false);
-
+    let regionId = JSON.parse(
+      window.localStorage.getItem("allAdminData")
+    ).regionId;
     let professionalTypeIds = ref([]);
     let professionalTypeIdss = ref([]);
-    let prefixList = ref([
-      { name: "None", id: 0 },
-      { name: "Consultant", id: 1 },
-      { name: "Expert", id: 2 },
-      { name: "Junior", id: 3 },
-      { name: "Senior", id: 4 },
-      { name: "Senior expert", id: 5 },
-      { name: "Chief", id: 6 },
-      { name: "Chief expert", id: 7 },
-    ]);
+    let licenseExpirationDate = ref(new Date());
     let prefix = ref();
     let canChangeName = ref(false);
     let showProfessionChangeError = ref(false);
@@ -1884,22 +1812,8 @@ export default {
     let showDepRemark = ref(false);
     let adminId = localStorage.getItem("adminId");
 
-    let newLicense = ref({
-      applicant: { profile: { name: "", fatherName: "" } },
-      applicantType: { name: "" },
-      declinedFields: "",
-      remark: "",
-      documents: [{ filePath: "" }],
-      applicationStatus: {
-        buttons: [{ action: "", name: "" }],
-      },
-    });
-    let buttons = ref([
-      { action: "", name: "" },
-      { action: "", name: "" },
-      { action: "", name: "" },
-      { action: "", name: "" },
-    ]);
+    let newLicense = ref({ licenseExpirationDate: new Date() });
+    let buttons = ref([]);
     let isLoadingName = ref(false);
     let professionalTypePrefixes = ref([]);
     let superviseAction = ref("");
@@ -1931,6 +1845,7 @@ export default {
     let showDateError = ref({ show: false, message: "" });
     let supervisor = ref("");
     let showFlash = ref(false);
+    let declineButtonStatus = ref(true);
     let showErrorFlash = ref(false);
     let showDeclineFlash = ref(false);
     let sendDeclinedData = ref(true);
@@ -1941,6 +1856,7 @@ export default {
     let allowProfChange = ref({});
     let instSearched = ref({ name: "" });
     let newProf = ref([]);
+    let expirationDateYear = ref(0);
     let tempProf = ref({});
     let tempPref = ref({});
     let modifiedProfession = [];
@@ -1949,7 +1865,6 @@ export default {
     let evaluateRoute = ref("/admin/evaluate/NewLicense" + route.params.id);
     const editPersonalData = ref(false);
     let others = ref({});
-    let droppedDepartments = ref([]);
     const editPersonalInfo = () => {
       editPersonalData.value = !editPersonalData.value;
     };
@@ -2237,38 +2152,20 @@ export default {
     };
     const action = (actionValue) => {
       let smsMessage = "";
-
-      if (actionValue === "ApproveEvent") {
+     
+      if (actionValue === "ApproveEvent"&&nothingDropped.value == true) {
         smsMessage = newLicense.value
           ? "Dear applicant your applied new license of number " +
             newLicense.value.newLicenseCode +
             " has been approved after careful examination of your uploaded documents by our reviewers. Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
           : "";
-        if (newLicense.value.licenseExpirationDate === null) {
-          toast.warning("Please fill in license expiration date", {
-            timeout: 5000,
-            position: "bottom-center",
-            pauseOnFocusLoss: true,
-            pauseOnHover: true,
-            icon: true,
-          });
-          return;
-        } else if (
-          !moment(newLicense.value.licenseExpirationDate).isAfter(new Date()) &&
-          !isGoodStanding.value
-        ) {
-          toast.warning("License expiration date must exceed today", {
-            timeout: 5000,
-            position: "bottom-center",
-            pauseOnFocusLoss: true,
-            pauseOnHover: true,
-            icon: true,
-          });
-          return;
-        }
-      }
-
-      if (actionValue == "DeclineEvent" && newLicense.value.remark == null) {
+      } else if (actionValue == "ReviewerDraftEvent") {
+        showRemarkError.value = false;
+        showRemark.value = false;
+      } else if (
+        (actionValue == "DeclineEvent" && newLicense.value.remark == null) ||
+        newLicense.value.remark == ""
+      ) {
         showRemarkError.value = true;
         nothingDropped.value == true;
         smsMessage = newLicense.value
@@ -2318,51 +2215,63 @@ export default {
         ],
         message: smsMessage ? smsMessage : "",
       };
-
-      if (applicationType.value == "New License") {
-        isLoadingAction.value = true;
-        store
-          .dispatch("reviewer/editNewLicense", req)
-          .then((res) => {
-            showActionLoading.value = false;
-            isLoadingAction.value = false;
-            if (res.statusText == "Created") {
-              store.dispatch("sms/sendSms", smsData).then(() => {
-                toast.success("Application reviewed Successfully", {
-                  timeout: 5000,
-                  position: "bottom-center",
-                  pauseOnFocusLoss: true,
-                  pauseOnHover: true,
-                  icon: true,
-                });
-                router.push({ name: "AdminNewLicenseInReview" });
-              });
-            } else {
-              toast.error("Please try again", {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true,
-              });
-              setTimeout(() => {
-                window.location.reload();
-              }, 3000);
-            }
-          })
-          .catch(() => {
-            toast.error("Please try again", {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            });
-            setTimeout(() => {
-              window.location.reload();
-            }, 3000);
-          });
+      newLicense.value.licenseExpirationDate = licenseExpirationDate.value;
+      let tempRemarkValue = true;
+      newLicense.value.educations.forEach((element) => {
+        if (element && element.isDropped == true) {
+          tempRemarkValue = false;
+        } else {
+          tempRemarkValue = true;
+        }
+      });
+      if (tempRemarkValue == true) {
+        newLicense.value.remark = "";
       }
+      console.log(req);
+      // if (applicationType.value == "New License") {
+      //   isLoadingAction.value = true;
+      //   store
+      //     .dispatch("reviewer/editNewLicense", req)
+      //     .then((res) => {
+      //       showActionLoading.value = false;
+      //       isLoadingAction.value = false;
+      //       if (res.statusText == "Created") {
+      //         store.dispatch("sms/sendSms", smsData).then(() => {
+      //           toast.success("Application reviewed Successfully", {
+      //             timeout: 5000,
+      //             position: "bottom-center",
+      //             pauseOnFocusLoss: true,
+      //             pauseOnHover: true,
+      //             icon: true,
+      //           });
+      //           router.push({ name: "AdminNewLicenseInReview" });
+      //         });
+      //       } else {
+      //         toast.error("Please try again", {
+      //           timeout: 5000,
+      //           position: "bottom-center",
+      //           pauseOnFocusLoss: true,
+      //           pauseOnHover: true,
+      //           icon: true,
+      //         });
+      //         setTimeout(() => {
+      //           window.location.reload();
+      //         }, 3000);
+      //       }
+      //     })
+      //     .catch(() => {
+      //       toast.error("Please try again", {
+      //         timeout: 5000,
+      //         position: "bottom-center",
+      //         pauseOnFocusLoss: true,
+      //         pauseOnHover: true,
+      //         icon: true,
+      //       });
+      //       setTimeout(() => {
+      //         window.location.reload();
+      //       }, 3000);
+      //     });
+      // }
     };
     const changePrefix = (education) => {
       newLicense.value.educations.forEach((element) => {
@@ -2371,30 +2280,36 @@ export default {
         }
       });
     };
-    const submitRemark = (finalAction, type) => {
-      if(type=='approve'){
-        nothingDropped.value=true;
-      }
+    const submitRemark = () => {
+      newLicense.value.educations.forEach((element) => {
+        if (element && element.isDropped == true) {
+          nothingDropped.value = false;
+        }
+      });
+
       showRemarkError.value = false;
       showRemark.value = false;
       sendDeclinedData.value = true;
-     
-      action(finalAction);
+
+      action(nothingDropped.value == false ? "ApproveEvent" : "DeclineEvent");
     };
-    const droppedDepartment = (education) => {
-      droppedDepartments.value.push(education);
-      droppedDepartments.value = [...new Set(droppedDepartments.value)];
-      if (droppedDepartments.value && droppedDepartments.value.length > 0) {
-        declineAction.value = "ApproveEvent";
-        if (rejected.value && rejected.value.length == 0) {
-          nothingDropped.value = false;
+    const droppedDepartment = () => {
+      JSON.parse(JSON.stringify(newLicense.value.educations)).forEach(
+        (element) => {
+          if (element && element.isDropped == true) {
+            declineAction.value = "ApproveEvent"; 
+            if (rejected.value && rejected.value.length == 0) {
+              nothingDropped.value = false;
+            } 
+          }
+          if (element && element.isDropped == false) { 
+            declineAction.value = "DeclineEvent"; 
+            if (rejected.value && rejected.value.length == 0) {
+              nothingDropped.value = true;
+            }
+          }
         }
-      } else {
-        declineAction.value = "DeclineEvent";
-        if (rejected.value && rejected.value.length == 0) {
-          nothingDropped.value = true;
-        }
-      }
+      );
     };
     const openPdfInNewTab = (pdfPath) => {
       pdfFilePath.value = pdfPath;
@@ -2412,7 +2327,11 @@ export default {
           newProf.value[profType.department.id] = res.data.data;
         });
     };
-
+    const isremarkFilled = () => {
+      newLicense.value.remark && newLicense.value.remark.length > 10
+        ? (remarkFilled.value = true)
+        : (remarkFilled.value = false);
+    };
     const changeAmharicName = () => {
       isLoadingName.value = true;
       const id = profileInfo.value.id;
@@ -2608,9 +2527,7 @@ export default {
                   pauseOnHover: true,
                   icon: true,
                 });
-                setTimeout(() => {
-                  window.location.reload();
-                }, 2000);
+                router.push({ name: "AdminNewLicenseInReview" });
               });
             } else {
               toast.error("Please try again", {
@@ -2682,6 +2599,22 @@ export default {
 
     onMounted(() => {
       created(route.params.id);
+      let date = new Date();
+      let year = date.getFullYear();
+      let month = date.getMonth();
+      let day = date.getDate();
+      store
+        .dispatch("lookups/getLicenseExpirationDateByRegionId", regionId)
+        .then((res) => {
+          licenseExpirationDate.value = new Date(
+            year + res.data.data[0].years,
+            month,
+            day
+          )
+            .toISOString()
+            .slice(0, 10);
+          expirationDateYear.value = res.data.data[0].years;
+        });
       store.dispatch("goodstanding/getInstitution").then((res) => {
         institutions.value = res.data.data.filter((elm) => elm.isLocal == true);
       });
@@ -2691,11 +2624,13 @@ export default {
     });
     return {
       isPdf,
+      licenseExpirationDate,
       newLicense,
       showDepRemark,
       index,
       docs,
       prefixes,
+      declineButtonStatus,
       dropedDepartment,
       resultQuery,
       next,
@@ -2704,10 +2639,11 @@ export default {
       nextRemark,
       previousRemark,
       droppedDepartment,
-      droppedDepartments,
       amount,
       supervise,
       showOptions,
+      remarkFilled,
+      isremarkFilled,
       width,
       instSearched,
       institutions,
@@ -2717,6 +2653,7 @@ export default {
       accepted,
       rejected,
       startDate,
+      expirationDateYear,
       supervisor,
       showDateError,
       endDate,
@@ -2779,7 +2716,6 @@ export default {
       professionalTypeIds,
       showProfessionChangeError,
       expirationDateExceedTodayError,
-      prefixList,
       prefix,
       professionalTypeIdss,
       addPrefix,
