@@ -1909,8 +1909,7 @@ export default {
 
           fetchDocumentTypes();
         });
-
-      applicationType.value = "New License";
+ 
     };
     const fetchDocumentTypes = async () => {
       store.dispatch("reviewer/getDocumentTypes").then((res) => {
@@ -2227,51 +2226,51 @@ export default {
       if (tempRemarkValue == true) {
         newLicense.value.remark = "";
       }
-      console.log(req);
-      // if (applicationType.value == "New License") {
-      //   isLoadingAction.value = true;
-      //   store
-      //     .dispatch("reviewer/editNewLicense", req)
-      //     .then((res) => {
-      //       showActionLoading.value = false;
-      //       isLoadingAction.value = false;
-      //       if (res.statusText == "Created") {
-      //         store.dispatch("sms/sendSms", smsData).then(() => {
-      //           toast.success("Application reviewed Successfully", {
-      //             timeout: 5000,
-      //             position: "bottom-center",
-      //             pauseOnFocusLoss: true,
-      //             pauseOnHover: true,
-      //             icon: true,
-      //           });
-      //           router.push({ name: "AdminNewLicenseInReview" });
-      //         });
-      //       } else {
-      //         toast.error("Please try again", {
-      //           timeout: 5000,
-      //           position: "bottom-center",
-      //           pauseOnFocusLoss: true,
-      //           pauseOnHover: true,
-      //           icon: true,
-      //         });
-      //         setTimeout(() => {
-      //           window.location.reload();
-      //         }, 3000);
-      //       }
-      //     })
-      //     .catch(() => {
-      //       toast.error("Please try again", {
-      //         timeout: 5000,
-      //         position: "bottom-center",
-      //         pauseOnFocusLoss: true,
-      //         pauseOnHover: true,
-      //         icon: true,
-      //       });
-      //       setTimeout(() => {
-      //         window.location.reload();
-      //       }, 3000);
-      //     });
-      // }
+
+      if (applicationType.value == "New License") {
+        isLoadingAction.value = true;
+        store
+          .dispatch("reviewer/editNewLicense", req)
+          .then((res) => {
+            showActionLoading.value = false;
+            isLoadingAction.value = false;
+            if (res.statusText == "Created") {
+              store.dispatch("sms/sendSms", smsData).then(() => {
+                toast.success("Application reviewed Successfully", {
+                  timeout: 5000,
+                  position: "bottom-center",
+                  pauseOnFocusLoss: true,
+                  pauseOnHover: true,
+                  icon: true,
+                });
+                router.push({ name: "AdminNewLicenseInReview" });
+              });
+            } else {
+              toast.error("Please try again", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
+              setTimeout(() => {
+                window.location.reload();
+              }, 3000);
+            }
+          })
+          .catch(() => {
+            toast.error("Please try again", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+            setTimeout(() => {
+              window.location.reload();
+            }, 3000);
+          });
+      }
     };
     const changePrefix = (education) => {
       newLicense.value.educations.forEach((element) => {
