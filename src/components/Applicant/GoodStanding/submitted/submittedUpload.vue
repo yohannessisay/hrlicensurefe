@@ -339,12 +339,13 @@ export default {
           showPreview.value = true;
 
           previewDocuments.value[data.documentType.code] = reader.result;
+
           imageData = imageData.filter(
             (el) => el.documenttype != data.documentType.name
           );
           imageData.push({
             documenttype: data.documentType ? data.documentType.name : "",
-            documentCode:data.documentType ? data.documentType.code : "",
+            documentCode: data.documentType ? data.documentType.code : "",
             educationalLevel: data.educationalLevel
               ? data.educationalLevel.name
               : "",
@@ -447,31 +448,29 @@ export default {
           let transaction = db.transaction(["GSdocumentUploads"], "readwrite");
           let tempStat = false;
 
-          if (existingDocs.length > 0) {
+          if (imageData && imageData.length > 0) {
             imageData.forEach((newImage) => {
               existingDocs.forEach((existing) => {
-                if (existing.documentCode == newImage.documentCode) {
-                  existing.image = newImage.image;
-                  finalLocalData.data.push(existing);
-                } else {
-                  finalLocalData.data.push(existing);
+                if (existing.documentTypeCode == newImage.documentCode) {
                   tempStat = true;
+                  return 0;
+                } else {
+                  finalLocalData.data.push(JSON.parse(JSON.stringify(existing)));
                 }
               });
               if (tempStat == true) {
                 finalLocalData.data.push(newImage);
-              }
+              } 
             });
             finalLocalData.data.concat(imageData);
           } else {
-            finalLocalData.data = imageData;
+            finalLocalData.data = JSON.parse(JSON.stringify(existingDocs));
           }
-          finalLocalData.data = [...new Set(finalLocalData.data)];
 
           const objectStore = transaction.objectStore("GSdocumentUploads");
 
           const objectStoreRequest = objectStore.clear();
-
+       
           objectStoreRequest.onsuccess = (event) => {
             let addReq = transaction
               .objectStore("GSdocumentUploads")
@@ -485,6 +484,7 @@ export default {
 
             transaction.oncomplete = function () {
               console.log("data stored");
+
               emit("changeActiveState");
             };
           };
@@ -499,7 +499,7 @@ export default {
       generalInfo.value.licenseFile = [];
 
       let license = {
-        action: 'SubmitEvent',
+        action: "DraftEvent",
         data: {
           applicantId: generalInfo.value.applicantId,
           applicantTypeId: generalInfo.value.applicantTypeId
@@ -571,18 +571,22 @@ export default {
           id: route.params.id,
         },
       };
-     
+
       store
         .dispatch("goodstanding/editGoodstandingLicense", license)
         .then((res) => {
           let licenseId = route.params.id;
           let payload = { document: formData, id: licenseId };
+
           store
-            .dispatch(      generalInfo.value &&
+            .dispatch(
+              generalInfo.value &&
                 generalInfo.value.documents &&
                 generalInfo.value.documents.length > 0
                 ? "goodstanding/updateDocuments"
-                : "goodstanding/uploadDocuments", payload)
+                : "goodstanding/uploadDocuments",
+              payload
+            )
             .then((res) => {
               if (res.data.status == "Success") {
                 toast.success("Applied successfuly", {
@@ -634,9 +638,12 @@ export default {
             documentsSaved.value[element.documentTypeCode].path =
               googleApi + element.filePath;
             documentsSaved.value[element.documentTypeCode].name =
-              element.originalFileName;
+              element.documentType.name;
+            documentsSaved.value[element.documentTypeCode].code =
+              element.documentType.code;
           });
-          documentsUploaded.value = documentsSaved.value;
+
+          existingDocs = generalInfo.value?.documents;
         });
 
       localData.value = window.localStorage.getItem("GSApplicationData")

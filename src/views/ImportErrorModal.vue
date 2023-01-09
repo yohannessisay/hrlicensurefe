@@ -12,7 +12,7 @@
       relative
       pt-8
       pb-8
-      shadow-2xl
+      shadow-lg
     "
   >
     <div id="holder" class="flex justify-center rounded mb-medium pb-4 mt-4">

@@ -339,6 +339,7 @@ export default {
           showPreview.value = true;
 
           previewDocuments.value[data.documentType.code] = reader.result;
+
           imageData = imageData.filter(
             (el) => el.documenttype != data.documentType.name
           );
@@ -447,31 +448,29 @@ export default {
           let transaction = db.transaction(["GSdocumentUploads"], "readwrite");
           let tempStat = false;
 
-          if (existingDocs.length > 0) {
+          if (imageData && imageData.length > 0) {
             imageData.forEach((newImage) => {
               existingDocs.forEach((existing) => {
-                if (existing.documentCode == newImage.documentCode) {
-                  existing.image = newImage.image;
-                  finalLocalData.data.push(existing);
-                } else {
-                  finalLocalData.data.push(existing);
+                if (existing.documentTypeCode == newImage.documentCode) {
                   tempStat = true;
+                  return 0;
+                } else {
+                  finalLocalData.data.push(JSON.parse(JSON.stringify(existing)));
                 }
               });
               if (tempStat == true) {
                 finalLocalData.data.push(newImage);
-              }
+              } 
             });
             finalLocalData.data.concat(imageData);
           } else {
-            finalLocalData.data = imageData;
+            finalLocalData.data = JSON.parse(JSON.stringify(existingDocs));
           }
-          finalLocalData.data = [...new Set(finalLocalData.data)];
 
           const objectStore = transaction.objectStore("GSdocumentUploads");
 
           const objectStoreRequest = objectStore.clear();
-
+       
           objectStoreRequest.onsuccess = (event) => {
             let addReq = transaction
               .objectStore("GSdocumentUploads")
@@ -485,6 +484,7 @@ export default {
 
             transaction.oncomplete = function () {
               console.log("data stored");
+
               emit("changeActiveState");
             };
           };
@@ -638,9 +638,12 @@ export default {
             documentsSaved.value[element.documentTypeCode].path =
               googleApi + element.filePath;
             documentsSaved.value[element.documentTypeCode].name =
-              element.originalFileName;
+              element.documentType.name;
+            documentsSaved.value[element.documentTypeCode].code =
+              element.documentType.code;
           });
-          documentsUploaded.value = documentsSaved.value;
+
+          existingDocs = generalInfo.value?.documents;
         });
 
       localData.value = window.localStorage.getItem("GSApplicationData")

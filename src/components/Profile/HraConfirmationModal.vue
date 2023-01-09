@@ -12,7 +12,7 @@
       relative
       pt-8
       pb-8
-      shadow-2xl
+      shadow-lg
     "
   >
     <div></div>

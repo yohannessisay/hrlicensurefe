@@ -156,7 +156,7 @@
         sm:grid-cols-1
       "
     >
-      <div class="bg-white flex-shrink px-4 w-full rounded-md shadow-2xl">
+      <div class="bg-white flex-shrink px-4 w-full rounded-md shadow-lg">
         <div class="py-8 px-12 mb-12 bg-gray-50 border-b border-white">
           <div class="border-b-2 text-main-400 mb-4">
             <div class="text-gray-900 mb-4 flex justify-center">
@@ -197,7 +197,7 @@
                 mb-8
                 bg-white
                 shadow-lg
-                hover:shadow-2xl
+                hover:shadow-lg
                 rounded-md
                 transform
                 transition
@@ -246,7 +246,7 @@
         sm:grid-cols-1
       "
     >
-      <div class="bg-white flex-shrink px-4 w-full rounded-md shadow-2xl">
+      <div class="bg-white flex-shrink px-4 w-full rounded-md shadow-lg">
         <div
           class="
             py-8

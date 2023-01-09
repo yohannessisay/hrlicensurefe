@@ -27,7 +27,7 @@
             lg:w-1/4
             mdlg:w-1/4
             sm:w-full sm:mr-4
-            shadow-2xl
+            shadow-lg
             rounded-lg
             transform
             transition
@@ -193,7 +193,7 @@
         lg:w-1/4
         mdlg:w-1/4
         sm:w-full sm:mr-4
-        shadow-2xl
+        shadow-lg
         rounded-lg
         transform
         transition

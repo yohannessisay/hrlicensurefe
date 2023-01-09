@@ -253,8 +253,8 @@
                   <div
                     :class="
                       isDarkMode
-                        ? 'pricing-plan border-t-4 border-solid  bg-secondaryDark rounded-lg shadow-2xl text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
-                        : 'pricing-plan border-t-4 border-solid border-white bg-white rounded-lg shadow-2xl text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
+                        ? 'pricing-plan border-t-4 border-solid  bg-secondaryDark rounded-lg shadow-lg text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
+                        : 'pricing-plan border-t-2  border-solid border-grey-200 bg-white rounded-lg shadow-lg  text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
                     "
                   >
                     <div class="p-2 md:py-4">
@@ -537,8 +537,8 @@
                   <div
                     :class="
                       isDarkMode
-                        ? 'pricing-plan border-t-4 border-solid  bg-secondaryDark rounded-lg shadow-2xl text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
-                        : 'pricing-plan border-t-4 border-solid border-white bg-white rounded-lg shadow-2xl text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
+                        ? 'pricing-plan border-t-4 border-solid  bg-secondaryDark rounded-lg shadow-lg text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
+                        : 'pricing-plan border-t-2  border-solid border-grey-200 bg-white rounded-lg shadow-lg text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
                     "
                   >
                     <div class="p-2 md:py-4">
@@ -767,8 +767,8 @@
                   <div
                     :class="
                       isDarkMode
-                        ? 'pricing-plan border-t-4 border-solid  bg-secondaryDark rounded-lg shadow-2xl text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
-                        : 'pricing-plan border-t-4 border-solid border-white bg-white rounded-lg shadow-2xl text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
+                        ? 'pricing-plan border-t-4 border-solid  bg-secondaryDark rounded-lg shadow-lg text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
+                        : 'pricing-plan border-t-2  border-solid border-grey-200 bg-white rounded-lg shadow-lg text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
                     "
                   >
                     <div class="p-2 md:py-4">
@@ -1060,8 +1060,8 @@
                   <div
                     :class="
                       isDarkMode
-                        ? 'pricing-plan border-t-4 border-solid  bg-secondaryDark rounded-lg shadow-2xl text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
-                        : 'pricing-plan border-t-4 border-solid border-white bg-white rounded-lg shadow-2xl text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
+                        ? 'pricing-plan border-t-4 border-solid  bg-secondaryDark rounded-lg shadow-lg text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
+                        : 'pricing-plan border-t-2  border-solid border-grey-200 bg-white rounded-lg shadow-lg text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
                     "
                   >
                     <div class="p-2 md:py-4">
@@ -1235,8 +1235,8 @@
                   <div
                     :class="
                       isDarkMode
-                        ? 'pricing-plan border-t-4 border-solid  bg-secondaryDark rounded-lg shadow-2xl text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
-                        : 'pricing-plan border-t-4 border-solid border-white bg-white rounded-lg shadow-2xl text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
+                        ? 'pricing-plan border-t-4 border-solid  bg-secondaryDark rounded-lg shadow-lg text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
+                        : 'pricing-plan border-t-2  border-solid border-grey-200 bg-white rounded-lg shadow-lg text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
                     "
                   >
                     <div class="p-2 md:py-4">
@@ -1372,8 +1372,8 @@
                   <div
                     :class="
                       isDarkMode
-                        ? 'pricing-plan border-t-4 border-solid  bg-secondaryDark rounded-lg shadow-2xl text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
-                        : 'pricing-plan border-t-4 border-solid border-white bg-white rounded-lg shadow-2xl text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
+                        ? 'pricing-plan border-t-4 border-solid  bg-secondaryDark rounded-lg shadow-lg text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
+                        : 'pricing-plan border-t-2  border-solid border-grey-200 bg-white rounded-lg shadow-lg text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
                     "
                   >
                     <div class="p-2 md:py-4">
@@ -1608,8 +1608,8 @@
                   <div
                     :class="
                       isDarkMode
-                        ? 'pricing-plan border-t-4 border-solid  bg-secondaryDark rounded-lg shadow-2xl text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
-                        : 'pricing-plan border-t-4 border-solid border-white bg-white rounded-lg shadow-2xl text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
+                        ? 'pricing-plan border-t-4 border-solid  bg-secondaryDark rounded-lg shadow-lg text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
+                        : 'pricing-plan border-t-2  border-solid border-grey-200 bg-white rounded-lg shadow-lg text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
                     "
                   >
                     <div class="p-6 md:py-8">

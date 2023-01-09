@@ -13,7 +13,7 @@
       relative
       pt-8
       pb-8
-      shadow-2xl
+      shadow-lg
     "
   >
     <div class="relative p-4 w-full max-w-7xl h-full md:h-auto">

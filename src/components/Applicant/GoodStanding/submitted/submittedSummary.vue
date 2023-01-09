@@ -435,9 +435,8 @@
                   aria-expanded="true"
                   aria-controls="collapseOne"
                 >
-                  <span v-if="changedDocs && changedDocs.length > 0">
-                    Previously</span
-                  >
+                  
+                    Previously 
                   uploaded files
                 </button>
               </h2>
@@ -463,43 +462,6 @@
                     "
                   >
                     <div
-                      v-if="changedDocs && changedDocs.length > 0"
-                      class="
-                        mt-4
-                        mb-8
-                        bg-white
-                        shadow-xl
-                        rounded-md
-                        transform
-                        transition
-                        duration-300
-                        ease-in-out
-                        p-2
-                        hover:-translate-y-2
-                      "
-                      v-for="prev in prevDocs"
-                      :key="prev.id"
-                    >
-                      <h4 class="text-main-400 font-bold m-2">Document Type</h4>
-                      <h6 class="m-2">{{ prev.documentType.name }}</h6>
-                      <div class="flex justify-center rounded-lg p-4">
-                        <div class="bg-white rounded-md p-2">
-                          <a
-                            :href="googleApi + prev.filePath"
-                            :data-title="prev.docName"
-                            data-lightbox="example-3"
-                          >
-                            <img
-                              :src="googleApi + prev.filePath"
-                              class="w-full h-48 object-cover"
-                            />
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div
-                      v-else
                       class="
                         mt-4
                         mb-8
@@ -521,12 +483,12 @@
                       <div class="flex justify-center rounded-lg p-4">
                         <div class="bg-white rounded-md p-2">
                           <a
-                            :href="prev.image"
+                            :href="prev&&prev.image?prev.image:prev&&prev.filePath?googleApi+prev.filePath:''"
                             :data-title="prev.documenttype"
                             data-lightbox="example-4"
                           >
                             <img
-                              :src="prev.image"
+                              :src="prev&&prev.image?prev.image:prev&&prev.filePath?googleApi+prev.filePath:''"
                               class="w-full h-48 object-cover"
                             />
                           </a>
@@ -562,7 +524,7 @@
           text-main-400
           transform
           rounded-lg
-          shadow-2xl
+          shadow-lg
           mt-4
           transition
           duration-300
@@ -664,7 +626,7 @@
     <div class="flex justify-end w-1/2 mb-8">
       <span v-for="button in buttons" :key="button.id">
         <button
-          v-if="button.action != 'WithdrawEvent'"
+          v-if="button.action != 'DraftEvent'"
           type="button"
           :class="
             allowSave
@@ -674,32 +636,6 @@
           @click="checkFinalStatus(button.action)"
         >
           <i class="fa fa-save"></i>
-          {{ button.name && button.code == "SUB" ? "Update" : button.name }}
-        </button>
-        <button
-          v-if="button.action == 'WithdrawEvent'"
-          class="
-            inline-block
-            px-6
-            border
-            text-main-400
-            hover:bg-main-400
-            hober:border-main-400
-            hover:text-white
-            mt-4
-            bg-white
-            font-medium
-            text-xs
-            leading-tight
-            uppercase
-            rounded
-            shadow-lg
-            transition
-            duration-150
-            ease-in-out
-          "
-          @click="checkFinalStatus(button.action)"
-        >
           {{ button.name }}
         </button>
       </span>
@@ -926,7 +862,6 @@ export default {
           return e.code == "DRA";
         });
         buttons.value = status[0]["buttons"];
-        buttons.value = buttons.value.filter((but) => but.code != "DRA");
       });
     };
     onMounted(() => {
@@ -985,7 +920,8 @@ export default {
               if (
                 localFileImages.value &&
                 localFileImages.value.length > 0 &&
-                savedData.value.documents
+                savedData.value.documents &&
+                savedData.value.documents.length > 0
               ) {
                 savedData.value.documents.forEach((ele) => {
                   localFileImages.value.forEach((newFile) => {

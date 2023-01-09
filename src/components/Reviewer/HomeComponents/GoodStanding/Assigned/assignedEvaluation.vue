@@ -556,7 +556,7 @@
                                 <hr class="text-grey-100 mb-2" />
                                 <div class="flex flex-row">
                                   <div>
-                                    {{ goodStanding.education }}
+                                 
                                     <div
                                       class="flex flex-col mb-medium mr-12 ml-8"
                                     >
@@ -1751,7 +1751,7 @@ export default {
         .dispatch("reviewer/getGoodStandingApplication", applicationId)
         .then((res) => {
           goodStanding.value = res.data.data;
-          departmentId.value = goodStanding.value.department.id;
+          departmentId.value = goodStanding.value&&goodStanding.value.department?goodStanding.value.department.id:'';
           profileInfo.value = goodStanding.value.profile;
           buttons.value = res.data.data.applicationStatus.buttons;
           docs.value = res.data.data.documents;

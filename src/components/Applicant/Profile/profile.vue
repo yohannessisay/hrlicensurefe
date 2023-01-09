@@ -43,7 +43,7 @@
                         bg-main-400
                         font-semibold
                         rounded-lg
-                        hover:bg-white hover:text-main-400 hover:shadow-2xl
+                        hover:bg-white hover:text-main-400 hover:shadow-lg
                       "
                     >
                       <i class="fa fa-camera"></i>
@@ -646,7 +646,7 @@
                           text-base
                           font-bold
                           rounded-lg
-                          hover:bg-white hover:text-main-400 hover:shadow-2xl
+                          hover:bg-white hover:text-main-400 hover:shadow-lg
                           p-3
                           my-4
                         "
