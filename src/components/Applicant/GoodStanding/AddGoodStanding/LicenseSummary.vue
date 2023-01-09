@@ -434,7 +434,7 @@
           text-main-400
           transform
           rounded-lg
-          shadow-2xl
+          shadow-lg
           mt-4
           transition
           duration-300

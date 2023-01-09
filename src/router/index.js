@@ -734,6 +734,22 @@ const routes = [
         "../components/Reviewer/HomeComponents/LookupManagement/professionalType/professionalType.vue"
       )
   },
+  {
+    path: "/admin/lookupManagement/licenseExpirationDate",
+    name: "LicenseExpirationDateLookupManagement",
+    component: () =>
+      import(
+        "../components/Reviewer/HomeComponents/LookupManagement/licenseExpirationDate/licenseExpirationDate.vue"
+      )
+  },
+  {
+    path: "/admin/lookupManagement/regional/licenseExpirationDate",
+    name: "RegionalLicenseExpirationDateLookupManagement",
+    component: () =>
+      import(
+        "../components/Reviewer/HomeComponents/LookupManagement/Regional/licenseExpirationDate/licenseExpirationDate.vue"
+      )
+  },
 
   //Admin Profile Management
   {

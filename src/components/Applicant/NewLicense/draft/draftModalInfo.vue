@@ -103,7 +103,7 @@
                       <article
                         :class="
                           isDarkMode
-                            ? 'overflow-hidden  bg-primaryDark rounded-lg shadow-2xl'
+                            ? 'overflow-hidden  bg-primaryDark rounded-lg shadow-lg'
                             : 'overflow-hidden rounded-lg shadow-xl'
                         "
                       >
@@ -224,7 +224,7 @@
                       <article
                         :class="
                           isDarkMode
-                            ? 'overflow-hidden  bg-primaryDark rounded-lg shadow-2xl'
+                            ? 'overflow-hidden  bg-primaryDark rounded-lg shadow-lg'
                             : 'overflow-hidden rounded-lg shadow-xl'
                         "
                       >
@@ -364,7 +364,7 @@
                       <article
                         :class="
                           isDarkMode
-                            ? 'overflow-hidden  bg-primaryDark rounded-lg shadow-2xl'
+                            ? 'overflow-hidden  bg-primaryDark rounded-lg shadow-lg'
                             : 'overflow-hidden rounded-lg shadow-xl'
                         "
                       >
@@ -486,7 +486,7 @@
                       <article
                         :class="
                           isDarkMode
-                            ? 'overflow-hidden  bg-primaryDark rounded-lg shadow-2xl'
+                            ? 'overflow-hidden  bg-primaryDark rounded-lg shadow-lg'
                             : 'overflow-hidden rounded-lg shadow-xl'
                         "
                       >

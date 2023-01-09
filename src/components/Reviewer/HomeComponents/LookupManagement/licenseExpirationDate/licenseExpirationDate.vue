@@ -16,7 +16,7 @@
 
         <li>
           <a href="#" class="pointer-events-none text-lg text-grey-300"
-            >Education Levels Management</a
+            >License Expiration Management</a
           >
         </li>
       </ol></reviewer-nav-bar
@@ -28,7 +28,7 @@
       <div class="container px-4 sm:px-8">
         <div class="relative py-4">
           <p class="absolute left-0 text-2xl font-semibold leading-tight">
-            View and manage educational levels found throughout the system
+            View and manage license expiration dates found throughout the system
           </p>
           <p class="absolute right-0" v-if="showAddButton">
             <button
@@ -53,7 +53,7 @@
               data-bs-target="#addModal"
             >
               <i class="fa fa-plus text-xl"></i>
-              Add Educational Level
+              Add License Expiration Date
             </button>
           </p>
         </div>
@@ -61,19 +61,22 @@
         <div class="w-full mt-8 rounded-xl">
           <vue-table-lite
             :is-static-mode="true"
-            :is-loading="edLevelsTable.isLoading"
-            :columns="edLevelsTable.columns"
-            :rows="edLevelsTable.rows"
-            :total="edLevelsTable.totalRecordCount"
-            :sortable="edLevelsTable.sortable"
+            :is-loading="licenseExpDateTable.isLoading"
+            :columns="licenseExpDateTable.columns"
+            :rows="licenseExpDateTable.rows"
+            :total="licenseExpDateTable.totalRecordCount"
+            :sortable="licenseExpDateTable.sortable"
             @is-finished="tableLoadingFinish"
             @row-clicked="rowClicked"
           ></vue-table-lite>
         </div>
       </div>
     </div>
-    <add-modal></add-modal>
-    <edit-modal :editModalData="editModalData"></edit-modal>
+    <add-modal :modalRegions="regions"></add-modal>
+    <edit-modal
+      :editModalData="editModalData"
+      :modalRegions="regions"
+    ></edit-modal>
     <!-- Main Content -->
   </section>
 </template>
@@ -102,22 +105,27 @@ export default {
   setup() {
     const store = useStore();
 
-    let edLevelsTable = ref({ isLoading: true });
-    let edLevelsTableData = [];
+    let licenseExpDateTable = ref({ isLoading: true });
+    let licenseExpDateTableData = [];
     let showAddButton = ref(false);
+    let regions = ref([]);
     let editModalData = ref({ finalStatus: false, Name: "" });
-    const fetchEdLevels = () => {
-      store.dispatch("lookups/getEducationLevel").then((res) => {
-        res.data.data.forEach((element) => {
-          edLevelsTableData.push({
-            id: element.id ? element.id : "",
-            Name: element.name ? element.name : "",
-            Code: element.code ? element.code : "",
-            Status: element && element.status == true ? "Active" : "Inactive",
-            finalStatus: element.status,
+    const fetchLicenseExpDate = () => {
+      store.dispatch("lookups/getLicenseExpirationDates").then((res) => {
+        if (res.data && res.data.data) {
+          res.data.data.forEach((element) => {
+            licenseExpDateTableData.push({
+              id: element.id ? element.id : "",
+              Years: element.years ? element.years : "",
+              Code: element.code ? element.code : "",
+              Status: element && element.status == true ? "Active" : "Inactive",
+              SelectedRegion: element ? element.region : {},
+              finalStatus: element.status,
+            });
           });
-        });
-        edLevelsTable.value = {
+        }
+
+        licenseExpDateTable.value = {
           isLoading: false,
           columns: [
             {
@@ -128,8 +136,8 @@ export default {
               isKey: true,
             },
             {
-              label: "Name",
-              field: "Name",
+              label: "Years",
+              field: "Years",
               width: "50%",
               sortable: true,
             },
@@ -165,8 +173,8 @@ export default {
               },
             },
           ],
-          rows: edLevelsTableData,
-          totalRecordCount: edLevelsTableData.length,
+          rows: licenseExpDateTableData,
+          totalRecordCount: licenseExpDateTableData.length,
           sortable: {
             order: "id",
             sort: "asc",
@@ -175,9 +183,14 @@ export default {
         showAddButton.value = true;
       });
     };
+    const fetchRegions = () => {
+      store.dispatch("lookups/getRegions").then((res) => {
+        regions.value = res.data.data;
+      });
+    };
 
     const tableLoadingFinish = () => {
-      edLevelsTable.value.isLoading = false;
+      licenseExpDateTable.value.isLoading = false;
       let elements = document.getElementsByClassName("edit-btn");
       Array.prototype.forEach.call(elements, function (element) {
         if (element.classList.contains("edit-btn")) {
@@ -189,12 +202,14 @@ export default {
       editModalData.value = row;
     };
     onMounted(() => {
-      fetchEdLevels();
+      fetchRegions();
+      fetchLicenseExpDate();
     });
     return {
-      edLevelsTable,
+      licenseExpDateTable,
       showAddButton,
       editModalData,
+      regions,
       rowClicked,
       tableLoadingFinish,
     };
