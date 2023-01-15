@@ -7,24 +7,24 @@
     <!-- Header -->
     <reviewer-nav-bar>
       <ol class="list-reset flex">
-          <li>
-            <router-link to="/admin/review"
-              ><span class="text-primary-600 text-base">Home</span></router-link
-            >
-          </li>
-          <li><span class="text-gray-500 mx-2">/</span></li>
-          <li>
-            <a href="#" class="hover:text-primary-600 text-grey-300"
-              >Good Standing</a
-            >
-          </li>
-          <li><span class="text-gray-500 mx-2">/</span></li>
-          <li>
-            <a href="#" class="pointer-events-none text-lg text-grey-300"
-              >Approved</a
-            >
-          </li>
-        </ol>
+        <li>
+          <router-link to="/admin/review"
+            ><span class="text-primary-600 text-base">Home</span></router-link
+          >
+        </li>
+        <li><span class="text-gray-500 mx-2">/</span></li>
+        <li>
+          <a href="#" class="hover:text-primary-600 text-grey-300"
+            >Good Standing</a
+          >
+        </li>
+        <li><span class="text-gray-500 mx-2">/</span></li>
+        <li>
+          <a href="#" class="pointer-events-none text-lg text-grey-300"
+            >Approved</a
+          >
+        </li>
+      </ol>
     </reviewer-nav-bar>
     <!-- Header -->
 
@@ -171,33 +171,34 @@ export default {
     };
     const approvedByOthers = () => {
       applicationStatus(store, "APP").then((res) => {
-         applicationStatus(store, "APP").then((resApp) => {
-        let statusId = res;
-         let approvedStatus = resApp;
-        let adminStatus = [adminId,approvedStatus,statusId];
-        store
-          .dispatch(
-            "reviewerGoodStanding/getGoodStandingOtherLicensed",
-            adminStatus
-          )
-          .then((res) => {
-            allInfo.value.assignApplication =
-              store.getters[
-                "reviewerGoodStanding/getGoodStandingOthersLicensedSearched"
-              ];
+        applicationStatus(store, "APP").then((resApp) => {
+          let statusId = res;
+          let approvedStatus = resApp;
+          let adminStatus = [adminId, approvedStatus, statusId];
+          store
+            .dispatch(
+              "reviewerGoodStanding/getGoodStandingOtherLicensed",
+              adminStatus
+            )
+            .then((res) => {
+              allInfo.value.assignApplication =
+                store.getters[
+                  "reviewerGoodStanding/getGoodStandingOthersLicensedSearched"
+                ];
 
-            for (let applicant in allInfo.value.assignApplication) {
-              if (
-                allInfo.value.assignApplication[applicant].applicationType ===
-                undefined
-              ) {
-                allInfo.value.assignApplication[applicant].applicationType =
-                  allInfo.value.assignApplication[applicant].applicantType;
+              for (let applicant in allInfo.value.assignApplication) {
+                if (
+                  allInfo.value.assignApplication[applicant].applicationType ===
+                  undefined
+                ) {
+                  allInfo.value.assignApplication[applicant].applicationType =
+                    allInfo.value.assignApplication[applicant].applicantType;
+                }
               }
-            }
 
-            JSON.parse(JSON.stringify(allInfo.value.assignApplication)).forEach(
-              (element) => {
+              JSON.parse(
+                JSON.stringify(allInfo.value.assignApplication)
+              ).forEach((element) => {
                 tableData.value.push({
                   id: element.id,
                   ApplicantName:
@@ -210,70 +211,71 @@ export default {
                     (element.profile.grandFatherName
                       ? element.profile.grandFatherName
                       : "-----"),
-                  ApplicationType: element.applicationType.name,
+                  ApplicationType:
+                    element && element.applicantType
+                      ? element.applicantType.name
+                      : "",
                   Date: new Date(element.createdAt)
                     .toJSON()
                     .slice(0, 10)
                     .replace(/-/g, "/"),
                   data: element,
                 });
-              }
-            );
+              });
 
-            toOthersTable.value = {
-              isLoading: false,
-              columns: [
-                {
-                  label: "ID",
-                  field: "id",
-                  width: "3%",
-                  sortable: true,
-                  isKey: true,
-                },
-                {
-                  label: "Applicant Name",
-                  field: "ApplicantName",
-                  width: "20%",
-                  sortable: true,
-                },
-                {
-                  label: "Applicant Type",
-                  field: "ApplicationType",
-                  width: "15%",
-                  sortable: true,
-                },
-                {
-                  label: "Date",
-                  field: "Date",
-                  width: "15%",
-                  sortable: true,
-                },
-                {
-                  label: "",
-                  field: "quick",
-                  width: "10%",
-                  display: function (row) {
-                    return (
-                      '<button  data-set="' +
-                      row +
-                      '"  data-bs-toggle="modal" data-bs-target="#staticBackdropOthers" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
-                      row.id +
-                      '" ><i class="fa fa-eye"></i>View/Edit</button>'
-                    );
+              toOthersTable.value = {
+                isLoading: false,
+                columns: [
+                  {
+                    label: "ID",
+                    field: "id",
+                    width: "3%",
+                    sortable: true,
+                    isKey: true,
                   },
+                  {
+                    label: "Applicant Name",
+                    field: "ApplicantName",
+                    width: "20%",
+                    sortable: true,
+                  },
+                  {
+                    label: "Applicant Type",
+                    field: "ApplicationType",
+                    width: "15%",
+                    sortable: true,
+                  },
+                  {
+                    label: "Date",
+                    field: "Date",
+                    width: "15%",
+                    sortable: true,
+                  },
+                  {
+                    label: "",
+                    field: "quick",
+                    width: "10%",
+                    display: function (row) {
+                      return (
+                        '<button  data-set="' +
+                        row +
+                        '"  data-bs-toggle="modal" data-bs-target="#staticBackdropOthers" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
+                        row.id +
+                        '" ><i class="fa fa-eye"></i>View/Edit</button>'
+                      );
+                    },
+                  },
+                ],
+                rows: JSON.parse(JSON.stringify(tableData.value)),
+                totalRecordCount: tableData.value.length,
+                sortable: {
+                  order: "id",
+                  sort: "asc",
                 },
-              ],
-              rows: JSON.parse(JSON.stringify(tableData.value)),
-              totalRecordCount: tableData.value.length,
-              sortable: {
-                order: "id",
-                sort: "asc",
-              },
-            };
-          });
-     
+              };
+            });
+        });
       });
-     });
     };
 
     const approvedByYou = () => {
@@ -318,7 +320,10 @@ export default {
                     (element.profile.grandFatherName
                       ? element.profile.grandFatherName
                       : "-----"),
-                  ApplicationType: element.applicationType.name,
+                  ApplicationType:
+                    element && element.applicantType
+                      ? element.applicantType.name
+                      : "",
                   Date: new Date(element.createdAt)
                     .toJSON()
                     .slice(0, 10)

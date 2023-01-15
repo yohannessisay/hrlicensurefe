@@ -112,7 +112,7 @@
                                     <h3 class="ml-64 mb-8">
                                       LETTER OF GOOD STANDING
                                     </h3>
-                                    <h4 class="ml-8">
+                                    <h4 class="ml-8" contenteditable="true">
                                       This letter of good standing and
                                       confirmation of registration is written
                                       upon request of
@@ -126,15 +126,14 @@
                                           (modalData && modalData.profile
                                             ? modalData.profile.name
                                             : "") +
-                                            " " +
-                                            (modalData && modalData.profile
-                                              ? modalData.profile.fatherName
-                                              : "") +
-                                            " " +
-                                            (modalData && modalData.profile
-                                              ? modalData.profile
-                                                  .grandFatherName
-                                              : "")
+                                          " " +
+                                          (modalData && modalData.profile
+                                            ? modalData.profile.fatherName
+                                            : "") +
+                                          " " +
+                                          (modalData && modalData.profile
+                                            ? modalData.profile.grandFatherName
+                                            : "")
                                         }}
                                       </span>
                                       .
@@ -143,20 +142,23 @@
                                     <h4 class="ml-4">
                                       <span>
                                         {{
-                                          modalData && modalData.profile
-                                            ? modalData.profile.gender == "male"
-                                              ? "He"
-                                              : "She"
-                                            : ""
+                                          modalData &&
+                                          modalData.profile &&
+                                          modalData.profile.gender == "male"
+                                            ? "He"
+                                            : "She"
                                         }}
                                       </span>
-                                      was registered as
+                                      <span contenteditable="true">
+                                        was registered as</span
+                                      >
+
                                       <span class="text-yellow-300">{{
                                         modalData && modalData.applicantPosition
                                           ? modalData.applicantPosition.name
                                           : ""
                                       }}</span>
-                                      on
+                                      <span contenteditable="true"> on </span>
                                       <span class="text-yellow-300">{{
                                         modalData
                                           ? moment(
@@ -166,15 +168,17 @@
                                             ).format("MMMM D, YYYY")
                                           : ""
                                       }}</span>
-                                      by
+                                      <span contenteditable="true"> by </span>
                                       <span class="text-yellow-300">{{
                                         modalData && modalData.whoIssued
                                           ? modalData.whoIssued
                                           : ""
-                                      }}</span
-                                      >, which is the responsible organ for
-                                      registration and licensing of health
-                                      professionals and
+                                      }}</span>
+                                      <span contenteditable="true"
+                                        >, which is the responsible organ for
+                                        registration and licensing of health
+                                        professionals and
+                                      </span>
                                       <span>
                                         {{
                                           modalData && modalData.profile
@@ -184,7 +188,9 @@
                                             : ""
                                         }}
                                       </span>
-                                      registration number is
+                                      <span contenteditable="true">
+                                        registration number is
+                                      </span>
                                       <span class="text-yellow-300">
                                         {{
                                           modalData
@@ -204,9 +210,11 @@
                                             : ""
                                         }}
                                       </span>
-                                      has no any reported medico legal records
-                                      and malpractices while he has practiced
-                                      his medical profession in Ethiopia
+                                      <span contenteditable="true">
+                                        has no any reported medico legal records
+                                        and malpractices while he has practiced
+                                        his medical profession in Ethiopia
+                                      </span>
                                     </h4>
                                     <h4 class="ml-4">
                                       untill
@@ -334,17 +342,19 @@ export default {
   props: ["modalDataGenerate"],
   components: { Loading },
   computed: {
-    moment: () => moment
+    moment: () => moment,
   },
   setup(props) {
     const store = useStore();
     const toast = useToast();
     let myRegion = ref(true);
-    const expertLevelId = JSON.parse(localStorage.getItem("allAdminData"))
-      .expertLevelId;
+    const expertLevelId = JSON.parse(
+      localStorage.getItem("allAdminData")
+    ).expertLevelId;
 
-    const adminRegionId = JSON.parse(localStorage.getItem("allAdminData"))
-      .regionId;
+    const adminRegionId = JSON.parse(
+      localStorage.getItem("allAdminData")
+    ).regionId;
 
     let show = ref(false);
 
@@ -363,7 +373,7 @@ export default {
       email: "",
       maritalStatus: "",
       nationality: "",
-      dateOfBirth: ""
+      dateOfBirth: "",
     });
     let applicantPosition = ref("-");
 
@@ -373,7 +383,7 @@ export default {
     let applicantTypeId = ref("");
     let education = ref({
       departmentId: "",
-      institutionId: ""
+      institutionId: "",
     });
     let licenseId = ref("");
     let activeClass = ref("active");
@@ -516,18 +526,18 @@ export default {
 
       license.value.isLicenseGenerated = true;
       let req = {
-        data: { ...license.value, isLicenseGenerated: true }
+        data: { ...license.value, isLicenseGenerated: true },
       };
       store
         .dispatch("reviewer/editGoodStanding", req)
-        .then(res => {
+        .then((res) => {
           if (res.statusText == "Created") {
             toast.success("Done", {
               timeout: 5000,
               position: "bottom-center",
               pauseOnFocusLoss: true,
               pauseOnHover: true,
-              icon: true
+              icon: true,
             });
             setTimeout(() => {
               window.location.reload();
@@ -538,14 +548,14 @@ export default {
               position: "bottom-center",
               pauseOnFocusLoss: true,
               pauseOnHover: true,
-              icon: true
+              icon: true,
             });
             setTimeout(() => {
               window.location.reload();
             }, 3000);
           }
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
           setTimeout(() => {
             window.location.reload();
@@ -637,9 +647,9 @@ export default {
       GenerateLetter,
       myRegion,
       modalData,
-      expertLevelId
+      expertLevelId,
     };
-  }
+  },
 };
 </script>
 <style>
