@@ -1,11 +1,51 @@
-* {
+  
+@import url('https://fonts.googleapis.com/css2?family=Laila&display=swap');
+
+/* purgecss start ignore */
+*,
+a,
+span,
+label { 
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   list-style: none;
   text-decoration: none;
-  font-family: 'Source Sans Pro', sans-serif !important;
+  font-family: 'Source Sans Pro', sans-serif ;
   font-weight: bold;
+}
+
+.font-medium,
+[type="text"],
+[type="email"],
+[type="url"],
+[type="password"],
+[type="number"],
+[type="date"],
+[type="datetime-local"],
+[type="month"],
+[type="search"],
+[type="tel"],
+[type="time"],
+[type="week"],
+[type="checkbox"],
+[type="radio"],
+[multiple],
+textarea,
+select>option,
+.font-medium,
+select,
+h2,
+h1,
+h3,
+h4,
+.form-select,
+h5,
+p,
+strong,
+h6 {
+  font-family: 'Laila', sans-serif;
+  font-weight: 700;
 }
 
 .main {

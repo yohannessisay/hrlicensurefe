@@ -1727,9 +1727,8 @@ export default {
                 : certificateDetail.value.educations[i].otherProfessionType
                 ? `${
                     certificateDetail.value.educations[i].prefix
-                      ? "(" +
-                        certificateDetail.value.educations[i].prefix.name +
-                        ")"
+                      ?  
+                        certificateDetail.value.educations[i].prefix.name  
                       : ""
                   }   ${
                     certificateDetail.value.educations[i].otherProfessionType
@@ -1757,9 +1756,8 @@ export default {
                 : certificateDetail.value.educations[i].otherProfessionType
                 ? `${
                     certificateDetail.value.educations[i].prefix
-                      ? "(" +
-                        certificateDetail.value.educations[i].prefix.name +
-                        ")"
+                      ?  
+                        certificateDetail.value.educations[i].prefix.name  
                       : ""
                   }   ${
                     certificateDetail.value.educations[i].otherProfessionType
@@ -1787,9 +1785,8 @@ export default {
                 certificateDetail.value.educations[i].professionType.name
                   ? `${
                       certificateDetail.value.educations[i].prefix
-                        ? "(" +
-                          certificateDetail.value.educations[i].prefix.name +
-                          ")"
+                        ?  
+                          certificateDetail.value.educations[i].prefix.name 
                         : ""
                     }   ${
                       certificateDetail.value.educations[i].otherProfessionType

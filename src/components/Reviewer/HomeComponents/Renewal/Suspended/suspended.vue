@@ -7,24 +7,22 @@
     <!-- Header -->
     <reviewer-nav-bar>
       <ol class="list-reset flex">
-          <li>
-            <router-link to="/admin/review"
-              ><span class="text-primary-600 text-base">Home</span></router-link
-            >
-          </li>
-          <li><span class="text-gray-500 mx-2">/</span></li>
-          <li>
-            <a href="#" class="hover:text-primary-600 text-grey-300"
-              >Renewal</a
-            >
-          </li>
-          <li><span class="text-gray-500 mx-2">/</span></li>
-          <li>
-            <a href="#" class="pointer-events-none text-lg text-grey-300"
-              >Suspended</a
-            >
-          </li>
-        </ol>
+        <li>
+          <router-link to="/admin/review"
+            ><span class="text-primary-600 text-base">Home</span></router-link
+          >
+        </li>
+        <li><span class="text-gray-500 mx-2">/</span></li>
+        <li>
+          <a href="#" class="hover:text-primary-600 text-grey-300">Renewal</a>
+        </li>
+        <li><span class="text-gray-500 mx-2">/</span></li>
+        <li>
+          <a href="#" class="pointer-events-none text-lg text-grey-300"
+            >Suspended</a
+          >
+        </li>
+      </ol>
     </reviewer-nav-bar>
     <!-- Header -->
 
@@ -116,7 +114,7 @@ import ReviewerNavBar from "../../../SharedComponents/navBar.vue";
 import NewLicenseMainContent from "../../../SharedComponents/suspended.vue";
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
-import VueTableLite from "../../../../../plugins/TableLite.vue";
+import VueTableLite from "vue3-table-lite";
 import editModal from "./suspendedModal.vue";
 import editModalOthers from "./suspendedModalOthers.vue";
 import applicationStatus from "../../../Configurations/getApplicationStatus.js";
@@ -129,7 +127,7 @@ export default {
     NewLicenseMainContent,
     VueTableLite,
     editModal,
-    editModalOthers,
+    editModalOthers
   },
   setup() {
     const store = useStore();
@@ -141,11 +139,11 @@ export default {
 
     let modalDataId = ref({
       id: "",
-      change: 0,
+      change: 0
     });
     let modalDataIdOthers = ref({
       id: "",
-      change: 0,
+      change: 0
     });
 
     let allInfo = ref({});
@@ -155,21 +153,20 @@ export default {
     let tableData = ref([]);
     let toYouTableData = ref([]);
     toOthersTable.value = {
-      isLoading: true,
+      isLoading: true
     };
     toYouTable.value = {
-      isLoading: true,
+      isLoading: true
     };
 
     const suspended = () => {
-      applicationStatus(store, "SUSP").then((statusId) => {
-      
+      applicationStatus(store, "SUSP").then(statusId => {
         store
           .dispatch("reviewerRenewal/getRenewalSuspended", statusId)
-          .then((res) => { 
+          .then(res => {
             allInfo.value = res;
 
-            JSON.parse(JSON.stringify(allInfo.value)).forEach((element) => {
+            JSON.parse(JSON.stringify(allInfo.value)).forEach(element => {
               if (element.renewalReviewer.reviewerId == adminId) {
                 toYouTableData.value.push({
                   id: element.id,
@@ -184,7 +181,7 @@ export default {
                     .toJSON()
                     .slice(0, 10)
                     .replace(/-/g, "/"),
-                  data: element,
+                  data: element
                 });
               } else {
                 tableData.value.push({
@@ -200,7 +197,7 @@ export default {
                     .toJSON()
                     .slice(0, 10)
                     .replace(/-/g, "/"),
-                  data: element,
+                  data: element
                 });
               }
             });
@@ -212,45 +209,45 @@ export default {
                   field: "id",
                   width: "3%",
                   sortable: true,
-                  isKey: true,
+                  isKey: true
                 },
                 {
                   label: "Applicant Name",
                   field: "ApplicantName",
                   width: "20%",
-                  sortable: true,
+                  sortable: true
                 },
                 {
                   label: "Applicant Type",
                   field: "ApplicationType",
                   width: "15%",
-                  sortable: true,
+                  sortable: true
                 },
                 {
                   label: "Date",
                   field: "Date",
                   width: "15%",
-                  sortable: true,
+                  sortable: true
                 },
                 {
                   label: "",
                   field: "quick",
                   width: "10%",
-                  display: function (row) {
+                  display: function(row) {
                     return (
                       '<button data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
                       row.id +
                       '" ><i class="fa fa-eye"></i>View/Edit</button>'
                     );
-                  },
-                },
+                  }
+                }
               ],
               rows: JSON.parse(JSON.stringify(toYouTableData.value)),
               totalRecordCount: toYouTableData.value.length,
               sortable: {
                 order: "id",
-                sort: "asc",
-              },
+                sort: "asc"
+              }
             };
 
             toOthersTable.value = {
@@ -260,31 +257,31 @@ export default {
                   field: "id",
                   width: "3%",
                   sortable: true,
-                  isKey: true,
+                  isKey: true
                 },
                 {
                   label: "Applicant Name",
                   field: "ApplicantName",
                   width: "20%",
-                  sortable: true,
+                  sortable: true
                 },
                 {
                   label: "Applicant Type",
                   field: "ApplicationType",
                   width: "15%",
-                  sortable: true,
+                  sortable: true
                 },
                 {
                   label: "Date",
                   field: "Date",
                   width: "15%",
-                  sortable: true,
+                  sortable: true
                 },
                 {
                   label: "",
                   field: "quick",
                   width: "10%",
-                  display: function (row) {
+                  display: function(row) {
                     return (
                       '<button  data-set="' +
                       row +
@@ -292,15 +289,15 @@ export default {
                       row.id +
                       '" ><i class="fa fa-eye"></i>View/Edit</button>'
                     );
-                  },
-                },
+                  }
+                }
               ],
               rows: JSON.parse(JSON.stringify(tableData.value)),
               totalRecordCount: tableData.value.length,
               sortable: {
                 order: "id",
-                sort: "asc",
-              },
+                sort: "asc"
+              }
             };
           });
       });
@@ -311,7 +308,7 @@ export default {
       toYouTable.value.isLoading = false;
       let elements = document.getElementsByClassName("edit-btn");
 
-      Array.prototype.forEach.call(elements, function (element) {
+      Array.prototype.forEach.call(elements, function(element) {
         if (element.classList.contains("edit-btn")) {
           element.addEventListener("click", rowClicked());
         }
@@ -321,7 +318,7 @@ export default {
     const tableLoadingFinishOthers = () => {
       let elements = document.getElementsByClassName("edit-btn-others");
 
-      Array.prototype.forEach.call(elements, function (element) {
+      Array.prototype.forEach.call(elements, function(element) {
         if (element.classList.contains("edit-btn-others")) {
           element.addEventListener("click", rowClicked());
         }
@@ -329,7 +326,7 @@ export default {
       toOthersTable.value.isLoading = false;
     };
 
-    const rowClicked = (row) => {
+    const rowClicked = row => {
       if (row != undefined) {
         row = JSON.parse(JSON.stringify(row));
         modalDataId.value.change++;
@@ -337,7 +334,7 @@ export default {
       }
     };
 
-    const rowClickedOthers = (row) => {
+    const rowClickedOthers = row => {
       if (row != undefined) {
         row = JSON.parse(JSON.stringify(row));
         modalDataIdOthers.value.change++;
@@ -361,8 +358,8 @@ export default {
       modalDataId,
       modalDataIdOthers,
       rowClickedOthers,
-      tableLoadingFinishOthers,
+      tableLoadingFinishOthers
     };
-  },
+  }
 };
 </script>

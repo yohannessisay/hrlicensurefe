@@ -18,7 +18,7 @@
   >
     <div class="flex justify-center items-center">
       <RenderIllustration illustration="Logo" class="hidden sm:block" />
-      <h3 class="ml-tiny font-AtkinsonHyperlegibleBold">eHPEL - Lisence</h3>
+      <h3 class="ml-4 text-2xl text-main-400">eHPEL - License</h3>
     </div>
     <div>
       <button
@@ -155,7 +155,7 @@
             <div class="form-group mb-6">
               <label
                 for="exampleInputEmail2"
-                class="form-label inline-block mb-2 text-gray-700"
+                class="form-label mb-2 text-gray-700"
                 >Email address</label
               >
               <input
@@ -165,8 +165,6 @@
                   form-control
                   block
                   w-full
-                  px-3
-                  py-1.5
                   text-base
                   font-normal
                   text-gray-700
@@ -186,50 +184,60 @@
                 placeholder="Enter email"
               />
             </div>
-            <div class="form-group mb-6">
+            <div class="form-group mb-6 mt-4">
               <label
-                for="exampleInputPassword2"
-                class="form-label inline-block mb-2 text-gray-700"
+                for="exampleInputEmail2"
+                class="form-label mb-2 text-gray-700"
                 >Password</label
               >
-              <input
-                v-model="credentials.password"
-                type="password"
-                id="password"
-                name="password"
-                autocomplete="current-password"
-                required
-                placeholder="**********"
-                @type="show ? 'password' : 'text'"
-                class="
-                  form-control
-                  block
-                  w-full
-                  px-3
-                  py-1.5
-                  text-base
-                  font-normal
-                  text-gray-700
-                  bg-white bg-clip-padding
-                  border border-solid border-gray-300
-                  rounded
-                  transition
-                  ease-in-out
-                  m-0
-                  focus:text-gray-700
-                  focus:bg-white
-                  focus:border-blue-600
-                  focus:outline-none
-                "
-              />
-              <a class="text-primary-500">
-                <i
-                  class="fa fa-eye cursor-pointer"
-                  style="font-size: 26px"
+              <div class="relative text-gray-600 focus-within:text-gray-400">
+                <input
+                  v-model="credentials.password"
+                  type="password"
+                  id="password"
+                  name="password"
+                  autocomplete="current-password"
+                  required
+                  placeholder="**********"
+                  @type="show ? 'password' : 'text'"
+                  class="
+                    form-control
+                    block
+                    w-full
+                    px-3
+                    py-1.5
+                    text-base
+                    font-normal
+                    text-gray-700
+                    bg-white bg-clip-padding
+                    border border-solid border-gray-300
+                    rounded
+                    transition
+                    ease-in-out
+                    m-0
+                    focus:text-gray-700
+                    focus:bg-white
+                    focus:border-blue-600
+                    focus:outline-none
+                  "
+                />
+                <span
                   @click="showVisibility()"
-                ></i
-              ></a>
+                  class="
+                    absolute
+                    inset-y-0
+                    right-0
+                    flex
+                    items-center
+                    pr-2
+                    cursor-pointer
+                  "
+                >
+                  <i class="fa fa-eye" style="font-size: 26px"></i>
+                </span>
+              </div>
             </div>
+
             <div class="flex justify-between items-center mb-6">
               <a
                 href="#!"
@@ -400,7 +408,6 @@
                 placeholder="912345678"
                 id="phone"
                 type="tel"
-              
                 class="w-full rounded-md sm:w-10/12 border ml-4 text-main-400"
                 v-model="registerCredentials.phoneNumber"
                 required
@@ -642,7 +649,7 @@ import PasswordMeter from "vue-simple-password-meter";
 export default {
   components: { RenderIllustration, VueElementLoading, PasswordMeter },
   emits: ["setShowLogin", "setShowSignup"],
-  setup({ emit }) {
+  setup() {
     const store = useStore();
     const router = useRouter();
     const toast = useToast();
@@ -753,7 +760,10 @@ export default {
           .then((res) => {
             if (res && res.status == "Success") {
               enableVerification.value = true;
-              localStorage.setItem("secretOtp", JSON.stringify(res.data.fullHash));
+              localStorage.setItem(
+                "secretOtp",
+                JSON.stringify(res.data.fullHash)
+              );
             } else {
               toast.error("Service error, please try again", {
                 timeout: 5000,

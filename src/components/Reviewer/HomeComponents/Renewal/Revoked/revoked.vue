@@ -116,7 +116,7 @@ import ReviewerNavBar from "../../../SharedComponents/navBar.vue";
 import NewLicenseMainContent from "../../../SharedComponents/revoked.vue";
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
-import VueTableLite from "../../../../../plugins/TableLite.vue";
+import VueTableLite from "vue3-table-lite";
 import editModal from "./revokedModal.vue";
 import editModalOthers from "./revokedModalOthers.vue";
 import applicationStatus from "../../../Configurations/getApplicationStatus.js";

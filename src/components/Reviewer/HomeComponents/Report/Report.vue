@@ -400,7 +400,7 @@
               </div>
             </div>
 
-            <div class="bg-white p-6 rounded-lg shadow-lg overflow-x-scroll">
+            <div class="bg-white p-6 rounded-lg shadow-sm ">
               <div
                 class="
                   inline-block

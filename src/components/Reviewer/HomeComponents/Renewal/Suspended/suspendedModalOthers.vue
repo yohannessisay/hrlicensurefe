@@ -43,20 +43,13 @@
           text-current
         "
       >
-   <div
-          class="
-            modal-header
-            flex flex-shrink-0
-           justify-end
-           
-            p-2
-            rounded-t-md
-          "
+        <div
+          class="modal-header flex flex-shrink-0 justify-end p-2 rounded-t-md"
         >
           <button
             type="button"
-            class="     
-                  px-6
+            class="
+              px-6
               text-white
               bg-primary-600
               hover:text-primary-600 hover:border
@@ -75,10 +68,13 @@
               active:bg-purple-800 active:shadow-lg
               transition
               duration-150
-              ease-in-out"
+              ease-in-out
+            "
             data-bs-dismiss="modal"
             aria-label="Close"
-          ><i class="fa fa-close fa-2x"></i></button>
+          >
+            <i class="fa fa-close fa-2x"></i>
+          </button>
         </div>
         <div class="vld-parent">
           <loading
@@ -132,7 +128,7 @@
                                 justify-center
                               "
                             >
-                                 <picture>
+                              <picture>
                                 <source
                                   :srcset="
                                     modalData.profile &&
@@ -206,8 +202,6 @@
                         </div>
                       </div>
 
-                      
-
                       <div
                         class="
                           grow-0
@@ -276,7 +270,11 @@
                               <div class="mt-large bg-white">
                                 <a
                                   :href="googleApi + document.filePath"
-                                  :data-title="document.documentType?document.documentType.name:''"
+                                  :data-title="
+                                    document.documentType
+                                      ? document.documentType.name
+                                      : ''
+                                  "
                                   data-lightbox="example-2"
                                 >
                                   <img
@@ -288,7 +286,13 @@
                                 <h4 style="font-weight: bold">
                                   Document Type:-
                                 </h4>
-                                    <h6>{{ document.documentType?document.documentType.name:'' }}</h6>
+                                <h6>
+                                  {{
+                                    document.documentType
+                                      ? document.documentType.name
+                                      : ""
+                                  }}
+                                </h6>
                               </div>
                             </div>
                           </div>
@@ -309,26 +313,26 @@
             justify-end
             border-t border-grey-100
             rounded-b-md
+            p-2
           "
         >
           <button
             class="
               inline-block
-                                            px-6
-                                            py-2.5
-                                            bg-primary-700
-                                            text-white
-                                            font-medium
-                                            text-xs
-                                            leading-tight
-                                            uppercase
-                                            rounded
-                                            shadow-lg
-                                            hover:bg-white 
-                                            hover:text-primary-600
-                                            transition
-                                            duration-150
-                                            ease-in-out
+              px-6
+              py-2.5
+              bg-primary-700
+              text-white
+              font-medium
+              text-xs
+              leading-tight
+              uppercase
+              rounded
+              shadow-lg
+              hover:bg-white hover:text-primary-600
+              transition
+              duration-150
+              ease-in-out
             "
             type="button"
             data-bs-toggle="collapse"
@@ -342,7 +346,7 @@
           <button
             type="button"
             class="
-         inline-block
+              inline-block
               px-6
               text-white
               font-medium
@@ -353,8 +357,7 @@
               rounded
               hover:border-primary-600
               shadow-lg
-              hover:bg-white 
-              hover:text-primary-700
+              hover:bg-white hover:text-primary-700
               transition
               duration-150
               ease-in-out
@@ -367,7 +370,7 @@
         </div>
       </div>
     </div>
-  </div> 
+  </div>
 </template>
 <script>
 import { googleApi } from "@/composables/baseURL";
@@ -385,17 +388,14 @@ export default {
       this.show = true;
     };
     const show = ref(true);
-    const showRes = ref(true); 
+    const showRes = ref(true);
     const showOptions = ref(true);
     const isLoading = ref(true);
     const modalData = ref({});
     let result = {};
     const check = () => {
       store
-        .dispatch(
-          "reviewer/getRenewalApplication",
-          props.modalDataIdOthers.id
-        )
+        .dispatch("reviewer/getRenewalApplication", props.modalDataIdOthers.id)
         .then((res) => {
           if (res.data.status == "Success") {
             result = res.data.data;
@@ -423,7 +423,7 @@ export default {
             modalData.value.email = result.applicant.emailAddress
               ? result.applicant.emailAddress
               : "-----";
-     
+
             modalData.value.profile = result.profile;
             modalData.value.professionalTypes = result.licenseProfessions;
             modalData.value.certifiedDate = result.certifiedDate;
@@ -445,7 +445,7 @@ export default {
       show,
       check,
       isLoading,
-      showRes, 
+      showRes,
       showOptions,
       googleApi,
       modalData,

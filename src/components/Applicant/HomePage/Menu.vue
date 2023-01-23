@@ -4,7 +4,7 @@
     <div class="content" id="mainContent">
       <top-nav :userInfo="userInfo"></top-nav>
       <div class="mt-8 ml-8 mr-8">
-        <nav class="bg-grey-100 p-4 rounded-sm w-full shadow-lg">
+        <nav class="bg-grey-100 p-4 rounded-sm w-full shadow-xl">
           <ol class="list-reset flex">
             <li>
               <a href="#" class="text-main-400 hover:text-main-100">Home</a>

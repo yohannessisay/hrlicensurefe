@@ -30,49 +30,11 @@
 
     <!-- Main Content -->
     <div class="home-content">
-      <new-license-main-content>
-        <template v-slot:unassigned>
+      <main-body>
+        <template v-slot:yourHeader> Unassigned Applications </template>
+        <template v-slot:toyou>
           <div class="container mx-auto px-4 sm:px-8">
             <div class="py-8">
-              <div>
-                <h2 class="text-2xl font-semibold leading-tight">
-                  Unassigned Applications
-                </h2>
-                <!-- <input
-                  v-if="adminLevel.code != 'REG'"
-                  class="
-                    form-check-input
-                    appearance-none
-                    h-5
-                    w-5
-                    border border-gray-300
-                    rounded-sm
-                    bg-white
-                    checked:bg-blue-600 checked:border-blue-600
-                    focus:outline-none
-                    transition
-                    duration-200
-                    mt-2
-                    align-top
-                    bg-no-repeat bg-center bg-contain
-                    float-left
-                    mr-2
-                    cursor-pointer
-                  "
-                  @change="includeFromOthers()"
-                  v-model="includeOthers"
-                  type="checkbox"
-                  value=""
-                  id="flexCheckDefault"
-                />
-                <h4
-                  v-if="adminLevel.code != 'REG'"
-                  class="form-check-label inline-block text-gray-800 mt-1"
-                  for="flexCheckDefault"
-                >
-                  Include From Other Regions
-                </h4> -->
-              </div>
               <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
                 <div
                   class="
@@ -105,13 +67,12 @@
             </div>
           </div>
         </template>
-        <template v-slot:resubmitted>
+        <template v-slot:othersHeader> Resubmitted Applications </template>
+        <template v-slot:to_others>
           <div class="container mx-auto px-4 sm:px-8">
             <div class="py-8">
               <div>
-                <h2 class="text-2xl font-semibold leading-tight">
-                  Resubmitted Applications
-                </h2>
+                <h2 class="text-2xl font-semibold leading-tight"></h2>
               </div>
               <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
                 <div
@@ -145,7 +106,7 @@
             </div>
           </div>
         </template>
-      </new-license-main-content>
+      </main-body>
     </div>
     <!-- Main Content -->
   </section>
@@ -154,7 +115,7 @@
 <script>
 import ReviewerSideNav from "../SharedComponents/sideNav.vue";
 import ReviewerNavBar from "../../../SharedComponents/navBar.vue";
-import NewLicenseMainContent from "../../../SharedComponents/unassigned.vue";
+import MainBody from "../../../SharedComponents/mainBody.vue";
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
 import applicationStatus from "../../../Configurations/getApplicationStatus.js";
@@ -167,7 +128,7 @@ export default {
   components: {
     ReviewerSideNav,
     ReviewerNavBar,
-    NewLicenseMainContent,
+    MainBody,
     editModal,
     VueTableLite,
     editModalResubmitted,
@@ -196,7 +157,7 @@ export default {
     });
 
     let allInfo = ref({});
-    let includeOthers=ref(false);
+    let includeOthers = ref(false);
     const unassignedTable = ref({});
     const reSubmittedTable = ref([]);
     unassignedTable.value = {
@@ -213,12 +174,12 @@ export default {
     const unassigned = () => {
       applicationStatus(store, "SUB").then((res) => {
         modalDataId.value.apStatusUnassigned = res;
-        let statusId = res; 
+        let statusId = res;
 
         store
           .dispatch("reviewerGoodStanding/getUnassignedGoodStanding", statusId)
           .then((res) => {
-            allInfo.value = res; 
+            allInfo.value = res;
             JSON.parse(JSON.stringify(allInfo.value)).forEach((element) => {
               tableData.value.push({
                 LicenseNumber: element.goodStandingCode
@@ -230,7 +191,7 @@ export default {
                   (element.profile ? element.profile.fatherName : "") +
                   " " +
                   (element.profile ? element.profile.grandFatherName : ""),
-                  ApplicantType: element?element.applicantType.name :'',
+                ApplicantType: element ? element.applicantType.name : "",
                 Date: new Date(element.createdAt)
                   .toJSON()
                   .slice(0, 10)
@@ -238,8 +199,6 @@ export default {
                 data: element,
               });
             });
-
-          
 
             tableDataTemp.value = tableData.value;
             unassignedTable.value = {
@@ -293,8 +252,6 @@ export default {
       });
     };
 
-  
-
     const reSubmitted = () => {
       applicationStatus(store, "UPD").then((res) => {
         let statusId = res;
@@ -314,7 +271,7 @@ export default {
                   element.profile.fatherName +
                   " " +
                   element.profile.grandFatherName,
-                ApplicantType: element?element.applicantType.name :'',
+                ApplicantType: element ? element.applicantType.name : "",
                 Date: new Date(element.createdAt)
                   .toJSON()
                   .slice(0, 10)
@@ -375,14 +332,13 @@ export default {
           });
       });
     };
-    const includeFromOthers=()=>{
-      if(includeOthers.value==true){
-        unassignedTable.value.rows=tableDataOthers.value;
-      }else{
-        unassignedTable.value.rows=tableData.value;
+    const includeFromOthers = () => {
+      if (includeOthers.value == true) {
+        unassignedTable.value.rows = tableDataOthers.value;
+      } else {
+        unassignedTable.value.rows = tableData.value;
       }
-      
-    }
+    };
     const tableLoadingFinish = () => {
       let elements = document.getElementsByClassName("edit-btn");
       Array.prototype.forEach.call(elements, function (element) {
@@ -441,8 +397,8 @@ export default {
       showModalResubmitted,
       searchedReviewer,
       tableLoadingFinish,
-      tableLoadingFinishResub, 
-      rowClicked, 
+      tableLoadingFinishResub,
+      rowClicked,
       includeFromOthers,
       rowClickedResub,
       modalDataId,

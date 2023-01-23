@@ -7,38 +7,34 @@
     <!-- Header -->
     <reviewer-nav-bar>
       <ol class="list-reset flex">
-          <li>
-            <router-link to="/admin/review"
-              ><span class="text-primary-600 text-base">Home</span></router-link
-            >
-          </li>
-          <li><span class="text-gray-500 mx-2">/</span></li>
-          <li>
-            <a href="#" class="hover:text-primary-600 text-grey-300"
-              >Good Standing</a
-            >
-          </li>
-          <li><span class="text-gray-500 mx-2">/</span></li>
-          <li>
-            <a href="#" class="pointer-events-none text-lg text-grey-300"
-              >Licensed</a
-            >
-          </li>
-        </ol>
+        <li>
+          <router-link to="/admin/review"
+            ><span class="text-primary-600 text-base">Home</span></router-link
+          >
+        </li>
+        <li><span class="text-gray-500 mx-2">/</span></li>
+        <li>
+          <a href="#" class="hover:text-primary-600 text-grey-300"
+            >Good Standing</a
+          >
+        </li>
+        <li><span class="text-gray-500 mx-2">/</span></li>
+        <li>
+          <a href="#" class="pointer-events-none text-lg text-grey-300"
+            >Printed</a
+          >
+        </li>
+      </ol>
     </reviewer-nav-bar>
     <!-- Header -->
 
     <!-- Main Content -->
     <div class="home-content">
-      <new-license-main-content>
+      <main-body>
+        <template v-slot:yourHeader> Letters Printed By You </template>
         <template v-slot:toyou>
           <div class="container mx-auto px-4 sm:px-8">
             <div class="py-8">
-              <div>
-                <h2 class="text-2xl font-semibold leading-tight">
-                  Letters Licensed By You
-                </h2>
-              </div>
               <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
                 <div
                   class="
@@ -67,14 +63,10 @@
             </div>
           </div>
         </template>
+        <template v-slot:othersHeader> Letters Printed By Others </template>
         <template v-slot:to_others>
           <div class="container mx-auto px-4 sm:px-8">
             <div class="py-8">
-              <div>
-                <h2 class="text-2xl font-semibold leading-tight">
-                  Letters Licensed By Others
-                </h2>
-              </div>
               <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
                 <div
                   class="
@@ -104,7 +96,7 @@
             </div>
           </div>
         </template>
-      </new-license-main-content>
+      </main-body>
     </div>
     <!-- Main Content -->
   </section>
@@ -112,23 +104,23 @@
 
 <script>
 import ReviewerSideNav from "../SharedComponents/sideNav.vue";
-import ReviewerNavBar from "../../../SharedComponents/navBar.vue";
-import NewLicenseMainContent from "../../../SharedComponents/licensed.vue";
+import ReviewerNavBar from "../../../SharedComponents/navBar.vue"; 
+import MainBody from "../../../SharedComponents/mainBody.vue";
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
 
 import applicationStatus from "../../../Configurations/getApplicationStatus.js";
 import VueTableLite from "vue3-table-lite";
-import editModal from "./licensedModal.vue";
-import editModalOthers from "./licensedModalOthers.vue";
+import editModal from "./printedModal.vue";
+import editModalOthers from "./printedModalOthers.vue";
 
 export default {
   name: "home",
   components: {
     ReviewerSideNav,
-    ReviewerNavBar,
-    NewLicenseMainContent,
+    ReviewerNavBar, 
     VueTableLite,
+    MainBody,
     editModal,
     editModalOthers,
   },
@@ -161,7 +153,7 @@ export default {
     toYouTable.value = {
       isLoading: true,
     };
-    const licensedByOthers = () => {
+    const printedByOthers = () => {
       applicationStatus(store, "AP").then((ap) => {
         applicationStatus(store, "APP").then((app) => {
           let adminStatus = [adminId, ap, app];
@@ -266,7 +258,7 @@ export default {
       });
     };
 
-    const licensedByYou = () => {
+    const printedByYou = () => {
       store
         .dispatch("reviewerGoodStanding/getGoodStandingAllLicensed")
         .then(() => {
@@ -298,11 +290,7 @@ export default {
                 ApplicationType: element.applicationType
                   ? element.applicationType.name
                   : "",
-                Date: new Date(
-                  element.applicationType
-                    ? element.applicationType.createdAt
-                    : ""
-                )
+                Date: new Date(element ? element.createdAt : "")
                   .toJSON()
                   .slice(0, 10)
                   .replace(/-/g, "/"),
@@ -393,7 +381,6 @@ export default {
     };
 
     const rowClickedOthers = (row) => {
-      console.log(row)
       if (row != undefined) {
         row = JSON.parse(JSON.stringify(row));
         modalDataIdOthers.value.change++;
@@ -402,8 +389,8 @@ export default {
     };
 
     onMounted(() => {
-      licensedByYou();
-      licensedByOthers();
+      printedByYou();
+      printedByOthers();
     });
 
     return {
@@ -414,7 +401,7 @@ export default {
       toYouTable,
       showModal,
       tableLoadingFinish,
-      licensedByOthers,
+      printedByOthers,
       rowClicked,
       modalDataId,
       modalDataIdOthers,

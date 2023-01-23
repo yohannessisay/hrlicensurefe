@@ -147,7 +147,6 @@
                         focus:border-blue-600
                         focus:outline-none
                       "
-                     
                       v-model="licenseTypeFilter"
                     >
                       <option selected disabled>License Type</option>
@@ -187,8 +186,7 @@
                         focus:outline-none
                       "
                       v-model="licensePrefixesFilter"
-                     
-                    > 
+                    >
                       <option value="all" selected>All</option>
                       <option
                         v-for="prefix in [...new Set(licensePrefixes)]"
@@ -225,7 +223,6 @@
                         focus:outline-none
                       "
                       v-model="genderFilter"
-                     
                     >
                       <option selected disabled>Gender</option>
                       <option value="all">All</option>
@@ -258,7 +255,6 @@
                         focus:border-blue-600
                         focus:outline-none
                       "
-                     
                     />
                   </div>
                   <div class="mb-3 ml-2">
@@ -286,7 +282,6 @@
                         focus:outline-none
                       "
                       v-model="toDate"
-                     
                     />
                   </div>
                   <div class="ml-8 mt-4">
@@ -320,7 +315,7 @@
               </div>
             </div>
 
-            <div class="bg-white p-6 rounded-lg shadow-lg overflow-x-scroll">
+            <div class="bg-white p-6 rounded-lg shadow-md">
               <div
                 class="
                   inline-block
@@ -548,7 +543,6 @@ import ReviewerNavBar from "./SharedComponents/navBar.vue";
 import ReviewerSideBar from "./SharedComponents/sideNav.vue";
 import VueTableLite from "vue3-table-lite";
 
-import moment from "moment";
 import { saveAs } from "file-saver";
 import "@ocrv/vue-tailwind-pagination/dist/style.css";
 
@@ -556,7 +550,7 @@ export default {
   components: {
     ReviewerNavBar,
     ReviewerSideBar,
-    VueTableLite,
+    VueTableLite
   },
 
   setup() {
@@ -582,11 +576,11 @@ export default {
 
     let licensePrefixes = ref([]);
 
-    const fetchLicenseReport = (apiParameters) => {
-      store.dispatch("reviewer/getLegacyData", apiParameters).then((res) => {
+    const fetchLicenseReport = apiParameters => {
+      store.dispatch("reviewer/getLegacyData", apiParameters).then(res => {
         tableData = [];
-      
-        res.rows.forEach((element) => {
+
+        res.rows.forEach(element => {
           licenseTypes.value.push(
             element.license_type_id ? element.license_type_id : ""
           );
@@ -624,110 +618,109 @@ export default {
             EmployeeMobile: element.emp_mobile ? element.emp_mobile : "",
             EmployeeEmail: element.emp_work_email ? element.emp_work_email : "",
             Gender: element.emp_gender ? element.emp_gender : "",
-            BirthDate: element.emp_birthday ? element.emp_birthday : "",
+            BirthDate: element.emp_birthday ? element.emp_birthday : ""
           });
         });
         allData.value = tableData;
         reportTable.value = {
-         
           columns: [
             {
               label: "Employee Id",
               field: "EmployeeId",
               width: "5%",
               sortable: true,
-              isKey: true,
+              isKey: true
             },
             {
               label: "First Name",
               field: "FirstName",
               width: "10%",
-              sortable: true,
+              sortable: true
             },
             {
               label: "Father Name",
               field: "MiddleName",
               width: "10%",
-              sortable: true,
+              sortable: true
             },
             {
               label: "Grandfather Name",
               field: "LastName",
               width: "10%",
-              sortable: true,
+              sortable: true
             },
             {
               label: "License Status",
               field: "LicenseStatus",
               width: "5%",
-              sortable: true,
+              sortable: true
             },
             {
               label: "Alternative Full Name",
               field: "AlternativeFullName",
               width: "35%",
-              sortable: true,
+              sortable: true
             },
             {
               label: "License Number",
               field: "LicenseNumber",
               width: "5%",
-              sortable: true,
+              sortable: true
             },
             {
               label: "Issued Date",
               field: "IssuedDate",
               width: "5%",
-              sortable: true,
+              sortable: true
             },
             {
               label: "Gender",
               field: "Gender",
               width: "5%",
-              sortable: true,
+              sortable: true
             },
             {
               label: "Expire Date",
               field: "ExpireDate",
               width: "5%",
-              sortable: true,
+              sortable: true
             },
             {
               label: "License Type",
               field: "LicenseType",
               width: "5%",
-              sortable: true,
+              sortable: true
             },
 
             {
               label: "License Prefix",
               field: "LicensePrefix",
               width: "5%",
-              sortable: true,
+              sortable: true
             },
             {
               label: "Employee Mobile",
               field: "EmployeeMobile",
               width: "5%",
-              sortable: true,
+              sortable: true
             },
 
             {
               label: "Employee Email",
               field: "EmployeeEmail",
               width: "5%",
-              sortable: true,
+              sortable: true
             },
             {
               label: "Birth Date",
               field: "BirthDate",
               width: "5%",
-              sortable: true,
-            },
+              sortable: true
+            }
           ],
           rows: computed(() => {
             return tableData.filter(
-              (curRow) =>
+              curRow =>
                 (curRow.FirstName
                   ? curRow.FirstName.toLowerCase().includes(
                       searchTerm.value.toLowerCase()
@@ -770,15 +763,16 @@ export default {
           totalRecordCount: res ? res.count : 0,
           sortable: {
             order: "EmployeeId",
-            sort: "asc",
-          },
+            sort: "asc"
+          }
         };
       });
     };
 
     const exportTable = () => {
       var blob = new Blob([document.getElementById("myTable").innerHTML], {
-        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8",
+        type:
+          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
       });
       let date = new Date().toISOString();
       saveAs(blob, date.slice(0, 10) + " Report.xls");
@@ -825,8 +819,8 @@ export default {
       searchData,
       reportTable,
       searchTerm,
-      licensePrefixes,
+      licensePrefixes
     };
-  },
+  }
 };
 </script>

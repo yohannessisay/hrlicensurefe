@@ -449,6 +449,7 @@
             modal-footer
             flex flex-shrink-0 flex-wrap
             items-center
+            p-2
             justify-end
             border-t border-grey-100
             rounded-b-md
