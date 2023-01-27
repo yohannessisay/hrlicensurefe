@@ -348,8 +348,7 @@ export default {
       }
       instance?.proxy?.forceUpdate();
     };
-    onMounted(() => {
-      console.log(typeof isDarkMode.value)
+    onMounted(() => { 
       initiateDarkMode();
       isLoading.value = true;
       userInfo.value = JSON.parse(window.localStorage.getItem("personalInfo"));

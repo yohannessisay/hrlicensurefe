@@ -1258,7 +1258,7 @@ export default {
               finalLocalData.data = imageData;
             }
             finalLocalData.data = [...new Set(finalLocalData.data)];
-            console.log(finalLocalData);
+            
             const objectStore = transaction.objectStore("RNdocumentUploads");
 
             const objectStoreRequest = objectStore.clear();

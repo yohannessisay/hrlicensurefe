@@ -454,7 +454,7 @@ export default {
         license.value.applicationStatus.code !== "AP" &&
         license.value.applicationStatus.code !== "APP"
       ) {
-        console.log(license.value);
+       
         // if user is not approved don't generate a good standing letter
         return;
       }

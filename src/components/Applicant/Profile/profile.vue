@@ -839,8 +839,7 @@ export default {
       let payload = { document: formData, id: userId };
       store
         .dispatch("profile/updateProfilePicture", payload)
-        .then((res) => {
-          console.log(res)
+        .then((res) => { 
           if (res.status == 200) {
             toast.success("Profile Photo Updated successfuly", {
               timeout: 5000,

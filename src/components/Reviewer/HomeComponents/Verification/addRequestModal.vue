@@ -406,7 +406,7 @@ export default {
         id: value.userId,
         name: value.name + " " + value.fatherName + " " + value.grandFatherName,
       };
-      console.log(assignedUser.value,value);
+     
       showOptions.value = false;
     };
 
