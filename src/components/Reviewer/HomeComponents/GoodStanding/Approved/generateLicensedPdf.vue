@@ -124,8 +124,8 @@
                                         contenteditable="false"
                                         class="text-yellow-300"
                                         >{{
-                                          modalData
-                                            ? modalData.applicantTitle
+                                          modalData&&modalData.applicantTitle
+                                            ? modalData.applicantTitle.name
                                             : ""
                                         }}</span
                                       >

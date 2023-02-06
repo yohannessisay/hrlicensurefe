@@ -79,7 +79,7 @@
                   </a>
                 </h1>
                 <p class="text-black text-sm">
-                  {{ license ? license.whoIssued : "Waiting for review" }}
+                  {{ license&& license.whoIssued ? license.whoIssued.name : "Waiting for review" }}
                 </p>
               </div>
 

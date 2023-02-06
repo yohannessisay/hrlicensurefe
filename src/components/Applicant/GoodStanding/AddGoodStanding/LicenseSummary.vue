@@ -123,8 +123,8 @@
           <div>
             <span class="text-black sm:text-sm">
               {{
-                localData && localData.professionType
-                  ? localData.professionType.professionTypeId.name
+                localData && localData.professionTypeId
+                  ? localData.professionTypeId.name
                   : ""
               }}
             </span>
@@ -236,7 +236,7 @@
           <div>
             <span class="text-black sm:text-sm">
               {{
-                localData && localData.whoIssued ? localData.whoIssued : ""
+                localData && localData.whoIssuedId ? localData.whoIssuedId.name : ""
               }}</span
             >
           </div>

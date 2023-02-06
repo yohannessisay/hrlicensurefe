@@ -1,17 +1,17 @@
 <template>
   <div
     class="
-          modal
-          fade
-          fixed
-          top-0
-          left-0
-          hidden
-          w-full
-          h-full
-          outline-none
-          overflow-x-hidden overflow-y-auto
-        "
+      modal
+      fade
+      fixed
+      top-0
+      left-0
+      hidden
+      w-full
+      h-full
+      outline-none
+      overflow-x-hidden overflow-y-auto
+    "
     id="draftModalInfo"
     data-bs-backdrop="static"
     data-bs-keyboard="false"
@@ -21,26 +21,26 @@
   >
     <div
       class="
-          modal-dialog modal-dialog-centered modal-xl
-          relative
-          w-auto
-          pointer-events-none
-        "
+        modal-dialog modal-dialog-centered modal-xl
+        relative
+        w-auto
+        pointer-events-none
+      "
     >
       <div
         class="
-            modal-content
-            border-none
-            shadow-lg
-            relative
-            flex flex-col
-            w-full
-            pointer-events-auto
-            bg-white bg-clip-padding
-            rounded-md
-            outline-none
-            text-current
-          "
+          modal-content
+          border-none
+          shadow-lg
+          relative
+          flex flex-col
+          w-full
+          pointer-events-auto
+          bg-white bg-clip-padding
+          rounded-md
+          outline-none
+          text-current
+        "
       >
         <div
           class="modal-header flex flex-shrink-0 justify-end p-2 rounded-t-md"
@@ -48,26 +48,26 @@
           <button
             type="button"
             class="
-                px-6
-                text-white
-                bg-main-400
-                hover:text-main-400 hover:border
-                font-medium
-                text-xs
-                leading-tight
-                uppercase
-                rounded
-                shadow-lg
-                hover:bg-purple-700 hover:shadow-lg
-                focus:bg-purple-700
-                focus:shadow-lg
-                focus:outline-none
-                focus:ring-0
-                active:bg-purple-800 active:shadow-lg
-                transition
-                duration-150
-                ease-in-out
-              "
+              px-6
+              text-white
+              bg-main-400
+              hover:text-main-400 hover:border
+              font-medium
+              text-xs
+              leading-tight
+              uppercase
+              rounded
+              shadow-lg
+              hover:bg-purple-700 hover:shadow-lg
+              focus:bg-purple-700
+              focus:shadow-lg
+              focus:outline-none
+              focus:ring-0
+              active:bg-purple-800 active:shadow-lg
+              transition
+              duration-150
+              ease-in-out
+            "
             data-bs-dismiss="modal"
             aria-label="Close"
           >
@@ -102,18 +102,18 @@
                       class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
                     >
                       <!-- Article -->
-                      <article class="overflow-hidden rounded-lg shadow-xl ">
+                      <article class="overflow-hidden rounded-lg shadow-xl">
                         <header
                           class="
-                              flex
-                              items-center
-                              justify-between
-                              leading-tight
-                              p-2
-                              md:p-4
-                              border-b-4  
-                              text-main-400
-                            "
+                            flex
+                            items-center
+                            justify-between
+                            leading-tight
+                            p-2
+                            md:p-4
+                            border-b-4
+                            text-main-400
+                          "
                         >
                           <h1 class="text-lg">
                             <a
@@ -129,21 +129,21 @@
                         </header>
 
                         <div class="grid grid-flow-row auto-rows-max">
-                          <div class="flex justify-between px-4 py-1 ">
+                          <div class="flex justify-between px-4 py-1">
                             <div>Applicant Name</div>
                             <div class="text-main-400 font-bold">
                               {{
                                 licenseData && licenseData.profile
                                   ? licenseData.profile.name
                                   : "-" +
-                                  " " +
-                                  (licenseData && licenseData.profile
-                                    ? licenseData.profile.fatherName
-                                    : "-") +
-                                  " " +
-                                  (licenseData && licenseData.profile
-                                    ? licenseData.profile.grandFatherName
-                                    : "-")
+                                    " " +
+                                    (licenseData && licenseData.profile
+                                      ? licenseData.profile.fatherName
+                                      : "-") +
+                                    " " +
+                                    (licenseData && licenseData.profile
+                                      ? licenseData.profile.grandFatherName
+                                      : "-")
                               }}
                             </div>
                           </div>
@@ -171,13 +171,13 @@
 
                         <footer
                           class="
-                              flex
-                              items-center
-                              justify-between
-                              leading-none
-                              p-2
-                              md:p-4
-                            "
+                            flex
+                            items-center
+                            justify-between
+                            leading-none
+                            p-2
+                            md:p-4
+                          "
                         ></footer>
                       </article>
                       <!-- END Article -->
@@ -192,15 +192,15 @@
                       <article class="overflow-hidden rounded-lg shadow-xl">
                         <header
                           class="
-                              flex
-                              items-center
-                              justify-between
-                              leading-tight
-                              p-2
-                              md:p-4
-                              border-b-4
-                              text-main-400
-                            "
+                            flex
+                            items-center
+                            justify-between
+                            leading-tight
+                            p-2
+                            md:p-4
+                            border-b-4
+                            text-main-400
+                          "
                         >
                           <h1 class="text-lg">
                             <a
@@ -269,13 +269,13 @@
 
                         <footer
                           class="
-                              flex
-                              items-center
-                              justify-between
-                              leading-none
-                              p-2
-                              md:p-4
-                            "
+                            flex
+                            items-center
+                            justify-between
+                            leading-none
+                            p-2
+                            md:p-4
+                          "
                         ></footer>
                       </article>
                       <!-- END Article -->
@@ -290,15 +290,15 @@
                       <article class="overflow-hidden rounded-lg shadow-xl">
                         <header
                           class="
-                              flex
-                              items-center
-                              justify-between
-                              leading-tight
-                              p-2
-                              md:p-4
-                              border-b-4
-                              text-main-400
-                            "
+                            flex
+                            items-center
+                            justify-between
+                            leading-tight
+                            p-2
+                            md:p-4
+                            border-b-4
+                            text-main-400
+                          "
                         >
                           <h1 class="text-lg">
                             <a
@@ -311,27 +311,26 @@
                           <p class="text-main-400 text-sm">Active</p>
                         </header>
 
-                        <div
-                          class="grid grid-flow-row auto-rows-max"
-                          v-for="(education, index) in licenseData.educations"
-                          :key="education ? education.id : ''"
-                        >
-                          <div class="flex justify-between px-4 py-1">
-                            <div>Department</div>
-                            <div class="text-main-400 font-bold">
+                        <div class="grid grid-flow-row auto-rows-max">
+                          <div class="flex  p-4 py-1">
+                            <div>Profession</div>
+                            <div class="text-main-400 font-bold ml-4">
                               {{
-                                education && education.department
-                                  ? education.department.name
+                                licenseData &&
+                                licenseData.GSProfessionals &&
+                                licenseData.GSProfessionals.professionalTypes
+                                  ? licenseData.GSProfessionals
+                                      .professionalTypes.name
                                   : "-"
                               }}
                             </div>
                           </div>
                           <div class="flex justify-between px-4 py-1">
-                            <div>Institution</div>
+                            <div>Department</div>
                             <div class="text-main-400 font-bold">
                               {{
-                                education && education.institution
-                                  ? education.institution.name
+                                licenseData && licenseData.department
+                                  ? licenseData.department.name
                                   : "-"
                               }}
                             </div>
@@ -340,29 +339,27 @@
                             <div>Education Level</div>
                             <div class="text-main-400 font-bold">
                               {{
-                                education && education.educationLevel
-                                  ? education.educationLevel.name
+                                licenseData &&
+                                licenseData.GSProfessionals &&
+                                licenseData.GSProfessionals.educationLevel
+                                  ? licenseData.GSProfessionals.educationLevel
+                                      .name
                                   : "-"
                               }}
                             </div>
                           </div>
-
-                          <hr
-                            class="mt-3 mb-3"
-                            style="color: lightgray"
-                            v-if="index != licenseData.educations.length - 1"
-                          />
+ 
                         </div>
 
                         <footer
                           class="
-                              flex
-                              items-center
-                              justify-between
-                              leading-none
-                              p-2
-                              md:p-4
-                            "
+                            flex
+                            items-center
+                            justify-between
+                            leading-none
+                            p-2
+                            md:p-4
+                          "
                         ></footer>
                       </article>
                       <!-- END Article -->
@@ -378,15 +375,15 @@
                       <article class="overflow-hidden rounded-lg shadow-xl">
                         <header
                           class="
-                              flex
-                              items-center
-                              justify-between
-                              leading-tight
-                              p-2
-                              md:p-4
-                              border-b-4
-                              text-main-400
-                            "
+                            flex
+                            items-center
+                            justify-between
+                            leading-tight
+                            p-2
+                            md:p-4
+                            border-b-4
+                            text-main-400
+                          "
                         >
                           <h1 class="text-lg">
                             <a
@@ -420,18 +417,17 @@
                               }}
                             </div>
                           </div>
-                        
                         </div>
 
                         <footer
                           class="
-                              flex
-                              items-center
-                              justify-between
-                              leading-none
-                              p-2
-                              md:p-4
-                            "
+                            flex
+                            items-center
+                            justify-between
+                            leading-none
+                            p-2
+                            md:p-4
+                          "
                         ></footer>
                       </article>
                       <!-- END Article -->
@@ -467,7 +463,10 @@ export default {
     watch(props.modalDataId, () => {
       isLoading.value = true;
       store
-        .dispatch("goodstanding/getGoodStandingLicenseById", props.modalDataId.id)
+        .dispatch(
+          "goodstanding/getGoodStandingLicenseById",
+          props.modalDataId.id
+        )
         .then((res) => {
           licenseData.value = res.data.data;
           isLoading.value = false;
