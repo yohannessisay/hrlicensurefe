@@ -499,7 +499,7 @@ export default {
 
     const saveDraft = () => {
       generalInfo.value.licenseFile = [];
-
+      generalInfo.value.whoIssued=localData.value.whoIssued;
       let license = {
         action: "DraftEvent",
         data: {
