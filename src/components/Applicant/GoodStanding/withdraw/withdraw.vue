@@ -241,7 +241,7 @@ export default {
       userInfo.value = JSON.parse(window.localStorage.getItem("personalInfo")); 
 
       store.dispatch("goodstanding/getGoodStandingLicense").then((res) => {
-        const results = res.data.data;
+        const results = res.data.data ? res.data.data : [];
 
         if (results.length > 0) {
           withdrawnLicenses.value = results.filter((withdrawnLicense) => {

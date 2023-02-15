@@ -286,7 +286,7 @@ export default {
       let userId = JSON.parse(window.localStorage.getItem("userId"));
 
       store.dispatch("renewal/getRenewalLicense", userId).then((res) => {
-        const results = res.data.data;
+        const results = res.data.data?res.data.data:[];
 
         if (results.length > 0) {
           userDraftLicenses.value = results.filter((draftLicenses) => {
