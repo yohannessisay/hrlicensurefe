@@ -262,6 +262,20 @@
                                       />
                                     </div>
                                     <div>
+                                      <textarea
+                                        placeholder="Reason for transfer"
+                                        v-model="transferRemark"
+                                        class="
+                                          resize-none
+                                          tArea
+                                          border
+                                          rounded-lg
+                                          flex
+                                          mt-4
+                                          ml-1
+                                          w-full
+                                        "
+                                      ></textarea>
                                       <button
                                         class="
                                           inline-block
@@ -283,6 +297,7 @@
                                           transition
                                           duration-150
                                           ease-in-out
+                                          mb-8
                                         "
                                         @click="transferReviewer()"
                                       >
@@ -424,8 +439,8 @@
                                   text-primary-500
                                 "
                                 v-for="education in modalData.data
-                              ? modalData.data.educations
-                              : []"
+                                  ? modalData.data.educations
+                                  : []"
                                 :key="education.id"
                               >
                                 <p class="text-gray-500">
@@ -476,8 +491,6 @@
                             </div>
                           </div>
                         </div>
-
-
                       </div>
                     </div>
                   </div>
@@ -578,7 +591,7 @@ export default {
   setup(props) {
     const store = useStore();
     const toast = useToast();
-
+    let transferRemark = ref("");
     let show = ref(true);
     let showRes = ref(false);
     let showOptions = ref(false);
@@ -604,40 +617,66 @@ export default {
     };
 
     const transferReviewer = () => {
-      if (role.value.code === "TL" || role.value.code === "ADM") {
-        transfer.value = {
-          licenseId: props.modalDataId.id,
-          reviewerId: transfer.value.reviewerId,
-          createdByAdminId: +localStorage.getItem("adminId"),
-        };
-      }
+      if (transferRemark.value == "") {
+        toast.error("Transfer reason is required", {
+          timeout: 5000,
+          position: "bottom-center",
+          pauseOnFocusLoss: true,
+          pauseOnHover: true,
+          icon: true,
+        });
+        return;
+      } else {
+        if (role.value.code === "TL" || role.value.code === "ADM") {
+          transfer.value = {
+            licenseId: props.modalDataId.id,
+            reviewerId: transfer.value.reviewerId,
+            createdByAdminId: +localStorage.getItem("adminId"),
+            transferRemark: transferRemark.value,
+          };
+        }
 
-      if (role.value.code == "REV") {
-        transfer.value = {
-          licenseId: props.modalDataId.id,
-          reviewerId: +localStorage.getItem("adminId"),
-          createdByAdminId: +localStorage.getItem("adminId"),
-        };
-      }
+        if (role.value.code == "REV") {
+          transfer.value = {
+            licenseId: props.modalDataId.id,
+            reviewerId: +localStorage.getItem("adminId"),
+            createdByAdminId: +localStorage.getItem("adminId"),
+            transferRemark: transferRemark.value,
+          };
+        }
 
-      isLoading.value = true;
+        isLoading.value = true;
 
-      store
-        .dispatch("reviewer/transferLicenseReview", transfer.value)
-        .then((response) => {
-          if (response.statusText == "Created") {
-            toast.success("Selected application transfered Successfully", {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            });
-            isLoading.value = false;
-            setTimeout(() => {
-              window.location.reload();
-            }, 3000);
-          } else {
+        store
+          .dispatch("reviewer/transferLicenseReview", transfer.value)
+          .then((response) => {
+            if (response.statusText == "Created") {
+              toast.success("Selected application transfered Successfully", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
+              isLoading.value = false;
+              setTimeout(() => {
+                window.location.reload();
+              }, 3000);
+            } else {
+              toast.error("Error transfering", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
+              isLoading.value = false;
+              setTimeout(() => {
+                window.location.reload();
+              }, 3000);
+            }
+          })
+          .catch(() => {
             toast.error("Error transfering", {
               timeout: 5000,
               position: "bottom-center",
@@ -649,21 +688,8 @@ export default {
             setTimeout(() => {
               window.location.reload();
             }, 3000);
-          }
-        })
-        .catch(() => {
-          toast.error("Error transfering", {
-            timeout: 5000,
-            position: "bottom-center",
-            pauseOnFocusLoss: true,
-            pauseOnHover: true,
-            icon: true,
           });
-          isLoading.value = false;
-          setTimeout(() => {
-            window.location.reload();
-          }, 3000);
-        });
+      }
     };
 
     const showModal = () => {
@@ -766,6 +792,7 @@ export default {
       transfer,
       licenseData,
       show,
+      transferRemark,
       showRes,
       showOptions,
       reviewer,

@@ -48,7 +48,7 @@
           <button
             type="button"
             class="
-                  px-6
+              px-6
               text-white
               bg-primary-600
               hover:text-primary-600 hover:border
@@ -262,9 +262,23 @@
                                       />
                                     </div>
                                     <div>
+                                      <textarea
+                                        placeholder="Reason for transfer"
+                                        v-model="transferRemark"
+                                        class="
+                                          resize-none
+                                          tArea
+                                          border
+                                          rounded-lg
+                                          flex
+                                          mt-4
+                                          ml-1
+                                          w-full
+                                        "
+                                      ></textarea>
                                       <button
                                         class="
-                                            inline-block
+                                          inline-block
                                           px-6
                                           py-2.5
                                           bg-primary-600
@@ -277,7 +291,8 @@
                                           shadow-lg
                                           mt-4
                                           ml-1
-                                          hover:bg-white hover:shadow-lg
+                                          hover:bg-white
+                                          hover:shadow-lg
                                           hover:text-primary-600
                                           transition
                                           duration-150
@@ -478,7 +493,7 @@ export default {
   setup(props) {
     const store = useStore();
     const toast = useToast();
-
+    let transferRemark = ref("");
     let show = ref(true);
     let showRes = ref(false);
     let showOptions = ref(false);
@@ -504,40 +519,66 @@ export default {
     };
 
     const transferReviewer = () => {
-      if (role.value.code === "TL" || role.value.code === "ADM") {
-        transfer.value = {
-          licenseId: props.modalDataId.id,
-          reviewerId: transfer.value.reviewerId,
-          createdByAdminId: +localStorage.getItem("adminId"),
-        };
-      }
+      if (transferRemark.value == "") {
+        toast.error("Transfer reason is required", {
+          timeout: 5000,
+          position: "bottom-center",
+          pauseOnFocusLoss: true,
+          pauseOnHover: true,
+          icon: true,
+        });
+        return;
+      } else {
+        if (role.value.code === "TL" || role.value.code === "ADM") {
+          transfer.value = {
+            licenseId: props.modalDataId.id,
+            reviewerId: transfer.value.reviewerId,
+            createdByAdminId: +localStorage.getItem("adminId"),
+            transferRemark: transferRemark.value,
+          };
+        }
 
-      if (role.value.code == "REV") {
-        transfer.value = {
-          licenseId: props.modalDataId.id,
-          reviewerId: +localStorage.getItem("adminId"),
-          createdByAdminId: +localStorage.getItem("adminId"),
-        };
-      }
+        if (role.value.code == "REV") {
+          transfer.value = {
+            licenseId: props.modalDataId.id,
+            reviewerId: +localStorage.getItem("adminId"),
+            createdByAdminId: +localStorage.getItem("adminId"),
+            transferRemark: transferRemark.value,
+          };
+        }
 
-      isLoading.value = true;
+        isLoading.value = true;
 
-      store
-        .dispatch("reviewer/transferLicenseReview", transfer.value)
-        .then((response) => {
-          if (response.statusText == "Created") {
-            toast.success("Selected application transfered Successfully", {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            });
-            isLoading.value = false;
-            setTimeout(() => {
-              window.location.reload();
-            }, 3000);
-          } else {
+        store
+          .dispatch("reviewer/transferLicenseReview", transfer.value)
+          .then((response) => {
+            if (response.statusText == "Created") {
+              toast.success("Selected application transfered Successfully", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
+              isLoading.value = false;
+              setTimeout(() => {
+                window.location.reload();
+              }, 3000);
+            } else {
+              toast.error("Error transfering", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
+              isLoading.value = false;
+              setTimeout(() => {
+                window.location.reload();
+              }, 3000);
+            }
+          })
+          .catch(() => {
             toast.error("Error transfering", {
               timeout: 5000,
               position: "bottom-center",
@@ -549,21 +590,8 @@ export default {
             setTimeout(() => {
               window.location.reload();
             }, 3000);
-          }
-        })
-        .catch(() => {
-          toast.error("Error transfering", {
-            timeout: 5000,
-            position: "bottom-center",
-            pauseOnFocusLoss: true,
-            pauseOnHover: true,
-            icon: true,
           });
-          isLoading.value = false;
-          setTimeout(() => {
-            window.location.reload();
-          }, 3000);
-        });
+      }
     };
 
     const showModal = () => {
@@ -666,6 +694,7 @@ export default {
       show,
       showRes,
       showOptions,
+      transferRemark,
       reviewer,
       setInput,
       showModal,

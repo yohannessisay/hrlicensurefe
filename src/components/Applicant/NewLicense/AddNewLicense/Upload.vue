@@ -198,8 +198,8 @@
                             <img
                               :id="
                                 'common_image_lightbox' +
-                                item.documentType.id +
-                                item.id
+                                  item.documentType.id +
+                                  item.id
                               "
                               :src="item.existingFile"
                               class="w-full h-2 object-cover"
@@ -229,8 +229,8 @@
                             <img
                               :id="
                                 'common_image_lightbox' +
-                                item.documentType.id +
-                                item.id
+                                  item.documentType.id +
+                                  item.id
                               "
                               src=""
                               class="w-full h-2 object-cover"
@@ -435,7 +435,7 @@
                         <a
                           :id="
                             'image_href_' +
-                            `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                              `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                           "
                           href=""
                           :data-title="item.name ? item.name : '-----'"
@@ -444,7 +444,7 @@
                           <i
                             :id="
                               'educational_icon_' +
-                              `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                             "
                             class="
                               fa fa-eye
@@ -457,7 +457,7 @@
                             <img
                               :id="
                                 'image_lightbox_' +
-                                `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                  `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                               "
                               src=""
                               class="w-full h-2 object-cover"
@@ -532,7 +532,7 @@
                         <a
                           :id="
                             'image_href_' +
-                            `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                              `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                           "
                           href=""
                           :data-title="parentItem[0].name ? item.name : '-----'"
@@ -541,7 +541,7 @@
                           <i
                             :id="
                               'educational_icon_' +
-                              `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                             "
                             class="
                               fa fa-eye
@@ -554,7 +554,7 @@
                             <img
                               :id="
                                 'image_lightbox_' +
-                                `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                  `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                               "
                               src=""
                               class="w-full h-2 object-cover"
@@ -626,8 +626,10 @@
                             parentItem[0].documentType.code
                           ] != null
                         "
-                        class="accordion"
-                        :id="`accordion_${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`"
+                        class="accordion p-4"
+                        :id="
+                          `accordion_${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                        "
                         style="width: max-content"
                       >
                         <div
@@ -642,11 +644,15 @@
                           <div
                             :id="
                               'docAccordion_' +
-                              `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                             "
                             class=""
-                            :aria-labelledby="`headingOne_${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`"
-                            :data-bs-parent="`#accordion_${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`"
+                            :aria-labelledby="
+                              `headingOne_${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                            "
+                            :data-bs-parent="
+                              `#accordion_${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                            "
                           >
                             <div class="accordion-body py-4 px-5">
                               <div class="bg-lightMain-500 rounded-sm p-2">
@@ -713,7 +719,7 @@
                                       parentItem[0].documentType.code
                                     ] >= index
                                   "
-                                  class="px-6 py-4"
+                                  class="p-4"
                                 >
                                   <p class="">
                                     <input
@@ -721,7 +727,9 @@
                                       :required="parentChildItem.isRequired"
                                       :id="`files${parentChildItem.id}`"
                                       accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
-                                      :ref="`imageUploader${parentChildItem.id}`"
+                                      :ref="
+                                        `imageUploader${parentChildItem.id}`
+                                      "
                                       class="custom-file-input"
                                       v-on:change="
                                         handleFileUpload(
@@ -745,7 +753,7 @@
                                   <a
                                     :id="
                                       'image_href_' +
-                                      `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                        `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                                     "
                                     href=""
                                     :data-title="
@@ -756,7 +764,7 @@
                                     <i
                                       :id="
                                         'educational_icon_' +
-                                        `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                          `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                                       "
                                       class="
                                         fa fa-eye
@@ -769,7 +777,7 @@
                                       <img
                                         :id="
                                           'image_lightbox_' +
-                                          `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                            `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                                         "
                                         src=""
                                         class="w-full h-2 object-cover"
@@ -902,7 +910,7 @@ export default {
       isImage: boolean,
       isPdf: boolean,
       file: "",
-      name: "",
+      name: ""
     });
     let existingDocs = [];
     let files = ref("");
@@ -928,8 +936,8 @@ export default {
     let errorDocuments = ref([
       {
         name: "",
-        code: "",
-      },
+        code: ""
+      }
     ]);
     let showNestedDocuments = ref({});
 
@@ -961,12 +969,12 @@ export default {
         }
         reader.addEventListener(
           "load",
-          function () {
+          function() {
             showPreview.value = true;
 
             previewDocuments.value[data.documentType.code] = reader.result;
             imageData = imageData.filter(
-              (el) => el.documenttype != data.documentType.name
+              el => el.documenttype != data.documentType.name
             );
             imageData.push({
               imageId: "common_image_lightbox_" + data.documentType.code,
@@ -975,7 +983,7 @@ export default {
                 ? data.educationalLevel.name
                 : "",
               fileName: event?.target?.files[0].name,
-              image: reader.result,
+              image: reader.result
             });
 
             documentToSave.value[data.documentType.code] = reader.result;
@@ -1031,7 +1039,7 @@ export default {
       }
 
       output
-        ? (output.onload = function () {
+        ? (output.onload = function() {
             URL.revokeObjectURL(output.src); // free memory
           })
         : "";
@@ -1108,7 +1116,7 @@ export default {
 
         reader.addEventListener(
           "load",
-          function () {
+          function() {
             showPreview.value = true;
 
             previewDocuments.value[
@@ -1138,7 +1146,7 @@ export default {
                 ? data.educationalLevel.name
                 : "",
               fileName: event?.target?.files[0].name,
-              image: reader.result,
+              image: reader.result
             });
             // documentUploaded.value[data.documentType.code] = reader.result;
           },
@@ -1275,7 +1283,7 @@ export default {
       }
 
       output
-        ? (output.onload = function () {
+        ? (output.onload = function() {
             URL.revokeObjectURL(output.src); // free memory
           })
         : "";
@@ -1287,8 +1295,8 @@ export default {
 
       /// check common documents
       commonDocuments.value
-        .filter((cd) => cd.isRequired)
-        .forEach((element) => {
+        .filter(cd => cd.isRequired)
+        .forEach(element => {
           CMtemp = documentsUploaded.value.hasOwnProperty(
             element.documentType.code
           );
@@ -1299,7 +1307,7 @@ export default {
             errorDocuments.value.push({
               isCommon: true,
               name: element.documentType.name,
-              code: element.documentType.code,
+              code: element.documentType.code
             });
           } else {
             fileUploadError.value[
@@ -1308,12 +1316,12 @@ export default {
           }
         });
 
-      educationalDocs.value.forEach((ed) => {
+      educationalDocs.value.forEach(ed => {
         // check normal docs with no parents
 
         ed.docs
-          .filter((docs) => docs.isRequired)
-          .forEach((single) => {
+          .filter(docs => docs.isRequired)
+          .forEach(single => {
             temp = documentsUploaded.value.hasOwnProperty(
               single.documentType.code +
                 "_" +
@@ -1337,7 +1345,7 @@ export default {
                   "_" +
                   ed.educationalLevel.code.toUpperCase() +
                   "_" +
-                  ed.professionType.code.toUpperCase(),
+                  ed.professionType.code.toUpperCase()
               });
             } else {
               fileUploadError.value[
@@ -1362,11 +1370,11 @@ export default {
         store.dispatch("newlicense/setTempDocs", formData).then(() => {
           let finalLocalData = {
             created: new Date(),
-            data: [],
+            data: []
           };
           let db;
           let request = indexedDB.open("NLdocumentUploads", dbVersion);
-          request.onsuccess = function () {
+          request.onsuccess = function() {
             db = request.result;
             let transaction = db.transaction(
               ["NLdocumentUploads"],
@@ -1374,8 +1382,8 @@ export default {
             );
 
             if (existingDocs.length > 0) {
-              existingDocs.forEach((existing) => {
-                imageData.forEach((newImage) => {
+              existingDocs.forEach(existing => {
+                imageData.forEach(newImage => {
                   if (existing.imageId == newImage.imageId) {
                     newImage.image = existing.image;
                     existing.fileName = newImage.fileName;
@@ -1392,18 +1400,18 @@ export default {
 
             const objectStoreRequest = objectStore.clear();
 
-            objectStoreRequest.onsuccess = (event) => {
+            objectStoreRequest.onsuccess = event => {
               let addReq = transaction
                 .objectStore("NLdocumentUploads")
                 .put(finalLocalData);
 
-              addReq.onerror = function () {
+              addReq.onerror = function() {
                 console.log(
                   "Error regarding your browser, please update your browser to the latest version"
                 );
               };
 
-              transaction.oncomplete = function () {
+              transaction.oncomplete = function() {
                 console.log("data stored");
                 emit("changeActiveState");
               };
@@ -1412,7 +1420,7 @@ export default {
         });
       } else {
         let errors = "";
-        errorDocuments.value.forEach((element) => {
+        errorDocuments.value.forEach(element => {
           if (!errors) {
             errors = element.name;
           } else {
@@ -1427,7 +1435,7 @@ export default {
             position: "bottom-center",
             pauseOnFocusLoss: true,
             pauseOnHover: true,
-            icon: true,
+            icon: true
           }
         );
       }
@@ -1457,22 +1465,22 @@ export default {
           nativeLanguageId: localData.value.nativeLanguageSelected
             ? localData.value.nativeLanguageSelected.id
             : null,
-          isLegal: true,
-        },
+          isLegal: true
+        }
       };
-      store.dispatch("newlicense/addNewLicense", license).then((res) => {
+      store.dispatch("newlicense/addNewLicense", license).then(res => {
         let licenseId = res.data.data.id;
         let payload = { document: formData, id: licenseId };
         store
           .dispatch("newlicense/uploadDocuments", payload)
-          .then((res) => {
+          .then(res => {
             if (res.data.status == "Success") {
               toast.success("Applied successfuly", {
                 timeout: 5000,
                 position: "bottom-center",
                 pauseOnFocusLoss: true,
                 pauseOnHover: true,
-                icon: true,
+                icon: true
               });
               localStorage.removeItem("NLApplicationData");
               location.reload();
@@ -1482,7 +1490,7 @@ export default {
                 position: "bottom-center",
                 pauseOnFocusLoss: true,
                 pauseOnHover: true,
-                icon: true,
+                icon: true
               });
             }
           })
@@ -1492,7 +1500,7 @@ export default {
               position: "bottom-center",
               pauseOnFocusLoss: true,
               pauseOnHover: true,
-              icon: true,
+              icon: true
             });
           });
       });
@@ -1502,12 +1510,12 @@ export default {
       return array.reduce((hash, obj) => {
         if (obj[key] === undefined || obj[key] == null) return hash;
         return Object.assign(hash, {
-          [obj[key]]: (hash[obj[key]] || []).concat(obj),
+          [obj[key]]: (hash[obj[key]] || []).concat(obj)
         });
       }, {});
     };
 
-    const addMore = (parentItem) => {
+    const addMore = parentItem => {
       if (
         showNestedDocuments.value[parentItem.documentType.code] == undefined
       ) {
@@ -1521,16 +1529,16 @@ export default {
     const initDb = () => {
       let request = indexedDB.open("NLdocumentUploads", dbVersion);
 
-      request.onerror = function () {
+      request.onerror = function() {
         console.error("Unable to open database.");
       };
 
-      request.onsuccess = function () {
+      request.onsuccess = function() {
         let db = request.result;
         const tx = db.transaction("NLdocumentUploads", "readonly");
         const store = tx.objectStore("NLdocumentUploads");
         let getAllIDB = store.getAll();
-        getAllIDB.onsuccess = function (evt) {
+        getAllIDB.onsuccess = function(evt) {
           existingDocs =
             evt.target.result && evt.target.result[0]
               ? evt.target.result[0].data
@@ -1538,11 +1546,11 @@ export default {
         };
       };
 
-      request.onupgradeneeded = function () {
+      request.onupgradeneeded = function() {
         let db = request.result;
         db.createObjectStore("NLdocumentUploads", {
           keyPath: "id",
-          autoIncrement: true,
+          autoIncrement: true
         });
       };
     };
@@ -1562,30 +1570,29 @@ export default {
 
         generalInfo.value = localData.value;
 
-        store.dispatch("newlicense/getApplicationCategories").then((res) => {
+        store.dispatch("newlicense/getApplicationCategories").then(res => {
           let categoryResults = res.data.data
-            ? res.data.data.filter((ele) => ele.code == "NA")
+            ? res.data.data.filter(ele => ele.code == "NA")
             : "";
           let educationLevels = generalInfo.value.multipleDepartment;
           //Get department docs
-          educationLevels.forEach((element) => {
+          educationLevels.forEach(element => {
             store
               .dispatch("newlicense/getNLdocuments", [
                 categoryResults[0].id,
                 generalInfo.value.applicantTypeSelected.id,
                 element.educationalLevel.id,
+                null
               ])
-              .then((res) => {
+              .then(res => {
                 let resp = res.data.data;
                 newLicenseDocuments.value = res.data.data;
 
                 educationalDocs.value.push({
                   educationalLevel: element.educationalLevel,
                   professionType: element.professionalType,
-                  docs: resp.filter(
-                    (element) => element.parentDocument == null
-                  ),
-                  parentDoc: groupByKey(resp, "parentDocument"),
+                  docs: resp.filter(element => element.parentDocument == null),
+                  parentDoc: groupByKey(resp, "parentDocument")
                 });
               });
           });
@@ -1595,9 +1602,9 @@ export default {
           store
             .dispatch("newlicense/getCommonNLdocuments", [
               categoryResults[0].id,
-              generalInfo.value.applicantTypeSelected.id,
+              generalInfo.value.applicantTypeSelected.id
             ])
-            .then((res) => {
+            .then(res => {
               let result = res.data.data;
               commonDocuments.value = result;
               if (
@@ -1606,8 +1613,8 @@ export default {
                 result &&
                 result.length > 0
               ) {
-                existingDocs.forEach((existing) => {
-                  result.forEach((Cd) => {
+                existingDocs.forEach(existing => {
+                  result.forEach(Cd => {
                     if (
                       existing.imageId ==
                       "common_image_lightbox_" + Cd.documentType.code
@@ -1646,9 +1653,9 @@ export default {
       next,
       back,
       addMore,
-      showNestedDocuments,
+      showNestedDocuments
     };
-  },
+  }
 };
 </script>
 

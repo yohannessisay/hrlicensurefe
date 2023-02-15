@@ -42,20 +42,13 @@
           text-current
         "
       >
-   <div
-          class="
-            modal-header
-            flex flex-shrink-0
-           justify-end
-           
-            p-2
-            rounded-t-md
-          "
+        <div
+          class="modal-header flex flex-shrink-0 justify-end p-2 rounded-t-md"
         >
           <button
             type="button"
-            class="     
-                  px-6
+            class="
+              px-6
               text-white
               bg-primary-600
               hover:text-primary-600 hover:border
@@ -74,10 +67,13 @@
               active:bg-purple-800 active:shadow-lg
               transition
               duration-150
-              ease-in-out"
+              ease-in-out
+            "
             data-bs-dismiss="modal"
             aria-label="Close"
-          ><i class="fa fa-close fa-2x"></i></button>
+          >
+            <i class="fa fa-close fa-2x"></i>
+          </button>
         </div>
         <div class="vld-parent mt-4">
           <loading
@@ -266,24 +262,37 @@
                                       />
                                     </div>
                                     <div>
+                                      <textarea
+                                        placeholder="Reason for transfer"
+                                        v-model="transferRemark"
+                                        class="
+                                          resize-none
+                                          tArea
+                                          border
+                                          rounded-lg
+                                          flex
+                                          mt-4
+                                          ml-1
+                                          w-full
+                                        "
+                                      ></textarea>
                                       <button
                                         class="
-                                            inline-block
-                                            px-6
-                                            py-2.5
-                                            bg-primary-700
-                                            text-white
-                                            font-medium
-                                            text-xs
-                                            leading-tight
-                                            uppercase
-                                            rounded
-                                            shadow-lg
-                                            hover:bg-white 
-                                            hover:text-primary-600
-                                            transition
-                                            duration-150
-                                            ease-in-out
+                                          inline-block
+                                          px-6
+                                          py-2.5
+                                          bg-primary-700
+                                          text-white
+                                          font-medium
+                                          text-xs
+                                          leading-tight
+                                          uppercase
+                                          rounded
+                                          shadow-lg
+                                          hover:bg-white hover:text-primary-600
+                                          transition
+                                          duration-150
+                                          ease-in-out
                                         "
                                         @click="transferReviewer()"
                                       >
@@ -420,8 +429,7 @@
                 px-6
                 text-white
                 bg-primary-700
-                hover:bg-white
-                hover:text-primary-600
+                hover:bg-white hover:text-primary-600
                 font-medium
                 text-xs
                 leading-tight
@@ -445,7 +453,7 @@
           <button
             type="button"
             class="
-         inline-block
+              inline-block
               px-6
               text-white
               font-medium
@@ -456,8 +464,7 @@
               rounded
               hover:border-primary-600
               shadow-lg
-              hover:bg-white 
-              hover:text-primary-700
+              hover:bg-white hover:text-primary-700
               transition
               duration-150
               ease-in-out
@@ -490,7 +497,8 @@ export default {
   },
   setup(props) {
     const store = useStore();
-const toast = useToast();
+    const toast = useToast();
+    let transferRemark = ref("");
     let show = ref(true);
     let showRes = ref(false);
     let showOptions = ref(false);
@@ -516,68 +524,79 @@ const toast = useToast();
     };
 
     const transferReviewer = () => {
-      if (role.value.code === "TL" || role.value.code === "ADM") {
-        transfer.value = {
-          licenseId: props.modalDataId.id,
-          reviewerId: transfer.value.reviewerId,
-          createdByAdminId: +localStorage.getItem("adminId"),
-        };
-      }
-
-      if (role.value.code == "REV") {
-        transfer.value = {
-          licenseId: props.modalDataId.id,
-          reviewerId: +localStorage.getItem("adminId"),
-          createdByAdminId: +localStorage.getItem("adminId"),
-        };
-      }
-
-      isLoading.value = true;
-
-      store
-        .dispatch("reviewer/transferLicenseReview", transfer.value)
-        .then((response) => {
-          if (response.statusText == "Created") {
-       
-                     toast.success("Selected reviewer is successfully assigned", {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            });
-            isLoading.value=false;
-                setTimeout(() => {
-              window.location.reload();
-            }, 3000);
-          } else {
-         
-                     toast.error("Error Occured", {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            });
-            isLoading.value=false;
-                setTimeout(() => {
-              window.location.reload();
-            }, 3000);
-          }
-        })
-        .catch(() => {
-                     toast.error("Error Occured", {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            });
-            isLoading.value=false;
-                setTimeout(() => {
-              window.location.reload();
-            }, 3000);
+      if (transferRemark.value == "") {
+        toast.error("Transfer reason is required", {
+          timeout: 5000,
+          position: "bottom-center",
+          pauseOnFocusLoss: true,
+          pauseOnHover: true,
+          icon: true,
         });
+        return;
+      } else {
+        if (role.value.code === "TL" || role.value.code === "ADM") {
+          transfer.value = {
+            licenseId: props.modalDataId.id,
+            reviewerId: transfer.value.reviewerId,
+            createdByAdminId: +localStorage.getItem("adminId"),
+            transferRemark: transferRemark.value,
+          };
+        }
+
+        if (role.value.code == "REV") {
+          transfer.value = {
+            licenseId: props.modalDataId.id,
+            reviewerId: +localStorage.getItem("adminId"),
+            createdByAdminId: +localStorage.getItem("adminId"),
+            transferRemark: transferRemark.value,
+          };
+        }
+
+        isLoading.value = true;
+
+        store
+          .dispatch("reviewer/transferLicenseReview", transfer.value)
+          .then((response) => {
+            if (response.statusText == "Created") {
+              toast.success("Selected reviewer is successfully assigned", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
+              isLoading.value = false;
+              setTimeout(() => {
+                window.location.reload();
+              }, 3000);
+            } else {
+              toast.error("Error Occured", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
+              isLoading.value = false;
+              setTimeout(() => {
+                window.location.reload();
+              }, 3000);
+            }
+          })
+          .catch(() => {
+            toast.error("Error Occured", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+            isLoading.value = false;
+            setTimeout(() => {
+              window.location.reload();
+            }, 3000);
+          });
+      }
     };
 
     const showModal = () => {
@@ -675,6 +694,7 @@ const toast = useToast();
       licenseData,
       show,
       showRes,
+      transferRemark,
       showOptions,
       reviewer,
       setInput,

@@ -1319,7 +1319,7 @@ export default {
             documentsUploaded.value = documentsSaved.value;
             store.dispatch("renewal/getApplicationCategories").then((res) => {
               let categoryResults = res.data.data
-                ? res.data.data.filter((ele) => ele.code == "NA")
+                ? res.data.data.filter((ele) => ele.code == "RA")
                 : "";
               let educationLevels = generalInfo.value.educations;
 

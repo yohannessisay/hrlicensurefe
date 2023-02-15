@@ -36,7 +36,6 @@
           aria-labelledby="commonFilesAccordionheading"
           data-bs-parent="#FilesAccordion"
         >
-          {{ existingDocs }}
           <div class="accordion-body py-4 px-5">
             <div class="bg-red-800 py-5">
               <div class="overflow-x-auto w-full p-4">
@@ -293,9 +292,7 @@
                 {{ table.educationalLevel ? table.educationalLevel.name : "" }}
                 Related Files
               </h4>
-              <h5 v-if="existingDocs">
-                Images are saved, only upload files you want to change
-              </h5>
+
               <div class="overflow-x-auto w-full p-4">
                 <table
                   class="
@@ -607,7 +604,7 @@
                             parentItem[0].documentType.code
                           ] != null
                         "
-                        class="accordion"
+                        class="accordion p-4"
                         id="accordionExample"
                         style="width: max-content"
                       >
@@ -622,11 +619,11 @@
                         >
                           <div
                             :id="'docAccordion' + parentItem[0].documentType.id"
-                            class=""
+                            class="p-4"
                             aria-labelledby="headingOne"
                             data-bs-parent="#accordionExample"
                           >
-                            <div class="accordion-body py-4 px-5">
+                            <div class="accordion-body p-4 ">
                               <div class="bg-lightMain-500 rounded-sm p-2">
                                 <small class="text-white"
                                   >Only the first file upload is required, the
@@ -1258,7 +1255,7 @@ export default {
               finalLocalData.data = imageData;
             }
             finalLocalData.data = [...new Set(finalLocalData.data)];
-            
+
             const objectStore = transaction.objectStore("RNdocumentUploads");
 
             const objectStoreRequest = objectStore.clear();
@@ -1460,7 +1457,7 @@ export default {
         return;
       } else {
         initDb();
-       
+
         localData.value = window.localStorage.getItem("RNApplicationData")
           ? JSON.parse(window.localStorage.getItem("RNApplicationData"))
           : {};
@@ -1469,16 +1466,18 @@ export default {
 
         store.dispatch("newlicense/getApplicationCategories").then(res => {
           let categoryResults = res.data.data
-            ? res.data.data.filter(ele => ele.code == "NA")
+            ? res.data.data.filter(ele => ele.code == "RA")
             : "";
           let educationLevels = generalInfo.value.multipleDepartment;
+          console.log(educationLevels);
           //Get department docs
           educationLevels.forEach(element => {
             store
               .dispatch("renewal/getRNdocuments", [
                 categoryResults[0].id,
                 generalInfo.value.applicantTypeSelected.id,
-                element.educationalLevel.id
+                element.educationalLevel.id,
+                element.department.id
               ])
               .then(res => {
                 let resp = res.data.data;

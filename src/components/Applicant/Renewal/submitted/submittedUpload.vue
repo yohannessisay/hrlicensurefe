@@ -1317,60 +1317,58 @@ export default {
                 element.originalFileName;
             });
             documentsUploaded.value = documentsSaved.value;
-            store
-              .dispatch("renewal/getApplicationCategories")
-              .then((res) => {
-                let categoryResults = res.data.data
-                  ? res.data.data.filter((ele) => ele.code == "NA")
-                  : "";
-                let educationLevels = generalInfo.value.educations;
+            store.dispatch("renewal/getApplicationCategories").then((res) => {
+              let categoryResults = res.data.data
+                ? res.data.data.filter((ele) => ele.code == "RA")
+                : "";
+              let educationLevels = generalInfo.value.educations;
 
-                //Get department docs
-                educationLevels.forEach((element) => {
-                  store
-                    .dispatch("renewal/getRNdocuments", [
-                      categoryResults[0].id,
-                      generalInfo.value.applicantType.id,
-                      element.educationalLevel
-                        ? element.educationalLevel.id
-                        : element.educationLevel
-                        ? element.educationLevel.id
-                        : "",
-                    ])
-                    .then((res) => {
-                      let resp = res.data.data;
-                      renewalDocuments.value = res.data.data;
-                      educationalDocs.value.push({
-                        professionType:
-                          element && element.professionType
-                            ? element.professionType
-                            : element
-                            ? element.professionTypeId
-                            : "",
-                        educationalLevel: element.educationalLevel
-                          ? element.educationalLevel
-                          : element.educationLevel
-                          ? element.educationLevel
-                          : "",
-                        docs: resp.filter(
-                          (element) => element.parentDocument == null
-                        ),
-                        parentDoc: groupByKey(resp, "parentDocument"),
-                      });
-                    });
-                });
-                //Get Common Docs
-
+              //Get department docs
+              educationLevels.forEach((element) => {
                 store
-                  .dispatch("renewal/getCommonRNdocuments", [
+                  .dispatch("renewal/getRNdocuments", [
                     categoryResults[0].id,
                     generalInfo.value.applicantType.id,
+                    element.educationalLevel
+                      ? element.educationalLevel.id
+                      : element.educationLevel
+                      ? element.educationLevel.id
+                      : "",
                   ])
                   .then((res) => {
-                    let result = res.data.data;
-                    commonDocuments.value = result;
+                    let resp = res.data.data;
+                    renewalDocuments.value = res.data.data;
+                    educationalDocs.value.push({
+                      professionType:
+                        element && element.professionType
+                          ? element.professionType
+                          : element
+                          ? element.professionTypeId
+                          : "",
+                      educationalLevel: element.educationalLevel
+                        ? element.educationalLevel
+                        : element.educationLevel
+                        ? element.educationLevel
+                        : "",
+                      docs: resp.filter(
+                        (element) => element.parentDocument == null
+                      ),
+                      parentDoc: groupByKey(resp, "parentDocument"),
+                    });
                   });
               });
+              //Get Common Docs
+
+              store
+                .dispatch("renewal/getCommonRNdocuments", [
+                  categoryResults[0].id,
+                  generalInfo.value.applicantType.id,
+                ])
+                .then((res) => {
+                  let result = res.data.data;
+                  commonDocuments.value = result;
+                });
+            });
           }
         });
     });

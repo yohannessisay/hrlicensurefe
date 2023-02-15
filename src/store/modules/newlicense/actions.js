@@ -518,7 +518,7 @@ export default {
   async getNLdocuments({ commit }, params) {
     try {
       const resp = await ApiService.get(
-        baseUrl + `/documentSpecs/${params[0]}/${params[1]}/${params[2]}`
+        baseUrl + `/documentSpecs/${params[0]}/${params[1]}/${params[2]}/${params[3]}`
       );
       return resp;
     } catch (error) {

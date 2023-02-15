@@ -7,24 +7,22 @@
     <!-- Header -->
     <reviewer-nav-bar>
       <ol class="list-reset flex">
-          <li>
-            <router-link to="/admin/review"
-              ><span class="text-primary-600 text-base">Home</span></router-link
-            >
-          </li>
-          <li><span class="text-gray-500 mx-2">/</span></li>
-          <li>
-            <a href="#" class="hover:text-primary-600 text-grey-300"
-              >Renewal</a
-            >
-          </li>
-          <li><span class="text-gray-500 mx-2">/</span></li>
-          <li>
-            <a href="#" class="pointer-events-none text-lg text-grey-300"
-              >In Review</a
-            >
-          </li>
-        </ol>
+        <li>
+          <router-link to="/admin/review"
+            ><span class="text-primary-600 text-base">Home</span></router-link
+          >
+        </li>
+        <li><span class="text-gray-500 mx-2">/</span></li>
+        <li>
+          <a href="#" class="hover:text-primary-600 text-grey-300">Renewal</a>
+        </li>
+        <li><span class="text-gray-500 mx-2">/</span></li>
+        <li>
+          <a href="#" class="pointer-events-none text-lg text-grey-300"
+            >In Review</a
+          >
+        </li>
+      </ol>
     </reviewer-nav-bar>
     <!-- Header -->
 
@@ -184,15 +182,10 @@ export default {
         let adminStatus = [statusId, adminId];
 
         store
-          .dispatch(
-            "reviewerRenewal/getRenewalOthersOnReview",
-            adminStatus
-          )
+          .dispatch("reviewerRenewal/getRenewalOthersOnReview", adminStatus)
           .then((res) => {
             allInfo.value.assignApplication =
-              store.getters[
-                "reviewerRenewal/getRenewalOthersOnReviewSearched"
-              ];
+              store.getters["reviewerRenewal/getRenewalOthersOnReviewSearched"];
 
             for (let applicant in allInfo.value.assignApplication) {
               if (
@@ -261,9 +254,9 @@ export default {
                   width: "10%",
                   display: function (row) {
                     return (
-                  '<button data-bs-toggle="modal" data-bs-target="#staticBackdropOthers" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
-                  row.id +
-                  '" ><i class="fa fa-eye"></i> View</button>'
+                      '<button data-bs-toggle="modal" data-bs-target="#staticBackdropOthers" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
+                      row.id +
+                      '" ><i class="fa fa-eye"></i> View</button>'
                     );
                   },
                 },
@@ -288,7 +281,7 @@ export default {
           .dispatch("reviewerRenewal/getRenewalOnReview", adminStatus)
           .then((res) => {
             allInfo.value.assignApplication = res;
-              // store.getters["reviewerRenewal/getRenewalOnReviewSearched"];
+            // store.getters["reviewerRenewal/getRenewalOnReviewSearched"];
 
             for (let applicant in allInfo.value.assignApplication) {
               if (
@@ -397,8 +390,6 @@ export default {
     };
     const rowClicked = (row) => {
       if (row != undefined) {
-   
-
         row = JSON.parse(JSON.stringify(row));
         modalDataId.value.id = row.id ? row.id : "-----";
         modalDataId.value.change++;
@@ -414,7 +405,7 @@ export default {
     onMounted(() => {
       inReviewAssignedToYou();
       inReviewAssignedToOthers();
-      store.dispatch("reviewer/getAdminsByRegion",adminRegion).then((res) => {
+      store.dispatch("reviewer/getAdminsByRegion", adminRegion).then((res) => {
         reviewers.value = res.data.data.filter((e) => {
           return e.role.code !== "UM";
         });
