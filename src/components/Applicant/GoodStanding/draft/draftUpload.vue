@@ -644,7 +644,7 @@ export default {
             documentsSaved.value[element.documentTypeCode].code =
               element.documentType.code;
           });
-
+          console.log();
           existingDocs = generalInfo.value?.documents;
         });
 

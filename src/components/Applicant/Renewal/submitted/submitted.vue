@@ -288,7 +288,7 @@ export default {
       store.dispatch("renewal/getRenewalLicense", userId).then((res) => {
         const results = res.data.data;
 
-        if (results.length > 0) {
+        if (results&&results.length > 0) {
           userDraftLicenses.value = results.filter((draftLicenses) => {
             return (
               draftLicenses.applicationStatus.code === "UPD" ||
@@ -296,7 +296,7 @@ export default {
             );
           });
 
-          if (userDraftLicenses.value.length === 0) {
+          if (userDraftLicenses&&userDraftLicenses.value.length === 0) {
             noData.value = true;
           }
 

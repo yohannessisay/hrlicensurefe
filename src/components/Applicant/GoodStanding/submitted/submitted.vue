@@ -79,7 +79,11 @@
                   </a>
                 </h1>
                 <p class="text-black text-sm">
-                  {{ license &&license.whoIssued? license.whoIssued.name : "Waiting for review" }}
+                  {{
+                    license && license.whoIssued
+                      ? license.whoIssued.name
+                      : "Waiting for review"
+                  }}
                 </p>
               </div>
 
@@ -274,9 +278,9 @@ export default {
       userInfo.value = JSON.parse(window.localStorage.getItem("personalInfo"));
 
       store.dispatch("goodstanding/getGoodStandingLicense").then((res) => {
-        const results = res.data.data;
+        const results = res.data.data ? res.data.data : [];
 
-        if (results&&results.length > 0) {
+        if (results && results.length > 0) {
           userSubmittedLicenses.value = results.filter((submittedLicense) => {
             return (
               submittedLicense.applicationStatus.code === "UPD" ||
@@ -284,7 +288,10 @@ export default {
             );
           });
 
-          if (userSubmittedLicenses.value.length === 0) {
+          if (
+            userSubmittedLicenses.value &&
+            userSubmittedLicenses.value.length === 0
+          ) {
             noData.value = true;
           }
 
