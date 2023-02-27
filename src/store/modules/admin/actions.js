@@ -39,7 +39,9 @@ export default {
         baseUrl + "/applicationStatuses"
       );
       commit(SET_APPLICATION_STATUSES, AppStatuses.data.data);
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   },
   async getRole({ commit }) {
     // commit(ADD_ADMIN_LOADING);
@@ -108,7 +110,11 @@ export default {
     try {
       let url =
         baseUrl +
-        `/admins/allAdmins?page=${parameters[0]}&size=${parameters[1]}`;
+        `/admins/allAdmins?page=${parameters[0]}&size=${parameters[1]}&value=${
+          parameters[2] ? parameters[2] : ""
+        }&expertLevel=${
+          parameters[3] && parameters[3] != "all" ? parameters[3] : ""
+        }`;
       const resp = await ApiService.get(url);
       return resp.data.data;
     } catch (error) {
