@@ -103,9 +103,9 @@
                 </div>
 
                 <div class="col-span-1 ml-8 mt-5">
-                    <button
-                      type="button"
-                      class="
+                  <button
+                    type="button"
+                    class="
                         inline-block
                         px-6
                         py-2
@@ -123,15 +123,14 @@
                         duration-150
                         ease-in-out
                       "
-                      @click="clearFilters()"
-                    >
-                      <i class="fa fa-close"></i>
-                      Clear Filters
-                    </button>
-                  </div>
+                    @click="clearFilters()"
+                  >
+                    <i class="fa fa-close"></i>
+                    Clear Filters
+                  </button>
+                </div>
               </div>
             </div>
-        
 
             <div
               class="inline-block min-w-full shadow-md rounded-lg overflow-hidden bg-primary-800"
@@ -332,9 +331,9 @@ export default {
         userTable.value.isReSearch = offset == undefined ? true : false;
         offset = offset / 10 + 1;
         if (sort == "asc") {
-          getAdmins([offset, limit, searchTerm.value,expertLevelFilter.value]);
+          getAdmins([offset, limit, searchTerm.value, expertLevelFilter.value]);
         } else {
-          getAdmins([offset, limit, searchTerm.value,expertLevelFilter.value]);
+          getAdmins([offset, limit, searchTerm.value, expertLevelFilter.value]);
         }
         userTable.value.sortable.order = order;
         userTable.value.sortable.sort = sort;

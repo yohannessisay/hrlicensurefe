@@ -31,7 +31,7 @@
         class="
           modal-content
           border-none
-          shadow-lg
+          shadow-md
           relative
           flex flex-col
           w-full
@@ -58,17 +58,18 @@
               uppercase
               rounded
               hover:border-primary-600
-              shadow-lg
-              hover:bg-purple-700 hover:shadow-lg
+              shadow-md
+              hover:bg-purple-700 hover:shadow-md
               focus:bg-purple-700
-              focus:shadow-lg
+              focus:shadow-md
               focus:outline-none
               focus:ring-0
-              active:bg-purple-800 active:shadow-lg
+              active:bg-purple-800 active:shadow-md
               transition
               duration-150
               ease-in-out
             "
+            id="closeButton"
             data-bs-dismiss="modal"
             aria-label="Close"
           >
@@ -121,7 +122,7 @@
                                 p-4
                                 bg-blue-600
                                 rounded-md
-                                shadow-lg
+                                shadow-md
                                 w-48
                                 h-48
                                 flex
@@ -217,7 +218,7 @@
                                 p-4
                                 bg-blue-600
                                 rounded-md
-                                shadow-lg
+                                shadow-md
                                 w-48
                                 h-48
                                 flex
@@ -252,7 +253,7 @@
                           shrink-0
                           basis-auto
                           w-full
-                          lg:w-full
+                          lg:w-6/12
                           px-3
                           lg:px-6
                         "
@@ -265,7 +266,7 @@
                                 p-4
                                 bg-blue-600
                                 rounded-md
-                                shadow-lg
+                                shadow-md
                                 w-48
                                 mt-2
                                 h-48
@@ -278,7 +279,7 @@
                             </div>
                           </div>
 
-                          <div class="grow ml-6 grid grid-cols-4">
+                          <div class="grow ml-6 grid grid-rows-1">
                             <div
                               class="
                                 border-2
@@ -290,8 +291,8 @@
                                 text-primary-500
                               "
                               v-for="education in modalData.data
-                              ? modalData.data.educations
-                              : []"
+                                ? modalData.data.educations
+                                : []"
                               :key="education.id"
                             >
                               <p class="text-gray-500">
@@ -342,6 +343,167 @@
                           </div>
                         </div>
                       </div>
+
+                      <div
+                        class="
+                          grow-0
+                          shrink-0
+                          basis-auto
+                          w-full
+                          lg:w-6/12
+                          px-3
+                          lg:px-6
+                        "
+                      >
+                        <h2 class="font-bold mb-1">Transfer Application</h2>
+                        <div class="flex items-start">
+                          <div class="shrink-0">
+                            <div
+                              class="
+                                p-4
+                                bg-blue-600
+                                rounded-md
+                                shadow-md
+                                w-48
+                                mt-2
+                                h-48
+                                flex
+                                items-center
+                                justify-center
+                              "
+                            >
+                              <i class="fa fa-building fa-4x"></i>
+                            </div>
+                          </div>
+                          <div
+                            class="grow ml-6"
+                            v-if="adminRole && adminRole != 'REV'"
+                          >
+                            <h2 class="font-bold mb-1">Transfer To</h2>
+
+                            <div class="flex items-center">
+                              <label
+                                for="email"
+                                class="
+                                    block
+                                    text-sm
+                                    font-semibold
+                                    leading-5
+                                    text-gray-700
+                                    sr-only
+                                  "
+                              >
+                                Users
+                              </label>
+                            </div>
+                            <label class="block text-left">
+                              <div>
+                                <div class="w-full relative">
+                                  <div
+                                    class="
+                                        mt-1
+                                        ml-1
+                                        relative
+                                        border border-gray-300
+                                        overflow-hidden
+                                        rounded-md
+                                        shadow-sm
+                                      "
+                                  >
+                                    <input
+                                      id="email"
+                                      @keyup="showOptions = true"
+                                      v-model="reviewer.name"
+                                      class="w-full px-3 py-3"
+                                      style="border: none"
+                                      autocomplete="off"
+                                      placeholder="Select reviewer by typing a name"
+                                    />
+                                  </div>
+                                  <div>
+                                    <textarea
+                                      placeholder="Reason for transfer"
+                                      v-model="transferRemark"
+                                      class="
+                                          resize-none
+                                          tArea
+                                          border
+                                          rounded-lg
+                                          flex
+                                          mt-4
+                                          ml-1
+                                          w-full
+                                        "
+                                    ></textarea>
+                                    <button
+                                      class="
+                                          inline-block
+                                          px-6
+                                          py-2.5
+                                          bg-primary-600
+                                          text-white
+                                          font-semibold
+                                          text-xs
+                                          leading-tight
+                                          uppercase
+                                          rounded
+                                          shadow-md
+                                          mt-4
+                                          ml-1
+                                          hover:bg-white
+                                          hover:shadow-md
+                                          hover:text-primary-600
+                                          transition
+                                          duration-150
+                                          ease-in-out
+                                          mb-8
+                                        "
+                                      @click="transferReviewer()"
+                                    >
+                                      Transfer
+                                    </button>
+                                  </div>
+                                  <div
+                                    v-show="resultQuery().length && showOptions"
+                                    class="
+                                        w-full
+                                        bg-white
+                                        border border-gray-300
+                                        mt-2
+                                        ml-1
+                                        max-height-12
+                                        overflow-hidden overflow-y-scroll
+                                        rounded-lg
+                                        shadow-md
+                                        text-left
+                                        dropdown-menu
+                                      "
+                                    style="height: 148px; border: none"
+                                  >
+                                    <ul class="py-1">
+                                      <li
+                                        v-for="value in resultQuery()"
+                                        :key="value.id"
+                                        @click="setInput(value)"
+                                        class="
+                                            dropdown-toggle
+                                            px-4
+                                            py-2
+                                            cursor-pointer
+                                            hover:bg-primary-700
+                                            hover:text-white
+                                          "
+                                      >
+                                        {{ value.name }}
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </div>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -355,32 +517,154 @@
 </template>
 <script>
 import { useStore } from "vuex";
-import { ref, watch } from "vue";
 import moment from "moment";
 import Loading from "vue3-loading-overlay";
 // Import stylesheet
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
+
+import { ref, onMounted, watch, computed } from "vue";
+// Import stylesheet
+import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
+
+import { useToast } from "vue-toastification";
 import { googleApi } from "@/composables/baseURL";
 export default {
-  props: ["modalDataIdOthers"],
+  props: ["modalDataIdOthers", "reviewers"],
   components: {
     Loading,
   },
   computed: {
     moment: () => moment,
   },
-  setup(props) {
+  setup(props, { emit }) {
     const store = useStore();
-
+    const toast = useToast();
+    let transferRemark = ref("");
     let show = ref(true);
-
+    let showRes = ref(false);
+    let showOptions = ref(false);
+    let reviewer = ref({ id: "", name: "", expertLevel: "", role: "" });
+    let adminId = +localStorage.getItem("adminId");
+    let adminRole = localStorage.getItem("role");
+    const licenseId = computed(() => props.modalDataIdOthers.id);
+    let transfer = ref({
+      reviewerId: "",
+      licenseId: "",
+      createdByAdminId: "",
+    });
     let role = ref({});
-    let isLoading = ref(true);
+    let isLoading = ref(false);
+    const isLoadingStart = ref(true);
+    const fullPage = ref(false);
+    const evaluationData = ref({});
+    let reviewerAdminId = ref(0);
+
+    const fetchRole = (id) => {
+      store.dispatch("reviewer/getRoles", id).then((res) => {
+        role.value = res.data.data.role;
+      });
+    };
+
+    const transferReviewer = () => {
+      if (transferRemark.value == "") {
+        toast.error("Transfer reason is required", {
+          timeout: 5000,
+          position: "bottom-center",
+          pauseOnFocusLoss: true,
+          pauseOnHover: true,
+          icon: true,
+        });
+        return;
+      } else {
+        if (role.value.code === "TL" || role.value.code === "ADM") {
+          transfer.value = {
+            licenseId: props.modalDataIdOthers.id,
+            reviewerId: transfer.value.reviewerId,
+            createdByAdminId: +localStorage.getItem("adminId"),
+            transferRemark: transferRemark.value,
+          };
+        }
+
+        if (role.value.code == "REV") {
+          transfer.value = {
+            licenseId: props.modalDataIdOthers.id,
+            reviewerId: +localStorage.getItem("adminId"),
+            createdByAdminId: +localStorage.getItem("adminId"),
+            transferRemark: transferRemark.value,
+          };
+        }
+
+        isLoading.value = true;
+
+        store
+          .dispatch("reviewer/transferLicenseReview", transfer.value)
+          .then((response) => {
+            if (response.statusText == "Created") {
+              toast.success("Selected application transfered Successfully", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
+              isLoading.value = false;
+              emit("refreshTable");
+              if (document.getElementById("closeButton")) {
+                document.getElementById("closeButton").click();
+              }
+            } else {
+              toast.error("Error transfering", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
+              isLoading.value = false;
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+            toast.error("Error transfering", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+            isLoading.value = false;
+          });
+      }
+    };
 
     const showModal = () => {
       show.value = true;
     };
+    const resultQuery = () => {
+      if (reviewer.value.name) {
+        let data = props.reviewers.filter((item) => {
+          return reviewer.value.name
+            .toLowerCase()
+            .split(" ")
+            .every((v) => item.name.toLowerCase().includes(v));
+        });
 
+        return data;
+      } else {
+        return [];
+      }
+    };
+
+    const setInput = (value) => {
+      reviewer.value = {
+        id: value.id,
+        name: value.name,
+        expertLevel: value.expertLevel.code,
+        role: value.role.code,
+      };
+      transfer.value.reviewerId = value.id;
+      showOptions.value = false;
+    };
     const onCancel = () => {
       isLoading.value = false;
     };
@@ -439,6 +723,10 @@ export default {
           }
         });
     };
+    onMounted(() => {
+      adminId = +localStorage.getItem("adminId");
+      fetchRole(adminId);
+    });
     return {
       role,
       googleApi,
@@ -447,10 +735,25 @@ export default {
       isLoading,
       modalData,
       onCancel,
+
+      adminId,
+      reviewerAdminId,
+      transfer,
+      transferRemark,
+      showRes,
+      showOptions,
+      reviewer,
+      setInput,
+      resultQuery,
+      isLoadingStart,
+      licenseId,
+      fullPage,
+      adminRole,
+      evaluationData,
+      transferReviewer,
     };
   },
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

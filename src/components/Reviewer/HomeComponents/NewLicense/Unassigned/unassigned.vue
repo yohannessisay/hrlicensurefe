@@ -130,6 +130,7 @@
                        
                         items-center
                       "
+                      @click="searchApplication()"
                     >
                       <svg
                         aria-hidden="true"
@@ -255,6 +256,7 @@
                     :sortable="unassignedTable.sortable"
                     @is-finished="tableLoadingFinish"
                     @row-clicked="rowClicked"
+                    @do-search="doSearchUnasssigned"
                   ></vue-table-lite>
                   <edit-modal
                     v-if="showModal"
@@ -535,7 +537,7 @@ export default {
     NewLicenseMainContent,
     editModal,
     VueTableLite,
-    editModalResubmitted,
+    editModalResubmitted
   },
   setup() {
     const store = useStore();
@@ -546,25 +548,23 @@ export default {
     const includeResub = ref(false);
     const searchTerm = ref("");
     const searchTermOthers = ref("");
-    let searchTermFromDate = ref("");
-    let searchTermToDate = ref("");
+    let searchTermFromDate = ref(new Date().toISOString().slice(0,10));
+    let searchTermToDate = ref(new Date().toISOString().slice(0,10));
     let searchTermFromDateResub = ref("");
     let searchTermToDateResub = ref("");
     let searchedReviewer = ref("");
     const adminId = +localStorage.getItem("adminId");
-    const adminLevel = JSON.parse(
-      localStorage.getItem("allAdminData")
-    ).expertLevel;
-    const adminRegion = JSON.parse(
-      localStorage.getItem("allAdminData")
-    ).regionId;
+    const adminLevel = JSON.parse(localStorage.getItem("allAdminData"))
+      .expertLevel;
+    const adminRegion = JSON.parse(localStorage.getItem("allAdminData"))
+      .regionId;
     let modalDataId = ref({
       id: "",
-      change: 0,
+      change: 0
     });
     let modalDataIdResub = ref({
       id: "",
-      change: 0,
+      change: 0
     });
 
     let allInfo = ref({});
@@ -572,10 +572,10 @@ export default {
     const unassignedTable = ref({});
     const reSubmittedTable = ref([]);
     unassignedTable.value = {
-      isLoading: true,
+      isLoading: true
     };
     reSubmittedTable.value = {
-      isLoading: true,
+      isLoading: true
     };
     let tableData = ref([]);
     let tableDataTemp = ref([]);
@@ -591,17 +591,20 @@ export default {
       searchTermFromDateResub.value = "";
       searchTermToDateResub.value = "";
     };
-    const unassigned = () => {
-      applicationStatus(store, "SUB").then((res) => {
+    const unassigned = apiParameters => {
+      applicationStatus(store, "SUB").then(res => {
         modalDataId.value.apStatusUnassigned = res;
         let statusId = res;
 
         store
-          .dispatch("reviewerNewLicense/getNewLicenseUnassigned", statusId)
-          .then((res) => {
+          .dispatch("reviewerNewLicense/getNewLicenseUnassigned", [
+            { status: statusId },
+            { params: apiParameters }
+          ])
+          .then(res => {
             allInfo.value = res;
             if (allInfo.value) {
-              JSON.parse(JSON.stringify(allInfo.value)).forEach((element) => {
+              JSON.parse(JSON.stringify(allInfo.value)).forEach(element => {
                 tableData.value.push({
                   LicenseNumber: element.newLicenseCode,
                   ApplicantName:
@@ -617,7 +620,7 @@ export default {
                     .toJSON()
                     .slice(0, 10)
                     .replace(/-/g, "/"),
-                  data: element,
+                  data: element
                 });
               });
             }
@@ -629,42 +632,42 @@ export default {
                   field: "LicenseNumber",
                   width: "15%",
                   sortable: true,
-                  isKey: true,
+                  isKey: true
                 },
                 {
                   label: "Applicant Name",
                   field: "ApplicantName",
                   width: "45%",
-                  sortable: true,
+                  sortable: true
                 },
                 {
                   label: "Applicant Type",
                   field: "ApplicantType",
                   width: "20%",
-                  sortable: true,
+                  sortable: true
                 },
                 {
                   label: "Applied Date",
                   field: "Date",
                   width: "20%",
-                  sortable: true,
+                  sortable: true
                 },
                 {
                   label: "Action",
                   field: "quick",
                   width: "10%",
-                  display: function (row) {
+                  display: function(row) {
                     return (
                       '<button data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
                       row.id +
                       '" ><i class="fa fa-eye"></i>View/Edit</button>'
                     );
-                  },
-                },
+                  }
+                }
               ],
               rows: computed(() => {
                 return tableData.value.filter(
-                  (x) =>
+                  x =>
                     (x.ApplicantName
                       ? x.ApplicantName.toLowerCase().includes(
                           searchTerm.value.toLowerCase()
@@ -703,8 +706,8 @@ export default {
               totalRecordCount: tableData.value.length,
               sortable: {
                 order: "id",
-                sort: "asc",
-              },
+                sort: "asc"
+              }
             };
           });
       });
@@ -713,7 +716,7 @@ export default {
     const includeFromOthers = () => {
       if (include.value === true) {
         unassignedTable.value.isLoading = true;
-        applicationStatus(store, "SUB").then((res) => {
+        applicationStatus(store, "SUB").then(res => {
           modalDataId.value.apStatusUnassigned = res;
           let statusId = res;
           store
@@ -721,11 +724,11 @@ export default {
               "reviewerNewLicense/getNewLicenseFromOtherRegion",
               statusId
             )
-            .then((res) => {
+            .then(res => {
               allInfo.value = res;
 
               tableData.value = [];
-              JSON.parse(JSON.stringify(allInfo.value)).forEach((element) => {
+              JSON.parse(JSON.stringify(allInfo.value)).forEach(element => {
                 tableData.value.push({
                   LicenseNumber: element.newLicenseCode,
                   ApplicantName:
@@ -741,7 +744,7 @@ export default {
                     .toJSON()
                     .slice(0, 10)
                     .replace(/-/g, "/"),
-                  data: element,
+                  data: element
                 });
               });
 
@@ -752,31 +755,31 @@ export default {
                     field: "LicenseNumber",
                     width: "15%",
                     sortable: true,
-                    isKey: true,
+                    isKey: true
                   },
                   {
                     label: "Applicant Name",
                     field: "ApplicantName",
                     width: "45%",
-                    sortable: true,
+                    sortable: true
                   },
                   {
                     label: "Application Type",
                     field: "ApplicationType",
                     width: "20%",
-                    sortable: true,
+                    sortable: true
                   },
                   {
                     label: "Date",
                     field: "Date",
                     width: "15%",
-                    sortable: true,
+                    sortable: true
                   },
                   {
                     label: "Actions",
                     field: "quick",
                     width: "10%",
-                    display: function (row) {
+                    display: function(row) {
                       return (
                         '<button  data-set="' +
                         row +
@@ -784,12 +787,12 @@ export default {
                         row.id +
                         '" ><i class="fa fa-eye"></i> View/Edit</button>'
                       );
-                    },
-                  },
+                    }
+                  }
                 ],
                 rows: computed(() => {
                   return tableData.value.filter(
-                    (x) =>
+                    x =>
                       (x.ApplicantName
                         ? x.ApplicantName.toLowerCase().includes(
                             searchTerm.value.toLowerCase()
@@ -828,8 +831,8 @@ export default {
                 totalRecordCount: tableData.value.length,
                 sortable: {
                   order: "id",
-                  sort: "asc",
-                },
+                  sort: "asc"
+                }
               };
             });
         });
@@ -837,7 +840,7 @@ export default {
       if (include.value === false) {
         unassignedTable.value.rows = computed(() => {
           return tableDataTemp.value.filter(
-            (x) =>
+            x =>
               (x.ApplicantName
                 ? x.ApplicantName.toLowerCase().includes(
                     searchTerm.value.toLowerCase()
@@ -868,7 +871,7 @@ export default {
     const includeFromOthersResub = () => {
       if (includeResub.value === true) {
         reSubmittedTable.value.isLoading = true;
-        applicationStatus(store, "UPD").then((res) => {
+        applicationStatus(store, "UPD").then(res => {
           modalDataId.value.apStatusUnassigned = res;
           let statusId = res;
           store
@@ -876,11 +879,11 @@ export default {
               "reviewerNewLicense/getNewLicenseFromOtherRegion",
               statusId
             )
-            .then((res) => {
+            .then(res => {
               allInfo.value = res;
 
               reTableData.value = [];
-              JSON.parse(JSON.stringify(allInfo.value)).forEach((element) => {
+              JSON.parse(JSON.stringify(allInfo.value)).forEach(element => {
                 reTableData.value.push({
                   LicenseNumber: element.newLicenseCode,
                   ApplicantName:
@@ -896,7 +899,7 @@ export default {
                     .toJSON()
                     .slice(0, 10)
                     .replace(/-/g, "/"),
-                  data: element,
+                  data: element
                 });
               });
 
@@ -907,31 +910,31 @@ export default {
                     field: "LicenseNumber",
                     width: "15%",
                     sortable: true,
-                    isKey: true,
+                    isKey: true
                   },
                   {
                     label: "Applicant Name",
                     field: "ApplicantName",
                     width: "45%",
-                    sortable: true,
+                    sortable: true
                   },
                   {
                     label: "Application Type",
                     field: "ApplicationType",
                     width: "20%",
-                    sortable: true,
+                    sortable: true
                   },
                   {
                     label: "Date",
                     field: "Date",
                     width: "15%",
-                    sortable: true,
+                    sortable: true
                   },
                   {
                     label: "Actions",
                     field: "quick",
                     width: "10%",
-                    display: function (row) {
+                    display: function(row) {
                       return (
                         '<button  data-set="' +
                         row +
@@ -939,12 +942,12 @@ export default {
                         row.id +
                         '" ><i class="fa fa-eye"></i> View/Edit</button>'
                       );
-                    },
-                  },
+                    }
+                  }
                 ],
                 rows: computed(() => {
                   return reTableData.value.filter(
-                    (x) =>
+                    x =>
                       (x.ApplicantName
                         ? x.ApplicantName.toLowerCase().includes(
                             searchTermOthers.value.toLowerCase()
@@ -983,8 +986,8 @@ export default {
                 totalRecordCount: reTableData.value.length,
                 sortable: {
                   order: "id",
-                  sort: "asc",
-                },
+                  sort: "asc"
+                }
               };
             });
         });
@@ -992,7 +995,7 @@ export default {
       if (includeResub.value === false) {
         reSubmittedTable.value.rows = computed(() => {
           return tableDataTempResub.value.filter(
-            (x) =>
+            x =>
               (x.ApplicantName
                 ? x.ApplicantName.toLowerCase().includes(
                     searchTermOthers.value.toLowerCase()
@@ -1030,16 +1033,16 @@ export default {
     };
 
     const reSubmitted = () => {
-      applicationStatus(store, "UPD").then((res) => {
+      applicationStatus(store, "UPD").then(res => {
         let statusId = res;
         const adminStatus = [statusId, adminId];
         modalDataId.value.apStatusResub = statusId;
         store
           .dispatch("reviewerNewLicense/getNewLicenseReApply", adminStatus)
-          .then((res) => {
+          .then(res => {
             allInfo.value = res;
 
-            JSON.parse(JSON.stringify(allInfo.value)).forEach((element) => {
+            JSON.parse(JSON.stringify(allInfo.value)).forEach(element => {
               reTableData.value.push({
                 LicenseNumber: element.newLicenseCode,
                 ApplicantName:
@@ -1053,7 +1056,7 @@ export default {
                   .toJSON()
                   .slice(0, 10)
                   .replace(/-/g, "/"),
-                data: element,
+                data: element
               });
             });
             tableDataTempResub.value = reTableData.value;
@@ -1064,31 +1067,31 @@ export default {
                   field: "LicenseNumber",
                   width: "20%",
                   sortable: true,
-                  isKey: true,
+                  isKey: true
                 },
                 {
                   label: "Applicant Name",
                   field: "ApplicantName",
                   width: "45%",
-                  sortable: true,
+                  sortable: true
                 },
                 {
                   label: "Application Type",
                   field: "ApplicationType",
                   width: "15%",
-                  sortable: true,
+                  sortable: true
                 },
                 {
                   label: "Date",
                   field: "Date",
                   width: "20%",
-                  sortable: true,
+                  sortable: true
                 },
                 {
                   label: "Actions",
                   field: "quick",
                   width: "10%",
-                  display: function (row) {
+                  display: function(row) {
                     return (
                       '<button  data-set="' +
                       row +
@@ -1096,12 +1099,12 @@ export default {
                       row.id +
                       '" ><i class="fa fa-eye"></i>View/Edit</button>'
                     );
-                  },
-                },
+                  }
+                }
               ],
               rows: computed(() => {
                 return reTableData.value.filter(
-                  (x) =>
+                  x =>
                     (x.ApplicantName
                       ? x.ApplicantName.toLowerCase().includes(
                           searchTermOthers.value.toLowerCase()
@@ -1140,8 +1143,8 @@ export default {
               totalRecordCount: reTableData.value.length,
               sortable: {
                 order: "id",
-                sort: "asc",
-              },
+                sort: "asc"
+              }
             };
           });
       });
@@ -1149,7 +1152,7 @@ export default {
 
     const tableLoadingFinish = () => {
       let elements = document.getElementsByClassName("edit-btn");
-      Array.prototype.forEach.call(elements, function (element) {
+      Array.prototype.forEach.call(elements, function(element) {
         if (element.classList.contains("edit-btn")) {
           element.addEventListener("click", rowClicked());
         }
@@ -1161,7 +1164,7 @@ export default {
       let elementsResub = document.getElementsByClassName(
         "edit-btn-resubmitted"
       );
-      Array.prototype.forEach.call(elementsResub, function (element) {
+      Array.prototype.forEach.call(elementsResub, function(element) {
         if (element.classList.contains("edit-btn-resubmitted")) {
           element.addEventListener("click", rowClickedResub());
         }
@@ -1169,26 +1172,69 @@ export default {
       reSubmittedTable.value.isLoading = false;
     };
 
-    const rowClicked = (row) => {
+    const rowClicked = row => {
       if (row != undefined) {
         row = JSON.parse(JSON.stringify(row));
         modalDataId.value.id = row.data.id ? row.data.id : "";
         modalDataId.value.change++;
       }
     };
-    const rowClickedResub = (row) => {
+    const rowClickedResub = row => {
       if (row != undefined) {
         row = JSON.parse(JSON.stringify(row));
         modalDataIdResub.value.change++;
         modalDataIdResub.value.id = row.data.id ? row.data.id : "";
       }
     };
+    const searchApplication = () => {
+  
+      unassignedTable.value.isLoading = true;
+      unassigned([
+        { key: "page", value: 0 },
+        { key: "size", value: 10 },
+        { key: "value", value: searchTerm.value },
+        { key: "fromDate", value: searchTermFromDate.value },
+        { key: "toDate", value: searchTermToDate.value }
+      ]);
+    };
+    const doSearchUnasssigned = (offset, limit, order, sort) => {
+      unassignedTable.value.isLoading = true;
 
+      setTimeout(() => {
+        unassignedTable.value.isReSearch = offset == undefined ? true : false;
+        offset = offset / 10 + 1;
+        if (sort == "asc") {
+          unassigned([
+            { key: "page", value: 0 },
+            { key: "size", value: 10 },
+            { key: "value", value: searchTerm.value },
+            { key: "fromDate", value: searchTermFromDate.value },
+            { key: "toDate", value: searchTermToDate.value }
+          ]);
+        } else {
+          unassigned([
+            { key: "page", value: 0 },
+            { key: "size", value: 10 },
+            { key: "value", value: searchTerm.value },
+            { key: "fromDate", value: searchTermFromDate.value },
+            { key: "toDate", value: searchTermToDate.value }
+          ]);
+        }
+        unassignedTable.value.sortable.order = order;
+        unassignedTable.value.sortable.sort = sort;
+      }, 600);
+    };
     onMounted(() => {
-      unassigned();
-      reSubmitted();
-      store.dispatch("reviewer/getAdminsByRegion", adminRegion).then((res) => {
-        reviewers.value = res.data.data.filter((e) => {
+      unassigned([
+        { key: "page", value: 0 },
+        { key: "size", value: 10 }
+      ]);
+      reSubmitted([
+        { key: "page", value: 0 },
+        { key: "size", value: 10 }
+      ]);
+      store.dispatch("reviewer/getAdminsByRegion", adminRegion).then(res => {
+        reviewers.value = res.data.data.filter(e => {
           return e.role.code !== "UM";
         });
       });
@@ -1204,6 +1250,8 @@ export default {
       include,
       includeResub,
       clearFilters,
+      doSearchUnasssigned,
+      searchApplication,
       clearFiltersResub,
       searchTermFromDate,
       searchTermToDate,
@@ -1222,8 +1270,8 @@ export default {
       rowClickedResub,
       modalDataId,
       adminLevel,
-      modalDataIdResub,
+      modalDataIdResub
     };
-  },
+  }
 };
 </script>

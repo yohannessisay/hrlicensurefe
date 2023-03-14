@@ -1,5 +1,21 @@
 import ApiService from "../../../services/api.service";
 import { baseUrl } from "../../../composables/baseURL";
+import reviewerUrls from "../../../shared/reviewerUrls";
+function urlFacilitator(detail) {
+  let url = `${reviewerUrls.newLicense}${detail[0].status}?`;
+  let parameters = detail[1].params ? detail[1].params : [];
+
+  if (parameters) {
+    parameters.forEach((param) => {
+      url +=
+        (param.value && param.value != "") || param.value == 0
+          ? `${param.key}=${param.value}&`
+          : "";
+    });
+  }
+  url = url.substring(0, url.length - 1);
+  return url;
+}
 export default {
   async getNewLicenseReport() {
     try {
@@ -11,8 +27,10 @@ export default {
       return err;
     }
   },
-  async getNewLicenseUnassigned(context, statusId) {
-    const url = baseUrl + "/newLicenses/status/" + statusId;
+
+  async getNewLicenseUnassigned(context, apiParameters) {
+    let url = urlFacilitator(apiParameters);
+    console.log(apiParameters);
     const resp = await ApiService.get(url);
     const unassignedApplications = resp.data.data.filter((unassigned) => {
       return unassigned.transferFromId == null;
@@ -123,13 +141,17 @@ export default {
     return othersUnderSuperVision;
   },
 
-  async getNewLicenseOnReview(context, adminStatus) {
-    const url = baseUrl + "/newlicenses/status/" + adminStatus[0];
+  async getNewLicenseOnReview(context, parameters) {
+    let ur = urlFacilitator(parameters);
+
+    const url = baseUrl + "/newlicenses/status/4";
+
     const resp = await ApiService.get(url);
 
     const onReview = resp.data.data.filter(function(e) {
       return (
-        e.licenseReviewer && e.licenseReviewer.reviewerId == adminStatus[1]
+        e.licenseReviewer &&
+        e.licenseReviewer.reviewerId == parameters.adminStatus.adminId
       );
     });
 

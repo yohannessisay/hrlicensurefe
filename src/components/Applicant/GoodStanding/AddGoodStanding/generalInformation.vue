@@ -667,7 +667,7 @@
                 >
                   <option
                     v-for="region in regions"
-                    v-bind:key="region.name"
+                    v-bind:key="region.id"
                     v-bind:value="region"
                   >
                     {{ region.name }}

@@ -225,7 +225,10 @@
                                 <i class="fa fa-link fa-4x"></i>
                               </div>
                             </div>
-                            <div class="grow ml-6">
+                            <div
+                              class="grow ml-6"
+                              v-if="adminRole && adminRole != 'REV'"
+                            >
                               <h2 class="font-bold mb-1">Assign To</h2>
 
                               <div class="flex items-center">
@@ -292,7 +295,12 @@
                                           duration-150
                                           ease-in-out
                                         "
-                                        @click="assignReviewer(button.action)"
+                                        @click="
+                                          assignReviewer({
+                                            action: button.action,
+                                            type: 'toOthers',
+                                          })
+                                        "
                                       >
                                         {{ button ? button.name : "" }}
                                       </button>
@@ -337,6 +345,43 @@
                                   </div>
                                 </div>
                               </label>
+                            </div>
+                            <div v-if="adminRole && adminRole == 'REV'">
+                              <div
+                                v-for="button in modalData.buttons"
+                                :key="button.id"
+                              >
+                                <button
+                                  v-if="button.code == 'AT'"
+                                  class="
+                                          inline-block
+                                          px-6
+                                          py-2.5
+                                          mt-4
+                                          bg-primary-700
+                                          text-white
+                                          font-medium
+                                          text-xs
+                                          ml-4
+                                          leading-tight
+                                          uppercase
+                                          rounded
+                                          shadow-lg
+                                          hover:bg-white hover:text-primary-600
+                                          transition
+                                          duration-150
+                                          ease-in-out
+                                        "
+                                  @click="
+                                    assignReviewer({
+                                      action: button.action,
+                                      type: 'toSelf',
+                                    })
+                                  "
+                                >
+                                  {{ button ? button.name : "" }} Self
+                                </button>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -552,6 +597,7 @@ export default {
     let showOptions = ref(false);
     let reviewer = ref({ id: "", name: "", expertLevel: "", role: "" });
     let adminId = +localStorage.getItem("adminId");
+    let adminRole = localStorage.getItem("role");
     let modalData = ref({});
     let assign = ref({
       reviewerId: "",
@@ -567,11 +613,18 @@ export default {
       role.value = JSON.parse(localStorage.getItem("allAdminData")).role;
     };
 
-    const assignReviewer = (action) => {
-      assign.value = {
-        licenseId: modalData.value ? modalData.value.data.id : "",
-        reviewerId: assign.value.reviewerId,
-      };
+    const assignReviewer = (data) => {
+      if (data.type == "toSelf") {
+        assign.value = {
+          licenseId: modalData.value ? modalData.value.data.id : "",
+          reviewerId: adminId,
+        };
+      } else {
+        assign.value = {
+          licenseId: modalData.value ? modalData.value.data.id : "",
+          reviewerId: assign.value.reviewerId,
+        };
+      }
 
       isLoading.value = true;
       let smsData = {
@@ -592,7 +645,7 @@ export default {
       };
       store
         .dispatch("reviewer/assignReviewer", {
-          action: action,
+          action: data.action,
           data: assign.value,
         })
         .then((response) => {
@@ -707,7 +760,7 @@ export default {
             modalData.value.email = result.applicant
               ? result.applicant.emailAddress
               : "-----";
-            modalData.value.profile = result.profile; 
+            modalData.value.profile = result.profile;
             modalData.value.data = result;
             modalData.value.buttons =
               result && result.applicationStatus
@@ -740,6 +793,7 @@ export default {
       showOptions,
       reviewer,
       setInput,
+      adminRole,
       showModal,
       check,
       resultQuery,

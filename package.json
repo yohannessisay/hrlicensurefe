@@ -22,7 +22,7 @@
         "core-js": "^3.6.5",
         "ethiopic-calendar": "^2.0.0",
         "file-saver": "^2.0.5",
-        "html2canvas": "^1.0.0-rc.7",
+        "html2canvas": "^1.4.1",
         "idle-vue": "^2.0.5",
         "js-base64": "^3.7.2",
         "jspdf": "^2.3.1",

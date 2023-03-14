@@ -219,7 +219,10 @@
                                 <i class="fa fa-right-left fa-4x"></i>
                               </div>
                             </div>
-                            <div class="grow ml-6">
+                            <div
+                              class="grow ml-6"
+                              v-if="adminRole && adminRole != 'REV'"
+                            >
                               <h2 class="font-bold mb-1">Transfer To</h2>
 
                               <div class="flex items-center">
@@ -344,6 +347,12 @@
                                   </div>
                                 </div>
                               </label>
+                            </div>
+                            <div v-if="adminRole && adminRole == 'REV'">
+                              <h2 class="ml-4">
+                                Please Contact Your Team Leader Or Admin For
+                                Transfer
+                              </h2>
                             </div>
                           </div>
                         </div>
@@ -597,6 +606,7 @@ export default {
     let showOptions = ref(false);
     let reviewer = ref({ id: "", name: "", expertLevel: "", role: "" });
     let adminId = +localStorage.getItem("adminId");
+    let adminRole = localStorage.getItem("role");
     const licenseId = computed(() => props.modalDataId.id);
     let transfer = ref({
       reviewerId: "",
@@ -803,6 +813,7 @@ export default {
       isLoadingStart,
       licenseId,
       fullPage,
+      adminRole,
       modalData,
       evaluationData,
       transferReviewer,

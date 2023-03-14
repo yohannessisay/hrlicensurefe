@@ -543,7 +543,7 @@ export default {
         .then((res) => {
           if (res.data.status == "Success") {
             result = res.data.data;
-
+            modalDataGenerate.value.withExperiance = false;
             modalData.value.name =
               result.profile.name +
               " " +
@@ -580,6 +580,16 @@ export default {
 
             modalData.value.documents = result.documents;
             modalDataGenerate.value = result;
+            modalDataGenerate.value.withExperiance = false;
+            modalDataGenerate.value && modalDataGenerate.value.documents
+              ? modalDataGenerate.value.documents.forEach((element) => {
+                  element.documentTypeCode == "WESLFO"
+                    ? (console.log(element.documentTypeCode),
+                      (modalDataGenerate.value.withExperiance = true))
+                    : '';
+                })
+              : "";
+            console.log(modalDataGenerate.value);
             isLoading.value = false;
           }
         });
