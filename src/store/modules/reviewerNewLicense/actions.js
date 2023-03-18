@@ -30,20 +30,25 @@ export default {
 
   async getNewLicenseUnassigned(context, apiParameters) {
     let url = urlFacilitator(apiParameters);
-    console.log(apiParameters);
+
     const resp = await ApiService.get(url);
-    const unassignedApplications = resp.data.data.filter((unassigned) => {
-      return unassigned.transferFromId == null;
-    });
+    const unassignedApplications = resp.data
+      ? resp.data.data.rows.filter((unassigned) => {
+          return unassigned.licenseReviewer == null;
+        })
+      : [];
+
     return unassignedApplications;
   },
-  async getNewLicenseFromOtherRegion(context, statusId) {
-    const url = baseUrl + "/newLicenses/status/" + statusId;
+  async getNewLicenseFromOtherRegion(context, apiParameters) {
+    let url = urlFacilitator(apiParameters);
     const resp = await ApiService.get(url);
 
-    const transferdApplications = resp.data.data.filter((unassigned) => {
-      return unassigned.transferFromId != null;
-    });
+    const transferdApplications = resp.data
+      ? resp.data.data.rows.filter((unassigned) => {
+          return unassigned.licenseReviewer != null;
+        })
+      : [];
     return transferdApplications;
   },
 
@@ -206,8 +211,8 @@ export default {
     return { byYou: byYou, byOthers: licensed };
   },
 
-  async getNewLicenseReApply(context, adminStatus) {
-    const url = baseUrl + "/newlicenses/status/" + adminStatus[0];
+  async getNewLicenseReApply(context, apiParameters) {
+    let url = urlFacilitator(apiParameters);
     const resp = await ApiService.get(url);
     const reApply = resp.data.data;
     return reApply;

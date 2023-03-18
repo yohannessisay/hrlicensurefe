@@ -1,13 +1,12 @@
 module.exports = {
   theme: {
     fontFamily: {
-      sans: ["Atkinson-Hyperlegible"],
-      serif: ["Atkinson-Hyperlegible"],
-      mono: ["Atkinson-Hyperlegible"],
-      display: ["Atkinson-Hyperlegible"],
-      body: ["Atkinson-Hyperlegible"],
-      AtkinsonHyperlegible: ["Atkinson-Hyperlegible"],
-      AtkinsonHyperlegibleBold: ["Atkinson-Hyperlegible-Bold"],
+      sans: ["Dosis-Bold"],
+      serif: ["Dosis-Bold"],
+      mono: ["Dosis-Bold"],
+      display: ["Dosis-Bold"],
+      body: ["Dosis-Bold"],
+      DosisBold: ["Dosis-Bold"], 
     },
     screens: {
       sm: "400px",

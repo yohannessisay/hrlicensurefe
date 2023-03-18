@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col justify-center items-center m-tiny">
-    <h2 class="font-AtkinsonHyperlegibleBold -mb-1 tracking-wide">
+    <h2 class="font-DosisBold -mb-1 tracking-wide">
       {{ message }}
     </h2>
     <hr class="yellow-gradient border-none" />

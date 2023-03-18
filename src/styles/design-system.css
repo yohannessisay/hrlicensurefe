@@ -1,8 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+ 
 
 @layer utilities {
+
   .blue-with-light-blue-gradient {
     background-image: linear-gradient(to right, #285180, #285180);
   }
@@ -74,36 +76,13 @@
 }
 
 @layer base {
-  h1 {
-    @apply  text-3xl font-AtkinsonHyperlegibleBold;
-  }
 
-  h2 {
-    @apply text-primary-600 text-2xl font-AtkinsonHyperlegible;
-  }
-
-  h3 {
-    @apply  text-xl font-AtkinsonHyperlegible;
-  }
-
-  h4 {
-    @apply  text-lg font-AtkinsonHyperlegible;
-  }
-
-  h5,
-  p,
-  label,
-  a {
-    @apply  text-base font-AtkinsonHyperlegible;
-  }
-
-  h6 {
-    @apply  text-sm font-AtkinsonHyperlegible;
-  }
-
-  span {
-    @apply  text-lg font-AtkinsonHyperlegible;
-  }
+ h3{
+  font-size: 26px;
+ }
+ h4{
+  font-size: 22px
+ }
 
   [type="button"],
   [type="submit"],
