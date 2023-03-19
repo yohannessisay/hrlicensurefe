@@ -20,11 +20,13 @@
     aria-hidden="true"
   >
     <div
-      class="
-        modal-dialog modal-dialog-centered modal-xl
-        relative
-        w-auto
-        pointer-events-none
+      :class="
+        finalData &&
+        finalData.data &&
+        finalData.data.applicantType &&
+        finalData.data.applicantType.code == 'ETH'
+          ? 'modal-dialog modal-dialog-centered modal-xl relative w-auto pointer-events-none'
+          : 'modal-dialog modal-dialog-centered modal-xl  relative w-auto pointer-events-none'
       "
     >
       <div
@@ -53,7 +55,15 @@
           "
         ></div>
 
-        <div class="modal-body relative p-4">
+        <div
+          v-if="
+            finalData &&
+              finalData.data &&
+              finalData.data.applicantType &&
+              finalData.data.applicantType.code == 'ETH'
+          "
+          class="modal-body relative p-4"
+        >
           <!-- if professions are less than 3 -->
 
           <div class="vld-parent">
@@ -1110,6 +1120,138 @@
         </div>
 
         <div
+          v-if="
+            finalData &&
+              finalData.data &&
+              finalData.data.applicantType &&
+              (finalData.data.applicantType.code == 'ETHABRO' ||
+                finalData.data.applicantType.code == 'FOR')
+          "
+          class="p-8 m-8 "
+          id="printedDiv"
+        >
+          <h2 class="mt-8">ለ፡____________________________________</h2>
+          <p class=" mt-12 p-2 tracking-widest">
+            ስለ ውጭ ሀገር የጤና ባለሙያዎች ምዝገባ ጉዳይ በቀን
+            <span class="text-yellow-300">
+              {{
+                finalData && finalData.data && finalData.data.certifiedDate
+                  ? finalData.data.certifiedDate.slice(0, 10)
+                  : ""
+              }}
+            </span>
+            በቁጥር
+            <span class="text-yellow-300">
+              {{
+                finalData && finalData.data && finalData.data.newLicenseCode
+                  ? finalData.data.newLicenseCode
+                  : ""
+              }}
+            </span>
+            የተጻፈውን ደብዳቤ ይመለከታል፡፡
+          </p>
+          <p class="p-2 tracking-widest ">
+            በቀረበው ጥያቄ መሰረት የተጠቃሾቹ የትምህርት ማስረጃ ከተገመገመ በኋላ በስማቸው ትይዩ በተጠቀሰው ስያሜ ከ
+            <span class="text-yellow-300">
+              {{
+                finalData && finalData.data && finalData.data.certifiedDate
+                  ? finalData.data.certifiedDate.slice(0, 10)
+                  : ""
+              }} </span
+            >.ዓ.ም ጀምሮ ለ
+            <span class="text-yellow-300">
+              {{
+                finalData &&
+                finalData.data &&
+                finalData.data.licenseExpirationDate
+                  ? Number(finalData.data.licenseExpirationDate.slice(0, 4)) -
+                    Number(new Date().toISOString().slice(0, 4))
+                  : ""
+              }}
+            </span>
+            ዓመት የተመዘገቡ መሆኑንና ከ
+            <span class="text-yellow-300">
+              {{
+                finalData &&
+                finalData.data &&
+                finalData.data.licenseExpirationDate
+                  ? Number(finalData.data.licenseExpirationDate.slice(0, 4)) -
+                    Number(new Date().toISOString().slice(0, 4))
+                  : ""
+              }}
+            </span>
+            ዓመት በኋላ በሀገር ውስጥ ካሉ ፈቃዳቸውን ማደስ እንደሚገባ እየገለጽን ይህን ፈቃድ ሰጥተናቸዋል፡፡
+          </p>
+
+          <div class="grid justify-items-center mt-8">
+            <table class=" border text-center text-sm font-light ">
+              <thead class="border-b font-medium bg-primary-200 ">
+                <tr>
+                  <th scope="col" class="border-r px-6 py-4 ">
+                    #ተ.ቁ
+                  </th>
+                  <th
+                    scope="col"
+                    class="border-r px-6 py-4 dark:border-neutral-500"
+                  >
+                    የስም ዝርዝር
+                  </th>
+                  <th
+                    scope="col"
+                    class="border-r px-6 py-4 dark:border-neutral-500"
+                  >
+                    የሙያ ስያሜ
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  class="border-b dark:border-neutral-500"
+                  v-for="(educations, index) in finalData &&
+                  finalData.data &&
+                  finalData.data.educations
+                    ? finalData.data.educations
+                    : []"
+                  :key="educations.id"
+                >
+                  <td
+                    class="whitespace-nowrap border-r px-6 py-4 font-medium dark:border-neutral-500"
+                  >
+                    {{ (index += 1) }}
+                  </td>
+                  <td
+                    class="whitespace-nowrap border-r px-6 py-4 text-yellow-300"
+                  >
+                    {{
+                      finalData && finalData.data && finalData.data.profile
+                        ? finalData.data.profile.name +
+                          " " +
+                          finalData.data.profile.fatherName +
+                          " " +
+                          finalData.data.profile.grandFatherName
+                        : []
+                    }}
+                  </td>
+                  <td
+                    class="whitespace-nowrap border-r px-6 py-4 text-yellow-300"
+                  >
+                    {{
+                      educations && educations.professionType
+                        ? educations.professionType.name
+                        : ""
+                    }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="text-left mt-12"></div>
+          <h5>ግልባጭ</h5>
+          <h5>ለ፡ብቃትና ሰው ሀብት አስተዳደር ስራ አስፈጻሚ አዲስ አበባ</h5>
+          <h5 class="mt-8 text-right">//ከሰላምታ ጋር//</h5>
+        </div>
+
+        <div
           class="
             modal-footer
             flex flex-shrink-0 flex-wrap
@@ -1377,6 +1519,7 @@ import STATIC_CERTIFICATE_URL from "../../../../../sharedComponents/constants/me
 import { useToast } from "vue-toastification";
 import moment from "moment";
 import Loading from "vue3-loading-overlay";
+import html2canvas from "html2canvas";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 
 export default {
@@ -1384,7 +1527,7 @@ export default {
     moment: () => moment,
     AmharicFont: () => AmharicFont,
     toEthiopian: () => toEthiopian,
-    STATIC_CERTIFICATE_URL: () => STATIC_CERTIFICATE_URL
+    STATIC_CERTIFICATE_URL: () => STATIC_CERTIFICATE_URL,
   },
   props: ["modalData"],
   components: { Loading },
@@ -1431,7 +1574,7 @@ export default {
           )
         : props.modalData.newEducations
     );
-
+    let isForeignApplicant = ref(false);
     const updateLicenseGenerated = () => {
       finalData.value.data
         ? (finalData.value.data.isLicenseGenerated = true)
@@ -1439,17 +1582,17 @@ export default {
 
       let req = {
         action: null,
-        data: { ...finalData.value.data }
+        data: { ...finalData.value.data },
       };
 
       editApplication(req);
     };
 
-    const editApplication = req => {
+    const editApplication = (req) => {
       delete req.data.educations;
       store
         .dispatch("reviewer/editNewLicense", req)
-        .then(res => {
+        .then((res) => {
           isLoading.value = false;
           if (res.statusText == "Created") {
             showGenerateModal.value = false;
@@ -1463,9 +1606,9 @@ export default {
               recipients: [
                 req.data && req.data.applicant
                   ? "251" + req.data.applicant.phoneNumber
-                  : ""
+                  : "",
               ],
-              message: smsMessage ? smsMessage : ""
+              message: smsMessage ? smsMessage : "",
             };
 
             store
@@ -1476,11 +1619,11 @@ export default {
                   position: "bottom-center",
                   pauseOnFocusLoss: true,
                   pauseOnHover: true,
-                  icon: true
+                  icon: true,
                 });
-                setTimeout(() => {
-                  window.location.reload();
-                }, 3000);
+                // setTimeout(() => {
+                //   window.location.reload();
+                // }, 3000);
               })
               .catch(() => {
                 toast.error("Sms is not sent", {
@@ -1488,7 +1631,7 @@ export default {
                   position: "bottom-center",
                   pauseOnFocusLoss: true,
                   pauseOnHover: true,
-                  icon: true
+                  icon: true,
                 });
                 setTimeout(() => {
                   window.location.reload();
@@ -1501,11 +1644,11 @@ export default {
               position: "bottom-center",
               pauseOnFocusLoss: true,
               pauseOnHover: true,
-              icon: true
+              icon: true,
             });
           }
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
         });
     };
@@ -1522,31 +1665,56 @@ export default {
         staticUrl + "/" + applicationType + "/" + userId + "/" + applicationId;
       store
         .dispatch("reviewer/getQrCode", qrParam)
-        .then(res => {
+        .then((res) => {
           imageSrc.value = res.data.data;
         })
         .finally(() => {
           downloadPdf();
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
         });
     };
     const generateRetrival = () => {
       if (retrivalDate.value != "") {
         finalData.value.data.retrivalDate = retrivalDate.value;
-        generate();
+        finalData.value.data &&
+        finalData.value.data.applicantType &&
+        finalData.value.data.applicantType.code == "ETH"
+          ? generate()
+          : generateForeigner();
       } else {
         toast.error("Please select retrival date", {
           timeout: 5000,
           position: "bottom-center",
           pauseOnFocusLoss: true,
           pauseOnHover: true,
-          icon: true
+          icon: true,
         });
       }
     };
+
+    const generateForeigner = () => {
+      var data = document.getElementById("printedDiv");
+      html2canvas(data, { scale: 2 }).then((canvas) => {
+        const contentDataURL = canvas.toDataURL("image/png");
+        let pdf = new jsPDF("p", "mm", "a4");
+        var width = pdf.internal.pageSize.getWidth();
+        var height = (canvas.height * width) / canvas.width;
+        pdf.addImage(contentDataURL, "PNG", 0, 0, width, height);
+        window.open(pdf.output("bloburl"));
+      });
+    };
     const generate = () => {
+      if (
+        finalData.value.data &&
+        finalData.value.data.applicantType &&
+        finalData.value.data.applicantType.code != "ETH"
+      ) {
+        generateForeigner();
+        return;
+      }
+
       isLoading.value = true;
       certifiedUser.value = props.modalData.profile;
       certificateDetail.value = props.modalData.data;
@@ -1557,7 +1725,7 @@ export default {
       );
       certificateDetail.value.educations = certificateDetail.value.educations
         ? certificateDetail.value.educations.filter(
-            edu => edu.isDropped != true
+            (edu) => edu.isDropped != true
           )
         : {};
       applicationStatus.value = props.modalData.data.applicationStatus.code;
@@ -1727,8 +1895,7 @@ export default {
                 : certificateDetail.value.educations[i].otherProfessionType
                 ? `${
                     certificateDetail.value.educations[i].prefix
-                      ?  
-                        certificateDetail.value.educations[i].prefix.name  
+                      ? certificateDetail.value.educations[i].prefix.name
                       : ""
                   }   ${
                     certificateDetail.value.educations[i].otherProfessionType
@@ -1756,8 +1923,7 @@ export default {
                 : certificateDetail.value.educations[i].otherProfessionType
                 ? `${
                     certificateDetail.value.educations[i].prefix
-                      ?  
-                        certificateDetail.value.educations[i].prefix.name  
+                      ? certificateDetail.value.educations[i].prefix.name
                       : ""
                   }   ${
                     certificateDetail.value.educations[i].otherProfessionType
@@ -1785,8 +1951,7 @@ export default {
                 certificateDetail.value.educations[i].professionType.name
                   ? `${
                       certificateDetail.value.educations[i].prefix
-                        ?  
-                          certificateDetail.value.educations[i].prefix.name 
+                        ? certificateDetail.value.educations[i].prefix.name
                         : ""
                     }   ${
                       certificateDetail.value.educations[i].otherProfessionType
@@ -2004,11 +2169,11 @@ export default {
         : null;
       const doc = new jsPDF({
         orientation: "landscape",
-        filters: ["ASCIIHexEncode"]
+        filters: ["ASCIIHexEncode"],
       });
       const doc2 = new jsPDF({
         orientation: "landscape",
-        filters: ["ASCIIHexEncode"]
+        filters: ["ASCIIHexEncode"],
       });
       let defaultCode = "";
       let defaultBackground = "";
@@ -2093,9 +2258,9 @@ export default {
           doc.addImage(imageSrc.value, "JPG", 246, 14, 35, 35);
           if (userImage != null) {
             let path = {
-              path: userImage
+              path: userImage,
             };
-            store.dispatch("profile/converProfilePicture", path).then(res => {
+            store.dispatch("profile/converProfilePicture", path).then((res) => {
               doc.addImage(res.data.data, "JPG", 33, 20, 30, 30);
               doc.setFontSize(10);
               window.open(doc.output("bloburl"));
@@ -2196,9 +2361,9 @@ export default {
         doc2.addImage(imageSrc.value, "JPG", 246, 14, 35, 35);
         if (userImage !== null) {
           let path = {
-            path: userImage
+            path: userImage,
           };
-          store.dispatch("profile/converProfilePicture", path).then(res => {
+          store.dispatch("profile/converProfilePicture", path).then((res) => {
             doc.addImage(res.data.data, "JPG", 33, 20, 30, 30);
             doc2.addImage(res.data.data, "JPG", 33, 20, 30, 30);
             doc.setFontSize(10);
@@ -2233,6 +2398,7 @@ export default {
       isUserFound,
       myRegion,
       generate,
+      isForeignApplicant,
       fullPage,
       educations,
       showGenerateModal,
@@ -2241,11 +2407,12 @@ export default {
       showActionLoading,
       applicationStatus,
       isReprint,
+      finalData,
       retrivalDate,
       generateRetrival,
-      today
+      today,
     };
-  }
+  },
 };
 </script>
 <style scoped>

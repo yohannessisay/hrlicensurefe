@@ -99,7 +99,6 @@
                         ease-in-out
                         items-center
                       "
-                      @click="applyFilter()"
                     >
                       <svg
                         aria-hidden="true"
@@ -217,7 +216,7 @@
                     bg-primary-800
                   "
                 >
-                  <vue-table-lite
+                  <vue-table-lite 
                     :is-loading="toYouTable.isLoading"
                     :columns="toYouTable.columns"
                     :rows="toYouTable.rows"
@@ -227,7 +226,6 @@
                     @row-clicked="rowClicked"
                   ></vue-table-lite>
                   <edit-modal
-                    @refreshTable="refreshTable()"
                     v-if="showModal"
                     :modalDataId="modalDataId"
                     :reviewers="reviewers"
@@ -238,7 +236,6 @@
             </div>
           </div>
         </template>
-
         <template v-slot:to_others>
           <div class="container mx-auto px-4 sm:px-8">
             <div class="py-8">
@@ -424,7 +421,7 @@
                     bg-primary-800
                   "
                 >
-                  <vue-table-lite
+                  <vue-table-lite 
                     :is-loading="toOthersTable.isLoading"
                     :columns="toOthersTable.columns"
                     :rows="toOthersTable.rows"
@@ -435,9 +432,7 @@
                   ></vue-table-lite>
 
                   <edit-modal-others
-                    @refreshTable="refreshTableOthers()"
                     v-if="showModal"
-                    :reviewers="reviewers"
                     :modalDataIdOthers="modalDataIdOthers"
                   >
                   </edit-modal-others>
@@ -478,8 +473,9 @@ export default {
     const store = useStore();
     const showModal = ref(true);
     const adminId = +localStorage.getItem("adminId");
-    const adminRegion = JSON.parse(localStorage.getItem("allAdminData"))
-      .regionId;
+    const adminRegion = JSON.parse(
+      localStorage.getItem("allAdminData")
+    ).regionId;
     let modalDataId = ref({
       id: "",
       change: 0,
@@ -488,15 +484,14 @@ export default {
       id: "",
       change: 0,
     });
-    let adminRole = localStorage.getItem("role");
-    let allInfo = ref({});
+    let allInfo = ref({ });
     const reviewers = ref([]);
     const searchTerm = ref("");
     const searchTermOthers = ref("");
     let searchTermFromDate = ref("");
     let searchTermToDate = ref("");
     let searchTermFromDateOth = ref("");
-    let searchTermToDateOth = ref("");
+    let searchTermToDateOth = ref(""); 
     const toOthersTable = ref({});
     const toYouTable = ref({});
     let tableData = ref([]);
@@ -508,32 +503,15 @@ export default {
       isLoading: true,
     };
 
-    const applyFilter = () => {};
-    const refreshTableOthers = () => {
-      toOthersTable.value.rows = computed(() => []);
-      tableData.value = [];
-      toOthersTable.value.isLoading = true;
-
-      inReviewAssignedToOthers();
-      inReviewAssignedToYou();
-    };
-    const refreshTable = () => {
-      toYouTable.value.rows = computed(() => []);
-      toYouTableData.value = [];
-      toYouTable.value.isLoading = true;
-
-      inReviewAssignedToYou();
-      inReviewAssignedToOthers();
-    };
     const clearFilters = () => {
-      searchTerm.value = "";
+      searchTerm.value = ""; 
       searchTermFromDate.value = "";
-      searchTermToDate.value = "";
+      searchTermToDate.value = ""; 
     };
-    const clearFiltersOthers = () => {
-      searchTermOthers.value = "";
+    const clearFiltersOthers = () => { 
+      searchTermOthers.value = ""; 
       searchTermFromDateOth.value = "";
-      searchTermToDateOth.value = "";
+      searchTermToDateOth.value = ""; 
     };
     const inReviewAssignedToOthers = () => {
       applicationStatus(store, "IRV").then((res) => {
@@ -602,7 +580,7 @@ export default {
                   label: "",
                   field: "quick",
                   width: "10%",
-                  display: function(row) {
+                  display: function (row) {
                     return (
                       '<button data-bs-toggle="modal" data-bs-target="#staticBackdropOthers" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
                       row.id +
@@ -616,20 +594,20 @@ export default {
                   (x) =>
                     (x.ApplicantName
                       ? x.ApplicantName.toLowerCase().includes(
-                          searchTermOthers.value.toLowerCase()
+                        searchTermOthers.value.toLowerCase()
                         )
                       : "") &&
                     (searchTermFromDateOth.value != ""
                       ? x.Date
                         ? searchTermToDateOth.value.length > 0
                           ? moment(x.Date).isSameOrAfter(
-                              searchTermFromDateOth.value
+                            searchTermFromDateOth.value
                             ) &&
                             moment(x.Date).isSameOrBefore(
                               searchTermToDateOth.value
                             )
                           : moment(x.Date).isSameOrAfter(
-                              searchTermFromDateOth.value
+                            searchTermFromDateOth.value
                             )
                         : ""
                       : x.Date || x.Date == "" || x.Date == null) &&
@@ -637,13 +615,13 @@ export default {
                       ? x.Date
                         ? searchTermFromDateOth.value.length > 0
                           ? moment(x.Date).isSameOrBefore(
-                              searchTermToDateOth.value
+                            searchTermToDateOth.value
                             ) &&
                             moment(x.Date).isSameOrAfter(
                               searchTermFromDateOth.value
                             )
                           : moment(x.Date).isSameOrBefore(
-                              searchTermFromDateOth.value
+                            searchTermFromDateOth.value
                             )
                         : ""
                       : x.Date || x.Date == "" || x.Date == null)
@@ -659,16 +637,13 @@ export default {
       });
     };
 
-    const inReviewAssignedToYou = (apiParameters) => {
+    const inReviewAssignedToYou = () => {
       applicationStatus(store, "IRV").then((res) => {
         let statusId = res;
-        let adminStatus = { statusId: statusId, adminId: adminId };
+        let adminStatus = [statusId, adminId];
 
         store
-          .dispatch("reviewerNewLicense/getNewLicenseOnReview", {
-            adminStatus: adminStatus,
-            apiParameters: apiParameters,
-          })
+          .dispatch("reviewerNewLicense/getNewLicenseOnReview", adminStatus)
           .then((res) => {
             allInfo.value = res;
             JSON.parse(JSON.stringify(allInfo.value)).forEach((element) => {
@@ -722,7 +697,7 @@ export default {
                   label: "Action",
                   field: "quick",
                   width: "10%",
-                  display: function(row) {
+                  display: function (row) {
                     return (
                       '<button data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
                       row.id +
@@ -731,7 +706,7 @@ export default {
                   },
                 },
               ],
-
+              
               rows: computed(() => {
                 return toYouTableData.value.filter(
                   (x) =>
@@ -783,7 +758,7 @@ export default {
     const tableLoadingFinish = () => {
       let elements = document.getElementsByClassName("edit-btn");
 
-      Array.prototype.forEach.call(elements, function(element) {
+      Array.prototype.forEach.call(elements, function (element) {
         if (element.classList.contains("edit-btn")) {
           element.addEventListener("click", rowClicked());
         }
@@ -792,7 +767,7 @@ export default {
     };
     const tableLoadingFinishOthers = () => {
       let elementOthers = document.getElementsByClassName("edit-btn-others");
-      Array.prototype.forEach.call(elementOthers, function(element) {
+      Array.prototype.forEach.call(elementOthers, function (element) {
         if (element.classList.contains("edit-btn-others")) {
           element.addEventListener("click", rowClickedOthers());
         }
@@ -801,8 +776,10 @@ export default {
     };
     const rowClicked = (row) => {
       if (row != undefined) {
-        row = JSON.parse(JSON.stringify(row));
+     
 
+        row = JSON.parse(JSON.stringify(row));
+     
         modalDataId.value.id = row.data ? row.data.id : "-----";
         modalDataId.value.change++;
       }
@@ -815,9 +792,9 @@ export default {
       }
     };
     onMounted(() => {
-      inReviewAssignedToYou([{ page: 0},{size: 10 }]);
-      adminRole && adminRole != "REV" ? inReviewAssignedToOthers() : "";
-      store.dispatch("reviewer/getAdminsByRegion", adminRegion).then((res) => {
+      inReviewAssignedToYou();
+      inReviewAssignedToOthers();
+      store.dispatch("reviewer/getAdminsByRegion",adminRegion).then((res) => {
         reviewers.value = res.data.data.filter((e) => {
           return e.role.code !== "UM";
         });
@@ -836,7 +813,6 @@ export default {
       searchTermFromDateOth,
       searchTermToDateOth,
       toYouTable,
-      adminRole,
       showModal,
       reviewers,
       tableLoadingFinish,
@@ -844,9 +820,6 @@ export default {
       tableLoadingFinishOthers,
       rowClicked,
       rowClickedOthers,
-      refreshTable,
-      applyFilter,
-      refreshTableOthers,
       modalDataId,
       modalDataIdOthers,
     };

@@ -35,7 +35,9 @@
           <div class="container mx-auto px-4 sm:px-8">
             <div class="py-8">
               <div>
-             
+                <h2 class="text-2xl font-semibold leading-tight">
+                  Unassigned Applications
+                </h2>
 
                 <input
                   v-if="adminLevel.code != 'REG'"
@@ -63,13 +65,13 @@
                   value=""
                   id="flexCheckDefault"
                 />
-                <h3
+                <h4
                   v-if="adminLevel.code != 'REG'"
-                  class="form-check-label include_label inline-block text-gray-800 mt-1"
+                  class="form-check-label inline-block text-gray-800 mt-1"
                   for="flexCheckDefault"
                 >
                   Include From Other Regions
-                </h3>
+                </h4>
               </div>
               <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
                 <div class="mb-3 xl:w-full">
@@ -128,7 +130,6 @@
                        
                         items-center
                       "
-                      @click="searchApplication()"
                     >
                       <svg
                         aria-hidden="true"
@@ -211,9 +212,8 @@
                   <div class="ml-8 mt-4">
                     <button
                       type="button"
-                      
                       class="
-                      clear_filter
+                        inline-block
                         px-6
                         py-2
                         mt-2
@@ -255,7 +255,6 @@
                     :sortable="unassignedTable.sortable"
                     @is-finished="tableLoadingFinish"
                     @row-clicked="rowClicked"
-                    @do-search="doSearchUnasssigned"
                   ></vue-table-lite>
                   <edit-modal
                     v-if="showModal"
@@ -272,7 +271,9 @@
           <div class="container mx-auto px-4 sm:px-8">
             <div class="py-8">
               <div>
-               
+                <h2 class="text-2xl font-semibold leading-tight">
+                  Resubmitted Applications
+                </h2>
 
                 <input
                   v-if="adminLevel.code != 'REG'"
@@ -352,9 +353,7 @@
                       v-model="searchTermOthers"
                     />
                     <button
-                  
                       class="
-                     
                         inline-block
                         px-6
                         py-2
@@ -372,7 +371,6 @@
                         ease-in-out
                         items-center
                       "
-                      @click="searchApplicationResub()"
                     >
                       <svg
                         aria-hidden="true"
@@ -456,7 +454,6 @@
                     <button
                       type="button"
                       class="
-                      clear_filter
                         inline-block
                         px-6
                         py-2
@@ -501,7 +498,6 @@
                     :sortable="reSubmittedTable.sortable"
                     @is-finished="tableLoadingFinish"
                     @row-clicked="rowClickedResub"
-                    @do-search="doSearchUnasssignedResub"
                   ></vue-table-lite>
                   <edit-modal-resubmitted
                     v-if="showModalResubmitted"
@@ -551,14 +547,17 @@ export default {
     const searchTerm = ref("");
     const searchTermOthers = ref("");
     let searchTermFromDate = ref("");
-    let searchTermToDate = ref(new Date().toISOString().slice(0, 10));
+    let searchTermToDate = ref("");
     let searchTermFromDateResub = ref("");
     let searchTermToDateResub = ref("");
     let searchedReviewer = ref("");
-    const adminLevel = JSON.parse(localStorage.getItem("allAdminData"))
-      .expertLevel;
-    const adminRegion = JSON.parse(localStorage.getItem("allAdminData"))
-      .regionId;
+    const adminId = +localStorage.getItem("adminId");
+    const adminLevel = JSON.parse(
+      localStorage.getItem("allAdminData")
+    ).expertLevel;
+    const adminRegion = JSON.parse(
+      localStorage.getItem("allAdminData")
+    ).regionId;
     let modalDataId = ref({
       id: "",
       change: 0,
@@ -586,36 +585,19 @@ export default {
       searchTerm.value = "";
       searchTermFromDate.value = "";
       searchTermToDate.value = "";
-      unassignedTable.value.isLoading = true;
-      unassignedTable.value.rows = [];
-      tableData.value = [];
-      unassigned([
-        { key: "page", value: 0 },
-        { key: "size", value: 10 },
-      ]);
     };
     const clearFiltersResub = () => {
       searchTermOthers.value = "";
       searchTermFromDateResub.value = "";
       searchTermToDateResub.value = "";
-      reSubmittedTable.value.isLoading = true;
-      reSubmittedTable.value.rows = [];
-      reTableData.value = [];
-      reSubmitted([
-        { key: "page", value: 0 },
-        { key: "size", value: 10 },
-      ]);
     };
-    const unassigned = (apiParameters) => {
+    const unassigned = () => {
       applicationStatus(store, "SUB").then((res) => {
         modalDataId.value.apStatusUnassigned = res;
         let statusId = res;
 
         store
-          .dispatch("reviewerNewLicense/getNewLicenseUnassigned", [
-            { status: statusId },
-            { params: apiParameters },
-          ])
+          .dispatch("reviewerNewLicense/getNewLicenseUnassigned", statusId)
           .then((res) => {
             allInfo.value = res;
             if (allInfo.value) {
@@ -639,7 +621,6 @@ export default {
                 });
               });
             }
-
             tableDataTemp.value = tableData.value;
             unassignedTable.value = {
               columns: [
@@ -672,7 +653,7 @@ export default {
                   label: "Action",
                   field: "quick",
                   width: "10%",
-                  display: function(row) {
+                  display: function (row) {
                     return (
                       '<button data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
                       row.id +
@@ -681,33 +662,65 @@ export default {
                   },
                 },
               ],
-              rows: tableData.value,
+              rows: computed(() => {
+                return tableData.value.filter(
+                  (x) =>
+                    (x.ApplicantName
+                      ? x.ApplicantName.toLowerCase().includes(
+                          searchTerm.value.toLowerCase()
+                        )
+                      : "") &&
+                    (searchTermFromDate.value != ""
+                      ? x.Date
+                        ? searchTermToDate.value.length > 0
+                          ? moment(x.Date).isSameOrAfter(
+                              searchTermFromDate.value
+                            ) &&
+                            moment(x.Date).isSameOrBefore(
+                              searchTermToDate.value
+                            )
+                          : moment(x.Date).isSameOrAfter(
+                              searchTermFromDate.value
+                            )
+                        : ""
+                      : x.Date || x.Date == "" || x.Date == null) &&
+                    (searchTermToDate.value != ""
+                      ? x.Date
+                        ? searchTermFromDate.value.length > 0
+                          ? moment(x.Date).isSameOrBefore(
+                              searchTermToDate.value
+                            ) &&
+                            moment(x.Date).isSameOrAfter(
+                              searchTermFromDate.value
+                            )
+                          : moment(x.Date).isSameOrBefore(
+                              searchTermToDate.value
+                            )
+                        : ""
+                      : x.Date || x.Date == "" || x.Date == null)
+                );
+              }),
               totalRecordCount: tableData.value.length,
               sortable: {
                 order: "id",
                 sort: "asc",
               },
             };
-            unassignedTable.value.isLoading = false;
           });
       });
     };
 
     const includeFromOthers = () => {
       if (include.value === true) {
-        let apiParameters = [
-          { key: "page", value: 0 },
-          { key: "size", value: 10 },
-        ];
         unassignedTable.value.isLoading = true;
         applicationStatus(store, "SUB").then((res) => {
           modalDataId.value.apStatusUnassigned = res;
           let statusId = res;
           store
-            .dispatch("reviewerNewLicense/getNewLicenseFromOtherRegion", [
-              { status: statusId },
-              { params: apiParameters },
-            ])
+            .dispatch(
+              "reviewerNewLicense/getNewLicenseFromOtherRegion",
+              statusId
+            )
             .then((res) => {
               allInfo.value = res;
 
@@ -763,7 +776,7 @@ export default {
                     label: "Actions",
                     field: "quick",
                     width: "10%",
-                    display: function(row) {
+                    display: function (row) {
                       return (
                         '<button  data-set="' +
                         row +
@@ -774,7 +787,44 @@ export default {
                     },
                   },
                 ],
-                rows: tableData.value,
+                rows: computed(() => {
+                  return tableData.value.filter(
+                    (x) =>
+                      (x.ApplicantName
+                        ? x.ApplicantName.toLowerCase().includes(
+                            searchTerm.value.toLowerCase()
+                          )
+                        : "") &&
+                      (searchTermFromDate.value != ""
+                        ? x.Date
+                          ? searchTermToDate.value.length > 0
+                            ? moment(x.Date).isSameOrAfter(
+                                searchTermFromDate.value
+                              ) &&
+                              moment(x.Date).isSameOrBefore(
+                                searchTermToDate.value
+                              )
+                            : moment(x.Date).isSameOrAfter(
+                                searchTermFromDate.value
+                              )
+                          : ""
+                        : x.Date || x.Date == "" || x.Date == null) &&
+                      (searchTermToDate.value != ""
+                        ? x.Date
+                          ? searchTermFromDate.value.length > 0
+                            ? moment(x.Date).isSameOrBefore(
+                                searchTermToDate.value
+                              ) &&
+                              moment(x.Date).isSameOrAfter(
+                                searchTermFromDate.value
+                              )
+                            : moment(x.Date).isSameOrBefore(
+                                searchTermToDate.value
+                              )
+                          : ""
+                        : x.Date || x.Date == "" || x.Date == null)
+                  );
+                }),
                 totalRecordCount: tableData.value.length,
                 sortable: {
                   order: "id",
@@ -785,26 +835,47 @@ export default {
         });
       }
       if (include.value === false) {
-        unassignedTable.value.rows = tableDataTemp.value;
+        unassignedTable.value.rows = computed(() => {
+          return tableDataTemp.value.filter(
+            (x) =>
+              (x.ApplicantName
+                ? x.ApplicantName.toLowerCase().includes(
+                    searchTerm.value.toLowerCase()
+                  )
+                : "") &&
+              (searchTermFromDate.value != ""
+                ? x.Date
+                  ? searchTermToDate.value.length > 0
+                    ? moment(x.Date).isSameOrAfter(searchTermFromDate.value) &&
+                      moment(x.Date).isSameOrBefore(searchTermToDate.value)
+                    : moment(x.Date).isSameOrAfter(searchTermFromDate.value)
+                  : ""
+                : x.Date || x.Date == "" || x.Date == null) &&
+              (searchTermToDate.value != ""
+                ? x.Date
+                  ? searchTermFromDate.value.length > 0
+                    ? moment(x.Date).isSameOrBefore(searchTermToDate.value) &&
+                      moment(x.Date).isSameOrAfter(searchTermFromDate.value)
+                    : moment(x.Date).isSameOrBefore(searchTermToDate.value)
+                  : ""
+                : x.Date || x.Date == "" || x.Date == null)
+          );
+        });
         unassignedTable.value.totalRecordCount = tableDataTemp.value.length;
       }
     };
 
     const includeFromOthersResub = () => {
       if (includeResub.value === true) {
-        let apiParameters = [
-          { key: "page", value: 0 },
-          { key: "size", value: 10 },
-        ];
         reSubmittedTable.value.isLoading = true;
         applicationStatus(store, "UPD").then((res) => {
           modalDataId.value.apStatusUnassigned = res;
           let statusId = res;
           store
-            .dispatch("reviewerNewLicense/getNewLicenseFromOtherRegion", [
-              { status: statusId },
-              { params: apiParameters },
-            ])
+            .dispatch(
+              "reviewerNewLicense/getNewLicenseFromOtherRegion",
+              statusId
+            )
             .then((res) => {
               allInfo.value = res;
 
@@ -860,7 +931,7 @@ export default {
                     label: "Actions",
                     field: "quick",
                     width: "10%",
-                    display: function(row) {
+                    display: function (row) {
                       return (
                         '<button  data-set="' +
                         row +
@@ -958,17 +1029,15 @@ export default {
       }
     };
 
-    const reSubmitted = (apiParameters) => {
+    const reSubmitted = () => {
       applicationStatus(store, "UPD").then((res) => {
         let statusId = res;
+        const adminStatus = [statusId, adminId];
         modalDataId.value.apStatusResub = statusId;
         store
-          .dispatch("reviewerNewLicense/getNewLicenseReApply", [
-            { status: statusId },
-            { params: apiParameters },
-          ])
+          .dispatch("reviewerNewLicense/getNewLicenseReApply", adminStatus)
           .then((res) => {
-            allInfo.value = res.rows;
+            allInfo.value = res;
 
             JSON.parse(JSON.stringify(allInfo.value)).forEach((element) => {
               reTableData.value.push({
@@ -1019,7 +1088,7 @@ export default {
                   label: "Actions",
                   field: "quick",
                   width: "10%",
-                  display: function(row) {
+                  display: function (row) {
                     return (
                       '<button  data-set="' +
                       row +
@@ -1030,7 +1099,44 @@ export default {
                   },
                 },
               ],
-              rows: reTableData.value,
+              rows: computed(() => {
+                return reTableData.value.filter(
+                  (x) =>
+                    (x.ApplicantName
+                      ? x.ApplicantName.toLowerCase().includes(
+                          searchTermOthers.value.toLowerCase()
+                        )
+                      : "") &&
+                    (searchTermFromDateResub.value != ""
+                      ? x.Date
+                        ? searchTermToDateResub.value.length > 0
+                          ? moment(x.Date).isSameOrAfter(
+                              searchTermFromDateResub.value
+                            ) &&
+                            moment(x.Date).isSameOrBefore(
+                              searchTermToDateResub.value
+                            )
+                          : moment(x.Date).isSameOrAfter(
+                              searchTermFromDateResub.value
+                            )
+                        : ""
+                      : x.Date || x.Date == "" || x.Date == null) &&
+                    (searchTermToDateResub.value != ""
+                      ? x.Date
+                        ? searchTermFromDateResub.value.length > 0
+                          ? moment(x.Date).isSameOrBefore(
+                              searchTermToDateResub.value
+                            ) &&
+                            moment(x.Date).isSameOrAfter(
+                              searchTermFromDateResub.value
+                            )
+                          : moment(x.Date).isSameOrBefore(
+                              searchTermToDateResub.value
+                            )
+                        : ""
+                      : x.Date || x.Date == "" || x.Date == null)
+                );
+              }),
               totalRecordCount: reTableData.value.length,
               sortable: {
                 order: "id",
@@ -1043,18 +1149,19 @@ export default {
 
     const tableLoadingFinish = () => {
       let elements = document.getElementsByClassName("edit-btn");
-      Array.prototype.forEach.call(elements, function(element) {
+      Array.prototype.forEach.call(elements, function (element) {
         if (element.classList.contains("edit-btn")) {
           element.addEventListener("click", rowClicked());
         }
       });
+      unassignedTable.value.isLoading = false;
     };
 
     const tableLoadingFinishResub = () => {
       let elementsResub = document.getElementsByClassName(
         "edit-btn-resubmitted"
       );
-      Array.prototype.forEach.call(elementsResub, function(element) {
+      Array.prototype.forEach.call(elementsResub, function (element) {
         if (element.classList.contains("edit-btn-resubmitted")) {
           element.addEventListener("click", rowClickedResub());
         }
@@ -1076,93 +1183,10 @@ export default {
         modalDataIdResub.value.id = row.data.id ? row.data.id : "";
       }
     };
-    const searchApplication = () => {
-      unassignedTable.value.isLoading = true;
-      unassignedTable.value.rows = [];
-      tableData.value = [];
-      unassigned([
-        { key: "page", value: 0 },
-        { key: "size", value: 10 },
-        { key: "value", value: searchTerm.value },
-        { key: "fromDate", value: searchTermFromDate.value },
-        { key: "toDate", value: searchTermToDate.value },
-      ]);
-    };
-    const searchApplicationResub = () => {
-      reSubmittedTable.value.isLoading = true;
-      reSubmittedTable.value.rows = [];
-      reTableData.value = [];
-      reSubmitted([
-        { key: "page", value: 0 },
-        { key: "size", value: 10 },
-        { key: "value", value: searchTermOthers.value },
-        { key: "fromDate", value: searchTermFromDateResub.value },
-        { key: "toDate", value: searchTermToDateResub.value },
-      ]);
-    };
-    const doSearchUnasssigned = (offset, limit, order, sort) => {
-      unassignedTable.value.isLoading = true;
 
-      setTimeout(() => {
-        unassignedTable.value.isReSearch = offset == undefined ? true : false;
-        offset = offset / 10 + 1;
-        if (sort == "asc") {
-          unassigned([
-            { key: "page", value: 0 },
-            { key: "size", value: 10 },
-            { key: "value", value: searchTerm.value },
-            { key: "fromDate", value: searchTermFromDate.value },
-            { key: "toDate", value: searchTermToDate.value },
-          ]);
-        } else {
-          unassigned([
-            { key: "page", value: 0 },
-            { key: "size", value: 10 },
-            { key: "value", value: searchTerm.value },
-            { key: "fromDate", value: searchTermFromDate.value },
-            { key: "toDate", value: searchTermToDate.value },
-          ]);
-        }
-        unassignedTable.value.sortable.order = order;
-        unassignedTable.value.sortable.sort = sort;
-      }, 600);
-    };
-    const doSearchUnasssignedResub = (offset, limit, order, sort) => {
-      unassignedTable.value.isLoading = true;
-
-      setTimeout(() => {
-        unassignedTable.value.isReSearch = offset == undefined ? true : false;
-        offset = offset / 10 + 1;
-        if (sort == "asc") {
-          unassigned([
-            { key: "page", value: 0 },
-            { key: "size", value: 10 },
-            { key: "value", value: searchTerm.value },
-            { key: "fromDate", value: searchTermFromDate.value },
-            { key: "toDate", value: searchTermToDate.value },
-          ]);
-        } else {
-          unassigned([
-            { key: "page", value: 0 },
-            { key: "size", value: 10 },
-            { key: "value", value: searchTerm.value },
-            { key: "fromDate", value: searchTermFromDate.value },
-            { key: "toDate", value: searchTermToDate.value },
-          ]);
-        }
-        unassignedTable.value.sortable.order = order;
-        unassignedTable.value.sortable.sort = sort;
-      }, 600);
-    };
     onMounted(() => {
-      unassigned([
-        { key: "page", value: 0 },
-        { key: "size", value: 10 },
-      ]);
-      reSubmitted([
-        { key: "page", value: 0 },
-        { key: "size", value: 10 },
-      ]);
+      unassigned();
+      reSubmitted();
       store.dispatch("reviewer/getAdminsByRegion", adminRegion).then((res) => {
         reviewers.value = res.data.data.filter((e) => {
           return e.role.code !== "UM";
@@ -1180,10 +1204,6 @@ export default {
       include,
       includeResub,
       clearFilters,
-      doSearchUnasssigned,
-      searchApplicationResub,
-      doSearchUnasssignedResub,
-      searchApplication,
       clearFiltersResub,
       searchTermFromDate,
       searchTermToDate,
