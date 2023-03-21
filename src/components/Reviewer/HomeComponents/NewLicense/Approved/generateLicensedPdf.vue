@@ -26,7 +26,7 @@
         finalData.data.applicantType &&
         finalData.data.applicantType.code == 'ETH'
           ? 'modal-dialog modal-dialog-centered modal-xl relative w-auto pointer-events-none'
-          : 'modal-dialog modal-dialog-centered modal-xl  relative w-auto pointer-events-none'
+          : 'modal-dialog modal-dialog-centered modal-lg  relative w-auto pointer-events-none'
       "
     >
       <div
@@ -1118,19 +1118,23 @@
           </div>
           <!-- End of professions that are greater than 3 part-->
         </div>
-
+        <!-- if applicant is foreigner -->
         <div
           v-if="
             finalData &&
               finalData.data &&
               finalData.data.applicantType &&
+              finalData.printType != 'externship' &&
+              finalData.printType != 'temporary' &&
               (finalData.data.applicantType.code == 'ETHABRO' ||
                 finalData.data.applicantType.code == 'FOR')
           "
           class="p-8 m-8 "
           id="printedDiv"
         >
-          <h2 class="mt-8">ለ፡____________________________________</h2>
+          <h2 class="mt-8" contenteditable="true">
+            ለ፡____________________________________
+          </h2>
           <p class=" mt-12 p-2 tracking-widest">
             ስለ ውጭ ሀገር የጤና ባለሙያዎች ምዝገባ ጉዳይ በቀን
             <span class="text-yellow-300">
@@ -1250,7 +1254,246 @@
           <h5>ለ፡ብቃትና ሰው ሀብት አስተዳደር ስራ አስፈጻሚ አዲስ አበባ</h5>
           <h5 class="mt-8 text-right">//ከሰላምታ ጋር//</h5>
         </div>
+        <!-- end of applicant as foreigner -->
 
+        <!-- if question being asked is externship -->
+        <div
+          v-if="
+            finalData &&
+              finalData.printType &&
+              finalData.printType != 'temporary' &&
+              finalData.printType == 'externship'
+          "
+          class="p-8 m-8 "
+          id="printedDiv"
+        >
+          <h2 contenteditable="true">ለ፡_________________________</h2>
+          <p>አዲስ አበባ</p>
+
+          <p class="p-4 mt-8">
+            <span class="ml-4">ከዚህ</span> በታች
+            <span contenteditable="true">ስሟ/ሙ</span> በሰንጠረዥ የተመለከቱት ባለሙያ በ
+            <span contenteditable="true" class="text-yellow-300 font-bold">
+              __________________
+            </span>
+            ከሚገኘው
+            <span class="text-yellow-300 font-bold">{{
+              finalData.data && finalData.data.educations
+                ? finalData.data.educations[0].institution.name
+                : ""
+            }}</span>
+            የህክምና ትምህርቷን
+            <span contenteditable="true" class="text-yellow-300 font-bold"
+              >ስትከታተል/ሲከታተል ቆይታ/ቶ</span
+            >
+            ኤክስተርንሺፕ ሀገር ውስጥ ለመስራት በቀን ባቀረቡት ማመልከቻ ጠይቀዋል፡፡ በዚህም መሠረት ጉዳያቸው በ
+            <span contenteditable="true" class="text-yellow-300 font-bold"
+              >_____________</span
+            >
+            ቀርቦ ከታየ ከተገመገመ በኃላ To Work externship as a
+            <span contenteditable="true" class="text-yellow-300 font-bold"
+              >_____________</span
+            >በሚል ፀድቆቸው ተመዝገበዋል፡፡ ስለዚህም ልምምዱን ከ
+            <span contenteditable="true" class="text-yellow-300 font-bold"
+              >___/___/___</span
+            >
+            ጀምሮ ለ
+            <span contenteditable="true" class="text-yellow-300 font-bold"
+              >_____________</span
+            >እንዲከታተሉ የተመደቡ መሆኑን እየገለጽን፤ ሆስፒታሉ በአንድ አመት መጨረሻ አስፈላጊውን ሁሉ በመፈጸም
+            የባለሙያዋን ውጤቱን እንድታሳውቁን እንጠይቃለን፡፡
+          </p>
+
+          <div class="grid justify-items-center mt-8">
+            <table class=" border text-center text-sm font-light ">
+              <thead class="border-b font-medium bg-primary-200 ">
+                <tr>
+                  <th scope="col" class="border-r px-6 py-4 ">
+                    #ተ.ቁ
+                  </th>
+                  <th
+                    scope="col"
+                    class="border-r px-6 py-4 dark:border-neutral-500"
+                  >
+                    የስም ዝርዝር
+                  </th>
+                  <th
+                    scope="col"
+                    class="border-r px-6 py-4 dark:border-neutral-500"
+                  >
+                    የሙያ ስያሜ
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  class="border-b dark:border-neutral-500"
+                  v-for="(educations, index) in finalData &&
+                  finalData.data &&
+                  finalData.data.educations
+                    ? finalData.data.educations
+                    : []"
+                  :key="educations.id"
+                >
+                  <td
+                    class="whitespace-nowrap border-r px-6 py-4 font-medium dark:border-neutral-500"
+                  >
+                    {{ (index += 1) }}
+                  </td>
+                  <td
+                    class="whitespace-nowrap border-r px-6 py-4 text-yellow-300"
+                  >
+                    {{
+                      finalData && finalData.data && finalData.data.profile
+                        ? finalData.data.profile.name +
+                          " " +
+                          finalData.data.profile.fatherName +
+                          " " +
+                          finalData.data.profile.grandFatherName
+                        : []
+                    }}
+                  </td>
+                  <td
+                    class="whitespace-nowrap border-r px-6 py-4 text-yellow-300"
+                  >
+                    {{
+                      educations && educations.professionType
+                        ? educations.professionType.name
+                        : ""
+                    }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="text-left mt-12"></div>
+
+          <h5 class="mt-8 text-right">//ከሰላምታ ጋር//</h5>
+        </div>
+        <!-- end of question being asked is externship-->
+
+        <!-- temp license -->
+        <div
+          v-if="
+            finalData &&
+              finalData.printType &&
+              finalData.printType == 'temporary' &&
+              finalData.printType != 'externship'
+          "
+          class="p-8 m-8 "
+          id="printedDiv"
+        >
+          <h2 contenteditable="true">ለ__________________________</h2>
+          <div class="text-center mb-8">
+            <h2 class="mt-8">ስለ ውጭ ሃገር የጤና ባለሙያዎች ምዝገባ ጉዳይ</h2>
+          </div>
+          በቀን
+          <span class="text-yellow-300">
+            {{
+              finalData && finalData.data && finalData.data.certifiedDate
+                ? finalData.data.certifiedDate.slice(0, 10)
+                : ""
+            }}
+          </span>
+          በቁጥር
+          <span class="text-yellow-300" contenteditable="true">
+            ___________________
+          </span>
+          የተጻፈውን ደብዳቤ ይመለከታል። በቀረበው ጥያቄ መሰረት የተጠቃሹ የትምህርት ማስረጃ ከተገመገመ በሁዋላ በስማችው
+          ትይዩ በተጠቀሰው ስያሜ
+          <p>
+            ከ <span contenteditable="true">___/___/___</span> ዓ.ም ጀምሮ ለ
+            <span class="text-yellow-300">
+              {{
+                finalData &&
+                finalData.data &&
+                finalData.data.licenseExpirationDate
+                  ? Number(finalData.data.licenseExpirationDate.slice(0, 4)) -
+                    Number(new Date().toISOString().slice(0, 4))
+                  : ""
+              }}</span
+            >
+            የተመዘገቡ መሆኑን እና ከ
+            <span class="text-yellow-300">
+              {{
+                finalData &&
+                finalData.data &&
+                finalData.data.licenseExpirationDate
+                  ? Number(finalData.data.licenseExpirationDate.slice(0, 4)) -
+                    Number(new Date().toISOString().slice(0, 4))
+                  : ""
+              }}</span
+            >
+            በሁዋላ በሃገር ውስጥ ካሉ ፈቃዳቸው ማደስ እንደሚገባ እየገለጽን ይህን ፈቃድ ሰጥተናችዋል።
+          </p>
+
+          <div class="grid justify-items-center mt-8">
+            <table class=" border text-center text-sm font-light ">
+              <thead class="border-b font-medium bg-primary-200 ">
+                <tr>
+                  <th scope="col" class="border-r px-6 py-4 ">
+                    #ተ.ቁ
+                  </th>
+                  <th
+                    scope="col"
+                    class="border-r px-6 py-4 dark:border-neutral-500"
+                  >
+                    የስም ዝርዝር
+                  </th>
+                  <th
+                    scope="col"
+                    class="border-r px-6 py-4 dark:border-neutral-500"
+                  >
+                    የሙያ ስያሜ
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  class="border-b dark:border-neutral-500"
+                  v-for="(educations, index) in finalData &&
+                  finalData.data &&
+                  finalData.data.educations
+                    ? finalData.data.educations
+                    : []"
+                  :key="educations.id"
+                >
+                  <td
+                    class="whitespace-nowrap border-r px-6 py-4 font-medium dark:border-neutral-500"
+                  >
+                    {{ (index += 1) }}
+                  </td>
+                  <td
+                    class="whitespace-nowrap border-r px-6 py-4 text-yellow-300"
+                  >
+                    {{
+                      finalData && finalData.data && finalData.data.profile
+                        ? finalData.data.profile.name +
+                          " " +
+                          finalData.data.profile.fatherName +
+                          " " +
+                          finalData.data.profile.grandFatherName
+                        : []
+                    }}
+                  </td>
+                  <td
+                    class="whitespace-nowrap border-r px-6 py-4 text-yellow-300"
+                  >
+                    {{
+                      educations && educations.professionType
+                        ? educations.professionType.name
+                        : ""
+                    }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="text-left mt-12"></div>
+
+          <h5 class="mt-8 text-right">//ከሰላምታ ጋር//</h5>
+        </div>
+        <!-- end of temp license -->
         <div
           class="
             modal-footer

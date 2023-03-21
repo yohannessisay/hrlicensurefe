@@ -56,7 +56,7 @@
  }
 
 
- .tabs_wrapper_label {
+ .tabs_wrapper_label,.dashboard_card_title {
      font-family: 'Laila-Bold' !important;
      font-size: 18px !important;
  }

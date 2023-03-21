@@ -507,6 +507,42 @@
                     </div>
                   </div>
                 </div>
+                <div
+                  class="
+            modal-footer
+            flex flex-shrink-0 flex-wrap
+            items-center
+            justify-end
+            border-t border-grey-100
+            rounded-b-md
+          "
+                >
+                  <button
+                    type="button"
+                    class="
+              inline-block
+             
+              mt-4
+              text-white
+              bg-primary-600
+              font-semibold
+              text-xs
+              leading-tight
+              uppercase
+              rounded
+              shadow-lg
+              hover:text-primary-600 hover:shadow-lg
+             
+              active:bg-purple-800 active:shadow-lg
+              transition
+              duration-150
+              ease-in-out
+            "
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                </div>
               </section>
             </div>
           </div>

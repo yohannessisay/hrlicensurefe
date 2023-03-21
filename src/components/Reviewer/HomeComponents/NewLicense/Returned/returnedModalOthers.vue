@@ -299,6 +299,7 @@
                                 class="
                                   border-2
                                   p-2
+                                  mr-2
                                   rounded-lg
                                   w-full
                                   shadow-md
@@ -309,7 +310,7 @@
                                   : []"
                                 :key="education.id"
                               >
-                                <p class="text-gray-500">
+                                <p class="text-gray-500 ">
                                   <span
                                     class="font-semibold text-primary-700 mb-1"
                                     >Department:</span

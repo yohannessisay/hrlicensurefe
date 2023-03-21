@@ -16,7 +16,7 @@
         "
       >
         <div class="m-3 text-center">
-          <h2 class="text-xl mb-2 text-white">Total Applicants</h2>
+          <h2 class="text-xl mb-2 text-white dashboard_card_title">Total Applicants</h2>
           <i class="fa fa-user fa-2x text-white"></i>
           <p
             class="
@@ -47,7 +47,7 @@
         "
       >
         <div class="m-3 text-center">
-          <h2 class="text-xl mb-2 text-white">Total New Licensed</h2>
+          <h2 class="text-xl mb-2 text-white dashboard_card_title">Total New Licensed</h2>
           <i class="fa fa-check fa-2x text-white"></i>
           <p
             class="
@@ -78,7 +78,7 @@
         "
       >
         <div class="m-3 text-center">
-          <h2 class="text-xl mb-2 text-white">Total Renewals</h2>
+          <h2 class="text-xl mb-2 text-white dashboard_card_title">Total Renewals</h2>
           <i class="fa fa-refresh fa-2x text-white"></i>
           <p
             class="
@@ -86,6 +86,7 @@
               transition-all
               duration-200
               text-white text-3xl
+              
             "
             id="totalRen"
           >
@@ -109,7 +110,7 @@
         "
       >
         <div class="m-3 text-center">
-          <h2 class="text-xl mb-2 text-white">Total Good Standings</h2>
+          <h2 class="text-xl mb-2 text-white dashboard_card_title">Total Good Standings</h2>
           <i class="fa fa-thumbs-up fa-2x text-white"></i>
           <p
             class="
@@ -137,7 +138,7 @@
               shadow-lg
               box
               rounded-2xl
-              hover:shadow-4xl
+              hover:shadow-2xl
               transition
               duration-500
               transform
@@ -166,7 +167,7 @@
             </p>
 
             <div class="flex justify-center px-5 mb-2 text-sm mt-4">
-              <h1 class="text-2xl text-primary-500">New License</h1>
+              <h1 class="text-2xl text-primary-500 dashboard_card_title">New License</h1>
             </div>
           </div>
         </router-link>
@@ -177,10 +178,10 @@
           <div
             class="
               bg-white
-              shadow-lg
+              shadow-xl
               box
               rounded-2xl
-              hover:shadow-4xl
+              hover:shadow-2xl
               transition
               duration-500
               transform
@@ -208,7 +209,7 @@
             </p>
 
             <div class="flex justify-center px-5 mb-2 text-sm mt-4">
-              <h1 class="text-2xl text-primary-500">Renewal</h1>
+              <h1 class="text-2xl text-primary-500 dashboard_card_title">Renewal</h1>
             </div>
           </div>
         </router-link>
@@ -254,7 +255,7 @@
             </p>
 
             <div class="flex justify-center px-5 mb-2 text-sm mt-4">
-              <h1 class="text-2xl text-primary-500">Verification</h1>
+              <h1 class="text-2xl text-primary-500 dashboard_card_title">Verification</h1>
             </div>
           </div>
         </router-link>
@@ -268,7 +269,7 @@
               shadow-lg
               box
               rounded-2xl
-              hover:shadow-4xl
+              hover:shadow-3xl
               transition
               duration-500
               transform
@@ -296,7 +297,7 @@
             </p>
 
             <div class="flex justify-center px-1 mb-2 text-sm mt-4">
-              <h1 class="text-2xl text-primary-500">Good Standing</h1>
+              <h1 class="text-2xl text-primary-500 dashboard_card_title ">Good Standing</h1>
             </div>
           </div>
         </router-link>
