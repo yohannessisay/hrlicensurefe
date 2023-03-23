@@ -99,6 +99,7 @@
                         ease-in-out
                         items-center
                       "
+                      @click="searchApplication()"
                     >
                       <svg
                         aria-hidden="true"
@@ -216,7 +217,8 @@
                     bg-primary-800
                   "
                 >
-                  <vue-table-lite 
+                  <vue-table-lite
+                    :is-static-mode="true"
                     :is-loading="toYouTable.isLoading"
                     :columns="toYouTable.columns"
                     :rows="toYouTable.rows"
@@ -224,11 +226,12 @@
                     :sortable="toYouTable.sortable"
                     @is-finished="tableLoadingFinish"
                     @row-clicked="rowClicked"
+                    @do-search="doSearch"
                   ></vue-table-lite>
-                  <edit-modal
-                    v-if="showModal"
+                  <edit-modal 
                     :modalDataId="modalDataId"
                     :reviewers="reviewers"
+                    @refreshTable="refreshTable"
                   >
                   </edit-modal>
                 </div>
@@ -304,6 +307,7 @@
                         ease-in-out
                         items-center
                       "
+                      @click="searchApplicationOther()"
                     >
                       <svg
                         aria-hidden="true"
@@ -404,7 +408,7 @@
                         duration-150
                         ease-in-out
                       "
-                      @click="clearFiltersOthers()"
+                      @click="clearFiltersOther()"
                     >
                       <i class="fa fa-close"></i>
                       Clear Filters
@@ -421,7 +425,8 @@
                     bg-primary-800
                   "
                 >
-                  <vue-table-lite 
+                  <vue-table-lite
+                    :is-static-mode="true"
                     :is-loading="toOthersTable.isLoading"
                     :columns="toOthersTable.columns"
                     :rows="toOthersTable.rows"
@@ -429,11 +434,13 @@
                     :sortable="toOthersTable.sortable"
                     @is-finished="tableLoadingFinishOthers"
                     @row-clicked="rowClickedOthers"
+                    @do-search="doSearchOth"
                   ></vue-table-lite>
 
-                  <edit-modal-others
-                    v-if="showModal"
+                  <edit-modal-others 
+                    :reviewers="reviewers"
                     :modalDataIdOthers="modalDataIdOthers"
+                    @refreshTable="refreshTable"
                   >
                   </edit-modal-others>
                 </div>
@@ -451,14 +458,11 @@
 import ReviewerSideNav from "../SharedComponents/sideNav.vue";
 import ReviewerNavBar from "../../../SharedComponents/navBar.vue";
 import NewLicenseMainContent from "../../../SharedComponents/inReview.vue";
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
-
-import applicationStatus from "../../../Configurations/getApplicationStatus.js";
 import VueTableLite from "vue3-table-lite";
 import editModal from "./inReviewModal.vue";
 import editModalOthers from "./inReviewOthersModal.vue";
-import moment from "moment";
 export default {
   name: "home",
   components: {
@@ -470,12 +474,9 @@ export default {
     editModalOthers,
   },
   setup() {
-    const store = useStore();
-    const showModal = ref(true);
-    const adminId = +localStorage.getItem("adminId");
-    const adminRegion = JSON.parse(
-      localStorage.getItem("allAdminData")
-    ).regionId;
+    const store = useStore(); 
+    const adminRegion = JSON.parse(localStorage.getItem("allAdminData"))
+      .regionId;
     let modalDataId = ref({
       id: "",
       change: 0,
@@ -484,14 +485,16 @@ export default {
       id: "",
       change: 0,
     });
-    let allInfo = ref({ });
+    let adminRole = localStorage.getItem("role");
+    let statuses = JSON.parse(localStorage.getItem("applicationStatuses"));
+    let allInfo = ref({});
     const reviewers = ref([]);
     const searchTerm = ref("");
     const searchTermOthers = ref("");
     let searchTermFromDate = ref("");
     let searchTermToDate = ref("");
     let searchTermFromDateOth = ref("");
-    let searchTermToDateOth = ref(""); 
+    let searchTermToDateOth = ref("");
     const toOthersTable = ref({});
     const toYouTable = ref({});
     let tableData = ref([]);
@@ -503,262 +506,226 @@ export default {
       isLoading: true,
     };
 
-    const clearFilters = () => {
-      searchTerm.value = ""; 
-      searchTermFromDate.value = "";
-      searchTermToDate.value = ""; 
+    const refreshTable = () => {
+      toOthersTable.value.isLoading = true;
+      toYouTable.value.isLoading = true;   
+      toOthersTable.value.rows = [];
+      tableData.value = [];
+      toYouTable.value.rows=[];
+      toYouTableData.value=[];
+      
+      inReviewAssignedToOthers([
+        { key: "page", value: 0 },
+        { key: "size", value: 10 },
+      ]);
+      inReviewAssignedToYou([
+        { key: "page", value: 0 },
+        { key: "size", value: 10 },
+      ]);
     };
-    const clearFiltersOthers = () => { 
-      searchTermOthers.value = ""; 
+
+    const clearFiltersOther = () => {
+      searchTermOthers.value = "";
       searchTermFromDateOth.value = "";
-      searchTermToDateOth.value = ""; 
+      searchTermToDateOth.value = "";
+      toOthersTable.value.isLoading = true;
+      toOthersTable.value.rows = [];
+      tableData.value = [];
+      inReviewAssignedToOthers([
+        { key: "page", value: 0 },
+        { key: "size", value: 10 },
+      ]);
     };
-    const inReviewAssignedToOthers = () => {
-      applicationStatus(store, "IRV").then((res) => {
-        let statusId = res;
-        let adminStatus = [statusId, adminId];
+    const clearFilters = () => {
+      searchTerm.value = "";
+      searchTermFromDate.value = "";
+      searchTermToDate.value = "";
+      toYouTable.value.isLoading = true;
+      toYouTable.value.rows = [];
+      toYouTableData.value = [];
+      inReviewAssignedToYou([
+        { key: "page", value: 0 },
+        { key: "size", value: 10 },
+      ]);
+    };
+    const inReviewAssignedToOthers = (apiParameters) => {
+      let revId = statuses
+        ? statuses.filter((stat) => stat.code == "IRV")[0].id
+        : "";
+      store
+        .dispatch("reviewerNewLicense/getNewLicenseOthersOnReview", [
+          {
+            statusId: revId,
+          },
+          {
+            params: apiParameters,
+          },
+        ])
+        .then((res) => {
+          allInfo.value = res ? res.rows : [];
 
-        store
-          .dispatch(
-            "reviewerNewLicense/getNewLicenseOthersOnReview",
-            adminStatus
-          )
-          .then((res) => {
-            allInfo.value = res;
-
-            JSON.parse(JSON.stringify(allInfo.value)).forEach((element) => {
-              tableData.value.push({
-                LicenseNumber: element ? element.newLicenseCode : "",
-                ApplicantName:
-                  (element.profile ? element.profile.name : "------") +
-                  " " +
-                  (element.profile.fatherName
-                    ? element.profile.fatherName
-                    : "------") +
-                  " " +
-                  (element.profile.grandFatherName
-                    ? element.profile.grandFatherName
-                    : "------"),
-                ApplicationType: element.applicationType
-                  ? element.applicationType.name
-                  : "",
-                Date: new Date(element.createdAt)
-                  .toJSON()
-                  .slice(0, 10)
-                  .replace(/-/g, "/"),
-                data: element,
-              });
+          allInfo.value.forEach((element) => {
+            tableData.value.push({
+              LicenseNumber: element ? element.newLicenseCode : "",
+              ApplicantName:
+                (element.profile ? element.profile.name : "------") +
+                " " +
+                (element.profile.fatherName
+                  ? element.profile.fatherName
+                  : "------") +
+                " " +
+                (element.profile.grandFatherName
+                  ? element.profile.grandFatherName
+                  : "------"),
+                  ApplicationType: element.applicantType
+                ? element.applicantType.name
+                : "",
+              Date: new Date(element.createdAt)
+                .toJSON()
+                .slice(0, 10)
+                .replace(/-/g, "/"),
+              data: element,
             });
-
-            toOthersTable.value = {
-              columns: [
-                {
-                  label: "License Number",
-                  field: "LicenseNumber",
-                  width: "15%",
-                  isKey: true,
-                },
-                {
-                  label: "Applicant Name",
-                  field: "ApplicantName",
-                  width: "20%",
-                  sortable: true,
-                },
-                {
-                  label: "Applicant Type",
-                  field: "ApplicationType",
-                  width: "15%",
-                  sortable: true,
-                },
-                {
-                  label: "Date",
-                  field: "Date",
-                  width: "15%",
-                  sortable: true,
-                },
-                {
-                  label: "",
-                  field: "quick",
-                  width: "10%",
-                  display: function (row) {
-                    return (
-                      '<button data-bs-toggle="modal" data-bs-target="#staticBackdropOthers" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
-                      row.id +
-                      '" ><i class="fa fa-eye"></i> View</button>'
-                    );
-                  },
-                },
-              ],
-              rows: computed(() => {
-                return tableData.value.filter(
-                  (x) =>
-                    (x.ApplicantName
-                      ? x.ApplicantName.toLowerCase().includes(
-                        searchTermOthers.value.toLowerCase()
-                        )
-                      : "") &&
-                    (searchTermFromDateOth.value != ""
-                      ? x.Date
-                        ? searchTermToDateOth.value.length > 0
-                          ? moment(x.Date).isSameOrAfter(
-                            searchTermFromDateOth.value
-                            ) &&
-                            moment(x.Date).isSameOrBefore(
-                              searchTermToDateOth.value
-                            )
-                          : moment(x.Date).isSameOrAfter(
-                            searchTermFromDateOth.value
-                            )
-                        : ""
-                      : x.Date || x.Date == "" || x.Date == null) &&
-                    (searchTermToDateOth.value != ""
-                      ? x.Date
-                        ? searchTermFromDateOth.value.length > 0
-                          ? moment(x.Date).isSameOrBefore(
-                            searchTermToDateOth.value
-                            ) &&
-                            moment(x.Date).isSameOrAfter(
-                              searchTermFromDateOth.value
-                            )
-                          : moment(x.Date).isSameOrBefore(
-                            searchTermFromDateOth.value
-                            )
-                        : ""
-                      : x.Date || x.Date == "" || x.Date == null)
-                );
-              }),
-              totalRecordCount: tableData.value.length,
-              sortable: {
-                order: "id",
-                sort: "asc",
-              },
-            };
           });
-      });
+
+          toOthersTable.value = {
+            columns: [
+              {
+                label: "License Number",
+                field: "LicenseNumber",
+                width: "20%",
+                isKey: true,
+              },
+              {
+                label: "Applicant Name",
+                field: "ApplicantName",
+                width: "40%",
+                sortable: true,
+              },
+              {
+                label: "Applicant Type",
+                field: "ApplicationType",
+                width: "20%",
+                sortable: true,
+              },
+              {
+                label: "Date",
+                field: "Date",
+                width: "20%",
+                sortable: true,
+              },
+              {
+                label: "Action",
+                field: "quick",
+                width: "10%",
+                display: function(row) {
+                  return (
+                    '<button data-bs-toggle="modal" data-bs-target="#staticBackdropOthers" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
+                    row.id +
+                    '" ><i class="fa fa-eye"></i> View</button>'
+                  );
+                },
+              },
+            ],
+            rows: tableData.value,
+            totalRecordCount: tableData.value.length,
+            sortable: {
+              order: "id",
+              sort: "asc",
+            },
+          };
+        });
     };
 
-    const inReviewAssignedToYou = () => {
-      applicationStatus(store, "IRV").then((res) => {
-        let statusId = res;
-        let adminStatus = [statusId, adminId];
-
-        store
-          .dispatch("reviewerNewLicense/getNewLicenseOnReview", adminStatus)
-          .then((res) => {
-            allInfo.value = res;
-            JSON.parse(JSON.stringify(allInfo.value)).forEach((element) => {
-              toYouTableData.value.push({
-                LicenseNumber: element.newLicenseCode,
-                ApplicantName:
-                  element.profile.name +
-                  " " +
-                  element.profile.fatherName +
-                  " " +
-                  element.profile.grandFatherName,
-                ApplicantType: element.applicantType
-                  ? element.applicantType.name
-                  : "",
-                Date: new Date(element.createdAt)
-                  .toJSON()
-                  .slice(0, 10)
-                  .replace(/-/g, "/"),
-                data: element,
-              });
+    const inReviewAssignedToYou = (apiParameters) => {
+      let revOthersId = statuses
+        ? statuses.filter((stat) => stat.code == "IRV")[0].id
+        : "";
+      store
+        .dispatch("reviewerNewLicense/getNewLicenseOnReview", [
+          {
+            statusId: revOthersId,
+          },
+          {
+            params: apiParameters,
+          },
+        ])
+        .then((res) => {
+          allInfo.value = res ? res.rows : [];
+          allInfo.value.forEach((element) => {
+            toYouTableData.value.push({
+              LicenseNumber: element.newLicenseCode,
+              ApplicantName:
+                element.profile.name +
+                " " +
+                element.profile.fatherName +
+                " " +
+                element.profile.grandFatherName,
+              ApplicantType: element.applicantType
+                ? element.applicantType.name
+                : "",
+              Date: new Date(element.createdAt)
+                .toJSON()
+                .slice(0, 10)
+                .replace(/-/g, "/"),
+              data: element,
             });
-
-            toYouTable.value = {
-              columns: [
-                {
-                  label: "License Number",
-                  field: "LicenseNumber",
-                  width: "15%",
-                  sortable: true,
-                  isKey: true,
-                },
-                {
-                  label: "Applicant Name",
-                  field: "ApplicantName",
-                  width: "45%",
-                  sortable: true,
-                },
-                {
-                  label: "Applicant Type",
-                  field: "ApplicantType",
-                  width: "20%",
-                  sortable: true,
-                },
-                {
-                  label: "Applied Date",
-                  field: "Date",
-                  width: "15%",
-                  sortable: true,
-                },
-                {
-                  label: "Action",
-                  field: "quick",
-                  width: "10%",
-                  display: function (row) {
-                    return (
-                      '<button data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
-                      row.id +
-                      '" ><i class="fa fa-eye"></i>View/Edit</button>'
-                    );
-                  },
-                },
-              ],
-              
-              rows: computed(() => {
-                return toYouTableData.value.filter(
-                  (x) =>
-                    (x.ApplicantName
-                      ? x.ApplicantName.toLowerCase().includes(
-                          searchTerm.value.toLowerCase()
-                        )
-                      : "") &&
-                    (searchTermFromDate.value != ""
-                      ? x.Date
-                        ? searchTermToDate.value.length > 0
-                          ? moment(x.Date).isSameOrAfter(
-                              searchTermFromDate.value
-                            ) &&
-                            moment(x.Date).isSameOrBefore(
-                              searchTermToDate.value
-                            )
-                          : moment(x.Date).isSameOrAfter(
-                              searchTermFromDate.value
-                            )
-                        : ""
-                      : x.Date || x.Date == "" || x.Date == null) &&
-                    (searchTermToDate.value != ""
-                      ? x.Date
-                        ? searchTermFromDate.value.length > 0
-                          ? moment(x.Date).isSameOrBefore(
-                              searchTermToDate.value
-                            ) &&
-                            moment(x.Date).isSameOrAfter(
-                              searchTermFromDate.value
-                            )
-                          : moment(x.Date).isSameOrBefore(
-                              searchTermToDate.value
-                            )
-                        : ""
-                      : x.Date || x.Date == "" || x.Date == null)
-                );
-              }),
-              totalRecordCount: toYouTableData.value.length,
-              sortable: {
-                order: "id",
-                sort: "asc",
-              },
-            };
           });
-      });
+
+          toYouTable.value = {
+            columns: [
+              {
+                label: "License Number",
+                field: "LicenseNumber",
+                width: "20%",
+                isKey: true,
+              },
+              {
+                label: "Applicant Name",
+                field: "ApplicantName",
+                width: "40%",
+                sortable: true,
+              },
+              {
+                label: "Applicant Type",
+                field: "ApplicantType",
+                width: "20%",
+                sortable: true,
+              },
+              {
+                label: "Date",
+                field: "Date",
+                width: "20%",
+                sortable: true,
+              },
+              {
+                label: "Action",
+                field: "quick",
+                width: "10%",
+                display: function(row) {
+                  return (
+                    '<button data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
+                    row.id +
+                    '" ><i class="fa fa-eye"></i>View/Edit</button>'
+                  );
+                },
+              },
+            ],
+
+            rows: toYouTableData.value,
+            totalRecordCount: toYouTableData.value.length,
+            sortable: {
+              order: "id",
+              sort: "asc",
+            },
+          };
+        });
     };
 
     const tableLoadingFinish = () => {
       let elements = document.getElementsByClassName("edit-btn");
 
-      Array.prototype.forEach.call(elements, function (element) {
+      Array.prototype.forEach.call(elements, function(element) {
         if (element.classList.contains("edit-btn")) {
           element.addEventListener("click", rowClicked());
         }
@@ -767,7 +734,7 @@ export default {
     };
     const tableLoadingFinishOthers = () => {
       let elementOthers = document.getElementsByClassName("edit-btn-others");
-      Array.prototype.forEach.call(elementOthers, function (element) {
+      Array.prototype.forEach.call(elementOthers, function(element) {
         if (element.classList.contains("edit-btn-others")) {
           element.addEventListener("click", rowClickedOthers());
         }
@@ -776,10 +743,8 @@ export default {
     };
     const rowClicked = (row) => {
       if (row != undefined) {
-     
-
         row = JSON.parse(JSON.stringify(row));
-     
+
         modalDataId.value.id = row.data ? row.data.id : "-----";
         modalDataId.value.change++;
       }
@@ -791,35 +756,125 @@ export default {
         modalDataIdOthers.value.change++;
       }
     };
+
+    const searchApplication = () => {
+      toYouTable.value.isLoading = true;
+      toYouTable.value.rows = [];
+      toYouTableData.value = [];
+      inReviewAssignedToYou([
+        { key: "page", value: 0 },
+        { key: "size", value: 10 },
+        { key: "value", value: searchTerm.value },
+        { key: "fromDate", value: searchTermFromDate.value },
+        { key: "toDate", value: searchTermToDate.value },
+      ]);
+    };
+    const searchApplicationOther = () => {
+      toOthersTable.value.isLoading = true;
+      toOthersTable.value.rows = [];
+      tableData.value = [];
+      inReviewAssignedToOthers([
+        { key: "page", value: 0 },
+        { key: "size", value: 10 },
+        { key: "value", value: searchTermOthers.value },
+        { key: "fromDate", value: searchTermFromDateOth.value },
+        { key: "toDate", value: searchTermToDateOth.value },
+      ]);
+    };
     onMounted(() => {
-      inReviewAssignedToYou();
-      inReviewAssignedToOthers();
-      store.dispatch("reviewer/getAdminsByRegion",adminRegion).then((res) => {
+      inReviewAssignedToYou([
+        { key: "page", value: 0 },
+        { key: "size", value: 10 },
+      ]);
+      adminRole && adminRole != "REV"
+        ? inReviewAssignedToOthers([
+            { key: "page", value: 0 },
+            { key: "size", value: 10 },
+          ])
+        : "";
+      store.dispatch("reviewer/getAdminsByRegion", adminRegion).then((res) => {
         reviewers.value = res.data.data.filter((e) => {
           return e.role.code !== "UM";
         });
       });
     });
+    const doSearch = (offset, limit, order, sort) => {
+      toYouTable.value.isLoading = true;
 
+      setTimeout(() => {
+        toYouTable.value.isReSearch = offset == undefined ? true : false;
+        offset = offset / 10 + 1;
+        if (sort == "asc") {
+          inReviewAssignedToYou([
+            { key: "page", value: offset },
+            { key: "size", value: limit },
+            { key: "value", value: searchTerm.value },
+            { key: "fromDate", value: searchTermFromDate.value },
+            { key: "toDate", value: searchTermToDate.value },
+          ]);
+        } else {
+          inReviewAssignedToYou([
+            { key: "page", value: offset },
+            { key: "size", value: limit },
+            { key: "value", value: searchTerm.value },
+            { key: "fromDate", value: searchTermFromDate.value },
+            { key: "toDate", value: searchTermToDate.value },
+          ]);
+        }
+        toYouTable.value.sortable.order = order;
+        toYouTable.value.sortable.sort = sort;
+      }, 600);
+    };
+    const doSearchOth = (offset, limit, order, sort) => {
+      toOthersTable.value.isLoading = true;
+
+      setTimeout(() => {
+        toOthersTable.value.isReSearch = offset == undefined ? true : false;
+        offset = offset / 10 + 1;
+        if (sort == "asc") {
+          inReviewAssignedToOthers([
+            { key: "page", value: offset },
+            { key: "size", value: limit },
+            { key: "value", value: searchTermOthers.value },
+            { key: "fromDate", value: searchTermFromDateOth.value },
+            { key: "toDate", value: searchTermToDateOth.value },
+          ]);
+        } else {
+          inReviewAssignedToOthers([
+            { key: "page", value: offset },
+            { key: "size", value: limit },
+            { key: "value", value: searchTermOthers.value },
+            { key: "fromDate", value: searchTermFromDateOth.value },
+            { key: "toDate", value: searchTermToDateOth.value },
+          ]);
+        }
+        toOthersTable.value.sortable.order = order;
+        toOthersTable.value.sortable.sort = sort;
+      }, 600);
+    };
     return {
       allInfo,
       toOthersTable,
+      searchApplicationOther,
+      searchApplication,
       clearFilters,
-      clearFiltersOthers,
+      clearFiltersOther,
+      doSearch,
+      doSearchOth,
       searchTerm,
       searchTermOthers,
       searchTermFromDate,
       searchTermToDate,
       searchTermFromDateOth,
       searchTermToDateOth,
-      toYouTable,
-      showModal,
+      toYouTable, 
       reviewers,
       tableLoadingFinish,
       inReviewAssignedToOthers,
       tableLoadingFinishOthers,
       rowClicked,
       rowClickedOthers,
+      refreshTable,
       modalDataId,
       modalDataIdOthers,
     };

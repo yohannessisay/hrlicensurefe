@@ -71,11 +71,12 @@
             "
             data-bs-dismiss="modal"
             aria-label="Close"
+            id="closeButton"
           >
             <i class="fa fa-close fa-2x"></i>
           </button>
         </div>
-        <div class="vld-parent mt-4">
+        <div class="vld-parent mt-2">
           <loading
             :active="isLoadingStart"
             :is-full-page="false"
@@ -87,11 +88,11 @@
               <section class="text-gray-800">
                 <div class="flex justify-center">
                   <div class="text-center lg:max-w-3xl md:max-w-xl">
-                    <h2 class="text-2xl font-bold mb-8 px-6">
+                    <h2 class="text-xl font-bold mb-8 px-6">
                       Showing
-                      <span class="text-2xl font-bold px-6">
+                      <a class="text-2xl font-bold px-6 text-yellow-300">
                         {{ modalData.name }}
-                      </span>
+                      </a>
                       's License Data
                     </h2>
                   </div>
@@ -248,8 +249,9 @@
                                         mt-1
                                         ml-1
                                         relative
-                                        border border-gray-300
+                                        border border-grey-200
                                         overflow-hidden
+                                        focus:border-primary-600
                                         rounded-md
                                         shadow-sm
                                       "
@@ -258,7 +260,7 @@
                                         id="email"
                                         @keyup="showOptions = true"
                                         v-model="reviewer.name"
-                                        class="w-full px-3 py-3"
+                                        class="w-full px-3 py-3 "
                                         style="border: none"
                                         autocomplete="off"
                                         placeholder="Select reviewer by typing a name"
@@ -507,6 +509,52 @@
               </section>
             </div>
           </div>
+          <div
+            class="bg-primary-300 m-2 p-4 rounded-lg"
+            v-if="
+              modalData &&
+                modalData.data &&
+                modalData.data.licenseReviewer &&
+                modalData.data.licenseReviewer.transferFrom
+            "
+          >
+            <h2 class="text-xl text-yellow-300">
+              This license is a transfer from
+            </h2>
+
+            <div class="grid grid-cols-2">
+              <div class="grid grid-cols-2">
+                <h5 class="text-lg  ">Reviewer Name</h5>
+
+                <h5 class="text-lg text-primary-600">
+                  {{
+                    modalData &&
+                    modalData.data &&
+                    modalData.data.licenseReviewer &&
+                    modalData.data.licenseReviewer.transferFrom
+                      ? modalData.data.licenseReviewer.transferFrom.name
+                      : ""
+                  }}
+                </h5>
+              </div>
+            </div>
+            <div class="grid grid-cols-2">
+              <div class="grid grid-cols-2">
+                <h5 class="text-lg  ">With a reason of</h5>
+
+                <h5 class="text-lg text-primary-600">
+                  {{
+                    modalData &&
+                    modalData.data &&
+                    modalData.data.licenseReviewer &&
+                    modalData.data.licenseReviewer.transferFrom
+                      ? modalData.data.licenseReviewer.transferRemark
+                      : ""
+                  }}
+                </h5>
+              </div>
+            </div>
+          </div>
         </div>
         <div
           class="
@@ -514,6 +562,7 @@
             flex flex-shrink-0 flex-wrap
             items-center
             justify-end
+            p-2
             border-t border-grey-100
             rounded-b-md
           "
@@ -597,7 +646,7 @@ export default {
   computed: {
     moment: () => moment,
   },
-  setup(props) {
+  setup(props, { emit }) {
     const store = useStore();
     const toast = useToast();
     let transferRemark = ref("");
@@ -609,9 +658,11 @@ export default {
     let adminRole = localStorage.getItem("role");
     const licenseId = computed(() => props.modalDataId.id);
     let transfer = ref({
-      reviewerId: "",
-      licenseId: "",
-      createdByAdminId: "",
+      expertLevelId: null,
+      reviewerId: null,
+      licenseId: null,
+      createdByAdminId: null,
+      transferRemark: "",
     });
     let role = ref({});
     let isLoading = ref(false);
@@ -627,33 +678,28 @@ export default {
     };
 
     const transferReviewer = () => {
-      if (transferRemark.value == "") {
-        toast.error("Transfer reason is required", {
-          timeout: 5000,
-          position: "bottom-center",
-          pauseOnFocusLoss: true,
-          pauseOnHover: true,
-          icon: true,
-        });
+      if (transferRemark.value == "" || transfer.value.reviewerId == null) {
+        toast.error(
+          transferRemark.value == ""
+            ? "Transfer reason is required"
+            : "Please select reviewer to tansfer to",
+          {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          }
+        );
         return;
       } else {
-        if (role.value.code === "TL" || role.value.code === "ADM") {
-          transfer.value = {
-            licenseId: props.modalDataId.id,
-            reviewerId: transfer.value.reviewerId,
-            createdByAdminId: +localStorage.getItem("adminId"),
-            transferRemark: transferRemark.value,
-          };
-        }
-
-        if (role.value.code == "REV") {
-          transfer.value = {
-            licenseId: props.modalDataId.id,
-            reviewerId: +localStorage.getItem("adminId"),
-            createdByAdminId: +localStorage.getItem("adminId"),
-            transferRemark: transferRemark.value,
-          };
-        }
+        transfer.value = {
+          licenseId: props.modalDataId.id,
+          reviewerId: transfer.value.reviewerId,
+          createdByAdminId: +localStorage.getItem("adminId"),
+          transferRemark: transferRemark.value,
+          expertLevelId: modalData.value.data.expertLevelId,
+        };
 
         isLoading.value = true;
 
@@ -669,9 +715,12 @@ export default {
                 icon: true,
               });
               isLoading.value = false;
-              setTimeout(() => {
-                window.location.reload();
-              }, 3000);
+              transfer.value = {};
+              transferRemark.value = "";
+              emit("refreshTable");
+              if (document.getElementById("closeButton")) {
+                document.getElementById("closeButton").click();
+              }
             } else {
               toast.error("Error transfering", {
                 timeout: 5000,

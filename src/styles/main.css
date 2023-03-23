@@ -17,11 +17,11 @@
      box-sizing: border-box;
      font-family: 'Dosis-Bold', sans-serif;
      font-weight: 800;
-     font-size: 18px;
+     font-size: 16px;
      letter-spacing: .3px;
  }
 
- .font-medium,
+ 
  [type="text"],
  [type="email"],
  [type="url"],
@@ -40,6 +40,17 @@
  textarea,
  select>option,
  select,
+
+ p,
+ strong,
+ span,
+ .links_name,
+ h6 {
+    font-family: 'Laila-Bold' !important;
+     font-weight: 700;
+     font-size: 16px !important;
+ }
+
  h2,
  h1,
  h3,
@@ -93,7 +104,7 @@
 
  .sidebar .logo-details .logo_name {
      color: #fff;
-     font-size: 24px;
+     font-size: 20px;
      font-weight: 500;
  }
 

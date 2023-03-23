@@ -165,23 +165,19 @@
   </div>
 </template>
 <script>
-import Title from "@/sharedComponents/Title";
 import { useStore } from "vuex";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
-import Spinner from "@/sharedComponents/Spinner";
 import VueElementLoading from "vue-element-loading";
 export default {
   components: {
-    Title,
     FlashMessage,
     ErrorFlashMessage,
-    Spinner,
     VueElementLoading,
   },
-  setup({ emit }) {
+  setup() {
     const store = useStore();
     const router = useRouter();
     let show = ref(false);
@@ -244,10 +240,13 @@ export default {
                 router.push({ path: "/admin/list" });
               }, 1000);
             } else {
-              message.value.showFlash = !message.value.showFlash;
-              setTimeout(() => {
-                router.push({ path: "/admin/review" });
-              }, 3000);
+             
+              store.dispatch("lookups/getApplicationStatuses").then((res) => {
+                if (res) {
+                  window.localStorage.setItem("applicationStatuses", res.data);
+                  router.push({ path: "/admin/review" });
+                }
+              });
             }
           }
         } else {

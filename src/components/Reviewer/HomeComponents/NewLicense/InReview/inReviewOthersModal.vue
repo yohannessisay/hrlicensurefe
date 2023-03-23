@@ -69,7 +69,7 @@
               duration-150
               ease-in-out
             "
-            id="closeButton"
+            id="closeButtonOther"
             data-bs-dismiss="modal"
             aria-label="Close"
           >
@@ -506,6 +506,52 @@
                       </div>
                     </div>
                   </div>
+                  <div
+                    class="bg-primary-300 m-2 p-4 rounded-lg"
+                    v-if="
+                      modalData &&
+                        modalData.data &&
+                        modalData.data.licenseReviewer &&
+                        modalData.data.licenseReviewer.transferFrom
+                    "
+                  >
+                    <h2 class="text-xl text-yellow-300">
+                      This license is a transfer from
+                    </h2>
+
+                    <div class="grid grid-cols-2">
+                      <div class="grid grid-cols-2">
+                        <h5 class="text-lg  ">Reviewer Name</h5>
+
+                        <h5 class="text-lg text-primary-600">
+                          {{
+                            modalData &&
+                            modalData.data &&
+                            modalData.data.licenseReviewer &&
+                            modalData.data.licenseReviewer.transferFrom
+                              ? modalData.data.licenseReviewer.transferFrom.name
+                              : ""
+                          }}
+                        </h5>
+                      </div>
+                    </div>
+                    <div class="grid grid-cols-2">
+                      <div class="grid grid-cols-2">
+                        <h5 class="text-lg  ">With a reason of</h5>
+
+                        <h5 class="text-lg text-primary-600">
+                          {{
+                            modalData &&
+                            modalData.data &&
+                            modalData.data.licenseReviewer &&
+                            modalData.data.licenseReviewer.transferFrom
+                              ? modalData.data.licenseReviewer.transferRemark
+                              : ""
+                          }}
+                        </h5>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <div
                   class="
@@ -584,9 +630,11 @@ export default {
     let adminRole = localStorage.getItem("role");
     const licenseId = computed(() => props.modalDataIdOthers.id);
     let transfer = ref({
-      reviewerId: "",
-      licenseId: "",
-      createdByAdminId: "",
+      expertLevelId: null,
+      reviewerId: null,
+      licenseId: null,
+      createdByAdminId: null,
+      transferRemark: "",
     });
     let role = ref({});
     let isLoading = ref(false);
@@ -602,35 +650,28 @@ export default {
     };
 
     const transferReviewer = () => {
-      if (transferRemark.value == "") {
-        toast.error("Transfer reason is required", {
-          timeout: 5000,
-          position: "bottom-center",
-          pauseOnFocusLoss: true,
-          pauseOnHover: true,
-          icon: true,
-        });
+      if (transferRemark.value == "" || transfer.value.reviewerId == null) {
+        toast.error(
+          transferRemark.value == ""
+            ? "Transfer reason is required"
+            : "Please select reviewer to tansfer to",
+          {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          }
+        );
         return;
       } else {
-        if (role.value.code === "TL" || role.value.code === "ADM") {
-          transfer.value = {
-            licenseId: props.modalDataIdOthers.id,
-            reviewerId: transfer.value.reviewerId,
-            createdByAdminId: +localStorage.getItem("adminId"),
-            transferRemark: transferRemark.value,
-          };
-        }
-
-        if (role.value.code == "REV") {
-          transfer.value = {
-            licenseId: props.modalDataIdOthers.id,
-            reviewerId: +localStorage.getItem("adminId"),
-            createdByAdminId: +localStorage.getItem("adminId"),
-            transferRemark: transferRemark.value,
-          };
-        }
-
-        isLoading.value = true;
+        transfer.value = {
+          licenseId: props.modalDataIdOthers.id,
+          reviewerId: transfer.value.reviewerId,
+          expertLevelId: modalData.value.data.expertLevelId,
+          createdByAdminId: +localStorage.getItem("adminId"),
+          transferRemark: transferRemark.value,
+        };
 
         store
           .dispatch("reviewer/transferLicenseReview", transfer.value)
@@ -644,10 +685,12 @@ export default {
                 icon: true,
               });
               isLoading.value = false;
-              emit("refreshTable");
-              if (document.getElementById("closeButton")) {
-                document.getElementById("closeButton").click();
+              transfer.value = {};
+              transferRemark.value = "";
+              if (document.getElementById("closeButtonOther")) {
+                document.getElementById("closeButtonOther").click();
               }
+              emit("refreshTable");
             } else {
               toast.error("Error transfering", {
                 timeout: 5000,

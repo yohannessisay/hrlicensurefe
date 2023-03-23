@@ -800,11 +800,11 @@ router.beforeEach(async (to, from, next) => {
     next();
   } else if (
     !auth &&
-    to.path !== "/landing" &&
-    to.path !== "/" &&
-    to.path !== "/verifyOTP" &&
-    to.path !== "/admin" &&
-    to.name !== "scannedCertifiedUser"
+    to.path != "/landing" &&
+    to.path != "/" &&
+    to.path != "/verifyOTP" &&
+    to.path != "/admin" &&
+    to.name != "scannedCertifiedUser"
   )
     next("/landing");
   else next();

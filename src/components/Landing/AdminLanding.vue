@@ -396,7 +396,6 @@ export default {
       store
         .dispatch("admin/login", credentialData)
         .then(() => {
-       
           loggedInData.value = store.getters["admin/getAdmin"];
           showLoading.value = false;
           if (loggedInData.value !== undefined) {
@@ -443,6 +442,14 @@ export default {
                   icon: true,
                 });
                 show.value = false;
+                store.dispatch("lookups/getApplicationStatuses").then((res) => {
+                  if (res) {
+                    window.localStorage.setItem(
+                      "applicationStatuses",
+                      JSON.stringify(res.data.data)
+                    );
+                  }
+                });
                 router.push({ path: "/admin/review" });
               }
             }
