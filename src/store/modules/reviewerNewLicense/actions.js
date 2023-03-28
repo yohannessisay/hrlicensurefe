@@ -38,15 +38,7 @@ export default {
     return resp.data ? resp.data.data : [];
   },
 
-  async getNewLicenseFromOtherRegion(context, statusId) {
-    const url = baseUrl + "/newLicenses/status/" + statusId;
-    const resp = await ApiService.get(url);
-
-    const transferdApplications = resp.data.data.filter((unassigned) => {
-      return unassigned.transferFromId != null;
-    });
-    return transferdApplications;
-  },
+ 
 
   async getNewLicenseApproved(context, parameters) {
     let url = baseUrl + "/newLicenses/all/approved";

@@ -36,41 +36,6 @@
         <template v-slot:unassigned>
           <div class="container mx-auto px-4 sm:px-8">
             <div class="py-8">
-              <div>
-                <input
-                  v-if="adminLevel.code != 'REG'"
-                  class="
-                    form-check-input
-                    appearance-none
-                    h-5
-                    w-5
-                    border border-gray-300
-                    rounded-sm
-                    bg-white
-                    checked:bg-blue-600 checked:border-blue-600
-                    focus:outline-none
-                    transition
-                    duration-200
-                    mt-2
-                    align-top
-                    bg-no-repeat bg-center bg-contain
-                    float-left
-                    mr-2
-                    cursor-pointer
-                  "
-                  @change="includeFromOthers((include = !include))"
-                  type="checkbox"
-                  value=""
-                  id="flexCheckDefault"
-                />
-                <h4
-                  v-if="adminLevel.code != 'REG'"
-                  class="form-check-label inline-block text-gray-800 mt-1"
-                  for="flexCheckDefault"
-                >
-                  Include From Other Regions
-                </h4>
-              </div>
               <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
                 <div class="p-4 bg-grey-200 mb-4 rounded-lg">
                   <h1 class="text-2xl mb-1">Filters</h1>
@@ -279,43 +244,6 @@
         <template v-slot:resubmitted>
           <div class="container mx-auto px-4 sm:px-8">
             <div class="py-8">
-              <div>
-                <input
-                  v-if="adminLevel.code != 'REG'"
-                  class="
-                    form-check-input
-                    appearance-none
-                    h-5
-                    w-5
-                    border border-gray-300
-                    rounded-sm
-                    bg-white
-                    checked:bg-blue-600 checked:border-blue-600
-                    focus:outline-none
-                    transition
-                    duration-200
-                    mt-2
-                    align-top
-                    bg-no-repeat bg-center bg-contain
-                    float-left
-                    mr-2
-                    cursor-pointer
-                  "
-                  @change="
-                    includeFromOthersResub((includeResub = !includeResub))
-                  "
-                  type="checkbox"
-                  value=""
-                  id="flexCheckDefault"
-                />
-                <h4
-                  v-if="adminLevel.code != 'REG'"
-                  class="form-check-label inline-block text-gray-800 mt-1"
-                  for="flexCheckDefault"
-                >
-                  Include From Other Regions
-                </h4>
-              </div>
               <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
                 <div class="p-4 bg-grey-200 mb-4 rounded-lg">
                   <h1 class="text-2xl mb-1">Filters</h1>
@@ -544,7 +472,7 @@ export default {
     NewLicenseMainContent,
     editModal,
     VueTableLite,
-    editModalResubmitted,
+    editModalResubmitted
   },
   setup() {
     const store = useStore();
@@ -567,35 +495,35 @@ export default {
     let statuses = JSON.parse(localStorage.getItem("applicationStatuses"));
     let modalDataId = ref({
       id: "",
-      change: 0,
+      change: 0
     });
     let modalDataIdResub = ref({
       id: "",
-      change: 0,
+      change: 0
     });
     let defParamsUnassigned = ref([
       { key: "page", value: 0 },
       { key: "size", value: 10 },
       { key: "value", value: searchTerm.value },
       { key: "fromDate", value: searchTermFromDate.value },
-      { key: "toDate", value: searchTermToDate.value },
+      { key: "toDate", value: searchTermToDate.value }
     ]);
     let defParamsResub = ref([
       { key: "page", value: 0 },
       { key: "size", value: 10 },
       { key: "value", value: searchTermOthers.value },
       { key: "fromDate", value: searchTermFromDateResub.value },
-      { key: "toDate", value: searchTermToDateResub.value },
+      { key: "toDate", value: searchTermToDateResub.value }
     ]);
     let allInfo = ref({});
 
     const unassignedTable = ref({});
     const reSubmittedTable = ref([]);
     unassignedTable.value = {
-      isLoading: true,
+      isLoading: true
     };
     reSubmittedTable.value = {
-      isLoading: true,
+      isLoading: true
     };
     let tableData = ref([]);
     let tableDataTemp = ref([]);
@@ -620,21 +548,21 @@ export default {
       reTableData.value = [];
       reSubmitted(defParamsResub.value);
     };
-    const unassigned = (apiParameters) => {
+    const unassigned = apiParameters => {
       // modalDataId.value.apStatusUnassigned = res;
       let subId = statuses
-        ? statuses.filter((stat) => stat.code == "SUB")[0].id
+        ? statuses.filter(stat => stat.code == "SUB")[0].id
         : "";
 
       store
         .dispatch("reviewerNewLicense/getNewLicenseByStatus", [
           { statusId: subId },
-          { params: apiParameters },
+          { params: apiParameters }
         ])
-        .then((res) => {
+        .then(res => {
           allInfo.value = res ? res.rows : [];
           if (allInfo.value) {
-            allInfo.value.forEach((element) => {
+            allInfo.value.forEach(element => {
               tableData.value.push({
                 LicenseNumber: element.newLicenseCode,
                 ApplicantName:
@@ -650,7 +578,7 @@ export default {
                   .toJSON()
                   .slice(0, 10)
                   .replace(/-/g, "/"),
-                data: element,
+                data: element
               });
             });
           }
@@ -663,25 +591,25 @@ export default {
                 field: "LicenseNumber",
                 width: "15%",
                 sortable: true,
-                isKey: true,
+                isKey: true
               },
               {
                 label: "Applicant Name",
                 field: "ApplicantName",
                 width: "45%",
-                sortable: true,
+                sortable: true
               },
               {
                 label: "Applicant Type",
                 field: "ApplicantType",
                 width: "20%",
-                sortable: true,
+                sortable: true
               },
               {
                 label: "Applied Date",
                 field: "Date",
                 width: "20%",
-                sortable: true,
+                sortable: true
               },
               {
                 label: "Action",
@@ -693,218 +621,32 @@ export default {
                     row.id +
                     '" ><i class="fa fa-eye"></i>View/Edit</button>'
                   );
-                },
-              },
+                }
+              }
             ],
             rows: tableData.value,
             totalRecordCount: res.count,
             sortable: {
               order: "id",
-              sort: "asc",
-            },
+              sort: "asc"
+            }
           };
         });
     };
 
-    const includeFromOthers = () => {
-      if (include.value === true) {
-        unassignedTable.value.isLoading = true;
-        let subId = statuses
-          ? statuses.filter((stat) => stat.code == "SUB").id
-          : "";
-
-        store
-          .dispatch("reviewerNewLicense/getNewLicenseFromOtherRegion", [
-            { statusCode: subId },
-            { params: defParamsUnassigned },
-          ])
-          .then((res) => {
-            allInfo.value = res ? res.rows : [];
-
-            tableData.value = [];
-            allInfo.value.forEach((element) => {
-              tableData.value.push({
-                LicenseNumber: element.newLicenseCode,
-                ApplicantName:
-                  (element.profile ? element.profile.name : "") +
-                  " " +
-                  (element.profile ? element.profile.fatherName : "") +
-                  " " +
-                  (element.profile ? element.profile.grandFatherName : ""),
-                ApplicantType: element.applicantType
-                  ? element.applicantType.name
-                  : "",
-                Date: new Date(element.createdAt)
-                  .toJSON()
-                  .slice(0, 10)
-                  .replace(/-/g, "/"),
-                data: element,
-              });
-            });
-
-            unassignedTable.value = {
-              columns: [
-                {
-                  label: "License Number",
-                  field: "LicenseNumber",
-                  width: "15%",
-                  sortable: true,
-                  isKey: true,
-                },
-                {
-                  label: "Applicant Name",
-                  field: "ApplicantName",
-                  width: "45%",
-                  sortable: true,
-                },
-                {
-                  label: "Application Type",
-                  field: "ApplicationType",
-                  width: "20%",
-                  sortable: true,
-                },
-                {
-                  label: "Date",
-                  field: "Date",
-                  width: "15%",
-                  sortable: true,
-                },
-                {
-                  label: "Actions",
-                  field: "quick",
-                  width: "10%",
-                  display: function(row) {
-                    return (
-                      '<button  data-set="' +
-                      row +
-                      '"  data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
-                      row.id +
-                      '" ><i class="fa fa-eye"></i> View/Edit</button>'
-                    );
-                  },
-                },
-              ],
-              rows: tableData.value,
-              totalRecordCount: tableData.value.length,
-              sortable: {
-                order: "id",
-                sort: "asc",
-              },
-            };
-          });
-      }
-      if (include.value === false) {
-        unassignedTable.value.rows = tableDataTemp.value;
-        unassignedTable.value.totalRecordCount = tableDataTemp.value.length;
-      }
-    };
-
-    const includeFromOthersResub = () => {
-      if (includeResub.value === true) {
-        reSubmittedTable.value.isLoading = true;
-        let updId = statuses
-          ? statuses.filter((stat) => stat.code == "UPD").id
-          : "";
-        store
-          .dispatch("reviewerNewLicense/getNewLicenseFromOtherRegion", [
-            { statusCode: updId },
-            { params: defParamsResub },
-          ])
-          .then((res) => {
-            allInfo.value = res ? res.rows : [];
-
-            reTableData.value = [];
-            allInfo.value.forEach((element) => {
-              reTableData.value.push({
-                LicenseNumber: element.newLicenseCode,
-                ApplicantName:
-                  (element.profile ? element.profile.name : "") +
-                  " " +
-                  (element.profile ? element.profile.fatherName : "") +
-                  " " +
-                  (element.profile ? element.profile.grandFatherName : ""),
-                ApplicantType: element.applicantType
-                  ? element.applicantType.name
-                  : "",
-                Date: new Date(element.createdAt)
-                  .toJSON()
-                  .slice(0, 10)
-                  .replace(/-/g, "/"),
-                data: element,
-              });
-            });
-
-            reSubmittedTable.value = {
-              columns: [
-                {
-                  label: "License Number",
-                  field: "LicenseNumber",
-                  width: "15%",
-                  sortable: true,
-                  isKey: true,
-                },
-                {
-                  label: "Applicant Name",
-                  field: "ApplicantName",
-                  width: "45%",
-                  sortable: true,
-                },
-                {
-                  label: "Application Type",
-                  field: "ApplicationType",
-                  width: "20%",
-                  sortable: true,
-                },
-                {
-                  label: "Date",
-                  field: "Date",
-                  width: "15%",
-                  sortable: true,
-                },
-                {
-                  label: "Actions",
-                  field: "quick",
-                  width: "10%",
-                  display: function(row) {
-                    return (
-                      '<button  data-set="' +
-                      row +
-                      '"  data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
-                      row.id +
-                      '" ><i class="fa fa-eye"></i> View/Edit</button>'
-                    );
-                  },
-                },
-              ],
-              rows: reTableData.value,
-              totalRecordCount: reTableData.value.length,
-              sortable: {
-                order: "id",
-                sort: "asc",
-              },
-            };
-          });
-      }
-      if (includeResub.value === false) {
-        reSubmittedTable.value.rows = tableDataTempResub.value;
-        reSubmittedTable.value.totalRecordCount =
-          tableDataTempResub.value.length;
-      }
-    };
-
-    const reSubmitted = (apiParameters) => {
+    const reSubmitted = apiParameters => {
       let updId = statuses
-        ? statuses.filter((stat) => stat.code == "UPD")[0].id
+        ? statuses.filter(stat => stat.code == "UPD")[0].id
         : "";
       store
         .dispatch("reviewerNewLicense/getNewLicenseByStatus", [
           { statusId: updId },
-          { params: apiParameters },
+          { params: apiParameters }
         ])
-        .then((res) => {
+        .then(res => {
           allInfo.value = res ? res.rows : [];
 
-          allInfo.value.forEach((element) => {
+          allInfo.value.forEach(element => {
             reTableData.value.push({
               LicenseNumber: element.newLicenseCode,
               ApplicantName:
@@ -918,7 +660,7 @@ export default {
                 .toJSON()
                 .slice(0, 10)
                 .replace(/-/g, "/"),
-              data: element,
+              data: element
             });
           });
           tableDataTempResub.value = reTableData.value;
@@ -929,25 +671,25 @@ export default {
                 field: "LicenseNumber",
                 width: "20%",
                 sortable: true,
-                isKey: true,
+                isKey: true
               },
               {
                 label: "Applicant Name",
                 field: "ApplicantName",
                 width: "45%",
-                sortable: true,
+                sortable: true
               },
               {
                 label: "Application Type",
                 field: "ApplicationType",
                 width: "15%",
-                sortable: true,
+                sortable: true
               },
               {
                 label: "Date",
                 field: "Date",
                 width: "20%",
-                sortable: true,
+                sortable: true
               },
               {
                 label: "Actions",
@@ -961,15 +703,15 @@ export default {
                     row.id +
                     '" ><i class="fa fa-eye"></i>View/Edit</button>'
                   );
-                },
-              },
+                }
+              }
             ],
             rows: reTableData.value,
             totalRecordCount: res.count,
             sortable: {
               order: "id",
-              sort: "asc",
-            },
+              sort: "asc"
+            }
           };
         });
     };
@@ -996,14 +738,14 @@ export default {
       reSubmittedTable.value.isLoading = false;
     };
 
-    const rowClicked = (row) => {
+    const rowClicked = row => {
       if (row != undefined) {
         row = JSON.parse(JSON.stringify(row));
         modalDataId.value.id = row.data.id ? row.data.id : "";
         modalDataId.value.change++;
       }
     };
-    const rowClickedResub = (row) => {
+    const rowClickedResub = row => {
       if (row != undefined) {
         row = JSON.parse(JSON.stringify(row));
         modalDataIdResub.value.change++;
@@ -1025,8 +767,8 @@ export default {
     onMounted(() => {
       unassigned(defParamsUnassigned.value);
       reSubmitted(defParamsResub.value);
-      store.dispatch("reviewer/getAdminsByRegion", adminRegion).then((res) => {
-        reviewers.value = res.data.data.filter((e) => {
+      store.dispatch("reviewer/getAdminsByRegion", adminRegion).then(res => {
+        reviewers.value = res.data.data.filter(e => {
           return e.role.code !== "UM";
         });
       });
@@ -1043,7 +785,7 @@ export default {
             { key: "size", value: limit },
             { key: "value", value: searchTerm.value },
             { key: "fromDate", value: searchTermFromDate.value },
-            { key: "toDate", value: searchTermToDate.value },
+            { key: "toDate", value: searchTermToDate.value }
           ]);
         } else {
           unassigned([
@@ -1051,7 +793,7 @@ export default {
             { key: "size", value: limit },
             { key: "value", value: searchTerm.value },
             { key: "fromDate", value: searchTermFromDate.value },
-            { key: "toDate", value: searchTermToDate.value },
+            { key: "toDate", value: searchTermToDate.value }
           ]);
         }
         unassignedTable.value.sortable.order = order;
@@ -1070,7 +812,7 @@ export default {
             { key: "size", value: limit },
             { key: "value", value: searchTermOthers.value },
             { key: "fromDate", value: searchTermFromDateResub.value },
-            { key: "toDate", value: searchTermToDateResub.value },
+            { key: "toDate", value: searchTermToDateResub.value }
           ]);
         } else {
           reSubmitted([
@@ -1078,7 +820,7 @@ export default {
             { key: "size", value: limit },
             { key: "value", value: searchTermOthers.value },
             { key: "fromDate", value: searchTermFromDateResub.value },
-            { key: "toDate", value: searchTermToDateResub.value },
+            { key: "toDate", value: searchTermToDateResub.value }
           ]);
         }
         reSubmittedTable.value.sortable.order = order;
@@ -1112,13 +854,11 @@ export default {
       unassigned,
       rowClicked,
       reSubmitted,
-      includeFromOthers,
-      includeFromOthersResub,
       rowClickedResub,
       modalDataId,
       adminLevel,
-      modalDataIdResub,
+      modalDataIdResub
     };
-  },
+  }
 };
 </script>

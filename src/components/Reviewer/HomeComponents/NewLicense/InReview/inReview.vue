@@ -482,7 +482,7 @@ export default {
     NewLicenseMainContent,
     VueTableLite,
     editModal,
-    editModalOthers,
+    editModalOthers
   },
   setup() {
     const store = useStore();
@@ -490,11 +490,11 @@ export default {
       .regionId;
     let modalDataId = ref({
       id: "",
-      change: 0,
+      change: 0
     });
     let modalDataIdOthers = ref({
       id: "",
-      change: 0,
+      change: 0
     });
     let adminRole = localStorage.getItem("role");
     let statuses = JSON.parse(localStorage.getItem("applicationStatuses"));
@@ -511,10 +511,10 @@ export default {
     let tableData = ref([]);
     let toYouTableData = ref([]);
     toOthersTable.value = {
-      isLoading: true,
+      isLoading: true
     };
     toYouTable.value = {
-      isLoading: true,
+      isLoading: true
     };
 
     const refreshTable = () => {
@@ -527,11 +527,11 @@ export default {
 
       inReviewAssignedToOthers([
         { key: "page", value: 0 },
-        { key: "size", value: 10 },
+        { key: "size", value: 10 }
       ]);
       inReviewAssignedToYou([
         { key: "page", value: 0 },
-        { key: "size", value: 10 },
+        { key: "size", value: 10 }
       ]);
     };
 
@@ -544,7 +544,7 @@ export default {
       tableData.value = [];
       inReviewAssignedToOthers([
         { key: "page", value: 0 },
-        { key: "size", value: 10 },
+        { key: "size", value: 10 }
       ]);
     };
     const clearFilters = () => {
@@ -556,25 +556,25 @@ export default {
       toYouTableData.value = [];
       inReviewAssignedToYou([
         { key: "page", value: 0 },
-        { key: "size", value: 10 },
+        { key: "size", value: 10 }
       ]);
     };
-    const inReviewAssignedToYou = (apiParameters) => {
+    const inReviewAssignedToYou = apiParameters => {
       let statId = statuses
-        ? statuses.filter((stat) => stat.code == "IRV")[0].id
+        ? statuses.filter(stat => stat.code == "IRV")[0].id
         : "";
       store
         .dispatch("reviewerNewLicense/getNewLicenseByStatus", [
           {
-            statusId: statId,
+            statusId: statId
           },
           {
-            params: apiParameters,
-          },
+            params: apiParameters
+          }
         ])
-        .then((res) => {
+        .then(res => {
           allInfo.value = res ? res.rows : [];
-          allInfo.value.forEach((element) => {
+          allInfo.value.forEach(element => {
             toYouTableData.value.push({
               LicenseNumber: element.newLicenseCode,
               ApplicantName:
@@ -590,7 +590,7 @@ export default {
                 .toJSON()
                 .slice(0, 10)
                 .replace(/-/g, "/"),
-              data: element,
+              data: element
             });
           });
 
@@ -600,25 +600,25 @@ export default {
                 label: "License Number",
                 field: "LicenseNumber",
                 width: "20%",
-                isKey: true,
+                isKey: true
               },
               {
                 label: "Applicant Name",
                 field: "ApplicantName",
                 width: "40%",
-                sortable: true,
+                sortable: true
               },
               {
                 label: "Applicant Type",
                 field: "ApplicantType",
                 width: "20%",
-                sortable: true,
+                sortable: true
               },
               {
                 label: "Date",
                 field: "Date",
                 width: "20%",
-                sortable: true,
+                sortable: true
               },
               {
                 label: "Action",
@@ -630,36 +630,36 @@ export default {
                     row.id +
                     '" ><i class="fa fa-eye"></i>View/Edit</button>'
                   );
-                },
-              },
+                }
+              }
             ],
 
             rows: toYouTableData.value,
             totalRecordCount: toYouTableData.value.length,
             sortable: {
               order: "id",
-              sort: "asc",
-            },
+              sort: "asc"
+            }
           };
         });
     };
-    const inReviewAssignedToOthers = (apiParameters) => {
+    const inReviewAssignedToOthers = apiParameters => {
       let statId = statuses
-        ? statuses.filter((stat) => stat.code == "IRV")[0].id
+        ? statuses.filter(stat => stat.code == "IRV")[0].id
         : "";
       store
         .dispatch("reviewerNewLicense/getOthersNewLicenseByStatus", [
           {
-            statusId: statId,
+            statusId: statId
           },
           {
-            params: apiParameters,
-          },
+            params: apiParameters
+          }
         ])
-        .then((res) => {
+        .then(res => {
           allInfo.value = res ? res.rows : [];
 
-          allInfo.value.forEach((element) => {
+          allInfo.value.forEach(element => {
             tableData.value.push({
               LicenseNumber: element ? element.newLicenseCode : "",
               ApplicantName:
@@ -679,7 +679,7 @@ export default {
                 .toJSON()
                 .slice(0, 10)
                 .replace(/-/g, "/"),
-              data: element,
+              data: element
             });
           });
 
@@ -689,25 +689,25 @@ export default {
                 label: "License Number",
                 field: "LicenseNumber",
                 width: "20%",
-                isKey: true,
+                isKey: true
               },
               {
                 label: "Applicant Name",
                 field: "ApplicantName",
                 width: "40%",
-                sortable: true,
+                sortable: true
               },
               {
                 label: "Applicant Type",
                 field: "ApplicationType",
                 width: "20%",
-                sortable: true,
+                sortable: true
               },
               {
                 label: "Date",
                 field: "Date",
                 width: "20%",
-                sortable: true,
+                sortable: true
               },
               {
                 label: "Action",
@@ -719,15 +719,15 @@ export default {
                     row.id +
                     '" ><i class="fa fa-eye"></i> View</button>'
                   );
-                },
-              },
+                }
+              }
             ],
             rows: tableData.value,
             totalRecordCount: tableData.value.length,
             sortable: {
               order: "id",
-              sort: "asc",
-            },
+              sort: "asc"
+            }
           };
         });
     };
@@ -751,7 +751,7 @@ export default {
       });
       toOthersTable.value.isLoading = false;
     };
-    const rowClicked = (row) => {
+    const rowClicked = row => {
       if (row != undefined) {
         row = JSON.parse(JSON.stringify(row));
 
@@ -759,7 +759,7 @@ export default {
         modalDataId.value.change++;
       }
     };
-    const rowClickedOthers = (row) => {
+    const rowClickedOthers = row => {
       if (row != undefined) {
         row = JSON.parse(JSON.stringify(row));
         modalDataIdOthers.value.id = row.data ? row.data.id : "-----";
@@ -776,7 +776,7 @@ export default {
         { key: "size", value: 10 },
         { key: "value", value: searchTerm.value },
         { key: "fromDate", value: searchTermFromDate.value },
-        { key: "toDate", value: searchTermToDate.value },
+        { key: "toDate", value: searchTermToDate.value }
       ]);
     };
     const searchApplicationOther = () => {
@@ -788,22 +788,22 @@ export default {
         { key: "size", value: 10 },
         { key: "value", value: searchTermOthers.value },
         { key: "fromDate", value: searchTermFromDateOth.value },
-        { key: "toDate", value: searchTermToDateOth.value },
+        { key: "toDate", value: searchTermToDateOth.value }
       ]);
     };
     onMounted(() => {
       inReviewAssignedToYou([
         { key: "page", value: 0 },
-        { key: "size", value: 10 },
+        { key: "size", value: 10 }
       ]);
       adminRole && adminRole != "REV"
         ? inReviewAssignedToOthers([
             { key: "page", value: 0 },
-            { key: "size", value: 10 },
+            { key: "size", value: 10 }
           ])
         : "";
-      store.dispatch("reviewer/getAdminsByRegion", adminRegion).then((res) => {
-        reviewers.value = res.data.data.filter((e) => {
+      store.dispatch("reviewer/getAdminsByRegion", adminRegion).then(res => {
+        reviewers.value = res.data.data.filter(e => {
           return e.role.code !== "UM";
         });
       });
@@ -820,7 +820,7 @@ export default {
             { key: "size", value: limit },
             { key: "value", value: searchTerm.value },
             { key: "fromDate", value: searchTermFromDate.value },
-            { key: "toDate", value: searchTermToDate.value },
+            { key: "toDate", value: searchTermToDate.value }
           ]);
         } else {
           inReviewAssignedToYou([
@@ -828,7 +828,7 @@ export default {
             { key: "size", value: limit },
             { key: "value", value: searchTerm.value },
             { key: "fromDate", value: searchTermFromDate.value },
-            { key: "toDate", value: searchTermToDate.value },
+            { key: "toDate", value: searchTermToDate.value }
           ]);
         }
         toYouTable.value.sortable.order = order;
@@ -847,7 +847,7 @@ export default {
             { key: "size", value: limit },
             { key: "value", value: searchTermOthers.value },
             { key: "fromDate", value: searchTermFromDateOth.value },
-            { key: "toDate", value: searchTermToDateOth.value },
+            { key: "toDate", value: searchTermToDateOth.value }
           ]);
         } else {
           inReviewAssignedToOthers([
@@ -855,7 +855,7 @@ export default {
             { key: "size", value: limit },
             { key: "value", value: searchTermOthers.value },
             { key: "fromDate", value: searchTermFromDateOth.value },
-            { key: "toDate", value: searchTermToDateOth.value },
+            { key: "toDate", value: searchTermToDateOth.value }
           ]);
         }
         toOthersTable.value.sortable.order = order;
@@ -886,9 +886,9 @@ export default {
       rowClickedOthers,
       refreshTable,
       modalDataId,
-      modalDataIdOthers,
+      modalDataIdOthers
     };
-  },
+  }
 };
 </script>
 <style scoped>

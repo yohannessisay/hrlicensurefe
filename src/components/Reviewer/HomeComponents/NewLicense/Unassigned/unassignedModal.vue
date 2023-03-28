@@ -126,7 +126,7 @@
                                   p-4
                                   bg-blue-600
                                   rounded-md
-                                  shadow-lg
+                                  shadow-md
                                   w-48
                                   h-48
                                   flex
@@ -135,64 +135,91 @@
                                   justify-center
                                 "
                               >
-                                <i class="fa fa-user fa-4x"></i>
+                                <img
+                                  src="../../../../../assets/showLicense/profile.png"
+                                  alt=""
+                                  style="height: 152px; width: 150px"
+                                />
                               </div>
                             </div>
                             <div class="grow ml-6">
                               <h2 class="font-extrabold text-2xl mb-1">
                                 Personal Info
                               </h2>
-                              <p class="text-gray-500">
-                                <span
-                                  class="
+                              <div
+                                class="
+                                  border-2
+                                  p-2
+                                  rounded-lg
+                                  m-1
+                                  shadow-md
+                                  text-primary-500
+                                "
+                              >
+                                <p class="text-gray-500">
+                                  <span
+                                    class="
                                     font-semibold
                                     text-lg text-primary-700
                                     mb-1
                                   "
-                                  >Full Name:</span
-                                >
-                                {{ modalData.name ? modalData.name : "" }}
-                              </p>
-                              <p class="text-gray-500">
-                                <span
-                                  class="font-semibold text-primary-700 mb-1"
-                                  >Gender:</span
-                                >
-                                {{ modalData.gender ? modalData.gender : "" }}
-                              </p>
-                              <p class="text-gray-500">
-                                <span
-                                  class="font-semibold text-primary-700 mb-1"
-                                  >Nationality:</span
-                                >
-                                {{
-                                  modalData.nationality
-                                    ? modalData.nationality
-                                    : ""
-                                }}
-                              </p>
-                              <p class="text-gray-500">
-                                <span
-                                  class="font-semibold text-primary-700 mb-1"
-                                  >Date Of Birth:</span
-                                >
-                                {{
-                                  modalData.dateOfBirth
-                                    ? modalData.dateOfBirth.slice(0, 10)
-                                    : ""
-                                }}
-                              </p>
-                              <p class="text-gray-500">
-                                <span
-                                  class="font-semibold text-primary-700 mb-1"
-                                  >Martial Status:</span
-                                >
-                                {{
-                                  modalData.maritalStatus
-                                    ? modalData.maritalStatus
-                                    : ""
-                                }}
-                              </p>
+                                    >Full Name:</span
+                                  >
+                                  <span class="text-grey-800 ml-1">
+                                    {{
+                                      modalData.name ? modalData.name : ""
+                                    }}</span
+                                  >
+                                </p>
+                                <p class="text-gray-500">
+                                  <span
+                                    class="font-semibold text-primary-700 mb-1"
+                                    >Gender:</span
+                                  >
+                                  <span class="text-grey-800 ml-1">
+                                    {{
+                                      modalData.gender ? modalData.gender : ""
+                                    }}</span
+                                  >
+                                </p>
+                                <p class="text-gray-500">
+                                  <span
+                                    class="font-semibold text-primary-700 mb-1"
+                                    >Nationality:</span
+                                  >
+                                  <span class="text-grey-800 ml-1">
+                                    {{
+                                      modalData.nationality
+                                        ? modalData.nationality
+                                        : ""
+                                    }}</span
+                                  >
+                                </p>
+                                <p class="text-gray-500">
+                                  <span
+                                    class="font-semibold text-primary-700 mb-1"
+                                    >Date Of Birth:</span
+                                  >
+                                  <span class="text-grey-800 ml-1">
+                                    {{
+                                      modalData.dateOfBirth
+                                        ? modalData.dateOfBirth.slice(0, 10)
+                                        : "-----"
+                                    }}</span
+                                  >
+                                </p>
+                                <p class="text-gray-500">
+                                  <span
+                                    class="font-semibold text-primary-700 mb-1"
+                                    >Martial Status:</span
+                                  >
+                                  <span class="text-grey-800 ml-1">{{
+                                    modalData.maritalStatus
+                                      ? modalData.maritalStatus
+                                      : ""
+                                  }}</span>
+                                </p>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -404,7 +431,7 @@
                                   p-4
                                   bg-blue-600
                                   rounded-md
-                                  shadow-lg
+                                  shadow-md
                                   w-48
                                   h-48
                                   flex
@@ -417,18 +444,41 @@
                             </div>
                             <div class="grow ml-6">
                               <h2 class="font-bold mb-1">Contact Info</h2>
-                              <p class="text-gray-500">
-                                <span class="font-medium text-primary-700 mb-1"
-                                  >Mobile Number:</span
-                                >
-                                {{ modalData.mobileNumber }}
-                              </p>
-                              <p class="text-gray-500">
-                                <span class="font-medium text-primary-700 mb-1"
-                                  >Email:</span
-                                >
-                                {{ modalData.email }}
-                              </p>
+                              <div
+                                class="
+                                  border-2
+                                  p-2
+                                  rounded-lg
+                                  m-1
+                                  shadow-md
+                                  text-primary-500
+                                "
+                              >
+                                <p class="text-gray-500">
+                                  <span
+                                    class="font-semibold text-primary-700 mb-1"
+                                    >Mobile Number:</span
+                                  >
+                                  <span class="text-grey-800 ml-1">
+                                    {{
+                                      modalData.mobileNumber
+                                        ? modalData.mobileNumber
+                                        : ""
+                                    }}</span
+                                  >
+                                </p>
+                                <p class="text-gray-500">
+                                  <span
+                                    class="font-semibold text-primary-700 mb-1"
+                                    >Email:</span
+                                  >
+                                  <span class="text-grey-800 ml-1">
+                                    {{
+                                      modalData.email ? modalData.email : ""
+                                    }}</span
+                                  >
+                                </p>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -662,7 +712,7 @@ export default {
               isLoading.value = true;
               setTimeout(() => {
                 window.location.reload();
-              }, 3000);
+              }, 1000);
             });
           } else {
             toast.error(
