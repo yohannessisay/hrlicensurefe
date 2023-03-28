@@ -14,7 +14,9 @@
         </li>
         <li><span class="text-gray-500 mx-2">/</span></li>
         <li>
-          <a href="#" class="hover:text-primary-600 text-grey-300"
+          <a
+            href="/admin/newLicense/"
+            class="hover:text-primary-600 text-grey-300"
             >New License</a
           >
         </li>
@@ -40,9 +42,12 @@
                 </h2>
               </div>
               <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
-                <div class="mb-3 xl:w-full">
-                  <div
-                    class="
+                <div class="p-4 bg-grey-200 mb-4 rounded-lg">
+                  <h1 class="text-2xl mb-1">Filters</h1>
+                  <div class="mb-3 xl:w-full">
+                    <h2 class="text-primary-100 text-lg">Applicant Name</h2>
+                    <div
+                      class="
                       input-group
                       relative
                       flex flex-wrap
@@ -50,10 +55,10 @@
                       w-full
                       mb-4
                     "
-                  >
-                    <input
-                      type="search"
-                      class="
+                    >
+                      <input
+                        type="search"
+                        class="
                         form-control
                         relative
                         flex-auto
@@ -75,17 +80,18 @@
                         focus:border-blue-600
                         focus:outline-none
                       "
-                      placeholder="Start Searching For Name"
-                      aria-label="Search"
-                      aria-describedby="button-addon2"
-                      v-model="searchTerm"
-                    />
-                    <button
-                      class="
+                        placeholder="Start Searching For Applicant's Name"
+                        aria-label="Search"
+                        aria-describedby="button-addon2"
+                        v-model="searchTerm"
+                      />
+                      <button
+                        class="
                         inline-block
                         px-6
                         py-2
-                        bg-primary-700
+                        bg-primary-600
+                        border-primary-300
                         text-white
                         font-medium
                         text-xs
@@ -93,42 +99,40 @@
                         uppercase
                         rounded
                         shadow-md
-                        hover:bg-white hover:text-primary-600 hover:border
+                        hover:bg-white hover:text-primary-600  
                         transition
                         duration-150
                         ease-in-out
                         items-center
                       "
-                      @click="searchApplication()"
-                    >
-                      <svg
-                        aria-hidden="true"
-                        focusable="false"
-                        data-prefix="fas"
-                        data-icon="search"
-                        class="w-5"
-                        role="img"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 512 512"
+                        @click="searchApplication()"
                       >
-                        <path
-                          fill="currentColor"
-                          d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
-                        ></path>
-                      </svg>
-                    </button>
+                        <svg
+                          aria-hidden="true"
+                          focusable="false"
+                          data-prefix="fas"
+                          data-icon="search"
+                          class="w-5"
+                          role="img"
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 512 512"
+                        >
+                          <path
+                            fill="currentColor"
+                            d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
+                          ></path>
+                        </svg>
+                      </button>
+                    </div>
                   </div>
-                </div>
-                <label for="" class="mt-8 text-primary-600 font-bold"
-                  >Applied Date</label
-                >
-                <div class="grid grid-cols-4">
-                  <div class="mb-3">
-                    <label for="" class="ml-2">From</label>
-                    <input
-                      v-model="searchTermFromDate"
-                      type="date"
-                      class="
+                  <h2 class="text-primary-100 text-lg">Applied Date</h2>
+                  <div class="grid grid-cols-4">
+                    <div class="mb-3">
+                      <label for="" class="ml-2">From</label>
+                      <input
+                        v-model="searchTermFromDate"
+                        type="date"
+                        class="
                         appearance-none
                         block
                         w-full
@@ -148,14 +152,14 @@
                         focus:border-blue-600
                         focus:outline-none
                       "
-                      aria-label="Default select example"
-                    />
-                  </div>
-                  <div class="mb-3 ml-2">
-                    <label for="" class="ml-4"> To</label>
-                    <input
-                      type="date"
-                      class="
+                        aria-label="Default select example"
+                      />
+                    </div>
+                    <div class="mb-3 ml-2">
+                      <label for="" class="ml-4"> To</label>
+                      <input
+                        type="date"
+                        class="
                         appearance-none
                         block
                         w-full
@@ -175,36 +179,38 @@
                         focus:border-blue-600
                         focus:outline-none
                       "
-                      v-model="searchTermToDate"
-                      aria-label="Default select example"
-                    />
-                  </div>
-                  <div class="ml-8 mt-4">
-                    <button
-                      type="button"
-                      class="
+                        v-model="searchTermToDate"
+                        aria-label="Default select example"
+                      />
+                    </div>
+                    <div class="ml-8 mt-4">
+                      <button
+                        type="button"
+                        class="
                         inline-block
                         px-6
                         py-2
                         mt-2
-                        border-2 border-primary-600
-                        text-primary-600
+                        border-2 border-primary-300
+                        text-white
                         font-medium
                         text-xs
                         leading-tight
                         uppercase
                         rounded
-                        hover:bg-primary-600 hover:bg-opacity-5 hover:text-white
+                        bg-primary-600
+                        hover:bg-white hover:bg-opacity-5 hover:text-primary-600
                         focus:outline-none focus:ring-0
                         transition
                         duration-150
                         ease-in-out
                       "
-                      @click="clearFilters()"
-                    >
-                      <i class="fa fa-close"></i>
-                      Clear Filters
-                    </button>
+                        @click="clearFilters()"
+                      >
+                        <i class="fa fa-close"></i>
+                        Clear Filters
+                      </button>
+                    </div>
                   </div>
                 </div>
                 <div
@@ -228,7 +234,7 @@
                     @row-clicked="rowClicked"
                     @do-search="doSearch"
                   ></vue-table-lite>
-                  <edit-modal 
+                  <edit-modal
                     :modalDataId="modalDataId"
                     :reviewers="reviewers"
                     @refreshTable="refreshTable"
@@ -248,9 +254,12 @@
                 </h2>
               </div>
               <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
-                <div class="mb-3 xl:w-full">
-                  <div
-                    class="
+                <div class="p-4 bg-grey-200 mb-4 rounded-lg">
+                  <h1 class="text-2xl mb-1">Filters</h1>
+                  <div class="mb-3 xl:w-full">
+                    <h2 class="text-primary-100 text-lg">Applicant Name</h2>
+                    <div
+                      class="
                       input-group
                       relative
                       flex flex-wrap
@@ -258,10 +267,10 @@
                       w-full
                       mb-4
                     "
-                  >
-                    <input
-                      type="search"
-                      class="
+                    >
+                      <input
+                        type="search"
+                        class="
                         form-control
                         relative
                         flex-auto
@@ -283,17 +292,18 @@
                         focus:border-blue-600
                         focus:outline-none
                       "
-                      placeholder="Start Searching For Name"
-                      aria-label="Search"
-                      aria-describedby="button-addon2"
-                      v-model="searchTermOthers"
-                    />
-                    <button
-                      class="
-                        inline-block
+                        placeholder="Start Searching For Applicant's Name"
+                        aria-label="Search"
+                        aria-describedby="button-addon2"
+                        v-model="searchTermOthers"
+                      />
+                      <button
+                        class="
+                      inline-block
                         px-6
                         py-2
-                        bg-primary-700
+                        bg-primary-600
+                        border-primary-300
                         text-white
                         font-medium
                         text-xs
@@ -301,42 +311,41 @@
                         uppercase
                         rounded
                         shadow-md
-                        hover:bg-white hover:text-primary-600 hover:border
+                        hover:bg-white hover:text-primary-600  
                         transition
+                        focus:border-blue-600
                         duration-150
                         ease-in-out
                         items-center
                       "
-                      @click="searchApplicationOther()"
-                    >
-                      <svg
-                        aria-hidden="true"
-                        focusable="false"
-                        data-prefix="fas"
-                        data-icon="search"
-                        class="w-5"
-                        role="img"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 512 512"
+                        @click="searchApplicationOther()"
                       >
-                        <path
-                          fill="currentColor"
-                          d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
-                        ></path>
-                      </svg>
-                    </button>
+                        <svg
+                          aria-hidden="true"
+                          focusable="false"
+                          data-prefix="fas"
+                          data-icon="search"
+                          class="w-5"
+                          role="img"
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 512 512"
+                        >
+                          <path
+                            fill="currentColor"
+                            d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
+                          ></path>
+                        </svg>
+                      </button>
+                    </div>
                   </div>
-                </div>
-                <label for="" class="mt-8 text-primary-600 font-bold"
-                  >Applied Date</label
-                >
-                <div class="grid grid-cols-4">
-                  <div class="mb-3">
-                    <label for="" class="ml-2">From</label>
-                    <input
-                      v-model="searchTermFromDateOth"
-                      type="date"
-                      class="
+                  <h2 class="text-primary-100 text-lg">Applied Date</h2>
+                  <div class="grid grid-cols-4">
+                    <div class="mb-3">
+                      <label for="" class="ml-2">From</label>
+                      <input
+                        v-model="searchTermFromDateOth"
+                        type="date"
+                        class="
                         appearance-none
                         block
                         w-full
@@ -356,14 +365,14 @@
                         focus:border-blue-600
                         focus:outline-none
                       "
-                      aria-label="Default select example"
-                    />
-                  </div>
-                  <div class="mb-3 ml-2">
-                    <label for="" class="ml-4"> To</label>
-                    <input
-                      type="date"
-                      class="
+                        aria-label="Default select example"
+                      />
+                    </div>
+                    <div class="mb-3 ml-2">
+                      <label for="" class="ml-4"> To</label>
+                      <input
+                        type="date"
+                        class="
                         appearance-none
                         block
                         w-full
@@ -383,36 +392,38 @@
                         focus:border-blue-600
                         focus:outline-none
                       "
-                      v-model="searchTermToDateOth"
-                      aria-label="Default select example"
-                    />
-                  </div>
-                  <div class="ml-8 mt-4">
-                    <button
-                      type="button"
-                      class="
-                        inline-block
+                        v-model="searchTermToDateOth"
+                        aria-label="Default select example"
+                      />
+                    </div>
+                    <div class="ml-8 mt-4">
+                      <button
+                        type="button"
+                        class="
+                      inline-block
                         px-6
                         py-2
                         mt-2
-                        border-2 border-primary-600
-                        text-primary-600
+                        border-2 border-primary-300
+                        text-white
                         font-medium
                         text-xs
                         leading-tight
                         uppercase
                         rounded
-                        hover:bg-primary-600 hover:bg-opacity-5 hover:text-white
+                        bg-primary-600
+                        hover:bg-white hover:bg-opacity-5 hover:text-primary-600
                         focus:outline-none focus:ring-0
                         transition
                         duration-150
                         ease-in-out
                       "
-                      @click="clearFiltersOther()"
-                    >
-                      <i class="fa fa-close"></i>
-                      Clear Filters
-                    </button>
+                        @click="clearFiltersOther()"
+                      >
+                        <i class="fa fa-close"></i>
+                        Clear Filters
+                      </button>
+                    </div>
                   </div>
                 </div>
                 <div
@@ -437,7 +448,7 @@
                     @do-search="doSearchOth"
                   ></vue-table-lite>
 
-                  <edit-modal-others 
+                  <edit-modal-others
                     :reviewers="reviewers"
                     :modalDataIdOthers="modalDataIdOthers"
                     @refreshTable="refreshTable"
@@ -474,7 +485,7 @@ export default {
     editModalOthers,
   },
   setup() {
-    const store = useStore(); 
+    const store = useStore();
     const adminRegion = JSON.parse(localStorage.getItem("allAdminData"))
       .regionId;
     let modalDataId = ref({
@@ -508,12 +519,12 @@ export default {
 
     const refreshTable = () => {
       toOthersTable.value.isLoading = true;
-      toYouTable.value.isLoading = true;   
+      toYouTable.value.isLoading = true;
       toOthersTable.value.rows = [];
       tableData.value = [];
-      toYouTable.value.rows=[];
-      toYouTableData.value=[];
-      
+      toYouTable.value.rows = [];
+      toYouTableData.value = [];
+
       inReviewAssignedToOthers([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
@@ -548,103 +559,14 @@ export default {
         { key: "size", value: 10 },
       ]);
     };
-    const inReviewAssignedToOthers = (apiParameters) => {
-      let revId = statuses
-        ? statuses.filter((stat) => stat.code == "IRV")[0].id
-        : "";
-      store
-        .dispatch("reviewerNewLicense/getNewLicenseOthersOnReview", [
-          {
-            statusId: revId,
-          },
-          {
-            params: apiParameters,
-          },
-        ])
-        .then((res) => {
-          allInfo.value = res ? res.rows : [];
-
-          allInfo.value.forEach((element) => {
-            tableData.value.push({
-              LicenseNumber: element ? element.newLicenseCode : "",
-              ApplicantName:
-                (element.profile ? element.profile.name : "------") +
-                " " +
-                (element.profile.fatherName
-                  ? element.profile.fatherName
-                  : "------") +
-                " " +
-                (element.profile.grandFatherName
-                  ? element.profile.grandFatherName
-                  : "------"),
-                  ApplicationType: element.applicantType
-                ? element.applicantType.name
-                : "",
-              Date: new Date(element.createdAt)
-                .toJSON()
-                .slice(0, 10)
-                .replace(/-/g, "/"),
-              data: element,
-            });
-          });
-
-          toOthersTable.value = {
-            columns: [
-              {
-                label: "License Number",
-                field: "LicenseNumber",
-                width: "20%",
-                isKey: true,
-              },
-              {
-                label: "Applicant Name",
-                field: "ApplicantName",
-                width: "40%",
-                sortable: true,
-              },
-              {
-                label: "Applicant Type",
-                field: "ApplicationType",
-                width: "20%",
-                sortable: true,
-              },
-              {
-                label: "Date",
-                field: "Date",
-                width: "20%",
-                sortable: true,
-              },
-              {
-                label: "Action",
-                field: "quick",
-                width: "10%",
-                display: function(row) {
-                  return (
-                    '<button data-bs-toggle="modal" data-bs-target="#staticBackdropOthers" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
-                    row.id +
-                    '" ><i class="fa fa-eye"></i> View</button>'
-                  );
-                },
-              },
-            ],
-            rows: tableData.value,
-            totalRecordCount: tableData.value.length,
-            sortable: {
-              order: "id",
-              sort: "asc",
-            },
-          };
-        });
-    };
-
     const inReviewAssignedToYou = (apiParameters) => {
-      let revOthersId = statuses
+      let statId = statuses
         ? statuses.filter((stat) => stat.code == "IRV")[0].id
         : "";
       store
-        .dispatch("reviewerNewLicense/getNewLicenseOnReview", [
+        .dispatch("reviewerNewLicense/getNewLicenseByStatus", [
           {
-            statusId: revOthersId,
+            statusId: statId,
           },
           {
             params: apiParameters,
@@ -714,6 +636,94 @@ export default {
 
             rows: toYouTableData.value,
             totalRecordCount: toYouTableData.value.length,
+            sortable: {
+              order: "id",
+              sort: "asc",
+            },
+          };
+        });
+    };
+    const inReviewAssignedToOthers = (apiParameters) => {
+      let statId = statuses
+        ? statuses.filter((stat) => stat.code == "IRV")[0].id
+        : "";
+      store
+        .dispatch("reviewerNewLicense/getOthersNewLicenseByStatus", [
+          {
+            statusId: statId,
+          },
+          {
+            params: apiParameters,
+          },
+        ])
+        .then((res) => {
+          allInfo.value = res ? res.rows : [];
+
+          allInfo.value.forEach((element) => {
+            tableData.value.push({
+              LicenseNumber: element ? element.newLicenseCode : "",
+              ApplicantName:
+                (element.profile ? element.profile.name : "------") +
+                " " +
+                (element.profile.fatherName
+                  ? element.profile.fatherName
+                  : "------") +
+                " " +
+                (element.profile.grandFatherName
+                  ? element.profile.grandFatherName
+                  : "------"),
+              ApplicationType: element.applicantType
+                ? element.applicantType.name
+                : "",
+              Date: new Date(element.createdAt)
+                .toJSON()
+                .slice(0, 10)
+                .replace(/-/g, "/"),
+              data: element,
+            });
+          });
+
+          toOthersTable.value = {
+            columns: [
+              {
+                label: "License Number",
+                field: "LicenseNumber",
+                width: "20%",
+                isKey: true,
+              },
+              {
+                label: "Applicant Name",
+                field: "ApplicantName",
+                width: "40%",
+                sortable: true,
+              },
+              {
+                label: "Applicant Type",
+                field: "ApplicationType",
+                width: "20%",
+                sortable: true,
+              },
+              {
+                label: "Date",
+                field: "Date",
+                width: "20%",
+                sortable: true,
+              },
+              {
+                label: "Action",
+                field: "quick",
+                width: "10%",
+                display: function(row) {
+                  return (
+                    '<button data-bs-toggle="modal" data-bs-target="#staticBackdropOthers" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
+                    row.id +
+                    '" ><i class="fa fa-eye"></i> View</button>'
+                  );
+                },
+              },
+            ],
+            rows: tableData.value,
+            totalRecordCount: tableData.value.length,
             sortable: {
               order: "id",
               sort: "asc",
@@ -867,7 +877,7 @@ export default {
       searchTermToDate,
       searchTermFromDateOth,
       searchTermToDateOth,
-      toYouTable, 
+      toYouTable,
       reviewers,
       tableLoadingFinish,
       inReviewAssignedToOthers,

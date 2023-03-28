@@ -32,7 +32,7 @@ export default {
   },
   created() {
     this.token = localStorage.getItem('token') ? localStorage.getItem('token') : null;
-    if (this.token && this.token !== null) {
+    if (this.token && this.token != null) {
       let timerId = setInterval(() => {
         this.time -= 1;
         if (!this.$store.state.idleVue.isIdle) clearInterval(timerId);
@@ -46,7 +46,7 @@ export default {
           localStorage.removeItem("role");
           localStorage.removeItem("userId");
           localStorage.removeItem("educationalLevel");
-
+          localStorage.removeItem("applicationStatuses");
           this.$router.push("/");
           this.showFlash = true;
         }

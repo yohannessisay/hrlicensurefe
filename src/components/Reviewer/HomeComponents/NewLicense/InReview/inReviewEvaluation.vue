@@ -13,8 +13,15 @@
     <!-- Main Content -->
     <div class="home-content">
       <div class="container mx-auto px-4 sm:px-4 mb-12">
-        <div class="rounded-lg bg-primary-800 w-full shadow-md">
-          <h2 class="text-white ml-4">
+        <div
+          v-if="
+            newLicense &&
+              newLicense.applicationStatus &&
+              newLicense.applicationStatus.code == 'IRV'
+          "
+          class="rounded-lg bg-primary-800 w-full shadow-md"
+        >
+          <h2 class="text-white ml-4 text-xl">
             Evaluating
             {{
               newLicense && newLicense.profile && newLicense.profile.name
@@ -154,14 +161,14 @@
                                       (profileInfo.name
                                         ? profileInfo.name
                                         : "-") +
-                                      " " +
-                                      (profileInfo.fatherName
-                                        ? profileInfo.fatherName
-                                        : "-") +
-                                      " " +
-                                      (profileInfo.grandFatherName
-                                        ? profileInfo.grandFatherName
-                                        : "-")
+                                        " " +
+                                        (profileInfo.fatherName
+                                          ? profileInfo.fatherName
+                                          : "-") +
+                                        " " +
+                                        (profileInfo.grandFatherName
+                                          ? profileInfo.grandFatherName
+                                          : "-")
                                     }}
                                   </div>
                                 </div>
@@ -248,14 +255,14 @@
                                       (profileInfo.alternativeName
                                         ? profileInfo.alternativeName
                                         : "-") +
-                                      " " +
-                                      (profileInfo.alternativeFatherName
-                                        ? profileInfo.alternativeFatherName
-                                        : "-") +
-                                      " " +
-                                      (profileInfo.alternativeGrandFatherName
-                                        ? profileInfo.alternativeGrandFatherName
-                                        : "-")
+                                        " " +
+                                        (profileInfo.alternativeFatherName
+                                          ? profileInfo.alternativeFatherName
+                                          : "-") +
+                                        " " +
+                                        (profileInfo.alternativeGrandFatherName
+                                          ? profileInfo.alternativeGrandFatherName
+                                          : "-")
                                     }}
                                   </div>
                                 </div>
@@ -602,9 +609,9 @@
                                           class="flex justify-center"
                                           v-if="
                                             education.professionType &&
-                                            allowProfChange[
-                                              education.department.id
-                                            ]
+                                              allowProfChange[
+                                                education.department.id
+                                              ]
                                           "
                                         >
                                           <div class="mb-3 w-full">
@@ -920,9 +927,9 @@
                                     <i class="fa fa-calendar"></i>
                                     {{
                                       licenseExpirationDate +
-                                      " (After " +
-                                      expirationDateYear +
-                                      " years)"
+                                        " (After " +
+                                        expirationDateYear +
+                                        " years)"
                                     }}</span
                                   >
                                 </div>
@@ -1337,8 +1344,8 @@
                                     <img
                                       v-bind:src="
                                         googleApi +
-                                        '' +
-                                        rejectedObj[ind].filePath
+                                          '' +
+                                          rejectedObj[ind].filePath
                                       "
                                     />
                                   </picture>
@@ -1449,6 +1456,10 @@
               </Modal>
             </div>
           </div>
+        </div>
+
+        <div v-else>
+          <h1 class="text-2xl text-red-300">License is already reviewed</h1>
         </div>
       </div>
     </div>
@@ -1773,9 +1784,8 @@ export default {
     let startDate = ref("");
     let endDate = ref("");
     let showOtherProfessionError = ref(false);
-    let regionId = JSON.parse(
-      window.localStorage.getItem("allAdminData")
-    ).regionId;
+    let regionId = JSON.parse(window.localStorage.getItem("allAdminData"))
+      .regionId;
     let professionalTypeIds = ref([]);
     let professionalTypeIdss = ref([]);
     let licenseExpirationDate = ref(new Date());
@@ -1852,8 +1862,9 @@ export default {
       allowProfChange.value[profType.department.id]
         ? allowProfChange.value[profType.department.id]
         : false;
-      allowProfChange.value[profType.department.id] =
-        !allowProfChange.value[profType.department.id];
+      allowProfChange.value[profType.department.id] = !allowProfChange.value[
+        profType.department.id
+      ];
       allowOtherProfChange.value[profType.department.id] = false;
     };
 

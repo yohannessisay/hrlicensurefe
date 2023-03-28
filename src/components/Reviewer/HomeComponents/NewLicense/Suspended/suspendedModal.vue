@@ -369,7 +369,7 @@
                               @click="earlySuspension()"
                             >
                               <i class="fa fa-times-circle"></i>
-                              Early Susupension
+                              Resumption
                             </button>
                             <button
                               type="button"

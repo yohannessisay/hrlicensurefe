@@ -68,7 +68,7 @@
               <div class="vld-parent">
                 <loading
                   :active="isLoading"
-                  :can-cancel="true" 
+                  :can-cancel="true"
                   :is-full-page="true"
                   :color="'#2F639D'"
                   :opacity="0.7"
@@ -183,22 +183,41 @@ export default {
         data: { ...props.modalData.data, remark: remark.value },
         action: "RevokeEvent",
       };
+      let smsData = {
+        recipients: [
+          revokedData.data && revokedData.data.applicant
+            ? "251" + revokedData.data.applicant.phoneNumber
+            : "",
+        ],
+        message:
+          revokedData.data && revokedData.data.profile
+            ? "Dear " +
+              revokedData.data.profile.name +
+              " " +
+              revokedData.data.profile.fatherName +
+              ", Your license with license number " +
+              revokedData.data.newLicenseCode +
+              "has been revoked.Please visit nearest office or contact your reviewer if you have any question. Thank you for using eHPEL,https://www.hrl.moh.gov.et"
+            : "",
+      };
       isLoading.value = true;
       store
         .dispatch("reviewer/editNewLicense", revokedData)
         .then((res) => {
           isLoading.value = false;
           if (res.statusText == "Created") {
-            toast.success("Done", {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
+            store.dispatch("sms/sendSms", smsData).then(() => {
+              toast.success("Application revoked Successfully", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
+              setTimeout(() => {
+                location.reload();
+              }, 2000);
             });
-            setTimeout(() => {
-              window.location.reload();
-            }, 3000);
           } else {
             toast.error(res.data.message, {
               timeout: 5000,

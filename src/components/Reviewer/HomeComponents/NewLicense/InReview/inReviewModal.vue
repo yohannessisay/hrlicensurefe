@@ -641,10 +641,10 @@ import { useToast } from "vue-toastification";
 export default {
   props: ["modalDataId", "reviewers"],
   components: {
-    Loading,
+    Loading
   },
   computed: {
-    moment: () => moment,
+    moment: () => moment
   },
   setup(props, { emit }) {
     const store = useStore();
@@ -662,7 +662,7 @@ export default {
       reviewerId: null,
       licenseId: null,
       createdByAdminId: null,
-      transferRemark: "",
+      transferRemark: ""
     });
     let role = ref({});
     let isLoading = ref(false);
@@ -671,8 +671,8 @@ export default {
     const evaluationData = ref({});
     let reviewerAdminId = ref(0);
 
-    const fetchRole = (id) => {
-      store.dispatch("reviewer/getRoles", id).then((res) => {
+    const fetchRole = id => {
+      store.dispatch("reviewer/getRoles", id).then(res => {
         role.value = res.data.data.role;
       });
     };
@@ -688,7 +688,7 @@ export default {
             position: "bottom-center",
             pauseOnFocusLoss: true,
             pauseOnHover: true,
-            icon: true,
+            icon: true
           }
         );
         return;
@@ -698,21 +698,21 @@ export default {
           reviewerId: transfer.value.reviewerId,
           createdByAdminId: +localStorage.getItem("adminId"),
           transferRemark: transferRemark.value,
-          expertLevelId: modalData.value.data.expertLevelId,
+          expertLevelId: modalData.value.data.expertLevelId
         };
 
         isLoading.value = true;
 
         store
           .dispatch("reviewer/transferLicenseReview", transfer.value)
-          .then((response) => {
+          .then(response => {
             if (response.statusText == "Created") {
               toast.success("Selected application transfered Successfully", {
                 timeout: 5000,
                 position: "bottom-center",
                 pauseOnFocusLoss: true,
                 pauseOnHover: true,
-                icon: true,
+                icon: true
               });
               isLoading.value = false;
               transfer.value = {};
@@ -727,7 +727,7 @@ export default {
                 position: "bottom-center",
                 pauseOnFocusLoss: true,
                 pauseOnHover: true,
-                icon: true,
+                icon: true
               });
               isLoading.value = false;
               setTimeout(() => {
@@ -741,7 +741,7 @@ export default {
               position: "bottom-center",
               pauseOnFocusLoss: true,
               pauseOnHover: true,
-              icon: true,
+              icon: true
             });
             isLoading.value = false;
             setTimeout(() => {
@@ -756,11 +756,11 @@ export default {
     };
     const resultQuery = () => {
       if (reviewer.value.name) {
-        let data = props.reviewers.filter((item) => {
+        let data = props.reviewers.filter(item => {
           return reviewer.value.name
             .toLowerCase()
             .split(" ")
-            .every((v) => item.name.toLowerCase().includes(v));
+            .every(v => item.name.toLowerCase().includes(v));
         });
 
         return data;
@@ -769,12 +769,12 @@ export default {
       }
     };
 
-    const setInput = (value) => {
+    const setInput = value => {
       reviewer.value = {
         id: value.id,
         name: value.name,
         expertLevel: value.expertLevel.code,
-        role: value.role.code,
+        role: value.role.code
       };
       transfer.value.reviewerId = value.id;
       showOptions.value = false;
@@ -800,7 +800,7 @@ export default {
     const check = () => {
       store
         .dispatch("reviewer/getNewLicenseApplication", props.modalDataId.id)
-        .then((res) => {
+        .then(res => {
           if (res.data.status == "Success") {
             result = res.data.data;
 
@@ -866,9 +866,9 @@ export default {
       modalData,
       evaluationData,
       transferReviewer,
-      onCancel,
+      onCancel
     };
-  },
+  }
 };
 </script>
 
