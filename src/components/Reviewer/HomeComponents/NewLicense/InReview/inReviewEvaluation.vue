@@ -41,26 +41,7 @@
 
             <div class="w-full">
               <div class="box-shadow-pop bg-lightGrey-100">
-                <section class="py-8 px-4 bg-primary-300 m-4 rounded-lg">
-                  <div class="flex flex-wrap -mx-4 -mb-8">
-                    <div
-                      class="md:w-1/4 px-4 mb-8"
-                      v-for="doc in docs"
-                      :key="doc.id"
-                    >
-                      <a
-                        :href="googleApi + doc.filePath"
-                        :data-title="doc.doc ? doc.documentType.name : ''"
-                        data-lightbox="example-2"
-                      >
-                        <img
-                          :src="googleApi + doc.filePath"
-                          class="rounded shadow-md"
-                        />
-                      </a>
-                    </div>
-                  </div>
-                </section>
+           
 
                 <div class="flex justify-content-evenly">
                   <div
@@ -1015,19 +996,34 @@
                                         : ""
                                     }}
                                   </h5>
-                                  <img
-                                    class="
+
+                                  <div class="flex items-center">
+                                    <a
+                                      
+                                      :data-src="
+                                        googleApi + '' + docs[index].filePath
+                                      "
+                                      :data-caption="
+                                        docs[index].documentType
+                                          ? docs[index].documentType.name
+                                          : ''
+                                      "
+                                    >
+                                      <img
+                                      @click="viewImage([{src:googleApi +docs[index].filePath, title: 'Image Caption 1'}])"
+                                        class="
                                     scale-50
                                     hover:scale-75
                                     ease-in
                                     duration-500
+                                    cursor-pointer
                                   "
-                                    style="height: 600px; width: 800px"
-                                    v-bind:src="
-                                      googleApi + '' + docs[index].filePath
-                                    "
-                                  />
-                                  <div style="width: 400px"></div>
+                                        :src="
+                                          googleApi + '' + docs[index].filePath
+                                        "
+                                      />
+                                    </a>
+                                  </div>
                                 </div>
                               </picture>
                             </div>
@@ -1761,9 +1757,10 @@ import moment from "moment";
 import ReviewerSideNav from "../SharedComponents/sideNav.vue";
 import ReviewerNavBar from "../../../SharedComponents/navBar.vue";
 import Loading from "vue3-loading-overlay";
-// Import stylesheet
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 import RadialProgressBar from "vue3-radial-progress";
+import PhotoViewer from "photoviewer";
+import "photoviewer/dist/photoviewer.css";
 export default {
   components: {
     Modal,
@@ -1913,10 +1910,20 @@ export default {
           newLicense.value.licenseReviewer.reviewer.regionId != null
             ? (showTransferToFederal.value = true)
             : (showTransferToFederal.value = false);
+        
 
+          // Initialize the plugin
+         
           fetchDocumentTypes();
         });
     };
+    const viewImage=(image)=>{
+      var options = {
+            
+            index: 0, // this option means you will start at first image
+          };
+      new PhotoViewer(image,options);
+    }
     const fetchDocumentTypes = async () => {
       store.dispatch("reviewer/getDocumentTypes").then((res) => {
         documentTypes.value = res.data.data;
@@ -2686,6 +2693,7 @@ export default {
       changePrefix,
       action,
       allowProfessionChange,
+      viewImage,
       allowProfChange,
       showButtons,
       showRemarkError,

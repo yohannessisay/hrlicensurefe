@@ -7,11 +7,10 @@ import "tw-elements";
 import Toast from "vue-toastification";
 import "./styles/main.css";
 import "@fortawesome/fontawesome-free/css/all.css";
-import "@fortawesome/fontawesome-free/js/all.js";
-import drag from "v-drag";
-import print from 'vue3-print-nb'
+import "@fortawesome/fontawesome-free/js/all.js"; 
+import print from "vue3-print-nb"; 
 const app = createApp(App);
- 
+
 app.use(store);
 app.use(IdleVue, {
   store,
@@ -19,7 +18,6 @@ app.use(IdleVue, {
   startAtIdle: false,
 });
 app.use(router);
-app.use(Toast, { transition: "Vue-Toastification__slideBlurred" });
-app.use(drag);
-app.use(print);
+app.use(Toast, { transition: "Vue-Toastification__slideBlurred" }); 
+app.use(print); 
 app.mount("#app");
