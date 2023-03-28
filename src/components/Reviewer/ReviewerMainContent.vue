@@ -27,7 +27,7 @@
             "
             id="totalApp"
           >
-            {{ stat.applicantCount }}
+          <span style="font-size:38px !important">{{ stat.applicantCount }}</span>
           </p>
         </div>
       </div>
@@ -58,7 +58,7 @@
             "
             id="totalNew"
           >
-            {{ stat.newLicenseCount }}
+          <span style="font-size:38px !important">{{ stat.newLicenseCount }}</span>
           </p>
         </div>
       </div>
@@ -82,15 +82,16 @@
           <i class="fa fa-refresh fa-2x text-white"></i>
           <p
             class="
-              font-light font-mono
+              font-light 
+              font-mono
               transition-all
               duration-200
-              text-white text-3xl
-              
+              text-white 
             "
             id="totalRen"
           >
-            {{ stat.renewalCount }}
+          <span style="font-size:38px !important"> {{ stat.renewalCount }}</span>
+           
           </p>
         </div>
       </div>
@@ -121,7 +122,7 @@
             "
             id="totalGoo"
           >
-            {{ stat.goodStandingCount }}
+          <span style="font-size:38px !important">{{ stat.goodStandingCount }}</span>
           </p>
         </div>
       </div>

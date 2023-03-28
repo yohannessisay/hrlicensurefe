@@ -41,8 +41,6 @@
 
             <div class="w-full">
               <div class="box-shadow-pop bg-lightGrey-100">
-           
-
                 <div class="flex justify-content-evenly">
                   <div
                     class="
@@ -457,7 +455,7 @@
                                     <h2 class="font-bold">
                                       Department Information
                                     </h2>
-                                    <small class="font-bold"
+                                    <small class="font-bold text-red-300"
                                       >Uncheck departments if you want to remove
                                       them</small
                                     >
@@ -999,7 +997,6 @@
 
                                   <div class="flex items-center">
                                     <a
-                                      
                                       :data-src="
                                         googleApi + '' + docs[index].filePath
                                       "
@@ -1010,7 +1007,16 @@
                                       "
                                     >
                                       <img
-                                      @click="viewImage([{src:googleApi +docs[index].filePath, title: 'Image Caption 1'}])"
+                                        @click="
+                                          viewImage([
+                                            {
+                                              src:
+                                                googleApi +
+                                                docs[index].filePath,
+                                              title: 'Image Caption 1',
+                                            },
+                                          ])
+                                        "
                                         class="
                                     scale-50
                                     hover:scale-75
@@ -1263,7 +1269,7 @@
                     "
                     >
                       <!--content-->
-                      <div class="w-full">
+                      <div class="w-full p-2 m-4">
                         <!--header-->
                         <div
                           class="
@@ -1272,6 +1278,7 @@
                           justify-between
                           border-b border-solid border-grey-100
                           m-4
+                          p-2
                           rounded-t
                         "
                         >
@@ -1291,7 +1298,9 @@
                           "
                             v-on:click="showRemark = false"
                           >
-                            <span class="text-3xl"> × </span>
+                            <span class="text-3xl">
+                              <i class="fa fa-close "></i
+                            ></span>
                           </div>
                         </div>
                         <!--body-->
@@ -1391,15 +1400,16 @@
                           </div>
                         </div>
                         <!--footer-->
-                        <label for="" class="ml-2">{{
+                        <label for="" class="m-4">{{
                           nothingDropped
                             ? "Remark on why you are declining the license"
                             : "Remark on why you have dropped the department/s"
                         }}</label>
-                        <textarea
-                          v-model="newLicense.remark"
-                          @keyup="isremarkFilled()"
-                          class="
+                        <div class="mr-4">
+                          <textarea
+                            v-model="newLicense.remark"
+                            @keyup="isremarkFilled()"
+                            class="
                           resize-none
                           tArea
                           border
@@ -1408,8 +1418,10 @@
                           m-4
                           w-full
                         "
-                        ></textarea>
-                        <small class="text-red-300 ml-8" v-if="showRemarkError"
+                            rows="6"
+                          ></textarea>
+                        </div>
+                        <small class="text-red-300 m-8" v-if="showRemarkError"
                           >Remark note must be more than 10 letters</small
                         >
                         <div
@@ -1910,20 +1922,18 @@ export default {
           newLicense.value.licenseReviewer.reviewer.regionId != null
             ? (showTransferToFederal.value = true)
             : (showTransferToFederal.value = false);
-        
 
           // Initialize the plugin
-         
+
           fetchDocumentTypes();
         });
     };
-    const viewImage=(image)=>{
+    const viewImage = (image) => {
       var options = {
-            
-            index: 0, // this option means you will start at first image
-          };
-      new PhotoViewer(image,options);
-    }
+        index: 0, // this option means you will start at first image
+      };
+      new PhotoViewer(image, options);
+    };
     const fetchDocumentTypes = async () => {
       store.dispatch("reviewer/getDocumentTypes").then((res) => {
         documentTypes.value = res.data.data;
@@ -1934,6 +1944,7 @@ export default {
     const next = (doc) => {
       if (nextClickable.value == true) {
         index.value = index.value + 1;
+        completedSteps.value += 1;
         amount.value = ((index.value + 1) / docs.value.length) * 100;
         width.value = "width:" + amount.value + "%";
         findDocumentType(documentTypes.value, docs.value[index.value]);
@@ -1951,6 +1962,7 @@ export default {
         showButtons.value = false;
       }
       index.value = index.value - 1;
+      completedSteps.value -= 1;
       amount.value = ((index.value + 1) / docs.value.length) * 100;
       width.value = "width:" + amount.value + "%";
       findDocumentType(documentTypes.value, docs.value[index.value]);

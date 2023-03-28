@@ -43,7 +43,7 @@
                 <div class="p-4 bg-grey-200 mb-4 rounded-lg">
                   <h1 class="text-2xl mb-1">Filters</h1>
                   <div class="mb-3 xl:w-full">
-                    <h2 class="text-primary-100 text-lg">Applicant Name</h2>
+                    <h2 class="text-primary-800 text-lg">Applicant Name</h2>
                     <div
                       class="
                       input-group
@@ -78,7 +78,7 @@
                         focus:border-blue-600
                         focus:outline-none
                       "
-                        placeholder="Start Searching For Applicant's Name"
+                        placeholder="Search Using Applicant's Name"
                         aria-label="Search"
                         aria-describedby="button-addon2"
                         v-model="searchTerm"
@@ -123,7 +123,7 @@
                       </button>
                     </div>
                   </div>
-                  <h2 class="text-primary-100 text-lg">Applied Date</h2>
+                  <h2 class="text-primary-800 text-lg">Applied Date</h2>
                   <div class="grid grid-cols-4">
                     <div class="mb-3">
                       <label for="" class="ml-2">From</label>
@@ -252,7 +252,7 @@
                   <h1 class="text-2xl mb-1">Filters</h1>
                   <div class="mb-3 xl:w-full">
                     
-                    <h2 class="text-primary-100 text-lg">Applicant Name</h2>
+                    <h2 class="text-primary-800 text-lg">Applicant Name</h2>
                     <div
                       class="
                       input-group
@@ -287,7 +287,7 @@
                         focus:border-blue-600
                         focus:outline-none
                       "
-                        placeholder="Start Searching For Applicant's Name"
+                        placeholder="Search Using Applicant's Name"
                         aria-label="Search"
                         aria-describedby="button-addon2"
                         v-model="searchTermOthers"
@@ -333,7 +333,7 @@
                       </button>
                     </div>
                   </div>
-                  <h2 class="text-primary-100 text-lg">Applied Date</h2>
+                  <h2 class="text-primary-800 text-lg">Applied Date</h2>
                   <div class="grid grid-cols-4">
                     <div class="mb-3">
                       <label for="" class="ml-2">From</label>
