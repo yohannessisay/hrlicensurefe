@@ -18,7 +18,7 @@
         <div class="m-3 text-center">
           <h2 class="text-xl mb-2 text-white dashboard_card_title">Total Applicants</h2>
           <i class="fa fa-user fa-2x text-white"></i>
-          <p
+          <h2
             class="
               font-light font-mono
               transition-all
@@ -28,7 +28,7 @@
             id="totalApp"
           >
           <span style="font-size:38px !important">{{ stat.applicantCount }}</span>
-          </p>
+          </h2>
         </div>
       </div>
 
@@ -49,7 +49,7 @@
         <div class="m-3 text-center">
           <h2 class="text-xl mb-2 text-white dashboard_card_title">Total New Licensed</h2>
           <i class="fa fa-check fa-2x text-white"></i>
-          <p
+          <h2
             class="
               font-light font-mono
               transition-all
@@ -59,7 +59,7 @@
             id="totalNew"
           >
           <span style="font-size:38px !important">{{ stat.newLicenseCount }}</span>
-          </p>
+          </h2>
         </div>
       </div>
 
@@ -80,7 +80,7 @@
         <div class="m-3 text-center">
           <h2 class="text-xl mb-2 text-white dashboard_card_title">Total Renewals</h2>
           <i class="fa fa-refresh fa-2x text-white"></i>
-          <p
+          <h2
             class="
               font-light 
               font-mono
@@ -92,7 +92,7 @@
           >
           <span style="font-size:38px !important"> {{ stat.renewalCount }}</span>
            
-          </p>
+          </h2>
         </div>
       </div>
 
@@ -113,7 +113,7 @@
         <div class="m-3 text-center">
           <h2 class="text-xl mb-2 text-white dashboard_card_title">Total Good Standings</h2>
           <i class="fa fa-thumbs-up fa-2x text-white"></i>
-          <p
+          <h2
             class="
               font-light font-mono
               transition-all
@@ -123,7 +123,7 @@
             id="totalGoo"
           >
           <span style="font-size:38px !important">{{ stat.goodStandingCount }}</span>
-          </p>
+          </h2>
         </div>
       </div>
     </div>
