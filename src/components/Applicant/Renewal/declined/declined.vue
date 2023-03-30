@@ -41,7 +41,7 @@
             <h2 class="text-main-400 border-b-2 text-xl p-2">
               License Number-
               <span class="text-base text-main-400">{{
-                license.newLicenseCode
+                license.renewalCode
               }}</span>
             </h2>
 

@@ -1468,8 +1468,7 @@ export default {
           let categoryResults = res.data.data
             ? res.data.data.filter(ele => ele.code == "RA")
             : "";
-          let educationLevels = generalInfo.value.multipleDepartment;
-          console.log(educationLevels);
+          let educationLevels = generalInfo.value.multipleDepartment; 
           //Get department docs
           educationLevels.forEach(element => {
             store

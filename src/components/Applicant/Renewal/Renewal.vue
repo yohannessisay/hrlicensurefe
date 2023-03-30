@@ -2,7 +2,7 @@
   <main-content>
     <transition name="fade" mode="out-in">
       <div v-if="this.activeState == 1">
-        <Institution
+        <Index
           @dark-mode="modeToggle()"
           :activeState="1"
           @changeActiveState="activeState++"
@@ -12,6 +12,16 @@
     </transition>
     <transition name="fade" mode="out-in">
       <div v-if="this.activeState == 2">
+        <Institution
+          @dark-mode="modeToggle()"
+          :activeState="1"
+          @changeActiveState="activeState++"
+          @changeActiveStateMinus="activeState--"
+        />
+      </div>
+    </transition>
+    <transition name="fade" mode="out-in">
+      <div v-if="this.activeState == 3">
         <Upload
           @dark-mode="modeToggle()"
           :activeState="2"
@@ -21,7 +31,7 @@
       </div>
     </transition>
     <transition name="fade" mode="out-in">
-      <div v-if="this.activeState == 3">
+      <div v-if="this.activeState == 4">
         <LicenseSummary
           @dark-mode="modeToggle()"
           :activeState="3"
@@ -36,7 +46,7 @@
 <script>
 import Institution from "./CreateRenewal/generalInformation.vue";
 import Upload from "./CreateRenewal/Upload.vue";
-
+import Index from "./CreateRenewal/index.vue";
 import LicenseSummary from "./CreateRenewal/LicenseSummary.vue";
 import MainContent from "./sharedComponents/Menu.vue";
 
@@ -127,14 +137,7 @@ export default {
               return e.code == "SUB";
             });
             buttons.value = status[0]["buttons"];
-            // let temp = "";
-            // temp = this.buttons[1];
-            // this.buttons[1] = this.buttons[2];
-            // this.buttons[2] = temp;
-            // let temp2 = "";
-            // temp2 = this.buttons[0];
-            // this.buttons[0] = this.buttons[2];
-            // this.buttons[2] = temp2;
+         
           }
           if (draftStatus.value == "USUP") {
             let status = this.applicationStatuses.filter(function (e) {
@@ -287,6 +290,7 @@ export default {
     Upload,
     LicenseSummary,
     MainContent,
+    Index
   },
 };
 </script>

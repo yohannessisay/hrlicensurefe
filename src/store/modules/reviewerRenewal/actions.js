@@ -74,8 +74,54 @@ import {
   SET_RENEWAL_ALL_Cancelled,
   SET_RENEWAL_ALL_Cancelled_SEARCHED,
 } from "./mutation-types";
+import reviewerUrls from "../../../shared/reviewerUrls";
+function urlFacilitator(detail) {
+  let url = `${reviewerUrls.renewal}${detail[0].statusId}?`;
+  let parameters = detail[1].params ? detail[1].params : [];
 
+  if (parameters) {
+    parameters.forEach((param) => {
+      url += param ? `${param.key}=${param.value}&` : "";
+    });
+  }
+  url = url.substring(0, url.length - 1);
+  return url;
+}
 export default {
+
+
+
+
+
+
+
+  async getRenewalByStatus(context, parameters) {
+    let url = urlFacilitator(parameters);
+    const resp = await ApiService.get(url);
+
+    return resp.data ? resp.data.data : [];
+  },
+  async getOtherRenewalByStatus(context, parameters) {
+    let url = urlFacilitator(parameters);
+    url = url + "&others=1";
+    const resp = await ApiService.get(url);
+
+    return resp.data ? resp.data.data : [];
+  },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   async getRenewalUnassigned({ commit }, statusId) {
     try {
       const url = baseUrl + "/renewals/status/" + statusId;

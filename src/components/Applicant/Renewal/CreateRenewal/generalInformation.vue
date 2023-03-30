@@ -783,18 +783,16 @@
             </button>
           </div>
           <span v-if="multipleDepartmentError" class="text-red-300"
-          >Please fill in all fields</span
-        >
-        <span v-if="checkForAddedError" class="ml-8 text-red-300"
-          >You already added the department</span
-        >
-        <span v-if="multipleDepartmentMaxError" class="ml-8 text-red-300"
-          >Only three departments can be selected</span
-        >
+            >Please fill in all fields</span
+          >
+          <span v-if="checkForAddedError" class="ml-8 text-red-300"
+            >You already added the department</span
+          >
+          <span v-if="multipleDepartmentMaxError" class="ml-8 text-red-300"
+            >Only three departments can be selected</span
+          >
         </div>
         <!-- ./Container -->
-
- 
       </div>
       <!-- Table for selected departments data -->
       <div
@@ -913,7 +911,8 @@
                           {{
                             item.educationalLevel
                               ? item.educationalLevel.name
-                              : ""
+                              :
+                              item.educationLevel?item.educationLevel.name: "----"
                           }}
                         </td>
                         <td
@@ -942,10 +941,15 @@
                             item.professionalType &&
                             item.professionalType.code != "OTH"
                               ? item.professionalType.name
-                              : item.otherProfessionalType +
+                              : item.professionalType &&
+                                item.professionalType.code == "OTH"
+                              ? item.otherProfessionalType +
                                 " ( " +
                                 item.otherProfessionalTypeAmharic +
                                 " )"
+                              : item.professionType
+                              ? item.professionType.name
+                              : "---"
                           }}
                         </td>
                         <td
@@ -999,8 +1003,8 @@
     </form>
   </div>
 </template>
-  
-  <script>
+
+<script>
 import { useStore } from "vuex";
 import { ref, onMounted, getCurrentInstance } from "vue";
 import { useToast } from "vue-toastification";
@@ -1290,6 +1294,7 @@ export default {
     };
     const clearLocalData = () => {
       window.localStorage.setItem("RNApplicationData", "");
+      window.indexedDB.deleteDatabase("RNdocumentUploads");
       setTimeout(() => {
         window.location.reload();
       }, 1000);
@@ -1430,7 +1435,7 @@ export default {
   },
 };
 </script>
-  <style>
+<style>
 #main {
   border-radius: 5px;
 }
@@ -1438,4 +1443,3 @@ export default {
   border-radius: 5px;
 }
 </style>
-  
