@@ -269,31 +269,7 @@
                                 >
                                   Users
                                 </label>
-                                <div>
-                                  <button
-                                    class="
-                                        inline-block
-                                            px-6
-                                            py-2.5
-                                            bg-primary-700
-                                            text-white
-                                            font-medium
-                                            text-xs
-                                            leading-tight
-                                            uppercase
-                                            rounded
-                                            shadow-lg
-                                            hover:bg-white 
-                                            hover:text-primary-600
-                                            transition
-                                            duration-150
-                                            ease-in-out
-                                    "
-                                    @click="transferReviewer()"
-                                  >
-                                    Transfer
-                                  </button>
-                                </div>
+                        
                               </div>
                               <label class="block text-left">
                                 <div>
@@ -319,6 +295,7 @@
                                         placeholder="Select reviewer by typing a name"
                                       />
                                     </div>
+                                    
                                     <div
                                       v-show="
                                         resultQuery().length && showOptions
@@ -356,6 +333,31 @@
                                         </li>
                                       </ul>
                                     </div>
+                                    <div>
+                                  <button
+                                    class="
+                                        inline-block
+                                            px-6
+                                            py-2.5
+                                            bg-primary-700
+                                            text-white
+                                            font-medium
+                                            text-xs
+                                            leading-tight
+                                            uppercase
+                                            rounded
+                                            shadow-lg
+                                            hover:bg-white 
+                                            hover:text-primary-600
+                                            transition
+                                            duration-150
+                                            ease-in-out
+                                    "
+                                    @click="transferReviewer()"
+                                  >
+                                    Transfer
+                                  </button>
+                                </div>
                                   </div>
                                 </div>
                               </label>

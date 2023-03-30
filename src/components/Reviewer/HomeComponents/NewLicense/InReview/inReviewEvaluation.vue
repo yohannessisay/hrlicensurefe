@@ -58,7 +58,7 @@
                     <div class="mt-8">
                       <div class="my-auto flex justify-center items-center">
                         <h2 class="text-3xl">
-                          {{ accepted.length }}
+                          {{ accepted ? accepted.length : 0 }}
                         </h2>
                       </div>
                       <div class="flex justify-center items-center">
@@ -202,6 +202,7 @@
                                         "
                                         class="w-48 mr-1"
                                         type="text"
+                                        placeholder="First Name"
                                       />
                                     </div>
                                     <div v-if="editPersonalData">
@@ -212,6 +213,7 @@
                                         "
                                         class="w-48 mr-1"
                                         type="text"
+                                        placeholder="Father Name"
                                       />
                                     </div>
                                     <div v-if="editPersonalData">
@@ -222,6 +224,7 @@
                                         "
                                         class="w-48"
                                         type="text"
+                                        placeholder="Grandfather Name"
                                       />
                                     </div>
                                     <div class="vld-parent">
@@ -966,20 +969,23 @@
                               <picture v-if="docs.length > 0">
                                 <div
                                   v-if="
-                                    docs[index].fileName.split('.')[1] == 'pdf'
+                                    docs[index] &&
+                                      docs[index].fileName &&
+                                      docs[index].fileName.split('.')[1] ==
+                                        'pdf'
                                   "
                                 >
                                   <div>
                                     <iframe
                                       v-bind:src="
-                                        googleApi + '' + docs[index].filePath
+                                        googleApi + '' + docs[index]?docs[index].filePath:''
                                       "
                                     ></iframe>
                                   </div>
                                   <br />
                                   <button
                                     @click="
-                                      openPdfInNewTab(docs[index].filePath)
+                                      openPdfInNewTab(docs[index]?docs[index].filePath:'')
                                     "
                                   >
                                     See pdf in detail
@@ -988,7 +994,7 @@
 
                                 <div v-else>
                                   <h5 class="text-grey-200 text-2xl">
-                                    {{
+                                    {{  docs[index]&&
                                       docs[index].documentType
                                         ? docs[index].documentType.name
                                         : ""
@@ -998,10 +1004,10 @@
                                   <div class="flex items-center">
                                     <a
                                       :data-src="
-                                        googleApi + '' + docs[index].filePath
+                                        googleApi + '' + docs[index]?docs[index].filePath:''
                                       "
                                       :data-caption="
-                                        docs[index].documentType
+                                      docs[index]&& docs[index].documentType
                                           ? docs[index].documentType.name
                                           : ''
                                       "
@@ -1012,7 +1018,7 @@
                                             {
                                               src:
                                                 googleApi +
-                                                docs[index].filePath,
+                                                docs[index]?docs[index].filePath:'',
                                               title: 'Image Caption 1',
                                             },
                                           ])
@@ -1025,7 +1031,7 @@
                                     cursor-pointer
                                   "
                                         :src="
-                                          googleApi + '' + docs[index].filePath
+                                          googleApi + '' + docs[index]?docs[index].filePath:''
                                         "
                                       />
                                     </a>
@@ -1181,7 +1187,7 @@
                     <div class="mt-8">
                       <div class="my-auto flex justify-center items-center">
                         <h2 class="text-red-300 text-3xl">
-                          {{ rejected.length }}
+                          {{ rejected ? rejected.length : 0 }}
                         </h2>
                       </div>
                       <div class="flex justify-center items-center">
@@ -1365,8 +1371,8 @@
                                       <img
                                         v-bind:src="
                                           googleApi +
-                                            '' +
-                                            rejectedObj[ind].filePath
+                                            '' +rejectedObj[ind]?
+                                            rejectedObj[ind].filePath:''
                                         "
                                       />
                                     </picture>
@@ -1923,8 +1929,23 @@ export default {
             ? (showTransferToFederal.value = true)
             : (showTransferToFederal.value = false);
 
-          // Initialize the plugin
-
+          accepted.value =
+            newLicense.value &&
+            newLicense.value.acceptedFields &&
+            newLicense.value.acceptedFields.length > 0
+              ? newLicense.value.acceptedFields
+              : (accepted.value = []);
+          rejected.value =
+            newLicense.value &&
+            newLicense.value.declinedFields &&
+            newLicense.value.declinedFields.length > 0
+              ? newLicense.value.declinedFields
+              : (rejected.value = []);
+          completedSteps.value = accepted.value.length + rejected.value.length;
+          index.value = completedSteps.value;
+          if (completedSteps.value == docs.value ? docs.value.length : 0) {
+            showButtons.value = true;
+          }
           fetchDocumentTypes();
         });
     };

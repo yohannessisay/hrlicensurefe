@@ -1130,7 +1130,7 @@
                 finalData.data.applicantType.code == 'FOR')
           "
           class="p-8 m-8 "
-          id="printedDiv"
+          id="foreignersPrintedDiv"
         >
           <h2 class="mt-8" contenteditable="true">
             ለ፡____________________________________
@@ -1265,7 +1265,7 @@
               finalData.printType == 'externship'
           "
           class="p-8 m-8 "
-          id="printedDiv"
+          id="externshipPrintedDiv"
         >
           <h2 contenteditable="true">ለ፡_________________________</h2>
           <p>አዲስ አበባ</p>
@@ -1381,7 +1381,7 @@
               finalData.printType != 'externship'
           "
           class="p-8 m-8 "
-          id="printedDiv"
+          id="temporaryPrintedDiv"
         >
           <h2 contenteditable="true">ለ__________________________</h2>
           <div class="text-center mb-8">
@@ -1507,7 +1507,7 @@
           <button
             v-if="
               modalData && modalData.data
-                ? modalData.data.isReprint == false
+                ? modalData.data.isLicenseGenerated == false
                 : false
             "
             type="button"
@@ -1843,7 +1843,11 @@ export default {
             let smsMessage = req.data
               ? "Dear applicant your applied new license of number " +
                 req.data.newLicenseCode +
-                " is printed and ready. Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
+                " is printed and ready. You can pick up your license on date " +
+                retrivalDate.value
+                ? retrivalDate.value.slice(0, 10)
+                : "" +
+                  "  Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
               : "";
             let smsData = {
               recipients: [
@@ -1937,15 +1941,43 @@ export default {
       }
     };
 
-    const generateForeigner = () => {
-      var data = document.getElementById("printedDiv");
-      html2canvas(data, { scale: 2 }).then((canvas) => {
-        const contentDataURL = canvas.toDataURL("image/png");
-        let pdf = new jsPDF("p", "mm", "a4");
+    const generateForeigner = async () => {
+      var data;
+
+      if (finalData.value && finalData.value.printType) {
+        switch (finalData.value.printType) {
+          case "externship":
+            data = document.getElementById("externshipPrintedDiv");
+            break;
+          case "temporary":
+            data = document.getElementById("temporaryPrintedDiv");
+            break;
+          case "foreigners":
+            data = document.getElementById("foreignersPrintedDiv");
+            break;
+
+          default:
+            break;
+        }
+      }
+      console.log(data);
+      await html2canvas(data, { scale: 2 }).then((canvas) => {
+        const contentDataURL = canvas.toDataURL("image/png", 1.0);
+
+        let pdf = new jsPDF("l", "mm", "a4");
+
         var width = pdf.internal.pageSize.getWidth();
-        var height = (canvas.height * width) / canvas.width;
+        var height = pdf.internal.pageSize.getHeight();
+
         pdf.addImage(contentDataURL, "PNG", 0, 0, width, height);
-        window.open(pdf.output("bloburl"));
+
+        window.open(
+          pdf.output("bloburl", { filename: "new-file.pdf" }),
+          "_blank"
+        );
+
+        
+        updateLicenseGenerated();
       });
     };
     const generate = () => {

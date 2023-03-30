@@ -426,9 +426,10 @@
                           type="button"
                           data-bs-toggle="modal"
                           data-bs-target="#generatePdf"
+                          @click="changePrintType('foreigners')"
                         >
                           <i class="fa fa-file-text"></i>
-                          Generate PDF
+                          Generate License
                         </button>
                         <button
                           v-if="showGenerate"

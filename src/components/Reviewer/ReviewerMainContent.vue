@@ -6,17 +6,20 @@
           card
           m-2
           bg-primary-700
-          border border-gray-400
+          border border-grey-400
           rounded-2xl
-          hover:shadow-md hover:border-opacity-0
+          hover:shadow-2xl  
           transform
+          shadow-md
           hover:-translate-y-2
           transition-all
           duration-200
         "
       >
         <div class="m-3 text-center">
-          <h2 class="text-xl mb-2 text-white dashboard_card_title">Total Applicants</h2>
+          <h2 class="text-xl mb-2 text-white dashboard_card_title">
+            Total Applicants
+          </h2>
           <i class="fa fa-user fa-2x text-white"></i>
           <h2
             class="
@@ -27,27 +30,32 @@
             "
             id="totalApp"
           >
-          <span style="font-size:38px !important">{{ stat.applicantCount }}</span>
+            <span style="font-size:38px !important">{{
+              stat.applicantCount
+            }}</span>
           </h2>
         </div>
       </div>
 
       <div
         class="
-          card
+        card
           m-2
           bg-primary-700
-          border border-gray-400
+          border border-grey-400
           rounded-2xl
-          hover:shadow-md hover:border-opacity-0
+          hover:shadow-2xl  
           transform
+          shadow-md
           hover:-translate-y-2
           transition-all
           duration-200
         "
       >
         <div class="m-3 text-center">
-          <h2 class="text-xl mb-2 text-white dashboard_card_title">Total New Licensed</h2>
+          <h2 class="text-xl mb-2 text-white dashboard_card_title">
+            Total New Licensed
+          </h2>
           <i class="fa fa-check fa-2x text-white"></i>
           <h2
             class="
@@ -58,27 +66,32 @@
             "
             id="totalNew"
           >
-          <span style="font-size:38px !important">{{ stat.newLicenseCount }}</span>
+            <span style="font-size:38px !important">{{
+              stat.newLicenseCount
+            }}</span>
           </h2>
         </div>
       </div>
 
       <div
         class="
-          card
+        card
           m-2
           bg-primary-700
-          border border-gray-400
+          border border-grey-400
           rounded-2xl
-          hover:shadow-md hover:border-opacity-0
+          hover:shadow-2xl  
           transform
+          shadow-md
           hover:-translate-y-2
           transition-all
           duration-200
         "
       >
         <div class="m-3 text-center">
-          <h2 class="text-xl mb-2 text-white dashboard_card_title">Total Renewals</h2>
+          <h2 class="text-xl mb-2 text-white dashboard_card_title">
+            Total Renewals
+          </h2>
           <i class="fa fa-refresh fa-2x text-white"></i>
           <h2
             class="
@@ -90,28 +103,32 @@
             "
             id="totalRen"
           >
-          <span style="font-size:38px !important"> {{ stat.renewalCount }}</span>
-           
+            <span style="font-size:38px !important">
+              {{ stat.renewalCount }}</span
+            >
           </h2>
         </div>
       </div>
 
       <div
         class="
-          card
+        card
           m-2
           bg-primary-700
-          border border-gray-400
+          border border-grey-400
           rounded-2xl
-          hover:shadow-md hover:border-opacity-0
+          hover:shadow-2xl  
           transform
+          shadow-md
           hover:-translate-y-2
           transition-all
           duration-200
         "
       >
         <div class="m-3 text-center">
-          <h2 class="text-xl mb-2 text-white dashboard_card_title">Total Good Standings</h2>
+          <h2 class="text-xl mb-2 text-white dashboard_card_title">
+            Total Good Standings
+          </h2>
           <i class="fa fa-thumbs-up fa-2x text-white"></i>
           <h2
             class="
@@ -122,7 +139,9 @@
             "
             id="totalGoo"
           >
-          <span style="font-size:38px !important">{{ stat.goodStandingCount }}</span>
+            <span style="font-size:38px !important">{{
+              stat.goodStandingCount
+            }}</span>
           </h2>
         </div>
       </div>
@@ -168,7 +187,9 @@
             </p>
 
             <div class="flex justify-center px-5 mb-2 text-sm mt-4">
-              <h1 class="text-2xl text-primary-500 dashboard_card_title">New License</h1>
+              <h1 class="text-2xl text-primary-500 dashboard_card_title">
+                New License
+              </h1>
             </div>
           </div>
         </router-link>
@@ -210,7 +231,9 @@
             </p>
 
             <div class="flex justify-center px-5 mb-2 text-sm mt-4">
-              <h1 class="text-2xl text-primary-500 dashboard_card_title">Renewal</h1>
+              <h1 class="text-2xl text-primary-500 dashboard_card_title">
+                Renewal
+              </h1>
             </div>
           </div>
         </router-link>
@@ -256,7 +279,9 @@
             </p>
 
             <div class="flex justify-center px-5 mb-2 text-sm mt-4">
-              <h1 class="text-2xl text-primary-500 dashboard_card_title">Verification</h1>
+              <h1 class="text-2xl text-primary-500 dashboard_card_title">
+                Verification
+              </h1>
             </div>
           </div>
         </router-link>
@@ -298,14 +323,15 @@
             </p>
 
             <div class="flex justify-center px-1 mb-2 text-sm mt-4">
-              <h1 class="text-2xl text-primary-500 dashboard_card_title ">Good Standing</h1>
+              <h1 class="text-2xl text-primary-500 dashboard_card_title ">
+                Good Standing
+              </h1>
             </div>
           </div>
         </router-link>
       </div>
     </div>
   </div>
-  
 </template>
 <script>
 import { ref, onMounted } from "vue";
@@ -350,7 +376,7 @@ export default {
       objRen = document.getElementById("totalNew");
       objNew = document.getElementById("totalRen");
       objGoo = document.getElementById("totalGoo");
-    
+
       getStats();
     });
 
