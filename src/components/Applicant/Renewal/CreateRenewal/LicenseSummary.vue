@@ -6,7 +6,7 @@
         Summary For Renewal Application
       </h2>
 
-      <p class="text-black leading-relaxed font-light text-xl mx-auto pb-2">
+      <p class="text-grey-800 leading-relaxed font-light text-xl mx-auto pb-2">
         Here is the detail you have filled in so far
       </p>
     </header>
@@ -53,7 +53,7 @@
                 leading-normal
                 mb-2
                 font-semibold
-                text-black
+                text-grey-800
               "
             >
               Department Detail
@@ -76,7 +76,7 @@
             >
           </div>
           <div>
-            <span class="text-black sm:text-sm">
+            <span class="text-grey-800 sm:text-sm">
               {{ dep.department.name }}</span
             >
           </div>
@@ -96,7 +96,7 @@
             >
           </div>
           <div>
-            <span class="text-black sm:text-sm">
+            <span class="text-grey-800 sm:text-sm">
               {{ dep.educationalLevel.name }}</span
             >
           </div>
@@ -116,7 +116,7 @@
             >
           </div>
           <div>
-            <span class="text-black sm:text-sm">
+            <span class="text-grey-800 sm:text-sm">
               {{ dep.institution.name }}</span
             >
           </div>
@@ -137,7 +137,7 @@
             >
           </div>
           <div>
-            <span class="text-black sm:text-sm">
+            <span class="text-grey-800 sm:text-sm">
               {{ dep.professionalType.name }}</span
             >
           </div>
@@ -169,7 +169,7 @@
                   leading-normal
                   mb-2
                   font-semibold
-                  text-black
+                  text-grey-800
                 "
               >
                 Files Uploaded
@@ -292,7 +292,7 @@
               </div>
               <h3
                 class="
-                  text-black
+                  text-grey-800
                   mb-2
                   sm:text-xs
                   lgmd:text-base
@@ -355,7 +355,7 @@
     <div class="flex justify-center w-full mb-8">
       <span v-for="button in buttons" :key="button.id">
         <button
-          v-if="button.action!='DraftEvent'"
+          v-if="button.action != 'DraftEvent'"
           type="button"
           :class="
             allowSave
@@ -368,7 +368,7 @@
           {{ button.name }}
         </button>
         <button
-          v-if="button.action=='DraftEvent'"
+          v-if="button.action == 'DraftEvent'"
           type="button"
           class="inline-block px-6 border text-main-400 hover:bg-main-400 hober:border-main-400 hover:text-white  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded shadow-lg transition  duration-150 ease-in-out"
           @click="checkFinalStatus(button.action)"
@@ -376,7 +376,6 @@
           <i class="fa fa-save"></i>
           {{ button.name }}
         </button>
-
       </span>
 
       <button
@@ -401,7 +400,6 @@
         back
       </button>
     </div>
-
 
     <!-- end row -->
   </div>
@@ -448,17 +446,17 @@ export default {
       store.dispatch("renewal/getApplicationStatuses").then((res) => {
         let results = res.data.data;
 
-        let status = results.filter(function (e) {
+        let status = results.filter(function(e) {
           return e.code == "INIT";
         });
         buttons.value = status[0]["buttons"];
       });
     };
-    const checkFinalStatus = (action) => { 
+    const checkFinalStatus = (action) => {
       generalInfo.value.licenseFile = [];
       documents.value = localFileData.value;
       isLoading.value = true;
-      if (agreed.value == true||action=='DraftEvent') {
+      if (agreed.value == true || action == "DraftEvent") {
         let formData = new FormData();
         tempDocs.value.forEach((element, index) => {
           formData.append(index, element);
@@ -496,6 +494,8 @@ export default {
               ? generalInfo.value.expertLevelId
               : null,
             isLegal: true,
+            newLicenseId: generalInfo.value.newLicenseId,
+            newLicenseCode: generalInfo.value.newLicenseCode,
             feedback: generalInfo.value.feedback
               ? generalInfo.value.feedback
               : "",
@@ -509,7 +509,7 @@ export default {
             .then((res) => {
               isLoading.value = false;
               if (res.data.status == "Success") {
-                localStorage.removeItem('RNApplicationData');
+                localStorage.removeItem("RNApplicationData");
                 toast.success("Applied successfuly", {
                   timeout: 5000,
                   position: "bottom-center",
@@ -517,7 +517,7 @@ export default {
                   pauseOnHover: true,
                   icon: true,
                 });
-               
+
                 if (license.action == "DraftEvent") {
                   router.push({ path: "/Applicant/Renewal/draft" });
                 } else {
@@ -557,17 +557,17 @@ export default {
 
       let request = indexedDB.open("RNdocumentUploads", 1);
 
-      request.onerror = function () {
+      request.onerror = function() {
         console.error("Unable to open database.");
       };
 
-      request.onsuccess = function () {
+      request.onsuccess = function() {
         let db = request.result;
         const tx = db.transaction("RNdocumentUploads", "readonly");
         const store = tx.objectStore("RNdocumentUploads");
         let getAllIDB = store.getAll();
 
-        getAllIDB.onsuccess = function (evt) {
+        getAllIDB.onsuccess = function(evt) {
           localFileData.value = evt.target.result ? evt.target.result : {};
         };
       };
@@ -576,14 +576,14 @@ export default {
       generalInfo.value.feedback = "";
       if (generalInfo.value.applicantTypeSelected.id == 1) {
         store.dispatch("renewal/getExpertLevel").then((res) => {
-          let expertLevel = res.data.data.filter(function (e) {
+          let expertLevel = res.data.data.filter(function(e) {
             return e.code.includes("REG");
           });
           generalInfo.value.expertLevelId = expertLevel[0].id;
         });
       } else {
         store.dispatch("renewal/getExpertLevel").then((res) => {
-          let expertLevel = res.data.data.filter(function (e) {
+          let expertLevel = res.data.data.filter(function(e) {
             return e.code.includes("FED");
           });
           generalInfo.value.expertLevelId = expertLevel[0].id;

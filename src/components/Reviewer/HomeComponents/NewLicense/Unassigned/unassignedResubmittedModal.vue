@@ -640,7 +640,7 @@ export default {
           if (response.statusText == "Created") {
             store.dispatch("sms/sendSms", smsData).then(() => {
               isLoading.value = false;
-              toast.success("Selected Rviewer assigned Successfully", {
+              toast.success("Selected reviewer assigned Successfully", {
                 timeout: 5000,
                 position: "bottom-center",
                 pauseOnFocusLoss: true,

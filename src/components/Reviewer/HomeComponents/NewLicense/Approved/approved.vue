@@ -8,7 +8,7 @@
     <reviewer-nav-bar>
       <ol class="list-reset flex">
         <li>
-          <router-link to="/admin/approved"
+          <router-link to="/admin/review"
             ><span class="text-primary-600 text-base">Home</span></router-link
           >
         </li>

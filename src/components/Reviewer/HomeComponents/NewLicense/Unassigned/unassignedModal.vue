@@ -298,40 +298,7 @@
                                       />
                                     </div>
 
-                                    <div
-                                      v-for="button in modalData.buttons"
-                                      :key="button.id"
-                                    >
-                                      <button
-                                        v-if="button.code == 'AT'"
-                                        class="
-                                          inline-block
-                                          px-6
-                                          py-2.5
-                                          mt-4
-                                          bg-primary-700
-                                          text-white
-                                          font-medium
-                                          text-xs
-                                          leading-tight
-                                          uppercase
-                                          rounded
-                                          shadow-lg
-                                          hover:bg-white hover:text-primary-600
-                                          transition
-                                          duration-150
-                                          ease-in-out
-                                        "
-                                        @click="
-                                          assignReviewer({
-                                            action: button.action,
-                                            type: 'toOthers',
-                                          })
-                                        "
-                                      >
-                                        {{ button ? button.name : "" }}
-                                      </button>
-                                    </div>
+                             
                                     <div
                                       v-show="
                                         resultQuery().length && showOptions
@@ -368,6 +335,40 @@
                                           {{ value.name }}
                                         </li>
                                       </ul>
+                                    </div>
+                                    <div
+                                      v-for="button in modalData.buttons"
+                                      :key="button.id"
+                                    >
+                                      <button
+                                        v-if="button.code == 'AT'"
+                                        class="
+                                          inline-block
+                                          px-6
+                                          py-2.5
+                                          mt-4
+                                          bg-primary-700
+                                          text-white
+                                          font-medium
+                                          text-xs
+                                          leading-tight
+                                          uppercase
+                                          rounded
+                                          shadow-lg
+                                          hover:bg-white hover:text-primary-600
+                                          transition
+                                          duration-150
+                                          ease-in-out
+                                        "
+                                        @click="
+                                          assignReviewer({
+                                            action: button.action,
+                                            type: 'toOthers',
+                                          })
+                                        "
+                                      >
+                                        {{ button ? button.name : "" }}
+                                      </button>
                                     </div>
                                   </div>
                                 </div>
@@ -702,7 +703,7 @@ export default {
           if (response.statusText == "Created") {
             store.dispatch("sms/sendSms", smsData).then(() => {
               isLoading.value = false;
-              toast.success("Selected Rviewer assigned Successfully", {
+              toast.success("Selected reviewer assigned Successfully", {
                 timeout: 5000,
                 position: "bottom-center",
                 pauseOnFocusLoss: true,

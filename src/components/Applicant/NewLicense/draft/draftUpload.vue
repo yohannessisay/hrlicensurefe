@@ -406,12 +406,12 @@
                           class="document-name"
                           v-if="
                             documentsSaved[
-                              `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                              `${item.documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                             ]?.name
                           "
                           >{{
                             documentsSaved[
-                              `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                              `${item.documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                             ]?.name
                           }}</span
                         >
@@ -420,11 +420,11 @@
                         <a
                           :id="
                             'image_href_' +
-                            `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                            `${item.documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                           "
                           :href="
                             documentsSaved[
-                              `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                              `${item.documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                             ]?.path
                           "
                           :data-title="item.name ? item.name : '-----'"
@@ -433,7 +433,7 @@
                           <i
                             :id="
                               'educational_icon_' +
-                              `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                              `${item.documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                             "
                             class="fa fa-eye cursor-pointer text-main-400"
                             aria-hidden="true"
@@ -441,11 +441,11 @@
                             <img
                               :id="
                                 'image_lightbox_' +
-                                `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                `${item.documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                               "
                               :src="
                                 documentsSaved[
-                                  `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                  `${item.documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                 ]?.path
                               "
                               class="w-full h-2 object-cover"
@@ -517,12 +517,12 @@
                           class="document-name"
                           v-if="
                             documentsSaved[
-                              `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                              `${parentItem[0].documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                             ]?.name
                           "
                           >{{
                             documentsSaved[
-                              `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                              `${parentItem[0].documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                             ]?.name
                           }}</span
                         >
@@ -531,11 +531,11 @@
                         <a
                           :id="
                             'image_href_' +
-                            `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                            `${parentItem[0].documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                           "
                           :href="
                             documentsSaved[
-                              `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                              `${parentItem[0].documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                             ]?.path
                           "
                           :data-title="
@@ -546,7 +546,7 @@
                           <i
                             :id="
                               'educational_icon_' +
-                              `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                              `${parentItem[0].documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                             "
                             class="fa fa-eye cursor-pointer text-main-400"
                             aria-hidden="true"
@@ -554,11 +554,11 @@
                             <img
                               :id="
                                 'image_lightbox_' +
-                                `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                `${parentItem[0].documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                               "
                               :src="
                                 documentsSaved[
-                                  `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                  `${parentItem[0].documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                 ]?.path
                               "
                               class="w-full h-2 object-cover"
@@ -732,12 +732,12 @@
                                     class="document-name"
                                     v-if="
                                       documentsSaved[
-                                        `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                        `${parentChildItem.documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                       ]?.name
                                     "
                                     >{{
                                       documentsSaved[
-                                        `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                        `${parentChildItem.documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                       ]?.name
                                     }}</span
                                   >
@@ -753,11 +753,11 @@
                                   <a
                                     :id="
                                       'image_href_' +
-                                      `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                      `${parentChildItem.documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                     "
                                     :href="
                                       documentsSaved[
-                                        `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                        `${parentChildItem.documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                       ]?.path
                                     "
                                     :data-title="
@@ -768,7 +768,7 @@
                                     <i
                                       :id="
                                         'educational_icon_' +
-                                        `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                        `${parentChildItem.documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                       "
                                       class="
                                         fa fa-eye
@@ -780,11 +780,11 @@
                                       <img
                                         :id="
                                           'image_lightbox_' +
-                                          `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                          `${parentChildItem.documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                         "
                                         :src="
                                           documentsSaved[
-                                            `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                            `${parentChildItem.documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                           ]?.path
                                         "
                                         class="w-full h-2 object-cover"
@@ -867,8 +867,7 @@
 
 <script>
 import { ref, onMounted } from "vue";
-import { useStore } from "vuex";
-import { useToast } from "vue-toastification";
+import { useStore } from "vuex"; 
 
 import MAX_FILE_SIZE from "../../../../composables/documentMessage";
 import filePreview from "@/sharedComponents/FilePreview";
@@ -879,8 +878,7 @@ export default {
   components: { filePreview },
 
   setup(props, { emit }) {
-    let store = useStore();
-    const toast = useToast();
+    let store = useStore(); 
     const route = useRoute();
     let documents = ref([]);
     let commonDocuments = ref([]);
@@ -895,8 +893,7 @@ export default {
       name: "",
     });
     let files = ref("");
-    let maxFileSize = ref(5000000);
-    let parentDocs = ref([]);
+    let maxFileSize = ref(5000000); 
     let isImage = ref({});
     let isPdf = ref({});
     let fileSizeExceed = ref({});
@@ -1250,91 +1247,7 @@ export default {
           })
         : "";
     };
-    const checkDocuments = () => {
-      let temp = false;
-      let CMtemp = false;
-
-      /// check common documents
-
-      commonDocuments.value
-        .filter((cd) => cd.isRequired)
-        .forEach((element) => {
-          CMtemp = documentsUploaded.value.hasOwnProperty(
-            element.documentType.code
-          );
-          if (!CMtemp) {
-            fileUploadError.value[
-              "file_upload_row_" + element.documentType.code
-            ] = true;
-            errorDocuments.value.push({
-              isCommon: true,
-              name: element.documentType.name,
-              code: element.documentType.code,
-            });
-          } else {
-            fileUploadError.value[
-              "file_upload_row_" + element.documentType.code
-            ] = false;
-          }
-        });
-
-      educationalDocs.value.forEach((ed) => {
-        // check normal docs with no parents
-
-        ed.docs
-          .filter((docs) => docs.isRequired)
-          .forEach((single) => {
-            temp = documentsUploaded.value.hasOwnProperty(
-              single.documentType.code +
-                "_" +
-                ed.educationalLevel.code.toUpperCase() +
-                "_" +
-                ed.professionType.code.toUpperCase()
-            );
-            if (!temp) {
-              fileUploadError.value[
-                "file_upload_row_" +
-                  single.documentType.code +
-                  "_" +
-                  ed.educationalLevel.code.toUpperCase() +
-                  "_" +
-                  ed.professionType.code.toUpperCase()
-              ] = true;
-              errorDocuments.value.push({
-                name: single.documentType.name,
-                code:
-                  single.documentType.code +
-                  "_" +
-                  ed.educationalLevel.code.toUpperCase() +
-                  "_" +
-                  ed.professionType.code.toUpperCase(),
-              });
-            } else {
-              fileUploadError.value[
-                "file_upload_row_" +
-                  single.documentType.code +
-                  "_" +
-                  ed.educationalLevel.code.toUpperCase() +
-                  "_" +
-                  ed.professionType.code.toUpperCase()
-              ] = false;
-            }
-          });
-
-        //// check documetns with parents
-
-        // fileUploadError.value[
-        //         "file_upload_row_" +
-        //           single.documentType.code +
-        //           "_" +
-        //           ed.educationalLevel.code.toUpperCase() +
-        //           "_" +
-        //           ed.professionType.code.toUpperCase()
-        //       ] = true;
-      });
-
-      return CMtemp && temp;
-    };
+   
     const next = () => {
       store.dispatch("newlicense/setTempDocs", formData).then(() => {
         //Save images to indexed Db
@@ -1357,7 +1270,7 @@ export default {
 
           const objectStoreRequest = objectStore.clear();
 
-          objectStoreRequest.onsuccess = (event) => {
+          objectStoreRequest.onsuccess = () => {
             let addReq = transaction
               .objectStore("NLdocumentUploads")
               .put(finalLocalData);

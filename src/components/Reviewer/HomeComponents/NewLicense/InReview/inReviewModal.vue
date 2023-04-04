@@ -312,33 +312,7 @@
                                           w-full
                                         "
                                       ></textarea>
-                                      <button
-                                        class="
-                                          inline-block
-                                          px-6
-                                          py-2.5
-                                          bg-primary-600
-                                          text-white
-                                          font-semibold
-                                          text-xs
-                                          leading-tight
-                                          uppercase
-                                          rounded
-                                          shadow-md
-                                          mt-4
-                                          ml-1
-                                          hover:bg-white
-                                          hover:shadow-md
-                                          hover:text-primary-600
-                                          transition
-                                          duration-150
-                                          ease-in-out
-                                          mb-8
-                                        "
-                                        @click="transferReviewer()"
-                                      >
-                                        Transfer
-                                      </button>
+                                 
                                     </div>
                                     <div
                                       v-show="
@@ -377,6 +351,33 @@
                                         </li>
                                       </ul>
                                     </div>
+                                    <button
+                                        class="
+                                          inline-block
+                                          px-6
+                                          py-2.5
+                                          bg-primary-600
+                                          text-white
+                                          font-semibold
+                                          text-xs
+                                          leading-tight
+                                          uppercase
+                                          rounded
+                                          shadow-md
+                                          mt-4
+                                          ml-1
+                                          hover:bg-white
+                                          hover:shadow-md
+                                          hover:text-primary-600
+                                          transition
+                                          duration-150
+                                          ease-in-out
+                                          mb-8
+                                        "
+                                        @click="transferReviewer()"
+                                      >
+                                        Transfer
+                                      </button>
                                   </div>
                                 </div>
                               </label>

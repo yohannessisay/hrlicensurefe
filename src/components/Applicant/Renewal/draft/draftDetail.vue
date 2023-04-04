@@ -19,7 +19,7 @@
         <li class="text-gray-500">Edit</li>
       </ol>
     </nav>
-
+ 
     <div
       v-if="activeState == 1"
       class="
@@ -839,7 +839,7 @@
         </div>
       </form>
     </div>
-
+ 
     <transition name="fade" mode="out-in">
       <div v-if="activeState == 2">
         <Upload
@@ -1213,6 +1213,7 @@ export default {
       );
     };
     onMounted(async () => {
+      isLoading.value = true;
       fetchApplicantType();
       fetchDepartments();
       fetchInstitutions();
@@ -1265,6 +1266,7 @@ export default {
             JSON.stringify(res.data.data.educations)
           );
           generalInfo.value.applicantTypeSelected = res.data.data.applicantType;
+          isLoading.value = false;
         });
     });
     return {

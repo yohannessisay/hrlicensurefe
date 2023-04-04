@@ -10,9 +10,7 @@
         <li><span class="text-gray-500 mx-2">/</span></li>
         <li>
           <router-link to="/Applicant/Renewal">
-            <a href="#" class="text-main-400 hover:text-blue-700"
-              >Renewal</a
-            >
+            <a href="#" class="text-main-400 hover:text-blue-700">Renewal</a>
           </router-link>
         </li>
         <li><span class="text-gray-500 mx-2">/</span></li>
@@ -231,10 +229,10 @@
                     focus:outline-none
                   "
                   :disabled="
-                  generalInfo.multipleDepartment
-                    ? generalInfo.multipleDepartment.length > 0
-                    : 0
-                "
+                    generalInfo.multipleDepartment
+                      ? generalInfo.multipleDepartment.length > 0
+                      : 0
+                  "
                   v-model="generalInfo.regionSelected"
                   @change="regionChangeHandler()"
                   required
@@ -275,14 +273,14 @@
                   aria-label="Default select example
                   "
                   :disabled="
-                  generalInfo.multipleDepartment
-                    ? generalInfo.multipleDepartment.length > 0
-                    : 0
-                "
-                v-model="generalInfo.zoneSelected"
+                    generalInfo.multipleDepartment
+                      ? generalInfo.multipleDepartment.length > 0
+                      : 0
+                  "
+                  v-model="generalInfo.zoneSelected"
                   @change="zoneChangeHandler()"
                 >
-                <option
+                  <option
                     v-for="zone in zones"
                     v-bind:key="zone.name"
                     v-bind:value="zone"
@@ -320,13 +318,13 @@
                     focus:outline-none
                   "
                   :disabled="
-                  generalInfo.multipleDepartment
-                    ? generalInfo.multipleDepartment.length > 0
-                    : 0
-                "
+                    generalInfo.multipleDepartment
+                      ? generalInfo.multipleDepartment.length > 0
+                      : 0
+                  "
                   required
                 >
-                <option
+                  <option
                     v-for="woreda in woredas"
                     v-bind:key="woreda.name"
                     v-bind:value="woreda"
@@ -710,9 +708,8 @@
                       <tbody>
                         <tr
                           class="border-b border-main-400 p-4"
-                          v-for="(
-                            item, index
-                          ) in generalInfo.multipleDepartment"
+                          v-for="(item,
+                          index) in generalInfo.multipleDepartment"
                           :key="item.id"
                         >
                           <td
@@ -773,7 +770,7 @@
                             "
                           >
                             <span
-                              @click="removeDepartment(index)" 
+                              @click="removeDepartment(index)"
                               title="Remove"
                               ><i
                                 class="fa fa-trash text-red-300 cursor-pointer"
@@ -868,8 +865,8 @@ import LicenseSummary from "./submittedSummary.vue";
 import Upload from "./submittedUpload.vue";
 import MainContent from "../sharedComponents/Menu.vue";
 import { useToast } from "vue-toastification";
-import Loading from "vue3-loading-overlay";
 import { useRouter } from "vue-router";
+import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 export default {
   components: { MainContent, LicenseSummary, Upload, Loading },
@@ -924,8 +921,7 @@ export default {
       educations: [],
     });
     let applicationStatuses = ref([]);
-    let isLoading = ref(false);
-    let professionChanged=ref(false)
+    let isLoading = ref(false); 
 
     const fetchApplicantType = () => {
       store.dispatch("renewal/getApplicantType").then((res) => {
@@ -1003,7 +999,7 @@ export default {
     };
 
     const fetchWoredas = () => {
-      console.log(generalInfo.value.zoneSelected)
+      console.log(generalInfo.value.zoneSelected);
       store
         .dispatch("renewal/getWoredas", generalInfo.value.zoneSelected.id)
         .then((res) => {
@@ -1016,11 +1012,9 @@ export default {
         departmentId: departmentId,
         educationalLevelId: educationalLevelId,
       };
-      store
-        .dispatch("renewal/getProfessionalTypes", profession)
-        .then((res) => {
-          professionalTypes.value = res.data.data;
-        });
+      store.dispatch("renewal/getProfessionalTypes", profession).then((res) => {
+        professionalTypes.value = res.data.data;
+      });
     };
     const applicantTypeChangeHandler = async () => {
       if (generalInfo.value.applicantType.code == "ETH") {
@@ -1113,7 +1107,7 @@ export default {
               ) == false
             ) {
               checkForAddedError.value = false;
-              generalInfo.value.professionChanged=true
+              generalInfo.value.professionChanged = true;
               generalInfo.value.multipleDepartment.push({
                 department: generalInfo.value.departmentSelected,
                 educationLevel: generalInfo.value.educationalLevelSelected,
@@ -1140,7 +1134,7 @@ export default {
             }
           } else {
             checkForAddedError.value = false;
-            generalInfo.value.professionChanged=true
+            generalInfo.value.professionChanged = true;
             generalInfo.value.multipleDepartment.push({
               department: generalInfo.value.departmentSelected,
               educationLevel: generalInfo.value.educationalLevelSelected,
@@ -1189,19 +1183,17 @@ export default {
         "NLApplicationData",
         JSON.stringify(tempApplicationData)
       );
-      store
-        .dispatch("renewal/setGeneralInfo", generalInfo.value)
-        .then(() => {
-          emit("changeActiveState");
-          activeState.value += 1;
-        });
+      store.dispatch("renewal/setGeneralInfo", generalInfo.value).then(() => {
+        emit("changeActiveState");
+        activeState.value += 1;
+      });
     };
     const fetchApplicationStatuses = () => {
       store.dispatch("renewal/getApplicationStatuses").then((res) => {
         const results = res.data.data;
         applicationStatuses.value = results;
 
-        let status = applicationStatuses.value.filter(function (e) {
+        let status = applicationStatuses.value.filter(function(e) {
           return e.code == "SUB";
         });
         store.dispatch("renewal/setButtons", status[0].buttons);
@@ -1215,6 +1207,7 @@ export default {
       );
     };
     onMounted(async () => {
+      isLoading.value = true;
       fetchApplicantType();
       fetchDepartments();
       fetchInstitutions();
@@ -1259,7 +1252,7 @@ export default {
                   updatedAt: res.data.data.woreda.updatedAt,
                 }
               : "";
-              isAppTypeSelected.value=true; 
+          isAppTypeSelected.value = true;
           applicantTypeChangeHandler();
           regionChangeHandler();
           zoneChangeHandler();
@@ -1267,6 +1260,7 @@ export default {
             JSON.stringify(res.data.data.educations)
           );
           generalInfo.value.applicantTypeSelected = res.data.data.applicantType;
+          isLoading.value = false;
         });
     });
     return {
@@ -1320,11 +1314,9 @@ export default {
 </script>
 <style>
 #main {
-  
   border-radius: 5px;
 }
 .table-multiple {
-  
   border-radius: 5px;
 }
 </style>

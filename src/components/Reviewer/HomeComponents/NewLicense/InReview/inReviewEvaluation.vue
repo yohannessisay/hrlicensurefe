@@ -978,7 +978,7 @@
                                   <div>
                                     <iframe
                                       v-bind:src="
-                                        googleApi + '' + docs[index]?docs[index].filePath:''
+                                docs[index]?  googleApi + docs[index].filePath:''
                                       "
                                     ></iframe>
                                   </div>
@@ -1004,7 +1004,7 @@
                                   <div class="flex items-center">
                                     <a
                                       :data-src="
-                                        googleApi + '' + docs[index]?docs[index].filePath:''
+                                  docs[index]?  googleApi + docs[index].filePath:''
                                       "
                                       :data-caption="
                                       docs[index]&& docs[index].documentType
@@ -1017,8 +1017,8 @@
                                           viewImage([
                                             {
                                               src:
-                                                googleApi +
-                                                docs[index]?docs[index].filePath:'',
+                                       
+                                                docs[index]?  googleApi + docs[index].filePath:'',
                                               title: 'Image Caption 1',
                                             },
                                           ])
@@ -1031,7 +1031,7 @@
                                     cursor-pointer
                                   "
                                         :src="
-                                          googleApi + '' + docs[index]?docs[index].filePath:''
+                                       docs[index]?  googleApi + docs[index].filePath:''
                                         "
                                       />
                                     </a>
@@ -1370,8 +1370,7 @@
                                     >
                                       <img
                                         v-bind:src="
-                                          googleApi +
-                                            '' +rejectedObj[ind]?
+                                     rejectedObj[ind]?  googleApi + 
                                             rejectedObj[ind].filePath:''
                                         "
                                       />

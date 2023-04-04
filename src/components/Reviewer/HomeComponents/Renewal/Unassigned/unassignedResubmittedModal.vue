@@ -585,7 +585,7 @@ export default {
 
     let assign = ref({
       reviewerId: "",
-      licenseId: "",
+      renewalId: "",
       createdByAdminId: "",
     });
     let role = ref({});
@@ -602,14 +602,14 @@ export default {
     const assignReviewer = (action) => {
       if (role.value.code === "TL" || role.value.code === "ADM") {
         assign.value = {
-          licenseId: licenseData.value.id,
+          renewalId: licenseData.value.id,
           reviewerId: assign.value.reviewerId,
         };
       }
 
       if (role.value.code == "REV") {
         assign.value = {
-          licenseId: licenseData.value.id,
+          renewalId: licenseData.value.id,
           reviewerId: +localStorage.getItem("adminId"),
         };
       }

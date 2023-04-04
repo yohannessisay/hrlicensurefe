@@ -638,7 +638,7 @@ export default {
         ? statuses.filter(stat => stat.code == "UPD")[0].id
         : "";
       store
-        .dispatch("reviewerRenewal/getOtherRenewalByStatus", [
+        .dispatch("reviewerRenewal/getRenewalByStatus", [
           { statusId: updId },
           { params: apiParameters }
         ])

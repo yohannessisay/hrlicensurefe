@@ -193,7 +193,7 @@
         duration-150
         ease-in-out
       "
-                @click="openDraftDetail(license.id)"
+                @click="openSubmittedDetail(license.id)"
                 data-bs-toggle="modal"
                 data-bs-target="#submittedModalInfo"
               >
@@ -201,7 +201,7 @@
               </button>
 
               <router-link
-                :to="'/Applicant/Renewal/draft/detail/' + license.id"
+                :to="'/Applicant/Renewal/submitted/detail/' + license.id"
               >
                 <button
                   class="
@@ -308,7 +308,7 @@ export default {
       });
     });
 
-    const openDraftDetail = (id) => {
+    const openSubmittedDetail = (id) => {
       modalDataId.value.id = id;
       modalDataId.value.change++;
     };
@@ -319,7 +319,7 @@ export default {
       userInfo,
       noData,
       isLoading,
-      openDraftDetail,
+      openSubmittedDetail,
       modalDataId,
     };
   },

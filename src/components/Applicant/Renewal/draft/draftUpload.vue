@@ -194,8 +194,8 @@
                             <img
                               :id="
                                 'common_image_lightbox' +
-                                item.documentType.id +
-                                item.id
+                                  item.documentType.id +
+                                  item.id
                               "
                               v-bind:src="
                                 documentsSaved[item.documentType.code]
@@ -406,12 +406,16 @@
                           class="document-name"
                           v-if="
                             documentsSaved[
-                              `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                              `${
+                                item.documentType.code
+                              }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                             ]?.name
                           "
                           >{{
                             documentsSaved[
-                              `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                              `${
+                                item.documentType.code
+                              }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                             ]?.name
                           }}</span
                         >
@@ -420,11 +424,15 @@
                         <a
                           :id="
                             'image_href_' +
-                            `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                              `${
+                                item.documentType.code
+                              }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                           "
                           :href="
                             documentsSaved[
-                              `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                              `${
+                                item.documentType.code
+                              }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                             ]?.path
                           "
                           :data-title="item.name ? item.name : '-----'"
@@ -433,7 +441,9 @@
                           <i
                             :id="
                               'educational_icon_' +
-                              `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                `${
+                                  item.documentType.code
+                                }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                             "
                             class="fa fa-eye cursor-pointer text-main-400"
                             aria-hidden="true"
@@ -441,11 +451,15 @@
                             <img
                               :id="
                                 'image_lightbox_' +
-                                `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                  `${
+                                    item.documentType.code
+                                  }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                               "
                               :src="
                                 documentsSaved[
-                                  `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                  `${
+                                    item.documentType.code
+                                  }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                 ]?.path
                               "
                               class="w-full h-2 object-cover"
@@ -517,12 +531,16 @@
                           class="document-name"
                           v-if="
                             documentsSaved[
-                              `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                              `${
+                                parentItem[0].documentType.code
+                              }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                             ]?.name
                           "
                           >{{
                             documentsSaved[
-                              `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                              `${
+                                parentItem[0].documentType.code
+                              }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                             ]?.name
                           }}</span
                         >
@@ -531,11 +549,15 @@
                         <a
                           :id="
                             'image_href_' +
-                            `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                              `${
+                                parentItem[0].documentType.code
+                              }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                           "
                           :href="
                             documentsSaved[
-                              `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                              `${
+                                parentItem[0].documentType.code
+                              }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                             ]?.path
                           "
                           :data-title="
@@ -546,7 +568,9 @@
                           <i
                             :id="
                               'educational_icon_' +
-                              `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                `${
+                                  parentItem[0].documentType.code
+                                }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                             "
                             class="fa fa-eye cursor-pointer text-main-400"
                             aria-hidden="true"
@@ -554,11 +578,15 @@
                             <img
                               :id="
                                 'image_lightbox_' +
-                                `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                  `${
+                                    parentItem[0].documentType.code
+                                  }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                               "
                               :src="
                                 documentsSaved[
-                                  `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                  `${
+                                    parentItem[0].documentType.code
+                                  }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                 ]?.path
                               "
                               class="w-full h-2 object-cover"
@@ -715,7 +743,9 @@
                                       :required="parentChildItem.isRequired"
                                       :id="`files${parentChildItem.id}`"
                                       accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
-                                      :ref="`imageUploader${parentChildItem.id}`"
+                                      :ref="
+                                        `imageUploader${parentChildItem.id}`
+                                      "
                                       class="custom-file-input"
                                       v-on:change="
                                         handleFileUpload(
@@ -732,12 +762,16 @@
                                     class="document-name"
                                     v-if="
                                       documentsSaved[
-                                        `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                        `${
+                                          parentChildItem.documentType.code
+                                        }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                       ]?.name
                                     "
                                     >{{
                                       documentsSaved[
-                                        `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                        `${
+                                          parentChildItem.documentType.code
+                                        }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                       ]?.name
                                     }}</span
                                   >
@@ -753,11 +787,15 @@
                                   <a
                                     :id="
                                       'image_href_' +
-                                      `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                        `${
+                                          parentChildItem.documentType.code
+                                        }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                     "
                                     :href="
                                       documentsSaved[
-                                        `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                        `${
+                                          parentChildItem.documentType.code
+                                        }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                       ]?.path
                                     "
                                     :data-title="
@@ -768,7 +806,9 @@
                                     <i
                                       :id="
                                         'educational_icon_' +
-                                        `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                          `${
+                                            parentChildItem.documentType.code
+                                          }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                       "
                                       class="
                                         fa fa-eye
@@ -780,11 +820,15 @@
                                       <img
                                         :id="
                                           'image_lightbox_' +
-                                          `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                            `${
+                                              parentChildItem.documentType.code
+                                            }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                         "
                                         :src="
                                           documentsSaved[
-                                            `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                            `${
+                                              parentChildItem.documentType.code
+                                            }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                           ]?.path
                                         "
                                         class="w-full h-2 object-cover"
@@ -868,7 +912,6 @@
 <script>
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
-import { useToast } from "vue-toastification";
 
 import MAX_FILE_SIZE from "../../../../composables/documentMessage";
 import filePreview from "@/sharedComponents/FilePreview";
@@ -880,7 +923,6 @@ export default {
 
   setup(props, { emit }) {
     let store = useStore();
-    const toast = useToast();
     const route = useRoute();
     let documents = ref([]);
     let commonDocuments = ref([]);
@@ -896,7 +938,6 @@ export default {
     });
     let files = ref("");
     let maxFileSize = ref(5000000);
-    let parentDocs = ref([]);
     let isImage = ref({});
     let isPdf = ref({});
     let fileSizeExceed = ref({});
@@ -945,7 +986,7 @@ export default {
         }
         reader.addEventListener(
           "load",
-          function () {
+          function() {
             showPreview.value = true;
 
             previewDocuments.value[data.documentType.code] = reader.result;
@@ -1002,7 +1043,7 @@ export default {
       );
       outputHref.href = URL.createObjectURL(event.target.files[0]);
       output.src = URL.createObjectURL(event.target.files[0]);
-      output.onload = function () {
+      output.onload = function() {
         URL.revokeObjectURL(output.src); // free memory
       };
     };
@@ -1057,7 +1098,7 @@ export default {
 
             previewDocuments.value[data.documentType.code] = reader.result;
             imageData = imageData.filter(
-              el => el.documenttype != data.documentType.name
+              (el) => el.documenttype != data.documentType.name
             );
             imageData.push({
               imageId:
@@ -1072,7 +1113,7 @@ export default {
                 ? data.educationalLevel.name
                 : "",
               fileName: event?.target?.files[0].name,
-              image: reader.result
+              image: reader.result,
             });
             // documentUploaded.value[data.documentType.code] = reader.result;
           },
@@ -1145,91 +1186,7 @@ export default {
           })
         : "";
     };
-    const checkDocuments = () => {
-      let temp = false;
-      let CMtemp = false;
 
-      /// check common documents
-
-      commonDocuments.value
-        .filter((cd) => cd.isRequired)
-        .forEach((element) => {
-          CMtemp = documentsUploaded.value.hasOwnProperty(
-            element.documentType.code
-          );
-          if (!CMtemp) {
-            fileUploadError.value[
-              "file_upload_row_" + element.documentType.code
-            ] = true;
-            errorDocuments.value.push({
-              isCommon: true,
-              name: element.documentType.name,
-              code: element.documentType.code,
-            });
-          } else {
-            fileUploadError.value[
-              "file_upload_row_" + element.documentType.code
-            ] = false;
-          }
-        });
-
-      educationalDocs.value.forEach((ed) => {
-        // check normal docs with no parents
-
-        ed.docs
-          .filter((docs) => docs.isRequired)
-          .forEach((single) => {
-            temp = documentsUploaded.value.hasOwnProperty(
-              single.documentType.code +
-                "_" +
-                ed.educationalLevel.code.toUpperCase() +
-                "_" +
-                ed.professionType.code.toUpperCase()
-            );
-            if (!temp) {
-              fileUploadError.value[
-                "file_upload_row_" +
-                  single.documentType.code +
-                  "_" +
-                  ed.educationalLevel.code.toUpperCase() +
-                  "_" +
-                  ed.professionType.code.toUpperCase()
-              ] = true;
-              errorDocuments.value.push({
-                name: single.documentType.name,
-                code:
-                  single.documentType.code +
-                  "_" +
-                  ed.educationalLevel.code.toUpperCase() +
-                  "_" +
-                  ed.professionType.code.toUpperCase(),
-              });
-            } else {
-              fileUploadError.value[
-                "file_upload_row_" +
-                  single.documentType.code +
-                  "_" +
-                  ed.educationalLevel.code.toUpperCase() +
-                  "_" +
-                  ed.professionType.code.toUpperCase()
-              ] = false;
-            }
-          });
-
-        //// check documetns with parents
-
-        // fileUploadError.value[
-        //         "file_upload_row_" +
-        //           single.documentType.code +
-        //           "_" +
-        //           ed.educationalLevel.code.toUpperCase() +
-        //           "_" +
-        //           ed.professionType.code.toUpperCase()
-        //       ] = true;
-      });
-
-      return CMtemp && temp;
-    };
     const next = () => {
       store.dispatch("renewal/setTempDocs", formData).then(() => {
         //Save images to indexed Db
@@ -1240,7 +1197,7 @@ export default {
         };
         let db;
         let request = indexedDB.open("RNdocumentUploads", 1);
-        request.onsuccess = function () {
+        request.onsuccess = function() {
           db = request.result;
           let transaction = db.transaction(["RNdocumentUploads"], "readwrite");
 
@@ -1252,18 +1209,18 @@ export default {
 
           const objectStoreRequest = objectStore.clear();
 
-          objectStoreRequest.onsuccess = (event) => {
+          objectStoreRequest.onsuccess = () => {
             let addReq = transaction
               .objectStore("RNdocumentUploads")
               .put(finalLocalData);
 
-            addReq.onerror = function () {
+            addReq.onerror = function() {
               console.log(
                 "Error regarding your browser, please update your browser to the latest version"
               );
             };
 
-            transaction.oncomplete = function () {
+            transaction.oncomplete = function() {
               console.log("data stored");
               emit("changeActiveState");
             };
@@ -1291,16 +1248,14 @@ export default {
       }
     };
 
-     
-
     const initDb = () => {
       let request = indexedDB.open("RNdocumentUploads", 1);
 
-      request.onerror = function () {
+      request.onerror = function() {
         console.error("Unable to open database.");
       };
 
-      request.onupgradeneeded = function () {
+      request.onupgradeneeded = function() {
         let db = request.result;
         db.createObjectStore("RNdocumentUploads", {
           keyPath: "id",
