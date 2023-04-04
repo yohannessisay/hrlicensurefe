@@ -29,7 +29,7 @@ export default {
     return resp.data ? resp.data.data : [];
   },
 
-  async getRenewalReport({ commit }) {
+  async getRenewalReport() {
     try {
       const approved = await ApiService.get(baseUrl + "/renewals/status/5");
       const declined = await ApiService.get(baseUrl + "/renewals/status/6");
@@ -40,8 +40,19 @@ export default {
       return err;
     }
   },
-
-  async getRenewalByUserId({ commit }, userId) {
+  async getRenewalLicensed(context, parameters) {
+    let url = baseUrl + "/renewals/all/licensed?";
+    if (parameters) {
+      parameters.forEach((param) => {
+        url += param ? `${param.key}=${param.value}&` : "";
+      });
+    }
+    url = url.substring(0, url.length - 1);
+    const resp = await ApiService.get(url);
+    let license = resp.data.data;
+    return license;
+  },
+  async getRenewalByUserId(context, userId) {
     try {
       const resp = await ApiService.get(baseUrl + "/renewals/user/" + userId);
       return resp;
@@ -59,13 +70,21 @@ export default {
     }
   },
   async getRenewalApproved(context, parameters) {
-    let url = baseUrl + "/renewals/all/approved";
+    let url = baseUrl + "/renewals/all/approved?";
+
+    if (parameters[0] && parameters[0].params) {
+      parameters[0].params.forEach((param) => {
+        url += param ? `${param.key}=${param.value}&` : "";
+      });
+    }
+    url = url.substring(0, url.length - 1);
+
     parameters && parameters[1] && parameters[1].other == true
-      ? (url = url + "?others=1")
+      ? (url = url + "&others=1")
       : "";
+
     const resp = await ApiService.get(url);
 
     return resp.data ? resp.data.data : [];
   },
-
 };

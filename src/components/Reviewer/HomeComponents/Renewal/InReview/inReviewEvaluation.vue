@@ -1942,7 +1942,7 @@ export default {
               : (rejected.value = []);
           completedSteps.value = accepted.value.length + rejected.value.length;
           index.value = completedSteps.value;
-          if (completedSteps.value == docs.value ? docs.value.length : 0) {
+          if (completedSteps.value == docs.value.length) {
             showButtons.value = true;
           }
           fetchDocumentTypes();
@@ -2055,6 +2055,7 @@ export default {
     const accept = (doc) => {
       nextClickable.value = true;
       completedSteps.value += 1;
+      
       if (accepted.value.length > 0) {
         if (!accepted.value.includes(doc.documentTypeCode)) {
           accepted.value.push(doc.fileName);

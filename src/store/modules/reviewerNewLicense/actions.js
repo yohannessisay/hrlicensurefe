@@ -38,13 +38,20 @@ export default {
     return resp.data ? resp.data.data : [];
   },
 
- 
-
   async getNewLicenseApproved(context, parameters) {
     let url = baseUrl + "/newLicenses/all/approved";
+
+    if (parameters[0] && parameters[0].params) {
+      parameters[0].params.forEach((param) => {
+        url += param ? `${param.key}=${param.value}&` : "";
+      });
+    }
+    url = url.substring(0, url.length - 1);
+
     parameters && parameters[1] && parameters[1].other == true
-      ? (url = url + "?others=1")
+      ? (url = url + "&others=1")
       : "";
+
     const resp = await ApiService.get(url);
 
     return resp.data ? resp.data.data : [];
