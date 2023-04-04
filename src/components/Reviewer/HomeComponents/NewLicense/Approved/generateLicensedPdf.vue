@@ -54,7 +54,7 @@
             rounded-t-md
           "
         ></div>
-
+<!-- if applicant is ethiopian -->
         <div
           v-if="
             finalData &&
@@ -1118,6 +1118,8 @@
           </div>
           <!-- End of professions that are greater than 3 part-->
         </div>
+
+        <!-- end of applicant as ethiopian -->
         <!-- if applicant is foreigner -->
         <div
           v-if="
@@ -1959,8 +1961,7 @@ export default {
           default:
             break;
         }
-      }
-      console.log(data);
+      } 
       await html2canvas(data, { scale: 2 }).then((canvas) => {
         const contentDataURL = canvas.toDataURL("image/png", 1.0);
 

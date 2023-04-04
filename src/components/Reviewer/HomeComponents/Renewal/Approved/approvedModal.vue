@@ -431,60 +431,7 @@
                           <i class="fa fa-file-text"></i>
                           Generate License
                         </button>
-                        <button
-                          v-if="showGenerate"
-                          class="
-                            inline-block
-                            px-6
-                            py-2.5
-                            bg-yellow-400
-                            text-primary-600
-                            font-medium
-                            text-xs
-                            leading-tight
-                            uppercase
-                            rounded
-                            shadow-lg
-                            hover:bg-white hover:text-primary-600
-                            transition
-                            duration-150
-                            ease-in-out
-                          "
-                          type="button"
-                          data-bs-toggle="modal"
-                          data-bs-target="#generatePdf"
-                          @click="changePrintType('externship')"
-                        >
-                          <i class="fa fa-file-archive"></i>
-                          Externship
-                        </button>
-                        <button
-                          v-if="showGenerate"
-                          class="
-                            inline-block
-                            px-6
-                            py-2.5
-                            bg-primary-400
-                            text-white
-                            font-medium
-                            text-xs
-                            leading-tight
-                            uppercase
-                            rounded
-                            shadow-lg
-                            hover:bg-white hover:text-primary-600
-                            transition
-                            duration-150
-                            ease-in-out
-                          "
-                          type="button"
-                          data-bs-toggle="modal"
-                          data-bs-target="#generatePdf"
-                          @click="changePrintType('temporary')"
-                        >
-                          <i class="fa fa-file-circle-check"></i>
-                          Temporary
-                        </button>
+                       
                         <button
                           v-if="showPreviousLicense"
                           type="button"

@@ -24,6 +24,7 @@
         "ethiopic-calendar": "^2.0.0",
         "file-saver": "^2.0.5",
         "html2canvas": "^1.4.1",
+        "html2pdf.js": "^0.10.1",
         "idle-vue": "^2.0.5",
         "js-base64": "^3.7.2",
         "jspdf": "^2.3.1",

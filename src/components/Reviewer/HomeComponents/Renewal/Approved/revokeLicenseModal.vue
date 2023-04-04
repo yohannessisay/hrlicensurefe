@@ -65,10 +65,8 @@
               </div>
               <div class="vld-parent">
                 <loading
-                  :active="isLoading"
-                  :can-cancel="true"
-                  :on-cancel="onCancel"
-                  :is-full-page="fullPage"
+                  :active="isLoading" 
+                  :is-full-page="false"
                   :color="'#2F639D'"
                   :opacity="0.7"
                 ></loading>
@@ -219,6 +217,7 @@ export default {
     return {
       showFlash,
       showErrorFlash,
+      isLoading,
       remark,
       revoke,
     };
