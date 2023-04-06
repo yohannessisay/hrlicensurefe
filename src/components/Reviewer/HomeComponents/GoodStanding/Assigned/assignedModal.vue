@@ -144,49 +144,79 @@
                               <h2 class="font-extrabold text-2xl mb-1">
                                 Personal Info
                               </h2>
-                              <p class="text-gray-500">
-                                <span
-                                  class="
+
+                              <div
+                                class="
+                                  border-2
+                                  p-2
+                                  rounded-lg
+                                  m-1
+                                  shadow-md
+                                  text-primary-500
+                                "
+                              >
+                                <p class="text-gray-500">
+                                  <span
+                                    class="
                                     font-semibold
                                     text-lg text-primary-700
                                     mb-1
                                   "
-                                  >Full Name:</span
-                                >
-                                {{ modalData.name }}
-                              </p>
-                              <p class="text-gray-500">
-                                <span
-                                  class="font-semibold text-primary-700 mb-1"
-                                  >Gender:</span
-                                >
-                                {{ modalData.gender }}
-                              </p>
-                              <p class="text-gray-500">
-                                <span
-                                  class="font-semibold text-primary-700 mb-1"
-                                  >Nationality:</span
-                                >
-                                {{ modalData.nationality }}
-                              </p>
-                              <p class="text-gray-500">
-                                <span
-                                  class="font-semibold text-primary-700 mb-1"
-                                  >Date Of Birth:</span
-                                >
-                                {{
-                                  modalData.dateOfBirth
-                                    ? modalData.dateOfBirth.slice(0, 10)
-                                    : "-----"
-                                }}
-                              </p>
-                              <p class="text-gray-500">
-                                <span
-                                  class="font-semibold text-primary-700 mb-1"
-                                  >Martial Status:</span
-                                >
-                                {{ modalData.maritalStatus }}
-                              </p>
+                                    >Full Name:</span
+                                  >
+                                  <span class="text-grey-800 ml-2">{{
+                                    modalData.name ? modalData.name : ""
+                                  }}</span>
+                                </p>
+                                <p class="text-gray-500 ">
+                                  <span
+                                    class="font-semibold text-primary-700 mb-1"
+                                    >Gender:</span
+                                  >
+                                  <span class="text-grey-800 ml-2">{{
+                                    modalData.gender ? modalData.gender : ""
+                                  }}</span>
+                                </p>
+                                <p class="text-gray-500">
+                                  <span
+                                    class="font-semibold text-primary-700 mb-1"
+                                    >Nationality:</span
+                                  >
+                                  <span class="text-grey-800 ml-2">
+                                    {{
+                                      modalData.nationality
+                                        ? modalData.nationality
+                                        : ""
+                                    }}</span
+                                  >
+                                </p>
+                                <p class="text-gray-500">
+                                  <span
+                                    class="font-semibold text-primary-700 mb-1"
+                                    >Date Of Birth:</span
+                                  >
+                                  <span class="text-grey-800 ml-2">
+                                    {{
+                                      modalData.dateOfBirth
+                                        ? modalData.dateOfBirth.slice(0, 10)
+                                        : ""
+                                    }}</span
+                                  >
+                                </p>
+                                <p class="text-gray-500">
+                                  <span
+                                    class="font-semibold text-primary-700 mb-1"
+                                    >Martial Status:</span
+                                  >
+                                  <span class="text-grey-800 ml-2">
+                                    {{
+                                      modalData.maritalStatus
+                                        ? modalData.maritalStatus
+                                        : ""
+                                    }}</span
+                                  >
+                                </p>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -261,44 +291,6 @@
                                         placeholder="Select reviewer by typing a name"
                                       />
                                     </div>
-                                    <div>
-                                      <textarea
-                                        placeholder="Reason for transfer"
-                                        v-model="transferRemark"
-                                        class="
-                                          resize-none
-                                          tArea
-                                          border
-                                          rounded-lg
-                                          flex
-                                          mt-4
-                                          ml-1
-                                          w-full
-                                        "
-                                      ></textarea>
-                                      <button
-                                        class="
-                                          inline-block
-                                          px-6
-                                          py-2.5
-                                          bg-primary-700
-                                          text-white
-                                          font-medium
-                                          text-xs
-                                          leading-tight
-                                          uppercase
-                                          rounded
-                                          shadow-lg
-                                          hover:bg-white hover:text-primary-600
-                                          transition
-                                          duration-150
-                                          ease-in-out
-                                        "
-                                        @click="transferReviewer()"
-                                      >
-                                        Transfer
-                                      </button>
-                                    </div>
                                     <div
                                       v-show="
                                         resultQuery().length && showOptions
@@ -336,9 +328,139 @@
                                         </li>
                                       </ul>
                                     </div>
+                                    <div>
+                                      <textarea
+                                        placeholder="Reason for transfer"
+                                        v-model="transferRemark"
+                                        class="
+                                          resize-none
+                                          tArea
+                                          border
+                                          rounded-lg
+                                          flex
+                                          mt-4
+                                          ml-1
+                                          w-full
+                                        "
+                                      ></textarea>
+                                      <button
+                                        class="
+                                          inline-block
+                                          px-6
+                                          mt-2
+                                          ml-2
+                                          py-2.5
+                                          bg-primary-700
+                                          text-white
+                                          font-medium
+                                          text-xs
+                                          leading-tight
+                                          uppercase
+                                          rounded
+                                          shadow-lg
+                                          hover:bg-white hover:text-primary-600
+                                          transition
+                                          duration-150
+                                          ease-in-out
+                                        "
+                                        @click="transferReviewer()"
+                                      >
+                                        Transfer
+                                      </button>
+                                    </div>
                                   </div>
                                 </div>
                               </label>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div
+                          class="
+                            grow-0
+                            shrink-0
+                            basis-auto
+                            w-full
+                            lg:w-6/12
+                            px-3
+                            lg:px-6
+                          "
+                        >
+                          <div class="flex align-center">
+                            <div class="shrink-0">
+                              <div
+                                class="
+                                  p-4
+                                  bg-blue-600
+                                  rounded-md
+                                  shadow-lg
+                                  w-48
+                                  h-48
+                                  flex
+                                  items-center
+                                  justify-center
+                                "
+                              >
+                                <i class="fa fa-building fa-4x"></i>
+                              </div>
+                            </div>
+                            <div class="grow ml-6">
+                              <h2 class="font-bold mb-1">Education Info</h2>
+                              <div
+                                class="
+                                  border-2
+                                  p-2
+                                  rounded-lg
+                                  m-1
+                                  shadow-md
+                                  text-primary-500
+                                "
+                              >
+                                <p class="text-gray-500">
+                                  <span
+                                    class="font-medium text-primary-700 mb-1"
+                                    >Profession Name:</span
+                                  >
+                                  <span class="text-grey-800 ml-2">
+                                    {{
+                                      modalData.data &&
+                                      modalData.data.GSProfessionals
+                                        ? modalData.data.GSProfessionals
+                                            .professionalTypes.name
+                                        : ""
+                                    }}</span
+                                  >
+                                </p>
+                                <p class="text-gray-500">
+                                  <span
+                                    class="font-medium text-primary-700 mb-1"
+                                    >Department:</span
+                                  >
+                                  <span class="text-grey-800 ml-2">
+                                    {{
+                                      modalData.data &&
+                                      modalData.data.department
+                                        ? modalData.data.department.name
+                                        : ""
+                                    }}</span
+                                  >
+                                </p>
+                                <p class="text-gray-500">
+                                  <span
+                                    class="font-medium text-primary-700 mb-1"
+                                    >Education Level:</span
+                                  >
+                                  <span class="text-grey-800 ml-2">
+                                    {{
+                                      modalData.data &&
+                                      modalData.data.GSProfessionals
+                                        ? modalData.data.GSProfessionals
+                                            .educationLevel.name
+                                        : ""
+                                    }}</span
+                                  >
+                                </p>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -374,40 +496,89 @@
                             </div>
                             <div class="grow ml-6">
                               <h2 class="font-bold mb-1">Contact Info</h2>
-                              <p class="text-gray-500">
-                                <span class="font-medium text-primary-700 mb-1"
-                                  >Mobile Number:</span
-                                >
-                                {{ modalData.mobileNumber }}
-                              </p>
-                              <p class="text-gray-500">
-                                <span class="font-medium text-primary-700 mb-1"
-                                  >Email:</span
-                                >
-                                {{ modalData.email }}
-                              </p>
+                              <div
+                                class="
+                                  border-2
+                                  p-2
+                                  rounded-lg
+                                  m-1
+                                  shadow-md
+                                  text-primary-500
+                                "
+                              >
+                                <p class="text-gray-500">
+                                  <span
+                                    class="font-medium text-primary-700 mb-1"
+                                    >Mobile Number:</span
+                                  >
+                                  <span class="text-grey-800 ml-2">{{
+                                    modalData.mobileNumber
+                                  }}</span>
+                                </p>
+                                <p class="text-gray-500">
+                                  <span
+                                    class="font-medium text-primary-700 mb-1"
+                                    >Email:</span
+                                  >
+                                  <span class="text-grey-800 ml-2">{{
+                                    modalData.email
+                                  }}</span>
+                                </p>
+                              </div>
                             </div>
                           </div>
-                        </div>
-
-                        <div
-                          class="
-                            grow-0
-                            shrink-0
-                            basis-auto
-                            w-full
-                            lg:w-6/12
-                            px-3
-                            lg:px-6
-                          "
-                        >
-                          <div class="flex align-center"></div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </section>
+            </div>
+            <div
+              class="bg-primary-300 mt-4 ml-1 p-4 rounded-lg"
+              v-if="
+                modalData &&
+                  modalData.data &&
+                  modalData.data.goodstandingReviewer &&
+                  modalData.data.goodstandingReviewer.transferFrom
+              "
+            >
+              <h2 class="text-xl text-yellow-300">
+                This license is a transfer from
+              </h2>
+
+              <div class="grid grid-cols-2">
+                <div class="grid grid-cols-2">
+                  <h5 class="text-lg  ">Reviewer Name</h5>
+
+                  <h5 class="text-lg text-primary-600">
+                    {{
+                      modalData &&
+                      modalData.data &&
+                      modalData.data.goodstandingReviewer &&
+                      modalData.data.goodstandingReviewer.transferFrom
+                        ? modalData.data.goodstandingReviewer.transferFrom.name
+                        : ""
+                    }}
+                  </h5>
+                </div>
+              </div>
+              <div class="grid grid-cols-2">
+                <div class="grid grid-cols-2">
+                  <h5 class="text-lg  ">With a reason of</h5>
+
+                  <h5 class="text-lg text-primary-600">
+                    {{
+                      modalData &&
+                      modalData.data &&
+                      modalData.data.goodstandingReviewer &&
+                      modalData.data.goodstandingReviewer.transferFrom
+                        ? modalData.data.goodstandingReviewer.transferRemark
+                        : ""
+                    }}
+                  </h5>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -498,6 +669,7 @@ export default {
   setup(props) {
     const store = useStore();
     const toast = useToast();
+    let adminRole = localStorage.getItem("role");
     let transferRemark = ref("");
     let show = ref(true);
     let showRes = ref(false);
@@ -515,7 +687,6 @@ export default {
     const isLoadingStart = ref(true);
     const fullPage = ref(false);
     const evaluationData = ref({});
-    let reviewerAdminId = ref(0);
 
     const fetchRole = (id) => {
       store.dispatch("reviewer/getRoles", id).then((res) => {
@@ -524,38 +695,32 @@ export default {
     };
 
     const transferReviewer = () => {
-      if (transferRemark.value == "") {
-        toast.error("Transfer reason is required", {
-          timeout: 5000,
-          position: "bottom-center",
-          pauseOnFocusLoss: true,
-          pauseOnHover: true,
-          icon: true,
-        });
+      if (transferRemark.value == "" || transfer.value.reviewerId == null) {
+        toast.error(
+          transferRemark.value == ""
+            ? "Transfer reason is required"
+            : "Please select reviewer to tansfer to",
+          {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          }
+        );
         return;
       } else {
-        if (role.value.code === "TL" || role.value.code === "ADM") {
-          transfer.value = {
-            licenseId: props.modalDataId.id,
-            reviewerId: transfer.value.reviewerId,
-            createdByAdminId: +localStorage.getItem("adminId"),
-            transferRemark: transferRemark.value,
-          };
-        }
-
-        if (role.value.code == "REV") {
-          transfer.value = {
-            licenseId: props.modalDataId.id,
-            reviewerId: +localStorage.getItem("adminId"),
-            createdByAdminId: +localStorage.getItem("adminId"),
-            transferRemark: transferRemark.value,
-          };
-        }
+        transfer.value = {
+          goodStandingId: props.modalDataId.id,
+          reviewerId: transfer.value.reviewerId,
+          createdByAdminId: +localStorage.getItem("adminId"),
+          transferRemark: transferRemark.value,
+          expertLevelId: modalData.value.data.expertLevelId,
+        };
 
         isLoading.value = true;
-
         store
-          .dispatch("reviewer/transferLicenseReview", transfer.value)
+          .dispatch("reviewer/transferGoodStandingReview", transfer.value)
           .then((response) => {
             if (response.statusText == "Created") {
               toast.success("Selected reviewer is successfully assigned", {
@@ -568,7 +733,7 @@ export default {
               isLoading.value = false;
               setTimeout(() => {
                 window.location.reload();
-              }, 3000);
+              }, 1000);
             } else {
               toast.error("Error Occured", {
                 timeout: 5000,
@@ -688,7 +853,7 @@ export default {
     };
     return {
       adminId,
-      reviewerAdminId,
+      adminRole,
       role,
       transfer,
       licenseData,

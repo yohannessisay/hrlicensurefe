@@ -146,57 +146,79 @@
                               <h2 class="font-extrabold text-2xl mb-1">
                                 Personal Info
                               </h2>
-                              <p class="text-gray-500">
-                                <span
-                                  class="
+
+                              <div
+                                class="
+                                  border-2
+                                  p-2
+                                  rounded-lg
+                                  m-1
+                                  shadow-md
+                                  text-primary-500
+                                "
+                              >
+                                <p class="text-gray-500">
+                                  <span
+                                    class="
                                     font-semibold
                                     text-lg text-primary-700
                                     mb-1
                                   "
-                                  >Full Name:</span
-                                >
-                                {{ modalData.name ? modalData.name : "" }}
-                              </p>
-                              <p class="text-gray-500">
-                                <span
-                                  class="font-semibold text-primary-700 mb-1"
-                                  >Gender:</span
-                                >
-                                {{ modalData.gender ? modalData.gender : "" }}
-                              </p>
-                              <p class="text-gray-500">
-                                <span
-                                  class="font-semibold text-primary-700 mb-1"
-                                  >Nationality:</span
-                                >
-                                {{
-                                  modalData.nationality
-                                    ? modalData.nationality
-                                    : ""
-                                }}
-                              </p>
-                              <p class="text-gray-500">
-                                <span
-                                  class="font-semibold text-primary-700 mb-1"
-                                  >Date Of Birth:</span
-                                >
-                                {{
-                                  modalData.dateOfBirth
-                                    ? modalData.dateOfBirth.slice(0, 10)
-                                    : ""
-                                }}
-                              </p>
-                              <p class="text-gray-500">
-                                <span
-                                  class="font-semibold text-primary-700 mb-1"
-                                  >Martial Status:</span
-                                >
-                                {{
-                                  modalData.maritalStatus
-                                    ? modalData.maritalStatus
-                                    : ""
-                                }}
-                              </p>
+                                    >Full Name:</span
+                                  >
+                                  <span class="text-grey-800 ml-2">{{
+                                    modalData.name ? modalData.name : ""
+                                  }}</span>
+                                </p>
+                                <p class="text-gray-500 ">
+                                  <span
+                                    class="font-semibold text-primary-700 mb-1"
+                                    >Gender:</span
+                                  >
+                                  <span class="text-grey-800 ml-2">{{
+                                    modalData.gender ? modalData.gender : ""
+                                  }}</span>
+                                </p>
+                                <p class="text-gray-500">
+                                  <span
+                                    class="font-semibold text-primary-700 mb-1"
+                                    >Nationality:</span
+                                  >
+                                  <span class="text-grey-800 ml-2">
+                                    {{
+                                      modalData.nationality
+                                        ? modalData.nationality
+                                        : ""
+                                    }}</span
+                                  >
+                                </p>
+                                <p class="text-gray-500">
+                                  <span
+                                    class="font-semibold text-primary-700 mb-1"
+                                    >Date Of Birth:</span
+                                  >
+                                  <span class="text-grey-800 ml-2">
+                                    {{
+                                      modalData.dateOfBirth
+                                        ? modalData.dateOfBirth.slice(0, 10)
+                                        : ""
+                                    }}</span
+                                  >
+                                </p>
+                                <p class="text-gray-500">
+                                  <span
+                                    class="font-semibold text-primary-700 mb-1"
+                                    >Martial Status:</span
+                                  >
+                                  <span class="text-grey-800 ml-2">
+                                    {{
+                                      modalData.maritalStatus
+                                        ? modalData.maritalStatus
+                                        : ""
+                                    }}</span
+                                  >
+                                </p>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -271,39 +293,6 @@
                                         placeholder="Select reviewer by typing a name"
                                       />
                                     </div>
-                                    <button
-                                      class="
-                                        inline-block
-                                        px-6
-                                        py-2.5
-                                        bg-primary-700
-                                        hover:bg-white
-                                        hover:text-primary-600
-                                        hover:border
-                                        text-white
-                                        font-medium
-                                        text-xs
-                                        mt-2
-                                        hover:border-primary-600
-                                        ml-1
-                                        leading-tight
-                                        uppercase
-                                        rounded
-                                        shadow-lg
-                                        hover:bg-blue-700 hover:shadow-lg
-                                        focus:bg-blue-700
-                                        focus:shadow-lg
-                                        focus:outline-none
-                                        focus:ring-0
-                                        active:bg-blue-800 active:shadow-lg
-                                        transition
-                                        duration-150
-                                        ease-in-out
-                                      "
-                                      @click="assignReviewer()"
-                                    >
-                                      Assign
-                                    </button>
                                     <div
                                       v-show="
                                         resultQuery().length && showOptions
@@ -341,6 +330,39 @@
                                         </li>
                                       </ul>
                                     </div>
+                                    <button
+                                      class="
+                                        inline-block
+                                        px-6
+                                        py-2.5
+                                        bg-primary-700
+                                        hover:bg-white
+                                        hover:text-primary-600
+                                        hover:border
+                                        text-white
+                                        font-medium
+                                        text-xs
+                                        mt-2
+                                        hover:border-primary-600
+                                        ml-1
+                                        leading-tight
+                                        uppercase
+                                        rounded
+                                        shadow-lg
+                                        hover:bg-blue-700 hover:shadow-lg
+                                        focus:bg-blue-700
+                                        focus:shadow-lg
+                                        focus:outline-none
+                                        focus:ring-0
+                                        active:bg-blue-800 active:shadow-lg
+                                        transition
+                                        duration-150
+                                        ease-in-out
+                                      "
+                                      @click="assignReviewer()"
+                                    >
+                                      Assign
+                                    </button>
                                   </div>
                                 </div>
                               </label>
@@ -378,25 +400,62 @@
                               </div>
                             </div>
                             <div class="grow ml-6">
-                              <h2 class="font-bold mb-1">Institution Info</h2>
-                              <p class="text-gray-500">
-                                <span class="font-medium text-primary-700 mb-1"
-                                  >Institution Name:</span
-                                >
-                                {{ modalData.instName }}
-                              </p>
-                              <p class="text-gray-500">
-                                <span class="font-medium text-primary-700 mb-1"
-                                  >Department:</span
-                                >
-                                {{ modalData.department }}
-                              </p>
-                              <p class="text-gray-500">
-                                <span class="font-medium text-primary-700 mb-1"
-                                  >Institution Type:</span
-                                >
-                                {{ modalData.instType }}
-                              </p>
+                              <h2 class="font-bold mb-1">Education Info</h2>
+                              <div
+                                class="
+                                  border-2
+                                  p-2
+                                  rounded-lg
+                                  m-1
+                                  shadow-md
+                                  text-primary-500
+                                "
+                              >
+                                <p class="text-gray-500">
+                                  <span
+                                    class="font-medium text-primary-700 mb-1"
+                                    >Profession Name:</span
+                                  >
+                                  <span class="text-grey-800 ml-2">
+                                    {{
+                                      modalData.data &&
+                                      modalData.data.GSProfessionals
+                                        ? modalData.data.GSProfessionals
+                                            .professionalTypes.name
+                                        : ""
+                                    }}</span
+                                  >
+                                </p>
+                                <p class="text-gray-500">
+                                  <span
+                                    class="font-medium text-primary-700 mb-1"
+                                    >Department:</span
+                                  >
+                                  <span class="text-grey-800 ml-2">
+                                    {{
+                                      modalData.data &&
+                                      modalData.data.department
+                                        ? modalData.data.department.name
+                                        : ""
+                                    }}</span
+                                  >
+                                </p>
+                                <p class="text-gray-500">
+                                  <span
+                                    class="font-medium text-primary-700 mb-1"
+                                    >Education Level:</span
+                                  >
+                                  <span class="text-grey-800 ml-2">
+                                    {{
+                                      modalData.data &&
+                                      modalData.data.GSProfessionals
+                                        ? modalData.data.GSProfessionals
+                                            .educationLevel.name
+                                        : ""
+                                    }}</span
+                                  >
+                                </p>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -432,18 +491,35 @@
                             </div>
                             <div class="grow ml-6">
                               <h2 class="font-bold mb-1">Contact Info</h2>
-                              <p class="text-gray-500">
-                                <span class="font-medium text-primary-700 mb-1"
-                                  >Mobile Number:</span
-                                >
-                                {{ modalData.mobileNumber }}
-                              </p>
-                              <p class="text-gray-500">
-                                <span class="font-medium text-primary-700 mb-1"
-                                  >Email:</span
-                                >
-                                {{ modalData.email }}
-                              </p>
+                              <div
+                                class="
+                                  border-2
+                                  p-2
+                                  rounded-lg
+                                  m-1
+                                  shadow-md
+                                  text-primary-500
+                                "
+                              >
+                                <p class="text-gray-500">
+                                  <span
+                                    class="font-medium text-primary-700 mb-1"
+                                    >Mobile Number:</span
+                                  >
+                                  <span class="text-grey-800 ml-2">{{
+                                    modalData.mobileNumber
+                                  }}</span>
+                                </p>
+                                <p class="text-gray-500">
+                                  <span
+                                    class="font-medium text-primary-700 mb-1"
+                                    >Email:</span
+                                  >
+                                  <span class="text-grey-800 ml-2">{{
+                                    modalData.email
+                                  }}</span>
+                                </p>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -560,7 +636,7 @@ export default {
             ? "Dear " +
               modalData.value.name +
               " your applied good standing letter for " +
-              licenseData.value.goodStandingCode+
+              licenseData.value.goodStandingCode +
               " has been assigned a reviewer , after careful examination of your uploaded documents by our reviewers we will get back and notify you on each steps, Thank you for using eHPL. https://hrl.moh.gov.et/"
             : ""
           : "",

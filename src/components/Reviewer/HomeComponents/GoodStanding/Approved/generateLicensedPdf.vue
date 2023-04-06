@@ -381,7 +381,7 @@
 
                                 .
 
-                                <h4 class="ml-8 mt-8" contenteditable="true">
+                                <h5 class="ml-8 mt-8" contenteditable="true">
                                   Hence we appreciate any assistance, which will
                                   be rendered to
                                   <span>
@@ -393,10 +393,10 @@
                                         : ""
                                     }} </span
                                   >.
-                                </h4>
-                                <h4 class="ml-8 mb-8" contenteditable="true">
+                                </h5>
+                                <h5 class="ml-8 mb-8" contenteditable="true">
                                   With best regards
-                                </h4>
+                                </h5>
 
                                 <div
                                   class="flex justify-start"

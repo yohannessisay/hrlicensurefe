@@ -65,6 +65,91 @@
                         <h2 class="text-3xl">Accepted</h2>
                       </div>
                     </div>
+
+                    <div
+                      class="container mt-8   rounded-lg overflow-hidden shadow-lg my-2 bg-white"
+                    >
+                      <div
+                        class="relative z-10 h-auto"
+                        style="clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - 5vw));"
+                      >
+                        <img
+                          class="w-full"
+                          :src="
+                            renewal &&
+                            renewal.profile &&
+                            renewal.profile.profilePicture
+                              ? googleApi +
+                                renewal.profile.profilePicture.filePath
+                              : ''
+                          "
+                          alt="Profile image"
+                        />
+                      </div>
+                      <div
+                        class="relative flex justify-between items-center flex-row px-6 z-50 -mt-10"
+                      >
+                        <h2
+                          class="text-primary-600 font-bold text-xl underline"
+                        >
+                          Applicant's Profile
+                        </h2>
+                      </div>
+                      <div class="pt-6 pb-8 text-gray-600 p-2">
+                        <div class="grid grid-cols-3">
+                          <div class="col-span-1 text-primary-600 mt-4">
+                            Name
+                          </div>
+                          <div class="col-span-2 mt-4 break-all ">
+                            {{
+                              renewal && renewal.profile && renewal.profile.name
+                                ? renewal.profile.name +
+                                  " " +
+                                  renewal.profile.fatherName +
+                                  " " +
+                                  renewal.profile.grandFatherName
+                                : ""
+                            }}
+                          </div>
+                          <div class="col-span-1 text-primary-600 mt-2">
+                            Email
+                          </div>
+                          <div class="col-span-2 mt-2 break-all ">
+                            {{
+                              renewal &&
+                              renewal.applicant &&
+                              renewal.applicant.emailAddress
+                                ? renewal.applicant.emailAddress
+                                : ""
+                            }}
+                          </div>
+                          <div class="col-span-1 text-primary-600 mt-2">
+                            Phone
+                          </div>
+                          <div class="col-span-2 mt-2 break-all ">
+                            {{
+                              renewal &&
+                              renewal.applicant &&
+                              renewal.applicant.phoneNumber
+                                ? renewal.applicant.phoneNumber
+                                : ""
+                            }}
+                          </div>
+                          <div class="col-span-1 text-primary-600 mt-2">
+                            Gender
+                          </div>
+                          <div class="col-span-2 mt-2 break-all ">
+                            {{
+                              renewal &&
+                              renewal.profile &&
+                              renewal.profile.gender
+                                ? renewal.profile.gender
+                                : ""
+                            }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                   <div class="flex justify-start mt-4 flex-wrap p-4">
                     <div
@@ -208,8 +293,7 @@
                                     <div v-if="editPersonalData">
                                       <input
                                         v-model="
-                                          renewal.profile
-                                            .alternativeFatherName
+                                          renewal.profile.alternativeFatherName
                                         "
                                         class="w-48 mr-1"
                                         type="text"
@@ -978,14 +1062,18 @@
                                   <div>
                                     <iframe
                                       v-bind:src="
-                                      docs[index]?  googleApi + docs[index].filePath:''
+                                        docs[index]
+                                          ? googleApi + docs[index].filePath
+                                          : ''
                                       "
                                     ></iframe>
                                   </div>
                                   <br />
                                   <button
                                     @click="
-                                      openPdfInNewTab(docs[index]?docs[index].filePath:'')
+                                      openPdfInNewTab(
+                                        docs[index] ? docs[index].filePath : ''
+                                      )
                                     "
                                   >
                                     See pdf in detail
@@ -994,21 +1082,22 @@
 
                                 <div v-else>
                                   <h5 class="text-grey-200 text-2xl">
-                                    {{  docs[index]&&
-                                      docs[index].documentType
+                                    {{
+                                      docs[index] && docs[index].documentType
                                         ? docs[index].documentType.name
                                         : ""
                                     }}
                                   </h5>
 
                                   <div class="flex items-center">
-                                     
                                     <a
                                       :data-src="
-                                        docs[index]?googleApi +docs[index].filePath:''
+                                        docs[index]
+                                          ? googleApi + docs[index].filePath
+                                          : ''
                                       "
                                       :data-caption="
-                                      docs[index]&& docs[index].documentType
+                                        docs[index] && docs[index].documentType
                                           ? docs[index].documentType.name
                                           : ''
                                       "
@@ -1017,8 +1106,10 @@
                                         @click="
                                           viewImage([
                                             {
-                                              src: 
-                                                docs[index]?googleApi +docs[index].filePath:'',
+                                              src: docs[index]
+                                                ? googleApi +
+                                                  docs[index].filePath
+                                                : '',
                                               title: 'Image Caption 1',
                                             },
                                           ])
@@ -1031,7 +1122,9 @@
                                     cursor-pointer
                                   "
                                         :src="
-                                      docs[index]?googleApi +docs[index].filePath:''
+                                          docs[index]
+                                            ? googleApi + docs[index].filePath
+                                            : ''
                                         "
                                       />
                                     </a>
@@ -1370,8 +1463,10 @@
                                     >
                                       <img
                                         v-bind:src="
-                                        rejectedObj[ind]?  googleApi + 
-                                            rejectedObj[ind].filePath:''
+                                          rejectedObj[ind]
+                                            ? googleApi +
+                                              rejectedObj[ind].filePath
+                                            : ''
                                         "
                                       />
                                     </picture>
@@ -1907,9 +2002,7 @@ export default {
         .then((res) => {
           renewal.value = res.data.data ? res.data.data : {};
           profileInfo.value =
-            renewal.value && renewal.value.profile
-              ? renewal.value.profile
-              : {};
+            renewal.value && renewal.value.profile ? renewal.value.profile : {};
           buttons.value =
             renewal.value &&
             renewal.value.applicationStatus &&
@@ -2055,7 +2148,7 @@ export default {
     const accept = (doc) => {
       nextClickable.value = true;
       completedSteps.value += 1;
-      
+
       if (accepted.value.length > 0) {
         if (!accepted.value.includes(doc.documentTypeCode)) {
           accepted.value.push(doc.fileName);
@@ -2512,9 +2605,7 @@ export default {
     };
     const supervise = () => {
       renewal.value.superviseEndDate = endDate.value ? endDate.value : "";
-      renewal.value.superviseStartDate = startDate.value
-        ? startDate.value
-        : "";
+      renewal.value.superviseStartDate = startDate.value ? startDate.value : "";
       renewal.value.supervisor = supervisor.value ? supervisor.value : "";
       renewal.value.supervisingInstitutionId = instSearched.value
         ? instSearched.value.id

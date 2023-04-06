@@ -39,7 +39,7 @@ export default {
   },
 
   async getNewLicenseApproved(context, parameters) {
-    let url = baseUrl + "/newLicenses/all/approved";
+    let url = baseUrl + "/newLicenses/all/approved?";
 
     if (parameters[0] && parameters[0].params) {
       parameters[0].params.forEach((param) => {

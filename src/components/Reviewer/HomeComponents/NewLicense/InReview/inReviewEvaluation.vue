@@ -65,6 +65,92 @@
                         <h2 class="text-3xl">Accepted</h2>
                       </div>
                     </div>
+                    <div
+                      class="container mt-8   rounded-lg overflow-hidden shadow-lg my-2 bg-white"
+                    >
+                      <div
+                        class="relative z-10 h-auto"
+                        style="clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - 5vw));"
+                      >
+                        <img
+                          class="w-full"
+                          :src="
+                          newLicense &&
+                            newLicense.profile &&
+                            newLicense.profile.profilePicture
+                              ? googleApi +
+                                newLicense.profile.profilePicture.filePath
+                              : ''
+                          "
+                          alt="Profile image"
+                        />
+                      </div>
+                      <div
+                        class="relative flex justify-between items-center flex-row px-6 z-50 -mt-10"
+                      >
+                        <h2
+                          class="text-primary-600 font-bold text-xl underline"
+                        >
+                          Applicant's Profile
+                        </h2>
+                      </div>
+                      <div class="pt-6 pb-8 text-gray-600 p-2">
+                        <div class="grid grid-cols-3">
+                          <div class="col-span-1 text-primary-600 mt-4">
+                            Name
+                          </div>
+                          <div class="col-span-2 mt-4 break-all ">
+                            {{
+                              newLicense &&
+                              newLicense.profile &&
+                              newLicense.profile.name
+                                ? newLicense.profile.name +
+                                  " " +
+                                  newLicense.profile.fatherName +
+                                  " " +
+                                  newLicense.profile.grandFatherName
+                                : ""
+                            }}
+                          </div>
+                          <div class="col-span-1 text-primary-600 mt-2">
+                            Email
+                          </div>
+                          <div class="col-span-2 mt-2 break-all ">
+                            {{
+                              newLicense &&
+                              newLicense.applicant &&
+                              newLicense.applicant.emailAddress
+                                ? newLicense.applicant.emailAddress
+                                : ""
+                            }}
+                          </div>
+                          <div class="col-span-1 text-primary-600 mt-2">
+                            Phone
+                          </div>
+                          <div class="col-span-2 mt-2 break-all ">
+                            {{
+                              newLicense &&
+                              newLicense.applicant &&
+                              newLicense.applicant.phoneNumber
+                                ? newLicense.applicant.phoneNumber
+                                : ""
+                            }}
+                          </div>
+                          <div class="col-span-1 text-primary-600 mt-2">
+                            Gender
+                          </div>
+                          <div class="col-span-2 mt-2 break-all ">
+                            {{
+                              newLicense &&
+                              newLicense.profile &&
+                              newLicense.profile.gender
+                                ? newLicense.profile.gender
+                                : ""
+                            }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                   <div class="flex justify-start mt-4 flex-wrap p-4">
                     <div

@@ -43,24 +43,17 @@
           text-current
         "
       >
-   <div
-          class="
-            modal-header
-            flex flex-shrink-0
-           justify-end
-           
-            p-2
-            rounded-t-md
-          "
+        <div
+          class="modal-header flex flex-shrink-0 justify-end p-2 rounded-t-md"
         >
           <button
             type="button"
-            class="     
-                  px-6
+            class="
+              px-6
               text-white
               bg-primary-600
               hover:text-primary-600 hover:border
-              font-medium
+              font-bold text-xl
               text-xs
               leading-tight
               uppercase
@@ -75,10 +68,13 @@
               active:bg-purple-800 active:shadow-lg
               transition
               duration-150
-              ease-in-out"
+              ease-in-out
+            "
             data-bs-dismiss="modal"
             aria-label="Close"
-          ><i class="fa fa-close fa-2x"></i></button>
+          >
+            <i class="fa fa-close fa-2x"></i>
+          </button>
         </div>
         <div class="vld-parent">
           <loading
@@ -107,147 +103,263 @@
                     <div class="flex flex-wrap">
                       <div
                         class="
-                          grow-0
-                          shrink-0
-                          basis-auto
-                          w-full
-                          lg:w-6/12
-                          px-3
-                          lg:px-6
-                        "
+                            grow-0
+                            shrink-0
+                            basis-auto
+                            w-full
+                            lg:w-6/12
+                            px-3
+                            lg:px-6
+                          "
                       >
                         <div class="flex items-start">
                           <div class="shrink-0">
                             <div
                               class="
-                                p-4
-                                bg-blue-600
-                                rounded-md
-                                shadow-lg
-                                w-48
-                                h-48
-                                flex
-                                mb-12
-                                items-center
-                                justify-center
-                              "
+                                  p-4
+                                  bg-blue-600
+                                  rounded-md
+                                  shadow-lg
+                                  w-48
+                                  h-48
+                                  flex
+                                  mb-12
+                                  items-center
+                                  justify-center
+                                "
                             >
-                                 <picture>
-                                <source
-                                  :srcset="
-                                    modalData.profile &&
-                                    modalData.profile.profilePicture
-                                      ? googleApi +
-                                        modalData.profile.profilePicture
-                                          .filePath
-                                      : ''
-                                  "
-                                  type="image/jpg"
-                                />
-
-                                <img
-                                  src="../../../../../assets/showLicense/profile.png"
-                                />
-                              </picture>
+                              <img
+                                src="../../../../../assets/showLicense/profile.png"
+                                alt=""
+                                style="height: 152px; width: 150px"
+                              />
                             </div>
                           </div>
                           <div class="grow ml-6">
                             <h2 class="font-extrabold text-2xl mb-1">
                               Personal Info
                             </h2>
-                            <p class="text-gray-500">
-                              <span
-                                class="
-                                  font-semibold
-                                  text-lg text-primary-700
-                                  mb-1
+
+                            <div
+                              class="
+                                  border-2
+                                  p-2
+                                  rounded-lg
+                                  m-1
+                                  shadow-md
+                                  text-primary-500
                                 "
-                                >Full Name:</span
-                              >
-                              {{ modalData.name ? modalData.name : "" }}
-                            </p>
-                            <p class="text-gray-500">
-                              <span class="font-semibold text-primary-700 mb-1"
-                                >Gender:</span
-                              >
-                              {{ modalData.gender ? modalData.gender : "" }}
-                            </p>
-                            <p class="text-gray-500">
-                              <span class="font-semibold text-primary-700 mb-1"
-                                >Nationality:</span
-                              >
-                              {{
-                                modalData.nationality
-                                  ? modalData.nationality
-                                  : ""
-                              }}
-                            </p>
-                            <p class="text-gray-500">
-                              <span class="font-semibold text-primary-700 mb-1"
-                                >Date Of Birth:</span
-                              >
-                              {{
-                                modalData.dateOfBirth
-                                  ? modalData.dateOfBirth.slice(0, 10)
-                                  : ""
-                              }}
-                            </p>
-                            <p class="text-gray-500">
-                              <span class="font-semibold text-primary-700 mb-1"
-                                >Martial Status:</span
-                              >
-                              {{
-                                modalData.maritalStatus
-                                  ? modalData.maritalStatus
-                                  : ""
-                              }}
-                            </p>
+                            >
+                              <p class="text-gray-500">
+                                <span
+                                  class="
+                                    font-semibold
+                                    text-lg text-primary-700
+                                    mb-1
+                                  "
+                                  >Full Name:</span
+                                >
+                                <span class="text-grey-800 ml-2">{{
+                                  modalData.name ? modalData.name : ""
+                                }}</span>
+                              </p>
+                              <p class="text-gray-500 ">
+                                <span
+                                  class="font-semibold text-primary-700 mb-1"
+                                  >Gender:</span
+                                >
+                                <span class="text-grey-800 ml-2">{{
+                                  modalData.gender ? modalData.gender : ""
+                                }}</span>
+                              </p>
+                              <p class="text-gray-500">
+                                <span
+                                  class="font-semibold text-primary-700 mb-1"
+                                  >Nationality:</span
+                                >
+                                <span class="text-grey-800 ml-2">
+                                  {{
+                                    modalData.nationality
+                                      ? modalData.nationality
+                                      : ""
+                                  }}</span
+                                >
+                              </p>
+                              <p class="text-gray-500">
+                                <span
+                                  class="font-semibold text-primary-700 mb-1"
+                                  >Date Of Birth:</span
+                                >
+                                <span class="text-grey-800 ml-2">
+                                  {{
+                                    modalData.dateOfBirth
+                                      ? modalData.dateOfBirth.slice(0, 10)
+                                      : ""
+                                  }}</span
+                                >
+                              </p>
+                              <p class="text-gray-500">
+                                <span
+                                  class="font-semibold text-primary-700 mb-1"
+                                  >Martial Status:</span
+                                >
+                                <span class="text-grey-800 ml-2">
+                                  {{
+                                    modalData.maritalStatus
+                                      ? modalData.maritalStatus
+                                      : ""
+                                  }}</span
+                                >
+                              </p>
+                            </div>
                           </div>
                         </div>
                       </div>
 
                       <div
                         class="
-                          grow-0
-                          shrink-0
-                          basis-auto
-                          w-full
-                          lg:w-6/12
-                          px-3
-                          lg:px-6
-                        "
+                            grow-0
+                            shrink-0
+                            basis-auto
+                            w-full
+                            lg:w-6/12
+                            px-3
+                            lg:px-6
+                          "
                       >
-                        <div>
-                         
-
-                          <button
-                            class="
-                              inline-block
-                              px-6
-                              py-2.5
-                              bg-primary-700
-                              text-white
-                              font-medium
-                              text-xs
-                              leading-tight
-                              uppercase
-                              rounded
-                              shadow-lg
-                              hover:bg-white hover:text-primary-600
-                              
-                              transition
-                              duration-150
-                              ease-in-out
-                            "
-                            type="button"
-                            data-bs-toggle="collapse"
-                            data-bs-target="#collapseExample"
-                            aria-expanded="false"
-                            aria-controls="collapseExample"
-                          >
-                            <i class="fa fa-eye"></i>
-                            Show Attached Documents
-                          </button>
+                        <div class="flex items-start">
+                          <div class="shrink-0">
+                            <div
+                              class="
+                                  p-4
+                                  bg-blue-600
+                                  rounded-md
+                                  shadow-lg
+                                  w-48
+                                  h-48
+                                  flex
+                                  items-center
+                                  justify-center
+                                "
+                            >
+                              <i class="fa fa-phone fa-4x"></i>
+                            </div>
+                          </div>
+                          <div class="grow ml-6">
+                            <h2 class="font-bold mb-1">Contact Info</h2>
+                            <div
+                              class="
+                                  border-2
+                                  p-2
+                                  rounded-lg
+                                  m-1
+                                  shadow-md
+                                  text-primary-500
+                                "
+                            >
+                              <p class="text-gray-500">
+                                <span class="font-medium text-primary-700 mb-1"
+                                  >Mobile Number:</span
+                                >
+                                <span class="text-grey-800 ml-2">{{
+                                  modalData.mobileNumber
+                                }}</span>
+                              </p>
+                              <p class="text-gray-500">
+                                <span class="font-medium text-primary-700 mb-1"
+                                  >Email:</span
+                                >
+                                <span class="text-grey-800 ml-2">{{
+                                  modalData.email
+                                }}</span>
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="
+                            grow-0
+                            shrink-0
+                            basis-auto
+                            w-full
+                            lg:w-6/12
+                            px-3
+                            lg:px-6
+                          "
+                      >
+                        <div class="flex align-center">
+                          <div class="shrink-0">
+                            <div
+                              class="
+                                  p-4
+                                  bg-blue-600
+                                  rounded-md
+                                  shadow-lg
+                                  w-48
+                                  h-48
+                                  flex
+                                  items-center
+                                  justify-center
+                                "
+                            >
+                              <i class="fa fa-building fa-4x"></i>
+                            </div>
+                          </div>
+                          <div class="grow ml-6">
+                            <h2 class="font-bold mb-1">Education Info</h2>
+                            <div
+                              class="
+                                  border-2
+                                  p-2
+                                  rounded-lg
+                                  m-1
+                                  shadow-md
+                                  text-primary-500
+                                "
+                            >
+                              <p class="text-gray-500">
+                                <span class="font-medium text-primary-700 mb-1"
+                                  >Profession Name:</span
+                                >
+                                <span class="text-grey-800 ml-2">
+                                  {{
+                                    modalData.data &&
+                                    modalData.data.GSProfessionals
+                                      ? modalData.data.GSProfessionals
+                                          .professionalTypes.name
+                                      : ""
+                                  }}</span
+                                >
+                              </p>
+                              <p class="text-gray-500">
+                                <span class="font-medium text-primary-700 mb-1"
+                                  >Department:</span
+                                >
+                                <span class="text-grey-800 ml-2">
+                                  {{
+                                    modalData.data && modalData.data.department
+                                      ? modalData.data.department.name
+                                      : ""
+                                  }}</span
+                                >
+                              </p>
+                              <p class="text-gray-500">
+                                <span class="font-medium text-primary-700 mb-1"
+                                  >Education Level:</span
+                                >
+                                <span class="text-grey-800 ml-2">
+                                  {{
+                                    modalData.data &&
+                                    modalData.data.GSProfessionals
+                                      ? modalData.data.GSProfessionals
+                                          .educationLevel.name
+                                      : ""
+                                  }}</span
+                                >
+                              </p>
+                            </div>
+                          </div>
                         </div>
                       </div>
 
@@ -277,31 +389,78 @@
                                 justify-center
                               "
                             >
-                              <i class="fa fa-phone fa-4x"></i>
+                              <i class="fa fa-book fa-4x"></i>
                             </div>
                           </div>
                           <div class="grow ml-6">
-                            <h2 class="font-bold mb-1">Contact Info</h2>
+                            <h2 class="font-bold mb-1">License Detail</h2>
+                            <div
+                              class="
+                                  border-2
+                                  p-2
+                                  rounded-lg
+                                  m-1
+                                  shadow-md
+                                  text-primary-500
+                                "
+                            >
                             <p class="text-gray-500">
-                              <span class="font-medium text-primary-700 mb-1"
-                                >Mobile Number:</span
+                              <span
+                                class="font-bold text-xl text-primary-700 mb-1"
+                                >Printed Date:</span
                               >
-                              {{
-                                modalData.mobileNumber
-                                  ? modalData.mobileNumber
+                              <span class="text-grey-800"> {{
+                                modalData &&
+                                modalData.data &&
+                                modalData.data.certifiedDate
+                                  ? modalData.data.certifiedDate.slice(0, 10)
                                   : ""
-                              }}
+                              }}</span>
+                            </p>
+
+                            <p class="text-gray-500">
+                              <span
+                                class="font-bold text-xl text-primary-700 mb-1"
+                                >Reviewer Name:</span
+                              >
+                              <span class="text-grey-800"> {{
+                                modalData && modalData.data &&
+                                modalData.data.goodstandingReviewer
+                                  ? modalData.data.goodstandingReviewer.reviewer
+                                      .name
+                                  : ""
+                              }}</span>
                             </p>
                             <p class="text-gray-500">
-                              <span class="font-medium text-primary-700 mb-1"
-                                >Email:</span
+                              <span
+                                class="font-bold text-xl text-primary-700 mb-1"
+                                >Reviewer Phone:</span
                               >
-                              {{ modalData.email ? modalData.email : "" }}
+                              <span class="text-grey-800"> {{
+                                modalData && modalData.data &&
+                                modalData.data.goodstandingReviewer
+                                  ? modalData.data.goodstandingReviewer.reviewer
+                                      .phoneNumber
+                                  : ""
+                              }}</span>
                             </p>
+                            <p class="text-gray-500">
+                              <span
+                                class="font-bold text-xl text-primary-700 mb-1"
+                                >Reviewer Email:</span
+                              >
+                          <span class="text-grey-800">  {{
+                                modalData && modalData.data &&
+                                modalData.data.goodstandingReviewer
+                                  ? modalData.data.goodstandingReviewer.reviewer
+                                      .email
+                                  : ""
+                              }}</span>  
+                            </p>
+                            </div>
                           </div>
                         </div>
                       </div>
-
                       <div
                         class="
                           grow-0
@@ -312,19 +471,17 @@
                           px-3
                           lg:px-6
                         "
-                      >
-                        <div class="flex align-center"></div>
-                      </div>
+                      ></div>
                     </div>
 
                     <div class="collapse mt-12" id="collapseExample">
                       <div class="block p-6 rounded-lg shadow-lg bg-white">
                         <div class="flex justify-content-evenly align-center">
-                          <h1 class="text-primary-600">Attached Documents</h1>
+                          <h1>Attached Documents</h1>
                         </div>
                         <div class="grid grid-cols-4 gap-4">
                           <div
-                            class="mt-4 mb-8 bg-white shadow-lg"
+                            class="mt-4 mb-8 bg-white"
                             style="border-radius: 15px; padding: 10px"
                             v-for="document in modalData.documents"
                             :key="document.id"
@@ -333,7 +490,11 @@
                               <div class="mt-large bg-white">
                                 <a
                                   :href="googleApi + document.filePath"
-                                  :data-title="document.documentType.name"
+                                  :data-title="
+                                    document.documentType
+                                      ? document.documentType.name
+                                      : ''
+                                  "
                                   data-lightbox="example-2"
                                 >
                                   <img
@@ -345,7 +506,13 @@
                                 <h4 style="font-weight: bold">
                                   Document Type:-
                                 </h4>
-                                    <h6>{{ document.documentType?document.documentType.name:'' }}</h6>
+                                <h6>
+                                  {{
+                                    document.documentType
+                                      ? document.documentType.name
+                                      : ""
+                                  }}
+                                </h6>
                               </div>
                             </div>
                           </div>
@@ -364,17 +531,45 @@
             flex flex-shrink-0 flex-wrap
             items-center
             justify-end
+            p-2
             border-t border-grey-100
             rounded-b-md
           "
         >
           <button
+            class="
+              inline-block
+              px-6
+              py-2.5
+              bg-primary-700
+              text-white
+              font-bold  
+              text-xs
+              leading-tight
+              uppercase
+              rounded
+              shadow-lg
+              hover:bg-white hover:text-primary-600
+              transition
+              duration-150
+              ease-in-out
+            "
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapseExample"
+            aria-expanded="false"
+            aria-controls="collapseExample"
+          >
+            <i class="fa fa-eye"></i>
+            Show Attached Documents
+          </button>
+          <button
             type="button"
             class="
-               inline-block
+              inline-block
               px-6
               text-white
-              font-medium
+              font-bold  
               text-xs
               bg-primary-700
               leading-tight
@@ -382,8 +577,7 @@
               rounded
               hover:border-primary-600
               shadow-lg
-              hover:bg-white 
-              hover:text-primary-700
+              hover:bg-white hover:text-primary-700
               transition
               duration-150
               ease-in-out
@@ -403,10 +597,12 @@ import { googleApi } from "@/composables/baseURL";
 import { ref, watch } from "vue";
 import { useStore } from "vuex";
 import Loading from "vue3-loading-overlay";
+// Import stylesheet
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
+
 export default {
   name: "Modal",
-  components: {  Loading },
+  components: { Loading },
   props: ["modalDataId"],
   setup(props) {
     const store = useStore();
@@ -415,11 +611,9 @@ export default {
     };
     const show = ref(true);
     const showRes = ref(true);
-    const showGenerateModal = ref(true);
     const showOptions = ref(true);
     const isLoading = ref(true);
     const modalData = ref({});
-    const modalDataGenerate = ref({});
     let result = {};
     const check = () => {
       store
@@ -428,53 +622,40 @@ export default {
           if (res.data.status == "Success") {
             result = res.data.data;
             modalData.value.name =
-              (result.profile ? result.profile.name : "") +
+              result.profile.name +
               " " +
-              (result.profile ? result.profile.fatherName : "") +
+              result.profile.fatherName +
               "  " +
-              (result.profile ? result.profile.grandFatherName : "");
-            modalData.value.gender = result.profile
+              result.profile.grandFatherName;
+            modalData.value.gender = result.profile.gender
               ? result.profile.gender
               : "-----";
             modalData.value.nationality = result.profile.nationality
               ? result.profile.nationality.name
               : "-----";
-            modalData.value.dateOfBirth = result.profile
+            modalData.value.dateOfBirth = result.profile.dateOfBirth
               ? result.profile.dateOfBirth
               : "-----";
-            modalData.value.maritalStatus = result.maritalStatus
+            modalData.value.maritalStatus = result.profile.maritalStatus?.name
               ? result.profile.maritalStatus.name
               : "-----";
-            modalData.value.mobileNumber = result.applicant
+            modalData.value.mobileNumber = result.applicant.phoneNumber
               ? result.applicant.phoneNumber
               : "-----";
-            modalData.value.email = result.applicant
+            modalData.value.email = result.applicant.emailAddress
               ? result.applicant.emailAddress
               : "-----";
-            modalData.value.instName = result.education?.name
-              ? result.education.institution?.name
-              : "-----";
-            modalData.value.instType = result.education?.institutionType
-              ? result.education.institution?.institutionType
-              : "-----";
-            modalData.value.department = result.education
-              ? result.education?.department.name
-              : "-----";
-            modalData.value.profile = result.profile ? result.profile : "";
-            modalData.value.professionalTypes = result.licenseProfessions
-              ? result.licenseProfessions
-              : "";
-            modalData.value.certifiedDate = result.certifiedDate
-              ? result.certifiedDate
-              : "";
-            modalData.value.licenseExpirationDate = result.licenseExpirationDate
-              ? result.licenseExpirationDate
-              : "";
-            modalData.value.documents = result.documents
-              ? result.documents
-              : "";
+            modalData.value.reviewer = result.licenseReviewer
+              ? result.licenseReviewer
+              : {};
+            modalData.value.profile = result.profile;
+            modalData.value.professionalTypes = result.licenseProfessions;
+            modalData.value.certifiedDate = result.certifiedDate;
+            modalData.value.licenseExpirationDate =
+              result.licenseExpirationDate;
+            modalData.value.documents = result.documents;
             modalData.value.data = result;
-            modalDataGenerate.value = result;
+            modalData.value.id = result.id;
             isLoading.value = false;
           }
         });
@@ -490,11 +671,9 @@ export default {
       check,
       isLoading,
       showRes,
-      showGenerateModal,
       showOptions,
       googleApi,
       modalData,
-      modalDataGenerate,
     };
   },
 };

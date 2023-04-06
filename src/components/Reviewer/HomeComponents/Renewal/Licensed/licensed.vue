@@ -33,6 +33,7 @@
     <!-- Main Content -->
     <div class="home-content">
       <new-license-main-content>
+        <template v-slot:tab_header>Renewed Applications </template>
         <template v-slot:toyou>
           <div class="container mx-auto px-4 sm:px-8">
             <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">

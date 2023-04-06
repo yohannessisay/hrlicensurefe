@@ -100,6 +100,7 @@
               transition-all
               duration-200
               text-white 
+              text-3xl
             "
             id="totalRen"
           >
