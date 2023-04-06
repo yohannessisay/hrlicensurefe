@@ -216,8 +216,11 @@
                     <button
                       :class="
                         expirationDatesHelper(
-                          license.licenseExpirationDate.slice(0, 10),
-                          new Date().toISOString().slice(0, 10)
+                          license.licenseExpirationDate
+                            ? (license.licenseExpirationDate.slice(0, 10),
+                              new Date().toISOString().slice(0, 10))
+                            : (new Date().toISOString().slice(0, 10),
+                              new Date().toISOString().slice(0, 10))
                         ) > 90
                           ? 'inline-block px-6 text-white bg-main-400 hover:text-main-400 hover:border text-sm font-bold uppercase rounded shadow-lg mb-4 transition duration-150 ease-in-out'
                           : 'inline-block px-6 text-white bg-grey-400 hover:text-main-400 hover:border text-sm font-bold uppercase rounded shadow-lg mb-4 transition duration-150 ease-in-out pointer-events-none'
@@ -233,8 +236,11 @@
                     <h2
                       :class="
                         expirationDatesHelper(
-                          license.licenseExpirationDate.slice(0, 10),
-                          new Date().toISOString().slice(0, 10)
+                          license.licenseExpirationDate
+                            ? license.licenseExpirationDate.slice(0, 10), (new Date().toISOString().slice(0, 10),
+                               
+                            : (new Date().toISOString().slice(0, 10),
+                              new Date().toISOString().slice(0, 10)
                         ) < 60
                           ? 'text-red-300 text-xl'
                           : 'text-grey-800 text-xl'
@@ -242,8 +248,11 @@
                     >
                       {{
                         expirationDatesHelper(
-                          license.licenseExpirationDate.slice(0, 10),
-                          new Date().toISOString().slice(0, 10)
+                          license.licenseExpirationDate
+                            ? (license.licenseExpirationDate.slice(0, 10),
+                              new Date().toISOString().slice(0, 10))
+                            : (new Date().toISOString().slice(0, 10),
+                              new Date().toISOString().slice(0, 10))
                         )
                       }}
                       Days Remaining For Expiration
@@ -289,6 +298,7 @@ export default {
       }
     };
     const expirationDatesHelper = (date_1, date_2) => {
+      console.log(date_1, date_2);
       let difference = new Date(date_1).getTime() - new Date(date_2).getTime();
       let TotalDays = Math.ceil(difference / (1000 * 3600 * 24));
       return TotalDays;
@@ -299,7 +309,13 @@ export default {
       store.dispatch("newlicense/getNewLicense", userId).then((res) => {
         let results = res.data.data ? res.data.data : [];
         if (results.length > 0) {
-          previousLicense.value = results;
+          previousLicense.value = results
+            ? results.filter((license) =>
+                license.applicationStatus
+                  ? license.applicationStatus.code == "APP"
+                  : ""
+              )
+            : [];
           isLoading.value = false;
         }
       });
