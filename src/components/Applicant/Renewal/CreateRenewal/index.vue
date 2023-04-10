@@ -237,10 +237,10 @@
                       :class="
                         expirationDatesHelper(
                           license.licenseExpirationDate
-                            ? license.licenseExpirationDate.slice(0, 10), (new Date().toISOString().slice(0, 10),
-                               
+                            ? (license.licenseExpirationDate.slice(0, 10),
+                              new Date().toISOString().slice(0, 10))
                             : (new Date().toISOString().slice(0, 10),
-                              new Date().toISOString().slice(0, 10)
+                              new Date().toISOString().slice(0, 10))
                         ) < 60
                           ? 'text-red-300 text-xl'
                           : 'text-grey-800 text-xl'

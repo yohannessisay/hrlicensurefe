@@ -1016,7 +1016,7 @@ export default {
   },
   async getAdminsByRegion(context, id) {
     let url = "";
-    try { 
+    try {
       if (id != null) {
         url = baseUrl + "/admins/region/" + id;
       } else {
@@ -1363,13 +1363,22 @@ export default {
     }
   },
 
-  async getImported({ commit }) {
+  async getImported(context, detail) {
     try {
-      const url = baseUrl + "/nationalExamResult";
-      const resp = await ApiService.get(url);
+      let url = baseUrl + "/nationalExamResult?";
+      let parameters = detail[0].params ? detail[0].params : [];
 
-      commit(SET_IMPORTED, resp.data);
-      return resp;
+      if (parameters) {
+        parameters.forEach((param) => {
+          url +=
+            param && param.value != "all" ? `${param.key}=${param.value}&` : "";
+        });
+      }
+      url = url.substring(0, url.length - 1);
+
+      let resp = await ApiService.get(url);
+
+      return resp.data && resp.data.data ? resp.data.data : [];
     } catch (error) {
       return error;
     }
