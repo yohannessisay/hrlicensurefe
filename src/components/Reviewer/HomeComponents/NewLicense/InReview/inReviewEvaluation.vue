@@ -75,7 +75,7 @@
                         <img
                           class="w-full"
                           :src="
-                          newLicense &&
+                            newLicense &&
                             newLicense.profile &&
                             newLicense.profile.profilePicture
                               ? googleApi +
@@ -1064,14 +1064,18 @@
                                   <div>
                                     <iframe
                                       v-bind:src="
-                                docs[index]?  googleApi + docs[index].filePath:''
+                                        docs[index]
+                                          ? googleApi + docs[index].filePath
+                                          : ''
                                       "
                                     ></iframe>
                                   </div>
                                   <br />
                                   <button
                                     @click="
-                                      openPdfInNewTab(docs[index]?docs[index].filePath:'')
+                                      openPdfInNewTab(
+                                        docs[index] ? docs[index].filePath : ''
+                                      )
                                     "
                                   >
                                     See pdf in detail
@@ -1080,8 +1084,8 @@
 
                                 <div v-else>
                                   <h5 class="text-grey-200 text-2xl">
-                                    {{  docs[index]&&
-                                      docs[index].documentType
+                                    {{
+                                      docs[index] && docs[index].documentType
                                         ? docs[index].documentType.name
                                         : ""
                                     }}
@@ -1090,10 +1094,12 @@
                                   <div class="flex items-center">
                                     <a
                                       :data-src="
-                                  docs[index]?  googleApi + docs[index].filePath:''
+                                        docs[index]
+                                          ? googleApi + docs[index].filePath
+                                          : ''
                                       "
                                       :data-caption="
-                                      docs[index]&& docs[index].documentType
+                                        docs[index] && docs[index].documentType
                                           ? docs[index].documentType.name
                                           : ''
                                       "
@@ -1102,9 +1108,10 @@
                                         @click="
                                           viewImage([
                                             {
-                                              src:
-                                       
-                                                docs[index]?  googleApi + docs[index].filePath:'',
+                                              src: docs[index]
+                                                ? googleApi +
+                                                  docs[index].filePath
+                                                : '',
                                               title: 'Image Caption 1',
                                             },
                                           ])
@@ -1117,7 +1124,9 @@
                                     cursor-pointer
                                   "
                                         :src="
-                                       docs[index]?  googleApi + docs[index].filePath:''
+                                          docs[index]
+                                            ? googleApi + docs[index].filePath
+                                            : ''
                                         "
                                       />
                                     </a>
@@ -1338,7 +1347,9 @@
                           button.code == 'US' ? '#superviseModal' : ''
                         "
                         @click="
-                          button.code == 'US' ? '()' : action(button.action)
+                          button.code == 'US'
+                            ? changeAction(button.action)
+                            : action(button.action)
                         "
                       >
                         {{ button.name }}
@@ -1346,6 +1357,7 @@
                     </div>
                   </div>
                 </div>
+                <!-- Remark modal -->
                 <Modal v-if="showRemark">
                   <div class="h-screen overflow-y-hidden">
                     <div
@@ -1456,8 +1468,10 @@
                                     >
                                       <img
                                         v-bind:src="
-                                     rejectedObj[ind]?  googleApi + 
-                                            rejectedObj[ind].filePath:''
+                                          rejectedObj[ind]
+                                            ? googleApi +
+                                              rejectedObj[ind].filePath
+                                            : ''
                                         "
                                       />
                                     </picture>
@@ -1569,6 +1583,7 @@
                     </div>
                   </div>
                 </Modal>
+                <!-- Remark modal -->
               </div>
             </div>
           </div>
@@ -1624,8 +1639,15 @@
           text-current
         "
       >
-        <div
-          class="
+        <div class="vld-parent">
+          <loading
+            :active="superviseLoading"
+            :is-full-page="false"
+            :color="'#2F639D'"
+            :opacity="0.8"
+          ></loading>
+          <div
+            class="
             modal-header
             flex flex-shrink-0
             items-center
@@ -1634,16 +1656,16 @@
             border-b border-grey-100
             rounded-t-md
           "
-        >
-          <h5
-            class="text-xl font-medium leading-normal text-gray-800"
-            id="superviseModalLabel"
           >
-            Supervise Detail
-          </h5>
-          <button
-            type="button"
-            class="
+            <h5
+              class="text-xl font-medium leading-normal text-gray-800"
+              id="superviseModalLabel"
+            >
+              Supervise Detail
+            </h5>
+            <button
+              type="button"
+              class="
               btn-close
               box-content
               w-4
@@ -1656,18 +1678,19 @@
               focus:shadow-none focus:outline-none focus:opacity-100
               hover:text-black hover:opacity-75 hover:no-underline
             "
-            data-bs-dismiss="modal"
-            aria-label="Close"
-            style="min-height: 28px; min-width: 28px"
-          ></button>
-        </div>
-        <div class="modal-body relative p-4">
-          <label for="" class="ml-2">Institution </label>
-          <label class="block text-left mb-4">
-            <div>
-              <div class="w-full relative">
-                <div
-                  class="
+              data-bs-dismiss="modal"
+              aria-label="Close"
+              style="min-height: 28px; min-width: 28px"
+            ></button>
+          </div>
+
+          <div class="modal-body relative p-4">
+            <label for="" class="ml-2">Institution </label>
+            <label class="block text-left mb-4">
+              <div>
+                <div class="w-full relative">
+                  <div
+                    class="
                     mt-1
                     ml-1
                     relative
@@ -1676,20 +1699,20 @@
                     rounded-md
                     shadow-sm
                   "
-                >
-                  <input
-                    id="institution"
-                    @keyup="showOptions = true"
-                    v-model="instSearched.name"
-                    class="w-full px-3 py-3"
-                    style="border: none"
-                    placeholder="Select institution by typing a name"
-                  />
-                </div>
-                <div></div>
-                <div
-                  v-show="resultQuery().length && showOptions"
-                  class="
+                  >
+                    <input
+                      id="institution"
+                      @keyup="showOptions = true"
+                      v-model="instSearched.name"
+                      class="w-full px-3 py-3"
+                      style="border: none"
+                      placeholder="Select institution by typing a name"
+                    />
+                  </div>
+                  <div></div>
+                  <div
+                    v-show="resultQuery().length && showOptions"
+                    class="
                     w-full
                     bg-white
                     border border-gray-300
@@ -1702,37 +1725,37 @@
                     text-left
                     dropdown-menu
                   "
-                  style="height: 148px; border: none"
-                >
-                  <ul class="py-1">
-                    <li
-                      v-for="value in resultQuery()"
-                      :key="value.id"
-                      @click="setInput(value)"
-                      class="
+                    style="height: 148px; border: none"
+                  >
+                    <ul class="py-1">
+                      <li
+                        v-for="value in resultQuery()"
+                        :key="value.id"
+                        @click="setInput(value)"
+                        class="
                         dropdown-toggle
                         px-4
                         py-2
                         cursor-pointer
                         hover:bg-primary-700 hover:text-white
                       "
-                    >
-                      {{ value.name }}
-                    </li>
-                  </ul>
+                      >
+                        {{ value.name }}
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               </div>
-            </div>
-          </label>
+            </label>
 
-          <div class="grid grid-cols-2 gap-4">
-            <div class="form-group mb-6 mt-4">
-              <label for="" class="ml-2">Start Date</label>
-              <input
-                v-model="startDate"
-                required
-                type="date"
-                class="
+            <div class="grid grid-cols-2 gap-4">
+              <div class="form-group mb-6 mt-4">
+                <label for="" class="ml-2">Start Date</label>
+                <input
+                  v-model="startDate"
+                  required
+                  type="date"
+                  class="
                   form-control
                   block
                   w-full
@@ -1752,13 +1775,14 @@
                   focus:border-blue-600
                   focus:outline-none
                 "
-              />
-            </div>
-            <div class="form-group mb-6 mt-4">
-              <label for="" class="ml-2">End Date</label>
-              <input
-                required
-                class="
+                  :min="minimumSuperviseDate"
+                />
+              </div>
+              <div class="form-group mb-6 mt-4">
+                <label for="" class="ml-2">End Date</label>
+                <input
+                  required
+                  class="
                   form-control
                   block
                   w-full
@@ -1778,14 +1802,15 @@
                   focus:border-blue-600
                   focus:outline-none
                 "
-                v-model="endDate"
-                type="date"
-              />
+                  v-model="endDate"
+                  type="date"
+                />
+              </div>
             </div>
+            <h6 v-show="showDateError.show" class="text-red-300">
+              {{ showDateError.message }}
+            </h6>
           </div>
-          <h6 v-show="showDateError.show" class="text-red-300">
-            {{ showDateError.message }}
-          </h6>
         </div>
         <div
           class="
@@ -1878,6 +1903,7 @@ export default {
   setup() {
     const route = useRoute();
     const router = useRouter();
+    let minimumSuperviseDate = new Date().toISOString().slice(0, 10);
     let remarkFilled = ref(false);
     const store = useStore();
     const toast = useToast();
@@ -1959,6 +1985,7 @@ export default {
     let showOptions = ref(false);
     let showActionLoading = ref(false);
     let showLoadingButtons = ref(false);
+    let superviseLoading = ref(false);
     let allowProfChange = ref({});
     let instSearched = ref({ name: "" });
     let newProf = ref([]);
@@ -2610,22 +2637,22 @@ export default {
         data: newLicense.value,
       };
       let minDate = moment(endDate.value).diff(moment(startDate.value), "days");
-      let lessThanToday = moment(startDate.value).diff(
-        moment(new Date()),
-        "days"
-      );
 
       if (minDate < 30) {
         showDateError.value.message =
           "Minimum supervised time is 3 month please change start and end date.";
         showDateError.value.show = true;
         return;
-      } else if (lessThanToday < 0) {
-        showDateError.value.message =
-          "Start date can not be set to past,minimum start date is today.";
+      } else if (!endDate.value || !startDate.value) {
+        showDateError.value.message = "Please select start/end date.";
+        showDateError.value.show = true;
+        return;
+      } else if (!instSearched.value.id) {
+        showDateError.value.message = "Please select instiution.";
         showDateError.value.show = true;
         return;
       } else {
+        superviseLoading.value = true;
         let smsData = {
           recipients: [
             newLicense.value && newLicense.value.applicant
@@ -2658,7 +2685,7 @@ export default {
                   pauseOnHover: true,
                   icon: true,
                 });
-                router.push({ name: "AdminNewLicenseInReview" });
+                superviseLoading.value = false;
               });
             } else {
               toast.error("Please try again", {
@@ -2764,6 +2791,7 @@ export default {
     });
     return {
       isPdf,
+      superviseLoading,
       licenseExpirationDate,
       newLicense,
       showDepRemark,
@@ -2836,6 +2864,7 @@ export default {
       applicationType,
       showFlash,
       isLoadingName,
+      minimumSuperviseDate,
       showErrorFlash,
       showDeclineFlash,
       sendDeclinedData,

@@ -20,7 +20,7 @@
     aria-labelledby="addRequestLabel"
     aria-hidden="true"
   >
-    <div class="modal-dialog modal-md relative w-auto pointer-events-none">
+    <div class="modal-dialog modal-lg relative w-auto pointer-events-none">
       <div
         class="
           modal-content
@@ -36,7 +36,7 @@
           text-current
         "
       >
-   <div
+        <div
           class="
             modal-header
             flex flex-shrink-0
@@ -59,7 +59,7 @@
               uppercase
               rounded
               hover:border-primary-600
-              shadow-lg
+              shadow-md
               hover:bg-purple-700 hover:shadow-lg
               focus:bg-purple-700
               focus:shadow-lg
@@ -71,101 +71,33 @@
               ease-in-out"
             data-bs-dismiss="modal"
             aria-label="Close"
-          ><i class="fa fa-close fa-2x"></i></button>
+          >
+            <i class="fa fa-close fa-2x"></i>
+          </button>
         </div>
 
         <div class="modal-body relative p-4">
-          <div class="container px-6 mx-auto">
-            <section class="text-gray-800">
-              <div class="flex justify-center">
-                <div class="text-center lg:max-w-3xl md:max-w-xl">
-                  <h2 class="text-2xl font-bold mb-8 px-6">
-                    Add A Verification Request
-                  </h2>
-                </div>
+          <div class="vld-parent">
+            <loading
+              :active="isLoading"
+              :is-full-page="false"
+              :color="'#2F639D'"
+              :opacity="0.7"
+            ></loading>
+            <div class="container px-6 mx-auto">
+              <div class="text-center lg:max-w-3xl md:max-w-xl">
+                <h2 class="text-2xl font-bold mb-8 px-6">
+                  Add A Verification Request
+                </h2>
               </div>
-
-              <div class="flex justify-center">
-                <div class="block p-6 rounded-lg shadow-md bg-white max-w-md">
-                  <div class="vld-parent">
-                    <loading
-                      :active="isLoading"
-                      :is-full-page="false"
-                      :color="'#2F639D'"
-                      :opacity="0.7"
-                    ></loading>
-
-                    <div class="form-group mb-6">
-                      <label for="users" class="ml-4">Select Users</label>
-                      <input
-                        type="text"
-                        @keyup="showOptions = true"
-                        v-model="assignedUser.name"
-                        class="
-                          form-control
-                          block
-                          w-full
-                          px-3
-                          py-1.5
-                          text-base
-                          font-normal
-                          text-gray-700
-                          bg-white bg-clip-padding
-                          border border-solid border-gray-300
-                          rounded
-                          transition
-                          ease-in-out
-                          m-4
-                          mt-0
-                          focus:text-gray-700
-                          focus:bg-white
-                          focus:border-blue-600
-                          focus:outline-none
-                        "
-                        id="users"
-                        placeholder="Users"
-                      />
-                      <div
-                        v-show="resultQuery().length && showOptions"
-                        class="
-                          w-full
-                          bg-white
-                          border border-gray-300
-                          mt-2
-                          ml-1
-                          max-height-12
-                          overflow-hidden overflow-y-scroll
-                          rounded-lg
-                          shadow-lg
-                          text-left
-                          dropdown-menu
-                        "
-                        style="height: 148px; border: none"
-                      >
-                        <ul class="py-1">
-                          <li
-                            v-for="value in resultQuery()"
-                            :key="value.id"
-                            @click="setInput(value)"
-                            class="
-                              dropdown-toggle
-                              px-4
-                              py-2
-                              cursor-pointer
-                              hover:bg-primary-700 hover:text-white
-                            "
-                          >
-                            {{ value.name }}&nbsp;{{ value.fatherName }}&nbsp;{{
-                              value.grandFatherName
-                            }}
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                    <div class="form-group mb-6">
-                      <label for="region" class="ml-4">Select Region</label>
-                      <select
-                        class="
+              <div class="grid grid-cols-2 p-2">
+                <div class=" p-2 mr-2 rounded-lg shadow-md bg-white ">
+                  <div class="form-group mb-6">
+                    <label for="region" class="ml-4"
+                      >Select Application Type</label
+                    >
+                    <select
+                      class="
                           m-4
                           mt-0
                           form-control
@@ -181,28 +113,23 @@
                           rounded
                           transition
                           ease-in-out
-                          m-4
+                         
                           focus:text-gray-700
                           focus:bg-white
                           focus:border-blue-600
                           focus:outline-none
                         "
-                        v-model="region"
-                      >
-                        <option
-                          v-for="region in regions"
-                          v-bind:key="region.name"
-                          v-bind:value="region.id"
-                        >
-                          {{ region.name }}
-                        </option>
-                      </select>
-                    </div>
-                    <div class="form-group mb-6">
-                      <label for="users" class="ml-4">License Code</label>
-                      <input
-                        type="text"
-                        class="
+                      v-model="licenseType"
+                    >
+                      <option value="newLicense">New License</option>
+                      <option value="renewal">Renewal</option>
+                    </select>
+                  </div>
+                  <div class="form-group mb-6">
+                    <label for="users" class="ml-4">License Code</label>
+                    <input
+                      type="text"
+                      class="
                           shadow
                           form-control
                           block
@@ -224,41 +151,157 @@
                           focus:border-blue-600
                           focus:outline-none
                         "
-                        id="lNumber"
-                        placeholder="License Code"
-                        v-model="licenseNumber"
-                      />
-                    </div>
+                      id="lNumber"
+                      :disabled="licenseType == ''"
+                      placeholder="License Code"
+                      v-model="licenseNumber"
+                    />
                     <div class="flex justify-center">
                       <button
                         type="submit"
-                        class="
-                        px-6
-                      text-white
-                      bg-primary-600
-                      hover:text-primary-600
-                      font-medium
-                      text-xs
-                      leading-tight
-                      uppercase
-                      rounded
-                      shadow-md
-                      focus:shadow-lg focus:outline-none focus:ring-0
-                      transition
-                      duration-150
-                      mt-0
-                      ease-in-out
-                      text-right
+                        :class="
+                          licenseType != ''
+                            ? 'px-6 text-white bg-primary-600 hover:text-primary-600 font-medium text-xs leading-tight uppercase rounded shadow-md focus:shadow-lg focus:outline-none focus:ring-0 transition duration-150 mt-0 ease-in-out text-right'
+                            : 'px-6 text-white bg-grey-300 hover:text-primary-600 font-medium text-xs leading-tight uppercase rounded shadow-md focus:shadow-lg focus:outline-none focus:ring-0 transition duration-150 mt-0 ease-in-out text-right pointer-events-none'
                         "
-                        @click="submit()"
+                        @click="searchLicense()"
                       >
-                        Add Request
+                        Search License
                       </button>
                     </div>
                   </div>
                 </div>
+                <div class="vld-parent">
+                  <loading
+                    :active="searchLoading"
+                    :is-full-page="false"
+                    :color="'#2F639D'"
+                    :opacity="0.7"
+                  >
+                  </loading>
+                  <div class=" p-2 rounded-lg shadow-md bg-white ">
+                    <h3>License Detail</h3>
+                    <div class="grid grid-cols-2">
+                      <h2>Applicant Name</h2>
+                      <h2 class="text-primary-600">
+                        {{
+                          licenseData && licenseData.profile
+                            ? licenseData.profile.name
+                            : "" + " " + licenseData && licenseData.profile
+                            ? licenseData.profile.fatherName
+                            : "" + " " + licenseData && licenseData.profile
+                            ? licenseData.profile.grandFatherName
+                            : ""
+                        }}
+                      </h2>
+                    </div>
+                    <div class="grid grid-cols-2">
+                      <h2>Applicant Email</h2>
+                      <h2 class="text-primary-600">
+                        {{
+                          licenseData && licenseData.applicant
+                            ? licenseData.applicant.emailAddress
+                            : ""
+                        }}
+                      </h2>
+                    </div>
+                    <div class="grid grid-cols-2">
+                      <h2>Applicant Phone</h2>
+                      <h2 class="text-primary-600">
+                        {{
+                          licenseData && licenseData.applicant
+                            ? licenseData.applicant.phoneNumber
+                            : ""
+                        }}
+                      </h2>
+                    </div>
+                    <div class="grid grid-cols-2">
+                      <h2>Certified Date</h2>
+                      <h2 class="text-primary-600">
+                        {{
+                          licenseData.certifiedDate
+                            ? licenseData.certifiedDate.slice(0, 10)
+                            : ""
+                        }}
+                      </h2>
+                    </div>
+                    <div class="grid grid-cols-2">
+                      <h2>Certified By</h2>
+                      <h2 class="text-primary-600">
+                        {{
+                          licenseData && licenseData.licenseReviewer
+                            ? licenseData.licenseReviewer.reviewer.name
+                            : ""
+                        }}
+                      </h2>
+                    </div>
+                    <div class="grid grid-cols-2">
+                      <h2>Certified Personnel Phone</h2>
+                      <h2 class="text-primary-600">
+                        {{
+                          licenseData && licenseData.licenseReviewer
+                            ? licenseData.licenseReviewer.reviewer.phoneNumber
+                            : ""
+                        }}
+                      </h2>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </section>
+
+              <section class="text-gray-800">
+                <div class="form-group mb-6">
+                  <label for="region" class="ml-4">Select Region</label>
+                  <select
+                    class="
+                          m-4
+                          mt-0
+                          form-control
+                          block
+                          w-full
+                          px-3
+                          py-1.5
+                          text-base
+                          font-normal
+                          text-gray-700
+                          bg-white bg-clip-padding
+                          border border-solid border-gray-300
+                          rounded
+                          transition
+                          ease-in-out
+                         
+                          focus:text-gray-700
+                          focus:bg-white
+                          focus:border-blue-600
+                          focus:outline-none
+                        "
+                    :disabled="licenseData && !licenseData.id"
+                    v-model="region"
+                  >
+                    <option
+                      v-for="region in regions"
+                      v-bind:key="region.name"
+                      v-bind:value="region.id"
+                    >
+                      {{ region.name }}
+                    </option>
+                  </select>
+                </div>
+                <div class="flex justify-center">
+                  <button
+                    type="submit"
+                    :class="
+                      licenseData && licenseData.id
+                        ? 'px-6 text-white bg-primary-600 hover:text-primary-600 font-medium text-xs leading-tight uppercase rounded shadow-md focus:shadow-lg focus:outline-none focus:ring-0 transition duration-150 mt-0 ease-in-out text-right'
+                        : 'px-6 text-white bg-grey-300 hover:text-primary-600 font-medium text-xs leading-tight uppercase rounded shadow-md focus:shadow-lg focus:outline-none focus:ring-0 transition duration-150 mt-0 ease-in-out text-right pointer-events-none'
+                    "
+                    @click="submit()"
+                  >
+                    Add Request
+                  </button>
+                </div>
+              </section>
+            </div>
           </div>
         </div>
 
@@ -271,10 +314,7 @@
             border-t border-grey-100
             rounded-b-md
           "
-        >
-       
-       
-        </div>
+        ></div>
       </div>
     </div>
   </div>
@@ -295,10 +335,13 @@ export default {
     const store = useStore();
     const toast = useToast();
     let users = ref([]);
+    let licenseData = ref({});
     let filteredUsers = ref([]);
     let searchInput = ref("");
+    let licenseType = ref("");
     let regions = ref([]);
     let region = ref();
+    let searchLoading = ref(false);
     let licenseNumber = ref("");
     let loggedInAdmin = JSON.parse(localStorage.getItem("allAdminData"));
 
@@ -308,19 +351,67 @@ export default {
     const isLoading = ref(false);
 
     onMounted(async () => {
-      await getAllUsers();
-      await getRegion();
+      getRegion();
     });
-    const getAllUsers = () => {
-      store.dispatch("applicationVerification/getAllUsers").then((res) => {
-        users.value = res.data.data;
-        filteredUsers.value = res.data.data;
-      });
-    };
+
     const getRegion = () => {
       store.dispatch("applicationVerification/getRegions").then((res) => {
         regions.value = res.data.data;
       });
+    };
+
+    const searchLicense = () => {
+      searchLoading.value = true;
+      if (licenseType.value == "newLicense") {
+        store
+          .dispatch(
+            "reviewerNewLicense/getNewLicenseApplicationByCode",
+            licenseNumber.value
+          )
+          .then((res) => {
+            licenseData.value =
+              res && res.data && res.data.data ? res.data.data : {};
+            assignedUser.value = {
+              id: licenseData.value.applicantId
+                ? licenseData.value.applicantId
+                : null,
+              name:
+                licenseData.value && licenseData.value.profile
+                  ? licenseData.value.profile.name
+                  : "" + " " + licenseData.value && licenseData.value.profile
+                  ? licenseData.value.profile.fatherName
+                  : "" + " " + licenseData.value && licenseData.value.profile
+                  ? licenseData.value.profile.grandFatherName
+                  : "",
+            };
+            searchLoading.value = false;
+          });
+      }
+      if (licenseType.value == "renewal") {
+        store
+          .dispatch(
+            "reviewerRenewal/getRenewalApplicationByCode",
+            licenseNumber.value
+          )
+          .then((res) => {
+            licenseData.value =
+              res && res.data && res.data.data ? res.data.data : {};
+            assignedUser.value = {
+              id: licenseData.value.applicantId
+                ? licenseData.value.applicantId
+                : null,
+              name:
+                licenseData.value && licenseData.value.profile
+                  ? licenseData.value.profile.name
+                  : "" + " " + licenseData.value && licenseData.value.profile
+                  ? licenseData.value.profile.fatherName
+                  : "" + " " + licenseData.value && licenseData.value.profile
+                  ? licenseData.value.profile.grandFatherName
+                  : "",
+            };
+            searchLoading.value = false;
+          });
+      }
     };
 
     const submit = () => {
@@ -328,9 +419,17 @@ export default {
       let submittedData = {
         regionId: region.value,
         licenseNumber: licenseNumber.value,
-        applicantId: assignedUser.value .id,
+        applicantId: assignedUser.value.id,
         requesterId: loggedInAdmin.id,
       };
+      if (licenseType.value == "renewal") {
+        submittedData.renewalId = licenseData.value.id;
+        submittedData.licenseType = "renewal";
+      }
+      if (licenseType.value == "newLicense") {
+        submittedData.licenseId = licenseData.value.id;
+        submittedData.licenseType = "newLicense";
+      }
       store
         .dispatch(
           "applicationVerification/saveVerificationRequest",
@@ -348,9 +447,9 @@ export default {
                 icon: true,
               });
 
-                setTimeout(() => {
-              window.location.reload();
-            }, 3000);
+              setTimeout(() => {
+                window.location.reload();
+              }, 3000);
             } else {
               isLoading.value = false;
 
@@ -361,10 +460,6 @@ export default {
                 pauseOnHover: true,
                 icon: true,
               });
-
-                setTimeout(() => {
-              window.location.reload();
-            }, 3000);
             }
           },
           () => {
@@ -379,50 +474,27 @@ export default {
               }
             );
 
-                setTimeout(() => {
+            setTimeout(() => {
               window.location.reload();
             }, 3000);
           }
         );
     };
 
-    const resultQuery = () => {
-      if (assignedUser.value.name) {
-        let data = users.value.filter((item) => {
-          return assignedUser.value.name
-            .toLowerCase()
-            .split(" ")
-            .every((v) => item.name.toLowerCase().includes(v));
-        });
-
-        return data;
-      } else {
-        return [];
-      }
-    };
-
-    const setInput = (value) => {
-      assignedUser.value = {
-        id: value.userId,
-        name: value.name + " " + value.fatherName + " " + value.grandFatherName,
-      };
-     
-      showOptions.value = false;
-    };
-
     return {
       users,
+      licenseData,
+      licenseType,
       submit,
-      getAllUsers,
       searchInput,
       filteredUsers,
+      searchLicense,
       region,
       regions,
       licenseNumber,
+      searchLoading,
       showRes,
       showOptions,
-      resultQuery,
-      setInput,
       assignedUser,
       isLoading,
     };

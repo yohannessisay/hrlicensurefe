@@ -89,4 +89,13 @@ export default {
       return error;
     }
   },
+  async getNewLicenseApplicationByCode(context, code) {
+    try { 
+      const url = baseUrl + "/newLicenses/code/" + code;
+      const resp = await ApiService.get(url);
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
 };
