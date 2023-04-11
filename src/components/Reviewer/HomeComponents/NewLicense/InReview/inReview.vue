@@ -813,7 +813,7 @@ export default {
 
       setTimeout(() => {
         toYouTable.value.isReSearch = offset == undefined ? true : false;
-        offset = offset / 10 + 1;
+        offset = offset / 10 - 1;
         if (sort == "asc") {
           inReviewAssignedToYou([
             { key: "page", value: offset },
@@ -840,7 +840,7 @@ export default {
 
       setTimeout(() => {
         toOthersTable.value.isReSearch = offset == undefined ? true : false;
-        offset = offset / 10 + 1;
+        offset = offset / 10 - 1;
         if (sort == "asc") {
           inReviewAssignedToOthers([
             { key: "page", value: offset },

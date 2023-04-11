@@ -803,7 +803,7 @@ export default {
 
       setTimeout(() => {
         assignedToYouTable.value.isReSearch = offset == undefined ? true : false;
-        offset = offset / 10 + 1;
+        offset = offset / 10 - 1;
         if (sort == "asc") {
           assignedToYou([
             { key: "page", value: offset },
@@ -830,7 +830,7 @@ export default {
 
       setTimeout(() => {
         assignedToOthersTable.value.isReSearch = offset == undefined ? true : false;
-        offset = offset / 10 + 1;
+        offset = offset / 10 - 1;
         if (sort == "asc") {
           assignedToOthers([
             { key: "page", value: offset },

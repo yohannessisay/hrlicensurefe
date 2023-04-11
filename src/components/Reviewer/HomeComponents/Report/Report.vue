@@ -1553,7 +1553,7 @@ export default {
       reportTable.value.isLoading = true; 
       setTimeout(() => {
         reportTable.value.isReSearch = offset == undefined ? true : false;
-        offset = offset / 10 + 1;
+        offset = offset / 10 - 1;
         if (sort == "asc" && applicationTypeSearch.value == "NewLicense") {
           fetchNewLicenseReport([offset, limit]);
         } else if (sort == "asc" && applicationTypeSearch.value == "Renewal") {

@@ -789,7 +789,7 @@ export default {
 
       setTimeout(() => {
         reportTable.value.isReSearch = offset == undefined ? true : false;
-        offset = offset / 10 + 1;
+        offset = offset / 10 - 1;
         if (sort == "asc") {
           fetchLicenseReport([offset, limit]);
         } else {

@@ -432,7 +432,7 @@ export default {
 
       setTimeout(() => {
         toYouTable.value.isReSearch = offset == undefined ? true : false;
-        offset = offset / 10 + 1;
+        offset = offset / 10 - 1;
         if (sort == "asc") {
           licensed([
             { key: "page", value: offset },

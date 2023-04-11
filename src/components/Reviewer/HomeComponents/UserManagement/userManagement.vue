@@ -329,7 +329,7 @@ export default {
 
       setTimeout(() => {
         userTable.value.isReSearch = offset == undefined ? true : false;
-        offset = offset / 10 + 1;
+        offset = offset / 10 - 1;
         if (sort == "asc") {
           getAdmins([offset, limit, searchTerm.value, expertLevelFilter.value]);
         } else {

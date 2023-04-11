@@ -1,3 +1,2 @@
-export default {
-  getCpdUsers: state => state.users
+export default { 
 };
