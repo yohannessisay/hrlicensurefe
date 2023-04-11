@@ -807,7 +807,7 @@ export default {
 
       setTimeout(() => {
         unassignedTable.value.isReSearch = offset == undefined ? true : false;
-        offset = offset / 10 - 1;
+        offset = offset && offset > 0 ? offset / 10 - 1 : 1;
         if (sort == "asc") {
           unassigned([
             { key: "page", value: offset },
@@ -834,7 +834,7 @@ export default {
 
       setTimeout(() => {
         reSubmittedTable.value.isReSearch = offset == undefined ? true : false;
-        offset = offset / 10 - 1;
+        offset = offset && offset > 0 ? offset / 10 - 1 : 1;
         if (sort == "asc") {
           reSubmitted([
             { key: "page", value: offset },

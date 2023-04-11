@@ -90,6 +90,7 @@
                       rounded
                       transition
                       ease-in-out
+                      mr-2
                       focus:text-gray-700
                       focus:bg-white
                       focus:border-blue-600
@@ -99,28 +100,69 @@
                     aria-label="Search"
                     aria-describedby="button-addon2"
                     v-model="searchTerm"
+                    @keyup.enter="applyFilter()"
                   />
-                  <button
+                  <input
+                    type="search"
                     class="
-                      inline-block
+                      form-control
+                      relative
+                      flex-auto
+                      min-w-0
+                      block
+                      w-full
                       px-6
-                      text-white
-                      bg-primary-700
-                      font-medium
-                      text-xs
-                      leading-tight
-                      uppercase
-                      border
+                      py-1.5
+                      text-base
+                      font-normal
+                      text-gray-700
+                      mr-2
+                      bg-white bg-clip-padding
+                      border border-solid border-gray-300
                       rounded
-                      shadow-lg
-                      hover:bg-white hover:text-primary-600
                       transition
-                      duration-150
                       ease-in-out
+                      focus:text-gray-700
+                      focus:bg-white
+                      focus:border-blue-600
+                      focus:outline-none
                     "
-                  >
-                    <i class="fa fa-user fa-2x"></i>
-                  </button>
+                    placeholder="License Number"
+                    aria-label="Search"
+                    aria-describedby="button-addon2"
+                    v-model="searchTermLicenseNumber"
+                    @keyup.enter="applyFilter()"
+                  />
+                  <input
+                    type="search"
+                    class="
+                      form-control
+                      relative
+                      flex-auto
+                      min-w-0
+                      block
+                      w-full
+                      px-6
+                      py-1.5
+                      text-base
+                      font-normal
+                      text-gray-700
+                      bg-white bg-clip-padding
+                      border border-solid border-gray-300
+                      rounded
+                      transition
+                      ease-in-out
+                      focus:text-gray-700
+                      focus:bg-white
+                      focus:border-blue-600
+                      focus:outline-none
+                    "
+                    placeholder="Phone Number"
+                    aria-label="Search"
+                    aria-describedby="button-addon2"
+                    v-model="searchTermPhone"
+                    @keyup.enter="applyFilter()"
+                  />
                 </div>
                 <div class="grid grid-cols-6 w-full">
                   <div class="mb-3 xl:w-full">
@@ -148,11 +190,11 @@
                         focus:outline-none
                       "
                       v-model="licenseTypeFilter"
+                      @change="applyFilter()"
                     >
                       <option selected disabled>License Type</option>
-                      <option :value="'all'">All</option>
                       <option
-                        v-for="licenseType in [...new Set(licenseTypes)]"
+                        v-for="licenseType in licenseTypes"
                         :value="licenseType"
                         :key="licenseType"
                       >
@@ -185,15 +227,16 @@
                         focus:border-blue-600
                         focus:outline-none
                       "
+                      @change="applyFilter()"
                       v-model="licensePrefixesFilter"
                     >
                       <option value="all" selected>All</option>
                       <option
-                        v-for="prefix in [...new Set(licensePrefixes)]"
+                        v-for="prefix in licensePrefixes"
                         :key="prefix"
                         :value="prefix"
                       >
-                        {{ prefix && prefix != "" ? prefix : "NONE" }}
+                        {{ prefix }}
                       </option>
                     </select>
                   </div>
@@ -223,67 +266,14 @@
                         focus:outline-none
                       "
                       v-model="genderFilter"
+                      @change="applyFilter()"
                     >
                       <option selected disabled>Gender</option>
-                      <option value="all">All</option>
                       <option value="male">Male</option>
                       <option value="female">Female</option>
                     </select>
                   </div>
 
-                  <div class="ml-8 mb-3 ml-2">
-                    <label for="" class="ml-4">From</label>
-                    <input
-                      v-model="fromDate"
-                      type="date"
-                      class="
-                        appearance-none
-                        block
-                        w-full
-                        px-6
-                        py-2
-                        text-base
-                        font-normal
-                        text-gray-700
-                        bg-white bg-clip-padding bg-no-repeat
-                        border border-solid border-gray-300
-                        rounded
-                        transition
-                        ease-in-out
-                        focus:text-gray-700
-                        focus:bg-white
-                        focus:border-blue-600
-                        focus:outline-none
-                      "
-                    />
-                  </div>
-                  <div class="mb-3 ml-2">
-                    <label for="" class="ml-4"> To</label>
-                    <input
-                      type="date"
-                      class="
-                        appearance-none
-                        block
-                        w-full
-                        px-6
-                        ml-4
-                        py-2
-                        text-base
-                        font-normal
-                        text-gray-700
-                        bg-white bg-clip-padding bg-no-repeat
-                        border border-solid border-gray-300
-                        rounded
-                        transition
-                        ease-in-out
-                        focus:text-gray-700
-                        focus:bg-white
-                        focus:border-blue-600
-                        focus:outline-none
-                      "
-                      v-model="toDate"
-                    />
-                  </div>
                   <div class="ml-8 mt-4">
                     <button
                       type="button"
@@ -536,8 +526,7 @@
 
 <script>
 import "@ocrv/vue-tailwind-pagination/dist/style.css";
-import { ref, computed } from "@vue/reactivity";
-import { onMounted } from "@vue/runtime-core";
+import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
 import ReviewerNavBar from "./SharedComponents/navBar.vue";
 import ReviewerSideBar from "./SharedComponents/sideNav.vue";
@@ -550,22 +539,18 @@ export default {
   components: {
     ReviewerNavBar,
     ReviewerSideBar,
-    VueTableLite
+    VueTableLite,
   },
 
   setup() {
     const store = useStore();
-    let allData = ref([]);
-    let searchData = ref();
-
+    let tableData = [];
     let reportTable = ref({ isLoading: false });
-    let tableData = ref([]);
-    const searchTerm = ref("");
-    let fromDate = ref("");
-    let toDate = ref("");
 
-    let currentPage = ref(1);
-    let totalCount = ref();
+    let searchTerm = ref("");
+    let searchTermLicenseNumber = ref("");
+    let searchTermPhone = ref("");
+
     let report = ref([]);
 
     let licenseTypeFilter = ref("");
@@ -576,232 +561,282 @@ export default {
 
     let licensePrefixes = ref([]);
 
-    const fetchLicenseReport = apiParameters => {
-      store.dispatch("reviewer/getLegacyData", apiParameters).then(res => {
-        tableData = [];
+    const fetchLicenseReport = (apiParameters) => {
+      store
+        .dispatch("reviewer/getLegacyData", {
+          params: apiParameters.params ? apiParameters.params : apiParameters,
+        })
+        .then((res) => {
+          let tempData = res && res.rows ? res.rows : [];
 
-        res.rows.forEach(element => {
-          licenseTypes.value.push(
-            element.license_type_id ? element.license_type_id : ""
-          );
-          licensePrefixes.value.push(
-            element.license_prefix_id ? element.license_prefix_id : ""
-          );
-          tableData.push({
-            EmployeeId: element.employee_id ? element.employee_id : "",
-            FirstName: element.emp_first_name ? element.emp_first_name : "",
-            MiddleName: element.emp_middle_name ? element.emp_middle_name : "",
-            LastName: element.emp_last_name ? element.emp_last_name : "",
-            LicenseNumber: element.license_no ? element.license_no : "",
-            AlternativeFullName:
-              (element.alternative_first_name
-                ? element.alternative_first_name
-                : "") +
-              " " +
-              (element.alternative_middle_name
-                ? element.alternative_last_name
-                : "") +
-              " " +
-              (element.alternative_middle_name
-                ? element.alternative_middle_name
-                : ""),
-            EmployeePrefix: element.prefix_id ? element.prefix_id : "",
-            ExpireDate: element.expiry_date ? element.expiry_date : "",
-            LicenseType: element.license_type_id ? element.license_type_id : "",
-            LicenseStatus: element.license_status_id
-              ? element.license_status_id
-              : "",
-            LicensePrefix: element.license_prefix_id
-              ? element.license_prefix_id
-              : "",
-            IssuedDate: element.issued_date ? element.issued_date : "",
-            EmployeeMobile: element.emp_mobile ? element.emp_mobile : "",
-            EmployeeEmail: element.emp_work_email ? element.emp_work_email : "",
-            Gender: element.emp_gender ? element.emp_gender : "",
-            BirthDate: element.emp_birthday ? element.emp_birthday : ""
+          apiParameters && apiParameters.isInitial == true
+            ? res.filters && res.filters.licenseType
+              ? res.filters.licenseType.forEach((element) => {
+                  licenseTypes.value.push(element.license_type_id);
+                })
+              : []
+            : "";
+
+          apiParameters && apiParameters.isInitial == true
+            ? res.filters && res.filters.licensePrefix
+              ? res.filters.licensePrefix.forEach((element) => {
+                  licensePrefixes.value.push(element.license_prefix_id);
+                })
+              : []
+            : "";
+          tempData.forEach((element) => {
+            tableData.push({
+              EmployeeId: element.employee_id ? element.employee_id : "",
+              FirstName: element.emp_first_name ? element.emp_first_name : "",
+              MiddleName: element.emp_middle_name
+                ? element.emp_middle_name
+                : "",
+              LastName: element.emp_last_name ? element.emp_last_name : "",
+              LicenseNumber: element.license_no ? element.license_no : "",
+              AlternativeFullName:
+                (element.alternative_first_name
+                  ? element.alternative_first_name
+                  : "") +
+                " " +
+                (element.alternative_middle_name
+                  ? element.alternative_last_name
+                  : "") +
+                " " +
+                (element.alternative_middle_name
+                  ? element.alternative_middle_name
+                  : ""),
+              EmployeePrefix: element.prefix_id ? element.prefix_id : "",
+              ExpireDate: element.expiry_date ? element.expiry_date : "",
+              LicenseType: element.license_type_id
+                ? element.license_type_id
+                : "",
+              LicenseStatus: element.license_status_id
+                ? element.license_status_id
+                : "",
+              LicensePrefix: element.license_prefix_id
+                ? element.license_prefix_id
+                : "",
+              IssuedDate: element.issued_date ? element.issued_date : "",
+              EmployeeMobile: element.emp_mobile ? element.emp_mobile : "",
+              EmployeeEmail: element.emp_work_email
+                ? element.emp_work_email
+                : "",
+              Gender: element.emp_gender ? element.emp_gender : "",
+              BirthDate: element.emp_birthday ? element.emp_birthday : "",
+            });
           });
+          reportTable.value = {
+            columns: [
+              {
+                label: "License Number",
+                field: "LicenseNumber",
+                width: "5%",
+                sortable: true,
+              },
+              {
+                label: "Employee Id",
+                field: "EmployeeId",
+                width: "5%",
+                sortable: true,
+                isKey: true,
+              },
+              {
+                label: "First Name",
+                field: "FirstName",
+                width: "10%",
+                sortable: true,
+              },
+              {
+                label: "Father Name",
+                field: "MiddleName",
+                width: "10%",
+                sortable: true,
+              },
+              {
+                label: "Grandfather Name",
+                field: "LastName",
+                width: "10%",
+                sortable: true,
+              },
+              {
+                label: "License Status",
+                field: "LicenseStatus",
+                width: "5%",
+                sortable: true,
+              },
+              {
+                label: "Alternative Full Name",
+                field: "AlternativeFullName",
+                width: "35%",
+                sortable: true,
+              },
+
+              {
+                label: "Issued Date",
+                field: "IssuedDate",
+                width: "5%",
+                sortable: true,
+              },
+              {
+                label: "Gender",
+                field: "Gender",
+                width: "5%",
+                sortable: true,
+              },
+              {
+                label: "Expire Date",
+                field: "ExpireDate",
+                width: "5%",
+                sortable: true,
+              },
+              {
+                label: "License Type",
+                field: "LicenseType",
+                width: "5%",
+                sortable: true,
+              },
+
+              {
+                label: "License Prefix",
+                field: "LicensePrefix",
+                width: "5%",
+                sortable: true,
+              },
+              {
+                label: "Employee Mobile",
+                field: "EmployeeMobile",
+                width: "5%",
+                sortable: true,
+              },
+
+              {
+                label: "Employee Email",
+                field: "EmployeeEmail",
+                width: "5%",
+                sortable: true,
+              },
+              {
+                label: "Birth Date",
+                field: "BirthDate",
+                width: "5%",
+                sortable: true,
+              },
+            ],
+            rows: tableData,
+            totalRecordCount: res ? res.count : 0,
+            sortable: {
+              order: "EmployeeId",
+              sort: "asc",
+            },
+          };
         });
-        allData.value = tableData;
-        reportTable.value = {
-          columns: [
-            {
-              label: "Employee Id",
-              field: "EmployeeId",
-              width: "5%",
-              sortable: true,
-              isKey: true
-            },
-            {
-              label: "First Name",
-              field: "FirstName",
-              width: "10%",
-              sortable: true
-            },
-            {
-              label: "Father Name",
-              field: "MiddleName",
-              width: "10%",
-              sortable: true
-            },
-            {
-              label: "Grandfather Name",
-              field: "LastName",
-              width: "10%",
-              sortable: true
-            },
-            {
-              label: "License Status",
-              field: "LicenseStatus",
-              width: "5%",
-              sortable: true
-            },
-            {
-              label: "Alternative Full Name",
-              field: "AlternativeFullName",
-              width: "35%",
-              sortable: true
-            },
-            {
-              label: "License Number",
-              field: "LicenseNumber",
-              width: "5%",
-              sortable: true
-            },
-            {
-              label: "Issued Date",
-              field: "IssuedDate",
-              width: "5%",
-              sortable: true
-            },
-            {
-              label: "Gender",
-              field: "Gender",
-              width: "5%",
-              sortable: true
-            },
-            {
-              label: "Expire Date",
-              field: "ExpireDate",
-              width: "5%",
-              sortable: true
-            },
-            {
-              label: "License Type",
-              field: "LicenseType",
-              width: "5%",
-              sortable: true
-            },
-
-            {
-              label: "License Prefix",
-              field: "LicensePrefix",
-              width: "5%",
-              sortable: true
-            },
-            {
-              label: "Employee Mobile",
-              field: "EmployeeMobile",
-              width: "5%",
-              sortable: true
-            },
-
-            {
-              label: "Employee Email",
-              field: "EmployeeEmail",
-              width: "5%",
-              sortable: true
-            },
-            {
-              label: "Birth Date",
-              field: "BirthDate",
-              width: "5%",
-              sortable: true
-            }
-          ],
-          rows: computed(() => {
-            return tableData.filter(
-              curRow =>
-                (curRow.FirstName
-                  ? curRow.FirstName.toLowerCase().includes(
-                      searchTerm.value.toLowerCase()
-                    )
-                  : "" || curRow.MiddleName
-                  ? curRow.MiddleName.toLowerCase().includes(
-                      searchTerm.value.toLowerCase()
-                    )
-                  : "" || curRow.LastName
-                  ? curRow.LastName.toLowerCase().includes(
-                      searchTerm.value.toLowerCase()
-                    )
-                  : "") &&
-                (licenseTypeFilter.value &&
-                licenseTypeFilter.value != "all" &&
-                licenseTypeFilter.value != ""
-                  ? curRow.LicenseType.toLowerCase() ==
-                    licenseTypeFilter.value.toLowerCase()
-                  : curRow.LicenseType ||
-                    curRow.LicenseType == null ||
-                    curRow.LicenseType == "") &&
-                (genderFilter.value &&
-                genderFilter.value != "all" &&
-                genderFilter.value != ""
-                  ? curRow.Gender.toLowerCase() ==
-                    genderFilter.value.toLowerCase()
-                  : curRow.Gender ||
-                    curRow.Gender == null ||
-                    curRow.Gender == "") &&
-                (licensePrefixesFilter.value &&
-                licensePrefixesFilter.value != "all" &&
-                licensePrefixesFilter.value != ""
-                  ? curRow.LicensePrefix.toLowerCase() ==
-                    licensePrefixesFilter.value.toLowerCase()
-                  : curRow.LicensePrefix ||
-                    curRow.LicensePrefix == null ||
-                    curRow.LicensePrefix == "")
-            );
-          }),
-          totalRecordCount: res ? res.count : 0,
-          sortable: {
-            order: "EmployeeId",
-            sort: "asc"
-          }
-        };
-      });
     };
 
     const exportTable = () => {
       var blob = new Blob([document.getElementById("myTable").innerHTML], {
         type:
-          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8",
       });
       let date = new Date().toISOString();
       saveAs(blob, date.slice(0, 10) + " Report.xls");
     };
 
-    const clearFilters = () => {
-      genderFilter.value = "";
-      licensePrefixesFilter.value = "";
-      licenseTypeFilter.value = "";
-      searchTerm.value = "";
-    };
     const doSearch = (offset, limit, order, sort) => {
       reportTable.value.isLoading = true;
-
+      reportTable.value.rows = [];
+      tableData = [];
       setTimeout(() => {
         reportTable.value.isReSearch = offset == undefined ? true : false;
-        offset = offset / 10 - 1;
+        offset = offset && offset > 0 ? offset / 10 - 1 : 1;
         if (sort == "asc") {
-          fetchLicenseReport([offset, limit]);
+          fetchLicenseReport([
+            { key: "page", value: offset },
+            { key: "size", value: limit },
+            { key: "licenseNumber", value: searchTermLicenseNumber.value },
+            { key: "phoneNumber", value: searchTermPhone.value },
+            { key: "name", value: searchTerm.value },
+            { key: "licenseType", value: licenseTypeFilter.value },
+            { key: "licensePrefix", value: licensePrefixesFilter.value },
+            { key: "gender", value: genderFilter.value },
+          ]);
         } else {
-          fetchLicenseReport([offset, limit]);
+          fetchLicenseReport([
+            { key: "page", value: offset },
+            { key: "size", value: limit },
+            { key: "licenseNumber", value: searchTermLicenseNumber.value },
+            { key: "phoneNumber", value: searchTermPhone.value },
+            { key: "name", value: searchTerm.value },
+            { key: "licenseType", value: licenseTypeFilter.value },
+            { key: "licensePrefix", value: licensePrefixesFilter.value },
+            { key: "gender", value: genderFilter.value },
+          ]);
         }
         reportTable.value.sortable.order = order;
         reportTable.value.sortable.sort = sort;
-      }, 600);
+      }, 200);
+    };
+    const applyFilter = () => {
+      reportTable.value.isLoading = true;
+      reportTable.value.rows = [];
+      tableData = [];
+      fetchLicenseReport([
+        { key: "page", value: 0 },
+        { key: "size", value: 10 },
+        { key: "licenseNumber", value: searchTermLicenseNumber.value },
+        { key: "phoneNumber", value: searchTermPhone.value },
+        { key: "name", value: searchTerm.value },
+        { key: "licenseType", value: licenseTypeFilter.value },
+        { key: "licensePrefix", value: licensePrefixesFilter.value },
+        { key: "gender", value: genderFilter.value },
+      ]);
+    };
+
+    const clearFilters = () => {
+      searchTermLicenseNumber.value = "";
+      searchTermPhone.value = "";
+      searchTerm.value = "";
+      licenseTypeFilter.value = "";
+      licensePrefixesFilter.value = "";
+      genderFilter.value = "";
+      reportTable.value.isLoading = true;
+      reportTable.value.rows = [];
+      tableData = [];
+      fetchLicenseReport([
+        { key: "page", value: 0 },
+        { key: "size", value: 10 },
+        { key: "licenseNumber", value: searchTermLicenseNumber.value },
+        { key: "phoneNumber", value: searchTermPhone.value },
+        { key: "name", value: searchTerm.value },
+        { key: "licenseType", value: licenseTypeFilter.value },
+        { key: "licensePrefix", value: licensePrefixesFilter.value },
+        { key: "gender", value: genderFilter.value },
+      ]);
+    };
+    const searchApplication = () => {
+      reportTable.value.isLoading = true;
+      reportTable.value.rows = [];
+      tableData = [];
+      fetchLicenseReport([
+        { key: "page", value: 0 },
+        { key: "size", value: 10 },
+        { key: "licenseNumber", value: searchTermLicenseNumber.value },
+        { key: "phoneNumber", value: searchTermPhone.value },
+        { key: "name", value: searchTerm.value },
+        { key: "licenseType", value: licenseTypeFilter.value },
+        { key: "licensePrefix", value: licensePrefixesFilter.value },
+        { key: "gender", value: genderFilter.value },
+      ]);
     };
     onMounted(() => {
       reportTable.value.isLoading = true;
-      fetchLicenseReport([1, 10]);
+      fetchLicenseReport({
+        isInitial: true,
+        params: [
+          { key: "page", value: 0 },
+          { key: "size", value: 10 },
+          { key: "initialPage", value: 1 },
+        ],
+      });
     });
     return {
       report,
@@ -810,17 +845,16 @@ export default {
       licenseTypeFilter,
       licensePrefixesFilter,
       genderFilter,
-      fromDate,
-      toDate,
-      currentPage,
-      totalCount,
       licenseTypes,
       doSearch,
-      searchData,
+      applyFilter,
+      searchApplication,
+      searchTermLicenseNumber,
+      searchTermPhone,
       reportTable,
       searchTerm,
-      licensePrefixes
+      licensePrefixes,
     };
-  }
+  },
 };
 </script>

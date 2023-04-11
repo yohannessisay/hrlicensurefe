@@ -1243,7 +1243,7 @@ export default {
     const doSearch = (offset, limit, order, sort) => {
       setTimeout(() => {
         userTable.value.isReSearch = offset == undefined ? true : false;
-        offset = offset / 10 - 1;
+        offset = offset && offset > 0 ? offset / 10 - 1 : 1;
         if (sort == "asc") {
           getResults([
             { key: "page", value: offset },

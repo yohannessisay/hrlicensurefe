@@ -787,7 +787,7 @@ export default {
 
       setTimeout(() => {
         toYouTable.value.isReSearch = offset == undefined ? true : false;
-        offset = offset / 10 - 1;
+        offset = offset && offset > 0 ? offset / 10 - 1 : 1;
         if (sort == "asc") {
           approvedApplicationsByYou([
             { key: "page", value: offset },
@@ -814,7 +814,7 @@ export default {
 
       setTimeout(() => {
         toOthersTable.value.isReSearch = offset == undefined ? true : false;
-        offset = offset / 10 - 1;
+        offset = offset && offset > 0 ? offset / 10 - 1 : 1;
         if (sort == "asc") {
           approvedApplicationsByOthers([
             { key: "page", value: offset },

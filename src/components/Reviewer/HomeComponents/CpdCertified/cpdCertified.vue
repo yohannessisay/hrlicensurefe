@@ -409,7 +409,7 @@ export default {
       tableData = [];
       setTimeout(() => {
         cpdTable.value.isReSearch = offset == undefined ? true : false;
-        offset = offset / 10 - 1;
+        offset = offset && offset > 0 ? offset / 10 - 1 : 1;
         if (sort == "asc") {
           getCpdUsers([
             { key: "page", value: offset },
