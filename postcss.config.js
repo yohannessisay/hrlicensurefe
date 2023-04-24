@@ -26,8 +26,9 @@ module.exports = {
           /modal*/,
           /accordion*/,
           /card*/,
+          /Vue-Toastification*/
         ],
-        whitelistPatternsChildren: [/modal*/, /accordion*/, /card*/],
+        whitelistPatternsChildren: [/modal*/, /accordion*/, /card*/, /Vue-Toastification*/],
       }),
     require("autoprefixer")(),
   ],
