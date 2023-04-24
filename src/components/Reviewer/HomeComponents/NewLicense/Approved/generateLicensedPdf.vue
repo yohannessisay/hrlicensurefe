@@ -54,7 +54,7 @@
             rounded-t-md
           "
         ></div>
-<!-- if applicant is ethiopian -->
+        <!-- if applicant is ethiopian -->
         <div
           v-if="
             finalData &&
@@ -1242,7 +1242,9 @@
                     class="whitespace-nowrap border-r px-6 py-4 text-yellow-300"
                   >
                     {{
-                      educations&&educations.isDropped!=true && educations.professionType
+                      educations &&
+                      educations.isDropped != true &&
+                      educations.professionType
                         ? educations.professionType.name
                         : ""
                     }}
@@ -1359,7 +1361,9 @@
                     class="whitespace-nowrap border-r px-6 py-4 text-yellow-300"
                   >
                     {{
-                      educations&&educations.isDropped!=true && educations.professionType
+                      educations &&
+                      educations.isDropped != true &&
+                      educations.professionType
                         ? educations.professionType.name
                         : ""
                     }}
@@ -1482,7 +1486,9 @@
                     class="whitespace-nowrap border-r px-6 py-4 text-yellow-300"
                   >
                     {{
-                      educations&&educations.isDropped!=true && educations.professionType
+                      educations &&
+                      educations.isDropped != true &&
+                      educations.professionType
                         ? educations.professionType.name
                         : ""
                     }}
@@ -1766,7 +1772,7 @@ import moment from "moment";
 import Loading from "vue3-loading-overlay";
 import html2canvas from "html2canvas";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
-
+import html2pdf from "html2pdf.js";
 export default {
   computed: {
     moment: () => moment,
@@ -1843,7 +1849,8 @@ export default {
             showGenerateModal.value = false;
 
             let smsMessage = req.data
-              ? "Dear applicant your applied new license of number " +
+              ? 
+              "Dear applicant your applied new license of number " +
                 req.data.newLicenseCode +
                 " is printed and ready. You can pick up your license on date " +
                 retrivalDate.value
@@ -1870,9 +1877,9 @@ export default {
                   pauseOnHover: true,
                   icon: true,
                 });
-                // setTimeout(() => {
-                //   window.location.reload();
-                // }, 3000);
+                setTimeout(() => {
+                  window.location.reload();
+                }, 1000);
               })
               .catch(() => {
                 toast.error("Sms is not sent", {
@@ -1961,25 +1968,31 @@ export default {
           default:
             break;
         }
-      } 
-      await html2canvas(data, { scale: 2 }).then((canvas) => {
-        const contentDataURL = canvas.toDataURL("image/png", 1.0);
+      }
 
-        let pdf = new jsPDF("l", "mm", "a4");
+      var element = data;
+      var opt = {
+        margin: 1,
+        filename: "myfile.pdf",
+        image: { type: "jpeg", quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
+      };
 
-        var width = pdf.internal.pageSize.getWidth();
-        var height = pdf.internal.pageSize.getHeight();
-
-        pdf.addImage(contentDataURL, "PNG", 0, 0, width, height);
-
-        window.open(
-          pdf.output("bloburl", { filename: "new-file.pdf" }),
-          "_blank"
+      html2pdf()
+        .set(opt)
+        .from(element)
+        .save(
+          finalData.value &&
+            finalData.value.profile &&
+            finalData.value.profile.name
+            ? finalData.value.profile.name +
+                " " +
+                new Date().toISOString().slice(0, 10)
+            : ""
         );
 
-        
-        updateLicenseGenerated();
-      });
+      updateLicenseGenerated();
     };
     const generate = () => {
       if (

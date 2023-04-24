@@ -105,7 +105,7 @@
                                 <h3 class="ml-64 mb-8" contenteditable="true">
                                   LETTER OF GOOD STANDING
                                 </h3>
-                                <h5 class="ml-10" contenteditable="true">
+                                <h5  contenteditable="true">
                                   This letter of good standing and confirmation
                                   of registration is written upon request of
                                   <span
@@ -223,7 +223,7 @@
                                   LETTER OF GOOD STANDING
                                 </h3>
 
-                                <h5 class="ml-10" contenteditable="true">
+                                <h5 contenteditable="true">
                                   This letter of good standing and confirmation
                                   of registration is written upon request of
                                   <span
@@ -492,6 +492,7 @@ import { jsPDF } from "jspdf";
 import { useStore } from "vuex";
 import html2canvas from "html2canvas";
 import { useToast } from "vue-toastification";
+import html2pdf from "html2pdf.js";
 export default {
   props: ["modalDataGenerate"],
   components: { Loading },
@@ -553,51 +554,66 @@ export default {
 
     const printPdf = () => {
       isLoading.value = true;
-      var data = document.getElementById("printedDiv");
-      html2canvas(data).then((canvas) => {
-        const contentDataURL = canvas.toDataURL("image/png");
-        let pdf = new jsPDF("p", "mm", "a4");
-        var width = pdf.internal.pageSize.getWidth();
-        var height = (canvas.height * width) / canvas.width;
-        pdf.addImage(contentDataURL, "PNG", 0, 0, width, height);
-        window.open(pdf.output("bloburl"));
-        license.value.isLicenseGenerated &&
-        license.value.isLicenseGenerated == true
-          ? (license.value.isReprint = true)
-          : "";
-        license.value.isLicenseGenerated = true;
 
-        let req = {
-          data: { ...license.value, isLicenseGenerated: true },
-        };
-        store
-          .dispatch("reviewer/editGoodStanding", req)
-          .then((res) => {
-            if (res.statusText == "Created") {
-              toast.success("Done", {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true,
-              });
-              isLoading.value = false;
-            } else {
-              toast.error(res, {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true,
-              });
-              isLoading.value = false;
-            }
-          })
-          .catch((err) => {
-            console.log(err);
+      var element = document.getElementById("printedDiv");
+      var opt = {
+        margin: 1,
+        filename: "myfile.pdf",
+        image: { type: "jpeg", quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
+      };
+
+      html2pdf()
+        .set(opt)
+        .from(element)
+        .save(
+          license.value && license.value.profile && license.value.profile.name
+            ? license.value.profile.name +
+                " " +
+                new Date().toISOString().slice(0, 10)
+            : ""
+        );
+
+      license.value.isLicenseGenerated &&
+      license.value.isLicenseGenerated == true
+        ? (license.value.isReprint = true)
+        : "";
+      license.value.isLicenseGenerated = true;
+
+      let req = {
+        data: { ...license.value, isLicenseGenerated: true },
+      };
+      store
+        .dispatch("reviewer/editGoodStanding", req)
+        .then((res) => {
+          if (res.statusText == "Created") {
+            toast.success("Done", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
             isLoading.value = false;
-          });
-      });
+            setTimeout(() => {
+              window.location.reload();
+            }, 1000);
+          } else {
+            toast.error(res, {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+            isLoading.value = false;
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          isLoading.value = false;
+        });
     };
 
     if (
