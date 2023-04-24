@@ -2132,6 +2132,7 @@ export default {
                 pauseOnHover: true,
                 icon: true,
               });
+              router.push({ path: "/admin/renewal" });
             } else {
               toast.error("Failed to transfer application", {
                 timeout: 5000,
@@ -2383,7 +2384,7 @@ export default {
                   pauseOnHover: true,
                   icon: true,
                 });
-                router.push({ name: "AdminRenewalInReview" });
+                router.push({ path: "/admin/renewal" });
               });
             } else {
               toast.error("Please try again", {
@@ -2664,7 +2665,7 @@ export default {
                   pauseOnHover: true,
                   icon: true,
                 });
-                router.push({ name: "AdminRenewalInReview" });
+                router.push({ path: "/admin/renewal" });
               });
             } else {
               toast.error("Please try again", {

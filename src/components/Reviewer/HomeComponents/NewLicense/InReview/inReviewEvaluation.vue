@@ -2152,6 +2152,7 @@ export default {
                 pauseOnHover: true,
                 icon: true,
               });
+              router.push({ path: "/admin/newLicense" });
             } else {
               toast.error("Failed to transfer application", {
                 timeout: 5000,
@@ -2402,7 +2403,7 @@ export default {
                   pauseOnHover: true,
                   icon: true,
                 });
-                router.push({ name: "AdminNewLicenseInReview" });
+                router.push({ path: "/admin/newLicense" });
               });
             } else {
               toast.error("Please try again", {
@@ -2686,6 +2687,7 @@ export default {
                   icon: true,
                 });
                 superviseLoading.value = false;
+                router.push({ path: "/admin/newLicense" });
               });
             } else {
               toast.error("Please try again", {

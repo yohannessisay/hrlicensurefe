@@ -152,46 +152,62 @@
                                 m-1
                                 shadow-md
                                 text-primary-500
-                              ">
-                            <p class="text-gray-500">
-                              <span
-                                class="
+                              "
+                            >
+                              <p class="text-gray-500">
+                                <span
+                                  class="
                                   font-semibold
                                   text-lg text-primary-700
                                   mb-1
                                 "
-                                >Full Name:</span
-                              >
-                           <span class="text-grey-800">    {{ modalData.name }} </span>
-                            </p>
-                            <p class="text-gray-500">
-                              <span class="font-semibold text-primary-700 mb-1"
-                                >Gender:</span
-                              >
-                               <span class="text-grey-800"> {{ modalData.gender }}</span>
-                            </p>
-                            <p class="text-gray-500">
-                              <span class="font-semibold text-primary-700 mb-1"
-                                >Nationality:</span
-                              >
-                             <span class="text-grey-800">  {{ modalData.nationality }} </span>
-                            </p>
-                            <p class="text-gray-500">
-                              <span class="font-semibold text-primary-700 mb-1"
-                                >Date Of Birth:</span
-                              >
-                            <span class="text-grey-800">   {{
-                                modalData.dateOfBirth
-                                  ? modalData.dateOfBirth.slice(0, 10)
-                                  : ""
-                              }} </span>
-                            </p>
-                            <p class="text-gray-500">
-                              <span class="font-semibold text-primary-700 mb-1"
-                                >Martial Status:</span
-                              >
-                              <span class="text-grey-800">  {{ modalData.maritalStatus }}</span>
-                            </p>
+                                  >Full Name:</span
+                                >
+                                <span class="text-grey-800">
+                                  {{ modalData.name }}
+                                  
+                                </span>
+                              </p>
+                              <p class="text-gray-500">
+                                <span
+                                  class="font-semibold text-primary-700 mb-1"
+                                  >Gender:</span
+                                >
+                                <span class="text-grey-800">
+                                  {{ modalData.gender }}</span
+                                >
+                              </p>
+                              <p class="text-gray-500">
+                                <span
+                                  class="font-semibold text-primary-700 mb-1"
+                                  >Nationality:</span
+                                >
+                                <span class="text-grey-800">
+                                  {{ modalData.nationality }}
+                                </span>
+                              </p>
+                              <p class="text-gray-500">
+                                <span
+                                  class="font-semibold text-primary-700 mb-1"
+                                  >Date Of Birth:</span
+                                >
+                                <span class="text-grey-800">
+                                  {{
+                                    modalData.dateOfBirth
+                                      ? modalData.dateOfBirth.slice(0, 10)
+                                      : ""
+                                  }}
+                                </span>
+                              </p>
+                              <p class="text-gray-500">
+                                <span
+                                  class="font-semibold text-primary-700 mb-1"
+                                  >Martial Status:</span
+                                >
+                                <span class="text-grey-800">
+                                  {{ modalData.maritalStatus }}</span
+                                >
+                              </p>
                             </div>
                           </div>
                         </div>
@@ -227,7 +243,9 @@
                             </div>
                           </div>
                           <div class="grow ml-6">
-                            <h2 class="font-bold mb-1 text-2xl ">Contact Info</h2>
+                            <h2 class="font-bold mb-1 text-2xl ">
+                              Contact Info
+                            </h2>
                             <div
                               class="
                                 border-2
@@ -236,20 +254,25 @@
                                 m-1
                                 shadow-md
                                 text-primary-500
-                              ">
-                            <p class="text-gray-500">
-                              <span class="font-medium text-primary-700 mb-1"
-                                >Mobile Number:</span
-                              >
-                             <span class="text-grey-800">  {{ modalData.mobileNumber }} </span>
-                            </p>
-                            <p class="text-gray-500">
-                              <span class="font-medium text-primary-700 mb-1"
-                                >Email:</span
-                              >
-                              <span class="text-grey-800">  {{ modalData.email }}</span>
-                            </p>
-                          </div>
+                              "
+                            >
+                              <p class="text-gray-500">
+                                <span class="font-medium text-primary-700 mb-1"
+                                  >Mobile Number:</span
+                                >
+                                <span class="text-grey-800">
+                                  {{ modalData.mobileNumber }}
+                                </span>
+                              </p>
+                              <p class="text-gray-500">
+                                <span class="font-medium text-primary-700 mb-1"
+                                  >Email:</span
+                                >
+                                <span class="text-grey-800">
+                                  {{ modalData.email }}</span
+                                >
+                              </p>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -284,7 +307,9 @@
                             </div>
                           </div>
                           <div class="grow ml-6 mb-4">
-                            <h2 class="font-bold mb-1 text-2xl ">Education Detail</h2>
+                            <h2 class="font-bold mb-1 text-2xl ">
+                              Education Detail
+                            </h2>
 
                             <div
                               class="
@@ -305,48 +330,55 @@
                                   class="font-semibold text-primary-700 mb-1"
                                   >Department:</span
                                 >
-                             
-                                <span class="text-grey-800">   {{
-                                  education.department
-                                    ? education.department.name
-                                    : ""
-                                }}</span>
+
+                                <span class="text-grey-800">
+                                  {{
+                                    education.department
+                                      ? education.department.name
+                                      : ""
+                                  }}</span
+                                >
                               </p>
                               <p class="text-gray-500">
                                 <span
                                   class="font-semibold text-primary-700 mb-1"
                                   >Education Level:</span
                                 >
-                              
-                                <span class="text-grey-800">  {{
-                                  education.educationLevel
-                                    ? education.educationLevel.name
-                                    : ""
-                                }}</span>
+
+                                <span class="text-grey-800">
+                                  {{
+                                    education.educationLevel
+                                      ? education.educationLevel.name
+                                      : ""
+                                  }}</span
+                                >
                               </p>
                               <p class="text-gray-500">
                                 <span
                                   class="font-semibold text-primary-700 mb-1"
                                   >Profession:</span
                                 >
-                              
-                                <span class="text-grey-800">  {{
-                                  education.professionType
-                                    ? education.professionType.name
-                                    : ""
-                                }}</span>
+
+                                <span class="text-grey-800">
+                                  {{
+                                    education.professionType
+                                      ? education.professionType.name
+                                      : ""
+                                  }}</span
+                                >
                               </p>
                               <p class="text-gray-500">
                                 <span
                                   class="font-semibold text-primary-700 mb-1"
                                   >Institution:</span
                                 >
-                                <span class="text-grey-800"> {{
-                                  education.institution
-                                    ? education.institution.name
-                                    : ""
-                                }}</span>
-                               
+                                <span class="text-grey-800">
+                                  {{
+                                    education.institution
+                                      ? education.institution.name
+                                      : ""
+                                  }}</span
+                                >
                               </p>
                             </div>
                           </div>
@@ -507,7 +539,7 @@ export default {
     let show = ref(true);
     let adminId = +localStorage.getItem("adminId");
 
-    const isLoading = ref(true);
+    let isLoading = ref(false);
     let reviewerAdminId = ref(0);
 
     const showModal = () => {
@@ -518,6 +550,7 @@ export default {
     let result = {};
 
     const check = () => {
+    
       store
         .dispatch(
           "reviewer/getNewLicenseApplication",

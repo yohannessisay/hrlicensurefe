@@ -1242,7 +1242,7 @@
                     class="whitespace-nowrap border-r px-6 py-4 text-yellow-300"
                   >
                     {{
-                      educations && educations.professionType
+                      educations&&educations.isDropped!=true && educations.professionType
                         ? educations.professionType.name
                         : ""
                     }}
@@ -1359,7 +1359,7 @@
                     class="whitespace-nowrap border-r px-6 py-4 text-yellow-300"
                   >
                     {{
-                      educations && educations.professionType
+                      educations&&educations.isDropped!=true && educations.professionType
                         ? educations.professionType.name
                         : ""
                     }}
@@ -1482,7 +1482,7 @@
                     class="whitespace-nowrap border-r px-6 py-4 text-yellow-300"
                   >
                     {{
-                      educations && educations.professionType
+                      educations&&educations.isDropped!=true && educations.professionType
                         ? educations.professionType.name
                         : ""
                     }}
