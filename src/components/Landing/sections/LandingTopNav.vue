@@ -73,6 +73,7 @@
         <i class="fa fa-sign-in"></i> Log In
       </button>
     </div>
+    
   </section>
   <div
     class="
@@ -296,7 +297,7 @@
                 :active="show"
                 spinner="ring"
                 color="white"
-                background-color="#ffffff00;"
+                background-color="#ffffff00"
                 style="margin-left: 110px; margin-top: -3px"
               />
             </button>
@@ -620,7 +621,7 @@
                   :active="show"
                   spinner="ring"
                   color="white"
-                  background-color="#ffffff00;"
+                  background-color="#ffffff00"
                   style="margin-left: 110px; margin-top: -3px"
                 />
               </button>

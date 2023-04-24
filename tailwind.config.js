@@ -6,7 +6,7 @@ module.exports = {
       mono: ["Dosis-Bold"],
       display: ["Dosis-Bold"],
       body: ["Dosis-Bold"],
-      DosisBold: ["Dosis-Bold"], 
+      DosisBold: ["Dosis-Bold"],
     },
     screens: {
       sm: "400px",
@@ -32,8 +32,8 @@ module.exports = {
     },
     colors: {
       white: "#ffffff",
-      primaryDark:"#1c1b20",
-      secondaryDark:"#353438",
+      primaryDark: "#1c1b20",
+      secondaryDark: "#353438",
       primary: {
         100: "#F9FAFB",
         200: "#E5E7EB",
@@ -202,5 +202,5 @@ module.exports = {
     "./src/**/*.{html,js}",
     "./node_modules/tw-elements/dist/js/**/*.js",
   ],
-  plugins: [require("@tailwindcss/forms")],
+  plugins: [require("@tailwindcss/forms"), require("tw-elements/dist/plugin")],
 };
