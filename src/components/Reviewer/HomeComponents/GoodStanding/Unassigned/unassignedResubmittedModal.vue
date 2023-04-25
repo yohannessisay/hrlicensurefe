@@ -52,7 +52,7 @@
             :opacity="0.7"
           ></loading>
           <div
-      class="modal-header flex flex-shrink-0 justify-end p-2 rounded-t-md"
+            class="modal-header flex flex-shrink-0 justify-end p-2 rounded-t-md"
           >
             <button
               type="button"
@@ -178,6 +178,7 @@
                             </div>
                           </div>
                         </div>
+
                         <div
                           class="
                             grow-0
@@ -207,7 +208,11 @@
                                 <i class="fa fa-link fa-4x"></i>
                               </div>
                             </div>
-                            <div class="grow ml-6">
+
+                            <div
+                              class="grow ml-6"
+                              v-if="adminRole && adminRole != 'REV'"
+                            >
                               <h2 class="font-bold mb-1">Assign To</h2>
 
                               <div class="flex items-center">
@@ -224,31 +229,6 @@
                                 >
                                   Users
                                 </label>
-                                <div>
-                                  <button
-                                    class="
-                                        inline-block
-                                            px-6
-                                            py-2.5
-                                            bg-primary-700
-                                            text-white
-                                            font-medium
-                                            text-xs
-                                            leading-tight
-                                            uppercase
-                                            rounded
-                                            shadow-lg
-                                            hover:bg-white 
-                                            hover:text-primary-600
-                                            transition
-                                            duration-150
-                                            ease-in-out
-                                    "
-                                    @click="assignReviewer()"
-                                  >
-                                    Assign
-                                  </button>
-                                </div>
                               </div>
                               <label class="block text-left">
                                 <div>
@@ -274,6 +254,7 @@
                                         placeholder="Select reviewer by typing a name"
                                       />
                                     </div>
+
                                     <div
                                       v-show="
                                         resultQuery().length && showOptions
@@ -311,9 +292,86 @@
                                         </li>
                                       </ul>
                                     </div>
+                                    <div
+                                      v-for="button in modalData.buttons"
+                                      :key="button.id"
+                                    >
+                                      <button
+                                        v-if="button.code == 'AT'"
+                                        class="
+                                          inline-block
+                                          px-6
+                                          py-2.5
+                                          mt-4
+                                          bg-primary-700
+                                          text-white
+                                          font-medium
+                                          text-xs
+                                          leading-tight
+                                          uppercase
+                                          rounded
+                                          shadow-lg
+                                          hover:bg-white hover:text-primary-600
+                                          transition
+                                          duration-150
+                                          ease-in-out
+                                        "
+                                        @click="
+                                          assignReviewer({
+                                            action: button.action,
+                                            type: 'toOthers',
+                                          })
+                                        "
+                                      >
+                                        {{
+                                          button && button.name
+                                            ? button.name
+                                            : ""
+                                        }}
+                                      </button>
+                                    </div>
                                   </div>
                                 </div>
                               </label>
+                            </div>
+
+                            <div v-if="adminRole && adminRole == 'REV'">
+                              <div
+                                v-for="button in modalData.buttons"
+                                :key="button.id"
+                              >
+                                <button
+                                  v-if="button.code == 'AT'"
+                                  class="
+                                          inline-block
+                                          px-6
+                                          py-2.5
+                                          mt-4
+                                          bg-primary-700
+                                          text-white
+                                          font-medium
+                                          text-xs
+                                          ml-4
+                                          leading-tight
+                                          uppercase
+                                          rounded
+                                          shadow-lg
+                                          hover:bg-white hover:text-primary-600
+                                          transition
+                                          duration-150
+                                          ease-in-out
+                                        "
+                                  @click="
+                                    assignReviewer({
+                                      action: button.action,
+                                      type: 'toSelf',
+                                    })
+                                  "
+                                >
+                                  {{ button && button.name ? button.name : "" }}
+                                  Self
+                                </button>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -348,25 +406,62 @@
                               </div>
                             </div>
                             <div class="grow ml-6">
-                              <h2 class="font-bold mb-1">Institution Info</h2>
-                              <p class="text-gray-500">
-                                <span class="font-medium text-primary-700 mb-1"
-                                  >Institution Name:</span
-                                >
-                                {{ modalData.instName }}
-                              </p>
-                              <p class="text-gray-500">
-                                <span class="font-medium text-primary-700 mb-1"
-                                  >Department:</span
-                                >
-                                {{ modalData.department }}
-                              </p>
-                              <p class="text-gray-500">
-                                <span class="font-medium text-primary-700 mb-1"
-                                  >Institution Type:</span
-                                >
-                                {{ modalData.instType }}
-                              </p>
+                              <h2 class="font-bold mb-1">Education Info</h2>
+                              <div
+                                class="
+                                  border-2
+                                  p-2
+                                  rounded-lg
+                                  m-1
+                                  shadow-md
+                                  text-primary-500
+                                "
+                              >
+                                <p class="text-gray-500">
+                                  <span
+                                    class="font-medium text-primary-700 mb-1"
+                                    >Profession Name:</span
+                                  >
+                                  <span class="text-grey-800 ml-2">
+                                    {{
+                                      modalData.data &&
+                                      modalData.data.GSProfessionals
+                                        ? modalData.data.GSProfessionals
+                                            .professionalTypes.name
+                                        : ""
+                                    }}</span
+                                  >
+                                </p>
+                                <p class="text-gray-500">
+                                  <span
+                                    class="font-medium text-primary-700 mb-1"
+                                    >Department:</span
+                                  >
+                                  <span class="text-grey-800 ml-2">
+                                    {{
+                                      modalData.data &&
+                                      modalData.data.department
+                                        ? modalData.data.department.name
+                                        : ""
+                                    }}</span
+                                  >
+                                </p>
+                                <p class="text-gray-500">
+                                  <span
+                                    class="font-medium text-primary-700 mb-1"
+                                    >Education Level:</span
+                                  >
+                                  <span class="text-grey-800 ml-2">
+                                    {{
+                                      modalData.data &&
+                                      modalData.data.GSProfessionals
+                                        ? modalData.data.GSProfessionals
+                                            .educationLevel.name
+                                        : ""
+                                    }}</span
+                                  >
+                                </p>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -446,12 +541,8 @@
                 uppercase
                 rounded
                 shadow-lg
-                hover:bg-purple-700 hover:shadow-lg
-                focus:bg-purple-700
-                focus:shadow-lg
-                focus:outline-none
-                focus:ring-0
-                active:bg-purple-800 active:shadow-lg
+              bg-primary-700
+              hover:text-primary-600
                 transition
                 duration-150
                 ease-in-out
@@ -484,7 +575,8 @@ export default {
   },
   setup(props) {
     const store = useStore();
-const toast = useToast();
+    const toast = useToast();
+    let adminRole = localStorage.getItem("role");
     let show = ref(true);
     let showRes = ref(false);
     let showOptions = ref(false);
@@ -507,66 +599,81 @@ const toast = useToast();
       role.value = JSON.parse(localStorage.getItem("allAdminData")).role;
     };
 
-    const assignReviewer = () => {
-      if (role.value.code === "TL" || role.value.code === "ADM") {
+    const assignReviewer = (data) => {
+      if (data.type == "toSelf") {
         assign.value = {
-          licenseId: licenseData.value.id,
-          reviewerId: assign.value.reviewerId,
-          createdByAdminId: +localStorage.getItem("adminId"),
-        };
-      }
-
-      if (role.value.code == "REV") {
-        assign.value = {
-          licenseId: licenseData.value.id,
           reviewerId: +localStorage.getItem("adminId"),
           createdByAdminId: +localStorage.getItem("adminId"),
+          goodStandingId: licenseData.value.id,
+        };
+      } else {
+        assign.value = {
+          reviewerId: assign.value.reviewerId,
+          createdByAdminId: +localStorage.getItem("adminId"),
+          goodStandingId: licenseData.value.id,
         };
       }
-
+      let smsData = {
+        recipients: [
+          modalData.value && modalData.value.mobileNumber
+            ? "251" + modalData.value.mobileNumber
+            : "",
+        ],
+        message: licenseData.value
+          ? modalData.value.name
+            ? "Dear " +
+              modalData.value.name +
+              " your applied good standing letter for " +
+              licenseData.value.goodStandingCode +
+              " has been assigned a reviewer , after careful examination of your uploaded documents by our reviewers we will get back and notify you on each steps, Thank you for using eHPL. https://hrl.moh.gov.et/"
+            : ""
+          : "",
+      };
       isLoading.value = true;
 
       store
-        .dispatch("reviewer/assignReviewer", assign.value)
+        .dispatch("reviewer/assignGoodStandingReviewer", assign.value)
         .then((response) => {
           if (response.statusText == "Created") {
-                    toast.success("Selected reviewer is successfully assigned", {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
+            store.dispatch("sms/sendSms", smsData).then(() => {
+              toast.success("Selected Rviewer assigned Successfully", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
+              isLoading.value = false;
+              setTimeout(() => {
+                window.location.reload();
+              }, 3000);
             });
-            isLoading.value=false;
-                setTimeout(() => {
-              window.location.reload();
-            }, 3000);
           } else {
-                          toast.error("Error Occured", {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            });
-            isLoading.value=false;
-                setTimeout(() => {
+            toast.error(
+              "Sorry there seems to be a problem, please try again.",
+              {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              }
+            );
+            isLoading.value = false;
+            setTimeout(() => {
               window.location.reload();
             }, 3000);
           }
         })
         .catch(() => {
-                   toast.error("Error Occured", {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            });
-            isLoading.value=false;
-                setTimeout(() => {
-              window.location.reload();
-            }, 3000);
+          toast.error("Sorry there seems to be a problem, please try again.", {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          });
+          isLoading.value = false;
         });
     };
 
@@ -612,7 +719,7 @@ const toast = useToast();
         )
         .then((res) => {
           if (res.data.status == "Success") {
-             result = res.data.data;
+            result = res.data.data;
             modalData.value.name =
               (result.profile ? result.profile.name + " " : "") +
               (result.profile ? result.profile.fatherName + "  " : " ") +
@@ -658,6 +765,10 @@ const toast = useToast();
               result.licenseExpirationDate;
             modalData.value.data = result;
             licenseData.value = result;
+            modalData.value.buttons =
+              result && result.applicationStatus
+                ? result.applicationStatus.buttons
+                : [];
             isLoadingStart.value = false;
           }
         });
@@ -674,6 +785,7 @@ const toast = useToast();
 
     return {
       adminId,
+      adminRole,
       reviewerAdminId,
       role,
       assign,

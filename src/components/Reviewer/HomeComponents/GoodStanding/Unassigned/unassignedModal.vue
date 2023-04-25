@@ -366,7 +366,11 @@
                                           })
                                         "
                                       >
-                                        {{ button&&button.name ? button.name : "" }}
+                                        {{
+                                          button && button.name
+                                            ? button.name
+                                            : ""
+                                        }}
                                       </button>
                                     </div>
                                   </div>
@@ -407,7 +411,10 @@
                                     })
                                   "
                                 >
-                                  {{ button&&button.name ? button.name : "" }} Self
+                                  {{
+                                    button && button.name ? button.name : ""
+                                  }}
+                                  Self
                                 </button>
                               </div>
                             </div>
@@ -729,7 +736,6 @@ export default {
           });
           isLoading.value = false;
         });
-   
     };
 
     const showModal = () => {
@@ -823,12 +829,11 @@ export default {
             modalData.value.certifiedDate = result.certifiedDate;
             modalData.value.licenseExpirationDate =
               result.licenseExpirationDate;
-         
+
             modalData.value.data = result;
             licenseData.value = result;
             isLoadingStart.value = false;
-
-            console.log(modalData.value);
+ 
           }
         });
     };

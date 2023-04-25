@@ -182,7 +182,7 @@
                   duration-150
                   ease-in-out
                 "
-                @click="openAssignedDetail(license.id)"
+                @click="openApprovedDetail(license.id)"
                 data-bs-toggle="modal"
                 data-bs-target="#approvedModalInfo"
               >

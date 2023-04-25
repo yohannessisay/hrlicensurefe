@@ -863,15 +863,16 @@
                                     duration-500
                                     cursor-pointer
                                   "
-                                  @click="
-                                          viewImage([
-                                            {
-                                              src: 
-                                                docs[index]?googleApi +docs[index].filePath:'',
-                                              title: 'Image Caption 1',
-                                            },
-                                          ])
-                                        "
+                                    @click="
+                                      viewImage([
+                                        {
+                                          src: docs[index]
+                                            ? googleApi + docs[index].filePath
+                                            : '',
+                                          title: 'Image Caption 1',
+                                        },
+                                      ])
+                                    "
                                     style="height: 600px; width: 800px"
                                     v-bind:src="
                                       googleApi + '' + docs[index].filePath
@@ -1106,11 +1107,12 @@
                     >
                       <div class="">
                         <!--content-->
-                        <div class="w-full">
+                        <div class="w-full p-2">
                           <!--header-->
                           <div
                             class="
                             flex
+                            p-2
                             items-start
                             justify-between
                             border-b border-solid border-blueGray-200
@@ -1134,21 +1136,7 @@
                             "
                               v-on:click="toggleModal()"
                             >
-                              <span
-                                class="
-                                bg-transparent
-                                text-black
-                                opacity-5
-                                h-6
-                                w-6
-                                text-2xl
-                                block
-                                outline-none
-                                focus:outline-none
-                              "
-                              >
-                                ×
-                              </span>
+                              <i class="fa fa-close"></i>
                             </div>
                           </div>
                           <!--body-->
@@ -1247,6 +1235,9 @@
                             </div>
                           </div>
                           <!--footer-->
+                          <label for=""
+                            >Reason for declining the letter request *</label
+                          >
                           <textarea
                             v-model="goodStanding.remark"
                             class="
@@ -1258,6 +1249,7 @@
                             mb-small
                             w-full
                           "
+                            required
                           ></textarea>
                           <div
                             class="
@@ -1499,7 +1491,7 @@ export default {
     let showActionLoading = ref(false);
     let showLoadingButtons = ref(false);
     let tempProf = ref([]);
-    let isLoadingFinalAction=ref(false);
+    let isLoadingFinalAction = ref(false);
     let professionalTypes = ref([]);
     let evaluateRoute = ref("/admin/evaluate/goodStanding" + route.params.id);
 
@@ -1619,10 +1611,13 @@ export default {
         showButtons.value = false;
       }
       index.value = index.value - 1;
+      completedSteps.value -= 1;
       amount.value = ((index.value + 1) / docs.value.length) * 100;
       width.value = "width:" + amount.value + "%";
       findDocumentType(documentTypes.value, docs.value[index.value]);
       nextClickable.value = true;
+
+      
     };
     const nextRemark = () => {
       if (ind.value != rejectedObj.value.length - 1) {
@@ -1662,7 +1657,7 @@ export default {
           expertLevelId: federalData[0].id,
           createdByAdminId: adminId,
         };
-        isLoadingFinalAction.value=true;
+        isLoadingFinalAction.value = true;
         store
           .dispatch("reviewer/transferToFederal", transferData)
           .then((res) => {
@@ -1674,7 +1669,7 @@ export default {
                 pauseOnHover: true,
                 icon: true,
               });
-              isLoadingFinalAction.value=false;
+              isLoadingFinalAction.value = false;
             } else {
               toast.success("Error occured", {
                 timeout: 5000,
@@ -1882,7 +1877,7 @@ export default {
         ],
         message: smsMessage ? smsMessage : "",
       };
-      isLoadingFinalAction.value=true;
+      isLoadingFinalAction.value = true;
       store
         .dispatch("reviewer/editGoodStanding", req)
         .then((res) => {
@@ -1897,7 +1892,7 @@ export default {
                 icon: true,
               });
             });
-            isLoadingFinalAction.value=false;
+            isLoadingFinalAction.value = false;
             router.push({ name: "GoodStandingAssigned" });
           }
         })
@@ -1913,10 +1908,37 @@ export default {
     };
 
     const submitRemark = () => {
-      showRemark.value = !showRemark.value;
-      sendDeclinedData.value = true;
-      fromModalSendDeclinedData.value = true;
-      action("DeclineEventFinal");
+      if (
+        goodStanding.value &&
+        goodStanding.value.remark &&
+        goodStanding.value.remark.length > 10
+      ) {
+        showRemark.value = !showRemark.value;
+        sendDeclinedData.value = true;
+        fromModalSendDeclinedData.value = true;
+        action("DeclineEventFinal");
+      } else if (
+        goodStanding.value &&
+        goodStanding.value.remark &&
+        goodStanding.value.remark.length < 10 &&
+        goodStanding.value.remark.length > 0
+      ) {
+        toast.error("Reason must be greater than 10 words", {
+          timeout: 5000,
+          position: "bottom-center",
+          pauseOnFocusLoss: true,
+          pauseOnHover: true,
+          icon: true,
+        });
+      } else {
+        toast.error("Please provide a reason for declining the letter", {
+          timeout: 5000,
+          position: "bottom-center",
+          pauseOnFocusLoss: true,
+          pauseOnHover: true,
+          icon: true,
+        });
+      }
     };
 
     const toggleModal = () => {
@@ -2138,7 +2160,6 @@ export default {
       return false;
     };
 
-   
     const changeAction = (action) => {
       superviseAction.value = action;
     };
@@ -2200,7 +2221,7 @@ export default {
       startDate,
       allowProfessionChange,
       viewImage,
-      supervisor, 
+      supervisor,
       resultQuery,
       changeAction,
       changeNewProfession,
