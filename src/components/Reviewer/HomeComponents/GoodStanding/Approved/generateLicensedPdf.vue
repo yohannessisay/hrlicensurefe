@@ -489,8 +489,7 @@ import moment from "moment";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 import { jsPDF } from "jspdf";
-import { useStore } from "vuex";
-import html2canvas from "html2canvas";
+import { useStore } from "vuex"; 
 import { useToast } from "vue-toastification";
 import html2pdf from "html2pdf.js";
 export default {

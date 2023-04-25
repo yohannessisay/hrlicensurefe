@@ -1769,8 +1769,7 @@ import { toEthiopian } from "../../../Configurations/dateConvertor";
 import STATIC_CERTIFICATE_URL from "../../../../../sharedComponents/constants/message.js";
 import { useToast } from "vue-toastification";
 import moment from "moment";
-import Loading from "vue3-loading-overlay";
-import html2canvas from "html2canvas";
+import Loading from "vue3-loading-overlay"; 
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 import html2pdf from "html2pdf.js";
 export default {

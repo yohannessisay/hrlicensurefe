@@ -59,64 +59,69 @@
       :opacity="1"
     ></loading>
     <!-- {{ previousLicense }} -->
-    <h1
-      v-if="previousLicense && previousLicense.length != 0"
-      :class="
-        isDarkMode && isDarkMode == true
-          ? 'text-3xl text-white'
-          : 'text-3xl text-main-400'
-      "
-    >
-      You can choose an existing license to renew or apply for a new renewal
-      form
-    </h1>
-
-    <p class="mb-4 space-y-1 md:space-x-1 md:space-y-0">
-      <button
-        class="inline-block px-6 text-white bg-main-400 hover:text-main-400 hover:border text-sm font-bold uppercase rounded shadow-lg mb-4 transition duration-150 ease-in-out"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#collapseExample"
-        title="Choose and renew an existing license of which you applied through this system"
-        data-toggle="tooltip"
-        data-placement="right"
-        data-ripple-init
-        data-ripple-color="light"
+    <div class="flex justify-center m-4 ">
+      <h1
+        v-if="previousLicense && previousLicense.length != 0"
+        :class="
+          isDarkMode && isDarkMode == true
+            ? 'text-3xl text-white'
+            : 'text-3xl text-main-400'
+        "
       >
-        Show Existing License/s
-      </button>
-      <button
-        class="inline-block px-6 text-white bg-main-400 hover:text-main-400 hover:border text-sm font-bold uppercase rounded shadow-lg mb-4 transition duration-150 ease-in-out"
-        type="button"
-        @click="applyForNew()"
-        title="Your License exists before this system and you want to renew it"
-        data-toggle="tooltip"
-        data-placement="right"
-        data-ripple-init
-        data-ripple-color="light"
+        You can choose an existing license to renew or apply for a new renewal
+        form
+      </h1>
+    </div>
+    <div class="flex justify-center m-4 ">
+      <div
+        class="bg-white p-4 rounded-lg m-4 shadow-md  hover:-translate-y-2  transition-all
+          duration-200   transform"
       >
-        Apply For A New Form
-      </button>
-    </p>
+        <button
+          class="inline-block px-6 text-white bg-main-400 hover:text-main-400 hover:border text-sm font-bold uppercase rounded shadow-lg mb-4 transition duration-150 ease-in-out"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapseExample"
+          title="Choose and renew an existing license of which you applied through this system"
+          data-toggle="tooltip"
+          data-placement="right"
+          data-ripple-init
+          data-ripple-color="light"
+        >
+          Show Existing License/s
+        </button>
+      </div>
+      <div
+        class="bg-white p-4 rounded-lg m-4 shadow-md  hover:-translate-y-2  transition-all
+          duration-200   transform"
+      >
+        <button
+          class="inline-block px-6 text-white bg-main-400 hover:text-main-400 hover:border text-sm font-bold uppercase rounded shadow-lg mb-4 transition duration-150 ease-in-out"
+          type="button"
+          @click="applyForNew()"
+          title="Your License exists before this system and you want to renew it"
+          data-toggle="tooltip"
+          data-placement="right"
+          data-ripple-init
+          data-ripple-color="light"
+        >
+          Apply For A New Form
+        </button>
+      </div>
+    </div>
     <div class="collapse" id="collapseExample" data-te-collapse-item>
       <div
         :class="
           isDarkMode && isDarkMode == true
-            ? 'block rounded-lg darkModeSecondLayer p-6 dark:bg-neutral-700 dark:text-neutral-50'
-            : 'block rounded-lg bg-white p-6 dark:bg-neutral-700 dark:text-neutral-50'
+            ? 'block rounded-lg darkModeSecondLayer p-6 dark:bg-neutral-700 dark:text-neutral-50 shadow-md'
+            : 'block rounded-lg bg-primary-200 p-6 dark:bg-neutral-700 dark:text-neutral-50 shadow-md'
         "
       >
         <div
           v-if="previousLicense && previousLicense.length != 0"
           class="w-full p-4"
         >
-          <div
-            :class="
-              isDarkMode && isDarkMode == true
-                ? '    block p-6 rounded-lg shadow-lg darkModeSecondLayer w-full mr-8 mb-8 sm:p-4'
-                : '   block p-6 rounded-lg shadow-lg bg-primary-200 w-full mr-8 mb-8 sm:p-4'
-            "
-          >
+     
             <div class="flex flex-row sm:-mx-1 lg:-mx-2">
               <div
                 v-for="license in previousLicense"
@@ -257,7 +262,7 @@
                 <!-- END Article -->
               </div>
             </div>
-          </div>
+         
         </div>
       </div>
     </div>
@@ -292,7 +297,6 @@ export default {
       }
     };
     const expirationDatesHelper = (date_1) => {
-     
       let date_2 = new Date().toISOString().slice(0, 10);
       let difference = new Date(date_1).getTime() - new Date(date_2).getTime();
       let TotalDays = Math.ceil(difference / (1000 * 3600 * 24));

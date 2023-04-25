@@ -191,6 +191,10 @@
       border-radius: 5px
   }
 
+  #menu-icon > i{
+    font-size: 36px;
+  }
+
   #mainSideBar>ul>li:nth-child(1)>a>a>span.icon>i,
   #mainSideBar>ul>li:nth-child(2)>a>a>span.icon>i,
   #mainSideBar>ul>li:nth-child(3)>a>a>span.icon>i,

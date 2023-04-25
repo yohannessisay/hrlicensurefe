@@ -72,9 +72,129 @@
       >
         <i class="fa fa-sign-in"></i> Log In
       </button>
+
+      <span
+        class="bg-grey-200 cursor-pointer  ml-4 mr-2 p-2 rounded-lg"
+        data-bs-toggle="modal"
+        data-bs-target="#showHelp"
+      >
+        <i class="fa-solid fa-question text-xl text-main-400"></i>
+      </span>
     </div>
-    
   </section>
+  <!-- Login Part -->
+  <div
+    class="
+      modal
+      fade
+      fixed
+      top-0
+      left-0
+      hidden
+      w-full
+      h-full
+      outline-none
+      overflow-x-hidden overflow-y-auto
+    "
+    id="showHelp"
+    data-bs-keyboard="false"
+    tabindex="-1"
+    aria-labelledby="showHelpLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-xl relative pointer-events-none">
+      <div
+        class="
+          modal-content
+          border-none
+          shadow-lg
+          relative
+          flex flex-col
+          w-8/12
+          md:w-9/12
+          mdlg:w-9/12
+          lg:w-10/12
+          sm:w-full
+          pointer-events-auto
+          bg-white bg-clip-padding
+          rounded-md
+          outline-none
+          text-current
+        "
+      >
+        <div
+          class="
+            modal-header
+            flex flex-shrink-0
+            justify-center
+            items-center
+            p-4
+            border-b border-grey-100
+            rounded-t-md
+          "
+        >
+          <button
+            type="button"
+            class="
+                  px-6
+              text-white
+              bg-main-400 
+              font-medium
+              text-xs
+              leading-tight
+              uppercase
+              rounded
+              hover:border-main-400
+              shadow-md
+              hover:text-main-400
+              
+              active:bg-purple-800 active:shadow-lg
+              transition
+              duration-150
+              ease-in-out
+            "
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          >
+            <i class="fa fa-close fa-2x"></i>
+          </button>
+        </div>
+        <div class="modal-body relative p-2">
+          <div class="flex justify-center">
+            <h2 class="text-main-400 text-xl">
+              This is a demo video showing you how to use the system if you are
+              new here. Thanks for watching.
+            </h2>
+          </div>
+          <div class="container bg-secondaryDark">
+            <vue-plyr :options="options">
+              <video controls crossorigin playsinline data-poster="poster.jpg">
+                <source
+                  size="720"
+                  src="/template/help_video.mp4"
+                  type="video/mp4"
+                />
+                <source
+                  size="1080"
+                  src="/template/help_video.mp4"
+                  type="video/mp4"
+                />
+                <track
+                  default
+                  kind="captions"
+                  label="English captions"
+                  src="/path/to/english.vtt"
+                  srclang="en"
+                />
+              </video>
+            </vue-plyr>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--End Of Login Part -->
+  <!-- Login Part -->
   <div
     class="
       modal
@@ -306,6 +426,7 @@
       </div>
     </div>
   </div>
+  <!--End Of Login Part -->
   <!-- Registration Part -->
   <div
     class="
@@ -638,6 +759,7 @@
       </div>
     </div>
   </div>
+  <!-- End Of Registration Part -->
 </template>
 <script>
 import RenderIllustration from "@/sharedComponents/RenderIllustration";
@@ -647,6 +769,7 @@ import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useToast } from "vue-toastification";
 import PasswordMeter from "vue-simple-password-meter";
+
 export default {
   components: { RenderIllustration, VueElementLoading, PasswordMeter },
   emits: ["setShowLogin", "setShowSignup"],
@@ -655,6 +778,7 @@ export default {
     const router = useRouter();
     const toast = useToast();
     let show = ref(false);
+    let options = { quality: { default: "1080p" } };
     let isVerified = ref(true);
     let enableVerification = ref(false);
     let showLoading = ref(false);
@@ -1032,6 +1156,7 @@ export default {
       sendSmsOtp,
       message,
       show,
+      options,
       otpInput,
       enableVerification,
       showLoading,
