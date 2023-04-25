@@ -744,7 +744,7 @@
                         focus:border-blue-600
                         focus:outline-none
                       "
-                      v-model="generalInfo.whoIssued"
+                      v-model="generalInfo.whoIssuedId"
                       required
                     >
                       <option
@@ -1167,8 +1167,8 @@ export default {
           licenseIssuedDate: generalInfo.value.licenseIssuedDate
             ? generalInfo.value.licenseIssuedDate
             : null,
-          whoIssuedId: generalInfo.value.whoIssued
-            ? generalInfo.value.whoIssued.id
+          whoIssuedId: generalInfo.value.whoIssuedId
+            ? generalInfo.value.whoIssuedId.id
             : "",
           licenseRegistrationNumber: generalInfo.value.licenseRegistrationNumber
             ? generalInfo.value.licenseRegistrationNumber

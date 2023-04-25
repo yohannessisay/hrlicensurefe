@@ -1793,7 +1793,7 @@ export default {
         alert(
           "This browser doesn't support Temporary storage please update your browser to the latest version"
         );
-        window.location.reload();
+
       } else {
         initDb();
         localData.value = window.localStorage.getItem("NLApplicationData")
@@ -1873,8 +1873,7 @@ export default {
                       });
                     }
                   });
-
-                  console.log(educationalDocs.value);
+ 
                 }
               });
           });

@@ -289,7 +289,7 @@ export default {
       isImage: boolean,
       isPdf: boolean,
       file: "",
-      name: ""
+      name: "",
     });
     let localData = ref();
     let files = ref("");
@@ -341,7 +341,7 @@ export default {
           previewDocuments.value[data.documentType.code] = reader.result;
 
           imageData = imageData.filter(
-            el => el.documenttype != data.documentType.name
+            (el) => el.documenttype != data.documentType.name
           );
           imageData.push({
             documenttype: data.documentType ? data.documentType.name : "",
@@ -349,7 +349,7 @@ export default {
             educationalLevel: data.educationalLevel
               ? data.educationalLevel.name
               : "",
-            image: reader.result
+            image: reader.result,
           });
         });
         if (documentUploaded.value[data.documentType.code]) {
@@ -430,7 +430,7 @@ export default {
         let db = request.result;
         db.createObjectStore("GSdocumentUploads", {
           keyPath: "id",
-          autoIncrement: true
+          autoIncrement: true,
         });
       };
     };
@@ -439,7 +439,7 @@ export default {
       store.dispatch("goodstanding/setTempDocs", formData).then(() => {
         let finalLocalData = {
           created: new Date(),
-          data: []
+          data: [],
         };
         let db;
         let request = indexedDB.open("GSdocumentUploads", 1);
@@ -448,9 +448,14 @@ export default {
           let transaction = db.transaction(["GSdocumentUploads"], "readwrite");
           let tempStat = false;
 
-          if (imageData && imageData.length > 0) {
-            imageData.forEach(newImage => {
-              existingDocs.forEach(existing => {
+          if (
+            imageData &&
+            imageData.length > 0 &&
+            existingDocs &&
+            existingDocs.length > 0
+          ) {
+            imageData.forEach((newImage) => {
+              existingDocs.forEach((existing) => {
                 if (existing.documentTypeCode == newImage.documentCode) {
                   tempStat = true;
                   return 0;
@@ -465,6 +470,8 @@ export default {
               }
             });
             finalLocalData.data.concat(imageData);
+          } else if (imageData && imageData.length > 0) {
+            finalLocalData.data = imageData;
           } else {
             finalLocalData.data = JSON.parse(JSON.stringify(existingDocs));
           }
@@ -473,7 +480,7 @@ export default {
 
           const objectStoreRequest = objectStore.clear();
 
-          objectStoreRequest.onsuccess = event => {
+          objectStoreRequest.onsuccess = () => {
             let addReq = transaction
               .objectStore("GSdocumentUploads")
               .put(finalLocalData);
@@ -499,7 +506,7 @@ export default {
 
     const saveDraft = () => {
       generalInfo.value.licenseFile = [];
-      generalInfo.value.whoIssued=localData.value.whoIssued;
+      generalInfo.value.whoIssued = localData.value.whoIssued;
       let license = {
         action: "DraftEvent",
         data: {
@@ -549,7 +556,7 @@ export default {
                 ? generalInfo.value.GSProfessionals.educationLevel.id
                 : generalInfo.value.GSProfessionals.educationLevelId
                 ? generalInfo.value.GSProfessionals.educationLevelId
-                : null
+                : null,
           },
           expertLevelId: generalInfo.value.expertLevelId
             ? generalInfo.value.expertLevelId
@@ -570,13 +577,13 @@ export default {
           feedback: generalInfo.value.feedback
             ? generalInfo.value.feedback
             : "",
-          id: route.params.id
-        }
+          id: route.params.id,
+        },
       };
 
       store
         .dispatch("goodstanding/editGoodstandingLicense", license)
-        .then(res => {
+        .then((res) => {
           let licenseId = route.params.id;
           let payload = { document: formData, id: licenseId };
 
@@ -589,14 +596,14 @@ export default {
                 : "goodstanding/uploadDocuments",
               payload
             )
-            .then(res => {
+            .then((res) => {
               if (res.data.status == "Success") {
                 toast.success("Applied successfuly", {
                   timeout: 5000,
                   position: "bottom-center",
                   pauseOnFocusLoss: true,
                   pauseOnHover: true,
-                  icon: true
+                  icon: true,
                 });
                 localStorage.removeItem("GSApplicationData");
                 location.reload();
@@ -606,7 +613,7 @@ export default {
                   position: "bottom-center",
                   pauseOnFocusLoss: true,
                   pauseOnHover: true,
-                  icon: true
+                  icon: true,
                 });
               }
             })
@@ -616,7 +623,7 @@ export default {
                 position: "bottom-center",
                 pauseOnFocusLoss: true,
                 pauseOnHover: true,
-                icon: true
+                icon: true,
               });
             });
         });
@@ -633,9 +640,9 @@ export default {
 
       store
         .dispatch("goodstanding/getGoodStandingLicenseById", route.params.id)
-        .then(res => {
+        .then((res) => {
           generalInfo.value = res.data.data;
-          generalInfo.value?.documents.forEach(element => {
+          generalInfo.value?.documents.forEach((element) => {
             documentsSaved.value[element.documentTypeCode] = {};
             documentsSaved.value[element.documentTypeCode].path =
               googleApi + element.filePath;
@@ -653,18 +660,18 @@ export default {
         : {};
 
       generalInfo.value = localData.value;
-      store.dispatch("goodstanding/getApplicationCategories").then(res => {
+      store.dispatch("goodstanding/getApplicationCategories").then((res) => {
         let categoryResults = res.data.data
-          ? res.data.data.filter(ele => ele.code == "GSL")
+          ? res.data.data.filter((ele) => ele.code == "GSL")
           : "";
 
         store
           .dispatch("goodstanding/getGSdocuments", categoryResults[0].id)
-          .then(res => {
+          .then((res) => {
             let results = res.data.data;
 
             documents.value = results.filter(
-              (set => f =>
+              ((set) => (f) =>
                 !set.has(f.documentTypeId) && set.add(f.documentTypeId))(
                 new Set()
               )
@@ -692,9 +699,9 @@ export default {
       documents,
       filePreviewData,
       next,
-      back
+      back,
     };
-  }
+  },
 };
 </script>
 

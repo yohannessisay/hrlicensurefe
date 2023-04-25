@@ -862,7 +862,7 @@ export default {
       residenceWoredaId: "",
       whomGoodStandingFor: "",
       licenseIssuedDate: "",
-      whoIssuedId: "",
+      whoIssuedId: {},
       licenseRegistrationNumber: "",
       professionType: { professionTypeId: "", educationLevelId: "" },
       applicantPositionId: "",
@@ -1059,7 +1059,7 @@ export default {
           licenseIssuedDate: generalInfo.value.licenseIssuedDate
             ? generalInfo.value.licenseIssuedDate
             : null,
-          whoIssuedId: generalInfo.value.whoIssuedId
+            whoIssuedId: generalInfo.value.whoIssuedId
             ? generalInfo.value.whoIssuedId.id
             : "",
           licenseRegistrationNumber: generalInfo.value.licenseRegistrationNumber

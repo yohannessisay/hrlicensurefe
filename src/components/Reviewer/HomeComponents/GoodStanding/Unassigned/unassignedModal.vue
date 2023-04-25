@@ -251,7 +251,11 @@
                                 <i class="fa fa-link fa-4x"></i>
                               </div>
                             </div>
-                            <div class="grow ml-6">
+
+                            <div
+                              class="grow ml-6"
+                              v-if="adminRole && adminRole != 'REV'"
+                            >
                               <h2 class="font-bold mb-1">Assign To</h2>
 
                               <div class="flex items-center">
@@ -293,6 +297,7 @@
                                         placeholder="Select reviewer by typing a name"
                                       />
                                     </div>
+
                                     <div
                                       v-show="
                                         resultQuery().length && showOptions
@@ -330,42 +335,81 @@
                                         </li>
                                       </ul>
                                     </div>
-                                    <button
-                                      class="
-                                        inline-block
-                                        px-6
-                                        py-2.5
-                                        bg-primary-700
-                                        hover:bg-white
-                                        hover:text-primary-600
-                                        hover:border
-                                        text-white
-                                        font-medium
-                                        text-xs
-                                        mt-2
-                                        hover:border-primary-600
-                                        ml-1
-                                        leading-tight
-                                        uppercase
-                                        rounded
-                                        shadow-lg
-                                        hover:bg-blue-700 hover:shadow-lg
-                                        focus:bg-blue-700
-                                        focus:shadow-lg
-                                        focus:outline-none
-                                        focus:ring-0
-                                        active:bg-blue-800 active:shadow-lg
-                                        transition
-                                        duration-150
-                                        ease-in-out
-                                      "
-                                      @click="assignReviewer()"
+                                    <div
+                                      v-for="button in modalData.buttons"
+                                      :key="button.id"
                                     >
-                                      Assign
-                                    </button>
+                                      <button
+                                        v-if="button.code == 'AT'"
+                                        class="
+                                          inline-block
+                                          px-6
+                                          py-2.5
+                                          mt-4
+                                          bg-primary-700
+                                          text-white
+                                          font-medium
+                                          text-xs
+                                          leading-tight
+                                          uppercase
+                                          rounded
+                                          shadow-lg
+                                          hover:bg-white hover:text-primary-600
+                                          transition
+                                          duration-150
+                                          ease-in-out
+                                        "
+                                        @click="
+                                          assignReviewer({
+                                            action: button.action,
+                                            type: 'toOthers',
+                                          })
+                                        "
+                                      >
+                                        {{ button&&button.name ? button.name : "" }}
+                                      </button>
+                                    </div>
                                   </div>
                                 </div>
                               </label>
+                            </div>
+
+                            <div v-if="adminRole && adminRole == 'REV'">
+                              <div
+                                v-for="button in modalData.buttons"
+                                :key="button.id"
+                              >
+                                <button
+                                  v-if="button.code == 'AT'"
+                                  class="
+                                          inline-block
+                                          px-6
+                                          py-2.5
+                                          mt-4
+                                          bg-primary-700
+                                          text-white
+                                          font-medium
+                                          text-xs
+                                          ml-4
+                                          leading-tight
+                                          uppercase
+                                          rounded
+                                          shadow-lg
+                                          hover:bg-white hover:text-primary-600
+                                          transition
+                                          duration-150
+                                          ease-in-out
+                                        "
+                                  @click="
+                                    assignReviewer({
+                                      action: button.action,
+                                      type: 'toSelf',
+                                    })
+                                  "
+                                >
+                                  {{ button&&button.name ? button.name : "" }} Self
+                                </button>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -593,7 +637,7 @@ export default {
     let showOptions = ref(false);
     let reviewer = ref({ id: "", name: "", expertLevel: "", role: "" });
     let adminId = +localStorage.getItem("adminId");
-
+    let adminRole = localStorage.getItem("role");
     let assign = ref({
       reviewerId: "",
       goodStandingId: "",
@@ -609,20 +653,18 @@ export default {
       role.value = JSON.parse(localStorage.getItem("allAdminData")).role;
     };
 
-    const assignReviewer = () => {
-      if (role.value.code === "TL" || role.value.code === "ADM") {
+    const assignReviewer = (data) => {
+      if (data.type == "toSelf") {
         assign.value = {
-          goodStandingId: licenseData.value.id,
-          reviewerId: adminId,
-          createdByAdminId: +localStorage.getItem("adminId"),
-        };
-      }
-
-      if (role.value.code == "REV") {
-        assign.value = {
-          goodStandingId: licenseData.value.id,
           reviewerId: +localStorage.getItem("adminId"),
           createdByAdminId: +localStorage.getItem("adminId"),
+          goodStandingId: licenseData.value.id,
+        };
+      } else {
+        assign.value = {
+          reviewerId: assign.value.reviewerId,
+          createdByAdminId: +localStorage.getItem("adminId"),
+          goodStandingId: licenseData.value.id,
         };
       }
       let smsData = {
@@ -687,9 +729,7 @@ export default {
           });
           isLoading.value = false;
         });
-      setTimeout(() => {
-        window.location.reload();
-      }, 3000);
+   
     };
 
     const showModal = () => {
@@ -736,6 +776,10 @@ export default {
               "New licenses total count retrieved successfully!"
           ) {
             result = res.data.data;
+            modalData.value.buttons =
+              result && result.applicationStatus
+                ? result.applicationStatus.buttons
+                : [];
             modalData.value.name =
               (result.profile ? result.profile.name : "") +
               " " +
@@ -779,9 +823,12 @@ export default {
             modalData.value.certifiedDate = result.certifiedDate;
             modalData.value.licenseExpirationDate =
               result.licenseExpirationDate;
+         
             modalData.value.data = result;
             licenseData.value = result;
             isLoadingStart.value = false;
+
+            console.log(modalData.value);
           }
         });
     };
@@ -800,6 +847,7 @@ export default {
       reviewerAdminId,
       role,
       assign,
+      adminRole,
       show,
       showRes,
       showOptions,

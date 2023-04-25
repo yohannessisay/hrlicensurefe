@@ -87,7 +87,7 @@
                 <div class="flex justify-center border-b-4 text-main-400">
                   <div class="text-center lg:max-w-3xl md:max-w-xl">
                     <h2 class="text-2xl font-bold mb-8 px-6 text-main-400">
-                      Draft License Detail
+                      Draft Letter Detail
                     </h2>
                   </div>
                 </div>
@@ -305,10 +305,9 @@
                               class="no-underline hover:underline text-black"
                               href="#"
                             >
-                              Applicants Education Detail
+                              Applicant's Education Detail
                             </a>
-                          </h1>
-                          <p class="text-main-400 text-sm">Active</p>
+                          </h1> 
                         </header>
 
                         <div class="grid grid-flow-row auto-rows-max">

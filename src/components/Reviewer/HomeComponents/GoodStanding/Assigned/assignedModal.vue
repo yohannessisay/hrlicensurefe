@@ -221,6 +221,7 @@
                           </div>
                         </div>
                         <div
+                          v-if="adminRole && adminRole != 'REV'"
                           class="
                             grow-0
                             shrink-0
@@ -373,6 +374,12 @@
                               </label>
                             </div>
                           </div>
+                        </div>
+                        <div v-if="adminRole && adminRole == 'REV'">
+                          <h2 class="ml-4">
+                            Please Contact Your Team Leader Or Admin For
+                            Transfer
+                          </h2>
                         </div>
 
                         <div

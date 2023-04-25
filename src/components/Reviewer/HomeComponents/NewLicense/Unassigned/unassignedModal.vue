@@ -298,7 +298,6 @@
                                       />
                                     </div>
 
-                             
                                     <div
                                       v-show="
                                         resultQuery().length && showOptions

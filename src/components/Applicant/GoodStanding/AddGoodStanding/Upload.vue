@@ -145,11 +145,58 @@
                           />
                         </p>
                       </td>
-
-                      <td class="px-6 py-4 text-center">
+                      <td class="px-6 py-4" v-if="item && item.fileName">
+                        <div class="flex items-center p-4">
+                          <div>
+                            <p class="">
+                              {{
+                                item.fileName
+                                  ? item.fileName
+                                  : "---------------"
+                              }}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        class="px-6 py-4 text-center"
+                        v-if="item && item.existingFile"
+                      >
                         <a
                           :id="
-                            'common_image_href' + item.documentType.id + item.id
+                            'common_image_href_' +
+                              item.documentType.id +
+                              item.id
+                          "
+                          :href="item.existingFile"
+                          :data-title="item.name ? item.name : '-----'"
+                          data-lightbox="example-2"
+                        >
+                          <i
+                            :id="
+                              'common_icon_' + item.documentType.id + item.id
+                            "
+                            class="fa fa-eye cursor-pointer text-main-400"
+                            aria-hidden="true"
+                          >
+                            <img
+                              :id="
+                                'common_image_lightbox_' +
+                                  item.documentType.id +
+                                  item.id
+                              "
+                              :src="item.existingFile"
+                              class="w-full h-2 object-cover"
+                            />
+                          </i>
+                        </a>
+                      </td>
+                      <td class="px-6 py-4 text-center" v-else>
+                        <a
+                          :id="
+                            'common_image_href_' +
+                              item.documentType.id +
+                              item.id
                           "
                           href=""
                           :data-title="item.name ? item.name : '-----'"
@@ -167,9 +214,9 @@
                           >
                             <img
                               :id="
-                                'common_image_lightbox' +
-                                item.documentType.id +
-                                item.id
+                                'common_image_lightbox_' +
+                                  item.documentType.id +
+                                  item.id
                               "
                               src=""
                               class="w-full h-2 object-cover"
@@ -295,6 +342,7 @@ export default {
     let fileSizeExceed = ref({});
     let fileSize = ref("");
     let showImage = ref(false);
+    let isBackButtonClicked = ref(false);
     let existingDocs = [];
     let previewDocuments = ref({});
     let showPreview = ref("");
@@ -327,7 +375,7 @@ export default {
         } else {
           fileSize.value = fileS / 1000000 + "MB";
         }
-        reader.addEventListener("load", function () {
+        reader.addEventListener("load", function() {
           showPreview.value = true;
 
           previewDocuments.value[data.documentType.code] = reader.result;
@@ -336,9 +384,11 @@ export default {
           );
           imageData.push({
             documenttype: data.documentType ? data.documentType.name : "",
+            documentCode: data.documentType ? data.documentType.code : "",
             educationalLevel: data.educationalLevel
               ? data.educationalLevel.name
               : "",
+            fileName: event?.target?.files[0].name,
             image: reader.result,
           });
         });
@@ -390,47 +440,63 @@ export default {
       }
 
       output
-        ? (output.onload = function () {
+        ? (output.onload = function() {
             URL.revokeObjectURL(output.src); // free memory
           })
         : "";
     };
 
     const checkDocuments = () => {
-      let temp = false;
-
-      documents.value
-        .filter((cd) => cd.isRequired)
-        .forEach((element) => {
-          temp = documentUploaded.value.hasOwnProperty(
-            element.documentType.code
-          );
-          if (!temp) {
-            documentError.value[
-              "file_upload_row_" + element.documentType.code
-            ] = true;
-          } else {
-            documentError.value[
-              "file_upload_row_" + element.documentType.code
-            ] = false;
-          }
-        });
+      let temp = false; 
+      existingDocs && existingDocs.length > 0
+        ? documents.value
+            .filter((cd) => cd.isRequired)
+            .forEach((element) => {
+              temp = existingDocs.filter(
+                (el) => el.documentCode == element.documentType.code
+              );
+              if (!temp) {
+                documentError.value[
+                  "file_upload_row_" + element.documentType.code
+                ] = true;
+              } else {
+                documentError.value[
+                  "file_upload_row_" + element.documentType.code
+                ] = false;
+              }
+            })
+        : documents.value
+            .filter((cd) => cd.isRequired)
+            .forEach((element) => {
+              temp = imageData.filter(
+                (el) => el.documentCode == element.documentType.code
+              );
+              if (!temp) {
+                documentError.value[
+                  "file_upload_row_" + element.documentType.code
+                ] = true;
+              } else {
+                documentError.value[
+                  "file_upload_row_" + element.documentType.code
+                ] = false;
+              }
+            });
       return temp;
     };
 
     const initDb = () => {
       let request = indexedDB.open("GSdocumentUploads", 1);
 
-      request.onerror = function () {
+      request.onerror = function() {
         console.error("Unable to open database.");
       };
 
-      request.onsuccess = function () {
+      request.onsuccess = function() {
         let db = request.result;
         const tx = db.transaction("GSdocumentUploads", "readwrite");
         const store = tx.objectStore("GSdocumentUploads");
         let getAllIDB = store.getAll();
-        getAllIDB.onsuccess = function (evt) {
+        getAllIDB.onsuccess = function(evt) {
           existingDocs =
             evt.target.result && evt.target.result[0]
               ? evt.target.result[0].data
@@ -438,7 +504,7 @@ export default {
         };
       };
 
-      request.onupgradeneeded = function () {
+      request.onupgradeneeded = function() {
         let db = request.result;
         db.createObjectStore("GSdocumentUploads", {
           keyPath: "id",
@@ -457,30 +523,22 @@ export default {
           };
           let db;
           let request = indexedDB.open("GSdocumentUploads", 1);
-          request.onsuccess = function () {
+          request.onsuccess = function() {
             db = request.result;
             let transaction = db.transaction(
               ["GSdocumentUploads"],
               "readwrite"
             );
-            let tempStat = false;
 
             if (existingDocs.length > 0) {
               imageData.forEach((newImage) => {
                 existingDocs.forEach((existing) => {
-                  if (existing.imageId == newImage.imageId) {
+                  if (existing.documentCode == newImage.documentCode) {
                     existing.image = newImage.image;
-                    finalLocalData.data.push(existing);
-                  } else {
-                    finalLocalData.data.push(existing);
-                    tempStat = true;
                   }
                 });
-                if (tempStat == true) {
-                  finalLocalData.data.push(newImage);
-                }
               });
-              finalLocalData.data.concat(imageData);
+              finalLocalData.data = existingDocs;
             } else {
               finalLocalData.data = imageData;
             }
@@ -490,18 +548,18 @@ export default {
 
             const objectStoreRequest = objectStore.clear();
 
-            objectStoreRequest.onsuccess = (event) => {
+            objectStoreRequest.onsuccess = () => {
               let addReq = transaction
                 .objectStore("GSdocumentUploads")
                 .put(finalLocalData);
 
-              addReq.onerror = function () {
+              addReq.onerror = function() {
                 console.log(
                   "Error regarding your browser, please update your browser to the latest version"
                 );
               };
 
-              transaction.oncomplete = function () {
+              transaction.oncomplete = function() {
                 console.log("data stored");
                 emit("changeActiveState");
               };
@@ -633,6 +691,7 @@ export default {
         : {};
       if (Object.keys(localData.value).length != 0) {
         generalInfo.value = localData.value;
+
         store.dispatch("goodstanding/getApplicationCategories").then((res) => {
           let categoryResults = res.data.data
             ? res.data.data.filter((ele) => ele.code == "GSL")
@@ -642,13 +701,34 @@ export default {
             .dispatch("goodstanding/getGSdocuments", categoryResults[0].id)
             .then((res) => {
               let results = res.data.data;
-
-              documents.value = results.filter(
-                (
-                  (set) => (f) =>
-                    !set.has(f.documentTypeId) && set.add(f.documentTypeId)
-                )(new Set())
+              results = results.filter(
+                ((set) => (f) =>
+                  !set.has(f.documentTypeId) && set.add(f.documentTypeId))(
+                  new Set()
+                )
               );
+              if (
+                existingDocs &&
+                existingDocs.length > 0 &&
+                results &&
+                results.length > 0
+              ) {
+                isBackButtonClicked.value = true;
+                existingDocs.forEach((existing) => {
+                  results.forEach((Cd) => {
+                    if (
+                      existing.documenttype &&
+                      existing.documentCode == Cd.documentType.code
+                    ) {
+                      Cd.existingFile = existing.image;
+                      Cd.fileName = existing.fileName;
+                    }
+                  });
+                });
+                documents.value = results;
+              } else {
+                documents.value = results;
+              }
             });
         });
       }
