@@ -217,10 +217,8 @@
                       :class="
                         expirationDatesHelper(
                           license.licenseExpirationDate
-                            ? (license.licenseExpirationDate.slice(0, 10),
-                              new Date().toISOString().slice(0, 10))
-                            : (new Date().toISOString().slice(0, 10),
-                              new Date().toISOString().slice(0, 10))
+                            ? license.licenseExpirationDate.slice(0, 10)
+                            : new Date().toISOString().slice(0, 10)
                         ) > 90
                           ? 'inline-block px-6 text-white bg-main-400 hover:text-main-400 hover:border text-sm font-bold uppercase rounded shadow-lg mb-4 transition duration-150 ease-in-out'
                           : 'inline-block px-6 text-white bg-grey-400 hover:text-main-400 hover:border text-sm font-bold uppercase rounded shadow-lg mb-4 transition duration-150 ease-in-out pointer-events-none'
@@ -237,10 +235,8 @@
                       :class="
                         expirationDatesHelper(
                           license.licenseExpirationDate
-                            ? (license.licenseExpirationDate.slice(0, 10),
-                              new Date().toISOString().slice(0, 10))
-                            : (new Date().toISOString().slice(0, 10),
-                              new Date().toISOString().slice(0, 10))
+                            ? license.licenseExpirationDate.slice(0, 10)
+                            : new Date().toISOString().slice(0, 10)
                         ) < 60
                           ? 'text-red-300 text-xl'
                           : 'text-grey-800 text-xl'
@@ -249,10 +245,8 @@
                       {{
                         expirationDatesHelper(
                           license.licenseExpirationDate
-                            ? (license.licenseExpirationDate.slice(0, 10),
-                              new Date().toISOString().slice(0, 10))
-                            : (new Date().toISOString().slice(0, 10),
-                              new Date().toISOString().slice(0, 10))
+                            ? license.licenseExpirationDate.slice(0, 10)
+                            : new Date().toISOString().slice(0, 10)
                         )
                       }}
                       Days Remaining For Expiration
@@ -297,8 +291,9 @@ export default {
         instance?.proxy?.forceUpdate();
       }
     };
-    const expirationDatesHelper = (date_1, date_2) => {
-      console.log(date_1, date_2);
+    const expirationDatesHelper = (date_1) => {
+     
+      let date_2 = new Date().toISOString().slice(0, 10);
       let difference = new Date(date_1).getTime() - new Date(date_2).getTime();
       let TotalDays = Math.ceil(difference / (1000 * 3600 * 24));
       return TotalDays;
