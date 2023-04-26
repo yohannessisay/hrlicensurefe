@@ -31,7 +31,7 @@
         class="
           modal-content
           border-none
-          shadow-lg
+          shadow-md
           relative
           flex flex-col
           w-full
@@ -58,240 +58,445 @@
               uppercase
               rounded
               hover:border-primary-600
-              shadow-lg
-              hover:bg-purple-700 hover:shadow-lg
+              shadow-md
+              hover:bg-purple-700 hover:shadow-md
               focus:bg-purple-700
-              focus:shadow-lg
+              focus:shadow-md
               focus:outline-none
               focus:ring-0
-              active:bg-purple-800 active:shadow-lg
+              active:bg-purple-800 active:shadow-md
               transition
               duration-150
               ease-in-out
             "
+            id="closeButtonOther"
             data-bs-dismiss="modal"
             aria-label="Close"
           >
             <i class="fa fa-close fa-2x"></i>
           </button>
         </div>
-        <div class="vld-parent mt-4">
-          <loading
-            :active="isLoading"
-            :can-cancel="true"
-            :on-cancel="onCancel"
-            :is-full-page="false"
-            :color="'#2F639D'"
-            :opacity="1"
-          ></loading>
-          <div class="modal-body relative p-4">
-            <div class="container px-6 mx-auto">
-              <section class="text-gray-800">
-                <div class="flex justify-center">
-                  <div class="text-center lg:max-w-3xl md:max-w-xl">
-                    <h2 class="text-2xl font-bold mb-12 px-6">
-                      Showing
-                      <span class="text-2xl font-bold mb-12 px-6">
-                        {{ modalData.name }}
-                      </span>
-                      's License Data
-                    </h2>
-                  </div>
-                </div>
 
+        <div class="modal-body relative p-4">
+          <div class="container px-6 mx-auto">
+            <section class="text-gray-800">
+              <div class="flex justify-center">
+                <div class="text-center lg:max-w-3xl md:max-w-xl">
+                  <h2 class="text-2xl font-bold mb-12 px-6">
+                    Showing
+                    <span class="text-2xl font-bold mb-12 px-6">
+                      {{ modalData.name }}
+                    </span>
+                    's License Data
+                  </h2>
+                </div>
+              </div>
+              <div class="vld-parent mt-4">
+                <loading
+                  :active="isLoading"
+                  :can-cancel="true"
+                  :on-cancel="onCancel"
+                  :is-full-page="false"
+                  :color="'#2F639D'"
+                  :opacity="1"
+                ></loading>
                 <div class="flex flex-wrap">
                   <div class="grow-0 shrink-0 basis-auto w-full lg:w-11/12">
                     <div class="flex flex-wrap">
                       <div
                         class="
-                          mb-12
-                          grow-0
-                          shrink-0
-                          basis-auto
-                          w-full
-                          lg:w-6/12
-                          px-3
-                          lg:px-6
-                        "
+                            grow-0
+                            shrink-0
+                            basis-auto
+                            w-full
+                            lg:w-6/12
+                            px-3
+                            lg:px-6
+                          "
                       >
                         <div class="flex items-start">
                           <div class="shrink-0">
                             <div
                               class="
-                                p-4
-                                bg-blue-600
-                                rounded-md
-                                shadow-lg
-                                w-48
-                                h-48
-                                flex
-                                items-center
-                                justify-center
-                              "
+                                  p-4
+                                  bg-blue-600
+                                  rounded-md
+                                  shadow-md
+                                  w-48
+                                  h-48
+                                  flex
+                                  mb-12
+                                  items-center
+                                  justify-center
+                                "
                             >
-                              <picture>
-                                <source
-                                  :srcset="
-                                    modalData.profile &&
-                                    modalData.profile.profilePicture
-                                      ? googleApi +
-                                        modalData.profile.profilePicture
-                                          .filePath
-                                      : ''
-                                  "
-                                  type="image/jpg"
-                                />
-
-                                <img
-                                  src="../../../../../assets/showLicense/profile.png"
-                                />
-                              </picture>
+                              <img
+                                src="../../../../../assets/showLicense/profile.png"
+                                alt=""
+                                style="height: 152px; width: 150px"
+                              />
                             </div>
                           </div>
                           <div class="grow ml-6">
                             <h2 class="font-extrabold text-2xl mb-1">
                               Personal Info
                             </h2>
-                            <p class="text-gray-500">
-                              <span
-                                class="
-                                  font-semibold
-                                  text-lg text-primary-700
-                                  mb-1
+                            <div
+                              class="
+                                  border-2
+                                  p-2
+                                  rounded-lg
+                                  m-1
+                                  shadow-md
+                                  text-primary-500
                                 "
-                                >Full Name:</span
-                              >
-                              {{ modalData.name }}
-                            </p>
-                            <p class="text-gray-500">
-                              <span class="font-semibold text-primary-700 mb-1"
-                                >Gender:</span
-                              >
-                              {{ modalData.gender ? modalData.gender : "" }}
-                            </p>
-                            <p class="text-gray-500">
-                              <span class="font-semibold text-primary-700 mb-1"
-                                >Nationality:</span
-                              >
-                              {{
-                                modalData.nationality
-                                  ? modalData.nationality.name
-                                  : ""
-                              }}
-                            </p>
-                            <p class="text-gray-500">
-                              <span class="font-semibold text-primary-700 mb-1"
-                                >Date Of Birth:</span
-                              >
-                              {{
-                                modalData.dateOfBirth
-                                  ? modalData.dateOfBirth.slice(0, 10)
-                                  : "-----"
-                              }}
-                            </p>
-                            <p class="text-gray-500">
-                              <span class="font-semibold text-primary-700 mb-1"
-                                >Martial Status:</span
-                              >
-                              {{ modalData.maritalStatus }}
-                            </p>
+                            >
+                              <p class="text-gray-500">
+                                <span
+                                  class="
+                                    font-semibold
+                                    text-lg text-primary-700
+                                    mb-1
+                                  "
+                                  >Full Name:</span
+                                >
+                                <span class="text-grey-800 ml-1">
+                                  {{
+                                    modalData.name ? modalData.name : ""
+                                  }}</span
+                                >
+                              </p>
+                              <p class="text-gray-500">
+                                <span
+                                  class="font-semibold text-primary-700 mb-1"
+                                  >Gender:</span
+                                >
+                                <span class="text-grey-800 ml-1">
+                                  {{
+                                    modalData.gender ? modalData.gender : ""
+                                  }}</span
+                                >
+                              </p>
+                              <p class="text-gray-500">
+                                <span
+                                  class="font-semibold text-primary-700 mb-1"
+                                  >Nationality:</span
+                                >
+                                <span class="text-grey-800 ml-1">
+                                  {{
+                                    modalData.nationality
+                                      ? modalData.nationality.name
+                                      : ""
+                                  }}</span
+                                >
+                              </p>
+                              <p class="text-gray-500">
+                                <span
+                                  class="font-semibold text-primary-700 mb-1"
+                                  >Date Of Birth:</span
+                                >
+                                <span class="text-grey-800 ml-1">
+                                  {{
+                                    modalData.dateOfBirth
+                                      ? modalData.dateOfBirth.slice(0, 10)
+                                      : "-----"
+                                  }}</span
+                                >
+                              </p>
+                              <p class="text-gray-500">
+                                <span
+                                  class="font-semibold text-primary-700 mb-1"
+                                  >Martial Status:</span
+                                >
+                                <span class="text-grey-800 ml-1">{{
+                                  modalData.maritalStatus
+                                    ? modalData.maritalStatus
+                                    : ""
+                                }}</span>
+                              </p>
+                            </div>
                           </div>
                         </div>
                       </div>
                       <div
                         class="
-                          mb-12
-                          grow-0
-                          shrink-0
-                          basis-auto
-                          w-full
-                          lg:w-6/12
-                          px-3
-                          lg:px-6
-                        "
+                            grow-0
+                            shrink-0
+                            basis-auto
+                            w-full
+                            lg:w-6/12
+                            px-3
+                            lg:px-6
+                          "
+                      >
+                        <div class="flex align-center">
+                          <div class="shrink-0">
+                            <div
+                              class="
+                                  p-4
+                                  bg-blue-600
+                                  rounded-md
+                                  shadow-md
+                                  w-48
+                                  h-48
+                                  flex
+                                  items-center
+                                  justify-center
+                                "
+                            >
+                              <i class="fa fa-right-left fa-4x"></i>
+                            </div>
+                          </div>
+                          <div
+                            class="grow ml-6"
+                            v-if="adminRole && adminRole != 'REV'"
+                          >
+                            <h2 class="font-bold mb-1">Transfer To</h2>
+
+                            <div class="flex items-center">
+                              <label
+                                for="email"
+                                class="
+                                    block
+                                    text-sm
+                                    font-semibold
+                                    leading-5
+                                    text-gray-700
+                                    sr-only
+                                  "
+                              >
+                                Users
+                              </label>
+                            </div>
+                            <label class="block text-left">
+                              <div>
+                                <div class="w-full relative">
+                                  <div
+                                    class="
+                                        mt-1
+                                        ml-1
+                                        relative
+                                        border border-grey-200
+                                        overflow-hidden
+                                        focus:border-primary-600
+                                        rounded-md
+                                        shadow-sm
+                                      "
+                                  >
+                                    <input
+                                      id="email"
+                                      @keyup="showOptions = true"
+                                      v-model="reviewer.name"
+                                      class="w-full px-3 py-3 "
+                                      style="border: none"
+                                      autocomplete="off"
+                                      placeholder="Select reviewer by typing a name"
+                                    />
+                                  </div>
+                                  <div>
+                                    <textarea
+                                      placeholder="Reason for transfer"
+                                      v-model="transferRemark"
+                                      class="
+                                          resize-none
+                                          tArea
+                                          border
+                                          rounded-lg
+                                          flex
+                                          mt-4
+                                          ml-1
+                                          w-full
+                                        "
+                                    ></textarea>
+                                    <button
+                                      class="
+                                          inline-block
+                                          px-6
+                                          py-2.5
+                                          bg-primary-600
+                                          text-white
+                                          font-semibold
+                                          text-xs
+                                          leading-tight
+                                          uppercase
+                                          rounded
+                                          shadow-md
+                                          mt-4
+                                          ml-1
+                                          hover:bg-white
+                                          hover:shadow-md
+                                          hover:text-primary-600
+                                          transition
+                                          duration-150
+                                          ease-in-out
+                                          mb-8
+                                        "
+                                      @click="transferReviewer()"
+                                    >
+                                      Transfer
+                                    </button>
+                                  </div>
+                                  <div
+                                    v-show="resultQuery().length && showOptions"
+                                    class="
+                                        w-full
+                                        bg-white
+                                        border border-gray-300
+                                        mt-2
+                                        ml-1
+                                        max-height-12
+                                        overflow-hidden overflow-y-scroll
+                                        rounded-lg
+                                        shadow-md
+                                        text-left
+                                        dropdown-menu
+                                      "
+                                    style="height: 148px; border: none"
+                                  >
+                                    <ul class="py-1">
+                                      <li
+                                        v-for="value in resultQuery()"
+                                        :key="value.id"
+                                        @click="setInput(value)"
+                                        class="
+                                            dropdown-toggle
+                                            px-4
+                                            py-2
+                                            cursor-pointer
+                                            hover:bg-primary-700
+                                            hover:text-white
+                                          "
+                                      >
+                                        {{ value.name }}
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </div>
+                            </label>
+                          </div>
+                          <div v-if="adminRole && adminRole == 'REV'">
+                            <h2 class="ml-4">
+                              Please Contact Your Team Leader Or Admin For
+                              Transfer
+                            </h2>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div
+                        class="
+                            grow-0
+                            shrink-0
+                            basis-auto
+                            w-full
+                            lg:w-6/12
+                            px-3
+                            lg:px-6
+                          "
                       >
                         <div class="flex items-start">
                           <div class="shrink-0">
                             <div
                               class="
-                                p-4
-                                bg-blue-600
-                                rounded-md
-                                shadow-lg
-                                w-48
-                                h-48
-                                flex
-                                items-center
-                                justify-center
-                              "
+                                  p-4
+                                  bg-blue-600
+                                  rounded-md
+                                  shadow-md
+                                  w-48
+                                  h-48
+                                  flex
+                                  items-center
+                                  justify-center
+                                "
                             >
                               <i class="fa fa-phone fa-4x"></i>
                             </div>
                           </div>
                           <div class="grow ml-6">
                             <h2 class="font-bold mb-1">Contact Info</h2>
-                            <p class="text-gray-500">
-                              <span class="font-medium text-primary-700 mb-1"
-                                >Mobile Number:</span
-                              >
-                              {{ modalData.mobileNumber }}
-                            </p>
-                            <p class="text-gray-500">
-                              <span class="font-medium text-primary-700 mb-1"
-                                >Email:</span
-                              >
-                              {{ modalData.email }}
-                            </p>
+                            <div
+                              class="
+                                  border-2
+                                  p-2
+                                  rounded-lg
+                                  m-1
+                                  shadow-md
+                                  text-primary-500
+                                "
+                            >
+                              <p class="text-gray-500">
+                                <span
+                                  class="font-semibold text-primary-700 mb-1"
+                                  >Mobile Number:</span
+                                >
+                                <span class="text-grey-800 ml-1">
+                                  {{
+                                    modalData.mobileNumber
+                                      ? modalData.mobileNumber
+                                      : ""
+                                  }}</span
+                                >
+                              </p>
+                              <p class="text-gray-500">
+                                <span
+                                  class="font-semibold text-primary-700 mb-1"
+                                  >Email:</span
+                                >
+                                <span class="text-grey-800 ml-1">
+                                  {{
+                                    modalData.email ? modalData.email : ""
+                                  }}</span
+                                >
+                              </p>
+                            </div>
                           </div>
                         </div>
                       </div>
-
                       <div
                         class="
-                          grow-0
-                          shrink-0
-                          basis-auto
-                          w-full
-                          lg:w-full
-                          px-3
-                          lg:px-6
-                        "
+                            grow-0
+                            shrink-0
+                            basis-auto
+                            w-full
+                            lg:w-6/12
+                            px-3
+                            lg:px-6
+                          "
                       >
-                        <h2 class="font-bold mb-1">Education Detail</h2>
                         <div class="flex items-start">
                           <div class="shrink-0">
                             <div
                               class="
-                                p-4
-                                bg-blue-600
-                                rounded-md
-                                shadow-lg
-                                w-48
-                                mt-2
-                                h-48
-                                flex
-                                items-center
-                                justify-center
-                              "
+                                  p-4
+                                  bg-blue-600
+                                  rounded-md
+                                  shadow-md
+                                  w-48
+                                  h-48
+                                  flex
+                                  items-center
+                                  justify-center
+                                "
                             >
                               <i class="fa fa-building fa-4x"></i>
                             </div>
                           </div>
+                          <div class="grow ml-6 mb-4">
+                            <h2 class="font-bold mb-1">Education Detail</h2>
 
-                          <div class="grow ml-6 grid grid-cols-4">
                             <div
                               class="
-                                border-2
-                                p-2
-                                rounded-lg
-                                m-2
-                                w-full
-                                shadow-md
-                                text-primary-500
-                              "
+                                  border-2
+                                  p-2
+                                  rounded-lg
+                                  m-1
+                                  shadow-md
+                                  text-primary-500
+                                "
                               v-for="education in modalData.data
-                              ? modalData.data.educations
-                              : []"
+                                ? modalData.data.educations
+                                : []"
                               :key="education.id"
                             >
                               <p class="text-gray-500">
@@ -299,44 +504,44 @@
                                   class="font-semibold text-primary-700 mb-1"
                                   >Department:</span
                                 >
-                                {{
+                                <span class="text-grey-800 ml-1">{{
                                   education.department
                                     ? education.department.name
                                     : ""
-                                }}
+                                }}</span>
                               </p>
                               <p class="text-gray-500">
                                 <span
                                   class="font-semibold text-primary-700 mb-1"
                                   >Education Level:</span
                                 >
-                                {{
+                                <span class="text-grey-800 ml-1">{{
                                   education.educationLevel
                                     ? education.educationLevel.name
                                     : ""
-                                }}
+                                }}</span>
                               </p>
                               <p class="text-gray-500">
                                 <span
                                   class="font-semibold text-primary-700 mb-1"
                                   >Profession:</span
                                 >
-                                {{
+                                <span class="text-grey-800 ml-1">{{
                                   education.professionType
                                     ? education.professionType.name
                                     : ""
-                                }}
+                                }}</span>
                               </p>
                               <p class="text-gray-500">
                                 <span
                                   class="font-semibold text-primary-700 mb-1"
                                   >Institution:</span
                                 >
-                                {{
+                                <span class="text-grey-800 ml-1">{{
                                   education.institution
                                     ? education.institution.name
                                     : ""
-                                }}
+                                }}</span>
                               </p>
                             </div>
                           </div>
@@ -344,9 +549,91 @@
                       </div>
                     </div>
                   </div>
+                  <div
+                    class="bg-primary-300 m-2 p-4 rounded-lg"
+                    v-if="
+                      modalData &&
+                        modalData.data &&
+                        modalData.data.licenseReviewer &&
+                        modalData.data.licenseReviewer.transferFrom
+                    "
+                  >
+                    <h2 class="text-xl text-yellow-300">
+                      This license is a transfer from
+                    </h2>
+
+                    <div class="grid grid-cols-2">
+                      <div class="grid grid-cols-2">
+                        <h5 class="text-lg  ">Reviewer Name</h5>
+
+                        <h5 class="text-lg text-primary-600">
+                          {{
+                            modalData &&
+                            modalData.data &&
+                            modalData.data.licenseReviewer &&
+                            modalData.data.licenseReviewer.transferFrom
+                              ? modalData.data.licenseReviewer.transferFrom.name
+                              : ""
+                          }}
+                        </h5>
+                      </div>
+                    </div>
+                    <div class="grid grid-cols-2">
+                      <div class="grid grid-cols-2">
+                        <h5 class="text-lg  ">With a reason of</h5>
+
+                        <h5 class="text-lg text-primary-600">
+                          {{
+                            modalData &&
+                            modalData.data &&
+                            modalData.data.licenseReviewer &&
+                            modalData.data.licenseReviewer.transferFrom
+                              ? modalData.data.licenseReviewer.transferRemark
+                              : ""
+                          }}
+                        </h5>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </section>
-            </div>
+              </div>
+              <div
+                class="
+            modal-footer
+            flex flex-shrink-0 flex-wrap
+            items-center
+            justify-end
+            border-t border-grey-100
+            rounded-b-md
+          "
+              >
+                <button
+                  type="button"
+                  class="
+              inline-block
+             
+              mt-4
+              text-white
+              bg-primary-600
+              font-semibold
+              text-xs
+              leading-tight
+              uppercase
+              rounded
+              shadow-md
+              hover:text-primary-600 hover:shadow-md
+             
+              active:bg-purple-800 active:shadow-md
+              transition
+              duration-150
+              ease-in-out
+            "
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+              </div>
+            </section>
           </div>
         </div>
       </div>
@@ -355,32 +642,153 @@
 </template>
 <script>
 import { useStore } from "vuex";
-import { ref, watch } from "vue";
 import moment from "moment";
 import Loading from "vue3-loading-overlay";
 // Import stylesheet
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
+
+import { ref, onMounted, watch, computed } from "vue";
+// Import stylesheet
+import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
+
+import { useToast } from "vue-toastification";
 import { googleApi } from "@/composables/baseURL";
 export default {
-  props: ["modalDataIdOthers"],
+  props: ["modalDataIdOthers", "reviewers"],
   components: {
-    Loading,
+    Loading
   },
   computed: {
-    moment: () => moment,
+    moment: () => moment
   },
-  setup(props) {
+  setup(props, { emit }) {
     const store = useStore();
-
+    const toast = useToast();
+    let transferRemark = ref("");
     let show = ref(true);
-
+    let showRes = ref(false);
+    let showOptions = ref(false);
+    let reviewer = ref({ id: "", name: "", expertLevel: "", role: "" });
+    let adminId = +localStorage.getItem("adminId");
+    let adminRole = localStorage.getItem("role");
+    const licenseId = computed(() => props.modalDataIdOthers.id);
+    let transfer = ref({
+      expertLevelId: null,
+      reviewerId: null,
+      licenseId: null,
+      createdByAdminId: null,
+      transferRemark: ""
+    });
     let role = ref({});
-    let isLoading = ref(true);
+    let isLoading = ref(false);
+    const isLoadingStart = ref(true);
+    const fullPage = ref(false);
+    const evaluationData = ref({});
+    let reviewerAdminId = ref(0);
+
+    const fetchRole = id => {
+      store.dispatch("reviewer/getRoles", id).then(res => {
+        role.value = res.data.data.role;
+      });
+    };
+
+    const transferReviewer = () => {
+      isLoading.value = true;
+      if (transferRemark.value == "" || transfer.value.reviewerId == null) {
+        toast.error(
+          transferRemark.value == ""
+            ? "Transfer reason is required"
+            : "Please select reviewer to tansfer to",
+          {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true
+          }
+        );
+        return;
+      } else {
+        transfer.value = {
+          licenseId: props.modalDataIdOthers.id,
+          reviewerId: transfer.value.reviewerId,
+          expertLevelId: modalData.value.data.expertLevelId,
+          createdByAdminId: +localStorage.getItem("adminId"),
+          transferRemark: transferRemark.value
+        };
+
+        store
+          .dispatch("reviewer/transferLicenseReview", transfer.value)
+          .then(response => {
+            if (response.statusText == "Created") {
+              toast.success("Selected application transfered Successfully", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true
+              });
+              isLoading.value = false;
+              transfer.value = {};
+              reviewer.value = {};
+              transferRemark.value = "";
+              if (document.getElementById("closeButtonOther")) {
+                document.getElementById("closeButtonOther").click();
+              }
+              emit("refreshTable");
+            } else {
+              toast.error("Error transfering", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true
+              });
+              isLoading.value = false;
+            }
+          })
+          .catch(error => {
+            console.log(error);
+            toast.error("Error transfering", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true
+            });
+            isLoading.value = false;
+          });
+      }
+    };
 
     const showModal = () => {
       show.value = true;
     };
+    const resultQuery = () => {
+      if (reviewer.value.name) {
+        let data = props.reviewers.filter(item => {
+          return reviewer.value.name
+            .toLowerCase()
+            .split(" ")
+            .every(v => item.name.toLowerCase().includes(v));
+        });
 
+        return data;
+      } else {
+        return [];
+      }
+    };
+
+    const setInput = value => {
+      reviewer.value = {
+        id: value.id,
+        name: value.name,
+        expertLevel: value.expertLevel.code,
+        role: value.role.code
+      };
+      transfer.value.reviewerId = value.id;
+      showOptions.value = false;
+    };
     const onCancel = () => {
       isLoading.value = false;
     };
@@ -399,7 +807,7 @@ export default {
           "reviewer/getNewLicenseApplication",
           props.modalDataIdOthers.id
         )
-        .then((res) => {
+        .then(res => {
           if (res.data.status == "Success") {
             result = res.data.data;
             modalData.value.name =
@@ -439,6 +847,10 @@ export default {
           }
         });
     };
+    onMounted(() => {
+      adminId = +localStorage.getItem("adminId");
+      fetchRole(adminId);
+    });
     return {
       role,
       googleApi,
@@ -447,10 +859,25 @@ export default {
       isLoading,
       modalData,
       onCancel,
+
+      adminId,
+      reviewerAdminId,
+      transfer,
+      transferRemark,
+      showRes,
+      showOptions,
+      reviewer,
+      setInput,
+      resultQuery,
+      isLoadingStart,
+      licenseId,
+      fullPage,
+      adminRole,
+      evaluationData,
+      transferReviewer
     };
-  },
+  }
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

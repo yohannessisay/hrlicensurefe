@@ -18,7 +18,7 @@
   >
     <div class="flex justify-center items-center">
       <RenderIllustration illustration="Logo" class="hidden sm:block" />
-      <h3 class="ml-tiny font-AtkinsonHyperlegibleBold">eHPEL - Lisence</h3>
+      <h3 class="ml-4 text-2xl text-main-400">eHPEL - License</h3>
     </div>
     <div>
       <button
@@ -72,8 +72,130 @@
       >
         <i class="fa fa-sign-in"></i> Log In
       </button>
+
+      <span
+        class="bg-grey-200 cursor-pointer  ml-4 mr-2 p-2 rounded-lg"
+        data-bs-toggle="modal"
+        data-bs-target="#showHelp"
+      >
+        <i class="fa-solid fa-question text-xl text-main-400"></i>
+      </span>
     </div>
   </section>
+  <!-- Login Part -->
+  <div
+    class="
+      modal
+      fade
+      fixed
+      top-0
+      left-0
+      hidden
+      w-full
+      h-full
+      outline-none
+      overflow-x-hidden overflow-y-auto
+    "
+    id="showHelp"
+    data-bs-keyboard="false"
+    tabindex="-1"
+    aria-labelledby="showHelpLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-xl relative pointer-events-none">
+      <div
+        class="
+          modal-content
+          border-none
+          shadow-lg
+          relative
+          flex flex-col
+          w-8/12
+          md:w-9/12
+          mdlg:w-9/12
+          lg:w-10/12
+          sm:w-full
+          pointer-events-auto
+          bg-white bg-clip-padding
+          rounded-md
+          outline-none
+          text-current
+        "
+      >
+        <div
+          class="
+            modal-header
+            flex flex-shrink-0
+            justify-center
+            items-center
+            p-4
+            border-b border-grey-100
+            rounded-t-md
+          "
+        >
+          <button
+            type="button"
+            class="
+                  px-6
+              text-white
+              bg-main-400 
+              font-medium
+              text-xs
+              leading-tight
+              uppercase
+              rounded
+              hover:border-main-400
+              shadow-md
+              hover:text-main-400
+              
+              active:bg-purple-800 active:shadow-lg
+              transition
+              duration-150
+              ease-in-out
+            "
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            @click="refreshPage()"
+          >
+            <i class="fa fa-close fa-2x"></i>
+          </button>
+        </div>
+        <div class="modal-body relative p-2">
+          <div class="flex justify-center">
+            <h2 class="text-main-400 text-xl">
+              This is a demo video showing you how to use the system if you are
+              new here. Thanks for watching.
+            </h2>
+          </div>
+          <div class="container bg-secondaryDark">
+            <vue-plyr :options="options">
+              <video controls crossorigin playsinline data-poster="poster.jpg">
+                <source
+                  size="720"
+                  src="/template/help_video.mp4"
+                  type="video/mp4"
+                />
+                <source
+                  size="1080"
+                  src="/template/help_video.mp4"
+                  type="video/mp4"
+                />
+                <track
+                  default
+                  kind="captions"
+                  label="English captions"
+                  src="/path/to/english.vtt"
+                  srclang="en"
+                />
+              </video>
+            </vue-plyr>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--End Of Login Part -->
+  <!-- Login Part -->
   <div
     class="
       modal
@@ -155,7 +277,7 @@
             <div class="form-group mb-6">
               <label
                 for="exampleInputEmail2"
-                class="form-label inline-block mb-2 text-gray-700"
+                class="form-label mb-2 text-gray-700"
                 >Email address</label
               >
               <input
@@ -165,8 +287,6 @@
                   form-control
                   block
                   w-full
-                  px-3
-                  py-1.5
                   text-base
                   font-normal
                   text-gray-700
@@ -186,50 +306,60 @@
                 placeholder="Enter email"
               />
             </div>
-            <div class="form-group mb-6">
+            <div class="form-group mb-6 mt-4">
               <label
-                for="exampleInputPassword2"
-                class="form-label inline-block mb-2 text-gray-700"
+                for="exampleInputEmail2"
+                class="form-label mb-2 text-gray-700"
                 >Password</label
               >
-              <input
-                v-model="credentials.password"
-                type="password"
-                id="password"
-                name="password"
-                autocomplete="current-password"
-                required
-                placeholder="**********"
-                @type="show ? 'password' : 'text'"
-                class="
-                  form-control
-                  block
-                  w-full
-                  px-3
-                  py-1.5
-                  text-base
-                  font-normal
-                  text-gray-700
-                  bg-white bg-clip-padding
-                  border border-solid border-gray-300
-                  rounded
-                  transition
-                  ease-in-out
-                  m-0
-                  focus:text-gray-700
-                  focus:bg-white
-                  focus:border-blue-600
-                  focus:outline-none
-                "
-              />
-              <a class="text-primary-500">
-                <i
-                  class="fa fa-eye cursor-pointer"
-                  style="font-size: 26px"
+              <div class="relative text-gray-600 focus-within:text-gray-400">
+                <input
+                  v-model="credentials.password"
+                  type="password"
+                  id="password"
+                  name="password"
+                  autocomplete="current-password"
+                  required
+                  placeholder="**********"
+                  @type="show ? 'password' : 'text'"
+                  class="
+                    form-control
+                    block
+                    w-full
+                    px-3
+                    py-1.5
+                    text-base
+                    font-normal
+                    text-gray-700
+                    bg-white bg-clip-padding
+                    border border-solid border-gray-300
+                    rounded
+                    transition
+                    ease-in-out
+                    m-0
+                    focus:text-gray-700
+                    focus:bg-white
+                    focus:border-blue-600
+                    focus:outline-none
+                  "
+                />
+                <span
                   @click="showVisibility()"
-                ></i
-              ></a>
+                  class="
+                    absolute
+                    inset-y-0
+                    right-0
+                    flex
+                    items-center
+                    pr-2
+                    cursor-pointer
+                  "
+                >
+                  <i class="fa fa-eye" style="font-size: 26px"></i>
+                </span>
+              </div>
             </div>
+
             <div class="flex justify-between items-center mb-6">
               <a
                 href="#!"
@@ -288,7 +418,7 @@
                 :active="show"
                 spinner="ring"
                 color="white"
-                background-color="#ffffff00;"
+                background-color="#ffffff00"
                 style="margin-left: 110px; margin-top: -3px"
               />
             </button>
@@ -297,6 +427,7 @@
       </div>
     </div>
   </div>
+  <!--End Of Login Part -->
   <!-- Registration Part -->
   <div
     class="
@@ -400,7 +531,6 @@
                 placeholder="912345678"
                 id="phone"
                 type="tel"
-              
                 class="w-full rounded-md sm:w-10/12 border ml-4 text-main-400"
                 v-model="registerCredentials.phoneNumber"
                 required
@@ -613,7 +743,7 @@
                   :active="show"
                   spinner="ring"
                   color="white"
-                  background-color="#ffffff00;"
+                  background-color="#ffffff00"
                   style="margin-left: 110px; margin-top: -3px"
                 />
               </button>
@@ -630,6 +760,7 @@
       </div>
     </div>
   </div>
+  <!-- End Of Registration Part -->
 </template>
 <script>
 import RenderIllustration from "@/sharedComponents/RenderIllustration";
@@ -639,14 +770,16 @@ import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useToast } from "vue-toastification";
 import PasswordMeter from "vue-simple-password-meter";
+
 export default {
   components: { RenderIllustration, VueElementLoading, PasswordMeter },
   emits: ["setShowLogin", "setShowSignup"],
-  setup({ emit }) {
+  setup() {
     const store = useStore();
     const router = useRouter();
     const toast = useToast();
     let show = ref(false);
+    let options = { quality: { default: "1080p" } };
     let isVerified = ref(true);
     let enableVerification = ref(false);
     let showLoading = ref(false);
@@ -684,7 +817,11 @@ export default {
         x.type = "password";
       }
     };
-
+    const refreshPage = () => {
+      setTimeout(() => {
+        location.reload();
+      }, 1000);
+    };
     const tabChange = () => {
       if (
         otpInput.value &&
@@ -753,7 +890,10 @@ export default {
           .then((res) => {
             if (res && res.status == "Success") {
               enableVerification.value = true;
-              localStorage.setItem("secretOtp", JSON.stringify(res.data.fullHash));
+              localStorage.setItem(
+                "secretOtp",
+                JSON.stringify(res.data.fullHash)
+              );
             } else {
               toast.error("Service error, please try again", {
                 timeout: 5000,
@@ -1021,6 +1161,7 @@ export default {
       sendSmsOtp,
       message,
       show,
+      options,
       otpInput,
       enableVerification,
       showLoading,
@@ -1038,6 +1179,7 @@ export default {
       verifySmsOtp,
       showPasswordStrength,
       passwordStrengthDisplay,
+      refreshPage,
     };
   },
 };

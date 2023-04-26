@@ -400,7 +400,7 @@
               </div>
             </div>
 
-            <div class="bg-white p-6 rounded-lg shadow-lg overflow-x-scroll">
+            <div class="bg-white p-6 rounded-lg shadow-sm ">
               <div
                 class="
                   inline-block
@@ -1553,7 +1553,7 @@ export default {
       reportTable.value.isLoading = true; 
       setTimeout(() => {
         reportTable.value.isReSearch = offset == undefined ? true : false;
-        offset = offset / 10 + 1;
+        offset = offset && offset > 0 ? offset / 10 - 1 : 1;
         if (sort == "asc" && applicationTypeSearch.value == "NewLicense") {
           fetchNewLicenseReport([offset, limit]);
         } else if (sort == "asc" && applicationTypeSearch.value == "Renewal") {

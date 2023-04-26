@@ -470,8 +470,7 @@ export default {
           message.value.showLoading = false;
           message.value.showFlash = true;
           let userId = +localStorage.getItem("userId");
-          let formData = new FormData();
-          console.log("uploadedDocument:  "+ photoFile.value);
+          let formData = new FormData(); 
           formData.append("document", photoFile.value);
           let payload = { document: formData, id: userId };
           store

@@ -799,8 +799,7 @@ export default {
               window.location.reload();
             }, 3000);
           });
-      });
-      console.log(formData);
+      }); 
     };
     onMounted(() => {
       userInfo.value = JSON.parse(window.localStorage.getItem("personalInfo"));

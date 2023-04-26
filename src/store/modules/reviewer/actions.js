@@ -38,7 +38,6 @@ import {
   SET_CERTIFIED_USERS_SEARCHED,
   SET_MY_REGION_CERTIFIED_USERS,
   SET_MY_REGION_CERTIFIED_USERS_SEARCHED,
-  SET_IMPORTED,
   SET_LEGACY_DATA_SEARCHED,
 } from "./mutation-types";
 
@@ -926,38 +925,21 @@ export default {
     return resp;
   },
 
-  async getLegacyData({ commit }, parameters) {
-    let url = "";
-    parameters[2]
-      ? (url =
-          baseUrl +
-          `/legacyData?page=${parameters[0]}&size=${parameters[1]}&value=${parameters[2]}`)
-      : (url =
-          baseUrl + `/legacyData?page=${parameters[0]}&size=${parameters[1]}`);
-    const resp = await ApiService.get(url);
-    return resp.data.data;
-    // commit(SET_LEGACY_DATA, resp.data.data);
-  },
+  async getLegacyData(context, detail) {
+    let url = baseUrl + "/legacyData?";
 
-  getLegacyDataSearched({ commit, getters }, searchKey) {
-    if (getters.legacyData === undefined) {
-      return;
+    let parameters = detail.params ? detail.params : [];
+
+    if (parameters) {
+      parameters.forEach((param) => {
+        url += param ? `${param.key}=${param.value}&` : "";
+      });
     }
-    const searchedVal = getters.legacyData.filter(function(e) {
-      return (
-        e.newLicenseCode.toLowerCase().includes(searchKey.toLowerCase()) ||
-        (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
-          .toLowerCase()
-          .includes(searchKey.toLowerCase()) ||
-        e.applicant.profile.name
-          .toLowerCase()
-          .includes(searchKey.toLowerCase()) ||
-        e.applicant.profile.fatherName
-          .toLowerCase()
-          .includes(searchKey.toLowerCase())
-      );
-    });
-    commit(SET_LEGACY_DATA_SEARCHED, searchedVal);
+    url = url.substring(0, url.length - 1);
+
+    const resp = await ApiService.get(url);
+
+    return resp.data ? resp.data.data : [];
   },
 
   async getProfile(context, id) {
@@ -1016,7 +998,7 @@ export default {
   },
   async getAdminsByRegion(context, id) {
     let url = "";
-    try { 
+    try {
       if (id != null) {
         url = baseUrl + "/admins/region/" + id;
       } else {
@@ -1202,16 +1184,16 @@ export default {
   },
 
   async evaluatVerification({ commit }, license) {
-    try {
-      return;
-      const resp = await ApiService.put(
-        baseUrl + "/verificationEvaluators/" + license.id,
-        license
-      );
-      return resp;
-    } catch (error) {
-      return error;
-    }
+    // try {
+    //   return;
+    //   const resp = await ApiService.put(
+    //     baseUrl + "/verificationEvaluators/" + license.id,
+    //     license
+    //   );
+    //   return resp;
+    // } catch (error) {
+    //   return error;
+    // }
   },
 
   async evaluateGoodStanding({ commit }, license) {
@@ -1363,13 +1345,22 @@ export default {
     }
   },
 
-  async getImported({ commit }) {
+  async getImported(context, detail) {
     try {
-      const url = baseUrl + "/nationalExamResult";
-      const resp = await ApiService.get(url);
+      let url = baseUrl + "/nationalExamResult?";
+      let parameters = detail[0].params ? detail[0].params : [];
 
-      commit(SET_IMPORTED, resp.data);
-      return resp;
+      if (parameters) {
+        parameters.forEach((param) => {
+          url +=
+            param && param.value != "all" ? `${param.key}=${param.value}&` : "";
+        });
+      }
+      url = url.substring(0, url.length - 1);
+
+      let resp = await ApiService.get(url);
+
+      return resp.data && resp.data.data ? resp.data.data : [];
     } catch (error) {
       return error;
     }

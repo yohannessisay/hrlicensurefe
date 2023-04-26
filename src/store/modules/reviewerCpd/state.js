@@ -1,5 +1,2 @@
-export default {
-  state: {
-    users: [],
-  }
+export default { 
 };

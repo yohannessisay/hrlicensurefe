@@ -76,7 +76,18 @@ export default {
       return resp;
     }
   },
+  async getVerificationByLicenseCode(context, code) {
+    try {
+      let resp = await ApiService.get(
+        baseUrl + "/applicationVerification/byLicenseCode/" + code
+      );
 
+      return resp;
+    } catch (error) {
+      const resp = error;
+      return resp;
+    }
+  },
   async saveResponse(id, data) {
     try {
       const resp = await ApiService.put(

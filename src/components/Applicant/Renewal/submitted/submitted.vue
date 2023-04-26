@@ -193,7 +193,7 @@
         duration-150
         ease-in-out
       "
-                @click="openDraftDetail(license.id)"
+                @click="openSubmittedDetail(license.id)"
                 data-bs-toggle="modal"
                 data-bs-target="#submittedModalInfo"
               >
@@ -201,7 +201,7 @@
               </button>
 
               <router-link
-                :to="'/Applicant/Renewal/draft/detail/' + license.id"
+                :to="'/Applicant/Renewal/submitted/detail/' + license.id"
               >
                 <button
                   class="
@@ -286,9 +286,9 @@ export default {
       let userId = JSON.parse(window.localStorage.getItem("userId"));
 
       store.dispatch("renewal/getRenewalLicense", userId).then((res) => {
-        const results = res.data.data;
+        const results =  res.data.data?res.data.data:[];
 
-        if (results.length > 0) {
+        if (results&&results.length > 0) {
           userDraftLicenses.value = results.filter((draftLicenses) => {
             return (
               draftLicenses.applicationStatus.code === "UPD" ||
@@ -296,7 +296,7 @@ export default {
             );
           });
 
-          if (userDraftLicenses.value.length === 0) {
+          if (userDraftLicenses&&userDraftLicenses.value.length === 0) {
             noData.value = true;
           }
 
@@ -308,7 +308,7 @@ export default {
       });
     });
 
-    const openDraftDetail = (id) => {
+    const openSubmittedDetail = (id) => {
       modalDataId.value.id = id;
       modalDataId.value.change++;
     };
@@ -319,7 +319,7 @@ export default {
       userInfo,
       noData,
       isLoading,
-      openDraftDetail,
+      openSubmittedDetail,
       modalDataId,
     };
   },

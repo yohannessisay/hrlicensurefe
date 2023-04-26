@@ -348,15 +348,14 @@ export default {
       }
       instance?.proxy?.forceUpdate();
     };
-    onMounted(() => {
-      console.log(typeof isDarkMode.value)
+    onMounted(() => { 
       initiateDarkMode();
       isLoading.value = true;
       userInfo.value = JSON.parse(window.localStorage.getItem("personalInfo"));
       let userId = JSON.parse(window.localStorage.getItem("userId"));
 
       store.dispatch("newlicense/getNewLicenseByUser", userId).then((res) => {
-        const results = res.data.data;
+        const results =  res.data.data?res.data.data:[];
 
         if (results.length > 0) {
           userDraftLicenses.value = results.filter((draftLicenses) => {

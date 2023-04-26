@@ -1,13 +1,12 @@
 module.exports = {
   theme: {
     fontFamily: {
-      sans: ["Atkinson-Hyperlegible"],
-      serif: ["Atkinson-Hyperlegible"],
-      mono: ["Atkinson-Hyperlegible"],
-      display: ["Atkinson-Hyperlegible"],
-      body: ["Atkinson-Hyperlegible"],
-      AtkinsonHyperlegible: ["Atkinson-Hyperlegible"],
-      AtkinsonHyperlegibleBold: ["Atkinson-Hyperlegible-Bold"],
+      sans: ["Dosis-Bold"],
+      serif: ["Dosis-Bold"],
+      mono: ["Dosis-Bold"],
+      display: ["Dosis-Bold"],
+      body: ["Dosis-Bold"],
+      DosisBold: ["Dosis-Bold"],
     },
     screens: {
       sm: "400px",
@@ -33,8 +32,8 @@ module.exports = {
     },
     colors: {
       white: "#ffffff",
-      primaryDark:"#1c1b20",
-      secondaryDark:"#353438",
+      primaryDark: "#1c1b20",
+      secondaryDark: "#353438",
       primary: {
         100: "#F9FAFB",
         200: "#E5E7EB",
@@ -55,6 +54,7 @@ module.exports = {
         500: "#374151",
         600: "#1F2937",
         700: "#111827",
+        800: "#000000",
       },
       green: {
         100: "#074E00",

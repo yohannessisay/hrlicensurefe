@@ -3,17 +3,21 @@
     <ol class="list-reset flex">
       <li>
         <router-link to="/menu">
-          <a href="#" :class="isDarkMode?'text-white':'text-main-400'">Home</a>
+          <a href="#" :class="isDarkMode ? 'text-white' : 'text-main-400'"
+            >Home</a
+          >
         </router-link>
       </li>
       <li><span class="text-gray-500 mx-2">/</span></li>
       <li>
         <router-link to="/Applicant/GoodStanding">
-          <a href="#" :class="isDarkMode?'text-white':'text-main-400'">Goodstanding</a>
+          <a href="#" :class="isDarkMode ? 'text-white' : 'text-main-400'"
+            >Goodstanding</a
+          >
         </router-link>
       </li>
       <li><span class="text-gray-500 mx-2">/</span></li>
-      <li :class="isDarkMode?'text-main-400':'text-main-400'">Apply</li>
+      <li :class="isDarkMode ? 'text-main-400' : 'text-main-400'">Apply</li>
     </ol>
   </nav>
 
@@ -45,7 +49,9 @@
             "
           >
             <div>
-              <label :class="isDarkMode?'text-white':'text-main-400'">Applicant Type</label>
+              <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
+                >Applicant Type</label
+              >
               <select
                 class="
                   form-select
@@ -124,7 +130,11 @@
           >
             <div>
               <div class="overflow-hidden shadow-sm">
-                <label for="" :class="isDarkMode?'text-white':'text-main-400'">Applicant Title</label>
+                <label
+                  for=""
+                  :class="isDarkMode ? 'text-white' : 'text-main-400'"
+                  >Applicant Title</label
+                >
 
                 <select
                   class="
@@ -172,7 +182,9 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
           <div class="flex justify-center text-6xl rounded-xl p-2 bg-gray-100">
             <div>
-              <label :class="isDarkMode?'text-white':'text-main-400'">Department</label>
+              <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
+                >Department</label
+              >
               <select
                 class="
                   form-select
@@ -213,7 +225,9 @@
           </div>
           <div class="flex justify-center text-6xl rounded-xl p-2 bg-gray-100">
             <div>
-              <label :class="isDarkMode?'text-white':'text-main-400'">Education Level</label>
+              <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
+                >Education Level</label
+              >
               <select
                 class="
                   form-select
@@ -267,7 +281,9 @@
             "
           >
             <div class="mb-4">
-              <label :class="isDarkMode?'text-white':'text-main-400'">Profession</label>
+              <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
+                >Profession</label
+              >
               <select
                 class="
                   form-select
@@ -312,7 +328,9 @@
             </div>
 
             <div v-show="showOtherProfession">
-              <label :class="isDarkMode?'text-white':'text-main-400'">Other Profession</label>
+              <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
+                >Other Profession</label
+              >
               <input
                 type="text"
                 v-model="generalInfo.otherProfessionType"
@@ -345,7 +363,9 @@
             </div>
 
             <div v-show="showOtherProfession">
-              <label :class="isDarkMode?'text-white':'text-main-400'">Other Profession Amharic</label>
+              <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
+                >Other Profession Amharic</label
+              >
               <input
                 type="text"
                 v-model="generalInfo.otherProfessionTypeAmharic"
@@ -380,7 +400,9 @@
 
           <div class="flex justify-center text-6xl rounded-xl p-2 bg-gray-100">
             <div>
-              <label :class="isDarkMode?'text-white':'text-main-400'">Applicant Position</label>
+              <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
+                >Applicant Position</label
+              >
               <select
                 class="
                   form-select
@@ -423,10 +445,19 @@
     </div>
 
     <!-- region -->
-    <div v-if="showLocation" :class="isDarkMode?'pt-8 mt-12 rounded bg-secondaryDark shadow-lg':'pt-8 mt-12 rounded bg-white shadow-lg'">
+    <div
+      v-if="showLocation"
+      :class="
+        isDarkMode
+          ? 'pt-8 mt-12 rounded bg-secondaryDark shadow-lg'
+          : 'pt-8 mt-12 rounded bg-white shadow-lg'
+      "
+    >
       <div class="flex">
         <div class="flex flex-col mb-medium w-2/5 ml-medium mr-12">
-          <label :class="isDarkMode?'text-white':'text-main-400'">Region</label>
+          <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
+            >Region</label
+          >
           <select
             class="
               form-select
@@ -463,7 +494,9 @@
           </select>
         </div>
         <div class="flex flex-col mb-medium w-2/5 mr-12">
-          <label :class="isDarkMode?'text-white':'text-main-400'">Zone</label>
+          <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
+            >Zone</label
+          >
           <select
             class="
               form-select
@@ -501,7 +534,9 @@
       </div>
       <div class="flex">
         <div class="flex flex-col mb-medium w-2/5 ml-medium mr-12">
-          <label :class="isDarkMode?'text-white':'text-main-400'">Woreda</label>
+          <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
+            >Woreda</label
+          >
           <select
             class="
               form-select
@@ -541,7 +576,13 @@
     <!-- end -->
 
     <!-- GS details -->
-    <div :class="isDarkMode?'mt-12 rounded-sm bg-secondaryDark shadow-lg mb-8':'mt-12 rounded-sm bg-white shadow-lg mb-8'">
+    <div
+      :class="
+        isDarkMode
+          ? 'mt-12 rounded-sm bg-secondaryDark shadow-lg mb-8'
+          : 'mt-12 rounded-sm bg-white shadow-lg mb-8'
+      "
+    >
       <div class="container mx-auto">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
           <div
@@ -549,10 +590,11 @@
           >
             <div>
               <div class="overflow-hidden shadow-sm">
-                <label for="" :class="isDarkMode?'text-white':'text-main-400'"
+                <label
+                  for=""
+                  :class="isDarkMode ? 'text-white' : 'text-main-400'"
                   >Organization Letter written for</label
                 >
-
                 <input
                   type="text"
                   v-model="generalInfo.whomGoodStandingFor"
@@ -582,6 +624,7 @@
                   placeholder=""
                   required
                 />
+               
               </div>
             </div>
           </div>
@@ -591,25 +634,24 @@
           >
             <div>
               <div class="overflow-hidden shadow-sm">
-                <label for="" :class="isDarkMode?'text-white':'text-main-400'"
+                <label
+                  for=""
+                  :class="isDarkMode ? 'text-white' : 'text-main-400'"
                   >Who Issued Previous License</label
                 >
 
-                <input
-                  type="text"
-                  v-model="generalInfo.whoIssued"
+                <select
                   class="
+                    form-select
                     appearance-none
                     block
-                    xl:w-64
-                    md:w-64
-                    sm:w-64
+                    max-w-3xl
                     px-3
                     py-1.5
                     text-base
                     font-normal
                     text-gray-700
-                    hover:text-main-500 hover:border-main-500
+                    bg-white bg-clip-padding bg-no-repeat
                     border border-solid border-gray-300
                     rounded
                     transition
@@ -617,13 +659,20 @@
                     m-0
                     focus:text-gray-700
                     focus:bg-white
-                    focus:border-main-400
+                    focus:border-blue-600
                     focus:outline-none
                   "
-                  autocomplete="off"
-                  placeholder=""
+                  v-model="generalInfo.whoIssuedId"
                   required
-                />
+                >
+                  <option
+                    v-for="region in regions"
+                    v-bind:key="region.id"
+                    v-bind:value="region"
+                  >
+                    {{ region.name }}
+                  </option>
+                </select>
               </div>
             </div>
           </div>
@@ -646,7 +695,9 @@
           >
             <div>
               <div class="overflow-hidden shadow-sm">
-                <label for="" :class="isDarkMode?'text-white':'text-main-400'"
+                <label
+                  for=""
+                  :class="isDarkMode ? 'text-white' : 'text-main-400'"
                   >License Registration Number</label
                 >
 
@@ -686,7 +737,11 @@
           <div class="flex justify-center text-6xl rounded-xl p-2 bg-gray-100">
             <div>
               <div class="overflow-hidden shadow-sm">
-                <label for="" :class="isDarkMode?'text-white':'text-main-400'">License Issued Date</label>
+                <label
+                  for=""
+                  :class="isDarkMode ? 'text-white' : 'text-main-400'"
+                  >License Issued Date</label
+                >
 
                 <input
                   type="date"
@@ -807,7 +862,7 @@ export default {
       residenceWoredaId: "",
       whomGoodStandingFor: "",
       licenseIssuedDate: "",
-      whoIssued: "",
+      whoIssuedId: {},
       licenseRegistrationNumber: "",
       professionType: { professionTypeId: "", educationLevelId: "" },
       applicantPositionId: "",
@@ -878,6 +933,7 @@ export default {
           zones.value = zonesResult;
         });
     };
+
     const checkOtherProfession = () => {
       if (
         generalInfo.value.professionTypeId &&
@@ -1003,13 +1059,13 @@ export default {
           licenseIssuedDate: generalInfo.value.licenseIssuedDate
             ? generalInfo.value.licenseIssuedDate
             : null,
-          whoIssued: generalInfo.value.whoIssued
-            ? generalInfo.value.whoIssued
+            whoIssuedId: generalInfo.value.whoIssuedId
+            ? generalInfo.value.whoIssuedId.id
             : "",
           licenseRegistrationNumber: generalInfo.value.licenseRegistrationNumber
             ? generalInfo.value.licenseRegistrationNumber
             : "",
-            professionType: {
+          professionType: {
             professionTypeId: generalInfo.value
               ? generalInfo.value.professionTypeId.id
               : null,
@@ -1028,7 +1084,7 @@ export default {
             ? generalInfo.value.expertLevelId
             : null,
           islegal: true,
-   
+
           departmentId: generalInfo.value.departmentId.id
             ? generalInfo.value.departmentId.id
             : null,

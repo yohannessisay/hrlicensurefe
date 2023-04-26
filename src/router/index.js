@@ -243,22 +243,26 @@ const routes = [
   {
     path: "/Applicant/Renewal/inReview",
     name: "ApplicantRenewalInReview",
-    component: () => import("../components/Applicant/Renewal/inReview/inReview.vue")
+    component: () =>
+      import("../components/Applicant/Renewal/inReview/inReview.vue")
   },
   {
     path: "/Applicant/Renewal/returned",
     name: "ApplicantRenewalReturned",
-    component: () => import("../components/Applicant/Renewal/returned/returned.vue")
+    component: () =>
+      import("../components/Applicant/Renewal/returned/returned.vue")
   },
   {
     path: "/Applicant/Renewal/suspended",
     name: "ApplicantRenewalSuspended",
-    component: () => import("../components/Applicant/Renewal/suspended/suspended.vue")
+    component: () =>
+      import("../components/Applicant/Renewal/suspended/suspended.vue")
   },
   {
     path: "/Applicant/Renewal/revoked",
     name: "ApplicantRenewalRevoked",
-    component: () => import("../components/Applicant/Renewal/revoked/revoked.vue")
+    component: () =>
+      import("../components/Applicant/Renewal/revoked/revoked.vue")
   },
   //Applicant Side Good Standing
   {
@@ -283,7 +287,9 @@ const routes = [
     path: "/Applicant/GoodStanding/submitted/detail/:id",
     name: "ApplicantGoodStandingSubmittedDetail",
     component: () =>
-      import("../components/Applicant/GoodStanding/submitted/submittedDetail.vue")
+      import(
+        "../components/Applicant/GoodStanding/submitted/submittedDetail.vue"
+      )
   },
   {
     path: "/Applicant/GoodStanding/assigned",
@@ -291,14 +297,14 @@ const routes = [
     component: () =>
       import("../components/Applicant/GoodStanding/assigned/assigned.vue")
   },
- 
+
   {
     path: "/Applicant/GoodStanding/withdraw",
     name: "ApplicantGoodStandingWithdraw",
     component: () =>
       import("../components/Applicant/GoodStanding/withdraw/withdraw.vue")
   },
- 
+
   {
     path: "/Applicant/GoodStanding/declined",
     name: "ApplicantDeclined",
@@ -324,15 +330,12 @@ const routes = [
       import("../components/Applicant/GoodStanding/draft/draftDetail.vue")
   },
 
-    //Applicant Profile Management
-    {
-      path: "/applicant/profile",
-      name: "ApplicantProfileManagement",
-      component: () =>
-        import(
-          "../components/Applicant/Profile/profile.vue"
-        )
-    },
+  //Applicant Profile Management
+  {
+    path: "/applicant/profile",
+    name: "ApplicantProfileManagement",
+    component: () => import("../components/Applicant/Profile/profile.vue")
+  },
 
   /******************************************************************************************************************************************/
   /**************1-END OF APPLICANT SIDE ROUTES*****************/
@@ -446,8 +449,6 @@ const routes = [
         "../components/Reviewer/HomeComponents/NewLicense/InReview/inReviewEvaluation.vue"
       )
   },
-
-  
 
   //Admin Renewal Section
   {
@@ -581,11 +582,11 @@ const routes = [
       )
   },
   {
-    path: "/admin/goodStanding/licensed",
-    name: "GoodStandingLicensed",
+    path: "/admin/goodStanding/printed",
+    name: "GoodStandingPrinted",
     component: () =>
       import(
-        "../components/Reviewer/HomeComponents/GoodStanding/Licensed/licensed.vue"
+        "../components/Reviewer/HomeComponents/GoodStanding/Printed/printed.vue"
       )
   },
   {
@@ -756,11 +757,9 @@ const routes = [
     path: "/admin/profile",
     name: "AdminProfileManagement",
     component: () =>
-      import(
-        "../components/Reviewer/HomeComponents/Profile/profile.vue"
-      )
-  },
-  
+      import("../components/Reviewer/HomeComponents/Profile/profile.vue")
+  }
+
   /******************************************************************************************************************************************/
   /**************End of routes*****************/
   /******************************************************************************************************************************************/
@@ -780,8 +779,8 @@ router.beforeEach(async (to, from, next) => {
     next("/admin/list");
   }
   if (to.path != "/Applicant/NewLicense") {
-    window.localStorage.removeItem("NLApplicationData"); 
-    window.indexedDB.deleteDatabase("NLdocumentUploads"); 
+    window.localStorage.removeItem("NLApplicationData");
+    window.indexedDB.deleteDatabase("NLdocumentUploads");
   }
   if (to.path != "/Applicant/Renewal") {
     window.localStorage.removeItem("RNApplicationData");
@@ -801,11 +800,11 @@ router.beforeEach(async (to, from, next) => {
     next();
   } else if (
     !auth &&
-    to.path !== "/landing" &&
-    to.path !== "/" &&
-    to.path !== "/verifyOTP" &&
-    to.path !== "/admin" &&
-    to.name !== "scannedCertifiedUser"
+    to.path != "/landing" &&
+    to.path != "/" &&
+    to.path != "/verifyOTP" &&
+    to.path != "/admin" &&
+    to.name != "scannedCertifiedUser"
   )
     next("/landing");
   else next();
@@ -815,13 +814,15 @@ router.beforeResolve((to, from, next) => {
   // If this isn't an initial page load.
   if (to.name) {
     // Start the route progress bar.
+    // eslint-disable-next-line no-undef
     NProgress.start();
   }
   next();
 });
 
-router.afterEach((to, from) => {
+router.afterEach(() => {
   // Complete the animation of the route progress bar.
+  // eslint-disable-next-line no-undef
   NProgress.done();
 });
 

@@ -20,11 +20,13 @@
     aria-hidden="true"
   >
     <div
-      class="
-        modal-dialog modal-dialog-centered modal-xl
-        relative
-        w-auto
-        pointer-events-none
+      :class="
+        finalData &&
+        finalData.data &&
+        finalData.data.applicantType &&
+        finalData.data.applicantType.code == 'ETH'
+          ? 'modal-dialog modal-dialog-centered modal-xl relative w-auto pointer-events-none'
+          : 'modal-dialog modal-dialog-centered modal-lg  relative w-auto pointer-events-none'
       "
     >
       <div
@@ -52,8 +54,16 @@
             rounded-t-md
           "
         ></div>
-
-        <div class="modal-body relative p-4">
+        <!-- if applicant is ethiopian -->
+        <div
+          v-if="
+            finalData &&
+              finalData.data &&
+              finalData.data.applicantType &&
+              finalData.data.applicantType.code == 'ETH'
+          "
+          class="modal-body relative p-4"
+        >
           <!-- if professions are less than 3 -->
 
           <div class="vld-parent">
@@ -1109,6 +1119,389 @@
           <!-- End of professions that are greater than 3 part-->
         </div>
 
+        <!-- end of applicant as ethiopian -->
+        <!-- if applicant is foreigner -->
+        <div
+          v-if="
+            finalData &&
+              finalData.data &&
+              finalData.data.applicantType &&
+              finalData.printType != 'externship' &&
+              finalData.printType != 'temporary' &&
+              (finalData.data.applicantType.code == 'ETHABRO' ||
+                finalData.data.applicantType.code == 'FOR')
+          "
+          class="p-8 m-8 "
+          id="foreignersPrintedDiv"
+        >
+          <h2 class="mt-8" contenteditable="true">
+            ለ፡____________________________________
+          </h2>
+          <p class=" mt-12 p-2 tracking-widest">
+            ስለ ውጭ ሀገር የጤና ባለሙያዎች ምዝገባ ጉዳይ በቀን
+            <span class="text-yellow-300">
+              {{
+                finalData && finalData.data && finalData.data.certifiedDate
+                  ? finalData.data.certifiedDate.slice(0, 10)
+                  : ""
+              }}
+            </span>
+            በቁጥር
+            <span class="text-yellow-300">
+              {{
+                finalData && finalData.data && finalData.data.newLicenseCode
+                  ? finalData.data.newLicenseCode
+                  : ""
+              }}
+            </span>
+            የተጻፈውን ደብዳቤ ይመለከታል፡፡
+          </p>
+          <p class="p-2 tracking-widest ">
+            በቀረበው ጥያቄ መሰረት የተጠቃሾቹ የትምህርት ማስረጃ ከተገመገመ በኋላ በስማቸው ትይዩ በተጠቀሰው ስያሜ ከ
+            <span class="text-yellow-300">
+              {{
+                finalData && finalData.data && finalData.data.certifiedDate
+                  ? finalData.data.certifiedDate.slice(0, 10)
+                  : ""
+              }} </span
+            >.ዓ.ም ጀምሮ ለ
+            <span class="text-yellow-300">
+              {{
+                finalData &&
+                finalData.data &&
+                finalData.data.licenseExpirationDate
+                  ? Number(finalData.data.licenseExpirationDate.slice(0, 4)) -
+                    Number(new Date().toISOString().slice(0, 4))
+                  : ""
+              }}
+            </span>
+            ዓመት የተመዘገቡ መሆኑንና ከ
+            <span class="text-yellow-300">
+              {{
+                finalData &&
+                finalData.data &&
+                finalData.data.licenseExpirationDate
+                  ? Number(finalData.data.licenseExpirationDate.slice(0, 4)) -
+                    Number(new Date().toISOString().slice(0, 4))
+                  : ""
+              }}
+            </span>
+            ዓመት በኋላ በሀገር ውስጥ ካሉ ፈቃዳቸውን ማደስ እንደሚገባ እየገለጽን ይህን ፈቃድ ሰጥተናቸዋል፡፡
+          </p>
+
+          <div class="grid justify-items-center mt-8">
+            <table class=" border text-center text-sm font-light ">
+              <thead class="border-b font-medium bg-primary-200 ">
+                <tr>
+                  <th scope="col" class="border-r px-6 py-4 ">
+                    #ተ.ቁ
+                  </th>
+                  <th
+                    scope="col"
+                    class="border-r px-6 py-4 dark:border-neutral-500"
+                  >
+                    የስም ዝርዝር
+                  </th>
+                  <th
+                    scope="col"
+                    class="border-r px-6 py-4 dark:border-neutral-500"
+                  >
+                    የሙያ ስያሜ
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  class="border-b dark:border-neutral-500"
+                  v-for="(educations, index) in finalData &&
+                  finalData.data &&
+                  finalData.data.educations
+                    ? finalData.data.educations
+                    : []"
+                  :key="educations.id"
+                >
+                  <td
+                    class="whitespace-nowrap border-r px-6 py-4 font-medium dark:border-neutral-500"
+                  >
+                    {{ (index += 1) }}
+                  </td>
+                  <td
+                    class="whitespace-nowrap border-r px-6 py-4 text-yellow-300"
+                  >
+                    {{
+                      finalData && finalData.data && finalData.data.profile
+                        ? finalData.data.profile.name +
+                          " " +
+                          finalData.data.profile.fatherName +
+                          " " +
+                          finalData.data.profile.grandFatherName
+                        : []
+                    }}
+                  </td>
+                  <td
+                    class="whitespace-nowrap border-r px-6 py-4 text-yellow-300"
+                  >
+                    {{
+                      educations &&
+                      educations.isDropped != true &&
+                      educations.professionType
+                        ? educations.professionType.name
+                        : ""
+                    }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="text-left mt-12"></div>
+          <h5>ግልባጭ</h5>
+          <h5>ለ፡ብቃትና ሰው ሀብት አስተዳደር ስራ አስፈጻሚ አዲስ አበባ</h5>
+          <h5 class="mt-8 text-right">//ከሰላምታ ጋር//</h5>
+        </div>
+        <!-- end of applicant as foreigner -->
+
+        <!-- if question being asked is externship -->
+        <div
+          v-if="
+            finalData &&
+              finalData.printType &&
+              finalData.printType != 'temporary' &&
+              finalData.printType == 'externship'
+          "
+          class="p-8 m-8 "
+          id="externshipPrintedDiv"
+        >
+          <h2 contenteditable="true">ለ፡_________________________</h2>
+          <p>አዲስ አበባ</p>
+
+          <p class="p-4 mt-8">
+            <span class="ml-4">ከዚህ</span> በታች
+            <span contenteditable="true">ስሟ/ሙ</span> በሰንጠረዥ የተመለከቱት ባለሙያ በ
+            <span contenteditable="true" class="text-yellow-300 font-bold">
+              __________________
+            </span>
+            ከሚገኘው
+            <span class="text-yellow-300 font-bold">{{
+              finalData.data && finalData.data.educations
+                ? finalData.data.educations[0].institution.name
+                : ""
+            }}</span>
+            የህክምና ትምህርቷን
+            <span contenteditable="true" class="text-yellow-300 font-bold"
+              >ስትከታተል/ሲከታተል ቆይታ/ቶ</span
+            >
+            ኤክስተርንሺፕ ሀገር ውስጥ ለመስራት በቀን ባቀረቡት ማመልከቻ ጠይቀዋል፡፡ በዚህም መሠረት ጉዳያቸው በ
+            <span contenteditable="true" class="text-yellow-300 font-bold"
+              >_____________</span
+            >
+            ቀርቦ ከታየ ከተገመገመ በኃላ To Work externship as a
+            <span contenteditable="true" class="text-yellow-300 font-bold"
+              >_____________</span
+            >በሚል ፀድቆቸው ተመዝገበዋል፡፡ ስለዚህም ልምምዱን ከ
+            <span contenteditable="true" class="text-yellow-300 font-bold"
+              >___/___/___</span
+            >
+            ጀምሮ ለ
+            <span contenteditable="true" class="text-yellow-300 font-bold"
+              >_____________</span
+            >እንዲከታተሉ የተመደቡ መሆኑን እየገለጽን፤ ሆስፒታሉ በአንድ አመት መጨረሻ አስፈላጊውን ሁሉ በመፈጸም
+            የባለሙያዋን ውጤቱን እንድታሳውቁን እንጠይቃለን፡፡
+          </p>
+
+          <div class="grid justify-items-center mt-8">
+            <table class=" border text-center text-sm font-light ">
+              <thead class="border-b font-medium bg-primary-200 ">
+                <tr>
+                  <th scope="col" class="border-r px-6 py-4 ">
+                    #ተ.ቁ
+                  </th>
+                  <th
+                    scope="col"
+                    class="border-r px-6 py-4 dark:border-neutral-500"
+                  >
+                    የስም ዝርዝር
+                  </th>
+                  <th
+                    scope="col"
+                    class="border-r px-6 py-4 dark:border-neutral-500"
+                  >
+                    የሙያ ስያሜ
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  class="border-b dark:border-neutral-500"
+                  v-for="(educations, index) in finalData &&
+                  finalData.data &&
+                  finalData.data.educations
+                    ? finalData.data.educations
+                    : []"
+                  :key="educations.id"
+                >
+                  <td
+                    class="whitespace-nowrap border-r px-6 py-4 font-medium dark:border-neutral-500"
+                  >
+                    {{ (index += 1) }}
+                  </td>
+                  <td
+                    class="whitespace-nowrap border-r px-6 py-4 text-yellow-300"
+                  >
+                    {{
+                      finalData && finalData.data && finalData.data.profile
+                        ? finalData.data.profile.name +
+                          " " +
+                          finalData.data.profile.fatherName +
+                          " " +
+                          finalData.data.profile.grandFatherName
+                        : []
+                    }}
+                  </td>
+                  <td
+                    class="whitespace-nowrap border-r px-6 py-4 text-yellow-300"
+                  >
+                    {{
+                      educations &&
+                      educations.isDropped != true &&
+                      educations.professionType
+                        ? educations.professionType.name
+                        : ""
+                    }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="text-left mt-12"></div>
+
+          <h5 class="mt-8 text-right">//ከሰላምታ ጋር//</h5>
+        </div>
+        <!-- end of question being asked is externship-->
+
+        <!-- temp license -->
+        <div
+          v-if="
+            finalData &&
+              finalData.printType &&
+              finalData.printType == 'temporary' &&
+              finalData.printType != 'externship'
+          "
+          class="p-8 m-8 "
+          id="temporaryPrintedDiv"
+        >
+          <h2 contenteditable="true">ለ__________________________</h2>
+          <div class="text-center mb-8">
+            <h2 class="mt-8">ስለ ውጭ ሃገር የጤና ባለሙያዎች ምዝገባ ጉዳይ</h2>
+          </div>
+          በቀን
+          <span class="text-yellow-300">
+            {{
+              finalData && finalData.data && finalData.data.certifiedDate
+                ? finalData.data.certifiedDate.slice(0, 10)
+                : ""
+            }}
+          </span>
+          በቁጥር
+          <span class="text-yellow-300" contenteditable="true">
+            ___________________
+          </span>
+          የተጻፈውን ደብዳቤ ይመለከታል። በቀረበው ጥያቄ መሰረት የተጠቃሹ የትምህርት ማስረጃ ከተገመገመ በሁዋላ በስማችው
+          ትይዩ በተጠቀሰው ስያሜ
+          <p>
+            ከ <span contenteditable="true">___/___/___</span> ዓ.ም ጀምሮ ለ
+            <span class="text-yellow-300">
+              {{
+                finalData &&
+                finalData.data &&
+                finalData.data.licenseExpirationDate
+                  ? Number(finalData.data.licenseExpirationDate.slice(0, 4)) -
+                    Number(new Date().toISOString().slice(0, 4))
+                  : ""
+              }}</span
+            >
+            የተመዘገቡ መሆኑን እና ከ
+            <span class="text-yellow-300">
+              {{
+                finalData &&
+                finalData.data &&
+                finalData.data.licenseExpirationDate
+                  ? Number(finalData.data.licenseExpirationDate.slice(0, 4)) -
+                    Number(new Date().toISOString().slice(0, 4))
+                  : ""
+              }}</span
+            >
+            በሁዋላ በሃገር ውስጥ ካሉ ፈቃዳቸው ማደስ እንደሚገባ እየገለጽን ይህን ፈቃድ ሰጥተናችዋል።
+          </p>
+
+          <div class="grid justify-items-center mt-8">
+            <table class=" border text-center text-sm font-light ">
+              <thead class="border-b font-medium bg-primary-200 ">
+                <tr>
+                  <th scope="col" class="border-r px-6 py-4 ">
+                    #ተ.ቁ
+                  </th>
+                  <th
+                    scope="col"
+                    class="border-r px-6 py-4 dark:border-neutral-500"
+                  >
+                    የስም ዝርዝር
+                  </th>
+                  <th
+                    scope="col"
+                    class="border-r px-6 py-4 dark:border-neutral-500"
+                  >
+                    የሙያ ስያሜ
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  class="border-b dark:border-neutral-500"
+                  v-for="(educations, index) in finalData &&
+                  finalData.data &&
+                  finalData.data.educations
+                    ? finalData.data.educations
+                    : []"
+                  :key="educations.id"
+                >
+                  <td
+                    class="whitespace-nowrap border-r px-6 py-4 font-medium dark:border-neutral-500"
+                  >
+                    {{ (index += 1) }}
+                  </td>
+                  <td
+                    class="whitespace-nowrap border-r px-6 py-4 text-yellow-300"
+                  >
+                    {{
+                      finalData && finalData.data && finalData.data.profile
+                        ? finalData.data.profile.name +
+                          " " +
+                          finalData.data.profile.fatherName +
+                          " " +
+                          finalData.data.profile.grandFatherName
+                        : []
+                    }}
+                  </td>
+                  <td
+                    class="whitespace-nowrap border-r px-6 py-4 text-yellow-300"
+                  >
+                    {{
+                      educations &&
+                      educations.isDropped != true &&
+                      educations.professionType
+                        ? educations.professionType.name
+                        : ""
+                    }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="text-left mt-12"></div>
+
+          <h5 class="mt-8 text-right">//ከሰላምታ ጋር//</h5>
+        </div>
+        <!-- end of temp license -->
         <div
           class="
             modal-footer
@@ -1122,7 +1515,7 @@
           <button
             v-if="
               modalData && modalData.data
-                ? modalData.data.isReprint == false
+                ? modalData.data.isLicenseGenerated == false
                 : false
             "
             type="button"
@@ -1376,15 +1769,15 @@ import { toEthiopian } from "../../../Configurations/dateConvertor";
 import STATIC_CERTIFICATE_URL from "../../../../../sharedComponents/constants/message.js";
 import { useToast } from "vue-toastification";
 import moment from "moment";
-import Loading from "vue3-loading-overlay";
+import Loading from "vue3-loading-overlay"; 
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
-
+import html2pdf from "html2pdf.js";
 export default {
   computed: {
     moment: () => moment,
     AmharicFont: () => AmharicFont,
     toEthiopian: () => toEthiopian,
-    STATIC_CERTIFICATE_URL: () => STATIC_CERTIFICATE_URL
+    STATIC_CERTIFICATE_URL: () => STATIC_CERTIFICATE_URL,
   },
   props: ["modalData"],
   components: { Loading },
@@ -1431,7 +1824,7 @@ export default {
           )
         : props.modalData.newEducations
     );
-
+    let isForeignApplicant = ref(false);
     const updateLicenseGenerated = () => {
       finalData.value.data
         ? (finalData.value.data.isLicenseGenerated = true)
@@ -1439,33 +1832,38 @@ export default {
 
       let req = {
         action: null,
-        data: { ...finalData.value.data }
+        data: { ...finalData.value.data },
       };
 
       editApplication(req);
     };
 
-    const editApplication = req => {
+    const editApplication = (req) => {
       delete req.data.educations;
       store
         .dispatch("reviewer/editNewLicense", req)
-        .then(res => {
+        .then((res) => {
           isLoading.value = false;
           if (res.statusText == "Created") {
             showGenerateModal.value = false;
 
             let smsMessage = req.data
-              ? "Dear applicant your applied new license of number " +
+              ? 
+              "Dear applicant your applied new license of number " +
                 req.data.newLicenseCode +
-                " is printed and ready. Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
+                " is printed and ready. You can pick up your license on date " +
+                retrivalDate.value
+                ? retrivalDate.value.slice(0, 10)
+                : "" +
+                  "  Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
               : "";
             let smsData = {
               recipients: [
                 req.data && req.data.applicant
                   ? "251" + req.data.applicant.phoneNumber
-                  : ""
+                  : "",
               ],
-              message: smsMessage ? smsMessage : ""
+              message: smsMessage ? smsMessage : "",
             };
 
             store
@@ -1476,11 +1874,11 @@ export default {
                   position: "bottom-center",
                   pauseOnFocusLoss: true,
                   pauseOnHover: true,
-                  icon: true
+                  icon: true,
                 });
                 setTimeout(() => {
                   window.location.reload();
-                }, 3000);
+                }, 1000);
               })
               .catch(() => {
                 toast.error("Sms is not sent", {
@@ -1488,7 +1886,7 @@ export default {
                   position: "bottom-center",
                   pauseOnFocusLoss: true,
                   pauseOnHover: true,
-                  icon: true
+                  icon: true,
                 });
                 setTimeout(() => {
                   window.location.reload();
@@ -1501,11 +1899,11 @@ export default {
               position: "bottom-center",
               pauseOnFocusLoss: true,
               pauseOnHover: true,
-              icon: true
+              icon: true,
             });
           }
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
         });
     };
@@ -1522,31 +1920,89 @@ export default {
         staticUrl + "/" + applicationType + "/" + userId + "/" + applicationId;
       store
         .dispatch("reviewer/getQrCode", qrParam)
-        .then(res => {
+        .then((res) => {
           imageSrc.value = res.data.data;
         })
         .finally(() => {
           downloadPdf();
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
         });
     };
     const generateRetrival = () => {
       if (retrivalDate.value != "") {
         finalData.value.data.retrivalDate = retrivalDate.value;
-        generate();
+        finalData.value.data &&
+        finalData.value.data.applicantType &&
+        finalData.value.data.applicantType.code == "ETH"
+          ? generate()
+          : generateForeigner();
       } else {
         toast.error("Please select retrival date", {
           timeout: 5000,
           position: "bottom-center",
           pauseOnFocusLoss: true,
           pauseOnHover: true,
-          icon: true
+          icon: true,
         });
       }
     };
+
+    const generateForeigner = async () => {
+      var data;
+
+      if (finalData.value && finalData.value.printType) {
+        switch (finalData.value.printType) {
+          case "externship":
+            data = document.getElementById("externshipPrintedDiv");
+            break;
+          case "temporary":
+            data = document.getElementById("temporaryPrintedDiv");
+            break;
+          case "foreigners":
+            data = document.getElementById("foreignersPrintedDiv");
+            break;
+
+          default:
+            break;
+        }
+      }
+
+      var element = data;
+      var opt = {
+        margin: 1,
+        filename: "myfile.pdf",
+        image: { type: "jpeg", quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
+      };
+
+      html2pdf()
+        .set(opt)
+        .from(element)
+        .save(
+          finalData.value &&
+            finalData.value.profile &&
+            finalData.value.profile.name
+            ? finalData.value.profile.name +
+                " " +
+                new Date().toISOString().slice(0, 10)
+            : ""
+        );
+
+      updateLicenseGenerated();
+    };
     const generate = () => {
+      if (
+        finalData.value.data &&
+        finalData.value.data.applicantType &&
+        finalData.value.data.applicantType.code != "ETH"
+      ) {
+        generateForeigner();
+        return;
+      }
+
       isLoading.value = true;
       certifiedUser.value = props.modalData.profile;
       certificateDetail.value = props.modalData.data;
@@ -1557,7 +2013,7 @@ export default {
       );
       certificateDetail.value.educations = certificateDetail.value.educations
         ? certificateDetail.value.educations.filter(
-            edu => edu.isDropped != true
+            (edu) => edu.isDropped != true
           )
         : {};
       applicationStatus.value = props.modalData.data.applicationStatus.code;
@@ -1727,9 +2183,7 @@ export default {
                 : certificateDetail.value.educations[i].otherProfessionType
                 ? `${
                     certificateDetail.value.educations[i].prefix
-                      ? "(" +
-                        certificateDetail.value.educations[i].prefix.name +
-                        ")"
+                      ? certificateDetail.value.educations[i].prefix.name
                       : ""
                   }   ${
                     certificateDetail.value.educations[i].otherProfessionType
@@ -1757,9 +2211,7 @@ export default {
                 : certificateDetail.value.educations[i].otherProfessionType
                 ? `${
                     certificateDetail.value.educations[i].prefix
-                      ? "(" +
-                        certificateDetail.value.educations[i].prefix.name +
-                        ")"
+                      ? certificateDetail.value.educations[i].prefix.name
                       : ""
                   }   ${
                     certificateDetail.value.educations[i].otherProfessionType
@@ -1787,9 +2239,7 @@ export default {
                 certificateDetail.value.educations[i].professionType.name
                   ? `${
                       certificateDetail.value.educations[i].prefix
-                        ? "(" +
-                          certificateDetail.value.educations[i].prefix.name +
-                          ")"
+                        ? certificateDetail.value.educations[i].prefix.name
                         : ""
                     }   ${
                       certificateDetail.value.educations[i].otherProfessionType
@@ -2007,11 +2457,11 @@ export default {
         : null;
       const doc = new jsPDF({
         orientation: "landscape",
-        filters: ["ASCIIHexEncode"]
+        filters: ["ASCIIHexEncode"],
       });
       const doc2 = new jsPDF({
         orientation: "landscape",
-        filters: ["ASCIIHexEncode"]
+        filters: ["ASCIIHexEncode"],
       });
       let defaultCode = "";
       let defaultBackground = "";
@@ -2096,9 +2546,9 @@ export default {
           doc.addImage(imageSrc.value, "JPG", 246, 14, 35, 35);
           if (userImage != null) {
             let path = {
-              path: userImage
+              path: userImage,
             };
-            store.dispatch("profile/converProfilePicture", path).then(res => {
+            store.dispatch("profile/converProfilePicture", path).then((res) => {
               doc.addImage(res.data.data, "JPG", 33, 20, 30, 30);
               doc.setFontSize(10);
               window.open(doc.output("bloburl"));
@@ -2199,9 +2649,9 @@ export default {
         doc2.addImage(imageSrc.value, "JPG", 246, 14, 35, 35);
         if (userImage !== null) {
           let path = {
-            path: userImage
+            path: userImage,
           };
-          store.dispatch("profile/converProfilePicture", path).then(res => {
+          store.dispatch("profile/converProfilePicture", path).then((res) => {
             doc.addImage(res.data.data, "JPG", 33, 20, 30, 30);
             doc2.addImage(res.data.data, "JPG", 33, 20, 30, 30);
             doc.setFontSize(10);
@@ -2236,6 +2686,7 @@ export default {
       isUserFound,
       myRegion,
       generate,
+      isForeignApplicant,
       fullPage,
       educations,
       showGenerateModal,
@@ -2244,11 +2695,12 @@ export default {
       showActionLoading,
       applicationStatus,
       isReprint,
+      finalData,
       retrivalDate,
       generateRetrival,
-      today
+      today,
     };
-  }
+  },
 };
 </script>
 <style scoped>

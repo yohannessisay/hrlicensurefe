@@ -286,8 +286,7 @@ export default {
     const getImage = (profile) => {
       if (!profile) {
         isFirstTime.value = true;
-      } else {
-        console.log(googleApi + profile.profilePicture.filePath);
+      } else { 
         pic.value = googleApi + profile.profilePicture.filePath;
       }
     };

@@ -234,7 +234,7 @@
           <div>
             <span class="text-black sm:text-sm">
               {{
-                localData && localData.whoIssued ? localData.whoIssued : ""
+                localData && localData.whoIssued ? localData.whoIssued.name : ""
               }}</span
             >
           </div>
@@ -761,8 +761,8 @@ export default {
             licenseIssuedDate: generalInfo.value.licenseIssuedDate
               ? generalInfo.value.licenseIssuedDate
               : null,
-            whoIssued: generalInfo.value.whoIssued
-              ? generalInfo.value.whoIssued
+              whoIssuedId: generalInfo.value.whoIssuedId
+              ? generalInfo.value.whoIssuedId.id
               : "",
             licenseRegistrationNumber: generalInfo.value
               .licenseRegistrationNumber

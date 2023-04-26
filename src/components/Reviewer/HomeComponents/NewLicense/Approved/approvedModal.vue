@@ -138,45 +138,57 @@
                             <h2 class="font-extrabold text-2xl mb-1">
                               Personal Info
                             </h2>
-                            <p class="text-gray-500">
-                              <span
-                                class="
+                            <div class="border text-primary-600 rounded-lg p-2">
+                              <p class="text-gray-500">
+                                <span
+                                  class="
                                   font-semibold
                                   text-lg text-primary-700
                                   mb-1
                                 "
-                                >Full Name:</span
-                              >
-                              {{ modalData.name }}
-                            </p>
-                            <p class="text-gray-500">
-                              <span class="font-semibold text-primary-700 mb-1"
-                                >Gender:</span
-                              >
-                              {{ modalData.gender }}
-                            </p>
-                            <p class="text-gray-500">
-                              <span class="font-semibold text-primary-700 mb-1"
-                                >Nationality:</span
-                              >
-                              {{ modalData.nationality }}
-                            </p>
-                            <p class="text-gray-500">
-                              <span class="font-semibold text-primary-700 mb-1"
-                                >Date Of Birth:</span
-                              >
-                              {{
-                                modalData.dateOfBirth
-                                  ? modalData.dateOfBirth.slice(0, 10)
-                                  : ""
-                              }}
-                            </p>
-                            <p class="text-gray-500">
-                              <span class="font-semibold text-primary-700 mb-1"
-                                >Martial Status:</span
-                              >
-                              {{ modalData.maritalStatus }}
-                            </p>
+                                  >Full Name:</span
+                                >
+                                <span class="font-semibold text-grey-800 mb-1">
+                                {{ modalData.name }}</span>
+                              </p>
+                              <p class="text-gray-500">
+                                <span
+                                  class="font-semibold text-primary-700 mb-1"
+                                  >Gender:</span
+                                >
+                                <span class="font-semibold text-grey-800 mb-1">
+                                  {{ modalData.gender }}</span
+                                >
+                              </p>
+                              <p class="text-gray-500">
+                                <span
+                                  class="font-semibold text-primary-700 mb-1"
+                                  >Nationality:</span
+                                >
+                                <span class="font-semibold text-grey-800 mb-1">
+                                {{ modalData.nationality }}</span>
+                              </p>
+                              <p class="text-gray-500">
+                                <span
+                                  class="font-semibold text-primary-700 mb-1"
+                                  >Date Of Birth:</span
+                                >
+                                <span class="font-semibold text-grey-800 mb-1">
+                                {{
+                                  modalData.dateOfBirth
+                                    ? modalData.dateOfBirth.slice(0, 10)
+                                    : ""
+                                }}</span>
+                              </p>
+                              <p class="text-gray-500">
+                                <span
+                                  class="font-semibold text-primary-700 mb-1"
+                                  >Martial Status:</span
+                                >
+                                <span class="font-semibold text-grey-800 mb-1">
+                                {{ modalData.maritalStatus }}</span>
+                              </p>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -211,19 +223,23 @@
                             </div>
                           </div>
                           <div class="grow ml-6">
-                            <h2 class="font-bold mb-1">Contact Info</h2>
+                            <h2 class="font-bold mb-1 text-2xl ">Contact Info</h2>
+                            <div class="border text-primary-600 rounded-lg p-2">
                             <p class="text-gray-500">
                               <span class="font-medium text-primary-700 mb-1"
                                 >Mobile Number:</span
                               >
-                              {{ modalData.mobileNumber }}
+                              <span class="font-semibold text-grey-800 mb-1">
+                              {{ modalData.mobileNumber }}</span>
                             </p>
                             <p class="text-gray-500">
                               <span class="font-medium text-primary-700 mb-1"
                                 >Email:</span
                               >
-                              {{ modalData.email }}
+                              <span class="font-semibold text-grey-800 mb-1">
+                              {{ modalData.email }}</span>
                             </p>
+                          </div>
                           </div>
                         </div>
                       </div>
@@ -257,7 +273,7 @@
                             </div>
                           </div>
                           <div class="grow ml-6 mb-4">
-                            <h2 class="font-bold mb-1">Education Detail</h2>
+                            <h2 class="font-bold mb-1 text-2xl ">Education Detail</h2>
 
                             <div
                               class="
@@ -273,49 +289,57 @@
                                 : []"
                               :key="education.id"
                             >
-                              <p class="text-gray-500">
+                              <p class="">
                                 <span
                                   class="font-semibold text-primary-700 mb-1"
                                   >Department:</span
                                 >
-                                {{
-                                  education.department
-                                    ? education.department.name
-                                    : ""
-                                }}
+                                <span style="color:black">
+                                  {{
+                                    education.department
+                                      ? education.department.name
+                                      : ""
+                                  }}
+                                </span>
                               </p>
                               <p class="text-gray-500">
                                 <span
                                   class="font-semibold text-primary-700 mb-1"
                                   >Education Level:</span
                                 >
-                                {{
-                                  education.educationLevel
-                                    ? education.educationLevel.name
-                                    : ""
-                                }}
+                                <span style="color:black">
+                                  {{
+                                    education.educationLevel
+                                      ? education.educationLevel.name
+                                      : ""
+                                  }}</span
+                                >
                               </p>
                               <p class="text-gray-500">
                                 <span
                                   class="font-semibold text-primary-700 mb-1"
                                   >Profession:</span
                                 >
-                                {{
-                                  education.professionType
-                                    ? education.professionType.name
-                                    : ""
-                                }}
+                                <span style="color:black">
+                                  {{
+                                    education.professionType
+                                      ? education.professionType.name
+                                      : ""
+                                  }}</span
+                                >
                               </p>
                               <p class="text-gray-500">
                                 <span
                                   class="font-semibold text-primary-700 mb-1"
                                   >Institution:</span
                                 >
-                                {{
-                                  education.institution
-                                    ? education.institution.name
-                                    : ""
-                                }}
+                                <span style="color:black">
+                                  {{
+                                    education.institution
+                                      ? education.institution.name
+                                      : ""
+                                  }}</span
+                                >
                               </p>
                             </div>
                           </div>
@@ -402,9 +426,64 @@
                           type="button"
                           data-bs-toggle="modal"
                           data-bs-target="#generatePdf"
+                          @click="changePrintType('foreigners')"
                         >
                           <i class="fa fa-file-text"></i>
-                          Generate PDF
+                          Generate License
+                        </button>
+                        <button
+                          v-if="showGenerate"
+                          class="
+                            inline-block
+                            px-6
+                            py-2.5
+                            bg-yellow-400
+                            text-primary-600
+                            font-medium
+                            text-xs
+                            leading-tight
+                            uppercase
+                            rounded
+                            shadow-lg
+                            hover:bg-white hover:text-primary-600
+                            transition
+                            duration-150
+                            ease-in-out
+                          "
+                          type="button"
+                          data-bs-toggle="modal"
+                          data-bs-target="#generatePdf"
+                          @click="changePrintType('externship')"
+                        >
+                          <i class="fa fa-file-archive"></i>
+                          Externship
+                        </button>
+                        <button
+                          v-if="showGenerate"
+                          class="
+                            inline-block
+                            px-6
+                            py-2.5
+                            bg-primary-400
+                            text-white
+                            font-medium
+                            text-xs
+                            leading-tight
+                            uppercase
+                            rounded
+                            shadow-lg
+                            hover:bg-white hover:text-primary-600
+                            transition
+                            duration-150
+                            ease-in-out
+                          "
+                          type="button"
+                          data-bs-toggle="modal"
+                          data-bs-target="#generatePdf"
+                          @click="changePrintType('temporary')"
+                        >
+                          <i class="fa fa-file-circle-check"></i>
+                          Temporary
                         </button>
                         <button
                           v-if="showPreviousLicense"
@@ -607,6 +686,9 @@ export default {
     const modalData = ref({ educations: [] });
     let result = {};
     let toBeGeneratedProfs = [];
+    const changePrintType = (type) => {
+      modalData.value.printType = type;
+    };
     const check = () => {
       modalData.value = {};
       store
@@ -652,8 +734,10 @@ export default {
                       });
                     }
                   });
-                  modalData.value.previousEducations = [...new Set(toBeGeneratedProfs)];
-                  if (tempEvaluateResult>1 ) {
+                  modalData.value.previousEducations = [
+                    ...new Set(toBeGeneratedProfs),
+                  ];
+                  if (tempEvaluateResult > 1) {
                     showGenerate.value = false;
                     showPreviousLicense.value = true;
                   } else {
@@ -664,9 +748,9 @@ export default {
                   showGenerate.value = true;
                   showPreviousLicense.value = false;
                 }
-              
+
                 if (toBeGeneratedProfs.length == 0) {
-                  modalData.value.educations=result.educations;
+                  modalData.value.educations = result.educations;
                 }
               })
 
@@ -709,7 +793,7 @@ export default {
             modalData.value.profileImage =
               result.profile && result.profile.profilePicture
                 ? googleApi + result.profile.profilePicture.filePath
-                : "";    
+                : "";
             isLoading.value = false;
           }
         });
@@ -731,6 +815,7 @@ export default {
       isLoading,
       modalData,
       googleApi,
+      changePrintType,
     };
   },
 };

@@ -1220,6 +1220,7 @@ export default {
       );
     };
     onMounted(async () => {
+      isLoading.value = true;
       fetchApplicantType();
       fetchDepartments();
       fetchInstitutions();
@@ -1273,6 +1274,7 @@ export default {
             JSON.stringify(res.data.data.educations)
           );
           generalInfo.value.applicantTypeSelected = res.data.data.applicantType;
+          isLoading.value = false;
         });
     });
     return {

@@ -5,25 +5,29 @@
 
   <section class="home-section">
     <!-- Header -->
-    <reviewer-nav-bar>      <ol class="list-reset flex">
-          <li>
-            <router-link to="/admin/review"
-              ><span class="text-primary-600 text-base">Home</span></router-link
-            >
-          </li>
-          <li><span class="text-gray-500 mx-2">/</span></li>
-          <li>
-            <a href="#" class="hover:text-primary-600 text-grey-300"
-              >Renewal</a
-            >
-          </li>
-          <li><span class="text-gray-500 mx-2">/</span></li>
-          <li>
-            <a href="#" class="pointer-events-none text-lg text-grey-300"
-              >Unassigned</a
-            >
-          </li>
-        </ol></reviewer-nav-bar>
+    <reviewer-nav-bar>
+      <ol class="list-reset flex">
+        <li>
+          <router-link to="/admin/review"
+            ><span class="text-primary-600 text-base ">Home</span></router-link
+          >
+        </li>
+        <li><span class="text-gray-500 mx-2">/</span></li>
+        <li>
+          <a
+            href="/admin/newLicense/"
+            class="hover:text-primary-600 text-grey-300"
+            >New License</a
+          >
+        </li>
+        <li><span class="text-gray-500 mx-2">/</span></li>
+        <li>
+          <a href="#" class="pointer-events-none text-lg text-grey-300"
+            >Unassigned</a
+          >
+        </li>
+      </ol></reviewer-nav-bar
+    >
     <!-- Header -->
 
     <!-- Main Content -->
@@ -32,47 +36,13 @@
         <template v-slot:unassigned>
           <div class="container mx-auto px-4 sm:px-8">
             <div class="py-8">
-              <div>
-                <h2 class="text-2xl font-semibold leading-tight">
-                  Unassigned Applications
-                </h2>
-                <input
-                  class="
-                    form-check-input
-                    appearance-none
-                    h-5
-                    w-5
-                    border border-gray-300
-                    rounded-sm
-                    bg-white
-                    checked:bg-blue-600 checked:border-blue-600
-                    focus:outline-none
-                    transition
-                    duration-200
-                    mt-1
-                    align-top
-                    bg-no-repeat bg-center bg-contain
-                    float-left
-                    mr-2
-                    cursor-pointer
-                  "
-                  @change="includeFromOthers((include = !include))"
-                  type="checkbox"
-                  value=""
-                  id="flexCheckDefault"
-                />
-                <label
-                  class="form-check-label inline-block text-gray-800 mt-1"
-                  for="flexCheckDefault"
-                >
-                  Include From Other Regions
-                </label>
-              </div>
-              
               <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
-                   <div class="mb-3 xl:w-full">
-                  <div
-                    class="
+                <div class="p-4 bg-grey-200 mb-4 rounded-lg">
+                  <h1 class="text-2xl mb-1">Filters</h1>
+                  <div class="mb-3 xl:w-full">
+                    <h2 class="text-primary-800 text-lg">Applicant Name</h2>
+                    <div
+                      class="
                       input-group
                       relative
                       flex flex-wrap
@@ -80,10 +50,10 @@
                       w-full
                       mb-4
                     "
-                  >
-                    <input
-                      type="search"
-                      class="
+                    >
+                      <input
+                        type="search"
+                        class="
                         form-control
                         relative
                         flex-auto
@@ -105,17 +75,18 @@
                         focus:border-blue-600
                         focus:outline-none
                       "
-                      placeholder="Start Searching For Name"
-                      aria-label="Search"
-                      aria-describedby="button-addon2"
-                      v-model="searchTerm"
-                    />
-                    <button
-                      class="
-                     inline-block
+                        placeholder="Search Using Applicant's Name"
+                        aria-label="Search"
+                        aria-describedby="button-addon2"
+                        v-model="searchTerm"
+                      />
+                      <button
+                        class="
+                        inline-block
                         px-6
                         py-2
-                        bg-primary-700
+                        bg-primary-600
+                        border-primary-300
                         text-white
                         font-medium
                         text-xs
@@ -123,31 +94,119 @@
                         uppercase
                         rounded
                         shadow-md
-                        hover:bg-white
-                        hover:text-primary-600
-                        hover:border
+                        hover:bg-white hover:text-primary-600  
                         transition
+                        focus:border-blue-600
                         duration-150
                         ease-in-out
                         items-center
                       "
-                    >
-                      <svg
-                        aria-hidden="true"
-                        focusable="false"
-                        data-prefix="fas"
-                        data-icon="search"
-                        class="w-5"
-                        role="img"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 512 512"
+                        @click="searchApplication()"
                       >
-                        <path
-                          fill="currentColor"
-                          d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
-                        ></path>
-                      </svg>
-                    </button>
+                        <svg
+                          aria-hidden="true"
+                          focusable="false"
+                          data-prefix="fas"
+                          data-icon="search"
+                          class="w-5"
+                          role="img"
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 512 512"
+                        >
+                          <path
+                            fill="currentColor"
+                            d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
+                          ></path>
+                        </svg>
+                      </button>
+                    </div>
+                    <h2 class="text-primary-800 text-lg">Applied Date</h2>
+                    <div class="grid grid-cols-4">
+                      <div class="mb-3">
+                        <label for="" class="ml-2">From</label>
+                        <input
+                          v-model="searchTermFromDate"
+                          type="date"
+                          class="
+                        appearance-none
+                        block
+                        w-full
+                        px-6
+                        ml-2
+                        py-2
+                        text-base
+                        font-normal
+                        text-gray-700
+                        bg-white bg-clip-padding bg-no-repeat
+                        border border-solid border-gray-300
+                        rounded
+                        transition
+                        ease-in-out
+                        focus:text-gray-700
+                        focus:bg-white
+                        focus:border-blue-600
+                        focus:outline-none
+                      "
+                          aria-label="Default select example"
+                        />
+                      </div>
+                      <div class="mb-3 ml-2">
+                        <label for="" class="ml-4"> To</label>
+                        <input
+                          type="date"
+                          class="
+                        appearance-none
+                        block
+                        w-full
+                        px-6
+                        ml-4
+                        py-2
+                        text-base
+                        font-normal
+                        text-gray-700
+                        bg-white bg-clip-padding bg-no-repeat
+                        border border-solid border-gray-300
+                        rounded
+                        transition
+                        ease-in-out
+                        focus:text-gray-700
+                        focus:bg-white
+                        focus:border-blue-600
+                        focus:outline-none
+                      "
+                          v-model="searchTermToDate"
+                          aria-label="Default select example"
+                        />
+                      </div>
+                      <div class="ml-8 mt-4">
+                        <button
+                          type="button"
+                          class="
+                        inline-block
+                        px-6
+                        py-2
+                        mt-2
+                        border-2 border-primary-300
+                        text-white
+                        font-medium
+                        text-xs
+                        leading-tight
+                        uppercase
+                        rounded
+                        bg-primary-600
+                        hover:bg-white hover:bg-opacity-5 hover:text-primary-600
+                        focus:outline-none focus:ring-0
+                        transition
+                        duration-150
+                        ease-in-out
+                      "
+                          @click="clearFilters()"
+                        >
+                          <i class="fa fa-close"></i>
+                          Clear Filters
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div
@@ -169,6 +228,7 @@
                     :sortable="unassignedTable.sortable"
                     @is-finished="tableLoadingFinish"
                     @row-clicked="rowClicked"
+                    @do-search="doSearch"
                   ></vue-table-lite>
                   <edit-modal
                     v-if="showModal"
@@ -184,15 +244,13 @@
         <template v-slot:resubmitted>
           <div class="container mx-auto px-4 sm:px-8">
             <div class="py-8">
-              <div>
-                <h2 class="text-2xl font-semibold leading-tight">
-                  Resubmitted Applications
-                </h2>
-              </div>
               <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
-                   <div class="mb-3 xl:w-full">
-                  <div
-                    class="
+                <div class="p-4 bg-grey-200 mb-4 rounded-lg">
+                  <h1 class="text-2xl mb-1">Filters</h1>
+                  <div class="mb-3 xl:w-full">
+                    <h2 class="text-primary-800 text-lg">Applicant Name</h2>
+                    <div
+                      class="
                       input-group
                       relative
                       flex flex-wrap
@@ -200,10 +258,10 @@
                       w-full
                       mb-4
                     "
-                  >
-                    <input
-                      type="search"
-                      class="
+                    >
+                      <input
+                        type="search"
+                        class="
                         form-control
                         relative
                         flex-auto
@@ -225,17 +283,18 @@
                         focus:border-blue-600
                         focus:outline-none
                       "
-                      placeholder="Start Searching For Name"
-                      aria-label="Search"
-                      aria-describedby="button-addon2"
-                      v-model="searchTerm"
-                    />
-                    <button
-                      class="
-                     inline-block
+                        placeholder="Search Using Applicant's Name"
+                        aria-label="Search"
+                        aria-describedby="button-addon2"
+                        v-model="searchTermOthers"
+                      />
+                      <button
+                        class="
+                      inline-block
                         px-6
                         py-2
-                        bg-primary-700
+                        bg-primary-600
+                        border-primary-300
                         text-white
                         font-medium
                         text-xs
@@ -243,31 +302,119 @@
                         uppercase
                         rounded
                         shadow-md
-                        hover:bg-white
-                        hover:text-primary-600
-                        hover:border
+                        hover:bg-white hover:text-primary-600  
                         transition
+                        focus:border-blue-600
                         duration-150
                         ease-in-out
                         items-center
                       "
-                    >
-                      <svg
-                        aria-hidden="true"
-                        focusable="false"
-                        data-prefix="fas"
-                        data-icon="search"
-                        class="w-5"
-                        role="img"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 512 512"
+                        @click="searchApplicationResub()"
                       >
-                        <path
-                          fill="currentColor"
-                          d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
-                        ></path>
-                      </svg>
-                    </button>
+                        <svg
+                          aria-hidden="true"
+                          focusable="false"
+                          data-prefix="fas"
+                          data-icon="search"
+                          class="w-5"
+                          role="img"
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 512 512"
+                        >
+                          <path
+                            fill="currentColor"
+                            d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
+                          ></path>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                  <h2 class="text-primary-800 text-lg">Applied Date</h2>
+                  <div class="grid grid-cols-4">
+                    <div class="mb-3">
+                      <label for="" class="ml-2">From</label>
+                      <input
+                        v-model="searchTermFromDateResub"
+                        type="date"
+                        class="
+                        appearance-none
+                        block
+                        w-full
+                        px-6
+                        ml-2
+                        py-2
+                        text-base
+                        font-normal
+                        text-gray-700
+                        bg-white bg-clip-padding bg-no-repeat
+                        border border-solid border-gray-300
+                        rounded
+                        transition
+                        ease-in-out
+                        focus:text-gray-700
+                        focus:bg-white
+                        focus:border-blue-600
+                        focus:outline-none
+                      "
+                        aria-label="Default select example"
+                      />
+                    </div>
+                    <div class="mb-3 ml-2">
+                      <label for="" class="ml-4"> To</label>
+                      <input
+                        type="date"
+                        class="
+                        appearance-none
+                        block
+                        w-full
+                        px-6
+                        ml-4
+                        py-2
+                        text-base
+                        font-normal
+                        text-gray-700
+                        bg-white bg-clip-padding bg-no-repeat
+                        border border-solid border-gray-300
+                        rounded
+                        transition
+                        ease-in-out
+                        focus:text-gray-700
+                        focus:bg-white
+                        focus:border-blue-600
+                        focus:outline-none
+                      "
+                        v-model="searchTermToDateResub"
+                        aria-label="Default select example"
+                      />
+                    </div>
+                    <div class="ml-8 mt-4">
+                      <button
+                        type="button"
+                        class="
+                      inline-block
+                        px-6
+                        py-2
+                        mt-2
+                        border-2 border-primary-300
+                        text-white
+                        font-medium
+                        text-xs
+                        leading-tight
+                        uppercase
+                        rounded
+                        bg-primary-600
+                        hover:bg-white hover:bg-opacity-5 hover:text-primary-600
+                        focus:outline-none focus:ring-0
+                        transition
+                        duration-150
+                        ease-in-out
+                      "
+                        @click="clearFiltersResub()"
+                      >
+                        <i class="fa fa-close"></i>
+                        Clear Filters
+                      </button>
+                    </div>
                   </div>
                 </div>
                 <div
@@ -289,6 +436,7 @@
                     :sortable="reSubmittedTable.sortable"
                     @is-finished="tableLoadingFinish"
                     @row-clicked="rowClickedResub"
+                    @do-search="doSearchResub"
                   ></vue-table-lite>
                   <edit-modal-resubmitted
                     v-if="showModalResubmitted"
@@ -311,13 +459,11 @@
 import ReviewerSideNav from "../SharedComponents/sideNav.vue";
 import ReviewerNavBar from "../../../SharedComponents/navBar.vue";
 import NewLicenseMainContent from "../../../SharedComponents/unassigned.vue";
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
-import applicationStatus from "../../../Configurations/getApplicationStatus.js";
 import VueTableLite from "vue3-table-lite";
 import editModal from "./unassignedModal.vue";
 import editModalResubmitted from "./unassignedResubmittedModal.vue";
-
 export default {
   name: "home",
   components: {
@@ -326,7 +472,7 @@ export default {
     NewLicenseMainContent,
     editModal,
     VueTableLite,
-    editModalResubmitted,
+    editModalResubmitted
   },
   setup() {
     const store = useStore();
@@ -334,409 +480,244 @@ export default {
     const showModalResubmitted = ref(true);
     const reviewers = ref([]);
     const include = ref(false);
+    const includeResub = ref(false);
     const searchTerm = ref("");
     const searchTermOthers = ref("");
+    let searchTermFromDate = ref("");
+    let searchTermToDate = ref("");
+    let searchTermFromDateResub = ref("");
+    let searchTermToDateResub = ref("");
     let searchedReviewer = ref("");
-    const adminId = +localStorage.getItem("adminId");
-    const adminRegion = JSON.parse(
-      localStorage.getItem("allAdminData")
-    ).regionId;
+    const adminLevel = JSON.parse(localStorage.getItem("allAdminData"))
+      .expertLevel;
+    const adminRegion = JSON.parse(localStorage.getItem("allAdminData"))
+      .regionId;
+    let statuses = JSON.parse(localStorage.getItem("applicationStatuses"));
     let modalDataId = ref({
       id: "",
-      change: 0,
+      change: 0
     });
     let modalDataIdResub = ref({
       id: "",
-      change: 0,
+      change: 0
     });
 
-    let allInfo = ref({
-      alreadyPushed: false,
-      searchByInput: false,
-      assignApplication: [],
-      message: {
-        showErrorFlash: false,
-      },
-      filteredByDate: [],
-      searchFromDate: "",
-      searchUpToDate: "",
-      app_type: "",
-    });
+    let allInfo = ref({});
 
     const unassignedTable = ref({});
     const reSubmittedTable = ref([]);
     unassignedTable.value = {
-      isLoading: true,
+      isLoading: true
     };
     reSubmittedTable.value = {
-      isLoading: true,
+      isLoading: true
     };
     let tableData = ref([]);
     let tableDataTemp = ref([]);
+    let tableDataTempResub = ref([]);
     let reTableData = ref([]);
-
-    const unassigned = () => {
-      applicationStatus(store, "SUB").then((res) => {
-        modalDataId.value.apStatusUnassigned = res;
-        let statusId = res;
-
-        store
-          .dispatch("reviewerRenewal/getRenewalUnassigned", statusId)
-          .then((res) => {
-            allInfo.value.assignApplication =
-              store.getters["reviewerRenewal/getRenewalUnassignedSearched"];
-
-            for (let applicant in allInfo.value.assignApplication) {
-              if (
-                allInfo.value.assignApplication[applicant].applicationType ===
-                undefined
-              ) {
-                allInfo.value.assignApplication[applicant].applicationType =
-                  allInfo.value.assignApplication[applicant].applicantType;
-              }
-            }
-
-            JSON.parse(JSON.stringify(allInfo.value.assignApplication)).forEach(
-              (element) => {
-                tableData.value.push({
-                  LicenseNumber: element.renewalCode,
-                  ApplicantName:
-                    element.profile.name +
-                    " " +
-                    element.profile.fatherName +
-                    " " +
-                    element.profile.grandFatherName,
-                  ApplicationType: element.renewalCode ? "Renewal" : "",
-                  Date: new Date(element.createdAt)
-                    .toJSON()
-                    .slice(0, 10)
-                    .replace(/-/g, "/"),
-                  data: element,
-                });
-              }
-            );
-
-            tableDataTemp.value = tableData.value;
-            unassignedTable.value = {
-              columns: [
-                {
-                  label: "License Number",
-                  field: "LicenseNumber",
-                  width: "3%",
-                  sortable: true,
-                  isKey: true,
-                },
-                {
-                  label: "Applicant Name",
-                  field: "ApplicantName",
-                  width: "20%",
-                  sortable: true,
-                },
-                {
-                  label: "Application Type",
-                  field: "ApplicationType",
-                  width: "15%",
-                  sortable: true,
-                },
-                {
-                  label: "Date",
-                  field: "Date",
-                  width: "15%",
-                  sortable: true,
-                },
-                {
-                  label: "",
-                  field: "quick",
-                  width: "10%",
-                  display: function (row) {
-                    return (
-                      '<button data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
-                      row.id +
-                      '" ><i class="fa fa-eye"></i>View/Edit</button>'
-                    );
-                  },
-                },
-              ],
-              rows: JSON.parse(JSON.stringify(tableData.value)),
-              totalRecordCount: tableData.value.length,
-              sortable: {
-                order: "id",
-                sort: "asc",
-              },
-            };
-          });
-      });
+    const clearFilters = () => {
+      searchTerm.value = "";
+      searchTermFromDate.value = "";
+      searchTermToDate.value = "";
+      unassignedTable.value.isLoading = true;
+      unassignedTable.value.rows = [];
+      tableData.value = [];
+      unassigned([
+        { key: "page", value: 0 },
+        { key: "size", value: 10 },
+        { key: "value", value: searchTerm.value },
+        { key: "fromDate", value: searchTermFromDate.value },
+        { key: "toDate", value: searchTermToDate.value }
+      ]);
     };
 
-    const includeFromOthers = () => {
-      if (include.value === true) {
-        unassignedTable.value.isLoading = true;
-        applicationStatus(store, "SUB").then((res) => {
-          const statusId = res;
-          store
-            .dispatch("reviewerRenewal/getRenewalFromOtherRegion", statusId)
-            .then((res) => {
-              allInfo.value.assignApplication =
-                store.getters[
-                  "reviewerRenewal/getRenewalFromOtherRegionSearched"
-                ];
+    const clearFiltersResub = () => {
+      searchTermOthers.value = "";
+      searchTermFromDateResub.value = "";
+      searchTermToDateResub.value = "";
+      reSubmittedTable.value.isLoading = true;
+      reSubmittedTable.value.rows = [];
+      reTableData.value = [];
+      reSubmitted([
+        { key: "page", value: 0 },
+        { key: "size", value: 10 },
+        { key: "value", value: searchTermOthers.value },
+        { key: "fromDate", value: searchTermFromDateResub.value },
+        { key: "toDate", value: searchTermToDateResub.value }
+      ]);
+    };
+    const unassigned = apiParameters => {
+      // modalDataId.value.apStatusUnassigned = res;
+      let subId = statuses
+        ? statuses.filter(stat => stat.code == "SUB")[0].id
+        : "";
 
-              for (let applicant in allInfo.value.assignApplication) {
-                if (
-                  allInfo.value.assignApplication[applicant].applicationType ===
-                  undefined
-                ) {
-                  allInfo.value.assignApplication[applicant].applicationType =
-                    allInfo.value.assignApplication[applicant].applicantType;
+      store
+        .dispatch("reviewerRenewal/getRenewalByStatus", [
+          { statusId: subId },
+          { params: apiParameters }
+        ])
+        .then(res => {
+          allInfo.value = res ? res.rows : [];
+          if (allInfo.value) {
+            allInfo.value.forEach(element => {
+              tableData.value.push({
+                LicenseNumber: element.renewalCode,
+                ApplicantName:
+                  (element.profile ? element.profile.name : "") +
+                  " " +
+                  (element.profile ? element.profile.fatherName : "") +
+                  " " +
+                  (element.profile ? element.profile.grandFatherName : ""),
+                ApplicantType: element.applicantType
+                  ? element.applicantType.name
+                  : "",
+                Date: new Date(element.createdAt)
+                  .toJSON()
+                  .slice(0, 10)
+                  .replace(/-/g, "/"),
+                data: element
+              });
+            });
+          }
+
+          tableDataTemp.value = tableData.value;
+          unassignedTable.value = {
+            columns: [
+              {
+                label: "License Number",
+                field: "LicenseNumber",
+                width: "15%",
+                sortable: true,
+                isKey: true
+              },
+              {
+                label: "Applicant Name",
+                field: "ApplicantName",
+                width: "45%",
+                sortable: true
+              },
+              {
+                label: "Applicant Type",
+                field: "ApplicantType",
+                width: "20%",
+                sortable: true
+              },
+              {
+                label: "Applied Date",
+                field: "Date",
+                width: "20%",
+                sortable: true
+              },
+              {
+                label: "Action",
+                field: "quick",
+                width: "10%",
+                display: function(row) {
+                  return (
+                    '<button data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
+                    row.id +
+                    '" ><i class="fa fa-eye"></i>View/Edit</button>'
+                  );
                 }
               }
-
-              tableData.value = [];
-              JSON.parse(
-                JSON.stringify(allInfo.value.assignApplication)
-              ).forEach((element) => {
-                tableData.value.push({
-                  LicenseNumber: element.renewalCode,
-                  ApplicantName:
-                    element.profile.name +
-                    " " +
-                    element.profile.fatherName +
-                    " " +
-                    element.profile.grandFatherName,
-                  ApplicationType: element.renewalCode ? "Renewal" : "",
-                  Date: new Date(element.createdAt)
-                    .toJSON()
-                    .slice(0, 10)
-                    .replace(/-/g, "/"),
-                  data: element,
-                });
-              });
-
-              unassignedTable.value = {
-                columns: [
-                  {
-                    label: "ID",
-                    field: "id",
-                    width: "3%",
-                    sortable: true,
-                    isKey: true,
-                  },
-                  {
-                    label: "Applicant Name",
-                    field: "ApplicantName",
-                    width: "20%",
-                    sortable: true,
-                  },
-
-                  {
-                    label: "Applicant Type",
-                    field: "ApplicationType",
-                    width: "15%",
-                    sortable: true,
-                  },
-                  {
-                    label: "Date",
-                    field: "Date",
-                    width: "15%",
-                    sortable: true,
-                  },
-                  {
-                    label: "",
-                    field: "quick",
-                    width: "10%",
-                    display: function (row) {
-                      return (
-                        '<button  data-set="' +
-                        row +
-                        '"  data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
-                        row.id +
-                        '" ><i class="fa fa-eye"></i> View/Edit</button>'
-                      );
-                    },
-                  },
-                ],
- rows: computed(() => {
-                return tableData.value.filter(
-                  (x) =>
-                    x.ApplicationType.toLowerCase().includes(
-                      searchTerm.value.toLowerCase()
-                    ) ||
-                    x.ApplicantName.toLowerCase().includes(
-                      searchTerm.value.toLowerCase()
-                    )
-                );
-              }),                totalRecordCount: tableData.value.length,
-                sortable: {
-                  order: "id",
-                  sort: "asc",
-                },
-              };
-            });
+            ],
+            rows: tableData.value,
+            totalRecordCount: res.count,
+            sortable: {
+              order: "id",
+              sort: "asc"
+            }
+          };
         });
-      }
-      if (include.value === false) {
-        tableData.value = [];
-        tableData.value = tableDataTemp.value;
-        unassignedTable.value = {
-          isLoading: false,
-          columns: [
-            {
-              label: "License Number",
-              field: "LicenseNumber",
-              width: "3%",
-              sortable: true,
-              isKey: true,
-            },
-            {
-              label: "Applicant Name",
-              field: "ApplicantName",
-              width: "20%",
-              sortable: true,
-            },
-            {
-              label: "Applicant Type",
-              field: "ApplicationType",
-              width: "15%",
-              sortable: true,
-            },
-            {
-              label: "Date",
-              field: "Date",
-              width: "15%",
-              sortable: true,
-            },
-            {
-              label: "",
-              field: "quick",
-              width: "10%",
-              display: function (row) {
-                return (
-                  '<button  data-set="' +
-                  row +
-                  '"  data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
-                  row.id +
-                  '" ><i class="fa fa-eye"></i>View/Edit</button>'
-                );
-              },
-            },
-          ],
-          rows: JSON.parse(JSON.stringify(tableData.value)),
-          totalRecordCount: tableData.value.length,
-          sortable: {
-            order: "id",
-            sort: "asc",
-          },
-        };
-      }
     };
 
-    const reSubmitted = () => {
-      applicationStatus(store, "UPD").then((res) => {
-        let statusId = res;
-        const adminStatus = [statusId, adminId];
-        modalDataId.value.apStatusResub = statusId;
-        store
-          .dispatch("reviewerRenewal/getRenewalReApply", adminStatus)
-          .then((res) => {
-            allInfo.value.assignApplication = res;
-              // store.getters["reviewerRenewal/getRenewalReApplySearched"];
+    const reSubmitted = apiParameters => {
+      let updId = statuses
+        ? statuses.filter(stat => stat.code == "UPD")[0].id
+        : "";
+      store
+        .dispatch("reviewerRenewal/getRenewalByStatus", [
+          { statusId: updId },
+          { params: apiParameters }
+        ])
+        .then(res => {
+          allInfo.value = res ? res.rows : [];
 
-            for (let applicant in allInfo.value.assignApplication) {
-              if (
-                allInfo.value.assignApplication[applicant].applicationType ===
-                undefined
-              ) {
-                allInfo.value.assignApplication[applicant].applicationType =
-                  allInfo.value.assignApplication[applicant].applicantType;
-              }
-            }
-
-           allInfo.value.assignApplication.forEach(
-              (element) => {
-                reTableData.value.push({
-                  LicenseNumber: element.renewalCode,
-                  ApplicantName:
-                    element.profile.name +
-                    " " +
-                    element.profile.fatherName +
-                    " " +
-                    element.profile.grandFatherName,
-                  ApplicationType: element.renewalCode ? "Renewal" : "",
-                  Date: new Date(element.createdAt)
-                    .toJSON()
-                    .slice(0, 10)
-                    .replace(/-/g, "/"),
-                  data: element,
-                });
-              }
-            );
-
-            reSubmittedTable.value = {
-              columns: [
-                {
-                  label: "License Number",
-                  field: "LicenseNumber",
-                  width: "3%",
-                  sortable: true,
-                  isKey: true,
-                },
-                {
-                  label: "Applicant Name",
-                  field: "ApplicantName",
-                  width: "20%",
-                  sortable: true,
-                },
-                {
-                  label: "Application Type",
-                  field: "ApplicationType",
-                  width: "15%",
-                  sortable: true,
-                },
-                {
-                  label: "Date",
-                  field: "Date",
-                  width: "15%",
-                  sortable: true,
-                },
-                {
-                  label: "",
-                  field: "quick",
-                  width: "10%",
-                  display: function (row) {
-                    return (
-                      '<button  data-set="' +
-                      row +
-                      '"  data-bs-toggle="modal" data-bs-target="#staticBackdropReSubmitted" class="edit-btn-resubmitted inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" data-id="' +
-                      row.id +
-                      '" ><i class="fa fa-eye"></i>View/Edit</button>'
-                    );
-                  },
-                },
-              ],
-                rows: computed(() => {
-                return reTableData.value.filter(
-                  (x) =>
-                    x.ApplicationType.toLowerCase().includes(
-                      searchTerm.value.toLowerCase()
-                    ) ||
-                    x.ApplicantName.toLowerCase().includes(
-                      searchTerm.value.toLowerCase()
-                    )
-                );
-              }),
-              totalRecordCount: reTableData.value.length,
-              sortable: {
-                order: "id",
-                sort: "asc",
-              },
-            };
+          allInfo.value.forEach(element => {
+            reTableData.value.push({
+              LicenseNumber: element.renewalCode,
+              ApplicantName:
+                (element.profile ? element.profile.name : "") +
+                " " +
+                (element.profile ? element.profile.fatherName : "") +
+                " " +
+                (element.profile ? element.profile.grandFatherName : ""),
+              ApplicationType: element ? element.applicantType.name : "",
+              Date: new Date(element.createdAt)
+                .toJSON()
+                .slice(0, 10)
+                .replace(/-/g, "/"),
+              data: element
+            });
           });
-      });
+          tableDataTempResub.value = reTableData.value;
+          reSubmittedTable.value = {
+            columns: [
+              {
+                label: "License Number",
+                field: "LicenseNumber",
+                width: "20%",
+                sortable: true,
+                isKey: true
+              },
+              {
+                label: "Applicant Name",
+                field: "ApplicantName",
+                width: "45%",
+                sortable: true
+              },
+              {
+                label: "Application Type",
+                field: "ApplicationType",
+                width: "15%",
+                sortable: true
+              },
+              {
+                label: "Date",
+                field: "Date",
+                width: "20%",
+                sortable: true
+              },
+              {
+                label: "Actions",
+                field: "quick",
+                width: "10%",
+                display: function(row) {
+                  return (
+                    '<button  data-set="' +
+                    row +
+                    '"  data-bs-toggle="modal" data-bs-target="#staticBackdropReSubmitted" class="edit-btn-resubmitted inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-white  hover:shadow-lg hover:border hover:text-primary-600 focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" data-id="' +
+                    row.id +
+                    '" ><i class="fa fa-eye"></i>View/Edit</button>'
+                  );
+                }
+              }
+            ],
+            rows: reTableData.value,
+            totalRecordCount: res.count,
+            sortable: {
+              order: "id",
+              sort: "asc"
+            }
+          };
+        });
     };
 
     const tableLoadingFinish = () => {
       let elements = document.getElementsByClassName("edit-btn");
-      Array.prototype.forEach.call(elements, function (element) {
+      Array.prototype.forEach.call(elements, function(element) {
         if (element.classList.contains("edit-btn")) {
           element.addEventListener("click", rowClicked());
         }
@@ -748,7 +729,7 @@ export default {
       let elementsResub = document.getElementsByClassName(
         "edit-btn-resubmitted"
       );
-      Array.prototype.forEach.call(elementsResub, function (element) {
+      Array.prototype.forEach.call(elementsResub, function(element) {
         if (element.classList.contains("edit-btn-resubmitted")) {
           element.addEventListener("click", rowClickedResub());
         }
@@ -756,37 +737,141 @@ export default {
       reSubmittedTable.value.isLoading = false;
     };
 
-    const rowClicked = (row) => {
+    const rowClicked = row => {
       if (row != undefined) {
         row = JSON.parse(JSON.stringify(row));
-        modalDataId.value.change++;
         modalDataId.value.id = row.data.id ? row.data.id : "";
+        modalDataId.value.change++;
       }
     };
-    const rowClickedResub = (row) => {
+    const rowClickedResub = row => {
       if (row != undefined) {
         row = JSON.parse(JSON.stringify(row));
         modalDataIdResub.value.change++;
         modalDataIdResub.value.id = row.data.id ? row.data.id : "";
       }
     };
-
+    const searchApplication = () => {
+      unassignedTable.value.isLoading = true;
+      unassignedTable.value.rows = [];
+      tableData.value = [];
+      unassigned([
+        { key: "page", value: 0 },
+        { key: "size", value: 10 },
+        { key: "value", value: searchTerm.value },
+        { key: "fromDate", value: searchTermFromDate.value },
+        {
+          key: "toDate",
+          value:
+            searchTermToDate.value && searchTermToDate.value != ""
+              ? searchTermToDate.value
+              : new Date().toISOString().slice(0, 10)
+        }
+      ]);
+    };
+    const searchApplicationResub = () => {
+      reSubmittedTable.value.isLoading = true;
+      reSubmittedTable.value.rows = [];
+      reTableData.value = [];
+      reSubmitted([
+        { key: "page", value: 0 },
+        { key: "size", value: 10 },
+        { key: "value", value: searchTermOthers.value },
+        { key: "fromDate", value: searchTermFromDateResub.value },
+        { key: "toDate", value: searchTermToDateResub.value }
+      ]);
+    };
     onMounted(() => {
-      unassigned();
-      reSubmitted();
-      store.dispatch("reviewer/getAdminsByRegion",adminRegion).then((res) => {
-        reviewers.value = res.data.data.filter((e) => {
+      unassigned([
+        { key: "page", value: 0 },
+        { key: "size", value: 10 }
+      ]);
+      reSubmitted([
+        { key: "page", value: 0 },
+        { key: "size", value: 10 },
+        { key: "value", value: searchTermOthers.value },
+        { key: "fromDate", value: searchTermFromDateResub.value },
+        { key: "toDate", value: searchTermToDateResub.value }
+      ]);
+      store.dispatch("reviewer/getAdminsByRegion", adminRegion).then(res => {
+        reviewers.value = res.data.data.filter(e => {
           return e.role.code !== "UM";
         });
       });
     });
+    const doSearch = (offset, limit, order, sort) => {
+      unassignedTable.value.isLoading = true;
 
+      setTimeout(() => {
+        unassignedTable.value.isReSearch = offset == undefined ? true : false;
+        offset = offset && offset > 0 ? offset / 10 - 1 : 1;
+        if (sort == "asc") {
+          unassigned([
+            { key: "page", value: offset },
+            { key: "size", value: limit },
+            { key: "value", value: searchTerm.value },
+            { key: "fromDate", value: searchTermFromDate.value },
+            { key: "toDate", value: searchTermToDate.value }
+          ]);
+        } else {
+          unassigned([
+            { key: "page", value: offset },
+            { key: "size", value: limit },
+            { key: "value", value: searchTerm.value },
+            { key: "fromDate", value: searchTermFromDate.value },
+            { key: "toDate", value: searchTermToDate.value }
+          ]);
+        }
+        unassignedTable.value.sortable.order = order;
+        unassignedTable.value.sortable.sort = sort;
+      }, 600);
+    };
+    const doSearchResub = (offset, limit, order, sort) => {
+      reSubmittedTable.value.isLoading = true;
+
+      setTimeout(() => {
+        reSubmittedTable.value.isReSearch = offset == undefined ? true : false;
+        offset = offset && offset > 0 ? offset / 10 - 1 : 1;
+        if (sort == "asc") {
+          reSubmitted([
+            { key: "page", value: offset },
+            { key: "size", value: limit },
+            { key: "value", value: searchTermOthers.value },
+            { key: "fromDate", value: searchTermFromDateResub.value },
+            { key: "toDate", value: searchTermToDateResub.value }
+          ]);
+        } else {
+          reSubmitted([
+            { key: "page", value: offset },
+            { key: "size", value: limit },
+            { key: "value", value: searchTermOthers.value },
+            { key: "fromDate", value: searchTermFromDateResub.value },
+            { key: "toDate", value: searchTermToDateResub.value }
+          ]);
+        }
+        reSubmittedTable.value.sortable.order = order;
+        reSubmittedTable.value.sortable.sort = sort;
+      }, 600);
+    };
     return {
       allInfo,
       unassignedTable,
+      searchTermOthers,
+      searchTerm,
       reSubmittedTable,
       showModal,
       include,
+      includeResub,
+      clearFilters,
+      searchApplication,
+      searchApplicationResub,
+      clearFiltersResub,
+      doSearch,
+      doSearchResub,
+      searchTermFromDate,
+      searchTermToDate,
+      searchTermFromDateResub,
+      searchTermToDateResub,
       reviewers,
       showModalResubmitted,
       searchedReviewer,
@@ -794,14 +879,12 @@ export default {
       tableLoadingFinishResub,
       unassigned,
       rowClicked,
-      searchTerm,
-      searchTermOthers,
       reSubmitted,
-      includeFromOthers,
       rowClickedResub,
       modalDataId,
-      modalDataIdResub,
+      adminLevel,
+      modalDataIdResub
     };
-  },
+  }
 };
 </script>

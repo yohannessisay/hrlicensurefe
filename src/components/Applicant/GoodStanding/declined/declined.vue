@@ -38,7 +38,7 @@
         >
           <!-- Article -->
           <div>
-            <h2 class="text-main-400 border-b-2 text-xl p-2">
+            <h2 class="text-grey-800 border-b-2 text-xl p-2">
               License Number-
               <span class="text-base text-main-400">{{
                 license.goodStandingCode
@@ -57,7 +57,7 @@
                 "
               >
                 <h1 class="text-lg">
-                  <a class="text-main-400 pointer-events-none" href="#">
+                  <a class="text-grey-800 pointer-events-none" href="#">
                     Who issued the letter
                   </a>
                 </h1>
@@ -65,7 +65,7 @@
                 <ul class="text-black text-sm">
                   <li style="display: inline">
                     <span class="text-black text-sm">
-                      {{ license.whoIssued ? license.whoIssued : "" }}
+                      {{ license&&license.whoIssued ? license.whoIssued.name : "" }}
                     </span>
                   </li>
                 </ul>
@@ -92,7 +92,7 @@
                 "
               >
                 <h1 class="text-lg">
-                  <a class="text-main-400 pointer-events-none" href="#">
+                  <a class="text-grey-800 pointer-events-none" href="#">
                     License Registration Number
                   </a>
                 </h1>
@@ -228,7 +228,7 @@ export default {
       userInfo.value = JSON.parse(window.localStorage.getItem("personalInfo"));
 
       store.dispatch("goodstanding/getGoodStandingLicense").then((res) => {
-        const results = res.data.data;
+        const results = res.data.data ? res.data.data : [];
 
         if (results && results.length > 0) {
           declinedLicenses.value = results.filter((declinedLicense) => {

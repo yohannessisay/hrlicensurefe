@@ -136,14 +136,14 @@
                                 licenseData && licenseData.profile
                                   ? licenseData.profile.name
                                   : "-" +
-                                  " " +
-                                  (licenseData && licenseData.profile
-                                    ? licenseData.profile.fatherName
-                                    : "-") +
-                                  " " +
-                                  (licenseData && licenseData.profile
-                                    ? licenseData.profile.grandFatherName
-                                    : "-")
+                                    " " +
+                                    (licenseData && licenseData.profile
+                                      ? licenseData.profile.fatherName
+                                      : "-") +
+                                    " " +
+                                    (licenseData && licenseData.profile
+                                      ? licenseData.profile.grandFatherName
+                                      : "-")
                               }}
                             </div>
                           </div>
@@ -219,17 +219,25 @@
                           <div class="flex justify-between px-4 py-1">
                             <div>Reviewer Name</div>
                             <div class="text-main-400 font-bold">
-                            {{ licenseData.reviewer?licenseData.reviewer.name:'' }}
+                              {{
+                                licenseData.goodstandingReviewer
+                                  ? licenseData.goodstandingReviewer.reviewer
+                                      .name
+                                  : ""
+                              }}
                             </div>
                           </div>
                           <div class="flex justify-between px-4 py-1">
                             <div>Phone Number</div>
                             <div class="text-main-400 font-bold">
-                              {{ licenseData.reviewer?licenseData.reviewer.phoneNumber:'' }}
+                              {{
+                                licenseData.goodstandingReviewer
+                                  ? licenseData.goodstandingReviewer.reviewer
+                                      .phoneNumber
+                                  : ""
+                              }}
                             </div>
                           </div>
-                       
-                          
                         </div>
 
                         <footer
@@ -276,25 +284,29 @@
                           <p class="text-main-400 text-sm">Active</p>
                         </header>
 
-                        <div
-                          class="grid grid-flow-row auto-rows-max" 
-                        >
+                        <div class="grid grid-flow-row auto-rows-max">
                           <div class="flex justify-between px-4 py-1">
                             <div>Department</div>
                             <div class="text-main-400 font-bold">
-                              {{ licenseData.department?licenseData.department.name:'' }}
-                            </div>
-                          </div>
-                          <div class="flex justify-between px-4 py-1">
-                            <div>Profession</div>
-                            <div class="text-main-400 font-bold">
-                              {{ 
-                                licenseData.GSProfessionals&&licenseData.GSProfessionals.professionalTypes?licenseData.GSProfessionals.professionalTypes.name:''
+                              {{
+                                licenseData.department
+                                  ? licenseData.department.name
+                                  : ""
                               }}
                             </div>
                           </div>
-                 
- 
+                          <div class="flex justify-start  ml-4">
+                            <div>Profession</div>
+                            <div class="text-main-400 font-bold ml-4">
+                              {{
+                                licenseData.GSProfessionals &&
+                                licenseData.GSProfessionals.professionalTypes
+                                  ? licenseData.GSProfessionals
+                                      .professionalTypes.name
+                                  : ""
+                              }}
+                            </div>
+                          </div>
                         </div>
 
                         <footer
@@ -363,7 +375,6 @@
                               }}
                             </div>
                           </div>
-                        
                         </div>
 
                         <footer
@@ -410,7 +421,10 @@ export default {
     watch(props.modalDataId, () => {
       isLoading.value = true;
       store
-        .dispatch("goodstanding/getGoodStandingLicenseById", props.modalDataId.id)
+        .dispatch(
+          "goodstanding/getGoodStandingLicenseById",
+          props.modalDataId.id
+        )
         .then((res) => {
           licenseData.value = res.data.data;
           isLoading.value = false;

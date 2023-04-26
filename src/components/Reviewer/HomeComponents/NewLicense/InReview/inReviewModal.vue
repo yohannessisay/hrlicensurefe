@@ -31,7 +31,7 @@
         class="
           modal-content
           border-none
-          shadow-lg
+          shadow-md
           relative
           flex flex-col
           w-full
@@ -58,24 +58,25 @@
               uppercase
               rounded
               hover:border-primary-600
-              shadow-lg
-              hover:bg-purple-700 hover:shadow-lg
+              shadow-md
+              hover:bg-purple-700 hover:shadow-md
               focus:bg-purple-700
-              focus:shadow-lg
+              focus:shadow-md
               focus:outline-none
               focus:ring-0
-              active:bg-purple-800 active:shadow-lg
+              active:bg-purple-800 active:shadow-md
               transition
               duration-150
               ease-in-out
             "
             data-bs-dismiss="modal"
             aria-label="Close"
+            id="closeButton"
           >
             <i class="fa fa-close fa-2x"></i>
           </button>
         </div>
-        <div class="vld-parent mt-4">
+        <div class="vld-parent mt-2">
           <loading
             :active="isLoadingStart"
             :is-full-page="false"
@@ -87,11 +88,11 @@
               <section class="text-gray-800">
                 <div class="flex justify-center">
                   <div class="text-center lg:max-w-3xl md:max-w-xl">
-                    <h2 class="text-2xl font-bold mb-8 px-6">
+                    <h2 class="text-xl font-bold mb-8 px-6">
                       Showing
-                      <span class="text-2xl font-bold px-6">
+                      <a class="text-2xl font-bold px-6 text-yellow-300">
                         {{ modalData.name }}
-                      </span>
+                      </a>
                       's License Data
                     </h2>
                   </div>
@@ -124,7 +125,7 @@
                                   p-4
                                   bg-blue-600
                                   rounded-md
-                                  shadow-lg
+                                  shadow-md
                                   w-48
                                   h-48
                                   flex
@@ -144,49 +145,80 @@
                               <h2 class="font-extrabold text-2xl mb-1">
                                 Personal Info
                               </h2>
-                              <p class="text-gray-500">
-                                <span
-                                  class="
+                              <div
+                                class="
+                                  border-2
+                                  p-2
+                                  rounded-lg
+                                  m-1
+                                  shadow-md
+                                  text-primary-500
+                                "
+                              >
+                                <p class="text-gray-500">
+                                  <span
+                                    class="
                                     font-semibold
                                     text-lg text-primary-700
                                     mb-1
                                   "
-                                  >Full Name:</span
-                                >
-                                {{ modalData.name }}
-                              </p>
-                              <p class="text-gray-500">
-                                <span
-                                  class="font-semibold text-primary-700 mb-1"
-                                  >Gender:</span
-                                >
-                                {{ modalData.gender }}
-                              </p>
-                              <p class="text-gray-500">
-                                <span
-                                  class="font-semibold text-primary-700 mb-1"
-                                  >Nationality:</span
-                                >
-                                {{ modalData.nationality }}
-                              </p>
-                              <p class="text-gray-500">
-                                <span
-                                  class="font-semibold text-primary-700 mb-1"
-                                  >Date Of Birth:</span
-                                >
-                                {{
-                                  modalData.dateOfBirth
-                                    ? modalData.dateOfBirth.slice(0, 10)
-                                    : "-----"
-                                }}
-                              </p>
-                              <p class="text-gray-500">
-                                <span
-                                  class="font-semibold text-primary-700 mb-1"
-                                  >Martial Status:</span
-                                >
-                                {{ modalData.maritalStatus }}
-                              </p>
+                                    >Full Name:</span
+                                  >
+                                  <span class="text-grey-800 ml-1">
+                                    {{
+                                      modalData.name ? modalData.name : ""
+                                    }}</span
+                                  >
+                                </p>
+                                <p class="text-gray-500">
+                                  <span
+                                    class="font-semibold text-primary-700 mb-1"
+                                    >Gender:</span
+                                  >
+                                  <span class="text-grey-800 ml-1">
+                                    {{
+                                      modalData.gender ? modalData.gender : ""
+                                    }}</span
+                                  >
+                                </p>
+                                <p class="text-gray-500">
+                                  <span
+                                    class="font-semibold text-primary-700 mb-1"
+                                    >Nationality:</span
+                                  >
+                                  <span class="text-grey-800 ml-1">
+                                    {{
+                                      modalData.nationality
+                                        ? modalData.nationality
+                                        : ""
+                                    }}</span
+                                  >
+                                </p>
+                                <p class="text-gray-500">
+                                  <span
+                                    class="font-semibold text-primary-700 mb-1"
+                                    >Date Of Birth:</span
+                                  >
+                                  <span class="text-grey-800 ml-1">
+                                    {{
+                                      modalData.dateOfBirth
+                                        ? modalData.dateOfBirth.slice(0, 10)
+                                        : "-----"
+                                    }}</span
+                                  >
+                                </p>
+                                <p class="text-gray-500">
+                                  <span
+                                    class="font-semibold text-primary-700 mb-1"
+                                    >Martial Status:</span
+                                  >
+                                  <span class="text-grey-800 ml-1">{{
+                                    modalData.maritalStatus
+                                      ? modalData.maritalStatus
+                                      : ""
+                                  }}</span>
+                                </p>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -208,7 +240,7 @@
                                   p-4
                                   bg-blue-600
                                   rounded-md
-                                  shadow-lg
+                                  shadow-md
                                   w-48
                                   h-48
                                   flex
@@ -219,7 +251,10 @@
                                 <i class="fa fa-right-left fa-4x"></i>
                               </div>
                             </div>
-                            <div class="grow ml-6">
+                            <div
+                              class="grow ml-6"
+                              v-if="adminRole && adminRole != 'REV'"
+                            >
                               <h2 class="font-bold mb-1">Transfer To</h2>
 
                               <div class="flex items-center">
@@ -245,8 +280,9 @@
                                         mt-1
                                         ml-1
                                         relative
-                                        border border-gray-300
+                                        border border-grey-200
                                         overflow-hidden
+                                        focus:border-primary-600
                                         rounded-md
                                         shadow-sm
                                       "
@@ -255,39 +291,28 @@
                                         id="email"
                                         @keyup="showOptions = true"
                                         v-model="reviewer.name"
-                                        class="w-full px-3 py-3"
+                                        class="w-full px-3 py-3 "
                                         style="border: none"
                                         autocomplete="off"
                                         placeholder="Select reviewer by typing a name"
                                       />
                                     </div>
                                     <div>
-                                      <button
+                                      <textarea
+                                        placeholder="Reason for transfer"
+                                        v-model="transferRemark"
                                         class="
-                                          inline-block
-                                          px-6
-                                          py-2.5
-                                          bg-primary-600
-                                          text-white
-                                          font-semibold
-                                          text-xs
-                                          leading-tight
-                                          uppercase
-                                          rounded
-                                          shadow-lg
+                                          resize-none
+                                          tArea
+                                          border
+                                          rounded-lg
+                                          flex
                                           mt-4
                                           ml-1
-                                          hover:bg-white
-                                          hover:shadow-lg
-                                          hover:text-primary-600
-                                          transition
-                                          duration-150
-                                          ease-in-out
+                                          w-full
                                         "
-                                        @click="transferReviewer()"
-                                      >
-                                        Transfer
-                                      </button>
+                                      ></textarea>
+                                 
                                     </div>
                                     <div
                                       v-show="
@@ -302,7 +327,7 @@
                                         max-height-12
                                         overflow-hidden overflow-y-scroll
                                         rounded-lg
-                                        shadow-lg
+                                        shadow-md
                                         text-left
                                         dropdown-menu
                                       "
@@ -326,9 +351,42 @@
                                         </li>
                                       </ul>
                                     </div>
+                                    <button
+                                        class="
+                                          inline-block
+                                          px-6
+                                          py-2.5
+                                          bg-primary-600
+                                          text-white
+                                          font-semibold
+                                          text-xs
+                                          leading-tight
+                                          uppercase
+                                          rounded
+                                          shadow-md
+                                          mt-4
+                                          ml-1
+                                          hover:bg-white
+                                          hover:shadow-md
+                                          hover:text-primary-600
+                                          transition
+                                          duration-150
+                                          ease-in-out
+                                          mb-8
+                                        "
+                                        @click="transferReviewer()"
+                                      >
+                                        Transfer
+                                      </button>
                                   </div>
                                 </div>
                               </label>
+                            </div>
+                            <div v-if="adminRole && adminRole == 'REV'">
+                              <h2 class="ml-4">
+                                Please Contact Your Team Leader Or Admin For
+                                Transfer
+                              </h2>
                             </div>
                           </div>
                         </div>
@@ -351,7 +409,7 @@
                                   p-4
                                   bg-blue-600
                                   rounded-md
-                                  shadow-lg
+                                  shadow-md
                                   w-48
                                   h-48
                                   flex
@@ -364,20 +422,41 @@
                             </div>
                             <div class="grow ml-6">
                               <h2 class="font-bold mb-1">Contact Info</h2>
-                              <p class="text-gray-500">
-                                <span
-                                  class="font-semibold text-primary-700 mb-1"
-                                  >Mobile Number:</span
-                                >
-                                {{ modalData.mobileNumber }}
-                              </p>
-                              <p class="text-gray-500">
-                                <span
-                                  class="font-semibold text-primary-700 mb-1"
-                                  >Email:</span
-                                >
-                                {{ modalData.email }}
-                              </p>
+                              <div
+                                class="
+                                  border-2
+                                  p-2
+                                  rounded-lg
+                                  m-1
+                                  shadow-md
+                                  text-primary-500
+                                "
+                              >
+                                <p class="text-gray-500">
+                                  <span
+                                    class="font-semibold text-primary-700 mb-1"
+                                    >Mobile Number:</span
+                                  >
+                                  <span class="text-grey-800 ml-1">
+                                    {{
+                                      modalData.mobileNumber
+                                        ? modalData.mobileNumber
+                                        : ""
+                                    }}</span
+                                  >
+                                </p>
+                                <p class="text-gray-500">
+                                  <span
+                                    class="font-semibold text-primary-700 mb-1"
+                                    >Email:</span
+                                  >
+                                  <span class="text-grey-800 ml-1">
+                                    {{
+                                      modalData.email ? modalData.email : ""
+                                    }}</span
+                                  >
+                                </p>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -400,7 +479,7 @@
                                   p-4
                                   bg-blue-600
                                   rounded-md
-                                  shadow-lg
+                                  shadow-md
                                   w-48
                                   h-48
                                   flex
@@ -424,8 +503,8 @@
                                   text-primary-500
                                 "
                                 v-for="education in modalData.data
-                              ? modalData.data.educations
-                              : []"
+                                  ? modalData.data.educations
+                                  : []"
                                 :key="education.id"
                               >
                                 <p class="text-gray-500">
@@ -433,56 +512,100 @@
                                     class="font-semibold text-primary-700 mb-1"
                                     >Department:</span
                                   >
-                                  {{
+                                  <span class="text-grey-800 ml-1">{{
                                     education.department
                                       ? education.department.name
                                       : ""
-                                  }}
+                                  }}</span>
                                 </p>
                                 <p class="text-gray-500">
                                   <span
                                     class="font-semibold text-primary-700 mb-1"
                                     >Education Level:</span
                                   >
-                                  {{
+                                  <span class="text-grey-800 ml-1">{{
                                     education.educationLevel
                                       ? education.educationLevel.name
                                       : ""
-                                  }}
+                                  }}</span>
                                 </p>
                                 <p class="text-gray-500">
                                   <span
                                     class="font-semibold text-primary-700 mb-1"
                                     >Profession:</span
                                   >
-                                  {{
+                                  <span class="text-grey-800 ml-1">{{
                                     education.professionType
                                       ? education.professionType.name
                                       : ""
-                                  }}
+                                  }}</span>
                                 </p>
                                 <p class="text-gray-500">
                                   <span
                                     class="font-semibold text-primary-700 mb-1"
                                     >Institution:</span
                                   >
-                                  {{
+                                  <span class="text-grey-800 ml-1">{{
                                     education.institution
                                       ? education.institution.name
                                       : ""
-                                  }}
+                                  }}</span>
                                 </p>
                               </div>
                             </div>
                           </div>
                         </div>
-
-
                       </div>
                     </div>
                   </div>
                 </div>
               </section>
+            </div>
+          </div>
+          <div
+            class="bg-primary-300 m-2 p-4 rounded-lg"
+            v-if="
+              modalData &&
+                modalData.data &&
+                modalData.data.licenseReviewer &&
+                modalData.data.licenseReviewer.transferFrom
+            "
+          >
+            <h2 class="text-xl text-yellow-300">
+              This license is a transfer from
+            </h2>
+
+            <div class="grid grid-cols-2">
+              <div class="grid grid-cols-2">
+                <h5 class="text-lg  ">Reviewer Name</h5>
+
+                <h5 class="text-lg text-primary-600">
+                  {{
+                    modalData &&
+                    modalData.data &&
+                    modalData.data.licenseReviewer &&
+                    modalData.data.licenseReviewer.transferFrom
+                      ? modalData.data.licenseReviewer.transferFrom.name
+                      : ""
+                  }}
+                </h5>
+              </div>
+            </div>
+            <div class="grid grid-cols-2">
+              <div class="grid grid-cols-2">
+                <h5 class="text-lg  ">With a reason of</h5>
+
+                <h5 class="text-lg text-primary-600">
+                  {{
+                    modalData &&
+                    modalData.data &&
+                    modalData.data.licenseReviewer &&
+                    modalData.data.licenseReviewer.transferFrom
+                      ? modalData.data.licenseReviewer.transferRemark
+                      : ""
+                  }}
+                </h5>
+              </div>
             </div>
           </div>
         </div>
@@ -492,6 +615,7 @@
             flex flex-shrink-0 flex-wrap
             items-center
             justify-end
+            p-2
             border-t border-grey-100
             rounded-b-md
           "
@@ -509,13 +633,13 @@
                 leading-tight
                 uppercase
                 rounded
-                shadow-lg
-                hover:text-primary-600 hover:shadow-lg
+                shadow-md
+                hover:text-primary-600 hover:shadow-md
                 focus:bg-purple-700
-                focus:shadow-lg
+                focus:shadow-md
                 focus:outline-none
                 focus:ring-0
-                active:bg-purple-800 active:shadow-lg
+                active:bg-purple-800 active:shadow-md
                 transition
                 duration-150
                 ease-in-out
@@ -537,13 +661,13 @@
               leading-tight
               uppercase
               rounded
-              shadow-lg
-              hover:text-primary-600 hover:shadow-lg
+              shadow-md
+              hover:text-primary-600 hover:shadow-md
               focus:bg-purple-700
-              focus:shadow-lg
+              focus:shadow-md
               focus:outline-none
               focus:ring-0
-              active:bg-purple-800 active:shadow-lg
+              active:bg-purple-800 active:shadow-md
               transition
               duration-150
               ease-in-out
@@ -570,25 +694,28 @@ import { useToast } from "vue-toastification";
 export default {
   props: ["modalDataId", "reviewers"],
   components: {
-    Loading,
+    Loading
   },
   computed: {
-    moment: () => moment,
+    moment: () => moment
   },
-  setup(props) {
+  setup(props, { emit }) {
     const store = useStore();
     const toast = useToast();
-
+    let transferRemark = ref("");
     let show = ref(true);
     let showRes = ref(false);
     let showOptions = ref(false);
     let reviewer = ref({ id: "", name: "", expertLevel: "", role: "" });
     let adminId = +localStorage.getItem("adminId");
+    let adminRole = localStorage.getItem("role");
     const licenseId = computed(() => props.modalDataId.id);
     let transfer = ref({
-      reviewerId: "",
-      licenseId: "",
-      createdByAdminId: "",
+      expertLevelId: null,
+      reviewerId: null,
+      licenseId: null,
+      createdByAdminId: null,
+      transferRemark: ""
     });
     let role = ref({});
     let isLoading = ref(false);
@@ -597,73 +724,85 @@ export default {
     const evaluationData = ref({});
     let reviewerAdminId = ref(0);
 
-    const fetchRole = (id) => {
-      store.dispatch("reviewer/getRoles", id).then((res) => {
+    const fetchRole = id => {
+      store.dispatch("reviewer/getRoles", id).then(res => {
         role.value = res.data.data.role;
       });
     };
 
     const transferReviewer = () => {
-      if (role.value.code === "TL" || role.value.code === "ADM") {
+      if (transferRemark.value == "" || transfer.value.reviewerId == null) {
+        toast.error(
+          transferRemark.value == ""
+            ? "Transfer reason is required"
+            : "Please select reviewer to tansfer to",
+          {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true
+          }
+        );
+        return;
+      } else {
         transfer.value = {
           licenseId: props.modalDataId.id,
           reviewerId: transfer.value.reviewerId,
           createdByAdminId: +localStorage.getItem("adminId"),
+          transferRemark: transferRemark.value,
+          expertLevelId: modalData.value.data.expertLevelId
         };
-      }
 
-      if (role.value.code == "REV") {
-        transfer.value = {
-          licenseId: props.modalDataId.id,
-          reviewerId: +localStorage.getItem("adminId"),
-          createdByAdminId: +localStorage.getItem("adminId"),
-        };
-      }
+        isLoading.value = true;
 
-      isLoading.value = true;
-
-      store
-        .dispatch("reviewer/transferLicenseReview", transfer.value)
-        .then((response) => {
-          if (response.statusText == "Created") {
-            toast.success("Selected application transfered Successfully", {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            });
-            isLoading.value = false;
-            setTimeout(() => {
-              window.location.reload();
-            }, 3000);
-          } else {
+        store
+          .dispatch("reviewer/transferLicenseReview", transfer.value)
+          .then(response => {
+            if (response.statusText == "Created") {
+              toast.success("Selected application transfered Successfully", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true
+              });
+              isLoading.value = false;
+              transfer.value = {};
+              reviewer.value = {};
+              transferRemark.value = "";
+              emit("refreshTable");
+              if (document.getElementById("closeButton")) {
+                document.getElementById("closeButton").click();
+              }
+            } else {
+              toast.error("Error transfering", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true
+              });
+              isLoading.value = false;
+              setTimeout(() => {
+                window.location.reload();
+              }, 3000);
+            }
+          })
+          .catch(() => {
             toast.error("Error transfering", {
               timeout: 5000,
               position: "bottom-center",
               pauseOnFocusLoss: true,
               pauseOnHover: true,
-              icon: true,
+              icon: true
             });
             isLoading.value = false;
             setTimeout(() => {
               window.location.reload();
             }, 3000);
-          }
-        })
-        .catch(() => {
-          toast.error("Error transfering", {
-            timeout: 5000,
-            position: "bottom-center",
-            pauseOnFocusLoss: true,
-            pauseOnHover: true,
-            icon: true,
           });
-          isLoading.value = false;
-          setTimeout(() => {
-            window.location.reload();
-          }, 3000);
-        });
+      }
     };
 
     const showModal = () => {
@@ -671,25 +810,25 @@ export default {
     };
     const resultQuery = () => {
       if (reviewer.value.name) {
-        let data = props.reviewers.filter((item) => {
+        let data = props.reviewers.filter(item => {
           return reviewer.value.name
             .toLowerCase()
             .split(" ")
-            .every((v) => item.name.toLowerCase().includes(v));
+            .every(v => item.name.toLowerCase().includes(v));
         });
-
+        data = data.filter(rev => rev.id != adminId);
         return data;
       } else {
         return [];
       }
     };
 
-    const setInput = (value) => {
+    const setInput = value => {
       reviewer.value = {
         id: value.id,
         name: value.name,
         expertLevel: value.expertLevel.code,
-        role: value.role.code,
+        role: value.role.code
       };
       transfer.value.reviewerId = value.id;
       showOptions.value = false;
@@ -715,7 +854,7 @@ export default {
     const check = () => {
       store
         .dispatch("reviewer/getNewLicenseApplication", props.modalDataId.id)
-        .then((res) => {
+        .then(res => {
           if (res.data.status == "Success") {
             result = res.data.data;
 
@@ -766,6 +905,7 @@ export default {
       transfer,
       licenseData,
       show,
+      transferRemark,
       showRes,
       showOptions,
       reviewer,
@@ -776,17 +916,18 @@ export default {
       isLoadingStart,
       licenseId,
       fullPage,
+      adminRole,
       modalData,
       evaluationData,
       transferReviewer,
-      onCancel,
+      onCancel
     };
-  },
+  }
 };
 </script>
 
 <style scoped>
-.shadow-lg {
+.shadow-md {
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 34%), 0 2px 4px -1px rgb(0 0 0 / 6%);
 }
 </style>

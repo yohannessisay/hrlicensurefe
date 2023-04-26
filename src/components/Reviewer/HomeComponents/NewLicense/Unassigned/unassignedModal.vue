@@ -126,7 +126,7 @@
                                   p-4
                                   bg-blue-600
                                   rounded-md
-                                  shadow-lg
+                                  shadow-md
                                   w-48
                                   h-48
                                   flex
@@ -135,64 +135,91 @@
                                   justify-center
                                 "
                               >
-                                <i class="fa fa-user fa-4x"></i>
+                                <img
+                                  src="../../../../../assets/showLicense/profile.png"
+                                  alt=""
+                                  style="height: 152px; width: 150px"
+                                />
                               </div>
                             </div>
                             <div class="grow ml-6">
                               <h2 class="font-extrabold text-2xl mb-1">
                                 Personal Info
                               </h2>
-                              <p class="text-gray-500">
-                                <span
-                                  class="
+                              <div
+                                class="
+                                  border-2
+                                  p-2
+                                  rounded-lg
+                                  m-1
+                                  shadow-md
+                                  text-primary-500
+                                "
+                              >
+                                <p class="text-gray-500">
+                                  <span
+                                    class="
                                     font-semibold
                                     text-lg text-primary-700
                                     mb-1
                                   "
-                                  >Full Name:</span
-                                >
-                                {{ modalData.name ? modalData.name : "" }}
-                              </p>
-                              <p class="text-gray-500">
-                                <span
-                                  class="font-semibold text-primary-700 mb-1"
-                                  >Gender:</span
-                                >
-                                {{ modalData.gender ? modalData.gender : "" }}
-                              </p>
-                              <p class="text-gray-500">
-                                <span
-                                  class="font-semibold text-primary-700 mb-1"
-                                  >Nationality:</span
-                                >
-                                {{
-                                  modalData.nationality
-                                    ? modalData.nationality
-                                    : ""
-                                }}
-                              </p>
-                              <p class="text-gray-500">
-                                <span
-                                  class="font-semibold text-primary-700 mb-1"
-                                  >Date Of Birth:</span
-                                >
-                                {{
-                                  modalData.dateOfBirth
-                                    ? modalData.dateOfBirth.slice(0, 10)
-                                    : ""
-                                }}
-                              </p>
-                              <p class="text-gray-500">
-                                <span
-                                  class="font-semibold text-primary-700 mb-1"
-                                  >Martial Status:</span
-                                >
-                                {{
-                                  modalData.maritalStatus
-                                    ? modalData.maritalStatus
-                                    : ""
-                                }}
-                              </p>
+                                    >Full Name:</span
+                                  >
+                                  <span class="text-grey-800 ml-1">
+                                    {{
+                                      modalData.name ? modalData.name : ""
+                                    }}</span
+                                  >
+                                </p>
+                                <p class="text-gray-500">
+                                  <span
+                                    class="font-semibold text-primary-700 mb-1"
+                                    >Gender:</span
+                                  >
+                                  <span class="text-grey-800 ml-1">
+                                    {{
+                                      modalData.gender ? modalData.gender : ""
+                                    }}</span
+                                  >
+                                </p>
+                                <p class="text-gray-500">
+                                  <span
+                                    class="font-semibold text-primary-700 mb-1"
+                                    >Nationality:</span
+                                  >
+                                  <span class="text-grey-800 ml-1">
+                                    {{
+                                      modalData.nationality
+                                        ? modalData.nationality
+                                        : ""
+                                    }}</span
+                                  >
+                                </p>
+                                <p class="text-gray-500">
+                                  <span
+                                    class="font-semibold text-primary-700 mb-1"
+                                    >Date Of Birth:</span
+                                  >
+                                  <span class="text-grey-800 ml-1">
+                                    {{
+                                      modalData.dateOfBirth
+                                        ? modalData.dateOfBirth.slice(0, 10)
+                                        : "-----"
+                                    }}</span
+                                  >
+                                </p>
+                                <p class="text-gray-500">
+                                  <span
+                                    class="font-semibold text-primary-700 mb-1"
+                                    >Martial Status:</span
+                                  >
+                                  <span class="text-grey-800 ml-1">{{
+                                    modalData.maritalStatus
+                                      ? modalData.maritalStatus
+                                      : ""
+                                  }}</span>
+                                </p>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -225,7 +252,10 @@
                                 <i class="fa fa-link fa-4x"></i>
                               </div>
                             </div>
-                            <div class="grow ml-6">
+                            <div
+                              class="grow ml-6"
+                              v-if="adminRole && adminRole != 'REV'"
+                            >
                               <h2 class="font-bold mb-1">Assign To</h2>
 
                               <div class="flex items-center">
@@ -269,35 +299,6 @@
                                     </div>
 
                                     <div
-                                      v-for="button in modalData.buttons"
-                                      :key="button.id"
-                                    >
-                                      <button
-                                        v-if="button.code == 'AT'"
-                                        class="
-                                          inline-block
-                                          px-6
-                                          py-2.5
-                                          mt-4
-                                          bg-primary-700
-                                          text-white
-                                          font-medium
-                                          text-xs
-                                          leading-tight
-                                          uppercase
-                                          rounded
-                                          shadow-lg
-                                          hover:bg-white hover:text-primary-600
-                                          transition
-                                          duration-150
-                                          ease-in-out
-                                        "
-                                        @click="assignReviewer(button.action)"
-                                      >
-                                        {{ button ? button.name : "" }}
-                                      </button>
-                                    </div>
-                                    <div
                                       v-show="
                                         resultQuery().length && showOptions
                                       "
@@ -334,9 +335,80 @@
                                         </li>
                                       </ul>
                                     </div>
+                                    <div
+                                      v-for="button in modalData.buttons"
+                                      :key="button.id"
+                                    >
+                                      <button
+                                        v-if="button.code == 'AT'"
+                                        class="
+                                          inline-block
+                                          px-6
+                                          py-2.5
+                                          mt-4
+                                          bg-primary-700
+                                          text-white
+                                          font-medium
+                                          text-xs
+                                          leading-tight
+                                          uppercase
+                                          rounded
+                                          shadow-lg
+                                          hover:bg-white hover:text-primary-600
+                                          transition
+                                          duration-150
+                                          ease-in-out
+                                        "
+                                        @click="
+                                          assignReviewer({
+                                            action: button.action,
+                                            type: 'toOthers',
+                                          })
+                                        "
+                                      >
+                                        {{ button ? button.name : "" }}
+                                      </button>
+                                    </div>
                                   </div>
                                 </div>
                               </label>
+                            </div>
+                            <div v-if="adminRole && adminRole == 'REV'">
+                              <div
+                                v-for="button in modalData.buttons"
+                                :key="button.id"
+                              >
+                                <button
+                                  v-if="button.code == 'AT'"
+                                  class="
+                                          inline-block
+                                          px-6
+                                          py-2.5
+                                          mt-4
+                                          bg-primary-700
+                                          text-white
+                                          font-medium
+                                          text-xs
+                                          ml-4
+                                          leading-tight
+                                          uppercase
+                                          rounded
+                                          shadow-lg
+                                          hover:bg-white hover:text-primary-600
+                                          transition
+                                          duration-150
+                                          ease-in-out
+                                        "
+                                  @click="
+                                    assignReviewer({
+                                      action: button.action,
+                                      type: 'toSelf',
+                                    })
+                                  "
+                                >
+                                  {{ button ? button.name : "" }} Self
+                                </button>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -359,7 +431,7 @@
                                   p-4
                                   bg-blue-600
                                   rounded-md
-                                  shadow-lg
+                                  shadow-md
                                   w-48
                                   h-48
                                   flex
@@ -372,18 +444,41 @@
                             </div>
                             <div class="grow ml-6">
                               <h2 class="font-bold mb-1">Contact Info</h2>
-                              <p class="text-gray-500">
-                                <span class="font-medium text-primary-700 mb-1"
-                                  >Mobile Number:</span
-                                >
-                                {{ modalData.mobileNumber }}
-                              </p>
-                              <p class="text-gray-500">
-                                <span class="font-medium text-primary-700 mb-1"
-                                  >Email:</span
-                                >
-                                {{ modalData.email }}
-                              </p>
+                              <div
+                                class="
+                                  border-2
+                                  p-2
+                                  rounded-lg
+                                  m-1
+                                  shadow-md
+                                  text-primary-500
+                                "
+                              >
+                                <p class="text-gray-500">
+                                  <span
+                                    class="font-semibold text-primary-700 mb-1"
+                                    >Mobile Number:</span
+                                  >
+                                  <span class="text-grey-800 ml-1">
+                                    {{
+                                      modalData.mobileNumber
+                                        ? modalData.mobileNumber
+                                        : ""
+                                    }}</span
+                                  >
+                                </p>
+                                <p class="text-gray-500">
+                                  <span
+                                    class="font-semibold text-primary-700 mb-1"
+                                    >Email:</span
+                                  >
+                                  <span class="text-grey-800 ml-1">
+                                    {{
+                                      modalData.email ? modalData.email : ""
+                                    }}</span
+                                  >
+                                </p>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -552,6 +647,7 @@ export default {
     let showOptions = ref(false);
     let reviewer = ref({ id: "", name: "", expertLevel: "", role: "" });
     let adminId = +localStorage.getItem("adminId");
+    let adminRole = localStorage.getItem("role");
     let modalData = ref({});
     let assign = ref({
       reviewerId: "",
@@ -567,11 +663,18 @@ export default {
       role.value = JSON.parse(localStorage.getItem("allAdminData")).role;
     };
 
-    const assignReviewer = (action) => {
-      assign.value = {
-        licenseId: modalData.value ? modalData.value.data.id : "",
-        reviewerId: assign.value.reviewerId,
-      };
+    const assignReviewer = (data) => {
+      if (data.type == "toSelf") {
+        assign.value = {
+          licenseId: modalData.value ? modalData.value.data.id : "",
+          reviewerId: adminId,
+        };
+      } else {
+        assign.value = {
+          licenseId: modalData.value ? modalData.value.data.id : "",
+          reviewerId: assign.value.reviewerId,
+        };
+      }
 
       isLoading.value = true;
       let smsData = {
@@ -592,14 +695,14 @@ export default {
       };
       store
         .dispatch("reviewer/assignReviewer", {
-          action: action,
+          action: data.action,
           data: assign.value,
         })
         .then((response) => {
           if (response.statusText == "Created") {
             store.dispatch("sms/sendSms", smsData).then(() => {
               isLoading.value = false;
-              toast.success("Selected Rviewer assigned Successfully", {
+              toast.success("Selected reviewer assigned Successfully", {
                 timeout: 5000,
                 position: "bottom-center",
                 pauseOnFocusLoss: true,
@@ -609,7 +712,7 @@ export default {
               isLoading.value = true;
               setTimeout(() => {
                 window.location.reload();
-              }, 3000);
+              }, 1000);
             });
           } else {
             toast.error(
@@ -707,7 +810,7 @@ export default {
             modalData.value.email = result.applicant
               ? result.applicant.emailAddress
               : "-----";
-            modalData.value.profile = result.profile; 
+            modalData.value.profile = result.profile;
             modalData.value.data = result;
             modalData.value.buttons =
               result && result.applicationStatus
@@ -740,6 +843,7 @@ export default {
       showOptions,
       reviewer,
       setInput,
+      adminRole,
       showModal,
       check,
       resultQuery,

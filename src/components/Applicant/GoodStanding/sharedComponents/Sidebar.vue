@@ -134,12 +134,12 @@
 
       <li
         :class="
-          $route.fullPath === '/Applicant/GoodStanding/inReview'
+          $route.fullPath === '/Applicant/GoodStanding/assigned'
             ? 'list active'
             : 'list'
         "
         :id="
-          $route.fullPath === '/Applicant/GoodStanding/inReview'
+          $route.fullPath === '/Applicant/GoodStanding/assigned'
             ? 'activeMenu'
             : ''
         "

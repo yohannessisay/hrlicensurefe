@@ -305,7 +305,7 @@
                   bg-gray-100
                 "
               >
-                <div class="mb-4"> 
+                <div class="mb-4">
                   <label class="text-main-400">Profession</label>
                   <select
                     class="
@@ -722,21 +722,18 @@
                       >Who Issued Previous License</label
                     >
 
-                    <input
-                      type="text"
-                      v-model="generalInfo.whoIssued"
+                    <select
                       class="
+                        form-select
                         appearance-none
                         block
-                        xl:w-64
-                        md:w-64
-                        sm:w-64
+                        max-w-3xl
                         px-3
                         py-1.5
                         text-base
                         font-normal
                         text-gray-700
-                        hover:text-main-500 hover:border-main-500
+                        bg-white bg-clip-padding bg-no-repeat
                         border border-solid border-gray-300
                         rounded
                         transition
@@ -744,13 +741,20 @@
                         m-0
                         focus:text-gray-700
                         focus:bg-white
-                        focus:border-main-400
+                        focus:border-blue-600
                         focus:outline-none
                       "
-                      autocomplete="off"
-                      placeholder=""
+                      v-model="generalInfo.whoIssuedId"
                       required
-                    />
+                    >
+                      <option
+                        v-for="region in regions"
+                        v-bind:key="region.name"
+                        v-bind:value="region"
+                      >
+                        {{ region.name }}
+                      </option>
+                    </select>
                   </div>
                 </div>
               </div>
@@ -962,7 +966,7 @@ export default {
       residenceWoredaId: "",
       whomGoodStandingFor: "",
       licenseIssuedDate: "",
-      whoIssued: "",
+      whoIssuedId: {},
       licenseRegistrationNumber: "",
       GSProfessionals: {
         professionTypeId: "",
@@ -1103,7 +1107,7 @@ export default {
           professionalTypes.value = res.data.data;
         });
     };
-    const setDepartment = () => { 
+    const setDepartment = () => {
       isDepartmentSelected.value = true;
     };
 
@@ -1117,7 +1121,6 @@ export default {
         .dispatch("goodstanding/setGeneralInfo", generalInfo.value)
         .then(() => {
           activeState.value++;
-         
         });
     };
     const clearLocalData = () => {
@@ -1164,8 +1167,8 @@ export default {
           licenseIssuedDate: generalInfo.value.licenseIssuedDate
             ? generalInfo.value.licenseIssuedDate
             : null,
-          whoIssued: generalInfo.value.whoIssued
-            ? generalInfo.value.whoIssued
+            whoIssuedId: generalInfo.value.whoIssuedId
+            ? generalInfo.value.whoIssuedId.id
             : "",
           licenseRegistrationNumber: generalInfo.value.licenseRegistrationNumber
             ? generalInfo.value.licenseRegistrationNumber
@@ -1261,7 +1264,7 @@ export default {
       fetchDepartments();
       fetchProfessionalType();
       fetchEducationLevel();
-     
+
       fetchRegions();
       fetchZone();
       fetchWoredas();
@@ -1278,7 +1281,7 @@ export default {
             res.data.data && res.data.data.woreda
               ? res.data.data.woreda.zone.region
               : "";
-   
+
           generalInfo.value.zoneSelected =
             res.data.data && res.data.data.woreda
               ? {
@@ -1311,7 +1314,7 @@ export default {
           generalInfo.value.education = JSON.parse(
             JSON.stringify(res.data.data.GSProfessionals)
           );
-  
+
           generalInfo.value.applicantTypeSelected = res.data.data.applicantType;
           educationalLevelChange();
         });

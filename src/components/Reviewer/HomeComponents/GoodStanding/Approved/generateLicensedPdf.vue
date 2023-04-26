@@ -63,25 +63,25 @@
                 <loading
                   :active="isLoading"
                   :can-cancel="true"
-                  :on-cancel="onCancel"
-                  :is-full-page="fullPage"
+                  :is-full-page="false"
                   :color="'#2F639D'"
                   :opacity="0.7"
                 ></loading>
+
                 <div class="flex flex-wrap">
                   <div class="grow-0 shrink-0 basis-auto w-full">
-                    <div>
-                      <div
-                        class="
+                    <div
+                      class="
                           bg-lightBlueB-200
                           flex
                           items-center
                           justify-center
                         "
-                      >
-                        <div class="w-screen">
-                          <div
-                            class="
+                      id="printedDiv"
+                    >
+                      <div class="w-screen">
+                        <div
+                          class="
                               flex flex-col
                               w-full
                               bg-white
@@ -90,160 +90,321 @@
                               justify-center
                               items-center
                             "
-                          >
-                            <div class="bg-lightBlueB-200">
-                              <div class="bg-lightBlueB-200 h-full">
-                                <div
-                                  v-if="show"
-                                  style="
-                                    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-                                  "
-                                  class="ml-8 mr-8 mb-12"
+                        >
+                          <div class="bg-white h-full">
+                            <div v-if="show" class="ml-8 mr-8 mb-12">
+                              <div v-if="!modalData.withExperiance">
+                                <h2 class="ml-4 mt-8" contenteditable="true">
+                                  To:
+                                  {{
+                                    modalData
+                                      ? modalData.whomGoodStandingFor
+                                      : ""
+                                  }}.
+                                </h2>
+                                <h3 class="ml-64 mb-8" contenteditable="true">
+                                  LETTER OF GOOD STANDING
+                                </h3>
+                                <h5  contenteditable="true">
+                                  This letter of good standing and confirmation
+                                  of registration is written upon request of
+                                  <span
+                                    contenteditable="false"
+                                    class="text-yellow-300"
+                                    >{{
+                                      modalData && modalData.applicantTitle
+                                        ? modalData.applicantTitle.name
+                                        : ""
+                                    }}</span
+                                  >
+                                  <span
+                                    contenteditable="false"
+                                    class="ml-1 text-yellow-300"
+                                  >
+                                    {{
+                                      (modalData && modalData.profile
+                                        ? modalData.profile.name
+                                        : "") +
+                                        " " +
+                                        (modalData && modalData.profile
+                                          ? modalData.profile.fatherName
+                                          : "") +
+                                        " " +
+                                        (modalData && modalData.profile
+                                          ? modalData.profile.grandFatherName
+                                          : "")
+                                    }}
+                                  </span>
+                                  .
+                                </h5>
+                                <span contenteditable="true">
+                                  {{
+                                    modalData &&
+                                    modalData.profile &&
+                                    modalData.profile.gender == "male"
+                                      ? "He"
+                                      : "She"
+                                  }}
+                                </span>
+                                had been registered and licensed as
+                                <span
+                                  contenteditable="false"
+                                  class="text-yellow-300"
+                                  >{{
+                                    modalData && modalData.GSProfessionals
+                                      ? modalData.GSProfessionals
+                                          .professionalTypes.name
+                                      : ""
+                                  }}</span
                                 >
-                                  <div class="mt-large bg-white">
-                                    <h2 class="ml-4 mt-8">
-                                      To:
-                                      {{
-                                        modalData
-                                          ? modalData.whomGoodStandingFor
-                                          : ""
-                                      }}.
-                                    </h2>
-                                    <h3 class="ml-64 mb-8">
-                                      LETTER OF GOOD STANDING
-                                    </h3>
-                                    <h4 class="ml-8">
-                                      This letter of good standing and
-                                      confirmation of registration is written
-                                      upon request of
-                                      <span class="text-yellow-300">{{
-                                        modalData
-                                          ? modalData.applicantTitle
-                                          : ""
-                                      }}</span>
-                                      <span class="ml-1 text-yellow-300">
-                                        {{
-                                          (modalData && modalData.profile
-                                            ? modalData.profile.name
-                                            : "") +
-                                            " " +
-                                            (modalData && modalData.profile
-                                              ? modalData.profile.fatherName
-                                              : "") +
-                                            " " +
-                                            (modalData && modalData.profile
-                                              ? modalData.profile
-                                                  .grandFatherName
-                                              : "")
-                                        }}
-                                      </span>
-                                      .
-                                    </h4>
-
-                                    <h4 class="ml-4">
-                                      <span>
-                                        {{
-                                          modalData && modalData.profile
-                                            ? modalData.profile.gender == "male"
-                                              ? "He"
-                                              : "She"
+                                on
+                                <span
+                                  class="text-yellow-300"
+                                  contenteditable="false"
+                                  >{{
+                                    modalData
+                                      ? moment(
+                                          modalData
+                                            ? modalData.licenseIssuedDate
                                             : ""
-                                        }}
-                                      </span>
-                                      was registered as
-                                      <span class="text-yellow-300">{{
-                                        modalData && modalData.applicantPosition
-                                          ? modalData.applicantPosition.name
+                                        ).format("MMMM D, YYYY")
+                                      : ""
+                                  }}</span
+                                >
+                                by the
+                                <span
+                                  contenteditable="false"
+                                  class="text-yellow-300"
+                                  >{{
+                                    modalData && modalData.whoIssued
+                                      ? modalData.whoIssued.name + ", "
+                                      : ""
+                                  }}</span
+                                >.which is the responsible organ for
+                                registration and licensing of health
+                                professionals and with registration number
+                                <span contenteditable="false">
+                                  {{
+                                    modalData
+                                      ? modalData.licenseRegistrationNumber
+                                      : ""
+                                  }} </span
+                                >.
+                                <p class="mt-8">
+                                  Hence we appreciate any assistance, which will
+                                  be rendered to
+                                  <span contenteditable="false">
+                                    {{
+                                      modalData &&
+                                      modalData.profile &&
+                                      modalData.profile.gender == "male"
+                                        ? "Him"
+                                        : "Her"
+                                    }} </span
+                                  >. With best regards
+                                </p>
+                              </div>
+
+                              <div
+                                v-if="modalData.withExperiance"
+                                class="mt-large bg-white"
+                                id="pdf"
+                              >
+                                <h2 class="ml-4 mt-8" contenteditable="true">
+                                  To:
+                                  {{
+                                    modalData
+                                      ? modalData.whomGoodStandingFor
+                                      : ""
+                                  }}.
+                                </h2>
+
+                                <h3 class="ml-64 mb-8" contenteditable="true">
+                                  LETTER OF GOOD STANDING
+                                </h3>
+
+                                <h5 contenteditable="true">
+                                  This letter of good standing and confirmation
+                                  of registration is written upon request of
+                                  <span
+                                    contenteditable="false"
+                                    class="text-yellow-300"
+                                    >{{
+                                      modalData && modalData.applicantTitle
+                                        ? modalData.applicantTitle.name
+                                        : ""
+                                    }}</span
+                                  >
+                                  <span
+                                    contenteditable="false"
+                                    class="ml-1 text-yellow-300"
+                                  >
+                                    {{
+                                      (modalData && modalData.profile
+                                        ? modalData.profile.name
+                                        : "") +
+                                        " " +
+                                        (modalData && modalData.profile
+                                          ? modalData.profile.fatherName
+                                          : "") +
+                                        " " +
+                                        (modalData && modalData.profile
+                                          ? modalData.profile.grandFatherName
+                                          : "")
+                                    }}
+                                  </span>
+                                  .
+                                </h5>
+
+                                <h4 class="ml-8">
+                                  <span contenteditable="false">
+                                    {{
+                                      modalData &&
+                                      modalData.profile &&
+                                      modalData.profile.gender == "male"
+                                        ? "He"
+                                        : "She"
+                                    }}
+                                  </span>
+                                  <span contenteditable="true">
+                                    had been registered and licensed as
+                                  </span>
+
+                                  <span
+                                    contenteditable="false"
+                                    class="text-yellow-300"
+                                    >{{
+                                      modalData && modalData.GSProfessionals
+                                        ? modalData.GSProfessionals
+                                            .professionalTypes.name
+                                        : ""
+                                    }}</span
+                                  >
+                                  <span contenteditable="true"> on </span>
+                                  <span
+                                    class="text-yellow-300"
+                                    contenteditable="false"
+                                    >{{
+                                      modalData
+                                        ? moment(
+                                            modalData
+                                              ? modalData.licenseIssuedDate
+                                              : ""
+                                          ).format("MMMM D, YYYY")
+                                        : ""
+                                    }}</span
+                                  >
+
+                                  <span contenteditable="true"> by </span>
+
+                                  <span
+                                    contenteditable="false"
+                                    class="text-yellow-300"
+                                    >{{
+                                      modalData && modalData.whoIssued
+                                        ? modalData.whoIssued.name + ", "
+                                        : ""
+                                    }}</span
+                                  >
+
+                                  <span contenteditable="true"
+                                    >which is the responsible organ for
+                                    registration and licensing of health
+                                    professionals and with registration number
+                                  </span>
+                                  <span contenteditable="false">
+                                    {{
+                                      modalData
+                                        ? modalData.licenseRegistrationNumber
+                                        : ""
+                                    }}
+                                  </span>
+
+                                  .
+                                </h4>
+                                <h4 class="ml-8 mt-8">
+                                  <span contenteditable="false">
+                                    {{
+                                      modalData && modalData.profile
+                                        ? modalData.profile.gender == "male"
+                                          ? "He"
+                                          : "She"
+                                        : ""
+                                    }}
+                                  </span>
+                                  <span>
+                                    has been working From
+                                    <span contenteditable="true">
+                                      __/__/__</span
+                                    >
+                                    to
+                                    <span contenteditable="true">
+                                      __/__/__</span
+                                    >
+                                    in Ethiopia.
+                                  </span>
+
+                                  <p contenteditable="true">
+                                    Since __/__/__ registration, till __/__/__
+                                    <span contenteditable="false">
+                                      {{
+                                        modalData && modalData.profile
+                                          ? modalData.profile.gender == "male"
+                                            ? "He"
+                                            : "She"
                                           : ""
-                                      }}</span>
-                                      on
-                                      <span class="text-yellow-300">{{
-                                        modalData
-                                          ? moment(
-                                              modalData
-                                                ? modalData.licenseIssuedDate
-                                                : ""
-                                            ).format("MMMM D, YYYY")
+                                      }}
+                                    </span>
+                                    has no any reported medico legal records and
+                                    malpractices while
+                                    <span contenteditable="false">
+                                      {{
+                                        modalData && modalData.profile
+                                          ? modalData.profile.gender == "male"
+                                            ? "He"
+                                            : "She"
                                           : ""
-                                      }}</span>
-                                      by
-                                      <span class="text-yellow-300">{{
-                                        modalData && modalData.whoIssued
-                                          ? modalData.whoIssued
+                                      }}
+                                    </span>
+                                    has practiced
+                                    <span class="text-yellow-300">
+                                      {{
+                                        modalData && modalData.GSProfessionals
+                                          ? modalData.GSProfessionals
+                                              .professionalTypes.name
                                           : ""
                                       }}</span
-                                      >, which is the responsible organ for
-                                      registration and licensing of health
-                                      professionals and
-                                      <span>
-                                        {{
-                                          modalData && modalData.profile
-                                            ? modalData.profile.gender == "male"
-                                              ? "His"
-                                              : "Her"
-                                            : ""
-                                        }}
-                                      </span>
-                                      registration number is
-                                      <span class="text-yellow-300">
-                                        {{
-                                          modalData
-                                            ? modalData.licenseRegistrationNumber
-                                            : ""
-                                        }}
-                                      </span>
-                                      .
-                                    </h4>
-                                    <h4 class="ml-8 mt-8">
-                                      <span>
-                                        {{
-                                          modalData && modalData.profile
-                                            ? modalData.profile.gender == "male"
-                                              ? "He"
-                                              : "She"
-                                            : ""
-                                        }}
-                                      </span>
-                                      has no any reported medico legal records
-                                      and malpractices while he has practiced
-                                      his medical profession in Ethiopia
-                                    </h4>
-                                    <h4 class="ml-4">
-                                      untill
-                                      <span class="text-yellow-300">{{
-                                        moment(new Date()).format(
-                                          "MMMM DD, YYYY"
-                                        )
-                                      }}</span>
-                                      .
-                                    </h4>
-
-                                    <h4 class="ml-8 mt-8">
-                                      Hence we appreciate any assistance, which
-                                      will be rendered to
-                                      <span>
-                                        {{
-                                          modalData && modalData.profile
-                                            ? modalData.profile.gender == "male"
-                                              ? "him"
-                                              : "her"
-                                            : ""
-                                        }} </span
-                                      >.
-                                    </h4>
-                                    <h4 class="ml-8 mb-8">With best regards</h4>
-
-                                    <div
-                                      class="flex justify-start"
-                                      v-if="expertLevelId != 3"
                                     >
-                                      <h3 class="font-bold">Address</h3>
-                                    </div>
+                                    medical profession in Ethiopia.
+                                  </p>
+                                </h4>
 
-                                    <div
-                                      class="flex justify-start flex-wrap"
-                                    ></div>
-                                  </div>
+                                .
+
+                                <h5 class="ml-8 mt-8" contenteditable="true">
+                                  Hence we appreciate any assistance, which will
+                                  be rendered to
+                                  <span>
+                                    {{
+                                      modalData && modalData.profile
+                                        ? modalData.profile.gender == "male"
+                                          ? "him"
+                                          : "her"
+                                        : ""
+                                    }} </span
+                                  >.
+                                </h5>
+                                <h5 class="ml-8 mb-8" contenteditable="true">
+                                  With best regards
+                                </h5>
+
+                                <div
+                                  class="flex justify-start"
+                                  v-if="expertLevelId != 3"
+                                >
+                                  <h3 class="font-bold" contenteditable="true">
+                                    Address
+                                  </h3>
                                 </div>
                               </div>
                             </div>
@@ -287,7 +448,7 @@
               duration-150
               ease-in-out
             "
-            @click="GenerateLetter()"
+            @click="printPdf"
           >
             <i class="fa fa-check"></i>
             Generate
@@ -325,20 +486,23 @@
 <script>
 import { ref, computed } from "vue";
 import moment from "moment";
-import jsPDF from "jspdf";
-import { useStore } from "vuex";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
+import { jsPDF } from "jspdf";
+import { useStore } from "vuex"; 
 import { useToast } from "vue-toastification";
+import html2pdf from "html2pdf.js";
 export default {
   props: ["modalDataGenerate"],
   components: { Loading },
   computed: {
-    moment: () => moment
+    moment: () => moment,
   },
+
   setup(props) {
     const store = useStore();
     const toast = useToast();
+    let isLoading = ref(false);
     let myRegion = ref(true);
     const expertLevelId = JSON.parse(localStorage.getItem("allAdminData"))
       .expertLevelId;
@@ -363,7 +527,7 @@ export default {
       email: "",
       maritalStatus: "",
       nationality: "",
-      dateOfBirth: ""
+      dateOfBirth: "",
     });
     let applicantPosition = ref("-");
 
@@ -373,7 +537,7 @@ export default {
     let applicantTypeId = ref("");
     let education = ref({
       departmentId: "",
-      institutionId: ""
+      institutionId: "",
     });
     let licenseId = ref("");
     let activeClass = ref("active");
@@ -387,172 +551,68 @@ export default {
     let getReviewId = ref(0);
     let modalData = computed(() => props.modalDataGenerate);
 
-    const GenerateLetter = () => {
-      if (
-        license.value.applicationStatus.code !== "AP" &&
-        license.value.applicationStatus.code !== "APP"
-      ) {
-        console.log(license.value);
-        // if user is not approved don't generate a good standing letter
-        return;
-      }
+    const printPdf = () => {
+      isLoading.value = true;
 
-      const doc = new jsPDF({ orientation: "landscape" });
-      const pageWidth =
-        doc.internal.pageSize.width || doc.internal.pageSize.getWidth;
-      doc.setFontSize(20);
-      doc.setFont("times", "bold");
-      doc.text(40, 58, "To: " + license.value.whomGoodStandingFor + ".");
-      doc.setFontSize(14);
+      var element = document.getElementById("printedDiv");
+      var opt = {
+        margin: 1,
+        filename: "myfile.pdf",
+        image: { type: "jpeg", quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
+      };
 
-      const letter = "LETTER OF GOOD STANDING";
-      doc.text(letter, pageWidth / 2, 75, { align: "center" });
-      const letterPosition = pageWidth / 2 - doc.getTextWidth(letter) / 2;
-      doc.line(
-        letterPosition,
-        77,
-        letterPosition + doc.getTextWidth(letter),
-        77
-      );
-      doc.setFontSize(15);
+      html2pdf()
+        .set(opt)
+        .from(element)
+        .save(
+          license.value && license.value.profile && license.value.profile.name
+            ? license.value.profile.name +
+                " " +
+                new Date().toISOString().slice(0, 10)
+            : ""
+        );
 
-      doc.setFont("times", "normal");
-      doc.text(
-        40,
-        90,
-        "This letter of good standing and confirmation of registration is written upon request of "
-      );
-      doc.text(
-        40,
-        100,
-        (modalData.value && modalData.value.profile
-          ? modalData.value.profile.name
-          : "") +
-          " " +
-          (modalData.value && modalData.value.profile
-            ? modalData.value.profile.fatherName
-            : "") +
-          " " +
-          (modalData.value && modalData.value.profile
-            ? modalData.value.profile.grandFatherName
-            : "") +
-          ` .${
-            modalData.value && modalData.value.profile
-              ? modalData.value.profile.gender == "male"
-                ? "He "
-                : "She "
-              : ""
-          }` +
-          "was registered as " +
-          (modalData.value && modalData.value.applicantPosition
-            ? modalData.value.applicantPosition.name
-            : "") +
-          ` on ` +
-          moment(
-            modalData.value ? modalData.value.licenseIssuedDate : ""
-          ).format("MMMM D, YYYY") +
-          " by " +
-          (modalData.value ? modalData.value.whoIssued : "") +
-          ","
-      );
-      doc.text(
-        40,
-        110,
-        `which is the responsible organ for registration and licensing of health professionals and ${
-          modalData.value && modalData.value.profile
-            ? modalData.value.profile.gender == "male"
-              ? "his"
-              : "her"
-            : ""
-        } registration`
-      );
-      doc.text(
-        40,
-        120,
-        `number is ${
-          modalData.value ? modalData.value.licenseRegistrationNumber : ""
-        }.`
-      );
-      doc.text(
-        40,
-        130,
-        `${
-          modalData.value && modalData.value.profile
-            ? modalData.value.profile.gender == "male"
-              ? "He"
-              : "S  he"
-            : ""
-        } has no any reported medico legal records and malpractices while ${
-          modalData.value && modalData.value.profile
-            ? modalData.value.profile.gender == "male"
-              ? "he"
-              : "she"
-            : ""
-        } has practiced ${
-          modalData.value && modalData.value.profile
-            ? modalData.value.profile.gender == "male"
-              ? "his"
-              : "her"
-            : ""
-        } medical profession`
-      );
-      doc.text(
-        40,
-        140,
-        `in Ethiopia till ${moment(new Date()).format("MMMM DD, YYYY")}.`
-      );
-      doc.text(
-        40,
-        165,
-        `Hence we appreciate any assistance, which will be rendered to ${
-          modalData.value && modalData.value.profile
-            ? modalData.value.profile.gender == "male"
-              ? "him"
-              : "her"
-            : ""
-        }.`
-      );
-      doc.text(40, 185, "With best regards");
-
+      license.value.isLicenseGenerated &&
+      license.value.isLicenseGenerated == true
+        ? (license.value.isReprint = true)
+        : "";
       license.value.isLicenseGenerated = true;
+
       let req = {
-        data: { ...license.value, isLicenseGenerated: true }
+        data: { ...license.value, isLicenseGenerated: true },
       };
       store
         .dispatch("reviewer/editGoodStanding", req)
-        .then(res => {
+        .then((res) => {
           if (res.statusText == "Created") {
             toast.success("Done", {
               timeout: 5000,
               position: "bottom-center",
               pauseOnFocusLoss: true,
               pauseOnHover: true,
-              icon: true
+              icon: true,
             });
+            isLoading.value = false;
             setTimeout(() => {
               window.location.reload();
-            }, 3000);
+            }, 1000);
           } else {
             toast.error(res, {
               timeout: 5000,
               position: "bottom-center",
               pauseOnFocusLoss: true,
               pauseOnHover: true,
-              icon: true
+              icon: true,
             });
-            setTimeout(() => {
-              window.location.reload();
-            }, 3000);
+            isLoading.value = false;
           }
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
-          setTimeout(() => {
-            window.location.reload();
-          }, 3000);
+          isLoading.value = false;
         });
-
-      window.open(doc.output("bloburl"));
     };
 
     if (
@@ -631,15 +691,17 @@ export default {
       show,
       showLoading,
       applicationType,
+
       licenseId,
       isUserApproved,
       isGoodStanding,
-      GenerateLetter,
+      isLoading,
+      printPdf,
       myRegion,
       modalData,
-      expertLevelId
+      expertLevelId,
     };
-  }
+  },
 };
 </script>
 <style>

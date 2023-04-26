@@ -270,23 +270,41 @@ export default {
           icon: true,
         });
         isLoading.value = false;
-     
       }
+      let smsData = {
+        recipients: [
+          suspendedData.data && suspendedData.data.applicant
+            ? "251" + suspendedData.data.applicant.phoneNumber
+            : "",
+        ],
+        message:
+          suspendedData.data && suspendedData.data.profile
+            ? "Dear " +
+              suspendedData.data.profile.name +
+              " " +
+              suspendedData.data.profile.fatherName +
+              ", Your license with license number " +
+              suspendedData.data.newLicenseCode +
+              "has been suspended.Please visit nearest office or contact your reviewer if you have any question. Thank you for using eHPEL,https://www.hrl.moh.gov.et"
+            : "",
+      };
       store
         .dispatch("reviewer/editNewLicense", suspendedData)
         .then((res) => {
           isLoading.value = false;
           if (res.statusText == "Created") {
-            toast.success("Done", {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
+            store.dispatch("sms/sendSms", smsData).then(() => {
+              toast.success("Application suspended Successfully", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
+              setTimeout(() => {
+                location.reload();
+              }, 2000);
             });
-            setTimeout(() => {
-              window.location.reload();
-            }, 3000);
           } else {
             toast.error(res.data.message, {
               timeout: 5000,

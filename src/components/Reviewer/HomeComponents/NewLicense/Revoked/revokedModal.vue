@@ -328,29 +328,25 @@
                           </div>
                         </div>
                       </div>
-
-                   
                       <div
                         class="
-                          shadow-lg
                           grow-0
                           shrink-0
                           basis-auto
-                          w-full 
-                          rounded-lg
-                          p-2
-                          text-primary-600
-                          mt-12
+                          w-full
+                          lg:w-6/12 
+                          px-3
                           lg:px-6
                         "
                       >
-                        <div class="flex items-start m-2">
+                        <div class="flex items-start">
                           <div class="shrink-0">
                             <div
                               class="
                                 p-4
                                 bg-blue-600
-                                rounded-md 
+                                rounded-md
+                                shadow-lg
                                 w-48
                                 h-48
                                 flex
@@ -358,18 +354,17 @@
                                 justify-center
                               "
                             >
-                              <i class="fa fa-building fa-4x"></i>
+                              <i class="fa fa-phone fa-4x"></i>
                             </div>
                           </div>
-                          <div class="grow ml-6 mb-4">
-                            <h2 class="font-bold mb-1">Education Detail</h2>
-                            <div class="grid grid-cols-3 w-full">
-                              <div
+                          <div class="grow ml-6">
+                            <h2 class="font-bold mb-1">Education Info</h2>
+                            <div
                                 class="
                                   border-2
                                   p-2
                                   rounded-lg
-                                  w-full
+                                  w-full 
                                   shadow-md
                                   text-primary-500
                                 "
@@ -423,10 +418,10 @@
                                   }}
                                 </p>
                               </div>
-                            </div>
                           </div>
                         </div>
                       </div>
+                     
                     </div>
 
                     <div class="collapse mt-12" id="collapseExample">
@@ -551,13 +546,13 @@ import { ref, watch } from "vue";
 import { useStore } from "vuex";
 import Loading from "vue3-loading-overlay";
 // Import stylesheet
-import "vue3-loading-overlay/dist/vue3-loading-overlay.css"; 
+import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 export default {
   name: "Modal",
   components: { Loading },
   props: ["modalDataId"],
   setup(props) {
-    const store = useStore(); 
+    const store = useStore();
     const showModal = () => {
       this.show = true;
     };
@@ -568,7 +563,7 @@ export default {
     const isLoading = ref(true);
     const modalData = ref({});
     let adminData = JSON.parse(localStorage.getItem("allAdminData"));
-    let result = {}; 
+    let result = {};
     const check = () => {
       store
         .dispatch("reviewer/getNewLicenseApplication", props.modalDataId.id)
@@ -611,7 +606,7 @@ export default {
             modalData.value.documents = result.documents;
             modalData.value.remark = result ? result.remark : "";
             modalData.value.id = result.id;
-            modalData.value.data = result; 
+            modalData.value.data = result;
             isLoading.value = false;
           }
         });

@@ -1,5 +1,12 @@
 <template>
-  <div>
+  <div class="vld-parent">
+    <loading
+      :active="isLoading" 
+      :is-full-page="true"
+      :color="'#2F639D'"
+      :opacity="0.7"
+    ></loading>
+
     <div class="accordion mr-8" id="FilesAccordion">
       <span
         v-if="errorDocuments && errorDocuments.length > 0"
@@ -183,7 +190,9 @@
                             'common_image_href' + item.documentType.id + item.id
                           "
                           :href="documentsSaved[item.documentType.code]?.path"
-                          :data-title="item.name ? item.name : '-----'"
+                          :data-title="
+                            item.documentType ? item.documentType.name : '-----'
+                          "
                           data-lightbox="example-2"
                         >
                           <i
@@ -194,8 +203,8 @@
                             <img
                               :id="
                                 'common_image_lightbox' +
-                                item.documentType.id +
-                                item.id
+                                  item.documentType.id +
+                                  item.id
                               "
                               v-bind:src="
                                 documentsSaved[item.documentType.code]
@@ -406,12 +415,12 @@
                           class="document-name"
                           v-if="
                             documentsSaved[
-                              `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                              `${item.documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                             ]?.name
                           "
                           >{{
                             documentsSaved[
-                              `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                              `${item.documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                             ]?.name
                           }}</span
                         >
@@ -420,20 +429,22 @@
                         <a
                           :id="
                             'image_href_' +
-                            `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                              `${item.documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                           "
                           :href="
                             documentsSaved[
-                              `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                              `${item.documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                             ]?.path
                           "
-                          :data-title="item.name ? item.name : '-----'"
+                          :data-title="
+                            item.documentType ? item.documentType.name : '-----'
+                          "
                           data-lightbox="example-2"
                         >
                           <i
                             :id="
                               'educational_icon_' +
-                              `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                `${item.documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                             "
                             class="fa fa-eye cursor-pointer text-main-400"
                             aria-hidden="true"
@@ -441,11 +452,11 @@
                             <img
                               :id="
                                 'image_lightbox_' +
-                                `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                  `${item.documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                               "
                               :src="
                                 documentsSaved[
-                                  `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                  `${item.documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                 ]?.path
                               "
                               class="w-full h-2 object-cover"
@@ -517,12 +528,12 @@
                           class="document-name"
                           v-if="
                             documentsSaved[
-                              `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                              `${parentItem[0].documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                             ]?.name
                           "
                           >{{
                             documentsSaved[
-                              `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                              `${parentItem[0].documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                             ]?.name
                           }}</span
                         >
@@ -531,11 +542,11 @@
                         <a
                           :id="
                             'image_href_' +
-                            `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                              `${parentItem[0].documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                           "
                           :href="
                             documentsSaved[
-                              `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                              `${parentItem[0].documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                             ]?.path
                           "
                           :data-title="
@@ -546,7 +557,7 @@
                           <i
                             :id="
                               'educational_icon_' +
-                              `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                `${parentItem[0].documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                             "
                             class="fa fa-eye cursor-pointer text-main-400"
                             aria-hidden="true"
@@ -554,11 +565,11 @@
                             <img
                               :id="
                                 'image_lightbox_' +
-                                `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                  `${parentItem[0].documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                               "
                               :src="
                                 documentsSaved[
-                                  `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                  `${parentItem[0].documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                 ]?.path
                               "
                               class="w-full h-2 object-cover"
@@ -715,7 +726,9 @@
                                       :required="parentChildItem.isRequired"
                                       :id="`files${parentChildItem.id}`"
                                       accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
-                                      :ref="`imageUploader${parentChildItem.id}`"
+                                      :ref="
+                                        `imageUploader${parentChildItem.id}`
+                                      "
                                       class="custom-file-input"
                                       v-on:change="
                                         handleFileUpload(
@@ -732,12 +745,12 @@
                                     class="document-name"
                                     v-if="
                                       documentsSaved[
-                                        `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                        `${parentChildItem.documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                       ]?.name
                                     "
                                     >{{
                                       documentsSaved[
-                                        `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                        `${parentChildItem.documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                       ]?.name
                                     }}</span
                                   >
@@ -753,11 +766,11 @@
                                   <a
                                     :id="
                                       'image_href_' +
-                                      `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                        `${parentChildItem.documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                     "
                                     :href="
                                       documentsSaved[
-                                        `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                        `${parentChildItem.documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                       ]?.path
                                     "
                                     :data-title="
@@ -768,7 +781,7 @@
                                     <i
                                       :id="
                                         'educational_icon_' +
-                                        `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                          `${parentChildItem.documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                       "
                                       class="
                                         fa fa-eye
@@ -780,11 +793,11 @@
                                       <img
                                         :id="
                                           'image_lightbox_' +
-                                          `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                            `${parentChildItem.documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                         "
                                         :src="
                                           documentsSaved[
-                                            `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                            `${parentChildItem.documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                           ]?.path
                                         "
                                         class="w-full h-2 object-cover"
@@ -866,20 +879,21 @@
 </template>
 <script>
 import { ref, onMounted } from "vue";
-import { useStore } from "vuex";
-import { useToast } from "vue-toastification";
+import { useStore } from "vuex"; 
 
+import Loading from "vue3-loading-overlay";
+import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 import MAX_FILE_SIZE from "../../../../composables/documentMessage";
 import filePreview from "@/sharedComponents/FilePreview";
 import { boolean } from "yargs";
 import { googleApi } from "@/composables/baseURL";
 import { useRoute } from "vue-router";
 export default {
-  components: { filePreview },
+  components: { filePreview, Loading },
 
   setup(props, { emit }) {
-    let store = useStore();
-    const toast = useToast();
+    let isLoading = ref(false);
+    let store = useStore(); 
     const route = useRoute();
     let documents = ref([]);
     let commonDocuments = ref([]);
@@ -891,11 +905,10 @@ export default {
       isImage: boolean,
       isPdf: boolean,
       file: "",
-      name: "",
+      name: ""
     });
     let files = ref("");
-    let maxFileSize = ref(5000000);
-    let parentDocs = ref([]);
+    let maxFileSize = ref(5000000); 
     let isImage = ref({});
     let isPdf = ref({});
     let fileSizeExceed = ref({});
@@ -944,7 +957,7 @@ export default {
         }
         reader.addEventListener(
           "load",
-          function () {
+          function() {
             showPreview.value = true;
 
             previewDocuments.value[data.documentType.code] = reader.result;
@@ -954,7 +967,7 @@ export default {
               educationalLevel: data.educationalLevel
                 ? data.educationalLevel.name
                 : "",
-              image: reader.result,
+              image: reader.result
             });
             documentToSave.value[data.documentType.code] = reader.result;
           },
@@ -1001,33 +1014,70 @@ export default {
       );
       outputHref.href = URL.createObjectURL(event.target.files[0]);
       output.src = URL.createObjectURL(event.target.files[0]);
-      output.onload = function () {
+      output.onload = function() {
         URL.revokeObjectURL(output.src); // free memory
       };
     };
 
     const handleFileUpload = (data, event, pro) => {
-      let uniqueId =
+      documentUploaded.value[
         data.documentType.code +
-        "_" +
-        data.educationalLevel.code.toUpperCase() +
-        "_" +
-        pro.code.toUpperCase();
+          "_" +
+          data.educationalLevel.code.toUpperCase() +
+          "_" +
+          pro.professionType.code.toUpperCase()
+      ] = event?.target?.files[0];
       let reader = new FileReader();
-      documentUploaded.value[uniqueId] = "";
-      documentUploaded.value[uniqueId] = event?.target?.files[0];
+      formData.append(
+        data.documentType.code +
+          "_" +
+          data.educationalLevel.code.toUpperCase() +
+          "_" +
+          pro.professionType.code.toUpperCase(),
 
-      formData.append(uniqueId, event?.target?.files[0]);
+        event?.target?.files[0]
+      );
+      if (data.parentDocument) {
+        documentsUploaded.value[
+          data.documentType.code +
+            "_" +
+            data.educationalLevel.code.toUpperCase() +
+            "_" +
+            pro.professionType.code.toUpperCase()
+        ] = event?.target?.files[0];
+      } else {
+        documentsUploaded.value[
+          data.documentType.code +
+            "_" +
+            data.educationalLevel.code.toUpperCase() +
+            "_" +
+            pro.professionType.code.toUpperCase()
+        ] = event?.target?.files[0];
+      }
 
-      documentsUploaded.value[uniqueId] = event?.target?.files[0];
-      isImage.value[uniqueId] = true;
-      //check file size
-      let fileS = documentsUploaded.value[uniqueId]
-        ? documentsUploaded.value[uniqueId].size
-        : 0;
-
+      isImage.value[
+        data.documentType.code +
+          "_" +
+          data.educationalLevel.code.toUpperCase() +
+          "_" +
+          pro.professionType.code.toUpperCase()
+      ] = true;
+      let fileS =
+        documentUploaded.value[
+          data.documentType.code +
+            "_" +
+            data.educationalLevel.code.toUpperCase() +
+            "_" +
+            pro.professionType.code.toUpperCase()
+        ].size;
       if (fileS <= maxFileSize.value / 1000) {
-        fileSizeExceed.value[uniqueId] = false;
+        fileSizeExceed.value[
+          data.documentType.code +
+            "_" +
+            data.educationalLevel.code.toUpperCase() +
+            "_" +
+            pro.professionType.code.toUpperCase()
+        ] = false;
         showImage.value = true;
 
         if (fileS > 0 && fileS < 1000) {
@@ -1040,207 +1090,231 @@ export default {
 
         reader.addEventListener(
           "load",
-          function () {
+          function() {
             showPreview.value = true;
 
-            previewDocuments.value[uniqueId] = reader.result;
-
-            imageData = imageData.filter((el) => el.documenttype != uniqueId);
+            previewDocuments.value[
+              data.documentType.code +
+                "_" +
+                data.educationalLevel.code.toUpperCase() +
+                "_" +
+                pro.professionType.code.toUpperCase()
+            ] = reader.result;
 
             imageData.push({
-              imageId: "image_lightbox_" + uniqueId,
-              documenttype: uniqueId,
-              documentName: data.documentType.name,
+              imageId:
+                "image_lightbox_" +
+                data.documentType.code +
+                "_" +
+                pro.educationalLevel.code +
+                "_" +
+                pro.professionType.code,
+              documenttype: data.documentType ? data.documentType.name : "",
+              documentCode:
+                data.documentType.code +
+                "_" +
+                data.educationalLevel.code.toUpperCase() +
+                "_" +
+                pro.professionType.code.toUpperCase(),
               educationalLevel: data.educationalLevel
                 ? data.educationalLevel.name
                 : "",
-              image: reader.result,
+              fileName: event?.target?.files[0].name,
+              image: reader.result
             });
-
-            documentUploaded.value[uniqueId] = reader.result;
+            // documentUploaded.value[data.documentType.code] = reader.result;
           },
           false
         );
-        if (documentUploaded.value[uniqueId]) {
-          if (
-            /\.(jpe?g|png|gif)$/i.test(documentUploaded.value[uniqueId].name)
-          ) {
-            isImage.value[uniqueId] = true;
-            isPdf.value[uniqueId] = false;
 
-            reader.readAsDataURL(documentUploaded.value[uniqueId]);
-          } else if (/\.(pdf)$/i.test(documentUploaded.value[uniqueId].name)) {
-            isImage.value[uniqueId] = false;
-            isPdf.value[uniqueId] = true;
-            reader.readAsDataURL(documentUploaded.value[uniqueId]);
+        if (
+          documentUploaded.value[
+            data.documentType.code +
+              "_" +
+              data.educationalLevel.code.toUpperCase() +
+              "_" +
+              pro.professionType.code.toUpperCase()
+          ]
+        ) {
+          if (
+            /\.(jpe?g|png|gif)$/i.test(
+              documentUploaded.value[
+                data.documentType.code +
+                  "_" +
+                  data.educationalLevel.code.toUpperCase() +
+                  "_" +
+                  pro.professionType.code.toUpperCase()
+              ].name
+            )
+          ) {
+            isImage.value[
+              data.documentType.code +
+                "_" +
+                data.educationalLevel.code.toUpperCase() +
+                "_" +
+                pro.professionType.code.toUpperCase()
+            ] = true;
+            isPdf.value[
+              data.documentType.code +
+                "_" +
+                data.educationalLevel.code.toUpperCase() +
+                "_" +
+                pro.professionType.code.toUpperCase()
+            ] = false;
+
+            reader.readAsDataURL(
+              documentUploaded.value[
+                data.documentType.code +
+                  "_" +
+                  data.educationalLevel.code.toUpperCase() +
+                  "_" +
+                  pro.professionType.code.toUpperCase()
+              ]
+            );
+          } else if (
+            /\.(pdf)$/i.test(
+              documentUploaded.value[
+                data.documentType.code +
+                  "_" +
+                  data.educationalLevel.code.toUpperCase() +
+                  "_" +
+                  pro.professionType.code.toUpperCase()
+              ].name
+            )
+          ) {
+            isImage.value[
+              data.documentType.code +
+                "_" +
+                data.educationalLevel.code.toUpperCase() +
+                "_" +
+                pro.professionType.code.toUpperCase()
+            ] = false;
+            isPdf.value[
+              data.documentType.code +
+                "_" +
+                data.educationalLevel.code.toUpperCase() +
+                "_" +
+                pro.professionType.code.toUpperCase()
+            ] = true;
+            reader.readAsDataURL(
+              documentUploaded.value[
+                data.documentType.code +
+                  "_" +
+                  data.educationalLevel.code.toUpperCase() +
+                  "_" +
+                  pro.professionType.code.toUpperCase()
+              ]
+            );
           }
         }
       } else {
-        toast.error("Files size exceeded the allowed limit", {
-          timeout: 3000,
-          position: "bottom-center",
-          pauseOnFocusLoss: true,
-          pauseOnHover: true,
-          icon: true,
-        });
-        fileSizeExceed.value[uniqueId] = true;
-        documentUploaded.value[uniqueId] = "";
+        fileSizeExceed.value[
+          data.documentType.code +
+            "_" +
+            data.educationalLevel.code.toUpperCase() +
+            "_" +
+            pro.professionType.code.toUpperCase()
+        ] = true;
+        documentUploaded.value[
+          data.documentType.code +
+            "_" +
+            data.educationalLevel.code.toUpperCase() +
+            "_" +
+            pro.professionType.code.toUpperCase()
+        ] = "";
       }
-      //end of check file size
-      let icon = document.getElementById("educational_icon_" + uniqueId);
-      icon.classList.toggle("disabled");
-      let output = document.getElementById("image_lightbox_" + uniqueId);
-      let outputHref = document.getElementById("image_href_" + uniqueId);
+      let icon = document.getElementById(
+        "educational_icon_" +
+          data.documentType.code +
+          "_" +
+          pro.educationalLevel.code +
+          "_" +
+          pro.professionType.code
+      );
+      if (icon.classList.contains("disabled")) {
+        icon.classList.toggle("disabled");
+      }
+
+      let output = document.getElementById(
+        "image_lightbox_" +
+          data.documentType.code +
+          "_" +
+          pro.educationalLevel.code +
+          "_" +
+          pro.professionType.code
+      );
+      let outputHref = document.getElementById(
+        "image_href_" +
+          data.documentType.code +
+          "_" +
+          pro.educationalLevel.code +
+          "_" +
+          pro.professionType.code
+      );
       outputHref.href = URL.createObjectURL(event.target.files[0]);
       if (output && output.src) {
         output.src = URL.createObjectURL(event.target.files[0]);
-        output.onload = function () {
-          URL.revokeObjectURL(output.src); // free memory
-        };
       }
+
+      output
+        ? (output.onload = function() {
+            URL.revokeObjectURL(output.src); // free memory
+          })
+        : "";
     };
-    const checkDocuments = () => {
-      let temp = false;
-      let CMtemp = false;
 
-      /// check common documents
-
-      commonDocuments.value
-        .filter((cd) => cd.isRequired)
-        .forEach((element) => {
-          CMtemp = documentsUploaded.value.hasOwnProperty(
-            element.documentType.code
-          );
-          if (!CMtemp) {
-            fileUploadError.value[
-              "file_upload_row_" + element.documentType.code
-            ] = true;
-            errorDocuments.value.push({
-              isCommon: true,
-              name: element.documentType.name,
-              code: element.documentType.code,
-            });
-          } else {
-            fileUploadError.value[
-              "file_upload_row_" + element.documentType.code
-            ] = false;
-          }
-        });
-
-      educationalDocs.value.forEach((ed) => {
-        // check normal docs with no parents
-
-        ed.docs
-          .filter((docs) => docs.isRequired)
-          .forEach((single) => {
-            temp = documentsUploaded.value.hasOwnProperty(
-              single.documentType.code +
-                "_" +
-                ed.educationalLevel.code.toUpperCase() +
-                "_" +
-                ed.professionType.code.toUpperCase()
-            );
-            if (!temp) {
-              fileUploadError.value[
-                "file_upload_row_" +
-                  single.documentType.code +
-                  "_" +
-                  ed.educationalLevel.code.toUpperCase() +
-                  "_" +
-                  ed.professionType.code.toUpperCase()
-              ] = true;
-              errorDocuments.value.push({
-                name: single.documentType.name,
-                code:
-                  single.documentType.code +
-                  "_" +
-                  ed.educationalLevel.code.toUpperCase() +
-                  "_" +
-                  ed.professionType.code.toUpperCase(),
-              });
-            } else {
-              fileUploadError.value[
-                "file_upload_row_" +
-                  single.documentType.code +
-                  "_" +
-                  ed.educationalLevel.code.toUpperCase() +
-                  "_" +
-                  ed.professionType.code.toUpperCase()
-              ] = false;
-            }
-          });
-
-        //// check documetns with parents
-
-        // fileUploadError.value[
-        //         "file_upload_row_" +
-        //           single.documentType.code +
-        //           "_" +
-        //           ed.educationalLevel.code.toUpperCase() +
-        //           "_" +
-        //           ed.professionType.code.toUpperCase()
-        //       ] = true;
-      });
-
-      return CMtemp && temp;
-    };
+ 
     const next = () => {
-     
-     
-        store.dispatch("newlicense/setTempDocs", formData).then(() => {
-          //Save images to indexed Db
+      store.dispatch("newlicense/setTempDocs", formData).then(() => {
+        //Save images to indexed Db
 
-          let finalLocalData = {
-            created: new Date(),
-            data: [],
-          };
-          let db;
-          let request = indexedDB.open("NLdocumentUploads", 1);
-          request.onsuccess = function () {
-            db = request.result;
-            let transaction = db.transaction(
-              ["NLdocumentUploads"],
-              "readwrite"
-            );
+        let finalLocalData = {
+          created: new Date(),
+          data: []
+        };
+        let db;
+        let request = indexedDB.open("NLdocumentUploads", 1);
+        request.onsuccess = function() {
+          db = request.result;
+          let transaction = db.transaction(["NLdocumentUploads"], "readwrite");
 
-            finalLocalData.data = imageData;
+          finalLocalData.data = imageData;
 
-            finalLocalData.data = [...new Set(finalLocalData.data)];
+          finalLocalData.data = [...new Set(finalLocalData.data)];
 
-            const objectStore = transaction.objectStore("NLdocumentUploads");
+          const objectStore = transaction.objectStore("NLdocumentUploads");
 
-            const objectStoreRequest = objectStore.clear();
+          const objectStoreRequest = objectStore.clear();
 
-            objectStoreRequest.onsuccess = (event) => {
-              let addReq = transaction
-                .objectStore("NLdocumentUploads")
-                .put(finalLocalData);
+          objectStoreRequest.onsuccess = () => {
+            let addReq = transaction
+              .objectStore("NLdocumentUploads")
+              .put(finalLocalData);
 
-              addReq.onerror = function () {
-                console.log(
-                  "Error regarding your browser, please update your browser to the latest version"
-                );
-              };
+            addReq.onerror = function() {
+              console.log(
+                "Error regarding your browser, please update your browser to the latest version"
+              );
+            };
 
-              transaction.oncomplete = function () {
-                console.log("data stored");
-                emit("changeActiveState");
-              };
+            transaction.oncomplete = function() {
+              console.log("data stored");
+              emit("changeActiveState");
             };
           };
-        });
-   
+        };
+      });
     };
 
     const groupByKey = (array, key) => {
       return array.reduce((hash, obj) => {
         if (obj[key] === undefined || obj[key] == null) return hash;
         return Object.assign(hash, {
-          [obj[key]]: (hash[obj[key]] || []).concat(obj),
+          [obj[key]]: (hash[obj[key]] || []).concat(obj)
         });
       }, {});
     };
-    const addMore = (parentItem) => {
+    const addMore = parentItem => {
       if (
         showNestedDocuments.value[parentItem.documentType.code] == undefined
       ) {
@@ -1251,57 +1325,23 @@ export default {
       }
     };
 
-    // const addMoreFile = (doc) => {
-    //   //For future use on adding individual files, good luck
-
-    //   divId.value == doc.length;
-    //   if (divId.value < doc.length) {
-    //     divId.value++;
-    //     let divElement = document.createElement("div");
-    //     divElement.classList.add("border-t-2");
-    //     divElement.classList.add("mt-4");
-    //     divElement.classList.add("mb-4");
-    //     let toBeAddedDoc = doc[divId.value];
-    //     let template =
-    //       '<tr id="parent_doc_' +
-    //       toBeAddedDoc.id +
-    //       '" class="p-4 text-gray-300"><td class="px-6 py-4"><div class="flex items-center ml-8"><div><p class="">' +
-    //       (toBeAddedDoc.documentType.name + "(optional)") +
-    //       '</p></div></div></td><td class="px-6 py-4"><div class="flex items-center ml-8"><div><p class="">' +
-    //       (toBeAddedDoc.documentType.description
-    //         ? toBeAddedDoc.documentType.description
-    //         : "") +
-    //       '</p></div></div></td><td class="px-6 py-4 "><p class="ml-8"><input type="file" :id="files' +
-    //       toBeAddedDoc.id +
-    //       '" accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg" :ref="imageUploader' +
-    //       toBeAddedDoc.id +
-    //       '" class="custom-file-input" v-on:change=" handleFileUpload(' +
-    //       toBeAddedDoc +
-    //       ', $event) " /></p></td><td><button id="remove_' +
-    //       toBeAddedDoc.id +
-    //       '" class="bg-main-400 mt-8 inline-block px-6 py-2.5 bg-main-400 hover:text-main-400 text-white text-xs font-bold leading-tight uppercase rounded shadow-md transition duration-150 ease-in-out " onclick="removeFileUpload()>Remove </button> </td>';
-
-    //     divElement.innerHTML = template;
-    //     document.getElementById(doc[0].id).appendChild(divElement);
-    //   }
-    // };
-
     const initDb = () => {
       let request = indexedDB.open("NLdocumentUploads", 1);
 
-      request.onerror = function () {
+      request.onerror = function() {
         console.error("Unable to open database.");
       };
 
-      request.onupgradeneeded = function () {
+      request.onupgradeneeded = function() {
         let db = request.result;
         db.createObjectStore("NLdocumentUploads", {
           keyPath: "id",
-          autoIncrement: true,
+          autoIncrement: true
         });
       };
     };
     onMounted(() => {
+      isLoading.value = true;
       //Initialize indexdb for file storage
       if (!("indexedDB" in window)) {
         console.log("This browser doesn't support IndexedDB");
@@ -1311,71 +1351,72 @@ export default {
       }
       store
         .dispatch("newlicense/getNewLicenseApplication", route.params.id)
-        .then((res) => {
+        .then(res => {
           if (res.data.data) {
             generalInfo.value = res.data.data;
-            generalInfo.value?.documents.forEach((element) => {
+            generalInfo.value?.documents.forEach(element => {
               documentsSaved.value[element.fileName] = {};
               documentsSaved.value[element.fileName].path =
                 googleApi + element.filePath;
               documentsSaved.value[element.fileName].name =
                 element.originalFileName;
             });
+
             documentsUploaded.value = documentsSaved.value;
-            store
-              .dispatch("newlicense/getApplicationCategories")
-              .then((res) => {
-                let categoryResults = res.data.data
-                  ? res.data.data.filter((ele) => ele.code == "NA")
-                  : "";
-                let educationLevels = generalInfo.value.educations;
+            store.dispatch("newlicense/getApplicationCategories").then(res => {
+              let categoryResults = res.data.data
+                ? res.data.data.filter(ele => ele.code == "NA")
+                : "";
+              let educationLevels = generalInfo.value.educations;
 
-                //Get department docs
-                educationLevels.forEach((element) => {
-                  store
-                    .dispatch("newlicense/getNLdocuments", [
-                      categoryResults[0].id,
-                      generalInfo.value.applicantType.id,
-                      element.educationalLevel
-                        ? element.educationalLevel.id
-                        : element.educationLevel
-                        ? element.educationLevel.id
-                        : "",
-                    ])
-                    .then((res) => {
-                      let resp = res.data.data;
-                      newLicenseDocuments.value = res.data.data;
-                      educationalDocs.value.push({
-                        professionType:
-                          element && element.professionType
-                            ? element.professionType
-                            : element
-                            ? element.professionTypeId
-                            : "",
-                        educationalLevel: element.educationalLevel
-                          ? element.educationalLevel
-                          : element.educationLevel
-                          ? element.educationLevel
-                          : "",
-                        docs: resp.filter(
-                          (element) => element.parentDocument == null
-                        ),
-                        parentDoc: groupByKey(resp, "parentDocument"),
-                      });
-                    });
-                });
-                //Get Common Docs
-
+              //Get department docs
+              educationLevels.forEach(element => {
                 store
-                  .dispatch("newlicense/getCommonNLdocuments", [
+                  .dispatch("newlicense/getNLdocuments", [
                     categoryResults[0].id,
                     generalInfo.value.applicantType.id,
+                    element.educationalLevel
+                      ? element.educationalLevel.id
+                      : element.educationLevel
+                      ? element.educationLevel.id
+                      : ""
                   ])
-                  .then((res) => {
-                    let result = res.data.data;
-                    commonDocuments.value = result;
+                  .then(res => {
+                    let resp = res.data.data;
+                    newLicenseDocuments.value = res.data.data;
+                    educationalDocs.value.push({
+                      professionType:
+                        element && element.professionType
+                          ? element.professionType
+                          : element
+                          ? element.professionTypeId
+                          : "",
+                      educationalLevel: element.educationalLevel
+                        ? element.educationalLevel
+                        : element.educationLevel
+                        ? element.educationLevel
+                        : "",
+                      docs: resp.filter(
+                        element => element.parentDocument == null
+                      ),
+                      parentDoc: groupByKey(resp, "parentDocument")
+                    });
+                    isLoading.value = true;
                   });
               });
+              //Get Common Docs
+
+              store
+                .dispatch("newlicense/getCommonNLdocuments", [
+                  categoryResults[0].id,
+                  generalInfo.value.applicantType.id
+                ])
+                .then(res => {
+                  let result = res.data.data;
+                  commonDocuments.value = result;
+                });
+            
+            });
           }
         });
     });
@@ -1386,6 +1427,7 @@ export default {
 
     return {
       documents,
+      isLoading,
       commonDocuments,
       files,
       fileUploadError,
@@ -1406,9 +1448,9 @@ export default {
       documentsSaved,
       googleApi,
       addMore,
-      showNestedDocuments,
+      showNestedDocuments
     };
-  },
+  }
 };
 </script>
 

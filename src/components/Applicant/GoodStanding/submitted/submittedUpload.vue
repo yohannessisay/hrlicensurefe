@@ -171,8 +171,8 @@
                             <img
                               :id="
                                 'common_image_lightbox' +
-                                item.documentType.id +
-                                item.id
+                                  item.documentType.id +
+                                  item.id
                               "
                               v-bind:src="
                                 documentsSaved[item.documentType.code]
@@ -335,7 +335,7 @@ export default {
         } else {
           fileSize.value = fileS / 1000000 + "MB";
         }
-        reader.addEventListener("load", function () {
+        reader.addEventListener("load", function() {
           showPreview.value = true;
 
           previewDocuments.value[data.documentType.code] = reader.result;
@@ -400,7 +400,7 @@ export default {
       }
 
       output
-        ? (output.onload = function () {
+        ? (output.onload = function() {
             URL.revokeObjectURL(output.src); // free memory
           })
         : "";
@@ -409,16 +409,16 @@ export default {
     const initDb = () => {
       let request = indexedDB.open("GSdocumentUploads", 1);
 
-      request.onerror = function () {
+      request.onerror = function() {
         console.error("Unable to open database.");
       };
 
-      request.onsuccess = function () {
+      request.onsuccess = function() {
         let db = request.result;
         const tx = db.transaction("GSdocumentUploads", "readwrite");
         const store = tx.objectStore("GSdocumentUploads");
         let getAllIDB = store.getAll();
-        getAllIDB.onsuccess = function (evt) {
+        getAllIDB.onsuccess = function(evt) {
           existingDocs =
             evt.target.result && evt.target.result[0]
               ? evt.target.result[0].data
@@ -426,7 +426,7 @@ export default {
         };
       };
 
-      request.onupgradeneeded = function () {
+      request.onupgradeneeded = function() {
         let db = request.result;
         db.createObjectStore("GSdocumentUploads", {
           keyPath: "id",
@@ -443,26 +443,35 @@ export default {
         };
         let db;
         let request = indexedDB.open("GSdocumentUploads", 1);
-        request.onsuccess = function () {
+        request.onsuccess = function() {
           db = request.result;
           let transaction = db.transaction(["GSdocumentUploads"], "readwrite");
           let tempStat = false;
 
-          if (imageData && imageData.length > 0) {
+          if (
+            imageData &&
+            imageData.length > 0 &&
+            existingDocs &&
+            existingDocs.length > 0
+          ) {
             imageData.forEach((newImage) => {
               existingDocs.forEach((existing) => {
                 if (existing.documentTypeCode == newImage.documentCode) {
                   tempStat = true;
                   return 0;
                 } else {
-                  finalLocalData.data.push(JSON.parse(JSON.stringify(existing)));
+                  finalLocalData.data.push(
+                    JSON.parse(JSON.stringify(existing))
+                  );
                 }
               });
               if (tempStat == true) {
                 finalLocalData.data.push(newImage);
-              } 
+              }
             });
             finalLocalData.data.concat(imageData);
+          } else if (imageData && imageData.length > 0) {
+            finalLocalData.data = imageData;
           } else {
             finalLocalData.data = JSON.parse(JSON.stringify(existingDocs));
           }
@@ -470,19 +479,19 @@ export default {
           const objectStore = transaction.objectStore("GSdocumentUploads");
 
           const objectStoreRequest = objectStore.clear();
-       
-          objectStoreRequest.onsuccess = (event) => {
+
+          objectStoreRequest.onsuccess = () => {
             let addReq = transaction
               .objectStore("GSdocumentUploads")
               .put(finalLocalData);
 
-            addReq.onerror = function () {
+            addReq.onerror = function() {
               console.log(
                 "Error regarding your browser, please update your browser to the latest version"
               );
             };
 
-            transaction.oncomplete = function () {
+            transaction.oncomplete = function() {
               console.log("data stored");
 
               emit("changeActiveState");
@@ -497,7 +506,7 @@ export default {
 
     const saveDraft = () => {
       generalInfo.value.licenseFile = [];
-
+      generalInfo.value.whoIssued = localData.value.whoIssued;
       let license = {
         action: "DraftEvent",
         data: {
@@ -527,8 +536,8 @@ export default {
           licenseIssuedDate: generalInfo.value.licenseIssuedDate
             ? generalInfo.value.licenseIssuedDate
             : null,
-          whoIssued: generalInfo.value.whoIssued
-            ? generalInfo.value.whoIssued
+          whoIssuedId: generalInfo.value.whoIssued
+            ? generalInfo.value.whoIssued.id
             : "",
           licenseRegistrationNumber: generalInfo.value.licenseRegistrationNumber
             ? generalInfo.value.licenseRegistrationNumber
@@ -662,10 +671,10 @@ export default {
             let results = res.data.data;
 
             documents.value = results.filter(
-              (
-                (set) => (f) =>
-                  !set.has(f.documentTypeId) && set.add(f.documentTypeId)
-              )(new Set())
+              ((set) => (f) =>
+                !set.has(f.documentTypeId) && set.add(f.documentTypeId))(
+                new Set()
+              )
             );
           });
       });

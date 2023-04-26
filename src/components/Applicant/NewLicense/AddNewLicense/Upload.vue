@@ -184,22 +184,26 @@
                       >
                         <a
                           :id="
-                            'common_image_href' + item.documentType.id + item.id
+                            'common_image_href_' +
+                              item.documentType.id +
+                              item.id
                           "
                           :href="item.existingFile"
                           :data-title="item.name ? item.name : '-----'"
                           data-lightbox="example-2"
                         >
                           <i
-                            :id="'common_icon' + item.documentType.id + item.id"
+                            :id="
+                              'common_icon_' + item.documentType.id + item.id
+                            "
                             class="fa fa-eye cursor-pointer text-main-400"
                             aria-hidden="true"
                           >
                             <img
                               :id="
-                                'common_image_lightbox' +
-                                item.documentType.id +
-                                item.id
+                                'common_image_lightbox_' +
+                                  item.documentType.id +
+                                  item.id
                               "
                               :src="item.existingFile"
                               class="w-full h-2 object-cover"
@@ -210,7 +214,9 @@
                       <td class="px-6 py-4 text-center" v-else>
                         <a
                           :id="
-                            'common_image_href' + item.documentType.id + item.id
+                            'common_image_href_' +
+                              item.documentType.id +
+                              item.id
                           "
                           href=""
                           :data-title="item.name ? item.name : '-----'"
@@ -228,9 +234,9 @@
                           >
                             <img
                               :id="
-                                'common_image_lightbox' +
-                                item.documentType.id +
-                                item.id
+                                'common_image_lightbox_' +
+                                  item.documentType.id +
+                                  item.id
                               "
                               src=""
                               class="w-full h-2 object-cover"
@@ -431,11 +437,56 @@
                         </p>
                       </td>
 
-                      <td class="px-6 py-4 text-center">
+                      <td class="px-6 py-4" v-if="item && item.fileName">
+                        <div class="flex items-center p-4">
+                          <div>
+                            <p class="">
+                              {{
+                                item.fileName
+                                  ? item.fileName
+                                  : "---------------"
+                              }}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        v-if="item.existingFile"
+                        class="px-6 py-4 text-center"
+                      >
                         <a
                           :id="
                             'image_href_' +
-                            `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                              `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                          "
+                          :href="item.existingFile"
+                          :data-title="item.name ? item.name : '-----'"
+                          data-lightbox="example-2"
+                        >
+                          <i
+                            :id="
+                              'educational_icon_' +
+                                `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                            "
+                            class="fa fa-eye cursor-pointer text-main-400"
+                            aria-hidden="true"
+                          >
+                            <img
+                              :id="
+                                'image_lightbox_' +
+                                  `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                              "
+                              :src="item.existingFile"
+                              class="w-full h-2 object-cover"
+                            />
+                          </i>
+                        </a>
+                      </td>
+                      <td v-else class="px-6 py-4 text-center">
+                        <a
+                          :id="
+                            'image_href_' +
+                              `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                           "
                           href=""
                           :data-title="item.name ? item.name : '-----'"
@@ -444,20 +495,21 @@
                           <i
                             :id="
                               'educational_icon_' +
-                              `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                             "
                             class="
                               fa fa-eye
                               cursor-pointer
                               text-main-400
                               disabled
+                             
                             "
                             aria-hidden="true"
                           >
                             <img
                               :id="
                                 'image_lightbox_' +
-                                `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                  `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                               "
                               src=""
                               class="w-full h-2 object-cover"
@@ -527,12 +579,61 @@
                           />
                         </p>
                       </td>
-
-                      <td class="px-6 py-4 text-center">
+                      <td
+                        class="px-6 py-4"
+                        v-if="parentItem[0] && parentItem[0].fileName"
+                      >
+                        <div class="flex items-center p-4">
+                          <div>
+                            <p class="">
+                              {{
+                                parentItem[0].fileName
+                                  ? parentItem[0].fileName
+                                  : "---------------"
+                              }}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        v-if="parentItem[0].existingFile"
+                        class="px-6 py-4 text-center"
+                      >
                         <a
                           :id="
                             'image_href_' +
-                            `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                              `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                          "
+                          :href="parentItem[0].existingFile"
+                          :data-title="
+                            parentItem[0].name ? parentItem[0].name : '-----'
+                          "
+                          data-lightbox="example-2"
+                        >
+                          <i
+                            :id="
+                              'educational_icon_' +
+                                `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                            "
+                            class="fa fa-eye cursor-pointer text-main-400"
+                            aria-hidden="true"
+                          >
+                            <img
+                              :id="
+                                'image_lightbox_' +
+                                  `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                              "
+                              :src="parentItem[0].existingFile"
+                              class="w-full h-2 object-cover"
+                            />
+                          </i>
+                        </a>
+                      </td>
+                      <td v-else class="px-6 py-4 text-center">
+                        <a
+                          :id="
+                            'image_href_' +
+                              `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                           "
                           href=""
                           :data-title="parentItem[0].name ? item.name : '-----'"
@@ -541,7 +642,7 @@
                           <i
                             :id="
                               'educational_icon_' +
-                              `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                             "
                             class="
                               fa fa-eye
@@ -554,7 +655,7 @@
                             <img
                               :id="
                                 'image_lightbox_' +
-                                `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                  `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                               "
                               src=""
                               class="w-full h-2 object-cover"
@@ -626,8 +727,10 @@
                             parentItem[0].documentType.code
                           ] != null
                         "
-                        class="accordion"
-                        :id="`accordion_${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`"
+                        class="accordion p-4"
+                        :id="
+                          `accordion_${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                        "
                         style="width: max-content"
                       >
                         <div
@@ -642,11 +745,15 @@
                           <div
                             :id="
                               'docAccordion_' +
-                              `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                             "
                             class=""
-                            :aria-labelledby="`headingOne_${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`"
-                            :data-bs-parent="`#accordion_${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`"
+                            :aria-labelledby="
+                              `headingOne_${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                            "
+                            :data-bs-parent="
+                              `#accordion_${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                            "
                           >
                             <div class="accordion-body py-4 px-5">
                               <div class="bg-lightMain-500 rounded-sm p-2">
@@ -713,7 +820,7 @@
                                       parentItem[0].documentType.code
                                     ] >= index
                                   "
-                                  class="px-6 py-4"
+                                  class="p-4"
                                 >
                                   <p class="">
                                     <input
@@ -721,7 +828,9 @@
                                       :required="parentChildItem.isRequired"
                                       :id="`files${parentChildItem.id}`"
                                       accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
-                                      :ref="`imageUploader${parentChildItem.id}`"
+                                      :ref="
+                                        `imageUploader${parentChildItem.id}`
+                                      "
                                       class="custom-file-input"
                                       v-on:change="
                                         handleFileUpload(
@@ -733,19 +842,77 @@
                                     />
                                   </p>
                                 </td>
-
+                                <td
+                                  class="px-6 py-4"
+                                  v-if="
+                                    parentChildItem && parentChildItem.fileName
+                                  "
+                                >
+                                  <div class="flex items-center p-4">
+                                    <div>
+                                      <p class="">
+                                        {{
+                                          parentChildItem.fileName
+                                            ? parentChildItem.fileName
+                                            : "---------------"
+                                        }}
+                                      </p>
+                                    </div>
+                                  </div>
+                                </td>
                                 <td
                                   v-if="
-                                    showNestedDocuments[
-                                      parentItem[0].documentType.code
-                                    ] >= index
+                                    parentChildItem.existingFile &&
+                                      showNestedDocuments[
+                                        parentItem[0].documentType.code
+                                      ] >= index
                                   "
                                   class="px-6 py-4 text-center"
                                 >
                                   <a
                                     :id="
                                       'image_href_' +
-                                      `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                        `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                    "
+                                    :href="parentChildItem.existingFile"
+                                    :data-title="
+                                      parentChildItem.name
+                                        ? parentChildItem.name
+                                        : '-----'
+                                    "
+                                    data-lightbox="example-2"
+                                  >
+                                    <i
+                                      :id="
+                                        'educational_icon_' +
+                                          `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                      "
+                                      class="fa fa-eye cursor-pointer text-main-400"
+                                      aria-hidden="true"
+                                    >
+                                      <img
+                                        :id="
+                                          'image_lightbox_' +
+                                            `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                        "
+                                        :src="parentChildItem.existingFile"
+                                        class="w-full h-2 object-cover"
+                                      />
+                                    </i>
+                                  </a>
+                                </td>
+                                <td
+                                  v-if="
+                                    showNestedDocuments[
+                                      parentItem[0].documentType.code
+                                    ] >= index && !parentChildItem.existingFile
+                                  "
+                                  class="px-6 py-4 text-center"
+                                >
+                                  <a
+                                    :id="
+                                      'image_href_' +
+                                        `${parentChildItem.documentType.code.toUpperCase()}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                     "
                                     href=""
                                     :data-title="
@@ -756,7 +923,7 @@
                                     <i
                                       :id="
                                         'educational_icon_' +
-                                        `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                          `${parentChildItem.documentType.code.toUpperCase()}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                       "
                                       class="
                                         fa fa-eye
@@ -769,7 +936,7 @@
                                       <img
                                         :id="
                                           'image_lightbox_' +
-                                          `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                            `${parentChildItem.documentType.code.toUpperCase()}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                         "
                                         src=""
                                         class="w-full h-2 object-cover"
@@ -908,6 +1075,7 @@ export default {
     let files = ref("");
     let maxFileSize = ref();
     let db;
+    let isBackButtonClicked = ref(false);
     let dbVersion = 1;
     let isImage = ref({});
     let isPdf = ref({});
@@ -961,7 +1129,7 @@ export default {
         }
         reader.addEventListener(
           "load",
-          function () {
+          function() {
             showPreview.value = true;
 
             previewDocuments.value[data.documentType.code] = reader.result;
@@ -1031,7 +1199,7 @@ export default {
       }
 
       output
-        ? (output.onload = function () {
+        ? (output.onload = function() {
             URL.revokeObjectURL(output.src); // free memory
           })
         : "";
@@ -1108,7 +1276,7 @@ export default {
 
         reader.addEventListener(
           "load",
-          function () {
+          function() {
             showPreview.value = true;
 
             previewDocuments.value[
@@ -1275,82 +1443,154 @@ export default {
       }
 
       output
-        ? (output.onload = function () {
+        ? (output.onload = function() {
             URL.revokeObjectURL(output.src); // free memory
           })
         : "";
     };
 
     const checkDocuments = () => {
-      let temp = false;
-      let CMtemp = false;
+      let temp = true;
+      let CMtemp = true;
 
-      /// check common documents
-      commonDocuments.value
-        .filter((cd) => cd.isRequired)
-        .forEach((element) => {
-          CMtemp = documentsUploaded.value.hasOwnProperty(
-            element.documentType.code
-          );
-          if (!CMtemp) {
-            fileUploadError.value[
-              "file_upload_row_" + element.documentType.code
-            ] = true;
-            errorDocuments.value.push({
-              isCommon: true,
-              name: element.documentType.name,
-              code: element.documentType.code,
-            });
-          } else {
-            fileUploadError.value[
-              "file_upload_row_" + element.documentType.code
-            ] = false;
-          }
-        });
+      // if back button is clicked
+      if (isBackButtonClicked.value == true) {
+        // check common documents
+        commonDocuments.value
+          .filter((cd) => cd.isRequired)
+          .forEach((element) => {
+            CMtemp = element.fileName;
 
-      educationalDocs.value.forEach((ed) => {
-        // check normal docs with no parents
-
-        ed.docs
-          .filter((docs) => docs.isRequired)
-          .forEach((single) => {
-            temp = documentsUploaded.value.hasOwnProperty(
-              single.documentType.code +
-                "_" +
-                ed.educationalLevel.code.toUpperCase() +
-                "_" +
-                ed.professionType.code.toUpperCase()
-            );
-            if (!temp) {
+            if (!CMtemp || CMtemp == "") {
+              CMtemp = false;
               fileUploadError.value[
-                "file_upload_row_" +
-                  single.documentType.code +
-                  "_" +
-                  ed.educationalLevel.code.toUpperCase() +
-                  "_" +
-                  ed.professionType.code.toUpperCase()
+                "file_upload_row_" + element.documentType.code
               ] = true;
               errorDocuments.value.push({
-                name: single.documentType.name,
-                code:
-                  single.documentType.code +
-                  "_" +
-                  ed.educationalLevel.code.toUpperCase() +
-                  "_" +
-                  ed.professionType.code.toUpperCase(),
+                isCommon: true,
+                name: element.documentType.name,
+                code: element.documentType.code,
               });
             } else {
               fileUploadError.value[
-                "file_upload_row_" +
-                  single.documentType.code +
+                "file_upload_row_" + element.documentType.code
+              ] = false;
+            }
+          });
+        // check normal docs with no parents
+        educationalDocs.value.forEach((ed) => {
+          ed.docs
+            .filter((docs) => docs.isRequired)
+            .forEach((single) => {
+              if (
+                documentsUploaded.value.some(
+                  (docs) =>
+                    docs.documentCode ===
+                    single.documentType.code.toUpperCase() +
+                      "_" +
+                      ed.educationalLevel.code.toUpperCase() +
+                      "_" +
+                      ed.professionType.code.toUpperCase()
+                )
+              ) {
+                fileUploadError.value[
+                  "file_upload_row_" +
+                    single.documentType.code +
+                    "_" +
+                    ed.educationalLevel.code +
+                    "_" +
+                    ed.professionType.code
+                ] = false;
+              } else {
+                temp = false;
+                fileUploadError.value[
+                  "file_upload_row_" +
+                    single.documentType.code +
+                    "_" +
+                    ed.educationalLevel.code +
+                    "_" +
+                    ed.professionType.code
+                ] = true;
+                errorDocuments.value.push({
+                  name: single.documentType.name,
+                  code:
+                    single.documentType.code +
+                    "_" +
+                    ed.educationalLevel.code +
+                    "_" +
+                    ed.professionType.code,
+                });
+              }
+            });
+        });
+      } else {
+        commonDocuments.value
+          .filter((cd) => cd.isRequired)
+          .forEach((element) => {
+            CMtemp = documentsUploaded.value.hasOwnProperty(
+              element.documentType.code
+            );
+
+            if (!CMtemp) {
+              fileUploadError.value[
+                "file_upload_row_" + element.documentType.code
+              ] = true;
+              errorDocuments.value.push({
+                isCommon: true,
+                name: element.documentType.name,
+                code: element.documentType.code,
+              });
+            } else {
+              fileUploadError.value[
+                "file_upload_row_" + element.documentType.code
+              ] = false;
+            }
+          });
+
+        educationalDocs.value.forEach((ed) => {
+          // check normal docs with no parents
+
+          ed.docs
+            .filter((docs) => docs.isRequired)
+            .forEach((single) => {
+              temp = documentsUploaded.value.hasOwnProperty(
+                single.documentType.code +
                   "_" +
                   ed.educationalLevel.code.toUpperCase() +
                   "_" +
                   ed.professionType.code.toUpperCase()
-              ] = false;
-            }
-          });
-      });
+              );
+              if (!temp) {
+                fileUploadError.value[
+                  "file_upload_row_" +
+                    single.documentType.code +
+                    "_" +
+                    ed.educationalLevel.code.toUpperCase() +
+                    "_" +
+                    ed.professionType.code.toUpperCase()
+                ] = true;
+                errorDocuments.value.push({
+                  name: single.documentType.name,
+                  code:
+                    single.documentType.code +
+                    "_" +
+                    ed.educationalLevel.code.toUpperCase() +
+                    "_" +
+                    ed.professionType.code.toUpperCase(),
+                });
+              } else {
+                fileUploadError.value[
+                  "file_upload_row_" +
+                    single.documentType.code +
+                    "_" +
+                    ed.educationalLevel.code.toUpperCase() +
+                    "_" +
+                    ed.professionType.code.toUpperCase()
+                ] = false;
+              }
+            });
+        });
+      }
 
       return CMtemp && temp;
     };
@@ -1366,23 +1606,23 @@ export default {
           };
           let db;
           let request = indexedDB.open("NLdocumentUploads", dbVersion);
-          request.onsuccess = function () {
+          request.onsuccess = function() {
             db = request.result;
             let transaction = db.transaction(
               ["NLdocumentUploads"],
               "readwrite"
             );
 
-            if (existingDocs.length > 0) {
+            if (existingDocs.length > 0 && imageData.length > 0) {
               existingDocs.forEach((existing) => {
                 imageData.forEach((newImage) => {
                   if (existing.imageId == newImage.imageId) {
-                    newImage.image = existing.image;
+                    existing.image = newImage.image;
                     existing.fileName = newImage.fileName;
                   }
                 });
               });
-              finalLocalData.data = imageData;
+              finalLocalData.data = existingDocs;
             } else {
               finalLocalData.data = imageData;
             }
@@ -1392,18 +1632,18 @@ export default {
 
             const objectStoreRequest = objectStore.clear();
 
-            objectStoreRequest.onsuccess = (event) => {
+            objectStoreRequest.onsuccess = () => {
               let addReq = transaction
                 .objectStore("NLdocumentUploads")
                 .put(finalLocalData);
 
-              addReq.onerror = function () {
+              addReq.onerror = function() {
                 console.log(
                   "Error regarding your browser, please update your browser to the latest version"
                 );
               };
 
-              transaction.oncomplete = function () {
+              transaction.oncomplete = function() {
                 console.log("data stored");
                 emit("changeActiveState");
               };
@@ -1521,16 +1761,16 @@ export default {
     const initDb = () => {
       let request = indexedDB.open("NLdocumentUploads", dbVersion);
 
-      request.onerror = function () {
+      request.onerror = function() {
         console.error("Unable to open database.");
       };
 
-      request.onsuccess = function () {
+      request.onsuccess = function() {
         let db = request.result;
         const tx = db.transaction("NLdocumentUploads", "readonly");
         const store = tx.objectStore("NLdocumentUploads");
         let getAllIDB = store.getAll();
-        getAllIDB.onsuccess = function (evt) {
+        getAllIDB.onsuccess = function(evt) {
           existingDocs =
             evt.target.result && evt.target.result[0]
               ? evt.target.result[0].data
@@ -1538,7 +1778,7 @@ export default {
         };
       };
 
-      request.onupgradeneeded = function () {
+      request.onupgradeneeded = function() {
         let db = request.result;
         db.createObjectStore("NLdocumentUploads", {
           keyPath: "id",
@@ -1553,7 +1793,7 @@ export default {
         alert(
           "This browser doesn't support Temporary storage please update your browser to the latest version"
         );
-        window.location.reload();
+
       } else {
         initDb();
         localData.value = window.localStorage.getItem("NLApplicationData")
@@ -1574,6 +1814,7 @@ export default {
                 categoryResults[0].id,
                 generalInfo.value.applicantTypeSelected.id,
                 element.educationalLevel.id,
+                null,
               ])
               .then((res) => {
                 let resp = res.data.data;
@@ -1587,6 +1828,53 @@ export default {
                   ),
                   parentDoc: groupByKey(resp, "parentDocument"),
                 });
+
+                if (
+                  existingDocs &&
+                  existingDocs.length > 0 &&
+                  resp &&
+                  resp.length > 0
+                ) {
+                  isBackButtonClicked.value = true;
+                  documentsUploaded.value = existingDocs;
+                  educationalDocs.value.forEach((ed) => {
+                    ed.docs
+                      .filter((docs) => docs.isRequired)
+                      .forEach((Cd) => {
+                        documentsUploaded.value.forEach((element) => {
+                          if (
+                            element.documentCode ===
+                            Cd.documentType.code.toUpperCase() +
+                              "_" +
+                              ed.educationalLevel.code.toUpperCase() +
+                              "_" +
+                              ed.professionType.code.toUpperCase()
+                          ) {
+                            Cd.existingFile = element.image;
+                            Cd.fileName = element.fileName;
+                          }
+                        });
+                      });
+                    for (const property in ed.parentDoc) {
+                      ed.parentDoc[property].forEach((Cd) => {
+                        documentsUploaded.value.forEach((element) => {
+                          if (
+                            element.documentCode ===
+                            Cd.documentType.code.toUpperCase() +
+                              "_" +
+                              ed.educationalLevel.code.toUpperCase() +
+                              "_" +
+                              ed.professionType.code.toUpperCase()
+                          ) {
+                            Cd.existingFile = element.image;
+                            Cd.fileName = element.fileName;
+                          }
+                        });
+                      });
+                    }
+                  });
+ 
+                }
               });
           });
 
@@ -1606,11 +1894,14 @@ export default {
                 result &&
                 result.length > 0
               ) {
+                isBackButtonClicked.value = true;
+                documentsUploaded.value = existingDocs;
                 existingDocs.forEach((existing) => {
                   result.forEach((Cd) => {
                     if (
                       existing.imageId ==
-                      "common_image_lightbox_" + Cd.documentType.code
+                      "common_image_lightbox_" +
+                        Cd.documentType.code.toUpperCase()
                     ) {
                       Cd.existingFile = existing.image;
                       Cd.fileName = existing.fileName;

@@ -1,15 +1,23 @@
 import ApiService from "../../../services/api.service";
 import { baseUrl } from "../../../composables/baseURL";
-import { SET_CPD_USERS } from "./mutation-types";
 
 export default {
-  async getCpdCertified({ commit }) {
+  async getCpdCertified(context, detail) {
     try {
-      const url =baseUrl+"/event/cpdCertifiedTrainees";
+      let url = baseUrl + "/event/cpdCertifiedTrainees?";
+
+      let parameters = detail[0].params ? detail[0].params : [];
+
+      if (parameters) {
+        parameters.forEach((param) => {
+          url += param ? `${param.key}=${param.value}&` : "";
+        });
+      }
+      url = url.substring(0, url.length - 1);
+
       const resp = await ApiService.get(url);
-      commit(SET_CPD_USERS, resp.data.data);
-      return resp.data
-     
+
+      return resp.data ? resp.data.data : [];
     } catch (error) {
       console.log(error);
     }

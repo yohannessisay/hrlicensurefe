@@ -38,32 +38,34 @@
         >
           <!-- Article -->
           <div>
-            <h2 class="text-main-400 border-b-2 text-xl p-2">
+            <h2 class="text-grey-800 border-b-2 text-xl p-2">
               License Number-
               <span class="text-base text-main-400">{{
-                license.newLicenseCode
+                license.goodStandingCode
               }}</span>
             </h2>
 
             <div class="border-b-2 text-main-400">
-              <div class="grid grid-rows-2 p-2 mb-2 border-b-2">
+              <div
+                class="
+                  flex
+                  items-center
+                  justify-between
+                  leading-tight
+                  p-2
+                  md:p-2
+                "
+              >
                 <h1 class="text-lg">
-                  <a class=" hover:underline underline text-main-400" href="#">
-                    Department
+                  <a class="text-grey-800 pointer-events-none" href="#">
+                    Who issued the letter
                   </a>
                 </h1>
 
                 <ul class="text-black text-sm">
-                  <li
-                    v-for="(education, index) in license.educations"
-                    :key="education.id"
-                    style="display: inline"
-                  >
+                  <li style="display: inline">
                     <span class="text-black text-sm">
-                      {{ education.department ? "*" + education.department.name : "-" }}</span
-                    >
-                    <span v-if="index != license.educations.length - 1">
-                      ,
+                      {{ license&&license.whoIssued ? license.whoIssued.name : "" }}
                     </span>
                   </li>
                 </ul>
@@ -78,23 +80,7 @@
                   p-2
                   md:p-2
                 "
-              >
-                <h1 class="text-lg">
-                  <a
-                    class="no-underline hover:underline text-main-400"
-                    href="#"
-                  >
-                    Certified Date
-                  </a>
-                </h1>
-                <p class="text-black text-sm">
-                  {{
-                    license.certifiedDate
-                      ? license.certifiedDate.slice(0, 10)
-                      : "Waiting for review"
-                  }}
-                </p>
-              </div>
+              ></div>
               <div
                 class="
                   flex
@@ -106,20 +92,22 @@
                 "
               >
                 <h1 class="text-lg">
-                  <a
-                    class="no-underline hover:underline text-main-400"
-                    href="#"
-                  >
-                    Expiry Date
+                  <a class="text-grey-800 pointer-events-none" href="#">
+                    License Registration Number
                   </a>
                 </h1>
-                <p class="text-black text-sm">
-                  {{
-                    license.certifiedDate
-                      ? license.certifiedDate.slice(0, 10)
-                      : "Waiting for review"
-                  }}
-                </p>
+
+                <ul class="text-black text-sm">
+                  <li style="display: inline">
+                    <span class="text-black text-sm">
+                      {{
+                        license.licenseRegistrationNumber
+                          ? license.licenseRegistrationNumber
+                          : ""
+                      }}
+                    </span>
+                  </li>
+                </ul>
               </div>
             </div>
             <footer
@@ -171,7 +159,7 @@
                 "
                 @click="changeLicenseId(license.id)"
                 data-bs-toggle="modal"
-                data-bs-target="#withdrawModalInfo"
+                data-bs-target="#declinedDetail"
               >
                 View Detail
               </button>
@@ -241,7 +229,7 @@ export default {
       userInfo.value = JSON.parse(window.localStorage.getItem("personalInfo")); 
 
       store.dispatch("goodstanding/getGoodStandingLicense").then((res) => {
-        const results = res.data.data;
+        const results = res.data.data ? res.data.data : [];
 
         if (results.length > 0) {
           withdrawnLicenses.value = results.filter((withdrawnLicense) => {

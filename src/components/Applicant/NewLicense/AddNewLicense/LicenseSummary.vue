@@ -76,7 +76,7 @@
             >
           </div>
           <div>
-            <span class="text-black sm:text-sm">
+            <span class="text-grey-800 sm:text-sm">
               {{ dep.department.name }}</span
             >
           </div>
@@ -96,7 +96,7 @@
             >
           </div>
           <div>
-            <span class="text-black sm:text-sm">
+            <span class="text-grey-800 sm:text-sm">
               {{ dep.educationalLevel.name }}</span
             >
           </div>
@@ -116,7 +116,7 @@
             >
           </div>
           <div>
-            <span class="text-black sm:text-sm">
+            <span class="text-grey-800 sm:text-sm">
               {{ dep.institution.name }}</span
             >
           </div>
@@ -137,7 +137,7 @@
             >
           </div>
           <div>
-            <span class="text-black sm:text-sm">
+            <span class="text-grey-800 sm:text-sm">
               {{ dep.professionalType.name }}</span
             >
           </div>

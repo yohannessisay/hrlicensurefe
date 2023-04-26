@@ -19,7 +19,7 @@
         <li class="text-gray-500">Edit</li>
       </ol>
     </nav>
-
+ 
     <div
       v-if="activeState == 1"
       class="
@@ -839,7 +839,7 @@
         </div>
       </form>
     </div>
-
+ 
     <transition name="fade" mode="out-in">
       <div v-if="activeState == 2">
         <Upload
@@ -1002,8 +1002,7 @@ export default {
         });
     };
 
-    const fetchWoredas = () => {
-      console.log(generalInfo.value.zoneSelected)
+    const fetchWoredas = () => { 
       store
         .dispatch("renewal/getWoredas", generalInfo.value.zoneSelected.id)
         .then((res) => {
@@ -1087,8 +1086,7 @@ export default {
       generalInfo.value.multipleDepartment.splice(index, 1);
       generalInfo.value.educations.splice(index, 1);
     };
-    const addMultiple = () => {
-      console.log(generalInfo.value);
+    const addMultiple = () => { 
       if (
         generalInfo.value.departmentSelected &&
         generalInfo.value.educationalLevelSelected &&
@@ -1215,6 +1213,7 @@ export default {
       );
     };
     onMounted(async () => {
+      isLoading.value = true;
       fetchApplicantType();
       fetchDepartments();
       fetchInstitutions();
@@ -1267,6 +1266,7 @@ export default {
             JSON.stringify(res.data.data.educations)
           );
           generalInfo.value.applicantTypeSelected = res.data.data.applicantType;
+          isLoading.value = false;
         });
     });
     return {

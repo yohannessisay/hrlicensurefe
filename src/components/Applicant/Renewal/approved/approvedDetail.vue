@@ -84,9 +84,16 @@
           <div class="modal-body relative p-4">
             <div class="container px-6 mx-auto">
               <section class="text-gray-800">
-                <div class="flex justify-center border-b-4 text-main-400 message_container">
-                  <h4 class="ml-8"   data-title="** Please bring required documents when coming to pick up your
-                    license **">
+                <div
+                  class="
+                    flex
+                    justify-center
+                    border-b-4
+                    text-main-400
+                    message_container
+                  "
+                >
+                  <h4 class="ml-8">
                     ** Please bring required documents when coming to pick up
                     your license **
                   </h4>

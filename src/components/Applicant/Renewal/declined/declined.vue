@@ -41,7 +41,7 @@
             <h2 class="text-main-400 border-b-2 text-xl p-2">
               License Number-
               <span class="text-base text-main-400">{{
-                license.newLicenseCode
+                license.renewalCode
               }}</span>
             </h2>
 
@@ -247,7 +247,7 @@ export default {
       let userId = JSON.parse(window.localStorage.getItem("userId"));
 
       store.dispatch("renewal/getRenewalLicense", userId).then((res) => {
-        const results = res.data.data;
+        const results =  res.data.data?res.data.data:[];
 
         if (results.length > 0) {
           declinedLicenses.value = results.filter((declinedLicense) => {

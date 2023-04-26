@@ -1,7 +1,7 @@
 <template>
   <div class="sidebar">
     <router-link to="/admin/review/">
-       <div class="logo-details">
+      <div class="logo-details">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 39.082 39.096"
@@ -105,28 +105,25 @@
         </li>
       </router-link>
 
-      <router-link to="/admin/goodStanding/licensed">
+      <router-link to="/admin/goodStanding/printed">
         <li
           :class="
-            $route.fullPath === '/admin/goodStanding/licensed'
+            $route.fullPath === '/admin/goodStanding/printed'
               ? 'mb-2 active'
               : ''
           "
         >
           <a href="#">
-            <i class="bx bx-badge-check"></i>
-            <span class="links_name">Licensed</span>
+            <i class="bx bx-printer"></i>
+            <span class="links_name">Printed</span>
           </a>
         </li>
       </router-link>
     </ul>
     <ul class="nav-links">
-      <div
-        class="profile-details mb-8 ml-4"
-     
-      >
+      <div class="profile-details mb-8 ml-4">
         <router-link to="/admin/review/">
-          <li  style="margin-top:100px;">
+          <li style="margin-top: 100px">
             <a href="" class="ml-6">
               <i class="bx bx-arrow-to-left text-white"></i>
 

@@ -49,7 +49,7 @@
                 leading-normal
                 mb-2
                 font-semibold
-                text-black
+                text-grey-800
               "
             >
               Application Detail
@@ -72,7 +72,7 @@
             >
           </div>
           <div>
-            <span class="text-black sm:text-sm">
+            <span class="text-grey-800 sm:text-sm">
               {{
                 localData && localData.applicantTypeId
                   ? localData.applicantTypeId.name
@@ -97,7 +97,7 @@
             >
           </div>
           <div>
-            <span class="text-black sm:text-sm">
+            <span class="text-grey-800 sm:text-sm">
               {{
                 localData && localData.departmentId
                   ? localData.departmentId.name
@@ -121,10 +121,10 @@
             >
           </div>
           <div>
-            <span class="text-black sm:text-sm">
+            <span class="text-grey-800 sm:text-sm">
               {{
-                localData && localData.professionType
-                  ? localData.professionType.professionTypeId.name
+                localData && localData.professionTypeId
+                  ? localData.professionTypeId.name
                   : ""
               }}
             </span>
@@ -145,7 +145,7 @@
             >
           </div>
           <div>
-            <span class="text-black sm:text-sm">
+            <span class="text-grey-800 sm:text-sm">
               {{
                 localData && localData.professionType.educationLevelId
                   ? localData.professionType.educationLevelId.name
@@ -172,7 +172,7 @@
             >
           </div>
           <div>
-            <span class="text-black sm:text-sm">
+            <span class="text-grey-800 sm:text-sm">
               {{
                 localData && localData.applicantTitleId
                   ? localData.applicantTitleId.name
@@ -211,7 +211,7 @@
                 leading-normal
                 mb-2
                 font-semibold
-                text-black
+                text-grey-800
               "
             >
               Letter Detail
@@ -234,9 +234,9 @@
             >
           </div>
           <div>
-            <span class="text-black sm:text-sm">
+            <span class="text-grey-800 sm:text-sm">
               {{
-                localData && localData.whoIssued ? localData.whoIssued : ""
+                localData && localData.whoIssuedId ? localData.whoIssuedId.name : ""
               }}</span
             >
           </div>
@@ -256,7 +256,7 @@
             >
           </div>
           <div>
-            <span class="text-black sm:text-sm">
+            <span class="text-grey-800 sm:text-sm">
               {{
                 localData && localData.whomGoodStandingFor
                   ? localData.whomGoodStandingFor
@@ -280,7 +280,7 @@
             >
           </div>
           <div>
-            <span class="text-black sm:text-sm">
+            <span class="text-grey-800 sm:text-sm">
               {{
                 localData && localData.licenseRegistrationNumber
                   ? localData.licenseRegistrationNumber
@@ -305,7 +305,7 @@
             >
           </div>
           <div>
-            <span class="text-black sm:text-sm">
+            <span class="text-grey-800 sm:text-sm">
               {{
                 localData && localData.licenseIssuedDate
                   ? localData.licenseIssuedDate
@@ -363,7 +363,7 @@
                 mb-2
                 border-b-2
                 font-semibold
-                text-black
+                text-grey-800
               "
             >
               Files Uploaded
@@ -474,7 +474,7 @@
             </div>
             <h3
               class="
-                text-black
+                text-grey-800
                 mb-2localFileData
                 sm:text-xs
                 lgmd:text-base
@@ -491,7 +491,7 @@
               for="feedback"
               class="form-label inline-block mb-2 text-main-400"
               >Feedback on the process and system
-              <span class="text-red-200">(required*)</span>
+              <span class="text-red-200">(Optional*)</span>
             </label>
           </div>
           <div class="vld-parent mt-4">
@@ -683,8 +683,8 @@ export default {
             licenseIssuedDate: generalInfo.value.licenseIssuedDate
               ? generalInfo.value.licenseIssuedDate
               : null,
-            whoIssued: generalInfo.value.whoIssued
-              ? generalInfo.value.whoIssued
+              whoIssuedId: generalInfo.value.whoIssuedId
+              ? generalInfo.value.whoIssuedId.id
               : "",
             licenseRegistrationNumber: generalInfo.value
               .licenseRegistrationNumber

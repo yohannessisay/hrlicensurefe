@@ -36,7 +36,6 @@
           aria-labelledby="commonFilesAccordionheading"
           data-bs-parent="#FilesAccordion"
         >
-          {{ existingDocs }}
           <div class="accordion-body py-4 px-5">
             <div class="bg-red-800 py-5">
               <div class="overflow-x-auto w-full p-4">
@@ -293,9 +292,7 @@
                 {{ table.educationalLevel ? table.educationalLevel.name : "" }}
                 Related Files
               </h4>
-              <h5 v-if="existingDocs">
-                Images are saved, only upload files you want to change
-              </h5>
+
               <div class="overflow-x-auto w-full p-4">
                 <table
                   class="
@@ -423,7 +420,11 @@
                         <a
                           :id="
                             'image_href_' +
-                              `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                              `${item.documentType.code}_${
+                                table.educationalLevel
+                                  ? table.educationalLevel.code
+                                  : ''
+                              }_${table.professionType?table.professionType.code:''}`
                           "
                           href=""
                           :data-title="item.name ? item.name : '-----'"
@@ -432,7 +433,11 @@
                           <i
                             :id="
                               'educational_icon_' +
-                                `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                `${item.documentType.code}_${
+                                  table.educationalLevel
+                                    ? table.educationalLevel.code
+                                    : ''
+                                }_${table.professionType?table.professionType.code:''}`
                             "
                             class="
                               fa fa-eye
@@ -445,7 +450,7 @@
                             <img
                               :id="
                                 'image_lightbox_' +
-                                  `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                  `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType?table.professionType.code:''}`
                               "
                               src=""
                               class="w-full h-2 object-cover"
@@ -607,7 +612,7 @@
                             parentItem[0].documentType.code
                           ] != null
                         "
-                        class="accordion"
+                        class="accordion p-4"
                         id="accordionExample"
                         style="width: max-content"
                       >
@@ -622,11 +627,11 @@
                         >
                           <div
                             :id="'docAccordion' + parentItem[0].documentType.id"
-                            class=""
+                            class="p-4"
                             aria-labelledby="headingOne"
                             data-bs-parent="#accordionExample"
                           >
-                            <div class="accordion-body py-4 px-5">
+                            <div class="accordion-body p-4 ">
                               <div class="bg-lightMain-500 rounded-sm p-2">
                                 <small class="text-white"
                                   >Only the first file upload is required, the
@@ -875,7 +880,7 @@ export default {
       isImage: boolean,
       isPdf: boolean,
       file: "",
-      name: ""
+      name: "",
     });
     let existingDocs = [];
     let files = ref("");
@@ -901,8 +906,8 @@ export default {
     let errorDocuments = ref([
       {
         name: "",
-        code: ""
-      }
+        code: "",
+      },
     ]);
     let showNestedDocuments = ref({});
 
@@ -939,7 +944,7 @@ export default {
 
             previewDocuments.value[data.documentType.code] = reader.result;
             imageData = imageData.filter(
-              el => el.documenttype != data.documentType.name
+              (el) => el.documenttype != data.documentType.name
             );
             imageData.push({
               imageId: "common_image_lightbox_" + data.documentType.code,
@@ -948,7 +953,7 @@ export default {
                 ? data.educationalLevel.name
                 : "",
               fileName: event?.target?.files[0].name,
-              image: reader.result
+              image: reader.result,
             });
 
             documentToSave.value[data.documentType.code] = reader.result;
@@ -1060,7 +1065,7 @@ export default {
 
             previewDocuments.value[data.documentType.code] = reader.result;
             imageData = imageData.filter(
-              el => el.documenttype != data.documentType.name
+              (el) => el.documenttype != data.documentType.name
             );
             imageData.push({
               imageId:
@@ -1075,7 +1080,7 @@ export default {
                 ? data.educationalLevel.name
                 : "",
               fileName: event?.target?.files[0].name,
-              image: reader.result
+              image: reader.result,
             });
             // documentUploaded.value[data.documentType.code] = reader.result;
           },
@@ -1157,25 +1162,25 @@ export default {
       /// check common documents
 
       commonDocuments.value
-        .filter(cd => cd.isRequired)
-        .forEach(element => {
+        .filter((cd) => cd.isRequired)
+        .forEach((element) => {
           CMtemp = documentsUploaded.value.hasOwnProperty(
             element.documentType.code
           );
           if (!CMtemp) {
             errorDocuments.value.push({
               name: element.documentType.name,
-              code: element.documentType.code
+              code: element.documentType.code,
             });
           }
         });
 
-      educationalDocs.value.forEach(ed => {
+      educationalDocs.value.forEach((ed) => {
         // check normal docs with no parents
 
         ed.docs
-          .filter(docs => docs.isRequired)
-          .forEach(single => {
+          .filter((docs) => docs.isRequired)
+          .forEach((single) => {
             temp = documentsUploaded.value.hasOwnProperty(
               single.documentType.code +
                 "_" +
@@ -1191,7 +1196,7 @@ export default {
                   "_" +
                   ed.educationalLevel.code.toUpperCase() +
                   "_" +
-                  ed.professionType.code.toUpperCase()
+                  ed.professionType.code.toUpperCase(),
               });
             }
           });
@@ -1199,7 +1204,7 @@ export default {
         for (var pd in ed.parentDoc) {
           if (
             renewalDocuments.value.filter(
-              nld => nld.parentDocument == pd && nld.isRequired
+              (nld) => nld.parentDocument == pd && nld.isRequired
             ).length > 0
           ) {
             NSTemp = documentsUploaded.value.hasOwnProperty(
@@ -1212,7 +1217,7 @@ export default {
             if (!NSTemp) {
               errorDocuments.value.push({
                 name: pd,
-                code: pd
+                code: pd,
               });
             }
           }
@@ -1233,7 +1238,7 @@ export default {
         store.dispatch("renewal/setTempDocs", formData).then(() => {
           let finalLocalData = {
             created: new Date(),
-            data: []
+            data: [],
           };
           let db;
           let request = indexedDB.open("RNdocumentUploads", dbVersion);
@@ -1245,8 +1250,8 @@ export default {
             );
 
             if (existingDocs.length > 0) {
-              existingDocs.forEach(existing => {
-                imageData.forEach(newImage => {
+              existingDocs.forEach((existing) => {
+                imageData.forEach((newImage) => {
                   if (existing.imageId == newImage.imageId) {
                     existing.image = newImage.image;
                     existing.fileName = newImage.fileName;
@@ -1258,12 +1263,12 @@ export default {
               finalLocalData.data = imageData;
             }
             finalLocalData.data = [...new Set(finalLocalData.data)];
-            console.log(finalLocalData);
+
             const objectStore = transaction.objectStore("RNdocumentUploads");
 
             const objectStoreRequest = objectStore.clear();
 
-            objectStoreRequest.onsuccess = event => {
+            objectStoreRequest.onsuccess = (event) => {
               let addReq = transaction
                 .objectStore("RNdocumentUploads")
                 .put(finalLocalData);
@@ -1283,7 +1288,7 @@ export default {
         });
       } else {
         let errors = "";
-        errorDocuments.value.forEach(element => {
+        errorDocuments.value.forEach((element) => {
           if (!errors) {
             errors = element.name;
           } else {
@@ -1298,7 +1303,7 @@ export default {
             position: "bottom-center",
             pauseOnFocusLoss: true,
             pauseOnHover: true,
-            icon: true
+            icon: true,
           }
         );
       }
@@ -1328,22 +1333,22 @@ export default {
           nativeLanguageId: localData.value.nativeLanguageSelected
             ? localData.value.nativeLanguageSelected.id
             : null,
-          isLegal: true
-        }
+          isLegal: true,
+        },
       };
-      store.dispatch("renewal/addRenewal", license).then(res => {
+      store.dispatch("renewal/addRenewal", license).then((res) => {
         let licenseId = res.data.data.id;
         let payload = { document: formData, id: licenseId };
         store
           .dispatch("renewal/uploadDocuments", payload)
-          .then(res => {
+          .then((res) => {
             if (res.data.status == "Success") {
               toast.success("Applied successfuly", {
                 timeout: 5000,
                 position: "bottom-center",
                 pauseOnFocusLoss: true,
                 pauseOnHover: true,
-                icon: true
+                icon: true,
               });
               localStorage.removeItem("RNApplicationData");
               location.reload();
@@ -1353,7 +1358,7 @@ export default {
                 position: "bottom-center",
                 pauseOnFocusLoss: true,
                 pauseOnHover: true,
-                icon: true
+                icon: true,
               });
             }
           })
@@ -1363,7 +1368,7 @@ export default {
               position: "bottom-center",
               pauseOnFocusLoss: true,
               pauseOnHover: true,
-              icon: true
+              icon: true,
             });
           });
       });
@@ -1373,12 +1378,12 @@ export default {
       return array.reduce((hash, obj) => {
         if (obj[key] === undefined || obj[key] == null) return hash;
         return Object.assign(hash, {
-          [obj[key]]: (hash[obj[key]] || []).concat(obj)
+          [obj[key]]: (hash[obj[key]] || []).concat(obj),
         });
       }, {});
     };
 
-    const addMoreFile = doc => {
+    const addMoreFile = (doc) => {
       divId.value == doc.length;
       if (divId.value < doc.length) {
         divId.value++;
@@ -1410,7 +1415,7 @@ export default {
         document.getElementById(doc[0].id).appendChild(divElement);
       }
     };
-    const addMore = parentItem => {
+    const addMore = (parentItem) => {
       if (
         showNestedDocuments.value[parentItem.documentType.code] == undefined
       ) {
@@ -1445,7 +1450,7 @@ export default {
         let db = request.result;
         db.createObjectStore("RNdocumentUploads", {
           keyPath: "id",
-          autoIncrement: true
+          autoIncrement: true,
         });
       };
     };
@@ -1460,47 +1465,51 @@ export default {
         return;
       } else {
         initDb();
-       
+
         localData.value = window.localStorage.getItem("RNApplicationData")
           ? JSON.parse(window.localStorage.getItem("RNApplicationData"))
           : {};
 
         generalInfo.value = localData.value;
 
-        store.dispatch("newlicense/getApplicationCategories").then(res => {
+        store.dispatch("newlicense/getApplicationCategories").then((res) => {
           let categoryResults = res.data.data
-            ? res.data.data.filter(ele => ele.code == "NA")
+            ? res.data.data.filter((ele) => ele.code == "RA")
             : "";
           let educationLevels = generalInfo.value.multipleDepartment;
+
           //Get department docs
-          educationLevels.forEach(element => {
+          educationLevels.forEach((element) => {
             store
               .dispatch("renewal/getRNdocuments", [
                 categoryResults[0].id,
                 generalInfo.value.applicantTypeSelected.id,
-                element.educationalLevel.id
+                element.educationalLevel.id,
+                element.department.id,
               ])
-              .then(res => {
+              .then((res) => {
                 let resp = res.data.data;
                 renewalDocuments.value = res.data.data;
 
                 educationalDocs.value.push({
                   educationalLevel: element.educationalLevel,
                   professionType: element.professionalType,
-                  docs: resp.filter(element => element.parentDocument == null),
-                  parentDoc: groupByKey(resp, "parentDocument")
+                  docs: resp.filter(
+                    (element) => element.parentDocument == null
+                  ),
+                  parentDoc: groupByKey(resp, "parentDocument"),
                 });
               });
           });
-
+          console.log("vals", educationLevels);
           //Get Common Docs
 
           store
             .dispatch("renewal/getCommonRNdocuments", [
               categoryResults[0].id,
-              generalInfo.value.applicantTypeSelected.id
+              generalInfo.value.applicantTypeSelected.id,
             ])
-            .then(res => {
+            .then((res) => {
               let result = res.data.data;
               commonDocuments.value = result;
               if (
@@ -1509,8 +1518,8 @@ export default {
                 result &&
                 result.length > 0
               ) {
-                existingDocs.forEach(existing => {
-                  result.forEach(Cd => {
+                existingDocs.forEach((existing) => {
+                  result.forEach((Cd) => {
                     if (
                       existing.imageId ==
                       "common_image_lightbox_" + Cd.documentType.code
@@ -1549,9 +1558,9 @@ export default {
       next,
       back,
       addMore,
-      showNestedDocuments
+      showNestedDocuments,
     };
-  }
+  },
 };
 </script>
 

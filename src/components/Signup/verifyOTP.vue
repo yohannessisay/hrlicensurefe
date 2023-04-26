@@ -33,11 +33,11 @@ export default {
     const otpInput = ref(null);
 
     const handleOnComplete = (value) => {
-      console.log("OTP completed: ", value);
+      
     };
 
     const handleOnChange = (value) => {
-      console.log("OTP changed: ", value);
+     
     };
 
     const clearInput = () => {

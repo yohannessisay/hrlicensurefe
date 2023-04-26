@@ -108,7 +108,7 @@
               Ethiopian Applicants
             </h1> 
           </div>
-          <h5 class="mt-small text-primary-100 text-center block relative">
+          <h3 class="mt-small text-primary-100 text-center block relative">
             <div>
               Diploma graduates should pass level 4 COC exam before applying. If
               you are a degree graduate and your profession is under licensure
@@ -119,7 +119,7 @@
               have your university send your graduation list to the ministry of
               health through this email nhpled.moh@gmail.com.
             </div>
-          </h5>
+          </h3>
         </section>
       </transition>
     </section>

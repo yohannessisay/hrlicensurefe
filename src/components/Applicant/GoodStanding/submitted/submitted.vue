@@ -40,7 +40,7 @@
         >
           <!-- Article -->
           <div>
-            <h2 class="text-main-400 border-b-2 text-xl p-2">
+            <h2 class="text-grey-800 border-b-2 text-xl p-2">
               License Number-
               <span class="text-base text-main-400">{{
                 license.goodStandingCode
@@ -71,15 +71,16 @@
                 "
               >
                 <h1 class="text-lg">
-                  <a
-                    class="no-underline hover:underline text-main-400"
-                    href="#"
-                  >
+                  <a class="no-underline   text-grey-800" href="#">
                     Who Issued the letter
                   </a>
                 </h1>
                 <p class="text-black text-sm">
-                  {{ license ? license.whoIssued : "Waiting for review" }}
+                  {{
+                    license && license.whoIssued
+                      ? license.whoIssued.name
+                      : "Waiting for review"
+                  }}
                 </p>
               </div>
 
@@ -94,10 +95,7 @@
                 "
               >
                 <h1 class="text-lg">
-                  <a
-                    class="no-underline hover:underline text-main-400"
-                    href="#"
-                  >
+                  <a class="no-underline  text-grey-800" href="#">
                     License Registration Number
                   </a>
                 </h1>
@@ -120,10 +118,7 @@
                 "
               >
                 <h1 class="text-lg">
-                  <a
-                    class="no-underline hover:underline text-main-400"
-                    href="#"
-                  >
+                  <a class="no-underline  text-grey-800" href="#">
                     To whom the goodstanding is
                   </a>
                 </h1>
@@ -274,17 +269,20 @@ export default {
       userInfo.value = JSON.parse(window.localStorage.getItem("personalInfo"));
 
       store.dispatch("goodstanding/getGoodStandingLicense").then((res) => {
-        const results = res.data.data;
+        const results = res.data.data ? res.data.data : [];
 
-        if (results&&results.length > 0) {
+        if (results && results.length > 0) {
           userSubmittedLicenses.value = results.filter((submittedLicense) => {
             return (
-              submittedLicense.applicationStatus.code === "UPD" ||
-              submittedLicense.applicationStatus.code === "SUB"
+              submittedLicense.applicationStatus.code == "UPD" ||
+              submittedLicense.applicationStatus.code == "SUB"
             );
           });
 
-          if (userSubmittedLicenses.value.length === 0) {
+          if (
+            userSubmittedLicenses.value &&
+            userSubmittedLicenses.value.length == 0
+          ) {
             noData.value = true;
           }
 

@@ -10,7 +10,7 @@
               message="Address"
             />
           </router-link>
-          <h2 class="text-md AtkinsonHyperlegibleBold text-primary-600 ml-2 ">
+          <h2 class="text-md DosisBold text-primary-600 ml-2 ">
            eHPEL
 
           </h2>
