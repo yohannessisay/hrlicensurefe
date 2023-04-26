@@ -73,17 +73,17 @@
         <i class="fa fa-sign-in"></i> Log In
       </button>
 
-      <span
+      <!-- <span
         class="bg-grey-200 cursor-pointer  ml-4 mr-2 p-2 rounded-lg"
         data-bs-toggle="modal"
         data-bs-target="#showHelp"
       >
         <i class="fa-solid fa-question text-xl text-main-400"></i>
-      </span>
+      </span> -->
     </div>
   </section>
   <!-- Login Part -->
-  <div
+  <!-- <div
     class="
       modal
       fade
@@ -193,7 +193,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
   <!--End Of Login Part -->
   <!-- Login Part -->
   <div
