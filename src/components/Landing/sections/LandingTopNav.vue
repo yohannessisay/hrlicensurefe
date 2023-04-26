@@ -155,6 +155,7 @@
             "
             data-bs-dismiss="modal"
             aria-label="Close"
+            @click="refreshPage()"
           >
             <i class="fa fa-close fa-2x"></i>
           </button>
@@ -816,7 +817,11 @@ export default {
         x.type = "password";
       }
     };
-
+    const refreshPage = () => {
+      setTimeout(() => {
+        location.reload();
+      }, 1000);
+    };
     const tabChange = () => {
       if (
         otpInput.value &&
@@ -1174,6 +1179,7 @@ export default {
       verifySmsOtp,
       showPasswordStrength,
       passwordStrengthDisplay,
+      refreshPage,
     };
   },
 };
