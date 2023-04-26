@@ -61,14 +61,14 @@
     <!-- {{ previousLicense }} -->
     <div class="flex justify-center m-4 ">
       <h1
-        v-if="previousLicense && previousLicense.length != 0"
+        
         :class="
           isDarkMode && isDarkMode == true
             ? 'text-3xl text-white'
             : 'text-3xl text-main-400'
         "
       >
-        You can choose an existing license to renew or apply for a new renewal
+        You can choose an existing license to renew or apply for a renewal
         form
       </h1>
     </div>
@@ -78,7 +78,9 @@
           duration-200   transform"
       >
         <button
-          class="inline-block px-6 text-white bg-main-400 hover:text-main-400 hover:border text-sm font-bold uppercase rounded shadow-lg mb-4 transition duration-150 ease-in-out"
+          :class="previousLicense&&previousLicense.length>0?
+          'inline-block px-6 text-white bg-main-400 hover:text-main-400 hover:border text-sm font-bold uppercase rounded shadow-lg mb-4 transition duration-150 ease-in-out':
+          'inline-block px-6 text-white bg-grey-300 hover:text-main-400 hover:border text-sm font-bold uppercase rounded shadow-lg mb-4 transition duration-150 ease-in-out pointer-events-none'"
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#collapseExample"
@@ -89,7 +91,10 @@
           data-ripple-color="light"
         >
           Show Existing License/s
-        </button>
+        </button> 
+        <p v-if="previousLicense&&previousLicense.length==0" class="flex justify-center">
+        <small>No existing license</small>
+      </p>
       </div>
       <div
         class="bg-white p-4 rounded-lg m-4 shadow-md  hover:-translate-y-2  transition-all
@@ -315,8 +320,9 @@ export default {
                   : ""
               )
             : [];
-          isLoading.value = false;
+        
         }
+        isLoading.value = false;
       });
     });
     const renewExisting = (license) => {
