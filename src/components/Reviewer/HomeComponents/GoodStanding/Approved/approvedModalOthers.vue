@@ -190,7 +190,91 @@
                           </div>
                         </div>
                       </div>
-
+                      <div
+                        class="
+                            grow-0
+                            shrink-0
+                            basis-auto
+                            w-full
+                            lg:w-6/12
+                            px-3
+                            lg:px-6
+                          "
+                      >
+                        <div class="flex align-center">
+                          <div class="shrink-0">
+                            <div
+                              class="
+                                  p-4
+                                  bg-blue-600
+                                  rounded-md
+                                  shadow-lg
+                                  w-48
+                                  h-48
+                                  flex
+                                  items-center
+                                  justify-center
+                                "
+                            >
+                              <i class="fa fa-building fa-4x"></i>
+                            </div>
+                          </div>
+                          <div class="grow ml-6">
+                            <h2 class="font-bold mb-1">Education Info</h2>
+                            <div
+                              class="
+                                  border-2
+                                  p-2
+                                  rounded-lg
+                                  m-1
+                                  shadow-md
+                                  text-primary-500
+                                "
+                            >
+                              <p class="text-gray-500">
+                                <span class="font-medium text-primary-700 mb-1"
+                                  >Profession Name:</span
+                                >
+                                <span class="text-grey-800 ml-2">
+                                  {{
+                                    modalData.data &&
+                                    modalData.data.GSProfessionals
+                                      ? modalData.data.GSProfessionals
+                                          .professionalTypes.name
+                                      : ""
+                                  }}</span
+                                >
+                              </p>
+                              <p class="text-gray-500">
+                                <span class="font-medium text-primary-700 mb-1"
+                                  >Department:</span
+                                >
+                                <span class="text-grey-800 ml-2">
+                                  {{
+                                    modalData.data && modalData.data.department
+                                      ? modalData.data.department.name
+                                      : ""
+                                  }}</span
+                                >
+                              </p>
+                              <p class="text-gray-500">
+                                <span class="font-medium text-primary-700 mb-1"
+                                  >Education Level:</span
+                                >
+                                <span class="text-grey-800 ml-2">
+                                  {{
+                                    modalData.data &&
+                                    modalData.data.GSProfessionals
+                                      ? modalData.data.GSProfessionals
+                                          .educationLevel.name
+                                      : ""
+                                  }}</span
+                                >
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                    
 
                       <div
@@ -444,6 +528,7 @@ export default {
             modalData.value.licenseExpirationDate =
               result.licenseExpirationDate;
             modalData.value.documents = result.documents;
+            modalData.value.data = result;
             isLoading.value=false
           }
         });
