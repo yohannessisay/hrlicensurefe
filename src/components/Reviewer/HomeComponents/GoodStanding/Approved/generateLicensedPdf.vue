@@ -105,7 +105,7 @@
                                 <h3 class="ml-64 mb-8" contenteditable="true">
                                   LETTER OF GOOD STANDING
                                 </h3>
-                                <h5  contenteditable="true">
+                                <h5 class=""  contenteditable="true">
                                   This letter of good standing and confirmation
                                   of registration is written upon request of
                                   <span
@@ -190,7 +190,7 @@
                                       : ""
                                   }} </span
                                 >.
-                                <p class="mt-8">
+                                <p class="ml-8 mt-8">
                                   Hence we appreciate any assistance, which will
                                   be rendered to
                                   <span contenteditable="false">
@@ -204,7 +204,8 @@
                                   >. With best regards
                                 </p>
                               </div>
-
+                                <!--end of letter without experiance -->
+                              <!-- letter with experiance -->
                               <div
                                 v-if="modalData.withExperiance"
                                 class="mt-large bg-white"
@@ -256,7 +257,7 @@
                                   .
                                 </h5>
 
-                                <h4 class="ml-8">
+                                <h4 class="">
                                   <span contenteditable="false">
                                     {{
                                       modalData &&
@@ -322,7 +323,7 @@
 
                                   .
                                 </h4>
-                                <h4 class="ml-8 mt-8">
+                                <h4 class=" mt-8">
                                   <span contenteditable="false">
                                     {{
                                       modalData && modalData.profile
@@ -407,6 +408,7 @@
                                   </h3>
                                 </div>
                               </div>
+                                <!--end of letter with experiance -->
                             </div>
                           </div>
                         </div>
