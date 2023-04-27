@@ -609,8 +609,7 @@ export default {
                       (modalDataGenerate.value.withExperiance = true))
                     : "";
                 })
-              : "";
-            console.log(modalDataGenerate.value);
+              : ""; 
             isLoading.value = false;
           }
         });
