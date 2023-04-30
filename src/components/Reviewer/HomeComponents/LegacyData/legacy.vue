@@ -532,7 +532,7 @@ import ReviewerNavBar from "./SharedComponents/navBar.vue";
 import ReviewerSideBar from "./SharedComponents/sideNav.vue";
 import VueTableLite from "vue3-table-lite";
 
-import { saveAs } from "file-saver";
+ 
 import "@ocrv/vue-tailwind-pagination/dist/style.css";
 
 export default {
@@ -738,7 +738,7 @@ export default {
           "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8",
       });
       let date = new Date().toISOString();
-      saveAs(blob, date.slice(0, 10) + " Report.xls");
+      // saveAs(blob, date.slice(0, 10) + " Report.xls");
     };
 
     const doSearch = (offset, limit, order, sort) => {

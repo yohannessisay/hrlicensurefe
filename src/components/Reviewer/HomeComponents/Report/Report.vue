@@ -679,9 +679,8 @@ import { useStore } from "vuex";
 import ReviewerNavBar from "./SharedComponents/navBar.vue";
 import ReviewerSideBar from "./SharedComponents/sideNav.vue";
 import VueTableLite from "vue3-table-lite";
-
+import * as XLSX from "xlsx";
 import moment from "moment";
-import { saveAs } from "file-saver";
 import "@ocrv/vue-tailwind-pagination/dist/style.css";
 
 export default {
@@ -703,6 +702,7 @@ export default {
     const searchTermRegion = ref("");
     const searchTermFromDate = ref("");
     const searchTermToDate = ref("");
+    let exportData = ref({ type: "", data: [] });
     let applicationTypeSearch = ref("NewLicense");
     let departments = ref([]);
     let professions = ref([]);
@@ -717,6 +717,10 @@ export default {
         .then((res) => {
           tableData = [];
           allData.value = [];
+          exportData.value.data = [];
+          exportData.value.type = "newLicense";
+          exportData.value.data = res.data.data ? res.data.data.rows : [];
+
           res.data.data.rows.forEach((element) => {
             let prof = element.educations.map((prof) => {
               return prof.professionType ? prof.professionType.name : "";
@@ -944,6 +948,9 @@ export default {
       store.dispatch("report/getRenewalReport", apiParameters).then((res) => {
         tableData = [];
         allData.value = [];
+        exportData.value.data = [];
+        exportData.value.type = "renewal";
+        exportData.value.data = res.data.data ? res.data.data.rows : [];
         res.data.data.rows.forEach((element) => {
           let prof = element.educations.map((prof) => {
             return prof.professionType ? prof.professionType.name : "";
@@ -1320,6 +1327,9 @@ export default {
         .then((res) => {
           tableData = [];
           allData.value = [];
+          exportData.value.data = [];
+          exportData.value.type = "goodStanding";
+          exportData.value.data = res.data.data ? res.data.data.rows : [];
           res.data.data.rows.forEach((element) => {
             let prof = element.GSProfessionals.professionalTypes
               ? element.GSProfessionals.professionalTypes.name
@@ -1510,9 +1520,8 @@ export default {
     const fetchRegion = () => {
       store.dispatch("report/getRegions").then((res) => {
         regions.value = res.data.data;
-        regions.value.unshift({name:'All'});
+        regions.value.unshift({ name: "All" });
       });
-  
     };
 
     const fetchZones = (regionID) => {
@@ -1543,14 +1552,61 @@ export default {
     };
 
     const exportTable = () => {
-      var blob = new Blob([document.getElementById("printable").innerHTML], {
-        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8",
+      let tempData = [];
+
+      exportData.value.data.forEach((element) => {
+        let tempdEdu = "";
+        element.educations
+          ? element.educations.forEach((element) => {
+              tempdEdu += element.professionType
+                ? element.professionType.name + " ,"
+                : "";
+            })
+          : element.GSProfessionals
+          ? element.GSProfessionals.forEach((element) => {
+              tempdEdu += element.professionType
+                ? element.professionType.name + " ,"
+                : "";
+            })
+          : "";
+          tempdEdu = tempdEdu.substring(0, tempdEdu.length-1);
+        let licenseCode = "";
+        exportData.value.type == "newLicense"
+          ? (licenseCode = element.newLicenseCode)
+          : exportData.value.type == "renewal"
+          ? (licenseCode = element.renewalCode)
+          : exportData.value.type == "goodStanding"
+          ? (licenseCode = element.goodStandingCode)
+          : "",
+          tempData.push({
+            "License Code": licenseCode,
+            "First Name": element.name,
+            "Father Name": element.fatherName,
+            "Grand Father Name": element.grandFatherName,
+            Gender: element.gender ? element.gender : "",
+            "Birth Date": element.dateOfBirth
+              ? element.dateOfBirth.slice(0, 10)
+              : "",
+            Nationality: element.nationality ? element.nationality.name : "",
+            Region: element.region ? element.region.name : "",
+            Professions: tempdEdu,
+            "Certified Date": element.certifiedDate,
+            "Application Status": element.applicationStatus
+              ? element.applicationStatus.name
+              : "",
+          });
       });
-      let date = new Date().toISOString();
-      saveAs(blob, date.slice(0, 10) + " Report.xls");
+      console.log(tempData);
+      var exportWS = XLSX.utils.json_to_sheet(tempData);
+
+      var wb = XLSX.utils.book_new();
+
+      XLSX.utils.book_append_sheet(wb, exportWS, "animals");
+
+      XLSX.writeFile(wb, "book.xlsx");
     };
     const doSearch = (offset, limit, order, sort) => {
-      reportTable.value.isLoading = true; 
+      reportTable.value.isLoading = true;
       setTimeout(() => {
         reportTable.value.isReSearch = offset == undefined ? true : false;
         offset = offset && offset > 0 ? offset / 10 - 1 : 1;
