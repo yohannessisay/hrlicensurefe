@@ -176,14 +176,7 @@ export default {
     let isFirstTime = ref(false);
     let userInfo = ref({});
     const logout = () => {
-      localStorage.removeItem("token");
-      localStorage.removeItem("userId");
-      localStorage.removeItem("GSApplicationData");
-      localStorage.removeItem("RNApplicationData");
-      localStorage.removeItem("NLApplicationData");
-      localStorage.removeItem("personalInfo");
-      localStorage.removeItem("applicantTypeId");
-      localStorage.removeItem("isApplicant");
+      localStorage.clear();
       window.indexedDB.deleteDatabase("NLdocumentUploads");
       window.indexedDB.deleteDatabase("RNdocumentUploads");
       window.indexedDB.deleteDatabase("GSdocumentUploads");

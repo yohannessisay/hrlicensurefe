@@ -170,11 +170,7 @@ export default {
       showFinishedDD.value = false;
     };
     const logout = () => {
-      localStorage.removeItem("token");
-      localStorage.removeItem("adminEmail");
-      localStorage.removeItem("allAdminData");
-      localStorage.removeItem("adminId");
-      localStorage.removeItem("role");
+      localStorage.clear();
       store.dispatch("admin/logout");
       router.push({ path: "/admin" });
     };

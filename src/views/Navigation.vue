@@ -235,13 +235,9 @@ export default {
       this.$router.push(url);
     },
     logout() {
+      localStorage.clear();
       location.reload();
-      localStorage.removeItem("token");
-      localStorage.removeItem("userId");
-      localStorage.removeItem("educationalLevel");
-      localStorage.removeItem("language");
-      localStorage.removeItem("payroll");
-      localStorage.removeItem("applicantTypeId");
+     
       this.$router.push({ path: "/" });
     },
     showDropDown() {
