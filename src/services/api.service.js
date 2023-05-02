@@ -7,9 +7,9 @@ axios.interceptors.response.use(
   
   async (error) => {
     if (error.request) {
-      localStorage.clear();
-      router.push("/landing");
-      return Promise.reject(error);
+      // localStorage.clear();
+      // router.push("/landing");
+      // return Promise.reject(error);
     }
   }
 );
