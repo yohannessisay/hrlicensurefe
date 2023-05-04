@@ -222,7 +222,7 @@
                   "
                 >
                   <vue-table-lite
-                    :is-static-mode="true"
+                   
                     :is-loading="toYouTable.isLoading"
                     :columns="toYouTable.columns"
                     :rows="toYouTable.rows"
@@ -251,7 +251,6 @@
                 <div class="p-4 bg-grey-200 mb-4 rounded-lg">
                   <h1 class="text-2xl mb-1">Filters</h1>
                   <div class="mb-3 xl:w-full">
-                    
                     <h2 class="text-primary-800 text-lg">Applicant Name</h2>
                     <div
                       class="
@@ -431,8 +430,7 @@
                     bg-primary-800
                   "
                 >
-                  <vue-table-lite
-                    :is-static-mode="true"
+                  <vue-table-lite 
                     :is-loading="toOthersTable.isLoading"
                     :columns="toOthersTable.columns"
                     :rows="toOthersTable.rows"
@@ -491,16 +489,16 @@ export default {
     });
     let allInfo = ref({});
     let allInfoOth = ref({});
-    const searchTerm = ref("");
-    const searchTermOthers = ref("");
+    let searchTerm = ref("");
+    let searchTermOthers = ref("");
     let searchTermFromDate = ref("");
     let searchTermToDate = ref("");
     let searchTermFromDateOth = ref("");
     let searchTermToDateOth = ref("");
-    const toOthersTable = ref({});
-    const toYouTable = ref({});
+    let toOthersTable = ref({});
+    let toYouTable = ref({});
     let tableData = ref([]);
-    let toYouTableData = ref([]);
+    let toYouTableData = [];
     toOthersTable.value = {
       isLoading: true,
     };
@@ -562,51 +560,55 @@ export default {
         ])
         .then((res) => {
           allInfo.value = res ? res.rows : [];
-          allInfo.value.forEach((element) => {
-            toYouTableData.value.push({
-              LicenseNumber: element.newLicenseCode,
-              ApplicantName:
-                element.profile.name +
-                " " +
-                element.profile.fatherName +
-                " " +
-                element.profile.grandFatherName,
-              ApplicationType: element.applicantType
-                ? element.applicantType.name
-                : "",
-              Date: new Date(element.createdAt)
-                .toJSON()
-                .slice(0, 10)
-                .replace(/-/g, "/"),
-              data: element,
+          if (allInfo.value) {
+            allInfo.value.forEach(element => {
+              toYouTableData.push({
+                LicenseNumber: element.newLicenseCode,
+                ApplicantName:
+                  (element.profile ? element.profile.name : "") +
+                  " " +
+                  (element.profile ? element.profile.fatherName : "") +
+                  " " +
+                  (element.profile ? element.profile.grandFatherName : ""),
+                ApplicantType: element.applicantType
+                  ? element.applicantType.name
+                  : "",
+                Date: new Date(element.createdAt)
+                  .toJSON()
+                  .slice(0, 10)
+                  .replace(/-/g, "/"),
+                data: element
+              });
             });
-          });
+          }
 
+         
           toYouTable.value = {
             columns: [
               {
                 label: "License Number",
                 field: "LicenseNumber",
-                width: "20%",
-                isKey: true,
+                width: "15%",
+                sortable: true,
+                isKey: true
               },
               {
                 label: "Applicant Name",
                 field: "ApplicantName",
-                width: "40%",
-                sortable: true,
+                width: "45%",
+                sortable: true
               },
               {
                 label: "Applicant Type",
-                field: "ApplicationType",
+                field: "ApplicantType",
                 width: "20%",
-                sortable: true,
+                sortable: true
               },
               {
-                label: "Date",
+                label: "Applied Date",
                 field: "Date",
                 width: "20%",
-                sortable: true,
+                sortable: true
               },
               {
                 label: "Action",
@@ -618,18 +620,18 @@ export default {
                     row.id +
                     '" ><i class="fa fa-eye"></i>View/Edit</button>'
                   );
-                },
-              },
+                }
+              }
             ],
-
-            rows: toYouTableData.value,
+            rows: toYouTableData,
             totalRecordCount: res.count,
             sortable: {
               order: "id",
-              sort: "asc",
-            },
+              sort: "asc"
+            }
           };
         });
+        
     };
     const approvedApplicationsByOthers = (apiParameters) => {
       store
@@ -668,23 +670,24 @@ export default {
               {
                 label: "License Number",
                 field: "LicenseNumber",
-                width: "20%",
+                width: "15%",
+                sortable: true,
                 isKey: true,
               },
               {
                 label: "Applicant Name",
                 field: "ApplicantName",
-                width: "40%",
+                width: "45%",
                 sortable: true,
               },
               {
                 label: "Applicant Type",
-                field: "ApplicationType",
+                field: "ApplicantType",
                 width: "20%",
                 sortable: true,
               },
               {
-                label: "Date",
+                label: "Applied Date",
                 field: "Date",
                 width: "20%",
                 sortable: true,
@@ -786,6 +789,8 @@ export default {
       toYouTable.value.isLoading = true;
 
       setTimeout(() => {
+        toYouTableData=[];
+        toYouTable.value.rows=[];
         toYouTable.value.isReSearch = offset == undefined ? true : false;
         offset = offset && offset > 0 ? offset / 10 - 1 : 1;
         if (sort == "asc") {
