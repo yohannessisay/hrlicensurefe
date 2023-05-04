@@ -180,15 +180,7 @@ export default {
     let userInfo = ref({});
     const logout = () => {
       location.reload();
-      localStorage.removeItem("token");
-      localStorage.removeItem("userId");
-      localStorage.removeItem("GSApplicationData");
-      localStorage.removeItem("RNApplicationImageData");
-      localStorage.removeItem("NlApplicationImageData");
-      localStorage.removeItem("RNApplicationData");
-      localStorage.removeItem("NLApplicationData");
-      localStorage.removeItem("isApplicant");
-      localStorage.removeItem("applicantTypeId");
+      localStorage.clear();
       this.$router.push({ path: "/" });
     };
     const showDropDown = () => {

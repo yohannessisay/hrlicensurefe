@@ -73,17 +73,17 @@
         <i class="fa fa-sign-in"></i> Log In
       </button>
 
-      <!-- <span
+      <span
         class="bg-grey-200 cursor-pointer  ml-4 mr-2 p-2 rounded-lg"
         data-bs-toggle="modal"
         data-bs-target="#showHelp"
       >
         <i class="fa-solid fa-question text-xl text-main-400"></i>
-      </span> -->
+      </span>
     </div>
   </section>
-  <!-- Login Part -->
-  <!-- <div
+  <!-- Help Part -->
+  <div
     class="
       modal
       fade
@@ -168,33 +168,16 @@
             </h2>
           </div>
           <div class="container bg-secondaryDark">
-            <vue-plyr :options="options">
-              <video controls crossorigin playsinline data-poster="poster.jpg">
-                <source
-                  size="720"
-                  src="/template/help_video.mp4"
-                  type="video/mp4"
-                />
-                <source
-                  size="1080"
-                  src="/template/help_video.mp4"
-                  type="video/mp4"
-                />
-                <track
-                  default
-                  kind="captions"
-                  label="English captions"
-                  src="/path/to/english.vtt"
-                  srclang="en"
-                />
-              </video>
-            </vue-plyr>
+            <vue3-video-player  
+            id="helpVideo" 
+              src="/template/help_video.mp4"
+            ></vue3-video-player>
           </div>
         </div>
       </div>
     </div>
-  </div> -->
-  <!--End Of Login Part -->
+  </div>
+  <!--End Of Help Part -->
   <!-- Login Part -->
   <div
     class="
@@ -818,9 +801,9 @@ export default {
       }
     };
     const refreshPage = () => {
-      setTimeout(() => {
+    
         location.reload();
-      }, 1000);
+     
     };
     const tabChange = () => {
       if (
@@ -1141,6 +1124,7 @@ export default {
         error.innerHTML = `Invalid phone number.`;
       }
     };
+ 
     onMounted(() => {
       const phoneInputField = document.getElementById("phone");
       phoneInput = window.intlTelInput(phoneInputField, {
@@ -1152,7 +1136,7 @@ export default {
 
     return {
       credentials,
-      credentialsErrors,
+      credentialsErrors, 
       submit,
       isEmail,
       tabChange,

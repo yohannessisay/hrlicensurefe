@@ -86,11 +86,7 @@ export default {
     };
 
     const logout = () => {
-      localStorage.removeItem("token");
-      localStorage.removeItem("adminEmail")
-      localStorage.removeItem("allAdminData")
-      localStorage.removeItem("adminId");
-      localStorage.removeItem("role");
+      localStorage.clear();
       router.push({path: "/admin"});
     }
     onMounted(() => {});

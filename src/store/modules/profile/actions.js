@@ -214,12 +214,12 @@ export default {
       return error;
     }
   },
-  async resetPassword({ commit }, data) {
+  async resetPassword(context, data) {
     data;
     try {
       const resp = await ApiService.post(
         baseUrl + "/resetpassword/" + data.id,
-        data.pass
+        data
       );
 
       return resp;

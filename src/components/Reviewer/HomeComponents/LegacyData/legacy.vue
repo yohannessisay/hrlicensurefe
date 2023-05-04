@@ -43,7 +43,7 @@
                 uppercase
                 border
                 rounded
-                shadow-lg
+                shadow-md
                 hover:bg-white hover:text-primary-600
                 transition
                 duration-150
@@ -269,8 +269,8 @@
                       @change="applyFilter()"
                     >
                       <option selected disabled>Gender</option>
-                      <option value="male">Male</option>
-                      <option value="female">Female</option>
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
                     </select>
                   </div>
 
@@ -531,8 +531,8 @@ import { useStore } from "vuex";
 import ReviewerNavBar from "./SharedComponents/navBar.vue";
 import ReviewerSideBar from "./SharedComponents/sideNav.vue";
 import VueTableLite from "vue3-table-lite";
+import * as XLSX from "xlsx";
 
-import { saveAs } from "file-saver";
 import "@ocrv/vue-tailwind-pagination/dist/style.css";
 
 export default {
@@ -546,7 +546,7 @@ export default {
     const store = useStore();
     let tableData = [];
     let reportTable = ref({ isLoading: false });
-
+    let exportData = ref([]);
     let searchTerm = ref("");
     let searchTermLicenseNumber = ref("");
     let searchTermPhone = ref("");
@@ -568,7 +568,7 @@ export default {
         })
         .then((res) => {
           let tempData = res && res.rows ? res.rows : [];
-
+          exportData.value=tempData;
           apiParameters && apiParameters.isInitial == true
             ? res.filters && res.filters.licenseType
               ? res.filters.licenseType.forEach((element) => {
@@ -733,12 +733,33 @@ export default {
     };
 
     const exportTable = () => {
-      var blob = new Blob([document.getElementById("myTable").innerHTML], {
-        type:
-          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8",
+      let tempData = [];
+
+      exportData.value.forEach((element) => {
+        tempData.push({
+          "Employee Id": element.employee_id,
+          "License Number": element.license_no ? element.license_no : "",
+          "Application Type": element.license_type_id,
+          "First Name": element.emp_first_name,
+          "Father Name": element.emp_middle_name,
+          "Grand Father Name": element.emp_last_name,
+          Gender: element.emp_gender ? element.emp_gender : "",
+          "Birth Date": element.emp_birthday
+            ? element.emp_birthday.slice(0, 10)
+            : "",
+          "Employee Phone": element.emp_mobile ? element.emp_mobile : "",
+          "License Status ": element.license_status_id,
+          Prefix: element.prefix_id ? element.prefix_id : "",
+        });
       });
-      let date = new Date().toISOString();
-      saveAs(blob, date.slice(0, 10) + " Report.xls");
+       
+      var exportWS = XLSX.utils.json_to_sheet(tempData);
+
+      var wb = XLSX.utils.book_new();
+
+      XLSX.utils.book_append_sheet(wb, exportWS, "animals");
+
+      XLSX.writeFile(wb, "book.xlsx");
     };
 
     const doSearch = (offset, limit, order, sort) => {

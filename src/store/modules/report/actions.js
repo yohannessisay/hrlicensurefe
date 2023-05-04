@@ -1,6 +1,18 @@
 import ApiService from "../../../services/api.service";
 import { baseUrl } from "../../../composables/baseURL";
 import { SET_REPORT } from "./mutation-types";
+function urlFacilitator(detail,address) {
+  let url = baseUrl+'/'+address;
+  let parameters = detail[0].params ? detail[0].params : [];
+
+  if (parameters) {
+    parameters.forEach((param) => {
+      url += param ? `${param.key}=${param.value}&` : "";
+    });
+  }
+  url = url.substring(0, url.length - 1);
+  return url;
+}
 export default {
   setReport({ commit }, report) {
     commit(SET_REPORT, report);
@@ -18,9 +30,8 @@ export default {
   },
   async getNewLicenseReport(context, parameters) {
     try {
-      let url =
-        baseUrl +
-        `/newLicenseReport?page=${parameters[0]}&size=${parameters[1]}`;
+      let url = urlFacilitator(parameters,'newLicenseReport?');
+ 
       const resp = await ApiService.get(url);
       return resp;
     } catch (error) {
@@ -40,11 +51,9 @@ export default {
   },
   async getRenewalReport(context,parameters) {
     try {
-        let url =
-        baseUrl +
-        `/renewalReport?page=${parameters[0]}&size=${parameters[1]}`;
+      let url = urlFacilitator(parameters,'renewalReport?');
+ 
       const resp = await ApiService.get(url);
-     
       return resp;
     } catch (error) {
       return error;
@@ -60,11 +69,9 @@ export default {
   },
   async getGoodstandingReport(context,parameters) {
     try {
-        let url =
-        baseUrl +
-        `/goodstandingReport?page=${parameters[0]}&size=${parameters[1]}`;
+      let url = urlFacilitator(parameters,'goodStandingReport?');
+ 
       const resp = await ApiService.get(url);
-      
       return resp;
     } catch (error) {
       return error;

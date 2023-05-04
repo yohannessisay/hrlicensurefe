@@ -36,7 +36,7 @@
           text-current
         "
       >
-   <div
+        <div
           class="
             modal-header
             flex flex-shrink-0
@@ -71,22 +71,22 @@
               ease-in-out"
             data-bs-dismiss="modal"
             aria-label="Close"
-          ><i class="fa fa-close fa-2x"></i></button>
+          >
+            <i class="fa fa-close fa-2x"></i>
+          </button>
         </div>
 
         <div class="modal-body relative p-4">
           <div class="container px-6 mx-auto">
-            <div id="modalPrint">
-              <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                <div class="showPrint">
-                  <div id="printIndiv">
-                    <div class="grid grid-cols-6 gap-4">
-                      <div class="col-start-2 col-span-4 ...">
-                        <h2 class="mt-4 text-center font-bold text-2xl">
-                          Primary Information
-                        </h2>
-                        <div
-                          class="
+            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+              <div id="printedDiv">
+                <div class="grid grid-cols-6 gap-4">
+                  <div class="col-start-2 col-span-4 ...">
+                    <h2 class="mt-4 text-center font-bold text-2xl">
+                      Primary Information
+                    </h2>
+                    <div
+                      class="
                             p-12
                             max-w-full
                             rounded-lg
@@ -94,97 +94,93 @@
                             shadow-md
                             bg-primary-600
                           "
-                        >
-                          <div class="grid grid-cols-2 gap-2">
-                            <div class="col-auto h-4">
-                              <i
-                                class="fa fa-user"
-                                style="color: white"
-                                aria-hidden="true"
-                              ></i
-                              >&nbsp;
-                              <label for="" class="text-white font-bold"
-                                >First Name:</label
-                              >&nbsp;<strong
-                                style="color: #ff8d00; font-size: 16px"
-                                >{{
-                                  result ? result.FirstName : ""
-                                }}</strong
-                              >
-                            </div>
-                            <div class="col-auto h-4 bg-teal-400">
-                              <i
-                                class="fa fa-user"
-                                style="color: white"
-                                aria-hidden="true"
-                              ></i
-                              >&nbsp;
-                              <label class="text-white font-bold"
-                                >Middle Name:</label
-                              >&nbsp;<strong
-                                style="color: #ff8d00; font-size: 16px"
-                                >{{
-                                  result ? result.MiddleName : ""
-                                }}</strong
-                              >
-                            </div>
-
-                            <div class="col-auto h-4 bg-teal-400 mt-4">
-                              <i
-                                class="fa fa-user"
-                                style="color: white"
-                                aria-hidden="true"
-                              ></i
-                              >&nbsp;
-                              <label for="" class="text-white font-bold"
-                                >Last Name:</label
-                              >&nbsp;<strong
-                                style="color: #ff8d00; font-size: 16px"
-                                >{{
-                                  result ? result.LastName : ""
-                                }}</strong
-                              >
-                            </div>
-
-                            <div
-                              class="
-                                col-auto
-                                h-4
-                                bg-teal-400
-                                mt-4
-                                show-on-print
-                              "
-                            >
-                              <i
-                                class="fa fa-male"
-                                style="color: white"
-                                aria-hidden="true"
-                              ></i>
-                              <i
-                                class="fa fa-female"
-                                style="color: white"
-                                aria-hidden="true"
-                              ></i>
-                              &nbsp;
-                              <label for="" class="text-white font-bold"
-                                >Sex:</label
-                              >&nbsp;<strong
-                                style="color: #ff8d00; font-size: 16px"
-                                >{{ result ? result.Sex : "" }}</strong
-                              >
-                            </div>
-                          </div>
+                    >
+                      <div class="grid grid-cols-2">
+                        <div class="cols-6 p-2">
+                          <i
+                            class="fa fa-user mt-1"
+                            style="color: white"
+                            aria-hidden="true"
+                          ></i>
+                          <label for="" class="text-white font-bold ml-1"
+                            >First Name:</label
+                          >
+                          <span class="text-yellow-300 text-xl ml-2">{{
+                            result ? result.FirstName : ""
+                          }}</span>
+                        </div>
+                        <div class="cols-6 p-2">
+                          <i
+                            class="fa fa-user"
+                            style="color: white"
+                            aria-hidden="true"
+                          ></i>
+                          <label for="" class="text-white font-bold ml-1"
+                            >Middle Name:</label
+                          >
+                          <span class="text-yellow-300 text-xl ml-2">{{
+                            result ? result.MiddleName : ""
+                          }}</span>
                         </div>
                       </div>
-                    </div>
 
-                    <div class="grid grid-cols-6 gap-4 mb-4">
-                      <div class="col-start-2 col-span-4 ...">
-                        <h2 class="mt-4 text-center font-bold text-2xl">
-                          Record Detail
-                        </h2>
-                        <div
-                          class="
+                      <div class="grid grid-cols-2">
+                        <div class="cols-6 p-2">
+                          <i
+                            class="fa fa-user"
+                            style="color: white"
+                            aria-hidden="true"
+                          ></i>
+                          <label for="" class="text-white font-bold ml-1"
+                            >First Name:</label
+                          >
+                          <span class="text-yellow-300 text-xl ml-2">{{
+                            result ? result.FirstName : ""
+                          }}</span>
+                        </div>
+                        <div class="cols-6 p-2">
+                          <i
+                            class="fa fa-user"
+                            style="color: white"
+                            aria-hidden="true"
+                          ></i>
+                          <label for="" class="text-white font-bold ml-1"
+                            >Last Name:</label
+                          >
+                          <span class="text-yellow-300 text-xl ml-2">{{
+                            result ? result.LastName : ""
+                          }}</span>
+                        </div>
+                      </div>
+
+                      <div class="grid grid-cols-2">
+                        <div class="cols-6 p-2">
+                          <i
+                            class="fa fa-user"
+                            style="color: white"
+                            aria-hidden="true"
+                          ></i>
+                          <label for="" class="text-white font-bold ml-1"
+                            >Gender:</label
+                          >
+                          <span class="text-yellow-300 text-xl ml-2">{{
+                            result ? result.Sex : ""
+                          }}</span>
+                        </div>
+                         
+                      </div>
+                     
+                    </div>
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-6 gap-4 mb-4">
+                  <div class="col-start-2 col-span-4 ...">
+                    <h2 class="mt-4 text-center font-bold text-2xl">
+                      Record Detail
+                    </h2>
+                    <div
+                      class="
                             p-12
                             max-w-full
                             rounded-lg
@@ -193,89 +189,75 @@
                             dark:bg-gray-200 dark:border-gray-700
                             bg-primary-600
                           "
-                        >
-                          <div class="grid grid-cols-1 gap-2">
-                            <div class="col-6 h-4 bg-teal-100 mt-4">
-                              <i
-                                class="fa fa-file-invoice"
-                                style="color: white"
-                                aria-hidden="true"
-                              ></i>
-                              <label class="text-white font-bold ml-2"
-                                >Registration Number:</label
-                              ><strong
-                                style="color: #ff8d00; font-size: 16px"
-                                >{{
-                                  result ? result.RegistrationNumber : ""
-                                }}</strong
-                              >
-                            </div>
+                    >
+                      <div class="grid grid-cols-1 gap-2">
+                        <div class="col-6 h-4 bg-teal-100 mt-4">
+                          <i
+                            class="fa fa-file-invoice"
+                            style="color: white"
+                            aria-hidden="true"
+                          ></i>
+                          <label class="text-white font-bold ml-2"
+                            >Registration Number:</label
+                          ><strong style="color: #ff8d00; font-size: 16px">{{
+                            result ? result.RegistrationNumber : ""
+                          }}</strong>
+                        </div>
 
-                            <div class="col-6 h-4 bg-teal-100 mt-4">
-                              <i
-                                class="fa fa-check"
-                                style="color: white"
-                                aria-hidden="true"
-                              ></i>
-                              <label class="text-white font-bold ml-2"
-                                >Result:</label
-                              ><strong
-                                style="color: #ff8d00; font-size: 16px"
-                                >{{ result?result.Result:'' }}</strong
-                              >
-                            </div>
+                        <div class="col-6 h-4 bg-teal-100 mt-4">
+                          <i
+                            class="fa fa-check"
+                            style="color: white"
+                            aria-hidden="true"
+                          ></i>
+                          <label class="text-white font-bold ml-2"
+                            >Result:</label
+                          ><strong style="color: #ff8d00; font-size: 16px">{{
+                            result ? result.Result : ""
+                          }}</strong>
+                        </div>
 
-                            <div class="col-6 h-4 bg-teal-100 mt-4">
-                              <i
-                                class="fa fa-building"
-                                style="color: white"
-                                aria-hidden="true"
-                              ></i>
-                              <label for="" class="text-white font-bold ml-2"
-                                >Institution:</label
-                              ><strong
-                                style="color: #ff8d00; font-size: 16px"
-                                >{{
-                                  result ? result.Institution : ""
-                                }}</strong
-                              >
-                            </div>
+                        <div class="col-6 h-4 bg-teal-100 mt-4">
+                          <i
+                            class="fa fa-building"
+                            style="color: white"
+                            aria-hidden="true"
+                          ></i>
+                          <label for="" class="text-white font-bold ml-2"
+                            >Institution:</label
+                          ><strong style="color: #ff8d00; font-size: 16px">{{
+                            result ? result.Institution : ""
+                          }}</strong>
+                        </div>
 
-                            <div class="col-6 h-4 bg-teal-100 mt-4">
-                              <i
-                                class="fa fa-briefcase"
-                                style="color: white"
-                                aria-hidden="true"
-                              ></i>
-                              <label for="" class="text-white font-bold ml-2"
-                                >Profession:</label
-                              ><strong style="color: #ff8d00; font-size: 16px">
-                                {{
-                                  result ? result.Profession : ""
-                                }}</strong
-                              >
-                            </div>
+                        <div class="col-6 h-4 bg-teal-100 mt-4">
+                          <i
+                            class="fa fa-briefcase"
+                            style="color: white"
+                            aria-hidden="true"
+                          ></i>
+                          <label for="" class="text-white font-bold ml-2"
+                            >Profession:</label
+                          ><strong style="color: #ff8d00; font-size: 16px">
+                            {{ result ? result.Profession : "" }}</strong
+                          >
+                        </div>
 
-                            <div class="col-6 h-4 bg-teal-100 mt-4">
-                              <i
-                                class="fa fa-clock"
-                                style="color: white"
-                                aria-hidden="true"
-                              ></i>
-                              <label for="" class="text-white font-bold ml-2"
-                                >Date Of Examination:</label
-                              ><strong style="color: #ff8d00; font-size: 16px">
-                                {{
-                                  result ? result.DateOfExamination : ""
-                                }}</strong
-                              >
-                            </div>
-                          </div>
+                        <div class="col-6 h-4 bg-teal-100 mt-4">
+                          <i
+                            class="fa fa-clock"
+                            style="color: white"
+                            aria-hidden="true"
+                          ></i>
+                          <label for="" class="text-white font-bold ml-2"
+                            >Date Of Examination:</label
+                          ><strong style="color: #ff8d00; font-size: 16px">
+                            {{ result ? result.DateOfExamination : "" }}</strong
+                          >
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div></div>
                 </div>
               </div>
             </div>
@@ -314,7 +296,7 @@
             "
             @click="printIndividualResult()"
           >
-          <i class="fa fa-print"></i>
+            <i class="fa fa-print"></i>
             Print
           </button>
           <button
@@ -347,22 +329,29 @@
   </div>
 </template>
 <script>
-import { useStore } from "vuex";
-import { ref, onMounted, computed } from "vue";
-
+import { onMounted, computed } from "vue";
+import html2pdf from "html2pdf.js";
 export default {
   components: {},
   props: ["result"],
   setup(props) {
-    const store = useStore();
     const modalData = computed(() => props.result);
     const printIndividualResult = () => {
-      let divElements = document.getElementById("printIndiv").innerHTML;
-      document.body.innerHTML =
-        "<html><head><title></title></head><body>" + divElements + "</body>";
+      var element = document.getElementById("printedDiv");
+      var opt = {
+        margin: 1,
+        filename: "myfile.pdf",
+        image: { type: "jpeg", quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: "in", format: "letter", orientation: "landscape" },
+      };
 
-      window.print();
-      window.location.reload();
+      html2pdf()
+        .set(opt)
+        .from(element)
+        .save(
+          props.result.FirstName + " " + new Date().toISOString().slice(0, 10)
+        );
     };
     onMounted(() => {});
 
