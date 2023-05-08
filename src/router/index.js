@@ -60,6 +60,11 @@ const routes = [
     component: () => import("../views/ResetPassword.vue")
   },
   {
+    path: "/resetpassword/:id/:token",
+    name: "ResetPassword",
+    component: () => import("../views/ResetPasswordUser.vue")
+  },
+  {
     path: "/licenseRequests",
     name: "LicenseRequests",
     component: () => import("../views/LicenseRequests.vue")

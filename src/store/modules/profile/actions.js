@@ -227,6 +227,19 @@ export default {
       return err;
     }
   },
+  async resetPasswordUser(context, data) {
+    data;
+    try {
+      const resp = await ApiService.post(
+        baseUrl + "/resetpasswordUser/" + data.id,
+        data
+      );
+
+      return resp;
+    } catch (err) {
+      return err;
+    }
+  },
   async sendEmail({ commit }, email) {
     try {
       const resp = await ApiService.post(baseUrl + "/forgotpassword", email);
@@ -239,6 +252,17 @@ export default {
     try {
       const resp = await ApiService.post(
         baseUrl + "/resetAdminPassword",
+        email
+      );
+      return resp;
+    } catch (err) {
+      return err;
+    }
+  },
+  async userForgotPassowrd({ commit }, email) {
+    try {
+      const resp = await ApiService.post(
+        baseUrl + "/resetUserPassword",
         email
       );
       return resp;

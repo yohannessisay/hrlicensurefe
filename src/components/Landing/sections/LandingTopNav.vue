@@ -168,8 +168,8 @@
             </h2>
           </div>
           <div class="container bg-secondaryDark">
-            <vue3-video-player  
-            id="helpVideo" 
+            <vue3-video-player
+              id="helpVideo"
               src="/template/help_video.mp4"
             ></vue3-video-player>
           </div>
@@ -354,7 +354,8 @@
                   duration-200
                   ease-in-out
                 "
-                @click="$emit('forgotPassword')"
+                data-bs-toggle="modal"
+                data-bs-target="#forgotPassword"
                 >Forgot password?</a
               >
             </div>
@@ -744,6 +745,149 @@
     </div>
   </div>
   <!-- End Of Registration Part -->
+  <!-- Forgot password part -->
+  <div
+    class="
+      modal
+      fade
+      fixed
+      top-0
+      left-0
+      hidden
+      w-full
+      h-full
+      outline-none
+      overflow-x-hidden overflow-y-auto
+    "
+    id="forgotPassword"
+    data-bs-keyboard="false"
+    tabindex="-1"
+    aria-labelledby="forgotPasswordLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-md relative pointer-events-none">
+      <div
+        class="
+          modal-content
+          border-none
+          shadow-lg
+          relative
+          flex flex-col
+          w-8/12
+          md:w-9/12
+          mdlg:w-9/12
+          lg:w-10/12
+          sm:w-full
+          pointer-events-auto
+          bg-white bg-clip-padding
+          rounded-md
+          outline-none
+          text-current
+        "
+      >
+        <div
+          class="
+            modal-header
+            flex flex-shrink-0
+            justify-center
+            items-center
+            p-4
+            border-b border-grey-100
+            rounded-t-md
+          "
+        >
+          <button
+            type="button"
+            class="
+                  px-6
+              text-white
+              bg-main-400 
+              font-medium
+              text-xs
+              leading-tight
+              uppercase
+              rounded
+              hover:border-main-400
+              shadow-md
+              hover:text-main-400
+              
+              active:bg-purple-800 active:shadow-lg
+              transition
+              duration-150
+              ease-in-out
+            "
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          >
+            <i class="fa fa-close fa-2x"></i>
+          </button>
+        </div>
+        <div class="modal-body relative p-2">
+          <div class="flex justify-center">
+            <h2 class="text-main-400 text-xl">
+              Please provide your email
+            </h2>
+          </div>
+          <div class="flex justify-center">
+            <input
+              type="email"
+              class="
+                form-control
+                block
+                w-full
+                mt-4
+                px-3
+                py-1.5
+                text-base
+                font-normal
+                text-gray-700
+                bg-white bg-clip-padding
+                border border-solid border-gray-300
+                rounded
+                transition
+                ease-in-out
+                m-0
+                focus:text-gray-700
+                focus:bg-white
+                focus:border-blue-600
+                focus:outline-none
+              "
+              v-model="forgotEmail"
+              aria-describedby="emailHelp"
+              placeholder="Enter email"
+            />
+          </div>
+          <div class="flex justify-center">
+            <button
+              type="button"
+              class="
+
+              px-6
+              mt-4
+              text-white
+              font-medium
+              text-xs
+              bg-main-400
+              leading-tight
+              uppercase
+              rounded
+              shadow-lg
+              hover:bg-white hover:text-primary-700
+              transition
+              duration-150
+              ease-in-out
+            "
+              @click="resetPassword()"
+            >
+              <i class="fa fa-refresh"></i>
+              Reset
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End of forgot password -->
 </template>
 <script>
 import RenderIllustration from "@/sharedComponents/RenderIllustration";
@@ -781,7 +925,7 @@ export default {
       showFlash: false,
       showErrorFlash: false,
     });
-
+    let forgotEmail = ref("");
     const credentials = ref({
       email: "",
       password: "",
@@ -801,9 +945,7 @@ export default {
       }
     };
     const refreshPage = () => {
-    
-        location.reload();
-     
+      location.reload();
     };
     const tabChange = () => {
       if (
@@ -1124,7 +1266,41 @@ export default {
         error.innerHTML = `Invalid phone number.`;
       }
     };
- 
+    const resetPassword = () => {
+      let emailToBeSent = {
+        email: forgotEmail.value,
+      };
+      store
+        .dispatch("profile/userForgotPassowrd", emailToBeSent)
+        .then((res) => {
+          if (res.data.status === "Success") {
+            toast.success("Sucess, New password has been sent to the email", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+          } else {
+            toast.error("Email does not exist in system", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+          }
+        })
+        .catch(() => {
+          toast.error("Email does not exist in system", {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          });
+        });
+    };
     onMounted(() => {
       const phoneInputField = document.getElementById("phone");
       phoneInput = window.intlTelInput(phoneInputField, {
@@ -1136,7 +1312,8 @@ export default {
 
     return {
       credentials,
-      credentialsErrors, 
+      credentialsErrors,
+      resetPassword,
       submit,
       isEmail,
       tabChange,
@@ -1159,6 +1336,7 @@ export default {
       showOtp,
       showVerificationButton,
       phoneError,
+      forgotEmail,
       isVerified,
       verifySmsOtp,
       showPasswordStrength,

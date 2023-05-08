@@ -1263,11 +1263,6 @@
           "
         >
           <button
-            v-if="
-              modalData && modalData.data
-                ? modalData.data.isReprint == false||modalData.data.isReprint == true
-                : false
-            "
             type="button"
             class="
               inline-block
@@ -1291,7 +1286,7 @@
             <i class="fa fa-check"></i>
             Set Retrival Date
           </button>
- 
+
           <button
             type="button"
             class="
@@ -1554,7 +1549,7 @@ export default {
       finalData.value.data
         ? (finalData.value.data.isLicenseGenerated = true)
         : null;
-
+      finalData.value.data ? (finalData.value.data.isReprint = true) : null;
       let req = {
         action: null,
         data: { ...finalData.value.data },
@@ -1573,11 +1568,8 @@ export default {
             showGenerateModal.value = false;
 
             let smsMessage = req.data
-              ? "Dear applicant your applied renewal of license with number " +
-                req.data.renewalCode +
-                " is printed and ready. Visit our office on " +
-                retrivalDate.value.slice(0, 10) +
-                " and please do not forget to bring all required legal documents.Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
+               // eslint-disable-next-line prettier/prettier
+              ? `Dear applicant your applied renewal of license with number ${req.data.renewalCode} is printed and ready. Visit our office on ${retrivalDate.value.slice(0, 10)} and please do not forget to bring all required legal documents.Thank you for using eHPL. visit https://hrl.moh.gov.et for more.`
               : "";
             let smsData = {
               recipients: [
