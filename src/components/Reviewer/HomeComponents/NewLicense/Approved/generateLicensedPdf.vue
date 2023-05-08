@@ -1513,11 +1513,6 @@
           "
         >
           <button
-            v-if="
-              modalData && modalData.data
-                ? modalData.data.isLicenseGenerated == false
-                : false
-            "
             type="button"
             class="
               inline-block
@@ -1542,30 +1537,6 @@
             Set Retrival Date
           </button>
 
-          <button
-            v-else
-            type="button"
-            class="
-              inline-block
-              px-6
-              text-white
-              font-medium
-              text-xs
-              bg-primary-700
-              leading-tight
-              uppercase
-              rounded
-              shadow-lg
-              hover:bg-white hover:text-primary-700
-              transition
-              duration-150
-              ease-in-out
-            "
-            @click="generate()"
-          >
-            <i class="fa fa-check"></i>
-            Generate
-          </button>
           <button
             type="button"
             class="
@@ -1769,7 +1740,7 @@ import { toEthiopian } from "../../../Configurations/dateConvertor";
 import STATIC_CERTIFICATE_URL from "../../../../../sharedComponents/constants/message.js";
 import { useToast } from "vue-toastification";
 import moment from "moment";
-import Loading from "vue3-loading-overlay"; 
+import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 import html2pdf from "html2pdf.js";
 export default {
@@ -1777,7 +1748,7 @@ export default {
     moment: () => moment,
     AmharicFont: () => AmharicFont,
     toEthiopian: () => toEthiopian,
-    STATIC_CERTIFICATE_URL: () => STATIC_CERTIFICATE_URL,
+    STATIC_CERTIFICATE_URL: () => STATIC_CERTIFICATE_URL
   },
   props: ["modalData"],
   components: { Loading },
@@ -1829,41 +1800,35 @@ export default {
       finalData.value.data
         ? (finalData.value.data.isLicenseGenerated = true)
         : null;
-
+      finalData.value.data ? (finalData.value.data.isReprint = true) : null;
       let req = {
         action: null,
-        data: { ...finalData.value.data },
+        data: { ...finalData.value.data }
       };
 
       editApplication(req);
     };
 
-    const editApplication = (req) => {
+    const editApplication = req => {
       delete req.data.educations;
       store
         .dispatch("reviewer/editNewLicense", req)
-        .then((res) => {
+        .then(res => {
           isLoading.value = false;
           if (res.statusText == "Created") {
             showGenerateModal.value = false;
 
             let smsMessage = req.data
-              ? 
-              "Dear applicant your applied new license of number " +
-                req.data.newLicenseCode +
-                " is printed and ready. You can pick up your license on date " +
-                retrivalDate.value
-                ? retrivalDate.value.slice(0, 10)
-                : "" +
-                  "  Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
+              // eslint-disable-next-line prettier/prettier
+              ? `Dear applicant your applied new license of number ${req.data.newLicenseCode} is printed and ready. You can pick up your license on date ${retrivalDate.value.slice(0,10)}.Thank you for using eHPL. visit https://hrl.moh.gov.et for more.`
               : "";
             let smsData = {
               recipients: [
                 req.data && req.data.applicant
                   ? "251" + req.data.applicant.phoneNumber
-                  : "",
+                  : ""
               ],
-              message: smsMessage ? smsMessage : "",
+              message: smsMessage ? smsMessage : ""
             };
 
             store
@@ -1874,7 +1839,7 @@ export default {
                   position: "bottom-center",
                   pauseOnFocusLoss: true,
                   pauseOnHover: true,
-                  icon: true,
+                  icon: true
                 });
                 setTimeout(() => {
                   window.location.reload();
@@ -1886,7 +1851,7 @@ export default {
                   position: "bottom-center",
                   pauseOnFocusLoss: true,
                   pauseOnHover: true,
-                  icon: true,
+                  icon: true
                 });
                 setTimeout(() => {
                   window.location.reload();
@@ -1899,11 +1864,11 @@ export default {
               position: "bottom-center",
               pauseOnFocusLoss: true,
               pauseOnHover: true,
-              icon: true,
+              icon: true
             });
           }
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     };
@@ -1920,13 +1885,13 @@ export default {
         staticUrl + "/" + applicationType + "/" + userId + "/" + applicationId;
       store
         .dispatch("reviewer/getQrCode", qrParam)
-        .then((res) => {
+        .then(res => {
           imageSrc.value = res.data.data;
         })
         .finally(() => {
           downloadPdf();
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     };
@@ -1944,7 +1909,7 @@ export default {
           position: "bottom-center",
           pauseOnFocusLoss: true,
           pauseOnHover: true,
-          icon: true,
+          icon: true
         });
       }
     };
@@ -1975,7 +1940,7 @@ export default {
         filename: "myfile.pdf",
         image: { type: "jpeg", quality: 0.98 },
         html2canvas: { scale: 2 },
-        jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
+        jsPDF: { unit: "in", format: "letter", orientation: "portrait" }
       };
 
       html2pdf()
@@ -2013,7 +1978,7 @@ export default {
       );
       certificateDetail.value.educations = certificateDetail.value.educations
         ? certificateDetail.value.educations.filter(
-            (edu) => edu.isDropped != true
+            edu => edu.isDropped != true
           )
         : {};
       applicationStatus.value = props.modalData.data.applicationStatus.code;
@@ -2457,11 +2422,11 @@ export default {
         : null;
       const doc = new jsPDF({
         orientation: "landscape",
-        filters: ["ASCIIHexEncode"],
+        filters: ["ASCIIHexEncode"]
       });
       const doc2 = new jsPDF({
         orientation: "landscape",
-        filters: ["ASCIIHexEncode"],
+        filters: ["ASCIIHexEncode"]
       });
       let defaultCode = "";
       let defaultBackground = "";
@@ -2546,9 +2511,9 @@ export default {
           doc.addImage(imageSrc.value, "JPG", 246, 14, 35, 35);
           if (userImage != null) {
             let path = {
-              path: userImage,
+              path: userImage
             };
-            store.dispatch("profile/converProfilePicture", path).then((res) => {
+            store.dispatch("profile/converProfilePicture", path).then(res => {
               doc.addImage(res.data.data, "JPG", 33, 20, 30, 30);
               doc.setFontSize(10);
               window.open(doc.output("bloburl"));
@@ -2649,9 +2614,9 @@ export default {
         doc2.addImage(imageSrc.value, "JPG", 246, 14, 35, 35);
         if (userImage !== null) {
           let path = {
-            path: userImage,
+            path: userImage
           };
-          store.dispatch("profile/converProfilePicture", path).then((res) => {
+          store.dispatch("profile/converProfilePicture", path).then(res => {
             doc.addImage(res.data.data, "JPG", 33, 20, 30, 30);
             doc2.addImage(res.data.data, "JPG", 33, 20, 30, 30);
             doc.setFontSize(10);
@@ -2698,9 +2663,9 @@ export default {
       finalData,
       retrivalDate,
       generateRetrival,
-      today,
+      today
     };
-  },
+  }
 };
 </script>
 <style scoped>
