@@ -510,6 +510,7 @@ export default {
               isLoading.value = false;
               if (res.data.status == "Success") {
                 localStorage.removeItem("RNApplicationData");
+                indexedDB.deleteDatabase("RNdocumentUploads");
                 toast.success("Applied successfuly", {
                   timeout: 5000,
                   position: "bottom-center",

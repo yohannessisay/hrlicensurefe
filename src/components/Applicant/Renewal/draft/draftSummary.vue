@@ -6,7 +6,7 @@
         Summary For Renewal Application
       </h2>
 
-      <p class="text-black leading-relaxed font-light text-xl mx-auto pb-2">
+      <p class="text-grey-800 leading-relaxed font-light text-xl mx-auto pb-2">
         Here is the detail you have filled in so far
       </p>
     </header>
@@ -53,7 +53,7 @@
                 leading-normal
                 mb-2
                 font-semibold
-                text-black
+                text-grey-800
               "
             >
               Department Detail
@@ -76,7 +76,7 @@
             >
           </div>
           <div>
-            <span class="text-black sm:text-sm">
+            <span class="text-grey-800 sm:text-sm">
               {{ dep?.department?.name }}</span
             >
           </div>
@@ -96,7 +96,7 @@
             >
           </div>
           <div>
-            <span class="text-black sm:text-sm">
+            <span class="text-grey-800 sm:text-sm">
               {{ dep?.educationLevel?.name }}</span
             >
           </div>
@@ -116,7 +116,7 @@
             >
           </div>
           <div>
-            <span class="text-black sm:text-sm">
+            <span class="text-grey-800 sm:text-sm">
               {{ dep.institution?.name }}</span
             >
           </div>
@@ -137,7 +137,7 @@
             >
           </div>
           <div>
-            <span class="text-black sm:text-sm">
+            <span class="text-grey-800 sm:text-sm">
               {{ dep.professionType?.name }}</span
             >
           </div>
@@ -169,7 +169,7 @@
                   leading-normal
                   mb-2
                   font-semibold
-                  text-black
+                  text-grey-800
                 "
               >
                 Files Uploaded
@@ -426,7 +426,7 @@
               </div>
               <h3
                 class="
-                  text-black
+                  text-grey-800
                   mb-2
                   sm:text-xs
                   lgmd:text-base

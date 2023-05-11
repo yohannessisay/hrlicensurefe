@@ -31,7 +31,7 @@ export default {
     }
   },
 
-  async signUp({ commit }, profile) {
+  async signUp(context, profile) {
     try {
       const resp = await ApiService.post(baseUrl + "/users/add", profile, {});
       return resp;
@@ -39,4 +39,15 @@ export default {
       return error;
     }
   },
+  async downloadHelpVideo() {
+    try {
+      const resp = await ApiService.getFile("/template/help_video.mp4");
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  
+  
+
 };

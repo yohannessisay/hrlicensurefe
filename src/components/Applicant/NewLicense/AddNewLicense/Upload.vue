@@ -41,7 +41,7 @@
               <div class="overflow-x-auto w-full p-4">
                 <table
                   class="
-                    max-w-4xl
+                    max-w-full
                     w-full
                     whitespace-nowrap
                     rounded-lg
@@ -103,6 +103,7 @@
                       >
                         View
                       </th>
+
                       <th
                         class="
                           font-semibold
@@ -112,7 +113,9 @@
                           py-4
                           text-white
                         "
-                      ></th>
+                      >
+                        Remark
+                      </th>
                     </tr>
                   </thead>
                   <tbody class="divide-y">
@@ -157,7 +160,9 @@
                           <input
                             type="file"
                             required
-                            id="common_files"
+                            :id="
+                              'common_image_' + item.documentType.id + item.id
+                            "
                             accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
                             :ref="`imageUploader${item.id}`"
                             class="custom-file-input"
@@ -223,7 +228,9 @@
                           data-lightbox="example-2"
                         >
                           <i
-                            :id="'common_icon' + item.documentType.id + item.id"
+                            :id="
+                              'common_icon_' + item.documentType.id + item.id
+                            "
                             class="
                               fa fa-eye
                               cursor-pointer
@@ -243,6 +250,19 @@
                             />
                           </i>
                         </a>
+                      </td>
+
+                      <td class="px-6 py-4">
+                        <div class="flex items-center p-4">
+                          <div>
+                            <p
+                              v-if="fileSizeExceed[item.documentType.code]"
+                              class="text-red-300"
+                            >
+                              Uploaded file Size has exceeded the limit (3 MB)
+                            </p>
+                          </div>
+                        </div>
                       </td>
                     </tr>
                   </tbody>
@@ -381,7 +401,9 @@
                           py-4
                           text-white
                         "
-                      ></th>
+                      >
+                        Remark
+                      </th>
                     </tr>
                   </thead>
                   <tbody class="divide-y p-4">
@@ -428,7 +450,9 @@
                           <input
                             type="file"
                             :required="item.isRequired"
-                            :id="`files${item.id}`"
+                            :id="
+                              `files_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                            "
                             accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
                             :ref="`imageUploader${item.id}`"
                             class="custom-file-input"
@@ -466,7 +490,9 @@
                           <i
                             :id="
                               'educational_icon_' +
-                                `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                `${
+                                  item.documentType.code
+                                }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                             "
                             class="fa fa-eye cursor-pointer text-main-400"
                             aria-hidden="true"
@@ -474,7 +500,9 @@
                             <img
                               :id="
                                 'image_lightbox_' +
-                                  `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                  `${
+                                    item.documentType.code
+                                  }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                               "
                               :src="item.existingFile"
                               class="w-full h-2 object-cover"
@@ -486,7 +514,9 @@
                         <a
                           :id="
                             'image_href_' +
-                              `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                              `${
+                                item.documentType.code
+                              }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                           "
                           href=""
                           :data-title="item.name ? item.name : '-----'"
@@ -495,7 +525,9 @@
                           <i
                             :id="
                               'educational_icon_' +
-                                `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                `${
+                                  item.documentType.code
+                                }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                             "
                             class="
                               fa fa-eye
@@ -509,13 +541,33 @@
                             <img
                               :id="
                                 'image_lightbox_' +
-                                  `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                  `${
+                                    item.documentType.code
+                                  }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                               "
                               src=""
                               class="w-full h-2 object-cover"
                             />
                           </i>
                         </a>
+                      </td>
+                      <td class="px-6 py-4">
+                        <div class="flex items-center p-4">
+                          <div>
+                            <p
+                              v-if="
+                                fileSizeExceed[
+                                  `${
+                                    item.documentType.code
+                                  }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                                ]
+                              "
+                              class="text-red-300"
+                            >
+                              Uploaded file Size has exceeded the limit (3 MB)
+                            </p>
+                          </div>
+                        </div>
                       </td>
                     </tr>
                   </tbody>
@@ -569,7 +621,12 @@
                           <input
                             type="file"
                             :required="parentItem[0].isRequired"
-                            :id="`files${parentItem[0].id}`"
+                            :id="
+                              `files_
+                                    ${
+                                      parentItem[0].documentType.code
+                                    }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                            "
                             accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
                             :ref="`imageUploader${parentItem[0].id}`"
                             class="custom-file-input"
@@ -613,7 +670,9 @@
                           <i
                             :id="
                               'educational_icon_' +
-                                `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                `${
+                                  parentItem[0].documentType.code
+                                }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                             "
                             class="fa fa-eye cursor-pointer text-main-400"
                             aria-hidden="true"
@@ -621,7 +680,9 @@
                             <img
                               :id="
                                 'image_lightbox_' +
-                                  `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                  `${
+                                    parentItem[0].documentType.code
+                                  }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                               "
                               :src="parentItem[0].existingFile"
                               class="w-full h-2 object-cover"
@@ -633,7 +694,9 @@
                         <a
                           :id="
                             'image_href_' +
-                              `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                              `${
+                                parentItem[0].documentType.code
+                              }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                           "
                           href=""
                           :data-title="parentItem[0].name ? item.name : '-----'"
@@ -642,7 +705,9 @@
                           <i
                             :id="
                               'educational_icon_' +
-                                `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                `${
+                                  parentItem[0].documentType.code
+                                }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                             "
                             class="
                               fa fa-eye
@@ -655,7 +720,9 @@
                             <img
                               :id="
                                 'image_lightbox_' +
-                                  `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                  `${
+                                    parentItem[0].documentType.code
+                                  }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                               "
                               src=""
                               class="w-full h-2 object-cover"
@@ -663,10 +730,39 @@
                           </i>
                         </a>
                       </td>
+                      <td class="px-6 py-4">
+                        <div class="flex items-center p-4">
+                          <div>
+                            <p
+                              v-if="
+                                fileSizeExceed[
+                                  `${
+                                    parentItem[0].documentType.code
+                                  }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                                ]
+                              "
+                              class="text-red-300"
+                            >
+                              Uploaded file Size has exceeded the limit (3 MB)
+                            </p>
+                          </div>
+                        </div>
+                      </td>
                     </tr>
                     <!-- if parent doc has more than 1 elements -->
                     <tr v-else class="border-b text-main-400 bg-lightGrey-100">
-                      <td class="px-6">
+                      <td
+                        :class="
+                          fileUploadError[
+                            'file_upload_row_' +
+                              `${
+                                parentItem[0].documentType.code
+                              }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                          ]
+                            ? 'accordion-body py-4 px-5 border-2 border-red-300 rounded-lg'
+                            : 'accordion-body py-4 px-5 border-b  rounded-lg'
+                        "
+                      >
                         <div class="flex items-center ml-4">
                           <div>
                             <p class="">
@@ -769,7 +865,9 @@
                                 :class="
                                   fileUploadError[
                                     'file_upload_row_' +
-                                      `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                      `${
+                                        parentChildItem.documentType.code
+                                      }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                   ]
                                     ? 'accordion-body py-4 px-5 border-2 border-red-300 rounded-lg'
                                     : 'accordion-body py-4 px-5 border-b  rounded-lg'
@@ -826,7 +924,9 @@
                                     <input
                                       type="file"
                                       :required="parentChildItem.isRequired"
-                                      :id="`files${parentChildItem.id}`"
+                                      :id="
+                                        `files_${parentChildItem.documentType.code.toUpperCase()}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                                      "
                                       accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
                                       :ref="
                                         `imageUploader${parentChildItem.id}`
@@ -872,7 +972,9 @@
                                   <a
                                     :id="
                                       'image_href_' +
-                                        `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                        `${
+                                          parentChildItem.documentType.code
+                                        }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                     "
                                     :href="parentChildItem.existingFile"
                                     :data-title="
@@ -885,7 +987,9 @@
                                     <i
                                       :id="
                                         'educational_icon_' +
-                                          `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                          `${
+                                            parentChildItem.documentType.code
+                                          }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                       "
                                       class="fa fa-eye cursor-pointer text-main-400"
                                       aria-hidden="true"
@@ -893,7 +997,9 @@
                                       <img
                                         :id="
                                           'image_lightbox_' +
-                                            `${parentChildItem.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                                            `${
+                                              parentChildItem.documentType.code
+                                            }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                         "
                                         :src="parentChildItem.existingFile"
                                         class="w-full h-2 object-cover"
@@ -943,6 +1049,23 @@
                                       />
                                     </i>
                                   </a>
+                                </td>
+                                <td class="px-6 py-4">
+                                  <div class="flex items-center p-4">
+                                    <div>
+                                      <p
+                                        v-if="
+                                          fileSizeExceed[
+                                            `${parentChildItem.documentType.code.toUpperCase()}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                                          ]
+                                        "
+                                        class="text-red-300"
+                                      >
+                                        Uploaded file Size has exceeded the
+                                        limit (3 MB)
+                                      </p>
+                                    </div>
+                                  </div>
                                 </td>
                               </tr>
                             </div>
@@ -1044,7 +1167,7 @@
   <!--<filePreview :modalData="filePreviewData"> </filePreview>-->
 </template>
 <script>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, toRaw } from "vue";
 import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
 
@@ -1086,12 +1209,11 @@ export default {
     let showPreview = ref("");
     maxFileSize.value = MAX_FILE_SIZE.MAX_FILE_SIZE;
     let generalInfo = ref({});
-    let documentUploaded = ref({});
+    let documentsUploaded = ref({});
     let documentToSave = ref({});
     let fileUploadError = ref([]);
     let imageData = [];
     let formData = new FormData();
-    let documentsUploaded = ref({});
     let newLicenseDocuments = ref([]);
     let errorDocuments = ref([
       {
@@ -1109,15 +1231,21 @@ export default {
     };
 
     const handleCommonFileUpload = (data, event) => {
-      documentUploaded.value[data.documentType.code] = "";
-      documentUploaded.value[data.documentType.code] = event?.target?.files[0];
-      formData.append(data.documentType.code, event?.target?.files[0]);
+      documentsUploaded.value[data.documentType.code] = "";
       documentsUploaded.value[data.documentType.code] = event?.target?.files[0];
       let reader = new FileReader();
-      isImage.value[data.documentType.code] = true;
-      let fileS = documentUploaded.value[data.documentType.code].size;
+
+      let fileS = documentsUploaded.value[data.documentType.code].size;
+
       if (fileS <= maxFileSize.value / 1000) {
-        fileSizeExceed.value[data.documentType.code] = false;
+        isImage.value[data.documentType.code] = true;
+        documentsUploaded.value[data.documentType.code] =
+          event?.target?.files[0];
+        formData.append(data.documentType.code, event?.target?.files[0]); 
+        delete fileSizeExceed.value[data.documentType.code];
+        delete fileUploadError.value[
+          "file_upload_row_" + data.documentType.code
+        ];
         showImage.value = true;
 
         if (fileS > 0 && fileS < 1000) {
@@ -1127,6 +1255,7 @@ export default {
         } else {
           fileSize.value = fileS / 1000000 + "MB";
         }
+
         reader.addEventListener(
           "load",
           function() {
@@ -1139,6 +1268,7 @@ export default {
             imageData.push({
               imageId: "common_image_lightbox_" + data.documentType.code,
               documenttype: data.documentType ? data.documentType.name : "",
+              documentCode: data.documentType ? data.documentType.code : "",
               educationalLevel: data.educationalLevel
                 ? data.educationalLevel.name
                 : "",
@@ -1151,62 +1281,71 @@ export default {
           false
         );
 
-        if (documentUploaded.value[data.documentType.code]) {
+        if (documentsUploaded.value[data.documentType.code]) {
           if (
             /\.(jpe?g|png|gif)$/i.test(
-              documentUploaded.value[data.documentType.code].name
+              documentsUploaded.value[data.documentType.code].name
             )
           ) {
             isImage.value[data.documentType.code] = true;
             isPdf.value[data.documentType.code] = false;
 
             reader.readAsDataURL(
-              documentUploaded.value[data.documentType.code]
+              documentsUploaded.value[data.documentType.code]
             );
           } else if (
             /\.(pdf)$/i.test(
-              documentUploaded.value[data.documentType.code].name
+              documentsUploaded.value[data.documentType.code].name
             )
           ) {
             isImage.value[data.documentType.code] = false;
             isPdf.value[data.documentType.code] = true;
             reader.readAsDataURL(
-              documentUploaded.value[data.documentType.code]
+              documentsUploaded.value[data.documentType.code]
             );
           }
         }
+        let icon = document.getElementById(
+          "common_icon_" + data.documentType.id + data.id
+        );
+
+        if (icon.classList.contains("disabled")) {
+          icon.classList.toggle("disabled");
+        }
+
+        let output = document.getElementById(
+          "common_image_lightbox_" + data.documentType.id + data.id
+        );
+
+        let outputHref = document.getElementById(
+          "common_image_" + data.documentType.id + data.id
+        );
+
+        outputHref.href = URL.createObjectURL(event.target.files[0]);
+        if (output && output.src) {
+          output.src = URL.createObjectURL(event.target.files[0]);
+        }
+
+        output
+          ? (output.onload = function() {
+              URL.revokeObjectURL(output.src); // free memory
+            })
+          : "";
       } else {
         fileSizeExceed.value[data.documentType.code] = true;
-        documentUploaded.value[data.documentType.code] = "";
+        documentsUploaded.value[data.documentType.code] = "";
       }
-      let icon = document.getElementById(
-        "common_icon" + data.documentType.id + data.id
-      );
-      if (icon.classList.contains("disabled")) {
-        icon.classList.toggle("disabled");
-      }
-
-      let output = document.getElementById(
-        "common_image_lightbox" + data.documentType.id + data.id
-      );
-
-      let outputHref = document.getElementById(
-        "common_image_href" + data.documentType.id + data.id
-      );
-      outputHref.href = URL.createObjectURL(event.target.files[0]);
-      if (output && output.src) {
-        output.src = URL.createObjectURL(event.target.files[0]);
-      }
-
-      output
-        ? (output.onload = function() {
-            URL.revokeObjectURL(output.src); // free memory
-          })
-        : "";
     };
 
     const handleFileUpload = (data, event, pro) => {
-      documentUploaded.value[
+      documentsUploaded.value[
+        data.documentType.code +
+          "_" +
+          data.educationalLevel.code.toUpperCase() +
+          "_" +
+          pro.professionType.code.toUpperCase()
+      ] = "";
+      documentsUploaded.value[
         data.documentType.code +
           "_" +
           data.educationalLevel.code.toUpperCase() +
@@ -1214,56 +1353,58 @@ export default {
           pro.professionType.code.toUpperCase()
       ] = event?.target?.files[0];
       let reader = new FileReader();
-      formData.append(
-        data.documentType.code +
-          "_" +
-          data.educationalLevel.code.toUpperCase() +
-          "_" +
-          pro.professionType.code.toUpperCase(),
 
-        event?.target?.files[0]
-      );
-      if (data.parentDocument) {
-        documentsUploaded.value[
-          data.documentType.code +
-            "_" +
-            data.educationalLevel.code.toUpperCase() +
-            "_" +
-            pro.professionType.code.toUpperCase()
-        ] = event?.target?.files[0];
-      } else {
-        documentsUploaded.value[
-          data.documentType.code +
-            "_" +
-            data.educationalLevel.code.toUpperCase() +
-            "_" +
-            pro.professionType.code.toUpperCase()
-        ] = event?.target?.files[0];
-      }
-
-      isImage.value[
-        data.documentType.code +
-          "_" +
-          data.educationalLevel.code.toUpperCase() +
-          "_" +
-          pro.professionType.code.toUpperCase()
-      ] = true;
       let fileS =
-        documentUploaded.value[
+        documentsUploaded.value[
           data.documentType.code +
             "_" +
             data.educationalLevel.code.toUpperCase() +
             "_" +
             pro.professionType.code.toUpperCase()
         ].size;
+
       if (fileS <= maxFileSize.value / 1000) {
-        fileSizeExceed.value[
+        if (data.parentDocument) {
+          documentsUploaded.value[
+            data.documentType.code +
+              "_" +
+              data.educationalLevel.code.toUpperCase() +
+              "_" +
+              pro.professionType.code.toUpperCase()
+          ] = event?.target?.files[0];
+        } else {
+          documentsUploaded.value[
+            data.documentType.code +
+              "_" +
+              data.educationalLevel.code.toUpperCase() +
+              "_" +
+              pro.professionType.code.toUpperCase()
+          ] = event?.target?.files[0];
+        }
+
+        isImage.value[
           data.documentType.code +
             "_" +
             data.educationalLevel.code.toUpperCase() +
             "_" +
             pro.professionType.code.toUpperCase()
-        ] = false;
+        ] = true;
+        formData.append(
+          data.documentType.code +
+            "_" +
+            data.educationalLevel.code.toUpperCase() +
+            "_" +
+            pro.professionType.code.toUpperCase(),
+
+          event?.target?.files[0]
+        );
+        delete fileSizeExceed.value[
+          data.documentType.code +
+            "_" +
+            data.educationalLevel.code.toUpperCase() +
+            "_" +
+            pro.professionType.code.toUpperCase()
+        ];
         showImage.value = true;
 
         if (fileS > 0 && fileS < 1000) {
@@ -1273,7 +1414,14 @@ export default {
         } else {
           fileSize.value = fileS / 1000000 + "MB";
         }
-
+        delete fileUploadError.value[
+          "file_upload_row_" +
+            data.documentType.code +
+            "_" +
+            data.educationalLevel.code.toUpperCase() +
+            "_" +
+            pro.professionType.code.toUpperCase()
+        ];
         reader.addEventListener(
           "load",
           function() {
@@ -1308,13 +1456,13 @@ export default {
               fileName: event?.target?.files[0].name,
               image: reader.result,
             });
-            // documentUploaded.value[data.documentType.code] = reader.result;
+            // documentsUploaded.value[data.documentType.code] = reader.result;
           },
           false
         );
 
         if (
-          documentUploaded.value[
+          documentsUploaded.value[
             data.documentType.code +
               "_" +
               data.educationalLevel.code.toUpperCase() +
@@ -1324,7 +1472,7 @@ export default {
         ) {
           if (
             /\.(jpe?g|png|gif)$/i.test(
-              documentUploaded.value[
+              documentsUploaded.value[
                 data.documentType.code +
                   "_" +
                   data.educationalLevel.code.toUpperCase() +
@@ -1349,7 +1497,7 @@ export default {
             ] = false;
 
             reader.readAsDataURL(
-              documentUploaded.value[
+              documentsUploaded.value[
                 data.documentType.code +
                   "_" +
                   data.educationalLevel.code.toUpperCase() +
@@ -1359,7 +1507,7 @@ export default {
             );
           } else if (
             /\.(pdf)$/i.test(
-              documentUploaded.value[
+              documentsUploaded.value[
                 data.documentType.code +
                   "_" +
                   data.educationalLevel.code.toUpperCase() +
@@ -1383,7 +1531,7 @@ export default {
                 pro.professionType.code.toUpperCase()
             ] = true;
             reader.readAsDataURL(
-              documentUploaded.value[
+              documentsUploaded.value[
                 data.documentType.code +
                   "_" +
                   data.educationalLevel.code.toUpperCase() +
@@ -1393,6 +1541,44 @@ export default {
             );
           }
         }
+        let icon = document.getElementById(
+          "educational_icon_" +
+            data.documentType.code +
+            "_" +
+            pro.educationalLevel.code.toUpperCase() +
+            "_" +
+            pro.professionType.code.toUpperCase()
+        );
+        if (icon.classList.contains("disabled")) {
+          icon.classList.toggle("disabled");
+        }
+
+        let output = document.getElementById(
+          "image_lightbox_" +
+            data.documentType.code +
+            "_" +
+            pro.educationalLevel.code.toUpperCase() +
+            "_" +
+            pro.professionType.code.toUpperCase()
+        );
+        let outputHref = document.getElementById(
+          "image_href_" +
+            data.documentType.code +
+            "_" +
+            pro.educationalLevel.code.toUpperCase() +
+            "_" +
+            pro.professionType.code.toUpperCase()
+        );
+        outputHref.href = URL.createObjectURL(event.target.files[0]);
+        if (output && output.src) {
+          output.src = URL.createObjectURL(event.target.files[0]);
+        }
+
+        output
+          ? (output.onload = function() {
+              URL.revokeObjectURL(output.src); // free memory
+            })
+          : "";
       } else {
         fileSizeExceed.value[
           data.documentType.code +
@@ -1401,7 +1587,8 @@ export default {
             "_" +
             pro.professionType.code.toUpperCase()
         ] = true;
-        documentUploaded.value[
+
+        documentsUploaded.value[
           data.documentType.code +
             "_" +
             data.educationalLevel.code.toUpperCase() +
@@ -1409,49 +1596,13 @@ export default {
             pro.professionType.code.toUpperCase()
         ] = "";
       }
-      let icon = document.getElementById(
-        "educational_icon_" +
-          data.documentType.code +
-          "_" +
-          pro.educationalLevel.code +
-          "_" +
-          pro.professionType.code
-      );
-      if (icon.classList.contains("disabled")) {
-        icon.classList.toggle("disabled");
-      }
-
-      let output = document.getElementById(
-        "image_lightbox_" +
-          data.documentType.code +
-          "_" +
-          pro.educationalLevel.code +
-          "_" +
-          pro.professionType.code
-      );
-      let outputHref = document.getElementById(
-        "image_href_" +
-          data.documentType.code +
-          "_" +
-          pro.educationalLevel.code +
-          "_" +
-          pro.professionType.code
-      );
-      outputHref.href = URL.createObjectURL(event.target.files[0]);
-      if (output && output.src) {
-        output.src = URL.createObjectURL(event.target.files[0]);
-      }
-
-      output
-        ? (output.onload = function() {
-            URL.revokeObjectURL(output.src); // free memory
-          })
-        : "";
     };
 
     const checkDocuments = () => {
-      let temp = true;
-      let CMtemp = true;
+      let temp = "";
+      let CMtemp = "";
+      let NSTemp = "";
+      var tempVal;
 
       // if back button is clicked
       if (isBackButtonClicked.value == true) {
@@ -1462,7 +1613,6 @@ export default {
             CMtemp = element.fileName;
 
             if (!CMtemp || CMtemp == "") {
-              CMtemp = false;
               fileUploadError.value[
                 "file_upload_row_" + element.documentType.code
               ] = true;
@@ -1472,9 +1622,9 @@ export default {
                 code: element.documentType.code,
               });
             } else {
-              fileUploadError.value[
+              delete fileUploadError.value[
                 "file_upload_row_" + element.documentType.code
-              ] = false;
+              ];
             }
           });
         // check normal docs with no parents
@@ -1485,7 +1635,7 @@ export default {
               if (
                 documentsUploaded.value.some(
                   (docs) =>
-                    docs.documentCode ===
+                    docs.documentCode ==
                     single.documentType.code.toUpperCase() +
                       "_" +
                       ed.educationalLevel.code.toUpperCase() +
@@ -1493,32 +1643,31 @@ export default {
                       ed.professionType.code.toUpperCase()
                 )
               ) {
-                fileUploadError.value[
+                delete fileUploadError.value[
                   "file_upload_row_" +
                     single.documentType.code +
                     "_" +
-                    ed.educationalLevel.code +
+                    ed.educationalLevel.code.toUpperCase() +
                     "_" +
-                    ed.professionType.code
-                ] = false;
+                    ed.professionType.code.toUpperCase()
+                ];
               } else {
-                temp = false;
                 fileUploadError.value[
                   "file_upload_row_" +
                     single.documentType.code +
                     "_" +
-                    ed.educationalLevel.code +
+                    ed.educationalLevel.code.toUpperCase() +
                     "_" +
-                    ed.professionType.code
+                    ed.professionType.code.toUpperCase()
                 ] = true;
                 errorDocuments.value.push({
                   name: single.documentType.name,
                   code:
                     single.documentType.code +
                     "_" +
-                    ed.educationalLevel.code +
+                    ed.educationalLevel.code.toUpperCase() +
                     "_" +
-                    ed.professionType.code,
+                    ed.professionType.code.toUpperCase(),
                 });
               }
             });
@@ -1535,15 +1684,16 @@ export default {
               fileUploadError.value[
                 "file_upload_row_" + element.documentType.code
               ] = true;
+
               errorDocuments.value.push({
                 isCommon: true,
                 name: element.documentType.name,
                 code: element.documentType.code,
               });
             } else {
-              fileUploadError.value[
+              delete fileUploadError.value[
                 "file_upload_row_" + element.documentType.code
-              ] = false;
+              ];
             }
           });
 
@@ -1579,77 +1729,164 @@ export default {
                     ed.professionType.code.toUpperCase(),
                 });
               } else {
-                fileUploadError.value[
+                delete fileUploadError.value[
                   "file_upload_row_" +
                     single.documentType.code +
                     "_" +
                     ed.educationalLevel.code.toUpperCase() +
                     "_" +
                     ed.professionType.code.toUpperCase()
-                ] = false;
+                ];
               }
             });
+
+          //// check documetns with parents
+          for (var pd in ed.parentDoc) {
+            tempVal = newLicenseDocuments.value.filter(
+              (nld) => nld.parentDocument == pd && nld.isRequired
+            );
+
+            if (
+              tempVal &&
+              tempVal.length > 0 &&
+              tempVal[0] &&
+              tempVal[0].isRequired == true
+            ) {
+              NSTemp = documentsUploaded.value.hasOwnProperty(
+                tempVal[0].documentType.code +
+                  "_" +
+                  ed.educationalLevel.code.toUpperCase() +
+                  "_" +
+                  ed.professionType.code.toUpperCase()
+              );
+              if (NSTemp == "") {
+                fileUploadError.value[
+                  "file_upload_row_" +
+                    newLicenseDocuments.value.filter(
+                      (nld) => nld.parentDocument == pd && nld.isRequired
+                    )[0].documentType.code +
+                    "_" +
+                    ed.educationalLevel.code.toUpperCase() +
+                    "_" +
+                    ed.professionType.code.toUpperCase()
+                ] = true;
+                errorDocuments.value.push({
+                  name: newLicenseDocuments.value.filter(
+                    (nld) => nld.parentDocument == pd && nld.isRequired
+                  )[0].documentType.name,
+                  code:
+                    newLicenseDocuments.value.filter(
+                      (nld) => nld.parentDocument == pd && nld.isRequired
+                    )[0].documentType.code +
+                    "_" +
+                    ed.educationalLevel.code.toUpperCase() +
+                    "_" +
+                    ed.professionType.code.toUpperCase(),
+                });
+              }
+            }
+          }
         });
       }
 
-      return CMtemp && temp;
+      return fileUploadError.value;
     };
-
+    const urltoFile = async (data, fileName) => {
+      let url = data;
+      let file = await fetch(url)
+        .then((res) => res.blob())
+        .then((blob) => {
+          return new File([blob], fileName, { type: "image/png" });
+        });
+      return file;
+    };
     const next = () => {
       let documentValidation = checkDocuments();
 
-      if (documentValidation) {
-        store.dispatch("newlicense/setTempDocs", formData).then(() => {
-          let finalLocalData = {
-            created: new Date(),
-            data: [],
-          };
-          let db;
-          let request = indexedDB.open("NLdocumentUploads", dbVersion);
-          request.onsuccess = function() {
-            db = request.result;
-            let transaction = db.transaction(
-              ["NLdocumentUploads"],
-              "readwrite"
-            );
+      if (Object.keys(fileSizeExceed.value).length > 0) {
+        toast.error(
+          "Please review the file uploads that has exceeded the limit",
+          {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          }
+        );
+      } else if (
+        documentValidation &&
+        Object.keys(documentValidation).length == 0
+      ) {
+        let finalLocalData = {
+          created: new Date(),
+          data: [],
+        };
+        let db;
+        let request = indexedDB.open("NLdocumentUploads", dbVersion);
+        request.onsuccess = function() {
+          db = request.result;
+          let transaction = db.transaction(["NLdocumentUploads"], "readwrite");
 
-            if (existingDocs.length > 0 && imageData.length > 0) {
-              existingDocs.forEach((existing) => {
-                imageData.forEach((newImage) => {
-                  if (existing.imageId == newImage.imageId) {
-                    existing.image = newImage.image;
-                    existing.fileName = newImage.fileName;
-                  }
-                });
+          if (documentsUploaded.value.length > 0 && imageData.length > 0) {
+            documentsUploaded.value.forEach((existing) => {
+              imageData.forEach((newImage) => {
+                if (existing.imageId == newImage.imageId) {
+                  existing.image = newImage.image;
+                  existing.fileName = newImage.fileName;
+                }
               });
-              finalLocalData.data = existingDocs;
-            } else {
-              finalLocalData.data = imageData;
-            }
-            finalLocalData.data = [...new Set(finalLocalData.data)];
+            });
 
-            const objectStore = transaction.objectStore("NLdocumentUploads");
+            finalLocalData.data = toRaw(documentsUploaded.value);
+            formData = new FormData();
+            finalLocalData.data.forEach((element) => {
+              urltoFile(element.image, element.fileName).then((res) => {
+                let tempImage = res;
 
-            const objectStoreRequest = objectStore.clear();
+                formData.append(element.documentCode, tempImage);
+              });
+            });
 
-            objectStoreRequest.onsuccess = () => {
-              let addReq = transaction
-                .objectStore("NLdocumentUploads")
-                .put(finalLocalData);
+            store.dispatch("newlicense/setTempDocs", formData);
+          } else if (isBackButtonClicked.value == true) {
+            finalLocalData.data = toRaw(documentsUploaded.value);
+            formData = new FormData();
+            finalLocalData.data.forEach((element) => {
+              urltoFile(element.image, element.fileName).then((res) => {
+                let tempImage = res;
+                formData.append(element.documentCode, tempImage);
+              });
+            });
 
-              addReq.onerror = function() {
-                console.log(
-                  "Error regarding your browser, please update your browser to the latest version"
-                );
-              };
+            store.dispatch("newlicense/setTempDocs", formData);
+          } else {
+            finalLocalData.data = imageData;
+            store.dispatch("newlicense/setTempDocs", formData);
+          }
+          finalLocalData.data = [...new Set(finalLocalData.data)];
 
-              transaction.oncomplete = function() {
-                console.log("data stored");
-                emit("changeActiveState");
-              };
+          const objectStore = transaction.objectStore("NLdocumentUploads");
+
+          const objectStoreRequest = objectStore.clear();
+
+          objectStoreRequest.onsuccess = () => {
+            let addReq = transaction
+              .objectStore("NLdocumentUploads")
+              .put(finalLocalData);
+
+            addReq.onerror = function() {
+              console.log(
+                "Error regarding your browser, please update your browser to the latest version"
+              );
+            };
+
+            transaction.oncomplete = function() {
+              console.log("data stored");
+              emit("changeActiveState");
             };
           };
-        });
+        };
       } else {
         let errors = "";
         errorDocuments.value.forEach((element) => {
@@ -1759,6 +1996,7 @@ export default {
     };
 
     const initDb = () => {
+      existingDocs;
       let request = indexedDB.open("NLdocumentUploads", dbVersion);
 
       request.onerror = function() {
@@ -1793,7 +2031,6 @@ export default {
         alert(
           "This browser doesn't support Temporary storage please update your browser to the latest version"
         );
-
       } else {
         initDb();
         localData.value = window.localStorage.getItem("NLApplicationData")
@@ -1873,7 +2110,6 @@ export default {
                       });
                     }
                   });
- 
                 }
               });
           });
@@ -1918,6 +2154,7 @@ export default {
 
     return {
       documents,
+      fileSizeExceed,
       commonDocuments,
       files,
       handleFileUpload,

@@ -355,7 +355,7 @@
     <div class="flex justify-center w-full mb-8">
       <span v-for="button in buttons" :key="button.id">
         <button
-          v-if="button.action!='DraftEvent'"
+          v-if="button.action != 'DraftEvent'"
           type="button"
           :class="
             allowSave
@@ -368,7 +368,7 @@
           {{ button.name }}
         </button>
         <button
-          v-if="button.action=='DraftEvent'"
+          v-if="button.action == 'DraftEvent'"
           type="button"
           class="inline-block px-6 border text-main-400 hover:bg-main-400 hober:border-main-400 hover:text-white  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded shadow-lg transition  duration-150 ease-in-out"
           @click="checkFinalStatus(button.action)"
@@ -376,7 +376,6 @@
           <i class="fa fa-save"></i>
           {{ button.name }}
         </button>
-
       </span>
 
       <button
@@ -444,11 +443,10 @@ export default {
       }
     };
     const checkFinalStatus = (action) => {
-   
       generalInfo.value.licenseFile = [];
       documents.value = localFileData.value;
       isLoading.value = true;
-      if (agreed.value == true||action=='DraftEvent') {
+      if (agreed.value == true || action == "DraftEvent") {
         let formData = new FormData();
         tempDocs.value.forEach((element, index) => {
           formData.append(index, element);
@@ -491,6 +489,7 @@ export default {
               : "",
           },
         };
+
         store.dispatch("newlicense/addNewLicense", license).then((res) => {
           let licenseId = res.data.data.id;
           let payload = { document: formData, id: licenseId };
@@ -499,7 +498,8 @@ export default {
             .then((res) => {
               isLoading.value = false;
               if (res.data.status == "Success") {
-                localStorage.removeItem('NLApplicationData');
+                localStorage.removeItem("NLApplicationData");
+                indexedDB.deleteDatabase("NLdocumentUploads");
                 toast.success("Applied successfuly", {
                   timeout: 5000,
                   position: "bottom-center",
@@ -507,7 +507,7 @@ export default {
                   pauseOnHover: true,
                   icon: true,
                 });
-             
+
                 if (license.action == "DraftEvent") {
                   router.push({ path: "/Applicant/NewLicense/draft" });
                 } else {
@@ -543,7 +543,7 @@ export default {
       store.dispatch("renewal/getApplicationStatuses").then((res) => {
         let results = res.data.data;
 
-        let status = results.filter(function (e) {
+        let status = results.filter(function(e) {
           return e.code == "INIT";
         });
         buttons.value = status[0]["buttons"];
@@ -559,33 +559,34 @@ export default {
 
       let request = indexedDB.open("NLdocumentUploads", 1);
 
-      request.onerror = function () {
+      request.onerror = function() {
         console.error("Unable to open database.");
       };
 
-      request.onsuccess = function () {
+      request.onsuccess = function() {
         let db = request.result;
         const tx = db.transaction("NLdocumentUploads", "readonly");
         const store = tx.objectStore("NLdocumentUploads");
         let getAllIDB = store.getAll();
 
-        getAllIDB.onsuccess = function (evt) {
+        getAllIDB.onsuccess = function(evt) {
           localFileData.value = evt.target.result ? evt.target.result : {};
         };
       };
 
       generalInfo.value = localData.value;
+ 
       generalInfo.value.feedback = "";
       if (generalInfo.value.applicantTypeSelected.id == 1) {
         store.dispatch("newlicense/getExpertLevel").then((res) => {
-          let expertLevel = res.data.data.filter(function (e) {
+          let expertLevel = res.data.data.filter(function(e) {
             return e.code.includes("REG");
           });
           generalInfo.value.expertLevelId = expertLevel[0].id;
         });
       } else {
         store.dispatch("newlicense/getExpertLevel").then((res) => {
-          let expertLevel = res.data.data.filter(function (e) {
+          let expertLevel = res.data.data.filter(function(e) {
             return e.code.includes("FED");
           });
           generalInfo.value.expertLevelId = expertLevel[0].id;
