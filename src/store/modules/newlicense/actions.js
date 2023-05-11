@@ -526,4 +526,14 @@ export default {
       return resp;
     }
   },
+  async getNewLicenseByUserId(context, userId) {
+    try {
+      const resp = await ApiService.get(
+        baseUrl + "/newLicenses/user/getExpired/" + userId
+      );
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
 };

@@ -30,6 +30,52 @@
           </div>
         </div> -->
 
+        <div class="relative inline-block text-left " style="z-index: 1">
+          <span
+            :class="
+              notifications && notifications.length > 0
+                ? 'cursor-pointer notifIcon '
+                : ''
+            "
+            v-on:click="showNotifications()"
+            ><i
+            
+              class="fa fa-bell text-main-400 text-2xl
+              "
+            ></i
+          ></span>
+          <div
+            v-if="showNotif == true"
+            class="
+              origin-top-right
+              absolute
+              right-0
+             sm:w-40
+              lg:w-64
+              mt-1
+            
+              p-4
+              rounded-md
+              shadow-lg
+              bg-white
+              focus:outline-none
+            "
+            role="menu"
+            aria-orientation="vertical"
+            aria-labelledby="options-menu"
+          >
+            <li
+              class="text-main-400 cursor-pointer hover:underline  border-b-4"
+              v-for="notif in notifications"
+              :key="notif"
+            >
+            <router-link to="/Applicant/Renewal">
+              {{ notif }}
+              </router-link>
+            </li>
+          </div>
+        </div>
+
         <p class="text-main-400 font-bold" v-text="userInfo.fullName"></p>
         <div class="relative inline-block text-left" style="z-index: 1">
           <a
@@ -179,16 +225,19 @@
   </div>
 </template>
 
-
 <script>
-import { ref } from "vue";
-
+import { ref, onMounted } from "vue";
+import { useStore } from "vuex";
 export default {
   props: ["userInfo"],
 
   setup() {
+    const store = useStore();
     let showDD = ref(false);
     let darkMode = ref(false);
+    let showNotif = ref(false);
+    const id = +localStorage.getItem("userId");
+    let notifications = ref([]);
     let showNotificationDropDown = ref(false);
     let isDarkMode = JSON.parse(localStorage.getItem("nightMode"));
     const logout = () => {
@@ -205,6 +254,9 @@ export default {
       showNotificationDropDown.value = false;
       showDD.value = !showDD.value;
     };
+    const showNotifications = () => {
+      showNotif.value = !showNotif.value;
+    };
     const showNotification = () => {
       showNotificationDropDown.value = !showNotificationDropDown.value;
       showDD.value = false;
@@ -216,7 +268,35 @@ export default {
         this.$emit("changeDisplay", menu);
       }
     };
+    const checkForExpiredLicense = () => {
+      store.dispatch("newlicense/getNewLicenseByUserId", id).then((res) => {
+        let tempData =
+          res && res.data && res.data.data
+            ? res && res.data && res.data.data
+            : [];
 
+        tempData.forEach((element) => {
+          let tempDate = expirationDatesHelper(
+            element.licenseExpirationDate
+              ? element.licenseExpirationDate.slice(0, 10)
+              : new Date().toISOString().slice(0, 10)
+          );
+          notifications.value.push(
+            tempDate && tempDate < 60
+              ? `Your license with number ${element.newLicenseCode} is about to expire in ${tempDate} days, please renew your license.`
+              : tempDate && tempDate < 0
+              ? `Your license with number ${element.newLicenseCode} has expired please renew your license.`
+              : ""
+          );
+        });
+      });
+    };
+    const expirationDatesHelper = (date_1) => {
+      let date_2 = new Date().toISOString().slice(0, 10);
+      let difference = new Date(date_1).getTime() - new Date(date_2).getTime();
+      let TotalDays = Math.ceil(difference / (1000 * 3600 * 24));
+      return TotalDays;
+    };
     const updateProfile = () => {
       let id = +localStorage.getItem("userId");
       let url = "/update-profile/:" + id;
@@ -269,15 +349,20 @@ export default {
         dark();
       }
     };
-
+    onMounted(() => {
+      checkForExpiredLicense();
+    });
     return {
       showDropDown,
       showNotification,
+      showNotifications,
       selectMenu,
+      showNotif,
       modeToggle,
       darkMode,
       light,
       isDarkMode,
+      notifications,
       dark,
       showDD,
       sidebarMenu,
@@ -288,6 +373,38 @@ export default {
 };
 </script>
 <style scoped>
+.notifIcon {
+  animation: pulse 2s infinite;
+  border-radius: 50%;
+  margin: 5px;
+}
+@-webkit-keyframes pulse {
+  0% {
+    -webkit-box-shadow: 0 0 0 0 #ffc400;
+  }
+  70% {
+    -webkit-box-shadow: 0 0 0 10px #ffc400;
+  }
+  100% {
+    -webkit-box-shadow: 0 0 0 0 #ffc400;
+  }
+}
+@keyframes pulse {
+  0% {
+    -moz-box-shadow: 0 0 0 0 #ffc400;
+    color: #fcca2946;
+    box-shadow: 0 0 0 0 rgba(244, 157, 22, 1);
+  }
+  70% {
+    -moz-box-shadow: 0 0 0 10px #ffc400;
+
+    box-shadow: 0 0 0 10px rgba(244, 157, 22, 0);
+  }
+  100% {
+    -moz-box-shadow: 0 0 0 0 #ffc400;
+    box-shadow: 0 0 0 0 rgba(244, 157, 22, 0);
+  }
+}
 .toggle-label {
   position: relative;
 }
@@ -330,4 +447,3 @@ export default {
   background-color: #07677e;
 }
 </style>
-  
