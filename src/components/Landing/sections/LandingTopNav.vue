@@ -20,7 +20,14 @@
       <RenderIllustration illustration="Logo" class="hidden sm:block" />
       <h3 class="ml-4 text-2xl text-main-400">eHPEL - License</h3>
     </div>
-    <div>
+    <div class="grid grid-cols-3">
+      <span
+        class="cursor-pointer   mt-1 rounded-lg"
+        data-bs-toggle="modal"
+        data-bs-target="#showHelp"
+      >
+        <h4 class="text-main-400  font-bold">How to apply?</h4>
+      </span>
       <button
         class="
           px-6
@@ -30,13 +37,14 @@
           hover:text-main-400 hover:bg-white
           font-medium
           text-xs
+          ml-4
           leading-tight
           uppercase
           rounded
           shadow-md
-          hover:bg-blue-700 hover:shadow-lg
-          focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
-          active:bg-blue-800 active:shadow-lg
+          hover:bg-blue-700 hover:shadow-md
+          focus:bg-blue-700 focus:shadow-md focus:outline-none focus:ring-0
+          active:bg-blue-800 active:shadow-md
           transition
           duration-150
           ease-in-out
@@ -48,6 +56,7 @@
       </button>
       <button
         type="button"
+        style="margin-left: -15px;"
         class="
           px-6
           py-2.5
@@ -60,9 +69,9 @@
           uppercase
           rounded
           shadow-md
-          hover:bg-blue-700 hover:shadow-lg
-          focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
-          active:bg-blue-800 active:shadow-lg
+          hover:bg-blue-700 hover:shadow-md
+          focus:bg-blue-700 focus:shadow-md focus:outline-none focus:ring-0
+          active:bg-blue-800 active:shadow-md
           transition
           duration-150
           ease-in-out
@@ -72,14 +81,6 @@
       >
         <i class="fa fa-sign-in"></i> Log In
       </button>
-
-      <span
-        class="bg-grey-200 cursor-pointer  ml-4 mr-2 p-2 rounded-lg"
-        data-bs-toggle="modal"
-        data-bs-target="#showHelp"
-      >
-        <i class="fa-solid fa-question text-xl text-main-400"></i>
-      </span>
     </div>
   </section>
   <!-- Help Part -->
@@ -107,7 +108,7 @@
         class="
           modal-content
           border-none
-          shadow-lg
+          shadow-md
           relative
           flex flex-col
           w-8/12
@@ -136,6 +137,30 @@
           <button
             type="button"
             class="
+
+              px-6
+          
+              text-white
+              font-medium
+              text-xs
+              bg-yellow-300
+              leading-tight
+              uppercase
+              rounded
+              shadow-md
+              hover:bg-white hover:text-primary-700
+              transition
+              duration-150
+              ease-in-out
+            "
+            @click="downloadHelpVideo()"
+          >
+            <i class="fa fa-download"></i>
+            Download Video  (21.3 MB)
+          </button>
+          <button
+            type="button"
+            class="
                   px-6
               text-white
               bg-main-400 
@@ -148,7 +173,7 @@
               shadow-md
               hover:text-main-400
               
-              active:bg-purple-800 active:shadow-lg
+              active:bg-purple-800 active:shadow-md
               transition
               duration-150
               ease-in-out
@@ -203,7 +228,7 @@
         class="
           modal-content
           border-none
-          shadow-lg
+          shadow-md
           relative
           flex flex-col
           w-8/12
@@ -437,7 +462,7 @@
         class="
           modal-content
           border-none
-          shadow-lg
+          shadow-md
           relative
           flex flex-col
           w-11/12
@@ -467,8 +492,8 @@
               uppercase
               rounded
               hover:border-main-400
-              shadow-lg
-              hover:bg-purple-700 hover:shadow-lg
+              shadow-md
+              hover:bg-purple-700 hover:shadow-md
               transition
               duration-150
               ease-in-out
@@ -770,7 +795,7 @@
         class="
           modal-content
           border-none
-          shadow-lg
+          shadow-md
           relative
           flex flex-col
           w-8/12
@@ -811,7 +836,7 @@
               shadow-md
               hover:text-main-400
               
-              active:bg-purple-800 active:shadow-lg
+              active:bg-purple-800 active:shadow-md
               transition
               duration-150
               ease-in-out
@@ -871,7 +896,7 @@
               leading-tight
               uppercase
               rounded
-              shadow-lg
+              shadow-md
               hover:bg-white hover:text-primary-700
               transition
               duration-150
@@ -1301,6 +1326,51 @@ export default {
           });
         });
     };
+    const downloadHelpVideo = () => {
+      store
+        .dispatch("user/downloadHelpVideo")
+        .then((res) => {
+          console.log(res);
+          var fileURL = window.URL.createObjectURL(new Blob([res.data]));
+          var fURL = document.createElement("a");
+
+          fURL.href = fileURL;
+          fURL.setAttribute("download", "file.mp4");
+          document.body.appendChild(fURL);
+
+          fURL.click();
+          if (res.data.status === "Success") {
+            toast.success("Download started", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+          } else {
+            toast.error(
+              "Please check permission of site or your download manager",
+              {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              }
+            );
+          }
+        })
+        .catch(() => {
+          toast.error("Server Error, please try again", {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          });
+        });
+    };
+
     onMounted(() => {
       const phoneInputField = document.getElementById("phone");
       phoneInput = window.intlTelInput(phoneInputField, {
@@ -1324,6 +1394,7 @@ export default {
       show,
       options,
       otpInput,
+      downloadHelpVideo,
       enableVerification,
       showLoading,
       checkPhoneValidity,

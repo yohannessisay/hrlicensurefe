@@ -1401,7 +1401,7 @@ export default {
                       ),
                       parentDoc: groupByKey(resp, "parentDocument")
                     });
-                    isLoading.value = true;
+                    isLoading.value = false;
                   });
               });
               //Get Common Docs

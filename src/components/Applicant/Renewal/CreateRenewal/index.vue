@@ -61,15 +61,13 @@
     <!-- {{ previousLicense }} -->
     <div class="flex justify-center m-4 ">
       <h1
-        
         :class="
           isDarkMode && isDarkMode == true
             ? 'text-3xl text-white'
             : 'text-3xl text-main-400'
         "
       >
-        You can choose an existing license to renew or apply for a renewal
-        form
+        You can choose an existing license to renew or apply for a renewal form
       </h1>
     </div>
     <div class="flex justify-center m-4 ">
@@ -78,9 +76,11 @@
           duration-200   transform"
       >
         <button
-          :class="previousLicense&&previousLicense.length>0?
-          'inline-block px-6 text-white bg-main-400 hover:text-main-400 hover:border text-sm font-bold uppercase rounded shadow-lg mb-4 transition duration-150 ease-in-out':
-          'inline-block px-6 text-white bg-grey-300 hover:text-main-400 hover:border text-sm font-bold uppercase rounded shadow-lg mb-4 transition duration-150 ease-in-out pointer-events-none'"
+          :class="
+            previousLicense && previousLicense.length > 0
+              ? 'inline-block px-6 text-white bg-main-400 hover:text-main-400 hover:border text-sm font-bold uppercase rounded shadow-lg mb-4 transition duration-150 ease-in-out'
+              : 'inline-block px-6 text-white bg-grey-300 hover:text-main-400 hover:border text-sm font-bold uppercase rounded shadow-lg mb-4 transition duration-150 ease-in-out pointer-events-none'
+          "
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#collapseExample"
@@ -91,10 +91,13 @@
           data-ripple-color="light"
         >
           Show Existing License/s
-        </button> 
-        <p v-if="previousLicense&&previousLicense.length==0" class="flex justify-center">
-        <small>No existing license</small>
-      </p>
+        </button>
+        <p
+          v-if="previousLicense && previousLicense.length == 0"
+          class="flex justify-center"
+        >
+          <small>No existing license</small>
+        </p>
       </div>
       <div
         class="bg-white p-4 rounded-lg m-4 shadow-md  hover:-translate-y-2  transition-all
@@ -126,130 +129,157 @@
           v-if="previousLicense && previousLicense.length != 0"
           class="w-full p-4"
         >
-     
-            <div class="flex flex-row sm:-mx-1 lg:-mx-2">
-              <div
-                v-for="license in previousLicense"
-                :key="license.id"
-                class="bg-white my-1 px-1 md:w-1/4 lg:w-1/4 mdlg:w-1/4 sm:w-full sm:mr-3 shadow-lg rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2"
-              >
-                <!-- Article -->
-                <div>
-                  <h2 class="text-main-400 border-b-2 text-xl p-2">
-                    License Number-
-                    <span class="text-base text-main-400">
-                      {{ license.newLicenseCode }}
-                    </span>
-                  </h2>
+          <div class="flex flex-row sm:-mx-1 lg:-mx-2">
+            <div
+              v-for="license in previousLicense"
+              :key="license.id"
+              :class="
+                expirationDatesHelper(
+                  license.licenseExpirationDate
+                    ? license.licenseExpirationDate.slice(0, 10)
+                    : new Date().toISOString().slice(0, 10)
+                ) < 90
+                  ? 'bg-white border-4 text-red-300 my-1 px-1 md:w-1/4 lg:w-1/4 mdlg:w-1/4 sm:w-full sm:mr-3 shadow-lg rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2'
+                  : expirationDatesHelper(
+                      license.licenseExpirationDate
+                        ? license.licenseExpirationDate.slice(0, 10)
+                        : new Date().toISOString().slice(0, 10)
+                    ) > 60 &&
+                    expirationDatesHelper(
+                      license.licenseExpirationDate
+                        ? license.licenseExpirationDate.slice(0, 10)
+                        : new Date().toISOString().slice(0, 10)
+                    ) < 90
+                  ? 'bg-white border-4 text-yellow-300 my-1 px-1 md:w-1/4 lg:w-1/4 mdlg:w-1/4 sm:w-full sm:mr-3 shadow-lg rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2'
+                  : 'bg-white my-1 px-1 md:w-1/4 lg:w-1/4 mdlg:w-1/4 sm:w-full sm:mr-3 shadow-lg rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2'
+              "
+            >
+              <!-- Article -->
+              <div>
+                <h2 class="text-main-400 border-b-2 text-xl p-2">
+                  License Number-
+                  <span class="text-base text-main-400">
+                    {{ license.newLicenseCode }}
+                  </span>
+                </h2>
 
-                  <div class="border-b-2 text-main-400 p-2">
-                    <div class="grid grid-cols-3">
-                      <h1 class="text-lg">
-                        <a class="text-main-400 pointer-events-none" href="#"
-                          >Department</a
-                        >
-                      </h1>
+                <div class="border-b-2 text-main-400 p-2">
+                  <div class="grid grid-cols-3">
+                    <h1 class="text-lg">
+                      <a class="text-main-400 pointer-events-none" href="#"
+                        >Department</a
+                      >
+                    </h1>
 
-                      <ul class="text-black text-sm col-span-2">
-                        <li
-                          v-for="(education, index) in license.educations"
-                          :key="education.id"
-                          style="display: inline"
-                        >
-                          <span class="text-grey-800 text-sm">
-                            {{
-                              education.department
-                                ? "*" + education.department.name
-                                : "-"
-                            }}
-                            <span v-if="index != license.educations.length - 1"
-                              >,</span
-                            >
-                          </span>
-                        </li>
-                      </ul>
-                    </div>
-
-                    <div class="grid grid-cols-3">
-                      <h1 class="text-lg">
-                        <a class="text-main-400 pointer-events-none" href="#"
-                          >Profession</a
-                        >
-                      </h1>
-                      <ul class="text-black text-sm col-span-2">
-                        <li
-                          v-for="(education, index) in license.educations"
-                          :key="education.id"
-                          style="display: inline"
-                        >
-                          <span class="text-grey-800 text-sm">
-                            {{
-                              "*" + education.professionType
-                                ? education.professionType.name
-                                : "-"
-                            }}
-                            <span v-if="index != license.educations.length - 1"
-                              >,</span
-                            >
-                          </span>
-                        </li>
-                      </ul>
-                    </div>
-
-                    <div class="grid grid-cols-2">
-                      <h1 class="text-lg">
-                        <a class="text-main-400 pointer-events-none" href="#"
-                          >License Expiration Date</a
-                        >
-                      </h1>
-                      <ul class="text-black text-sm">
-                        <h2>
-                          <span class="text-grey-800 text-sm">
-                            {{
-                              license.licenseExpirationDate
-                                ? license.licenseExpirationDate.slice(0, 10)
-                                : ""
-                            }}
-                          </span>
-                        </h2>
-                      </ul>
-                    </div>
+                    <ul class="text-black text-sm col-span-2">
+                      <li
+                        v-for="(education, index) in license.educations"
+                        :key="education.id"
+                        style="display: inline"
+                      >
+                        <span class="text-grey-800 text-sm">
+                          {{
+                            education.department
+                              ? "*" + education.department.name
+                              : "-"
+                          }}
+                          <span v-if="index != license.educations.length - 1"
+                            >,</span
+                          >
+                        </span>
+                      </li>
+                    </ul>
                   </div>
-                  <footer
-                    class="flex items-center justify-between leading-none p-2 md:p-2"
+
+                  <div class="grid grid-cols-3">
+                    <h1 class="text-lg">
+                      <a class="text-main-400 pointer-events-none" href="#"
+                        >Profession</a
+                      >
+                    </h1>
+                    <ul class="text-black text-sm col-span-2">
+                      <li
+                        v-for="(education, index) in license.educations"
+                        :key="education.id"
+                        style="display: inline"
+                      >
+                        <span class="text-grey-800 text-sm">
+                          {{
+                            "*" + education.professionType
+                              ? education.professionType.name
+                              : "-"
+                          }}
+                          <span v-if="index != license.educations.length - 1"
+                            >,</span
+                          >
+                        </span>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div class="grid grid-cols-2">
+                    <h1 class="text-lg">
+                      <a class="text-main-400 pointer-events-none" href="#"
+                        >License Expiration Date</a
+                      >
+                    </h1>
+                    <ul class="text-black text-sm">
+                      <h2>
+                        <span class="text-grey-800 text-sm">
+                          {{
+                            license.licenseExpirationDate
+                              ? license.licenseExpirationDate.slice(0, 10)
+                              : ""
+                          }}
+                        </span>
+                      </h2>
+                    </ul>
+                  </div>
+                </div>
+                <footer
+                  class="flex items-center justify-between leading-none p-2 md:p-2"
+                >
+                  <span class="text-main-400 text-sm">
+                    {{ license.createdAt.slice(0, 10) }}
+                  </span>
+                </footer>
+                <div class="flex justify-center">
+                  <button
+                    :class="
+                      expirationDatesHelper(
+                        license.licenseExpirationDate
+                          ? license.licenseExpirationDate.slice(0, 10)
+                          : new Date().toISOString().slice(0, 10)
+                      ) < 90
+                        ? 'inline-block px-6 text-white bg-main-400 hover:text-main-400 hover:border text-sm font-bold uppercase rounded shadow-lg mb-4 transition duration-150 ease-in-out'
+                        : 'inline-block px-6 text-white bg-grey-400 hover:text-main-400 hover:border text-sm font-bold uppercase rounded shadow-lg mb-4 transition duration-150 ease-in-out pointer-events-none'
+                    "
+                    data-bs-toggle="modal"
+                    data-bs-target="#declinedDetail"
+                    @click="renewExisting(license)"
                   >
-                    <span class="text-main-400 text-sm">
-                      {{ license.createdAt.slice(0, 10) }}
-                    </span>
-                  </footer>
-                  <div class="flex justify-center">
-                    <button
-                      :class="
+                    Renew
+                  </button>
+                </div>
+                <div class="text-center">
+                  <h2
+                    :class="
+                      expirationDatesHelper(
+                        license.licenseExpirationDate
+                          ? license.licenseExpirationDate.slice(0, 10)
+                          : new Date().toISOString().slice(0, 10)
+                      ) < 60
+                        ? 'text-red-300 text-xl'
+                        : 'text-grey-800 text-xl'
+                    "
+                  >
+                    <span
+                      v-if="
                         expirationDatesHelper(
                           license.licenseExpirationDate
                             ? license.licenseExpirationDate.slice(0, 10)
                             : new Date().toISOString().slice(0, 10)
-                        ) > 90
-                          ? 'inline-block px-6 text-white bg-main-400 hover:text-main-400 hover:border text-sm font-bold uppercase rounded shadow-lg mb-4 transition duration-150 ease-in-out'
-                          : 'inline-block px-6 text-white bg-grey-400 hover:text-main-400 hover:border text-sm font-bold uppercase rounded shadow-lg mb-4 transition duration-150 ease-in-out pointer-events-none'
-                      "
-                      data-bs-toggle="modal"
-                      data-bs-target="#declinedDetail"
-                      @click="renewExisting(license)"
-                    >
-                      Renew
-                    </button>
-                  </div>
-                  <div class="text-center">
-                    <h2
-                      :class="
-                        expirationDatesHelper(
-                          license.licenseExpirationDate
-                            ? license.licenseExpirationDate.slice(0, 10)
-                            : new Date().toISOString().slice(0, 10)
-                        ) < 60
-                          ? 'text-red-300 text-xl'
-                          : 'text-grey-800 text-xl'
+                        ) > 0
                       "
                     >
                       {{
@@ -259,15 +289,18 @@
                             : new Date().toISOString().slice(0, 10)
                         )
                       }}
-                      Days Remaining For Expiration
-                    </h2>
-                  </div>
+                      Days Remaining For Expiration</span
+                    >
+                    <h4 v-else class="text-red-300 text-2xl font-bold">
+                      Expired
+                    </h4>
+                  </h2>
                 </div>
-
-                <!-- END Article -->
               </div>
+
+              <!-- END Article -->
             </div>
-         
+          </div>
         </div>
       </div>
     </div>
@@ -320,7 +353,6 @@ export default {
                   : ""
               )
             : [];
-        
         }
         isLoading.value = false;
       });
