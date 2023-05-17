@@ -32,6 +32,13 @@
             Good Standing Letter Files
           </span>
         </h2>
+        <div class="vld-parent mt-4">
+        <loading
+          :active="isLoading"
+          :is-full-page="false"
+          :color="'#2F639D'"
+          :opacity="1"
+        ></loading>
         <div
           id="commonFilesAccordion"
           class="accordion-collapse collapse show"
@@ -147,10 +154,10 @@
                       </td>
                       <td class="px-6 py-4">
                         <span
-                          class="document-name"
-                          v-if="documentsSaved[item.documentType.code]"
+                          class="text-grey-800"
+                          v-if="documentsSaved[item.documentType.code]&&documentsSaved[item.documentType.code].fileName"
                           >{{
-                            documentsSaved[item.documentType.code].name
+                            documentsSaved[item.documentType.code].fileName
                           }}</span
                         >
                       </td>
@@ -188,6 +195,7 @@
               </div>
             </div>
           </div>
+        </div>
         </div>
       </div>
     </div>
@@ -275,7 +283,10 @@ import { boolean } from "yargs";
 import { useToast } from "vue-toastification";
 import { googleApi } from "@/composables/baseURL";
 import { useRoute } from "vue-router";
+import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
+import Loading from "vue3-loading-overlay";
 export default {
+  components:{Loading},
   setup(props, { emit }) {
     let store = useStore();
     let toast = useToast();
@@ -283,7 +294,7 @@ export default {
     let imageUploader = ref(null);
     let goToNext = ref(false);
     let departmentDocuments = [];
-
+    let isLoading = ref(false);
     let documents = ref([]);
     let filePreviewData = ref({
       isImage: boolean,
@@ -499,6 +510,7 @@ export default {
 
     const saveDraft = () => {
       generalInfo.value.licenseFile = [];
+      isLoading.value = true;
       generalInfo.value.whoIssued = localData.value.whoIssued;
       let license = {
         action: "DraftEvent",
@@ -598,6 +610,7 @@ export default {
                   pauseOnHover: true,
                   icon: true
                 });
+                isLoading.value = false;
                 localStorage.removeItem("GSApplicationData");
                 location.reload();
               } else {
@@ -608,6 +621,7 @@ export default {
                   pauseOnHover: true,
                   icon: true
                 });
+                isLoading.value = false;
               }
             })
             .catch(() => {
@@ -618,6 +632,7 @@ export default {
                 pauseOnHover: true,
                 icon: true
               });
+              isLoading.value = false;
             });
         });
     };
@@ -643,8 +658,10 @@ export default {
               element.documentType.name;
             documentsSaved.value[element.documentTypeCode].code =
               element.documentType.code;
+              documentsSaved.value[element.documentTypeCode].fileName =
+              element.fileName;
           });
-          console.log();
+          
           existingDocs = generalInfo.value?.documents;
         });
 
@@ -690,6 +707,7 @@ export default {
       departmentDocuments,
       imageUploader,
       documents,
+      isLoading,
       filePreviewData,
       next,
       back
