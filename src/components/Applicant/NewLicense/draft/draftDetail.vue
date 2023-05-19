@@ -1,5 +1,5 @@
 <template>
-  <main-content>
+ <main-content :url="'newLicense'">
     <nav class="bg-gray-100 px-5 py-3 rounded-md w-full">
       <ol class="list-reset flex">
         <li>
@@ -866,7 +866,7 @@ import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import LicenseSummary from "./draftSummary.vue";
 import Upload from "./draftUpload.vue";
-import MainContent from "../sharedComponents/Menu.vue";
+import MainContent from "../../Shared/Menu.vue";
 import { useToast } from "vue-toastification";
 import Loading from "vue3-loading-overlay";
 import { useRouter } from "vue-router";
@@ -1213,6 +1213,9 @@ export default {
       );
     };
     onMounted(async () => {
+      window.addEventListener("darkModeChanged", (data) => {
+        isDarkMode.value = data.detail ? data.detail.content : "";
+      });
       isLoading.value = true;
       fetchApplicantType();
       fetchDepartments();
@@ -1269,6 +1272,7 @@ export default {
           isLoading.value = false;
         });
     });
+    let isDarkMode = ref(JSON.parse(localStorage.getItem("darkMode")));
     return {
       applicantTypeChangeHandler,
       regionChangeHandler,
@@ -1283,6 +1287,7 @@ export default {
       educationalLevelChange,
       showLocation,
       departments,
+      isDarkMode,
       withdraw,
       institutions,
       educationalLevels,

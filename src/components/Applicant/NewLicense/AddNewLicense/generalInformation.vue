@@ -1,5 +1,5 @@
 <template>
-  <nav class="bg-grey-100 mb-4 px-5 py-3 rounded-md w-full" id="topNav">
+  <nav :class="isDarkMode&&isDarkMode==true?'bg-secondaryDark mb-4 px-5 py-3 rounded-md w-full':'bg-grey-100 mb-4 px-5 py-3 rounded-md w-full'" id="topNav">
     <ol class="list-reset flex">
       <li>
         <router-link to="/menu">
@@ -41,7 +41,7 @@
       <li
         :class="
           isDarkMode && isDarkMode == true
-            ? 'text-grey-100 '
+            ? 'text-main-400 '
             : 'text-main-400 hover:text-blue-700'
         "
       >
@@ -53,7 +53,7 @@
   <div
     :class="
       isDarkMode && isDarkMode == true
-        ? '    block p-6 rounded-lg shadow-lg darkModeSecondLayer max-w-full mr-8 mb-8 sm:p-4'
+        ? '    block p-6 rounded-lg shadow-lg bg-primaryDark max-w-full mr-8 mb-8 sm:p-4'
         : '   block p-6 rounded-lg shadow-lg bg-primary-200 max-w-full mr-8 mb-8 sm:p-4 '
     "
   >
@@ -68,18 +68,16 @@
         General Information
       </h2>
     </div>
-    <!-- <div class="float-container" @click="darkMode()">
-      <a href="#" class="icon one"> </a>
-    </div> -->
+
     <form @submit.prevent="submit" class="mx-auto w-full mt-10 p-4">
       <div
         :class="
           isDarkMode && isDarkMode == true
-            ? 'generalInfoCard flex shadow-lg rounded-md   justify-center mt-8 p-4'
+            ? 'bg-secondaryDark flex shadow-lg rounded-md   justify-center mt-8 p-4'
             : 'flex shadow-lg rounded-md bg-primary-100 justify-center mt-8 p-4'
         "
       >
-        <!-- applican type -->
+        <!-- applicant type -->
         <div
           class="
             grid grid-rows-3
@@ -782,18 +780,16 @@
             </button>
           </div>
           <span v-if="multipleDepartmentError" class="text-red-300"
-          >Please fill in all fields</span
-        >
-        <span v-if="checkForAddedError" class="ml-8 text-red-300"
-          >You already added the department</span
-        >
-        <span v-if="multipleDepartmentMaxError" class="ml-8 text-red-300"
-          >Only three departments can be selected</span
-        >
+            >Please fill in all fields</span
+          >
+          <span v-if="checkForAddedError" class="ml-8 text-red-300"
+            >You already added the department</span
+          >
+          <span v-if="multipleDepartmentMaxError" class="ml-8 text-red-300"
+            >Only three departments can be selected</span
+          >
         </div>
         <!-- ./Container -->
-
-    
       </div>
       <!-- Table for selected departments data -->
       <div
@@ -899,7 +895,7 @@
                             text-gray-900
                           "
                         >
-                          {{ item.department?item.department.name:'' }}
+                          {{ item.department ? item.department.name : "" }}
                         </td>
                         <td
                           class="
@@ -909,7 +905,11 @@
                             whitespace-nowrap
                           "
                         >
-                          {{ item.educationalLevel?item.educationalLevel.name:'' }}
+                          {{
+                            item.educationalLevel
+                              ? item.educationalLevel.name
+                              : ""
+                          }}
                         </td>
                         <td
                           class="
@@ -992,11 +992,12 @@
         </button>
       </div>
     </form>
+    
   </div>
 </template>
 <script>
 import { useStore } from "vuex";
-import { ref, onMounted, getCurrentInstance } from "vue";
+import { ref, onMounted } from "vue";
 import { useToast } from "vue-toastification";
 export default {
   props: ["activeState"],
@@ -1053,54 +1054,43 @@ export default {
       nativeLanguageSelected: "",
       otherEducationalInstitution: "",
       multipleDepartment: [],
-      education: []
+      education: [],
     });
     const fetchApplicantType = () => {
-      store.dispatch("newlicense/getApplicantType").then(res => {
+      store.dispatch("newlicense/getApplicantType").then((res) => {
         const results = res.data.data;
         applicantTypes.value = results;
       });
     };
     const fetchEducationLevel = () => {
-      store.dispatch("lookups/getEducationLevel").then(res => {
+      store.dispatch("lookups/getEducationLevel").then((res) => {
         educationalLevels.value = res.data.data;
       });
     };
-    const fetchInstitutions = value => {
-      store.dispatch("newlicense/getInstitution", value).then(res => {
+    const fetchInstitutions = (value) => {
+      store.dispatch("newlicense/getInstitution", value).then((res) => {
         const institution = res.data.data;
         institutions.value = institution;
-      });      
+      });
     };
     const fetchDepartments = () => {
-      store.dispatch("newlicense/getDepartmentType").then(res => {
+      store.dispatch("newlicense/getDepartmentType").then((res) => {
         const department = res.data.data;
         departments.value = department;
       });
     };
     const fetchRegions = () => {
-      store.dispatch("newlicense/getRegions").then(res => {
+      store.dispatch("newlicense/getRegions").then((res) => {
         const regionsResult = res.data.data;
         regions.value = regionsResult;
       });
     };
-    const darkMode = () => {
-      const instance = getCurrentInstance();
-      emit("darkMode");
-      if (isDarkMode.value == true) {
-        isDarkMode.value = false;
-        instance?.proxy?.forceUpdate();
-      } else {
-        isDarkMode.value = true;
 
-        instance?.proxy?.forceUpdate();
-      }
-    };
     const fetchZones = () => {
       store
 
         .dispatch("newlicense/getZones", generalInfo.value.regionSelected.id)
-        .then(res => {
+        .then((res) => {
           const zonesResult = res.data.data;
           zones.value = zonesResult;
         });
@@ -1109,7 +1099,7 @@ export default {
     const fetchWoredas = () => {
       store
         .dispatch("newlicense/getWoredas", generalInfo.value.zoneSelected.id)
-        .then(res => {
+        .then((res) => {
           const woredasResult = res.data.data;
           woredas.value = woredasResult;
         });
@@ -1117,11 +1107,11 @@ export default {
     const fetchProfessionalType = (departmentId, educationalLevelId) => {
       let profession = {
         departmentId: departmentId,
-        educationalLevelId: educationalLevelId
+        educationalLevelId: educationalLevelId,
       };
       store
         .dispatch("newlicense/getProfessionalTypes", profession)
-        .then(res => {
+        .then((res) => {
           professionalTypes.value = res.data.data;
         });
     };
@@ -1150,7 +1140,7 @@ export default {
       fetchWoredas();
     };
     const fetchLanguages = () => {
-      store.dispatch("lookups/getNativeLanguage").then(res => {
+      store.dispatch("lookups/getNativeLanguage").then((res) => {
         if (res.data.status == "Success") {
           languages.value = res.data.data;
         }
@@ -1175,10 +1165,10 @@ export default {
       }
     };
 
-    const checkForAdded = data => {
+    const checkForAdded = (data) => {
       let tempStatus = false;
       if (generalInfo.value.multipleDepartment) {
-        generalInfo.value.multipleDepartment.forEach(element => {
+        generalInfo.value.multipleDepartment.forEach((element) => {
           if (element.department.code == data.code) {
             checkForAddedError.value = true;
             tempStatus = true;
@@ -1187,7 +1177,7 @@ export default {
         return tempStatus;
       }
     };
-    const removeDepartment = index => {
+    const removeDepartment = (index) => {
       generalInfo.value.multipleDepartment.splice(index, 1);
       generalInfo.value.education.splice(index, 1);
     };
@@ -1226,7 +1216,7 @@ export default {
                   generalInfo.value.otherEducationalInstitution,
                 otherProfessionalTypeAmharic:
                   generalInfo.value.otherProfessionalTypeAmharic,
-                otherProfessionalType: generalInfo.value.otherProfessionalType
+                otherProfessionalType: generalInfo.value.otherProfessionalType,
               });
               generalInfo.value.education.push({
                 departmentId: generalInfo.value.departmentSelected.id,
@@ -1237,7 +1227,7 @@ export default {
                 otherInstitution: generalInfo.value.otherEducationalInstitution,
                 otherProfessionTypeAmharic:
                   generalInfo.value.otherProfessionalTypeAmharic,
-                otherProfessionType: generalInfo.value.otherProfessionalType
+                otherProfessionType: generalInfo.value.otherProfessionalType,
               });
             }
           } else {
@@ -1252,7 +1242,7 @@ export default {
                 generalInfo.value.otherEducationalInstitution,
               otherProfessionalTypeAmharic:
                 generalInfo.value.otherProfessionalTypeAmharic,
-              otherProfessionalType: generalInfo.value.otherProfessionalType
+              otherProfessionalType: generalInfo.value.otherProfessionalType,
             });
             generalInfo.value.education.push({
               departmentId: generalInfo.value.departmentSelected.id,
@@ -1262,7 +1252,7 @@ export default {
               otherInstitution: generalInfo.value.otherEducationalInstitution,
               otherProfessionTypeAmharic:
                 generalInfo.value.otherProfessionalTypeAmharic,
-              otherProfessionType: generalInfo.value.otherProfessionalType
+              otherProfessionType: generalInfo.value.otherProfessionalType,
             });
           }
           generalInfo.value.departmentSelected = "";
@@ -1278,7 +1268,7 @@ export default {
       }
     };
     const fetchOccupation = () => {
-      store.dispatch("lookups/getGovernment").then(res => {
+      store.dispatch("lookups/getGovernment").then((res) => {
         if (res.data.status == "Success") {
           occupations.value = res.data.data;
         }
@@ -1286,21 +1276,25 @@ export default {
     };
     const apply = () => {
       let tempComparision = [];
-      if (existingLicense.value && generalInfo.value.education&&existingLicense.value.length>0) {
-        existingLicense.value.forEach(element => {
+      if (
+        existingLicense.value &&
+        generalInfo.value.education &&
+        existingLicense.value.length > 0
+      ) {
+        existingLicense.value.forEach((element) => {
           if (element.educations) {
             tempComparision.push({
               licenseId: element.id,
-              educations: element.educations
+              educations: element.educations,
             });
           }
         });
       }
       let tempError = false;
-      tempComparision.forEach(existingEd => {
-        generalInfo.value.education.forEach(newEd => {
+      tempComparision.forEach((existingEd) => {
+        generalInfo.value.education.forEach((newEd) => {
           if (existingEd.educations) {
-            existingEd.educations.forEach(element => {
+            existingEd.educations.forEach((element) => {
               if (
                 element.departmentId == newEd.departmentId &&
                 element.professionTypeId == newEd.professionTypeId
@@ -1332,7 +1326,7 @@ export default {
             position: "bottom-center",
             pauseOnFocusLoss: true,
             pauseOnHover: true,
-            icon: true
+            icon: true,
           }
         );
       }
@@ -1372,19 +1366,19 @@ export default {
           nativeLanguageId: generalInfo.value.nativeLanguageSelected
             ? generalInfo.value.nativeLanguageSelected.id
             : null,
-            isLegal:true,
-        }
+          isLegal: true,
+        },
       };
-      store.dispatch("newlicense/addNewLicense", license).then(res => {
+      store.dispatch("newlicense/addNewLicense", license).then((res) => {
         if (res.data.status == "Success") {
           toast.success("Applied successfuly", {
             timeout: 5000,
             position: "bottom-center",
             pauseOnFocusLoss: true,
             pauseOnHover: true,
-            icon: true
+            icon: true,
           });
-          localStorage.removeItem('NLApplicationData');
+          localStorage.removeItem("NLApplicationData");
           location.reload();
         } else {
           toast.error("Error occured, please try again", {
@@ -1392,13 +1386,17 @@ export default {
             position: "bottom-center",
             pauseOnFocusLoss: true,
             pauseOnHover: true,
-            icon: true
+            icon: true,
           });
         }
       });
     };
-    
+
     onMounted(async () => {
+      window.addEventListener("darkModeChanged", (data) => {
+       
+        isDarkMode.value = data.detail ? data.detail.content : "";
+      });
       fetchApplicantType();
       fetchDepartments();
       fetchInstitutions();
@@ -1410,11 +1408,11 @@ export default {
         : {};
       if (Object.keys(localData.value).length != 0) {
         generalInfo.value = localData.value;
-        isAppTypeSelected.value=true;
+        isAppTypeSelected.value = true;
         applicantTypeChangeHandler();
       }
       let userId = JSON.parse(window.localStorage.getItem("userId"));
-      store.dispatch("newlicense/getNewLicenseByUser", userId).then(res => {
+      store.dispatch("newlicense/getNewLicenseByUser", userId).then((res) => {
         existingLicense.value = res.data.data;
       });
     });
@@ -1444,7 +1442,6 @@ export default {
       educationalLevels,
       applicantTypes,
       clearLocalData,
-      darkMode,
       regions,
       woredas,
       localData,
@@ -1468,18 +1465,16 @@ export default {
       educationalLevelSelected,
       multipleDepartmentError,
       multipleDepartmentMaxError,
-      generalInfo
+      generalInfo,
     };
-  }
+  },
 };
 </script>
 <style>
 #main {
-  
   border-radius: 5px;
 }
 .table-multiple {
-  
   border-radius: 5px;
 }
 </style>

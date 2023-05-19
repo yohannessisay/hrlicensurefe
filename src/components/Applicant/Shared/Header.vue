@@ -39,7 +39,6 @@
             "
             v-on:click="showNotifications()"
             ><i
-            
               class="fa fa-bell text-main-400 text-2xl
               "
             ></i
@@ -69,8 +68,8 @@
               v-for="notif in notifications"
               :key="notif"
             >
-            <router-link to="/Applicant/Renewal">
-              {{ notif }}
+              <router-link :to="notif.url">
+                {{ notif && notif.message ? notif.message : "" }}
               </router-link>
             </li>
           </div>
@@ -268,12 +267,40 @@ export default {
         this.$emit("changeDisplay", menu);
       }
     };
+    const checkForNotification = () => {
+      store
+        .dispatch("notification/getApplicantNotification", id)
+        .then((res) => {
+          let tempData = res && res.data ? res.data : [];
+
+          tempData.forEach((element) => {
+            element && element.message
+              ? notifications.value.push({
+                  data: element,
+                  message: element && element.message ? element.message : "",
+                  url:
+                    element && element.new_license_id
+                      ? "/Applicant/NewLicense/approved"
+                      : element && element.renewal_id
+                      ? "/Applicant/Renewal/approved"
+                      : element && element.goodstanding_id
+                      ? "/Applicant/Goodstanding/approved"
+                      : "",
+                })
+              : "";
+          });
+        });
+    };
+    const updateNotif = (data) => {
+      store
+        .dispatch("notification/updateApplicantNotification", data)
+        .then((res) => {
+          console.log(res);
+        });
+    };
     const checkForExpiredLicense = () => {
       store.dispatch("newlicense/getNewLicenseByUserId", id).then((res) => {
-        let tempData =
-          res && res.data && res.data.data
-            ? res && res.data && res.data.data
-            : [];
+        let tempData = res && res.data && res.data.data ? res.data.data : [];
 
         tempData.forEach((element) => {
           let tempDate = expirationDatesHelper(
@@ -281,13 +308,16 @@ export default {
               ? element.licenseExpirationDate.slice(0, 10)
               : new Date().toISOString().slice(0, 10)
           );
-          notifications.value.push(
-            tempDate && tempDate < 60
-              ? `Your license with number ${element.newLicenseCode} is about to expire in ${tempDate} days, please renew your license.`
-              : tempDate && tempDate < 0
-              ? `Your license with number ${element.newLicenseCode} has expired please renew your license.`
-              : ""
-          );
+
+          notifications.value.push({
+            message:
+              tempDate && tempDate <= 0
+                ? `Your license with number ${element.newLicenseCode} has expired please renew your license.`
+                : tempDate && tempDate < 60
+                ? `Your license with number ${element.newLicenseCode} is about to expire in ${tempDate} days, please renew your license.`
+                : "",
+            url: "/Applicant/Renewal",
+          });
         });
       });
     };
@@ -351,6 +381,7 @@ export default {
     };
     onMounted(() => {
       checkForExpiredLicense();
+      checkForNotification();
     });
     return {
       showDropDown,
@@ -358,6 +389,7 @@ export default {
       showNotifications,
       selectMenu,
       showNotif,
+      updateNotif,
       modeToggle,
       darkMode,
       light,

@@ -1,10 +1,18 @@
 <template>
   <div>
-    <div class="accordion mr-8" id="FilesAccordion">
+    <div class="accordion mr-8 " id="FilesAccordion">
       <div
-        class="accordion-item bg-white border border-grey-200 p-4 rounded-lg"
+        :class="
+          isDarkMode
+            ? 'accordion-item bg-secondaryDark  border border-grey-200 p-4 rounded-lg'
+            : 'accordion-item  bg-white border border-grey-200 p-4 rounded-lg'
+        "
       >
-        <h2 class="accordion-header mb-0" id="headingOne">
+        <h2
+          id="headingOne"
+          class="accordion-header mb-0
+          "
+        >
           <button
             class="
               accordion-button
@@ -12,15 +20,16 @@
               flex
               items-center
               w-full
-              py-4
-              px-5
+              p-4
+              m-4
               text-base text-gray-800 text-left
               border-0
               rounded-md
+            
               transition
               focus:outline-none
             "
-            style="background: #d8d8d8 !important; color: #27687e !important"
+            style="color: #27687e !important"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#commonFilesAccordion"
@@ -32,7 +41,8 @@
         </h2>
         <div
           id="commonFilesAccordion"
-          class="accordion-collapse collapse show"
+          class="accordion-collapse collapse show
+          "
           aria-labelledby="commonFilesAccordionheading"
           data-bs-parent="#FilesAccordion"
         >
@@ -40,16 +50,10 @@
             <div class="bg-red-800 py-5">
               <div class="overflow-x-auto w-full p-4">
                 <table
-                  class="
-                    max-w-full
-                    w-full
-                    whitespace-nowrap
-                    rounded-lg
-                    shadow-lg
-                    mb-8
-                    bg-white
-                    divide-y
-                    overflow-hidden
+                  :class="
+                    isDarkMode
+                      ? 'max-w-full w-full whitespace-nowrap rounded-lg shadow-lg mb-8 bg-primaryDark divide-y overflow-hidden'
+                      : 'max-w-full w-full whitespace-nowrap rounded-lg shadow-lg mb-8 bg-white divide-y overflow-hidden'
                   "
                 >
                   <thead class="bg-lightMain-500">
@@ -133,7 +137,7 @@
                       <td class="px-6 py-4">
                         <div class="flex items-center p-4">
                           <div>
-                            <p class="">
+                            <p :class="isDarkMode ? 'text-white' : ''">
                               {{ item.documentType.name }}
                               <b v-if="item.isRequired" class="text-red-300"
                                 >(*)</b
@@ -145,7 +149,7 @@
                       <td class="px-6 py-4">
                         <div class="flex items-center p-4">
                           <div>
-                            <p class="">
+                            <p :class="isDarkMode ? 'text-white' : ''">
                               {{
                                 item.documentType.description
                                   ? item.documentType.description
@@ -173,7 +177,7 @@
                       <td class="px-6 py-4" v-if="item && item.fileName">
                         <div class="flex items-center p-4">
                           <div>
-                            <p class="">
+                            <p :class="isDarkMode ? 'text-white' : ''">
                               {{
                                 item.fileName
                                   ? item.fileName
@@ -422,7 +426,7 @@
                       <td class="px-6 py-4">
                         <div class="flex items-center ml-4">
                           <div>
-                            <p class="">
+                            <p :class="isDarkMode ? 'text-white' : ''">
                               {{ item.documentType.name }}
                               <b v-if="item.isRequired" class="text-red-300"
                                 >(*)</b
@@ -434,7 +438,7 @@
                       <td class="px-6 py-4">
                         <div class="flex items-center ml-4">
                           <div>
-                            <p class="">
+                            <p :class="isDarkMode ? 'text-white' : ''">
                               {{
                                 item.documentType.description
                                   ? item.documentType.description
@@ -446,7 +450,7 @@
                       </td>
 
                       <td class="px-6 py-4">
-                        <p class="">
+                        <p :class="isDarkMode ? 'text-white' : ''">
                           <input
                             type="file"
                             :required="item.isRequired"
@@ -464,7 +468,7 @@
                       <td class="px-6 py-4" v-if="item && item.fileName">
                         <div class="flex items-center p-4">
                           <div>
-                            <p class="">
+                            <p :class="isDarkMode ? 'text-white' : ''">
                               {{
                                 item.fileName
                                   ? item.fileName
@@ -591,7 +595,7 @@
                       <td class="px-6 py-4">
                         <div class="flex items-center ml-4">
                           <div>
-                            <p class="">
+                            <p :class="isDarkMode ? 'text-white' : ''">
                               {{ parentItem[0].documentType.name }}
                               <b
                                 v-if="parentItem[0].isRequired"
@@ -605,7 +609,7 @@
                       <td class="px-6 py-4">
                         <div class="flex items-center ml-4">
                           <div>
-                            <p class="">
+                            <p :class="isDarkMode ? 'text-white' : ''">
                               {{
                                 parentItem[0].documentType.description
                                   ? parentItem[0].documentType.description
@@ -617,7 +621,7 @@
                       </td>
 
                       <td class="px-6 py-4">
-                        <p class="">
+                        <p :class="isDarkMode ? 'text-white' : ''">
                           <input
                             type="file"
                             :required="parentItem[0].isRequired"
@@ -642,7 +646,7 @@
                       >
                         <div class="flex items-center p-4">
                           <div>
-                            <p class="">
+                            <p :class="isDarkMode ? 'text-white' : ''">
                               {{
                                 parentItem[0].fileName
                                   ? parentItem[0].fileName
@@ -765,7 +769,7 @@
                       >
                         <div class="flex items-center ml-4">
                           <div>
-                            <p class="">
+                            <p :class="isDarkMode ? 'text-white' : ''">
                               {{
                                 parentItem[0].documentType.name.slice(
                                   0,
@@ -843,7 +847,7 @@
                               'docAccordion_' +
                                 `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                             "
-                            class=""
+                            :class="isDarkMode ? 'text-white' : ''"
                             :aria-labelledby="
                               `headingOne_${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                             "
@@ -883,7 +887,7 @@
                                 >
                                   <div class="flex items-center ml-4">
                                     <div>
-                                      <p class="">
+                                      <p :class="isDarkMode ? 'text-white' : ''">
                                         {{ parentChildItem.documentType.name }}
                                       </p>
                                     </div>
@@ -899,7 +903,7 @@
                                 >
                                   <div class="flex items-center ml-4">
                                     <div>
-                                      <p class="">
+                                      <p :class="isDarkMode ? 'text-white' : ''">
                                         {{
                                           parentChildItem.documentType
                                             .description
@@ -920,7 +924,7 @@
                                   "
                                   class="p-4"
                                 >
-                                  <p class="">
+                                  <p :class="isDarkMode ? 'text-white' : ''">
                                     <input
                                       type="file"
                                       :required="parentChildItem.isRequired"
@@ -950,7 +954,7 @@
                                 >
                                   <div class="flex items-center p-4">
                                     <div>
-                                      <p class="">
+                                      <p :class="isDarkMode ? 'text-white' : ''">
                                         {{
                                           parentChildItem.fileName
                                             ? parentChildItem.fileName
@@ -1197,7 +1201,7 @@ export default {
     let existingDocs = [];
     let files = ref("");
     let maxFileSize = ref();
-    let db;
+    let isDarkMode = ref(JSON.parse(localStorage.getItem("darkMode")));
     let isBackButtonClicked = ref(false);
     let dbVersion = 1;
     let isImage = ref({});
@@ -1241,7 +1245,7 @@ export default {
         isImage.value[data.documentType.code] = true;
         documentsUploaded.value[data.documentType.code] =
           event?.target?.files[0];
-        formData.append(data.documentType.code, event?.target?.files[0]); 
+        formData.append(data.documentType.code, event?.target?.files[0]);
         delete fileSizeExceed.value[data.documentType.code];
         delete fileUploadError.value[
           "file_upload_row_" + data.documentType.code
@@ -2026,6 +2030,9 @@ export default {
     };
 
     onMounted(() => {
+      window.addEventListener("darkModeChanged", (data) => {
+        isDarkMode.value = data.detail ? data.detail.content : "";
+      });
       //Initialize indexdb for file storage
       if (!("indexedDB" in window)) {
         alert(
@@ -2168,6 +2175,7 @@ export default {
       generalInfo,
       goToNext,
       saveDraft,
+      isDarkMode,
       educationalDocs,
       imageUploader,
       filePreviewData,

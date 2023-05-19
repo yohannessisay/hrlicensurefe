@@ -1711,7 +1711,7 @@
 <script>
 import { ref, onMounted } from "vue";
 import SideNav from "./Sidebar.vue";
-import TopNav from "./Header.vue";
+import TopNav from "../Shared/Header.vue";
 import { googleApi } from "@/composables/baseURL";
 import "../../../styles/applicant.css";
 import { useStore } from "vuex";

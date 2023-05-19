@@ -1,5 +1,5 @@
 <template>
-  <main-content>
+  <main-content :url="'goodstanding'">
     <transition name="fade" mode="out-in">
       <div v-if="this.activeState == 1" class="">
         <GeneralInfo
@@ -36,7 +36,7 @@
 <script>
 import GeneralInfo from "./AddGoodStanding/generalInformation.vue";
 import Upload from "./AddGoodStanding/Upload.vue";
-import MainContent from "./sharedComponents/Menu.vue";
+import MainContent from "../Shared/Menu.vue";
 import GoodStandingSummary from "./AddGoodStanding/LicenseSummary.vue";
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";

@@ -1,5 +1,5 @@
 <template>
-  <main-content>
+  <main-content :url="'renewal'">
     <nav class="bg-gray-100 px-5 py-3 rounded-md w-full">
       <ol class="list-reset flex">
         <li><a href="#" class="text-main-400 hover:text-blue-700">Home</a></li>
@@ -17,7 +17,7 @@
         <!-- Column -->
 
         <div
-          v-for="license in newLicense"
+          v-for="license in renewal"
           :key="license.id"
           class="
             bg-white
@@ -41,7 +41,7 @@
             <h2 class="text-main-400 border-b-2 text-xl p-2">
               License Number-
               <span class="text-base text-main-400">{{
-                license.newLicenseCode
+                license.renewalCode
               }}</span>
             </h2>
 
@@ -215,14 +215,14 @@
   <script>
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
-import MainContent from "../sharedComponents/Menu.vue";
+import MainContent from "../../Shared/Menu.vue";
 import { googleApi } from "@/composables/baseURL";
 import approvedDetail from "./pendingPaymentDetail.vue";
 export default {
   components: { MainContent, approvedDetail },
   setup() {
     let store = useStore();
-    let newLicense = ref({});
+    let renewal = ref({});
     let userInfo = ref({});
     let isLoading = ref(false);
     let noData = ref(false);
@@ -235,16 +235,16 @@ export default {
       isLoading.value = true;
       userInfo.value = JSON.parse(window.localStorage.getItem("personalInfo"));
       store.dispatch("renewal/getRenewalLicense").then((res) => {
-        newLicense.value = res.data.data;
+        renewal.value = res.data.data;
         if (res.data.status != "Error") {
-          newLicense.value = res.data.data;
+          renewal.value = res.data.data;
 
-          if (newLicense.value) {
-            newLicense.value = newLicense.value.filter(function (e) {
+          if (renewal.value) {
+            renewal.value = renewal.value.filter(function (e) {
               return e.applicationStatus.code=='PP';
             });
             isLoading.value = false;
-            if (newLicense.value.length < 1) {
+            if (renewal.value.length < 1) {
               noData.value = true;
             }
           }
@@ -256,7 +256,7 @@ export default {
     });
 
     return {
-      newLicense,
+      renewal,
       googleApi,
       userInfo,
       noData,
