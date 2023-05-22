@@ -1,4 +1,4 @@
-  <template>
+<template>
   <nav>
     <div class="sidebar-button">
       <slot></slot>
@@ -9,7 +9,6 @@
         {{ adminName }}
       </div>
 
-      
       <div class="flex flex-row">
         <div class="relative inline-block text-left ">
           <a
@@ -65,8 +64,7 @@
             aria-labelledby="options-menu"
           >
             <div class="py-1 px-1 " role="none">
-            
-                <a
+              <a
                 href="/admin/profile"
                 class="
                   block
@@ -83,15 +81,12 @@
                 role="menuitem"
                 id="logout"
               >
-            
-              <i class="fa fa-user mr-2"></i>
-               Manage Profile
-          
+                <i class="fa fa-user mr-2"></i>
+                Manage Profile
               </a>
-           
-            
+
               <a
-              @click="logout"
+                @click="logout"
                 class="
                   block
                   px-4
@@ -106,7 +101,7 @@
                 role="menuitem"
                 id="logout"
               >
-              <i class="fa fa-sign-out mr-2"></i>
+                <i class="fa fa-sign-out mr-2"></i>
                 Sign Out
               </a>
             </div>
@@ -118,13 +113,13 @@
 </template>
 
 <script scoped>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 
 export default {
   components: {},
-  setup () {
+  setup() {
     const router = useRouter();
     const store = useStore();
     let showDD = ref(false);
@@ -136,8 +131,12 @@ export default {
     let primaryText = ref("");
     let isUserManager = ref(false);
     const adminName = JSON.parse(localStorage.getItem("allAdminData")).name;
+    let checkedForNotification = JSON.parse(
+      localStorage.getItem("checkedForExpired")
+    );
+    const id = +localStorage.getItem("adminId");
+    let notifications = ref([]);
 
- 
     const showDropDown = () => {
       showDD.value = !showDD.value;
       showUnfinishedDD.value = false;
@@ -145,24 +144,50 @@ export default {
       showFinishedDD.value = false;
       showLicensedDD.value = false;
     };
+    const checkForNotification = () => {
+      store.dispatch("notification/getReviewerNotification", id).then((res) => {
+        let tempData = res && res.data ? res.data : [];
 
+        tempData.forEach((element) => {
+          element && element.message
+            ? notifications.value.push({
+                data: element,
+                message: element && element.message ? element.message : "",
+                url:
+                  element && element.new_license_id
+                    ? "/Reviewer/NewLicense"
+                    : element && element.renewal_id
+                    ? "/Reviewer/Renewal"
+                    : element && element.goodstanding_id
+                    ? "/Reviewer/Goodstanding"
+                    : "",
+              })
+            : "";
+        });
+      });
+    };
     const logout = () => {
       localStorage.clear();
       store.dispatch("admin/logout");
       router.push({ path: "/admin" });
     };
+    onMounted(() => {
+      checkForNotification();
+    });
     return {
       showDD,
       showDropDown,
       showUnfinishedDD,
+      checkForNotification,
+      notifications,
       showAssignedDD,
       showFinishedDD,
-      showLicensedDD, 
+      showLicensedDD,
       search,
-      logout, 
+      logout,
       primaryText,
       adminName,
-      isUserManager, 
+      isUserManager,
     };
   },
 };
