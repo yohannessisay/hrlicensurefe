@@ -1,4 +1,4 @@
-import { baseUrl } from "../composables/baseURL";
+import { baseUrl } from "../../composables/baseURL";
 let reviewerUrls = {
   newLicense: `${baseUrl}/newLicenses/status/`,
   renewal: `${baseUrl}/renewals/status/`,

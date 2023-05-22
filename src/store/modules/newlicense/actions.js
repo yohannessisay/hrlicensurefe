@@ -374,7 +374,7 @@ export default {
     }
   },
 
-  async getNewLicense({ commit }) {
+  async getNewLicense() {
     try {
       const resp = await ApiService.get(
         baseUrl + "/newLicenses/user/" + userId
@@ -384,7 +384,7 @@ export default {
       return error;
     }
   },
-  async getNewLicenseByUser({ commit }, id) {
+  async getNewLicenseByUser(context, id) {
     try {
       const resp = await ApiService.get(baseUrl + "/newLicenses/user/" + id);
       return resp;

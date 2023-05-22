@@ -1,7 +1,7 @@
 <template>
   <div class="sidebar">
     <router-link to="/admin/review/">
-       <div class="logo-details">
+      <div class="logo-details">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 39.082 39.096"
@@ -31,110 +31,121 @@
         <span class="logo_name ml-4">eHPL</span>
       </div>
     </router-link>
-        <li class="inverted-border-radius mb-8 mt-4">
-      <i class="bx bx-refresh ml-8 mt-4" style="color: #224771"></i>
+    <div id="outer">
+      <div class="top left"></div>
+    </div>
+    <li class="inverted-border-radius mb-8 mt-4">
+      <i class="bx bx-plus ml-8 mt-4" style="color: #224771"></i>
 
-      <span class="header_text ml-4"> Renewal</span>
+      <span class="header_text ml-4">
+        {{
+          finalUrl == "newLicense"
+            ? "New License"
+            : finalUrl == "renewal"
+            ? "Renewal"
+            : finalUrl == "goodstanding"
+            ? "Goodstanding"
+            : ""
+        }}</span
+      >
     </li>
     <ul class="nav-links">
-      <router-link to="/admin/renewal/">
-        <li
-          :class="$route.fullPath === '/admin/renewal/' ? 'mb-2 active' : ''"
-        >
-          <a href="">
-            <i class="bx bx-certification"></i>
+      <router-link :to="returnClassUrl()">
+        <li :class="$route.fullPath == returnClassUrl() ? 'mb-2 active' : ''">
+          <a href="#Unassigned">
+            <i class="bx bx-certification "></i>
 
             <span class="links_name"> Unassigned</span>
           </a>
         </li>
       </router-link>
-      <router-link to="/admin/renewal/inReview">
+      <router-link :to="returnClassUrl() + 'inReview'">
         <li
           :class="
-            $route.fullPath === '/admin/renewal/inReview'
+            $route.fullPath == returnClassUrl() + 'inReview'
               ? 'mb-2 active'
               : ''
           "
         >
-          <a href="">
-            <i class="bx bx-refresh"></i>
+          <a href="#inReview">
+            <i class="bx bx-refresh "></i>
             <span class="links_name">In Review</span>
           </a>
         </li>
       </router-link>
-      <router-link to="/admin/renewal/draft">
+      <router-link :to="returnClassUrl() + 'draft'">
         <li
           :class="
-            $route.fullPath === '/admin/renewal/draft' ? 'mb-2 active' : ''
+            $route.fullPath == returnClassUrl() + 'draft' ? 'mb-2 active' : ''
           "
         >
-          <a href="">
-            <i class="bx bx-pencil"></i>
+          <a href="#Draft">
+            <i class="bx bx-pencil "></i>
             <span class="links_name">Draft</span>
           </a>
         </li>
       </router-link>
-      <router-link to="/admin/renewal/approved">
+      <router-link :to="returnClassUrl() + 'approved'">
         <li
           :class="
-            $route.fullPath === '/admin/renewal/approved'
+            $route.fullPath == returnClassUrl() + 'approved'
               ? 'mb-2 active'
               : ''
           "
         >
-          <a href="#">
-            <i class="bx bx-badge"></i>
+          <a href="#Approved">
+            <i class="bx bx-badge "></i>
             <span class="links_name">Approved</span>
           </a>
         </li>
       </router-link>
-      <router-link to="/admin/renewal/declined">
+      <router-link :to="returnClassUrl() + 'declined'">
         <li
           :class="
-            $route.fullPath === '/admin/renewal/declined'
+            $route.fullPath == returnClassUrl() + 'declined'
               ? 'mb-2 active'
               : ''
           "
         >
-          <a href="#">
-            <i class="bx bx-error-alt"></i>
+          <a href="#Declined">
+            <i class="bx bx-error-alt "></i>
             <span class="links_name">Declined</span>
           </a>
         </li>
       </router-link>
-      <router-link to="/admin/renewal/underSupervision">
+      <router-link :to="returnClassUrl() + 'underSupervision'">
         <li
           :class="
-            $route.fullPath === '/admin/renewal/underSupervision'
+            $route.fullPath == returnClassUrl() + 'underSupervision'
               ? 'mb-2 active'
               : ''
           "
         >
-          <a href="#">
-            <i class="bx bx-folder-open"></i>
+          <a href="#Under Supervision">
+            <i class="bx bx-folder-open "></i>
             <span class="links_name">Under Supervision</span>
           </a>
         </li>
       </router-link>
-      <router-link to="/admin/renewal/licensed">
+      <router-link :to="returnClassUrl() + 'licensed'">
         <li
           :class="
-            $route.fullPath === '/admin/renewal/licensed'
+            $route.fullPath == returnClassUrl() + 'licensed'
               ? 'mb-2 active'
               : ''
           "
         >
-          <a href="#">
+          <a href="#Licensed">
             <i class="bx bx-badge-check"></i>
             <span class="links_name">Licensed</span>
           </a>
         </li>
-        <router-link to="/admin/renewal/revoked">
+      </router-link>
+
+      <router-link :to="returnClassUrl() + 'revoked'">
         <li
           :class="
-            $route.fullPath === '/admin/renewal/revoked'
-              ? 'mb-2 active'
-              : ''
+            $route.fullPath == returnClassUrl() + 'revoked' ? 'mb-2 active' : ''
           "
         >
           <a href="#Licensed">
@@ -144,51 +155,44 @@
         </li>
       </router-link>
 
-      <router-link to="/admin/renewal/suspended">
+      <router-link :to="returnClassUrl() + 'suspended'">
         <li
           :class="
-            $route.fullPath === '/admin/renewal/suspended'
+            $route.fullPath == returnClassUrl() + 'suspended'
               ? 'mb-2 active'
               : ''
           "
         >
           <a href="#Licensed">
-            <i class="bx bx-stop-circle bx-sm"></i>
+            <i class="bx bx-stop-circle "></i>
             <span class="links_name">Suspended</span>
           </a>
         </li>
       </router-link>
 
-      <router-link to="/admin/renewal/returned">
+      <router-link :to="returnClassUrl() + 'returned'">
         <li
           :class="
-            $route.fullPath === '/admin/renewal/returned'
+            $route.fullPath == returnClassUrl() + 'returned'
               ? 'mb-2 active'
               : ''
           "
         >
           <a href="#Licensed">
-            <i class="bx bx-rotate-left bx-sm"></i>
+            <i class="bx bx-rotate-left "></i>
             <span class="links_name">Returned</span>
           </a>
         </li>
       </router-link>
-      </router-link>
     </ul>
-      <ul class="nav-links">
-  
-      <div
-        class="profile-details mb-8 "
-        style="
-          margin-top:100px;
-        "
-      >
+    <ul class="nav-links">
+      <div class="profile-details mb-8 ml-4">
         <router-link to="/admin/review/">
-          <li>
+          <li style="margin-top:100px;">
             <a href="" class="ml-6">
-              <i class="bx bx-arrow-to-left text-white "></i>
+              <i class="bx bx-arrow-to-left text-white"></i>
 
-              <span class="links_name text-white mr-12 ">Home</span>
+              <span class="links_name text-white mr-12">Home</span>
             </a>
           </li>
         </router-link>
@@ -196,6 +200,25 @@
     </ul>
   </div>
 </template>
-<script>
-export default {};
+<script> 
+export default {
+  props: ["finalUrl"],
+  setup(props) {
+    let classUrl = "";
+    const returnClassUrl = () => {
+      props.finalUrl == "newLicense"
+        ? (classUrl = "/admin/newLicense/")
+        : props.finalUrl == "renewal"
+        ? (classUrl = "/admin/renewal/")
+        : props.finalUrl == "goodstanding"
+        ? (classUrl = "/admin/goodstanding/")
+        : "";
+      return classUrl;
+    };
+    return {
+      classUrl,
+      returnClassUrl,
+    };
+  },
+};
 </script>

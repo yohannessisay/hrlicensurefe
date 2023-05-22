@@ -640,6 +640,9 @@ export default {
           if (response.statusText == "Created") {
             store.dispatch("sms/sendSms", smsData).then(() => {
               isLoading.value = false;
+              setTimeout(() => {
+                window.location.reload();
+              }, 1000);
               toast.success("Selected reviewer assigned Successfully", {
                 timeout: 5000,
                 position: "bottom-center",
@@ -647,10 +650,7 @@ export default {
                 pauseOnHover: true,
                 icon: true,
               });
-              isLoading.value = true;
-              setTimeout(() => {
-                window.location.reload();
-              }, 1000);
+             
             });
           } else {
             toast.error(
@@ -663,10 +663,8 @@ export default {
                 icon: true,
               }
             );
-            setTimeout(() => {
-              window.location.reload();
-            }, 3000);
-            isLoading.value = true;
+       
+            isLoading.value = false;
           }
         })
         .catch(() => {
@@ -677,10 +675,8 @@ export default {
             pauseOnHover: true,
             icon: true,
           });
-          setTimeout(() => {
-            window.location.reload();
-          }, 3000);
-          isLoading.value = true;
+         
+          isLoading.value = false;
         });
     };
     const showModal = () => {

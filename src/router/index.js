@@ -48,11 +48,7 @@ const routes = [
     name: "verifyOTP",
     component: () => import("../components/Signup/verifyOTP.vue")
   },
-  {
-    path: "/login",
-    name: "Login",
-    component: () => import("../views/Login.vue")
-  },
+ 
 
   {
     path: "/admin/resetpassword/:id/:token",
@@ -64,11 +60,7 @@ const routes = [
     name: "ResetPassword",
     component: () => import("../views/ResetPasswordUser.vue")
   },
-  {
-    path: "/licenseRequests",
-    name: "LicenseRequests",
-    component: () => import("../views/LicenseRequests.vue")
-  },
+ 
   {
     name: "Google-Form",
     path: "/google-form",

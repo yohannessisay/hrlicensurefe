@@ -235,6 +235,9 @@ export default {
     let showDD = ref(false);
     let darkMode = ref(false);
     let showNotif = ref(false);
+    let checkedForNotification = JSON.parse(
+      localStorage.getItem("checkedForExpired")
+    );
     const id = +localStorage.getItem("userId");
     let notifications = ref([]);
     let showNotificationDropDown = ref(false);
@@ -299,27 +302,36 @@ export default {
         });
     };
     const checkForExpiredLicense = () => {
-      store.dispatch("newlicense/getNewLicenseByUserId", id).then((res) => {
-        let tempData = res && res.data && res.data.data ? res.data.data : [];
+      checkedForNotification == false
+        ? store.dispatch("newlicense/getNewLicenseByUserId", id).then((res) => {
+            let tempData =
+              res && res.data && res.data.data ? res.data.data : [];
 
-        tempData.forEach((element) => {
-          let tempDate = expirationDatesHelper(
-            element.licenseExpirationDate
-              ? element.licenseExpirationDate.slice(0, 10)
-              : new Date().toISOString().slice(0, 10)
-          );
+            tempData.forEach((element) => {
+              let tempDate = expirationDatesHelper(
+                element.licenseExpirationDate
+                  ? element.licenseExpirationDate.slice(0, 10)
+                  : new Date().toISOString().slice(0, 10)
+              );
 
-          notifications.value.push({
-            message:
-              tempDate && tempDate <= 0
-                ? `Your license with number ${element.newLicenseCode} has expired please renew your license.`
-                : tempDate && tempDate < 60
-                ? `Your license with number ${element.newLicenseCode} is about to expire in ${tempDate} days, please renew your license.`
-                : "",
-            url: "/Applicant/Renewal",
-          });
-        });
-      });
+              notifications.value.push({
+                message:
+                  tempDate && tempDate <= 0
+                    ? `Your license with number ${element.newLicenseCode} has expired please renew your license.`
+                    : tempDate && tempDate < 60
+                    ? `Your license with number ${element.newLicenseCode} is about to expire in ${tempDate} days, please renew your license.`
+                    : "",
+                url: "/Applicant/Renewal",
+              });
+              localStorage.setItem(
+                "expiredNotifications",
+                JSON.stringify(notifications.value)
+              );
+            });
+          })
+        : (notifications.value = JSON.parse(
+            localStorage.getItem("expiredNotifications")
+          ));
     };
     const expirationDatesHelper = (date_1) => {
       let date_2 = new Date().toISOString().slice(0, 10);

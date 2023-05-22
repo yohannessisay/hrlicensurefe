@@ -1,6 +1,6 @@
 <template>
   <!-- Sidebar -->
-  <reviewer-side-nav />
+  <reviewer-side-nav :finalUrl="'newLicense'"></reviewer-side-nav>
   <!-- Sidebar -->
 
   <section class="home-section">
@@ -189,7 +189,7 @@
                             class="
                             justify-center
                             items-center
-                            text-grey-200 text-2xl
+                            text-grey-800 text-2xl
                           "
                           >
                             {{ documentTypeName }}
@@ -1083,7 +1083,7 @@
                                 </div>
 
                                 <div v-else>
-                                  <h5 class="text-grey-200 text-2xl">
+                                  <h5 class="text-grey-800 text-2xl">
                                     {{
                                       docs[index] && docs[index].documentType
                                         ? docs[index].documentType.name
@@ -1447,7 +1447,7 @@
                                     class="
                                     justify-center
                                     items-center
-                                    text-grey-200 text-2xl
+                                    text-grey-800 text-2xl
                                   "
                                   >
                                     {{ modalDocumentTypeName }}
@@ -1882,7 +1882,7 @@ import { googleApi } from "@/composables/baseURL";
 import Modal from "@/sharedComponents/Modal";
 import { useToast } from "vue-toastification";
 import moment from "moment";
-import ReviewerSideNav from "../SharedComponents/sideNav.vue";
+import ReviewerSideNav from "../../../SharedComponents/sideNav.vue";
 import ReviewerNavBar from "../../../SharedComponents/navBar.vue";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";

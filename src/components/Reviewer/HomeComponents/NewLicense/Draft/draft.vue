@@ -1,6 +1,6 @@
 <template>
   <!-- Sidebar -->
-  <reviewer-side-nav />
+  <reviewer-side-nav :finalUrl="'newLicense'"></reviewer-side-nav>
   <!-- Sidebar -->
 
   <section class="home-section">
@@ -464,7 +464,7 @@
 </template>
 
 <script>
-import ReviewerSideNav from "../SharedComponents/sideNav.vue";
+import ReviewerSideNav from "../../../SharedComponents/sideNav.vue";
 import ReviewerNavBar from "../../../SharedComponents/navBar.vue";
 import NewLicenseMainContent from "../../../SharedComponents/draft.vue";
 import { ref, onMounted } from "vue";
