@@ -145,7 +145,7 @@ import { ref } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import Spinner from "@/sharedComponents/Spinner";
-import logout from "../adminLogout.js";
+
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import PasswordMeter from "vue-simple-password-meter";
 
@@ -155,15 +155,12 @@ export default {
     FlashMessage,
     PasswordMeter,
   },
-  computed: {
-    logout: () => logout,
-  },
+
   name: "NewPasswordForm",
   setup() {
     let showLoading = ref(false);
-    const isFirstTimeLogin = JSON.parse(
-      localStorage.getItem("allAdminData")
-    ).isFirstTime;
+    const isFirstTimeLogin = JSON.parse(localStorage.getItem("allAdminData"))
+      .isFirstTime;
 
     let passwordInfo = ref({
       email: localStorage.getItem("adminEmail"),
@@ -211,11 +208,12 @@ export default {
             showFlash.value = true;
             setTimeout(() => {
               if (isFirstTimeLogin) {
-                logout(router);
+                localStorage.clear();
+                router.push({ path: "/admin" });
               } else {
                 router.push({ path: "/admin/review" });
               }
-            }, 3000);
+            }, 1000);
           }
         })
         .catch((err) => {

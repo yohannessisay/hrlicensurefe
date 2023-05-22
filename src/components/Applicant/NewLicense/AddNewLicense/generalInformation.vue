@@ -1,5 +1,12 @@
 <template>
-  <nav :class="isDarkMode&&isDarkMode==true?'bg-secondaryDark mb-4 px-5 py-3 rounded-md w-full':'bg-grey-100 mb-4 px-5 py-3 rounded-md w-full'" id="topNav">
+  <nav
+    :class="
+      isDarkMode && isDarkMode == true
+        ? 'bg-secondaryDark mb-4 px-5 py-3 rounded-md w-full'
+        : 'bg-grey-100 mb-4 px-5 py-3 rounded-md w-full'
+    "
+    id="topNav"
+  >
     <ol class="list-reset flex">
       <li>
         <router-link to="/menu">
@@ -992,7 +999,6 @@
         </button>
       </div>
     </form>
-    
   </div>
 </template>
 <script>
@@ -1394,7 +1400,6 @@ export default {
 
     onMounted(async () => {
       window.addEventListener("darkModeChanged", (data) => {
-       
         isDarkMode.value = data.detail ? data.detail.content : "";
       });
       fetchApplicantType();

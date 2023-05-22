@@ -1,7 +1,7 @@
 <template>
   <Navigation />
 
-  <div class=" body">
+  <div class=" body  ">
     <div class="wave"></div>
     <div class="wave"></div>
     <div class="wave"></div>
@@ -174,32 +174,33 @@
         </g>
       </svg>
     </div>
-    <div class="frosted-glass m-4">
+
+    <div class="frosted-glass m-4 ">
       <h4 class="p-4 font-DosisBold text-2xl text-primary-700 ">
-        The Human Resource Licensing (HRL) system is a web-based application
-        that allows medical professionals in Ethiopia to apply for a new
-        license, renew their license, or apply for a good standing letter. The
-        system is managed by the Ministry of Health (MOH) and is designed to
-        make it easier and more efficient for medical professionals to obtain
-        and maintain their licenses.
+        The electronical Health Professional Licensing (eHPL) system is a
+        web-based application that allows medical professionals in Ethiopia to
+        apply for a new license, renew their license, or apply for a good
+        standing letter. The system is managed by the Ministry of Health (MOH)
+        and is designed to make it easier and more efficient for medical
+        professionals to obtain and maintain their licenses.
       </h4>
       <div class="grid grids-cols-1">
         <h4 class="p-4 font-DosisBold text-2xl text-primary-700 ">
-          The Human Resource Licensing (HRL) system is a web-based application
-          that allows medical professionals in Ethiopia to apply for a new
-          license, renew their license, or apply for a good standing letter. The
-          system is managed by the Ministry of Health (MOH) and is designed to
-          make it easier and more efficient for medical professionals to obtain
-          and maintain their licenses.
+          The electronical Health Professional Licensing (eHPL) system is a
+          web-based application that allows medical professionals in Ethiopia to
+          apply for a new license, renew their license, or apply for a good
+          standing letter. The system is managed by the Ministry of Health (MOH)
+          and is designed to make it easier and more efficient for medical
+          professionals to obtain and maintain their licenses.
         </h4>
 
         <h4 class="p-4 font-DosisBold text-2xl text-primary-700  ">
           To apply for a new license, medical professionals must first create an
-          account on the HRL system. Once they have created an account, they can
-          begin the application process by providing their personal information,
-          educational background, and work experience. They will also need to
-          submit copies of their transcripts, diploma, and any other relevant
-          documents.
+          account on the eHPL system. Once they have created an account, they
+          can begin the application process by providing their personal
+          information, educational background, and work experience. They will
+          also need to submit copies of their transcripts, diploma, and any
+          other relevant documents.
         </h4>
         <h4 class="p-4 font-DosisBold text-2xl  text-primary-700 ">
           Once the application has been submitted, it will be reviewed by a
@@ -208,14 +209,14 @@
           years and must be renewed every five years.
         </h4>
         <h4 class="p-4 font-DosisBold text-2xl  text-primary-700 ">
-          Medical professionals can also use the HRL system to apply for a good
+          Medical professionals can also use the eHPL system to apply for a good
           standing letter. A good standing letter is a document that verifies
           that a medical professional is in good standing with the MOH. This
           letter is often required by employers or other organizations.
         </h4>
         <h4 class="p-4 font-DosisBold text-2xl  text-primary-700 ">
           To apply for a good standing letter, medical professionals must first
-          log in to their HRL account. Once they have logged in, they can begin
+          log in to their eHPL account. Once they have logged in, they can begin
           the application process by providing their personal information and
           license number. They will also need to provide a reason for requesting
           the letter.
@@ -226,14 +227,14 @@
           professional will be issued a good standing letter.
         </h4>
         <h4 class="p-4 font-DosisBold text-2xl  text-primary-700 ">
-          The HRL system is a valuable resource for medical professionals in
+          The eHPL system is a valuable resource for medical professionals in
           Ethiopia. It makes it easier and more efficient for medical
           professionals to obtain and maintain their licenses. The system also
           helps to ensure that only qualified medical professionals are
           practicing in Ethiopia.
         </h4>
         <h4 class="p-4 font-DosisBold text-2xl  text-primary-700 ">
-          Here are some of the benefits of using the HRL system:
+          Here are some of the benefits of using the eHPL system:
         </h4>
         <ul>
           <li class="ml-8 font-DosisBold text-2xl  text-primary-700 ">
@@ -295,6 +296,7 @@ svg {
 }
 .body {
   overflow: auto;
+  height: 90vh;
   background: linear-gradient(
     315deg,
     rgba(245, 0, 0, 0.575) 10%,
