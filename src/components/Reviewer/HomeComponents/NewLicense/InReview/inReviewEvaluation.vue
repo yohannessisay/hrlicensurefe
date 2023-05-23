@@ -2312,7 +2312,7 @@ export default {
 
       if (actionValue === "ApproveEvent" && nothingDropped.value == true) {
         smsMessage = newLicense.value
-          ? "Dear applicant your applied new license of number " +
+          ? "Dear applicant your applied new license of code " +
             newLicense.value.newLicenseCode +
             " has been approved after careful examination of your uploaded documents by our reviewers. Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
           : "";
@@ -2326,7 +2326,7 @@ export default {
         showRemarkError.value = true;
         nothingDropped.value == true;
         smsMessage = newLicense.value
-          ? "Dear applicant your applied new license of number " +
+          ? "Dear applicant your applied new license of code " +
             newLicense.value.newLicenseCode +
             " has been declined after careful examination of your uploaded documents by our reviewers. Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
           : "";
@@ -2413,7 +2413,7 @@ export default {
                   new_license_id: newLicense.value ? newLicense.value.id : null,
                   message: newLicense.value
                     ? // eslint-disable-next-line prettier/prettier
-                      `Dear applicant your submitted new license application of number ${
+                      `Dear applicant your submitted new license application of code ${
                         newLicense.value.newLicenseCode
                       } has been ${
                         actionValue == "ApproveEvent"
@@ -2687,7 +2687,7 @@ export default {
               : ""
           ],
           message: newLicense.value
-            ? "Dear applicant your applied new license of number " +
+            ? "Dear applicant your applied new license of code " +
               newLicense.value.newLicenseCode +
               " has been set to be under supervison of MR/MRS:-" +
               newLicense.value.supervisor +
@@ -2725,7 +2725,7 @@ export default {
                   new_license_id: newLicense.value ? newLicense.value.id : null,
                   message: newLicense.value
                     ? // eslint-disable-next-line prettier/prettier
-                      "Dear applicant your applied new license of number " +
+                      "Dear applicant your applied new license of code " +
                       newLicense.value.newLicenseCode +
                       " has been set to be under supervison of MR/MRS:-" +
                       newLicense.value.supervisor +

@@ -2295,7 +2295,7 @@ export default {
 
       if (actionValue === "ApproveEvent" && nothingDropped.value == true) {
         smsMessage = renewal.value
-          ? "Dear applicant your applied renewal of number " +
+          ? "Dear applicant your applied renewal of code " +
             renewal.value.renewalCode +
             " has been approved after careful examination of your uploaded documents by our reviewers. Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
           : "";
@@ -2309,7 +2309,7 @@ export default {
         showRemarkError.value = true;
         nothingDropped.value == true;
         smsMessage = renewal.value
-          ? "Dear applicant your applied renewal of number " +
+          ? "Dear applicant your applied renewal of code " +
             renewal.value.renewalCode +
             " has been declined after careful examination of your uploaded documents by our reviewers. Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
           : "";
@@ -2385,6 +2385,34 @@ export default {
                   icon: true,
                 });
                 router.push({ path: "/admin/renewal" });
+                let userNotification = {
+                  user_id:
+                  renewal.value && renewal.value.applicant
+                      ? renewal.value.data.applicant.id
+                      : null,
+                  reviewer_id: renewal.value.licenseReviewer
+                    ? renewal.value.licenseReviewer.reviewerId
+                    : null,
+                  renewal_id: renewal.value ? renewal.value.id : null,
+                  message: renewal.value
+                    ? // eslint-disable-next-line prettier/prettier
+                      `Dear applicant your submitted new license application of code ${
+                        renewal.value.renewalCode
+                      } has been ${
+                        actionValue == "ApproveEvent"
+                          ? "approved"
+                          : actionValue == "DeclineEvent"
+                          ? "declined"
+                          : ""
+                      }by a reviewer.`
+                    : "",
+                  type: "applicant_new_license",
+                  status: "new"
+                };
+                store.dispatch(
+                  "notification/notifyApplicant",
+                  userNotification
+                );
               });
             } else {
               toast.error("Please try again", {
@@ -2640,7 +2668,7 @@ export default {
               : "",
           ],
           message: renewal.value
-            ? "Dear applicant your applied renewal of number " +
+            ? "Dear applicant your applied renewal of code " +
               renewal.value.renewalCode +
               " has been set to be under supervison of MR/MRS:-" +
               renewal.value.supervisor +
@@ -2666,6 +2694,34 @@ export default {
                   icon: true,
                 });
                 router.push({ path: "/admin/renewal" });
+                let userNotification = {
+                  user_id:
+                  renewal.value && renewal.value.applicant
+                      ? renewal.value.data.applicant.id
+                      : null,
+                  reviewer_id: renewal.value.licenseReviewer
+                    ? renewal.value.licenseReviewer.reviewerId
+                    : null,
+                  renewal_id: renewal.value ? renewal.value.id : null,
+                  message: renewal.value
+                  ? // eslint-disable-next-line prettier/prettier
+                      "Dear applicant your applied renewal application of code " +
+                      renewal.value.renewalCode +
+                      " has been set to be under supervison of MR/MRS:-" +
+                      renewal.value.supervisor +
+                      " at institution of " +
+                      instSearched.value.name +
+                      " for " +
+                      minDate +
+                      " days "
+                    : "",
+                  type: "applicant_new_license",
+                  status: "new"
+                };
+                store.dispatch(
+                  "notification/notifyApplicant",
+                  userNotification
+                );
               });
             } else {
               toast.error("Please try again", {

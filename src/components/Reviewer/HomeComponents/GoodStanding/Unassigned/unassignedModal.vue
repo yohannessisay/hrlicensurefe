@@ -411,9 +411,7 @@
                                     })
                                   "
                                 >
-                                  {{
-                                    button && button.name ? button.name : ""
-                                  }}
+                                  {{ button && button.name ? button.name : "" }}
                                   Self
                                 </button>
                               </div>
@@ -691,7 +689,20 @@ export default {
           : "",
       };
       isLoading.value = true;
-
+      let userNotification = {
+        user_id:
+          modalData.value.data && modalData.value.data.applicant
+            ? modalData.value.data.applicant.id
+            : null,
+        reviewer_id: assign.value.reviewerId,
+        goodstanding_id: modalData.value.data ? modalData.value.data.id : null,
+        message: modalData.value.data
+          ? // eslint-disable-next-line prettier/prettier
+            `Dear applicant your submitted goodstanding application letter of number ${modalData.value.data.goodStandingCode} has been assigned to a reviewer.`
+          : "",
+        type: "applicant_good_standing",
+        status: "new",
+      };
       store
         .dispatch("reviewer/assignGoodStandingReviewer", assign.value)
         .then((response) => {
@@ -707,7 +718,32 @@ export default {
               isLoading.value = false;
               setTimeout(() => {
                 window.location.reload();
-              }, 3000);
+              }, 1000);
+              store
+                .dispatch("notification/notifyApplicant", userNotification)
+                .then((res) => {
+                  if (res && res.status == "Success") {
+                    let notification = {
+                      user_id:
+                        modalData.value.data && modalData.value.data.applicant
+                          ? modalData.value.data.applicant.id
+                          : null,
+                      reviewer_id: assign.value.reviewerId,
+                      goodstanding_id: modalData.value.data
+                        ? modalData.value.data.id
+                        : null,
+                      message: modalData.value.data
+                        ? // eslint-disable-next-line prettier/prettier
+                          `Dear reviewer , a  new submitted goodstanding application with code ${modalData.value.data.goodStandingCode} has been assigned to you.`
+                        : "",
+                      type: "reviewer_good_standing",
+                      status: "new",
+                    };
+                    store.dispatch("notification/notifyReviewer", notification);
+                  } else {
+                    isLoading.value = false;
+                  }
+                });
             });
           } else {
             toast.error(
@@ -833,7 +869,6 @@ export default {
             modalData.value.data = result;
             licenseData.value = result;
             isLoadingStart.value = false;
- 
           }
         });
     };
