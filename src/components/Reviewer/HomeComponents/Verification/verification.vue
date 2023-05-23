@@ -88,6 +88,198 @@
                       <div
                         class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto"
                       >
+                        <div class="p-4 bg-grey-200 mb-4 rounded-lg">
+                          <h1 class="text-2xl mb-1">Filters</h1>
+                          <div class="grid lg:grid-cols-4 xl:gap-6  mt-4">
+                            <div class="mb-3 xl:w-full">
+                              <label for="" class="">Applicant Name</label>
+                              <input
+                                type="search"
+                                class="
+                    form-control
+                    relative
+                    flex-auto
+                    min-w-0
+                    block
+                    w-full
+                    px-6
+                    py-1.5
+                    text-base
+                    font-normal
+                    text-gray-700
+                    bg-white bg-clip-padding
+                    border border-solid border-gray-300
+                    rounded
+                    transition
+                    ease-in-out
+                    focus:text-gray-700
+                    focus:bg-white
+                    focus:border-blue-600
+                    focus:outline-none
+                  "
+                                @keyup.enter="applyFilter()"
+                                placeholder="Start Searching For Name"
+                                aria-label="Search"
+                                aria-describedby="button-addon2"
+                                v-model="searchTerm"
+                              />
+                            </div>
+                            <div class="mb-3 xl:w-full">
+                              <label for="" class="">Code</label>
+                              <input
+                                type="search"
+                                class="
+                    form-control
+                    relative
+                    flex-auto
+                    min-w-0
+                    block
+                    w-full
+                    px-6
+                    py-1.5
+                    text-base
+                    font-normal
+                    text-gray-700
+                    bg-white bg-clip-padding
+                    border border-solid border-gray-300
+                    rounded
+                    transition
+                    ease-in-out
+                    focus:text-gray-700
+                    focus:bg-white
+                    focus:border-blue-600
+                    focus:outline-none
+                  "
+                                @keyup.enter="applyFilter()"
+                                placeholder="Start Searching For code"
+                                aria-label="Search"
+                                aria-describedby="button-addon2"
+                                v-model="codeSearchTerm"
+                              />
+                            </div>
+                            <div class="mb-3 xl:w-full mr-2">
+                              <label for="" class="ml-4">Region</label>
+                              <select
+                                class="
+                    form-select
+                    appearance-none
+                    block
+                    w-full
+                    px-6
+                    ml-4
+                    py-2
+                    text-base
+                    font-normal
+                    text-gray-700
+                    bg-white bg-clip-padding bg-no-repeat
+                    border border-solid border-gray-300
+                    rounded
+                    transition
+                    ease-in-out
+                    focus:text-gray-700
+                    focus:bg-white
+                    focus:border-blue-600
+                    focus:outline-none
+                  "
+                                v-model="regionSearchTerm"
+                                @change="applyFilter()"
+                                aria-label="Default select"
+                              >
+                                <option selected value="all">All</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                              </select>
+                            </div>
+                          </div>
+                          <h2 class="text-primary-800 text-lg">Applied Date</h2>
+                          <div class="grid grid-cols-4">
+                            <div class="mb-3">
+                              <label for="" class="ml-2">From</label>
+                              <input
+                                v-model="searchTermFromDate"
+                                type="date"
+                                class="
+                        appearance-none
+                        block
+                        w-full
+                        px-6
+                        ml-2
+                        py-2
+                        text-base
+                        font-normal
+                        text-gray-700
+                        bg-white bg-clip-padding bg-no-repeat
+                        border border-solid border-gray-300
+                        rounded
+                        transition
+                        ease-in-out
+                        focus:text-gray-700
+                        focus:bg-white
+                        focus:border-blue-600
+                        focus:outline-none
+                      "
+                                aria-label="Default select example"
+                              />
+                            </div>
+                            <div class="mb-3 ml-2">
+                              <label for="" class="ml-4"> To</label>
+                              <input
+                                type="date"
+                                class="
+                        appearance-none
+                        block
+                        w-full
+                        px-6
+                        ml-4
+                        py-2
+                        text-base
+                        font-normal
+                        text-gray-700
+                        bg-white bg-clip-padding bg-no-repeat
+                        border border-solid border-gray-300
+                        rounded
+                        transition
+                        ease-in-out
+                        focus:text-gray-700
+                        focus:bg-white
+                        focus:border-blue-600
+                        focus:outline-none
+                      "
+                                v-model="searchTermToDate"
+                                @change="applyFilter()"
+                                aria-label="Default select example"
+                              />
+                            </div>
+                            <div class="ml-8 mt-4">
+                              <button
+                                type="button"
+                                class="
+                        inline-block
+                        px-6
+                        py-2
+                        mt-2
+                        border-2 border-primary-300
+                        text-white
+                        font-medium
+                        text-xs
+                        leading-tight
+                        uppercase
+                        rounded
+                        bg-primary-600
+                        hover:bg-white hover:bg-opacity-5 hover:text-primary-600
+                        focus:outline-none focus:ring-0
+                        transition
+                        duration-150
+                        ease-in-out
+                      "
+                                @click="clearFilters()"
+                              >
+                                <i class="fa fa-close"></i>
+                                Clear Filters
+                              </button>
+                            </div>
+                          </div>
+                        </div>
                         <div
                           class="
                             inline-block
@@ -106,6 +298,7 @@
                             :sortable="verificationTable.sortable"
                             @is-finished="tableLoadingFinish"
                             @row-clicked="rowClicked"
+                            @do-search="doSearch"
                           ></vue-table-lite>
                         </div>
                       </div>
@@ -134,6 +327,7 @@
                             :sortable="verificationTableOthers.sortable"
                             @is-finished="tableLoadingFinishOthers"
                             @row-clicked="rowClickedOthers"
+                            @do-search="doSearchOth"
                           ></vue-table-lite>
                         </div>
                       </div>
@@ -182,14 +376,8 @@ export default {
     let modalData = ref({});
     let modalDataOthers = ref({});
 
-    let allInfo = ref({
-      users: [],
-    });
-    let isRegional = ref(false);
-
     const verificationTable = ref({});
     const verificationTableOthers = ref({});
-    let loggedInAdmin = JSON.parse(localStorage.getItem("allAdminData"));
 
     verificationTable.value = {
       isLoading: true,
@@ -197,175 +385,203 @@ export default {
     verificationTableOthers.value = {
       isLoading: true,
     };
-    let tableData = ref([]);
-    let tableDataOthers = ref([]);
-    let tableDataTemp = ref([]);
-    let tableDataTempOthers = ref([]);
-    let params = { url: "", id: "" };
+    let tableData = [];
+    let tableDataOthers = [];
+    let allInfo = [];
+    let allInfoOth = [];
+    let searchTerm = ref("");
+    let codeSearchTerm = ref("");
+    let regionSearchTerm = ref("");
+    let searchTermFromDate = ref("");
+    let searchTermToDate = ref("");
 
-    const getVerification = () => {
-      store.dispatch(params.url, params.id ? params.id : "").then((res) => {
-        allInfo.value = res;
-        allInfo.value.byReviewer.forEach((element) => {
-          tableData.value.push({
-            Number: element.id,
-            ApplicantName:
-              (element.profile.name ? element.profile.name : "") +
-              " " +
-              (element.profile.fatherName ? element.profile.fatherName : "") +
-              " " +
-              (element.profile.grandFatherName
-                ? element.profile.grandFatherName
-                : ""),
-            RequestedRegion: element.region.name,
-            LicenseCode: element.newLicense
-              ? element.newLicense.newLicenseCode
-              : element.renewal
-              ? element.renewal.renewalCode
-              : "-------",
-            IsVerified: element.isVerified ? "Verified" : "Not Verified",
-            data: element,
+    let searchTermOth = ref("");
+    let codeSearchTermOth = ref("");
+    let regionSearchTermOth = ref("");
+    let searchTermFromDateOth = ref("");
+    let searchTermToDateOth = ref("");
+
+    const getVerification = (apiParameters) => {
+      store
+        .dispatch("applicationVerification/getRequests", {
+          params: apiParameters,
+        })
+        .then((res) => {
+          allInfo =res.data && res.data.data 
+            ? res.data.data.rows
+            :  [];
+        console.log(allInfo);
+          allInfo.forEach((element) => {
+            tableData.push({
+              Number: element.id,
+              ApplicantName:
+                (element.profile.name ? element.profile.name : "") +
+                " " +
+                (element.profile.fatherName ? element.profile.fatherName : "") +
+                " " +
+                (element.profile.grandFatherName
+                  ? element.profile.grandFatherName
+                  : ""),
+              RequestedRegion: element.region.name,
+              LicenseCode: element.newLicense
+                ? element.newLicense.newLicenseCode
+                : element.renewal
+                ? element.renewal.renewalCode
+                : "-------",
+              IsVerified: element.isVerified ? "Verified" : "Not Verified",
+              data: element,
+            });
           });
-        });
-        tableDataTemp.value = tableData.value;
-        allInfo.value.byRegion.forEach((element) => {
-          tableDataOthers.value.push({
-            Number: element.id,
-            ApplicantName:
-              (element.profile.name ? element.profile.name : "") +
-              " " +
-              (element.profile.fatherName ? element.profile.fatherName : "") +
-              " " +
-              (element.profile.grandFatherName
-                ? element.profile.grandFatherName
-                : ""),
-            RequestedRegion: element.region.name,
-            LicenseCode: element.newLicense
-              ? element.newLicense.newLicenseCode
-              : element.renewal
-              ? element.renewal.renewalCode
-              : "-------",
-            IsVerified: element.isVerified ? "Verified" : "Not Verified",
-            data: element,
-          });
-        });
-        tableDataTempOthers.value = tableData.value;
 
-        verificationTable.value = {
-          columns: [
-            {
-              label: "Number",
-              field: "Number",
-              width: "3%",
-              sortable: true,
-              isKey: true,
-            },
-            {
-              label: "Applicant Name",
-              field: "ApplicantName",
-              width: "20%",
-              sortable: true,
-            },
-            {
-              label: "Requested Region",
-              field: "RequestedRegion",
-              width: "20%",
-              sortable: true,
-            },
-            {
-              label: "License Code",
-              field: "LicenseCode",
-              width: "20%",
-              sortable: true,
-            },
-            {
-              label: "Verified",
-              field: "IsVerified",
-              width: "20%",
-              sortable: true,
-            },
-
-            {
-              label: "",
-              field: "quick",
-              width: "10%",
-              display: function (row) {
-                return (
-                  '<button data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
-                  row.licenseNumber +
-                  '" >View</button>'
-                );
+          verificationTable.value = {
+            columns: [
+              {
+                label: "Number",
+                field: "Number",
+                width: "3%",
+                sortable: true,
+                isKey: true,
               },
-            },
-          ],
-          rows: JSON.parse(JSON.stringify(tableData.value)),
-          totalRecordCount: tableData.value.length,
-          sortable: {
-            order: "id",
-            sort: "asc",
-          },
-        };
-        verificationTableOthers.value = {
-          columns: [
-            {
-              label: "Number",
-              field: "Number",
-              width: "3%",
-              sortable: true,
-              isKey: true,
-            },
-            {
-              label: "Applicant Name",
-              field: "ApplicantName",
-              width: "20%",
-              sortable: true,
-            },
-            {
-              label: "Requested Region",
-              field: "RequestedRegion",
-              width: "20%",
-              sortable: true,
-            },
-            {
-              label: "License Code",
-              field: "LicenseCode",
-              width: "20%",
-              sortable: true,
-            },
-            {
-              label: "Verified",
-              field: "IsVerified",
-              width: "20%",
-              sortable: true,
-            },
-
-            {
-              label: "",
-              field: "quick",
-              width: "10%",
-              display: function (row) {
-                return (
-                  '<button data-bs-toggle="modal" data-bs-target="#staticBackdropOthers" class="edit-btn-others bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
-                  row.licenseNumber +
-                  '" >View</button>'
-                );
+              {
+                label: "Applicant Name",
+                field: "ApplicantName",
+                width: "20%",
+                sortable: true,
               },
+              {
+                label: "Requested Region",
+                field: "RequestedRegion",
+                width: "20%",
+                sortable: true,
+              },
+              {
+                label: "License Code",
+                field: "LicenseCode",
+                width: "20%",
+                sortable: true,
+              },
+              {
+                label: "Status",
+                field: "IsVerified",
+                width: "20%",
+                sortable: true,
+              },
+
+              {
+                label: "",
+                field: "quick",
+                width: "10%",
+                display: function(row) {
+                  return (
+                    '<button data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
+                    row.licenseNumber +
+                    '" >View</button>'
+                  );
+                },
+              },
+            ],
+            rows: tableData,
+            totalRecordCount:
+              res.data && res.data.data ? res.data.data.count : 0,
+            sortable: {
+              order: "id",
+              sort: "asc",
             },
-          ],
-          rows: JSON.parse(JSON.stringify(tableDataOthers.value)),
-          totalRecordCount: tableDataOthers.value.length,
-          sortable: {
-            order: "id",
-            sort: "asc",
-          },
-        };
-      });
+          };
+        });
     };
+    const getVerificationOthers = (apiParameters) => {
+      apiParameters.push({ key: "others", value: 1 });
+      store
+        .dispatch("applicationVerification/getRequests", {
+          params: apiParameters,
+        })
+        .then((res) => { 
+          res.data && res.data.data && res.data.data.status == "Success"
+            ? (allInfoOth = res.data.data.rows)
+            : (allInfoOth = []);
+          allInfoOth.forEach((element) => {
+            tableDataOthers.push({
+              Number: element.id,
+              ApplicantName:
+                (element.profile.name ? element.profile.name : "") +
+                " " +
+                (element.profile.fatherName ? element.profile.fatherName : "") +
+                " " +
+                (element.profile.grandFatherName
+                  ? element.profile.grandFatherName
+                  : ""),
+              RequestedRegion: element.region.name,
+              LicenseCode: element.newLicense
+                ? element.newLicense.newLicenseCode
+                : element.renewal
+                ? element.renewal.renewalCode
+                : "-------",
+              IsVerified: element.isVerified ? "Verified" : "Not Verified",
+              data: element,
+            });
+          });
+          verificationTableOthers.value = {
+            columns: [
+              {
+                label: "Number",
+                field: "Number",
+                width: "3%",
+                sortable: true,
+                isKey: true,
+              },
+              {
+                label: "Applicant Name",
+                field: "ApplicantName",
+                width: "20%",
+                sortable: true,
+              },
+              {
+                label: "Requested Region",
+                field: "RequestedRegion",
+                width: "20%",
+                sortable: true,
+              },
+              {
+                label: "License Code",
+                field: "LicenseCode",
+                width: "20%",
+                sortable: true,
+              },
+              {
+                label: "Status",
+                field: "IsVerified",
+                width: "20%",
+                sortable: true,
+              },
 
+              {
+                label: "",
+                field: "quick",
+                width: "10%",
+                display: function(row) {
+                  return (
+                    '<button data-bs-toggle="modal" data-bs-target="#staticBackdropOthers" class="edit-btn-others bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
+                    row.licenseNumber +
+                    '" >View</button>'
+                  );
+                },
+              },
+            ],
+            rows: tableDataOthers,
+            totalRecordCount:
+              res.data && res.data.data ? res.data.data.count : 0,
+            sortable: {
+              order: "id",
+              sort: "asc",
+            },
+          };
+        });
+    };
     const tableLoadingFinish = () => {
       let elements = document.getElementsByClassName("edit-btn");
 
-      Array.prototype.forEach.call(elements, function (element) {
+      Array.prototype.forEach.call(elements, function(element) {
         if (element.classList.contains("edit-btn")) {
           element.addEventListener("click", rowClicked());
         }
@@ -375,7 +591,7 @@ export default {
     const tableLoadingFinishOthers = () => {
       let elements = document.getElementsByClassName("edit-btn-others");
 
-      Array.prototype.forEach.call(elements, function (element) {
+      Array.prototype.forEach.call(elements, function(element) {
         if (element.classList.contains("edit-btn-others")) {
           element.addEventListener("click", rowClicked());
         }
@@ -397,23 +613,214 @@ export default {
     };
 
     onMounted(() => {
-      if (loggedInAdmin.regionId) {
-        params = {
-          url: "applicationVerification/getRequestsByRegion",
-          id: { adminId: loggedInAdmin.id, regionId: loggedInAdmin.regionId },
-        };
-        isRegional.value = true;
-      } else {
-        params = {
-          url: "applicationVerification/getRequestsForFederal",
-          id: loggedInAdmin.id,
-        };
-      }
-      getVerification();
+      getVerification([
+        { key: "page", value: 0 },
+        { key: "size", value: 10 },
+      ]);
+      getVerificationOthers([
+        { key: "page", value: 0 },
+        { key: "size", value: 10 },
+      ]);
     });
+    const applyFilter = () => {
+      verificationTable.value.isLoading = true;
+      tableData = [];
+      getVerification([
+        { key: "page", value: 0 },
+        { key: "size", value: 10 },
+        { key: "value", value: searchTerm.value },
+        { key: "region", value: regionSearchTerm.value },
+        { key: "code", value: codeSearchTerm.value },
+        { key: "fromDate", value: searchTermFromDate.value },
+        {
+          key: "toDate",
+          value:
+            searchTermFromDate.value && searchTermFromDate.value != ""
+              ? searchTermToDate.value
+              : new Date().toISOString().slice(0, 10),
+        },
+      ]);
+    };
+    const clearFilters = () => {
+      searchTerm.value = "";
+      searchTermFromDate.value = "";
+      searchTermToDate.value = "";
+      verificationTable.value.isLoading = true;
+      verificationTable.value.rows = [];
+      tableData = [];
+      getVerification([
+        { key: "page", value: 0 },
+        { key: "size", value: 10 },
+        { key: "value", value: searchTerm.value },
+        { key: "region", value: regionSearchTerm.value },
+        { key: "code", value: codeSearchTerm.value },
+        { key: "fromDate", value: searchTermFromDate.value },
+        { key: "toDate", value: searchTermToDate.value },
+      ]);
+    };
 
+    const searchApplication = () => {
+      verificationTable.value.isLoading = true;
+      verificationTable.value.rows = [];
+      tableData = [];
+      getVerification([
+        { key: "page", value: 0 },
+        { key: "size", value: 10 },
+        { key: "value", value: searchTerm.value },
+        { key: "region", value: regionSearchTerm.value },
+        { key: "code", value: codeSearchTerm.value },
+        { key: "fromDate", value: searchTermFromDate.value },
+        {
+          key: "toDate",
+          value:
+            searchTermFromDate.value && searchTermFromDate.value != ""
+              ? searchTermToDate.value
+              : new Date().toISOString().slice(0, 10),
+        },
+      ]);
+    };
+
+    const doSearch = (offset, limit, order, sort) => {
+      setTimeout(() => {
+        verificationTable.value.isReSearch = offset == undefined ? true : false;
+        offset = offset && offset > 0 ? offset / 10 - 1 : 1;
+        if (sort == "asc") {
+          getVerification([
+            { key: "page", value: offset },
+            { key: "size", value: limit },
+            { key: "value", value: searchTerm.value },
+            { key: "region", value: regionSearchTerm.value },
+            { key: "code", value: codeSearchTerm.value },
+            { key: "fromDate", value: searchTermFromDate.value },
+            {
+              key: "toDate",
+              value:
+                searchTermFromDate.value && searchTermFromDate.value != ""
+                  ? searchTermToDate.value
+                  : new Date().toISOString().slice(0, 10),
+            },
+          ]);
+        } else {
+          getVerification([
+            { key: "page", value: offset },
+            { key: "size", value: limit },
+            { key: "value", value: searchTerm.value },
+            { key: "region", value: regionSearchTerm.value },
+            { key: "code", value: codeSearchTerm.value },
+            { key: "fromDate", value: searchTermFromDate.value },
+            {
+              key: "toDate",
+              value:
+                searchTermFromDate.value && searchTermFromDate.value != ""
+                  ? searchTermToDate.value
+                  : new Date().toISOString().slice(0, 10),
+            },
+          ]);
+        }
+        verificationTable.value.sortable.order = order;
+        verificationTable.value.sortable.sort = sort;
+      }, 200);
+    };
+    const applyFilterOth = () => {
+      verificationTableOthers.value.isLoading = true;
+      tableDataOthers = [];
+      getVerificationOthers([
+        { key: "page", value: 0 },
+        { key: "size", value: 10 },
+        { key: "value", value: searchTermOth.value },
+        { key: "region", value: regionSearchTermOth.value },
+        { key: "code", value: codeSearchTermOth.value },
+        { key: "fromDate", value: searchTermFromDateOth.value },
+        {
+          key: "toDate",
+          value:
+            searchTermFromDateOth.value && searchTermFromDateOth.value != ""
+              ? searchTermToDateOth.value
+              : new Date().toISOString().slice(0, 10),
+        },
+      ]);
+    };
+    const clearFiltersOth = () => {
+      searchTermOth.value = "";
+      searchTermFromDateOth.value = "";
+      searchTermToDateOth.value = "";
+      verificationTableOthers.value.isLoading = true;
+      verificationTableOthers.value.rows = [];
+      tableDataOthers = [];
+      getVerificationOthers([
+        { key: "page", value: 0 },
+        { key: "size", value: 10 },
+        { key: "value", value: searchTermOth.value },
+        { key: "region", value: regionSearchTermOth.value },
+        { key: "code", value: codeSearchTermOth.value },
+        { key: "fromDate", value: searchTermFromDateOth.value },
+        { key: "toDate", value: searchTermToDateOth.value },
+      ]);
+    };
+
+    const searchApplicationOth = () => {
+      verificationTableOthers.value.isLoading = true;
+      verificationTableOthers.value.rows = [];
+      tableDataOthers = [];
+      getVerificationOthers([
+        { key: "page", value: 0 },
+        { key: "size", value: 10 },
+        { key: "value", value: searchTermOth.value },
+        { key: "region", value: regionSearchTermOth.value },
+        { key: "code", value: codeSearchTermOth.value },
+        { key: "fromDate", value: searchTermFromDateOth.value },
+        {
+          key: "toDate",
+          value:
+            searchTermFromDateOth.value && searchTermFromDateOth.value != ""
+              ? searchTermToDateOth.value
+              : new Date().toISOString().slice(0, 10),
+        },
+      ]);
+    };
+    const doSearchOth = (offset, limit, order, sort) => {
+      setTimeout(() => {
+        verificationTableOthers.value.isReSearch =
+          offset == undefined ? true : false;
+        offset = offset && offset > 0 ? offset / 10 - 1 : 1;
+        if (sort == "asc") {
+          getVerificationOthers([
+            { key: "page", value: offset },
+            { key: "size", value: limit },
+            { key: "value", value: searchTermOth.value },
+            { key: "region", value: regionSearchTermOth.value },
+            { key: "code", value: codeSearchTermOth.value },
+            { key: "fromDate", value: searchTermFromDateOth.value },
+            {
+              key: "toDate",
+              value:
+                searchTermFromDateOth.value && searchTermFromDateOth.value != ""
+                  ? searchTermToDateOth.value
+                  : new Date().toISOString().slice(0, 10),
+            },
+          ]);
+        } else {
+          getVerificationOthers([
+            { key: "page", value: offset },
+            { key: "size", value: limit },
+            { key: "value", value: searchTermOth.value },
+            { key: "region", value: regionSearchTermOth.value },
+            { key: "code", value: codeSearchTermOth.value },
+            { key: "fromDate", value: searchTermFromDateOth.value },
+            {
+              key: "toDate",
+              value:
+                searchTermFromDateOth.value && searchTermFromDateOth.value != ""
+                  ? searchTermToDateOth.value
+                  : new Date().toISOString().slice(0, 10),
+            },
+          ]);
+        }
+        verificationTableOthers.value.sortable.order = order;
+        verificationTableOthers.value.sortable.sort = sort;
+      }, 200);
+    };
     return {
-      allInfo,
       loading,
       verificationTable,
       verificationTableOthers,
@@ -423,8 +830,26 @@ export default {
       tableLoadingFinishOthers,
       rowClicked,
       getVerification,
+      doSearchOth,
       modalData,
+      searchTerm,
+      codeSearchTerm,
+      regionSearchTerm,
+      searchTermFromDate,
+      searchTermToDate,
       modalDataOthers,
+      applyFilter,
+      clearFilters,
+      searchApplication,
+      doSearch,
+      applyFilterOth,
+      clearFiltersOth,
+      searchApplicationOth,
+      searchTermOth,
+      codeSearchTermOth,
+      regionSearchTermOth,
+      searchTermFromDateOth,
+      searchTermToDateOth,
     };
   },
 };
