@@ -625,11 +625,25 @@ export default {
           ? modalData.value.name
             ? "Dear " +
               modalData.value.name +
-              " your applied new license for " +
+              " your re-applied new license for " +
               modalData.value.newLicenseCode +
               " has been assigned a reviewer , after careful examination of your uploaded documents by our reviewers we will get back and notify you on each steps, Thank you for using eHPL. https://hrl.moh.gov.et/"
             : ""
           : "",
+      };
+      let userNotification = {
+        user_id:
+          modalData.value.data && modalData.value.data.applicant
+            ? modalData.value.data.applicant.id
+            : null,
+        reviewer_id: assign.value.reviewerId,
+        new_license_id: modalData.value.data ? modalData.value.data.id : null,
+        message: modalData.value.data
+          ? // eslint-disable-next-line prettier/prettier
+            `Dear applicant your re-submitted new license application of number ${modalData.value.data.newLicenseCode} has been assigned to a reviewer.`
+          : "",
+        type: "applicant_new_license",
+        status: "new",
       };
       store
         .dispatch("reviewer/assignReviewer", {
@@ -643,6 +657,31 @@ export default {
               setTimeout(() => {
                 window.location.reload();
               }, 1000);
+              store
+                .dispatch("notification/notifyApplicant", userNotification)
+                .then((res) => {
+                  if (res && res.status == "Success") {
+                    let notification = {
+                      user_id:
+                        modalData.value.data && modalData.value.data.applicant
+                          ? modalData.value.data.applicant.id
+                          : null,
+                      reviewer_id: assign.value.reviewerId,
+                      new_license_id: modalData.value.data
+                        ? modalData.value.data.id
+                        : null,
+                      message: modalData.value.data
+                        ? // eslint-disable-next-line prettier/prettier
+                          `Dear reviewer , a re-submitted new license application with code ${modalData.value.data.newLicenseCode} has been assigned to you.`
+                        : "",
+                      type: "reviewer_new_license",
+                      status: "new",
+                    };
+                    store.dispatch("notification/notifyReviewer", notification);
+                  } else {
+                    isLoading.value = false;
+                  }
+                });
               toast.success("Selected reviewer assigned Successfully", {
                 timeout: 5000,
                 position: "bottom-center",

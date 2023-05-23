@@ -702,7 +702,7 @@ export default {
         renewal_id: modalData.value.data ? modalData.value.data.id : null,
         message: modalData.value.data
           ? // eslint-disable-next-line prettier/prettier
-            `Dear applicant your applied renewal of number ${modalData.value.data.renewalCode} has been assigned to a reviewer.`
+            `Dear applicant your submitted renewal application of number ${modalData.value.data.renewalCode} has been assigned to a reviewer.`
           : "",
         type: "applicant_renewal",
         status: "new",
@@ -734,14 +734,12 @@ export default {
                         : null,
                       message: modalData.value.data
                         ? // eslint-disable-next-line prettier/prettier
-                          `Dear reviewer , a renewal with code ${modalData.value.data.renewalCode} has been assigned to you.`
+                          `Dear reviewer , a renewal application with code ${modalData.value.data.renewalCode} has been assigned to you.`
                         : "",
                       type: "reviewer_renewal",
                       status: "new",
                     };
-                    store
-                      .dispatch("notification/notifyReviewer", notification)
-                     
+                    store.dispatch("notification/notifyReviewer", notification);
                   } else {
                     isLoading.value = false;
                   }

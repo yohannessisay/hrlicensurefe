@@ -63,15 +63,19 @@
             aria-orientation="vertical"
             aria-labelledby="options-menu"
           >
-            <li
-              class="text-main-400 cursor-pointer hover:underline  border-b-4"
-              v-for="notif in notifications"
-              :key="notif"
+            <span v-if="notifications && notifications.length">
+              0>
+              <li
+                class="text-main-400 cursor-pointer hover:underline  border-b-4"
+                v-for="notif in notifications"
+                :key="notif"
+              >
+                <router-link :to="notif.url">
+                  {{ notif && notif.message ? notif.message : "" }}
+                </router-link>
+              </li></span
             >
-              <router-link :to="notif.url">
-                {{ notif && notif.message ? notif.message : "" }}
-              </router-link>
-            </li>
+            <span v-else>No Notifications</span>
           </div>
         </div>
 
