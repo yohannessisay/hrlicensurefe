@@ -1297,8 +1297,7 @@ export default {
     const searchApplication = () => {
       reportTable.value.isLoading = true;
       reportTable.value.rows = [];
-      tableData = [];
-
+      tableData = []; 
       licenseTypeFilter.value == "newLicense"
         ? fetchNewLicenseReport([
             { key: "page", value: 0 },
@@ -1312,7 +1311,7 @@ export default {
             {
               key: "toDate",
               value:
-                searchTermToDate.value && searchTermToDate.value != ""
+              searchTermFromDate.value && searchTermFromDate.value != ""
                   ? searchTermToDate.value
                   : new Date().toISOString().slice(0, 10),
             },
@@ -1330,7 +1329,7 @@ export default {
             {
               key: "toDate",
               value:
-                searchTermToDate.value && searchTermToDate.value != ""
+              searchTermFromDate.value && searchTermFromDate.value != ""
                   ? searchTermToDate.value
                   : new Date().toISOString().slice(0, 10),
             },
@@ -1348,7 +1347,7 @@ export default {
             {
               key: "toDate",
               value:
-                searchTermToDate.value && searchTermToDate.value != ""
+              searchTermFromDate.value && searchTermFromDate.value != ""
                   ? searchTermToDate.value
                   : new Date().toISOString().slice(0, 10),
             },

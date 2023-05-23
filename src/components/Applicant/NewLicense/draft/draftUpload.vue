@@ -861,21 +861,19 @@
         next
       </button>
     </div>
-  </div>
-  <filePreview :modalData="filePreviewData"> </filePreview>
+  </div> 
 </template>
 
 <script>
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex"; 
 
-import MAX_FILE_SIZE from "../../../../composables/documentMessage";
-import filePreview from "@/sharedComponents/FilePreview";
+import MAX_FILE_SIZE from "../../../../composables/documentMessage"; 
 import { boolean } from "yargs";
 import { googleApi } from "@/composables/baseURL";
 import { useRoute } from "vue-router";
 export default {
-  components: { filePreview },
+  components: {   },
 
   setup(props, { emit }) {
     let store = useStore(); 

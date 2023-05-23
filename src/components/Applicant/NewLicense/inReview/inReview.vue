@@ -1,5 +1,5 @@
 <template>
-  <main-content>
+  <main-content :url="'newLicense'">
     <nav class="bg-gray-100 px-5 py-3 rounded-md w-full">
       <ol class="list-reset flex">
         <li><a href="#" class="text-main-400 hover:text-blue-700">Home</a></li>
@@ -18,7 +18,10 @@
       <div class="flex flex-wrap sm:-mx-1 lg:-mx-4">
         <!-- Column -->
 
-        <div v-for="license in inReviewLicenses" :key="license.id" class="
+        <div
+          v-for="license in inReviewLicenses"
+          :key="license.id"
+          class="
             bg-white
             my-1
             px-1
@@ -33,13 +36,14 @@
             duration-300
             ease-in-out
             hover:-translate-y-2
-          ">
+          "
+        >
           <!-- Article -->
           <div>
             <h2 class="text-main-400 border-b-2 text-xl p-2">
               License Code -
               <span class="text-base text-main-400">{{
-              license.newLicenseCode ? license.newLicenseCode : "-"
+                license.newLicenseCode ? license.newLicenseCode : "-"
               }}</span>
             </h2>
 
@@ -52,14 +56,18 @@
                 </h1>
 
                 <ul class="text-black text-sm">
-                  <li v-for="(education, index) in license.educations" :key="education.id" style="display: inline">
+                  <li
+                    v-for="(education, index) in license.educations"
+                    :key="education.id"
+                    style="display: inline"
+                  >
                     <span class="text-black text-sm">
                       {{
-                      education.department
-                      ? education.department.name
-                      ? "*" + education.department.name
-                      : "-"
-                      : "-"
+                        education.department
+                          ? education.department.name
+                            ? "*" + education.department.name
+                            : "-"
+                          : "-"
                       }}
                       <span v-if="index != license.educations.length - 1">
                         ,
@@ -69,71 +77,91 @@
                 </ul>
               </div>
 
-              <div class="
+              <div
+                class="
       flex
       items-center
       justify-between
       leading-tight
       p-2
       md:p-2
-    ">
+    "
+              >
                 <h1 class="text-lg">
-                  <a class="no-underline hover:underline text-main-400" href="#">
+                  <a
+                    class="no-underline hover:underline text-main-400"
+                    href="#"
+                  >
                     Certified Date
                   </a>
                 </h1>
                 <p class="text-black text-sm">
                   {{
-                  license.certifiedDate
-                  ? license.certifiedDate.slice(0, 10)
-                  : "Waiting for review"
+                    license.certifiedDate
+                      ? license.certifiedDate.slice(0, 10)
+                      : "Waiting for review"
                   }}
                 </p>
               </div>
-              <div class="
+              <div
+                class="
       flex
       items-center
       justify-between
       leading-tight
       p-2
       md:p-2
-    ">
+    "
+              >
                 <h1 class="text-lg">
-                  <a class="no-underline hover:underline text-main-400" href="#">
+                  <a
+                    class="no-underline hover:underline text-main-400"
+                    href="#"
+                  >
                     Expiry Date
                   </a>
                 </h1>
                 <p class="text-black text-sm">
                   {{
-                  license.licenseExpirationDate
-                  ? license.licenseExpirationDate.slice(0, 10)
-                  : "Waiting for review"
+                    license.licenseExpirationDate
+                      ? license.licenseExpirationDate.slice(0, 10)
+                      : "Waiting for review"
                   }}
                 </p>
               </div>
             </div>
-            <footer class="flex items-center justify-between leading-none p-2 md:p-4">
-              <a class="
+            <footer
+              class="flex items-center justify-between leading-none p-2 md:p-4"
+            >
+              <a
+                class="
       flex
       items-center
       no-underline
       hover:underline
       text-black
-    " href="#">
-                <img alt="Placeholder" class="block rounded-full h-8" v-bind:src="
-                  userInfo.profilePicturePath
-                    ? googleApi + userInfo.profilePicturePath
-                    : ''
-                " />
+    "
+                href="#"
+              >
+                <img
+                  alt="Placeholder"
+                  class="block rounded-full h-8"
+                  v-bind:src="
+                    userInfo.profilePicturePath
+                      ? googleApi + userInfo.profilePicturePath
+                      : ''
+                  "
+                />
                 <p class="ml-2 text-sm text-main-400">{{ userInfo.name }}</p>
               </a>
 
               <span class="text-main-400 text-sm">{{
-              license.createdAt.slice(0, 10)
+                license.createdAt.slice(0, 10)
               }}</span>
             </footer>
             <div class="flex justify-center">
-              <button class="
+              <button
+                class="
                   inline-block
                   px-6
                   text-white
@@ -148,7 +176,11 @@
                   transition
                   duration-150
                   ease-in-out
-                " @click="openInReviewDetail(license.id)" data-bs-toggle="modal" data-bs-target="#inReviewDetail">
+                "
+                @click="openInReviewDetail(license.id)"
+                data-bs-toggle="modal"
+                data-bs-target="#inReviewDetail"
+              >
                 View Detail
               </button>
             </div>
@@ -160,7 +192,9 @@
       </div>
     </div>
 
-    <div v-else class="
+    <div
+      v-else
+      class="
         bg-white
         my-1
         px-1
@@ -175,7 +209,8 @@
         duration-300
         ease-in-out
         hover:-translate-y-2
-      ">
+      "
+    >
       <!-- Article -->
 
       <h2 class="text-main-400 border-b-2 text-xl p-2">
@@ -185,11 +220,11 @@
     <in-review-detail :modalDataId="modalDataId"></in-review-detail>
   </main-content>
 </template>
-  
+
 <script>
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
-import MainContent from "../sharedComponents/Menu.vue";
+import MainContent from "../../Shared/Menu.vue";
 import { googleApi } from "@/composables/baseURL";
 import inReviewDetail from "./inReviewDetail.vue";
 
@@ -197,25 +232,24 @@ export default {
   components: { MainContent, inReviewDetail },
   setup() {
     let store = useStore();
-    let inReviewLicenses = ref([]);
-    let userInfo = ref({});
+    let inReviewLicenses = ref([]); 
     let isLoading = ref(false);
     let noData = ref(false);
     let modalDataId = ref({ change: 0, id: "" });
-
+    let isDarkMode = ref(JSON.parse(localStorage.getItem("darkMode")));
     onMounted(() => {
-      isLoading.value = true;
-      userInfo.value = JSON.parse(window.localStorage.getItem("personalInfo"));
+      window.addEventListener("darkModeChanged", (data) => {
+        isDarkMode.value = data.detail ? data.detail.content : "";
+      });
+      isLoading.value = true; 
       let userId = JSON.parse(window.localStorage.getItem("userId"));
 
       store.dispatch("newlicense/getNewLicenseByUser", userId).then((res) => {
-        const results =  res.data.data?res.data.data:[];
+        const results = res.data.data ? res.data.data : [];
 
         if (results.length > 0) {
-          inReviewLicenses.value = results.filter(inReviewLicense => {
-            return (
-              inReviewLicense.applicationStatus.code === "IRV"
-            );
+          inReviewLicenses.value = results.filter((inReviewLicense) => {
+            return inReviewLicense.applicationStatus.code === "IRV";
           });
 
           if (inReviewLicenses.value.length === 0) {
@@ -236,14 +270,13 @@ export default {
 
     return {
       inReviewLicenses,
-      googleApi,
-      userInfo,
+      googleApi, 
       isLoading,
       noData,
       openInReviewDetail,
       modalDataId,
+      isDarkMode
     };
   },
 };
 </script>
-  

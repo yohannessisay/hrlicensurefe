@@ -319,6 +319,7 @@ export default {
   setup(props, { emit }) {
     let isLoading = ref(false);
     const store = useStore();
+    const id = +localStorage.getItem("userId");
     let isDarkMode = ref(JSON.parse(localStorage.getItem("darkMode")));
     let previousLicense = ref([]);
     const darkMode = () => {
@@ -340,10 +341,14 @@ export default {
       let TotalDays = Math.ceil(difference / (1000 * 3600 * 24));
       return TotalDays;
     };
-    onMounted(async () => {
+    onMounted(() => {
       isLoading.value = true;
-      let userId = JSON.parse(window.localStorage.getItem("userId"));
-      store.dispatch("newlicense/getNewLicense", userId).then((res) => {
+   
+      checkForNewLicenses(id);
+    });
+    const checkForNewLicenses = (userId) => {
+     
+      store.dispatch("newlicense/getNewLicenseByUser", userId).then((res) => {
         let results = res.data.data ? res.data.data : [];
         if (results.length > 0) {
           previousLicense.value = results
@@ -356,7 +361,7 @@ export default {
         }
         isLoading.value = false;
       });
-    });
+    };
     const renewExisting = (license) => {
       let tempApplicationData = {};
       license.educations.forEach((element) => {

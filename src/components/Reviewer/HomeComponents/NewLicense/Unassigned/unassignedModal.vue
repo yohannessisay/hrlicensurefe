@@ -693,6 +693,20 @@ export default {
             : ""
           : "",
       };
+      let userNotification = {
+        user_id:
+          modalData.value.data && modalData.value.data.applicant
+            ? modalData.value.data.applicant.id
+            : null,
+        reviewer_id: assign.value.reviewerId,
+        new_license_id: modalData.value.data ? modalData.value.data.id : null,
+        message: modalData.value.data
+          ? // eslint-disable-next-line prettier/prettier
+            `Dear applicant your submitted new license application of number ${modalData.value.data.newLicenseCode} has been assigned to a reviewer.`
+          : "",
+        type: "applicant_new_license",
+        status: "new",
+      };
       store
         .dispatch("reviewer/assignReviewer", {
           action: data.action,
@@ -702,6 +716,34 @@ export default {
           if (response.statusText == "Created") {
             store.dispatch("sms/sendSms", smsData).then(() => {
               isLoading.value = false;
+              setTimeout(() => {
+                window.location.reload();
+              }, 1000);
+              store
+                .dispatch("notification/notifyApplicant", userNotification)
+                .then((res) => {
+                  if (res && res.status == "Success") {
+                    let notification = {
+                      user_id:
+                        modalData.value.data && modalData.value.data.applicant
+                          ? modalData.value.data.applicant.id
+                          : null,
+                      reviewer_id: assign.value.reviewerId,
+                      new_license_id: modalData.value.data
+                        ? modalData.value.data.id
+                        : null,
+                      message: modalData.value.data
+                        ? // eslint-disable-next-line prettier/prettier
+                          `Dear reviewer , a new license application with code ${modalData.value.data.newLicenseCode} has been assigned to you.`
+                        : "",
+                      type: "reviewer_new_license",
+                      status: "new",
+                    };
+                    store.dispatch("notification/notifyReviewer", notification);
+                  } else {
+                    isLoading.value = false;
+                  }
+                });
               toast.success("Selected reviewer assigned Successfully", {
                 timeout: 5000,
                 position: "bottom-center",
@@ -709,10 +751,8 @@ export default {
                 pauseOnHover: true,
                 icon: true,
               });
-              isLoading.value = true;
-              setTimeout(() => {
-                window.location.reload();
-              }, 1000);
+             
+            
             });
           } else {
             toast.error(
@@ -725,10 +765,7 @@ export default {
                 icon: true,
               }
             );
-            isLoading.value = true;
-            setTimeout(() => {
-              window.location.reload();
-            }, 3000);
+            isLoading.value = false;
           }
         })
         .catch(() => {
@@ -739,10 +776,7 @@ export default {
             pauseOnHover: true,
             icon: true,
           });
-          isLoading.value = true;
-          setTimeout(() => {
-            window.location.reload();
-          }, 3000);
+          isLoading.value = false;
         });
     };
 

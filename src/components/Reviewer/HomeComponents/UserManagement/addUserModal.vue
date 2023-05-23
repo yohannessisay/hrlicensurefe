@@ -668,9 +668,9 @@ export default {
               });
               isLoading.value = false;
 
-              // setTimeout(() => {
-              //   window.location.reload();
-              // }, 2000);
+              setTimeout(() => {
+                window.location.reload();
+              }, 1000);
             } else if (res.data.status == "Error") {
               toast.error(res.data.message, {
                 timeout: 5000,

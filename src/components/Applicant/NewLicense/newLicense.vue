@@ -1,9 +1,8 @@
 <template>
-  <main-content>
+  <main-content :url="'newLicense'" >
     <transition name="fade" mode="out-in">
       <div v-if="this.activeState == 1">
-        <Institution
-          @dark-mode="modeToggle()"
+        <Institution 
           :activeState="1"
           @changeActiveState="activeState++"
           @changeActiveStateMinus="activeState--"
@@ -16,8 +15,7 @@
     </transition>
     <transition name="fade" mode="out-in">
       <div v-if="this.activeState == 2">
-        <Upload
-          @dark-mode="modeToggle()"
+        <Upload 
           :activeState="2"
           @changeActiveState="activeState++"
           @changeActiveStateMinus="activeState--"
@@ -30,8 +28,7 @@
     </transition>
     <transition name="fade" mode="out-in">
       <div v-if="this.activeState == 3">
-        <LicenseSummary
-          @dark-mode="modeToggle()"
+        <LicenseSummary 
           :activeState="3"
           @changeActiveState="activeState++"
           @changeActiveStateMinus="activeState--"
@@ -48,7 +45,7 @@
 <script>
 import Institution from "./AddNewLicense/generalInformation.vue";
 import Upload from "./AddNewLicense/Upload.vue";
-import MainContent from "./sharedComponents/Menu.vue";
+import MainContent from "../Shared/Menu.vue";
 import LicenseSummary from "./AddNewLicense/LicenseSummary.vue";
 import { ref, onMounted } from "vue";
 
@@ -143,54 +140,12 @@ export default {
       });
     };
     onMounted(async () => {
-      initiateDarkMode();
+      
       fetchApplicationStatuses();
       fetchApplicationCategory();
     });
 
-    const dark = () => {
-      document.getElementById("mainContent").classList.add("dark-mode");
-      document.getElementById("activeMenu")?.classList.add("dark-mode");
-      document.getElementById("mainSideBar")?.classList.add("dark-mode");
-      document.getElementById("options-menu")?.classList.add("dark-mode");
-      document.getElementById("topNav")?.classList.add("dark-mode");
-      document.getElementById("menu-icon")?.classList.add("dark-mode");
-      document.getElementById("generalInfoMain")?.classList.add("dark-mode");
-
-      darkMode.value = true;
-      localStorage.setItem("darkMode", JSON.stringify(darkMode.value));
-    };
-
-    const light = () => {
-      document.getElementById("mainContent").classList.remove("dark-mode");
-      document.getElementById("activeMenu")?.classList.remove("dark-mode");
-      document.getElementById("topNav")?.classList.remove("dark-mode");
-      document.getElementById("mainSideBar")?.classList.remove("dark-mode");
-      document.getElementById("options-menu")?.classList.remove("dark-mode");
-      document.getElementById("menu-icon")?.classList.remove("dark-mode");
-      document.getElementById("generalInfoMain")?.classList.remove("dark-mode");
-
-      darkMode.value = false;
-      localStorage.setItem("darkMode", JSON.stringify(darkMode.value));
-    };
-    const initiateDarkMode = () => {
-      if (JSON.parse(localStorage.getItem("darkMode")) == true) {
-        dark();
-      } else {
-        light();
-      }
-    };
-    const modeToggle = () => {
-      if (
-        localStorage.getItem("darkMode") == true ||
-        darkMode.value ||
-        document.getElementById("main")?.classList.contains("dark-mode")
-      ) {
-        light();
-      } else {
-        dark();
-      }
-    };
+    
 
     return {
       activeState,
@@ -199,8 +154,7 @@ export default {
       applicationCategories,
       documentSpecs,
       buttons,
-      submit,
-      modeToggle,
+      submit, 
       draftStatus,
       declinedFields,
       acceptedFields,

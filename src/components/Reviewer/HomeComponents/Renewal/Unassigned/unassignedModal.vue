@@ -298,7 +298,6 @@
                                       />
                                     </div>
 
-                                   
                                     <div
                                       v-show="
                                         resultQuery().length && showOptions
@@ -694,6 +693,20 @@ export default {
             : ""
           : "",
       };
+      let userNotification = {
+        user_id:
+          modalData.value.data && modalData.value.data.applicant
+            ? modalData.value.data.applicant.id
+            : null,
+        reviewer_id: assign.value.reviewerId,
+        renewal_id: modalData.value.data ? modalData.value.data.id : null,
+        message: modalData.value.data
+          ? // eslint-disable-next-line prettier/prettier
+            `Dear applicant your submitted renewal application of number ${modalData.value.data.renewalCode} has been assigned to a reviewer.`
+          : "",
+        type: "applicant_renewal",
+        status: "new",
+      };
       store
         .dispatch("reviewer/assignRenewalReviewer", {
           action: data.action,
@@ -703,6 +716,34 @@ export default {
           if (response.statusText == "Created") {
             store.dispatch("sms/sendSms", smsData).then(() => {
               isLoading.value = false;
+              setTimeout(() => {
+                window.location.reload();
+              }, 1000);
+              store
+                .dispatch("notification/notifyApplicant", userNotification)
+                .then((res) => {
+                  if (res && res.status == "Success") {
+                    let notification = {
+                      user_id:
+                        modalData.value.data && modalData.value.data.applicant
+                          ? modalData.value.data.applicant.id
+                          : null,
+                      reviewer_id: assign.value.reviewerId,
+                      renewal_id: modalData.value.data
+                        ? modalData.value.data.id
+                        : null,
+                      message: modalData.value.data
+                        ? // eslint-disable-next-line prettier/prettier
+                          `Dear reviewer , a renewal application with code ${modalData.value.data.renewalCode} has been assigned to you.`
+                        : "",
+                      type: "reviewer_renewal",
+                      status: "new",
+                    };
+                    store.dispatch("notification/notifyReviewer", notification);
+                  } else {
+                    isLoading.value = false;
+                  }
+                });
               toast.success("Selected reiewer assigned Successfully", {
                 timeout: 5000,
                 position: "bottom-center",
@@ -710,10 +751,6 @@ export default {
                 pauseOnHover: true,
                 icon: true,
               });
-              isLoading.value = true;
-              setTimeout(() => {
-                window.location.reload();
-              }, 1000);
             });
           } else {
             toast.error(
@@ -726,10 +763,7 @@ export default {
                 icon: true,
               }
             );
-            isLoading.value = true;
-            setTimeout(() => {
-              window.location.reload();
-            }, 3000);
+            isLoading.value = false;
           }
         })
         .catch(() => {
@@ -740,10 +774,7 @@ export default {
             pauseOnHover: true,
             icon: true,
           });
-          isLoading.value = true;
-          setTimeout(() => {
-            window.location.reload();
-          }, 3000);
+          isLoading.value = false;
         });
     };
 

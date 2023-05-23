@@ -1,7 +1,7 @@
 import ApiService from "../../../services/api.service";
 import { baseUrl } from "../../../composables/baseURL";
 
-import reviewerUrls from "../../../shared/reviewerUrls";
+import reviewerUrls from "../../shared/reviewerUrls";
 function urlFacilitator(detail) {
   let url = `${reviewerUrls.renewal}${detail[0].statusId}?`;
   let parameters = detail[1].params ? detail[1].params : [];
