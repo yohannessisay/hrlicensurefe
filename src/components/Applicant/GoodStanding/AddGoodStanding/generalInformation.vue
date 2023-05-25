@@ -27,6 +27,13 @@
   <!-- <div class="float-container" @click="darkMode()">
     <a href="#" class="icon one"> </a>
   </div> -->
+  <div class="vld-parent mt-4">
+              <loading
+                :active="isLoading"
+                :is-full-page="false"
+                :color="'#2F639D'"
+                :opacity="1"
+              ></loading>
   <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-10">
     <div
       :class="
@@ -842,20 +849,24 @@
       </button>
     </div>
   </form>
+  </div>
 </template>
 <script>
 import { useStore } from "vuex";
 import { ref, onMounted, getCurrentInstance } from "vue";
 import { useToast } from "vue-toastification";
 import { useRouter } from "vue-router";
+import Loading from "vue3-loading-overlay";
+import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 export default {
   props: ["activeState"],
-  components: {},
+  components: {Loading},
 
   setup(props, { emit }) {
     const store = useStore();
     const toast = useToast();
     const router = useRouter();
+    let isLoading = ref(false);
     let generalInfo = ref({
       applicantId: +localStorage.getItem("userId"),
       applicantTypeId: "",
@@ -1038,7 +1049,7 @@ export default {
     };
     const saveDraft = () => {
       generalInfo.value.licenseFile = [];
-
+      isLoading.value=true;
       let license = {
         action: "DraftEvent",
         data: {
@@ -1104,6 +1115,7 @@ export default {
               pauseOnHover: true,
               icon: true,
             });
+            isLoading.value=false;
             localStorage.removeItem("GSApplicationData");
             router.push({ path: "/Applicant/GoodStanding/draft" });
           } else {
@@ -1114,6 +1126,7 @@ export default {
               pauseOnHover: true,
               icon: true,
             });
+            isLoading.value=false;
           }
         });
     };
@@ -1164,6 +1177,7 @@ export default {
       departments,
       clearLocalData,
       localData,
+      isLoading
     };
   },
 };

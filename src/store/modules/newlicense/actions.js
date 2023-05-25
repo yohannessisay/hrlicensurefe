@@ -374,7 +374,7 @@ export default {
     }
   },
 
-  async getNewLicense({ commit }) {
+  async getNewLicense() {
     try {
       const resp = await ApiService.get(
         baseUrl + "/newLicenses/user/" + userId
@@ -384,7 +384,7 @@ export default {
       return error;
     }
   },
-  async getNewLicenseByUser({ commit }, id) {
+  async getNewLicenseByUser(context, id) {
     try {
       const resp = await ApiService.get(baseUrl + "/newLicenses/user/" + id);
       return resp;
@@ -524,6 +524,16 @@ export default {
     } catch (error) {
       const resp = error;
       return resp;
+    }
+  },
+  async getNewLicenseByUserId(context, userId) {
+    try {
+      const resp = await ApiService.get(
+        baseUrl + "/newLicenses/user/getExpired/" + userId
+      );
+      return resp;
+    } catch (error) {
+      return error;
     }
   },
 };

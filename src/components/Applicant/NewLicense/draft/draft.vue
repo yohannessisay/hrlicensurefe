@@ -1,5 +1,5 @@
 <template>
-  <main-content>
+  <main-content :url="'newLicense'">
     <nav class="bg-gray-100 px-5 py-3 rounded-md w-full">
       <ol class="list-reset flex">
         <li>
@@ -21,9 +21,7 @@
     </nav>
 
     <h2 class="ml-8 mt-8" v-if="isLoading">Loading...</h2>
-    <!-- <div class="float-container" @click="modeToggle()">
-      <a href="#" class="icon one"> </a>
-    </div> -->
+  
 
     <div class="container my-12 mx-auto px-4 md:px-12" v-if="noData == false">
       <div class="flex flex-wrap sm:-mx-1 lg:-mx-4">
@@ -290,70 +288,30 @@
 </template>
 
 <script>
-import { ref, onMounted, getCurrentInstance } from "vue";
+import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
-import MainContent from "../sharedComponents/Menu.vue";
+import MainContent from "../../Shared/Menu.vue";
 import { googleApi } from "@/composables/baseURL";
 import draftModalInfo from "./draftModalInfo.vue";
 
 export default {
   components: { MainContent, draftModalInfo },
-  setup(props, { emit }) {
+  setup( ) {
     let store = useStore();
     let userDraftLicenses = ref([]);
     let userInfo = ref({});
     let isLoading = ref(true);
     let noData = ref(false);
     let modalDataId = ref({ change: 0, id: "" });
-    let isDarkMode = ref(JSON.parse(localStorage.getItem("darkMode")))
-      ? ref(JSON.parse(localStorage.getItem("darkMode")))
-      : ref(false);
-
-    const dark = () => {
-      document.getElementById("mainContent")?.classList.add("dark-mode");
-      document.getElementById("activeMenu")?.classList.add("dark-mode");
-      document.getElementById("mainSideBar")?.classList.add("dark-mode");
-      document.getElementById("options-menu")?.classList.add("dark-mode");
-      document.getElementById("topNav")?.classList.add("dark-mode");
-      document.getElementById("menu-icon")?.classList.add("dark-mode");
-      document.getElementById("generalInfoMain")?.classList.add("dark-mode");
-      isDarkMode.value = true;
-      localStorage.setItem("darkMode", true);
-    };
-
-    const light = () => {
-      document.getElementById("mainContent")?.classList.remove("dark-mode");
-      document.getElementById("activeMenu")?.classList.remove("dark-mode");
-      document.getElementById("topNav")?.classList.remove("dark-mode");
-      document.getElementById("mainSideBar")?.classList.remove("dark-mode");
-      document.getElementById("options-menu")?.classList.remove("dark-mode");
-      document.getElementById("menu-icon")?.classList.remove("dark-mode");
-      document.getElementById("generalInfoMain")?.classList.remove("dark-mode");
-      isDarkMode.value = false;
-      localStorage.setItem("darkMode", false);
-    };
-    const initiateDarkMode = () => {
-      if (JSON.parse(localStorage.getItem("darkMode")) == true) {
-        dark();
-      } else {
-        light();
-      }
-    };
-    const modeToggle = () => {
-      const instance = getCurrentInstance(); 
-      if (isDarkMode.value && isDarkMode.value == true) {
-        light();
-      } else {
-        dark();
-      }
-      instance?.proxy?.forceUpdate();
-    };
-    onMounted(() => { 
-      initiateDarkMode();
+    let isDarkMode = ref(JSON.parse(localStorage.getItem("darkMode")));
+   
+    onMounted(() => {  
       isLoading.value = true;
       userInfo.value = JSON.parse(window.localStorage.getItem("personalInfo"));
       let userId = JSON.parse(window.localStorage.getItem("userId"));
-
+      window.addEventListener("darkModeChanged", (data) => {
+        isDarkMode.value = data.detail ? data.detail.content : "";
+      });
       store.dispatch("newlicense/getNewLicenseByUser", userId).then((res) => {
         const results =  res.data.data?res.data.data:[];
 
@@ -383,12 +341,11 @@ export default {
       userDraftLicenses,
       googleApi,
       userInfo,
-      noData,
-      isDarkMode,
+      noData, 
       isLoading,
+      isDarkMode,
       openDraftDetail,
-      modalDataId,
-      modeToggle,
+      modalDataId, 
     };
   },
 };

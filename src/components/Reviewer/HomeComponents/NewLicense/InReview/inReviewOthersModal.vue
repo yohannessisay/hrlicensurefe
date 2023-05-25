@@ -736,6 +736,24 @@ export default {
                 document.getElementById("closeButtonOther").click();
               }
               emit("refreshTable");
+
+              let notification = {
+                user_id:
+                  modalData.value.data && modalData.value.data.applicant
+                    ? modalData.value.data.applicant.id
+                    : null,
+                reviewer_id: transfer.value.reviewerId,
+                new_license_id: modalData.value.data
+                  ? modalData.value.data.id
+                  : null,
+                message: modalData.value.data
+                  ? // eslint-disable-next-line prettier/prettier
+                    `Dear reviewer , a re-submitted new license application with code ${modalData.value.data.newLicenseCode} has been transfered to you.`
+                  : "",
+                type: "reviewer_new_license",
+                status: "new",
+              };
+              store.dispatch("notification/notifyReviewer", notification);
             } else {
               toast.error("Error transfering", {
                 timeout: 5000,

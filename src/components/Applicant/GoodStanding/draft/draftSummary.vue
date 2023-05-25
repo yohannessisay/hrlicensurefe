@@ -49,7 +49,7 @@
                 leading-normal
                 mb-2
                 font-semibold
-                text-black
+                text-grey-800
               "
             >
               Application Detail
@@ -72,7 +72,7 @@
             >
           </div>
           <div>
-            <span class="text-black sm:text-sm">
+            <span class="text-grey-800 sm:text-sm">
               {{
                 localData && localData.applicantType
                   ? localData.applicantType.name
@@ -97,7 +97,7 @@
             >
           </div>
           <div>
-            <span class="text-black sm:text-sm">
+            <span class="text-grey-800 sm:text-sm">
               {{
                 localData && localData.department
                   ? localData.department.name
@@ -121,7 +121,7 @@
             >
           </div>
           <div>
-            <span class="text-black sm:text-sm">
+            <span class="text-grey-800 sm:text-sm">
               {{
                 localData && localData.GSProfessionals
                   ? localData.GSProfessionals.professionalTypes.name
@@ -145,7 +145,7 @@
             >
           </div>
           <div>
-            <span class="text-black sm:text-sm">
+            <span class="text-grey-800 sm:text-sm">
               {{
                 localData && localData.GSProfessionals
                   ? localData.GSProfessionals.educationLevel.name
@@ -170,7 +170,7 @@
             >
           </div>
           <div>
-            <span class="text-black sm:text-sm">
+            <span class="text-grey-800 sm:text-sm">
               {{
                 localData && localData.applicantTitle
                   ? localData.applicantTitle.name
@@ -209,7 +209,7 @@
                 leading-normal
                 mb-2
                 font-semibold
-                text-black
+                text-grey-800
               "
             >
               Letter Detail
@@ -232,7 +232,7 @@
             >
           </div>
           <div>
-            <span class="text-black sm:text-sm">
+            <span class="text-grey-800 sm:text-sm">
               {{
                 localData && localData.whoIssued ? localData.whoIssued.name : ""
               }}</span
@@ -254,7 +254,7 @@
             >
           </div>
           <div>
-            <span class="text-black sm:text-sm">
+            <span class="text-grey-800 sm:text-sm">
               {{
                 localData && localData.whomGoodStandingFor
                   ? localData.whomGoodStandingFor
@@ -278,7 +278,7 @@
             >
           </div>
           <div>
-            <span class="text-black sm:text-sm">
+            <span class="text-grey-800 sm:text-sm">
               {{
                 localData && localData.licenseRegistrationNumber
                   ? localData.licenseRegistrationNumber
@@ -303,7 +303,7 @@
             >
           </div>
           <div>
-            <span class="text-black sm:text-sm">
+            <span class="text-grey-800 sm:text-sm">
               {{
                 localData && localData.licenseIssuedDate
                   ? localData.licenseIssuedDate
@@ -339,7 +339,7 @@
                   leading-normal
                   mb-2
                   font-semibold
-                  text-black
+                  text-grey-800
                 "
               >
                 Files Uploaded
@@ -564,7 +564,7 @@
             </div>
             <h3
               class="
-                text-black
+                text-grey-800
                 mb-2localFileData
                 sm:text-xs
                 lgmd:text-base

@@ -174,7 +174,7 @@
                             class="
                             justify-center
                             items-center
-                            text-grey-200 text-2xl
+                            text-grey-800 text-2xl
                           "
                           >
                             {{ documentTypeName }}
@@ -1178,7 +1178,7 @@
                                       class="
                                       justify-center
                                       items-center
-                                      text-grey-200 text-2xl
+                                      text-grey-800 text-2xl
                                     "
                                     >
                                       {{ modalDocumentTypeName }}
@@ -1321,26 +1321,7 @@
                   </div>
                 </Modal>
 
-                <div v-if="showOtherProfessionError">
-                  <ErrorFlashMessage
-                    message="Please type other profession type in the input field"
-                  />
-                </div>
-
-                <div v-if="showProfessionChangeError">
-                  <ErrorFlashMessage
-                    message="you can't change profession if you are not approving"
-                  />
-                </div>
-
-                <div v-if="showTransferSuccessMessage">
-                  <FlashMessage message="Transfer Successful!" />
-                </div>
-                <div v-if="showTransferErrorMessage">
-                  <ErrorFlashMessage
-                    message="Error! Couldn't transfer to federal"
-                  />
-                </div>
+          
               </div>
             </div>
           </div>
@@ -1650,6 +1631,7 @@ export default {
       }
     };
     const transferToFederal = () => {
+      isLoadingStart.value = true;
       store.dispatch("goodStanding/getExpertLevel").then((res) => {
         let federalData = res.data.data.filter((r) => r.code == "FED");
         let transferData = {
@@ -1661,6 +1643,7 @@ export default {
         store
           .dispatch("reviewer/transferToFederal", transferData)
           .then((res) => {
+            isLoadingStart.value = false;
             if (res.data?.status == "Success") {
               toast.success("Application  transfered Successfully", {
                 timeout: 5000,
@@ -1827,7 +1810,7 @@ export default {
 
     const action = (actionValue) => {
       let smsMessage = "";
-
+      isLoadingStart.value = true;
       if (actionValue === "ApproveEvent") {
         smsMessage = goodStanding.value
           ? "Dear applicant your applied letter of goodstanding with license number " +
@@ -1881,6 +1864,7 @@ export default {
       store
         .dispatch("reviewer/editGoodStanding", req)
         .then((res) => {
+          isLoadingStart.value = false;
           showActionLoading.value = false;
           if (res.statusText == "Created") {
             store.dispatch("sms/sendSms", smsData).then(() => {

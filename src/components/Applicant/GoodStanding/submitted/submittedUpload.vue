@@ -80,6 +80,17 @@
                       >
                         Upload
                       </th>
+
+                      <th
+                        class="
+                          font-semibold
+                          text-sm
+                          uppercase
+                          px-6
+                          py-4
+                          text-white
+                        "
+                      ></th>
                       <th
                         class="
                           font-semibold
@@ -92,16 +103,6 @@
                       >
                         View
                       </th>
-                      <th
-                        class="
-                          font-semibold
-                          text-sm
-                          uppercase
-                          px-6
-                          py-4
-                          text-white
-                        "
-                      ></th>
                     </tr>
                   </thead>
                   <tbody class="divide-y">
@@ -147,14 +148,14 @@
                       </td>
                       <td class="px-6 py-4">
                         <span
-                          class="document-name"
-                          v-if="documentsSaved[item.documentType.code]"
+                          class="text-grey-800"
+                          v-if="documentsSaved[item.documentType.code]&&documentsSaved[item.documentType.code].fileName"
                           >{{
-                            documentsSaved[item.documentType.code].name
+                            documentsSaved[item.documentType.code].fileName
                           }}</span
                         >
                       </td>
-                      <td class="px-6 py-4 text-center">
+                      <td class="px-6 py-4 text-center"> 
                         <a
                           :id="
                             'common_image_href' + item.documentType.id + item.id
@@ -650,6 +651,8 @@ export default {
               element.documentType.name;
             documentsSaved.value[element.documentTypeCode].code =
               element.documentType.code;
+            documentsSaved.value[element.documentTypeCode].fileName =
+              element.fileName;
           });
 
           existingDocs = generalInfo.value?.documents;

@@ -1,5 +1,5 @@
 <template>
-  <main-content>
+  <main-content :url="'renewal'">
     <transition name="fade" mode="out-in">
       <div v-if="this.activeState == 1">
         <Index
@@ -48,13 +48,13 @@ import Institution from "./CreateRenewal/generalInformation.vue";
 import Upload from "./CreateRenewal/Upload.vue";
 import Index from "./CreateRenewal/index.vue";
 import LicenseSummary from "./CreateRenewal/LicenseSummary.vue";
-import MainContent from "./sharedComponents/Menu.vue";
+import MainContent from "../Shared/Menu.vue";
 
 import { useStore } from "vuex";
 import { ref, onMounted } from "vue";
 
 export default {
-  setup({ emit }) {
+  setup() {
     let store = useStore();
     let applicantType = ref(1);
     let activeState = ref(1);

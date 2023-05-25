@@ -1,5 +1,5 @@
 <template>
-  <main-content>
+  <main-content :url="'newLicense'">
     <nav class="bg-gray-100 px-5 py-3 rounded-md w-full">
       <ol class="list-reset flex">
         <li><a href="#" class="text-main-400 hover:text-blue-700">Home</a></li>
@@ -248,7 +248,7 @@
 <script>
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
-import MainContent from "../sharedComponents/Menu.vue";
+import MainContent from "../../Shared/Menu.vue";
 import { googleApi } from "@/composables/baseURL";
 import approvedDetail from "./approvedDetail.vue";
 
@@ -261,19 +261,22 @@ export default {
     let isLoading = ref(false);
     let noData = ref(false);
     let modalDataId = ref({ change: 0, id: "" });
-
+    let isDarkMode = ref(JSON.parse(localStorage.getItem("darkMode")));
     const changeLicenseId = (id) => {
       modalDataId.value.id = id;
       modalDataId.value.change++;
     };
 
     onMounted(() => {
+      window.addEventListener("darkModeChanged", (data) => {
+        isDarkMode.value = data.detail ? data.detail.content : "";
+      });
       isLoading.value = true;
       userInfo.value = JSON.parse(window.localStorage.getItem("personalInfo"));
       let userId = JSON.parse(window.localStorage.getItem("userId"));
 
       store.dispatch("newlicense/getNewLicenseByUser", userId).then((res) => {
-        const results =  res.data.data?res.data.data:[];
+        const results = res.data.data ? res.data.data : [];
 
         if (results.length > 0) {
           approvedLicenses.value = results.filter((approvedLicense) => {
@@ -300,6 +303,7 @@ export default {
       changeLicenseId,
       isLoading,
       modalDataId,
+      isDarkMode,
     };
   },
 };

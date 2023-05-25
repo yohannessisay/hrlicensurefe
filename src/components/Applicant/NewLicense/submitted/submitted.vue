@@ -1,5 +1,5 @@
 <template>
-  <main-content>
+ <main-content :url="'newLicense'">
     <nav class="bg-gray-100 px-5 py-3 rounded-md w-full">
       <ol class="list-reset flex">
         <li>
@@ -19,9 +19,7 @@
     </nav>
 
     <h2 class="ml-8 mt-8" v-if="isLoading">Loading...</h2>
-    <!-- <div class="float-container" @click="modeToggle()">
-      <a href="#" class="icon one"> </a>
-    </div> -->
+   
     <div class="container my-12 mx-auto px-4 md:px-12 " v-if="noData == false">
       <div class="flex flex-wrap sm:-mx-1 lg:-mx-4">
         <!-- Column -->
@@ -263,7 +261,7 @@
 <script>
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
-import MainContent from "../sharedComponents/Menu.vue";
+import MainContent from "../../Shared/Menu.vue";
 import { googleApi } from "@/composables/baseURL";
 import submittedModalInfo from "./submittedModalInfo.vue";
 
@@ -277,52 +275,12 @@ export default {
     let noData = ref(false);
     let modalDataId = ref({ change: 0, id: "" });
     let isDarkMode = ref(JSON.parse(localStorage.getItem("darkMode")));
-    let darkMode = ref(false);
-    const dark = () => {
-      document.getElementById("mainContent").classList.add("dark-mode");
-      document.getElementById("activeMenu")?.classList.add("dark-mode");
-      document.getElementById("mainSideBar")?.classList.add("dark-mode");
-      document.getElementById("options-menu")?.classList.add("dark-mode");
-      document.getElementById("topNav")?.classList.add("dark-mode");
-      document.getElementById("menu-icon")?.classList.add("dark-mode");
-      document.getElementById("generalInfoMain")?.classList.add("dark-mode");
-
-      darkMode.value = true;
-      localStorage.setItem("darkMode", JSON.stringify(darkMode.value));
-    };
-
-    const light = () => {
-      document.getElementById("mainContent").classList.remove("dark-mode");
-      document.getElementById("activeMenu")?.classList.remove("dark-mode");
-      document.getElementById("topNav")?.classList.remove("dark-mode");
-      document.getElementById("mainSideBar")?.classList.remove("dark-mode");
-      document.getElementById("options-menu")?.classList.remove("dark-mode");
-      document.getElementById("menu-icon")?.classList.remove("dark-mode");
-      document.getElementById("generalInfoMain")?.classList.remove("dark-mode");
-
-      darkMode.value = false;
-      localStorage.setItem("darkMode", JSON.stringify(darkMode.value));
-    };
-    const initiateDarkMode = () => {
-      if (JSON.parse(localStorage.getItem("darkMode")) == true) {
-        dark();
-      } else {
-        light();
-      }
-    };
-    const modeToggle = () => {
-      if (
-        localStorage.getItem("darkMode") == true ||
-        darkMode.value ||
-        document.getElementById("main")?.classList.contains("dark-mode")
-      ) {
-        light();
-      } else {
-        dark();
-      }
-    };
-    onMounted(() => {
-      initiateDarkMode();
+  
+    
+    onMounted(() => { 
+      window.addEventListener("darkModeChanged", (data) => {
+        isDarkMode.value = data.detail ? data.detail.content : "";
+      });
       isLoading.value = true;
       userInfo.value = JSON.parse(window.localStorage.getItem("personalInfo"));
       let userId = JSON.parse(window.localStorage.getItem("userId"));
@@ -363,8 +321,7 @@ export default {
       noData,
       isLoading,
       openSubmittedDetail,
-      modalDataId,
-      modeToggle
+      modalDataId, 
     };
   },
 };

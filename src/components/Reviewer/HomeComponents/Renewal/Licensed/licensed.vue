@@ -1,6 +1,6 @@
 <template>
   <!-- Sidebar -->
-  <reviewer-side-nav />
+  <reviewer-side-nav :finalUrl="'renewal'"></reviewer-side-nav>
   <!-- Sidebar -->
 
   <section class="home-section">
@@ -15,9 +15,9 @@
         <li><span class="text-gray-500 mx-2">/</span></li>
         <li>
           <a
-            href="/admin/newLicense/"
+            href="/admin/renewal/"
             class="hover:text-primary-600 text-grey-300"
-            >New License</a
+            >Renewal</a
           >
         </li>
         <li><span class="text-gray-500 mx-2">/</span></li>
@@ -245,7 +245,7 @@
 </template>
 
 <script>
-import ReviewerSideNav from "../SharedComponents/sideNav.vue";
+import ReviewerSideNav from "../../../SharedComponents/sideNav.vue";
 import ReviewerNavBar from "../../../SharedComponents/navBar.vue";
 import NewLicenseMainContent from "../../../SharedComponents/licensed.vue";
 import { ref, onMounted } from "vue";

@@ -578,6 +578,7 @@
       -webkit-box-shadow: 0 2px 4px #c7c7c7;
       box-shadow: 0 2px 4px #c9c6c6;
   }
+  
 
   .float-container .icon:before {
       font-family: "Font Awesome 5 Free";
@@ -589,6 +590,11 @@
   .icon.one:before {
       content: "\f186";
   }
+  .icon.two:before {
+    content: "\1F323";
+}
+
+  
 
   @media screen and (max-width:760px) {
       .float-container {

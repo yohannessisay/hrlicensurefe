@@ -1,5 +1,5 @@
 <template>
-  <main-content>
+  <main-content :url="'newLicense'">
     <nav class="bg-gray-100 px-5 py-3 rounded-md w-full">
       <ol class="list-reset flex">
         <li><a href="#" class="text-main-400 hover:text-blue-700">Home</a></li>
@@ -223,7 +223,7 @@
 <script>
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
-import MainContent from "../sharedComponents/Menu.vue";
+import MainContent from "../../Shared/Menu.vue";
 import { googleApi } from "@/composables/baseURL";
 import declinedDetail from "./declinedDetail.vue";
 export default {
@@ -240,12 +240,15 @@ export default {
       modalDataId.value.id = id;
       modalDataId.value.change++;
     };
-
+    let isDarkMode = ref(JSON.parse(localStorage.getItem("darkMode")));
     onMounted(() => {
       isLoading.value = true;
       userInfo.value = JSON.parse(window.localStorage.getItem("personalInfo"));
       let userId = JSON.parse(window.localStorage.getItem("userId"));
-
+    
+      window.addEventListener("darkModeChanged", (data) => {
+        isDarkMode.value = data.detail ? data.detail.content : "";
+      });
       store.dispatch("newlicense/getNewLicenseByUser", userId).then((res) => {
         const results =  res.data.data?res.data.data:[];
 
@@ -270,6 +273,7 @@ export default {
       googleApi,
       userInfo,
       noData,
+      isDarkMode,
       changeLicenseId,
       isLoading,
       modalDataId,

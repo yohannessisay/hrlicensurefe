@@ -1761,7 +1761,6 @@ export default {
     let certifiedUser = ref({});
     let certificateDetail = ref({});
     let isLoading = ref(false);
-    let showLoading = ref(false);
     let showActionLoading = ref(false);
     const fullPage = ref(false);
     let isUserCertified = ref(true);
@@ -1796,6 +1795,7 @@ export default {
         : props.modalData.newEducations
     );
     let isForeignApplicant = ref(false);
+
     const updateLicenseGenerated = () => {
       finalData.value.data
         ? (finalData.value.data.isLicenseGenerated = true)
@@ -1805,8 +1805,36 @@ export default {
         action: null,
         data: { ...finalData.value.data }
       };
-
-      editApplication(req);
+      let notification = {
+        user_id:
+          finalData.value.data && finalData.value.data.applicant
+            ? finalData.value.data.applicant.id
+            : null,
+        reviewer_id:
+          finalData.value.data && finalData.value.data.licenseReviewer
+            ? finalData.value.data.licenseReviewer.reviewerId
+            : null,
+        new_license_id: finalData.value.data ? finalData.value.data.id : null,
+        message: finalData.value.data
+          ? // eslint-disable-next-line prettier/prettier
+            `Dear applicant your applied new license of number ${
+              finalData.value.data.newLicenseCode
+            } is printed and ready. You can pick up your license on date ${retrivalDate.value.slice(
+              0,
+              10
+            )}.`
+          : "",
+        type: "",
+        status: "new"
+      };
+      isLoading.value = false;
+      store.dispatch("notification/notifyApplicant", notification).then(res => {
+        if (res && res.status == "Success") {
+          editApplication(req);
+        } else {
+          isLoading.value = false;
+        }
+      });
     };
 
     const editApplication = req => {
@@ -1819,8 +1847,13 @@ export default {
             showGenerateModal.value = false;
 
             let smsMessage = req.data
-              // eslint-disable-next-line prettier/prettier
-              ? `Dear applicant your applied new license of number ${req.data.newLicenseCode} is printed and ready. You can pick up your license on date ${retrivalDate.value.slice(0,10)}.Thank you for using eHPL. visit https://hrl.moh.gov.et for more.`
+              ? // eslint-disable-next-line prettier/prettier
+                `Dear applicant your applied new license of number ${
+                  req.data.newLicenseCode
+                } is printed and ready. You can pick up your license on date ${retrivalDate.value.slice(
+                  0,
+                  10
+                )}.Thank you for using eHPL. visit https://hrl.moh.gov.et for more.`
               : "";
             let smsData = {
               recipients: [
@@ -2626,6 +2659,7 @@ export default {
             setTimeout(() => {
               window.open(doc2.output("bloburl"), "w2");
             }, 100);
+
             updateLicenseGenerated();
           });
         } else {
@@ -2645,7 +2679,6 @@ export default {
       show,
       downloadPdf,
       certifiedUser,
-      showLoading,
       certificateDetail,
       isUserCertified,
       isUserFound,

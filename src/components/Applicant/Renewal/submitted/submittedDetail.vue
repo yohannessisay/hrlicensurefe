@@ -1,5 +1,5 @@
 <template>
-  <main-content>
+<main-content :url="'renewal'">
     <nav class="bg-gray-100 px-5 py-3 rounded-md w-full">
       <ol class="list-reset flex">
         <li>
@@ -863,7 +863,7 @@ import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import LicenseSummary from "./submittedSummary.vue";
 import Upload from "./submittedUpload.vue";
-import MainContent from "../sharedComponents/Menu.vue";
+import MainContent from "../../Shared/Menu.vue";
 import { useToast } from "vue-toastification";
 import { useRouter } from "vue-router";
 import Loading from "vue3-loading-overlay";
