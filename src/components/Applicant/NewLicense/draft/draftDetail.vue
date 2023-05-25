@@ -1,5 +1,5 @@
 <template>
- <main-content :url="'newLicense'">
+  <main-content :url="'newLicense'">
     <nav class="bg-gray-100 px-5 py-3 rounded-md w-full">
       <ol class="list-reset flex">
         <li>
@@ -19,10 +19,10 @@
         <li class="text-gray-500">Edit</li>
       </ol>
     </nav>
-
-    <div
-      v-if="activeState == 1"
-      class="
+    <div v-if="invalidLicenseStat != true">
+      <div
+        v-if="activeState == 1"
+        class="
         block
         p-6
         rounded-lg
@@ -33,18 +33,18 @@
         mb-8
         sm:p-4
       "
-    >
-      <div class="mt-small flex justify-center">
-        <h2 class="text-main-400 text-3xl font-bold">General Information</h2>
-      </div>
+      >
+        <div class="mt-small flex justify-center">
+          <h2 class="text-main-400 text-3xl font-bold">General Information</h2>
+        </div>
 
-      <form @submit.prevent="submit" class="mx-auto w-full mt-10">
-        <div
-          class="flex shadow-lg rounded-md bg-primary-100 justify-center p-4"
-        >
-          <!-- applican type -->
+        <form @submit.prevent="submit" class="mx-auto w-full mt-10">
           <div
-            class="
+            class="flex shadow-lg rounded-md bg-primary-100 justify-center p-4"
+          >
+            <!-- applican type -->
+            <div
+              class="
               grid grid-rows-3
               sm:grid-rows-1
               lg:grid-cols-3
@@ -52,12 +52,12 @@
               md:grid-cols-3
               p-4
             "
-          >
-            <div class="mr-4">
-              <label class="text-main-400">Applicant Type</label>
+            >
+              <div class="mr-4">
+                <label class="text-main-400">Applicant Type</label>
 
-              <select
-                class="
+                <select
+                  class="
                   form-select
                   appearance-none
                   block
@@ -81,29 +81,29 @@
                   focus:border-main-400
                   focus:outline-none
                 "
-                aria-label="Default select example"
-                @change="applicantTypeChangeHandler()"
-                v-model="generalInfo.applicantType"
-                :disabled="
-                  generalInfo.multipleDepartment
-                    ? generalInfo.multipleDepartment.length > 0
-                    : 0
-                "
-                required
-              >
-                <option
-                  v-for="applicant in applicantTypes"
-                  :key="applicant.name"
-                  :value="applicant"
+                  aria-label="Default select example"
+                  @change="applicantTypeChangeHandler()"
+                  v-model="generalInfo.applicantType"
+                  :disabled="
+                    generalInfo.multipleDepartment
+                      ? generalInfo.multipleDepartment.length > 0
+                      : 0
+                  "
+                  required
                 >
-                  {{ applicant.name }}
-                </option>
-              </select>
-            </div>
-            <div v-if="showLanguage" class="mr-4">
-              <label class="text-main-400">Language Type</label>
-              <select
-                class="
+                  <option
+                    v-for="applicant in applicantTypes"
+                    :key="applicant.name"
+                    :value="applicant"
+                  >
+                    {{ applicant.name }}
+                  </option>
+                </select>
+              </div>
+              <div v-if="showLanguage" class="mr-4">
+                <label class="text-main-400">Language Type</label>
+                <select
+                  class="
                   form-select
                   appearance-none
                   block
@@ -127,21 +127,21 @@
                   focus:border-main-400
                   focus:outline-none
                 "
-                v-model="generalInfo.nativeLanguageSelected"
-              >
-                <option
-                  v-for="language in languages"
-                  v-bind:key="language.name"
-                  v-bind:value="language"
+                  v-model="generalInfo.nativeLanguageSelected"
                 >
-                  {{ language.name }}
-                </option>
-              </select>
-            </div>
-            <div v-if="showOccupation">
-              <label class="text-main-400">Occupation Type</label>
-              <select
-                class="
+                  <option
+                    v-for="language in languages"
+                    v-bind:key="language.name"
+                    v-bind:value="language"
+                  >
+                    {{ language.name }}
+                  </option>
+                </select>
+              </div>
+              <div v-if="showOccupation">
+                <label class="text-main-400">Occupation Type</label>
+                <select
+                  class="
                   form-select
                   appearance-none
                   block
@@ -165,24 +165,24 @@
                   focus:border-main-400
                   focus:outline-none
                 "
-                v-model="generalInfo.occupationTypes"
-              >
-                <option
-                  v-for="occupation in occupations"
-                  v-bind:key="occupation.name"
-                  v-bind:value="occupation"
+                  v-model="generalInfo.occupationTypes"
                 >
-                  {{ occupation.name }}
-                </option>
-              </select>
+                  <option
+                    v-for="occupation in occupations"
+                    v-bind:key="occupation.name"
+                    v-bind:value="occupation"
+                  >
+                    {{ occupation.name }}
+                  </option>
+                </select>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- region -->
-        <div
-          v-if="showLocation"
-          class="
+          <!-- region -->
+          <div
+            v-if="showLocation"
+            class="
             flex
             shadow-lg
             rounded-md
@@ -191,10 +191,10 @@
             mt-8
             p-4
           "
-        >
-          <div class="flex">
-            <div
-              class="
+          >
+            <div class="flex">
+              <div
+                class="
                 grid grid-rows-3
                 sm:grid-rows-1
                 lg:grid-cols-3
@@ -202,11 +202,11 @@
                 md:grid-cols-3
                 p-4
               "
-            >
-              <div class="mr-4">
-                <label class="text-main-400">Region</label>
-                <select
-                  class="
+              >
+                <div class="mr-4">
+                  <label class="text-main-400">Region</label>
+                  <select
+                    class="
                     form-select
                     appearance-none
                     block
@@ -230,28 +230,28 @@
                     focus:border-main-400
                     focus:outline-none
                   "
-                  :disabled="
-                  generalInfo.multipleDepartment
-                    ? generalInfo.multipleDepartment.length > 0
-                    : 0
-                "
-                  v-model="generalInfo.regionSelected"
-                  @change="regionChangeHandler()"
-                  required
-                >
-                  <option
-                    v-for="region in regions"
-                    v-bind:key="region.name"
-                    v-bind:value="region"
+                    :disabled="
+                      generalInfo.multipleDepartment
+                        ? generalInfo.multipleDepartment.length > 0
+                        : 0
+                    "
+                    v-model="generalInfo.regionSelected"
+                    @change="regionChangeHandler()"
+                    required
                   >
-                    {{ region.name }}
-                  </option>
-                </select>
-              </div>
-              <div class="mr-4">
-                <label class="text-main-400">Zone</label>
-                <select
-                  class="
+                    <option
+                      v-for="region in regions"
+                      v-bind:key="region.name"
+                      v-bind:value="region"
+                    >
+                      {{ region.name }}
+                    </option>
+                  </select>
+                </div>
+                <div class="mr-4">
+                  <label class="text-main-400">Zone</label>
+                  <select
+                    class="
                     form-select
                     appearance-none
                     block
@@ -272,33 +272,33 @@
                     focus:border-blue-600
                     focus:outline-none
                   "
-                  aria-label="Default select example
+                    aria-label="Default select example
                   "
-                  :disabled="
-                  generalInfo.multipleDepartment
-                    ? generalInfo.multipleDepartment.length > 0
-                    : 0
-                "
-                v-model="generalInfo.zoneSelected"
-                  @change="zoneChangeHandler()"
-                >
-                <option
-                    v-for="zone in zones"
-                    v-bind:key="zone.name"
-                    v-bind:value="zone"
+                    :disabled="
+                      generalInfo.multipleDepartment
+                        ? generalInfo.multipleDepartment.length > 0
+                        : 0
+                    "
+                    v-model="generalInfo.zoneSelected"
+                    @change="zoneChangeHandler()"
                   >
-                    {{ zone.name }}
-                  </option>
-                  <option selected>
-                    {{ generalInfo ? generalInfo.zoneSelected.name : "" }}
-                  </option>
-                </select>
-              </div>
+                    <option
+                      v-for="zone in zones"
+                      v-bind:key="zone.name"
+                      v-bind:value="zone"
+                    >
+                      {{ zone.name }}
+                    </option>
+                    <option selected>
+                      {{ generalInfo ? generalInfo.zoneSelected.name : "" }}
+                    </option>
+                  </select>
+                </div>
 
-              <div class="mr-4">
-                <label class="text-main-400">Woreda</label>
-                <select
-                  class="
+                <div class="mr-4">
+                  <label class="text-main-400">Woreda</label>
+                  <select
+                    class="
                     form-select
                     appearance-none
                     block
@@ -319,40 +319,40 @@
                     focus:border-blue-600
                     focus:outline-none
                   "
-                  :disabled="
-                  generalInfo.multipleDepartment
-                    ? generalInfo.multipleDepartment.length > 0
-                    : 0
-                "
-                  required
-                >
-                <option
-                    v-for="woreda in woredas"
-                    v-bind:key="woreda.name"
-                    v-bind:value="woreda"
+                    :disabled="
+                      generalInfo.multipleDepartment
+                        ? generalInfo.multipleDepartment.length > 0
+                        : 0
+                    "
+                    required
                   >
-                    {{ woreda.name }}
-                  </option>
-                  <option selected>
-                    {{ generalInfo ? generalInfo.woredaSelected.name : "" }}
-                  </option>
-                </select>
+                    <option
+                      v-for="woreda in woredas"
+                      v-bind:key="woreda.name"
+                      v-bind:value="woreda"
+                    >
+                      {{ woreda.name }}
+                    </option>
+                    <option selected>
+                      {{ generalInfo ? generalInfo.woredaSelected.name : "" }}
+                    </option>
+                  </select>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <!-- end -->
+          <!-- end -->
 
-        <!-- educational institution and department -->
-        <div
-          class="mt-12 rounded-sm bg-primary-100 shadow-lg mb-8 justify-center"
-          v-if="generalInfo.educations.length < 3"
-        >
-          <div class="container">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-              <div
-                class="
+          <!-- educational institution and department -->
+          <div
+            class="mt-12 rounded-sm bg-primary-100 shadow-lg mb-8 justify-center"
+            v-if="generalInfo.educations.length < 3"
+          >
+            <div class="container">
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+                <div
+                  class="
                   flex
                   justify-center
                   text-6xl
@@ -361,11 +361,11 @@
                   p-6
                   bg-gray-100
                 "
-              >
-                <div>
-                  <label class="text-main-400">Department</label>
-                  <select
-                    class="
+                >
+                  <div>
+                    <label class="text-main-400">Department</label>
+                    <select
+                      class="
                       form-select
                       appearance-none
                       block
@@ -389,27 +389,27 @@
                       focus:border-main-400
                       focus:outline-none
                     "
-                    v-model="generalInfo.departmentSelected"
-                    @change="departmentChange()"
-                  >
-                    <option
-                      v-for="department in departments"
-                      v-bind:key="department.name"
-                      v-bind:value="department"
+                      v-model="generalInfo.departmentSelected"
+                      @change="departmentChange()"
                     >
-                      {{ department.name }}
-                    </option>
-                  </select>
+                      <option
+                        v-for="department in departments"
+                        v-bind:key="department.name"
+                        v-bind:value="department"
+                      >
+                        {{ department.name }}
+                      </option>
+                    </select>
+                  </div>
                 </div>
-              </div>
 
-              <div
-                class="flex justify-center text-6xl rounded-xl p-2 bg-gray-100"
-              >
-                <div>
-                  <label class="text-main-400">Education Level </label>
-                  <select
-                    class="
+                <div
+                  class="flex justify-center text-6xl rounded-xl p-2 bg-gray-100"
+                >
+                  <div>
+                    <label class="text-main-400">Education Level </label>
+                    <select
+                      class="
                       form-select
                       appearance-none
                       block
@@ -433,143 +433,147 @@
                       focus:border-main-400
                       focus:outline-none
                     "
-                    :disabled="!isDepartmentSelected"
-                    v-model="generalInfo.educationalLevelSelected"
-                    @change="educationalLevelChange()"
-                  >
-                    <option
-                      v-for="educationalLevel in educationalLevels"
-                      v-bind:key="educationalLevel.name"
-                      v-bind:value="educationalLevel"
+                      :disabled="!isDepartmentSelected"
+                      v-model="generalInfo.educationalLevelSelected"
+                      @change="educationalLevelChange()"
                     >
-                      {{ educationalLevel.name }}
-                    </option>
-                  </select>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="container mx-auto">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-              <div
-                class="flex justify-center text-6xl rounded-xl p-2 bg-gray-100"
-              >
-                <div>
-                  <label class="text-main-400">Professional Types</label>
-                  <select
-                    class="
-                      form-select
-                      appearance-none
-                      block
-                      xl:w-64
-                      md:w-64
-                      sm:w-full
-                      w-full
-                      px-3
-                      py-1.5
-                      text-base
-                      font-normal
-                      text-gray-700
-                      hover:text-main-500 hover:border-main-500
-                      border border-solid border-gray-300
-                      rounded
-                      transition
-                      ease-in-out
-                      m-0
-                      focus:text-gray-700
-                      focus:bg-white
-                      focus:border-main-400
-                      focus:outline-none
-                    "
-                    :disabled="!isEdLevelSelected"
-                    v-model="generalInfo.professionalTypeSelected"
-                    @change="ProfessionTypeChange(institution)"
-                  >
-                    <option disabled>First Select Department from above</option>
-                    <option
-                      v-for="pf in professionalTypes"
-                      v-bind:key="pf.id"
-                      v-bind:value="pf"
-                    >
-                      {{ pf.name }}
-                    </option>
-                  </select>
-                  <input
-                    v-model="generalInfo.otherProfessionalType"
-                    v-if="showOtherProfession"
-                    class="mt-2"
-                    placeholder="Write Educational Institution"
-                    type="text"
-                  />
-                  <input
-                    v-model="generalInfo.otherProfessionalTypeAmharic"
-                    v-if="showOtherProfession"
-                    class="mt-2"
-                    placeholder="Write Educational Institution In Amharic"
-                    type="text"
-                  />
-                </div>
-              </div>
-              <div
-                class="flex justify-center text-6xl rounded-xl p-2 bg-gray-100"
-              >
-                <div>
-                  <label class="text-main-400">Educational Institution</label>
-
-                  <select
-                    class="
-                      form-select
-                      appearance-none
-                      block
-                      xl:w-64
-                      md:w-64
-                      sm:w-full
-                      w-full
-                      px-3
-                      py-1.5
-                      text-base
-                      font-normal
-                      text-gray-700
-                      hover:text-main-500 hover:border-main-500
-                      border border-solid border-gray-300
-                      rounded
-                      transition
-                      ease-in-out
-                      m-0
-                      focus:text-gray-700
-                      focus:bg-white
-                      focus:border-main-400
-                      focus:outline-none
-                    "
-                    v-model="generalInfo.institutionSelected"
-                    @change="institutionChange(institution)"
-                  >
-                    <option disabled>Please Select Applicant Type first</option>
-                    <option
-                      v-for="institution in institutions"
-                      v-bind:key="institution.name"
-                      v-bind:value="institution"
-                    >
-                      {{ institution.name }}
-                    </option>
-                  </select>
-                  <input
-                    v-model="generalInfo.otherEducationalInstitution"
-                    v-if="showOtherEducation"
-                    class="mt-2"
-                    placeholder="Write Educational Institution"
-                    type="text"
-                  />
+                      <option
+                        v-for="educationalLevel in educationalLevels"
+                        v-bind:key="educationalLevel.name"
+                        v-bind:value="educationalLevel"
+                      >
+                        {{ educationalLevel.name }}
+                      </option>
+                    </select>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <div class="text-right">
-            <button
-              type="button"
-              class="
+            <div class="container mx-auto">
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+                <div
+                  class="flex justify-center text-6xl rounded-xl p-2 bg-gray-100"
+                >
+                  <div>
+                    <label class="text-main-400">Professional Types</label>
+                    <select
+                      class="
+                      form-select
+                      appearance-none
+                      block
+                      xl:w-64
+                      md:w-64
+                      sm:w-full
+                      w-full
+                      px-3
+                      py-1.5
+                      text-base
+                      font-normal
+                      text-gray-700
+                      hover:text-main-500 hover:border-main-500
+                      border border-solid border-gray-300
+                      rounded
+                      transition
+                      ease-in-out
+                      m-0
+                      focus:text-gray-700
+                      focus:bg-white
+                      focus:border-main-400
+                      focus:outline-none
+                    "
+                      :disabled="!isEdLevelSelected"
+                      v-model="generalInfo.professionalTypeSelected"
+                      @change="ProfessionTypeChange(institution)"
+                    >
+                      <option disabled
+                        >First Select Department from above</option
+                      >
+                      <option
+                        v-for="pf in professionalTypes"
+                        v-bind:key="pf.id"
+                        v-bind:value="pf"
+                      >
+                        {{ pf.name }}
+                      </option>
+                    </select>
+                    <input
+                      v-model="generalInfo.otherProfessionalType"
+                      v-if="showOtherProfession"
+                      class="mt-2"
+                      placeholder="Write Educational Institution"
+                      type="text"
+                    />
+                    <input
+                      v-model="generalInfo.otherProfessionalTypeAmharic"
+                      v-if="showOtherProfession"
+                      class="mt-2"
+                      placeholder="Write Educational Institution In Amharic"
+                      type="text"
+                    />
+                  </div>
+                </div>
+                <div
+                  class="flex justify-center text-6xl rounded-xl p-2 bg-gray-100"
+                >
+                  <div>
+                    <label class="text-main-400">Educational Institution</label>
+
+                    <select
+                      class="
+                      form-select
+                      appearance-none
+                      block
+                      xl:w-64
+                      md:w-64
+                      sm:w-full
+                      w-full
+                      px-3
+                      py-1.5
+                      text-base
+                      font-normal
+                      text-gray-700
+                      hover:text-main-500 hover:border-main-500
+                      border border-solid border-gray-300
+                      rounded
+                      transition
+                      ease-in-out
+                      m-0
+                      focus:text-gray-700
+                      focus:bg-white
+                      focus:border-main-400
+                      focus:outline-none
+                    "
+                      v-model="generalInfo.institutionSelected"
+                      @change="institutionChange(institution)"
+                    >
+                      <option disabled
+                        >Please Select Applicant Type first</option
+                      >
+                      <option
+                        v-for="institution in institutions"
+                        v-bind:key="institution.name"
+                        v-bind:value="institution"
+                      >
+                        {{ institution.name }}
+                      </option>
+                    </select>
+                    <input
+                      v-model="generalInfo.otherEducationalInstitution"
+                      v-if="showOtherEducation"
+                      class="mt-2"
+                      placeholder="Write Educational Institution"
+                      type="text"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="text-right">
+              <button
+                type="button"
+                class="
                 px-6
                 mr-2
                 mb-2
@@ -593,26 +597,26 @@
                 duration-150
                 ease-in-out
               "
-              @click="addMultiple()"
-            >
-              <i class="fa fa-plus"></i>
-              Add
-            </button>
-          </div>
+                @click="addMultiple()"
+              >
+                <i class="fa fa-plus"></i>
+                Add
+              </button>
+            </div>
 
-          <span v-if="multipleDepartmentError" class="ml-8 text-red-300"
-            >Please fill in all fields</span
-          >
-          <span v-if="checkForAddedError" class="ml-8 text-red-300"
-            >You already added the department</span
-          >
-          <span v-if="multipleDepartmentMaxError" class="ml-8 text-red-300"
-            >Only three departments can be selected</span
-          >
-        </div>
-        <!-- Table for selected departments data -->
-        <div
-          class="
+            <span v-if="multipleDepartmentError" class="ml-8 text-red-300"
+              >Please fill in all fields</span
+            >
+            <span v-if="checkForAddedError" class="ml-8 text-red-300"
+              >You already added the department</span
+            >
+            <span v-if="multipleDepartmentMaxError" class="ml-8 text-red-300"
+              >Only three departments can be selected</span
+            >
+          </div>
+          <!-- Table for selected departments data -->
+          <div
+            class="
             table-multiple
             border border-white
             shadow-lg
@@ -621,40 +625,40 @@
             rounded-sm
             bg-white
           "
-        >
-          <h2 class="text-main-400 font-bold m-4 border-b-2">
-            Selected Departments
-          </h2>
+          >
+            <h2 class="text-main-400 font-bold m-4 border-b-2">
+              Selected Departments
+            </h2>
 
-          <div class="flex flex-col">
-            <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
-              <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
-                <div class="overflow-hidden">
-                  <div
-                    class="flex justify-center"
-                    v-if="generalInfo.multipleDepartment.length < 1"
-                  >
-                    No Data
-                  </div>
-                  <div v-else>
-                    <table class="min-w-full p-4">
-                      <thead class="border-b border-t text-main-400 p-4">
-                        <tr>
-                          <th
-                            scope="col"
-                            class="
+            <div class="flex flex-col">
+              <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+                  <div class="overflow-hidden">
+                    <div
+                      class="flex justify-center"
+                      v-if="generalInfo.multipleDepartment.length < 1"
+                    >
+                      No Data
+                    </div>
+                    <div v-else>
+                      <table class="min-w-full p-4">
+                        <thead class="border-b border-t text-main-400 p-4">
+                          <tr>
+                            <th
+                              scope="col"
+                              class="
                               text-sm text-gray-900
                               p-5
                               text-left
                               font-bold
                               text-main-400
                             "
-                          >
-                            Department
-                          </th>
-                          <th
-                            scope="col"
-                            class="
+                            >
+                              Department
+                            </th>
+                            <th
+                              scope="col"
+                              class="
                               text-sm text-gray-900
                               px-6
                               py-4
@@ -662,12 +666,12 @@
                               font-bold
                               text-main-400
                             "
-                          >
-                            Education Level
-                          </th>
-                          <th
-                            scope="col"
-                            class="
+                            >
+                              Education Level
+                            </th>
+                            <th
+                              scope="col"
+                              class="
                               text-sm text-gray-900
                               px-6
                               py-4
@@ -675,12 +679,12 @@
                               font-bold
                               text-main-400
                             "
-                          >
-                            Institution
-                          </th>
-                          <th
-                            scope="col"
-                            class="
+                            >
+                              Institution
+                            </th>
+                            <th
+                              scope="col"
+                              class="
                               text-sm text-gray-900
                               px-6
                               py-4
@@ -688,12 +692,12 @@
                               font-bold
                               text-main-400
                             "
-                          >
-                            Professional Type
-                          </th>
-                          <th
-                            scope="col"
-                            class="
+                            >
+                              Professional Type
+                            </th>
+                            <th
+                              scope="col"
+                              class="
                               text-sm text-gray-900
                               px-6
                               py-4
@@ -701,117 +705,118 @@
                               font-bold
                               text-main-400
                             "
+                            >
+                              Action
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody></tbody>
+                        <tbody>
+                          <tr
+                            class="border-b border-main-400 p-4"
+                            v-for="(item,
+                            index) in generalInfo.multipleDepartment"
+                            :key="item.id"
                           >
-                            Action
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody></tbody>
-                      <tbody>
-                        <tr
-                          class="border-b border-main-400 p-4"
-                          v-for="(
-                            item, index
-                          ) in generalInfo.multipleDepartment"
-                          :key="item.id"
-                        >
-                          <td
-                            class="
+                            <td
+                              class="
                               p-4
                               whitespace-nowrap
                               text-sm
                               font-medium
                               text-gray-900
                             "
-                          >
-                            {{ item.department ? item.department.name : "" }}
-                          </td>
-                          <td
-                            class="
+                            >
+                              {{ item.department ? item.department.name : "" }}
+                            </td>
+                            <td
+                              class="
                               text-sm text-gray-900
                               font-light
                               p-4
                               whitespace-nowrap
                             "
-                          >
-                            {{
-                              item.educationLevel
-                                ? item.educationLevel.name
-                                : ""
-                            }}
-                          </td>
-                          <td
-                            class="
+                            >
+                              {{
+                                item.educationLevel
+                                  ? item.educationLevel.name
+                                  : ""
+                              }}
+                            </td>
+                            <td
+                              class="
                               text-sm text-gray-900
                               font-light
                               p-4
                               whitespace-nowrap
                             "
-                          >
-                            {{ item.institution ? item.institution.name : "" }}
-                          </td>
-                          <td
-                            class="
+                            >
+                              {{
+                                item.institution ? item.institution.name : ""
+                              }}
+                            </td>
+                            <td
+                              class="
                               text-sm text-gray-900
                               font-light
                               p-4
                               whitespace-nowrap
                             "
-                          >
-                            {{
-                              item.professionType
-                                ? item.professionType.name
-                                : ""
-                            }}
-                          </td>
-                          <td
-                            class="
+                            >
+                              {{
+                                item.professionType
+                                  ? item.professionType.name
+                                  : ""
+                              }}
+                            </td>
+                            <td
+                              class="
                               text-sm text-gray-900
                               font-light
                               p-5
                               whitespace-nowrap
                             "
-                          >
-                            <span
-                              @click="removeDepartment(index)" 
-                              title="Remove"
-                              ><i
-                                class="fa fa-trash text-red-300 cursor-pointer"
-                              ></i
-                            ></span>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
+                            >
+                              <span
+                                @click="removeDepartment(index)"
+                                title="Remove"
+                                ><i
+                                  class="fa fa-trash text-red-300 cursor-pointer"
+                                ></i
+                              ></span>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <!-- Table for selected departments data -->
-        <div class="vld-parent">
-          <loading
-            :active="isLoading"
-            :can-cancel="true"
-            :is-full-page="true"
-            :color="'#2F639D'"
-            :opacity="0.7"
-          ></loading>
-          <div class="flex justify-end mb-2 mr-1">
-            <button
-              :class="
-                generalInfo.educations.length > 0
-                  ? 'px-6 mr-2 mb-2 py-2.5 bg-white text-main-400 font-medium border text-xs leading-tight uppercase rounded shadow-md hover:text-white hover:border-main-400 hover:bg-main-400 transition duration-150   ease-in-out'
-                  : 'px-6 mr-2 mb-2 py-2.5 bg-white text-main-400 font-medium border text-xs leading-tight uppercase rounded shadow-md hover:text-white hover:border-main-400 hover:bg-main-400 transition duration-150   ease-in-out  disabled'
-              "
-              type="submit"
-              @click="apply()"
-            >
-              Next
-            </button>
-            <button
-              class="
+          <!-- Table for selected departments data -->
+          <div class="vld-parent">
+            <loading
+              :active="isLoading"
+              :can-cancel="true"
+              :is-full-page="true"
+              :color="'#2F639D'"
+              :opacity="0.7"
+            ></loading>
+            <div class="flex justify-end mb-2 mr-1">
+              <button
+                :class="
+                  generalInfo.educations.length > 0
+                    ? 'px-6 mr-2 mb-2 py-2.5 bg-white text-main-400 font-medium border text-xs leading-tight uppercase rounded shadow-md hover:text-white hover:border-main-400 hover:bg-main-400 transition duration-150   ease-in-out'
+                    : 'px-6 mr-2 mb-2 py-2.5 bg-white text-main-400 font-medium border text-xs leading-tight uppercase rounded shadow-md hover:text-white hover:border-main-400 hover:bg-main-400 transition duration-150   ease-in-out  disabled'
+                "
+                type="submit"
+                @click="apply()"
+              >
+                Next
+              </button>
+              <button
+                class="
                 px-6
                 mr-2
                 mb-2
@@ -830,34 +835,40 @@
                 duration-150
                 ease-in-out
               "
-              type="submit"
-              @click="withdraw()"
-            >
-              Withdraw
-            </button>
+                type="submit"
+                @click="withdraw()"
+              >
+                Withdraw
+              </button>
+            </div>
           </div>
-        </div>
-      </form>
-    </div>
+        </form>
+      </div>
 
-    <transition name="fade" mode="out-in">
-      <div v-if="activeState == 2">
-        <Upload
-          :activeState="2"
-          @changeActiveState="activeState++"
-          @changeActiveStateMinus="activeState--"
-        />
-      </div>
-    </transition>
-    <transition name="fade" mode="out-in">
-      <div v-if="activeState == 3">
-        <LicenseSummary
-          :activeState="3"
-          @changeActiveState="activeState++"
-          @changeActiveStateMinus="activeState--"
-        />
-      </div>
-    </transition>
+      <transition name="fade" mode="out-in">
+        <div v-if="activeState == 2">
+          <Upload
+            :activeState="2"
+            @changeActiveState="activeState++"
+            @changeActiveStateMinus="activeState--"
+          />
+        </div>
+      </transition>
+      <transition name="fade" mode="out-in">
+        <div v-if="activeState == 3">
+          <LicenseSummary
+            :activeState="3"
+            @changeActiveState="activeState++"
+            @changeActiveStateMinus="activeState--"
+          />
+        </div>
+      </transition>
+    </div>
+    <div v-else>
+      <h2 class="text-main-400 font-bold text-2xl">
+        License status is not in submitted or updated one.
+      </h2>
+    </div>
   </main-content>
 </template>
 <script>
@@ -890,6 +901,7 @@ export default {
     let zones = ref("");
     let store = useStore();
     let showLocation = ref(false);
+    let invalidLicenseStat = ref(false);
     let showOccupation = ref(false);
     let showLanguage = ref(false);
     let isDepartmentSelected = ref(false);
@@ -925,7 +937,7 @@ export default {
     });
     let applicationStatuses = ref([]);
     let isLoading = ref(false);
-    let professionChanged=ref(false)
+    let professionChanged = ref(false);
 
     const fetchApplicantType = () => {
       store.dispatch("newlicense/getApplicantType").then((res) => {
@@ -1002,7 +1014,7 @@ export default {
         });
     };
 
-    const fetchWoredas = () => { 
+    const fetchWoredas = () => {
       store
         .dispatch("newlicense/getWoredas", generalInfo.value.zoneSelected.id)
         .then((res) => {
@@ -1086,7 +1098,7 @@ export default {
       generalInfo.value.multipleDepartment.splice(index, 1);
       generalInfo.value.educations.splice(index, 1);
     };
-    const addMultiple = () => { 
+    const addMultiple = () => {
       if (
         generalInfo.value.departmentSelected &&
         generalInfo.value.educationalLevelSelected &&
@@ -1111,7 +1123,7 @@ export default {
               ) == false
             ) {
               checkForAddedError.value = false;
-              generalInfo.value.professionChanged=true
+              generalInfo.value.professionChanged = true;
               generalInfo.value.multipleDepartment.push({
                 department: generalInfo.value.departmentSelected,
                 educationLevel: generalInfo.value.educationalLevelSelected,
@@ -1138,7 +1150,7 @@ export default {
             }
           } else {
             checkForAddedError.value = false;
-            generalInfo.value.professionChanged=true
+            generalInfo.value.professionChanged = true;
             generalInfo.value.multipleDepartment.push({
               department: generalInfo.value.departmentSelected,
               educationLevel: generalInfo.value.educationalLevelSelected,
@@ -1199,7 +1211,7 @@ export default {
         const results = res.data.data;
         applicationStatuses.value = results;
 
-        let status = applicationStatuses.value.filter(function (e) {
+        let status = applicationStatuses.value.filter(function(e) {
           return e.code == "DRA";
         });
         store.dispatch("newlicense/setButtons", status[0].buttons);
@@ -1230,6 +1242,13 @@ export default {
         .then((res) => {
           withdrawData.value = res.data.data;
           generalInfo.value = res.data.data;
+          if (
+            generalInfo.value &&
+            generalInfo.value.applicationStatus &&
+            generalInfo.value.applicationStatus.code != "DRA"
+          ) {
+            invalidLicenseStat.value = true;
+          }
           generalInfo.value.regionSelected =
             res.data.data && res.data.data.woreda
               ? res.data.data.woreda.zone.region
@@ -1261,7 +1280,7 @@ export default {
                   updatedAt: res.data.data.woreda.updatedAt,
                 }
               : "";
-              isAppTypeSelected.value=true; 
+          isAppTypeSelected.value = true;
           applicantTypeChangeHandler();
           regionChangeHandler();
           zoneChangeHandler();
@@ -1290,6 +1309,7 @@ export default {
       isDarkMode,
       withdraw,
       institutions,
+      invalidLicenseStat,
       educationalLevels,
       applicantTypes,
       regions,
@@ -1325,11 +1345,9 @@ export default {
 </script>
 <style>
 #main {
-  
   border-radius: 5px;
 }
 .table-multiple {
-  
   border-radius: 5px;
 }
 </style>
