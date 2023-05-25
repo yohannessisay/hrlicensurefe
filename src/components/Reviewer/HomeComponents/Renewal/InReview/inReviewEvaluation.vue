@@ -2294,11 +2294,30 @@ export default {
       let smsMessage = "";
 
       if (actionValue === "ApproveEvent" && nothingDropped.value == true) {
+        if (renewal.value.newLicenseId && renewal.value.newLicenseId != null) {
+          store
+            .dispatch(
+              "reviewer/getNewLicenseApplication",
+              renewal.value.newLicenseId
+            )
+            .then((res) => {
+              res.data.data.isReturned = true;
+              res.data.data.isreturned = true;
+              let tempReq = {
+                action: "ReturnEvent",
+                data: res.data.data,
+              };
+              store
+                .dispatch("reviewer/editNewLicense", tempReq)
+                .then((res) => {});
+            });
+        }
         smsMessage = renewal.value
           ? "Dear applicant your applied renewal of code " +
             renewal.value.renewalCode +
             " has been approved after careful examination of your uploaded documents by our reviewers. Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
           : "";
+         
       } else if (actionValue == "ReviewerDraftEvent") {
         showRemarkError.value = false;
         showRemark.value = false;
@@ -2387,7 +2406,7 @@ export default {
                 router.push({ path: "/admin/renewal" });
                 let userNotification = {
                   user_id:
-                  renewal.value && renewal.value.applicant
+                    renewal.value && renewal.value.applicant
                       ? renewal.value.data.applicant.id
                       : null,
                   reviewer_id: renewal.value.licenseReviewer
@@ -2407,7 +2426,7 @@ export default {
                       }by a reviewer.`
                     : "",
                   type: "applicant_new_license",
-                  status: "new"
+                  status: "new",
                 };
                 store.dispatch(
                   "notification/notifyApplicant",
@@ -2696,7 +2715,7 @@ export default {
                 router.push({ path: "/admin/renewal" });
                 let userNotification = {
                   user_id:
-                  renewal.value && renewal.value.applicant
+                    renewal.value && renewal.value.applicant
                       ? renewal.value.data.applicant.id
                       : null,
                   reviewer_id: renewal.value.licenseReviewer
@@ -2704,7 +2723,7 @@ export default {
                     : null,
                   renewal_id: renewal.value ? renewal.value.id : null,
                   message: renewal.value
-                  ? // eslint-disable-next-line prettier/prettier
+                    ? // eslint-disable-next-line prettier/prettier
                       "Dear applicant your applied renewal application of code " +
                       renewal.value.renewalCode +
                       " has been set to be under supervison of MR/MRS:-" +
@@ -2716,7 +2735,7 @@ export default {
                       " days "
                     : "",
                   type: "applicant_new_license",
-                  status: "new"
+                  status: "new",
                 };
                 store.dispatch(
                   "notification/notifyApplicant",

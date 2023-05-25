@@ -235,6 +235,7 @@ export default {
     let inReviewLicenses = ref([]); 
     let isLoading = ref(false);
     let noData = ref(false);
+    let userInfo = JSON.parse(window.localStorage.getItem("personalInfo"));
     let modalDataId = ref({ change: 0, id: "" });
     let isDarkMode = ref(JSON.parse(localStorage.getItem("darkMode")));
     onMounted(() => {
@@ -270,6 +271,7 @@ export default {
 
     return {
       inReviewLicenses,
+      userInfo,
       googleApi, 
       isLoading,
       noData,

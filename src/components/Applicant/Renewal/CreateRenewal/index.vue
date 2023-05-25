@@ -343,18 +343,19 @@ export default {
     };
     onMounted(() => {
       isLoading.value = true;
-   
+
       checkForNewLicenses(id);
     });
     const checkForNewLicenses = (userId) => {
-     
       store.dispatch("newlicense/getNewLicenseByUser", userId).then((res) => {
         let results = res.data.data ? res.data.data : [];
         if (results.length > 0) {
           previousLicense.value = results
             ? results.filter((license) =>
                 license.applicationStatus
-                  ? license.applicationStatus.code == "APP"
+                  ? license.applicationStatus.code == "APP" &&
+                    license.isReturned != true &&
+                    license.isreturned != true
                   : ""
               )
             : [];

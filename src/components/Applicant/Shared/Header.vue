@@ -242,8 +242,9 @@ export default {
     let checkedForNotification = JSON.parse(
       localStorage.getItem("checkedForExpired")
     );
+    let tempData = [];
     const id = +localStorage.getItem("userId");
-    let notifications = ref([]);
+    let notifications = [];
     let showNotificationDropDown = ref(false);
     let isDarkMode = JSON.parse(localStorage.getItem("nightMode"));
     const logout = () => {
@@ -267,77 +268,65 @@ export default {
       showNotificationDropDown.value = !showNotificationDropDown.value;
       showDD.value = false;
     };
-    const selectMenu = (menu) => {
-      if (this.$route.name != "Menu") {
-        this.$router.push({ path: "/menu" });
-      } else {
-        this.$emit("changeDisplay", menu);
-      }
-    };
-    const checkForNotification = () => {
-      store
-        .dispatch("notification/getApplicantNotification", id)
-        .then((res) => {
-          let tempData = res && res.data ? res.data : [];
 
-          tempData.forEach((element) => {
-            element && element.message
-              ? notifications.value.push({
-                  data: element,
-                  message: element && element.message ? element.message : "",
-                  url:
-                    element && element.new_license_id
-                      ? "/Applicant/NewLicense/approved"
-                      : element && element.renewal_id
-                      ? "/Applicant/Renewal/approved"
-                      : element && element.goodstanding_id
-                      ? "/Applicant/Goodstanding/approved"
-                      : "",
-                })
-              : "";
+    const checkForNotification = () => {
+      store.dispatch("notification/getApplicantNotification", id).then(res => {
+        tempData = res && res.data ? res.data : [];
+        if (tempData.length>0) {
+          tempData.forEach(element => {
+          notifications.push({
+            data: element,
+            message: element.message,
+            url:
+              element && element.new_license_id
+                ? "/Applicant/NewLicense/approved"
+                : element && element.renewal_id
+                ? "/Applicant/Renewal/approved"
+                : element && element.goodstanding_id
+                ? "/Applicant/Goodstanding/approved"
+                : ""
           });
         });
+        }
+      
+      });
     };
-    const updateNotif = (data) => {
-      store
-        .dispatch("notification/updateApplicantNotification", data)
-        .then((res) => {
-          console.log(res);
-        });
+    const updateNotif = data => {
+      store.dispatch("notification/updateApplicantNotification", data);
     };
     const checkForExpiredLicense = () => {
       checkedForNotification == false
-        ? store.dispatch("newlicense/getNewLicenseByUserId", id).then((res) => {
+        ? store.dispatch("newlicense/getNewLicenseByUserId", id).then(res => {
             let tempData =
               res && res.data && res.data.data ? res.data.data : [];
 
-            tempData.forEach((element) => {
+            tempData.forEach(element => {
               let tempDate = expirationDatesHelper(
                 element.licenseExpirationDate
                   ? element.licenseExpirationDate.slice(0, 10)
                   : new Date().toISOString().slice(0, 10)
               );
 
-              notifications.value.push({
+              notifications.push({
                 message:
                   tempDate && tempDate <= 0
                     ? `Your license with number ${element.newLicenseCode} has expired please renew your license.`
                     : tempDate && tempDate < 60
                     ? `Your license with number ${element.newLicenseCode} is about to expire in ${tempDate} days, please renew your license.`
                     : "",
-                url: "/Applicant/Renewal",
+                url: "/Applicant/Renewal"
               });
               localStorage.setItem(
                 "expiredNotifications",
-                JSON.stringify(notifications.value)
+                JSON.stringify(notifications)
               );
             });
           })
-        : (notifications.value = JSON.parse(
+        : (notifications = JSON.parse(
             localStorage.getItem("expiredNotifications")
           ));
     };
-    const expirationDatesHelper = (date_1) => {
+    const expirationDatesHelper = date_1 => {
       let date_2 = new Date().toISOString().slice(0, 10);
       let difference = new Date(date_1).getTime() - new Date(date_2).getTime();
       let TotalDays = Math.ceil(difference / (1000 * 3600 * 24));
@@ -403,7 +392,6 @@ export default {
       showDropDown,
       showNotification,
       showNotifications,
-      selectMenu,
       showNotif,
       updateNotif,
       modeToggle,
@@ -415,9 +403,9 @@ export default {
       showDD,
       sidebarMenu,
       updateProfile,
-      logout,
+      logout
     };
-  },
+  }
 };
 </script>
 <style scoped>

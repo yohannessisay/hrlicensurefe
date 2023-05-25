@@ -66,7 +66,7 @@
                   </h2>
                 </div>
               </div>
-           
+
               <div class="grid grid-cols-3 gap-4">
                 <div class="form-group mb-4">
                   <label for="firstName">Applicant Name</label>
@@ -278,11 +278,13 @@
                       block
                       p-2.5
                       w-full
-                      text-sm text-gray-900
-                      bg-gray-50
+                      text-sm 
+                      text-white
+                      bg-primary-600
                       rounded-lg
                       border border-gray-300
-                      focus:ring-blue-500 focus:border-blue-500
+                      focus:ring-blue-500 
+                      focus:border-blue-500
                       dark:bg-gray-700
                       dark:border-gray-600
                       dark:placeholder-gray-400
@@ -292,7 +294,7 @@
                     "
                     id="remark"
                     placeholder="Remark note "
-                    :value="remark"
+                    :value="modalData.data ? modalData.data.remark : ''"
                     disabled
                   />
                 </div>
@@ -306,8 +308,8 @@
                       block
                       p-2.5
                       w-full
-                      text-sm text-gray-900
-                      bg-gray-50
+                      text-sm text-white
+                      bg-primary-600
                       rounded-lg
                       border border-gray-300
                       focus:ring-blue-500 focus:border-blue-500
@@ -319,7 +321,9 @@
                       dark:focus:border-blue-500
                     "
                     placeholder="Information regarding malpractice"
-                    :value="malpracticeInfo"
+                    :value="
+                      modalData.data ? modalData.data.malpracticeInfo : ''
+                    "
                     type="textarea"
                     disabled
                     id="malpracticeInfo"
