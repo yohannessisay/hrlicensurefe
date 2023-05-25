@@ -212,8 +212,8 @@
                         class="toggle-checkbox hidden cursor-pointer"
                         type="checkbox"
                         :checked="
-                          modalDataOthers && modalDataOthers.data
-                            ? modalDataOthers.data.isVerified == true
+                          editedData.isVerified
+                            ? editedData.isVerified == true
                             : false
                         "
                       />
@@ -230,15 +230,6 @@
                           ease-out
                         "
                       ></label>
-                      <span>
-                        {{
-                          modalDataOthers &&
-                          modalDataOthers.data &&
-                          modalDataOthers.data.isVerified == true
-                            ? "Yes"
-                            : "No"
-                        }}
-                      </span>
                     </div>
                   </div>
                 </div>
@@ -286,11 +277,6 @@
                 <div class="form-group mb-4">
                   <label for="firstName">Remark</label>
                   <textarea
-                    :disabled="
-                      modalDataOthers && modalDataOthers.data
-                        ? modalDataOthers.data.remark
-                        : ''
-                    "
                     type="textarea"
                     rows="4"
                     class="
@@ -310,6 +296,13 @@
                       dark:focus:border-blue-500
                     "
                     id="remark"
+                    :disabled="
+                      modalDataOthers &&
+                      modalDataOthers.data &&
+                      modalDataOthers.data.remark
+                        ? true
+                        : false
+                    "
                     placeholder="Remark note "
                     v-model="remark"
                     required
@@ -343,14 +336,276 @@
                     id="malpracticeInfo"
                     required
                     :disabled="
-                      modalDataOthers && modalDataOthers.data
-                        ? modalDataOthers.data.malpracticeInfo
-                        : ''
+                      modalDataOthers &&
+                      modalDataOthers.data &&
+                      modalDataOthers.data.malpracticeInfo
+                        ? true
+                        : false
                     "
                   />
                 </div>
               </div>
+              <hr class="text-primary-600 " />
+              <div class="bg-white shadow-md p-4 m-4">
+                <h2 class="text-primary-600 font-bold text-xl">
+                  License Detail
+                </h2>
+              </div>
+              <div class="grid grid-cols-2">
+                <div class="bg-white shadow-md p-4 m-4">
+                  <h4 class="text-primary-600 font-bold text-xl">
+                    Applicant Detail
+                  </h4>
+                  <div class="grid grid-cols-2 mt-4">
+                    <h4 class="text-grey-800 font-bold text-base">
+                      Applicant Name
+                    </h4>
+                    <h4 class="text-primary-600 font-bold text-base">
+                      {{
+                        licenseInfo && licenseInfo.profile
+                          ? licenseInfo.profile.name +
+                            " " +
+                            licenseInfo.profile.fatherName +
+                            " " +
+                            licenseInfo.profile.grandFatherName
+                          : ""
+                      }}
+                    </h4>
+                    <h4 class="text-grey-800 font-bold text-base">
+                      Applicant Nationality
+                    </h4>
+                    <h4 class="text-primary-600 font-bold text-base">
+                      {{
+                        licenseInfo &&
+                        licenseInfo.profile &&
+                        licenseInfo.profile.nationality
+                          ? licenseInfo.profile.nationality.name
+                          : ""
+                      }}
+                    </h4>
+                    <h4 class="text-grey-800 font-bold text-base">
+                      Applicant Email
+                    </h4>
+                    <h4 class="text-primary-600 font-bold text-base">
+                      {{
+                        licenseInfo && licenseInfo.applicant
+                          ? licenseInfo.applicant.emailAddress
+                          : ""
+                      }}
+                    </h4>
+                    <h4 class="text-grey-800 font-bold text-base">
+                      Applicant Phone
+                    </h4>
+                    <h4 class="text-primary-600 font-bold text-base">
+                      {{
+                        licenseInfo && licenseInfo.applicant
+                          ? "+251 " + licenseInfo.applicant.phoneNumber
+                          : ""
+                      }}
+                    </h4>
+                  </div>
+                </div>
+
+                <div class="bg-white shadow-md p-4 m-4">
+                  <h4 class="text-primary-600 font-bold text-xl">
+                    Reviewer Detail
+                  </h4>
+                  <div class="grid grid-cols-2 mt-4">
+                    <h4 class="text-grey-800 font-bold text-base">
+                      Reviewer Name
+                    </h4>
+                    <h4 class="text-primary-600 font-bold text-base">
+                      {{
+                        licenseInfo &&
+                        licenseInfo.newLicense &&
+                        licenseInfo.newLicense.licenseReviewer
+                          ? licenseInfo.newLicense.licenseReviewer.reviewer.name
+                          : licenseInfo &&
+                            licenseInfo.renewal &&
+                            licenseInfo.renewal.renewalReviewer
+                          ? licenseInfo.renewal.renewalReviewer.reviewer.name
+                          : ""
+                      }}
+                    </h4>
+                    <h4 class="text-grey-800 font-bold text-base">
+                      Reviewer Email
+                    </h4>
+                    <h4 class="text-primary-600 font-bold text-base">
+                      {{
+                        licenseInfo &&
+                        licenseInfo.newLicense &&
+                        licenseInfo.newLicense.licenseReviewer
+                          ? licenseInfo.newLicense.licenseReviewer.reviewer
+                              .email
+                          : licenseInfo &&
+                            licenseInfo.renewal &&
+                            licenseInfo.renewal.renewalReviewer
+                          ? licenseInfo.renewal.renewalReviewer.reviewer.email
+                          : ""
+                      }}
+                    </h4>
+                    <h4 class="text-grey-800 font-bold text-base">
+                      Reviewer Phone
+                    </h4>
+                    <h4 class="text-primary-600 font-bold text-base">
+                      {{
+                        licenseInfo &&
+                        licenseInfo.newLicense &&
+                        licenseInfo.newLicense.licenseReviewer
+                          ? licenseInfo.newLicense.licenseReviewer.reviewer
+                              .phoneNumber
+                          : licenseInfo &&
+                            licenseInfo.renewal &&
+                            licenseInfo.renewal.renewalReviewer
+                          ? licenseInfo.renewal.renewalReviewer.reviewer
+                              .phoneNumber
+                          : ""
+                      }}
+                    </h4>
+                    <h4 class="text-grey-800 font-bold text-base">
+                      Reviewer Region
+                    </h4>
+                    <h4 class="text-primary-600 font-bold text-base">
+                      {{
+                        licenseInfo &&
+                        licenseInfo.newLicense &&
+                        licenseInfo.newLicense.licenseReviewer &&
+                        licenseInfo.newLicense.licenseReviewer.reviewer.region
+                          ? licenseInfo.newLicense.licenseReviewer.reviewer
+                              .region.name
+                          : licenseInfo &&
+                            licenseInfo.renewal &&
+                            licenseInfo.renewal.renewalReviewer &&
+                            licenseInfo.renewal.renewalReviewer.reviewer.region
+                          ? licenseInfo.renewal.renewalReviewer.reviewer.region
+                              .name
+                          : ""
+                      }}
+                    </h4>
+                  </div>
+                </div>
+              </div>
+              <div
+                v-if="
+                  (licenseInfo && licenseInfo.newLicense) ||
+                    (licenseInfo && licenseInfo.renewal)
+                "
+                class="grid grid-cols-3"
+              >
+                <div
+                  class="bg-white shadow-md p-4 m-4"
+                  v-for="education in licenseInfo && licenseInfo.newLicense
+                    ? licenseInfo.newLicense.educations
+                    : licenseInfo && licenseInfo.renewal
+                    ? licenseInfo.renewal.educations
+                    : []"
+                  :key="education.id"
+                >
+                  <h4 class="text-primary-600 font-bold text-xl">
+                    Education Detail
+                  </h4>
+                  <div class="grid grid-cols-2 mt-4">
+                    <h4 class="text-grey-800 font-bold text-base">
+                      Department Name
+                    </h4>
+                    <h4 class="text-primary-600 font-bold text-base">
+                      {{
+                        education && education.department
+                          ? education.department.name
+                          : ""
+                      }}
+                    </h4>
+                    <h4 class="text-grey-800 font-bold text-base">
+                      Educational Level
+                    </h4>
+                    <h4 class="text-primary-600 font-bold text-base">
+                      {{
+                        education && education.educationLevel
+                          ? education.educationLevel.name
+                          : ""
+                      }}
+                    </h4>
+                    <h4 class="text-grey-800 font-bold text-base">
+                      Profession Name
+                    </h4>
+                    <h4 class="text-primary-600 font-bold text-base">
+                      {{
+                        education && education.professionType
+                          ? education.professionType.name
+                          : ""
+                      }}
+                    </h4>
+                    <h4 class="text-grey-800 font-bold text-base">
+                      Institution Name
+                    </h4>
+                    <h4 class="text-primary-600 font-bold text-base">
+                      {{
+                        education && education.institution
+                          ? education.institution.name
+                          : ""
+                      }}
+                    </h4>
+                  </div>
+                </div>
+              </div>
             </section>
+          </div>
+        </div>
+
+        <div
+          class="collapse mt-12"
+          id="collapseExample"
+          v-if="
+            (licenseInfo && licenseInfo.newLicense) ||
+              (licenseInfo && licenseInfo.renewal)
+          "
+        >
+          <div class="block p-6 rounded-lg shadow-md m-4 bg-white">
+            <div class="flex justify-content-evenly align-center">
+              <h1>Attached Documents</h1>
+            </div>
+            <div class="grid grid-cols-4 gap-4">
+              <div
+                class="mt-4 mb-8 bg-white"
+                style="border-radius: 15px; padding: 10px"
+                v-for="document in licenseInfo &&
+                licenseInfo.newLicense &&
+                licenseInfo.newLicense.documents
+                  ? licenseInfo.newLicense.documents
+                  : licenseInfo &&
+                    licenseInfo.renewal &&
+                    licenseInfo.renewal.documents
+                  ? licenseInfo.renewal.documents
+                  : []"
+                :key="document.id"
+              >
+                <div class="flex justify-center">
+                  <div class="mt-large bg-white">
+                    <a
+                      :href="googleApi + document.filePath"
+                      :data-title="
+                        document.documentType ? document.documentType.name : ''
+                      "
+                      data-lightbox="example-2"
+                    >
+                      <img
+                        :src="googleApi + document.filePath"
+                        class="w-full h-48 object-cover"
+                      />
+                    </a>
+
+                    <h4 style="font-weight: bold">
+                      Document Type:-
+                    </h4>
+                    <h6>
+                      {{
+                        document.documentType ? document.documentType.name : ""
+                      }}
+                    </h6>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -361,14 +616,42 @@
             items-center
             justify-end
             border-t border-grey-100
-            rounded-b-md
+            rounded-b-mdmodalData
           "
         >
           <button
+            class="
+              inline-block
+              px-6
+              py-2.5
+              m-2
+              bg-primary-700
+              text-white
+              font-bold  
+              text-xs
+              leading-tight
+              uppercase
+              rounded
+              shadow-lg
+              hover:bg-white hover:text-primary-600
+              transition
+              duration-150
+              ease-in-out
+            "
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapseExample"
+            aria-expanded="false"
+            aria-controls="collapseExample"
+          >
+            <i class="fa fa-eye"></i>
+            Show Attached Documents
+          </button>
+          <button
             v-if="
               modalDataOthers &&
-              modalDataOthers.data &&
-              modalDataOthers.data.requesterId != loggedInAdmin.id
+                modalDataOthers.data &&
+                modalDataOthers.data.requesterId != loggedInAdmin.id
             "
             type="button"
             @click="saveVerification()"
@@ -410,9 +693,10 @@
   </div>
 </template>
 <script>
-import { ref, computed } from "vue";
+import { ref, computed, watch } from "vue";
 import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
+import { googleApi } from "@/composables/baseURL";
 export default {
   props: ["modalDataOthers"],
   setup(props) {
@@ -420,29 +704,20 @@ export default {
     const toast = useToast();
     let loggedInAdmin = JSON.parse(localStorage.getItem("allAdminData"));
 
-    let isVerified = ref(
-      props.modalDataOthers && props.modalDataOthers.data
-        ? props.modalDataOthers.data.isVerified
-        : false
-    );
-    let remark = computed(() =>
-      props.modalDataOthers && props.modalDataOthers.data
-        ? props.modalDataOthers.data.remark
-        : ""
-    );
-    let malpracticeInfo = computed(() =>
-      props.modalDataOthers && props.modalDataOthers.data
-        ? props.modalDataOthers.data.malpracticeInfo
-        : ""
-    );
+    let isVerified = ref(null);
+    let remark = ref("");
+
+    let malpracticeInfo = ref("");
+    let licenseInfo = computed({
+      get: () => props.modalDataOthers?.data,
+    });
+
     const editedData = ref({});
     const saveVerification = () => {
-      editedData.value.isVerified = isVerified.value ? isVerified.value : null;
-      editedData.value.remark = remark.value ? remark.value : null;
-      editedData.value.malpracticeInfo = malpracticeInfo.value
-        ? malpracticeInfo.value
-        : null;
       editedData.value.verifier = loggedInAdmin.name;
+      editedData.value.remark = remark.value;
+      editedData.value.isVerified = isVerified.value;
+      editedData.value.malpracticeInfo = malpracticeInfo.value;
       (editedData.value.applicantId =
         props.modalDataOthers && props.modalDataOthers.data
           ? props.modalDataOthers.data.applicantId
@@ -480,6 +755,9 @@ export default {
               pauseOnHover: true,
               icon: true,
             });
+            setTimeout(() => {
+              location.reload();
+            }, 1000);
           } else {
             toast.error(res.data.message, {
               timeout: 5000,
@@ -491,12 +769,19 @@ export default {
           }
         });
     };
-
+    watch(props.modalDataOthers, () => {
+      isVerified.value = props.modalDataOthers.data.isVerified;
+      remark.value = props.modalDataOthers.data.remark;
+      malpracticeInfo.value = props.modalDataOthers.data.malpracticeInfo;
+    });
     return {
       saveVerification,
       remark,
       malpracticeInfo,
+      editedData,
       isVerified,
+      licenseInfo,
+      googleApi,
       loggedInAdmin,
     };
   },

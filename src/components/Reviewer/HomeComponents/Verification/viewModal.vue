@@ -199,7 +199,7 @@
                   <div class="m-4">
                     <div class="toggle slim colour">
                       <input
-                        disabled  
+                        disabled
                         class="toggle-checkbox hidden cursor-pointer"
                         type="checkbox"
                         :checked="
@@ -208,7 +208,7 @@
                             : false
                         "
                       />
-                      <label 
+                      <label
                         class="
                           toggle-label
                           block
@@ -278,11 +278,13 @@
                       block
                       p-2.5
                       w-full
-                      text-sm text-gray-900
-                      bg-gray-50
+                      text-sm 
+                      text-white
+                      bg-primary-600
                       rounded-lg
                       border border-gray-300
-                      focus:ring-blue-500 focus:border-blue-500
+                      focus:ring-blue-500 
+                      focus:border-blue-500
                       dark:bg-gray-700
                       dark:border-gray-600
                       dark:placeholder-gray-400
@@ -292,7 +294,7 @@
                     "
                     id="remark"
                     placeholder="Remark note "
-                    :value="remark"
+                    :value="modalData.data ? modalData.data.remark : ''"
                     disabled
                   />
                 </div>
@@ -306,8 +308,8 @@
                       block
                       p-2.5
                       w-full
-                      text-sm text-gray-900
-                      bg-gray-50
+                      text-sm text-white
+                      bg-primary-600
                       rounded-lg
                       border border-gray-300
                       focus:ring-blue-500 focus:border-blue-500
@@ -319,7 +321,9 @@
                       dark:focus:border-blue-500
                     "
                     placeholder="Information regarding malpractice"
-                    :value="malpracticeInfo"
+                    :value="
+                      modalData.data ? modalData.data.malpracticeInfo : ''
+                    "
                     type="textarea"
                     disabled
                     id="malpracticeInfo"
@@ -340,7 +344,6 @@
             rounded-b-md
           "
         >
-        
           <button
             type="button"
             class="
@@ -458,7 +461,7 @@ export default {
             });
             setTimeout(() => {
               window.location.reload();
-            }, 3000);
+            }, 1000);
           } else {
             toast.error(res.data.message, {
               timeout: 5000,
@@ -469,7 +472,7 @@ export default {
             });
             setTimeout(() => {
               window.location.reload();
-            }, 3000);
+            }, 1000);
           }
         });
     };

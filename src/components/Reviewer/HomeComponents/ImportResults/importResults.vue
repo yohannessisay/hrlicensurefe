@@ -1178,9 +1178,7 @@ export default {
         }
       });
     };
-    //These filters all will be collected and made into a separate vue file in which all the other componenets will share them.
-    //One initial idea i have is to make an object holding a dynamic filter objects given through vue's props and these filters
-    //will be dynamically populated from the child or parent component upon mount and thus removing huge headache for report related tasks in the future
+    
     const applyFilter = () => {
       userTable.value.isLoading = true;
       tableData = [];

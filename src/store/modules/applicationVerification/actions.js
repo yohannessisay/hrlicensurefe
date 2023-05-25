@@ -1,9 +1,19 @@
 import ApiService from "../../../services/api.service";
 import { baseUrl } from "../../../composables/baseURL";
 import {} from "./mutation-types";
+ 
+function urlFacilitator(detail,address) {
+  let url = baseUrl+'/'+address;
+  let parameters = detail.params ? detail.params : [];
 
-const userId = +localStorage.getItem("userId");
-
+  if (parameters) {
+    parameters.forEach((param) => {
+      url += param ? `${param.key}=${param.value}&` : "";
+    });
+  }
+  url = url.substring(0, url.length - 1);
+  return url;
+}
 export default {
   async getAllUsers({ commit }) {
     try {
@@ -62,15 +72,13 @@ export default {
       return resp;
     }
   },
-  async getRequestsByRegion({ commit }, id) {
+  async getRequests(context, params) {
     try {
-      const respReg = await ApiService.get(
-        baseUrl + "/applicationVerification/all/byRegion/" + id.regionId
-      );
-      const resp = await ApiService.get(
-        baseUrl + "/applicationVerification/all/byRequester/" + id.adminId
-      );
-      return { byReviewer: resp.data.data, byRegion: respReg.data.data };
+      
+      let url = urlFacilitator(params,'applicationVerification?');
+
+      const resp = await ApiService.get(url);
+      return resp;
     } catch (error) {
       const resp = error;
       return resp;

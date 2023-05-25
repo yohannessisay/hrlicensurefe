@@ -731,7 +731,7 @@ export default {
                     if (
                       (newFile.commonDocCode &&
                         newFile.commonDocCode == ele.fileName) ||
-                      newFile.documenttype == ele.fileName
+                      newFile.documentCode == ele.fileName
                     ) {
                       changedDocs.value.push({
                         docName: newFile.documentName,
