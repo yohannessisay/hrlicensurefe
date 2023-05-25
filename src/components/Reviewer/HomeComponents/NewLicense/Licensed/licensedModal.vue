@@ -448,7 +448,7 @@
                     </div>
 
                     <div class="collapse mt-12" id="collapseExample">
-                      <div class="block p-6 rounded-lg shadow-lg bg-white">
+                      <div class="block p-6 rounded-lg shadow-md bg-white">
                         <div class="flex justify-content-evenly align-center">
                           <h1>Attached Documents</h1>
                         </div>

@@ -185,9 +185,13 @@
                                 @change="applyFilter()"
                                 aria-label="Default select"
                               >
-                                <option selected value="all">All</option>
-                                <option value="male">Male</option>
-                                <option value="female">Female</option>
+                                <option selected value="">All</option>
+                                <option
+                                  v-for="region in regions"
+                                  :key="region.id"
+                                  :value="region.id"
+                                  >{{ region.name }}</option
+                                >
                               </select>
                             </div>
                           </div>
@@ -309,6 +313,202 @@
                       <div
                         class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto"
                       >
+                        <div class="p-4 bg-grey-200 mb-4 rounded-lg">
+                          <h1 class="text-2xl mb-1">Filters</h1>
+                          <div class="grid lg:grid-cols-4 xl:gap-6  mt-4">
+                            <div class="mb-3 xl:w-full">
+                              <label for="" class="">Applicant Name</label>
+                              <input
+                                type="search"
+                                class="
+                    form-control
+                    relative
+                    flex-auto
+                    min-w-0
+                    block
+                    w-full
+                    px-6
+                    py-1.5
+                    text-base
+                    font-normal
+                    text-gray-700
+                    bg-white bg-clip-padding
+                    border border-solid border-gray-300
+                    rounded
+                    transition
+                    ease-in-out
+                    focus:text-gray-700
+                    focus:bg-white
+                    focus:border-blue-600
+                    focus:outline-none
+                  "
+                                @keyup.enter="applyFilterOth()"
+                                placeholder="Start Searching For Name"
+                                aria-label="Search"
+                                aria-describedby="button-addon2"
+                                v-model="searchTermOth"
+                              />
+                            </div>
+                            <div class="mb-3 xl:w-full">
+                              <label for="" class="">Code</label>
+                              <input
+                                type="search"
+                                class="
+                    form-control
+                    relative
+                    flex-auto
+                    min-w-0
+                    block
+                    w-full
+                    px-6
+                    py-1.5
+                    text-base
+                    font-normal
+                    text-gray-700
+                    bg-white bg-clip-padding
+                    border border-solid border-gray-300
+                    rounded
+                    transition
+                    ease-in-out
+                    focus:text-gray-700
+                    focus:bg-white
+                    focus:border-blue-600
+                    focus:outline-none
+                  "
+                                @keyup.enter="applyFilterOth()"
+                                placeholder="Start Searching For code"
+                                aria-label="Search"
+                                aria-describedby="button-addon2"
+                                v-model="codeSearchTermOth"
+                              />
+                            </div>
+                            <div class="mb-3 xl:w-full mr-2">
+                              <label for="" class="ml-4">Region</label>
+                              <select
+                                class="
+                    form-select
+                    appearance-none
+                    block
+                    w-full
+                    px-6
+                    ml-4
+                    py-2
+                    text-base
+                    font-normal
+                    text-gray-700
+                    bg-white bg-clip-padding bg-no-repeat
+                    border border-solid border-gray-300
+                    rounded
+                    transition
+                    ease-in-out
+                    focus:text-gray-700
+                    focus:bg-white
+                    focus:border-blue-600
+                    focus:outline-none
+                  "
+                                v-model="regionSearchTermOth"
+                                @change="applyFilterOth()"
+                                aria-label="Default select"
+                              >
+                                <option selected value="">All</option>
+                                <option
+                                  v-for="region in regions"
+                                  :key="region.id"
+                                  :value="region.id"
+                                  >{{ region.name }}</option
+                                >
+                              </select>
+                            </div>
+                          </div>
+                          <h2 class="text-primary-800 text-lg">Applied Date</h2>
+                          <div class="grid grid-cols-4">
+                            <div class="mb-3">
+                              <label for="" class="ml-2">From</label>
+                              <input
+                                v-model="searchTermFromDateOth"
+                                type="date"
+                                class="
+                        appearance-none
+                        block
+                        w-full
+                        px-6
+                        ml-2
+                        py-2
+                        text-base
+                        font-normal
+                        text-gray-700
+                        bg-white bg-clip-padding bg-no-repeat
+                        border border-solid border-gray-300
+                        rounded
+                        transition
+                        ease-in-out
+                        focus:text-gray-700
+                        focus:bg-white
+                        focus:border-blue-600
+                        focus:outline-none
+                      "
+                                aria-label="Default select example"
+                              />
+                            </div>
+                            <div class="mb-3 ml-2">
+                              <label for="" class="ml-4"> To</label>
+                              <input
+                                type="date"
+                                class="
+                        appearance-none
+                        block
+                        w-full
+                        px-6
+                        ml-4
+                        py-2
+                        text-base
+                        font-normal
+                        text-gray-700
+                        bg-white bg-clip-padding bg-no-repeat
+                        border border-solid border-gray-300
+                        rounded
+                        transition
+                        ease-in-out
+                        focus:text-gray-700
+                        focus:bg-white
+                        focus:border-blue-600
+                        focus:outline-none
+                      "
+                                v-model="searchTermToDateOth"
+                                @change="applyFilterOth()"
+                                aria-label="Default select example"
+                              />
+                            </div>
+                            <div class="ml-8 mt-4">
+                              <button
+                                type="button"
+                                class="
+                        inline-block
+                        px-6
+                        py-2
+                        mt-2
+                        border-2 border-primary-300
+                        text-white
+                        font-medium
+                        text-xs
+                        leading-tight
+                        uppercase
+                        rounded
+                        bg-primary-600
+                        hover:bg-white hover:bg-opacity-5 hover:text-primary-600
+                        focus:outline-none focus:ring-0
+                        transition
+                        duration-150
+                        ease-in-out
+                      "
+                                @click="clearFiltersOth()"
+                              >
+                                <i class="fa fa-close"></i>
+                                Clear Filters
+                              </button>
+                            </div>
+                          </div>
+                        </div>
                         <div
                           class="
                             inline-block
@@ -342,7 +542,7 @@
     </div>
     <!-- Main Content -->
   </section>
-  <add-request></add-request>
+  <add-request :regions="regions"></add-request>
   <view-modal :modalData="modalData"></view-modal>
   <view-modal-others :modalDataOthers="modalDataOthers"></view-modal-others>
 </template>
@@ -374,7 +574,7 @@ export default {
     let loading = ref(false);
 
     let modalData = ref({});
-    let modalDataOthers = ref({});
+    let modalDataOthers = ref({ change: 0 });
 
     const verificationTable = ref({});
     const verificationTableOthers = ref({});
@@ -388,6 +588,7 @@ export default {
     let tableData = [];
     let tableDataOthers = [];
     let allInfo = [];
+    let regions = ref([]);
     let allInfoOth = [];
     let searchTerm = ref("");
     let codeSearchTerm = ref("");
@@ -407,31 +608,35 @@ export default {
           params: apiParameters,
         })
         .then((res) => {
-          allInfo =res.data && res.data.data 
-            ? res.data.data.rows
-            :  [];
-        console.log(allInfo);
-          allInfo.forEach((element) => {
-            tableData.push({
-              Number: element.id,
-              ApplicantName:
-                (element.profile.name ? element.profile.name : "") +
-                " " +
-                (element.profile.fatherName ? element.profile.fatherName : "") +
-                " " +
-                (element.profile.grandFatherName
-                  ? element.profile.grandFatherName
-                  : ""),
-              RequestedRegion: element.region.name,
-              LicenseCode: element.newLicense
-                ? element.newLicense.newLicenseCode
-                : element.renewal
-                ? element.renewal.renewalCode
-                : "-------",
-              IsVerified: element.isVerified ? "Verified" : "Not Verified",
-              data: element,
-            });
-          });
+          res.data && res.data.data && res.data.data.rows
+            ? (allInfo = res.data.data.rows)
+            : (allInfo = []);
+          console.log(allInfo);
+          allInfo
+            ? allInfo.forEach((element) => {
+                tableData.push({
+                  Number: element.id,
+                  ApplicantName:
+                    (element.profile.name ? element.profile.name : "") +
+                    " " +
+                    (element.profile.fatherName
+                      ? element.profile.fatherName
+                      : "") +
+                    " " +
+                    (element.profile.grandFatherName
+                      ? element.profile.grandFatherName
+                      : ""),
+                  RequestedRegion: element.region.name,
+                  LicenseCode: element.newLicense
+                    ? element.newLicense.newLicenseCode
+                    : element.renewal
+                    ? element.renewal.renewalCode
+                    : "-------",
+                  IsVerified: element.isVerified ? "Verified" : "Not Verified",
+                  data: element,
+                });
+              })
+            : "";
 
           verificationTable.value = {
             columns: [
@@ -474,7 +679,7 @@ export default {
                 display: function(row) {
                   return (
                     '<button data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
-                    row.licenseNumber +
+                    row +
                     '" >View</button>'
                   );
                 },
@@ -496,10 +701,11 @@ export default {
         .dispatch("applicationVerification/getRequests", {
           params: apiParameters,
         })
-        .then((res) => { 
-          res.data && res.data.data && res.data.data.status == "Success"
+        .then((res) => {
+          res.data && res.data.data && res.data.data.rows
             ? (allInfoOth = res.data.data.rows)
             : (allInfoOth = []);
+
           allInfoOth.forEach((element) => {
             tableDataOthers.push({
               Number: element.id,
@@ -562,7 +768,7 @@ export default {
                 display: function(row) {
                   return (
                     '<button data-bs-toggle="modal" data-bs-target="#staticBackdropOthers" class="edit-btn-others bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
-                    row.licenseNumber +
+                    row +
                     '" >View</button>'
                   );
                 },
@@ -593,22 +799,27 @@ export default {
 
       Array.prototype.forEach.call(elements, function(element) {
         if (element.classList.contains("edit-btn-others")) {
-          element.addEventListener("click", rowClicked());
+          element.addEventListener("click", rowClickedOthers());
         }
       });
       verificationTableOthers.value.isLoading = false;
     };
 
     const rowClicked = (row) => {
+      modalData.value = {};
       if (row != undefined) {
         row = JSON.parse(JSON.stringify(row));
         modalData.value = row ? row : {};
       }
     };
     const rowClickedOthers = (row) => {
+ 
       if (row != undefined) {
         row = JSON.parse(JSON.stringify(row));
-        modalDataOthers.value = row ? row : {};
+        
+        modalDataOthers.value.data = row.data ? row.data : {};
+        modalDataOthers.value.change+=1;
+
       }
     };
 
@@ -621,6 +832,10 @@ export default {
         { key: "page", value: 0 },
         { key: "size", value: 10 },
       ]);
+
+      store.dispatch("applicationVerification/getRegions").then((res) => {
+        regions.value = res.data.data;
+      });
     });
     const applyFilter = () => {
       verificationTable.value.isLoading = true;
@@ -846,6 +1061,7 @@ export default {
       clearFiltersOth,
       searchApplicationOth,
       searchTermOth,
+      regions,
       codeSearchTermOth,
       regionSearchTermOth,
       searchTermFromDateOth,

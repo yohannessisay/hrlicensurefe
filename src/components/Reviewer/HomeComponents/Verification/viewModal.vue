@@ -66,7 +66,7 @@
                   </h2>
                 </div>
               </div>
-
+           
               <div class="grid grid-cols-3 gap-4">
                 <div class="form-group mb-4">
                   <label for="firstName">Applicant Name</label>
@@ -199,7 +199,7 @@
                   <div class="m-4">
                     <div class="toggle slim colour">
                       <input
-                        disabled  
+                        disabled
                         class="toggle-checkbox hidden cursor-pointer"
                         type="checkbox"
                         :checked="
@@ -208,7 +208,7 @@
                             : false
                         "
                       />
-                      <label 
+                      <label
                         class="
                           toggle-label
                           block
@@ -340,7 +340,6 @@
             rounded-b-md
           "
         >
-        
           <button
             type="button"
             class="
@@ -458,7 +457,7 @@ export default {
             });
             setTimeout(() => {
               window.location.reload();
-            }, 3000);
+            }, 1000);
           } else {
             toast.error(res.data.message, {
               timeout: 5000,
@@ -469,7 +468,7 @@ export default {
             });
             setTimeout(() => {
               window.location.reload();
-            }, 3000);
+            }, 1000);
           }
         });
     };

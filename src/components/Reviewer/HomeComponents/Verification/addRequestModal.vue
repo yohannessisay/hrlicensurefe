@@ -226,22 +226,26 @@
                       </h2>
                     </div>
                     <div class="grid grid-cols-2">
-                      <h2>Certified By</h2>
+                      <h2>Reviewed By</h2>
                       <h2 class="text-primary-600">
                         {{
                           licenseData && licenseData.licenseReviewer
                             ? licenseData.licenseReviewer.reviewer.name
+                            : licenseData && licenseData.renewalReviewer
+                            ? licenseData.renewalReviewer.reviewer.name
                             : ""
                         }}
                       </h2>
                     </div>
                     <div class="grid grid-cols-2">
-                      <h2>Certified Personnel Phone</h2>
+                      <h2>Reviewer Phone</h2>
                       <h2 class="text-primary-600">
                         {{
                           licenseData && licenseData.licenseReviewer
                             ? licenseData.licenseReviewer.reviewer.phoneNumber
-                            : ""
+                            : 
+                             licenseData && licenseData.renewalReviewer
+                            ? licenseData.renewalReviewer.reviewer.phoneNumber:""
                         }}
                       </h2>
                     </div>
@@ -279,7 +283,7 @@
                     v-model="region"
                   >
                     <option
-                      v-for="region in regions"
+                      v-for="region in allRegions"
                       v-bind:key="region.name"
                       v-bind:value="region.id"
                     >
@@ -321,7 +325,7 @@
 </template>
 <script>
 import { useStore } from "vuex";
-import { ref, onMounted } from "vue";
+import { ref, computed } from "vue";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 import { useToast } from "vue-toastification";
@@ -330,16 +334,16 @@ export default {
   components: {
     Loading,
   },
-
-  setup() {
+  props: ["regions"],
+  setup(props) {
     const store = useStore();
     const toast = useToast();
     let users = ref([]);
     let licenseData = ref({});
     let filteredUsers = ref([]);
     let searchInput = ref("");
+    let allRegions = computed(() => props.regions);
     let licenseType = ref("");
-    let regions = ref([]);
     let region = ref();
     let searchLoading = ref(false);
     let licenseNumber = ref("");
@@ -349,16 +353,6 @@ export default {
     let showOptions = ref(false);
     const assignedUser = ref({ id: "", name: "" });
     const isLoading = ref(false);
-
-    onMounted(async () => {
-      getRegion();
-    });
-
-    const getRegion = () => {
-      store.dispatch("applicationVerification/getRegions").then((res) => {
-        regions.value = res.data.data;
-      });
-    };
 
     const searchLicense = () => {
       searchLoading.value = true;
@@ -449,7 +443,7 @@ export default {
 
               setTimeout(() => {
                 window.location.reload();
-              }, 3000);
+              }, 1000);
             } else {
               isLoading.value = false;
 
@@ -476,7 +470,7 @@ export default {
 
             setTimeout(() => {
               window.location.reload();
-            }, 3000);
+            }, 1000);
           }
         );
     };
@@ -486,11 +480,11 @@ export default {
       licenseData,
       licenseType,
       submit,
+      allRegions,
       searchInput,
       filteredUsers,
       searchLicense,
       region,
-      regions,
       licenseNumber,
       searchLoading,
       showRes,
