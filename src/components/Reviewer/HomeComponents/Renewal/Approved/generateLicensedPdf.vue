@@ -1235,7 +1235,11 @@
                   <td
                     class="whitespace-nowrap border-r px-6 py-4 text-yellow-300"
                   >
-                    {{
+                  ({{
+                      educations && educations.prefix
+                        ? educations.prefix.name
+                        : ""
+                    }})  {{
                       educations && educations.professionType
                         ? educations.professionType.name
                         : ""
