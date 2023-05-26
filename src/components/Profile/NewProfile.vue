@@ -32,7 +32,7 @@
       v-if="this.approvalModal != 0"
     >
       <transition name="fade" mode="out-in">
-        <div v-if="this.activeState == 1" class="mt-64">
+        <div v-if="this.activeState == 1" class=" ">
           <PersonalInfo
             :activeState="1"
             @changeActiveState="activeState++"
@@ -43,7 +43,7 @@
       <transition name="fade" mode="out-in">
         <div
           v-if="this.activeState == 2"
-          class="sm:w-full md:w-3/5 lg:w-3/5 xl:w-3/5 mdlg:w-3/5"
+          class="w-full m-4"
         >
           <Preview
             :activeState="2"
@@ -84,36 +84,5 @@ export default {
 };
 </script>
 <style>
-#holder {
-  height: max-content;
-}
-
-#navg a {
-  margin-left: 20px;
-  height: 45px;
-  width: 45px;
-  background-color: #d1d5db;
-  color: white;
-  border-radius: 100%;
-  display: inline-block;
-}
-
-#navg a:hover {
-  background-color: #2f639d;
-  cursor: pointer;
-}
-
-#navg a:visited {
-  background-color: #2f639d;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0.5s;
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.5s ease-out ease-in;
-}
+ 
 </style>
