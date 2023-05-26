@@ -145,11 +145,11 @@
     </div>
   </div>
 
-  <div class="w-screen max-w-4xl mt-48  mb-20 p-4" v-if="approveStatus == 2">
+  <div class="w-screen max-w-4xl mt-64  mb-20 p-4" v-if="approveStatus == 2">
     <div
       class="
         flex flex-col
-       
+         
         w-full
         form_wrapper
         bg-white
@@ -823,13 +823,11 @@
 </template>
 <script>
 import { ref, onMounted } from "vue";
-import { useStore } from "vuex";
-import axios from "axios";
-import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
+import { useStore } from "vuex"; 
 import { useToast } from "vue-toastification";
 
 export default {
-  components: { TitleWithIllustration },
+  components: {  },
   props: ["activeState", "approvalModal"],
   setup(props, { emit }) {
     const store = useStore();

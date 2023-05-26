@@ -1,11 +1,16 @@
 <template>
-  <div class="container my-12 mx-auto px-4 md:px-12 w-full mt-48">
+  <div class="container" style="margin-top: 10px;">
     <h2 class="text-main-400 font-bold text-display">Summary</h2>
-    <div class="flex flex-wrap -mx-1 lg:-mx-4">
-      <!-- Column -->
-      <div class="my-1 px-1 lg:px-4 w-full">
-        <!-- Article -->
-        <article class="overflow-hidden rounded-lg shadow-lg p-4">
+    <div
+      class="grid grid-cols-1  
+              md:grid-cols-1
+              mdlg:grid-cols-1
+              lg:grid-cols-3
+              xl:grid-cols-3
+              sm:grid-rows-1"
+    >
+      <div class="bg-white rounded-md shadow-md p-4 m-2">
+        <article class="overflow-hidden   p-4">
           <div class="flex justify-start flex-col mb-large">
             <div class="flex justify-start">
               <h2 class="text-main-400 font-bold text-lg">Profile Picture</h2>
@@ -16,20 +21,11 @@
             <img :src="profilePic" />
           </picture>
         </article>
-        <!-- END Article -->
       </div>
-      <!-- END Column -->
-    </div>
-  </div>
-
-  <div class="container mx-auto px-4 md:px-12">
-    <div class="flex flex-wrap -mx-1 lg:-mx-4">
-      <!-- Column -->
-      <div class="my-1 px-1 lg:px-4 w-full">
-        <!-- Article -->
-        <article class="overflow-hidden rounded-lg shadow-lg p-4">
+      <div class="bg-white rounded-md shadow-md p-4 m-2">
+        <article class="overflow-hidden   p-4">
           <div class="flex justify-start flex-col">
-            <div class="flex justify-start">
+            <div class="flex justify-start border-b-4 text-main-400 mt-4 mb-4">
               <h2 class="text-main-400 font-bold text-lg">
                 General Personal Info
               </h2>
@@ -38,122 +34,106 @@
 
           <div
             class="
-              grid grid-rows-3
-              md:grid-cols-3
-              mdlg:grid-cols-3
-              lg:grid-cols-3
-              xl:grid-cols-3
-              sm:grid-rows-3
+              grid grid-rows-1
+             
             "
           >
-            <div>
-              <label class="ml-8 text-main-400 font-semibold"> Full Name</label>
-              <h5 class="ml-8">
+            <div class="grid grid-cols-2">
+              <label class="text-main-400 font-semibold"> Full Name</label>
+              <h5 class=" text-grey-800">
                 {{
                   personalInfo.name +
-                  " " +
-                  personalInfo.fatherName +
-                  " " +
-                  personalInfo.grandFatherName
+                    " " +
+                    personalInfo.fatherName +
+                    " " +
+                    personalInfo.grandFatherName
                 }}
               </h5>
             </div>
-            <div>
-              <label class="ml-8 text-main-400 font-semibold"
+            <div class="grid grid-cols-2">
+              <label class="text-main-400 font-semibold"
                 >Full Alternative Name</label
               >
-              <h5 class="ml-8">
+              <h5 class=" text-grey-800">
                 {{
                   personalInfo.alternativeName +
-                  " " +
-                  personalInfo.alternativeFatherName +
-                  " " +
-                  personalInfo.alternativeGrandFatherName
+                    " " +
+                    personalInfo.alternativeFatherName +
+                    " " +
+                    personalInfo.alternativeGrandFatherName
                 }}
               </h5>
             </div>
-            <div>
-              <label class="ml-8 text-main-400 font-semibold"> Gender</label>
-              <h5 class="ml-8">{{ personalInfo.gender }}</h5>
+            <div class="grid grid-cols-2">
+              <label class="text-main-400 font-semibold">Gender</label>
+              <h5 class=" text-grey-800">{{ personalInfo.gender }}</h5>
             </div>
-            <div>
-              <label class="ml-8 text-main-400 font-semibold"
-                >Nationality</label
-              >
-              <h5 class="ml-8">{{ nationality }}</h5>
+            <div class="grid grid-cols-2">
+              <label class="text-main-400 font-semibold">Nationality</label>
+              <h5 class=" text-grey-800">{{ nationality }}</h5>
             </div>
-            <div>
-              <label class="ml-8 text-main-400 font-semibold">
-                Marital Status</label
-              >
-              <h5 class="ml-8">{{ maritalStatus }}</h5>
+            <div class="grid grid-cols-2">
+              <label class="text-main-400 font-semibold"> Marital Status</label>
+              <h5 class=" text-grey-800">{{ maritalStatus }}</h5>
             </div>
           </div>
           <div class="flex justify-start border-b-4 text-main-400 mt-4 mb-4">
             <h2 class="text-main-400 font-bold text-lg">Address</h2>
           </div>
-          <div class="flex flex-row">
-            <div>
-              <label class="ml-8 text-main-400 font-semibold">PO Box</label>
-              <h5 class="ml-8">{{ personalInfo.poBox }}</h5>
-            </div>
+
+          <div class="grid grid-cols-2">
+            <label class="text-main-400 font-semibold">PO Box</label>
+            <h5 class=" text-grey-800">{{ personalInfo.poBox }}</h5>
           </div>
+
           <div class="flex justify-start border-b-4 text-main-400 mt-4 mb-4">
             <h2 class="text-main-400 font-bold text-lg">Contact Info</h2>
           </div>
           <div
             class="
-              grid grid-rows-3
-              md:grid-cols-3
-              mdlg:grid-cols-3
-              lg:grid-cols-3
-              xl:grid-cols-3
-              sm:grid-rows-3
+              grid grid-rows-1
             "
           >
-            <div>
-              <label class="ml-8 text-main-400 font-semibold">
-                Email Address</label
-              >
-              <h5 class="ml-8">{{ user.emailAddress }}</h5>
+            <div class="grid grid-cols-2">
+              <label class=" text-main-400 font-semibold"> Email Address</label>
+              <h5 class=" text-grey-800">{{ user.emailAddress }}</h5>
             </div>
             <div
+              class="grid grid-cols-2"
               v-if="
                 personalInfo.employeeId != null || personalInfo.employeeId != ''
               "
             >
-              <label class="ml-8 text-main-400 font-semibold"
-                >HRA Employee Id</label
-              >
-              <h5 class="ml-8">{{ personalInfo.employeeId }}</h5>
+              <label class="text-main-400 font-semibold">HRA Employee Id</label>
+              <h5 class=" text-grey-800">{{ personalInfo.employeeId }}</h5>
             </div>
             <div
+              class="grid grid-cols-2"
               v-if="
                 personalInfo.fileNumber != null || personalInfo.fileNumber != ''
               "
             >
-              <label class="ml-8 text-main-400 font-semibold"
+              <label class=" text-main-400 font-semibold"
                 >HRA File Number</label
               >
-              <h5 class="ml-8">{{ personalInfo.fileNumber }}</h5>
+              <h5 class=" text-grey-800">{{ personalInfo.fileNumber }}</h5>
             </div>
           </div>
         </article>
-        <!-- END Article -->
       </div>
-      <!-- END Column -->
-    </div>
-  </div>
-  <div class="container my-12 mx-auto px-4 md:px-12">
-    <div class="flex flex-wrap -mx-1 lg:-mx-4">
-      <!-- Column -->
-      <div class="my-1 px-1 lg:px-4 w-full">
-        <!-- Article -->
-        <article class="overflow-hidden rounded-lg shadow-lg p-4">
-          <div class="mt-12 flex justify-center mb-medium">
-            <div>
-              <button
-                class="
+      <div class="bg-white rounded-md shadow-md p-4 m-2">
+        <div class="vld-parent mt-4">
+          <loading
+            :active="isLoading"
+            :is-full-page="false"
+            :color="'#2F639D'"
+            :opacity="1"
+          ></loading>
+          <article class="overflow-hidden  p-4">
+            <div class="mt-12 flex justify-center mb-medium">
+              <div>
+                <button
+                  class="
                   inline-block
                   px-6
                   py-2.5
@@ -164,31 +144,29 @@
                   leading-tight
                   uppercase
                   rounded
-                  shadow-lg
+                  shadow-md
                   hover:bg-white hover:shadow-lg hover:text-main-400
                   transition
                   duration-150
                   ease-in-out
                 "
-                variant="outline"
-                type="button"
-                @click="prevStep"
-              >
-                Back
-              </button>
-            </div>
-            <div v-if="!message.showLoading">
-              <div
-                class="flex justify-center justify-items-center mt-8 mb-12"
-                v-if="message.showLoading"
-              >
-                <Spinner />
+                  variant="outline"
+                  type="button"
+                  @click="prevStep"
+                >
+                  Back
+                </button>
               </div>
-              <button
-                v-on:click="submit()"
-                variant="outline"
-                type="button"
-                class="
+              <div v-if="!message.showLoading">
+                <div
+                  class="flex justify-center justify-items-center mt-8 mb-12"
+                  v-if="message.showLoading"
+                ></div>
+                <button
+                  v-on:click="submit()"
+                  variant="outline"
+                  type="button"
+                  class="
                   inline-block
                   px-6
                   py-2.5
@@ -199,21 +177,20 @@
                   leading-tight
                   uppercase
                   rounded
-                  shadow-lg
+                  shadow-md
                   hover:bg-white hover:shadow-lg hover:text-main-400
                   transition
                   duration-150
                   ease-in-out
                 "
-              >
-                Save Profile
-              </button>
+                >
+                  Save Profile
+                </button>
+              </div>
             </div>
-          </div>
-        </article>
-        <!-- END Article -->
+          </article>
+        </div>
       </div>
-      <!-- END Column -->
     </div>
   </div>
 </template>
@@ -222,15 +199,12 @@
 import { ref, onMounted, nextTick } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
-import Title from "@/sharedComponents/TitleWithIllustration";
-import FlashMessage from "@/sharedComponents/FlashMessage";
-import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
-import Spinner from "@/sharedComponents/Spinner";
 import moment from "moment";
 import { useToast } from "vue-toastification";
-
+import Loading from "vue3-loading-overlay";
+import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 export default {
-  components: { Title, FlashMessage, ErrorFlashMessage, Spinner },
+  components: { Loading },
   computed: {
     moment: () => moment,
   },
@@ -276,6 +250,7 @@ export default {
       poBox: null,
     };
     let success = ref(false);
+    let isLoading = ref(false);
     let response = {};
     let showFlash = ref(false);
     let nationality = ref("");
@@ -290,7 +265,7 @@ export default {
       formData.append("document", photoFormData);
 
       let payload = { document: formData, id: userId };
-
+      isLoading.value = true;
       store
         .dispatch("profile/addProfile", {
           name: personalInfo.name,
@@ -332,6 +307,7 @@ export default {
                     pauseOnHover: true,
                     icon: true,
                   });
+                  isLoading.value = false;
                   router.push("/menu");
                 } else {
                   toast.error("Please try again", {
@@ -392,7 +368,7 @@ export default {
     photoFormData = store.getters["profile/getPhoto"];
     onMounted(() => {
       fetchUser();
-      nextTick(function () {
+      nextTick(function() {
         window.setInterval(() => {
           showFlash.value = false;
         }, 10000);
@@ -403,6 +379,7 @@ export default {
       personalInfo,
       address,
       contact,
+      isLoading,
       success,
       nationality,
       maritalStatus,
