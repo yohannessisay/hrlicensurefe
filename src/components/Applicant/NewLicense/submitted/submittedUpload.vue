@@ -1,7 +1,7 @@
 <template>
   <div class="vld-parent">
     <loading
-      :active="isLoading" 
+      :active="isLoading"
       :is-full-page="true"
       :color="'#2F639D'"
       :opacity="0.7"
@@ -189,7 +189,9 @@
                       <td class="px-6 py-4 text-center">
                         <a
                           :id="
-                            'common_image_href_' + item.documentType.id + item.id
+                            'common_image_href_' +
+                              item.documentType.id +
+                              item.id
                           "
                           :href="documentsSaved[item.documentType.code]?.path"
                           :data-title="
@@ -198,7 +200,9 @@
                           data-lightbox="example-2"
                         >
                           <i
-                            :id="'common_icon_' + item.documentType.id + item.id"
+                            :id="
+                              'common_icon_' + item.documentType.id + item.id
+                            "
                             class="fa fa-eye cursor-pointer text-main-400"
                             aria-hidden="true"
                           >
@@ -402,13 +406,7 @@
                             accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
                             :ref="`imageUploader${item.id}`"
                             class="custom-file-input"
-                            v-on:change="
-                              handleFileUpload(
-                                item,
-                                $event,
-                                table
-                              )
-                            "
+                            v-on:change="handleFileUpload(item, $event, table)"
                           />
                         </p>
                       </td>
@@ -417,12 +415,16 @@
                           class="document-name"
                           v-if="
                             documentsSaved[
-                              `${item.documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                              `${
+                                item.documentType.code
+                              }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                             ]?.name
                           "
                           >{{
                             documentsSaved[
-                              `${item.documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                              `${
+                                item.documentType.code
+                              }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                             ]?.name
                           }}</span
                         >
@@ -431,11 +433,15 @@
                         <a
                           :id="
                             'image_href_' +
-                              `${item.documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                              `${
+                                item.documentType.code
+                              }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                           "
                           :href="
                             documentsSaved[
-                              `${item.documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                              `${
+                                item.documentType.code
+                              }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                             ]?.path
                           "
                           :data-title="
@@ -446,7 +452,9 @@
                           <i
                             :id="
                               'educational_icon_' +
-                                `${item.documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                                `${
+                                  item.documentType.code
+                                }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                             "
                             class="fa fa-eye cursor-pointer text-main-400"
                             aria-hidden="true"
@@ -454,11 +462,15 @@
                             <img
                               :id="
                                 'image_lightbox_' +
-                                  `${item.documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                                  `${
+                                    item.documentType.code
+                                  }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                               "
                               :src="
                                 documentsSaved[
-                                  `${item.documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                                  `${
+                                    item.documentType.code
+                                  }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                 ]?.path
                               "
                               class="w-full h-2 object-cover"
@@ -516,11 +528,7 @@
                             :ref="`imageUploader${parentItem[0].id}`"
                             class="custom-file-input"
                             v-on:change="
-                              handleFileUpload(
-                                parentItem[0],
-                                $event,
-                                table
-                              )
+                              handleFileUpload(parentItem[0], $event, table)
                             "
                           />
                         </p>
@@ -530,12 +538,16 @@
                           class="document-name"
                           v-if="
                             documentsSaved[
-                              `${parentItem[0].documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                              `${
+                                parentItem[0].documentType.code
+                              }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                             ]?.name
                           "
                           >{{
                             documentsSaved[
-                              `${parentItem[0].documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                              `${
+                                parentItem[0].documentType.code
+                              }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                             ]?.name
                           }}</span
                         >
@@ -544,11 +556,15 @@
                         <a
                           :id="
                             'image_href_' +
-                              `${parentItem[0].documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                              `${
+                                parentItem[0].documentType.code
+                              }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                           "
                           :href="
                             documentsSaved[
-                              `${parentItem[0].documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                              `${
+                                parentItem[0].documentType.code
+                              }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                             ]?.path
                           "
                           :data-title="
@@ -559,7 +575,9 @@
                           <i
                             :id="
                               'educational_icon_' +
-                                `${parentItem[0].documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                                `${
+                                  parentItem[0].documentType.code
+                                }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                             "
                             class="fa fa-eye cursor-pointer text-main-400"
                             aria-hidden="true"
@@ -567,11 +585,15 @@
                             <img
                               :id="
                                 'image_lightbox_' +
-                                  `${parentItem[0].documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                                  `${
+                                    parentItem[0].documentType.code
+                                  }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                               "
                               :src="
                                 documentsSaved[
-                                  `${parentItem[0].documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                                  `${
+                                    parentItem[0].documentType.code
+                                  }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                 ]?.path
                               "
                               class="w-full h-2 object-cover"
@@ -747,12 +769,16 @@
                                     class="document-name"
                                     v-if="
                                       documentsSaved[
-                                        `${parentChildItem.documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                                        `${
+                                          parentChildItem.documentType.code
+                                        }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                       ]?.name
                                     "
                                     >{{
                                       documentsSaved[
-                                        `${parentChildItem.documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                                        `${
+                                          parentChildItem.documentType.code
+                                        }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                       ]?.name
                                     }}</span
                                   >
@@ -768,11 +794,15 @@
                                   <a
                                     :id="
                                       'image_href_' +
-                                        `${parentChildItem.documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                                        `${
+                                          parentChildItem.documentType.code
+                                        }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                     "
                                     :href="
                                       documentsSaved[
-                                        `${parentChildItem.documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                                        `${
+                                          parentChildItem.documentType.code
+                                        }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                       ]?.path
                                     "
                                     :data-title="
@@ -783,7 +813,9 @@
                                     <i
                                       :id="
                                         'educational_icon_' +
-                                          `${parentChildItem.documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                                          `${
+                                            parentChildItem.documentType.code
+                                          }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                       "
                                       class="
                                         fa fa-eye
@@ -795,11 +827,15 @@
                                       <img
                                         :id="
                                           'image_lightbox_' +
-                                            `${parentChildItem.documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                                            `${
+                                              parentChildItem.documentType.code
+                                            }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                         "
                                         :src="
                                           documentsSaved[
-                                            `${parentChildItem.documentType.code}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                                            `${
+                                              parentChildItem.documentType.code
+                                            }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                           ]?.path
                                         "
                                         class="w-full h-2 object-cover"
@@ -876,24 +912,24 @@
         next
       </button>
     </div>
-  </div> 
+  </div>
 </template>
 <script>
 import { ref, onMounted } from "vue";
-import { useStore } from "vuex"; 
+import { useStore } from "vuex";
 
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
-import MAX_FILE_SIZE from "../../../../composables/documentMessage"; 
+import MAX_FILE_SIZE from "../../../../composables/documentMessage";
 import { boolean } from "yargs";
 import { googleApi } from "@/composables/baseURL";
 import { useRoute } from "vue-router";
 export default {
-  components: {Loading },
+  components: { Loading },
 
   setup(props, { emit }) {
     let isLoading = ref(false);
-    let store = useStore(); 
+    let store = useStore();
     const route = useRoute();
     let documents = ref([]);
     let commonDocuments = ref([]);
@@ -908,7 +944,7 @@ export default {
       name: ""
     });
     let files = ref("");
-    let maxFileSize = ref(5000000); 
+    let maxFileSize = ref(5000000);
     let isImage = ref({});
     let isPdf = ref({});
     let fileSizeExceed = ref({});
@@ -968,7 +1004,7 @@ export default {
 
             previewDocuments.value[data.documentType.code] = reader.result;
             imageData = imageData.filter(
-              (el) => el.documenttype != data.documentType.name
+              el => el.documenttype != data.documentType.name
             );
             imageData.push({
               imageId: "common_image_lightbox_" + data.documentType.code,
@@ -978,7 +1014,7 @@ export default {
                 ? data.educationalLevel.name
                 : "",
               fileName: event?.target?.files[0].name,
-              image: reader.result,
+              image: reader.result
             });
 
             documentToSave.value[data.documentType.code] = reader.result;
@@ -1159,7 +1195,7 @@ export default {
                 ? data.educationalLevel.name
                 : "",
               fileName: event?.target?.files[0].name,
-              image: reader.result,
+              image: reader.result
             });
             // documentsUploaded.value[data.documentType.code] = reader.result;
           },
@@ -1303,7 +1339,6 @@ export default {
       }
     };
 
- 
     const next = () => {
       store.dispatch("newlicense/setTempDocs", formData).then(() => {
         //Save images to indexed Db
@@ -1319,8 +1354,6 @@ export default {
           let transaction = db.transaction(["NLdocumentUploads"], "readwrite");
 
           finalLocalData.data = imageData;
-
-          
 
           const objectStore = transaction.objectStore("NLdocumentUploads");
 
@@ -1393,21 +1426,37 @@ export default {
         .dispatch("newlicense/getNewLicenseApplication", route.params.id)
         .then(res => {
           if (res.data.data) {
-            generalInfo.value = res.data.data;
-            generalInfo.value?.documents.forEach(element => {
-              documentsSaved.value[element.fileName] = {};
-              documentsSaved.value[element.fileName].path =
-                googleApi + element.filePath;
-              documentsSaved.value[element.fileName].name =
-                element.originalFileName;
-            });
+            let localData = JSON.parse(
+              localStorage.getItem("NLApplicationData")
+            );
+            let professionChanged = localData.professionChanged;
+            if (professionChanged && professionChanged == true) {
+              documentsUploaded.value = [];
+              documentsSaved.value = [];
+              generalInfo.value = localData;
+            } else {
+              generalInfo.value = res.data.data;
+              generalInfo.value?.documents.forEach(element => {
+                documentsSaved.value[element.fileName] = {};
+                documentsSaved.value[element.fileName].path =
+                  googleApi + element.filePath;
+                documentsSaved.value[element.fileName].name =
+                  element.originalFileName;
+              });
+              documentsUploaded.value = documentsSaved.value;
+            }
 
-            documentsUploaded.value = documentsSaved.value;
             store.dispatch("newlicense/getApplicationCategories").then(res => {
               let categoryResults = res.data.data
                 ? res.data.data.filter(ele => ele.code == "NA")
                 : "";
-              let educationLevels = generalInfo.value.educations;
+              let educationLevels =
+                generalInfo.value.multipleDepartment &&
+                generalInfo.value.multipleDepartment.length > 0
+                  ? generalInfo.value.multipleDepartment
+                  : generalInfo.value.educations
+                  ? generalInfo.value.educations
+                  : [];
 
               //Get department docs
               educationLevels.forEach(element => {
@@ -1415,11 +1464,8 @@ export default {
                   .dispatch("newlicense/getNLdocuments", [
                     categoryResults[0].id,
                     generalInfo.value.applicantType.id,
-                    element.educationalLevel
-                      ? element.educationalLevel.id
-                      : element.educationLevel
-                      ? element.educationLevel.id
-                      : ""
+                    element.educationLevel ? element.educationLevel.id : "",
+                    null
                   ])
                   .then(res => {
                     let resp = res.data.data;
@@ -1428,12 +1474,8 @@ export default {
                       professionType:
                         element && element.professionType
                           ? element.professionType
-                          : element
-                          ? element.professionTypeId
                           : "",
-                      educationalLevel: element.educationalLevel
-                        ? element.educationalLevel
-                        : element.educationLevel
+                      educationalLevel: element.educationLevel
                         ? element.educationLevel
                         : "",
                       docs: resp.filter(
@@ -1455,7 +1497,6 @@ export default {
                   let result = res.data.data;
                   commonDocuments.value = result;
                 });
-            
             });
           }
         });

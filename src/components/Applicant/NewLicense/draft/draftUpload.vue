@@ -1423,69 +1423,78 @@ export default {
         .dispatch("newlicense/getNewLicenseApplication", route.params.id)
         .then((res) => {
           if (res.data.data) {
-            generalInfo.value = res.data.data;
-            generalInfo.value?.documents.forEach((element) => {
-              documentsSaved.value[element.fileName] = {};
-              documentsSaved.value[element.fileName].path =
-                googleApi + element.filePath;
-              documentsSaved.value[element.fileName].name =
-                element.originalFileName;
-            });
-            documentsUploaded.value = documentsSaved.value;
-            store
-              .dispatch("newlicense/getApplicationCategories")
-              .then((res) => {
-                let categoryResults = res.data.data
-                  ? res.data.data.filter((ele) => ele.code == "NA")
-                  : "";
-                let educationLevels = generalInfo.value.educations;
+            let localData = JSON.parse(
+              localStorage.getItem("NLApplicationData")
+            );
+            let professionChanged = localData.professionChanged;
+            if (professionChanged && professionChanged == true) {
+              documentsUploaded.value = [];
+              documentsSaved.value = [];
+              generalInfo.value = localData;
+            } else {
+              generalInfo.value = res.data.data;
+              generalInfo.value?.documents.forEach(element => {
+                documentsSaved.value[element.fileName] = {};
+                documentsSaved.value[element.fileName].path =
+                  googleApi + element.filePath;
+                documentsSaved.value[element.fileName].name =
+                  element.originalFileName;
+              });
+              documentsUploaded.value = documentsSaved.value;
+            }
 
-                //Get department docs
-                educationLevels.forEach((element) => {
-                  store
-                    .dispatch("newlicense/getNLdocuments", [
-                      categoryResults[0].id,
-                      generalInfo.value.applicantType.id,
-                      element.educationalLevel
-                        ? element.educationalLevel.id
-                        : element.educationLevel
-                        ? element.educationLevel.id
-                        : "",
-                    ])
-                    .then((res) => {
-                      let resp = res.data.data;
-                      newLicenseDocuments.value = res.data.data;
-                      educationalDocs.value.push({
-                        professionType:
-                          element && element.professionType
-                            ? element.professionType
-                            : element
-                            ? element.professionTypeId
-                            : "",
-                        educationalLevel: element.educationalLevel
-                          ? element.educationalLevel
-                          : element.educationLevel
-                          ? element.educationLevel
-                          : "",
-                        docs: resp.filter(
-                          (element) => element.parentDocument == null
-                        ),
-                        parentDoc: groupByKey(resp, "parentDocument"),
-                      });
-                    });
-                });
-                //Get Common Docs
+            store.dispatch("newlicense/getApplicationCategories").then(res => {
+              let categoryResults = res.data.data
+                ? res.data.data.filter(ele => ele.code == "NA")
+                : "";
+              let educationLevels =
+                generalInfo.value.multipleDepartment &&
+                generalInfo.value.multipleDepartment.length > 0
+                  ? generalInfo.value.multipleDepartment
+                  : generalInfo.value.educations
+                  ? generalInfo.value.educations
+                  : [];
 
+              //Get department docs
+              educationLevels.forEach(element => {
                 store
-                  .dispatch("newlicense/getCommonNLdocuments", [
+                  .dispatch("newlicense/getNLdocuments", [
                     categoryResults[0].id,
                     generalInfo.value.applicantType.id,
+                    element.educationLevel ? element.educationLevel.id : "",
+                    null
                   ])
-                  .then((res) => {
-                    let result = res.data.data;
-                    commonDocuments.value = result;
+                  .then(res => {
+                    let resp = res.data.data;
+                    newLicenseDocuments.value = res.data.data;
+                    educationalDocs.value.push({
+                      professionType:
+                        element && element.professionType
+                          ? element.professionType
+                          : "",
+                      educationalLevel: element.educationLevel
+                        ? element.educationLevel
+                        : "",
+                      docs: resp.filter(
+                        element => element.parentDocument == null
+                      ),
+                      parentDoc: groupByKey(resp, "parentDocument")
+                    });
+                  
                   });
               });
+              //Get Common Docs
+
+              store
+                .dispatch("newlicense/getCommonNLdocuments", [
+                  categoryResults[0].id,
+                  generalInfo.value.applicantType.id
+                ])
+                .then(res => {
+                  let result = res.data.data;
+                  commonDocuments.value = result;
+                });
+            });
           }
         });
     });

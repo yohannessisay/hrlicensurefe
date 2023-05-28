@@ -182,14 +182,19 @@
                       <td class="px-6 py-4 text-center">
                         <a
                           :id="
-                            'common_image_href_' + item.documentType.id + item.id
+                            'common_image_href_' +
+                              item.documentType.id +
+                              item.id
                           "
-                          :href="documentsSaved[item.documentType.code]?.path"
+                          :href="documentsSaved[item.documentType.code]?.path?
+                          documentsSaved[item.documentType.code]?.path:''"
                           :data-title="item.name ? item.name : '-----'"
                           data-lightbox="example-2"
                         >
                           <i
-                            :id="'common_icon' + item.documentType.id + item.id"
+                            :id="
+                              'common_icon_' + item.documentType.id + item.id
+                            "
                             class="fa fa-eye cursor-pointer text-main-400"
                             aria-hidden="true"
                           >
@@ -199,12 +204,12 @@
                                   item.documentType.id +
                                   item.id
                               "
-                              v-bind:src="
-                                documentsSaved[item.documentType.code]
-                              "
+                              :src="documentsSaved[item.documentType.code]"
                               class="w-full h-2 object-cover"
                             />
+                          
                           </i>
+                         
                         </a>
                       </td>
                     </tr>
@@ -393,13 +398,7 @@
                             accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
                             :ref="`imageUploader${item.id}`"
                             class="custom-file-input"
-                            v-on:change="
-                              handleFileUpload(
-                                item,
-                                $event,
-                                table
-                              )
-                            "
+                            v-on:change="handleFileUpload(item, $event, table)"
                           />
                         </p>
                       </td>
@@ -519,11 +518,7 @@
                             :ref="`imageUploader${parentItem[0].id}`"
                             class="custom-file-input"
                             v-on:change="
-                              handleFileUpload(
-                                parentItem[0],
-                                $event,
-                                table
-                              )
+                              handleFileUpload(parentItem[0], $event, table)
                             "
                           />
                         </p>
@@ -787,6 +782,13 @@
                                   class="px-6 py-4 text-center"
                                 >
                                   <a
+                                    v-if="
+                                      documentsSaved[
+                                        `${
+                                          parentChildItem.documentType.code
+                                        }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                                      ]?.name
+                                    "
                                     :id="
                                       'image_href_' +
                                         `${
@@ -907,19 +909,19 @@
         next
       </button>
     </div>
-  </div> 
+  </div>
 </template>
 
 <script>
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
 
-import MAX_FILE_SIZE from "../../../../composables/documentMessage"; 
+import MAX_FILE_SIZE from "../../../../composables/documentMessage";
 import { boolean } from "yargs";
 import { googleApi } from "@/composables/baseURL";
 import { useRoute } from "vue-router";
 export default {
-  components: { },
+  components: {},
 
   setup(props, { emit }) {
     let store = useStore();
@@ -934,7 +936,7 @@ export default {
       isImage: boolean,
       isPdf: boolean,
       file: "",
-      name: "",
+      name: ""
     });
     let files = ref("");
     let maxFileSize = ref(5000000);
@@ -997,7 +999,7 @@ export default {
 
             previewDocuments.value[data.documentType.code] = reader.result;
             imageData = imageData.filter(
-              (el) => el.documenttype != data.documentType.name
+              el => el.documenttype != data.documentType.name
             );
             imageData.push({
               imageId: "common_image_lightbox_" + data.documentType.code,
@@ -1007,10 +1009,11 @@ export default {
                 ? data.educationalLevel.name
                 : "",
               fileName: event?.target?.files[0].name,
-              image: reader.result,
+              image: reader.result
             });
 
             documentToSave.value[data.documentType.code] = reader.result;
+            documentsSaved[data.documentType.code] = reader.result;
           },
           false
         );
@@ -1054,7 +1057,7 @@ export default {
         let outputHref = document.getElementById(
           "common_image_" + data.documentType.id + data.id
         );
-
+      
         outputHref.href = URL.createObjectURL(event.target.files[0]);
         if (output && output.src) {
           output.src = URL.createObjectURL(event.target.files[0]);
@@ -1188,7 +1191,7 @@ export default {
                 ? data.educationalLevel.name
                 : "",
               fileName: event?.target?.files[0].name,
-              image: reader.result,
+              image: reader.result
             });
             // documentsUploaded.value[data.documentType.code] = reader.result;
           },
@@ -1332,14 +1335,13 @@ export default {
       }
     };
 
-
     const next = () => {
       store.dispatch("renewal/setTempDocs", formData).then(() => {
         //Save images to indexed Db
 
         let finalLocalData = {
           created: new Date(),
-          data: [],
+          data: []
         };
         let db;
         let request = indexedDB.open("RNdocumentUploads", 1);
@@ -1379,11 +1381,11 @@ export default {
       return array.reduce((hash, obj) => {
         if (obj[key] === undefined || obj[key] == null) return hash;
         return Object.assign(hash, {
-          [obj[key]]: (hash[obj[key]] || []).concat(obj),
+          [obj[key]]: (hash[obj[key]] || []).concat(obj)
         });
       }, {});
     };
-    const addMore = (parentItem) => {
+    const addMore = parentItem => {
       if (
         showNestedDocuments.value[parentItem.documentType.code] == undefined
       ) {
@@ -1405,7 +1407,7 @@ export default {
         let db = request.result;
         db.createObjectStore("RNdocumentUploads", {
           keyPath: "id",
-          autoIncrement: true,
+          autoIncrement: true
         });
       };
     };
@@ -1419,69 +1421,78 @@ export default {
       }
       store
         .dispatch("renewal/getRenewalApplication", route.params.id)
-        .then((res) => {
+        .then(res => {
           if (res.data.data) {
-            generalInfo.value = res.data.data;
-            generalInfo.value?.documents.forEach((element) => {
-              documentsSaved.value[element.fileName] = {};
-              documentsSaved.value[element.fileName].path =
-                googleApi + element.filePath;
-              documentsSaved.value[element.fileName].name =
-                element.originalFileName;
-            });
-            documentsUploaded.value = documentsSaved.value;
-            store.dispatch("renewal/getApplicationCategories").then((res) => {
-              let categoryResults = res.data.data
-                ? res.data.data.filter((ele) => ele.code == "RA")
-                : "";
-              let educationLevels = generalInfo.value.educations;
-
-              //Get department docs
-              educationLevels.forEach((element) => {
-                store
-                  .dispatch("renewal/getRNdocuments", [
-                    categoryResults[0].id,
-                    generalInfo.value.applicantType.id,
-                    element.educationalLevel
-                      ? element.educationalLevel.id
-                      : element.educationLevel
-                      ? element.educationLevel.id
-                      : "",
-                  ])
-                  .then((res) => {
-                    let resp = res.data.data;
-                    renewalDocuments.value = res.data.data;
-                    educationalDocs.value.push({
-                      professionType:
-                        element && element.professionType
-                          ? element.professionType
-                          : element
-                          ? element.professionTypeId
+            let localData = JSON.parse(
+              localStorage.getItem("RNApplicationData")
+            );
+            let professionChanged = localData.professionChanged;
+            if (professionChanged && professionChanged == true) {
+              documentsUploaded.value = [];
+              documentsSaved.value = [];
+              generalInfo.value = localData;
+            } else {
+              generalInfo.value = res.data.data;
+              generalInfo.value?.documents.forEach(element => {
+                documentsSaved.value[element.fileName] = {};
+                documentsSaved.value[element.fileName].path =
+                  googleApi + element.filePath;
+                documentsSaved.value[element.fileName].name =
+                  element.originalFileName;
+              });
+              documentsUploaded.value = documentsSaved.value;
+              store.dispatch("renewal/getApplicationCategories").then(res => {
+                let categoryResults = res.data.data
+                  ? res.data.data.filter(ele => ele.code == "RA")
+                  : "";
+                let educationLevels =
+                  generalInfo.value.multipleDepartment &&
+                  generalInfo.value.multipleDepartment.length > 0
+                    ? generalInfo.value.multipleDepartment
+                    : generalInfo.value.educations
+                    ? generalInfo.value.educations
+                    : [];
+                console.log(educationLevels);
+                //Get department docs
+                educationLevels.forEach(element => {
+                  store
+                    .dispatch("renewal/getRNdocuments", [
+                      categoryResults[0].id,
+                      generalInfo.value.applicantType.id,
+                      element.educationLevel.id,
+                      element.department.id
+                    ])
+                    .then(res => {
+                      let resp = res.data.data;
+                      renewalDocuments.value = res.data.data;
+                      educationalDocs.value.push({
+                        professionType:
+                          element && element.professionType
+                            ? element.professionType
+                            : "",
+                        educationalLevel: element.educationLevel
+                          ? element.educationLevel
                           : "",
-                      educationalLevel: element.educationalLevel
-                        ? element.educationalLevel
-                        : element.educationLevel
-                        ? element.educationLevel
-                        : "",
-                      docs: resp.filter(
-                        (element) => element.parentDocument == null
-                      ),
-                      parentDoc: groupByKey(resp, "parentDocument"),
+                        docs: resp.filter(
+                          element => element.parentDocument == null
+                        ),
+                        parentDoc: groupByKey(resp, "parentDocument")
+                      });
                     });
+                });
+                //Get Common Docs
+
+                store
+                  .dispatch("renewal/getCommonRNdocuments", [
+                    categoryResults[0].id,
+                    generalInfo.value.applicantType.id
+                  ])
+                  .then(res => {
+                    let result = res.data.data;
+                    commonDocuments.value = result;
                   });
               });
-              //Get Common Docs
-
-              store
-                .dispatch("renewal/getCommonRNdocuments", [
-                  categoryResults[0].id,
-                  generalInfo.value.applicantType.id,
-                ])
-                .then((res) => {
-                  let result = res.data.data;
-                  commonDocuments.value = result;
-                });
-            });
+            }
           }
         });
     });
@@ -1512,9 +1523,9 @@ export default {
       documentsSaved,
       googleApi,
       addMore,
-      showNestedDocuments,
+      showNestedDocuments
     };
-  },
+  }
 };
 </script>
 

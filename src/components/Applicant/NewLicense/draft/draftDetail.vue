@@ -1097,6 +1097,7 @@ export default {
     const removeDepartment = (index) => {
       generalInfo.value.multipleDepartment.splice(index, 1);
       generalInfo.value.educations.splice(index, 1);
+      generalInfo.value.professionChanged = true;
     };
     const addMultiple = () => {
       if (

@@ -233,6 +233,7 @@
                             px-3
                             lg:px-6
                           "
+                          v-if="adminRole && adminRole != 'REV'"
                         >
                           <div class="flex align-center">
                             <div class="shrink-0">
@@ -633,6 +634,7 @@ export default {
     let showOptions = ref(false);
     let reviewer = ref({ id: "", name: "", expertLevel: "", role: "" });
     let adminId = +localStorage.getItem("adminId");
+    let adminRole = localStorage.getItem("role");
     const licenseId = computed(() => props.modalDataId.id);
     let transfer = ref({
       reviewerId: "",
@@ -812,6 +814,7 @@ export default {
       resultQuery,
       licenseId,
       isLoading,
+      adminRole,
       isLoadingStart,
       fullPage,
       modalData,

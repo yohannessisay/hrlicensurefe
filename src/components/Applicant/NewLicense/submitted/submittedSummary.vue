@@ -343,6 +343,7 @@
                       v-for="prev in prevDocs"
                       :key="prev.docName"
                     >
+                  
                       <h4 class="text-main-400 font-bold m-2">Document Type</h4>
                       <h6 class="m-2">{{ prev.documentType.name }}</h6>
                       <div class="flex justify-center rounded-lg p-4">
@@ -443,7 +444,7 @@
                 for="feedback"
                 class="form-label inline-block mb-2 text-main-400"
                 >Feedback on the process and system
-                <span class="text-red-200">(required*)</span>
+                <span class="text-yellow-300">(optional*)</span>
               </label>
             </div>
             <div class="vld-parent mt-4">
@@ -746,6 +747,7 @@ export default {
               }
 
               if (localData.value.professionChanged == true) {
+               
                 professionChanged.value = true;
                 // prevDocs.value = localFileImages.value;
                 localFileImages.value.forEach((element) => {
@@ -758,6 +760,7 @@ export default {
                   }
                 });
               } else {
+                console.log(savedData.value.documents);
                 prevDocs.value = savedData.value.documents;
               }
             };
