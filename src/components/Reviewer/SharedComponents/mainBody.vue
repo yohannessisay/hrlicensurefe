@@ -12,7 +12,11 @@
       <slot name="yourHeader"></slot
     ></label>
     <input type="radio" name="tab" id="tab2" class="tab-head" />
-    <label for="tab2" class="tabs_wrapper_label">
+    <label
+      for="tab2"
+      class="tabs_wrapper_label"
+      v-if="adminRole && adminRole != 'REV'"
+    >
       <slot name="othersHeader"></slot
     ></label>
 
@@ -20,7 +24,11 @@
       <div id="tab-body-1" class="tab-body">
         <slot name="toyou"></slot>
       </div>
-      <div id="tab-body-2" class="tab-body">
+      <div
+        id="tab-body-2"
+        class="tab-body"
+        v-if="adminRole && adminRole != 'REV'"
+      >
         <slot name="to_others"></slot>
       </div>
     </div>
@@ -30,7 +38,8 @@
 export default {
   components: {},
   setup() {
-    return {};
+    let adminRole = localStorage.getItem("role");
+    return { adminRole };
   },
 };
 </script>
