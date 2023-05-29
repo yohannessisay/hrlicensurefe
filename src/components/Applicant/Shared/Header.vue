@@ -33,9 +33,7 @@
         <div class="relative inline-block text-left " style="z-index: 1">
           <span
             :class="
-              notifications && notifications.length > 0
-                ? 'cursor-pointer notifIcon '
-                : ''
+              notif && notif.length > 0 ? 'cursor-pointer notifIcon ' : ''
             "
             v-on:click="showNotifications()"
             ><i
@@ -52,7 +50,8 @@
              sm:w-40
               lg:w-64
               mt-1
-            
+              h-64
+              overflow-y-scroll
               p-4
               rounded-md
               shadow-lg
@@ -63,16 +62,18 @@
             aria-orientation="vertical"
             aria-labelledby="options-menu"
           >
-            <span v-if="notifications && notifications.length">
-              0>
+            <span v-if="notif && notif.length > 0">
               <li
-                class="text-main-400 cursor-pointer hover:underline  border-b-4"
-                v-for="notif in notifications"
+                class="text-main-400 cursor-pointer hover:underline hover:bg-primary-300 p-2 rounded-md  border-b-4"
+                v-for="notif in notif"
                 :key="notif"
               >
-                <router-link :to="notif.url">
+                <h6 @click="updateNotif(notif)">
+                  <span class="text-grey-800">{{
+                    notif.data ? notif.data.createdAt.slice(0, 10) : ""
+                  }}</span>
                   {{ notif && notif.message ? notif.message : "" }}
-                </router-link>
+                </h6>
               </li></span
             >
             <span v-else>No Notifications</span>
@@ -230,6 +231,7 @@
 
 <script>
 import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 export default {
   props: ["userInfo"],
@@ -239,12 +241,14 @@ export default {
     let showDD = ref(false);
     let darkMode = ref(false);
     let showNotif = ref(false);
+    const router = useRouter();
     let checkedForNotification = JSON.parse(
       localStorage.getItem("checkedForExpired")
     );
     let tempData = [];
+    let notif = ref([]);
     const id = +localStorage.getItem("userId");
-    let notifications = [];
+    let notifications = ref([]);
     let showNotificationDropDown = ref(false);
     let isDarkMode = JSON.parse(localStorage.getItem("nightMode"));
     const logout = () => {
@@ -272,27 +276,36 @@ export default {
     const checkForNotification = () => {
       store.dispatch("notification/getApplicantNotification", id).then(res => {
         tempData = res && res.data ? res.data : [];
-        if (tempData.length>0) {
+        notif.value=[];
+        if (tempData.length > 0) {
           tempData.forEach(element => {
-          notifications.push({
-            data: element,
-            message: element.message,
-            url:
-              element && element.new_license_id
-                ? "/Applicant/NewLicense/approved"
-                : element && element.renewal_id
-                ? "/Applicant/Renewal/approved"
-                : element && element.goodstanding_id
-                ? "/Applicant/Goodstanding/approved"
-                : ""
+            notif.value.push({
+              data: element,
+              message: element.message,
+              url:
+                element && element.new_license_id
+                  ? "/Applicant/NewLicense/approved"
+                  : element && element.renewal_id
+                  ? "/Applicant/Renewal/approved"
+                  : element && element.goodstanding_id
+                  ? "/Applicant/Goodstanding/approved"
+                  : ""
+            });
           });
-        });
         }
-      
       });
     };
-    const updateNotif = data => {
-      store.dispatch("notification/updateApplicantNotification", data);
+    const updateNotif = notifData => {
+      router.push({ path: notifData.url.toString() });
+      showNotif.value=false;
+      store
+        .dispatch("notification/updateApplicantNotification", notifData.data)
+        .then(() => {
+          checkForNotification();
+        })
+        .catch(err => {
+          console.log(err);
+        });
     };
     const checkForExpiredLicense = () => {
       checkedForNotification == false
@@ -307,7 +320,7 @@ export default {
                   : new Date().toISOString().slice(0, 10)
               );
 
-              notifications.push({
+              notifications.value.push({
                 message:
                   tempDate && tempDate <= 0
                     ? `Your license with number ${element.newLicenseCode} has expired please renew your license.`
@@ -318,11 +331,11 @@ export default {
               });
               localStorage.setItem(
                 "expiredNotifications",
-                JSON.stringify(notifications)
+                JSON.stringify(notifications.value)
               );
             });
           })
-        : (notifications = JSON.parse(
+        : (notifications.value = JSON.parse(
             localStorage.getItem("expiredNotifications")
           ));
     };
@@ -401,6 +414,7 @@ export default {
       notifications,
       dark,
       showDD,
+      notif,
       sidebarMenu,
       updateProfile,
       logout

@@ -487,6 +487,7 @@ export default {
   setup() {
     const store = useStore();
     const showModal = ref(true);
+    let adminRole = localStorage.getItem("role");
     let statuses = JSON.parse(localStorage.getItem("applicationStatuses"));
     let modalDataId = ref({
       id: "",
@@ -797,10 +798,13 @@ export default {
         { key: "page", value: 0 },
         { key: "size", value: 10 },
       ]);
-      draftAssignedToOthers([
+     
+      adminRole && adminRole != "REV"
+        ?  draftAssignedToOthers([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
-      ]);
+      ])
+        : "";
       store.dispatch("reviewer/getAdminsByRegion", adminRegion).then(res => {
         reviewers.value = res.data.data.filter(e => {
           return e.role.code !== "UM";

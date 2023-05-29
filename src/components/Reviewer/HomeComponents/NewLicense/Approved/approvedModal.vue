@@ -432,7 +432,7 @@
                           Generate License
                         </button>
                         <button
-                          v-if="showGenerate"
+                          v-if="showGenerate&&adminExpLevel!='REG'"
                           class="
                             inline-block
                             px-6
@@ -459,7 +459,7 @@
                           Externship
                         </button>
                         <button
-                          v-if="showGenerate"
+                          v-if="showGenerate&&adminExpLevel!='REG'"
                           class="
                             inline-block
                             px-6
@@ -674,6 +674,7 @@ export default {
 
     let show = ref(true);
     let adminId = +localStorage.getItem("adminId");
+    let adminExpLevel=JSON.parse(localStorage.getItem("allAdminData")).expertLevel.code;
     let userId = ref("");
     let isLoading = ref(false);
     let reviewerAdminId = ref(0);
@@ -809,6 +810,7 @@ export default {
       reviewerAdminId,
       showModal,
       showGenerate,
+      adminExpLevel,
       showPreviousLicense,
       previousLicenseData,
       check,

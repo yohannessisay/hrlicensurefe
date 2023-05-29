@@ -581,7 +581,7 @@
               for="feedback"
               class="form-label inline-block mb-2 text-main-400"
               >Feedback on the process and system
-              <span class="text-red-200">(required*)</span>
+              <span class="text-yellow-300">(optional*)</span>
             </label>
           </div>
           <div class="vld-parent mt-4">

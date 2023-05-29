@@ -138,7 +138,9 @@
                           <input
                             type="file"
                             required
-                            :id="`files${item.id}`"
+                            :id="
+                              'common_image_' + item.documentType.id + item.id
+                            "
                             accept=".jpeg, .jpg, .pdf"
                             :ref="`imageUploader${item.id}`"
                             class="custom-file-input"
@@ -148,30 +150,36 @@
                       </td>
                       <td class="px-6 py-4">
                         <span
-                          class="text-grey-800"
-                          v-if="documentsSaved[item.documentType.code]&&documentsSaved[item.documentType.code].fileName"
+                          class="document-name"
+                          v-if="documentsSaved[item.documentType.code]"
                           >{{
-                            documentsSaved[item.documentType.code].fileName
+                            documentsSaved[item.documentType.code].name
                           }}</span
                         >
                       </td>
-                      <td class="px-6 py-4 text-center"> 
+                      <td class="px-6 py-4 text-center">
                         <a
                           :id="
-                            'common_image_href' + item.documentType.id + item.id
+                            'common_image_href_' +
+                              item.documentType.id +
+                              item.id
                           "
                           :href="documentsSaved[item.documentType.code]?.path"
-                          :data-title="item.name ? item.name : '-----'"
+                          :data-title="
+                            item.documentType ? item.documentType.name : '-----'
+                          "
                           data-lightbox="example-2"
                         >
                           <i
-                            :id="'common_icon' + item.documentType.id + item.id"
+                            :id="
+                              'common_icon_' + item.documentType.id + item.id
+                            "
                             class="fa fa-eye cursor-pointer text-main-400"
                             aria-hidden="true"
                           >
                             <img
                               :id="
-                                'common_image_lightbox' +
+                                'common_image_lightbox_' +
                                   item.documentType.id +
                                   item.id
                               "
@@ -377,11 +385,7 @@ export default {
             );
           }
         }
-      } else {
-        fileSizeExceed.value[data.documentType.code] = true;
-        documentUploaded.value[data.documentType.code] = "";
-      }
-      let icon = document.getElementById(
+        let icon = document.getElementById(
         "common_icon" + data.documentType.id + data.id
       );
       if (icon.classList.contains("disabled")) {
@@ -405,6 +409,11 @@ export default {
             URL.revokeObjectURL(output.src); // free memory
           })
         : "";
+      } else {
+        fileSizeExceed.value[data.documentType.code] = true;
+        documentUploaded.value[data.documentType.code] = "";
+      }
+     
     };
 
     const initDb = () => {
