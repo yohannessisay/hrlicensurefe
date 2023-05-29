@@ -54,7 +54,7 @@
       >
         <div class="m-3 text-center">
           <h2 class="text-xl mb-2 text-white dashboard_card_title">
-            Total New Licensed
+            Total New Licenses
           </h2>
           <i class="fa fa-check fa-2x text-white"></i>
           <h2
@@ -128,7 +128,7 @@
       >
         <div class="m-3 text-center">
           <h2 class="text-xl mb-2 text-white dashboard_card_title">
-            Total Good Standings
+            Total Good-Standings
           </h2>
           <i class="fa fa-thumbs-up fa-2x text-white"></i>
           <h2

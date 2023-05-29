@@ -50,6 +50,9 @@
               :key="notif"
             >
               <h6 @click="updateNotif(notif)">
+                <span class="text-grey-800">{{
+                  notif.data ? notif.data.createdAt.slice(0, 10) : ""
+                }}</span>
                 {{ notif && notif.message ? notif.message : "" }}
               </h6>
             </li>
@@ -217,10 +220,12 @@ export default {
       });
     };
     const updateNotif = (notifData) => {
+      router.push({ path: notifData.url.toString() });
+      showNotif.value = false;
       store
         .dispatch("notification/updateReviewerNotification", notifData.data)
         .then(() => {
-          router.push({ path: notifData.url.toString() });
+          checkedForNotification();
         })
         .catch((err) => {
           console.log(err);

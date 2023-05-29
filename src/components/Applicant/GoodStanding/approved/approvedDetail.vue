@@ -84,7 +84,25 @@
           <div class="modal-body relative p-4">
             <div class="container px-6 mx-auto">
               <section class="text-gray-800">
+                <div
+                  class="
+                    flex
+                    justify-center
+                    border-b-4
+                    text-main-400
+                    message_container
+                  "
+                >
+                  <h4 class="ml-8">
+                    ** Please bring required documents when coming to pick up
+                    your letter **
+                  </h4>
+                </div>
+                <div class="flex justify-center">
+                  <div class="loader"></div>
+                </div>
                 <div class="flex justify-center border-b-4 text-main-400">
+                  
                   <div class="text-center lg:max-w-3xl md:max-w-xl">
                     <h2 class="text-2xl font-bold mb-8 px-6 text-main-400">
                       Approved License Detail
@@ -443,3 +461,49 @@ export default {
   },
 };
 </script>
+<style>
+
+.loader {
+  position: relative;
+  width: 800px;
+  height: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background: #e9ecef;
+  border-radius: 50px;
+}
+
+.loader::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #00aa33;
+  border-radius: 100px;
+
+  transform-origin: left;
+  box-shadow: 0 0 30px 4px #b3b604;
+  animation: animate 4s linear infinite;
+}
+
+@keyframes animate {
+  0%,
+  20% {
+    transform: scaleX(0);
+  }
+  40% {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+  40.00001%,
+  60% {
+    transform: scaleX(1);
+    transform-origin: right;
+  }
+  70%,
+  100% {
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+}
+</style>

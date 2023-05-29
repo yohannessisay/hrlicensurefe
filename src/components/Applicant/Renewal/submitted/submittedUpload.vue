@@ -917,7 +917,7 @@ import { useRoute } from "vue-router";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 export default {
-  components: { filePreview, Loading },
+  components: {  Loading },
 
   setup(props, { emit }) {
     let isLoading = ref(false);
