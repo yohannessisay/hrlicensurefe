@@ -220,7 +220,7 @@
                   "
                 >
                   <vue-table-lite
-                    :is-static-mode="true"
+                  
                     :is-loading="unassignedTable.isLoading"
                     :columns="unassignedTable.columns"
                     :rows="unassignedTable.rows"
@@ -428,7 +428,7 @@
                   "
                 >
                   <vue-table-lite
-                    :is-static-mode="true"
+                   
                     :is-loading="reSubmittedTable.isLoading"
                     :columns="reSubmittedTable.columns"
                     :rows="reSubmittedTable.rows"
