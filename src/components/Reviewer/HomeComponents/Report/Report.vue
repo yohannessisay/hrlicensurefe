@@ -452,7 +452,7 @@
                   :rows="reportTable.rows"
                   :total="reportTable.totalRecordCount"
                   :sortable="reportTable.sortable"
-                  :is-static-mode="true"
+                  
                 >
                 </vue-table-lite>
               </div>

@@ -221,7 +221,7 @@
                   "
                 >
                   <vue-table-lite
-                    :is-static-mode="true"
+                    
                     :is-loading="assignedToYouTable.isLoading"
                     :columns="assignedToYouTable.columns"
                     :rows="assignedToYouTable.rows"
@@ -430,7 +430,7 @@
                   "
                 >
                   <vue-table-lite
-                    :is-static-mode="true"
+                    
                     :is-loading="assignedToOthersTable.isLoading"
                     :columns="assignedToOthersTable.columns"
                     :rows="assignedToOthersTable.rows"

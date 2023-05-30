@@ -219,7 +219,8 @@
                     bg-primary-800
                   "
                 >
-                  <vue-table-lite 
+                  <vue-table-lite
+                    
                     :is-loading="unassignedTable.isLoading"
                     :columns="unassignedTable.columns"
                     :rows="unassignedTable.rows"

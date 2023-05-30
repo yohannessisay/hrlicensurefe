@@ -224,7 +224,7 @@
                   "
                 >
                   <vue-table-lite
-                  :is-static-mode="true"
+                  
                     :is-loading="toYouTable.isLoading"
                     :columns="toYouTable.columns"
                     :rows="toYouTable.rows"
@@ -437,7 +437,7 @@
                   "
                 >
                   <vue-table-lite
-                  :is-static-mode="true"
+                  
                     :is-loading="toOthersTable.isLoading"
                     :columns="toOthersTable.columns"
                     :rows="toOthersTable.rows"
