@@ -494,13 +494,7 @@
               <span class="text-yellow-300">(optional*)</span>
             </label>
           </div>
-          <div class="vld-parent mt-4">
-            <loading
-              :active="isLoading"
-              :is-full-page="false"
-              :color="'#2F639D'"
-              :opacity="1"
-            ></loading>
+      
             <div class="mb-3 w-full flex justify-center">
               <input
                 v-model="generalInfo.feedback"
@@ -528,11 +522,17 @@
                 type="textarea"
               />
             </div>
-          </div>
+          
         </div>
       </div>
     </div>
-
+    <div class="vld-parent mt-4">
+            <loading
+              :active="isLoading"
+              :is-full-page="false"
+              :color="'#2F639D'"
+              :opacity="1"
+            ></loading>
     <div class="flex justify-center w-full mb-8">
       <span v-for="button in buttons" :key="button.id">
         <button
@@ -599,6 +599,7 @@
       >
         back
       </button>
+    </div>
     </div>
 
     <!-- end row -->
