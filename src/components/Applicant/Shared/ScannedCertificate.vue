@@ -7,7 +7,7 @@
       :opacity="1"
     ></loading>
     <div
-      class="container bg-grey-100 p-4 ml-24 mr-24 mt-4 rounded-md"
+      class="container bg-grey-100 p-4 lg:ml-24 lg:mr-24 mt-4 rounded-md  "
       v-if="isUserCertified && isApplicationTypeFound"
     >
       <img class="moh-logo" src="../../../assets/image.png" />
@@ -26,14 +26,14 @@
         />
 
         <h2 class="text-2xl">License Status</h2>
-       <span class="bg-green-200 p-2 rounded-md text-white">
-        {{
-          certificateDetail.applicationStatus &&
-          certificateDetail.applicationStatus.code == "APP"
-            ? "License Is Valid"
-            : ""
-        }}
-       </span>
+        <span class="bg-green-200 p-2 rounded-md text-white">
+          {{
+            certificateDetail.applicationStatus &&
+            certificateDetail.applicationStatus.code == "APP"
+              ? "License Is Valid"
+              : ""
+          }}
+        </span>
       </div>
       <div class="container">
         <div class="grid grid-cols-2 gap-4 mt-5">
