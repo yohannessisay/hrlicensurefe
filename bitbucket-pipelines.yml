@@ -6,6 +6,7 @@ pipelines:
             name: Build
             image: google/cloud-sdk:latest
             script:
+            - export DOCKER_BUILDKIT=0
             - export DEPLOYNAME=${BITBUCKET_REPO_SLUG//_/}
             - echo $GCLOUD_API_KEYFILE > ~/.gcloud-api-key.json
             - export IMAGE_NAME=$DOCKER_GCR_REPO_URL/$GCLOUD_PROJECT_ID/$BITBUCKET_REPO_SLUG:${BITBUCKET_COMMIT}-${BITBUCKET_BUILD_NUMBER}-${BITBUCKET_BRANCH}
@@ -43,6 +44,7 @@ pipelines:
             name: Build
             image: google/cloud-sdk:latest
             script:
+            - export DOCKER_BUILDKIT=0
             - echo $GCLOUD_API_KEYFILE > ~/.gcloud-api-key.json
             - export IMAGE_NAME=$DOCKER_GCR_REPO_URL/$GCLOUD_PROJECT_ID/$BITBUCKET_REPO_SLUG:${BITBUCKET_COMMIT}-${BITBUCKET_BUILD_NUMBER}-${BITBUCKET_BRANCH}
             - gcloud auth activate-service-account --key-file ~/.gcloud-api-key.json
@@ -82,6 +84,7 @@ pipelines:
             name: Build
             image: google/cloud-sdk:latest
             script:
+            - export DOCKER_BUILDKIT=0
             - echo $GCLOUD_API_KEYFILE > ~/.gcloud-api-key.json
             - export IMAGE_NAME=$DOCKER_GCR_REPO_URL/$GCLOUD_PROJECT_ID/$BITBUCKET_REPO_SLUG:${BITBUCKET_COMMIT}-${BITBUCKET_BUILD_NUMBER}-${BITBUCKET_BRANCH}
             - gcloud auth activate-service-account --key-file ~/.gcloud-api-key.json
