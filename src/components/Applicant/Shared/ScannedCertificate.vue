@@ -119,7 +119,7 @@
             <img class="moh-logo" src="../../../assets/image.png" />
           </div>
           <div class="flex justify-center content-center">
-            <h1 class="mt-8">Sorry User is not Certified</h1>
+            <h1 class="mt-8">Sorry License is not Certified</h1>
           </div>
           <div class="flex justify-center content-center">
             <span
@@ -180,11 +180,11 @@ export default {
           applicationType: route.params.applicationType,
         })
         .then((res) => {
+           
           if (res.data && res.data.data) {
             certificateDetail.value = res.data.data;
-            if (
-              route.params.userId != certificateDetail.value.applicantId ||
-              certificateDetail.value.certified === false
+            if ( 
+              certificateDetail.value.certified == false
             ) {
               isUserCertified.value = false;
             }
@@ -197,6 +197,7 @@ export default {
             certifiedUser.value = res.data.data.profile;
             certifiedUser.value.pic =
               googleApi + res.data.data.profile.profilePicture.filePath;
+              
             if (!certifiedUser.value) {
               isUserFound.value = false;
             }
