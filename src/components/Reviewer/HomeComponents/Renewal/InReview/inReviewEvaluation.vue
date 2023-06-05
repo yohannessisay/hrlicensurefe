@@ -2292,7 +2292,43 @@ export default {
     };
     const action = (actionValue) => {
       let smsMessage = "";
-
+      let proffesionsWithoutPrefix = "";
+      renewal.value.educations.forEach((element) => {
+     
+        if (
+          (element.prefixId && element.prefixId.length == 0) ||
+          element.prefixId == null
+        ) {
+          proffesionsWithoutPrefix += element.professionType.name + " ,";
+        }
+      });
+      if (
+        renewal.value.profile.alternativeName.length == 0 ||
+        renewal.value.profile.alternativeFatherName.length == 0 ||
+        renewal.value.profile.alternativeGrandFatherName.length == 0
+      ) {
+        toast.error(
+          "Applicant's amharic name | father name | grandfather name| can not be empty",
+          {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          }
+        );
+        return;
+      }
+      if (proffesionsWithoutPrefix.length > 0) {
+        toast.error(`Prefix for ${proffesionsWithoutPrefix} can not be empty`, {
+          timeout: 5000,
+          position: "bottom-center",
+          pauseOnFocusLoss: true,
+          pauseOnHover: true,
+          icon: true,
+        });
+        return;
+      }
       if (actionValue === "ApproveEvent" && nothingDropped.value == true) {
         if (renewal.value.newLicenseId && renewal.value.newLicenseId != null) {
           store
@@ -2309,7 +2345,7 @@ export default {
               };
               store
                 .dispatch("reviewer/editNewLicense", tempReq)
-                .then((res) => {});
+                
             });
         }
         smsMessage = renewal.value
@@ -2375,17 +2411,17 @@ export default {
         message: smsMessage ? smsMessage : "",
       };
       renewal.value.licenseExpirationDate = licenseExpirationDate.value;
-      let tempRemarkValue = true;
-      renewal.value.educations.forEach((element) => {
-        if (element && element.isDropped == true) {
-          tempRemarkValue = false;
-        } else {
-          tempRemarkValue = true;
-        }
-      });
-      if (tempRemarkValue == true) {
-        renewal.value.remark = "";
-      }
+      // let tempRemarkValue = true;
+      // renewal.value.educations.forEach((element) => {
+      //   if (element && element.isDropped == true) {
+      //     tempRemarkValue = false;
+      //   } else {
+      //     tempRemarkValue = true;
+      //   }
+      // });
+      // if (tempRemarkValue == true) {
+      //   renewal.value.remark = "";
+      // }
 
       if (applicationType.value == "Renewal") {
         isLoadingAction.value = true;
@@ -2652,8 +2688,8 @@ export default {
       }
     };
     const supervise = () => {
-      renewal.value.superviseEndDate = endDate.value ? endDate.value : "";
-      renewal.value.superviseStartDate = startDate.value ? startDate.value : "";
+      renewal.value.suspEndDate = endDate.value ? endDate.value : "";
+      renewal.value.suspStartDate = startDate.value ? startDate.value : "";
       renewal.value.supervisor = supervisor.value ? supervisor.value : "";
       renewal.value.supervisingInstitutionId = instSearched.value
         ? instSearched.value.id

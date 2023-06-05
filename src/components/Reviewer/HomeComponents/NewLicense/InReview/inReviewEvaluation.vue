@@ -1360,7 +1360,7 @@
                 </div>
                 <!-- Remark modal -->
                 <Modal v-if="showRemark">
-                  <div class="h-screen overflow-y-hidden">
+                  <div class="h-screen overflow-y-scroll">
                     <div
                       class="
                       card-wrapper
@@ -1374,11 +1374,12 @@
                     "
                     >
                       <!--content-->
-                      <div class="w-full p-2 m-4">
+                      <div class="w-full p-2 m-4 ">
                         <!--header-->
                         <div
                           class="
                           flex
+                          
                           items-start
                           justify-between
                           border-b border-solid border-grey-100
@@ -1410,7 +1411,7 @@
                         </div>
                         <!--body-->
                         <div
-                          class="modalBody pb-xl"
+                          class="modalBody pb-xl "
                           v-if="nothingDropped == true"
                         >
                           <div class="flex mt-medium justify-center">
@@ -2317,129 +2318,183 @@ export default {
     };
     const action = (actionValue) => {
       let smsMessage = "";
-
-      if (actionValue === "ApproveEvent" && nothingDropped.value == true) {
-        smsMessage = newLicense.value
-          ? "Dear applicant your applied new license of code " +
-            newLicense.value.newLicenseCode +
-            " has been approved after careful examination of your uploaded documents by our reviewers. Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
-          : "";
-      } else if (actionValue == "ReviewerDraftEvent") {
+      let proffesionsWithoutPrefix = "";
+      newLicense.value.educations.forEach((element) => {
+        if (
+          (element.prefixId && element.prefixId.length == 0) ||
+          element.prefixId == null
+        ) {
+          proffesionsWithoutPrefix += element.professionType.name + " ,";
+        }
+      });
+      if (
+        newLicense.value.profile.alternativeName.length == 0 ||
+        newLicense.value.profile.alternativeFatherName.length == 0 ||
+        newLicense.value.profile.alternativeGrandFatherName.length == 0
+      ) {
+        toast.error(
+          "Applicant's amharic name | father name | grandfather name| can not be empty",
+          {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          }
+        );
+        return;
+      }
+      if (proffesionsWithoutPrefix.length > 0) {
+        toast.error(`Prefix for ${proffesionsWithoutPrefix} can not be empty`, {
+          timeout: 5000,
+          position: "bottom-center",
+          pauseOnFocusLoss: true,
+          pauseOnHover: true,
+          icon: true,
+        });
+        return;
+      }
+      if (actionValue == "ReviewerDraftEvent") {
         showRemarkError.value = false;
         showRemark.value = false;
       } else if (
-        (actionValue == "DeclineEvent" && newLicense.value.remark == null) ||
+        actionValue == "DeclineEvent" &&
         newLicense.value.remark == ""
       ) {
         showRemarkError.value = true;
         nothingDropped.value == true;
+        showRemark.value = true;
+        sendDeclinedData.value = false;
         smsMessage = newLicense.value
           ? "Dear applicant your applied new license of code " +
             newLicense.value.newLicenseCode +
             " has been declined after careful examination of your uploaded documents by our reviewers. Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
           : "";
-        showRemark.value = true;
-        sendDeclinedData.value = false;
+
         return;
       } else if (nothingDropped.value == false) {
         showRemarkError.value = true;
         showRemark.value = true;
         sendDeclinedData.value = false;
         return;
-      } else showRemarkError.value = false;
-      let checkProfessionResult = false;
-      newLicense.value.isProfessionChanged == false;
-
-      checkProfessionResult = checkProfessionChanged(
-        newLicense.value.educations,
-        modifiedProfession
-      );
-
-      if (checkProfessionResult) {
-        newLicense.value.isProfessionChanged == true;
       } else {
+        if (actionValue === "ApproveEvent" && nothingDropped.value == true) {
+         
+          smsMessage = newLicense.value
+            ? "Dear applicant your applied new license of code " +
+              newLicense.value.newLicenseCode +
+              " has been approved after careful examination of your uploaded documents by our reviewers. Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
+            : "";
+        }
+        showRemarkError.value = false;
+        let checkProfessionResult = false;
         newLicense.value.isProfessionChanged == false;
-        if (fromModalSendDeclinedData.value == true) {
-          sendDeclinedData.value = true;
-        }
-      }
 
-      newLicense.value.declinedFields = rejected.value;
-      newLicense.value.acceptedFields = accepted.value;
-      newLicense.value.certified = true;
-      newLicense.value.certifiedDate = new Date();
-      let req = {
-        action: actionValue,
-        data: newLicense.value,
-      };
-      let smsData = {
-        recipients: [
-          newLicense.value && newLicense.value.applicant
-            ? "251" + newLicense.value.applicant.phoneNumber
-            : "",
-        ],
-        message: smsMessage ? smsMessage : "",
-      };
-      newLicense.value.licenseExpirationDate = licenseExpirationDate.value;
-      let tempRemarkValue = true;
-      newLicense.value.educations.forEach((element) => {
-        if (element && element.isDropped == true) {
-          tempRemarkValue = false;
+        checkProfessionResult = checkProfessionChanged(
+          newLicense.value.educations,
+          modifiedProfession
+        );
+
+        if (checkProfessionResult) {
+          newLicense.value.isProfessionChanged == true;
         } else {
-          tempRemarkValue = true;
+          newLicense.value.isProfessionChanged == false;
+          if (fromModalSendDeclinedData.value == true) {
+            sendDeclinedData.value = true;
+          }
         }
-      });
-      if (tempRemarkValue == true) {
-        newLicense.value.remark = "";
-      }
 
-      if (applicationType.value == "New License") {
-        isLoadingAction.value = true;
-        store
-          .dispatch("reviewer/editNewLicense", req)
-          .then((res) => {
-            showActionLoading.value = false;
-            isLoadingAction.value = false;
-            if (res.statusText == "Created") {
-              store.dispatch("sms/sendSms", smsData).then(() => {
-                toast.success("Application reviewed Successfully", {
+        newLicense.value.declinedFields = rejected.value;
+        newLicense.value.acceptedFields = accepted.value;
+        newLicense.value.certified = true;
+        newLicense.value.certifiedDate = new Date();
+        let req = {
+          action: actionValue,
+          data: newLicense.value,
+        };
+        let smsData = {
+          recipients: [
+            newLicense.value && newLicense.value.applicant
+              ? "251" + newLicense.value.applicant.phoneNumber
+              : "",
+          ],
+          message: smsMessage ? smsMessage : "",
+        };
+        newLicense.value.licenseExpirationDate = licenseExpirationDate.value;
+        // let tempRemarkValue = true;
+        // newLicense.value.educations.forEach((element) => {
+        //   if (element && element.isDropped == true) {
+        //     tempRemarkValue = false;
+        //   } else {
+        //     tempRemarkValue = true;
+        //   }
+        // });
+        // if (tempRemarkValue == true) {
+        //   newLicense.value.remark = "";
+        // }
+
+        if (applicationType.value == "New License") {
+          isLoadingAction.value = true;
+          store
+            .dispatch("reviewer/editNewLicense", req)
+            .then((res) => {
+              showActionLoading.value = false;
+              isLoadingAction.value = false;
+              if (res.statusText == "Created") {
+                store.dispatch("sms/sendSms", smsData).then(() => {
+                  toast.success("Application reviewed Successfully", {
+                    timeout: 5000,
+                    position: "bottom-center",
+                    pauseOnFocusLoss: true,
+                    pauseOnHover: true,
+                    icon: true,
+                  });
+                  router.push({ path: "/admin/newLicense" });
+                  let userNotification = {
+                    user_id:
+                      newLicense.value && newLicense.value.applicant
+                        ? newLicense.value.data.applicant.id
+                        : null,
+                    reviewer_id: newLicense.value.licenseReviewer
+                      ? newLicense.value.licenseReviewer.reviewerId
+                      : null,
+                    new_license_id: newLicense.value
+                      ? newLicense.value.id
+                      : null,
+                    message: newLicense.value
+                      ? // eslint-disable-next-line prettier/prettier
+                        `Dear applicant your submitted new license application of code ${
+                          newLicense.value.newLicenseCode
+                        } has been ${
+                          actionValue == "ApproveEvent"
+                            ? "approved"
+                            : actionValue == "DeclineEvent"
+                            ? "declined"
+                            : ""
+                        }by a reviewer.`
+                      : "",
+                    type: "applicant_new_license",
+                    status: "new",
+                  };
+                  store.dispatch(
+                    "notification/notifyApplicant",
+                    userNotification
+                  );
+                });
+              } else {
+                toast.error("Please try again", {
                   timeout: 5000,
                   position: "bottom-center",
                   pauseOnFocusLoss: true,
                   pauseOnHover: true,
                   icon: true,
                 });
-                router.push({ path: "/admin/newLicense" });
-                let userNotification = {
-                  user_id:
-                    newLicense.value && newLicense.value.applicant
-                      ? newLicense.value.data.applicant.id
-                      : null,
-                  reviewer_id: newLicense.value.licenseReviewer
-                    ? newLicense.value.licenseReviewer.reviewerId
-                    : null,
-                  new_license_id: newLicense.value ? newLicense.value.id : null,
-                  message: newLicense.value
-                    ? // eslint-disable-next-line prettier/prettier
-                      `Dear applicant your submitted new license application of code ${
-                        newLicense.value.newLicenseCode
-                      } has been ${
-                        actionValue == "ApproveEvent"
-                          ? "approved"
-                          : actionValue == "DeclineEvent"
-                          ? "declined"
-                          : ""
-                      }by a reviewer.`
-                    : "",
-                  type: "applicant_new_license",
-                  status: "new",
-                };
-                store.dispatch(
-                  "notification/notifyApplicant",
-                  userNotification
-                );
-              });
-            } else {
+                setTimeout(() => {
+                  window.location.reload();
+                }, 3000);
+              }
+            })
+            .catch(() => {
               toast.error("Please try again", {
                 timeout: 5000,
                 position: "bottom-center",
@@ -2450,20 +2505,8 @@ export default {
               setTimeout(() => {
                 window.location.reload();
               }, 3000);
-            }
-          })
-          .catch(() => {
-            toast.error("Please try again", {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
             });
-            setTimeout(() => {
-              window.location.reload();
-            }, 3000);
-          });
+        }
       }
     };
     const changePrefix = (education) => {
@@ -2658,10 +2701,8 @@ export default {
       }
     };
     const supervise = () => {
-      newLicense.value.superviseEndDate = endDate.value ? endDate.value : "";
-      newLicense.value.superviseStartDate = startDate.value
-        ? startDate.value
-        : "";
+      newLicense.value.suspEndDate = endDate.value ? endDate.value : "";
+      newLicense.value.suspStartDate = startDate.value ? startDate.value : "";
       newLicense.value.supervisor = supervisor.value ? supervisor.value : "";
       newLicense.value.supervisingInstitutionId = instSearched.value
         ? instSearched.value.id
@@ -2721,7 +2762,7 @@ export default {
                   icon: true,
                 });
                 superviseLoading.value = false;
-              
+
                 let userNotification = {
                   user_id:
                     newLicense.value && newLicense.value.applicant

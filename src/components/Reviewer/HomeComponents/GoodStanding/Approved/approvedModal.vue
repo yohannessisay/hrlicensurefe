@@ -257,7 +257,9 @@
                                 <span class="text-grey-800 ml-2">
                                   {{
                                     modalData.data &&
-                                    modalData.data.GSProfessionals
+                                    modalData.data.GSProfessionals&&
+                                     modalData.data.GSProfessionals
+                                          .professionalTypes
                                       ? modalData.data.GSProfessionals
                                           .professionalTypes.name
                                       : ""

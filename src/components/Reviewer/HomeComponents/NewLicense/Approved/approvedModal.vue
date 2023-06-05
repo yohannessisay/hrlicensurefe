@@ -426,7 +426,8 @@
                           type="button"
                           data-bs-toggle="modal"
                           data-bs-target="#generatePdf"
-                          @click="changePrintType('foreigners')"
+                          @click="changePrintType(modalData&&modalData.data&&modalData.data.applicantType&&
+                          modalData.data.applicantType.code=='FOR'?'foreigners':'')"
                         >
                           <i class="fa fa-file-text"></i>
                           Generate License

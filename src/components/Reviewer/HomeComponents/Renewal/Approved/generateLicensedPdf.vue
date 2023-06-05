@@ -1746,41 +1746,7 @@ export default {
         paddingAmharic = 10;
         paddingEnglish = 10;
       }
-      //Amharic name part
-      doc.text(
-        60,
-        namePosition - paddingAmharic,
-        `${
-          certifiedUser.value.alternativeName
-            ? certifiedUser.value.alternativeName
-            : ""
-        } ${
-          certifiedUser.value.alternativeFatherName
-            ? certifiedUser.value.alternativeFatherName
-            : ""
-        } ${
-          certifiedUser.value.alternativeGrandFatherName
-            ? certifiedUser.value.alternativeGrandFatherName
-            : ""
-        }`
-      );
-      doc2.text(
-        60,
-        namePosition - paddingAmharic,
-        `${
-          certifiedUser.value.alternativeName
-            ? certifiedUser.value.alternativeName
-            : ""
-        } ${
-          certifiedUser.value.alternativeFatherName
-            ? certifiedUser.value.alternativeFatherName
-            : ""
-        } ${
-          certifiedUser.value.alternativeGrandFatherName
-            ? certifiedUser.value.alternativeGrandFatherName
-            : ""
-        }`
-      );
+      
       //English name part
       doc.text(
         190,
@@ -2013,7 +1979,41 @@ export default {
       doc2.addFont("Tera-Regular-normal.ttf", "Tera-Regular", "normal");
       doc.setFont("Tera-Regular"); // set font
       doc2.setFont("Tera-Regular");
-
+//Amharic name part
+doc.text(
+        60,
+        namePosition - paddingAmharic,
+        `${
+          certifiedUser.value.alternativeName
+            ? certifiedUser.value.alternativeName
+            : ""
+        } ${
+          certifiedUser.value.alternativeFatherName
+            ? certifiedUser.value.alternativeFatherName
+            : ""
+        } ${
+          certifiedUser.value.alternativeGrandFatherName
+            ? certifiedUser.value.alternativeGrandFatherName
+            : ""
+        }`
+      );
+      doc2.text(
+        60,
+        namePosition - paddingAmharic,
+        `${
+          certifiedUser.value.alternativeName
+            ? certifiedUser.value.alternativeName
+            : ""
+        } ${
+          certifiedUser.value.alternativeFatherName
+            ? certifiedUser.value.alternativeFatherName
+            : ""
+        } ${
+          certifiedUser.value.alternativeGrandFatherName
+            ? certifiedUser.value.alternativeGrandFatherName
+            : ""
+        }`
+      );
       doc.setFontSize(17);
       doc2.setFontSize(17);
 

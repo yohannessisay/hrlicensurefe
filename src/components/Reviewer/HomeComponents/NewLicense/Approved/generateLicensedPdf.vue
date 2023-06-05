@@ -24,7 +24,8 @@
         finalData &&
         finalData.data &&
         finalData.data.applicantType &&
-        finalData.data.applicantType.code == 'ETH'
+        (finalData.data.applicantType.code == 'ETH' ||
+          finalData.data.applicantType.code == 'ETHABRO')
           ? 'modal-dialog modal-dialog-centered modal-xl relative w-auto pointer-events-none'
           : 'modal-dialog modal-dialog-centered modal-lg  relative w-auto pointer-events-none'
       "
@@ -60,7 +61,8 @@
             finalData &&
               finalData.data &&
               finalData.data.applicantType &&
-              finalData.data.applicantType.code == 'ETH'
+              (finalData.data.applicantType.code == 'ETH' ||
+                finalData.data.applicantType.code == 'ETHABRO')
           "
           class="modal-body relative p-4"
         >
@@ -192,7 +194,7 @@
                         class="underline text-yellow-300 font-bold"
                         style="word-break: break-word"
                       >
-                        {{
+                   {{
                           department.professionType &&
                           department.professionType.amharicProfessionalType
                             ? department.professionType.amharicProfessionalType
@@ -1128,8 +1130,7 @@
               finalData.data.applicantType &&
               finalData.printType != 'externship' &&
               finalData.printType != 'temporary' &&
-              (finalData.data.applicantType.code == 'ETHABRO' ||
-                finalData.data.applicantType.code == 'FOR')
+              finalData.data.applicantType.code == 'FOR'
           "
           class="p-8 m-8 "
           id="foreignersPrintedDiv"
@@ -1950,7 +1951,8 @@ export default {
         finalData.value.data.retrivalDate = retrivalDate.value;
         finalData.value.data &&
         finalData.value.data.applicantType &&
-        finalData.value.data.applicantType.code == "ETH"
+        (finalData.value.data.applicantType.code == "ETH" ||
+          finalData.value.data.applicantType.code == "ETHABRO")
           ? generate()
           : generateForeigner();
       } else {
@@ -2012,7 +2014,7 @@ export default {
       if (
         finalData.value.data &&
         finalData.value.data.applicantType &&
-        finalData.value.data.applicantType.code != "ETH"
+        finalData.value.data.applicantType.code == "FOR"  
       ) {
         generateForeigner();
         return;
@@ -2067,41 +2069,7 @@ export default {
         paddingAmharic = 10;
         paddingEnglish = 10;
       }
-      //Amharic name part
-      doc.text(
-        60,
-        namePosition - paddingAmharic,
-        `${
-          certifiedUser.value.alternativeName
-            ? certifiedUser.value.alternativeName
-            : ""
-        } ${
-          certifiedUser.value.alternativeFatherName
-            ? certifiedUser.value.alternativeFatherName
-            : ""
-        } ${
-          certifiedUser.value.alternativeGrandFatherName
-            ? certifiedUser.value.alternativeGrandFatherName
-            : ""
-        }`
-      );
-      doc2.text(
-        60,
-        namePosition - paddingAmharic,
-        `${
-          certifiedUser.value.alternativeName
-            ? certifiedUser.value.alternativeName
-            : ""
-        } ${
-          certifiedUser.value.alternativeFatherName
-            ? certifiedUser.value.alternativeFatherName
-            : ""
-        } ${
-          certifiedUser.value.alternativeGrandFatherName
-            ? certifiedUser.value.alternativeGrandFatherName
-            : ""
-        }`
-      );
+    
       //English name part
       doc.text(
         190,
@@ -2318,16 +2286,52 @@ export default {
             : "Not Specified"
         }`
       );
-      // License Number for amharic
-      doc.text(38, 58, `${certificateDetail.value.licenseNumber}`);
-      doc2.text(38, 58, `${certificateDetail.value.licenseNumber}`);
-      // doc.addFileToVFS("Amiri-Regular.ttf", AmiriRegular);
       doc.addFileToVFS("Tera-Regular-normal.ttf", AmharicFont);
       doc2.addFileToVFS("Tera-Regular-normal.ttf", AmharicFont);
       doc.addFont("Tera-Regular-normal.ttf", "Tera-Regular", "normal");
       doc2.addFont("Tera-Regular-normal.ttf", "Tera-Regular", "normal");
       doc.setFont("Tera-Regular"); // set font
       doc2.setFont("Tera-Regular");
+      //Amharic name part
+      doc.text(
+        60,
+        namePosition - paddingAmharic,
+        `${
+          certifiedUser.value.alternativeName
+            ? certifiedUser.value.alternativeName
+            : ""
+        } ${
+          certifiedUser.value.alternativeFatherName
+            ? certifiedUser.value.alternativeFatherName
+            : ""
+        } ${
+          certifiedUser.value.alternativeGrandFatherName
+            ? certifiedUser.value.alternativeGrandFatherName
+            : ""
+        }`
+      );
+      doc2.text(
+        60,
+        namePosition - paddingAmharic,
+        `${
+          certifiedUser.value.alternativeName
+            ? certifiedUser.value.alternativeName
+            : ""
+        } ${
+          certifiedUser.value.alternativeFatherName
+            ? certifiedUser.value.alternativeFatherName
+            : ""
+        } ${
+          certifiedUser.value.alternativeGrandFatherName
+            ? certifiedUser.value.alternativeGrandFatherName
+            : ""
+        }`
+      );
+      // License Number for amharic
+      doc.text(38, 58, `${certificateDetail.value.licenseNumber}`);
+      doc2.text(38, 58, `${certificateDetail.value.licenseNumber}`);
+      // doc.addFileToVFS("Amiri-Regular.ttf", AmiriRegular);
+    
 
       doc.setFontSize(17);
       doc2.setFontSize(17);

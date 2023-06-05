@@ -21,7 +21,7 @@
             <div class="py-8">
               <div>
                 <h2 class="text-2xl font-semibold leading-tight">
-                  Cpd Certified Users
+                  CPD Certified Users
                 </h2>
               </div>
               <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
@@ -140,7 +140,7 @@
                       ease-in-out
                       rounded-lg
                     "
-                      placeholder="Cpd Provider"
+                      placeholder="CPD Provider"
                       aria-label="Search"
                       aria-describedby="button-addon2"
                       v-model="searchTermCpd"
@@ -318,7 +318,7 @@ export default {
                 sortable: true,
               },
               {
-                label: "Cpd Provider",
+                label: "CPD Provider",
                 field: "CpdProvider",
                 width: "20%",
                 sortable: true,

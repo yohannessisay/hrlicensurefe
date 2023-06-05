@@ -331,7 +331,7 @@
                                             hover:text-white
                                           "
                                         >
-                                          {{ value.name }}
+                                          {{ value&&value.name?value.name:'' }}
                                         </li>
                                       </ul>
                                     </div>
@@ -468,7 +468,9 @@
                                   <span class="text-grey-800 ml-2">
                                     {{
                                       modalData.data &&
+                                      modalData.data.GSProfessionals&&
                                       modalData.data.GSProfessionals
+                                            .professionalTypes
                                         ? modalData.data.GSProfessionals
                                             .professionalTypes.name
                                         : ""
@@ -497,7 +499,9 @@
                                   <span class="text-grey-800 ml-2">
                                     {{
                                       modalData.data &&
+                                      modalData.data.GSProfessionals&&
                                       modalData.data.GSProfessionals
+                                            .educationLevel
                                         ? modalData.data.GSProfessionals
                                             .educationLevel.name
                                         : ""

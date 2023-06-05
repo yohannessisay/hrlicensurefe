@@ -605,7 +605,7 @@ const routes = [
       )
   },
 
-  //Admin Cpd part
+  //Admin CPD part
   {
     path: "/admin/cpdCertified",
     name: "AdminCpdCertified",

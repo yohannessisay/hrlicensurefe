@@ -229,12 +229,11 @@
                               </div>
                             </div>
                             <div class="flex justify-between px-4 py-1">
-                              <div>Phone Number</div>
+                              <div>Office Phone Number</div>
                               <div class="text-main-400 font-bold">
                                 {{
                                   licenseData && licenseData.licenseReviewer
-                                    ? licenseData.licenseReviewer.reviewer
-                                        .phoneNumber
+                                    ? licenseData.licenseReviewer.reviewer.phoneNumber
                                     : "-"
                                 }}
                               </div>

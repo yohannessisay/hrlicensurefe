@@ -33,7 +33,7 @@
     </router-link>
         <li class="inverted-border-radius mb-8 mt-3">
       <i class="bx bx-badge-check ml-8 mt-2 text-2xl" style="color: #224771"></i>
- <span class="header_text ml-4">Cpd Certified</span>
+ <span class="header_text ml-4">CPD Certified</span>
      
     </li>
     
@@ -47,7 +47,7 @@
           <a href="">
             <i class="bx bx-certification"></i>
 
-            <span class="links_name"> Cpd Certified Users</span>
+            <span class="links_name"> CPD Certified Users</span>
           </a>
         </li>
       </router-link>
