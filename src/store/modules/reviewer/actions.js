@@ -139,7 +139,7 @@ export default {
     try {
       const url =
         baseUrl +
-        `/certified-user/${params.applicationType}/${params.applicationId}`;
+        `/certified-user/${params.applicationType}/${params.userId}/${params.applicationId}`;
       const resp = await ApiService.get(url);
       return resp;
     } catch (error) {

@@ -71,7 +71,7 @@ const routes = [
     }
   },
   {
-    path: "/scanned-certified-user/:applicationType/:applicationId",
+    path: "/scanned-certified-user/:applicationType/:userId/:applicationId",
     name: "scannedCertifiedUser",
     component: () =>
       import("../components/Applicant/Shared/ScannedCertificate.vue"),
