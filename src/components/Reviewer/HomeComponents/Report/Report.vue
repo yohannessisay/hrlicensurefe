@@ -258,7 +258,7 @@
                       @change="searchApplication()"
                     >
                       <option value="" disabled>Application Status</option>
-                      <option>All</option>
+                      <option value="">All</option>
                       <option
                         v-for="appStatus in applicationStatuses"
                         :key="appStatus.id"
@@ -297,7 +297,7 @@
                       @change="searchApplication()"
                       aria-label="Default select example"
                     >
-                      <option value="" disabled>All</option>
+                      <option value="">All</option>
 
                       <option value="male">Male</option>
                       <option value="female">Female</option>
@@ -332,10 +332,10 @@
                       v-model="searchTermRegion"
                       aria-label="Default select example"
                     >
-                      <option value="" disabled>Region</option>
+                      <option value="">All</option>
                       <option
                         v-for="region in regions"
-                        :value="region.name"
+                        :value="region.id"
                         :key="region.id"
                       >
                         {{ region.name }}
@@ -1116,8 +1116,7 @@ export default {
 
     const fetchRegion = () => {
       store.dispatch("report/getRegions").then((res) => {
-        regions.value = res.data.data;
-        regions.value.unshift({ name: "All" });
+        regions.value = res.data.data; 
       });
     };
 
