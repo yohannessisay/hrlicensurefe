@@ -351,6 +351,7 @@
                         >
                         <br />
                         <button
+                        v-if="adminRole!='REV'"
                           class="
                             inline-block
                             px-6
@@ -378,6 +379,7 @@
                           Suspend
                         </button>
                         <button
+                        v-if="adminRole!='REV'"
                           class="
                             inline-block
                             px-6
@@ -672,7 +674,7 @@ export default {
   },
   setup(props) {
     const store = useStore();
-
+    let adminRole = localStorage.getItem("role");
     let show = ref(true);
     let adminId = +localStorage.getItem("adminId");
     let adminExpLevel=JSON.parse(localStorage.getItem("allAdminData")).expertLevel.code;
@@ -817,6 +819,7 @@ export default {
       check,
       isLoading,
       modalData,
+      adminRole,
       googleApi,
       changePrintType,
     };

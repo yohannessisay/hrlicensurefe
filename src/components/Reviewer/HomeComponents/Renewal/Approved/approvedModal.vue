@@ -351,6 +351,7 @@
                         >
                         <br />
                         <button
+                        v-if="adminRole!='REV'"
                           class="
                             inline-block
                             px-6
@@ -378,6 +379,7 @@
                           Suspend
                         </button>
                         <button
+                        v-if="adminRole!='REV'"
                           class="
                             inline-block
                             px-6
@@ -618,7 +620,7 @@ export default {
   },
   setup(props) {
     const store = useStore();
-
+    let adminRole = localStorage.getItem("role");
     let show = ref(true);
     let adminId = +localStorage.getItem("adminId");
     let userId = ref("");
@@ -762,6 +764,7 @@ export default {
       isLoading,
       modalData,
       googleApi,
+      adminRole,
       changePrintType,
     };
   },

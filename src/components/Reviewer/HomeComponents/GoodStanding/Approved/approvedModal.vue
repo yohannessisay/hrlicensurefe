@@ -545,7 +545,7 @@ export default {
 
     let show = ref(true);
     let adminId = +localStorage.getItem("adminId");
-
+    let adminRole = localStorage.getItem("role");
     let isLoading = ref(false);
     const licenseData = ref({});
     let reviewerAdminId = ref(0);
@@ -624,6 +624,7 @@ export default {
 
     return {
       adminId,
+      adminRole,
       reviewerAdminId,
       showModal,
       check,
