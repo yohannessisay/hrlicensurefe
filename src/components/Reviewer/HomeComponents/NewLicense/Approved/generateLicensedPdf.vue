@@ -61,6 +61,8 @@
             finalData &&
               finalData.data &&
               finalData.data.applicantType &&
+              finalData.printType != 'externship' &&
+              finalData.printType != 'temporary' &&
               (finalData.data.applicantType.code == 'ETH' ||
                 finalData.data.applicantType.code == 'ETHABRO')
           "
@@ -1133,6 +1135,7 @@
               finalData.data.applicantType.code == 'FOR'
           "
           class="p-8 m-8 "
+          contenteditable="true"
           id="foreignersPrintedDiv"
         >
           <h2 class="mt-8" contenteditable="true">
@@ -1227,6 +1230,7 @@
                     {{ (index += 1) }}
                   </td>
                   <td
+                  contenteditable="false"
                     class="whitespace-nowrap border-r px-6 py-4 text-yellow-300"
                   >
                     {{
@@ -1240,6 +1244,7 @@
                     }}
                   </td>
                   <td
+                  contenteditable="false"
                     class="whitespace-nowrap border-r px-6 py-4 text-yellow-300"
                   >
                     ({{
@@ -1275,6 +1280,7 @@
               finalData.printType == 'externship'
           "
           class="p-8 m-8 "
+          contenteditable="true"
           id="externshipPrintedDiv"
         >
           <h2 contenteditable="true">ለ፡_________________________</h2>
@@ -1351,6 +1357,7 @@
                     {{ (index += 1) }}
                   </td>
                   <td
+                  contenteditable="false"
                     class="whitespace-nowrap border-r px-6 py-4 text-yellow-300"
                   >
                     {{
@@ -1364,6 +1371,7 @@
                     }}
                   </td>
                   <td
+                  contenteditable="false"
                     class="whitespace-nowrap border-r px-6 py-4 text-yellow-300"
                   >
                     ({{
@@ -1397,6 +1405,7 @@
               finalData.printType == 'temporary' &&
               finalData.printType != 'externship'
           "
+          contenteditable="true"
           class="p-8 m-8 "
           id="temporaryPrintedDiv"
         >
@@ -1482,6 +1491,7 @@
                   </td>
                   <td
                     class="whitespace-nowrap border-r px-6 py-4 text-yellow-300"
+                    contenteditable="false"
                   >
                     {{
                       finalData && finalData.data && finalData.data.profile
@@ -1495,6 +1505,7 @@
                   </td>
                   <td
                     class="whitespace-nowrap border-r px-6 py-4 text-yellow-300"
+                    contenteditable="false"
                   >
                     ({{
                       educations && educations.prefix
