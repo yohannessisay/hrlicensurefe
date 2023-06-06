@@ -91,7 +91,7 @@
                               items-center
                             "
                         >
-                          <div class="bg-white h-full">
+                          <div class="bg-white h-full " contenteditable="true">
                             <div v-if="show" class="ml-8 mr-8 mb-12">
                               <div v-if="!modalData.withExperiance">
                                 <h2 class="ml-4 mt-8" contenteditable="true">
@@ -105,7 +105,7 @@
                                 <h3 class="ml-64 mb-8" contenteditable="true">
                                   LETTER OF GOOD STANDING
                                 </h3>
-                                <h5 class=""  contenteditable="true">
+                                <h5 class="" contenteditable="true">
                                   This letter of good standing and confirmation
                                   of registration is written upon request of
                                   <span
@@ -122,15 +122,21 @@
                                     class="ml-1 text-yellow-300"
                                   >
                                     {{
-                                      (modalData && modalData.profile
+                                      (modalData &&
+                                      modalData.profile &&
+                                      modalData.profile.name
                                         ? modalData.profile.name
                                         : "") +
                                         " " +
-                                        (modalData && modalData.profile
+                                        (modalData &&
+                                        modalData.profile &&
+                                        modalData.profile.fatherName
                                           ? modalData.profile.fatherName
                                           : "") +
                                         " " +
-                                        (modalData && modalData.profile
+                                        (modalData &&
+                                        modalData.profile &&
+                                        modalData.profile.grandFatherName
                                           ? modalData.profile.grandFatherName
                                           : "")
                                     }}
@@ -151,7 +157,9 @@
                                   contenteditable="false"
                                   class="text-yellow-300"
                                   >{{
-                                    modalData && modalData.GSProfessionals
+                                    modalData &&
+                                    modalData.GSProfessionals &&
+                                    modalData.GSProfessionals.professionalTypes
                                       ? modalData.GSProfessionals
                                           .professionalTypes.name
                                       : ""
@@ -160,7 +168,7 @@
                                 on
                                 <span
                                   class="text-yellow-300"
-                                  contenteditable="false"
+                                  contenteditable="true"
                                   >{{
                                     modalData
                                       ? moment(
@@ -204,7 +212,7 @@
                                   >. With best regards
                                 </p>
                               </div>
-                                <!--end of letter without experiance -->
+                              <!--end of letter without experiance -->
                               <!-- letter with experiance -->
                               <div
                                 v-if="modalData.withExperiance"
@@ -231,7 +239,9 @@
                                     contenteditable="false"
                                     class="text-yellow-300"
                                     >{{
-                                      modalData && modalData.applicantTitle
+                                      modalData &&
+                                      modalData.applicantTitle &&
+                                      modalData.applicantTitle.name
                                         ? modalData.applicantTitle.name
                                         : ""
                                     }}</span
@@ -241,15 +251,21 @@
                                     class="ml-1 text-yellow-300"
                                   >
                                     {{
-                                      (modalData && modalData.profile
+                                      (modalData &&
+                                      modalData.profile &&
+                                      modalData.profile.name
                                         ? modalData.profile.name
                                         : "") +
                                         " " +
-                                        (modalData && modalData.profile
+                                        (modalData &&
+                                        modalData.profile &&
+                                        modalData.profile.fatherName
                                           ? modalData.profile.fatherName
                                           : "") +
                                         " " +
-                                        (modalData && modalData.profile
+                                        (modalData &&
+                                        modalData.profile &&
+                                        modalData.profile.grandFatherName
                                           ? modalData.profile.grandFatherName
                                           : "")
                                     }}
@@ -275,7 +291,10 @@
                                     contenteditable="false"
                                     class="text-yellow-300"
                                     >{{
-                                      modalData && modalData.GSProfessionals
+                                      modalData &&
+                                      modalData.GSProfessionals &&
+                                      modalData.GSProfessionals
+                                        .professionalTypes
                                         ? modalData.GSProfessionals
                                             .professionalTypes.name
                                         : ""
@@ -370,7 +389,10 @@
                                     has practiced
                                     <span class="text-yellow-300">
                                       {{
-                                        modalData && modalData.GSProfessionals
+                                        modalData &&
+                                        modalData.GSProfessionals &&
+                                        modalData.GSProfessionals
+                                          .professionalTypes
                                           ? modalData.GSProfessionals
                                               .professionalTypes.name
                                           : ""
@@ -408,7 +430,7 @@
                                   </h3>
                                 </div>
                               </div>
-                                <!--end of letter with experiance -->
+                              <!--end of letter with experiance -->
                             </div>
                           </div>
                         </div>
@@ -491,7 +513,7 @@ import moment from "moment";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 import { jsPDF } from "jspdf";
-import { useStore } from "vuex"; 
+import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
 import html2pdf from "html2pdf.js";
 export default {
