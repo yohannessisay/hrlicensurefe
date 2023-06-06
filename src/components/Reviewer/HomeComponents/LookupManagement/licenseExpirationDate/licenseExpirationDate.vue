@@ -60,7 +60,7 @@
 
         <div class="w-full mt-8 rounded-xl">
           <vue-table-lite
-            
+          :is-static-mode="true"
             :is-loading="licenseExpDateTable.isLoading"
             :columns="licenseExpDateTable.columns"
             :rows="licenseExpDateTable.rows"

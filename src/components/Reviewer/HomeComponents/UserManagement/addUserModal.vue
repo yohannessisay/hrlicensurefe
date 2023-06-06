@@ -415,8 +415,8 @@
                         <span
                           v-show="
                             expertLevel.id == 4 &&
-                            region &&
-                            region.code == 'AMH'
+                              region &&
+                              region.code == 'AMH'
                           "
                           class="mr-2 ml-2"
                         >
@@ -547,9 +547,8 @@ export default {
     const store = useStore();
     let isLoading = ref(false);
     const toast = useToast();
-    const adminExpertId = JSON.parse(
-      localStorage.getItem("allAdminData")
-    ).expertLevelId;
+    const adminExpertId = JSON.parse(localStorage.getItem("allAdminData"))
+      .expertLevelId;
     let errorMessage = ref("");
     const adminRole = JSON.parse(localStorage.getItem("allAdminData")).role;
     let admin = {
@@ -559,8 +558,8 @@ export default {
       email: null,
       phoneNumber: null,
       roleId: null,
-      expertLevelId: null,
-      regionId: null,
+      expertLevelId: adminExpertId,
+      regionId: JSON.parse(localStorage.getItem("allAdminData")).regionId,
       zoneId: null,
       password: "password1",
       isActive: true,
@@ -614,18 +613,16 @@ export default {
 
     let showRegion = ref("");
     const selectedExpertLevel = () => {
-
       if (expertLevel.value.code == "FED") {
         admin.regionId = null;
         admin.expertLevelId = expertLevel.value.id;
-      } else { 
+      } else {
         showRegion.value = 4;
         admin.expertLevelId = expertLevel.value.id;
       }
-   
     };
     const selectedRegion = () => {
-      admin.zoneId=null;
+      admin.zoneId = null;
       admin.regionId = region.value.id;
       if (region.value.code == "AMH") {
         store.dispatch("renewal/getZones", region.value.id).then((res) => {
@@ -634,11 +631,12 @@ export default {
       }
     };
 
-    const registerAdmin = () => { 
+    const registerAdmin = () => {
       let isValidated = validateForm(admin);
+      console.log(isValidated);
       showLoading.value = true;
       showButtons.value = true;
-
+      isLoading.value = true;
       if (isValidated) {
         state.value.validationErrors = isValidated;
         state.value.showErrorMessages = true;
@@ -713,8 +711,8 @@ export default {
         errors.phoneNumber = "Phone Number is Required";
       if (formData.email && !isValidEmail(formData.email)) {
         errors.email = "Invalid Email";
-      } 
-      if (!formData.expertLevelId )
+      }
+      if (!formData.expertLevelId)
         errors.expertLevel = "Expert Level is required";
       if (!formData.regionId && formData.expertLevelId == 4)
         errors.region = "Region is required";
@@ -747,8 +745,7 @@ export default {
     };
 
     const isValidEmail = (email) => {
-      const re =
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(email);
     };
 
