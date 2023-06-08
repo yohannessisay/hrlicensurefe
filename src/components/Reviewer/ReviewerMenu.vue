@@ -101,7 +101,7 @@
         <li class="mb-2">
           <a href="#ImportResults">
             <i class="bx bx-import"></i>
-            <span class="links_name">National Exam Import</span>
+            <span class="links_name">National Licensure Exam Import</span>
           </a>
         </li>
       </router-link>
