@@ -393,7 +393,7 @@
                             </div>
                           </div>
                           <div class="grow ml-6">
-                            <h2 class="font-bold mb-1">License Detail</h2>
+                            <h2 class="font-bold mb-1">Letter Detail</h2>
                             <div
                               class="
                                   border-2

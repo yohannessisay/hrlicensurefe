@@ -289,7 +289,6 @@ export default {
       searchTermToDate.value = "";
       toYouTable.value.isLoading = true;
       toYouTable.value.rows = [];
-      toYouTableData = [];
       licensed([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
@@ -301,7 +300,7 @@ export default {
         .dispatch("reviewerGoodStanding/getGoodstandingLicensed", apiParameters)
         .then((res) => {
           allInfo = res && res.rows ? res.rows : [];
-
+          toYouTableData = [];
           allInfo.forEach((element) => {
             toYouTableData.push({
               LicenseNumber: element ? element.goodStandingCode : "",
@@ -394,7 +393,7 @@ export default {
     const searchApplication = () => {
       toYouTable.value.isLoading = true;
       toYouTable.value.rows = [];
-      toYouTableData.value = [];
+   
       licensed([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
