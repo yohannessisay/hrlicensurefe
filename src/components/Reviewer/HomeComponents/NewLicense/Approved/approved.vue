@@ -221,7 +221,7 @@
                     bg-primary-800
                   "
                 >
-                  <vue-table-lite 
+                  <vue-table-lite
                     :is-loading="toYouTable.isLoading"
                     :columns="toYouTable.columns"
                     :rows="toYouTable.rows"
@@ -231,8 +231,7 @@
                     @row-clicked="rowClicked"
                     @do-search="doSearch"
                   ></vue-table-lite>
-                  <edit-modal   :modalDataId="modalDataId">
-                  </edit-modal>
+                  <edit-modal :modalDataId="modalDataId"> </edit-modal>
                 </div>
               </div>
             </div>
@@ -429,20 +428,17 @@
                     bg-primary-800
                   "
                 >
-                  <vue-table-lite  
+                  <vue-table-lite
                     :is-loading="toOthersTable.isLoading"
                     :columns="toOthersTable.columns"
                     :rows="toOthersTable.rows"
-                    :total="toOthersTable.totalRecordCount" 
+                    :total="toOthersTable.totalRecordCount"
                     @is-finished="tableLoadingFinishOthers"
                     @row-clicked="rowClickedOthers"
                     @do-search="doSearchOth"
                   ></vue-table-lite>
 
-                  <edit-modal-others
-                 
-                    :modalDataIdOthers="modalDataIdOthers"
-                  >
+                  <edit-modal-others :modalDataIdOthers="modalDataIdOthers">
                   </edit-modal-others>
                 </div>
               </div>
@@ -475,7 +471,7 @@ export default {
     editModalOthers,
   },
   setup() {
-    const store = useStore(); 
+    const store = useStore();
     let modalDataId = ref({
       id: "",
       change: 0,
@@ -484,8 +480,8 @@ export default {
       id: "",
       change: 0,
     });
-    let allInfo = ref({});
-    let allInfoOth = ref({});
+    let allInfo = [];
+    let allInfoOth = [];
     let searchTerm = ref("");
     let searchTermOthers = ref("");
     let searchTermFromDate = ref("");
@@ -494,8 +490,8 @@ export default {
     let searchTermToDateOth = ref("");
     let toOthersTable = ref({});
     let toYouTable = ref({});
-    let tableData = ref([]);
-    let toYouTableData = ref([]);
+    let tableData = [];
+    let toYouTableData = [];
     toOthersTable.value = {
       isLoading: false,
     };
@@ -503,13 +499,10 @@ export default {
       isLoading: false,
     };
 
-    const refreshTable = () => {
-      toOthersTable.value.isLoading = true;
-      toYouTable.value.isLoading = true;
+    const refreshTable = () => { 
       toOthersTable.value.rows = [];
-      tableData.value = [];
+
       toYouTable.value.rows = [];
-      toYouTableData.value = [];
 
       approvedApplicationsByYou([
         { key: "page", value: 0 },
@@ -523,9 +516,9 @@ export default {
     const clearFiltersOther = () => {
       searchTermOthers.value = "";
       searchTermFromDateOth.value = "";
-      searchTermToDateOth.value = ""; 
+      searchTermToDateOth.value = "";
       toOthersTable.value.rows = [];
-      tableData.value = [];
+      toOthersTable.value.isLoading = true;
       approvedApplicationsByOthers([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
@@ -534,10 +527,9 @@ export default {
     const clearFilters = () => {
       searchTerm.value = "";
       searchTermFromDate.value = "";
-      searchTermToDate.value = "";
-      toYouTable.value.isLoading = true;
+      searchTermToDate.value = ""; 
       toYouTable.value.rows = [];
-      toYouTableData.value = [];
+      toYouTable.value.isLoading = true;
       approvedApplicationsByYou([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
@@ -545,6 +537,7 @@ export default {
     };
 
     const approvedApplicationsByYou = (apiParameters) => {
+      toYouTableData = [];
       store
         .dispatch("reviewerNewLicense/getNewLicenseApproved", [
           {
@@ -555,10 +548,10 @@ export default {
           },
         ])
         .then((res) => {
-          allInfo.value = res ? res.rows : [];
-          if (allInfo.value) {
-            allInfo.value.forEach(element => {
-              toYouTableData.value.push({
+          allInfo = res ? res.rows : [];
+          if (allInfo) {
+            allInfo.forEach((element) => {
+              toYouTableData.push({
                 LicenseNumber: element.newLicenseCode,
                 ApplicantName:
                   (element.profile ? element.profile.name : "") +
@@ -573,12 +566,11 @@ export default {
                   .toJSON()
                   .slice(0, 10)
                   .replace(/-/g, "/"),
-                data: element
+                data: element,
               });
             });
           }
 
-         
           toYouTable.value = {
             columns: [
               {
@@ -586,25 +578,25 @@ export default {
                 field: "LicenseNumber",
                 width: "15%",
                 sortable: true,
-                isKey: true
+                isKey: true,
               },
               {
                 label: "Applicant Name",
                 field: "ApplicantName",
                 width: "45%",
-                sortable: true
+                sortable: true,
               },
               {
                 label: "Applicant Type",
                 field: "ApplicantType",
                 width: "20%",
-                sortable: true
+                sortable: true,
               },
               {
                 label: "Applied Date",
                 field: "Date",
                 width: "20%",
-                sortable: true
+                sortable: true,
               },
               {
                 label: "Action",
@@ -616,20 +608,21 @@ export default {
                     row +
                     '" ><i class="fa fa-eye"></i>View/Edit</button>'
                   );
-                }
-              }
+                },
+              },
             ],
-            rows: toYouTableData.value,
+            rows: toYouTableData,
             totalRecordCount: res.count,
             sortable: {
               order: "id",
-              sort: "asc"
-            }
+              sort: "asc",
+            },
           };
         });
-        
     };
     const approvedApplicationsByOthers = (apiParameters) => {
+      tableData = [];
+     
       store
         .dispatch("reviewerNewLicense/getNewLicenseApproved", [
           {
@@ -640,9 +633,9 @@ export default {
           },
         ])
         .then((res) => {
-          allInfoOth.value = res ? res.rows : [];
-          allInfoOth.value.forEach((element) => {
-            tableData.value.push({
+          allInfoOth = res ? res.rows : [];
+          allInfoOth.forEach((element) => {
+            tableData.push({
               LicenseNumber: element.newLicenseCode,
               ApplicantName:
                 element.profile.name +
@@ -702,7 +695,7 @@ export default {
               },
             ],
 
-            rows: tableData.value,
+            rows: tableData,
             totalRecordCount: res.count,
             sortable: {
               order: "id",
@@ -748,9 +741,8 @@ export default {
     };
 
     const searchApplication = () => {
-      toYouTable.value.isLoading = true;
       toYouTable.value.rows = [];
-      toYouTableData.value = [];
+      toYouTable.value.isLoading = true;
       approvedApplicationsByYou([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
@@ -760,9 +752,8 @@ export default {
       ]);
     };
     const searchApplicationOther = () => {
-      toOthersTable.value.isLoading = true;
       toOthersTable.value.rows = [];
-      tableData.value = [];
+      toOthersTable.value.isLoading = true;
       approvedApplicationsByOthers([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
@@ -773,21 +764,19 @@ export default {
     };
     onMounted(() => {
       toYouTable.value.isLoading = true;
-      toOthersTable.value.isLoading = true;
       approvedApplicationsByOthers([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
       ]);
+      toOthersTable.value.isLoading = true;
       approvedApplicationsByYou([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
       ]);
     });
     const doSearch = (offset, limit, order, sort) => {
-       
-
+      toYouTable.value.isLoading = true;
       setTimeout(() => {
-       
         toYouTable.value.isReSearch = offset == undefined ? true : false;
         offset = offset && offset > 0 ? offset / 10 - 1 : 1;
         if (sort == "asc") {
@@ -812,8 +801,7 @@ export default {
       }, 600);
     };
     const doSearchOth = (offset, limit, order, sort) => {
-      
-
+      toOthersTable.value.isLoading = true;
       setTimeout(() => {
         toOthersTable.value.isReSearch = offset == undefined ? true : false;
         offset = offset && offset > 0 ? offset / 10 - 1 : 1;
@@ -834,8 +822,6 @@ export default {
             { key: "toDate", value: searchTermToDateOth.value },
           ]);
         }
-        toOthersTable.value.sortable.order = order;
-        toOthersTable.value.sortable.sort = sort;
       }, 600);
     };
     return {
@@ -854,7 +840,7 @@ export default {
       searchTermToDate,
       searchTermFromDateOth,
       searchTermToDateOth,
-      toYouTable, 
+      toYouTable,
       tableLoadingFinish,
       tableLoadingFinishOthers,
       rowClicked,
