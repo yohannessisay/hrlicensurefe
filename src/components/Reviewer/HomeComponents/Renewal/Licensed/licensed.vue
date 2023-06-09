@@ -273,13 +273,13 @@ export default {
       id: "",
       change: 0,
     });
-    let allInfo = ref({}); 
-    const searchTerm = ref("");
+    let allInfo = []; 
+    let searchTerm = ref("");
     let searchTermFromDate = ref("");
     let searchTermToDate = ref("");
-    const toOthersTable = ref({});
-    const toYouTable = ref({});
-    let toYouTableData = ref([]);
+    let toOthersTable = ref({});
+    let toYouTable = ref({});
+    let toYouTableData = [];
     toOthersTable.value = {
       isLoading: true,
     };
@@ -293,7 +293,7 @@ export default {
       searchTermToDate.value = "";
       toYouTable.value.isLoading = true;
       toYouTable.value.rows = [];
-      toYouTableData.value = [];
+      toYouTableData = [];
       licensed([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
@@ -308,10 +308,10 @@ export default {
           apiParameters
         )
         .then((res) => {
-          allInfo.value = res && res.rows ? res.rows : [];
-
-          allInfo.value.forEach((element) => {
-            toYouTableData.value.push({
+          allInfo = res && res.rows ? res.rows : [];
+          toYouTableData=[];
+          allInfo.forEach((element) => {
+            toYouTableData.push({
               LicenseNumber: element ? element.renewalCode : "",
               ApplicantName:
                 (element.profile ? element.profile.name : "------") +
@@ -374,7 +374,7 @@ export default {
                 },
               },
             ],
-            rows: toYouTableData.value,
+            rows: toYouTableData,
             totalRecordCount: res.count,
           };
         });
@@ -404,7 +404,7 @@ export default {
     const searchApplication = () => {
       toYouTable.value.isLoading = true;
       toYouTable.value.rows = [];
-      toYouTableData.value = [];
+      toYouTableData = [];
       licensed([
         { key: "page", value: 0 },
         { key: "size", value: 10 },

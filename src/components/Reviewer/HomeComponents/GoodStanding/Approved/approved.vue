@@ -457,7 +457,7 @@
 <script>
 import ReviewerSideNav from "../SharedComponents/sideNav.vue";
 import ReviewerNavBar from "../../../SharedComponents/navBar.vue";
-import NewLicenseMainContent from "../../../SharedComponents/inReview.vue";
+import NewLicenseMainContent from "../../../SharedComponents/approved.vue";
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
 import VueTableLite from "vue3-table-lite";
