@@ -60,7 +60,7 @@
 
         <div class="w-full mt-8 rounded-xl">
           <vue-table-lite
-            :is-static-mode="true"
+          :is-static-mode="true"
             :is-loading="departmentsTable.isLoading"
             :columns="departmentsTable.columns"
             :rows="departmentsTable.rows"

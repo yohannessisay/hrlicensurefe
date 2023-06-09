@@ -221,8 +221,7 @@
                     bg-primary-800
                   "
                 >
-                  <vue-table-lite
-                   
+                  <vue-table-lite 
                     :is-loading="toYouTable.isLoading"
                     :columns="toYouTable.columns"
                     :rows="toYouTable.rows"
@@ -232,7 +231,7 @@
                     @row-clicked="rowClicked"
                     @do-search="doSearch"
                   ></vue-table-lite>
-                  <edit-modal v-if="showModal" :modalDataId="modalDataId">
+                  <edit-modal   :modalDataId="modalDataId">
                   </edit-modal>
                 </div>
               </div>
@@ -430,19 +429,18 @@
                     bg-primary-800
                   "
                 >
-                  <vue-table-lite 
+                  <vue-table-lite  
                     :is-loading="toOthersTable.isLoading"
                     :columns="toOthersTable.columns"
                     :rows="toOthersTable.rows"
-                    :total="toOthersTable.totalRecordCount"
-                    :sortable="toOthersTable.sortable"
+                    :total="toOthersTable.totalRecordCount" 
                     @is-finished="tableLoadingFinishOthers"
                     @row-clicked="rowClickedOthers"
                     @do-search="doSearchOth"
                   ></vue-table-lite>
 
                   <edit-modal-others
-                    v-if="showModal"
+                 
                     :modalDataIdOthers="modalDataIdOthers"
                   >
                   </edit-modal-others>
@@ -477,8 +475,7 @@ export default {
     editModalOthers,
   },
   setup() {
-    const store = useStore();
-    const showModal = ref(true);
+    const store = useStore(); 
     let modalDataId = ref({
       id: "",
       change: 0,
@@ -498,12 +495,12 @@ export default {
     let toOthersTable = ref({});
     let toYouTable = ref({});
     let tableData = ref([]);
-    let toYouTableData = [];
+    let toYouTableData = ref([]);
     toOthersTable.value = {
-      isLoading: true,
+      isLoading: false,
     };
     toYouTable.value = {
-      isLoading: true,
+      isLoading: false,
     };
 
     const refreshTable = () => {
@@ -526,8 +523,7 @@ export default {
     const clearFiltersOther = () => {
       searchTermOthers.value = "";
       searchTermFromDateOth.value = "";
-      searchTermToDateOth.value = "";
-      toOthersTable.value.isLoading = true;
+      searchTermToDateOth.value = ""; 
       toOthersTable.value.rows = [];
       tableData.value = [];
       approvedApplicationsByOthers([
@@ -562,7 +558,7 @@ export default {
           allInfo.value = res ? res.rows : [];
           if (allInfo.value) {
             allInfo.value.forEach(element => {
-              toYouTableData.push({
+              toYouTableData.value.push({
                 LicenseNumber: element.newLicenseCode,
                 ApplicantName:
                   (element.profile ? element.profile.name : "") +
@@ -617,13 +613,13 @@ export default {
                 display: function(row) {
                   return (
                     '<button data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
-                    row.id +
+                    row +
                     '" ><i class="fa fa-eye"></i>View/Edit</button>'
                   );
                 }
               }
             ],
-            rows: toYouTableData,
+            rows: toYouTableData.value,
             totalRecordCount: res.count,
             sortable: {
               order: "id",
@@ -699,7 +695,7 @@ export default {
                 display: function(row) {
                   return (
                     '<button data-bs-toggle="modal" data-bs-target="#staticBackdropOthers" class="edit-btn-others bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
-                    row.id +
+                    row +
                     '" ><i class="fa fa-eye"></i>View/Edit</button>'
                   );
                 },
@@ -776,6 +772,8 @@ export default {
       ]);
     };
     onMounted(() => {
+      toYouTable.value.isLoading = true;
+      toOthersTable.value.isLoading = true;
       approvedApplicationsByOthers([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
@@ -786,11 +784,10 @@ export default {
       ]);
     });
     const doSearch = (offset, limit, order, sort) => {
-      toYouTable.value.isLoading = true;
+       
 
       setTimeout(() => {
-        toYouTableData=[];
-        toYouTable.value.rows=[];
+       
         toYouTable.value.isReSearch = offset == undefined ? true : false;
         offset = offset && offset > 0 ? offset / 10 - 1 : 1;
         if (sort == "asc") {
@@ -815,7 +812,7 @@ export default {
       }, 600);
     };
     const doSearchOth = (offset, limit, order, sort) => {
-      toOthersTable.value.isLoading = true;
+      
 
       setTimeout(() => {
         toOthersTable.value.isReSearch = offset == undefined ? true : false;
@@ -857,8 +854,7 @@ export default {
       searchTermToDate,
       searchTermFromDateOth,
       searchTermToDateOth,
-      toYouTable,
-      showModal,
+      toYouTable, 
       tableLoadingFinish,
       tableLoadingFinishOthers,
       rowClicked,

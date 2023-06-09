@@ -887,7 +887,9 @@
                                 >
                                   <div class="flex items-center ml-4">
                                     <div>
-                                      <p :class="isDarkMode ? 'text-white' : ''">
+                                      <p
+                                        :class="isDarkMode ? 'text-white' : ''"
+                                      >
                                         {{ parentChildItem.documentType.name }}
                                       </p>
                                     </div>
@@ -903,7 +905,9 @@
                                 >
                                   <div class="flex items-center ml-4">
                                     <div>
-                                      <p :class="isDarkMode ? 'text-white' : ''">
+                                      <p
+                                        :class="isDarkMode ? 'text-white' : ''"
+                                      >
                                         {{
                                           parentChildItem.documentType
                                             .description
@@ -954,7 +958,9 @@
                                 >
                                   <div class="flex items-center p-4">
                                     <div>
-                                      <p :class="isDarkMode ? 'text-white' : ''">
+                                      <p
+                                        :class="isDarkMode ? 'text-white' : ''"
+                                      >
                                         {{
                                           parentChildItem.fileName
                                             ? parentChildItem.fileName
@@ -2063,7 +2069,16 @@ export default {
               .then((res) => {
                 let resp = res.data.data;
                 newLicenseDocuments.value = res.data.data;
-
+                resp.forEach((ed, index) => {
+                  if (
+                    generalInfo.value &&
+                    generalInfo.value.nativeLanguageSelected &&
+                    generalInfo.value.nativeLanguageSelected.code != "NENGS" &&
+                    ed.documentType.code == "ELPC"
+                  ) {
+                    resp.splice(index, 1);
+                  }
+                });
                 educationalDocs.value.push({
                   educationalLevel: element.educationalLevel,
                   professionType: element.professionalType,

@@ -15,6 +15,8 @@
         "@ocrv/vue-tailwind-pagination": "^0.0.4",
         "@tailwindcss/forms": "^0.2.1",
         "@vue/composition-api": "^1.0.0-rc.5",
+        "@vueup/vue-quill": "^1.2.0",
+        "@wangeditor/editor-for-vue": "^5.1.12",
         "apexcharts": "^3.40.0",
         "axios": "^0.21.1",
         "ethiopic-calendar": "^2.0.0",

@@ -705,24 +705,7 @@
                           Current Work Experience / Goodstanding Letter
                         </li>
 
-                        <li
-                          :class="
-                            isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
-                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
-                          "
-                          data-bs-toggle="tooltip"
-                          title="Foun in ethiopia"
-                        >
-                          <i
-                            :class="
-                              isDarkMode
-                                ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long'
-                            "
-                          ></i>
-                          Renewed License of Health FacilityFound in Ethiopia
-                        </li>
+                       
 
                         <li
                           :class="
@@ -1192,24 +1175,7 @@
                           Work Experience
                         </li>
 
-                        <li
-                          :class="
-                            isDarkMode
-                              ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
-                              : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
-                          "
-                          data-bs-toggle="tooltip"
-                          title=" "
-                        >
-                          <i
-                            :class="
-                              isDarkMode
-                                ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long'
-                            "
-                          ></i>
-                          Renewed License of Health Facility
-                        </li>
+                   
                       </ul>
                       <div class="mt-6 py-4">
                         <a href="/Applicant/Renewal">

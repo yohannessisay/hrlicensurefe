@@ -59,7 +59,10 @@
             modalData &&
               modalData.data &&
               modalData.data.applicantType &&
-              modalData.data.applicantType.code == 'ETH'
+              finalData.printType != 'externship' &&
+              finalData.printType != 'temporary' &&
+              (finalData.data.applicantType.code == 'ETH' ||
+                finalData.data.applicantType.code == 'ETHABRO')
           "
         >
           <!-- if professions are less than 3 -->
@@ -1122,9 +1125,10 @@
             modalData &&
               modalData.data &&
               modalData.data.applicantType &&
-              (modalData.data.applicantType.code == 'ETHABRO' ||
-                modalData.data.applicantType.code == 'FOR')
+              
+                modalData.data.applicantType.code == 'FOR'
           "
+          contenteditable="true"
           class="p-8 m-8 "
           id="foreignersPrintedDiv"
         >
@@ -1220,6 +1224,7 @@
                     {{ (index += 1) }}
                   </td>
                   <td
+                  contenteditable="false"
                     class="whitespace-nowrap border-r px-6 py-4 text-yellow-300"
                   >
                     {{
@@ -1233,6 +1238,7 @@
                     }}
                   </td>
                   <td
+                  contenteditable="false"
                     class="whitespace-nowrap border-r px-6 py-4 text-yellow-300"
                   >
                   ({{
@@ -1746,41 +1752,7 @@ export default {
         paddingAmharic = 10;
         paddingEnglish = 10;
       }
-      //Amharic name part
-      doc.text(
-        60,
-        namePosition - paddingAmharic,
-        `${
-          certifiedUser.value.alternativeName
-            ? certifiedUser.value.alternativeName
-            : ""
-        } ${
-          certifiedUser.value.alternativeFatherName
-            ? certifiedUser.value.alternativeFatherName
-            : ""
-        } ${
-          certifiedUser.value.alternativeGrandFatherName
-            ? certifiedUser.value.alternativeGrandFatherName
-            : ""
-        }`
-      );
-      doc2.text(
-        60,
-        namePosition - paddingAmharic,
-        `${
-          certifiedUser.value.alternativeName
-            ? certifiedUser.value.alternativeName
-            : ""
-        } ${
-          certifiedUser.value.alternativeFatherName
-            ? certifiedUser.value.alternativeFatherName
-            : ""
-        } ${
-          certifiedUser.value.alternativeGrandFatherName
-            ? certifiedUser.value.alternativeGrandFatherName
-            : ""
-        }`
-      );
+      
       //English name part
       doc.text(
         190,
@@ -2013,7 +1985,41 @@ export default {
       doc2.addFont("Tera-Regular-normal.ttf", "Tera-Regular", "normal");
       doc.setFont("Tera-Regular"); // set font
       doc2.setFont("Tera-Regular");
-
+//Amharic name part
+doc.text(
+        60,
+        namePosition - paddingAmharic,
+        `${
+          certifiedUser.value.alternativeName
+            ? certifiedUser.value.alternativeName
+            : ""
+        } ${
+          certifiedUser.value.alternativeFatherName
+            ? certifiedUser.value.alternativeFatherName
+            : ""
+        } ${
+          certifiedUser.value.alternativeGrandFatherName
+            ? certifiedUser.value.alternativeGrandFatherName
+            : ""
+        }`
+      );
+      doc2.text(
+        60,
+        namePosition - paddingAmharic,
+        `${
+          certifiedUser.value.alternativeName
+            ? certifiedUser.value.alternativeName
+            : ""
+        } ${
+          certifiedUser.value.alternativeFatherName
+            ? certifiedUser.value.alternativeFatherName
+            : ""
+        } ${
+          certifiedUser.value.alternativeGrandFatherName
+            ? certifiedUser.value.alternativeGrandFatherName
+            : ""
+        }`
+      );
       doc.setFontSize(17);
       doc2.setFontSize(17);
 

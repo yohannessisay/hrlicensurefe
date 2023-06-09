@@ -197,13 +197,13 @@
                           </p>
                           <p class="text-gray-500">
                             <span class="font-medium text-primary-700 mb-1"
-                              >Cpd Activity:</span
+                              >CPD Activity:</span
                             >
                             {{ modalData.cpdActivity }}
                           </p>
                           <p class="text-gray-500">
                             <span class="font-medium text-primary-700 mb-1"
-                              >Cpd Provider:</span
+                              >CPD Provider:</span
                             >
                             {{ modalData.cpdProvider }}
                           </p>

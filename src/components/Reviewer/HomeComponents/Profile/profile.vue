@@ -203,7 +203,7 @@
                         </div>
                         <div class="grid grid-cols-2">
                           <div class="px-4 py-2 font-semibold">
-                            Phone Number
+                           Office Phone Number
                           </div>
                           <div class="mb-3 xl:w-96">
                             <input
@@ -228,7 +228,7 @@
                                 focus:outline-none
                               "
                               id="phoneNumber"
-                              placeholder="First name"
+                              placeholder="Office Phone Number"
                               v-model="userInfo.phoneNumber"
                             />
                           </div>

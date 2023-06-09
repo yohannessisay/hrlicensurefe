@@ -489,7 +489,7 @@ export default {
     const showRes = ref(true);
     const showGenerateModal = ref(true);
     const showOptions = ref(true);
-    const isLoading = ref(true);
+    const isLoading = ref(false);
     const modalData = ref({});
     let result = {};
     const check = () => {

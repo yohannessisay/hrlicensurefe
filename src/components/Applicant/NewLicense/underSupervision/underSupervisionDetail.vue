@@ -249,7 +249,7 @@
                             </div>
                           </div>
                           <div class="flex justify-between px-4 py-1">
-                            <div>Phone Number</div>
+                            <div>Office Phone Number</div>
                             <div class="text-main-400 font-bold">
                               {{
                                 licenseData && licenseData.licenseReviewer
@@ -276,104 +276,7 @@
                     </div>
                     <!-- END Column -->
 
-                    <!-- Column -->
-                    <div
-                      class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
-                    >
-                    
-                        <!-- Article -->
-                        <article class="overflow-hidden rounded-lg shadow-xl">
-                        <header
-                          class="
-                            flex
-                            items-center
-                            justify-between
-                            leading-tight
-                            p-2
-                            md:p-4
-                            border-b-4
-                            text-main-400
-                          "
-                        >
-                          <h1 class="text-lg">
-                            <a
-                              class="no-underline hover:underline text-black"
-                              href="#"
-                            >
-                              License Detail
-                            </a>
-                          </h1>
-                          <p class="text-main-400 text-sm">Active</p>
-                        </header>
-
-                        <div class="grid grid-flow-row auto-rows-max">
-                          <div class="flex justify-between px-4 py-1">
-                            <div>Applicant Type</div>
-                            <div class="text-main-400 font-bold">
-                              {{
-                                licenseData && licenseData.applicantType
-                                  ? licenseData.applicantType.name
-                                  : "-"
-                              }}
-                            </div>
-                          </div>
-                          <div class="flex justify-between px-4 py-1">
-                            <div>Application Status</div>
-                            <div class="text-main-400 font-bold">
-                              {{
-                                licenseData && licenseData.applicationStatus
-                                  ? licenseData.applicationStatus.name
-                                  : "-"
-                              }}
-                            </div>
-                          </div>
-                          <div class="flex justify-between px-4 py-1">
-                            <div>Certified Status</div>
-                            <div class="text-main-400 font-bold">
-                              {{
-                                licenseData && licenseData.certified
-                                  ? "Certified"
-                                  : "Not Certified"
-                              }}
-                            </div>
-                          </div>
-                          <div class="flex justify-between px-4 py-1">
-                            <div>Certified Date</div>
-                            <div class="text-main-400 font-bold">
-                              {{
-                                licenseData && licenseData.applicationStatus
-                                  ? licenseData.applicationStatus.name
-                                  : "-"
-                              }}
-                            </div>
-                          </div>
-                          <div class="flex justify-between px-4 py-1">
-                            <div>Expiration Date</div>
-                            <div class="text-main-400 font-bold">
-                              {{
-                                licenseData && licenseData.applicationStatus
-                                  ? licenseData.applicationStatus.name
-                                  : "-"
-                              }}
-                            </div>
-                          </div>
-                        </div>
-
-                        <footer
-                          class="
-                            flex
-                            items-center
-                            justify-between
-                            leading-none
-                            p-2
-                            md:p-4
-                          "
-                        ></footer>
-                      </article>
-                      <!-- END Article -->
-                    </div>
-
-                    <!-- END Column -->
+            
 
                     <!-- Column -->
                     <div
@@ -460,6 +363,104 @@
                       </article>
                       <!-- END Article -->
                     </div>
+                    <!-- END Column -->
+                            <!-- Column -->
+                            <div
+                      class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
+                    >
+                    
+                        <!-- Article -->
+                        <article class="overflow-hidden rounded-lg shadow-xl">
+                        <header
+                          class="
+                            flex
+                            items-center
+                            justify-between
+                            leading-tight
+                            p-2
+                            md:p-4
+                            border-b-4
+                            text-main-400
+                          "
+                        >
+                          <h1 class="text-lg">
+                            <a
+                              class="no-underline hover:underline text-black"
+                              href="#"
+                            >
+                              License Detail
+                            </a>
+                          </h1>
+                          <p class="text-main-400 text-sm">Active</p>
+                        </header>
+
+                        <div class="grid grid-flow-row auto-rows-max">
+                          <div class="flex justify-between px-4 py-1">
+                            <div>Applicant Type</div>
+                            <div class="text-main-400 font-bold">
+                              {{
+                                licenseData && licenseData.applicantType
+                                  ? licenseData.applicantType.name
+                                  : "-"
+                              }}
+                            </div>
+                          </div>
+                          <div class="flex justify-between px-4 py-1">
+                            <div>Application Status</div>
+                            <div class="text-main-400 font-bold">
+                              {{
+                                licenseData && licenseData.applicationStatus
+                                  ? licenseData.applicationStatus.name
+                                  : "-"
+                              }}
+                            </div>
+                          </div>
+                          <div class="flex justify-between px-4 py-1">
+                            <div>Certified Status</div>
+                            <div class="text-main-400 font-bold">
+                              {{
+                                licenseData && licenseData.certified
+                                  ? "Certified"
+                                  : "Not Certified"
+                              }}
+                            </div>
+                          </div>
+                          <div class="flex justify-between px-4 py-1">
+                            <div>Supervision Start Date</div>
+                            <div class="text-main-400 font-bold">
+                              {{
+                                licenseData && licenseData.suspStartDate
+                                  ? licenseData.suspStartDate
+                                  : "-"
+                              }}
+                            </div>
+                          </div>
+                          <div class="flex justify-between px-4 py-1">
+                            <div>Supervision End Date</div>
+                            <div class="text-main-400 font-bold">
+                              {{
+                                licenseData && licenseData.suspEndDate
+                                  ? licenseData.suspEndDate
+                                  : "-"
+                              }}
+                            </div>
+                          </div>
+                        </div>
+
+                        <footer
+                          class="
+                            flex
+                            items-center
+                            justify-between
+                            leading-none
+                            p-2
+                            md:p-4
+                          "
+                        ></footer>
+                      </article>
+                      <!-- END Article -->
+                    </div>
+
                     <!-- END Column -->
                   </div>
                 </div>
