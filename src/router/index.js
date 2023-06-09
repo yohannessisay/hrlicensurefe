@@ -52,7 +52,7 @@ const routes = [
 
   {
     path: "/admin/resetpassword/:id/:token",
-    name: "ResetPassword",
+    name: "ResetPasswordAdmin",
     component: () => import("../views/ResetPassword.vue")
   },
   {
@@ -70,7 +70,12 @@ const routes = [
         "https://docs.google.com/forms/d/e/1FAIpQLSdHJh4WF9bBHgw7ewMHUzEr3a4dhvOjdF9aWu50PdQo_7no0Q/viewform"
     }
   },
-
+  {
+    path: "/scanned-certified-user/:applicationType/:userId/:applicationId",
+    name: "scannedCertifiedUser",
+    component: () =>
+      import("../components/Applicant/Shared/ScannedCertificate.vue"),
+  },
   /******************************************************************************************************************************************/
   /**************2-APPLICANT SIDE ROUTES*****************/
   /******************************************************************************************************************************************/
@@ -605,7 +610,7 @@ const routes = [
       )
   },
 
-  //Admin Cpd part
+  //Admin CPD part
   {
     path: "/admin/cpdCertified",
     name: "AdminCpdCertified",

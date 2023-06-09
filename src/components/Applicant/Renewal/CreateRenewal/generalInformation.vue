@@ -99,7 +99,7 @@
                   : 'text-main-400'
               "
               >Applicant Type</label
-            >
+            ><span class="text-red-300">*</span>
             <select
               class="
                 form-select
@@ -166,7 +166,7 @@
                   : 'text-main-400'
               "
               >Language Type</label
-            >
+            ><span class="text-red-300">*</span>
             <select
               class="
                 form-select
@@ -210,8 +210,8 @@
                   ? 'text-white '
                   : 'text-main-400'
               "
-              >Occupation Type</label
-            >
+              >Employer Type</label
+            ><span class="text-red-300">*</span>
             <select
               class="
                 form-select
@@ -304,7 +304,7 @@
                     : 'text-main-400'
                 "
                 >Region</label
-              >
+              ><span class="text-red-300">*</span>
               <select
                 class="
                   form-select
@@ -371,7 +371,7 @@
                     : 'text-main-400'
                 "
                 >Zone</label
-              >
+              ><span class="text-red-300">*</span>
               <select
                 class="
                   form-select
@@ -437,7 +437,7 @@
                     : 'text-main-400'
                 "
                 >Woreda</label
-              >
+              ><span class="text-red-300">*</span>
               <select
                 class="
                   form-select
@@ -525,7 +525,7 @@
                     : 'text-main-400'
                 "
                 >Department</label
-              >
+              ><span class="text-red-300">*</span>
               <select
                 class="
                   form-select
@@ -633,7 +633,7 @@
                     : 'text-main-400'
                 "
                 >Professional Types</label
-              >
+              ><span class="text-red-300">*</span>
               <select
                 class="
                   form-select
@@ -699,7 +699,7 @@
                     : 'text-main-400'
                 "
                 >Educational Institution</label
-              >
+              ><span class="text-red-300">*</span>
 
               <select
                 class="
@@ -779,7 +779,16 @@
               @click="addMultiple()"
             >
               <i class="fa fa-plus"></i>
-              Add
+
+              <span
+                v-if="
+                  generalInfo.multipleDepartment &&
+                    generalInfo.multipleDepartment.length > 0
+                "
+              >
+                Add More Education
+              </span>
+              <span v-else>Add</span>
             </button>
           </div>
           <span v-if="multipleDepartmentError" class="text-red-300"
@@ -911,8 +920,9 @@
                           {{
                             item.educationalLevel
                               ? item.educationalLevel.name
-                              :
-                              item.educationLevel?item.educationLevel.name: "----"
+                              : item.educationLevel
+                              ? item.educationLevel.name
+                              : "----"
                           }}
                         </td>
                         <td
@@ -1284,13 +1294,41 @@ export default {
     };
     const apply = () => {
       let tempApplicationData = generalInfo.value;
-      window.localStorage.setItem(
-        "RNApplicationData",
-        JSON.stringify(tempApplicationData)
-      );
-      store.dispatch("renewal/setGeneralInfo", generalInfo.value).then(() => {
-        emit("changeActiveState");
-      });
+      let tempFieldError = {};
+
+      generalInfo.value.applicantTypeSelected == ""
+        ? (tempFieldError.applicantTypeSelected = true)
+        : delete tempFieldError.applicantTypeSelected;
+
+      generalInfo.value.nativeLanguageSelected == "" &&
+      generalInfo.value.applicantTypeSelected &&
+      generalInfo.value.applicantTypeSelected.code == "FOR"
+        ? (tempFieldError.nativeLanguageSelected = true)
+        : delete tempFieldError.nativeLanguageSelected;
+
+      generalInfo.value.occupationSelected == "" &&
+      generalInfo.value.applicantTypeSelected &&
+      generalInfo.value.applicantTypeSelected.code == "ETH"
+        ? (tempFieldError.occupationSelected = true)
+        : delete tempFieldError.occupationSelected;
+
+      if (Object.keys(tempFieldError).length > 0) {
+        toast.error("Fill out fileds marked red", {
+          timeout: 5000,
+          position: "bottom-center",
+          pauseOnFocusLoss: true,
+          pauseOnHover: true,
+          icon: true,
+        });
+      } else {
+        window.localStorage.setItem(
+          "RNApplicationData",
+          JSON.stringify(tempApplicationData)
+        );
+        store.dispatch("renewal/setGeneralInfo", generalInfo.value).then(() => {
+          emit("changeActiveState");
+        });
+      }
     };
     const clearLocalData = () => {
       window.localStorage.setItem("RNApplicationData", "");

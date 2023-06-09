@@ -220,7 +220,7 @@
                   "
                 >
                   <vue-table-lite
-                    :is-static-mode="true"
+                    
                     :is-loading="unassignedTable.isLoading"
                     :columns="unassignedTable.columns"
                     :rows="unassignedTable.rows"
@@ -427,8 +427,7 @@
                     bg-primary-800
                   "
                 >
-                  <vue-table-lite
-                    :is-static-mode="true"
+                  <vue-table-lite 
                     :is-loading="reSubmittedTable.isLoading"
                     :columns="reSubmittedTable.columns"
                     :rows="reSubmittedTable.rows"

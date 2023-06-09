@@ -103,7 +103,7 @@
                   : 'text-main-400'
               "
               >Applicant Type</label
-            >
+            ><span class="text-red-300">*</span>
             <select
               class="
                 form-select
@@ -170,7 +170,7 @@
                   : 'text-main-400'
               "
               >Language Type</label
-            >
+            ><span class="text-red-300">*</span>
             <select
               class="
                 form-select
@@ -214,8 +214,8 @@
                   ? 'text-white '
                   : 'text-main-400'
               "
-              >Occupation Type</label
-            >
+              >Employer Type</label
+            ><span class="text-red-300">*</span>
             <select
               class="
                 form-select
@@ -308,7 +308,7 @@
                     : 'text-main-400'
                 "
                 >Region</label
-              >
+              ><span class="text-red-300">*</span>
               <select
                 class="
                   form-select
@@ -375,7 +375,7 @@
                     : 'text-main-400'
                 "
                 >Zone</label
-              >
+              ><span class="text-red-300">*</span>
               <select
                 class="
                   form-select
@@ -441,7 +441,7 @@
                     : 'text-main-400'
                 "
                 >Woreda</label
-              >
+              ><span class="text-red-300">*</span>
               <select
                 class="
                   form-select
@@ -529,7 +529,7 @@
                     : 'text-main-400'
                 "
                 >Department</label
-              >
+              ><span class="text-red-300">*</span>
               <select
                 class="
                   form-select
@@ -576,8 +576,8 @@
                     ? 'text-white '
                     : 'text-main-400'
                 "
-                >Education Level
-              </label>
+                >Education Level </label
+              ><span class="text-red-300">*</span>
               <select
                 class="
                   form-select
@@ -637,7 +637,7 @@
                     : 'text-main-400'
                 "
                 >Professional Types</label
-              >
+              ><span class="text-red-300">*</span>
               <select
                 class="
                   form-select
@@ -680,15 +680,15 @@
                 <input
                   v-model="generalInfo.otherProfessionalType"
                   v-if="showOtherProfession"
-                  class="mt-2"
-                  placeholder="Write profession title"
+                  class=""
+                  placeholder="Write other profession title"
                   type="text"
                 />
                 <input
                   v-model="generalInfo.otherProfessionalTypeAmharic"
                   v-if="showOtherProfession"
-                  class="mt-2"
-                  placeholder="Write profession title in Amharic"
+                  class=""
+                  placeholder="Write other profession title in Amharic"
                   type="text"
                 />
               </div>
@@ -703,7 +703,7 @@
                     : 'text-main-400'
                 "
                 >Educational Institution</label
-              >
+              ><span class="text-red-300">*</span>
 
               <select
                 class="
@@ -783,7 +783,16 @@
               @click="addMultiple()"
             >
               <i class="fa fa-plus"></i>
-              Add
+
+              <span
+                v-if="
+                  generalInfo.multipleDepartment &&
+                    generalInfo.multipleDepartment.length > 0
+                "
+              >
+                Add More Education
+              </span>
+              <span v-else>Add</span>
             </button>
           </div>
           <span v-if="multipleDepartmentError" class="text-red-300"
@@ -1164,7 +1173,10 @@ export default {
       }
     };
     const ProfessionTypeChange = () => {
-      if (generalInfo.value.professionalTypeSelected.code == "OTH") {
+      if (
+        generalInfo.value.professionalTypeSelected.name &&
+        generalInfo.value.professionalTypeSelected.name.toLowerCase() == "other"
+      ) {
         showOtherProfession.value = true;
       } else {
         showOtherProfession.value = false;
@@ -1281,6 +1293,7 @@ export default {
       });
     };
     const apply = () => {
+      let tempFieldError = {};
       let tempComparision = [];
       if (
         existingLicense.value &&
@@ -1312,18 +1325,43 @@ export default {
           }
         });
       });
+      generalInfo.value.applicantTypeSelected == ""
+        ? (tempFieldError.applicantTypeSelected = true)
+        : delete tempFieldError.applicantTypeSelected;
+
+      generalInfo.value.nativeLanguageSelected == "" &&
+      generalInfo.value.applicantTypeSelected &&
+      generalInfo.value.applicantTypeSelected.code == "FOR"
+        ? (tempFieldError.nativeLanguageSelected = true)
+        : delete tempFieldError.nativeLanguageSelected;
+
+      generalInfo.value.occupationSelected == "" &&
+      generalInfo.value.applicantTypeSelected &&
+      generalInfo.value.applicantTypeSelected.code == "ETH"
+        ? (tempFieldError.occupationSelected = true)
+        : delete tempFieldError.occupationSelected;
 
       if (tempError == false) {
-        let tempApplicationData = generalInfo.value;
-        window.localStorage.setItem(
-          "NLApplicationData",
-          JSON.stringify(tempApplicationData)
-        );
-        store
-          .dispatch("newlicense/setGeneralInfo", generalInfo.value)
-          .then(() => {
-            emit("changeActiveState");
+        if (Object.keys(tempFieldError).length > 0) {
+          toast.error("Fill out fileds marked red", {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
           });
+        } else {
+          let tempApplicationData = generalInfo.value;
+          window.localStorage.setItem(
+            "NLApplicationData",
+            JSON.stringify(tempApplicationData)
+          );
+          store
+            .dispatch("newlicense/setGeneralInfo", generalInfo.value)
+            .then(() => {
+              emit("changeActiveState");
+            });
+        }
       } else {
         toast.error(
           "Sorry, seems like you have applied for this department and profession already",

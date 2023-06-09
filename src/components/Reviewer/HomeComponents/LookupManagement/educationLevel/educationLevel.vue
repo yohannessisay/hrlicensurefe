@@ -60,7 +60,7 @@
 
         <div class="w-full mt-8 rounded-xl">
           <vue-table-lite
-            :is-static-mode="true"
+            
             :is-loading="edLevelsTable.isLoading"
             :columns="edLevelsTable.columns"
             :rows="edLevelsTable.rows"

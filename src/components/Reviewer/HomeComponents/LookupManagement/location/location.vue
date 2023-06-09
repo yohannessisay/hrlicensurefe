@@ -205,7 +205,7 @@
                             "
                           >
                             <vue-table-lite
-                              :is-static-mode="true"
+                            :is-static-mode="true"
                               :is-loading="regionsTable.isLoading"
                               :columns="regionsTable.columns"
                               :rows="regionsTable.rows"
@@ -243,7 +243,7 @@
                             "
                           >
                             <vue-table-lite
-                              :is-static-mode="true"
+                            :is-static-mode="true"
                               :is-loading="zonesTable.isLoading"
                               :columns="zonesTable.columns"
                               :rows="zonesTable.rows"
@@ -281,7 +281,7 @@
                             "
                           >
                             <vue-table-lite
-                              :is-static-mode="true"
+                            :is-static-mode="true"
                               :is-loading="woredasTable.isLoading"
                               :columns="woredasTable.columns"
                               :rows="woredasTable.rows"

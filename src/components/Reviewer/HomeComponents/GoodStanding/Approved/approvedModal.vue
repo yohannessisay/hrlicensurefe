@@ -257,7 +257,9 @@
                                 <span class="text-grey-800 ml-2">
                                   {{
                                     modalData.data &&
-                                    modalData.data.GSProfessionals
+                                    modalData.data.GSProfessionals&&
+                                     modalData.data.GSProfessionals
+                                          .professionalTypes
                                       ? modalData.data.GSProfessionals
                                           .professionalTypes.name
                                       : ""
@@ -543,7 +545,7 @@ export default {
 
     let show = ref(true);
     let adminId = +localStorage.getItem("adminId");
-
+    let adminRole = localStorage.getItem("role");
     let isLoading = ref(false);
     const licenseData = ref({});
     let reviewerAdminId = ref(0);
@@ -622,6 +624,7 @@ export default {
 
     return {
       adminId,
+      adminRole,
       reviewerAdminId,
       showModal,
       check,

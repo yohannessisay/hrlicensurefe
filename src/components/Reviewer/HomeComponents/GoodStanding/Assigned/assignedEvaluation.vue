@@ -835,7 +835,7 @@
                               <picture v-if="docs.length > 0">
                                 <div
                                   v-if="
-                                    docs[index].fileName.split('.')[1] == 'pdf'
+                                    docs[index].fileType.split('/')[1] == 'pdf'
                                   "
                                 >
                                   <div>
@@ -1320,8 +1320,6 @@
                     </div>
                   </div>
                 </Modal>
-
-          
               </div>
             </div>
           </div>
@@ -1597,8 +1595,6 @@ export default {
       width.value = "width:" + amount.value + "%";
       findDocumentType(documentTypes.value, docs.value[index.value]);
       nextClickable.value = true;
-
-      
     };
     const nextRemark = () => {
       if (ind.value != rejectedObj.value.length - 1) {
@@ -1810,15 +1806,14 @@ export default {
 
     const action = (actionValue) => {
       let smsMessage = "";
-      isLoadingStart.value = true;
+
       if (actionValue === "ApproveEvent") {
         smsMessage = goodStanding.value
           ? "Dear applicant your applied letter of goodstanding with license number " +
             goodStanding.value.goodStandingCode +
             " has been approved after careful examination of your uploaded documents by our reviewers. Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
           : "";
-      }
-      if (actionValue == "DeclineEvent") {
+      } else if (actionValue == "DeclineEvent") {
         smsMessage = goodStanding.value
           ? "Dear applicant your applied letter of goodstanding with license number " +
             goodStanding.value.goodStandingCode +
@@ -1827,15 +1822,9 @@ export default {
 
         showRemark.value = true;
         sendDeclinedData.value = false;
-        if (fromModalSendDeclinedData.value == true) {
-          sendDeclinedData.value = true;
-        }
-        return;
-      } else if (actionValue == "DeclineEventFinal") {
-        actionValue = "DeclineEvent";
-      }
 
-      if (actionValue == "ReviewerDraftEvent") {
+        return;
+      } else if (actionValue == "ReviewerDraftEvent") {
         if (
           goodStanding.value.GSProfessionals.professionalTypes.id !=
           goodStanding.value.GSProfessionals.professionalTypeId
@@ -1844,10 +1833,12 @@ export default {
         }
       }
 
+      isLoadingStart.value = true;
       goodStanding.value.declinedFields = rejected.value;
       goodStanding.value.acceptedFields = accepted.value;
       goodStanding.value.certified = true;
       goodStanding.value.certifiedDate = new Date();
+      actionValue == "DeclineEventFinal" ? (actionValue = "DeclineEvent") : "";
       let req = {
         action: actionValue,
         data: goodStanding.value,

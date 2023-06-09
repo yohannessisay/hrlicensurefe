@@ -219,7 +219,7 @@
                   "
               >
                 <vue-table-lite
-                  :is-static-mode="true"
+                  
                   :is-loading="toYouTable.isLoading"
                   :columns="toYouTable.columns"
                   :rows="toYouTable.rows"

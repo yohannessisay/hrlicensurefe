@@ -135,6 +135,17 @@ export default {
       return resp;
     }
   },
+  async getScannedCertificate(context, params) {
+    try {
+      const url =
+        baseUrl +
+        `/certified-user/${params.applicationType}/${params.userId}/${params.applicationId}`;
+      const resp = await ApiService.get(url);
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
 
   // tobechanged
   async getUnconfirmed({ commit }, id) {
