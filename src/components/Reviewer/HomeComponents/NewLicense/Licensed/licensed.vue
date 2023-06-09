@@ -219,7 +219,7 @@
                   "
               >
                 <vue-table-lite
-                  
+                    
                   :is-loading="toYouTable.isLoading"
                   :columns="toYouTable.columns"
                   :rows="toYouTable.rows"
@@ -273,13 +273,13 @@ export default {
       id: "",
       change: 0,
     });
-    let allInfo = ref({}); 
-    const searchTerm = ref("");
+    let allInfo =[]; 
+    let searchTerm = ref("");
     let searchTermFromDate = ref("");
     let searchTermToDate = ref("");
-    const toOthersTable = ref({});
-    const toYouTable = ref({});
-    let toYouTableData = ref([]);
+    let toOthersTable = ref({});
+    let toYouTable = ref({});
+    let toYouTableData = [];
     toOthersTable.value = {
       isLoading: true,
     };
@@ -293,7 +293,7 @@ export default {
       searchTermToDate.value = "";
       toYouTable.value.isLoading = true;
       toYouTable.value.rows = [];
-      toYouTableData.value = [];
+      toYouTableData = [];
       licensed([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
@@ -301,6 +301,7 @@ export default {
     };
 
     const licensed = (apiParameters) => {
+      
       store
         .dispatch(
           "reviewerNewLicense/getNewLicenseLicensed",
@@ -308,10 +309,10 @@ export default {
           apiParameters
         )
         .then((res) => {
-          allInfo.value = res && res.rows ? res.rows : [];
-
-          allInfo.value.forEach((element) => {
-            toYouTableData.value.push({
+          allInfo = res && res.rows ? res.rows : [];
+          toYouTableData=[];
+          allInfo.forEach((element) => {
+            toYouTableData.push({
               LicenseNumber: element ? element.newLicenseCode : "",
               ApplicantName:
                 (element.profile ? element.profile.name : "------") +
@@ -374,7 +375,7 @@ export default {
                 },
               },
             ],
-            rows: toYouTableData.value,
+            rows: toYouTableData,
             totalRecordCount: res.count,
           };
         });
@@ -429,7 +430,7 @@ export default {
     });
     const doSearch = (offset, limit, order, sort) => {
       toYouTable.value.isLoading = true;
-
+     
       setTimeout(() => {
         toYouTable.value.isReSearch = offset == undefined ? true : false;
         offset = offset && offset > 0 ? offset / 10 - 1 : 1;
