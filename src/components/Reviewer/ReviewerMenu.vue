@@ -138,7 +138,7 @@
         to="/admin/lookupManagement/regional/licenseExpirationDate"
         v-if="
           adminData
-            ? adminData.role.code == 'ADM' &&
+            ? adminData.role.code == 'SA' &&
               adminData.expertLevel.code == 'REG'
             : ''
         "

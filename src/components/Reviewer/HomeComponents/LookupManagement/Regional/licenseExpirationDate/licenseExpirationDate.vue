@@ -30,32 +30,7 @@
           <p class="absolute left-0 text-2xl font-semibold leading-tight">
             View and manage license expiration dates found throughout the system
           </p>
-          <p class="absolute right-0" v-if="showAddButton">
-            <button
-              class="
-                inline-block
-                px-6
-                text-white
-                bg-primary-700
-                font-medium
-                text-xs
-                leading-tight
-                uppercase
-                border
-                rounded
-                shadow-lg
-                hover:bg-white hover:text-primary-600 hover:border-primary-600
-                transition
-                duration-150
-                ease-in-out
-              "
-              data-bs-toggle="modal"
-              data-bs-target="#addModal"
-            >
-              <i class="fa fa-plus text-xl"></i>
-              Add License Expiration Date
-            </button>
-          </p>
+          
         </div>
 
         <div class="w-full mt-8 rounded-xl">

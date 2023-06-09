@@ -60,7 +60,7 @@
 
         <div class="w-full mt-8 rounded-xl">
           <vue-table-lite
-          :is-static-mode="true"
+            :is-static-mode="true"
             :is-loading="professionalTypeTable.isLoading"
             :columns="professionalTypeTable.columns"
             :rows="professionalTypeTable.rows"
@@ -122,10 +122,13 @@ export default {
               : "",
             Department:
               element && element.department ? element.department.name : "",
+            EducationLevel: element.educationalLevel
+              ? element.educationalLevel.name
+              : "---",
             Status: element && element.status == true ? "Active" : "Inactive",
             finalStatus: element.status,
-            selectedDepartment:element ? element.department : {},
-            selectedEdLevel:element ? element.educationalLevel : {},
+            selectedDepartment: element ? element.department : {},
+            selectedEdLevel: element ? element.educationalLevel : {},
             data: element ? element : {},
           });
         });
@@ -158,10 +161,16 @@ export default {
               sortable: true,
             },
             {
+              label: "Educational Level",
+              field: "EducationLevel",
+              width: "10%",
+              sortable: true,
+            },
+            {
               label: "Status",
               field: "Status",
-              width: "30%",
-              display: function (row) {
+              width: "10%",
+              display: function(row) {
                 return row.Status && row.Status == "Active"
                   ? '<span  class="activeElement" >  ' + row.Status + " </span>"
                   : '<span  class="bg-red-300 rounded-md p-1 text-white font-bold" >' +
@@ -174,7 +183,7 @@ export default {
               label: "",
               field: "quick",
               width: "10%",
-              display: function (row) {
+              display: function(row) {
                 return (
                   '<button data-bs-toggle="modal" data-bs-target="#editModal" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5 font-medium text-xs leading-tight uppercase rounded shadow-md hover:shadow-lg  transition duration-150 ease-in-out" data-id="' +
                   row.id +
@@ -197,7 +206,7 @@ export default {
     const tableLoadingFinish = () => {
       professionalTypeTable.value.isLoading = false;
       let elements = document.getElementsByClassName("edit-btn");
-      Array.prototype.forEach.call(elements, function (element) {
+      Array.prototype.forEach.call(elements, function(element) {
         if (element.classList.contains("edit-btn")) {
           element.addEventListener("click", rowClicked());
         }
