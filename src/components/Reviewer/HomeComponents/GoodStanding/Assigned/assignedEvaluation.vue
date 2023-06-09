@@ -835,7 +835,7 @@
                               <picture v-if="docs.length > 0">
                                 <div
                                   v-if="
-                                    docs[index].fileName.split('.')[1] == 'pdf'
+                                    docs[index].fileType.split('/')[1] == 'pdf'
                                   "
                                 >
                                   <div>

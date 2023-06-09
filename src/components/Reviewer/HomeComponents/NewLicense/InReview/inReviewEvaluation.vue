@@ -1057,8 +1057,8 @@
                                 <div
                                   v-if="
                                     docs[index] &&
-                                      docs[index].fileName &&
-                                      docs[index].fileName.split('.')[1] ==
+                                      docs[index].fileType &&
+                                      docs[index].fileType.split('/')[1] ==
                                         'pdf'
                                   "
                                 >
@@ -1073,6 +1073,27 @@
                                   </div>
                                   <br />
                                   <button
+                                    class="
+                                  inline-block
+                            px-6
+                            text-white
+                            bg-primary-400
+                            font-medium
+                            text-xs
+                            leading-tight
+                            uppercase
+                            rounded
+                            shadow-lg
+                            hover:bg-purple-700 hover:shadow-lg
+                            focus:bg-purple-700
+                            focus:shadow-lg
+                            focus:outline-none
+                            focus:ring-0
+                            active:bg-purple-800 active:shadow-lg
+                            transition
+                            duration-150
+                            hover:bg-white hover:text-primary-600
+                            ease-in-out"
                                     @click="
                                       openPdfInNewTab(
                                         docs[index] ? docs[index].filePath : ''
@@ -2379,7 +2400,6 @@ export default {
         return;
       } else {
         if (actionValue === "ApproveEvent" && nothingDropped.value == true) {
-         
           smsMessage = newLicense.value
             ? "Dear applicant your applied new license of code " +
               newLicense.value.newLicenseCode +

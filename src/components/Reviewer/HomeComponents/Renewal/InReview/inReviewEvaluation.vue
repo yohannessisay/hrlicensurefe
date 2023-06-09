@@ -1054,8 +1054,8 @@
                                 <div
                                   v-if="
                                     docs[index] &&
-                                      docs[index].fileName &&
-                                      docs[index].fileName.split('.')[1] ==
+                                      docs[index].fileType &&
+                                      docs[index].fileType.split('/')[1] ==
                                         'pdf'
                                   "
                                 >

@@ -32,9 +32,8 @@
 
     <!-- Main Content -->
     <div class="home-content">
-      <main-body>
-        <template v-slot:yourHeader> Unassigned Applications </template>
-        <template v-slot:toyou>
+      <main-body> 
+        <template v-slot:unassigned>
           <div class="container mx-auto px-4 sm:px-8">
             <div class="py-8">
               <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
@@ -241,9 +240,8 @@
               </div>
             </div>
           </div>
-        </template>
-        <template v-slot:othersHeader> Resubmitted Applications </template>
-        <template v-slot:to_others>
+        </template> 
+        <template v-slot:resubmitted>
           <div class="container mx-auto px-4 sm:px-8">
             <div class="py-8">
               <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
@@ -460,7 +458,7 @@
 <script>
 import ReviewerSideNav from "../SharedComponents/sideNav.vue";
 import ReviewerNavBar from "../../../SharedComponents/navBar.vue";
-import MainBody from "../../../SharedComponents/mainBody.vue";
+import MainBody from "../../../SharedComponents/unassigned.vue";
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
 import VueTableLite from "vue3-table-lite";
