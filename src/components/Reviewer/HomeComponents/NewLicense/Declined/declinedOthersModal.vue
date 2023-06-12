@@ -603,16 +603,14 @@ export default {
     let show = ref(true);
     let adminId = +localStorage.getItem("adminId");
     let newLicense = {};
-    const isLoading = ref(true);
+    const isLoading = ref(false);
     let reviewerAdminId = ref(0);
     let adminData = JSON.parse(localStorage.getItem("allAdminData"));
     const showModal = () => {
       show.value = true;
     };
 
-    const onCancel = () => {
-      isLoading.value = false;
-    };
+  
     const modalData = ref({});
     let result = {};
 
@@ -623,6 +621,7 @@ export default {
           props.modalDataIdOthers.id
         )
         .then((res) => {
+          isLoading.value = false;
           if (
             res.data.status == "Success" &&
             res.data.message !=
@@ -664,7 +663,7 @@ export default {
             modalData.value.documents = result.documents;
             newLicense = result ? result : {};
             modalData.value.data = result;
-            isLoading.value = false;
+           
           }
         });
     };
@@ -676,7 +675,7 @@ export default {
         newLicense.acceptedFields.push(element.fileName);
       });
 
-      isLoading.value = false;
+     
       newLicense.declinedFields = [];
       let req = {
         action: "ApproveEvent",
@@ -714,7 +713,7 @@ export default {
               });
               setTimeout(() => {
                 window.location.reload();
-              }, 3000);
+              }, 1000);
             });
           } else {
             toast.error("Please try again", {
@@ -748,7 +747,7 @@ export default {
       showModal,
       check,
       isLoading,
-      onCancel,
+     
       adminData,
       modalData,
       googleApi,
