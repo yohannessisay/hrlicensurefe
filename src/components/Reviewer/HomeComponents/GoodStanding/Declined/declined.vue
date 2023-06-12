@@ -504,8 +504,8 @@ export default {
       change: 0,
     });
 
-    let allInfo = ref({});
-    let allInfoRes = ref({});
+    let allInfo = [];
+  
 
     const assignedToYouTable = ref({});
     const assignedToOthersTable = ref([]);
@@ -515,15 +515,15 @@ export default {
     assignedToOthersTable.value = {
       isLoading: true,
     };
-    let tableData = ref([]);
-    let othersTable = ref([]);
+    let tableData = [];
+    let othersTable = []
     const clearFilters = () => {
       searchTerm.value = "";
       searchTermFromDate.value = "";
       searchTermToDate.value = "";
       assignedToYouTable.value.isLoading = true;
       assignedToYouTable.value.rows = [];
-      tableData.value = [];
+     
       assignedToYou([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
@@ -553,17 +553,17 @@ export default {
       let subId = statuses
         ? statuses.filter((stat) => stat.code == "DEC")[0].id
         : "";
-
+        tableData=[];
       store
         .dispatch("reviewerGoodStanding/getGoodstandingsByStatus", [
           { statusId: subId },
           { params: apiParameters },
         ])
         .then((res) => {
-          allInfo.value = res ? res.rows : [];
-          if (allInfo.value) {
-            allInfo.value.forEach((element) => {
-              tableData.value.push({
+          allInfo = res ? res.rows : [];
+        
+            allInfo.forEach((element) => {
+              tableData.push({
                 LicenseNumber: element.goodStandingCode,
                 ApplicantName:
                   (element.profile ? element.profile.name : "") +
@@ -581,7 +581,7 @@ export default {
                 data: element,
               });
             });
-          }
+         
 
           assignedToYouTable.value = {
             columns: [
@@ -623,7 +623,7 @@ export default {
                 },
               },
             ],
-            rows: tableData.value,
+            rows: tableData,
             totalRecordCount: res.count,
             sortable: {
               order: "id",
@@ -637,16 +637,17 @@ export default {
       let updId = statuses
         ? statuses.filter((stat) => stat.code == "DEC")[0].id
         : "";
+        othersTable=[];
       store
         .dispatch("reviewerGoodStanding/getOtherGoodstandingsByStatus", [
           { statusId: updId },
           { params: apiParameters },
         ])
         .then((res) => {
-          allInfoRes.value = res && res.rows ? res.rows : [];
+          allInfo = res && res.rows ? res.rows : [];
 
-          allInfoRes.value.forEach((element) => {
-            othersTable.value.push({
+          allInfo.forEach((element) => {
+            othersTable.push({
               LicenseNumber: element.goodStandingCode,
               ApplicantName:
                 (element.profile ? element.profile.name : "") +
@@ -704,7 +705,7 @@ export default {
                 },
               },
             ],
-            rows: othersTable.value,
+            rows: othersTable,
             totalRecordCount: res.count,
             sortable: {
               order: "id",
@@ -753,7 +754,7 @@ export default {
     const searchApplication = () => {
       assignedToYouTable.value.isLoading = true;
       assignedToYouTable.value.rows = [];
-      tableData.value = [];
+     
       assignedToYou([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
@@ -771,7 +772,7 @@ export default {
     const searchApplicationResub = () => {
       assignedToOthersTable.value.isLoading = true;
       assignedToOthersTable.value.rows = [];
-      othersTable.value = [];
+    
       assignedToOthers([
         { key: "page", value: 0 },
         { key: "size", value: 10 },

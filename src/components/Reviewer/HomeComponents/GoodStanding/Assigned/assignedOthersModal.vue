@@ -31,7 +31,7 @@
         class="
           modal-content
           border-none
-          shadow-lg
+          shadow-md
           relative
           flex flex-col
           w-full
@@ -58,13 +58,13 @@
               uppercase
               rounded
               hover:border-primary-600
-              shadow-lg
-              hover:bg-purple-700 hover:shadow-lg
+              shadow-md
+              hover:bg-purple-700 hover:shadow-md
               focus:bg-purple-700
-              focus:shadow-lg
+              focus:shadow-md
               focus:outline-none
               focus:ring-0
-              active:bg-purple-800 active:shadow-lg
+              active:bg-purple-800 active:shadow-md
               transition
               duration-150
               ease-in-out
@@ -511,7 +511,9 @@
                                   <span class="text-grey-800 ml-2">
                                     {{
                                       modalData.data &&
+                                      modalData.data.GSProfessionals &&
                                       modalData.data.GSProfessionals
+                                        .professionalTypes
                                         ? modalData.data.GSProfessionals
                                             .professionalTypes.name
                                         : ""
@@ -540,7 +542,9 @@
                                   <span class="text-grey-800 ml-2">
                                     {{
                                       modalData.data &&
+                                      modalData.data.GSProfessionals&&
                                       modalData.data.GSProfessionals
+                                        .professionalTypes
                                         ? modalData.data.GSProfessionals
                                             .educationLevel.name
                                         : ""
@@ -576,7 +580,8 @@
                               modalData.data &&
                               modalData.data.goodstandingReviewer &&
                               modalData.data.goodstandingReviewer.transferFrom
-                                ? modalData.data.goodstandingReviewer.transferFrom.name
+                                ? modalData.data.goodstandingReviewer
+                                    .transferFrom.name
                                 : ""
                             }}
                           </h5>
@@ -592,7 +597,8 @@
                               modalData.data &&
                               modalData.data.goodstandingReviewer &&
                               modalData.data.goodstandingReviewer.transferFrom
-                                ? modalData.data.goodstandingReviewer.transferRemark
+                                ? modalData.data.goodstandingReviewer
+                                    .transferRemark
                                 : ""
                             }}
                           </h5>
@@ -768,7 +774,7 @@ export default {
               isLoading.value = false;
               setTimeout(() => {
                 window.location.reload();
-              }, 3000);
+              }, 1000);
             }
           })
           .catch(() => {
@@ -782,7 +788,7 @@ export default {
             isLoading.value = false;
             setTimeout(() => {
               window.location.reload();
-            }, 3000);
+            }, 1000);
           });
       }
     };

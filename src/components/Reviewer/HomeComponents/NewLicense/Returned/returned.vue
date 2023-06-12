@@ -224,7 +224,6 @@
                   "
                 >
                   <vue-table-lite
-                    
                     :is-loading="toYouTable.isLoading"
                     :columns="toYouTable.columns"
                     :rows="toYouTable.rows"
@@ -433,7 +432,6 @@
                   "
                 >
                   <vue-table-lite
-                    
                     :is-loading="toOthersTable.isLoading"
                     :columns="toOthersTable.columns"
                     :rows="toOthersTable.rows"
@@ -491,17 +489,17 @@ export default {
       id: "",
       change: 0,
     });
-    let allInfo = ref({});
-    const searchTerm = ref("");
-    const searchTermOthers = ref("");
+    let allInfo = [];
+    let searchTerm = ref("");
+    let searchTermOthers = ref("");
     let searchTermFromDate = ref("");
     let searchTermToDate = ref("");
     let searchTermFromDateOth = ref("");
     let searchTermToDateOth = ref("");
-    const toOthersTable = ref({});
-    const toYouTable = ref({});
-    let tableData = ref([]);
-    let toYouTableData = ref([]);
+    let toOthersTable = ref({});
+    let toYouTable = ref({});
+    let tableData = [];
+    let toYouTableData = [];
     toOthersTable.value = {
       isLoading: true,
     };
@@ -513,9 +511,7 @@ export default {
       toOthersTable.value.isLoading = true;
       toYouTable.value.isLoading = true;
       toOthersTable.value.rows = [];
-      tableData.value = [];
       toYouTable.value.rows = [];
-      toYouTableData.value = [];
 
       returnedByYou([
         { key: "page", value: 0 },
@@ -532,7 +528,6 @@ export default {
       searchTermToDateOth.value = "";
       toOthersTable.value.isLoading = true;
       toOthersTable.value.rows = [];
-      tableData.value = [];
       returnedByOthers([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
@@ -544,7 +539,6 @@ export default {
       searchTermToDate.value = "";
       toYouTable.value.isLoading = true;
       toYouTable.value.rows = [];
-      toYouTableData.value = [];
       returnedByYou([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
@@ -555,7 +549,7 @@ export default {
       let statId = statuses
         ? statuses.filter((stat) => stat.code == "RTN")[0].id
         : "";
-
+      toYouTableData = [];
       store
         .dispatch("reviewerNewLicense/getNewLicenseByStatus", [
           {
@@ -566,9 +560,9 @@ export default {
           },
         ])
         .then((res) => {
-          allInfo.value = res ? res.rows : [];
-          allInfo.value.forEach((element) => {
-            toYouTableData.value.push({
+          allInfo = res ? res.rows : [];
+          allInfo.forEach((element) => {
+            toYouTableData.push({
               LicenseNumber: element.newLicenseCode,
               ApplicantName:
                 element.profile.name +
@@ -627,7 +621,7 @@ export default {
               },
             ],
 
-            rows: toYouTableData.value,
+            rows: toYouTableData,
             totalRecordCount: res.count,
             sortable: {
               order: "id",
@@ -641,6 +635,7 @@ export default {
         ? statuses.filter((stat) => stat.code == "RTN")[0].id
         : "";
 
+      tableData = [];
       store
         .dispatch("reviewerNewLicense/getOthersNewLicenseByStatus", [
           {
@@ -651,9 +646,9 @@ export default {
           },
         ])
         .then((res) => {
-          allInfo.value = res ? res.rows : [];
-          allInfo.value.forEach((element) => {
-            tableData.value.push({
+          allInfo = res ? res.rows : [];
+          allInfo.forEach((element) => {
+            tableData.push({
               LicenseNumber: element.newLicenseCode,
               ApplicantName:
                 element.profile.name +
@@ -704,7 +699,7 @@ export default {
                 width: "10%",
                 display: function(row) {
                   return (
-                    '<button data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
+                    '<button data-bs-toggle="modal" data-bs-target="#staticBackdropOthers" class="edit-btn-others bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
                     row.id +
                     '" ><i class="fa fa-eye"></i>View/Edit</button>'
                   );
@@ -712,7 +707,7 @@ export default {
               },
             ],
 
-            rows: tableData.value,
+            rows: tableData,
             totalRecordCount: res.count,
             sortable: {
               order: "id",
@@ -760,7 +755,6 @@ export default {
     const searchApplication = () => {
       toYouTable.value.isLoading = true;
       toYouTable.value.rows = [];
-      toYouTableData.value = [];
       returnedByYou([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
@@ -772,7 +766,6 @@ export default {
     const searchApplicationOther = () => {
       toOthersTable.value.isLoading = true;
       toOthersTable.value.rows = [];
-      tableData.value = [];
       returnedByOthers([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
