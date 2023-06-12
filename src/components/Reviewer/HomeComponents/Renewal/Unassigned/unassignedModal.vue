@@ -630,7 +630,7 @@ import moment from "moment";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 import { useToast } from "vue-toastification";
-
+import { useRouter } from "vue-router";
 export default {
   props: ["modalDataId", "reviewers"],
   components: {
@@ -640,6 +640,7 @@ export default {
     moment: () => moment,
   },
   setup(props) {
+    const router = useRouter();
     const store = useStore();
     const toast = useToast();
     let show = ref(true);
@@ -716,9 +717,7 @@ export default {
           if (response.statusText == "Created") {
             store.dispatch("sms/sendSms", smsData).then(() => {
               isLoading.value = false;
-              setTimeout(() => {
-                window.location.reload();
-              }, 1000);
+           
               store
                 .dispatch("notification/notifyApplicant", userNotification)
                 .then((res) => {
@@ -740,6 +739,10 @@ export default {
                       status: "new",
                     };
                     store.dispatch("notification/notifyReviewer", notification);
+                    router.push({ path: "/admin/renewal/inReview" });
+                    setTimeout(() => {
+                      location.reload();
+                    }, 100);
                   } else {
                     isLoading.value = false;
                   }

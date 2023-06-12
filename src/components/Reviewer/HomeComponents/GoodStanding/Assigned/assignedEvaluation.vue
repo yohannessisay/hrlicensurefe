@@ -1868,7 +1868,7 @@ export default {
               });
             });
             isLoadingFinalAction.value = false;
-            router.push({ name: "GoodStandingAssigned" });
+            router.push({ name: "GoodStandingApproved" });
           }
         })
         .catch(() => {
@@ -1898,7 +1898,7 @@ export default {
         goodStanding.value.remark.length < 10 &&
         goodStanding.value.remark.length > 0
       ) {
-        toast.error("Reason must be greater than 10 words", {
+        toast.error("Reason must be greater than 10 letters", {
           timeout: 5000,
           position: "bottom-center",
           pauseOnFocusLoss: true,

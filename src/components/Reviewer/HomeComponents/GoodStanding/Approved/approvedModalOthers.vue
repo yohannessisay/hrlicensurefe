@@ -479,9 +479,7 @@ export default {
       show.value = true;
     };
 
-    const onCancel = () => {
-      isLoading.value = false;
-    };
+    
     const modalData = ref({});
     let result = {};
 
@@ -545,7 +543,7 @@ export default {
       showModal,
       check,
       isLoading,
-      onCancel,
+     
       modalData,
       googleApi
     };

@@ -230,6 +230,7 @@
                     :sortable="toYouTable.sortable"
                     @is-finished="tableLoadingFinish"
                     @row-clicked="rowClicked"
+                    @do-search="doSearch"
                   ></vue-table-lite>
                   <edit-modal v-if="showModal" :modalDataId="modalDataId">
                   </edit-modal>
@@ -439,6 +440,7 @@
                     :sortable="toOthersTable.sortable"
                     @is-finished="tableLoadingFinishOthers"
                     @row-clicked="rowClickedOthers"
+                    @do-search="doSearchOth"
                   ></vue-table-lite>
                   <edit-modal-others
                     :modalDataIdOthers="modalDataIdOthers"
@@ -485,18 +487,18 @@ export default {
       id: "",
       change: 0,
     });
-    let allInfo = ref({});
-    let allInfoOth = ref({});
-    const searchTerm = ref("");
-    const searchTermOthers = ref("");
+    let allInfo = [];
+    let allInfoOth = [];
+    let searchTerm = ref("");
+    let searchTermOthers = ref("");
     let searchTermFromDate = ref("");
     let searchTermToDate = ref("");
     let searchTermFromDateOth = ref("");
     let searchTermToDateOth = ref("");
-    const toOthersTable = ref({});
-    const toYouTable = ref({});
-    let tableData = ref([]);
-    let toYouTableData = ref([]);
+    let toOthersTable = ref({});
+    let toYouTable = ref({});
+    let tableData = [];
+    let toYouTableData = [];
     toOthersTable.value = {
       isLoading: true,
     };
@@ -508,9 +510,8 @@ export default {
       toOthersTable.value.isLoading = true;
       toYouTable.value.isLoading = true;
       toOthersTable.value.rows = [];
-      tableData.value = [];
       toYouTable.value.rows = [];
-      toYouTableData.value = [];
+    
 
       approvedApplicationsByYou([
         { key: "page", value: 0 },
@@ -527,7 +528,7 @@ export default {
       searchTermToDateOth.value = "";
       toOthersTable.value.isLoading = true;
       toOthersTable.value.rows = [];
-      tableData.value = [];
+   
       approvedApplicationsByOthers([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
@@ -539,7 +540,7 @@ export default {
       searchTermToDate.value = "";
       toYouTable.value.isLoading = true;
       toYouTable.value.rows = [];
-      toYouTableData.value = [];
+    
       approvedApplicationsByYou([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
@@ -547,6 +548,7 @@ export default {
     };
 
     const approvedApplicationsByYou = (apiParameters) => {
+      toYouTableData = [];
       store
         .dispatch("reviewerGoodStanding/getGoodStandingAllApproved", [
           {
@@ -557,9 +559,9 @@ export default {
           },
         ])
         .then((res) => {
-          allInfo.value = res ? res.rows : [];
-          allInfo.value.forEach((element) => {
-            toYouTableData.value.push({
+          allInfo = res ? res.rows : [];
+          allInfo.forEach((element) => {
+            toYouTableData.push({
               LicenseNumber: element.goodStandingCode,
               ApplicantName:
                 element.profile.name +
@@ -618,7 +620,7 @@ export default {
               },
             ],
 
-            rows: toYouTableData.value,
+            rows: toYouTableData,
             totalRecordCount: res.count,
             sortable: {
               order: "id",
@@ -628,6 +630,7 @@ export default {
         });
     };
     const approvedApplicationsByOthers = (apiParameters) => {
+      tableData = [];
       store
         .dispatch("reviewerGoodStanding/getGoodStandingAllApproved", [
           {
@@ -638,9 +641,9 @@ export default {
           },
         ])
         .then((res) => {
-          allInfoOth.value = res ? res.rows : [];
-          allInfoOth.value.forEach((element) => {
-            tableData.value.push({
+          allInfoOth = res ? res.rows : [];
+          allInfoOth.forEach((element) => {
+            tableData.push({
               LicenseNumber: element.goodStandingCode,
               ApplicantName:
                 element.profile.name +
@@ -699,7 +702,7 @@ export default {
               },
             ],
 
-            rows: tableData.value,
+            rows: tableData,
             totalRecordCount: res.count,
             sortable: {
               order: "id",
@@ -747,7 +750,7 @@ export default {
     const searchApplication = () => {
       toYouTable.value.isLoading = true;
       toYouTable.value.rows = [];
-      toYouTableData.value = [];
+  
       approvedApplicationsByYou([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
@@ -759,7 +762,6 @@ export default {
     const searchApplicationOther = () => {
       toOthersTable.value.isLoading = true;
       toOthersTable.value.rows = [];
-      tableData.value = [];
       approvedApplicationsByOthers([
         { key: "page", value: 0 },
         { key: "size", value: 10 },

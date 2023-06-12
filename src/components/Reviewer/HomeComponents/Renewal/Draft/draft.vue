@@ -500,17 +500,17 @@ export default {
     const adminRegion = JSON.parse(localStorage.getItem("allAdminData"))
       .regionId;
     let reviewers=ref([]);
-    let allInfo = ref({}); 
-    const searchTerm = ref("");
-    const searchTermOthers = ref("");
+    let allInfo =[]; 
+    let searchTerm = ref("");
+    let searchTermOthers = ref("");
     let searchTermFromDate = ref("");
     let searchTermToDate = ref("");
     let searchTermFromDateOth = ref("");
     let searchTermToDateOth = ref("");
-    const toOthersTable = ref({});
-    const toYouTable = ref({});
-    let tableData = ref([]);
-    let toYouTableData = ref([]);
+    let toOthersTable = ref({});
+    let toYouTable = ref({});
+    let tableData = [];
+    let toYouTableData = [];
     toOthersTable.value = {
       isLoading: true,
     };
@@ -521,9 +521,9 @@ export default {
       toOthersTable.value.isLoading = true;
       toYouTable.value.isLoading = true;
       toOthersTable.value.rows = [];
-      tableData.value = [];
+     
       toYouTable.value.rows = [];
-      toYouTableData.value = [];
+      
 
       draftAssignedToOthers([
         { key: "page", value: 0 },
@@ -540,7 +540,7 @@ export default {
       searchTermToDateOth.value = "";
       toOthersTable.value.isLoading = true;
       toOthersTable.value.rows = [];
-      tableData.value = [];
+     
       draftAssignedToOthers([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
@@ -552,7 +552,7 @@ export default {
       searchTermToDate.value = "";
       toYouTable.value.isLoading = true;
       toYouTable.value.rows = [];
-      toYouTableData.value = [];
+    
       draftAssignedToYou([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
@@ -562,7 +562,7 @@ export default {
       let statId = statuses
         ? statuses.filter((stat) => stat.code == "REVDRA")[0].id
         : "";
-
+        toYouTableData=[];
       store
         .dispatch("reviewerRenewal/getRenewalByStatus", [
           {
@@ -573,9 +573,9 @@ export default {
           },
         ])
         .then((res) => {
-          allInfo.value = res ? res.rows : [];
-          allInfo.value.forEach((element) => {
-            toYouTableData.value.push({
+          allInfo = res ? res.rows : [];
+          allInfo.forEach((element) => {
+            toYouTableData.push({
               LicenseNumber: element.renewalCode,
               ApplicantName:
                 element.profile.name +
@@ -634,7 +634,7 @@ export default {
               },
             ],
 
-            rows: toYouTableData.value,
+            rows: toYouTableData,
             totalRecordCount: res.count,
             sortable: {
               order: "id",
@@ -647,7 +647,7 @@ export default {
       let statId = statuses
         ? statuses.filter((stat) => stat.code == "REVDRA")[0].id
         : "";
-
+        tableData=[];
       store
         .dispatch("reviewerRenewal/getOtherRenewalByStatus", [
           {
@@ -658,10 +658,10 @@ export default {
           },
         ])
         .then((res) => {
-          allInfo.value = res ? res.rows : [];
+          allInfo = res ? res.rows : [];
 
-          allInfo.value.forEach((element) => {
-            tableData.value.push({
+          allInfo.forEach((element) => {
+            tableData.push({
               LicenseNumber: element ? element.renewalCode : "",
               ApplicantName:
                 (element.profile ? element.profile.name : "------") +
@@ -716,14 +716,14 @@ export default {
                 width: "10%",
                 display: function(row) {
                   return (
-                    '<button data-bs-toggle="modal" data-bs-target="#staticBackdropOthers" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
+                    '<button data-bs-toggle="modal" data-bs-target="#staticBackdropOthers" class="edit-btn-others bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
                     row.id +
                     '" ><i class="fa fa-eye"></i> View</button>'
                   );
                 },
               },
             ],
-            rows: tableData.value,
+            rows: tableData,
             totalRecordCount: res.count,
             sortable: {
               order: "id",
@@ -771,8 +771,7 @@ export default {
     };
     const searchApplication = () => {
       toYouTable.value.isLoading = true;
-      toYouTable.value.rows = [];
-      toYouTableData.value = [];
+      toYouTable.value.rows = []; 
       draftAssignedToYou([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
@@ -783,8 +782,7 @@ export default {
     };
     const searchApplicationOther = () => {
       toOthersTable.value.isLoading = true;
-      toOthersTable.value.rows = [];
-      tableData.value = [];
+      toOthersTable.value.rows = []; 
       draftAssignedToOthers([
         { key: "page", value: 0 },
         { key: "size", value: 10 },

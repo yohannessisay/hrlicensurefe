@@ -102,9 +102,11 @@
                                       : ""
                                   }}.
                                 </h2>
-                                <h3 class="ml-64 mb-8" contenteditable="true">
-                                  LETTER OF GOOD STANDING
-                                </h3>
+                                <div class="flex justify-center">
+                                  <h3 class="mb-8 mt-8" contenteditable="true">
+                                    LETTER OF GOOD STANDING
+                                  </h3>
+                                </div>
                                 <h5 class="" contenteditable="true">
                                   This letter of good standing and confirmation
                                   of registration is written upon request of
@@ -179,7 +181,7 @@
                                       : ""
                                   }}</span
                                 >
-                                by the
+                                by
                                 <span
                                   contenteditable="false"
                                   class="text-yellow-300"
@@ -188,7 +190,7 @@
                                       ? modalData.whoIssued.name + ", "
                                       : ""
                                   }}</span
-                                >.which is the responsible organ for
+                                >.which is the responsible organ for the
                                 registration and licensing of health
                                 professionals and with registration number
                                 <span contenteditable="false">
@@ -198,7 +200,7 @@
                                       : ""
                                   }} </span
                                 >.
-                                <p class="ml-8 mt-8">
+                                <p class="ml-2 mt-8">
                                   Hence we appreciate any assistance, which will
                                   be rendered to
                                   <span contenteditable="false">
@@ -228,9 +230,11 @@
                                   }}.
                                 </h2>
 
-                                <h3 class="ml-64 mb-8" contenteditable="true">
-                                  LETTER OF GOOD STANDING
-                                </h3>
+                                <div class="flex justify-center">
+                                  <h3 class="mb-8 mt-8" contenteditable="true">
+                                    LETTER OF GOOD STANDING
+                                  </h3>
+                                </div>
 
                                 <h5 contenteditable="true">
                                   This letter of good standing and confirmation
@@ -328,7 +332,7 @@
                                   >
 
                                   <span contenteditable="true"
-                                    >which is the responsible organ for
+                                    >which is the responsible organ for the
                                     registration and licensing of health
                                     professionals and with registration number
                                   </span>
@@ -375,7 +379,7 @@
                                           : ""
                                       }}
                                     </span>
-                                    has no any reported medico legal records and
+                                    has no reported medico-legal records and
                                     malpractices while
                                     <span contenteditable="false">
                                       {{
@@ -402,9 +406,7 @@
                                   </p>
                                 </h4>
 
-                                .
-
-                                <h5 class="ml-8 mt-8" contenteditable="true">
+                                <h5 class="ml-4 mt-8" contenteditable="true">
                                   Hence we appreciate any assistance, which will
                                   be rendered to
                                   <span>
@@ -417,7 +419,7 @@
                                     }} </span
                                   >.
                                 </h5>
-                                <h5 class="ml-8 mb-8" contenteditable="true">
+                                <h5 class="ml-4 mb-8" contenteditable="true">
                                   With best regards
                                 </h5>
 

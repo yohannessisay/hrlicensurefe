@@ -331,7 +331,11 @@
                                             hover:text-white
                                           "
                                         >
-                                          {{ value&&value.name?value.name:'' }}
+                                          {{
+                                            value && value.name
+                                              ? value.name
+                                              : ""
+                                          }}
                                         </li>
                                       </ul>
                                     </div>
@@ -468,9 +472,9 @@
                                   <span class="text-grey-800 ml-2">
                                     {{
                                       modalData.data &&
-                                      modalData.data.GSProfessionals&&
+                                      modalData.data.GSProfessionals &&
                                       modalData.data.GSProfessionals
-                                            .professionalTypes
+                                        .professionalTypes
                                         ? modalData.data.GSProfessionals
                                             .professionalTypes.name
                                         : ""
@@ -499,9 +503,9 @@
                                   <span class="text-grey-800 ml-2">
                                     {{
                                       modalData.data &&
-                                      modalData.data.GSProfessionals&&
+                                      modalData.data.GSProfessionals &&
                                       modalData.data.GSProfessionals
-                                            .educationLevel
+                                        .educationLevel
                                         ? modalData.data.GSProfessionals
                                             .educationLevel.name
                                         : ""
@@ -630,6 +634,7 @@ import moment from "moment";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 import { useToast } from "vue-toastification";
+import { useRouter } from "vue-router";
 export default {
   props: ["modalDataId", "reviewers"],
   components: {
@@ -641,6 +646,7 @@ export default {
   setup(props) {
     const store = useStore();
     const toast = useToast();
+    const router = useRouter();
     let show = ref(true);
     let showRes = ref(false);
     let showOptions = ref(false);
@@ -707,6 +713,7 @@ export default {
         type: "applicant_good_standing",
         status: "new",
       };
+
       store
         .dispatch("reviewer/assignGoodStandingReviewer", assign.value)
         .then((response) => {
@@ -720,9 +727,7 @@ export default {
                 icon: true,
               });
               isLoading.value = false;
-              setTimeout(() => {
-                window.location.reload();
-              }, 1000);
+
               store
                 .dispatch("notification/notifyApplicant", userNotification)
                 .then((res) => {
@@ -744,8 +749,10 @@ export default {
                       status: "new",
                     };
                     store.dispatch("notification/notifyReviewer", notification);
-                  } else {
-                    isLoading.value = false;
+                    router.push({ path: "/admin/goodStanding/assigned" });
+                    setTimeout(() => {
+                      location.reload();
+                    }, 100);
                   }
                 });
             });

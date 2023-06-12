@@ -676,14 +676,14 @@
           ></button>
         </div>
 
-        <div class="container shadow-md rounded-lg">
+        <div class="container shadow-md rounded-lg" contenteditable="true">
           <div class="p-8 m-8 " id="printSupervisionModal">
-            <h2 contenteditable="true">ለ፡_________________________</h2>
+            <h2>ለ፡_________________________</h2>
             <p>አዲስ አበባ</p>
 
             <p class="p-4 mt-8">
               <span class="ml-4">ከዚህ</span> በታች
-              <span contenteditable="true">
+              <span contenteditable="false">
                 {{
                   modalData &&
                   modalData.data &&
@@ -694,11 +694,11 @@
                 }}</span
               >
               በሰንጠረዥ የተመለከቱት ባለሙያ በ
-              <span contenteditable="true" class="text-yellow-300 font-bold">
+              <span class="text-yellow-300 font-bold">
                 __________________
               </span>
               ከሚገኘው
-              <span class="text-yellow-300 font-bold">{{
+              <span contenteditable="false" class="text-yellow-300 font-bold">{{
                 modalData.data && modalData.data.supervisingInstitution
                   ? modalData.data.supervisingInstitution.name
                   : ""
@@ -713,19 +713,13 @@
                   : "ስትከታተል ቆይታ"
               }}</span>
               ኤክስተርንሺፕ ሀገር ውስጥ ለመስራት በቀን ባቀረቡት ማመልከቻ ጠይቀዋል፡፡ በዚህም መሠረት ጉዳያቸው በ
-              <span contenteditable="true" class="text-yellow-300 font-bold"
-                >_____________</span
-              >
+              <span class="text-yellow-300 font-bold">_____________</span>
               ቀርቦ ከታየ ከተገመገመ በኃላ To Work externship as a
-              <span contenteditable="true" class="text-yellow-300 font-bold"
-                >_____________</span
-              >በሚል ፀድቆቸው ተመዝገበዋል፡፡ ስለዚህም ልምምዱን ከ
-              <span contenteditable="true" class="text-yellow-300 font-bold"
-                >___/___/___</span
-              >
+              <span class="text-yellow-300 font-bold">_____________</span>በሚል
+              ፀድቆቸው ተመዝገበዋል፡፡ ስለዚህም ልምምዱን ከ
+              <span class="text-yellow-300 font-bold">___/___/___</span>
               ጀምሮ ለ
-              <span contenteditable="true" class="text-yellow-300 font-bold"
-                >_____________</span
+              <span class="text-yellow-300 font-bold">_____________</span
               >እንዲከታተሉ የተመደቡ መሆኑን እየገለጽን፤ ሆስፒታሉ በአንድ አመት መጨረሻ አስፈላጊውን ሁሉ በመፈጸም
               {{
                 modalData &&
@@ -775,6 +769,7 @@
                       {{ (index += 1) }}
                     </td>
                     <td
+                    contenteditable="false"
                       class="whitespace-nowrap border-r px-6 py-4 text-yellow-300"
                     >
                       {{
@@ -788,6 +783,7 @@
                       }}
                     </td>
                     <td
+                    contenteditable="false"
                       class="whitespace-nowrap border-r px-6 py-4 text-yellow-300"
                     >
                       {{

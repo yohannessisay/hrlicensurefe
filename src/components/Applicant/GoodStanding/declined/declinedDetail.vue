@@ -138,14 +138,14 @@
                                 (licenseData && licenseData.profile
                                   ? licenseData.profile.name
                                   : "-") +
-                                " " +
-                                (licenseData && licenseData.profile
-                                  ? licenseData.profile.fatherName
-                                  : "-") +
-                                " " +
-                                (licenseData && licenseData.profile
-                                  ? licenseData.profile.grandFatherName
-                                  : "-")
+                                  " " +
+                                  (licenseData && licenseData.profile
+                                    ? licenseData.profile.fatherName
+                                    : "-") +
+                                  " " +
+                                  (licenseData && licenseData.profile
+                                    ? licenseData.profile.grandFatherName
+                                    : "-")
                               }}
                             </div>
                           </div>
@@ -375,15 +375,17 @@
                           >
                           </i
                           ><span class="text-main-400 ml-2">Re-upload</span>
+
                           <a
-                            :id="'image_href_' + `${document.documentTypeCode}`"
+                            :id="
+                              `re_image_href_${document.documentType.id}_${document.id}`
+                            "
                             href=""
                             data-lightbox="example-2"
                           >
                             <i
                               :id="
-                                're_educational_icon_' +
-                                `${document.documentTypeCode}`
+                                `re_educational_icon_${document.documentType.id}_${document.id}`
                               "
                               class="
                                 fa fa-eye fa-2x
@@ -396,8 +398,7 @@
                             >
                               <img
                                 :id="
-                                  're_image_lightbox_' +
-                                  `${document.documentTypeCode}`
+                                  `re_image_lightbox_${document.documentType.id}_${document.id}`
                                 "
                                 src=""
                                 class="w-full h-2 object-cover"
@@ -408,7 +409,9 @@
                             <input
                               type="file"
                               required
-                              :id="`files${document.id}`"
+                              :id="
+                                `re_image_href_${document.documentType.id}_${document.id}`
+                              "
                               accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
                               :ref="`imageUploader${document.id}`"
                               class="custom-file-input"
@@ -585,7 +588,7 @@ export default {
         }
         reader.addEventListener(
           "load",
-          function () {
+          function() {
             showPreview.value = true;
             previewDocuments.value[data.documentType.code] = reader.result;
           },
@@ -615,25 +618,36 @@ export default {
             );
           }
         }
+        let icon = document.getElementById(
+          "re_educational_icon_" + data.documentType.id + "_" + data.id
+        );
+
+        if (icon.classList.contains("disabled")) {
+          icon.classList.toggle("disabled");
+        }
+
+        let output = document.getElementById(
+          "re_image_lightbox_" + data.documentType.id + "_" + data.id
+        );
+
+        let outputHref = document.getElementById(
+          "re_image_href_" + data.documentType.id + "_" + data.id
+        );
+
+        outputHref.href = URL.createObjectURL(event.target.files[0]);
+        if (output && output.src) {
+          output.src = URL.createObjectURL(event.target.files[0]);
+        }
+
+        output
+          ? (output.onload = function() {
+              URL.revokeObjectURL(output.src); // free memory
+            })
+          : "";
       } else {
         fileSizeExceed.value[data.documentType.code] = true;
         documentUploaded.value[data.documentType.code] = "";
       }
-      let icon = document.getElementById(
-        "re_educational_icon_" + data.documentTypeCode
-      );
-      icon.classList.toggle("disabled");
-      let output = document.getElementById(
-        "re_image_lightbox_" + data.documentType.code + data.documentTypeCode
-      );
-      let outputHref = document.getElementById(
-        "re_image_href_" + data.documentTypeCode
-      );
-      outputHref.href = URL.createObjectURL(event.target.files[0]);
-      output.src = URL.createObjectURL(event.target.files[0]);
-      output.onload = function () {
-        URL.revokeObjectURL(output.src); // free memory
-      };
     };
 
     const reApply = () => {
@@ -644,15 +658,16 @@ export default {
           data: licenseData.value,
         },
       };
-     
+
       store.dispatch("goodstanding/updateDeclined", license).then((res) => {
         let licenseId = licenseData.value.id;
         let payload = { document: formData, id: licenseId };
-     
+        isLoading.value = true;
         store
           .dispatch("goodstanding/updateDocuments", payload)
           .then((res) => {
             if (res.data.status == "Success") {
+              isLoading.value = false;
               toast.success("Applied successfuly", {
                 timeout: 5000,
                 position: "bottom-center",
@@ -663,7 +678,7 @@ export default {
               router.push({ path: "/Applicant/GoodStanding/submitted" });
               setTimeout(() => {
                 window.location.reload();
-              }, 3000);
+              }, 1000);
             } else {
               toast.error("Error occured, please try again", {
                 timeout: 5000,
@@ -672,9 +687,6 @@ export default {
                 pauseOnHover: true,
                 icon: true,
               });
-              setTimeout(() => {
-                window.location.reload();
-              }, 3000);
             }
           })
           .catch(() => {
@@ -690,7 +702,6 @@ export default {
             }, 3000);
           });
       });
-     
     };
     onMounted(() => {
       userInfo.value = JSON.parse(window.localStorage.getItem("personalInfo"));

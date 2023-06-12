@@ -2469,7 +2469,7 @@ export default {
                     pauseOnHover: true,
                     icon: true,
                   });
-                  router.push({ path: "/admin/newLicense" });
+                  router.push({ path: "/admin/newLicense/approved" });
                   let userNotification = {
                     user_id:
                       newLicense.value && newLicense.value.applicant
