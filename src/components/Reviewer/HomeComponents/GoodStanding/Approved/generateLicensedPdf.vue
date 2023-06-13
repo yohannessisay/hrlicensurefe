@@ -94,7 +94,13 @@
                           <div class="bg-white h-full " contenteditable="true">
                             <div v-if="show" class="ml-8 mr-8 mb-12">
                               <div v-if="!modalData.withExperiance">
-                                <h2 class="ml-4 mt-8" contenteditable="true">
+                                <div
+                                  class="flex justify-end"
+                                  contenteditable="false"
+                                >
+                                  <img :src="qrSrc" alt="" />
+                                </div>
+                                <h2 class="ml-4" contenteditable="true">
                                   To:
                                   {{
                                     modalData
@@ -218,10 +224,16 @@
                               <!-- letter with experiance -->
                               <div
                                 v-if="modalData.withExperiance"
-                                class="mt-large bg-white"
+                                class=" bg-white"
                                 id="pdf"
                               >
-                                <h2 class="ml-4 mt-8" contenteditable="true">
+                                <div
+                                  class="flex justify-end"
+                                  contenteditable="false"
+                                >
+                                  <img :src="qrSrc" alt="" />
+                                </div>
+                                <h2 class="ml-4 " contenteditable="true">
                                   To:
                                   {{
                                     modalData
@@ -514,7 +526,7 @@ import { ref, computed } from "vue";
 import moment from "moment";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
-import { jsPDF } from "jspdf";
+import STATIC_CERTIFICATE_URL from "../../../../../sharedComponents/constants/message.js";
 import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
 import html2pdf from "html2pdf.js";
@@ -537,7 +549,7 @@ export default {
       .regionId;
 
     let show = ref(false);
-
+    let qrSrc = ref("");
     let showLoading = ref(false);
     let isUserApproved = ref(false);
 
@@ -578,66 +590,82 @@ export default {
     let modalData = computed(() => props.modalDataGenerate);
 
     const printPdf = () => {
-      isLoading.value = true;
-
       var element = document.getElementById("printedDiv");
       var opt = {
         margin: 1,
-        filename: "myfile.pdf",
+        filename: new Date().toISOString().slice(0, 10) + ".pdf",
         image: { type: "jpeg", quality: 0.98 },
         html2canvas: { scale: 2 },
         jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
       };
 
-      html2pdf()
-        .set(opt)
-        .from(element)
-        .save(
-          license.value && license.value.profile && license.value.profile.name
-            ? license.value.profile.name +
-                " " +
-                new Date().toISOString().slice(0, 10)
-            : ""
-        );
+      let staticUrl = STATIC_CERTIFICATE_URL;
+      let userId = modalData.value.profile.id;
+      let applicationId = modalData.value.id;
+      let applicationType = "GoodStanding";
 
-      license.value.isLicenseGenerated &&
-      license.value.isLicenseGenerated == true
-        ? (license.value.isReprint = true)
-        : "";
-      license.value.isLicenseGenerated = true;
+      const qrParam = { url: null };
 
-      let req = {
-        data: { ...license.value, isLicenseGenerated: true },
-      };
+      qrParam.url =
+        staticUrl + "/" + applicationType + "/" + userId + "/" + applicationId;
       store
-        .dispatch("reviewer/editGoodStanding", req)
+        .dispatch("reviewer/getQrCode", qrParam)
         .then((res) => {
-          if (res.statusText == "Created") {
-            toast.success("Done", {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
+          qrSrc.value = res.data.data;
+        })
+        .finally(() => {
+          html2pdf()
+            .set(opt)
+            .from(element)
+            .save(
+              license.value &&
+                license.value.profile &&
+                license.value.profile.name
+                ? license.value.profile.name +
+                    " " +
+                    new Date().toISOString().slice(0, 10)
+                : ""
+            );
+
+          license.value.isReprint = true;
+          license.value.isLicenseGenerated = true;
+
+          let req = {
+            data: { ...license.value, isLicenseGenerated: true },
+          };
+          store
+            .dispatch("reviewer/editGoodStanding", req)
+            .then((res) => {
+              if (res.statusText == "Created") {
+                toast.success("Done", {
+                  timeout: 5000,
+                  position: "bottom-center",
+                  pauseOnFocusLoss: true,
+                  pauseOnHover: true,
+                  icon: true,
+                });
+                isLoading.value = false;
+                setTimeout(() => {
+                  location.reload();
+                }, 1000);
+              } else {
+                toast.error(res, {
+                  timeout: 5000,
+                  position: "bottom-center",
+                  pauseOnFocusLoss: true,
+                  pauseOnHover: true,
+                  icon: true,
+                });
+                isLoading.value = false;
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+              isLoading.value = false;
             });
-            isLoading.value = false;
-            setTimeout(() => {
-              window.location.reload();
-            }, 1000);
-          } else {
-            toast.error(res, {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            });
-            isLoading.value = false;
-          }
         })
         .catch((err) => {
           console.log(err);
-          isLoading.value = false;
         });
     };
 
@@ -703,6 +731,7 @@ export default {
 
     return {
       license,
+      qrSrc,
       userProfile,
       activeClass,
       errorClass,

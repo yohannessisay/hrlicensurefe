@@ -62,10 +62,12 @@
                 : ""
             }}
           </h2>
+
           <h2 class="text-grey-800 text-xl font-bold">
             Licensed Profession/s List
           </h2>
           <h2
+            v-if="certificateDetail.educations"
             class="text-primary-600 text-xl font-bold"
             v-for="education in certificateDetail.educations"
             :key="education.id"
@@ -76,10 +78,25 @@
                 : ""
             }}
           </h2>
-          <h2 class="text-grey-800 text-xl font-bold">
+
+          <h2 class="text-primary-600 text-xl font-bold" v-else>
+            {{
+              certificateDetail.GSProfessionals &&
+              certificateDetail.GSProfessionals.professionalTypes
+                ? certificateDetail.GSProfessionals.professionalTypes.name
+                : ""
+            }}
+          </h2>
+          <h2
+            class="text-grey-800 text-xl font-bold"
+            v-if="certificateDetail.educations"
+          >
             License is valid from
           </h2>
-          <h2 class="text-primary-600 text-xl font-bold">
+          <h2
+            class="text-primary-600 text-xl font-bold"
+            v-if="certificateDetail.educations"
+          >
             {{
               moment(certificateDetail.certifiedDate).format("MM/ DD / YYYY")
             }}
@@ -88,6 +105,20 @@
               moment(certificateDetail.licenseExpirationDate).format(
                 "MM /DD / YYYY"
               )
+            }}
+          </h2>
+          <h2
+            class="text-grey-800 text-xl font-bold"
+            v-if="!certificateDetail.educations"
+          >
+            Letter given on
+          </h2>
+          <h2
+            class="text-primary-600 text-xl font-bold"
+            v-if="!certificateDetail.educations"
+          >
+            {{
+              moment(certificateDetail.certifiedDate).format("MM /DD / YYYY")
             }}
           </h2>
         </div>
@@ -180,12 +211,9 @@ export default {
           applicationType: route.params.applicationType,
         })
         .then((res) => {
-           
           if (res.data && res.data.data) {
             certificateDetail.value = res.data.data;
-            if ( 
-              certificateDetail.value.certified == false
-            ) {
+            if (certificateDetail.value.certified == false) {
               isUserCertified.value = false;
             }
             licenseExpireDate.value = moment(
@@ -197,7 +225,7 @@ export default {
             certifiedUser.value = res.data.data.profile;
             certifiedUser.value.pic =
               googleApi + res.data.data.profile.profilePicture.filePath;
-              
+
             if (!certifiedUser.value) {
               isUserFound.value = false;
             }
