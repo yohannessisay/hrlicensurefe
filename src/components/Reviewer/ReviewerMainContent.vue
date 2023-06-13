@@ -11,7 +11,7 @@
           hover:shadow-2xl  
           transform
           shadow-md
-          hover:-translate-y-2
+          hover:-translate-y-4
           transition-all
           duration-200
         "
@@ -47,7 +47,7 @@
           hover:shadow-2xl  
           transform
           shadow-md
-          hover:-translate-y-2
+          hover:-translate-y-4
           transition-all
           duration-200
         "
@@ -83,7 +83,7 @@
           hover:shadow-2xl  
           transform
           shadow-md
-          hover:-translate-y-2
+          hover:-translate-y-4
           transition-all
           duration-200
         "
@@ -121,7 +121,7 @@
           hover:shadow-2xl  
           transform
           shadow-md
-          hover:-translate-y-2
+          hover:-translate-y-4
           transition-all
           duration-200
         "

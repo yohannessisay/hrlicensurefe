@@ -452,7 +452,6 @@
                   :rows="reportTable.rows"
                   :total="reportTable.totalRecordCount"
                   :sortable="reportTable.sortable"
-                  
                 >
                 </vue-table-lite>
               </div>
@@ -518,28 +517,31 @@ export default {
           exportData.value.data = [];
           exportData.value.type = "newLicense";
           exportData.value.data = tempData;
-
+          let tempProf = "";
           tempData.forEach((element) => {
-            let prof = element.educations.map((prof) => {
-              return prof.professionType ? prof.professionType.name : "";
+            element.educations.map((prof) => {
+              prof.professionType
+                ? (tempProf += prof.professionType.name + ", ")
+                : "";
             });
-
             tableData.push({
-              id: element.id ? +element.id : "",
-              FirstName: element.name ? element.name : "",
-              MiddleName: element.fatherName ? element.fatherName : "",
-              LastName: element.grandFatherName ? element.grandFatherName : "",
-              LicenseStatus: element.applicationStatus
-                ? element.applicationStatus.name
-                : "",
               LicenseNumber: element.newLicenseCode
                 ? element.newLicenseCode
                 : "",
+              FirstName: element.name ? element.name : "",
+              MiddleName: element.fatherName ? element.fatherName : "",
+              LastName: element.grandFatherName ? element.grandFatherName : "",
+              Email: element.applicant ? element.applicant.emailAddress : "",
+              Phone: element.applicant ? element.applicant.phoneNumber : "",
+              LicenseStatus: element.applicationStatus
+                ? element.applicationStatus.name
+                : "",
+
               CertifiedDate: element.certifiedDate
                 ? element.certifiedDate.slice(0, 10)
                 : "",
 
-              ProfessionalType: prof ? prof.join(",") : "",
+              ProfessionalType: tempProf,
               Gender: element.gender ? element.gender : "",
               OrganizationalUnit: element.region ? element.region.name : "",
               data: element ? element : {},
@@ -549,11 +551,10 @@ export default {
           reportTable.value = reactive({
             columns: [
               {
-                label: "ID",
-                field: "id",
+                label: "License Number",
+                field: "LicenseNumber",
                 width: "5%",
                 sortable: true,
-                isKey: true,
               },
               {
                 label: "First Name",
@@ -574,6 +575,18 @@ export default {
                 sortable: true,
               },
               {
+                label: "Email",
+                field: "Email",
+                width: "5%",
+                sortable: true,
+              },
+              {
+                label: "Phone",
+                field: "Phone",
+                width: "5%",
+                sortable: true,
+              },
+              {
                 label: "License Status",
                 field: "LicenseStatus",
                 width: "5%",
@@ -585,12 +598,7 @@ export default {
                 width: "35%",
                 sortable: true,
               },
-              {
-                label: "License Number",
-                field: "LicenseNumber",
-                width: "5%",
-                sortable: true,
-              },
+
               {
                 label: "Certified Date",
                 field: "CertifiedDate",
@@ -706,14 +714,16 @@ export default {
               return prof.professionType ? prof.professionType.name : "";
             });
             tableData.push({
-              id: element.id ? +element.id : "",
+              LicenseNumber: element.renewalCode ? element.renewalCode : "",
               FirstName: element.name ? element.name : "",
               MiddleName: element.fatherName ? element.fatherName : "",
               LastName: element.grandFatherName ? element.grandFatherName : "",
+              Email: element.applicant ? element.applicant.emailAddress : "",
+              Phone: element.applicant ? element.applicant.phoneNumber : "",
               LicenseStatus: element.applicationStatus
                 ? element.applicationStatus.name
                 : "",
-              LicenseNumber: element.renewalCode ? element.renewalCode : "",
+
               IssuedDate: element.certifiedDate
                 ? element.certifiedDate.slice(0, 10)
                 : "",
@@ -728,11 +738,10 @@ export default {
           reportTable.value = {
             columns: [
               {
-                label: "ID",
-                field: "id",
+                label: "License Number",
+                field: "LicenseNumber",
                 width: "5%",
                 sortable: true,
-                isKey: true,
               },
               {
                 label: "First Name",
@@ -753,6 +762,18 @@ export default {
                 sortable: true,
               },
               {
+                label: "Email",
+                field: "Email",
+                width: "5%",
+                sortable: true,
+              },
+              {
+                label: "Phone",
+                field: "Phone",
+                width: "5%",
+                sortable: true,
+              },
+              {
                 label: "License Status",
                 field: "LicenseStatus",
                 width: "5%",
@@ -764,12 +785,7 @@ export default {
                 width: "35%",
                 sortable: true,
               },
-              {
-                label: "License Number",
-                field: "LicenseNumber",
-                width: "5%",
-                sortable: true,
-              },
+
               {
                 label: "Issued Date",
                 field: "IssuedDate",
@@ -1014,16 +1030,18 @@ export default {
               ? element.GSProfessionals.professionalTypes.name
               : "";
             tableData.push({
-              id: element.id ? +element.id : "",
-              FirstName: element.name ? element.name : "",
-              MiddleName: element.fatherName ? element.fatherName : "",
-              LastName: element.grandFatherName ? element.grandFatherName : "",
-              LicenseStatus: element.applicationStatus
-                ? element.applicationStatus.name
-                : "",
               LicenseNumber: element.goodStandingCode
                 ? element.goodStandingCode
                 : "",
+              FirstName: element.name ? element.name : "",
+              MiddleName: element.fatherName ? element.fatherName : "",
+              LastName: element.grandFatherName ? element.grandFatherName : "",
+              Email: element.applicant ? element.applicant.emailAddress : "",
+              Phone: element.applicant ? element.applicant.phoneNumber : "",
+              LicenseStatus: element.applicationStatus
+                ? element.applicationStatus.name
+                : "",
+
               PrintedDate: element.certifiedDate
                 ? element.certifiedDate.slice(0, 10)
                 : "",
@@ -1037,11 +1055,10 @@ export default {
           reportTable.value = {
             columns: [
               {
-                label: "ID",
-                field: "id",
+                label: "License Number",
+                field: "LicenseNumber",
                 width: "5%",
                 sortable: true,
-                isKey: true,
               },
               {
                 label: "First Name",
@@ -1062,6 +1079,18 @@ export default {
                 sortable: true,
               },
               {
+                label: "Email",
+                field: "Email",
+                width: "5%",
+                sortable: true,
+              },
+              {
+                label: "Phone",
+                field: "Phone",
+                width: "5%",
+                sortable: true,
+              },
+              {
                 label: "License Status",
                 field: "LicenseStatus",
                 width: "5%",
@@ -1073,12 +1102,7 @@ export default {
                 width: "35%",
                 sortable: true,
               },
-              {
-                label: "License Number",
-                field: "LicenseNumber",
-                width: "5%",
-                sortable: true,
-              },
+
               {
                 label: "Printed Date",
                 field: "PrintedDate",
@@ -1116,7 +1140,7 @@ export default {
 
     const fetchRegion = () => {
       store.dispatch("report/getRegions").then((res) => {
-        regions.value = res.data.data; 
+        regions.value = res.data.data;
       });
     };
 
@@ -1149,7 +1173,7 @@ export default {
 
     const exportTable = () => {
       let tempData = [];
-       
+
       exportData.value.data.forEach((element) => {
         let tempdEdu = "";
         element.educations
@@ -1296,7 +1320,7 @@ export default {
     const searchApplication = () => {
       reportTable.value.isLoading = true;
       reportTable.value.rows = [];
-      tableData = []; 
+      tableData = [];
       licenseTypeFilter.value == "newLicense"
         ? fetchNewLicenseReport([
             { key: "page", value: 0 },
@@ -1310,7 +1334,7 @@ export default {
             {
               key: "toDate",
               value:
-              searchTermFromDate.value && searchTermFromDate.value != ""
+                searchTermFromDate.value && searchTermFromDate.value != ""
                   ? searchTermToDate.value
                   : new Date().toISOString().slice(0, 10),
             },
@@ -1328,7 +1352,7 @@ export default {
             {
               key: "toDate",
               value:
-              searchTermFromDate.value && searchTermFromDate.value != ""
+                searchTermFromDate.value && searchTermFromDate.value != ""
                   ? searchTermToDate.value
                   : new Date().toISOString().slice(0, 10),
             },
@@ -1346,7 +1370,7 @@ export default {
             {
               key: "toDate",
               value:
-              searchTermFromDate.value && searchTermFromDate.value != ""
+                searchTermFromDate.value && searchTermFromDate.value != ""
                   ? searchTermToDate.value
                   : new Date().toISOString().slice(0, 10),
             },

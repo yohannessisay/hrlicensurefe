@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="w-screen max-w-4xl"
-    v-if="approveStatus == 1"
-  >
+  <div class="w-screen max-w-4xl" v-if="approveStatus == 1">
     <div
       class="
         flex flex-col
@@ -169,19 +166,21 @@
         <div class="flex justify-center">
           <span>
             <h6 class="text-sm border-b-2 text-main-400">
-              File-{{ photoFile.name }}
+              File-{{ photoFile.name ? photoFile.name : "------" }}
             </h6>
-            <h6 class="text-sm text-main-400">Size-{{ fileSize }}</h6>
+            <h6 class="text-sm text-main-400">
+              Size-{{ fileSize ? fileSize : "------" }}
+            </h6>
           </span>
         </div>
+        <h2
+          class="text-xl text-justify  bg-yellow-300 rounded-md p-2 m-2"
+        >
+          Please upload your own personal picture where the prefered size is in
+          3 X 4 format as this photo will be used in your generated license
+        </h2>
         <div class="flex mb-12 justify-center">
-          <span v-if="showUpload">
-            <span>
-              <label class="text-main-400 text-justify text-sm"
-                >Maximum size for profile picture is 3 MB
-              </label>
-            </span>
-            <br />
+          <div class="flex mb-12 justify-center" v-if="showUpload">
             <label class="text-primary-700 text-justify">
               <div class="dropbox ml-8">
                 <input
@@ -189,6 +188,7 @@
                   id="photoFile"
                   class="photoFile"
                   ref="photoFileP"
+                  accept=".jpeg,.jpg,.png"
                   v-on:change="handleFileUpload()"
                   style="margin-bottom: 15px !important"
                 />
@@ -206,7 +206,7 @@
                 >
               </div>
             </label>
-          </span>
+          </div>
           <picture v-if="!showUpload && isImage">
             <div class="flex justify-center">
               <span
@@ -681,7 +681,7 @@
                   focus:border-main-400 focus:outline-none
                 "
                 :max="minimumBirthDate"
-                min='1899-01-01'
+                min="1899-01-01"
                 v-model="personalInfo.dateOfBirth"
                 @change="validateDate(personalInfo.dateOfBirth)"
                 :disabled="
@@ -693,7 +693,7 @@
               <div
                 v-if="
                   personalInfoErrors.dateOfBirth ||
-                  personalInfoErrors.invalidBirthDate
+                    personalInfoErrors.invalidBirthDate
                 "
                 class="border p-2 text-sm text-red-300 mr-4"
               >
@@ -727,7 +727,7 @@
                       >
                         Male
                       </label>
-                    </div> 
+                    </div>
                   </div>
 
                   <div class="flex py-2 ml-4">
@@ -784,7 +784,7 @@
                 focus:bg-white
                 focus:border-blue-600
                 focus:outline-none
-              " 
+              "
               v-model="personalInfo.poBox"
               :disabled="isRegisterdHRAuser == true && searchResultData.pobox"
               id="pobox"
@@ -823,11 +823,11 @@
 </template>
 <script>
 import { ref, onMounted } from "vue";
-import { useStore } from "vuex"; 
+import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
 
 export default {
-  components: {  },
+  components: {},
   props: ["activeState", "approvalModal"],
   setup(props, { emit }) {
     const store = useStore();
@@ -843,8 +843,9 @@ export default {
     let photoSizeCheck = ref(false);
     let fileSize = ref("");
     let nationality = ref("");
-    let minimumBirthDate =  
-      new Date(`${new Date().getFullYear()-18}`).toISOString().slice(0,10);
+    let minimumBirthDate = new Date(`${new Date().getFullYear() - 18}`)
+      .toISOString()
+      .slice(0, 10);
     let maritalStatus = ref("");
     let invalidBirthDate = ref(false);
     const hraUserStat = ref(false);
@@ -920,7 +921,7 @@ export default {
         }
         reader.addEventListener(
           "load",
-          async function () {
+          async function() {
             showPreview.value = true;
             filePreview.value = reader.result;
             var base64 = reader.result;
@@ -1072,7 +1073,7 @@ export default {
       store.dispatch("profile/setMaritalStatus", maritalStatus.value);
       let empty = isEmpty(personalInfoErrors.value);
 
-      console.log(personalInfoErrors.value,empty)
+      console.log(personalInfoErrors.value, empty);
       if (empty == false || invalidBirthDate.value == true) {
         return;
       } else if (empty == true) {
@@ -1095,7 +1096,7 @@ export default {
         invalidBirthDate.value = true;
         personalInfoErrors.value.dateOfBirth = "Applicant must be 18 or above";
       } else {
-        invalidBirthDate.value = false; 
+        invalidBirthDate.value = false;
       }
     };
     const validateForm = (formData) => {
@@ -1115,10 +1116,10 @@ export default {
 
       let today = new Date().getFullYear();
       let age = today - new Date(formData.dateOfBirth).getFullYear();
-    
+
       if (age < 18) {
         errors.dateOfBirth = "Applicant must be 18 or above";
-      }  
+      }
       return errors;
     };
     const isEmpty = (obj) => {
@@ -1151,7 +1152,7 @@ export default {
           }
           reader.addEventListener(
             "load",
-            async function () {
+            async function() {
               showPreview.value = true;
               filePreview.value = reader.result;
               var base64 = reader.result;
@@ -1254,7 +1255,6 @@ img {
 .dropbox p {
   font-size: 1.2em;
   text-align: center;
- 
 }
 
 .form_wrapper {
