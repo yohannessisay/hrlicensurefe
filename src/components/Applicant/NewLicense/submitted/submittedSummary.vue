@@ -343,7 +343,6 @@
                       v-for="prev in prevDocs"
                       :key="prev.docName"
                     >
-                  
                       <h4 class="text-main-400 font-bold m-2">Document Type</h4>
                       <h6 class="m-2">{{ prev.documentType.name }}</h6>
                       <div class="flex justify-center rounded-lg p-4">
@@ -628,7 +627,7 @@ export default {
             },
           },
         };
-        store.dispatch("newlicense/updateDraft", license).then((res) => {
+        store.dispatch("newlicense/updateDraft", license).then(() => {
           let licenseId = route.params.id;
           let payload = { document: formData, id: licenseId };
           store
@@ -692,14 +691,14 @@ export default {
           generalInfo.value.feedback = "";
           if (generalInfo.value.applicantTypeSelected.id == 1) {
             store.dispatch("newlicense/getExpertLevel").then((res) => {
-              let expertLevel = res.data.data.filter(function (e) {
+              let expertLevel = res.data.data.filter(function(e) {
                 return e.code.includes("REG");
               });
               generalInfo.value.expertLevelId = expertLevel[0].id;
             });
           } else {
             store.dispatch("newlicense/getExpertLevel").then((res) => {
-              let expertLevel = res.data.data.filter(function (e) {
+              let expertLevel = res.data.data.filter(function(e) {
                 return e.code.includes("FED");
               });
               generalInfo.value.expertLevelId = expertLevel[0].id;
@@ -708,17 +707,17 @@ export default {
           //Get images from indexed Db
           let request = indexedDB.open("NLdocumentUploads", 1);
 
-          request.onerror = function () {
+          request.onerror = function() {
             console.error("Unable to open database.");
           };
 
-          request.onsuccess = function () {
+          request.onsuccess = function() {
             let db = request.result;
             const tx = db.transaction("NLdocumentUploads", "readonly");
             const store = tx.objectStore("NLdocumentUploads");
             let getAllIDB = store.getAll();
 
-            getAllIDB.onsuccess = function (evt) {
+            getAllIDB.onsuccess = function(evt) {
               localFileImages.value = evt.target.result
                 ? JSON.parse(
                     JSON.stringify(
@@ -747,7 +746,6 @@ export default {
               }
 
               if (localData.value.professionChanged == true) {
-               
                 professionChanged.value = true;
                 // prevDocs.value = localFileImages.value;
                 localFileImages.value.forEach((element) => {
