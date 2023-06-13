@@ -257,9 +257,9 @@
                                 <span class="text-grey-800 ml-2">
                                   {{
                                     modalData.data &&
-                                    modalData.data.GSProfessionals&&
-                                     modalData.data.GSProfessionals
-                                          .professionalTypes
+                                    modalData.data.GSProfessionals &&
+                                    modalData.data.GSProfessionals
+                                      .professionalTypes
                                       ? modalData.data.GSProfessionals
                                           .professionalTypes.name
                                       : ""
@@ -554,7 +554,6 @@ export default {
       show.value = true;
     };
 
-     
     const modalData = ref({});
     let result = {};
 
@@ -564,7 +563,7 @@ export default {
         .then((res) => {
           if (res.data.status == "Success") {
             result = res.data.data;
-            modalDataGenerate.value.withExperiance = false;
+          
             modalData.value.name =
               result.profile.name +
               " " +
@@ -602,14 +601,14 @@ export default {
             modalData.value.documents = result.documents;
             modalDataGenerate.value = result;
             modalDataGenerate.value.withExperiance = false;
-            modalDataGenerate.value && modalDataGenerate.value.documents
-              ? modalDataGenerate.value.documents.forEach((element) => {
-                  element.documentTypeCode == "WESLFO"
-                    ? (console.log(element.documentTypeCode),
-                      (modalDataGenerate.value.withExperiance = true))
-                    : "";
+           
+            licenseData.value && licenseData.value.documents
+              ? licenseData.value.documents.forEach((element) => {
+                  if (element.documentTypeCode == "WESLFO") {
+                    modalDataGenerate.value.withExperiance = true;
+                  }
                 })
-              : ""; 
+              : "";
             isLoading.value = false;
           }
         });
@@ -626,7 +625,7 @@ export default {
       reviewerAdminId,
       showModal,
       check,
-      isLoading, 
+      isLoading,
       modalData,
       googleApi,
       modalDataGenerate,

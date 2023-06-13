@@ -312,12 +312,12 @@
                 <span class="text-yellow-300">(optional*)</span>
               </label>
             </div>
-          
-              <div class="mb-3 w-full flex justify-center">
-                <input
-                  v-model="generalInfo.feedback"
-                  @keyup="checkAgreement()"
-                  class="
+
+            <div class="mb-3 w-full flex justify-center">
+              <input
+                v-model="generalInfo.feedback"
+                @keyup="checkAgreement()"
+                class="
                     form-control
                     block
                     w-full
@@ -334,52 +334,66 @@
                     m-0
                     focus:outline-none
                   "
-                  id="feedback"
-                  rows="6"
-                  placeholder="Your feedback"
-                  type="textarea"
-                />
-              </div>
-            
+                id="feedback"
+                rows="6"
+                placeholder="Your feedback"
+                type="textarea"
+              />
+            </div>
           </div>
         </div>
       </div>
     </div>
+    <div class="flex justify-center bg-yellow-300 p-2 rounded-md">
+        <h2 class="text-grey-800 text-xl">
+          Total file size you have uploaded so far is
+          <h2 class="text-white text-2xl">{{ totalSize }}</h2>
+          MB
+        </h2>
+      </div>
+      <div class="flex justify-center bg-yellow-300 p-2 rounded-md">
+        <h2 class="text-grey-800 text-xl">
+          Please wait patiently as your files are being uploaded, if for any
+          reason the files you uploaded are not successful you will be
+          redirected to the submitted page automatically so you can re-attach
+          your documents again
+        </h2>
+      </div>
     <div class="vld-parent mt-4">
-              <loading
-                :active="isLoading"
-                :is-full-page="false"
-                :color="'#2F639D'"
-                :opacity="1"
-              ></loading>
-    <div class="flex justify-center w-full mb-8">
-      <span v-for="button in buttons" :key="button.id">
-        <button
-          v-if="button.action != 'DraftEvent'"
-          type="button"
-          :class="
-            allowSave
-              ? 'inline-block px-6 border text-main-400 hover:bg-main-400 hober:border-main-400 hover:text-white  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded shadow-lg transition  duration-150 ease-in-out'
-              : 'inline-block px-6 disabled text-main-400  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded shadow-lg transition  duration-150 ease-in-out'
-          "
-          @click="checkFinalStatus(button.action)"
-        >
-          <i class="fa fa-save"></i>
-          {{ button.name }}
-        </button>
-        <button
-          v-if="button.action == 'DraftEvent'"
-          type="button"
-          class="inline-block px-6 border text-main-400 hover:bg-main-400 hober:border-main-400 hover:text-white  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded shadow-lg transition  duration-150 ease-in-out"
-          @click="checkFinalStatus(button.action)"
-        >
-          <i class="fa fa-save"></i>
-          {{ button.name }}
-        </button>
-      </span>
+      <loading
+        :active="isLoading"
+        :is-full-page="false"
+        :color="'#2F639D'"
+        :opacity="1"
+      ></loading>
+      <div class="flex justify-center w-full mb-8">
+        <span v-for="button in buttons" :key="button.id">
+          <button
+            v-if="button.action != 'DraftEvent'"
+            type="button"
+            :class="
+              allowSave
+                ? 'inline-block px-6 border text-main-400 hover:bg-main-400 hober:border-main-400 hover:text-white  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded shadow-lg transition  duration-150 ease-in-out'
+                : 'inline-block px-6 disabled text-main-400  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded shadow-lg transition  duration-150 ease-in-out'
+            "
+            @click="checkFinalStatus(button.action)"
+          >
+            <i class="fa fa-save"></i>
+            {{ button.name }}
+          </button>
+          <button
+            v-if="button.action == 'DraftEvent'"
+            type="button"
+            class="inline-block px-6 border text-main-400 hover:bg-main-400 hober:border-main-400 hover:text-white  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded shadow-lg transition  duration-150 ease-in-out"
+            @click="checkFinalStatus(button.action)"
+          >
+            <i class="fa fa-save"></i>
+            {{ button.name }}
+          </button>
+        </span>
 
-      <button
-        class="
+        <button
+          class="
           inline-block
           px-6
           text-main-400
@@ -395,12 +409,12 @@
           duration-150
           ease-in-out
         "
-        @click="back()"
-      >
-        back
-      </button>
+          @click="back()"
+        >
+          back
+        </button>
+      </div>
     </div>
-</div>
     <!-- end row -->
   </div>
 </template>
@@ -423,6 +437,7 @@ export default {
     let localFileData = ref({});
     let generalInfo = ref({});
     let agreed = ref(false);
+    let totalSize = ref(0);
     let documents = ref([]);
     let buttons = ref([]);
     let tempDocs = ref({});
@@ -570,6 +585,12 @@ export default {
 
         getAllIDB.onsuccess = function(evt) {
           localFileData.value = evt.target.result ? evt.target.result : {};
+          localFileData.value[0].data.forEach((element) => {
+            totalSize.value += Number(
+              Math.ceil((element.image.length * 6) / 8 / 1000)
+            );
+          });
+          totalSize.value = totalSize.value / 1000;
         };
       };
 
@@ -593,6 +614,7 @@ export default {
     });
     return {
       localData,
+      totalSize,
       localFileData,
       generalInfo,
       agreed,
