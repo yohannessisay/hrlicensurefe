@@ -19,6 +19,7 @@
         "@wangeditor/editor-for-vue": "^5.1.12",
         "apexcharts": "^3.40.0",
         "axios": "^0.21.1",
+        "compressorjs": "^1.2.1",
         "ethiopic-calendar": "^2.0.0",
         "html2canvas": "^1.4.1",
         "html2pdf.js": "^0.10.1",
