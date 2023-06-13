@@ -53,7 +53,13 @@
                   <div class="break-words">
                     <span id="fileChosen">No file chosen</span>
                   </div>
-
+                  <h2
+                    class="text-xl text-justify  bg-yellow-300 rounded-md p-2 m-2"
+                  >
+                    Note when changing your own personal picture, the prefered
+                    size is in 3 X 4 format and make sure it is your own photo
+                    as this photo will be used in your generated license
+                  </h2>
                   <ul
                     class="
                       bg-gray-100
@@ -83,7 +89,7 @@
                       >
                     </li>
                     <li class="flex items-center py-3">
-                      <span>Registered</span>
+                      <span>Member since</span>
                       <span class="ml-auto">{{
                         userInfo && userInfo.createdAt
                           ? userInfo.createdAt.slice(0, 10)
@@ -835,11 +841,11 @@ export default {
     const updateProfilePicture = () => {
       let formData = new FormData();
       formData.append("document", photoFile.value);
-     
+
       let payload = { document: formData, id: userId };
       store
         .dispatch("profile/updateProfilePicture", payload)
-        .then((res) => { 
+        .then((res) => {
           if (res.status == 200) {
             toast.success("Profile Photo Updated successfuly", {
               timeout: 5000,
@@ -882,7 +888,7 @@ export default {
         }
         reader.addEventListener(
           "load",
-          async function () {
+          async function() {
             var base64 = reader.result;
             userInfo.value.photo = base64;
           },
@@ -917,7 +923,7 @@ export default {
 
       const fileChosen = document.getElementById("fileChosen");
 
-      actualBtn.addEventListener("change", function () {
+      actualBtn.addEventListener("change", function() {
         fileChosen.textContent = this.files[0].name;
       });
     };

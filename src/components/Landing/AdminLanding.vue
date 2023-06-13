@@ -148,7 +148,7 @@
                     leading-tight
                     uppercase
                     rounded
-                    shadow-lg
+                    shadow-md
                     hover:bg-white hover:text-primary-700
                     transition
                     duration-150
@@ -225,7 +225,7 @@
         class="
           modal-content
           border-none
-          shadow-lg
+          shadow-md
           relative
           flex flex-col
           w-full
@@ -305,7 +305,7 @@
               leading-tight
               uppercase
               rounded
-              shadow-lg
+              shadow-md
               hover:bg-white hover:text-primary-700
               transition
               duration-150
@@ -328,7 +328,7 @@
               leading-tight
               uppercase
               rounded
-              shadow-lg
+              shadow-md
               hover:bg-white hover:text-primary-700
               transition
               duration-150
