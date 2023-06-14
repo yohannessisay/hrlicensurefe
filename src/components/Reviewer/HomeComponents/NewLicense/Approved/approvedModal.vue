@@ -730,7 +730,7 @@ export default {
                     }
                   });
                   tempEd.forEach((element) => {
-                    if (element.length < 2) {
+                    if (element.length ==1) {
                       toBeGeneratedProfs.push(element[0]);
                     } else {
                       element.forEach((element) => {

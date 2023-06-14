@@ -909,7 +909,7 @@ export default {
     };
     const earlySuspension = () => {
       extendedData.value.suspEndDate = new Date().toISOString().slice(0, 10);
-      isLoadingSuspend.value = true;
+      isLoading.value = true;
       let req = {
         action: "ApproveEvent",
         data: extendedData.value,
@@ -934,7 +934,7 @@ export default {
       store
         .dispatch("reviewer/editNewLicense", req)
         .then((res) => {
-          isLoadingSuspend.value = false;
+          isLoading.value = false;
           if (res.data.status == "Success") {
             store.dispatch("sms/sendSms", smsData).then(() => {
               toast.success(

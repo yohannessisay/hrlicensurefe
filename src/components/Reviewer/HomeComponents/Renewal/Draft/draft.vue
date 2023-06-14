@@ -814,7 +814,7 @@ export default {
 
       setTimeout(() => {
         toYouTable.value.isReSearch = offset == undefined ? true : false;
-        offset = offset && offset > 0 ? offset / 10 - 1 : 1;
+        offset = offset / 10;
         if (sort == "asc") {
           draftAssignedToYou([
             { key: "page", value: offset },
@@ -841,7 +841,7 @@ export default {
 
       setTimeout(() => {
         toOthersTable.value.isReSearch = offset == undefined ? true : false;
-        offset = offset && offset > 0 ? offset / 10 - 1 : 1;
+        offset = offset / 10;
         if (sort == "asc") {
           draftAssignedToOthers([
             { key: "page", value: offset },

@@ -6,6 +6,7 @@ export default {
   async login({ commit }, profile) {
     try {
       const resp = await ApiService.post(baseUrl + "/login", profile, {});
+      window.localStorage.clear();
       window.localStorage.setItem("token", resp.data["token"]);
       window.localStorage.setItem("userId", resp.data.data["id"]);
       window.localStorage.setItem("isApplicant", true);

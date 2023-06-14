@@ -454,8 +454,8 @@
                         <span
                           v-show="
                             showRegion == 4 &&
-                            admin.region &&
-                            admin.region.code == 'AMH'
+                              admin.region &&
+                              admin.region.code == 'AMH'
                           "
                           class="mr-2 ml-2"
                         >
@@ -590,9 +590,8 @@ export default {
     const store = useStore();
     let isLoading = ref(false);
     const toast = useToast();
-    const adminExpertId = JSON.parse(
-      localStorage.getItem("allAdminData")
-    ).expertLevelId;
+    const adminExpertId = JSON.parse(localStorage.getItem("allAdminData"))
+      .expertLevelId;
     const isUserManager =
       localStorage.getItem("role") == "UM" ||
       localStorage.getItem("role") == "SA";
@@ -701,7 +700,9 @@ export default {
         editData.roleId = admin.value.roleId;
         editData.expertLevelId = admin.value.expertLevel.id;
         editData.isActive = admin.value.isActive;
-        editData.regionId = admin.value.region.id;
+        admin.value.region
+          ? (editData.regionId = admin.value.region.id)
+          : (editData.regionId = null);
 
         store
           .dispatch("admin/updateAdmin", editData)
@@ -719,7 +720,7 @@ export default {
 
               setTimeout(() => {
                 window.location.reload();
-              }, 3000);
+              }, 1000);
             } else {
               toast.error(res.data.message.name, {
                 timeout: 5000,
@@ -730,9 +731,7 @@ export default {
               });
               isLoading.value = false;
 
-              setTimeout(() => {
-                window.location.reload();
-              }, 3000);
+             
             }
           })
           .catch(() => {
@@ -745,9 +744,7 @@ export default {
               icon: true,
             });
 
-            // setTimeout(() => {
-            //   window.location.reload();
-            // }, 3000);
+             
           });
       }
     };
@@ -763,14 +760,20 @@ export default {
 
       if (!formData.expertLevel.id)
         errors.expertLevel = "Expert Level is required";
-      if (!formData.region.id && formData.expertLevel.id == 4)
+      if (
+        formData.region &&
+        !formData.region.id &&
+        formData.expertLevel.id == 4
+      )
         errors.region = "Region is required";
       if (
-        (!formData.region.id &&
+        (formData.region &&
+          !formData.region.id &&
           formData.expertLevel.id == 4 &&
           region.value.code == "AMH" &&
           formData.zoneId == null) ||
-        (formData.region.id &&
+        (formData.region &&
+          formData.region.id &&
           formData.expertLevel.id == 4 &&
           region.value.code == "AMH" &&
           formData.zoneId == null)
@@ -795,8 +798,7 @@ export default {
     };
 
     const isValidEmail = (email) => {
-      const re =
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(email);
     };
     watch(props.modalData, () => {

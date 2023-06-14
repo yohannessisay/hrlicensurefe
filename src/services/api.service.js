@@ -4,63 +4,16 @@ axios.interceptors.response.use(
   function(response) {
     return response;
   },
-  
+
   async (error) => {
-    if (error.request) {
-      // localStorage.clear();
-      // router.push("/landing");
-      // return Promise.reject(error);
+    if (error.request.status == 403 || error.request.status == 401) {
+      localStorage.clear();
+      router.go(-1);
+   
     }
   }
 );
 const ApiService = {
-  // Stores the 401 interceptor position so that it can be later ejected when needed
-  _401interceptor: null,
-  _403interceptor: null,
-  init(baseURL) {
-    axios.defaults.baseURL = baseURL;
-    this.mount403Interceptor();
-    this.mount401Interceptor();
-  },
-
-  mount401Interceptor() {
-    this._401interceptor = axios.interceptors.response.use(
-      (response) => {
-        return response;
-      },
-      async (error) => {
-        if (error.request.status === 401) {
-          /**
-           * If there is refresh token implemented handle
-           * refresh token
-           * else sign the user out
-           */
-        }
-      }
-    );
-  },
-  mount403Interceptor() {
-    this._403interceptor = axios.interceptors.response.use(
-      (response) => {
-        return response;
-      },
-      async (error) => {
-        if (error.request.status === 40) {
-          /**
-           * If there is refresh token implemented handle
-           * refresh token
-           * else sign the user out
-           */
-        }
-      }
-    );
-  },
-
-  unmount401Interceptor() {
-    // Eject the interceptor
-    axios.interceptors.response.eject(this._401interceptor);
-  },
-
   setHeader(key, value) {
     axios.defaults.headers.common[key] = value;
   },

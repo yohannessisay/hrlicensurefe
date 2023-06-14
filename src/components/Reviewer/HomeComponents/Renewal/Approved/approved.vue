@@ -783,7 +783,7 @@ export default {
 
       setTimeout(() => {
         toYouTable.value.isReSearch = offset == undefined ? true : false;
-        offset = offset && offset > 0 ? offset / 10 - 1 : 1;
+        offset = offset / 10;
         if (sort == "asc") {
           approvedApplicationsByYou([
             { key: "page", value: offset },
@@ -801,8 +801,7 @@ export default {
             { key: "toDate", value: searchTermToDate.value },
           ]);
         }
-        toYouTable.value.sortable.order = order;
-        toYouTable.value.sortable.sort = sort;
+        
       }, 600);
     };
     const doSearchOth = (offset, limit, order, sort) => {
@@ -810,7 +809,7 @@ export default {
 
       setTimeout(() => {
         toOthersTable.value.isReSearch = offset == undefined ? true : false;
-        offset = offset && offset > 0 ? offset / 10 - 1 : 1;
+        offset = offset / 10;
         if (sort == "asc") {
           approvedApplicationsByOthers([
             { key: "page", value: offset },
@@ -828,8 +827,7 @@ export default {
             { key: "toDate", value: searchTermToDateOth.value },
           ]);
         }
-        toOthersTable.value.sortable.order = order;
-        toOthersTable.value.sortable.sort = sort;
+      
       }, 600);
     };
     return {

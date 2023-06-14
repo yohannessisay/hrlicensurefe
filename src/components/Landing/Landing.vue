@@ -11,9 +11,7 @@
     <FooterSection />
 
 
-    <Modal v-if="showSendEmail">
-      <SendEmail @closeModal="showSendEmail = false" />
-    </Modal>
+ 
   </div>
 </template>
 <script>
@@ -27,7 +25,7 @@ import GoodStandingSection from "./sections/GoodStandingSectionApplicant.vue";
 import DeviceAccessibilitySection from "./sections/DeviceAccessibilitySection";
 import MinistryOfHealthSection from "./sections/MinistryOfHealthSection";
 import FooterSection from "./sections/FooterSection"; 
-import Modal from "@/sharedComponents/Modal"; 
+ 
 
 export default {
   components: {
@@ -39,14 +37,12 @@ export default {
     GoodStandingSection,
     DeviceAccessibilitySection,
     MinistryOfHealthSection,
-    FooterSection,
-    Modal,
+    FooterSection, 
   },
   setup() {
     onMounted(() => {});
     const showLogin = ref(false);
-    const showSignUp = ref(false);
-    const showSendEmail = ref(false);
+    const showSignUp = ref(false); 
     const redirectToSignup = () => {
       showLogin.value = false;
       showSignUp.value = true;
@@ -57,16 +53,14 @@ export default {
     };
     const forgotPassword = () => {
       showLogin.value = false;
-      showSignUp.value = false;
-      showSendEmail.value = true;
+      showSignUp.value = false; 
     };
     return {
       showLogin,
       showSignUp,
       redirectToSignup,
       redirectToLogin,
-      forgotPassword,
-      showSendEmail,
+      forgotPassword, 
     };
   },
 };

@@ -502,7 +502,7 @@ export default {
     let zones = ref([]);
     let woredas = ref([]);
     let applicationStatuses = ref([]);
-
+    let tempProf = "";
     const fetchNewLicenseReport = (apiParameters) => {
       reportTable.value.isLoading = true;
       store
@@ -517,8 +517,9 @@ export default {
           exportData.value.data = [];
           exportData.value.type = "newLicense";
           exportData.value.data = tempData;
-          let tempProf = "";
+
           tempData.forEach((element) => {
+            tempProf = "";
             element.educations.map((prof) => {
               prof.professionType
                 ? (tempProf += prof.professionType.name + ", ")
@@ -559,19 +560,19 @@ export default {
               {
                 label: "First Name",
                 field: "FirstName",
-                width: "10%",
+                width: "5%",
                 sortable: true,
               },
               {
                 label: "Father Name",
                 field: "MiddleName",
-                width: "10%",
+                width: "5%",
                 sortable: true,
               },
               {
                 label: "Grandfather Name",
                 field: "LastName",
-                width: "10%",
+                width: "5%",
                 sortable: true,
               },
               {
@@ -595,8 +596,7 @@ export default {
               {
                 label: "Professional Type",
                 field: "ProfessionalType",
-                width: "35%",
-                sortable: true,
+                width: "50%",
               },
 
               {
@@ -708,10 +708,13 @@ export default {
           exportData.value.data = [];
           exportData.value.type = "renewal";
           exportData.value.data = tempData;
-
+          let tempProf = "";
           tempData.forEach((element) => {
-            let prof = element.educations.map((prof) => {
-              return prof.professionType ? prof.professionType.name : "";
+            tempProf = "";
+            element.educations.map((prof) => {
+              prof.professionType
+                ? (tempProf += prof.professionType.name + ", ")
+                : "";
             });
             tableData.push({
               LicenseNumber: element.renewalCode ? element.renewalCode : "",
@@ -728,7 +731,7 @@ export default {
                 ? element.certifiedDate.slice(0, 10)
                 : "",
 
-              ProfessionalType: prof ? prof.join(" , ") : "",
+              ProfessionalType: tempProf,
               Gender: element.gender ? element.gender : "",
               OrganizationalUnit: element.region ? element.region.name : "",
               data: element ? element : {},
@@ -1226,7 +1229,7 @@ export default {
       tableData = [];
       setTimeout(() => {
         reportTable.value.isReSearch = offset == undefined ? true : false;
-        offset = offset && offset > 0 ? offset / 10 - 1 : 1;
+        offset = offset / 10;
         if (sort == "asc" && licenseTypeFilter.value == "newLicense") {
           fetchNewLicenseReport([
             { key: "page", value: offset },
