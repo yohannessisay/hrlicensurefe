@@ -189,14 +189,16 @@
                       }}</span
                     >
                     ተገቢውን መስፈርት አሟልተው ስለተገኙ ሚኒስቴር መስሪያ ቤቱ <br />
-                    <div class="flex justify-center mt-8 mb-2">
+                    <div class="flex justify-center mt-8 mb-2"
+                    v-for="department in educations"
+                        :key="department.id">
+                      
                       <span
-                        v-for="department in modalData.educations"
-                        :key="department.id"
+                       
                         class="underline text-yellow-300 font-bold"
                         style="word-break: break-word"
                       >
-                   {{
+                        {{
                           department.professionType &&
                           department.professionType.amharicProfessionalType
                             ? department.professionType.amharicProfessionalType
@@ -283,7 +285,7 @@
                     ><br />
                     <div class="grid grid-rows-3 justify-center mt-8 mb-2">
                       <span
-                        v-for="department in modalData.educations"
+                        v-for="department in educations"
                         :key="department.id"
                         class="underline text-yellow-300 font-bold"
                         style="word-break: break-word"
@@ -293,10 +295,12 @@
                             ? department.prefix
                               ? "(" +
                                 department.prefix.name +
-                                ")" +
+                                ") " +
                                 department.professionType.name
                               : department.professionType.name
                             : department.otherProfessionType
+                            ? department.otherProfessionType
+                            : ""
                         }} </span
                       ><br />
                     </div>
@@ -639,6 +643,8 @@
                                     educations[0].professionType.name
                                   : educations[0].professionType.name
                                 : educations[0].otherProfessionType
+                                ? educations[0].otherProfessionType
+                                : ""
                             }}</span
                           >
                           <span
@@ -656,6 +662,8 @@
                                     educations[1].professionType.name
                                   : educations[1].professionType.name
                                 : educations[1].otherProfessionType
+                                ? educations[1].otherProfessionType
+                                : ""
                             }}</span
                           >
                           <span
@@ -673,6 +681,8 @@
                                     educations[2].professionType.name
                                   : educations[2].professionType.name
                                 : educations[2].otherProfessionType
+                                ? educations[2].otherProfessionType
+                                : ""
                             }}</span
                           ><br />
                           <span
@@ -1015,6 +1025,8 @@
                                     educations[3].professionType.name
                                   : educations[3].professionType.name
                                 : educations[3].otherProfessionType
+                                ? educations[3].otherProfessionType
+                                : ""
                             }}</span
                           >
                           <span
@@ -1032,6 +1044,8 @@
                                     educations[4].professionType.name
                                   : educations[4].professionType.name
                                 : educations[4].otherProfessionType
+                                ? educations[4].otherProfessionType
+                                : ""
                             }}</span
                           >
                           <span
@@ -1049,6 +1063,8 @@
                                     educations[5].professionType.name
                                   : educations[5].professionType.name
                                 : educations[5].otherProfessionType
+                                ? educations[5].otherProfessionType
+                                : ""
                             }}</span
                           ><br />
                           <span
@@ -1230,7 +1246,7 @@
                     {{ (index += 1) }}
                   </td>
                   <td
-                  contenteditable="false"
+                    contenteditable="false"
                     class="whitespace-nowrap border-r px-6 py-4 text-yellow-300"
                   >
                     {{
@@ -1244,7 +1260,7 @@
                     }}
                   </td>
                   <td
-                  contenteditable="false"
+                    contenteditable="false"
                     class="whitespace-nowrap border-r px-6 py-4 text-yellow-300"
                   >
                     ({{
@@ -1357,7 +1373,7 @@
                     {{ (index += 1) }}
                   </td>
                   <td
-                  contenteditable="false"
+                    contenteditable="false"
                     class="whitespace-nowrap border-r px-6 py-4 text-yellow-300"
                   >
                     {{
@@ -1371,7 +1387,7 @@
                     }}
                   </td>
                   <td
-                  contenteditable="false"
+                    contenteditable="false"
                     class="whitespace-nowrap border-r px-6 py-4 text-yellow-300"
                   >
                     ({{
@@ -2025,7 +2041,7 @@ export default {
       if (
         finalData.value.data &&
         finalData.value.data.applicantType &&
-        finalData.value.data.applicantType.code == "FOR"  
+        finalData.value.data.applicantType.code == "FOR"
       ) {
         generateForeigner();
         return;
@@ -2080,7 +2096,7 @@ export default {
         paddingAmharic = 10;
         paddingEnglish = 10;
       }
-    
+
       //English name part
       doc.text(
         190,
@@ -2114,6 +2130,8 @@ export default {
             certificateDetail.value.educations[i].professionType
               ? certificateDetail.value.educations[i].professionType.name
               : certificateDetail.value.educations[i].otherProfessionType
+              ? certificateDetail.value.educations[i].otherProfessionType
+              : ""
           }`;
           let getLength = doc.getTextWidth(professionPrefix);
           if (getLength > 125 && getLength <= 132) {
@@ -2136,6 +2154,8 @@ export default {
             certificateDetail.value.educations[i].professionType
               ? certificateDetail.value.educations[i].professionType.name
               : certificateDetail.value.educations[i].otherProfessionType
+              ? certificateDetail.value.educations[i].otherProfessionType
+              : ""
           }`;
           let getLength = doc.getTextWidth(professionPrefix);
           if (getLength > 125 && getLength <= 132) {
@@ -2175,7 +2195,7 @@ export default {
               certificateDetail.value.educations[i].professionType
                 ? certificateDetail.value.educations[i].professionType.name
                 : certificateDetail.value.educations[i].otherProfessionType
-                ? `${
+                 ? `${
                     certificateDetail.value.educations[i].prefix
                       ? certificateDetail.value.educations[i].prefix.name
                       : ""
@@ -2203,6 +2223,7 @@ export default {
               certificateDetail.value.educations[i].professionType
                 ? certificateDetail.value.educations[i].professionType.name
                 : certificateDetail.value.educations[i].otherProfessionType
+            
                 ? `${
                     certificateDetail.value.educations[i].prefix
                       ? certificateDetail.value.educations[i].prefix.name
@@ -2342,7 +2363,6 @@ export default {
       doc.text(38, 58, `${certificateDetail.value.licenseNumber}`);
       doc2.text(38, 58, `${certificateDetail.value.licenseNumber}`);
       // doc.addFileToVFS("Amiri-Regular.ttf", AmiriRegular);
-    
 
       doc.setFontSize(17);
       doc2.setFontSize(17);

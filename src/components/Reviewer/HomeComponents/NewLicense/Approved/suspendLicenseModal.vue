@@ -260,6 +260,7 @@ export default {
           icon: true,
         });
         isLoading.value = false;
+        return;
       }
       if (new Date(startDate.value).getDate() < new Date().getDate()) {
         toast.error("Start date can not be before today", {
@@ -270,6 +271,7 @@ export default {
           icon: true,
         });
         isLoading.value = false;
+        return;
       }
       let smsData = {
         recipients: [
@@ -303,7 +305,7 @@ export default {
               });
               setTimeout(() => {
                 location.reload();
-              }, 2000);
+              }, 1000);
             });
           } else {
             toast.error(res.data.message, {
@@ -313,9 +315,7 @@ export default {
               pauseOnHover: true,
               icon: true,
             });
-            setTimeout(() => {
-              window.location.reload();
-            }, 3000);
+           
           }
         })
         .catch((err) => {

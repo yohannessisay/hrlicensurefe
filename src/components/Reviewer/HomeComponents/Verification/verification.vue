@@ -898,7 +898,7 @@ export default {
     const doSearch = (offset, limit, order, sort) => {
       setTimeout(() => {
         verificationTable.value.isReSearch = offset == undefined ? true : false;
-        offset = offset && offset > 0 ? offset / 10 - 1 : 1;
+        offset = offset / 10;
         if (sort == "asc") {
           getVerification([
             { key: "page", value: offset },
@@ -997,7 +997,7 @@ export default {
       setTimeout(() => {
         verificationTableOthers.value.isReSearch =
           offset == undefined ? true : false;
-        offset = offset && offset > 0 ? offset / 10 - 1 : 1;
+        offset = offset / 10;
         if (sort == "asc") {
           getVerificationOthers([
             { key: "page", value: offset },

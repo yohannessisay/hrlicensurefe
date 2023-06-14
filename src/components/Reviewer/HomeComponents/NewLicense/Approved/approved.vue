@@ -613,10 +613,7 @@ export default {
             ],
             rows: toYouTableData,
             totalRecordCount: res.count,
-            sortable: {
-              order: "id",
-              sort: "asc",
-            },
+          
           };
         });
     };
@@ -697,10 +694,7 @@ export default {
 
             rows: tableData,
             totalRecordCount: res.count,
-            sortable: {
-              order: "id",
-              sort: "asc",
-            },
+          
           };
         });
     };
@@ -778,7 +772,7 @@ export default {
       toYouTable.value.isLoading = true;
       setTimeout(() => {
         toYouTable.value.isReSearch = offset == undefined ? true : false;
-        offset = offset && offset > 0 ? offset / 10 - 1 : 1;
+        offset = offset / 10;
         if (sort == "asc") {
           approvedApplicationsByYou([
             { key: "page", value: offset },
@@ -796,15 +790,16 @@ export default {
             { key: "toDate", value: searchTermToDate.value },
           ]);
         }
-        toYouTable.value.sortable.order = order;
-        toYouTable.value.sortable.sort = sort;
+         
+       
       }, 600);
     };
     const doSearchOth = (offset, limit, order, sort) => {
+     
       toOthersTable.value.isLoading = true;
       setTimeout(() => {
         toOthersTable.value.isReSearch = offset == undefined ? true : false;
-        offset = offset && offset > 0 ? offset / 10 - 1 : 1;
+        offset = offset / 10;
         if (sort == "asc") {
           approvedApplicationsByOthers([
             { key: "page", value: offset },
@@ -822,6 +817,7 @@ export default {
             { key: "toDate", value: searchTermToDateOth.value },
           ]);
         }
+        
       }, 600);
     };
     return {

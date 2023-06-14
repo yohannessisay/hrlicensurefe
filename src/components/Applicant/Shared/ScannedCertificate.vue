@@ -26,14 +26,44 @@
         />
 
         <h2 class="text-2xl">License Status</h2>
-        <span class="bg-green-200 p-2 rounded-md text-white">
+        <span
+          :class="
+            certificateDetail.applicationStatus &&
+            certificateDetail.applicationStatus.code == 'APP'
+              ? 'bg-green-200 p-2 rounded-md text-white'
+              : certificateDetail.applicationStatus &&
+                certificateDetail.applicationStatus.code == 'SUSP'
+              ? 'bg-yellow-300 p-2 rounded-md text-white'
+              : certificateDetail.applicationStatus &&
+                certificateDetail.applicationStatus.code == 'RVK'
+              ? 'bg-red-300 p-2 rounded-md text-white'
+              : ''
+          "
+        >
           {{
             certificateDetail.applicationStatus &&
             certificateDetail.applicationStatus.code == "APP"
               ? "License Is Valid"
+              : certificateDetail.applicationStatus &&
+                certificateDetail.applicationStatus.code == "SUSP"
+              ? "License Is Suspended"
+              : certificateDetail.applicationStatus &&
+                certificateDetail.applicationStatus.code == "RVK"
+              ? "License Is Revoked"
               : ""
           }}
         </span>
+        <h2
+          v-if="
+            certificateDetail.applicationStatus &&
+              (certificateDetail.applicationStatus.code == 'RVK' ||
+                certificateDetail.applicationStatus.code == 'SUSP')
+          "
+          class="text-primary-600 font-bold text-xl m-2"
+        >
+          Reason--
+          <span class="text-grey-800 border rounded-md p-2"> {{ certificateDetail.remark }}</span>
+        </h2>
       </div>
       <div class="container">
         <div class="grid grid-cols-2 gap-4 mt-5">
@@ -69,14 +99,16 @@
           <h2
             v-if="certificateDetail.educations"
             class="text-primary-600 text-xl font-bold"
-            v-for="education in certificateDetail.educations"
-            :key="education.id"
           >
-            {{
-              education && education.professionType
-                ? education.professionType.name + " ,"
-                : ""
-            }}
+            <span
+              v-for="education in certificateDetail.educations"
+              :key="education.id"
+              >{{
+                education && education.professionType
+                  ? education.professionType.name + " ,"
+                  : ""
+              }}
+            </span>
           </h2>
 
           <h2 class="text-primary-600 text-xl font-bold" v-else>
@@ -95,7 +127,11 @@
           </h2>
           <h2
             class="text-primary-600 text-xl font-bold"
-            v-if="certificateDetail.educations"
+            v-if="
+              certificateDetail.educations &&
+                certificateDetail.applicationStatus &&
+                certificateDetail.applicationStatus.code == 'APP'
+            "
           >
             {{
               moment(certificateDetail.certifiedDate).format("MM/ DD / YYYY")
