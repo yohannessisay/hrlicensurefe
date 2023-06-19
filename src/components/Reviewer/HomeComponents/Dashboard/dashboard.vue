@@ -64,79 +64,79 @@
           ></apexchart>
         </div>
       </div>
-      <div class="grid grid-cols-6 ">
+      <div class="grid grid-cols-3 ">
         <div class="bg-white shadow-md m-2 rounded-md p-2 mb-20">
           <apexchart
-            type="donut"
+            type="pie"
             :options="pieChartOption"
             :series="approvedSeries"
           ></apexchart>
-          <div class="flex justify-center">
-            <h2 class="text-2xl font-bold text-primary-600 mt-2 ">
-              Approved Licenses/Letters
-            </h2>
-          </div>
+          <h2 class="text-primary-600 font-bold text-2xl">
+           Approved Applications
+          </h2>
         </div>
-        <div class="bg-white shadow-md m-2 rounded-md p-2 mb-20">
+       <div class="bg-white shadow-md m-2 rounded-md p-2 mb-20">
           <apexchart
-            type="donut"
+            type="pie"
             :options="pieChartOption"
             :series="declinedSeries"
           ></apexchart>
-          <div class="flex justify-center">
-            <h2 class="text-2xl font-bold text-yellow-300 mt-2">
+           
+            <h2 class="font-bold text-2xl text-yellow-300">
               Declined Licenses/Letters
             </h2>
-          </div>
+         
         </div>
+        
         <div class="bg-white shadow-md m-2 rounded-md p-2 mb-20">
           <apexchart
-            type="donut"
+            type="pie"
             :options="pieChartOption"
             :series="revokedSeries"
           ></apexchart>
-          <div class="flex justify-center">
+         
             <h2 class="text-2xl font-bold text-red-300 mt-2">
               Revoked Licenses/Letters
             </h2>
-          </div>
+          
         </div>
         <div class="bg-white shadow-md m-2 rounded-md p-2 mb-20">
           <apexchart
-            type="donut"
+            type="pie"
             :options="pieChartOption"
             :series="susupendedSeries"
           ></apexchart>
-          <div class="flex justify-center">
+         
             <h2 class="text-2xl font-bold text-main-400 mt-2">
               Suspended Licenses/Letters
             </h2>
-          </div>
+          
         </div>
         <div class="bg-white shadow-md m-2 rounded-md p-2 mb-20">
+         
           <apexchart
-            type="donut"
+            type="pie"
             :options="pieChartOption"
             :series="underSupervisionSeries"
           ></apexchart>
-          <div class="flex justify-center">
+          
             <h2 class="text-2xl font-bold text-yellow-400 mt-2">
               Licenses Under-Supervision
             </h2>
-          </div>
+        
         </div>
         <div class="bg-white shadow-md m-2 rounded-md p-2 mb-20">
           <apexchart
-            type="donut"
+            type="pie"
             :options="pieChartOption"
             :series="unassignedSeries"
           ></apexchart>
-          <div class="flex justify-center">
+         
             <h2 class="text-2xl font-bold text-grey-800 mt-2">
               Unassigned Licenses/Letters
             </h2>
-          </div>
-        </div>
+       
+        </div>  
       </div>
     </div>
 
@@ -177,26 +177,16 @@ export default {
     };
     let pieChartOption = {
       chart: {
-        type: "donut",
+        width: 380,
+        type: "pie",
       },
-      plotOptions: {
-        pie: {
-          startAngle: -90,
-          endAngle: 90,
-          offsetY: 10,
-        },
-      },
-      grid: {
-        padding: {
-          bottom: -40,
-        },
-      },
+      labels: ["New License", "Renewal", "Goodstanding"],
       responsive: [
         {
           breakpoint: 480,
           options: {
             chart: {
-              width: 300,
+              width: 200,
             },
             legend: {
               position: "bottom",
@@ -204,7 +194,6 @@ export default {
           },
         },
       ],
-      labels: ["New License", "Renewal", "Goodstandng"],
     };
     let genderSeries = ref([
       {
@@ -313,11 +302,10 @@ export default {
     Object.assign(genderChartOption, chartOption);
     Object.assign(applicationChartOption, chartOption);
 
-   
     genderChartOption.xaxis = {
       categories: ["Male", "Female"],
     };
-    genderChartOption.colors = ["#0bf303", "#f303cb"];
+    genderChartOption.colors = ["#10A04C", "#A702A7"];
     applicationChartOption.xaxis = {
       categories: ["New License", "Renewal", "Goodstanding"],
     };
@@ -352,23 +340,23 @@ export default {
           res.data.newLicense.forEach((element) => {
             switch (element.name) {
               case "Approve":
-                approvedSeries.value.push([element.count]);
+                approvedSeries.value.push(element.count);
                 break;
               case "Decline":
-                declinedSeries.value.push([element.count]);
+                declinedSeries.value.push(element.count);
                 break;
 
               case "Revoked":
-                revokedSeries.value.push([element.count]);
+                revokedSeries.value.push(element.count);
                 break;
               case "Suspended":
-                susupendedSeries.value.push([element.count]);
+                susupendedSeries.value.push(element.count);
                 break;
               case "Submit":
-                unassignedSeries.value.push([element.count]);
+                unassignedSeries.value.push(element.count);
                 break;
               case "Under Supervision":
-                underSupervisionSeries.value.push([element.count]);
+                underSupervisionSeries.value.push(element.count);
                 break;
 
               default:
@@ -378,23 +366,23 @@ export default {
           res.data.renewal.forEach((element) => {
             switch (element.name) {
               case "Approve":
-                approvedSeries.value.push([element.count]);
+                approvedSeries.value.push(element.count);
                 break;
               case "Decline":
-                declinedSeries.value.push([element.count]);
+                declinedSeries.value.push(element.count);
                 break;
 
               case "Revoked":
-                revokedSeries.value.push([element.count]);
+                revokedSeries.value.push(element.count);
                 break;
               case "Suspended":
-                susupendedSeries.value.push([element.count]);
+                susupendedSeries.value.push(element.count);
                 break;
               case "Submit":
-                unassignedSeries.value.push([element.count]);
+                unassignedSeries.value.push(element.count);
                 break;
               case "Under Supervision":
-                underSupervisionSeries.value.push([element.count]);
+                underSupervisionSeries.value.push(element.count);
                 break;
 
               default:
@@ -404,20 +392,20 @@ export default {
           res.data.goodStanding.forEach((element) => {
             switch (element.name) {
               case "Approve":
-                approvedSeries.value.push([element.count]);
+                approvedSeries.value.push(element.count);
                 break;
               case "Decline":
-                declinedSeries.value.push([element.count]);
+                declinedSeries.value.push(element.count);
                 break;
 
               case "Revoked":
-                revokedSeries.value.push([element.count]);
+                revokedSeries.value.push(element.count);
                 break;
               case "Suspended":
-                susupendedSeries.value.push([element.count]);
+                susupendedSeries.value.push(element.count);
                 break;
               case "Submit":
-                unassignedSeries.value.push([element.count]);
+                unassignedSeries.value.push(element.count);
                 break;
               default:
                 break;
@@ -425,6 +413,7 @@ export default {
           });
         }
       });
+      console.log(approvedSeries);
     };
     let tempRegions = [];
 
