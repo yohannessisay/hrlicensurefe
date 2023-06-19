@@ -1062,7 +1062,9 @@ export default {
     let checkForAddedError = ref(false);
     let generalInfo = ref({
       educationalLevelSelected: "",
-      applicantTypeSelected: "",
+      applicantTypeSelected: JSON.parse(
+        localStorage.getItem("applicantTypeSelected")
+      ),
       applicantPositionId: "",
       regionSelected: "",
       zoneSelected: "",
@@ -1135,17 +1137,25 @@ export default {
     };
     const applicantTypeChangeHandler = async () => {
       isAppTypeSelected.value = true;
-      if (generalInfo.value.applicantTypeSelected.code == "ETH") {
+      if (
+        generalInfo.value.applicantTypeSelected &&
+        generalInfo.value.applicantTypeSelected.code &&
+        generalInfo.value.applicantTypeSelected.code == "ETH"
+      ) {
         showLocation.value = true;
         showOccupation.value = true;
-        await fetchInstitutions(true);
+        fetchInstitutions(true);
       } else {
         showLocation.value = false;
         showOccupation.value = false;
-        await fetchInstitutions(false);
+        fetchInstitutions(false);
       }
-      if (generalInfo.value.applicantTypeSelected.code == "FOR") {
-        await fetchLanguages();
+      if (
+        generalInfo.value.applicantTypeSelected &&
+        generalInfo.value.applicantTypeSelected.code &&
+        generalInfo.value.applicantTypeSelected.code == "FOR"
+      ) {
+        fetchLanguages();
         showLanguage.value = true;
       } else {
         showLanguage.value = false;
@@ -1405,9 +1415,9 @@ export default {
       }
     };
     onMounted(async () => {
+      applicantTypeChangeHandler();
       fetchApplicantType();
-      fetchDepartments();
-      fetchInstitutions();
+      fetchDepartments(); 
       fetchEducationLevel();
       fetchRegions();
       fetchOccupation();

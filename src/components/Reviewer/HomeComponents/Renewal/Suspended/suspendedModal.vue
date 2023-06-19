@@ -360,9 +360,10 @@
                                 duration-150
                                 ease-in-out
                               "
+                              @click="earlySuspension()"
                             >
                               <i class="fa fa-times-circle"></i>
-                              Early Susupension
+                              Resumption
                             </button>
                             <button
                               type="button"
@@ -578,7 +579,7 @@
               </div>
               <div class="vld-parent">
                 <loading
-                  :active="isLoadingSuspend"
+                  :active="isLoadingExtend"
                   :can-cancel="true"
                   :is-full-page="true"
                   :color="'#2F639D'"
@@ -674,6 +675,7 @@
               duration-150
               ease-in-out
             "
+            @click="extend()"
           >
             <i class="fa fa-times-circle"></i>
             Extend
@@ -713,14 +715,14 @@ import { useStore } from "vuex";
 import Loading from "vue3-loading-overlay";
 // Import stylesheet
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
-
+import { useToast } from "vue-toastification";
 export default {
   name: "Modal",
   components: { Loading },
   props: ["modalDataId"],
   setup(props) {
     const store = useStore();
-
+    const toast = useToast();
     let show = ref(true);
     let showRes = ref(true); 
     let showOptions = ref(true);
@@ -728,6 +730,7 @@ export default {
     let modalData = ref({});
     let extendedData = ref({});
     let isLoadingSuspend = ref(false);
+    let isLoadingExtend = ref(false);
     let result = {};
     const check = () => {
       store
@@ -773,12 +776,139 @@ export default {
           }
         });
     };
+    const earlySuspension = () => {
+      extendedData.value.suspEndDate = new Date().toISOString().slice(0, 10);
+      isLoading.value = true;
+      let req = {
+        action: "ApproveEvent",
+        data: extendedData.value,
+      };
+      let smsData = {
+        recipients: [
+          extendedData.value && extendedData.value.applicant
+            ? "251" + extendedData.value.applicant.phoneNumber
+            : "",
+        ],
+        message:
+          extendedData.value && extendedData.value.profile
+            ? "Dear " +
+              extendedData.value.profile.name +
+              " " +
+              extendedData.value.profile.fatherName +
+              ", Your renewal license with license number " +
+              extendedData.value.renewalCode +
+              "has been released from suspension . Thank you for using eHPEL,https://www.hrl.moh.gov.et"
+            : "",
+      };
+      store
+        .dispatch("reviewer/editRenewal", req)
+        .then((res) => {
+          isLoading.value = false;
+          if (res.data.status == "Success") {
+            store.dispatch("sms/sendSms", smsData).then(() => {
+              toast.success(
+                "Application released from suspension Successfully",
+                {
+                  timeout: 5000,
+                  position: "bottom-center",
+                  pauseOnFocusLoss: true,
+                  pauseOnHover: true,
+                  icon: true,
+                }
+              );
+              setTimeout(() => {
+                location.reload()
+              }, 1000);
+            });
+          } else {
+            toast.error("Please try again", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+          }
+        })
+        .catch(() => {
+          toast.error("Please try again", {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          });
+        });
+    };
+    const extend = () => {
+      isLoadingExtend.value = true;
+      let req = {
+        action: "",
+        data: extendedData.value,
+      };
+      let smsData = {
+        recipients: [
+          extendedData.value && extendedData.value.applicant
+            ? "251" + extendedData.value.applicant.phoneNumber
+            : "",
+        ],
+        message:
+          extendedData.value && extendedData.value.profile
+            ? "Dear " +
+              extendedData.value.profile.name +
+              " " +
+              extendedData.value.profile.fatherName +
+              ", Your renewal license with license number " +
+              extendedData.value.renewalCode +
+              " suspension has been extended . Thank you for using eHPEL,https://www.hrl.moh.gov.et"
+            : "",
+      };
 
+      store
+        .dispatch("reviewer/editRenewal", req)
+        .then((res) => {
+          isLoadingExtend.value = false;
+          if (res.data.status == "Success") {
+            store.dispatch("sms/sendSms", smsData).then(() => {
+              toast.success("Application Susupension Extended Successfully", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
+            });
+            setTimeout(() => {
+                location.reload()
+              }, 2000);
+          } else {
+            toast.error("Please try again", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+          }
+        })
+        .catch(() => {
+          toast.error("Please try again", {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          });
+        });
+    };
     watch(props.modalDataId, () => {
       isLoading.value = true;
       check();
     });
     return {
+      earlySuspension,
+      extend,
+      isLoadingExtend,
       show,
       check,
       isLoading,

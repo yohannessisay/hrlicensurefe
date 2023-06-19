@@ -222,7 +222,6 @@
                   "
                 >
                   <vue-table-lite
-                    
                     :is-loading="toYouTable.isLoading"
                     :columns="toYouTable.columns"
                     :rows="toYouTable.rows"
@@ -232,12 +231,7 @@
                     @row-clicked="rowClicked"
                     @do-search="doSearch"
                   ></vue-table-lite>
-                  <edit-modal
-                    :modalDataId="modalDataId"
-                    :reviewers="reviewers"
-                    @refreshTable="refreshTable"
-                  >
-                  </edit-modal>
+                  <edit-modal :modalDataId="modalDataId"> </edit-modal>
                 </div>
               </div>
             </div>
@@ -435,7 +429,6 @@
                   "
                 >
                   <vue-table-lite
-                    
                     :is-loading="toOthersTable.isLoading"
                     :columns="toOthersTable.columns"
                     :rows="toOthersTable.rows"
@@ -446,11 +439,7 @@
                     @do-search="doSearchOth"
                   ></vue-table-lite>
 
-                  <edit-modal-others
-                    :reviewers="reviewers"
-                    :modalDataIdOthers="modalDataIdOthers"
-                    @refreshTable="refreshTable"
-                  >
+                  <edit-modal-others :modalDataIdOthers="modalDataIdOthers">
                   </edit-modal-others>
                 </div>
               </div>
@@ -484,8 +473,7 @@ export default {
   },
   setup() {
     const store = useStore();
-    const adminRegion = JSON.parse(localStorage.getItem("allAdminData"))
-      .regionId;
+
     let modalDataId = ref({
       id: "",
       change: 0,
@@ -494,10 +482,9 @@ export default {
       id: "",
       change: 0,
     });
-    let adminRole = localStorage.getItem("role");
     let statuses = JSON.parse(localStorage.getItem("applicationStatuses"));
     let allInfo = [];
-    let reviewers = ref([]);
+
     let searchTerm = ref("");
     let searchTermOthers = ref("");
     let searchTermFromDate = ref("");
@@ -515,31 +502,13 @@ export default {
       isLoading: true,
     };
 
-    const refreshTable = () => {
-      toOthersTable.value.isLoading = true;
-      toYouTable.value.isLoading = true;
-      toOthersTable.value.rows = [];
-     
-      toYouTable.value.rows = [];
-     
-
-      suspendedByOthers([
-        { key: "page", value: 0 },
-        { key: "size", value: 10 },
-      ]);
-      suspendedByYou([
-        { key: "page", value: 0 },
-        { key: "size", value: 10 },
-      ]);
-    };
-
     const clearFiltersOther = () => {
       searchTermOthers.value = "";
       searchTermFromDateOth.value = "";
       searchTermToDateOth.value = "";
       toOthersTable.value.isLoading = true;
       toOthersTable.value.rows = [];
-    
+
       suspendedByOthers([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
@@ -551,7 +520,7 @@ export default {
       searchTermToDate.value = "";
       toYouTable.value.isLoading = true;
       toYouTable.value.rows = [];
-    
+
       suspendedByYou([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
@@ -561,7 +530,7 @@ export default {
       let statId = statuses
         ? statuses.filter((stat) => stat.code == "SUSP")[0].id
         : "";
-        toYouTableData=[];
+      toYouTableData = [];
       store
         .dispatch("reviewerRenewal/getRenewalByStatus", [
           {
@@ -634,7 +603,7 @@ export default {
             ],
 
             rows: toYouTableData,
-            totalRecordCount:res.count,
+            totalRecordCount: res.count,
             sortable: {
               order: "id",
               sort: "asc",
@@ -646,7 +615,7 @@ export default {
       let statId = statuses
         ? statuses.filter((stat) => stat.code == "SUSP")[0].id
         : "";
-        tableData=[];
+      tableData = [];
       store
         .dispatch("reviewerRenewal/getOtherRenewalByStatus", [
           {
@@ -770,7 +739,7 @@ export default {
     const searchApplication = () => {
       toYouTable.value.isLoading = true;
       toYouTable.value.rows = [];
-       
+
       suspendedByYou([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
@@ -782,7 +751,7 @@ export default {
     const searchApplicationOther = () => {
       toOthersTable.value.isLoading = true;
       toOthersTable.value.rows = [];
-      
+
       suspendedByOthers([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
@@ -796,17 +765,10 @@ export default {
         { key: "page", value: 0 },
         { key: "size", value: 10 },
       ]);
-      adminRole && adminRole != "REV"
-        ? suspendedByOthers([
-            { key: "page", value: 0 },
-            { key: "size", value: 10 },
-          ])
-        : "";
-      store.dispatch("reviewer/getAdminsByRegion", adminRegion).then((res) => {
-        reviewers.value = res.data.data.filter((e) => {
-          return e.role.code !== "UM";
-        });
-      });
+      suspendedByOthers([
+        { key: "page", value: 0 },
+        { key: "size", value: 10 },
+      ]);
     });
     const doSearch = (offset, limit, order, sort) => {
       toYouTable.value.isLoading = true;
@@ -878,13 +840,11 @@ export default {
       searchTermFromDateOth,
       searchTermToDateOth,
       toYouTable,
-      reviewers,
       tableLoadingFinish,
       suspendedByOthers,
       tableLoadingFinishOthers,
       rowClicked,
       rowClickedOthers,
-      refreshTable,
       modalDataId,
       modalDataIdOthers,
     };

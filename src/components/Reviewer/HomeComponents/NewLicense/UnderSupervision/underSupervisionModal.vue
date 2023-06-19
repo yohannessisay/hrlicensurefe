@@ -677,11 +677,14 @@
         </div>
 
         <div class="container shadow-md rounded-lg" contenteditable="true">
-          <div class="p-8 m-8 " id="printSupervisionModal">
+          <div class="p-2 m-2 " id="printSupervisionModal">
+            <div class="flex justify-end" contenteditable="false">
+              <img :src="qrSrc" alt="" style="height: 150px;width: 150px;" />
+            </div>
             <h2>ለ፡_________________________</h2>
             <p>አዲስ አበባ</p>
 
-            <p class="p-4 mt-8">
+            <p class="p-2 mt-2">
               <span class="ml-4">ከዚህ</span> በታች
               <span contenteditable="false">
                 {{
@@ -769,28 +772,32 @@
                       {{ (index += 1) }}
                     </td>
                     <td
-                    contenteditable="false"
-                      class="whitespace-nowrap border-r px-6 py-4 text-yellow-300"
+                      contenteditable="false"
+                      class="whitespace-nowrap border-r px-6 py-4"
                     >
-                      {{
-                        modalData && modalData.data && modalData.data.profile
-                          ? modalData.data.profile.name +
-                            " " +
-                            modalData.data.profile.fatherName +
-                            " " +
-                            modalData.data.profile.grandFatherName
-                          : []
-                      }}
+                      <span class="text-yellow-300">
+                        {{
+                          modalData && modalData.data && modalData.data.profile
+                            ? modalData.data.profile.name +
+                              " " +
+                              modalData.data.profile.fatherName +
+                              " " +
+                              modalData.data.profile.grandFatherName
+                            : []
+                        }}
+                      </span>
                     </td>
                     <td
-                    contenteditable="false"
-                      class="whitespace-nowrap border-r px-6 py-4 text-yellow-300"
+                      contenteditable="false"
+                      class="whitespace-nowrap border-r px-6 py-4 "
                     >
-                      {{
-                        educations && educations.professionType
-                          ? educations.professionType.name
-                          : ""
-                      }}
+                      <span class="text-yellow-300">
+                        {{
+                          educations && educations.professionType
+                            ? educations.professionType.name
+                            : ""
+                        }}</span
+                      >
                     </td>
                   </tr>
                 </tbody>
@@ -871,6 +878,8 @@ import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 import { googleApi } from "@/composables/baseURL";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import html2pdf from "html2pdf.js";
+import STATIC_CERTIFICATE_URL from "../../../../../sharedComponents/constants/message.js";
 export default {
   props: ["modalDataId"],
   components: {
@@ -884,7 +893,7 @@ export default {
 
     let show = ref(true);
     let adminId = +localStorage.getItem("adminId");
-
+    let qrSrc = ref("");
     let isLoading = ref(false);
     const licenseData = ref({});
     let reviewerAdminId = ref(0);
@@ -949,22 +958,46 @@ export default {
     };
     const print = async () => {
       var data = document.getElementById("printSupervisionModal");
+      const staticUrl = STATIC_CERTIFICATE_URL;
+      const userId = modalData.value.data.profile.id;
+      const applicationId = modalData.value.data.id;
+      const applicationType = "NewLicense";
 
-      await html2canvas(data, { scale: 2 }).then((canvas) => {
-        const contentDataURL = canvas.toDataURL("image/png", 1.0);
+      const qrParam = { url: null };
 
-        let pdf = new jsPDF("l", "mm", "a4");
+      qrParam.url =
+        staticUrl + "/" + applicationType + "/" + userId + "/" + applicationId;
+      store
+        .dispatch("reviewer/getQrCode", qrParam)
+        .then((res) => {
+          qrSrc.value = res.data.data;
+        })
+        .finally(async () => {
+          var element = data;
+          var opt = {
+            margin: 1,
+            filename: "myfile.pdf",
+            image: { type: "jpeg", quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
+          };
 
-        var width = pdf.internal.pageSize.getWidth();
-        var height = pdf.internal.pageSize.getHeight();
-
-        pdf.addImage(contentDataURL, "PNG", 0, 0, width, height);
-
-        window.open(
-          pdf.output("bloburl", { filename: "new-file.pdf" }),
-          "_blank"
-        );
-      });
+          html2pdf()
+            .set(opt)
+            .from(element)
+            .save(
+              modalData.value.data &&
+                modalData.value.data.profile &&
+                modalData.value.data.profile.name
+                ? modalData.value.data.profile.name +
+                    " " +
+                    new Date().toISOString().slice(0, 10)
+                : ""
+            );
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     };
     watch(props.modalDataId, () => {
       isLoading.value = true;
@@ -978,6 +1011,7 @@ export default {
       check,
       print,
       isLoading,
+      qrSrc,
       onCancel,
       modalData,
       googleApi,

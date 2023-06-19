@@ -323,7 +323,8 @@ export default {
       return error;
     }
   },
-  async getInstitution({ commit }, value) {
+  async getInstitution(context, value) {
+    console.log(value);
     try {
       const resp = await ApiService.get(
         baseUrl + "/lookups/appTypeInstitutions/" + value

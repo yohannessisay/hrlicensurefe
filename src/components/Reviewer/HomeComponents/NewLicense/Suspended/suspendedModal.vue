@@ -234,7 +234,7 @@
                             </div>
                           </div>
                           <div class="grow ml-6">
-                            <h2 class="font-bold mb-1">Suspension Detail</h2>
+                            <h2 class="font-bold mb-1 text-xl">Suspension Detail</h2>
                             <p class="text-gray-500">
                               <span class="font-medium text-primary-700 mb-1"
                                 >Suspension Start Date:</span

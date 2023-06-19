@@ -9,13 +9,13 @@
     />
     <label for="tab1" class="tabs_wrapper_label">Supervised By You</label>
     <input type="radio" name="tab" id="tab2" class="tab-head" />
-    <label for="tab2" class="tabs_wrapper_label">Supervised By Others</label>
+    <label for="tab2" class="tabs_wrapper_label" v-if="adminRole!='REV'">Supervised By Others</label>
 
     <div class="tab-body-wrapper">
       <div id="tab-body-1" class="tab-body">
         <slot name="toyou"></slot>
       </div>
-      <div id="tab-body-2" class="tab-body">
+      <div id="tab-body-2" class="tab-body" v-if="adminRole!='REV'">
         <slot name="to_others"></slot>
       </div>
     </div>
@@ -25,7 +25,8 @@
 export default {
   components: {},
   setup() {
-    return {};
+    let adminRole = localStorage.getItem("role");
+    return {adminRole};
   },
 };
 </script>

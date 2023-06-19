@@ -92,13 +92,16 @@
                             "
                         >
                           <div class="bg-white h-full " contenteditable="true">
-                            <div v-if="show" class="ml-8 mr-8 mb-12">
+                            <div v-if="show" class="ml-2 mr-2 mb-4">
                               <div v-if="!modalData.withExperiance">
                                 <div
                                   class="flex justify-end"
                                   contenteditable="false"
+                                  height="200"
+                                  width="200"
                                 >
-                                  <img :src="qrSrc" alt="" />
+                                  <img    height="150"
+                                  width="150" :src="qrSrc" alt="qr placeholder" />
                                 </div>
                                 <h2 class="ml-4" contenteditable="true">
                                   To:
@@ -109,7 +112,7 @@
                                   }}.
                                 </h2>
                                 <div class="flex justify-center">
-                                  <h3 class="mb-8 mt-8" contenteditable="true">
+                                  <h3 class="mb-4 mt-4" contenteditable="true">
                                     LETTER OF GOOD STANDING
                                   </h3>
                                 </div>
@@ -230,8 +233,10 @@
                                 <div
                                   class="flex justify-end"
                                   contenteditable="false"
+                               
                                 >
-                                  <img :src="qrSrc" alt="" />
+                                  <img    height="150"
+                                  width="150" :src="qrSrc" alt="qr placeholder" />
                                 </div>
                                 <h2 class="ml-4 " contenteditable="true">
                                   To:
@@ -242,8 +247,8 @@
                                   }}.
                                 </h2>
 
-                                <div class="flex justify-center">
-                                  <h3 class="mb-8 mt-8" contenteditable="true">
+                                <div class="flex justify-center p-2">
+                                  <h3 class="mb-2 mt-2" contenteditable="true">
                                     LETTER OF GOOD STANDING
                                   </h3>
                                 </div>

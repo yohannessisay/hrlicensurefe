@@ -222,7 +222,6 @@
                   "
                 >
                   <vue-table-lite
-                    
                     :is-loading="toYouTable.isLoading"
                     :columns="toYouTable.columns"
                     :rows="toYouTable.rows"
@@ -234,7 +233,6 @@
                   ></vue-table-lite>
                   <edit-modal
                     :modalDataId="modalDataId"
-                    :reviewers="reviewers"
                     @refreshTable="refreshTable"
                   >
                   </edit-modal>
@@ -435,7 +433,6 @@
                   "
                 >
                   <vue-table-lite
-                    
                     :is-loading="toOthersTable.isLoading"
                     :columns="toOthersTable.columns"
                     :rows="toOthersTable.rows"
@@ -447,7 +444,6 @@
                   ></vue-table-lite>
 
                   <edit-modal-others
-                    :reviewers="reviewers"
                     :modalDataIdOthers="modalDataIdOthers"
                     @refreshTable="refreshTable"
                   >
@@ -480,24 +476,23 @@ export default {
     NewLicenseMainContent,
     VueTableLite,
     editModal,
-    editModalOthers,
+    editModalOthers
   },
   setup() {
     const store = useStore();
-    const adminRegion = JSON.parse(localStorage.getItem("allAdminData"))
-      .regionId;
+
     let modalDataId = ref({
       id: "",
-      change: 0,
+      change: 0
     });
     let modalDataIdOthers = ref({
       id: "",
-      change: 0,
+      change: 0
     });
     let adminRole = localStorage.getItem("role");
     let statuses = JSON.parse(localStorage.getItem("applicationStatuses"));
     let allInfo = [];
-    let reviewers = ref([]);
+
     let searchTerm = ref("");
     let searchTermOthers = ref("");
     let searchTermFromDate = ref("");
@@ -509,27 +504,26 @@ export default {
     let tableData = [];
     let toYouTableData = [];
     toOthersTable.value = {
-      isLoading: true,
+      isLoading: true
     };
     toYouTable.value = {
-      isLoading: true,
+      isLoading: true
     };
 
     const refreshTable = () => {
       toOthersTable.value.isLoading = true;
       toYouTable.value.isLoading = true;
       toOthersTable.value.rows = [];
-    
+
       toYouTable.value.rows = [];
-     
 
       supervisedByOthers([
         { key: "page", value: 0 },
-        { key: "size", value: 10 },
+        { key: "size", value: 10 }
       ]);
       supervisedByYou([
         { key: "page", value: 0 },
-        { key: "size", value: 10 },
+        { key: "size", value: 10 }
       ]);
     };
 
@@ -539,10 +533,10 @@ export default {
       searchTermToDateOth.value = "";
       toOthersTable.value.isLoading = true;
       toOthersTable.value.rows = [];
-     
+
       supervisedByOthers([
         { key: "page", value: 0 },
-        { key: "size", value: 10 },
+        { key: "size", value: 10 }
       ]);
     };
     const clearFilters = () => {
@@ -551,29 +545,29 @@ export default {
       searchTermToDate.value = "";
       toYouTable.value.isLoading = true;
       toYouTable.value.rows = [];
-      
+
       supervisedByYou([
         { key: "page", value: 0 },
-        { key: "size", value: 10 },
+        { key: "size", value: 10 }
       ]);
     };
-    const supervisedByYou = (apiParameters) => {
+    const supervisedByYou = apiParameters => {
       let statId = statuses
-        ? statuses.filter((stat) => stat.code == "USUP")[0].id
+        ? statuses.filter(stat => stat.code == "USUP")[0].id
         : "";
-        toYouTableData=[];
+      toYouTableData = [];
       store
         .dispatch("reviewerRenewal/getRenewalByStatus", [
           {
-            statusId: statId,
+            statusId: statId
           },
           {
-            params: apiParameters,
-          },
+            params: apiParameters
+          }
         ])
-        .then((res) => {
+        .then(res => {
           allInfo = res ? res.rows : [];
-          allInfo.forEach((element) => {
+          allInfo.forEach(element => {
             toYouTableData.push({
               LicenseNumber: element.renewalCode,
               ApplicantName:
@@ -589,7 +583,7 @@ export default {
                 .toJSON()
                 .slice(0, 10)
                 .replace(/-/g, "/"),
-              data: element,
+              data: element
             });
           });
 
@@ -599,25 +593,25 @@ export default {
                 label: "License Number",
                 field: "LicenseNumber",
                 width: "20%",
-                isKey: true,
+                isKey: true
               },
               {
                 label: "Applicant Name",
                 field: "ApplicantName",
                 width: "40%",
-                sortable: true,
+                sortable: true
               },
               {
                 label: "Applicant Type",
                 field: "ApplicantType",
                 width: "20%",
-                sortable: true,
+                sortable: true
               },
               {
                 label: "Date",
                 field: "Date",
                 width: "20%",
-                sortable: true,
+                sortable: true
               },
               {
                 label: "Action",
@@ -629,37 +623,37 @@ export default {
                     row.id +
                     '" ><i class="fa fa-eye"></i>View/Edit</button>'
                   );
-                },
-              },
+                }
+              }
             ],
 
             rows: toYouTableData,
             totalRecordCount: res.count,
             sortable: {
               order: "id",
-              sort: "asc",
-            },
+              sort: "asc"
+            }
           };
         });
     };
-    const supervisedByOthers = (apiParameters) => {
+    const supervisedByOthers = apiParameters => {
       let statId = statuses
-        ? statuses.filter((stat) => stat.code == "USUP")[0].id
+        ? statuses.filter(stat => stat.code == "USUP")[0].id
         : "";
-        tableData=[];
+      tableData = [];
       store
         .dispatch("reviewerRenewal/getOtherRenewalByStatus", [
           {
-            statusId: statId,
+            statusId: statId
           },
           {
-            params: apiParameters,
-          },
+            params: apiParameters
+          }
         ])
-        .then((res) => {
+        .then(res => {
           allInfo = res ? res.rows : [];
-
-          allInfo.forEach((element) => {
+          console.log("called");
+          allInfo.forEach(element => {
             tableData.push({
               LicenseNumber: element ? element.renewalCode : "",
               ApplicantName:
@@ -679,7 +673,7 @@ export default {
                 .toJSON()
                 .slice(0, 10)
                 .replace(/-/g, "/"),
-              data: element,
+              data: element
             });
           });
 
@@ -689,25 +683,25 @@ export default {
                 label: "License Number",
                 field: "LicenseNumber",
                 width: "20%",
-                isKey: true,
+                isKey: true
               },
               {
                 label: "Applicant Name",
                 field: "ApplicantName",
                 width: "40%",
-                sortable: true,
+                sortable: true
               },
               {
                 label: "Applicant Type",
                 field: "ApplicationType",
                 width: "20%",
-                sortable: true,
+                sortable: true
               },
               {
                 label: "Date",
                 field: "Date",
                 width: "20%",
-                sortable: true,
+                sortable: true
               },
               {
                 label: "Action",
@@ -719,15 +713,15 @@ export default {
                     row.id +
                     '" ><i class="fa fa-eye"></i> View</button>'
                   );
-                },
-              },
+                }
+              }
             ],
             rows: tableData,
-            totalRecordCount:res.count,
+            totalRecordCount: res.count,
             sortable: {
               order: "id",
-              sort: "asc",
-            },
+              sort: "asc"
+            }
           };
         });
     };
@@ -751,7 +745,7 @@ export default {
       });
       toOthersTable.value.isLoading = false;
     };
-    const rowClicked = (row) => {
+    const rowClicked = row => {
       if (row != undefined) {
         row = JSON.parse(JSON.stringify(row));
 
@@ -759,7 +753,7 @@ export default {
         modalDataId.value.change++;
       }
     };
-    const rowClickedOthers = (row) => {
+    const rowClickedOthers = row => {
       if (row != undefined) {
         row = JSON.parse(JSON.stringify(row));
         modalDataIdOthers.value.id = row.data ? row.data.id : "-----";
@@ -770,43 +764,38 @@ export default {
     const searchApplication = () => {
       toYouTable.value.isLoading = true;
       toYouTable.value.rows = [];
-     
+
       supervisedByYou([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
         { key: "value", value: searchTerm.value },
         { key: "fromDate", value: searchTermFromDate.value },
-        { key: "toDate", value: searchTermToDate.value },
+        { key: "toDate", value: searchTermToDate.value }
       ]);
     };
     const searchApplicationOther = () => {
       toOthersTable.value.isLoading = true;
       toOthersTable.value.rows = [];
-    
+
       supervisedByOthers([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
         { key: "value", value: searchTermOthers.value },
         { key: "fromDate", value: searchTermFromDateOth.value },
-        { key: "toDate", value: searchTermToDateOth.value },
+        { key: "toDate", value: searchTermToDateOth.value }
       ]);
     };
     onMounted(() => {
       supervisedByYou([
         { key: "page", value: 0 },
-        { key: "size", value: 10 },
+        { key: "size", value: 10 }
       ]);
       adminRole && adminRole != "REV"
         ? supervisedByOthers([
             { key: "page", value: 0 },
-            { key: "size", value: 10 },
+            { key: "size", value: 10 }
           ])
         : "";
-      store.dispatch("reviewer/getAdminsByRegion", adminRegion).then((res) => {
-        reviewers.value = res.data.data.filter((e) => {
-          return e.role.code !== "UM";
-        });
-      });
     });
     const doSearch = (offset, limit, order, sort) => {
       toYouTable.value.isLoading = true;
@@ -820,7 +809,7 @@ export default {
             { key: "size", value: limit },
             { key: "value", value: searchTerm.value },
             { key: "fromDate", value: searchTermFromDate.value },
-            { key: "toDate", value: searchTermToDate.value },
+            { key: "toDate", value: searchTermToDate.value }
           ]);
         } else {
           supervisedByYou([
@@ -828,7 +817,7 @@ export default {
             { key: "size", value: limit },
             { key: "value", value: searchTerm.value },
             { key: "fromDate", value: searchTermFromDate.value },
-            { key: "toDate", value: searchTermToDate.value },
+            { key: "toDate", value: searchTermToDate.value }
           ]);
         }
         toYouTable.value.sortable.order = order;
@@ -847,7 +836,7 @@ export default {
             { key: "size", value: limit },
             { key: "value", value: searchTermOthers.value },
             { key: "fromDate", value: searchTermFromDateOth.value },
-            { key: "toDate", value: searchTermToDateOth.value },
+            { key: "toDate", value: searchTermToDateOth.value }
           ]);
         } else {
           supervisedByOthers([
@@ -855,7 +844,7 @@ export default {
             { key: "size", value: limit },
             { key: "value", value: searchTermOthers.value },
             { key: "fromDate", value: searchTermFromDateOth.value },
-            { key: "toDate", value: searchTermToDateOth.value },
+            { key: "toDate", value: searchTermToDateOth.value }
           ]);
         }
         toOthersTable.value.sortable.order = order;
@@ -878,7 +867,6 @@ export default {
       searchTermFromDateOth,
       searchTermToDateOth,
       toYouTable,
-      reviewers,
       tableLoadingFinish,
       supervisedByOthers,
       tableLoadingFinishOthers,
@@ -886,9 +874,9 @@ export default {
       rowClickedOthers,
       refreshTable,
       modalDataId,
-      modalDataIdOthers,
+      modalDataIdOthers
     };
-  },
+  }
 };
 </script>
 <style scoped>

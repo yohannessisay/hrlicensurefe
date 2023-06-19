@@ -45,16 +45,6 @@
           text-current
         "
       >
-        <div
-          class="
-            modal-header
-            flex flex-shrink-0
-            items-center
-            justify-between
-            p-2
-            rounded-t-md
-          "
-        ></div>
         <!-- if applicant is ethiopian -->
         <div
           v-if="
@@ -189,12 +179,12 @@
                       }}</span
                     >
                     ተገቢውን መስፈርት አሟልተው ስለተገኙ ሚኒስቴር መስሪያ ቤቱ <br />
-                    <div class="flex justify-center mt-8 mb-2"
-                    v-for="department in educations"
-                        :key="department.id">
-                      
+                    <div
+                      class="flex justify-center mt-8 mb-2"
+                      v-for="department in educations"
+                      :key="department.id"
+                    >
                       <span
-                       
                         class="underline text-yellow-300 font-bold"
                         style="word-break: break-word"
                       >
@@ -1150,10 +1140,13 @@
               finalData.printType != 'temporary' &&
               finalData.data.applicantType.code == 'FOR'
           "
-          class="p-8 m-8 "
+          class="p-2 m-2 "
           contenteditable="true"
           id="foreignersPrintedDiv"
         >
+          <div class="flex justify-end" contenteditable="false">
+            <img :src="qrSrc" alt="" style="height: 150px;width: 150px;" />
+          </div>
           <h2 class="mt-8" contenteditable="true">
             ለ፡____________________________________
           </h2>
@@ -1800,7 +1793,7 @@ export default {
     const toast = useToast();
     const showGenerateModal = ref(true);
     let show = ref(false);
-
+    let qrSrc = ref("");
     let certifiedUser = ref({});
     let certificateDetail = ref({});
     let isLoading = ref(false);
@@ -1964,7 +1957,7 @@ export default {
       store
         .dispatch("reviewer/getQrCode", qrParam)
         .then((res) => {
-          imageSrc.value = res.data.data;
+          imageSrc.value = res.data.data; 
         })
         .finally(() => {
           downloadPdf();
@@ -2021,21 +2014,39 @@ export default {
         html2canvas: { scale: 2 },
         jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
       };
+      const staticUrl = STATIC_CERTIFICATE_URL;
+      const userId = props.modalData.profile.id;
+      const applicationId = props.modalData.data.id;
+      const applicationType = "NewLicense";
 
-      html2pdf()
-        .set(opt)
-        .from(element)
-        .save(
-          finalData.value &&
-            finalData.value.profile &&
-            finalData.value.profile.name
-            ? finalData.value.profile.name +
-                " " +
-                new Date().toISOString().slice(0, 10)
-            : ""
-        );
+      const qrParam = { url: null };
 
-      updateLicenseGenerated();
+      qrParam.url =
+        staticUrl + "/" + applicationType + "/" + userId + "/" + applicationId;
+      store
+        .dispatch("reviewer/getQrCode", qrParam)
+        .then((res) => {
+          qrSrc.value = res.data.data;
+        })
+        .finally(() => {
+          html2pdf()
+            .set(opt)
+            .from(element)
+            .save(
+              finalData.value &&
+                finalData.value.profile &&
+                finalData.value.profile.name
+                ? finalData.value.profile.name +
+                    " " +
+                    new Date().toISOString().slice(0, 10)
+                : ""
+            );
+
+          updateLicenseGenerated();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     };
     const generate = () => {
       if (
@@ -2195,7 +2206,7 @@ export default {
               certificateDetail.value.educations[i].professionType
                 ? certificateDetail.value.educations[i].professionType.name
                 : certificateDetail.value.educations[i].otherProfessionType
-                 ? `${
+                ? `${
                     certificateDetail.value.educations[i].prefix
                       ? certificateDetail.value.educations[i].prefix.name
                       : ""
@@ -2223,7 +2234,6 @@ export default {
               certificateDetail.value.educations[i].professionType
                 ? certificateDetail.value.educations[i].professionType.name
                 : certificateDetail.value.educations[i].otherProfessionType
-            
                 ? `${
                     certificateDetail.value.educations[i].prefix
                       ? certificateDetail.value.educations[i].prefix.name
@@ -2747,6 +2757,7 @@ export default {
       isReprint,
       finalData,
       retrivalDate,
+      qrSrc,
       generateRetrival,
       today,
     };

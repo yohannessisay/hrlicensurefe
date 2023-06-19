@@ -59,8 +59,6 @@
             modalData &&
               modalData.data &&
               modalData.data.applicantType &&
-              finalData.printType != 'externship' &&
-              finalData.printType != 'temporary' &&
               (finalData.data.applicantType.code == 'ETH' ||
                 finalData.data.applicantType.code == 'ETHABRO')
           "
@@ -187,7 +185,7 @@
                     ተገቢውን መስፈርት አሟልተው ስለተገኙ ሚኒስቴር መስሪያ ቤቱ <br />
                     <div class="flex justify-center mt-8 mb-2">
                       <span
-                        v-for="department in modalData.educations"
+                        v-for="department in educations"
                         :key="department.id"
                         class="underline text-yellow-300 font-bold"
                         style="word-break: break-word"
@@ -279,7 +277,7 @@
                     ><br />
                     <div class="grid grid-rows-3 justify-center mt-8 mb-2">
                       <span
-                        v-for="department in modalData.educations"
+                        v-for="department in educations"
                         :key="department.id"
                         class="underline text-yellow-300 font-bold"
                         style="word-break: break-word"
@@ -1125,7 +1123,6 @@
             modalData &&
               modalData.data &&
               modalData.data.applicantType &&
-              
                 modalData.data.applicantType.code == 'FOR'
           "
           contenteditable="true"
@@ -1698,7 +1695,7 @@ export default {
       if (
         finalData.value.data &&
         finalData.value.data.applicantType &&
-        finalData.value.data.applicantType.code != "ETH"
+        finalData.value.data.applicantType.code == "FOR"
       ) {
         generateForeigner();
         return;
@@ -2403,6 +2400,7 @@ doc.text(
       retrivalDate,
       generateRetrival,
       today,
+      finalData,
     };
   },
 };

@@ -149,7 +149,8 @@
                                   >Full Name:</span
                                 >
                                 <span class="font-semibold text-grey-800 mb-1">
-                                {{ modalData.name }}</span>
+                                  {{ modalData.name }}</span
+                                >
                               </p>
                               <p class="text-gray-500">
                                 <span
@@ -166,7 +167,8 @@
                                   >Nationality:</span
                                 >
                                 <span class="font-semibold text-grey-800 mb-1">
-                                {{ modalData.nationality }}</span>
+                                  {{ modalData.nationality }}</span
+                                >
                               </p>
                               <p class="text-gray-500">
                                 <span
@@ -174,11 +176,12 @@
                                   >Date Of Birth:</span
                                 >
                                 <span class="font-semibold text-grey-800 mb-1">
-                                {{
-                                  modalData.dateOfBirth
-                                    ? modalData.dateOfBirth.slice(0, 10)
-                                    : ""
-                                }}</span>
+                                  {{
+                                    modalData.dateOfBirth
+                                      ? modalData.dateOfBirth.slice(0, 10)
+                                      : ""
+                                  }}</span
+                                >
                               </p>
                               <p class="text-gray-500">
                                 <span
@@ -186,7 +189,8 @@
                                   >Martial Status:</span
                                 >
                                 <span class="font-semibold text-grey-800 mb-1">
-                                {{ modalData.maritalStatus }}</span>
+                                  {{ modalData.maritalStatus }}</span
+                                >
                               </p>
                             </div>
                           </div>
@@ -223,23 +227,27 @@
                             </div>
                           </div>
                           <div class="grow ml-6">
-                            <h2 class="font-bold mb-1 text-2xl ">Contact Info</h2>
+                            <h2 class="font-bold mb-1 text-2xl ">
+                              Contact Info
+                            </h2>
                             <div class="border text-primary-600 rounded-lg p-2">
-                            <p class="text-gray-500">
-                              <span class="font-medium text-primary-700 mb-1"
-                                >Mobile Number:</span
-                              >
-                              <span class="font-semibold text-grey-800 mb-1">
-                              {{ modalData.mobileNumber }}</span>
-                            </p>
-                            <p class="text-gray-500">
-                              <span class="font-medium text-primary-700 mb-1"
-                                >Email:</span
-                              >
-                              <span class="font-semibold text-grey-800 mb-1">
-                              {{ modalData.email }}</span>
-                            </p>
-                          </div>
+                              <p class="text-gray-500">
+                                <span class="font-medium text-primary-700 mb-1"
+                                  >Mobile Number:</span
+                                >
+                                <span class="font-semibold text-grey-800 mb-1">
+                                  {{ modalData.mobileNumber }}</span
+                                >
+                              </p>
+                              <p class="text-gray-500">
+                                <span class="font-medium text-primary-700 mb-1"
+                                  >Email:</span
+                                >
+                                <span class="font-semibold text-grey-800 mb-1">
+                                  {{ modalData.email }}</span
+                                >
+                              </p>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -273,7 +281,9 @@
                             </div>
                           </div>
                           <div class="grow ml-6 mb-4">
-                            <h2 class="font-bold mb-1 text-2xl ">Education Detail</h2>
+                            <h2 class="font-bold mb-1 text-2xl ">
+                              Education Detail
+                            </h2>
 
                             <div
                               class="
@@ -351,7 +361,7 @@
                         >
                         <br />
                         <button
-                        v-if="adminRole!='REV'"
+                          v-if="adminRole != 'REV'"
                           class="
                             inline-block
                             px-6
@@ -379,7 +389,7 @@
                           Suspend
                         </button>
                         <button
-                        v-if="adminRole!='REV'"
+                          v-if="adminRole != 'REV'"
                           class="
                             inline-block
                             px-6
@@ -428,12 +438,21 @@
                           type="button"
                           data-bs-toggle="modal"
                           data-bs-target="#generatePdf"
-                          @click="changePrintType('foreigners')"
+                          @click="
+                            changePrintType(
+                              modalData &&
+                                modalData.data &&
+                                modalData.data.applicantType &&
+                                modalData.data.applicantType.code == 'FOR'
+                                ? 'foreigners'
+                                : ''
+                            )
+                          "
                         >
                           <i class="fa fa-file-text"></i>
                           Generate License
                         </button>
-                       
+
                         <button
                           v-if="showPreviousLicense"
                           type="button"
@@ -649,10 +668,7 @@ export default {
 
             userId.value = result.profile ? result.profile.userId : "";
             store
-              .dispatch(
-                "reviewerRenewal/getRenewalByUserId",
-                userId.value
-              )
+              .dispatch("reviewerRenewal/getRenewalByUserId", userId.value)
               .then((res) => {
                 let tempEd = [];
                 if (res.data && res.data.data && res.data.data.length > 0) {

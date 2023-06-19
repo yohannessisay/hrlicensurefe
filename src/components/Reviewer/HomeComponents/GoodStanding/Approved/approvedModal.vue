@@ -285,7 +285,9 @@
                                 <span class="text-grey-800 ml-2">
                                   {{
                                     modalData.data &&
+                                    modalData.data.GSProfessionals &&
                                     modalData.data.GSProfessionals
+                                      .educationLevel
                                       ? modalData.data.GSProfessionals
                                           .educationLevel.name
                                       : ""
@@ -563,7 +565,7 @@ export default {
         .then((res) => {
           if (res.data.status == "Success") {
             result = res.data.data;
-          
+
             modalData.value.name =
               result.profile.name +
               " " +
@@ -601,7 +603,7 @@ export default {
             modalData.value.documents = result.documents;
             modalDataGenerate.value = result;
             modalDataGenerate.value.withExperiance = false;
-           
+
             licenseData.value && licenseData.value.documents
               ? licenseData.value.documents.forEach((element) => {
                   if (element.documentTypeCode == "WESLFO") {
