@@ -195,7 +195,7 @@ export default {
             });
             setTimeout(() => {
               window.location.reload();
-            }, 3000);
+            }, 1000);
           } else {
             toast.error(res.data.message, {
               timeout: 5000,
@@ -204,9 +204,7 @@ export default {
               pauseOnHover: true,
               icon: true,
             });
-            setTimeout(() => {
-              window.location.reload();
-            }, 3000);
+          
           }
         })
         .catch((err) => {

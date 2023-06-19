@@ -5,11 +5,15 @@ axios.interceptors.response.use(
     return response;
   },
 
-  async (error) => {
+  async error => {
     if (error.request.status == 403 || error.request.status == 401) {
-      localStorage.clear();
-      router.go(-1);
-   
+      if (
+        !router.currentRoute.value.name == "Home" ||
+        !router.currentRoute.value.name == "Admin"
+      ) {
+        localStorage.clear();
+        location.reload();
+      }
     }
   }
 );
@@ -25,7 +29,7 @@ const ApiService = {
   get(resource, config, needsAuth = true) {
     return axios.get(resource, {
       ...config,
-      headers: authHeaders(needsAuth),
+      headers: authHeaders(needsAuth)
     });
   },
 
@@ -33,7 +37,7 @@ const ApiService = {
     return axios.get(resource, {
       headers: authHeaders(true),
       responseType: "blob",
-      timeout: 30000,
+      timeout: 30000
     });
   },
 
@@ -41,13 +45,13 @@ const ApiService = {
     return axios.get(resource, {
       responseType: "arraybuffer",
       timeout: 30000,
-      headers: authHeaders(true),
+      headers: authHeaders(true)
     });
   },
 
   post(resource, data, needsAuth = true) {
     return axios.post(resource, data, {
-      headers: authHeaders(needsAuth),
+      headers: authHeaders(needsAuth)
     });
   },
 
@@ -55,35 +59,35 @@ const ApiService = {
     return axios.post(resource, data, {
       headers: {
         "Content-Type": "multipart/form-data",
-        ...authHeaders(needsAuth),
-      },
+        ...authHeaders(needsAuth)
+      }
     });
   },
 
   put(resource, data, needsAuth = true) {
     return axios.put(resource, data, {
-      headers: authHeaders(needsAuth),
+      headers: authHeaders(needsAuth)
     });
   },
 
   patch(resource, data) {
     return axios.patch(resource, data, {
-      headers: authHeaders(true),
+      headers: authHeaders(true)
     });
   },
 
   delete(resource) {
     return axios.delete(resource, {
-      headers: authHeaders(true),
+      headers: authHeaders(true)
     });
-  },
+  }
 };
 
 function authHeaders(needsAuth) {
   const token = localStorage.getItem("token");
   return needsAuth
     ? {
-        Authorization: token ? `Bearer ${token}` : "",
+        Authorization: token ? `Bearer ${token}` : ""
       }
     : {};
 }

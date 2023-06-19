@@ -513,6 +513,7 @@ export default {
             .then((res) => {
               isLoading.value = false;
               if (res.data.status == "Success") {
+                window.localStorage.removeItem("applicantTypeSelected");
                 window.localStorage.removeItem("NLApplicationData");
                 indexedDB.deleteDatabase("NLdocumentUploads");
                 toast.success("Applied successfuly", {

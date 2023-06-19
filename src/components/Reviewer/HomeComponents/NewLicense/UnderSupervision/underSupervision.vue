@@ -236,8 +236,7 @@
                   ></vue-table-lite>
                   <edit-modal
                     v-if="showModal"
-                    :modalDataId="modalDataId"
-                    :reviewers="reviewers"
+                    :modalDataId="modalDataId" 
                   >
                   </edit-modal>
                 </div>
@@ -495,8 +494,7 @@ export default {
       id: "",
       change: 0,
     });
-    let allInfo = [];
-    let reviewers = ref([]);
+    let allInfo = []; 
     let searchTerm = ref("");
     let searchTermOthers = ref("");
     let searchTermFromDate = ref("");
@@ -748,11 +746,7 @@ export default {
     };
     const rowClicked = (row) => {
       if (row != undefined) {
-        store.dispatch("reviewer/getAdmins").then((res) => {
-          reviewers.value = res?.data?.data.filter((e) => {
-            return e.role.code !== "UM";
-          });
-        });
+     
 
         row = JSON.parse(JSON.stringify(row));
 
@@ -873,8 +867,7 @@ export default {
       searchTermFromDateOth,
       searchTermToDateOth,
       toYouTable,
-      showModal,
-      reviewers,
+      showModal, 
       tableLoadingFinish,
       tableLoadingFinishOthers,
       rowClicked,

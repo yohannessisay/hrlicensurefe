@@ -796,12 +796,10 @@ export default {
         { key: "page", value: 0 },
         { key: "size", value: 10 },
       ]);
-      adminRole && adminRole != "REV"
-        ? returnedByOthers([
+     returnedByOthers([
             { key: "page", value: 0 },
             { key: "size", value: 10 },
-          ])
-        : "";
+          ]);
       store.dispatch("reviewer/getAdminsByRegion", adminRegion).then((res) => {
         reviewers.value = res.data.data.filter((e) => {
           return e.role.code !== "UM";

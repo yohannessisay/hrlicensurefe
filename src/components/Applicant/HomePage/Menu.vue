@@ -193,7 +193,9 @@
         >
           <h2
             :class="
-              isDarkMode ? 'text-white xl:mx-12' : 'text-main-400 xl:mx-12'
+              isDarkMode
+                ? 'text-white xl:mx-12 text-2xl'
+                : 'text-main-400 text-2xl xl:mx-12'
             "
           >
             Document specification for new License
@@ -244,7 +246,7 @@
                     md:mb-6
                   "
                 >
-                  Required Documents for New License
+                  Required Documents for New License Application
                 </h1>
               </div>
 
@@ -286,10 +288,9 @@
                         >(hover over lists to see details)</small
                       >
                     </div>
+
                     <div class="p-6 mb-2" v-if="NLdocumentSpecs">
-                      <ul
-                        :class="isDarkMode ? 'bg-secondaryDark' : 'bg-white'"
-                      >
+                      <ul :class="isDarkMode ? 'bg-secondaryDark' : 'bg-white'">
                         <li
                           :class="
                             isDarkMode
@@ -525,6 +526,7 @@
                               px-6
                               rounded-sm
                             "
+                            @click="setApplicantType('Ethiopian')"
                           >
                             Get Started
                           </button>
@@ -572,9 +574,7 @@
                     </div>
 
                     <div class="p-6 mb-2" v-if="NLdocumentSpecs">
-                      <ul
-                        :class="isDarkMode ? 'bg-secondaryDark' : 'bg-white'"
-                      >
+                      <ul :class="isDarkMode ? 'bg-secondaryDark' : 'bg-white'">
                         <li
                           :class="
                             isDarkMode
@@ -705,8 +705,6 @@
                           Current Work Experience / Goodstanding Letter
                         </li>
 
-                       
-
                         <li
                           :class="
                             isDarkMode
@@ -737,6 +735,7 @@
                               px-6
                               rounded-sm
                             "
+                            @click="setApplicantType('Foreign')"
                           >
                             Get Started
                           </button>
@@ -784,9 +783,7 @@
                       >
                     </div>
                     <div class="p-6 mb-2" v-if="NLdocumentSpecs">
-                      <ul
-                        :class="isDarkMode ? 'bg-secondaryDark' : 'bg-white'"
-                      >
+                      <ul :class="isDarkMode ? 'bg-secondaryDark' : 'bg-white'">
                         <li
                           :class="
                             isDarkMode
@@ -931,6 +928,7 @@
                               px-6
                               rounded-sm
                             "
+                            @click="setApplicantType('EthiopianFromAbroad')"
                           >
                             Get Started
                           </button>
@@ -1077,9 +1075,7 @@
                       >
                     </div>
                     <div class="p-6 mb-2" v-if="RNdocumentSpecs">
-                      <ul
-                        :class="isDarkMode ? 'bg-secondaryDark' : 'bg-white'"
-                      >
+                      <ul :class="isDarkMode ? 'bg-secondaryDark' : 'bg-white'">
                         <li
                           :class="
                             isDarkMode
@@ -1174,8 +1170,6 @@
                           ></i>
                           Work Experience
                         </li>
-
-                   
                       </ul>
                       <div class="mt-6 py-4">
                         <a href="/Applicant/Renewal">
@@ -1188,6 +1182,7 @@
                               px-6
                               rounded-sm
                             "
+                            @click="setApplicantType('Ethiopian')"
                           >
                             Get Started
                           </button>
@@ -1235,9 +1230,7 @@
                       >
                     </div>
                     <div class="p-6 mb-2" v-if="RNdocumentSpecs">
-                      <ul
-                        :class="isDarkMode ? 'bg-secondaryDark' : 'bg-white'"
-                      >
+                      <ul :class="isDarkMode ? 'bg-secondaryDark' : 'bg-white'">
                         <li
                           :class="
                             isDarkMode
@@ -1325,6 +1318,7 @@
                               px-6
                               rounded-sm
                             "
+                            @click="setApplicantType('EthiopianFromAbroad')"
                           >
                             Get Started
                           </button>
@@ -1372,9 +1366,7 @@
                       >
                     </div>
                     <div class="p-6 mb-2" v-if="RNdocumentSpecs">
-                      <ul
-                        :class="isDarkMode ? 'bg-secondaryDark' : 'bg-white'"
-                      >
+                      <ul :class="isDarkMode ? 'bg-secondaryDark' : 'bg-white'">
                         <li
                           :class="
                             isDarkMode
@@ -1462,6 +1454,7 @@
                               px-6
                               rounded-sm
                             "
+                            @click="setApplicantType('Foreign')"
                           >
                             Get Started
                           </button>
@@ -1683,7 +1676,7 @@ import "../../../styles/applicant.css";
 import { useStore } from "vuex";
 export default {
   components: { SideNav, TopNav },
-  setup(props, { emit }) {
+  setup() {
     const store = useStore();
     const id = +localStorage.getItem("userId");
     let isFirstTime = ref(false);
@@ -1723,6 +1716,48 @@ export default {
         userInfo.value.pic = profile.profilePicture
           ? googleApi + profile.profilePicture.filePath
           : "";
+      }
+    };
+    const setApplicantType = (type) => {
+      switch (type) {
+        case "Ethiopian":
+          localStorage.setItem(
+            "applicantTypeSelected",
+            JSON.stringify({
+              code: "ETH",
+              createdAt: "2021-11-17T17:29:25.271Z",
+              id: 1,
+              name: "Ethiopian",
+              updatedAt: "2021-11-17T17:29:25.271Z",
+            })
+          );
+          break;
+        case "EthiopianFromAbroad":
+          localStorage.setItem(
+            "applicantTypeSelected",
+            JSON.stringify({
+              code: "ETHABRO",
+              createdAt: "2021-11-17T17:29:25.271Z",
+              id: 3,
+              name: "Ethiopian From Abroad",
+              updatedAt: "2021-11-17T17:29:25.271Z",
+            })
+          );
+          break;
+        case "Foreign":
+          localStorage.setItem(
+            "applicantTypeSelected",
+            JSON.stringify({
+              code: "FOR",
+              createdAt: "2021-11-17T17:29:25.271Z",
+              id: 2,
+              name: "Foreigner",
+              updatedAt: "2021-11-17T17:29:25.271Z",
+            })
+          );
+          break;
+        default:
+          break;
       }
     };
     onMounted(() => {
@@ -1852,6 +1887,7 @@ export default {
       GSdocumentSpecs,
       modeToggle,
       isDarkMode,
+      setApplicantType,
     };
   },
 };

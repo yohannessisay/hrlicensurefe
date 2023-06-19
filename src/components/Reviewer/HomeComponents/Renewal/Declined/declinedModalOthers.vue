@@ -218,18 +218,26 @@
                           </div>
                           <div class="grow ml-6">
                             <h2 class="font-bold mb-1">Contact Info</h2>
+                            <div class="border text-primary-600 rounded-md p-2">
                             <p class="text-gray-500">
                               <span class="font-medium text-primary-700 mb-1"
                                 >Mobile Number:</span
                               >
-                              {{ modalData.mobileNumber }}
+                              <span class="text-grey-800 ml-2 "> {{ modalData.mobileNumber }}</span>
                             </p>
                             <p class="text-gray-500">
                               <span class="font-medium text-primary-700 mb-1"
                                 >Email:</span
                               >
-                              {{ modalData.email }}
+                              <span class="text-grey-800 ml-2"> {{ modalData.email }}</span>
                             </p>
+                            <p class="text-gray-500">
+                              <span class="font-medium text-primary-700 mb-1"
+                                >Reason for decline:</span
+                              >
+                              <span class="text-grey-800 ml-2">{{ modalData.remark?modalData.remark:'' }}</span>
+                            </p>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -284,44 +292,44 @@
                                   class="font-semibold text-primary-700 mb-1"
                                   >Department:</span
                                 >
-                                {{
+                                <span class="text-grey-800 ml-2 ">{{
                                   education.department
                                     ? education.department.name
                                     : ""
-                                }}
+                                }}</span>
                               </p>
                               <p class="text-gray-500">
                                 <span
                                   class="font-semibold text-primary-700 mb-1"
                                   >Education Level:</span
                                 >
-                                {{
+                                <span class="text-grey-800 ml-2 ">{{
                                   education.educationLevel
                                     ? education.educationLevel.name
                                     : ""
-                                }}
+                                }}</span>
                               </p>
                               <p class="text-gray-500">
                                 <span
                                   class="font-semibold text-primary-700 mb-1"
                                   >Profession:</span
                                 >
-                                {{
+                                <span class="text-grey-800 ml-2 ">{{
                                   education.professionType
                                     ? education.professionType.name
                                     : ""
-                                }}
+                                }}</span>
                               </p>
                               <p class="text-gray-500">
                                 <span
                                   class="font-semibold text-primary-700 mb-1"
                                   >Institution:</span
                                 >
-                                {{
+                                <span class="text-grey-800 ml-2 ">{{
                                   education.institution
                                     ? education.institution.name
                                     : ""
-                                }}
+                                }}</span>
                               </p>
                             </div>
                           </div>

@@ -221,7 +221,6 @@
                   "
                 >
                   <vue-table-lite
-                    
                     :is-loading="assignedToYouTable.isLoading"
                     :columns="assignedToYouTable.columns"
                     :rows="assignedToYouTable.rows"
@@ -430,7 +429,6 @@
                   "
                 >
                   <vue-table-lite
-                    
                     :is-loading="assignedToOthersTable.isLoading"
                     :columns="assignedToOthersTable.columns"
                     :rows="assignedToOthersTable.rows"
@@ -474,7 +472,7 @@ export default {
     MainBody,
     editModal,
     VueTableLite,
-    EditModalOthers
+    EditModalOthers,
   },
   setup() {
     const store = useStore();
@@ -503,26 +501,26 @@ export default {
       change: 0,
     });
 
-    let allInfo = ref({});
-    let allInfoRes = ref({});
+    let allInfo = [];
+    let allInfoRes = [];
 
-    const assignedToYouTable = ref({});
-    const assignedToOthersTable = ref([]);
+    let assignedToYouTable = ref({});
+    let assignedToOthersTable = ref([]);
     assignedToYouTable.value = {
       isLoading: true,
     };
     assignedToOthersTable.value = {
       isLoading: true,
     };
-    let tableData = ref([]);
-    let othersTable = ref([]);
+    let tableData = [];
+    let othersTable = [];
     const clearFilters = () => {
       searchTerm.value = "";
       searchTermFromDate.value = "";
       searchTermToDate.value = "";
       assignedToYouTable.value.isLoading = true;
       assignedToYouTable.value.rows = [];
-      tableData.value = [];
+
       assignedToYou([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
@@ -538,7 +536,7 @@ export default {
       searchTermToDateOthers.value = "";
       assignedToOthersTable.value.isLoading = true;
       assignedToOthersTable.value.rows = [];
-      othersTable.value = [];
+   
       assignedToOthers([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
@@ -552,17 +550,17 @@ export default {
       let subId = statuses
         ? statuses.filter((stat) => stat.code == "IRV")[0].id
         : "";
-
+      tableData = [];
       store
         .dispatch("reviewerGoodStanding/getGoodstandingsByStatus", [
           { statusId: subId },
           { params: apiParameters },
         ])
         .then((res) => {
-          allInfo.value = res ? res.rows : [];
-          if (allInfo.value) {
-            allInfo.value.forEach((element) => {
-              tableData.value.push({
+          allInfo = res ? res.rows : [];
+          if (allInfo) {
+            allInfo.forEach((element) => {
+              tableData.push({
                 LicenseNumber: element.goodStandingCode,
                 ApplicantName:
                   (element.profile ? element.profile.name : "") +
@@ -622,7 +620,7 @@ export default {
                 },
               },
             ],
-            rows: tableData.value,
+            rows: tableData,
             totalRecordCount: res.count,
             sortable: {
               order: "id",
@@ -636,16 +634,17 @@ export default {
       let updId = statuses
         ? statuses.filter((stat) => stat.code == "IRV")[0].id
         : "";
+      othersTable = [];
       store
         .dispatch("reviewerGoodStanding/getOtherGoodstandingsByStatus", [
           { statusId: updId },
           { params: apiParameters },
         ])
         .then((res) => {
-          allInfoRes.value = res && res.rows ? res.rows : [];
+          allInfoRes = res && res.rows ? res.rows : [];
 
-          allInfoRes.value.forEach((element) => {
-            othersTable.value.push({
+          allInfoRes.forEach((element) => {
+            othersTable.push({
               LicenseNumber: element.goodStandingCode,
               ApplicantName:
                 (element.profile ? element.profile.name : "") +
@@ -703,7 +702,7 @@ export default {
                 },
               },
             ],
-            rows: othersTable.value,
+            rows: othersTable,
             totalRecordCount: res.count,
             sortable: {
               order: "id",
@@ -750,7 +749,7 @@ export default {
     const searchApplication = () => {
       assignedToYouTable.value.isLoading = true;
       assignedToYouTable.value.rows = [];
-      tableData.value = [];
+     
       assignedToYou([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
@@ -768,7 +767,7 @@ export default {
     const searchApplicationOthers = () => {
       assignedToOthersTable.value.isLoading = true;
       assignedToOthersTable.value.rows = [];
-      othersTable.value = [];
+    
       assignedToOthers([
         { key: "page", value: 0 },
         { key: "size", value: 10 },

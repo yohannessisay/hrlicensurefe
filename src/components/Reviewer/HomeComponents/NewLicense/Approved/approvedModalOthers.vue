@@ -165,7 +165,6 @@
                                 >
                                 <span class="text-grey-800">
                                   {{ modalData.name }}
-                                  
                                 </span>
                               </p>
                               <p class="text-gray-500">
@@ -396,38 +395,58 @@
                           lg:px-6
                         "
                       >
-                        <button
-                          class="
-                            inline-block
-                            px-6
-                            py-2.5
-                            bg-blue-600
-                            hover:text-primary-600 hover:border
-                            text-white
-                            font-medium
-                            text-xs
-                            leading-tight
-                            uppercase
-                            rounded
-                            shadow-lg
-                            hover:bg-blue-700 hover:shadow-lg
-                            focus:bg-blue-700
-                            focus:shadow-lg
-                            focus:outline-none
-                            focus:ring-0
-                            active:bg-blue-800 active:shadow-lg
-                            transition
-                            duration-150
-                            ease-in-out
-                          "
-                          type="button"
-                          data-bs-toggle="collapse"
-                          data-bs-target="#collapseExample"
-                          aria-expanded="false"
-                          aria-controls="collapseExample"
-                        >
-                          Show Attached Documents
-                        </button>
+                        <div class="flex items-start">
+                          <div class="shrink-0">
+                            <div
+                              class="
+                                p-4
+                                bg-blue-600
+                                rounded-md
+                                shadow-lg
+                                w-48
+                                h-48
+                                flex
+                                items-center
+                                justify-center
+                              "
+                            >
+                              <i
+                                class="bx bx-certification text-largeDisplay"
+                              ></i>
+                            </div>
+                          </div>
+                          <div class="grow ml-6">
+                            <h2 class="font-bold mb-1 text-xl">
+                              License Detail
+                            </h2>
+                            <p class="text-gray-500">
+                              <span class="font-medium text-primary-700 mb-1"
+                                >Approved By:</span
+                              >
+                              {{
+                                modalData.data &&
+                                modalData.data.licenseReviewer &&
+                                modalData.data.licenseReviewer.reviewer
+                                  ? modalData.data.licenseReviewer.reviewer.name
+                                  : ""
+                              }}
+                            </p>
+                            <p class="text-gray-500">
+                              <span class="font-medium text-primary-700 mb-1"
+                                >Licensed Date:</span
+                              >
+                              {{
+                                modalData.data ? modalData.data.certifiedDate.slice(0,10) : ""
+                              }}
+                            </p>
+                            <p class="text-gray-500">
+                              <span class="font-medium text-primary-700 mb-1"
+                                >Expiration Date:</span
+                              >
+                              {{ modalData.data ? modalData.data.licenseExpirationDate.slice(0,10) : "" }}
+                            </p>
+                          </div>
+                        </div>
                       </div>
                     </div>
 
@@ -491,6 +510,39 @@
           "
         >
           <button
+            class="
+                            inline-block
+                            px-6
+                            m-2
+                            py-2.5
+                            bg-blue-600
+                            hover:text-primary-600 hover:border
+                            text-white
+                            font-medium
+                            text-xs
+                            leading-tight
+                            uppercase
+                            rounded
+                            shadow-lg
+                            hover:bg-blue-700 hover:shadow-lg
+                            focus:bg-blue-700
+                            focus:shadow-lg
+                            focus:outline-none
+                            focus:ring-0
+                            active:bg-blue-800 active:shadow-lg
+                            transition
+                            duration-150
+                            ease-in-out
+                          "
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapseExample"
+            aria-expanded="false"
+            aria-controls="collapseExample"
+          >
+            Show Attached Documents
+          </button>
+          <button
             type="button"
             class="
               inline-block
@@ -550,7 +602,6 @@ export default {
     let result = {};
 
     const check = () => {
-    
       store
         .dispatch(
           "reviewer/getNewLicenseApplication",

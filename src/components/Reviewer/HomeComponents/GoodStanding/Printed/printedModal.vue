@@ -404,59 +404,73 @@
                                   text-primary-500
                                 "
                             >
-                            <p class="text-gray-500">
-                              <span
-                                class="font-bold text-xl text-primary-700 mb-1"
-                                >Printed Date:</span
-                              >
-                              <span class="text-grey-800"> {{
-                                modalData &&
-                                modalData.data &&
-                                modalData.data.certifiedDate
-                                  ? modalData.data.certifiedDate.slice(0, 10)
-                                  : ""
-                              }}</span>
-                            </p>
+                              <p class="text-gray-500">
+                                <span
+                                  class="font-bold text-xl text-primary-700 mb-1"
+                                  >Printed Date:</span
+                                >
+                                <span class="text-grey-800">
+                                  {{
+                                    modalData &&
+                                    modalData.data &&
+                                    modalData.data.certifiedDate
+                                      ? modalData.data.certifiedDate.slice(
+                                          0,
+                                          10
+                                        )
+                                      : ""
+                                  }}</span
+                                >
+                              </p>
 
-                            <p class="text-gray-500">
-                              <span
-                                class="font-bold text-xl text-primary-700 mb-1"
-                                >Reviewer Name:</span
-                              >
-                              <span class="text-grey-800"> {{
-                                modalData && modalData.data &&
-                                modalData.data.goodstandingReviewer
-                                  ? modalData.data.goodstandingReviewer.reviewer
-                                      .name
-                                  : ""
-                              }}</span>
-                            </p>
-                            <p class="text-gray-500">
-                              <span
-                                class="font-bold text-xl text-primary-700 mb-1"
-                                >Reviewer Phone:</span
-                              >
-                              <span class="text-grey-800"> {{
-                                modalData && modalData.data &&
-                                modalData.data.goodstandingReviewer
-                                  ? modalData.data.goodstandingReviewer.reviewer
-                                      .phoneNumber
-                                  : ""
-                              }}</span>
-                            </p>
-                            <p class="text-gray-500">
-                              <span
-                                class="font-bold text-xl text-primary-700 mb-1"
-                                >Reviewer Email:</span
-                              >
-                          <span class="text-grey-800">  {{
-                                modalData && modalData.data &&
-                                modalData.data.goodstandingReviewer
-                                  ? modalData.data.goodstandingReviewer.reviewer
-                                      .email
-                                  : ""
-                              }}</span>  
-                            </p>
+                              <p class="text-gray-500">
+                                <span
+                                  class="font-bold text-xl text-primary-700 mb-1"
+                                  >Reviewer Name:</span
+                                >
+                                <span class="text-grey-800">
+                                  {{
+                                    modalData &&
+                                    modalData.data &&
+                                    modalData.data.goodstandingReviewer
+                                      ? modalData.data.goodstandingReviewer
+                                          .reviewer.name
+                                      : ""
+                                  }}</span
+                                >
+                              </p>
+                              <p class="text-gray-500">
+                                <span
+                                  class="font-bold text-xl text-primary-700 mb-1"
+                                  >Reviewer Phone:</span
+                                >
+                                <span class="text-grey-800">
+                                  {{
+                                    modalData &&
+                                    modalData.data &&
+                                    modalData.data.goodstandingReviewer
+                                      ? modalData.data.goodstandingReviewer
+                                          .reviewer.phoneNumber
+                                      : ""
+                                  }}</span
+                                >
+                              </p>
+                              <p class="text-gray-500">
+                                <span
+                                  class="font-bold text-xl text-primary-700 mb-1"
+                                  >Reviewer Email:</span
+                                >
+                                <span class="text-grey-800">
+                                  {{
+                                    modalData &&
+                                    modalData.data &&
+                                    modalData.data.goodstandingReviewer
+                                      ? modalData.data.goodstandingReviewer
+                                          .reviewer.email
+                                      : ""
+                                  }}</span
+                                >
+                              </p>
                             </div>
                           </div>
                         </div>

@@ -449,9 +449,7 @@ export default {
             { key: "fromDate", value: searchTermFromDate.value },
             { key: "toDate", value: searchTermToDate.value },
           ]);
-        }
-        toYouTable.value.sortable.order = order;
-        toYouTable.value.sortable.sort = sort;
+        }  
       }, 600);
     };
     return {

@@ -36,7 +36,7 @@
           text-current
         "
       >
-   <div
+        <div
           class="
             modal-header
             flex flex-shrink-0
@@ -71,7 +71,9 @@
               ease-in-out"
             data-bs-dismiss="modal"
             aria-label="Close"
-          ><i class="fa fa-close fa-2x"></i></button>
+          >
+            <i class="fa fa-close fa-2x"></i>
+          </button>
         </div>
         <div class="vld-parent mt-4">
           <loading
@@ -125,7 +127,7 @@
                                 justify-center
                               "
                             >
-                                 <picture>
+                              <picture>
                                 <source
                                   :srcset="
                                     modalData.profile &&
@@ -271,11 +273,38 @@
                                   }}</span
                                 >
                               </p>
+                              <p class="text-gray-500">
+                                <span class="font-medium text-primary-700 mb-1"
+                                  >Letter Given By:</span
+                                >
+                                <span class="text-grey-800 ml-2">
+                                  {{
+                                    modalData.data &&
+                                    modalData.data.goodstandingReviewer &&
+                                    modalData.data.goodstandingReviewer.reviewer
+                                      ? modalData.data.goodstandingReviewer
+                                          .reviewer.name
+                                      : ""
+                                  }}</span
+                                >
+                              </p>
+                              <p class="text-gray-500">
+                                <span class="font-medium text-primary-700 mb-1"
+                                  >Letter Printed Date:</span
+                                >
+                                <span class="text-grey-800 ml-2">
+                                  {{
+                                    modalData.data &&
+                                    modalData.data.certifiedDate 
+                                      ? modalData.data.certifiedDate.slice(0,10)
+                                      : ""
+                                  }}</span
+                                >
+                              </p>
                             </div>
                           </div>
                         </div>
                       </div>
-                   
 
                       <div
                         class="
@@ -387,7 +416,11 @@
                               <div class="mt-large bg-white">
                                 <a
                                   :href="googleApi + document.filePath"
-                                  :data-title="document.documentType.name?document.documentType.name:''"
+                                  :data-title="
+                                    document.documentType.name
+                                      ? document.documentType.name
+                                      : ''
+                                  "
                                   data-lightbox="example-2"
                                 >
                                   <img
@@ -399,7 +432,13 @@
                                 <h4 style="font-weight: bold">
                                   Document Type
                                 </h4>
-                                <h5 class="text-primary-500">{{ document.documentType.name?document.documentType.name:'' }}</h5>
+                                <h5 class="text-primary-500">
+                                  {{
+                                    document.documentType.name
+                                      ? document.documentType.name
+                                      : ""
+                                  }}
+                                </h5>
                               </div>
                             </div>
                           </div>
@@ -479,7 +518,6 @@ export default {
       show.value = true;
     };
 
-    
     const modalData = ref({});
     let result = {};
 
@@ -519,7 +557,7 @@ export default {
               : "-----";
             modalData.value.email = result.applicant.emailAddress
               ? result.applicant.emailAddress
-              : "-----"; 
+              : "-----";
             modalData.value.profile = result.profile;
             modalData.value.professionalTypes = result.licenseProfessions;
             modalData.value.certifiedDate = result.certifiedDate;
@@ -527,7 +565,7 @@ export default {
               result.licenseExpirationDate;
             modalData.value.documents = result.documents;
             modalData.value.data = result;
-            isLoading.value=false
+            isLoading.value = false;
           }
         });
     };
@@ -543,9 +581,9 @@ export default {
       showModal,
       check,
       isLoading,
-     
+
       modalData,
-      googleApi
+      googleApi,
     };
   },
 };
