@@ -123,4 +123,13 @@ export default {
       return error;
     }
   },
+  async getIndividualDetail(context, adminId) {
+    try {
+      const resp = await ApiService.get(baseUrl + "/admin/report/getIndividualDetail/" + adminId);
+      return resp;
+    } catch (error) {
+      const resp = error;
+      return resp;
+    }
+  },
 };

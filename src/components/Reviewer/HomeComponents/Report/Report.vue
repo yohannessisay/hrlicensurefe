@@ -333,6 +333,7 @@
                       aria-label="Default select example"
                     >
                       <option value="">All</option>
+                      <option value="0">Federal</option>
                       <option
                         v-for="region in regions"
                         :value="region.id"
