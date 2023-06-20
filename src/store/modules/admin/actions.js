@@ -123,6 +123,20 @@ export default {
       return resp;
     }
   },
+  async getAllAdminsForReport(id, parameters) {
+    try {
+      let url =
+        baseUrl +
+        `/admins/getAllAdminsForReport?page=${parameters[0]}&size=${
+          parameters[1]
+        }&value=${parameters[2] ? parameters[2] : ""}`;
+      const resp = await ApiService.get(url);
+      return resp.data.data;
+    } catch (error) {
+      const resp = error;
+      return resp;
+    }
+  },
   async getAdminById(context, adminId) {
     try {
       const resp = await ApiService.get(baseUrl + "/admins/" + adminId);

@@ -64,7 +64,7 @@
           ></apexchart>
         </div>
       </div>
-      <div class="grid grid-cols-3 ">
+      <div class="grid grid-cols-3 lg:grid-cols-4 ">
         <div class="bg-white shadow-md m-2 rounded-md p-2 mb-20">
           <apexchart
             type="pie"

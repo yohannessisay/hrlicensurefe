@@ -48,7 +48,6 @@ const routes = [
     name: "verifyOTP",
     component: () => import("../components/Signup/verifyOTP.vue")
   },
- 
 
   {
     path: "/admin/resetpassword/:id/:token",
@@ -60,7 +59,7 @@ const routes = [
     name: "ResetPassword",
     component: () => import("../views/ResetPasswordUser.vue")
   },
- 
+
   {
     name: "Google-Form",
     path: "/google-form",
@@ -74,7 +73,7 @@ const routes = [
     path: "/scanned-certified-user/:applicationType/:userId/:applicationId",
     name: "scannedCertifiedUser",
     component: () =>
-      import("../components/Applicant/Shared/ScannedCertificate.vue"),
+      import("../components/Applicant/Shared/ScannedCertificate.vue")
   },
   /******************************************************************************************************************************************/
   /**************2-APPLICANT SIDE ROUTES*****************/
@@ -670,6 +669,14 @@ const routes = [
     name: "AdminReport",
     component: () =>
       import("../components/Reviewer/HomeComponents/Report/Report.vue")
+  },
+  {
+    path: "/admin/report/individualReport",
+    name: "IndividualAdminReport",
+    component: () =>
+      import(
+        "../components/Reviewer/HomeComponents/Report/IndividualReport.vue"
+      )
   },
 
   //Admin Legacy Data
