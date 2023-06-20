@@ -5,7 +5,7 @@ import {
   ADD_ADMIN_LOADING,
   ADD_ADMIN_SUCCESS,
   ADD_ADMIN_ERROR,
-  SET_APPLICATION_STATUSES,
+  SET_APPLICATION_STATUSES
 } from "./mutation-types";
 
 export default {
@@ -44,7 +44,7 @@ export default {
       console.log(error);
     }
   },
-  async getRole({ commit }) {
+  async getRole() {
     // commit(ADD_ADMIN_LOADING);
     try {
       const resp = await ApiService.get(baseUrl + "/roles");
@@ -153,5 +153,5 @@ export default {
     } catch (error) {
       return error;
     }
-  },
+  }
 };
