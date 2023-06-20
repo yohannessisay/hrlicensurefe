@@ -60,7 +60,7 @@
           <a href="#IndividualReport">
             <i class="bx bx-user"></i>
 
-            <span class="links_name">Individual Report</span>
+            <span class="links_name">Reviewer Report</span>
           </a>
         </li>
       </router-link>
