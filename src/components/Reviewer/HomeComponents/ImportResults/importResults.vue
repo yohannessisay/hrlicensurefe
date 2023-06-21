@@ -1131,7 +1131,7 @@ export default {
                 finalArray[i].registrationNo ===
                 checkforExisting[j].registrationNo
               ) {
-                timeOut += 1000;
+                timeOut += 2000;
                 errorForExisting.push({
                   row: i,
                   column: 1,
@@ -1144,7 +1144,7 @@ export default {
                     finalArray[i].registrationNo +
                     "",
                   {
-                    timeout: 6000 + timeOut,
+                    timeout: 10000 + timeOut,
                     position: "bottom-center",
                     pauseOnFocusLoss: true,
                     pauseOnHover: true,
@@ -1335,4 +1335,5 @@ export default {
 .blurBackground {
   filter: blur(3px);
 }
+ 
 </style>

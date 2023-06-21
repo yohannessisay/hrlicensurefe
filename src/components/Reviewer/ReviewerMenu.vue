@@ -149,13 +149,24 @@
           </a>
         </li>
       </router-link>
+
+      <router-link to="/admin/statusLog">
+        <li class="mb-2">
+          <a href="#StatusLog">
+            <i class="bx bx-book"></i>
+            <span class="links_name">Status Log</span>
+          </a>
+        </li>
+      </router-link>
     </ul>
   </reviewer-side-bar>
 
   <!-- Sidebar -->
   <section class="home-section">
     <!-- Header -->
-    <reviewer-nav-bar><h2>Home</h2></reviewer-nav-bar>
+    <reviewer-nav-bar>
+      <h2>Home</h2>
+    </reviewer-nav-bar>
     <!-- Header -->
 
     <!-- Main Content -->
@@ -167,7 +178,6 @@
 </template>
 
 <script>
-import { ref } from "vue";
 import ReviewerNavBar from "./SharedComponents/navBar.vue";
 import ReviewerSideBar from "./ReviewerSideNav.vue";
 import ReviewerMainContent from "./ReviewerMainContent.vue";
@@ -177,7 +187,7 @@ export default {
   components: {
     ReviewerNavBar,
     ReviewerSideBar,
-    ReviewerMainContent,
+    ReviewerMainContent
   },
   setup() {
     const store = useStore();
@@ -213,7 +223,7 @@ export default {
               position: "bottom-right",
               pauseOnFocusLoss: true,
               pauseOnHover: true,
-              icon: true,
+              icon: true
             }
           );
         }
@@ -227,12 +237,12 @@ export default {
               position: "bottom-right",
               pauseOnFocusLoss: true,
               pauseOnHover: true,
-              icon: true,
+              icon: true
             }
           );
         }
         break;
-        case "Edge":
+      case "Edge":
         if (Number(navigator.browserSpecs.version) < 44) {
           toast.warning(
             `Your browser version ${navigator.browserSpecs.version} is below the recomended version for eHPEL, please update before going any further`,
@@ -241,12 +251,12 @@ export default {
               position: "bottom-right",
               pauseOnFocusLoss: true,
               pauseOnHover: true,
-              icon: true,
+              icon: true
             }
           );
         }
         break;
-        case "Firefox":
+      case "Firefox":
         if (Number(navigator.browserSpecs.version) < 80) {
           toast.warning(
             `Your browser version ${navigator.browserSpecs.version} is below the recomended version for eHPEL, please update before going any further`,
@@ -255,14 +265,14 @@ export default {
               position: "bottom-right",
               pauseOnFocusLoss: true,
               pauseOnHover: true,
-              icon: true,
+              icon: true
             }
           );
         }
         break;
       default:
         break;
-    } 
+    }
     const adminData = JSON.parse(localStorage.getItem("allAdminData"));
     store.dispatch("ReviewerSideNav/assignSelectedSideBar", "mainPage");
     let currentMenu = store.getters["ReviewerSideNav/getSelectedSideBar"];
@@ -273,8 +283,8 @@ export default {
     return {
       currentMenu,
       updateMenu,
-      adminData,
+      adminData
     };
-  },
+  }
 };
 </script>

@@ -1,8 +1,8 @@
 import ApiService from "../../../services/api.service";
 import { baseUrl } from "../../../composables/baseURL";
 import { SET_REPORT } from "./mutation-types";
-function urlFacilitator(detail,address) {
-  let url = baseUrl+'/'+address;
+function urlFacilitator(detail, address) {
+  let url = baseUrl + "/" + address;
   let parameters = detail[0].params ? detail[0].params : [];
 
   if (parameters) {
@@ -30,8 +30,8 @@ export default {
   },
   async getNewLicenseReport(context, parameters) {
     try {
-      let url = urlFacilitator(parameters,'newLicenseReport?');
- 
+      let url = urlFacilitator(parameters, "newLicenseReport?");
+
       const resp = await ApiService.get(url);
       return resp;
     } catch (error) {
@@ -40,19 +40,17 @@ export default {
   },
   async getAdminReport({ commit }) {
     try {
-    
-
       const resp = await ApiService.get(baseUrl + "/admin/Report");
-     
+
       return resp;
     } catch (error) {
       return error;
     }
   },
-  async getRenewalReport(context,parameters) {
+  async getRenewalReport(context, parameters) {
     try {
-      let url = urlFacilitator(parameters,'renewalReport?');
- 
+      let url = urlFacilitator(parameters, "renewalReport?");
+
       const resp = await ApiService.get(url);
       return resp;
     } catch (error) {
@@ -67,10 +65,10 @@ export default {
       return error;
     }
   },
-  async getGoodstandingReport(context,parameters) {
+  async getGoodstandingReport(context, parameters) {
     try {
-      let url = urlFacilitator(parameters,'goodStandingReport?');
- 
+      let url = urlFacilitator(parameters, "goodStandingReport?");
+
       const resp = await ApiService.get(url);
       return resp;
     } catch (error) {
@@ -125,7 +123,25 @@ export default {
   },
   async getIndividualDetail(context, adminId) {
     try {
-      const resp = await ApiService.get(baseUrl + "/admin/report/getIndividualDetail/" + adminId);
+      const resp = await ApiService.get(
+        baseUrl + "/admin/report/getIndividualDetail/" + adminId
+      );
+      return resp;
+    } catch (error) {
+      const resp = error;
+      return resp;
+    }
+  },
+  async statusLog(context, apiParams) {
+    try {
+      console.log(apiParams);
+      const resp = await ApiService.get(
+        baseUrl +
+          "/admin/report/statusLogs?licenseType=" +
+          apiParams.type +
+          "&licenseCode=" +
+          apiParams.code
+      );
       return resp;
     } catch (error) {
       const resp = error;
