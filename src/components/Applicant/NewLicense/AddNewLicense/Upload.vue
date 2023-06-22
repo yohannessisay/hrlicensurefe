@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="accordion mr-8 " id="FilesAccordion">
+    <div class="accordion mr-8" id="FilesAccordion">
       <div
         :class="
           isDarkMode
@@ -8,27 +8,9 @@
             : 'accordion-item  bg-white border border-grey-200 p-4 rounded-lg'
         "
       >
-        <h2
-          id="headingOne"
-          class="accordion-header mb-0
-          "
-        >
+        <h2 id="headingOne" class="accordion-header mb-0">
           <button
-            class="
-              accordion-button
-              relative
-              flex
-              items-center
-              w-full
-              p-4
-              m-4
-              text-base text-gray-800 text-left
-              border-0
-              rounded-md
-            
-              transition
-              focus:outline-none
-            "
+            class="accordion-button relative flex items-center w-full p-4 m-4 text-base text-gray-800 text-left border-0 rounded-md transition focus:outline-none"
             style="color: #27687e !important"
             type="button"
             data-bs-toggle="collapse"
@@ -41,8 +23,7 @@
         </h2>
         <div
           id="commonFilesAccordion"
-          class="accordion-collapse collapse show
-          "
+          class="accordion-collapse collapse show"
           aria-labelledby="commonFilesAccordionheading"
           data-bs-parent="#FilesAccordion"
         >
@@ -58,66 +39,25 @@
                 >
                   <thead class="bg-lightMain-500">
                     <tr class="text-left">
-                      <th
-                        class="
-                          font-semibold
-                          text-sm
-                          uppercase
-                          px-6
-                          py-4
-                          text-white
-                        "
-                      >
+                      <th class="font-semibold text-sm uppercase px-6 py-4 text-white">
                         Document Name
                       </th>
-                      <th
-                        class="
-                          font-semibold
-                          text-sm
-                          uppercase
-                          px-6
-                          py-4
-                          text-white
-                        "
-                      >
+                      <th class="font-semibold text-sm uppercase px-6 py-4 text-white">
                         Document Description
                       </th>
                       <th
-                        class="
-                          font-semibold
-                          text-sm
-                          uppercase
-                          px-6
-                          py-4
-                          text-left text-white
-                        "
+                        class="font-semibold text-sm uppercase px-6 py-4 text-left text-white"
                       >
                         Upload
                       </th>
 
                       <th
-                        class="
-                          font-semibold
-                          text-sm
-                          uppercase
-                          px-6
-                          py-4
-                          text-center text-white
-                        "
+                        class="font-semibold text-sm uppercase px-6 py-4 text-center text-white"
                       >
                         View
                       </th>
 
-                      <th
-                        class="
-                          font-semibold
-                          text-sm
-                          uppercase
-                          px-6
-                          py-4
-                          text-white
-                        "
-                      >
+                      <th class="font-semibold text-sm uppercase px-6 py-4 text-white">
                         Remark
                       </th>
                     </tr>
@@ -127,9 +67,7 @@
                       v-for="item in commonDocuments"
                       :key="item.id"
                       :class="
-                        fileUploadError[
-                          `file_upload_row_${item.documentType.code}`
-                        ]
+                        fileUploadError[`file_upload_row_${item.documentType.code}`]
                           ? 'accordion-body py-4 px-5 border-2 border-red-300 rounded-lg'
                           : 'accordion-body py-4 px-5 border-b rounded-lg'
                       "
@@ -139,9 +77,7 @@
                           <div>
                             <p :class="isDarkMode ? 'text-white' : ''">
                               {{ item.documentType.name }}
-                              <b v-if="item.isRequired" class="text-red-300"
-                                >(*)</b
-                              >
+                              <b v-if="item.isRequired" class="text-red-300">(*)</b>
                             </p>
                           </div>
                         </div>
@@ -164,9 +100,7 @@
                           <input
                             type="file"
                             required
-                            :id="
-                              'common_image_' + item.documentType.id + item.id
-                            "
+                            :id="'common_image_' + item.documentType.id + item.id"
                             accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
                             :ref="`imageUploader${item.id}`"
                             class="custom-file-input"
@@ -178,41 +112,26 @@
                         <div class="flex items-center p-4">
                           <div>
                             <p :class="isDarkMode ? 'text-white' : ''">
-                              {{
-                                item.fileName
-                                  ? item.fileName
-                                  : "---------------"
-                              }}
+                              {{ item.fileName ? item.fileName : "---------------" }}
                             </p>
                           </div>
                         </div>
                       </td>
-                      <td
-                        class="px-6 py-4 text-center"
-                        v-if="item && item.existingFile"
-                      >
+                      <td class="px-6 py-4 text-center" v-if="item && item.existingFile">
                         <a
-                          :id="
-                            'common_image_href_' +
-                              item.documentType.id +
-                              item.id
-                          "
+                          :id="'common_image_href_' + item.documentType.id + item.id"
                           :href="item.existingFile"
                           :data-title="item.name ? item.name : '-----'"
                           data-lightbox="example-2"
                         >
                           <i
-                            :id="
-                              'common_icon_' + item.documentType.id + item.id
-                            "
+                            :id="'common_icon_' + item.documentType.id + item.id"
                             class="fa fa-eye cursor-pointer text-main-400"
                             aria-hidden="true"
                           >
                             <img
                               :id="
-                                'common_image_lightbox_' +
-                                  item.documentType.id +
-                                  item.id
+                                'common_image_lightbox_' + item.documentType.id + item.id
                               "
                               :src="item.existingFile"
                               class="w-full h-2 object-cover"
@@ -222,32 +141,19 @@
                       </td>
                       <td class="px-6 py-4 text-center" v-else>
                         <a
-                          :id="
-                            'common_image_href_' +
-                              item.documentType.id +
-                              item.id
-                          "
+                          :id="'common_image_href_' + item.documentType.id + item.id"
                           href=""
                           :data-title="item.name ? item.name : '-----'"
                           data-lightbox="example-2"
                         >
                           <i
-                            :id="
-                              'common_icon_' + item.documentType.id + item.id
-                            "
-                            class="
-                              fa fa-eye
-                              cursor-pointer
-                              text-main-400
-                              disabled
-                            "
+                            :id="'common_icon_' + item.documentType.id + item.id"
+                            class="fa fa-eye cursor-pointer text-main-400 disabled"
                             aria-hidden="true"
                           >
                             <img
                               :id="
-                                'common_image_lightbox_' +
-                                  item.documentType.id +
-                                  item.id
+                                'common_image_lightbox_' + item.documentType.id + item.id
                               "
                               src=""
                               class="w-full h-2 object-cover"
@@ -276,32 +182,10 @@
           </div>
         </div>
       </div>
-      <div
-        class="
-          accordion-item
-          bg-white
-          border border-grey-200
-          p-4
-          mt-8
-          rounded-lg
-        "
-      >
+      <div class="accordion-item bg-white border border-grey-200 p-4 mt-8 rounded-lg">
         <h2 class="accordion-header mb-0" id="headingTwo">
           <button
-            class="
-              accordion-button
-              relative
-              flex
-              items-center
-              w-full
-              py-4
-              px-5
-              text-base text-gray-800 text-left
-              border-0
-              rounded-md
-              transition
-              focus:outline-none
-            "
+            class="accordion-button relative flex items-center w-full py-4 px-5 text-base text-gray-800 text-left border-0 rounded-md transition focus:outline-none"
             style="background: #d8d8d8 !important; color: #27687e !important"
             type="button"
             data-bs-toggle="collapse"
@@ -333,79 +217,28 @@
               </h5>
               <div class="overflow-x-auto w-full p-4">
                 <table
-                  class="
-                    w-full
-                    p-4
-                    whitespace-nowrap
-                    rounded-lg
-                    bg-white
-                    shadow-lg
-                    divide-y divide-gray-300
-                    overflow-hidden
-                    table-auto
-                  "
+                  class="w-full p-4 whitespace-nowrap rounded-lg bg-white shadow-lg divide-y divide-gray-300 overflow-hidden table-auto"
                 >
                   <thead class="bg-lightMain-500 p-4">
                     <tr class="text-left">
-                      <th
-                        class="
-                          font-semibold
-                          text-sm
-                          uppercase
-                          px-6
-                          py-4
-                          text-white
-                        "
-                      >
+                      <th class="font-semibold text-sm uppercase px-6 py-4 text-white">
                         Document Name
                       </th>
-                      <th
-                        class="
-                          font-semibold
-                          text-sm
-                          uppercase
-                          px-6
-                          py-4
-                          text-white
-                        "
-                      >
+                      <th class="font-semibold text-sm uppercase px-6 py-4 text-white">
                         Document Description
                       </th>
 
                       <th
-                        class="
-                          font-semibold
-                          text-sm
-                          uppercase
-                          px-6
-                          py-4
-                          text-left text-white
-                        "
+                        class="font-semibold text-sm uppercase px-6 py-4 text-left text-white"
                       >
                         Upload
                       </th>
                       <th
-                        class="
-                          font-semibold
-                          text-sm
-                          uppercase
-                          px-6
-                          py-4
-                          text-center text-white
-                        "
+                        class="font-semibold text-sm uppercase px-6 py-4 text-center text-white"
                       >
                         View
                       </th>
-                      <th
-                        class="
-                          font-semibold
-                          text-sm
-                          uppercase
-                          px-6
-                          py-4
-                          text-white
-                        "
-                      >
+                      <th class="font-semibold text-sm uppercase px-6 py-4 text-white">
                         Remark
                       </th>
                     </tr>
@@ -428,9 +261,7 @@
                           <div>
                             <p :class="isDarkMode ? 'text-white' : ''">
                               {{ item.documentType.name }}
-                              <b v-if="item.isRequired" class="text-red-300"
-                                >(*)</b
-                              >
+                              <b v-if="item.isRequired" class="text-red-300">(*)</b>
                             </p>
                           </div>
                         </div>
@@ -454,9 +285,7 @@
                           <input
                             type="file"
                             :required="item.isRequired"
-                            :id="
-                              `files_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                            "
+                            :id="`files_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`"
                             accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
                             :ref="`imageUploader${item.id}`"
                             class="custom-file-input"
@@ -469,23 +298,16 @@
                         <div class="flex items-center p-4">
                           <div>
                             <p :class="isDarkMode ? 'text-white' : ''">
-                              {{
-                                item.fileName
-                                  ? item.fileName
-                                  : "---------------"
-                              }}
+                              {{ item.fileName ? item.fileName : "---------------" }}
                             </p>
                           </div>
                         </div>
                       </td>
-                      <td
-                        v-if="item.existingFile"
-                        class="px-6 py-4 text-center"
-                      >
+                      <td v-if="item.existingFile" class="px-6 py-4 text-center">
                         <a
                           :id="
                             'image_href_' +
-                              `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                            `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                           "
                           :href="item.existingFile"
                           :data-title="item.name ? item.name : '-----'"
@@ -494,9 +316,9 @@
                           <i
                             :id="
                               'educational_icon_' +
-                                `${
-                                  item.documentType.code
-                                }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                              `${
+                                item.documentType.code
+                              }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                             "
                             class="fa fa-eye cursor-pointer text-main-400"
                             aria-hidden="true"
@@ -504,9 +326,9 @@
                             <img
                               :id="
                                 'image_lightbox_' +
-                                  `${
-                                    item.documentType.code
-                                  }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                                `${
+                                  item.documentType.code
+                                }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                               "
                               :src="item.existingFile"
                               class="w-full h-2 object-cover"
@@ -518,9 +340,9 @@
                         <a
                           :id="
                             'image_href_' +
-                              `${
-                                item.documentType.code
-                              }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                            `${
+                              item.documentType.code
+                            }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                           "
                           href=""
                           :data-title="item.name ? item.name : '-----'"
@@ -529,25 +351,19 @@
                           <i
                             :id="
                               'educational_icon_' +
-                                `${
-                                  item.documentType.code
-                                }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                              `${
+                                item.documentType.code
+                              }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                             "
-                            class="
-                              fa fa-eye
-                              cursor-pointer
-                              text-main-400
-                              disabled
-                             
-                            "
+                            class="fa fa-eye cursor-pointer text-main-400 disabled"
                             aria-hidden="true"
                           >
                             <img
                               :id="
                                 'image_lightbox_' +
-                                  `${
-                                    item.documentType.code
-                                  }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                                `${
+                                  item.documentType.code
+                                }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                               "
                               src=""
                               class="w-full h-2 object-cover"
@@ -597,9 +413,7 @@
                           <div>
                             <p :class="isDarkMode ? 'text-white' : ''">
                               {{ parentItem[0].documentType.name }}
-                              <b
-                                v-if="parentItem[0].isRequired"
-                                class="text-red-300"
+                              <b v-if="parentItem[0].isRequired" class="text-red-300"
                                 >(*)</b
                               >
                             </p>
@@ -625,18 +439,14 @@
                           <input
                             type="file"
                             :required="parentItem[0].isRequired"
-                            :id="
-                              `files_
+                            :id="`files_
                                     ${
                                       parentItem[0].documentType.code
-                                    }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                            "
+                                    }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`"
                             accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
                             :ref="`imageUploader${parentItem[0].id}`"
                             class="custom-file-input"
-                            v-on:change="
-                              handleFileUpload(parentItem[0], $event, table)
-                            "
+                            v-on:change="handleFileUpload(parentItem[0], $event, table)"
                           />
                         </p>
                       </td>
@@ -656,27 +466,22 @@
                           </div>
                         </div>
                       </td>
-                      <td
-                        v-if="parentItem[0].existingFile"
-                        class="px-6 py-4 text-center"
-                      >
+                      <td v-if="parentItem[0].existingFile" class="px-6 py-4 text-center">
                         <a
                           :id="
                             'image_href_' +
-                              `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                            `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                           "
                           :href="parentItem[0].existingFile"
-                          :data-title="
-                            parentItem[0].name ? parentItem[0].name : '-----'
-                          "
+                          :data-title="parentItem[0].name ? parentItem[0].name : '-----'"
                           data-lightbox="example-2"
                         >
                           <i
                             :id="
                               'educational_icon_' +
-                                `${
-                                  parentItem[0].documentType.code
-                                }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                              `${
+                                parentItem[0].documentType.code
+                              }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                             "
                             class="fa fa-eye cursor-pointer text-main-400"
                             aria-hidden="true"
@@ -684,9 +489,9 @@
                             <img
                               :id="
                                 'image_lightbox_' +
-                                  `${
-                                    parentItem[0].documentType.code
-                                  }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                                `${
+                                  parentItem[0].documentType.code
+                                }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                               "
                               :src="parentItem[0].existingFile"
                               class="w-full h-2 object-cover"
@@ -698,9 +503,9 @@
                         <a
                           :id="
                             'image_href_' +
-                              `${
-                                parentItem[0].documentType.code
-                              }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                            `${
+                              parentItem[0].documentType.code
+                            }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                           "
                           href=""
                           :data-title="parentItem[0].name ? item.name : '-----'"
@@ -709,24 +514,19 @@
                           <i
                             :id="
                               'educational_icon_' +
-                                `${
-                                  parentItem[0].documentType.code
-                                }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                              `${
+                                parentItem[0].documentType.code
+                              }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                             "
-                            class="
-                              fa fa-eye
-                              cursor-pointer
-                              text-main-400
-                              disabled
-                            "
+                            class="fa fa-eye cursor-pointer text-main-400 disabled"
                             aria-hidden="true"
                           >
                             <img
                               :id="
                                 'image_lightbox_' +
-                                  `${
-                                    parentItem[0].documentType.code
-                                  }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                                `${
+                                  parentItem[0].documentType.code
+                                }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                               "
                               src=""
                               class="w-full h-2 object-cover"
@@ -776,9 +576,7 @@
                                   parentItem[0].documentType.name.length - 2
                                 )
                               }}
-                              <b
-                                v-if="parentItem[0].isRequired"
-                                class="text-red-300"
+                              <b v-if="parentItem[0].isRequired" class="text-red-300"
                                 >(*)</b
                               >
                             </p>
@@ -793,24 +591,7 @@
 
                       <td class="px-6 text-center">
                         <button
-                          class="
-                            inline-block
-                            px-6
-                            py-2.5
-                            bg-white
-                            hover:bg-main-400 hover:text-white
-                            text-main-400 text-xs
-                            font-bold
-                            leading-tight
-                            uppercase
-                            rounded
-                            shadow-md
-                            active:border-main-400
-                            transition
-                            duration-150
-                            ease-in-out
-                            border
-                          "
+                          class="inline-block px-6 py-2.5 bg-white hover:bg-main-400 hover:text-white text-main-400 text-xs font-bold leading-tight uppercase rounded shadow-md active:border-main-400 transition duration-150 ease-in-out border"
                           type="button"
                           @click="addMore(parentItem[0])"
                         >
@@ -823,43 +604,29 @@
                     <tr>
                       <div
                         v-if="
-                          showNestedDocuments[
-                            parentItem[0].documentType.code
-                          ] != null
+                          showNestedDocuments[parentItem[0].documentType.code] != null
                         "
                         class="accordion p-4"
-                        :id="
-                          `accordion_${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
-                        "
+                        :id="`accordion_${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`"
                         style="width: max-content"
                       >
                         <div
-                          class="
-                            shadow-lg
-                            w-full
-                            bg-white
-                            border border-grey-400
-                            ml-8
-                          "
+                          class="shadow-lg w-full bg-white border border-grey-400 ml-8"
                         >
                           <div
                             :id="
                               'docAccordion_' +
-                                `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                              `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                             "
                             :class="isDarkMode ? 'text-white' : ''"
-                            :aria-labelledby="
-                              `headingOne_${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
-                            "
-                            :data-bs-parent="
-                              `#accordion_${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
-                            "
+                            :aria-labelledby="`headingOne_${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`"
+                            :data-bs-parent="`#accordion_${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`"
                           >
                             <div class="accordion-body py-4 px-5">
                               <div class="bg-lightMain-500 rounded-sm p-2">
                                 <small class="text-white"
-                                  >Only the first file upload is required, the
-                                  remaining ones are optional</small
+                                  >Only the first file upload is required, the remaining
+                                  ones are optional</small
                                 >
                               </div>
 
@@ -887,9 +654,7 @@
                                 >
                                   <div class="flex items-center ml-4">
                                     <div>
-                                      <p
-                                        :class="isDarkMode ? 'text-white' : ''"
-                                      >
+                                      <p :class="isDarkMode ? 'text-white' : ''">
                                         {{ parentChildItem.documentType.name }}
                                       </p>
                                     </div>
@@ -905,14 +670,10 @@
                                 >
                                   <div class="flex items-center ml-4">
                                     <div>
-                                      <p
-                                        :class="isDarkMode ? 'text-white' : ''"
-                                      >
+                                      <p :class="isDarkMode ? 'text-white' : ''">
                                         {{
-                                          parentChildItem.documentType
-                                            .description
-                                            ? parentChildItem.documentType
-                                                .description
+                                          parentChildItem.documentType.description
+                                            ? parentChildItem.documentType.description
                                             : "- "
                                         }}
                                       </p>
@@ -932,35 +693,23 @@
                                     <input
                                       type="file"
                                       :required="parentChildItem.isRequired"
-                                      :id="
-                                        `files_${parentChildItem.documentType.code.toUpperCase()}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                                      "
+                                      :id="`files_${parentChildItem.documentType.code.toUpperCase()}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`"
                                       accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
-                                      :ref="
-                                        `imageUploader${parentChildItem.id}`
-                                      "
+                                      :ref="`imageUploader${parentChildItem.id}`"
                                       class="custom-file-input"
                                       v-on:change="
-                                        handleFileUpload(
-                                          parentChildItem,
-                                          $event,
-                                          table
-                                        )
+                                        handleFileUpload(parentChildItem, $event, table)
                                       "
                                     />
                                   </p>
                                 </td>
                                 <td
                                   class="px-6 py-4"
-                                  v-if="
-                                    parentChildItem && parentChildItem.fileName
-                                  "
+                                  v-if="parentChildItem && parentChildItem.fileName"
                                 >
                                   <div class="flex items-center p-4">
                                     <div>
-                                      <p
-                                        :class="isDarkMode ? 'text-white' : ''"
-                                      >
+                                      <p :class="isDarkMode ? 'text-white' : ''">
                                         {{
                                           parentChildItem.fileName
                                             ? parentChildItem.fileName
@@ -973,18 +722,18 @@
                                 <td
                                   v-if="
                                     parentChildItem.existingFile &&
-                                      showNestedDocuments[
-                                        parentItem[0].documentType.code
-                                      ] >= index
+                                    showNestedDocuments[
+                                      parentItem[0].documentType.code
+                                    ] >= index
                                   "
                                   class="px-6 py-4 text-center"
                                 >
                                   <a
                                     :id="
                                       'image_href_' +
-                                        `${
-                                          parentChildItem.documentType.code
-                                        }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                                      `${
+                                        parentChildItem.documentType.code
+                                      }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                     "
                                     :href="parentChildItem.existingFile"
                                     :data-title="
@@ -997,9 +746,9 @@
                                     <i
                                       :id="
                                         'educational_icon_' +
-                                          `${
-                                            parentChildItem.documentType.code
-                                          }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                                        `${
+                                          parentChildItem.documentType.code
+                                        }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                       "
                                       class="fa fa-eye cursor-pointer text-main-400"
                                       aria-hidden="true"
@@ -1007,9 +756,9 @@
                                       <img
                                         :id="
                                           'image_lightbox_' +
-                                            `${
-                                              parentChildItem.documentType.code
-                                            }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                                          `${
+                                            parentChildItem.documentType.code
+                                          }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                         "
                                         :src="parentChildItem.existingFile"
                                         class="w-full h-2 object-cover"
@@ -1028,7 +777,7 @@
                                   <a
                                     :id="
                                       'image_href_' +
-                                        `${parentChildItem.documentType.code.toUpperCase()}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                                      `${parentChildItem.documentType.code.toUpperCase()}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                     "
                                     href=""
                                     :data-title="
@@ -1039,20 +788,15 @@
                                     <i
                                       :id="
                                         'educational_icon_' +
-                                          `${parentChildItem.documentType.code.toUpperCase()}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                                        `${parentChildItem.documentType.code.toUpperCase()}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                       "
-                                      class="
-                                        fa fa-eye
-                                        cursor-pointer
-                                        text-main-400
-                                        disabled
-                                      "
+                                      class="fa fa-eye cursor-pointer text-main-400 disabled"
                                       aria-hidden="true"
                                     >
                                       <img
                                         :id="
                                           'image_lightbox_' +
-                                            `${parentChildItem.documentType.code.toUpperCase()}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                                          `${parentChildItem.documentType.code.toUpperCase()}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                         "
                                         src=""
                                         class="w-full h-2 object-cover"
@@ -1071,8 +815,7 @@
                                         "
                                         class="text-red-300"
                                       >
-                                        Uploaded file Size has exceeded the
-                                        limit (3 MB)
+                                        Uploaded file Size has exceeded the limit (3 MB)
                                       </p>
                                     </div>
                                   </div>
@@ -1086,9 +829,8 @@
                   </tbody>
                 </table>
                 <small
-                  >Note:-document names with
-                  <b class="text-red-300">(*)</b> must be uploaded in order to
-                  go forward with application process</small
+                  >Note:-document names with <b class="text-red-300">(*)</b> must be
+                  uploaded in order to go forward with application process</small
                 >
               </div>
             </div>
@@ -1096,83 +838,35 @@
         </div>
       </div>
     </div>
-    <div class="flex justify-end mr-8 mb-8">
-      <button
-        class="
-          mt-8
-          inline-block
-          px-6
-          py-2.5
-          bg-white
-          hover:bg-main-400 hover:text-white
-          text-main-400 text-xs
-          font-bold
-          leading-tight
-          uppercase
-          rounded
-          shadow-md
-          active:border-main-400
-          transition
-          duration-150
-          ease-in-out
-          border
-        "
-        type="submit"
-        @click="saveDraft()"
-      >
-        Save as draft
-      </button>
-      <button
-        class="
-          mt-8
-          inline-block
-          px-6
-          py-2.5
-          bg-white
-          hover:bg-main-400 hover:text-white
-          text-main-400 text-xs
-          font-bold
-          leading-tight
-          uppercase
-          rounded
-          shadow-md
-          active:border-main-400
-          transition
-          duration-150
-          ease-in-out
-          border
-        "
-        @click="back()"
-      >
-        back
-      </button>
-      <button
-        class="
-          mt-8
-          inline-block
-          px-6
-          py-2.5
-          bg-white
-          hover:bg-main-400 hover:text-white
-          text-main-400 text-xs
-          font-bold
-          leading-tight
-          uppercase
-          rounded
-          shadow-md
-          active:border-main-400
-          transition
-          duration-150
-          ease-in-out
-          border
-        "
-        @click="next()"
-      >
-        next
-      </button>
+    <div class="vld-parent mt-4">
+      <loading
+        :active="isLoading"
+        :is-full-page="false"
+        :color="'#2F639D'"
+        :opacity="1"
+      ></loading>
+      <div class="flex justify-end mr-8 mb-8">
+        <button
+          class="mt-8 inline-block px-6 py-2.5 bg-white hover:bg-main-400 hover:text-white text-main-400 text-xs font-bold leading-tight uppercase rounded shadow-md active:border-main-400 transition duration-150 ease-in-out border"
+          type="submit"
+          @click="saveDraft()"
+        >
+          Save as draft
+        </button>
+        <button
+          class="mt-8 inline-block px-6 py-2.5 bg-white hover:bg-main-400 hover:text-white text-main-400 text-xs font-bold leading-tight uppercase rounded shadow-md active:border-main-400 transition duration-150 ease-in-out border"
+          @click="back()"
+        >
+          back
+        </button>
+        <button
+          class="mt-8 inline-block px-6 py-2.5 bg-white hover:bg-main-400 hover:text-white text-main-400 text-xs font-bold leading-tight uppercase rounded shadow-md active:border-main-400 transition duration-150 ease-in-out border"
+          @click="next()"
+        >
+          next
+        </button>
+      </div>
     </div>
-
-    <div class="flex justify-right mr-0"></div>
   </div>
   <!--<filePreview :modalData="filePreviewData"> </filePreview>-->
 </template>
@@ -1184,14 +878,16 @@ import Compressor from "compressorjs";
 import MAX_FILE_SIZE from "../../../../composables/documentMessage";
 import { boolean } from "yargs";
 
+import Loading from "vue3-loading-overlay";
+import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 export default {
-  components: {},
+  components: { Loading },
 
   // eslint-disable-next-line vue/no-setup-props-destructure
   setup(props, { emit }) {
     let store = useStore();
     const toast = useToast();
-
+    let isLoading = ref(false);
     let documents = ref([]);
     let commonDocuments = ref([]);
     let imageUploader = ref(null);
@@ -1202,7 +898,7 @@ export default {
       isImage: boolean,
       isPdf: boolean,
       file: "",
-      name: ""
+      name: "",
     });
     let existingDocs = [];
     let files = ref("");
@@ -1215,7 +911,7 @@ export default {
     let fileSizeExceed = ref({});
     let fileSize = ref("");
     let showImage = ref(false);
-    let previewDocuments = ref({}); 
+    let previewDocuments = ref({});
     let showPreview = ref("");
     maxFileSize.value = MAX_FILE_SIZE.MAX_FILE_SIZE;
     let generalInfo = ref({});
@@ -1228,8 +924,8 @@ export default {
     let errorDocuments = ref([
       {
         name: "",
-        code: ""
-      }
+        code: "",
+      },
     ]);
     let showNestedDocuments = ref({});
 
@@ -1250,20 +946,16 @@ export default {
           const dataTransfer = new DataTransfer();
           dataTransfer.items.add(new File([result], result.name));
           documentsUploaded.value[data.documentType.code] = "";
-          documentsUploaded.value[data.documentType.code] =
-            event?.target?.files[0];
+          documentsUploaded.value[data.documentType.code] = event?.target?.files[0];
           let reader = new FileReader();
 
           let fileS = documentsUploaded.value[data.documentType.code].size;
 
           isImage.value[data.documentType.code] = true;
-          documentsUploaded.value[data.documentType.code] =
-            event?.target?.files[0];
+          documentsUploaded.value[data.documentType.code] = event?.target?.files[0];
 
           event.target.files = dataTransfer.files;
-          delete fileUploadError.value[
-            "file_upload_row_" + data.documentType.code
-          ];
+          delete fileUploadError.value["file_upload_row_" + data.documentType.code];
           showImage.value = true;
 
           if (fileS > 0 && fileS < 1000) {
@@ -1272,26 +964,24 @@ export default {
             fileSize.value = fileS / 1000 + "kB";
           } else {
             fileSize.value = fileS / 1000000 + "MB";
-          } 
+          }
 
           reader.addEventListener(
             "load",
-            function() {
+            function () {
               showPreview.value = true;
 
               previewDocuments.value[data.documentType.code] = reader.result;
               imageData = imageData.filter(
-                el => el.documenttype != data.documentType.name
+                (el) => el.documenttype != data.documentType.name
               );
               imageData.push({
                 imageId: "common_image_lightbox_" + data.documentType.code,
                 documenttype: data.documentType ? data.documentType.name : "",
                 documentCode: data.documentType ? data.documentType.code : "",
-                educationalLevel: data.educationalLevel
-                  ? data.educationalLevel.name
-                  : "",
+                educationalLevel: data.educationalLevel ? data.educationalLevel.name : "",
                 fileName: event?.target?.files[0].name,
-                image: reader.result
+                image: reader.result,
               });
 
               documentToSave.value[data.documentType.code] = reader.result;
@@ -1308,19 +998,13 @@ export default {
               isImage.value[data.documentType.code] = true;
               isPdf.value[data.documentType.code] = false;
 
-              reader.readAsDataURL(
-                documentsUploaded.value[data.documentType.code]
-              );
+              reader.readAsDataURL(documentsUploaded.value[data.documentType.code]);
             } else if (
-              /\.(pdf)$/i.test(
-                documentsUploaded.value[data.documentType.code].name
-              )
+              /\.(pdf)$/i.test(documentsUploaded.value[data.documentType.code].name)
             ) {
               isImage.value[data.documentType.code] = false;
               isPdf.value[data.documentType.code] = true;
-              reader.readAsDataURL(
-                documentsUploaded.value[data.documentType.code]
-              );
+              reader.readAsDataURL(documentsUploaded.value[data.documentType.code]);
             }
           }
           let icon = document.getElementById(
@@ -1345,14 +1029,14 @@ export default {
           }
 
           output
-            ? (output.onload = function() {
+            ? (output.onload = function () {
                 URL.revokeObjectURL(output.src); // free memory
               })
             : "";
         },
         error(err) {
           console.log(err.message);
-        }
+        },
       });
     };
 
@@ -1427,7 +1111,7 @@ export default {
             event?.target?.files[0]
           );
 
-          showImage.value = true; 
+          showImage.value = true;
           if (fileS > 0 && fileS < 1000) {
             fileSize.value += "B";
           } else if (fileS > 1000 && fileS < 1000000) {
@@ -1446,7 +1130,7 @@ export default {
           ];
           reader.addEventListener(
             "load",
-            function() {
+            function () {
               showPreview.value = true;
 
               previewDocuments.value[
@@ -1472,11 +1156,9 @@ export default {
                   data.educationalLevel.code.toUpperCase() +
                   "_" +
                   pro.professionType.code.toUpperCase(),
-                educationalLevel: data.educationalLevel
-                  ? data.educationalLevel.name
-                  : "",
+                educationalLevel: data.educationalLevel ? data.educationalLevel.name : "",
                 fileName: event?.target?.files[0].name,
-                image: reader.result
+                image: reader.result,
               });
               // documentsUploaded.value[data.documentType.code] = reader.result;
             },
@@ -1597,7 +1279,7 @@ export default {
           }
 
           output
-            ? (output.onload = function() {
+            ? (output.onload = function () {
                 URL.revokeObjectURL(output.src); // free memory
               })
             : "";
@@ -1605,7 +1287,7 @@ export default {
         },
         error(err) {
           console.log(err.message);
-        }
+        },
       });
     };
 
@@ -1619,8 +1301,8 @@ export default {
       if (isBackButtonClicked.value == true) {
         // check common documents
         commonDocuments.value
-          .filter(cd => cd.isRequired)
-          .forEach(element => {
+          .filter((cd) => cd.isRequired)
+          .forEach((element) => {
             CMtemp = element.fileName;
 
             if (!CMtemp || CMtemp == "") {
@@ -1630,7 +1312,7 @@ export default {
               errorDocuments.value.push({
                 isCommon: true,
                 name: element.documentType.name,
-                code: element.documentType.code
+                code: element.documentType.code,
               });
             } else {
               delete fileUploadError.value[
@@ -1639,13 +1321,13 @@ export default {
             }
           });
         // check normal docs with no parents
-        educationalDocs.value.forEach(ed => {
+        educationalDocs.value.forEach((ed) => {
           ed.docs
-            .filter(docs => docs.isRequired)
-            .forEach(single => {
+            .filter((docs) => docs.isRequired)
+            .forEach((single) => {
               if (
                 documentsUploaded.value.some(
-                  docs =>
+                  (docs) =>
                     docs.documentCode ==
                     single.documentType.code.toUpperCase() +
                       "_" +
@@ -1678,19 +1360,17 @@ export default {
                     "_" +
                     ed.educationalLevel.code.toUpperCase() +
                     "_" +
-                    ed.professionType.code.toUpperCase()
+                    ed.professionType.code.toUpperCase(),
                 });
               }
             });
         });
       } else {
         commonDocuments.value
-          .filter(cd => cd.isRequired)
-          .forEach(element => {
+          .filter((cd) => cd.isRequired)
+          .forEach((element) => {
             // eslint-disable-next-line no-prototype-builtins
-            CMtemp = documentsUploaded.value.hasOwnProperty(
-              element.documentType.code
-            );
+            CMtemp = documentsUploaded.value.hasOwnProperty(element.documentType.code);
 
             if (!CMtemp) {
               fileUploadError.value[
@@ -1700,7 +1380,7 @@ export default {
               errorDocuments.value.push({
                 isCommon: true,
                 name: element.documentType.name,
-                code: element.documentType.code
+                code: element.documentType.code,
               });
             } else {
               delete fileUploadError.value[
@@ -1709,12 +1389,12 @@ export default {
             }
           });
 
-        educationalDocs.value.forEach(ed => {
+        educationalDocs.value.forEach((ed) => {
           // check normal docs with no parents
 
           ed.docs
-            .filter(docs => docs.isRequired)
-            .forEach(single => {
+            .filter((docs) => docs.isRequired)
+            .forEach((single) => {
               // eslint-disable-next-line no-prototype-builtins
               temp = documentsUploaded.value.hasOwnProperty(
                 single.documentType.code +
@@ -1739,7 +1419,7 @@ export default {
                     "_" +
                     ed.educationalLevel.code.toUpperCase() +
                     "_" +
-                    ed.professionType.code.toUpperCase()
+                    ed.professionType.code.toUpperCase(),
                 });
               } else {
                 delete fileUploadError.value[
@@ -1756,7 +1436,7 @@ export default {
           //// check documetns with parents
           for (var pd in ed.parentDoc) {
             tempVal = newLicenseDocuments.value.filter(
-              nld => nld.parentDocument == pd && nld.isRequired
+              (nld) => nld.parentDocument == pd && nld.isRequired
             );
 
             if (
@@ -1777,7 +1457,7 @@ export default {
                 fileUploadError.value[
                   "file_upload_row_" +
                     newLicenseDocuments.value.filter(
-                      nld => nld.parentDocument == pd && nld.isRequired
+                      (nld) => nld.parentDocument == pd && nld.isRequired
                     )[0].documentType.code +
                     "_" +
                     ed.educationalLevel.code.toUpperCase() +
@@ -1786,16 +1466,16 @@ export default {
                 ] = true;
                 errorDocuments.value.push({
                   name: newLicenseDocuments.value.filter(
-                    nld => nld.parentDocument == pd && nld.isRequired
+                    (nld) => nld.parentDocument == pd && nld.isRequired
                   )[0].documentType.name,
                   code:
                     newLicenseDocuments.value.filter(
-                      nld => nld.parentDocument == pd && nld.isRequired
+                      (nld) => nld.parentDocument == pd && nld.isRequired
                     )[0].documentType.code +
                     "_" +
                     ed.educationalLevel.code.toUpperCase() +
                     "_" +
-                    ed.professionType.code.toUpperCase()
+                    ed.professionType.code.toUpperCase(),
                 });
               }
             }
@@ -1808,8 +1488,8 @@ export default {
     const urltoFile = async (data, fileName) => {
       let url = data;
       let file = await fetch(url)
-        .then(res => res.blob())
-        .then(blob => {
+        .then((res) => res.blob())
+        .then((blob) => {
           return new File([blob], fileName, { type: "image/png" });
         });
       return file;
@@ -1820,17 +1500,17 @@ export default {
       if (documentValidation && Object.keys(documentValidation).length == 0) {
         let finalLocalData = {
           created: new Date(),
-          data: []
+          data: [],
         };
         let db;
         let request = indexedDB.open("NLdocumentUploads", dbVersion);
-        request.onsuccess = function() {
+        request.onsuccess = function () {
           db = request.result;
           let transaction = db.transaction(["NLdocumentUploads"], "readwrite");
 
           if (documentsUploaded.value.length > 0 && imageData.length > 0) {
-            documentsUploaded.value.forEach(existing => {
-              imageData.forEach(newImage => {
+            documentsUploaded.value.forEach((existing) => {
+              imageData.forEach((newImage) => {
                 if (existing.imageId == newImage.imageId) {
                   existing.image = newImage.image;
                   existing.fileName = newImage.fileName;
@@ -1840,8 +1520,8 @@ export default {
 
             finalLocalData.data = toRaw(documentsUploaded.value);
             formData = new FormData();
-            finalLocalData.data.forEach(element => {
-              urltoFile(element.image, element.fileName).then(res => {
+            finalLocalData.data.forEach((element) => {
+              urltoFile(element.image, element.fileName).then((res) => {
                 let tempImage = res;
 
                 formData.append(element.documentCode, tempImage);
@@ -1852,8 +1532,8 @@ export default {
           } else if (isBackButtonClicked.value == true) {
             finalLocalData.data = toRaw(documentsUploaded.value);
             formData = new FormData();
-            finalLocalData.data.forEach(element => {
-              urltoFile(element.image, element.fileName).then(res => {
+            finalLocalData.data.forEach((element) => {
+              urltoFile(element.image, element.fileName).then((res) => {
                 let tempImage = res;
                 formData.append(element.documentCode, tempImage);
               });
@@ -1869,19 +1549,17 @@ export default {
 
           const objectStore = transaction.objectStore("NLdocumentUploads");
 
-          const objectStoreRequest = objectStore.clear(); 
+          const objectStoreRequest = objectStore.clear();
           objectStoreRequest.onsuccess = () => {
-            let addReq = transaction
-              .objectStore("NLdocumentUploads")
-              .put(finalLocalData);
+            let addReq = transaction.objectStore("NLdocumentUploads").put(finalLocalData);
 
-            addReq.onerror = function() {
+            addReq.onerror = function () {
               alert(
                 "Error regarding your browser, please update your browser to the latest version"
               );
             };
 
-            transaction.oncomplete = function() {
+            transaction.oncomplete = function () {
               console.log("data stored");
               emit("changeActiveState");
             };
@@ -1889,7 +1567,7 @@ export default {
         };
       } else {
         let errors = "";
-        errorDocuments.value.forEach(element => {
+        errorDocuments.value.forEach((element) => {
           if (!errors) {
             errors = element.name;
           } else {
@@ -1904,7 +1582,7 @@ export default {
             position: "bottom-center",
             pauseOnFocusLoss: true,
             pauseOnHover: true,
-            icon: true
+            icon: true,
           }
         );
       }
@@ -1915,7 +1593,7 @@ export default {
 
     const saveDraft = () => {
       generalInfo.value.licenseFile = [];
-
+      isLoading.value = true;
       let license = {
         action: "DraftEvent",
         data: {
@@ -1934,23 +1612,24 @@ export default {
           nativeLanguageId: localData.value.nativeLanguageSelected
             ? localData.value.nativeLanguageSelected.id
             : null,
-          isLegal: true
-        }
+          isLegal: true,
+        },
       };
-      store.dispatch("newlicense/addNewLicense", license).then(res => {
+      store.dispatch("newlicense/addNewLicense", license).then((res) => {
         let licenseId = res.data.data.id;
         let payload = { document: formData, id: licenseId };
         store
           .dispatch("newlicense/uploadDocuments", payload)
-          .then(res => {
+          .then((res) => {
             if (res.data.status == "Success") {
               toast.success("Applied successfuly", {
                 timeout: 5000,
                 position: "bottom-center",
                 pauseOnFocusLoss: true,
                 pauseOnHover: true,
-                icon: true
+                icon: true,
               });
+              isLoading.value = false;
               localStorage.removeItem("NLApplicationData");
               location.reload();
             } else {
@@ -1959,7 +1638,7 @@ export default {
                 position: "bottom-center",
                 pauseOnFocusLoss: true,
                 pauseOnHover: true,
-                icon: true
+                icon: true,
               });
             }
           })
@@ -1969,7 +1648,7 @@ export default {
               position: "bottom-center",
               pauseOnFocusLoss: true,
               pauseOnHover: true,
-              icon: true
+              icon: true,
             });
           });
       });
@@ -1979,15 +1658,13 @@ export default {
       return array.reduce((hash, obj) => {
         if (obj[key] === undefined || obj[key] == null) return hash;
         return Object.assign(hash, {
-          [obj[key]]: (hash[obj[key]] || []).concat(obj)
+          [obj[key]]: (hash[obj[key]] || []).concat(obj),
         });
       }, {});
     };
 
-    const addMore = parentItem => {
-      if (
-        showNestedDocuments.value[parentItem.documentType.code] == undefined
-      ) {
+    const addMore = (parentItem) => {
+      if (showNestedDocuments.value[parentItem.documentType.code] == undefined) {
         showNestedDocuments.value[parentItem.documentType.code] = 0;
       } else {
         showNestedDocuments.value[parentItem.documentType.code] =
@@ -1999,34 +1676,32 @@ export default {
       existingDocs;
       let request = indexedDB.open("NLdocumentUploads", dbVersion);
 
-      request.onerror = function() {
+      request.onerror = function () {
         console.error("Unable to open database.");
       };
 
-      request.onsuccess = function() {
+      request.onsuccess = function () {
         let db = request.result;
         const tx = db.transaction("NLdocumentUploads", "readonly");
         const store = tx.objectStore("NLdocumentUploads");
         let getAllIDB = store.getAll();
-        getAllIDB.onsuccess = function(evt) {
+        getAllIDB.onsuccess = function (evt) {
           existingDocs =
-            evt.target.result && evt.target.result[0]
-              ? evt.target.result[0].data
-              : {};
+            evt.target.result && evt.target.result[0] ? evt.target.result[0].data : {};
         };
       };
 
-      request.onupgradeneeded = function() {
+      request.onupgradeneeded = function () {
         let db = request.result;
         db.createObjectStore("NLdocumentUploads", {
           keyPath: "id",
-          autoIncrement: true
+          autoIncrement: true,
         });
       };
     };
 
     onMounted(() => {
-      window.addEventListener("darkModeChanged", data => {
+      window.addEventListener("darkModeChanged", (data) => {
         isDarkMode.value = data.detail ? data.detail.content : "";
       });
       //Initialize indexdb for file storage
@@ -2042,21 +1717,21 @@ export default {
 
         generalInfo.value = localData.value;
 
-        store.dispatch("newlicense/getApplicationCategories").then(res => {
+        store.dispatch("newlicense/getApplicationCategories").then((res) => {
           let categoryResults = res.data.data
-            ? res.data.data.filter(ele => ele.code == "NA")
+            ? res.data.data.filter((ele) => ele.code == "NA")
             : "";
           let educationLevels = generalInfo.value.multipleDepartment;
           //Get department docs
-          educationLevels.forEach(element => {
+          educationLevels.forEach((element) => {
             store
               .dispatch("newlicense/getNLdocuments", [
                 categoryResults[0].id,
                 generalInfo.value.applicantTypeSelected.id,
                 element.educationalLevel.id,
-                null
+                null,
               ])
-              .then(res => {
+              .then((res) => {
                 let resp = res.data.data;
                 newLicenseDocuments.value = res.data.data;
                 resp.forEach((ed, index) => {
@@ -2072,23 +1747,18 @@ export default {
                 educationalDocs.value.push({
                   educationalLevel: element.educationalLevel,
                   professionType: element.professionalType,
-                  docs: resp.filter(element => element.parentDocument == null),
-                  parentDoc: groupByKey(resp, "parentDocument")
+                  docs: resp.filter((element) => element.parentDocument == null),
+                  parentDoc: groupByKey(resp, "parentDocument"),
                 });
 
-                if (
-                  existingDocs &&
-                  existingDocs.length > 0 &&
-                  resp &&
-                  resp.length > 0
-                ) {
+                if (existingDocs && existingDocs.length > 0 && resp && resp.length > 0) {
                   isBackButtonClicked.value = true;
                   documentsUploaded.value = existingDocs;
-                  educationalDocs.value.forEach(ed => {
+                  educationalDocs.value.forEach((ed) => {
                     ed.docs
-                      .filter(docs => docs.isRequired)
-                      .forEach(Cd => {
-                        documentsUploaded.value.forEach(element => {
+                      .filter((docs) => docs.isRequired)
+                      .forEach((Cd) => {
+                        documentsUploaded.value.forEach((element) => {
                           if (
                             element.documentCode ===
                             Cd.documentType.code.toUpperCase() +
@@ -2103,8 +1773,8 @@ export default {
                         });
                       });
                     for (const property in ed.parentDoc) {
-                      ed.parentDoc[property].forEach(Cd => {
-                        documentsUploaded.value.forEach(element => {
+                      ed.parentDoc[property].forEach((Cd) => {
+                        documentsUploaded.value.forEach((element) => {
                           if (
                             element.documentCode ===
                             Cd.documentType.code.toUpperCase() +
@@ -2129,9 +1799,9 @@ export default {
           store
             .dispatch("newlicense/getCommonNLdocuments", [
               categoryResults[0].id,
-              generalInfo.value.applicantTypeSelected.id
+              generalInfo.value.applicantTypeSelected.id,
             ])
-            .then(res => {
+            .then((res) => {
               let result = res.data.data;
               commonDocuments.value = result;
               if (
@@ -2142,12 +1812,11 @@ export default {
               ) {
                 isBackButtonClicked.value = true;
                 documentsUploaded.value = existingDocs;
-                existingDocs.forEach(existing => {
-                  result.forEach(Cd => {
+                existingDocs.forEach((existing) => {
+                  result.forEach((Cd) => {
                     if (
                       existing.imageId ==
-                      "common_image_lightbox_" +
-                        Cd.documentType.code.toUpperCase()
+                      "common_image_lightbox_" + Cd.documentType.code.toUpperCase()
                     ) {
                       Cd.existingFile = existing.image;
                       Cd.fileName = existing.fileName;
@@ -2185,9 +1854,9 @@ export default {
       next,
       back,
       addMore,
-      showNestedDocuments
+      showNestedDocuments,
     };
-  }
+  },
 };
 </script>
 
