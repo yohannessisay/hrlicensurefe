@@ -30,7 +30,7 @@
           <div class="mb-3 xl:w-full">
             <label for="" class="ml-4">License Type</label>
             <select
-              class="form-select appearance-none block w-full px-6 ml-4 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+              class="block w-full px-6 py-2 ml-4 text-base font-normal text-gray-700 transition ease-in-out bg-white bg-no-repeat border border-gray-300 border-solid rounded appearance-none form-select bg-clip-padding focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
               v-model="licenseType"
             >
               <option value="newLicense">New License Applications</option>
@@ -60,55 +60,61 @@
           :color="'#2F639D'"
           :opacity="0.7"
         ></loading>
-        <div class="bg-white rounded-md shadow-md p-2 m-4">
+        <div class="p-2 m-4 bg-white rounded-md shadow-md">
           <div class="p-4 mt-4">
-            <h1 class="text-2xl text-center font-semibold mb-6">License History</h1>
+            <h1 class="mb-6 text-2xl font-semibold text-center">License History</h1>
             <div class="container">
-              <div class="flex flex-col md:grid grid-cols-12 text-gray-50">
+              <div class="flex flex-col grid-cols-12 md:grid text-gray-50">
                 <div
                   class="flex md:contents"
                   v-for="history in licenseHistory"
                   :key="history.id"
                 >
-                  <div class="col-start-2 col-end-4 mr-10 md:mx-auto relative">
-                    <div class="h-full w-6 flex items-center justify-center">
-                      <div class="h-full w-1 bg-main-500 pointer-events-none"></div>
+                  <div class="relative col-start-2 col-end-4 mr-10 md:mx-auto">
+                    <div class="flex items-center justify-center w-6 h-full">
+                      <div class="w-1 h-full pointer-events-none bg-main-500"></div>
                     </div>
                     <div
-                      class="w-6 h-6 absolute top-1/2 -mt-20 rounded-full bg-main-500 shadow text-center"
+                      class="absolute w-6 h-6 -mt-20 text-center rounded-full shadow top-1/2 bg-main-500"
                     >
-                      <i class="fas fa-check-circle text-primary-600 text-3xl"></i>
+                      <i class="text-3xl fas fa-check-circle text-primary-600"></i>
                     </div>
                   </div>
                   <div
-                    class="bg-main-500 col-start-4 col-end-12 p-4 rounded-xl my-4 mr-auto shadow-md w-full"
+                    class="w-full col-start-4 col-end-12 p-4 my-4 mr-auto shadow-md bg-main-500 rounded-xl"
                   >
                     <div class="grid grid-cols-2">
                       <div>
-                        <h2 class="text-white text-2xl">
+                        <h2 class="text-2xl text-white">
                           {{ history.createdAt.slice(0, 10) }}
                         </h2>
-                        <h3 class="text-white font-semibold text-lg mb-2">
+                        <h3 class="mb-2 text-lg font-semibold text-white">
                           License Status
                         </h3>
-                        <p class="text-white leading-tight text-justify w-full">
+                        <p class="w-full leading-tight text-justify text-white">
                           From
                           <span
-                            class="text-2xl m-2 p-2 rounded-md text-primary-600 bg-white"
+                            class="p-2 m-2 text-2xl bg-white rounded-md text-primary-600"
                           >
                             {{ history.fromStatus.name }}
                           </span>
                           To
                           <span
-                            class="text-2xl m-2 p-2 rounded-md text-primary-600 bg-white"
+                            class="p-2 m-2 text-2xl bg-white rounded-md text-primary-600"
                           >
                             {{ history.toStatus.name }}
+                          </span>
+                          <span
+                          v-if="history.toStatus.name==history.fromStatus.name"
+                            class="p-2 m-2 text-2xl text-white rounded-md bg-primary-600"
+                          >
+                            This is a Transfer
                           </span>
                         </p>
                       </div>
                       <div>
-                        <h2 class="text-xl text-white font-bold">Remark</h2>
-                        <div class="border text-white rounded-md p-2">
+                        <h2 class="text-xl font-bold text-white">Remark</h2>
+                        <div class="p-2 text-white border rounded-md">
                           {{ history.remark }}
                         </div>
                       </div>

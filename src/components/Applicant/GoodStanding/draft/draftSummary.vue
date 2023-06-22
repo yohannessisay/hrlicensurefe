@@ -13,30 +13,10 @@
     <!-- End heading -->
     <!-- row -->
     <div
-      class="
-        grid grid-cols-2
-        gap-4
-        md:grid-cols-2
-        lg:grid-cols-2
-        mdlg:grid-cols-2
-        sm:grid-cols-1
-      "
+      class="grid grid-cols-2 gap-4 md:grid-cols-2 lg:grid-cols-2 mdlg:grid-cols-2 sm:grid-cols-1"
     >
       <div
-        class="
-          py-8
-          px-12
-          mb-12
-          bg-white
-          mt-8
-          shadow-lg
-          rounded-lg
-          transform
-          transition
-          duration-300
-          ease-in-out
-          hover:-translate-y-2
-        "
+        class="py-8 px-12 mb-12 bg-white mt-8 shadow-lg rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2"
       >
         <div class="border-b-2 text-main-400 mb-4">
           <div class="text-gray-900 mb-4 flex justify-center">
@@ -44,13 +24,7 @@
           </div>
           <div class="flex justify-center text-gray-900 mb-4">
             <h3
-              class="
-                text-lg text-main-400
-                leading-normal
-                mb-2
-                font-semibold
-                text-grey-800
-              "
+              class="text-lg text-main-400 leading-normal mb-2 font-semibold text-grey-800"
             >
               Application Detail
             </h3>
@@ -59,14 +33,7 @@
         <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
           <div>
             <span
-              class="
-                text-main-400
-                font-bold
-                sm:text-sm
-                mdlg:text-base
-                lg:text-base
-                md:text-base
-              "
+              class="text-main-400 font-bold sm:text-sm mdlg:text-base lg:text-base md:text-base"
             >
               Applicant Type</span
             >
@@ -74,9 +41,7 @@
           <div>
             <span class="text-grey-800 sm:text-sm">
               {{
-                localData && localData.applicantType
-                  ? localData.applicantType.name
-                  : ""
+                localData && localData.applicantType ? localData.applicantType.name : ""
               }}</span
             >
           </div>
@@ -84,14 +49,7 @@
         <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
           <div>
             <span
-              class="
-                text-main-400
-                font-bold
-                sm:text-sm
-                mdlg:text-base
-                lg:text-base
-                md:text-base
-              "
+              class="text-main-400 font-bold sm:text-sm mdlg:text-base lg:text-base md:text-base"
             >
               Department</span
             >
@@ -99,9 +57,7 @@
           <div>
             <span class="text-grey-800 sm:text-sm">
               {{
-                localData && localData.department
-                  ? localData.department.name
-                  : ""
+                localData && localData.department ? localData.department.name : ""
               }}</span
             >
           </div>
@@ -109,14 +65,7 @@
         <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
           <div>
             <span
-              class="
-                text-main-400
-                font-bold
-                sm:text-sm
-                mdlg:text-base
-                lg:text-base
-                md:text-base
-              "
+              class="text-main-400 font-bold sm:text-sm mdlg:text-base lg:text-base md:text-base"
               >Profession</span
             >
           </div>
@@ -133,14 +82,7 @@
         <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
           <div>
             <span
-              class="
-                text-main-400
-                font-bold
-                sm:text-sm
-                mdlg:text-base
-                lg:text-base
-                md:text-base
-              "
+              class="text-main-400 font-bold sm:text-sm mdlg:text-base lg:text-base md:text-base"
               >Education Level</span
             >
           </div>
@@ -157,14 +99,7 @@
         <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
           <div>
             <span
-              class="
-                text-main-400
-                font-bold
-                sm:text-sm
-                mdlg:text-base
-                lg:text-base
-                md:text-base
-              "
+              class="text-main-400 font-bold sm:text-sm mdlg:text-base lg:text-base md:text-base"
             >
               Applicant Title</span
             >
@@ -172,9 +107,7 @@
           <div>
             <span class="text-grey-800 sm:text-sm">
               {{
-                localData && localData.applicantTitle
-                  ? localData.applicantTitle.name
-                  : ""
+                localData && localData.applicantTitle ? localData.applicantTitle.name : ""
               }}</span
             >
           </div>
@@ -182,21 +115,7 @@
       </div>
 
       <div
-        class="
-          py-8
-          px-12
-          mb-12
-          bg-white
-          rounded-lg
-          mt-8
-          text-main-400
-          transform
-          transition
-          duration-300
-          ease-in-out
-          shadow-lg
-          hover:-translate-y-2
-        "
+        class="py-8 px-12 mb-12 bg-white rounded-lg mt-8 text-main-400 transform transition duration-300 ease-in-out shadow-lg hover:-translate-y-2"
       >
         <div class="border-b-2 text-main-400 mb-4">
           <div class="text-gray-900 mb-4 flex justify-center">
@@ -204,13 +123,7 @@
           </div>
           <div class="flex justify-center text-gray-900 mb-4">
             <h3
-              class="
-                text-lg text-main-400
-                leading-normal
-                mb-2
-                font-semibold
-                text-grey-800
-              "
+              class="text-lg text-main-400 leading-normal mb-2 font-semibold text-grey-800"
             >
               Letter Detail
             </h3>
@@ -219,37 +132,21 @@
         <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
           <div>
             <span
-              class="
-                text-main-400
-                font-bold
-                sm:text-sm
-                mdlg:text-base
-                lg:text-base
-                md:text-base
-              "
+              class="text-main-400 font-bold sm:text-sm mdlg:text-base lg:text-base md:text-base"
             >
               Who issued the letter</span
             >
           </div>
           <div>
             <span class="text-grey-800 sm:text-sm">
-              {{
-                localData && localData.whoIssued ? localData.whoIssued.name : ""
-              }}</span
+              {{ localData && localData.whoIssued ? localData.whoIssued.name : "" }}</span
             >
           </div>
         </div>
         <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
           <div>
             <span
-              class="
-                text-main-400
-                font-bold
-                sm:text-sm
-                mdlg:text-base
-                lg:text-base
-                md:text-base
-              "
+              class="text-main-400 font-bold sm:text-sm mdlg:text-base lg:text-base md:text-base"
               >To whom the letter is written for</span
             >
           </div>
@@ -266,14 +163,7 @@
         <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
           <div>
             <span
-              class="
-                text-main-400
-                font-bold
-                sm:text-sm
-                mdlg:text-base
-                lg:text-base
-                md:text-base
-              "
+              class="text-main-400 font-bold sm:text-sm mdlg:text-base lg:text-base md:text-base"
               >License Registration Number</span
             >
           </div>
@@ -290,14 +180,7 @@
         <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
           <div>
             <span
-              class="
-                text-main-400
-                font-bold
-                sm:text-sm
-                mdlg:text-base
-                lg:text-base
-                md:text-base
-              "
+              class="text-main-400 font-bold sm:text-sm mdlg:text-base lg:text-base md:text-base"
             >
               License IssuedDate</span
             >
@@ -316,15 +199,7 @@
     </div>
 
     <div
-      class="
-        mt-8
-        grid grid-cols-1
-        gap-4
-        md:grid-cols-1
-        lg:grid-cols-1
-        mdlg:grid-cols-1
-        sm:grid-cols-1
-      "
+      class="mt-8 grid grid-cols-1 gap-4 md:grid-cols-1 lg:grid-cols-1 mdlg:grid-cols-1 sm:grid-cols-1"
     >
       <div class="bg-white flex-shrink px-4 w-full rounded-md shadow-xl">
         <div class="py-8 px-12 mb-12 bg-gray-50 border-b border-white">
@@ -334,13 +209,7 @@
             </div>
             <div class="flex justify-center text-gray-900 mb-4">
               <h3
-                class="
-                  text-3xl text-main-400
-                  leading-normal
-                  mb-2
-                  font-semibold
-                  text-grey-800
-                "
+                class="text-3xl text-main-400 leading-normal mb-2 font-semibold text-grey-800"
               >
                 Files Uploaded
               </h3>
@@ -358,21 +227,7 @@
             "
           >
             <div
-              class="
-                mt-4
-                mb-8
-                bg-white
-                border-4
-                text-main-400
-                shadow-xl
-                rounded-md
-                transform
-                transition
-                duration-300
-                ease-in-out
-                p-2
-                hover:-translate-y-2
-              "
+              class="mt-4 mb-8 bg-white border-4 text-main-400 shadow-xl rounded-md transform transition duration-300 ease-in-out p-2 hover:-translate-y-2"
               v-for="changed in changedDocs"
               :key="changed.id"
             >
@@ -386,10 +241,7 @@
                     :data-title="changed.docName"
                     data-lightbox="example-1"
                   >
-                    <img
-                      :src="changed.prevFile"
-                      class="w-full h-48 object-cover"
-                    />
+                    <img :src="changed.prevFile" class="w-full h-48 object-cover" />
                   </a>
                 </div>
 
@@ -414,30 +266,14 @@
             <div class="accordion-item bg-white">
               <h2 class="accordion-header mb-0" id="headingOne">
                 <button
-                  class="
-                    relative
-                    flex
-                    items-center
-                    w-full
-                    py-4
-                    px-5
-                    text-white
-                    bg-grey-200
-                    hover:text-main-400 hover:bg-white
-                    transition
-                    focus:outline-none
-                    hover:border-main-400
-                    rounded-md
-                  "
+                  class="relative flex items-center w-full py-4 px-5 text-white bg-grey-200 hover:text-main-400 hover:bg-white transition focus:outline-none hover:border-main-400 rounded-md"
                   type="button"
                   data-bs-toggle="collapse"
                   data-bs-target="#collapseOne"
                   aria-expanded="true"
                   aria-controls="collapseOne"
                 >
-                  
-                    Previously 
-                  uploaded files
+                  Previously uploaded files
                 </button>
               </h2>
               <div
@@ -448,33 +284,10 @@
               >
                 <div class="accordion-body py-4 px-5">
                   <div
-                    class="
-                      grid grid-cols-4
-                      gap-4
-                      ml-4
-                      sm:w-full sm:grid-cols-1
-                      md:w-full
-                      mdlg:grid-cols-2
-                      lg:w-full
-                      md:grid-cols-4
-                      mdlg:w-full
-                      lg:grid-cols-4
-                    "
+                    class="grid grid-cols-4 gap-4 ml-4 sm:w-full sm:grid-cols-1 md:w-full mdlg:grid-cols-2 lg:w-full md:grid-cols-4 mdlg:w-full lg:grid-cols-4"
                   >
                     <div
-                      class="
-                        mt-4
-                        mb-8
-                        bg-white
-                        shadow-xl
-                        rounded-md
-                        transform
-                        transition
-                        duration-300
-                        ease-in-out
-                        p-2
-                        hover:-translate-y-2
-                      "
+                      class="mt-4 mb-8 bg-white shadow-xl rounded-md transform transition duration-300 ease-in-out p-2 hover:-translate-y-2"
                       v-for="prev in localFileImages"
                       :key="prev.docName"
                     >
@@ -483,12 +296,24 @@
                       <div class="flex justify-center rounded-lg p-4">
                         <div class="bg-white rounded-md p-2">
                           <a
-                            :href="prev&&prev.image?prev.image:prev&&prev.filePath?googleApi+prev.filePath:''"
+                            :href="
+                              prev && prev.image
+                                ? prev.image
+                                : prev && prev.filePath
+                                ? googleApi + prev.filePath
+                                : ''
+                            "
                             :data-title="prev.documenttype"
                             data-lightbox="example-4"
                           >
                             <img
-                              :src="prev&&prev.image?prev.image:prev&&prev.filePath?googleApi+prev.filePath:''"
+                              :src="
+                                prev && prev.image
+                                  ? prev.image
+                                  : prev && prev.filePath
+                                  ? googleApi + prev.filePath
+                                  : ''
+                              "
                               class="w-full h-48 object-cover"
                             />
                           </a>
@@ -505,57 +330,16 @@
     </div>
 
     <div
-      class="
-        mt-8
-        grid grid-cols-1
-        gap-4
-        md:grid-cols-1
-        lg:grid-cols-1
-        mdlg:grid-cols-1
-        sm:grid-cols-1
-      "
+      class="mt-8 grid grid-cols-1 gap-4 md:grid-cols-1 lg:grid-cols-1 mdlg:grid-cols-1 sm:grid-cols-1"
     >
       <div
-        class="
-          py-8
-          px-12
-          mb-12
-          bg-white
-          text-main-400
-          transform
-          rounded-lg
-          shadow-lg
-          mt-4
-          transition
-          duration-300
-          ease-in-out
-          hover:-translate-y-2
-        "
+        class="py-8 px-12 mb-12 bg-white text-main-400 transform rounded-lg shadow-lg mt-4 transition duration-300 ease-in-out hover:-translate-y-2"
       >
         <div class="mb-4">
           <div class="flex justify-center text-gray-900 mb-4">
             <div class="form-check">
               <input
-                class="
-                  form-check-input
-                  appearance-none
-                  h-5
-                  w-5
-                  border
-                  rounded-sm
-                  bg-white
-                  checked:bg-main-400 checked:border-main-400
-                  focus:outline-none
-                  transition
-                  duration-200
-                  mt-1
-                  text-main-400
-                  align-top
-                  bg-no-repeat bg-center bg-contain
-                  float-left
-                  mr-2
-                  cursor-pointer
-                "
+                class="form-check-input appearance-none h-5 w-5 border rounded-sm bg-white checked:bg-main-400 checked:border-main-400 focus:outline-none transition duration-200 mt-1 text-main-400 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                 type="checkbox"
                 :value="agreed"
                 @click="changeAgrement()"
@@ -563,23 +347,14 @@
               />
             </div>
             <h3
-              class="
-                text-grey-800
-                mb-2localFileData
-                sm:text-xs
-                lgmd:text-base
-                lg:text-base
-                md:text-base
-              "
+              class="text-grey-800 mb-2localFileData sm:text-xs lgmd:text-base lg:text-base md:text-base"
             >
-              By checking here I hereby verify the documents and details filled
-              in are legal.
+              By checking here I hereby verify the documents and details filled in are
+              legal.
             </h3>
           </div>
           <div class="flex justify-center">
-            <label
-              for="feedback"
-              class="form-label inline-block mb-2 text-main-400"
+            <label for="feedback" class="form-label inline-block mb-2 text-main-400"
               >Feedback on the process and system
               <span class="text-yellow-300">(optional*)</span>
             </label>
@@ -594,23 +369,7 @@
             <div class="mb-3 w-full flex justify-center">
               <input
                 v-model="generalInfo.feedback"
-                class="
-                  form-control
-                  block
-                  w-full
-                  px-3
-                  py-1.5
-                  text-base
-                  font-normal
-                  text-gray-700
-                  border border-solid border-main-400
-                  rounded
-                  focus:border-main-400
-                  transition
-                  ease-in-out
-                  m-0
-                  focus:outline-none
-                "
+                class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 border border-solid border-main-400 rounded focus:border-main-400 transition ease-in-out m-0 focus:outline-none"
                 @keyup="checkAgreement()"
                 id="feedback"
                 rows="6"
@@ -641,22 +400,7 @@
       </span>
 
       <button
-        class="
-          inline-block
-          px-6
-          text-main-400
-          mt-4
-          bg-white
-          font-medium
-          text-xs
-          leading-tight
-          uppercase
-          rounded
-          shadow-lg
-          transition
-          duration-150
-          ease-in-out
-        "
+        class="inline-block px-6 text-main-400 mt-4 bg-white font-medium text-xs leading-tight uppercase rounded shadow-lg transition duration-150 ease-in-out"
         @click="back()"
       >
         back
@@ -761,11 +505,10 @@ export default {
             licenseIssuedDate: generalInfo.value.licenseIssuedDate
               ? generalInfo.value.licenseIssuedDate
               : null,
-              whoIssuedId: generalInfo.value.whoIssuedId
+            whoIssuedId: generalInfo.value.whoIssuedId
               ? generalInfo.value.whoIssuedId.id
               : "",
-            licenseRegistrationNumber: generalInfo.value
-              .licenseRegistrationNumber
+            licenseRegistrationNumber: generalInfo.value.licenseRegistrationNumber
               ? generalInfo.value.licenseRegistrationNumber
               : "",
             professionType: {
@@ -791,8 +534,7 @@ export default {
             otherProfessionalType: generalInfo.value.otherProfessionType
               ? generalInfo.value.otherProfessionType
               : "",
-            otherProfessionalTypeAmharic: generalInfo.value
-              .otherProfessionTypeAmharic
+            otherProfessionalTypeAmharic: generalInfo.value.otherProfessionTypeAmharic
               ? generalInfo.value.otherProfessionTypeAmharic
               : "",
             departmentId: generalInfo.value.department
@@ -800,46 +542,32 @@ export default {
               : generalInfo.value.departmentId
               ? generalInfo.value.departmentId
               : null,
-            feedback: generalInfo.value.feedback
-              ? generalInfo.value.feedback
-              : "",
+            feedback: generalInfo.value.feedback ? generalInfo.value.feedback : "",
             id: route.params.id,
           },
         };
-        store
-          .dispatch("goodstanding/editGoodstandingLicense", license)
-          .then(() => {
-            let licenseId = route.params.id;
-            let payload = { document: formData, id: licenseId };
-            store
-              .dispatch("goodstanding/updateDocuments", payload)
-              .then((res) => {
-                isLoading.value = false;
-                if (res.data.status == "Success") {
-                  localStorage.removeItem("GSApplicationData");
-                  toast.success("Applied successfuly", {
-                    timeout: 5000,
-                    position: "bottom-center",
-                    pauseOnFocusLoss: true,
-                    pauseOnHover: true,
-                    icon: true,
-                  });
-                  if (action == "DraftEvent") {
-                    router.push({ path: "/Applicant/GoodStanding/draft" });
-                  } else {
-                    router.push({ path: "/Applicant/GoodStanding/submitted" });
-                  }
+        store.dispatch("goodstanding/editGoodstandingLicense", license).then(() => {
+          let licenseId = route.params.id;
+          let payload = { document: formData, id: licenseId };
+          store
+            .dispatch("goodstanding/updateDocuments", payload)
+            .then((res) => {
+              isLoading.value = false;
+              if (res.data.status == "Success") {
+                localStorage.removeItem("GSApplicationData");
+                toast.success("Applied successfuly", {
+                  timeout: 5000,
+                  position: "bottom-center",
+                  pauseOnFocusLoss: true,
+                  pauseOnHover: true,
+                  icon: true,
+                });
+                if (action == "DraftEvent") {
+                  router.push({ path: "/Applicant/GoodStanding/draft" });
                 } else {
-                  toast.error("Error occured, please try again", {
-                    timeout: 5000,
-                    position: "bottom-center",
-                    pauseOnFocusLoss: true,
-                    pauseOnHover: true,
-                    icon: true,
-                  });
+                  router.push({ path: "/Applicant/GoodStanding/submitted" });
                 }
-              })
-              .catch(() => {
+              } else {
                 toast.error("Error occured, please try again", {
                   timeout: 5000,
                   position: "bottom-center",
@@ -847,8 +575,18 @@ export default {
                   pauseOnHover: true,
                   icon: true,
                 });
+              }
+            })
+            .catch(() => {
+              toast.error("Error occured, please try again", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
               });
-          });
+            });
+        });
       }
     };
     const back = () => {
@@ -911,9 +649,7 @@ export default {
             getAllIDB.onsuccess = function (evt) {
               localFileImages.value = evt.target.result
                 ? JSON.parse(
-                    JSON.stringify(
-                      evt.target.result[0] ? evt.target.result[0].data : {}
-                    )
+                    JSON.stringify(evt.target.result[0] ? evt.target.result[0].data : {})
                   )
                 : {};
 

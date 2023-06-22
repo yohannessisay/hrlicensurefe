@@ -10,9 +10,7 @@
         <li><span class="text-gray-500 mx-2">/</span></li>
         <li>
           <router-link to="/Applicant/GoodStanding">
-            <a href="#" class="text-main-400 hover:text-blue-700"
-              >Goodstanding</a
-            >
+            <a href="#" class="text-main-400 hover:text-blue-700">Goodstanding</a>
           </router-link>
         </li>
         <li><span class="text-gray-500 mx-2">/</span></li>
@@ -22,17 +20,7 @@
 
     <div
       v-if="activeState == 1"
-      class="
-        block
-        p-6
-        rounded-lg
-        shadow-lg
-        bg-primary-200
-        max-w-full
-        mr-8
-        mb-8
-        sm:p-4
-      "
+      class="block p-6 rounded-lg shadow-lg bg-primary-200 max-w-full mr-8 mb-8 sm:p-4"
     >
       <div class="mt-small flex justify-center">
         <h2 class="text-main-400 text-3xl font-bold">General Information</h2>
@@ -49,42 +37,12 @@
             <div class="container mx-auto">
               <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
                 <div
-                  class="
-                  flex
-                  justify-center
-                  text-6xl
-                  min-w-full
-                  rounded-xl
-                  p-6
-                  bg-gray-100
-                "
+                  class="flex justify-center text-6xl min-w-full rounded-xl p-6 bg-gray-100"
                 >
                   <div>
                     <label class="text-main-400">Applicant Type</label>
                     <select
-                      class="
-                      form-select
-                      appearance-none
-                      block
-                      xl:w-64
-                      md:w-64
-                      sm:w-64
-                      px-3
-                      py-1.5
-                      text-base
-                      font-normal
-                      text-gray-700
-                      hover:text-main-500 hover:border-main-500
-                      border border-solid border-gray-300
-                      rounded
-                      transition
-                      ease-in-out
-                      m-0
-                      focus:text-gray-700
-                      focus:bg-white
-                      focus:border-main-400
-                      focus:outline-none
-                    "
+                      class="form-select appearance-none block xl:w-64 md:w-64 sm:w-64 px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
                       aria-label="Default select example"
                       @change="checkApplicantType(generalInfo.applicantType)"
                       v-model="generalInfo.applicantType"
@@ -116,46 +74,13 @@
                   </div>
                 </div>
 
-                <div
-                  class="
-                  flex
-                  justify-center
-                  text-6xl
-                  rounded-none
-                  p-2
-                  bg-gray-100
-                "
-                >
+                <div class="flex justify-center text-6xl rounded-none p-2 bg-gray-100">
                   <div>
                     <div class="overflow-hidden shadow-sm">
-                      <label for="" class="text-main-400"
-                        >Applicant Title</label
-                      >
+                      <label for="" class="text-main-400">Applicant Title</label>
 
                       <select
-                        class="
-                        form-select
-                        appearance-none
-                        block
-                        xl:w-64
-                        md:w-64
-                        sm:w-64
-                        px-3
-                        py-1.5
-                        text-base
-                        font-normal
-                        text-gray-700
-                        hover:text-main-500 hover:border-main-500
-                        border border-solid border-gray-300
-                        rounded
-                        transition
-                        ease-in-out
-                        m-0
-                        focus:text-gray-700
-                        focus:bg-white
-                        focus:border-main-400
-                        focus:outline-none
-                      "
+                        class="form-select appearance-none block xl:w-64 md:w-64 sm:w-64 px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
                         aria-label="Default select example"
                         v-model="generalInfo.applicantTitle"
                         required
@@ -189,35 +114,11 @@
 
             <div class="container mx-auto">
               <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-                <div
-                  class="flex justify-center text-6xl rounded-xl p-2 bg-gray-100"
-                >
+                <div class="flex justify-center text-6xl rounded-xl p-2 bg-gray-100">
                   <div>
                     <label class="text-main-400">Department</label>
                     <select
-                      class="
-                      form-select
-                      appearance-none
-                      block
-                      xl:w-64
-                      md:w-64
-                      sm:w-64
-                      px-3
-                      py-1.5
-                      text-base
-                      font-normal
-                      text-gray-700
-                      hover:text-main-500 hover:border-main-500
-                      border border-solid border-gray-300
-                      rounded
-                      transition
-                      ease-in-out
-                      m-0
-                      focus:text-gray-700
-                      focus:bg-white
-                      focus:border-main-400
-                      focus:outline-none
-                    "
+                      class="form-select appearance-none block xl:w-64 md:w-64 sm:w-64 px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
                       v-model="generalInfo.department"
                       @change="setDepartment()"
                     >
@@ -244,35 +145,11 @@
                     </select>
                   </div>
                 </div>
-                <div
-                  class="flex justify-center text-6xl rounded-xl p-2 bg-gray-100"
-                >
+                <div class="flex justify-center text-6xl rounded-xl p-2 bg-gray-100">
                   <div>
                     <label class="text-main-400">Education Level</label>
                     <select
-                      class="
-                      form-select
-                      appearance-none
-                      block
-                      xl:w-64
-                      md:w-64
-                      sm:w-64
-                      px-3
-                      py-1.5
-                      text-base
-                      font-normal
-                      text-gray-700
-                      hover:text-main-500 hover:border-main-500
-                      border border-solid border-gray-300
-                      rounded
-                      transition
-                      ease-in-out
-                      m-0
-                      focus:text-gray-700
-                      focus:bg-white
-                      focus:border-main-400
-                      focus:outline-none
-                    "
+                      class="form-select appearance-none block xl:w-64 md:w-64 sm:w-64 px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
                       v-model="generalInfo.GSProfessionals.educationLevel"
                       @change="educationalLevelChange()"
                     >
@@ -304,48 +181,18 @@
                   </div>
                 </div>
                 <div
-                  class="
-                  grid grid-rows-3
-                  justify-center
-                  text-6xl
-                  rounded-xl
-                  p-2
-                  bg-gray-100
-                "
+                  class="grid grid-rows-3 justify-center text-6xl rounded-xl p-2 bg-gray-100"
                 >
                   <div class="mb-4">
                     <label class="text-main-400">Profession</label>
                     <select
-                      class="
-                      form-select
-                      appearance-none
-                      block
-                      xl:w-64
-                      md:w-64
-                      sm:w-64
-                      px-3
-                      py-1.5
-                      text-base
-                      font-normal
-                      text-gray-700
-                      hover:text-main-500 hover:border-main-500
-                      border border-solid border-gray-300
-                      rounded
-                      transition
-                      ease-in-out
-                      m-0
-                      focus:text-gray-700
-                      focus:bg-white
-                      focus:border-main-400
-                      focus:outline-none
-                    "
+                      class="form-select appearance-none block xl:w-64 md:w-64 sm:w-64 px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
                       @change="checkOtherProfession()"
                       v-model="generalInfo.GSProfessionals.professionalTypes"
                     >
                       <option
                         :value="
-                          generalInfo &&
-                          generalInfo.GSProfessionals.professionalTypes
+                          generalInfo && generalInfo.GSProfessionals.professionalTypes
                             ? generalInfo.GSProfessionals.professionalTypes.id
                             : null
                         "
@@ -375,28 +222,7 @@
                     <input
                       type="text"
                       v-model="generalInfo.GSProfessionals.otherProfessionType"
-                      class="
-                      appearance-none
-                      block
-                      xl:w-64
-                      md:w-64
-                      sm:w-64
-                      px-3
-                      py-1.5
-                      text-base
-                      font-normal
-                      text-gray-700
-                      hover:text-main-500 hover:border-main-500
-                      border border-solid border-gray-300
-                      rounded
-                      transition
-                      ease-in-out
-                      m-0
-                      focus:text-gray-700
-                      focus:bg-white
-                      focus:border-main-400
-                      focus:outline-none
-                    "
+                      class="appearance-none block xl:w-64 md:w-64 sm:w-64 px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
                       autocomplete="off"
                       placeholder=""
                       required
@@ -404,36 +230,11 @@
                   </div>
 
                   <div v-show="showOtherProfession">
-                    <label class="text-main-400"
-                      >Other Profession Amharic</label
-                    >
+                    <label class="text-main-400">Other Profession Amharic</label>
                     <input
                       type="text"
-                      v-model="
-                        generalInfo.GSProfessionals.otherProfessionTypeAmharic
-                      "
-                      class="
-                      appearance-none
-                      block
-                      xl:w-64
-                      md:w-64
-                      sm:w-64
-                      px-3
-                      py-1.5
-                      text-base
-                      font-normal
-                      text-gray-700
-                      hover:text-main-500 hover:border-main-500
-                      border border-solid border-gray-300
-                      rounded
-                      transition
-                      ease-in-out
-                      m-0
-                      focus:text-gray-700
-                      focus:bg-white
-                      focus:border-main-400
-                      focus:outline-none
-                    "
+                      v-model="generalInfo.GSProfessionals.otherProfessionTypeAmharic"
+                      class="appearance-none block xl:w-64 md:w-64 sm:w-64 px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
                       autocomplete="off"
                       placeholder=""
                       required
@@ -441,35 +242,11 @@
                   </div>
                 </div>
 
-                <div
-                  class="flex justify-center text-6xl rounded-xl p-2 bg-gray-100"
-                >
+                <div class="flex justify-center text-6xl rounded-xl p-2 bg-gray-100">
                   <div>
                     <label class="text-main-400">Applicant Position</label>
                     <select
-                      class="
-                      form-select
-                      appearance-none
-                      block
-                      xl:w-64
-                      md:w-64
-                      sm:w-64
-                      px-3
-                      py-1.5
-                      text-base
-                      font-normal
-                      text-gray-700
-                      hover:text-main-500 hover:border-main-500
-                      border border-solid border-gray-300
-                      rounded
-                      transition
-                      ease-in-out
-                      m-0
-                      focus:text-gray-700
-                      focus:bg-white
-                      focus:border-main-400
-                      focus:outline-none
-                    "
+                      class="form-select appearance-none block xl:w-64 md:w-64 sm:w-64 px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
                       v-model="generalInfo.applicantPosition"
                       required
                     >
@@ -502,35 +279,12 @@
           </div>
 
           <!-- region -->
-          <div
-            v-if="showLocation"
-            class="pt-8 mt-12 rounded bg-white shadow-lg"
-          >
+          <div v-if="showLocation" class="pt-8 mt-12 rounded bg-white shadow-lg">
             <div class="flex">
               <div class="flex flex-col mb-medium w-2/5 ml-medium mr-12">
                 <label class="text-main-400">Region</label>
                 <select
-                  class="
-                  form-select
-                  appearance-none
-                  block
-                  max-w-3xl
-                  px-3
-                  py-1.5
-                  text-base
-                  font-normal
-                  text-gray-700
-                  bg-white bg-clip-padding bg-no-repeat
-                  border border-solid border-gray-300
-                  rounded
-                  transition
-                  ease-in-out
-                  m-0
-                  focus:text-gray-700
-                  focus:bg-white
-                  focus:border-blue-600
-                  focus:outline-none
-                "
+                  class="form-select appearance-none block max-w-3xl px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                   v-model="generalInfo.regionSelected"
                   @change="regionChangeHandler()"
                   required
@@ -561,27 +315,7 @@
               <div class="flex flex-col mb-medium w-2/5 mr-12">
                 <label class="text-main-400">Zone</label>
                 <select
-                  class="
-                  form-select
-                  appearance-none
-                  block
-                  max-w-3xl
-                  px-3
-                  py-1.5
-                  text-base
-                  font-normal
-                  text-gray-700
-                  bg-white bg-clip-padding bg-no-repeat
-                  border border-solid border-gray-300
-                  rounded
-                  transition
-                  ease-in-out
-                  m-0
-                  focus:text-gray-700
-                  focus:bg-white
-                  focus:border-blue-600
-                  focus:outline-none
-                "
+                  class="form-select appearance-none block max-w-3xl px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                   @change="zoneChangeHandler()"
                   v-model="generalInfo.zoneSelected"
                 >
@@ -613,27 +347,7 @@
               <div class="flex flex-col mb-medium w-2/5 ml-medium mr-12">
                 <label class="text-main-400">Woreda</label>
                 <select
-                  class="
-                  form-select
-                  appearance-none
-                  block
-                  max-w-3xl
-                  px-3
-                  py-1.5
-                  text-base
-                  font-normal
-                  text-gray-700
-                  bg-white bg-clip-padding bg-no-repeat
-                  border border-solid border-gray-300
-                  rounded
-                  transition
-                  ease-in-out
-                  m-0
-                  focus:text-gray-700
-                  focus:bg-white
-                  focus:border-blue-600
-                  focus:outline-none
-                "
+                  class="form-select appearance-none block max-w-3xl px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                   v-model="generalInfo.woredaSelected"
                   required
                 >
@@ -668,17 +382,7 @@
           <div class="mt-12 rounded-sm bg-white shadow-lg mb-8">
             <div class="container mx-auto">
               <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-                <div
-                  class="
-                  flex
-                  justify-center
-                  text-6xl
-                  rounded-xl
-                  ml-4
-                  p-2
-                  bg-gray-100
-                "
-                >
+                <div class="flex justify-center text-6xl rounded-xl ml-4 p-2 bg-gray-100">
                   <div>
                     <div class="overflow-hidden shadow-sm">
                       <label for="" class="text-main-400"
@@ -688,28 +392,7 @@
                       <input
                         type="text"
                         v-model="generalInfo.whomGoodStandingFor"
-                        class="
-                        appearance-none
-                        block
-                        xl:w-64
-                        md:w-64
-                        sm:w-64
-                        px-3
-                        py-1.5
-                        text-base
-                        font-normal
-                        text-gray-700
-                        hover:text-main-500 hover:border-main-500
-                        border border-solid border-gray-300
-                        rounded
-                        transition
-                        ease-in-out
-                        m-0
-                        focus:text-gray-700
-                        focus:bg-white
-                        focus:border-main-400
-                        focus:outline-none
-                      "
+                        class="appearance-none block xl:w-64 md:w-64 sm:w-64 px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
                         autocomplete="off"
                         placeholder=""
                         required
@@ -718,17 +401,7 @@
                   </div>
                 </div>
 
-                <div
-                  class="
-                  flex
-                  justify-center
-                  text-6xl
-                  rounded-xl
-                  ml-4
-                  p-2
-                  bg-gray-100
-                "
-                >
+                <div class="flex justify-center text-6xl rounded-xl ml-4 p-2 bg-gray-100">
                   <div>
                     <div class="overflow-hidden shadow-sm">
                       <label for="" class="text-main-400"
@@ -736,27 +409,7 @@
                       >
 
                       <select
-                        class="
-                        form-select
-                        appearance-none
-                        block
-                        max-w-3xl
-                        px-3
-                        py-1.5
-                        text-base
-                        font-normal
-                        text-gray-700
-                        bg-white bg-clip-padding bg-no-repeat
-                        border border-solid border-gray-300
-                        rounded
-                        transition
-                        ease-in-out
-                        m-0
-                        focus:text-gray-700
-                        focus:bg-white
-                        focus:border-blue-600
-                        focus:outline-none
-                      "
+                        class="form-select appearance-none block max-w-3xl px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                         v-model="generalInfo.whoIssuedId"
                         required
                       >
@@ -777,16 +430,7 @@
             <div class="container mx-auto">
               <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
                 <div
-                  class="
-                  flex
-                  justify-center
-                  text-6xl
-                  ml-4
-                  mb-4
-                  rounded-xl
-                  p-2
-                  bg-gray-100
-                "
+                  class="flex justify-center text-6xl ml-4 mb-4 rounded-xl p-2 bg-gray-100"
                 >
                   <div>
                     <div class="overflow-hidden shadow-sm">
@@ -797,28 +441,7 @@
                       <input
                         type="text"
                         v-model="generalInfo.licenseRegistrationNumber"
-                        class="
-                        appearance-none
-                        block
-                        xl:w-64
-                        md:w-64
-                        sm:w-64
-                        px-3
-                        py-1.5
-                        text-base
-                        font-normal
-                        text-gray-700
-                        hover:text-main-500 hover:border-main-500
-                        border border-solid border-gray-300
-                        rounded
-                        transition
-                        ease-in-out
-                        m-0
-                        focus:text-gray-700
-                        focus:bg-white
-                        focus:border-main-400
-                        focus:outline-none
-                      "
+                        class="appearance-none block xl:w-64 md:w-64 sm:w-64 px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
                         autocomplete="off"
                         placeholder=""
                         required
@@ -827,40 +450,15 @@
                   </div>
                 </div>
 
-                <div
-                  class="flex justify-center text-6xl rounded-xl p-2 bg-gray-100"
-                >
+                <div class="flex justify-center text-6xl rounded-xl p-2 bg-gray-100">
                   <div>
                     <div class="overflow-hidden shadow-sm">
-                      <label for="" class="text-main-400"
-                        >License Issued Date</label
-                      >
+                      <label for="" class="text-main-400">License Issued Date</label>
 
                       <input
                         type="date"
                         v-model="generalInfo.licenseIssuedDate"
-                        class="
-                        appearance-none
-                        block
-                        xl:w-64
-                        md:w-64
-                        sm:w-64
-                        px-3
-                        py-1.5
-                        text-base
-                        font-normal
-                        text-gray-700
-                        hover:text-main-500 hover:border-main-500
-                        border border-solid border-gray-300
-                        rounded
-                        transition
-                        ease-in-out
-                        m-0
-                        focus:text-gray-700
-                        focus:bg-white
-                        focus:border-main-400
-                        focus:outline-none
-                      "
+                        class="appearance-none block xl:w-64 md:w-64 sm:w-64 px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
                         autocomplete="off"
                         placeholder="example-MR,MRS"
                         required
@@ -874,60 +472,14 @@
           <!-- GS details -->
           <div class="flex justify-end mb-2 mr-1">
             <button
-              class="
-              float-right
-              mt-8
-              inline-block
-              px-6
-              py-2.5
-              bg-blue-700
-              text-main-400
-              max-w-3xl
-              font-medium
-              text-xs
-              leading-tight
-              uppercase
-              rounded
-              shadow-md
-              bg-white
-              border
-              hover:text-white hover:border-main-500 hover:bg-main-400
-              focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
-              active:bg-blue-800 active:shadow-lg
-              transition
-              duration-150
-              ease-in-out
-            "
+              class="float-right mt-8 inline-block px-6 py-2.5 bg-blue-700 text-main-400 max-w-3xl font-medium text-xs leading-tight uppercase rounded shadow-md bg-white border hover:text-white hover:border-main-500 hover:bg-main-400 focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
               type="submit"
               @click="saveDraft()"
             >
               Update
             </button>
             <button
-              class="
-              float-right
-              mt-8
-              inline-block
-              px-6
-              py-2.5
-              bg-blue-700
-              text-main-400
-              max-w-3xl
-              font-medium
-              text-xs
-              leading-tight
-              uppercase
-              rounded
-              shadow-md
-              bg-white
-              border
-              hover:text-white hover:border-main-500 hover:bg-main-400
-              focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
-              active:bg-blue-800 active:shadow-lg
-              transition
-              duration-150
-              ease-in-out
-            "
+              class="float-right mt-8 inline-block px-6 py-2.5 bg-blue-700 text-main-400 max-w-3xl font-medium text-xs leading-tight uppercase rounded shadow-md bg-white border hover:text-white hover:border-main-500 hover:bg-main-400 focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
               type="submit"
               @click="apply()"
             >
@@ -969,7 +521,7 @@ import { useToast } from "vue-toastification";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 import Loading from "vue3-loading-overlay";
 export default {
-  components: { MainContent, LicenseSummary, Upload,Loading  },
+  components: { MainContent, LicenseSummary, Upload, Loading },
 
   setup() {
     const store = useStore();
@@ -1061,9 +613,8 @@ export default {
     };
     const checkOtherProfession = () => {
       if (
-        generalInfo.value.professionType &&
-        generalInfo.value.professionType.professionTypeId &&
-        generalInfo.value.professionType.professionTypeId.code == "OTH"
+        generalInfo.value.professionTypeId.name &&
+        generalInfo.value.professionTypeId.name.toLowerCase() == "other"
       ) {
         showOtherProfession.value = true;
       } else {
@@ -1098,11 +649,9 @@ export default {
       });
     };
     const fetchZone = () => {
-      store
-        .dispatch("goodstanding/getZones", generalInfo.value.regionId)
-        .then((res) => {
-          zones.value = res.data.data;
-        });
+      store.dispatch("goodstanding/getZones", generalInfo.value.regionId).then((res) => {
+        zones.value = res.data.data;
+      });
     };
     const fetchWoredas = () => {
       store
@@ -1116,11 +665,9 @@ export default {
         departmentId: departmentId,
         educationalLevelId: educationalLevelId,
       };
-      store
-        .dispatch("newlicense/getProfessionalTypes", profession)
-        .then((res) => {
-          professionalTypes.value = res.data.data;
-        });
+      store.dispatch("newlicense/getProfessionalTypes", profession).then((res) => {
+        professionalTypes.value = res.data.data;
+      });
     };
     const setDepartment = () => {
       isDepartmentSelected.value = true;
@@ -1132,11 +679,9 @@ export default {
         "GSApplicationData",
         JSON.stringify(tempApplicationData)
       );
-      store
-        .dispatch("goodstanding/setGeneralInfo", generalInfo.value)
-        .then(() => {
-          activeState.value++;
-        });
+      store.dispatch("goodstanding/setGeneralInfo", generalInfo.value).then(() => {
+        activeState.value++;
+      });
     };
     const clearLocalData = () => {
       window.localStorage.removeItem("GSApplicationData");
@@ -1211,8 +756,7 @@ export default {
           otherProfessionalType: generalInfo.value.otherProfessionType
             ? generalInfo.value.otherProfessionType
             : "",
-          otherProfessionalTypeAmharic: generalInfo.value
-            .otherProfessionTypeAmharic
+          otherProfessionalTypeAmharic: generalInfo.value.otherProfessionTypeAmharic
             ? generalInfo.value.otherProfessionTypeAmharic
             : "",
           departmentId: generalInfo.value.department
@@ -1220,38 +764,34 @@ export default {
             : generalInfo.value.departmentId
             ? generalInfo.value.departmentId
             : null,
-          feedback: generalInfo.value.feedback
-            ? generalInfo.value.feedback
-            : "",
+          feedback: generalInfo.value.feedback ? generalInfo.value.feedback : "",
           id: route.params.id,
         },
       };
 
-      store
-        .dispatch("goodstanding/editGoodstandingLicense", license)
-        .then((res) => {
-          if (res.data.status == "Success") {
-            toast.success("Applied successfuly", {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            });
-            isLoading.value = false;
-            localStorage.removeItem("GSApplicationData");
-            loadFunctions();
-          } else {
-            toast.error("Error occured, please try again", {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            });
-            isLoading.value = false;
-          }
-        });
+      store.dispatch("goodstanding/editGoodstandingLicense", license).then((res) => {
+        if (res.data.status == "Success") {
+          toast.success("Applied successfuly", {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          });
+          isLoading.value = false;
+          localStorage.removeItem("GSApplicationData");
+          loadFunctions();
+        } else {
+          toast.error("Error occured, please try again", {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          });
+          isLoading.value = false;
+        }
+      });
     };
     const fetchLanguages = () => {
       store.dispatch("lookups/getNativeLanguage").then((res) => {
@@ -1275,7 +815,7 @@ export default {
         showLanguage.value = false;
       }
     };
-    const loadFunctions =  () => {
+    const loadFunctions = () => {
       isLoading.value = true;
       fetchApplicantType();
       fetchDepartments();
@@ -1298,9 +838,7 @@ export default {
             10
           );
           generalInfo.value.regionSelected =
-            res.data.data && res.data.data.woreda
-              ? res.data.data.woreda.zone.region
-              : "";
+            res.data.data && res.data.data.woreda ? res.data.data.woreda.zone.region : "";
 
           generalInfo.value.zoneSelected =
             res.data.data && res.data.data.woreda

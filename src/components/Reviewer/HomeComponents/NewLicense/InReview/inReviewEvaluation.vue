@@ -1,3 +1,9 @@
+<style scoped>
+  .shadow-lg {
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 34%), 0 2px 4px -1px rgb(0 0 0 / 6%);
+  }
+</style>
+
 <template>
   <!-- Sidebar -->
   <reviewer-side-nav :finalUrl="'newLicense'"></reviewer-side-nav>
@@ -12,14 +18,14 @@
 
     <!-- Main Content -->
     <div class="home-content">
-      <div class="vld-parent mt-4">
+      <div class="mt-4 vld-parent">
         <loading
           :active="isLoadingStart"
           :is-full-page="false"
           :color="'#2F639D'"
           :opacity="1"
         ></loading>
-        <div class="container mx-auto px-4 sm:px-4 mb-12">
+        <div class="container px-4 mx-auto mb-12 sm:px-4">
           <div
             v-if="
               newLicense &&
@@ -27,9 +33,9 @@
                 (newLicense.applicationStatus.code == 'IRV' ||
                   newLicense.applicationStatus.code == 'REVDRA')
             "
-            class="rounded-lg bg-primary-800 w-full shadow-md"
+            class="w-full rounded-lg shadow-md bg-primary-800"
           >
-            <h2 class="text-white ml-4 text-xl">
+            <h2 class="ml-4 text-xl text-white">
               Evaluating
               {{
                 newLicense && newLicense.profile && newLicense.profile.name
@@ -43,67 +49,48 @@
               <div class="box-shadow-pop bg-lightGrey-100">
                 <div class="flex justify-content-evenly">
                   <div
-                    class="
-                    p-4
-                    w-64
-                    h-40
-                    mt-8
-                    ml-8
-                    shadow-lg
-                    container
-                    box-shadow-pop
-                    rounded-lg
-                  "
+                    class="container w-64 h-40 p-4 mt-8 ml-8 rounded-lg shadow-lg box-shadow-pop"
                   >
                     <div class="mt-8">
-                      <div class="my-auto flex justify-center items-center">
+                      <div class="flex items-center justify-center my-auto">
                         <h2 class="text-3xl">
                           {{ accepted ? accepted.length : 0 }}
                         </h2>
                       </div>
-                      <div class="flex justify-center items-center">
+                      <div class="flex items-center justify-center">
                         <h2 class="text-3xl">Accepted</h2>
                       </div>
                     </div>
-                    <div
-                      class="container mt-8   rounded-lg overflow-hidden shadow-lg my-2 bg-white"
-                    >
+                    <div class="container my-2 mt-8 overflow-hidden bg-white rounded-lg shadow-lg">
                       <div
                         class="relative z-10 h-auto"
-                        style="clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - 5vw));"
+                        style="
+                          clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - 5vw));
+                        "
                       >
                         <img
                           class="w-full"
                           :src="
-                            newLicense &&
-                            newLicense.profile &&
-                            newLicense.profile.profilePicture
-                              ? googleApi +
-                                newLicense.profile.profilePicture.filePath
+                            newLicense && newLicense.profile && newLicense.profile.profilePicture
+                              ? googleApi + newLicense.profile.profilePicture.filePath
                               : ''
                           "
                           alt="Profile image"
                         />
                       </div>
                       <div
-                        class="relative flex justify-between items-center flex-row px-6 z-50 -mt-10"
+                        class="relative z-50 flex flex-row items-center justify-between px-6 -mt-10"
                       >
-                        <h2
-                          class="text-primary-600 font-bold text-xl underline"
-                        >
+                        <h2 class="text-xl font-bold underline text-primary-600">
                           Applicant's Profile
                         </h2>
                       </div>
-                      <div class="pt-6 pb-8 text-gray-600 p-2">
+                      <div class="p-2 pt-6 pb-8 text-gray-600">
                         <div class="grid grid-cols-3">
-                          <div class="col-span-1 text-primary-600 mt-4">
-                            Name
-                          </div>
-                          <div class="col-span-2 mt-4 break-all ">
+                          <div class="col-span-1 mt-4 text-primary-600">Name</div>
+                          <div class="col-span-2 mt-4 break-all">
                             {{
-                              newLicense &&
-                              newLicense.profile &&
-                              newLicense.profile.name
+                              newLicense && newLicense.profile && newLicense.profile.name
                                 ? newLicense.profile.name +
                                   " " +
                                   newLicense.profile.fatherName +
@@ -112,10 +99,8 @@
                                 : ""
                             }}
                           </div>
-                          <div class="col-span-1 text-primary-600 mt-2">
-                            Email
-                          </div>
-                          <div class="col-span-2 mt-2 break-all ">
+                          <div class="col-span-1 mt-2 text-primary-600">Email</div>
+                          <div class="col-span-2 mt-2 break-all">
                             {{
                               newLicense &&
                               newLicense.applicant &&
@@ -124,26 +109,18 @@
                                 : ""
                             }}
                           </div>
-                          <div class="col-span-1 text-primary-600 mt-2">
-                            Phone
-                          </div>
-                          <div class="col-span-2 mt-2 break-all ">
+                          <div class="col-span-1 mt-2 text-primary-600">Phone</div>
+                          <div class="col-span-2 mt-2 break-all">
                             {{
-                              newLicense &&
-                              newLicense.applicant &&
-                              newLicense.applicant.phoneNumber
+                              newLicense && newLicense.applicant && newLicense.applicant.phoneNumber
                                 ? newLicense.applicant.phoneNumber
                                 : ""
                             }}
                           </div>
-                          <div class="col-span-1 text-primary-600 mt-2">
-                            Gender
-                          </div>
-                          <div class="col-span-2 mt-2 break-all ">
+                          <div class="col-span-1 mt-2 text-primary-600">Gender</div>
+                          <div class="col-span-2 mt-2 break-all">
                             {{
-                              newLicense &&
-                              newLicense.profile &&
-                              newLicense.profile.gender
+                              newLicense && newLicense.profile && newLicense.profile.gender
                                 ? newLicense.profile.gender
                                 : ""
                             }}
@@ -152,10 +129,8 @@
                       </div>
                     </div>
                   </div>
-                  <div class="flex justify-start mt-4 flex-wrap p-4">
-                    <div
-                      class="box-shadow-pop bg-lightGrey-100 mb-8 p-4 shadow-lg"
-                    >
+                  <div class="flex flex-wrap justify-start p-4 mt-4">
+                    <div class="p-4 mb-8 shadow-lg box-shadow-pop bg-lightGrey-100">
                       <div class="flex justify-center">
                         <h1 class="text-primary-600">Evaluation</h1>
                       </div>
@@ -182,84 +157,46 @@
                         </svg>
                       </div>
 
-                      <div class="flex flex-col justify-center items-center">
+                      <div class="flex flex-col items-center justify-center">
                         <div class="mt-8">
                           <label
                             v-if="!showButtons"
-                            class="
-                            justify-center
-                            items-center
-                            text-grey-800 text-2xl
-                          "
+                            class="items-center justify-center text-2xl text-grey-800"
                           >
                             {{ documentTypeName }}
                           </label>
 
-                          <div
-                            class="container my-2 mx-auto px-4 md:px-4"
-                            v-if="showButtons"
-                          >
+                          <div class="container px-4 mx-auto my-2 md:px-4" v-if="showButtons">
                             <div class="flex flex-wrap md:-mx-4 lg:-mx-8">
                               <!-- Personal Info card -->
-                              <div class="my-1 mx-4 w-full mb-4 shadow-xl">
+                              <div class="w-full mx-4 my-1 mb-4 shadow-xl">
                                 <!-- Article -->
-                                <article
-                                  class="overflow-hidden rounded-lg shadow-lg"
-                                >
+                                <article class="overflow-hidden rounded-lg shadow-lg">
                                   <header
-                                    class="
-                                    flex
-                                    items-center
-                                    justify-between
-                                    leading-tight
-                                    p-2
-                                    md:p-4
-                                  "
+                                    class="flex items-center justify-between p-2 leading-tight md:p-4"
                                   >
                                     <h2 class="font-bold">
                                       Personal Information
-                                      <span
-                                        @click="
-                                          editPersonalData = !editPersonalData
-                                        "
+                                      <span @click="editPersonalData = !editPersonalData"
                                         ><i
-                                          class="
-                                          fa fa-pencil
-                                          cursor-pointer
-                                          ml-4
-                                          text-yellow-300
-                                        "
+                                          class="ml-4 text-yellow-300 cursor-pointer fa fa-pencil"
                                         ></i
                                         >Edit Amharic Name</span
                                       >
                                     </h2>
-                                    <i
-                                      class="fa fa-user fa-2x text-primary-600"
-                                    ></i>
+                                    <i class="fa fa-user fa-2x text-primary-600"></i>
                                   </header>
                                   <hr class="text-grey-100" />
                                   <div
-                                    class="
-                                    container
-                                    flex
-                                    items-center
-                                    justify-between
-                                    leading-tight
-                                    p-2
-                                    md:p-4
-                                  "
+                                    class="container flex items-center justify-between p-2 leading-tight md:p-4"
                                   >
                                     <div class="font-bold">Full Name</div>
 
                                     <div>
                                       {{
-                                        (profileInfo.name
-                                          ? profileInfo.name
-                                          : "-") +
+                                        (profileInfo.name ? profileInfo.name : "-") +
                                           " " +
-                                          (profileInfo.fatherName
-                                            ? profileInfo.fatherName
-                                            : "-") +
+                                          (profileInfo.fatherName ? profileInfo.fatherName : "-") +
                                           " " +
                                           (profileInfo.grandFatherName
                                             ? profileInfo.grandFatherName
@@ -268,24 +205,12 @@
                                     </div>
                                   </div>
                                   <div
-                                    class="
-                                    container
-                                    flex
-                                    items-center
-                                    justify-between
-                                    leading-tight
-                                    p-2
-                                    md:p-4
-                                  "
+                                    class="container flex items-center justify-between p-2 leading-tight md:p-4"
                                   >
-                                    <div class="font-bold">
-                                      Full Name In Amharic
-                                    </div>
+                                    <div class="font-bold">Full Name In Amharic</div>
                                     <div v-if="editPersonalData">
                                       <input
-                                        v-model="
-                                          newLicense.profile.alternativeName
-                                        "
+                                        v-model="newLicense.profile.alternativeName"
                                         class="w-48 mr-1"
                                         type="text"
                                         placeholder="First Name"
@@ -293,10 +218,7 @@
                                     </div>
                                     <div v-if="editPersonalData">
                                       <input
-                                        v-model="
-                                          newLicense.profile
-                                            .alternativeFatherName
-                                        "
+                                        v-model="newLicense.profile.alternativeFatherName"
                                         class="w-48 mr-1"
                                         type="text"
                                         placeholder="Father Name"
@@ -304,10 +226,7 @@
                                     </div>
                                     <div v-if="editPersonalData">
                                       <input
-                                        v-model="
-                                          newLicense.profile
-                                            .alternativeGrandFatherName
-                                        "
+                                        v-model="newLicense.profile.alternativeGrandFatherName"
                                         class="w-48"
                                         type="text"
                                         placeholder="Grandfather Name"
@@ -322,27 +241,7 @@
                                       ></loading>
                                       <button
                                         v-if="editPersonalData"
-                                        class="
-                                        inline-block
-                                        px-6
-                                        text-white
-                                        bg-primary-600
-                                        font-medium
-                                        text-xs
-                                        leading-tight
-                                        uppercase
-                                        rounded
-                                        shadow-lg
-                                        hover:text-primary-600 hover:shadow-lg
-                                        focus:bg-purple-700
-                                        focus:shadow-lg
-                                        focus:outline-none
-                                        focus:ring-0
-                                        active:bg-purple-800 active:shadow-lg
-                                        transition
-                                        duration-150
-                                        ease-in-out
-                                      "
+                                        class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded shadow-lg bg-primary-600 hover:text-primary-600 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg"
                                         @click="changeAmharicName"
                                       >
                                         Save
@@ -366,57 +265,27 @@
                                     </div>
                                   </div>
                                   <div
-                                    class="
-                                    container
-                                    flex
-                                    items-center
-                                    justify-between
-                                    leading-tight
-                                    p-2
-                                    md:p-4
-                                  "
+                                    class="container flex items-center justify-between p-2 leading-tight md:p-4"
                                   >
                                     <div class="font-bold">Nationality</div>
                                     <div>
                                       {{
-                                        profileInfo.nationality
-                                          ? profileInfo.nationality.name
-                                          : "-"
+                                        profileInfo.nationality ? profileInfo.nationality.name : "-"
                                       }}
                                     </div>
                                   </div>
 
                                   <div
-                                    class="
-                                    container
-                                    flex
-                                    items-center
-                                    justify-between
-                                    leading-tight
-                                    p-2
-                                    md:p-4
-                                  "
+                                    class="container flex items-center justify-between p-2 leading-tight md:p-4"
                                   >
                                     <div class="font-bold">gender</div>
                                     <div>
-                                      {{
-                                        profileInfo.gender
-                                          ? profileInfo["gender"]
-                                          : "-"
-                                      }}
+                                      {{ profileInfo.gender ? profileInfo["gender"] : "-" }}
                                     </div>
                                   </div>
 
                                   <div
-                                    class="
-                                    container
-                                    flex
-                                    items-center
-                                    justify-between
-                                    leading-tight
-                                    p-2
-                                    md:p-4
-                                  "
+                                    class="container flex items-center justify-between p-2 leading-tight md:p-4"
                                   >
                                     <div class="font-bold">Martial Status</div>
                                     <div>
@@ -429,14 +298,7 @@
                                   </div>
                                   <hr class="text-grey-100" />
                                   <footer
-                                    class="
-                                    flex
-                                    items-center
-                                    justify-center
-                                    leading-none
-                                    p-2
-                                    md:p-4
-                                  "
+                                    class="flex items-center justify-center p-2 leading-none md:p-4"
                                   >
                                     {{ new Date().toISOString().slice(0, 10) }}
                                   </footer>
@@ -445,48 +307,18 @@
                               </div>
                               <!-- Personal Info card -->
                               <!-- Contact card -->
-                              <div
-                                class="
-                                my-1
-                                mb-4
-                                px-1
-                                w-full
-                                md:w-1/2
-                                lg:my-4 lg:px-4 lg:w-1/2
-                              "
-                              >
+                              <div class="w-full px-1 my-1 mb-4 md:w-1/2 lg:my-4 lg:px-4 lg:w-1/2">
                                 <!-- Article -->
-                                <article
-                                  class="overflow-hidden rounded-lg shadow-lg"
-                                >
+                                <article class="overflow-hidden rounded-lg shadow-lg">
                                   <header
-                                    class="
-                                    flex
-                                    items-center
-                                    justify-between
-                                    leading-tight
-                                    p-2
-                                    md:p-4
-                                  "
+                                    class="flex items-center justify-between p-2 leading-tight md:p-4"
                                   >
-                                    <h2 class="font-bold">
-                                      Contact Information
-                                    </h2>
-                                    <i
-                                      class="fa fa-phone text-primary-600 fa-2xl"
-                                    ></i>
+                                    <h2 class="font-bold">Contact Information</h2>
+                                    <i class="fa fa-phone text-primary-600 fa-2xl"></i>
                                   </header>
                                   <hr class="text-grey-100" />
                                   <div
-                                    class="
-                                    container
-                                    flex
-                                    items-center
-                                    justify-between
-                                    leading-tight
-                                    p-2
-                                    md:p-4
-                                  "
+                                    class="container flex items-center justify-between p-2 leading-tight md:p-4"
                                   >
                                     <div class="font-bold">Mobile Number</div>
                                     <div>
@@ -499,18 +331,9 @@
                                   </div>
 
                                   <div
-                                    class="
-                                    container
-                                    flex
-                                    items-center
-                                    justify-between
-                                    leading-tight
-                                    p-2
-                                    md:p-4
-                                    mb-12
-                                  "
+                                    class="container flex items-center justify-between p-2 mb-12 leading-tight md:p-4"
                                   >
-                                    <div class="font-bold mb-1">Email</div>
+                                    <div class="mb-1 font-bold">Email</div>
                                     <div>
                                       {{
                                         newLicense && newLicense.applicant
@@ -524,37 +347,17 @@
                               </div>
                               <!-- Contact card -->
                               <!-- Profession Card -->
-                              <div class="my-1 mx-4 w-full mb-4">
+                              <div class="w-full mx-4 my-1 mb-4">
                                 <!-- Article -->
-                                <article
-                                  class="overflow-hidden rounded-lg shadow-lg"
-                                >
+                                <article class="overflow-hidden rounded-lg shadow-lg">
                                   <header
-                                    class="
-                                    flex
-                                    border-b-2
-                                    text-grey-300
-                                    items-center
-                                    justify-between
-                                    leading-tight
-                                    p-2
-                                    md:p-4
-                                  "
+                                    class="flex items-center justify-between p-2 leading-tight border-b-2 text-grey-300 md:p-4"
                                   >
-                                    <h2 class="font-bold">
-                                      Department Information
-                                    </h2>
+                                    <h2 class="font-bold">Department Information</h2>
                                     <small class="font-bold text-red-300"
-                                      >Uncheck departments if you want to remove
-                                      them</small
+                                      >Uncheck departments if you want to remove them</small
                                     >
-                                    <i
-                                      class="
-                                      fa fa-briefcase
-                                      text-primary-600
-                                      fa-2xl
-                                    "
-                                    ></i>
+                                    <i class="fa fa-briefcase text-primary-600 fa-2xl"></i>
                                   </header>
 
                                   <div
@@ -568,88 +371,46 @@
                                   >
                                     <div class="flex justify-center">
                                       <div>
-                                        <label
-                                          for=""
-                                          class="font-bold text-red-300"
-                                          >{{
-                                            education &&
-                                            education.isDropped &&
-                                            education.isDropped == true
-                                              ? "Removed"
-                                              : ""
-                                          }}</label
-                                        >
+                                        <label for="" class="font-bold text-red-300">{{
+                                          education &&
+                                          education.isDropped &&
+                                          education.isDropped == true
+                                            ? "Removed"
+                                            : ""
+                                        }}</label>
                                         <div class="form-check">
                                           <input
-                                            class="
-                                            form-check-input
-                                            appearance-none
-                                            h-8
-                                            w-8
-                                            border border-gray-300
-                                            rounded-md
-                                            bg-red-300
-                                            transition
-                                            duration-200
-                                            my-1
-                                            btn-check:bg-white
-                                            focus:outline-none
-                                            align-top
-                                            bg-no-repeat bg-center bg-contain
-                                            float-left
-                                            cursor-pointer
-                                          "
+                                            class="float-left w-8 h-8 my-1 align-top transition duration-200 bg-red-300 bg-center bg-no-repeat bg-contain border border-gray-300 rounded-md appearance-none cursor-pointer form-check-input btn-check:bg-white focus:outline-none"
                                             checked
                                             type="checkbox"
                                             @change="
-                                              education &&
-                                              education.isDropped == false
+                                              education && education.isDropped == false
                                                 ? (education.isDropped = true)
                                                 : (education.isDropped = false),
                                                 droppedDepartment()
                                             "
-                                            v-model="
-                                              education.department.isDropped
-                                            "
+                                            v-model="education.department.isDropped"
                                             :id="education.id"
                                           />
                                         </div>
                                       </div>
                                     </div>
-                                    <div
-                                      class="flex flex-col mb-medium mr-12 ml-8"
-                                    >
+                                    <div class="flex flex-col ml-8 mr-12 mb-medium">
                                       <div class="grid grid-cols-2 gap-4">
-                                        <p
-                                          class="
-                                          text-primary-600 text-base
-                                          font-bold
-                                        "
-                                        >
+                                        <p class="text-base font-bold text-primary-600">
                                           Department Name
                                         </p>
-                                        <p
-                                          class="text-black text-base font-bold"
-                                        >
+                                        <p class="text-base font-bold text-black">
                                           {{
-                                            education.department
-                                              ? education.department.name
-                                              : ""
+                                            education.department ? education.department.name : ""
                                           }}
                                         </p>
                                       </div>
                                       <div class="grid grid-cols-2 gap-4">
-                                        <p
-                                          class="
-                                          text-primary-600 text-base
-                                          font-bold
-                                        "
-                                        >
+                                        <p class="text-base font-bold text-primary-600">
                                           Education Level
                                         </p>
-                                        <p
-                                          class="text-black text-base font-bold"
-                                        >
+                                        <p class="text-base font-bold text-black">
                                           {{
                                             education.educationLevel
                                               ? education.educationLevel.name
@@ -658,40 +419,23 @@
                                         </p>
                                       </div>
                                       <div class="grid grid-cols-2 gap-4">
-                                        <p
-                                          class="
-                                          text-primary-600 text-base
-                                          font-bold
-                                        "
-                                        >
+                                        <p class="text-base font-bold text-primary-600">
                                           Institution
                                         </p>
-                                        <p
-                                          class="text-black text-base font-bold"
-                                        >
+                                        <p class="text-base font-bold text-black">
                                           {{
-                                            education.institution
-                                              ? education.institution.name
-                                              : ""
+                                            education.institution ? education.institution.name : ""
                                           }}
                                         </p>
                                       </div>
                                       <div class="grid grid-cols-2 gap-4">
-                                        <p
-                                          class="
-                                          text-primary-600 text-base
-                                          font-bold
-                                        "
-                                        >
+                                        <p class="text-base font-bold text-primary-600">
                                           Profession
                                         </p>
-                                        <div
-                                          class="text-black text-base font-bold"
-                                        >
+                                        <div class="text-base font-bold text-black">
                                           {{
                                             education.professionType
-                                              ? education.professionType.name !=
-                                                "Other"
+                                              ? education.professionType.name != "Other"
                                                 ? education.professionType.name
                                                 : education.otherProfessionType +
                                                   "/" +
@@ -699,73 +443,31 @@
                                               : ""
                                           }}
                                           <span
-                                            @click="
-                                              allowProfessionChange(education)
-                                            "
-                                            class="
-                                            cursor-pointer
-                                            text-primary-500
-                                          "
+                                            @click="allowProfessionChange(education)"
+                                            class="cursor-pointer text-primary-500"
                                           >
-                                            <i
-                                              class="fa fa-pencil text-green-200"
-                                            ></i
-                                            >Edit
+                                            <i class="text-green-200 fa fa-pencil"></i>Edit
                                           </span>
                                           <div
                                             :id="education.department.id"
                                             class="flex justify-center"
                                             v-if="
                                               education.professionType &&
-                                                allowProfChange[
-                                                  education.department.id
-                                                ]
+                                                allowProfChange[education.department.id]
                                             "
                                           >
-                                            <div class="mb-3 w-full">
+                                            <div class="w-full mb-3">
                                               <select
-                                                class="
-                                                form-select
-                                                appearance-none
-                                                block
-                                                w-full
-                                                px-3
-                                                py-1.5
-                                                text-base
-                                                font-normal
-                                                text-gray-700
-                                                bg-white
-                                                bg-clip-padding
-                                                bg-no-repeat
-                                                border
-                                                border-solid
-                                                border-gray-300
-                                                rounded
-                                                transition
-                                                ease-in-out
-                                                m-0
-                                                focus:text-gray-700
-                                                focus:bg-white
-                                                focus:border-blue-600
-                                                focus:oProfessionutline-none
-                                              "
-                                                @click="
-                                                  checkForOther(education)
-                                                "
-                                                v-model="
-                                                  tempProf[
-                                                    education.department.id
-                                                  ]
-                                                "
+                                                class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:oProfessionutline-none"
+                                                @click="checkForOther(education)"
+                                                v-model="tempProf[education.department.id]"
                                                 aria-label="Default select example"
                                               >
                                                 <option selected disabled>
                                                   Choose new profession
                                                 </option>
                                                 <option
-                                                  v-for="prof in newProf[
-                                                    education.department.id
-                                                  ]"
+                                                  v-for="prof in newProf[education.department.id]"
                                                   :key="prof.id"
                                                   :value="prof"
                                                 >
@@ -778,20 +480,14 @@
                                           <div
                                             class="flex justify-center"
                                             v-if="
-                                              allowOtherProfChange[
-                                                education.department.id
-                                              ] && education.professionType
+                                              allowOtherProfChange[education.department.id] &&
+                                                education.professionType
                                             "
                                           >
                                             <div class="mb-3 xl:w-96">
                                               <label
                                                 for="exampleFormControlInput1"
-                                                class="
-                                                form-label
-                                                inline-block
-                                                mb-2
-                                                text-gray-700
-                                              "
+                                                class="inline-block mb-2 text-gray-700 form-label"
                                                 >Other Profession</label
                                               >
                                               <input
@@ -804,28 +500,7 @@
                                                     'english'
                                                   )
                                                 "
-                                                class="
-                                                form-control
-                                                block
-                                                w-full
-                                                px-3
-                                                py-1.5
-                                                text-base
-                                                font-normal
-                                                text-gray-700
-                                                bg-white bg-clip-padding
-                                                border
-                                                border-solid
-                                                border-gray-300
-                                                rounded
-                                                transition
-                                                ease-in-out
-                                                m-0
-                                                focus:text-gray-700
-                                                focus:bg-white
-                                                focus:border-blue-600
-                                                focus:outline-none
-                                              "
+                                                class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                                 id="exampleFormControlInput1"
                                                 placeholder="Type name"
                                               />
@@ -833,14 +508,8 @@
                                             <div class="mb-3 xl:w-96">
                                               <label
                                                 for="exampleFormControlInput1"
-                                                class="
-                                                form-label
-                                                inline-block
-                                                mb-2
-                                                text-gray-700
-                                              "
-                                                >Other Profession Amharic
-                                                Name</label
+                                                class="inline-block mb-2 text-gray-700 form-label"
+                                                >Other Profession Amharic Name</label
                                               >
                                               <input
                                                 type="text"
@@ -852,28 +521,7 @@
                                                     'amharic'
                                                   )
                                                 "
-                                                class="
-                                                form-control
-                                                block
-                                                w-full
-                                                px-3
-                                                py-1.5
-                                                text-base
-                                                font-normal
-                                                text-gray-700
-                                                bg-white bg-clip-padding
-                                                border
-                                                border-solid
-                                                border-gray-300
-                                                rounded
-                                                transition
-                                                ease-in-out
-                                                m-0
-                                                focus:text-gray-700
-                                                focus:bg-white
-                                                focus:border-blue-600
-                                                focus:outline-none
-                                              "
+                                                class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                                 id="exampleFormControlInput1"
                                                 placeholder="Type amharic name"
                                               />
@@ -884,81 +532,22 @@
                                       </div>
 
                                       <div class="grid grid-cols-2 gap-4">
-                                        <p
-                                          class="
-                                          text-primary-600 text-base
-                                          font-bold
-                                        "
-                                        >
+                                        <p class="text-base font-bold text-primary-600">
                                           Prefix
                                         </p>
-                                        <div
-                                          class="text-black text-base font-bold"
-                                        >
+                                        <div class="text-base font-bold text-black">
                                           <button
-                                            class="
-                                            inline-block
-                                            px-6
-                                            text-white
-                                            bg-primary-600
-                                            font-medium
-                                            text-xs
-                                            leading-tight
-                                            uppercase
-                                            rounded
-                                            shadow-lg
-                                            hover:text-primary-600
-                                            hover:shadow-lg
-                                            focus:bg-purple-700
-                                            focus:shadow-lg
-                                            focus:outline-none
-                                            focus:ring-0
-                                            active:bg-purple-800
-                                            active:shadow-lg
-                                            transition
-                                            duration-150
-                                            ease-in-out
-                                          "
-                                            @click="
-                                              showPrefix(education.departmentId)
-                                            "
+                                            class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded shadow-lg bg-primary-600 hover:text-primary-600 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg"
+                                            @click="showPrefix(education.departmentId)"
                                           >
                                             Add Prefix
                                           </button>
                                           <div
-                                            class="mb-3 w-full"
-                                            v-if="
-                                              showPrefixFor[
-                                                education.departmentId
-                                              ]
-                                            "
+                                            class="w-full mb-3"
+                                            v-if="showPrefixFor[education.departmentId]"
                                           >
                                             <select
-                                              class="
-                                              form-select
-                                              appearance-none
-                                              block
-                                              w-full
-                                              px-3
-                                              py-1.5
-                                              text-base
-                                              font-normal
-                                              text-gray-700
-                                              bg-white
-                                              bg-clip-padding
-                                              bg-no-repeat
-                                              border
-                                              border-solid
-                                              border-gray-300
-                                              rounded
-                                              transition
-                                              ease-in-out
-                                              m-0
-                                              focus:text-gray-700
-                                              focus:bg-white
-                                              focus:border-blue-600
-                                              focus:oProfessionutline-none
-                                            "
+                                              class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:oProfessionutline-none"
                                               @click="changePrefix(education)"
                                               v-model="education.prefixId"
                                               aria-label="Default select example"
@@ -985,54 +574,22 @@
                               <!-- Profession Card -->
 
                               <!-- licesne Exp Card -->
-                              <div class="my-1 mx-4 w-full">
+                              <div class="w-full mx-4 my-1">
                                 <!-- Article -->
-                                <article
-                                  class="overflow-hidden rounded-lg shadow-lg"
-                                >
+                                <article class="overflow-hidden rounded-lg shadow-lg">
                                   <header
-                                    class="
-                                    flex
-                                    items-center
-                                    justify-between
-                                    leading-tight
-                                    p-2
-                                    md:p-4
-                                  "
+                                    class="flex items-center justify-between p-2 leading-tight md:p-4"
                                   >
-                                    <h2 class="font-bold">
-                                      License Expiration Date
-                                    </h2>
-                                    <i
-                                      class="
-                                      fa fa-calendar fa-2x
-                                      text-primary-600
-                                    "
-                                    ></i>
+                                    <h2 class="font-bold">License Expiration Date</h2>
+                                    <i class="fa fa-calendar fa-2x text-primary-600"></i>
                                   </header>
                                   <hr class="text-grey-100" />
 
                                   <div
-                                    class="
-                                    container
-                                    flex
-                                    items-center
-                                    justify-between
-                                    leading-tight
-                                    p-2
-                                    md:p-4
-                                  "
+                                    class="container flex items-center justify-between p-2 leading-tight md:p-4"
                                   >
                                     <span
-                                      class="
-                                      font-bold
-                                      text-xl
-                                      ml-8
-                                      bg-grey-300
-                                      text-white
-                                      p-2
-                                      rounded-lg
-                                    "
+                                      class="p-2 ml-8 text-xl font-bold text-white rounded-lg bg-grey-300"
                                     >
                                       <i class="fa fa-calendar"></i>
                                       {{
@@ -1051,53 +608,28 @@
                             </div>
                           </div>
 
-                          <div v-else class="flex justify-start flex-wrap">
+                          <div v-else class="flex flex-wrap justify-start">
                             <div>
                               <picture v-if="docs.length > 0">
                                 <div
                                   v-if="
                                     docs[index] &&
                                       docs[index].fileType &&
-                                      docs[index].fileType.split('/')[1] ==
-                                        'pdf'
+                                      docs[index].fileType.split('/')[1] == 'pdf'
                                   "
                                 >
                                   <div>
                                     <iframe
                                       v-bind:src="
-                                        docs[index]
-                                          ? googleApi + docs[index].filePath
-                                          : ''
+                                        docs[index] ? googleApi + docs[index].filePath : ''
                                       "
                                     ></iframe>
                                   </div>
                                   <br />
                                   <button
-                                    class="
-                                  inline-block
-                            px-6
-                            text-white
-                            bg-primary-400
-                            font-medium
-                            text-xs
-                            leading-tight
-                            uppercase
-                            rounded
-                            shadow-lg
-                            hover:bg-purple-700 hover:shadow-lg
-                            focus:bg-purple-700
-                            focus:shadow-lg
-                            focus:outline-none
-                            focus:ring-0
-                            active:bg-purple-800 active:shadow-lg
-                            transition
-                            duration-150
-                            hover:bg-white hover:text-primary-600
-                            ease-in-out"
+                                    class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded shadow-lg bg-primary-400 hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg hover:bg-white hover:text-primary-600"
                                     @click="
-                                      openPdfInNewTab(
-                                        docs[index] ? docs[index].filePath : ''
-                                      )
+                                      openPdfInNewTab(docs[index] ? docs[index].filePath : '')
                                     "
                                   >
                                     See pdf in detail
@@ -1105,7 +637,7 @@
                                 </div>
 
                                 <div v-else>
-                                  <h5 class="text-grey-800 text-2xl">
+                                  <h5 class="text-2xl text-grey-800">
                                     {{
                                       docs[index] && docs[index].documentType
                                         ? docs[index].documentType.name
@@ -1116,9 +648,7 @@
                                   <div class="flex items-center">
                                     <a
                                       :data-src="
-                                        docs[index]
-                                          ? googleApi + docs[index].filePath
-                                          : ''
+                                        docs[index] ? googleApi + docs[index].filePath : ''
                                       "
                                       :data-caption="
                                         docs[index] && docs[index].documentType
@@ -1131,25 +661,14 @@
                                           viewImage([
                                             {
                                               src: docs[index]
-                                                ? googleApi +
-                                                  docs[index].filePath
+                                                ? googleApi + docs[index].filePath
                                                 : '',
                                               title: 'Image Caption 1',
                                             },
                                           ])
                                         "
-                                        class="
-                                    scale-50
-                                    hover:scale-75
-                                    ease-in
-                                    duration-500
-                                    cursor-pointer
-                                  "
-                                        :src="
-                                          docs[index]
-                                            ? googleApi + docs[index].filePath
-                                            : ''
-                                        "
+                                        class="duration-500 ease-in scale-50 cursor-pointer hover:scale-75"
+                                        :src="docs[index] ? googleApi + docs[index].filePath : ''"
                                       />
                                     </a>
                                   </div>
@@ -1166,80 +685,19 @@
                         </div>
                         <div class="mt-medium" v-if="!showButtons">
                           <button
-                            class="
-                            inline-block
-                            px-6
-                            text-white
-                            bg-primary-600
-                            font-medium
-                            text-xs
-                            leading-tight
-                            uppercase
-                            rounded
-                            shadow-lg
-                            hover:text-primary-600 hover:shadow-lg
-                            focus:bg-purple-700
-                            focus:shadow-lg
-                            focus:outline-none
-                            focus:ring-0
-                            active:bg-purple-800 active:shadow-lg
-                            transition
-                            duration-150
-                            ease-in-out
-                          "
+                            class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded shadow-lg bg-primary-600 hover:text-primary-600 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg"
                             @click="accept(docs[index])"
                           >
                             Accept
                           </button>
                           <button
-                            class="
-                            inline-block
-                            px-6
-                            font-medium
-                            text-xs text-white
-                            bg-red-300
-                            leading-tight
-                            uppercase
-                            rounded
-                            shadow-lg
-                            hover:bg-purple-700 hover:shadow-lg
-                            focus:bg-purple-700
-                            focus:shadow-lg
-                            focus:outline-none
-                            focus:ring-0
-                            active:bg-white active:shadow-lg
-                            hover:bg-white hover:text-primary-600
-                            transition
-                            duration-150
-                            ease-in-out
-                          "
+                            class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out bg-red-300 rounded shadow-lg hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-white active:shadow-lg hover:bg-white hover:text-primary-600"
                             @click="reject(docs[index])"
                           >
                             Reject
                           </button>
                           <button
-                            class="
-                            inline-block
-                            px-6
-                            text-white
-                            bg-yellow-300
-                            font-medium
-                            text-xs
-                            leading-tight
-                            uppercase
-                            rounded
-                            shadow-lg
-                            hover:bg-purple-700 hover:shadow-lg
-                            focus:bg-purple-700
-                            focus:shadow-lg
-                            focus:outline-none
-                            focus:ring-0
-                            active:bg-purple-800 active:shadow-lg
-                            transition
-                            duration-150
-                            hover:bg-white hover:text-primary-600
-                            ease-in-out
-                          "
+                            class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out bg-yellow-300 rounded shadow-lg hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg hover:bg-white hover:text-primary-600"
                             @click="action('ReviewerDraftEvent')"
                           >
                             Save as Draft
@@ -1247,28 +705,7 @@
 
                           <button
                             v-if="showTransferToFederal == true"
-                            class="
-                            inline-block
-                            px-6
-                            text-white
-                            bg-primary-600
-                            font-medium
-                            text-xs
-                            leading-tight
-                            uppercase
-                            rounded
-                            shadow-lg
-                            hover:bg-purple-700 hover:shadow-lg
-                            focus:bg-purple-700
-                            focus:shadow-lg
-                            focus:outline-none
-                            focus:ring-0
-                            active:bg-purple-800 active:shadow-lg
-                            transition
-                            duration-150
-                            hover:bg-primary-400 hover:text-white
-                            ease-in-out
-                          "
+                            class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded shadow-lg bg-primary-600 hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg hover:bg-primary-400 hover:text-white"
                             @click="transferToFederal()"
                           >
                             Transfer to Federal
@@ -1289,26 +726,16 @@
                     </div>
                   </div>
                   <div
-                    class="
-                    w-64
-                    h-40
-                    mt-8
-                    p-4
-                    mr-8
-                    shadow-lg
-                    container
-                    box-shadow-pop
-                    rounded-lg
-                  "
+                    class="container w-64 h-40 p-4 mt-8 mr-8 rounded-lg shadow-lg box-shadow-pop"
                   >
                     <div class="mt-8">
-                      <div class="my-auto flex justify-center items-center">
-                        <h2 class="text-red-300 text-3xl">
+                      <div class="flex items-center justify-center my-auto">
+                        <h2 class="text-3xl text-red-300">
                           {{ rejected ? rejected.length : 0 }}
                         </h2>
                       </div>
-                      <div class="flex justify-center items-center">
-                        <h2 class="text-red-300 text-3xl">Rejected</h2>
+                      <div class="flex items-center justify-center">
+                        <h2 class="text-3xl text-red-300">Rejected</h2>
                       </div>
                     </div>
                   </div>
@@ -1321,7 +748,7 @@
                     :opacity="1"
                   ></loading>
                   <div
-                    class="flex justify-center items-center mb-medium"
+                    class="flex items-center justify-center mb-medium"
                     v-if="showButtons && !showLoadingButtons"
                   >
                     <div
@@ -1342,36 +769,11 @@
                       </button>
                       <button
                         v-else
-                        class="
-                        inline-block
-                        px-6
-                        text-white
-                        bg-primary-600
-                        font-medium
-                        text-xs
-                        leading-tight
-                        uppercase
-                        rounded
-                        shadow-lg
-                        hover:bg-purple-700 hover:shadow-lg
-                        focus:bg-purple-700
-                        focus:shadow-lg
-                        focus:outline-none
-                        focus:ring-0
-                        active:bg-purple-800 active:shadow-lg
-                        transition
-                        duration-150
-                        hover:bg-primary-400 hover:text-white
-                        ease-in-out
-                      "
+                        class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded shadow-lg bg-primary-600 hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg hover:bg-primary-400 hover:text-white"
                         :data-bs-toggle="button.code == 'US' ? 'modal' : ''"
-                        :data-bs-target="
-                          button.code == 'US' ? '#superviseModal' : ''
-                        "
+                        :data-bs-target="button.code == 'US' ? '#superviseModal' : ''"
                         @click="
-                          button.code == 'US'
-                            ? changeAction(button.action)
-                            : action(button.action)
+                          button.code == 'US' ? changeAction(button.action) : action(button.action)
                         "
                       >
                         {{ button.name }}
@@ -1383,62 +785,28 @@
                 <Modal v-if="showRemark">
                   <div class="h-screen overflow-y-scroll">
                     <div
-                      class="
-                      card-wrapper
-                      bg-white
-                      sm:rounded-lg
-                      w-full
-                      flex
-                      justify-center
-                      relative
-                      mt-20
-                    "
+                      class="relative flex justify-center w-full mt-20 bg-white card-wrapper sm:rounded-lg"
                     >
                       <!--content-->
-                      <div class="w-full p-2 m-4 ">
+                      <div class="w-full p-2 m-4">
                         <!--header-->
                         <div
-                          class="
-                          flex
-                          
-                          items-start
-                          justify-between
-                          border-b border-solid border-grey-100
-                          m-4
-                          p-2
-                          rounded-t
-                        "
+                          class="flex items-start justify-between p-2 m-4 border-b border-solid rounded-t border-grey-100"
                         >
                           <h3 class="text-3xl font-semibold">Remark</h3>
                           <div
-                            class="
-                            bg-transparent
-                            border-0
-                            text-black
-                            opacity-5
-                            float-right
-                            text-3xl
-                            leading-none
-                            font-semibold
-                            outline-none
-                            cursor-pointer
-                          "
+                            class="float-right text-3xl font-semibold leading-none text-black bg-transparent border-0 outline-none cursor-pointer opacity-5"
                             v-on:click="showRemark = false"
                           >
-                            <span class="text-3xl">
-                              <i class="fa fa-close "></i
-                            ></span>
+                            <span class="text-3xl"> <i class="fa fa-close"></i></span>
                           </div>
                         </div>
                         <!--body-->
-                        <div
-                          class="modalBody pb-xl "
-                          v-if="nothingDropped == true"
-                        >
-                          <div class="flex mt-medium justify-center">
+                        <div class="modalBody pb-xl" v-if="nothingDropped == true">
+                          <div class="flex justify-center mt-medium">
                             <h2>Declined documents</h2>
                           </div>
-                          <div class="relative p-6 flex-auto w-full">
+                          <div class="relative flex-auto w-full p-6">
                             <div class="flex justify-center">
                               <div class="mt-12">
                                 <svg
@@ -1462,38 +830,19 @@
                                 </svg>
                               </div>
 
-                              <div
-                                class="flex flex-col justify-center items-center"
-                              >
+                              <div class="flex flex-col items-center justify-center">
                                 <div class="mt-8">
-                                  <label
-                                    class="
-                                    justify-center
-                                    items-center
-                                    text-grey-800 text-2xl
-                                  "
-                                  >
+                                  <label class="items-center justify-center text-2xl text-grey-800">
                                     {{ modalDocumentTypeName }}
                                   </label>
                                   <div
-                                    class="
-                                    flex
-                                    justify-center
-                                    flex-wrap
-                                    max-w-sm
-                                    rounded
-                                    overflow-hidden
-                                  "
+                                    class="flex flex-wrap justify-center max-w-sm overflow-hidden rounded"
                                   >
-                                    <picture
-                                      class="imageViewer"
-                                      v-if="rejectedObj.length > 0"
-                                    >
+                                    <picture class="imageViewer" v-if="rejectedObj.length > 0">
                                       <img
                                         v-bind:src="
                                           rejectedObj[ind]
-                                            ? googleApi +
-                                              rejectedObj[ind].filePath
+                                            ? googleApi + rejectedObj[ind].filePath
                                             : ''
                                         "
                                       />
@@ -1537,54 +886,18 @@
                           <textarea
                             v-model="newLicense.remark"
                             @keyup="isremarkFilled()"
-                            class="
-                          resize-none
-                          tArea
-                          border
-                          rounded-sm
-                          flex
-                          m-4
-                          w-full
-                        "
+                            class="flex w-full m-4 border rounded-sm resize-none tArea"
                             rows="6"
                           ></textarea>
                         </div>
-                        <small class="text-red-300 m-8" v-if="showRemarkError"
+                        <small class="m-8 text-red-300" v-if="showRemarkError"
                           >Remark note must be more than 10 letters</small
                         >
                         <div
-                          class="
-                          flex
-                          items-center
-                          justify-center
-                          p-6
-                          border-t border-solid border-blueGray-200
-                          rounded-b
-                        "
+                          class="flex items-center justify-center p-6 border-t border-solid rounded-b border-blueGray-200"
                         >
                           <button
-                            class="
-                            inline-block
-                            px-6
-                            text-white
-                            bg-primary-600
-                            font-medium
-                            text-xs
-                            leading-tight
-                            uppercase
-                            rounded
-                            shadow-lg
-                            hover:bg-purple-700 hover:shadow-lg
-                            focus:bg-purple-700
-                            focus:shadow-lg
-                            focus:outline-none
-                            focus:ring-0
-                            active:bg-purple-800 active:shadow-lg
-                            transition
-                            duration-150
-                            hover:bg-primary-400 hover:text-white
-                            ease-in-out
-                          "
+                            class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded shadow-lg bg-primary-600 hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg hover:bg-primary-400 hover:text-white"
                             type="button"
                             v-on:click="showRemark = false"
                           >
@@ -1621,46 +934,16 @@
   </section>
   <!-- Supervise part -->
   <div
-    class="
-      modal
-      fade
-      fixed
-      top-0
-      left-0
-      hidden
-      w-full
-      h-full
-      outline-none
-      overflow-x-hidden overflow-y-auto
-    "
+    class="fixed top-0 left-0 hidden w-full h-full overflow-x-hidden overflow-y-auto outline-none modal fade"
     id="superviseModal"
     tabindex="-1"
     aria-labelledby="superviseModalTitle"
     aria-modal="true"
     role="dialog"
   >
-    <div
-      class="
-        modal-dialog modal-dialog-centered
-        relative
-        w-auto
-        pointer-events-none
-      "
-    >
+    <div class="relative w-auto pointer-events-none modal-dialog modal-dialog-centered">
       <div
-        class="
-          modal-content
-          border-none
-          shadow-lg
-          relative
-          flex flex-col
-          w-full
-          pointer-events-auto
-          bg-white bg-clip-padding
-          rounded-md
-          outline-none
-          text-current
-        "
+        class="relative flex flex-col w-full text-current bg-white border-none rounded-md shadow-lg outline-none pointer-events-auto modal-content bg-clip-padding"
       >
         <div class="vld-parent">
           <loading
@@ -1670,58 +953,27 @@
             :opacity="0.8"
           ></loading>
           <div
-            class="
-            modal-header
-            flex flex-shrink-0
-            items-center
-            justify-between
-            p-4
-            border-b border-grey-100
-            rounded-t-md
-          "
+            class="flex items-center justify-between flex-shrink-0 p-4 border-b modal-header border-grey-100 rounded-t-md"
           >
-            <h5
-              class="text-xl font-medium leading-normal text-gray-800"
-              id="superviseModalLabel"
-            >
+            <h5 class="text-xl font-medium leading-normal text-gray-800" id="superviseModalLabel">
               Supervise Detail
             </h5>
             <button
               type="button"
-              class="
-              btn-close
-              box-content
-              w-4
-              h-4
-              p-1
-              text-black
-              border-none
-              rounded-none
-              opacity-50
-              focus:shadow-none focus:outline-none focus:opacity-100
-              hover:text-black hover:opacity-75 hover:no-underline
-            "
+              class="box-content w-4 h-4 p-1 text-black border-none rounded-none opacity-50 btn-close focus:shadow-none focus:outline-none focus:opacity-100 hover:text-black hover:opacity-75 hover:no-underline"
               data-bs-dismiss="modal"
               aria-label="Close"
               style="min-height: 28px; min-width: 28px"
             ></button>
           </div>
 
-          <div class="modal-body relative p-4">
+          <div class="relative p-4 modal-body">
             <label for="" class="ml-2">Institution </label>
-            <label class="block text-left mb-4">
+            <label class="block mb-4 text-left">
               <div>
-                <div class="w-full relative">
+                <div class="relative w-full">
                   <div
-                    class="
-                    mt-1
-                    ml-1
-                    relative
-                    border border-gray-300
-                    overflow-hidden
-                    rounded-md
-                    shadow-sm
-                  "
+                    class="relative mt-1 ml-1 overflow-hidden border border-gray-300 rounded-md shadow-sm"
                   >
                     <input
                       id="institution"
@@ -1735,19 +987,7 @@
                   <div></div>
                   <div
                     v-show="resultQuery().length && showOptions"
-                    class="
-                    w-full
-                    bg-white
-                    border border-gray-300
-                    mt-2
-                    ml-1
-                    max-height-12
-                    overflow-hidden overflow-y-scroll
-                    rounded-lg
-                    shadow-lg
-                    text-left
-                    dropdown-menu
-                  "
+                    class="w-full mt-2 ml-1 overflow-hidden overflow-y-scroll text-left bg-white border border-gray-300 rounded-lg shadow-lg max-height-12 dropdown-menu"
                     style="height: 148px; border: none"
                   >
                     <ul class="py-1">
@@ -1755,13 +995,7 @@
                         v-for="value in resultQuery()"
                         :key="value.id"
                         @click="setInput(value)"
-                        class="
-                        dropdown-toggle
-                        px-4
-                        py-2
-                        cursor-pointer
-                        hover:bg-primary-700 hover:text-white
-                      "
+                        class="px-4 py-2 cursor-pointer dropdown-toggle hover:bg-primary-700 hover:text-white"
                       >
                         {{ value.name }}
                       </li>
@@ -1772,59 +1006,21 @@
             </label>
 
             <div class="grid grid-cols-2 gap-4">
-              <div class="form-group mb-6 mt-4">
+              <div class="mt-4 mb-6 form-group">
                 <label for="" class="ml-2">Start Date</label>
                 <input
                   v-model="startDate"
                   required
                   type="date"
-                  class="
-                  form-control
-                  block
-                  w-full
-                  px-3
-                  py-1.5
-                  text-base
-                  font-normal
-                  text-gray-700
-                  bg-white bg-clip-padding
-                  border border-solid border-gray-300
-                  rounded
-                  transition
-                  ease-in-out
-                  m-0
-                  focus:text-gray-700
-                  focus:bg-white
-                  focus:border-blue-600
-                  focus:outline-none
-                "
+                  class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                   :min="minimumSuperviseDate"
                 />
               </div>
-              <div class="form-group mb-6 mt-4">
+              <div class="mt-4 mb-6 form-group">
                 <label for="" class="ml-2">End Date</label>
                 <input
                   required
-                  class="
-                  form-control
-                  block
-                  w-full
-                  px-3
-                  py-1.5
-                  text-base
-                  font-normal
-                  text-gray-700
-                  bg-white bg-clip-padding
-                  border border-solid border-gray-300
-                  rounded
-                  transition
-                  ease-in-out
-                  m-0
-                  focus:text-gray-700
-                  focus:bg-white
-                  focus:border-blue-600
-                  focus:outline-none
-                "
+                  class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                   v-model="endDate"
                   type="date"
                 />
@@ -1836,57 +1032,17 @@
           </div>
         </div>
         <div
-          class="
-            modal-footer
-            flex flex-shrink-0 flex-wrap
-            items-center
-            justify-end
-            p-1
-            border-t border-grey-100
-            rounded-b-md
-          "
+          class="flex flex-wrap items-center justify-end flex-shrink-0 p-1 border-t modal-footer border-grey-100 rounded-b-md"
         >
           <button
             type="button"
-            class="
-              inline-block
-              px-6
-              py-2.5
-              bg-primary-700
-              text-white
-              font-medium
-              text-xs
-              leading-tight
-              uppercase
-              rounded
-              shadow-lg
-              hover:bg-white hover:text-primary-600
-              transition
-              duration-150
-              ease-in-out
-            "
+            class="inline-block px-6 py-2.5 bg-primary-700 text-white font-medium text-xs leading-tight uppercase rounded shadow-lg hover:bg-white hover:text-primary-600 transition duration-150 ease-in-out"
             data-bs-dismiss="modal"
           >
             Close
           </button>
           <button
-            class="
-              inline-block
-              px-6
-              py-2.5
-              bg-primary-700
-              text-white
-              font-medium
-              text-xs
-              leading-tight
-              uppercase
-              rounded
-              shadow-lg
-              hover:bg-white hover:text-primary-600
-              transition
-              duration-150
-              ease-in-out
-            "
+            class="inline-block px-6 py-2.5 bg-primary-700 text-white font-medium text-xs leading-tight uppercase rounded shadow-lg hover:bg-white hover:text-primary-600 transition duration-150 ease-in-out"
             @click="supervise()"
           >
             Save
@@ -1897,150 +1053,155 @@
   </div>
   <!-- Supervise part -->
 </template>
+
 <script>
-import { useStore } from "vuex";
-import { useRoute, useRouter } from "vue-router";
-import { ref, onMounted } from "vue";
-import { googleApi } from "@/composables/baseURL";
-import Modal from "@/sharedComponents/Modal";
-import { useToast } from "vue-toastification";
-import moment from "moment";
-import ReviewerSideNav from "../../../SharedComponents/sideNav.vue";
-import ReviewerNavBar from "../../../SharedComponents/navBar.vue";
-import Loading from "vue3-loading-overlay";
-import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
-import RadialProgressBar from "vue3-radial-progress";
-import PhotoViewer from "photoviewer";
-import "photoviewer/dist/photoviewer.css";
-export default {
-  components: {
-    Modal,
-    Loading,
-    ReviewerSideNav,
-    ReviewerNavBar,
-    RadialProgressBar,
-  },
-  computed: {
-    moment: () => moment,
-  },
-  setup() {
-    const route = useRoute();
-    const router = useRouter();
-    let minimumSuperviseDate = new Date().toISOString().slice(0, 10);
-    let remarkFilled = ref(false);
-    const store = useStore();
-    const toast = useToast();
-    let declineAction = ref("DeclineEvent");
-    let nothingDropped = ref(true);
-    const options = ref([0, 1, 2]);
-    const selectedOptions = ref([0]);
-    const newSelectedOptions = ref([0]);
-    let isPdf = ref(false);
-    let isLoadingAction = ref(false);
-    let isLoadingStart = ref(true);
-    let pdfFilePath = ref("");
-    const completedSteps = ref(0);
-    const totalSteps = ref(0);
-    let showPrefixFor = ref([]);
-    let dropedDepartment = ref({});
-    let isGoodStanding = ref(false);
-    let institutions = ref([]);
-    let expirationDateExceedTodayError = ref(false);
-    let isProfessionalTypeChanged = ref(false);
-    let startDate = ref("");
-    let endDate = ref("");
-    let showOtherProfessionError = ref(false);
-    let regionId = JSON.parse(window.localStorage.getItem("allAdminData"))
-      .regionId;
-    let professionalTypeIds = ref([]);
-    let professionalTypeIdss = ref([]);
-    let licenseExpirationDate = ref(new Date());
-    let prefix = ref();
-    let canChangeName = ref(false);
-    let showProfessionChangeError = ref(false);
+  import { useStore } from "vuex";
+  import { useRoute, useRouter } from "vue-router";
+  import { ref, onMounted } from "vue";
+  import { googleApi } from "@/composables/baseURL";
+  import Modal from "@/sharedComponents/Modal";
+  import { useToast } from "vue-toastification";
+  import moment from "moment";
+  import ReviewerSideNav from "../../../SharedComponents/sideNav.vue";
+  import ReviewerNavBar from "../../../SharedComponents/navBar.vue";
+  import Loading from "vue3-loading-overlay";
+  import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
+  import RadialProgressBar from "vue3-radial-progress";
+  import PhotoViewer from "photoviewer";
+  import "photoviewer/dist/photoviewer.css";
+  export default {
+    components: {
+      Modal,
+      Loading,
+      ReviewerSideNav,
+      ReviewerNavBar,
+      RadialProgressBar,
+    },
+    computed: {
+      moment: () => moment,
+    },
+    setup() {
+      const route = useRoute();
+      const router = useRouter();
+      let minimumSuperviseDate = new Date().toISOString().slice(0, 10);
+      let remarkFilled = ref(false);
+      const store = useStore();
+      const toast = useToast();
+      let declineAction = ref("DeclineEvent");
+      let nothingDropped = ref(true);
+      const options = ref([0, 1, 2]);
+      const selectedOptions = ref([0]);
+      const newSelectedOptions = ref([0]);
+      let isPdf = ref(false);
+      let isLoadingAction = ref(false);
+      let isLoadingStart = ref(true);
+      let pdfFilePath = ref("");
+      const completedSteps = ref(0);
+      const totalSteps = ref(0);
+      let showPrefixFor = ref([]);
+      let dropedDepartment = ref({});
+      let isGoodStanding = ref(false);
+      let institutions = ref([]);
+      let expirationDateExceedTodayError = ref(false);
+      let isProfessionalTypeChanged = ref(false);
+      let startDate = ref("");
+      let endDate = ref("");
+      let showOtherProfessionError = ref(false);
+      let regionId = JSON.parse(window.localStorage.getItem("allAdminData")).regionId;
+      let professionalTypeIds = ref([]);
+      let professionalTypeIdss = ref([]);
+      let licenseExpirationDate = ref(new Date());
+      let prefix = ref();
+      let canChangeName = ref(false);
+      let showProfessionChangeError = ref(false);
 
-    let showNameChangeFlash = ref(false);
-    let showNameChangeErrorFlash = ref(false);
-    let showTransferErrorMessage = ref(false);
-    let showTransferSuccessMessage = ref(false);
-    let showLicenseDateRequirementError = ref(false);
-    let showDepRemark = ref(false);
-    let adminId = localStorage.getItem("adminId");
+      let showNameChangeFlash = ref(false);
+      let showNameChangeErrorFlash = ref(false);
+      let showTransferErrorMessage = ref(false);
+      let showTransferSuccessMessage = ref(false);
+      let showLicenseDateRequirementError = ref(false);
+      let showDepRemark = ref(false);
+      let adminId = localStorage.getItem("adminId");
 
-    let newLicense = ref({ licenseExpirationDate: new Date() });
-    let buttons = ref([]);
-    let isLoadingName = ref(false);
-    let professionalTypePrefixes = ref([]);
-    let superviseAction = ref("");
-    let documentTypes = ref([]);
-    let documentTypeName = ref("");
-    let modalDocumentTypeName = ref("");
-    let docs = ref([]);
-    let index = ref(0);
-    let ind = ref(0);
-    let amount = ref(1);
-    let width = ref("width:11.11111%");
-    let accepted = ref([]);
-    let rejected = ref([]);
-    let prefixes = ref({});
-    let showTransferToFederal = ref(false);
-    let rejectedObj = ref([]);
-    let showButtons = ref(false);
-    let disableNext = ref(true);
-    let nextClickable = ref(false);
-    let foundInRejected = ref(false);
-    let foundInAcceptted = ref(false);
-    let isToChangeProfession = ref(false);
-    let profileInfo = ref({});
-    let activeClass = ref("active");
-    let errorClass = ref("text-danger");
-    let showRemark = ref(false);
-    let applicationType = ref("");
-    let showRemarkError = ref(false);
-    let showDateError = ref({ show: false, message: "" });
-    let supervisor = ref("");
-    let showFlash = ref(false);
-    let declineButtonStatus = ref(true);
-    let showErrorFlash = ref(false);
-    let showDeclineFlash = ref(false);
-    let sendDeclinedData = ref(true);
-    let fromModalSendDeclinedData = ref(false);
-    let showOptions = ref(false);
-    let showActionLoading = ref(false);
-    let showLoadingButtons = ref(false);
-    let superviseLoading = ref(false);
-    let allowProfChange = ref({});
-    let instSearched = ref({ name: "" });
-    let newProf = ref([]);
-    let expirationDateYear = ref(0);
-    let tempProf = ref({});
-    let tempPref = ref({});
-    let modifiedProfession = [];
-    let allowOtherProfChange = ref({});
-    let professionalTypes = ref([]);
-    let evaluateRoute = ref("/admin/evaluate/NewLicense" + route.params.id);
-    const editPersonalData = ref(false);
-    let others = ref({});
-    const editPersonalInfo = () => {
-      editPersonalData.value = !editPersonalData.value;
-    };
-    const allowProfessionChange = (profType) => {
-      getProfessionalTypesByDepartmentId(profType);
-      allowProfChange.value[profType.department.id]
-        ? allowProfChange.value[profType.department.id]
-        : false;
-      allowProfChange.value[profType.department.id] = !allowProfChange.value[
-        profType.department.id
-      ];
-      allowOtherProfChange.value[profType.department.id] = false;
-    };
+      let newLicense = ref({
+        licenseExpirationDate: new Date(),
+      });
+      let buttons = ref([]);
+      let isLoadingName = ref(false);
+      let professionalTypePrefixes = ref([]);
+      let superviseAction = ref("");
+      let documentTypes = ref([]);
+      let documentTypeName = ref("");
+      let modalDocumentTypeName = ref("");
+      let docs = ref([]);
+      let index = ref(0);
+      let ind = ref(0);
+      let amount = ref(1);
+      let width = ref("width:11.11111%");
+      let accepted = ref([]);
+      let rejected = ref([]);
+      let prefixes = ref({});
+      let showTransferToFederal = ref(false);
+      let rejectedObj = ref([]);
+      let showButtons = ref(false);
+      let disableNext = ref(true);
+      let nextClickable = ref(false);
+      let foundInRejected = ref(false);
+      let foundInAcceptted = ref(false);
+      let isToChangeProfession = ref(false);
+      let profileInfo = ref({});
+      let activeClass = ref("active");
+      let errorClass = ref("text-danger");
+      let showRemark = ref(false);
+      let applicationType = ref("");
+      let showRemarkError = ref(false);
+      let showDateError = ref({
+        show: false,
+        message: "",
+      });
+      let supervisor = ref("");
+      let showFlash = ref(false);
+      let declineButtonStatus = ref(true);
+      let showErrorFlash = ref(false);
+      let showDeclineFlash = ref(false);
+      let sendDeclinedData = ref(true);
+      let fromModalSendDeclinedData = ref(false);
+      let showOptions = ref(false);
+      let showActionLoading = ref(false);
+      let showLoadingButtons = ref(false);
+      let superviseLoading = ref(false);
+      let allowProfChange = ref({});
+      let instSearched = ref({
+        name: "",
+      });
+      let newProf = ref([]);
+      let expirationDateYear = ref(0);
+      let tempProf = ref({});
+      let tempPref = ref({});
+      let modifiedProfession = [];
+      let allowOtherProfChange = ref({});
+      let professionalTypes = ref([]);
+      let evaluateRoute = ref("/admin/evaluate/NewLicense" + route.params.id);
+      const editPersonalData = ref(false);
+      let others = ref({});
+      const editPersonalInfo = () => {
+        editPersonalData.value = !editPersonalData.value;
+      };
+      const allowProfessionChange = (profType) => {
+        getProfessionalTypesByDepartmentId(profType);
+        allowProfChange.value[profType.department.id]
+          ? allowProfChange.value[profType.department.id]
+          : false;
+        allowProfChange.value[profType.department.id] = !allowProfChange.value[
+          profType.department.id
+        ];
+        allowOtherProfChange.value[profType.department.id] = false;
+      };
 
-    const created = async (applicationId) => {
-      applicationType.value = "New License";
+      const created = async (applicationId) => {
+        applicationType.value = "New License";
 
-      store
-        .dispatch("reviewer/getNewLicenseApplication", applicationId)
-        .then((res) => {
+        store.dispatch("reviewer/getNewLicenseApplication", applicationId).then((res) => {
           newLicense.value = res.data.data ? res.data.data : {};
           newLicense.value.educations.forEach((element) => {
             if (element.isDropped != true) {
@@ -2048,9 +1209,7 @@ export default {
             }
           });
           profileInfo.value =
-            newLicense.value && newLicense.value.profile
-              ? newLicense.value.profile
-              : {};
+            newLicense.value && newLicense.value.profile ? newLicense.value.profile : {};
           buttons.value =
             newLicense.value &&
             newLicense.value.applicationStatus &&
@@ -2058,9 +1217,7 @@ export default {
               ? newLicense.value.applicationStatus.buttons
               : {};
           docs.value =
-            newLicense.value && newLicense.value.documents
-              ? newLicense.value.documents
-              : {};
+            newLicense.value && newLicense.value.documents ? newLicense.value.documents : {};
           totalSteps.value = docs.value ? docs.value.length : 0;
 
           newLicense.value &&
@@ -2088,90 +1245,83 @@ export default {
           }
           fetchDocumentTypes();
         });
-    };
-    const viewImage = (image) => {
-      var options = {
-        index: 0, // this option means you will start at first image
       };
-      new PhotoViewer(image, options);
-    };
-    const fetchDocumentTypes = async () => {
-      store.dispatch("reviewer/getDocumentTypes").then((res) => {
-        documentTypes.value = res.data.data;
-        isLoadingStart.value = false;
-        findDocumentType(documentTypes.value, docs.value[0]);
-      });
-    };
-    const next = (doc) => {
-      if (nextClickable.value == true) {
-        index.value = index.value + 1;
-        completedSteps.value += 1;
+      const viewImage = (image) => {
+        var options = {
+          index: 0, // this option means you will start at first image
+        };
+        new PhotoViewer(image, options);
+      };
+      const fetchDocumentTypes = async () => {
+        store.dispatch("reviewer/getDocumentTypes").then((res) => {
+          documentTypes.value = res.data.data;
+          isLoadingStart.value = false;
+          findDocumentType(documentTypes.value, docs.value[0]);
+        });
+      };
+      const next = (doc) => {
+        if (nextClickable.value == true) {
+          index.value = index.value + 1;
+          completedSteps.value += 1;
+          amount.value = ((index.value + 1) / docs.value.length) * 100;
+          width.value = "width:" + amount.value + "%";
+          findDocumentType(documentTypes.value, docs.value[index.value]);
+          nextClickable.value = false;
+        }
+        if (
+          accepted.value.includes(doc.documentTypeCode) ||
+          rejected.value.includes(doc.documentTypeCode)
+        ) {
+          nextClickable.value = true;
+        }
+      };
+      const previous = () => {
+        if (index.value == docs.value.length - 1) {
+          showButtons.value = false;
+        }
+        index.value = index.value - 1;
+        completedSteps.value -= 1;
         amount.value = ((index.value + 1) / docs.value.length) * 100;
         width.value = "width:" + amount.value + "%";
         findDocumentType(documentTypes.value, docs.value[index.value]);
-        nextClickable.value = false;
-      }
-      if (
-        accepted.value.includes(doc.documentTypeCode) ||
-        rejected.value.includes(doc.documentTypeCode)
-      ) {
         nextClickable.value = true;
-      }
-    };
-    const previous = () => {
-      if (index.value == docs.value.length - 1) {
-        showButtons.value = false;
-      }
-      index.value = index.value - 1;
-      completedSteps.value -= 1;
-      amount.value = ((index.value + 1) / docs.value.length) * 100;
-      width.value = "width:" + amount.value + "%";
-      findDocumentType(documentTypes.value, docs.value[index.value]);
-      nextClickable.value = true;
-    };
-    const nextRemark = () => {
-      if (ind.value != rejectedObj.value.length - 1) {
-        ind.value = ind.value + 1;
-        modalFindDocumentType(
-          documentTypes.value,
-          rejectedObj.value[ind.value]
-        );
-        nextClickable.value = false;
-      }
-    };
-    const previousRemark = () => {
-      ind.value = ind.value - 1;
-      modalFindDocumentType(documentTypes.value, rejectedObj.value[ind.value]);
-      nextClickable.value = true;
-    };
-    const findDocumentType = (obj, ab) => {
-      for (var prop in obj) {
-        if (
-          obj[prop].code == ab && ab.documentTypeCode ? ab.documentTypeCode : ""
-        ) {
-          documentTypeName.value = obj[prop].name;
+      };
+      const nextRemark = () => {
+        if (ind.value != rejectedObj.value.length - 1) {
+          ind.value = ind.value + 1;
+          modalFindDocumentType(documentTypes.value, rejectedObj.value[ind.value]);
+          nextClickable.value = false;
         }
-      }
-    };
+      };
+      const previousRemark = () => {
+        ind.value = ind.value - 1;
+        modalFindDocumentType(documentTypes.value, rejectedObj.value[ind.value]);
+        nextClickable.value = true;
+      };
+      const findDocumentType = (obj, ab) => {
+        for (var prop in obj) {
+          if (obj[prop].code == ab && ab.documentTypeCode ? ab.documentTypeCode : "") {
+            documentTypeName.value = obj[prop].name;
+          }
+        }
+      };
 
-    const modalFindDocumentType = (obj, ab) => {
-      for (var prop in obj) {
-        if (obj[prop].code == ab.documentTypeCode) {
-          modalDocumentTypeName.value = obj[prop].name;
+      const modalFindDocumentType = (obj, ab) => {
+        for (var prop in obj) {
+          if (obj[prop].code == ab.documentTypeCode) {
+            modalDocumentTypeName.value = obj[prop].name;
+          }
         }
-      }
-    };
-    const transferToFederal = () => {
-      store.dispatch("newlicense/getExpertLevel").then((res) => {
-        let federalData = res.data.data.filter((r) => r.code == "FED");
-        let transferData = {
-          licenseId: route.params.id,
-          expertLevelId: federalData[0].id,
-          createdByAdminId: adminId,
-        };
-        store
-          .dispatch("reviewer/transferToFederal", transferData)
-          .then((res) => {
+      };
+      const transferToFederal = () => {
+        store.dispatch("newlicense/getExpertLevel").then((res) => {
+          let federalData = res.data.data.filter((r) => r.code == "FED");
+          let transferData = {
+            licenseId: route.params.id,
+            expertLevelId: federalData[0].id,
+            createdByAdminId: adminId,
+          };
+          store.dispatch("reviewer/transferToFederal", transferData).then((res) => {
             if (res.data?.status == "Success") {
               toast.success("Application transfered Successfully", {
                 timeout: 5000,
@@ -2180,7 +1330,9 @@ export default {
                 pauseOnHover: true,
                 icon: true,
               });
-              router.push({ path: "/admin/newLicense" });
+              router.push({
+                path: "/admin/newLicense",
+              });
             } else {
               toast.error("Failed to transfer application", {
                 timeout: 5000,
@@ -2191,14 +1343,38 @@ export default {
               });
             }
           });
-      });
-    };
+        });
+      };
 
-    const accept = (doc) => {
-      nextClickable.value = true;
-      completedSteps.value += 1;
-      if (accepted.value.length > 0) {
-        if (!accepted.value.includes(doc.documentTypeCode)) {
+      const accept = (doc) => {
+        nextClickable.value = true;
+        completedSteps.value += 1;
+        if (accepted.value.length > 0) {
+          if (!accepted.value.includes(doc.documentTypeCode)) {
+            accepted.value.push(doc.fileName);
+            if (index.value == docs.value.length - 1) {
+              showButtons.value = true;
+            } else {
+              index.value = index.value + 1;
+              amount.value = ((index.value + 1) / docs.value.length) * 100;
+              width.value = "width:" + amount.value + "%";
+              findDocumentType(documentTypes.value, docs.value[index.value]);
+            }
+            if (rejected.value.includes(doc.documentTypeCode)) {
+              rejected.value.splice(rejected.value.indexOf(doc.documentTypeCode), 1);
+              rejectedObj.value.splice(rejectedObj.value.indexOf(doc), 1);
+            }
+          } else {
+            if (index.value == docs.value.length - 1) {
+              showButtons.value = true;
+            } else {
+              index.value = index.value + 1;
+              amount.value = ((index.value + 1) / docs.value.length) * 100;
+              width.value = "width:" + amount.value + "%";
+              findDocumentType(documentTypes.value, docs.value[index.value]);
+            }
+          }
+        } else {
           accepted.value.push(doc.fileName);
           if (index.value == docs.value.length - 1) {
             showButtons.value = true;
@@ -2209,54 +1385,48 @@ export default {
             findDocumentType(documentTypes.value, docs.value[index.value]);
           }
           if (rejected.value.includes(doc.documentTypeCode)) {
-            rejected.value.splice(
-              rejected.value.indexOf(doc.documentTypeCode),
-              1
-            );
+            rejected.value.splice(rejected.value.indexOf(doc.documentTypeCode), 1);
             rejectedObj.value.splice(rejectedObj.value.indexOf(doc), 1);
           }
-        } else {
-          if (index.value == docs.value.length - 1) {
-            showButtons.value = true;
-          } else {
-            index.value = index.value + 1;
-            amount.value = ((index.value + 1) / docs.value.length) * 100;
-            width.value = "width:" + amount.value + "%";
-            findDocumentType(documentTypes.value, docs.value[index.value]);
+        }
+      };
+
+      const reject = (doc) => {
+        completedSteps.value += 1;
+        nextClickable.value = true;
+        for (let i = 0; i < buttons.value.length; i++) {
+          if (buttons.value[i].code === "APP") {
+            buttons.value.splice(i, 1);
+            i--;
           }
         }
-      } else {
-        accepted.value.push(doc.fileName);
-        if (index.value == docs.value.length - 1) {
-          showButtons.value = true;
+
+        if (rejected.value.length > 0) {
+          if (!rejected.value.includes(doc.documentTypeCode)) {
+            rejected.value.push(doc.fileName);
+            rejectedObj.value.push(doc);
+            if (index.value == docs.value.length - 1) {
+              showButtons.value = true;
+            } else {
+              index.value = index.value + 1;
+              amount.value = ((index.value + 1) / docs.value.length) * 100;
+              width.value = "width:" + amount.value + "%";
+              findDocumentType(documentTypes.value, docs.value[index.value]);
+            }
+            if (accepted.value.includes(doc.documentTypeCode)) {
+              accepted.value.splice(accepted.value.indexOf(doc.documentTypeCode), 1);
+            }
+          } else {
+            if (index.value == docs.value.length - 1) {
+              showButtons.value = true;
+            } else {
+              index.value = index.value + 1;
+              amount.value = ((index.value + 1) / docs.value.length) * 100;
+              width.value = "width:" + amount.value + "%";
+              findDocumentType(documentTypes.value, docs.value[index.value]);
+            }
+          }
         } else {
-          index.value = index.value + 1;
-          amount.value = ((index.value + 1) / docs.value.length) * 100;
-          width.value = "width:" + amount.value + "%";
-          findDocumentType(documentTypes.value, docs.value[index.value]);
-        }
-        if (rejected.value.includes(doc.documentTypeCode)) {
-          rejected.value.splice(
-            rejected.value.indexOf(doc.documentTypeCode),
-            1
-          );
-          rejectedObj.value.splice(rejectedObj.value.indexOf(doc), 1);
-        }
-      }
-    };
-
-    const reject = (doc) => {
-      completedSteps.value += 1;
-      nextClickable.value = true;
-      for (let i = 0; i < buttons.value.length; i++) {
-        if (buttons.value[i].code === "APP") {
-          buttons.value.splice(i, 1);
-          i--;
-        }
-      }
-
-      if (rejected.value.length > 0) {
-        if (!rejected.value.includes(doc.documentTypeCode)) {
           rejected.value.push(doc.fileName);
           rejectedObj.value.push(doc);
           if (index.value == docs.value.length - 1) {
@@ -2268,240 +1438,221 @@ export default {
             findDocumentType(documentTypes.value, docs.value[index.value]);
           }
           if (accepted.value.includes(doc.documentTypeCode)) {
-            accepted.value.splice(
-              accepted.value.indexOf(doc.documentTypeCode),
-              1
-            );
+            accepted.value.splice(accepted.value.indexOf(doc.documentTypeCode), 1);
           }
-        } else {
-          if (index.value == docs.value.length - 1) {
-            showButtons.value = true;
+        }
+      };
+      const setOtherProfession = (education, id, event, type) => {
+        if (type == "english") {
+          if (others.value[id]) {
+            others.value[id]["otherProfessionType"] = event.target.value;
           } else {
-            index.value = index.value + 1;
-            amount.value = ((index.value + 1) / docs.value.length) * 100;
-            width.value = "width:" + amount.value + "%";
-            findDocumentType(documentTypes.value, docs.value[index.value]);
+            others.value[id] = {};
+            others.value[id]["otherProfessionType"] = "";
+            others.value[id]["otherProfessionType"] = event.target.value;
           }
+          education.otherProfessionType = others.value[id]["otherProfessionType"];
+          modifiedProfession.forEach((element) => {
+            if (element.department.id == education.department.id) {
+              element.otherProfessionType = others.value[id]["otherProfessionType"];
+            }
+          });
         }
-      } else {
-        rejected.value.push(doc.fileName);
-        rejectedObj.value.push(doc);
-        if (index.value == docs.value.length - 1) {
-          showButtons.value = true;
-        } else {
-          index.value = index.value + 1;
-          amount.value = ((index.value + 1) / docs.value.length) * 100;
-          width.value = "width:" + amount.value + "%";
-          findDocumentType(documentTypes.value, docs.value[index.value]);
+        if (type == "amharic") {
+          if (others.value[id]) {
+            others.value[id]["otherProfessionAmharic"] = event.target.value;
+          } else {
+            others.value[id] = {};
+            others.value[id]["otherProfessionAmharic"] = "";
+            others.value[id]["otherProfessionAmharic"] = event.target.value;
+          }
+          education.otherProfessionAmharic = others.value[id]["otherProfessionAmharic"];
+          modifiedProfession.forEach((element) => {
+            if (element.department.id == education.department.id) {
+              element.otherProfessionAmharic = others.value[id]["otherProfessionAmharic"];
+            }
+          });
         }
-        if (accepted.value.includes(doc.documentTypeCode)) {
-          accepted.value.splice(
-            accepted.value.indexOf(doc.documentTypeCode),
-            1
-          );
-        }
-      }
-    };
-    const setOtherProfession = (education, id, event, type) => {
-      if (type == "english") {
-        if (others.value[id]) {
-          others.value[id]["otherProfessionType"] = event.target.value;
-        } else {
-          others.value[id] = {};
-          others.value[id]["otherProfessionType"] = "";
-          others.value[id]["otherProfessionType"] = event.target.value;
-        }
-        education.otherProfessionType = others.value[id]["otherProfessionType"];
-        modifiedProfession.forEach((element) => {
-          if (element.department.id == education.department.id) {
-            element.otherProfessionType =
-              others.value[id]["otherProfessionType"];
+      };
+      const action = (actionValue) => {
+        let smsMessage = "";
+        let proffesionsWithoutPrefix = "";
+        newLicense.value.educations.forEach((element) => {
+          if ((element.prefixId && element.prefixId.length == 0) || element.prefixId == null) {
+            proffesionsWithoutPrefix += element.professionType.name + " ,";
           }
         });
-      }
-      if (type == "amharic") {
-        if (others.value[id]) {
-          others.value[id]["otherProfessionAmharic"] = event.target.value;
-        } else {
-          others.value[id] = {};
-          others.value[id]["otherProfessionAmharic"] = "";
-          others.value[id]["otherProfessionAmharic"] = event.target.value;
-        }
-        education.otherProfessionAmharic =
-          others.value[id]["otherProfessionAmharic"];
-        modifiedProfession.forEach((element) => {
-          if (element.department.id == education.department.id) {
-            element.otherProfessionAmharic =
-              others.value[id]["otherProfessionAmharic"];
-          }
-        });
-      }
-    };
-    const action = (actionValue) => {
-      let smsMessage = "";
-      let proffesionsWithoutPrefix = "";
-      newLicense.value.educations.forEach((element) => {
+        // check if applicant has amharic name
         if (
-          (element.prefixId && element.prefixId.length == 0) ||
-          element.prefixId == null
+          newLicense.value.profile.alternativeName.length == 0 ||
+          newLicense.value.profile.alternativeFatherName.length == 0 ||
+          newLicense.value.profile.alternativeGrandFatherName.length == 0
         ) {
-          proffesionsWithoutPrefix += element.professionType.name + " ,";
+          toast.error(
+            "Applicant's amharic name | father name | grandfather name| can not be empty",
+            {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            }
+          );
+          return;
         }
-      });
-      if (
-        newLicense.value.profile.alternativeName.length == 0 ||
-        newLicense.value.profile.alternativeFatherName.length == 0 ||
-        newLicense.value.profile.alternativeGrandFatherName.length == 0
-      ) {
-        toast.error(
-          "Applicant's amharic name | father name | grandfather name| can not be empty",
-          {
+        // check if all the professions has prefix
+        if (proffesionsWithoutPrefix.length > 0) {
+          toast.error(`Prefix for ${proffesionsWithoutPrefix} can not be empty`, {
             timeout: 5000,
             position: "bottom-center",
             pauseOnFocusLoss: true,
             pauseOnHover: true,
             icon: true,
-          }
-        );
-        return;
-      }
-      if (proffesionsWithoutPrefix.length > 0) {
-        toast.error(`Prefix for ${proffesionsWithoutPrefix} can not be empty`, {
-          timeout: 5000,
-          position: "bottom-center",
-          pauseOnFocusLoss: true,
-          pauseOnHover: true,
-          icon: true,
-        });
-        return;
-      }
-      if (actionValue == "ReviewerDraftEvent") {
-        showRemarkError.value = false;
-        showRemark.value = false;
-      } else if (
-        actionValue == "DeclineEvent" &&
-        newLicense.value.remark == ""
-      ) {
-        showRemarkError.value = true;
-        nothingDropped.value == true;
-        showRemark.value = true;
-        sendDeclinedData.value = false;
-        smsMessage = newLicense.value
-          ? "Dear applicant your applied new license of code " +
-            newLicense.value.newLicenseCode +
-            " has been declined after careful examination of your uploaded documents by our reviewers. Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
-          : "";
+          });
+          return;
+        }
 
-        return;
-      } else if (nothingDropped.value == false) {
-        showRemarkError.value = true;
-        showRemark.value = true;
-        sendDeclinedData.value = false;
-        return;
-      } else {
-        if (actionValue === "ApproveEvent" && nothingDropped.value == true) {
+        if (actionValue == "ReviewerDraftEvent") {
+          showRemarkError.value = false;
+          showRemark.value = false;
+        }
+
+        if (
+          actionValue == "DeclineEvent" &&
+          (newLicense.value.remark == "" || newLicense.value.remark == null)
+        ) {
+          showRemarkError.value = true;
+          nothingDropped.value == true;
+          showRemark.value = true;
+          sendDeclinedData.value = false;
           smsMessage = newLicense.value
             ? "Dear applicant your applied new license of code " +
               newLicense.value.newLicenseCode +
-              " has been approved after careful examination of your uploaded documents by our reviewers. Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
+              " has been declined after careful examination of your uploaded documents by our reviewers. Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
             : "";
+
+          return;
         }
-        showRemarkError.value = false;
-        let checkProfessionResult = false;
-        newLicense.value.isProfessionChanged == false;
-
-        checkProfessionResult = checkProfessionChanged(
-          newLicense.value.educations,
-          modifiedProfession
-        );
-
-        if (checkProfessionResult) {
-          newLicense.value.isProfessionChanged == true;
+        if (nothingDropped.value == false) {
+          showRemarkError.value = true;
+          showRemark.value = true;
+          sendDeclinedData.value = false;
+          return;
         } else {
-          newLicense.value.isProfessionChanged == false;
-          if (fromModalSendDeclinedData.value == true) {
-            sendDeclinedData.value = true;
+          if (actionValue == "ApproveEvent" && nothingDropped.value == true) {
+            smsMessage = newLicense.value
+              ? "Dear applicant your applied new license of code " +
+                newLicense.value.newLicenseCode +
+                " has been approved after careful examination of your uploaded documents by our reviewers. Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
+              : "";
+              newLicense.value.remark="";
           }
-        }
+          showRemarkError.value = false;
+          let checkProfessionResult = false;
+          newLicense.value.isProfessionChanged == false;
 
-        newLicense.value.declinedFields = rejected.value;
-        newLicense.value.acceptedFields = accepted.value;
-        newLicense.value.certified = true;
-        newLicense.value.certifiedDate = new Date();
-        let req = {
-          action: actionValue,
-          data: newLicense.value,
-        };
-        let smsData = {
-          recipients: [
-            newLicense.value && newLicense.value.applicant
-              ? "251" + newLicense.value.applicant.phoneNumber
-              : "",
-          ],
-          message: smsMessage ? smsMessage : "",
-        };
-        newLicense.value.licenseExpirationDate = licenseExpirationDate.value;
-        // let tempRemarkValue = true;
-        // newLicense.value.educations.forEach((element) => {
-        //   if (element && element.isDropped == true) {
-        //     tempRemarkValue = false;
-        //   } else {
-        //     tempRemarkValue = true;
-        //   }
-        // });
-        // if (tempRemarkValue == true) {
-        //   newLicense.value.remark = "";
-        // }
+          checkProfessionResult = checkProfessionChanged(
+            newLicense.value.educations,
+            modifiedProfession
+          );
 
-        if (applicationType.value == "New License") {
-          isLoadingAction.value = true;
-          store
-            .dispatch("reviewer/editNewLicense", req)
-            .then((res) => {
-              showActionLoading.value = false;
-              isLoadingAction.value = false;
-              if (res.statusText == "Created") {
-                store.dispatch("sms/sendSms", smsData).then(() => {
-                  toast.success("Application reviewed Successfully", {
+          if (checkProfessionResult) {
+            newLicense.value.isProfessionChanged == true;
+          } else {
+            newLicense.value.isProfessionChanged == false;
+            if (fromModalSendDeclinedData.value == true) {
+              sendDeclinedData.value = true;
+            }
+          }
+
+          newLicense.value.declinedFields = rejected.value;
+          newLicense.value.acceptedFields = accepted.value;
+          newLicense.value.certified = true;
+          newLicense.value.certifiedDate = new Date();
+          let req = {
+            action: actionValue,
+            data: newLicense.value,
+          };
+          let smsData = {
+            recipients: [
+              newLicense.value && newLicense.value.applicant
+                ? "251" + newLicense.value.applicant.phoneNumber
+                : "",
+            ],
+            message: smsMessage ? smsMessage : "",
+          };
+
+          newLicense.value.licenseExpirationDate = licenseExpirationDate.value;
+          let tempRemarkValue = true;
+          newLicense.value.educations.forEach((element) => {
+            if (element && element.isDropped == true) {
+              tempRemarkValue = false;
+            } else {
+              tempRemarkValue = true;
+            }
+          });
+          if (tempRemarkValue == true) {
+            newLicense.value.remark = "";
+          }
+
+          if (applicationType.value == "New License") {
+            isLoadingAction.value = true;
+            store
+              .dispatch("reviewer/editNewLicense", req)
+              .then((res) => {
+                showActionLoading.value = false;
+                isLoadingAction.value = false;
+                if (res.statusText == "Created") {
+                  store.dispatch("sms/sendSms", smsData).then(() => {
+                    toast.success("Application reviewed Successfully", {
+                      timeout: 5000,
+                      position: "bottom-center",
+                      pauseOnFocusLoss: true,
+                      pauseOnHover: true,
+                      icon: true,
+                    });
+                    router.push({
+                      path: "/admin/newLicense/approved",
+                    });
+                    let userNotification = {
+                      user_id:
+                        newLicense.value && newLicense.value.applicant
+                          ? newLicense.value.data.applicant.id
+                          : null,
+                      reviewer_id: newLicense.value.licenseReviewer
+                        ? newLicense.value.licenseReviewer.reviewerId
+                        : null,
+                      new_license_id: newLicense.value ? newLicense.value.id : null,
+                      message: newLicense.value // eslint-disable-next-line prettier/prettier
+                        ? `Dear applicant your submitted new license application of code ${
+                            newLicense.value.newLicenseCode
+                          } has been ${
+                            actionValue == "ApproveEvent"
+                              ? "approved"
+                              : actionValue == "DeclineEvent"
+                              ? "declined"
+                              : ""
+                          }by a reviewer.`
+                        : "",
+                      type: "applicant_new_license",
+                      status: "new",
+                    };
+                    store.dispatch("notification/notifyApplicant", userNotification);
+                  });
+                } else {
+                  toast.error("Please try again", {
                     timeout: 5000,
                     position: "bottom-center",
                     pauseOnFocusLoss: true,
                     pauseOnHover: true,
                     icon: true,
                   });
-                  router.push({ path: "/admin/newLicense/approved" });
-                  let userNotification = {
-                    user_id:
-                      newLicense.value && newLicense.value.applicant
-                        ? newLicense.value.data.applicant.id
-                        : null,
-                    reviewer_id: newLicense.value.licenseReviewer
-                      ? newLicense.value.licenseReviewer.reviewerId
-                      : null,
-                    new_license_id: newLicense.value
-                      ? newLicense.value.id
-                      : null,
-                    message: newLicense.value
-                      ? // eslint-disable-next-line prettier/prettier
-                        `Dear applicant your submitted new license application of code ${
-                          newLicense.value.newLicenseCode
-                        } has been ${
-                          actionValue == "ApproveEvent"
-                            ? "approved"
-                            : actionValue == "DeclineEvent"
-                            ? "declined"
-                            : ""
-                        }by a reviewer.`
-                      : "",
-                    type: "applicant_new_license",
-                    status: "new",
-                  };
-                  store.dispatch(
-                    "notification/notifyApplicant",
-                    userNotification
-                  );
-                });
-              } else {
+                  setTimeout(() => {
+                    window.location.reload();
+                  }, 3000);
+                }
+              })
+              .catch(() => {
                 toast.error("Please try again", {
                   timeout: 5000,
                   position: "bottom-center",
@@ -2512,46 +1663,32 @@ export default {
                 setTimeout(() => {
                   window.location.reload();
                 }, 3000);
-              }
-            })
-            .catch(() => {
-              toast.error("Please try again", {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true,
               });
-              setTimeout(() => {
-                window.location.reload();
-              }, 3000);
-            });
+          }
         }
-      }
-    };
-    const changePrefix = (education) => {
-      newLicense.value.educations.forEach((element) => {
-        if (element.departmentId == education.departmentId) {
-          element = education;
-        }
-      });
-    };
-    const submitRemark = () => {
-      newLicense.value.educations.forEach((element) => {
-        if (element && element.isDropped == true) {
-          nothingDropped.value = false;
-        }
-      });
+      };
+      const changePrefix = (education) => {
+        newLicense.value.educations.forEach((element) => {
+          if (element.departmentId == education.departmentId) {
+            element = education;
+          }
+        });
+      };
+      const submitRemark = () => {
+        newLicense.value.educations.forEach((element) => {
+          if (element && element.isDropped == true) {
+            nothingDropped.value = false;
+          }
+        });
 
-      showRemarkError.value = false;
-      showRemark.value = false;
-      sendDeclinedData.value = true;
+        showRemarkError.value = false;
+        showRemark.value = false;
+        sendDeclinedData.value = true;
 
-      action(nothingDropped.value == false ? "ApproveEvent" : "DeclineEvent");
-    };
-    const droppedDepartment = () => {
-      JSON.parse(JSON.stringify(newLicense.value.educations)).forEach(
-        (element) => {
+        action(nothingDropped.value == false ? "ApproveEvent" : "DeclineEvent");
+      };
+      const droppedDepartment = () => {
+        JSON.parse(JSON.stringify(newLicense.value.educations)).forEach((element) => {
           if (element && element.isDropped && element.isDropped == true) {
             declineAction.value = "ApproveEvent";
             if (rejected.value && rejected.value.length == 0) {
@@ -2564,85 +1701,96 @@ export default {
               nothingDropped.value = true;
             }
           }
-        }
-      );
-    };
-    const openPdfInNewTab = (pdfPath) => {
-      pdfFilePath.value = pdfPath;
-      window.open(googleApi + "" + pdfPath, "_blank");
-    };
-
-    const getProfessionalTypesByDepartmentId = async (profType) => {
-      let profId = {
-        departmentId: profType.department.id,
-        educationalLevelId: profType.educationLevel.id,
+        });
       };
-      await store
-        .dispatch("reviewer/getProfessionalTypeByDepartmentId", profId)
-        .then((res) => {
+      const openPdfInNewTab = (pdfPath) => {
+        pdfFilePath.value = pdfPath;
+        window.open(googleApi + "" + pdfPath, "_blank");
+      };
+
+      const getProfessionalTypesByDepartmentId = async (profType) => {
+        let profId = {
+          departmentId: profType.department.id,
+          educationalLevelId: profType.educationLevel.id,
+        };
+        await store.dispatch("reviewer/getProfessionalTypeByDepartmentId", profId).then((res) => {
           newProf.value[profType.department.id] = res.data.data;
         });
-    };
-    const isremarkFilled = () => {
-      newLicense.value.remark && newLicense.value.remark.length > 10
-        ? (remarkFilled.value = true)
-        : (remarkFilled.value = false);
-    };
-    const changeAmharicName = () => {
-      isLoadingName.value = true;
-      const id = profileInfo.value.id;
-      let newProfile = {
-        alternativeName: newLicense.value.profile.alternativeName,
-        alternativeFatherName: newLicense.value.profile.alternativeFatherName,
-        alternativeGrandFatherName:
-          newLicense.value.profile.alternativeGrandFatherName,
       };
-      const profileData = [id, newProfile];
-      store
-        .dispatch("profile/changeUserProfile", profileData)
-        .then(() => {
-          canChangeName.value = false;
-          toast.success("Name change was Successfull", {
-            timeout: 5000,
-            position: "bottom-center",
-            pauseOnFocusLoss: true,
-            pauseOnHover: true,
-            icon: true,
+      const isremarkFilled = () => {
+        newLicense.value.remark && newLicense.value.remark.length > 10
+          ? (remarkFilled.value = true)
+          : (remarkFilled.value = false);
+      };
+      const changeAmharicName = () => {
+        isLoadingName.value = true;
+        const id = profileInfo.value.id;
+        let newProfile = {
+          alternativeName: newLicense.value.profile.alternativeName,
+          alternativeFatherName: newLicense.value.profile.alternativeFatherName,
+          alternativeGrandFatherName: newLicense.value.profile.alternativeGrandFatherName,
+        };
+        const profileData = [id, newProfile];
+        store
+          .dispatch("profile/changeUserProfile", profileData)
+          .then(() => {
+            canChangeName.value = false;
+            toast.success("Name change was Successfull", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+            isLoadingName.value = false;
+            editPersonalData.value = false;
+            created(route.params.id);
+          })
+          .catch(() => {
+            toast.error("Error Occured", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+            isLoadingName.value = false;
           });
-          isLoadingName.value = false;
-          editPersonalData.value = false;
-          created(route.params.id);
-        })
-        .catch(() => {
-          toast.error("Error Occured", {
-            timeout: 5000,
-            position: "bottom-center",
-            pauseOnFocusLoss: true,
-            pauseOnHover: true,
-            icon: true,
+      };
+
+      const checkResult = ref(false);
+
+      let countProLength = ref(0);
+      const addPrefix = (professionId, event) => {
+        if (professionalTypePrefixes.value.length === 0) {
+          professionalTypePrefixes.value.push({
+            professionalTypeId: professionId,
+            prefix: event.target.value,
           });
-          isLoadingName.value = false;
-        });
-    };
+          return;
+        }
 
-    const checkResult = ref(false);
-
-    let countProLength = ref(0);
-    const addPrefix = (professionId, event) => {
-      if (professionalTypePrefixes.value.length === 0) {
-        professionalTypePrefixes.value.push({
-          professionalTypeId: professionId,
-          prefix: event.target.value,
-        });
-        return;
-      }
-
-      for (let i = 0; i < professionalTypePrefixes.value.length; i++) {
-        if (
-          professionId !== professionalTypePrefixes.value[i].professionalTypeId
-        ) {
-          countProLength.value++;
-          if (countProLength.value === professionalTypePrefixes.value.length) {
+        for (let i = 0; i < professionalTypePrefixes.value.length; i++) {
+          if (professionId !== professionalTypePrefixes.value[i].professionalTypeId) {
+            countProLength.value++;
+            if (countProLength.value === professionalTypePrefixes.value.length) {
+              professionalTypePrefixes.value.push({
+                professionalTypeId: professionId,
+                prefix: event.target.value,
+              });
+              countProLength.value = 0;
+              return;
+            }
+          } else {
+            professionalTypePrefixes.value.splice(
+              professionalTypePrefixes.value.indexOf({
+                professionalTypeId: professionId,
+              }),
+              1
+            );
+            if (event.target.value === "None") {
+              return;
+            }
             professionalTypePrefixes.value.push({
               professionalTypeId: professionId,
               prefix: event.target.value,
@@ -2650,171 +1798,162 @@ export default {
             countProLength.value = 0;
             return;
           }
-        } else {
-          professionalTypePrefixes.value.splice(
-            professionalTypePrefixes.value.indexOf({
-              professionalTypeId: professionId,
-            }),
-            1
-          );
-          if (event.target.value === "None") {
-            return;
-          }
-          professionalTypePrefixes.value.push({
-            professionalTypeId: professionId,
-            prefix: event.target.value,
-          });
-          countProLength.value = 0;
-          return;
         }
-      }
-    };
-
-    const checkProfessionChanged = (previousProfession, modifiedProfesion) => {
-      let count = 0;
-
-      for (let i = 0; i < previousProfession.length; i++) {
-        for (let j = 0; j < modifiedProfesion.length; j++) {
-          if (
-            previousProfession[i].professionalTypeId !=
-            modifiedProfesion[j].professionalTypeId
-          ) {
-            count++;
-          }
-        }
-      }
-      if (count != 0) {
-        return true;
-      } else {
-        return false;
-      }
-    };
-
-    const setInput = (value) => {
-      instSearched.value = value ? value : "";
-      showOptions.value = false;
-    };
-
-    const resultQuery = () => {
-      if (institutions.value) {
-        let data = institutions.value.filter((item) => {
-          return instSearched.value
-            ? instSearched.value.name
-                .toLowerCase()
-                .split(" ")
-                .every((v) => item.name.toLowerCase().includes(v))
-            : "";
-        });
-
-        return data;
-      } else {
-        return [];
-      }
-    };
-    const showPrefix = (id) => {
-      if (showPrefixFor.value[id] == undefined) {
-        showPrefixFor.value[id] = true;
-      } else if (showPrefixFor.value[id] && showPrefixFor.value[id] == true) {
-        showPrefixFor.value[id] = false;
-      } else {
-        showPrefixFor.value[id] = true;
-      }
-    };
-    const supervise = () => {
-      newLicense.value.suspEndDate = endDate.value ? endDate.value : "";
-      newLicense.value.suspStartDate = startDate.value ? startDate.value : "";
-      newLicense.value.supervisor = supervisor.value ? supervisor.value : "";
-      newLicense.value.supervisingInstitutionId = instSearched.value
-        ? instSearched.value.id
-        : "";
-
-      let req = {
-        action: superviseAction.value ? superviseAction.value : "",
-        data: newLicense.value,
       };
-      let minDate = moment(endDate.value).diff(moment(startDate.value), "days");
 
-      if (minDate < 30) {
-        showDateError.value.message =
-          "Minimum supervised time is 3 month please change start and end date.";
-        showDateError.value.show = true;
-        return;
-      } else if (!endDate.value || !startDate.value) {
-        showDateError.value.message = "Please select start/end date.";
-        showDateError.value.show = true;
-        return;
-      } else if (!instSearched.value.id) {
-        showDateError.value.message = "Please select instiution.";
-        showDateError.value.show = true;
-        return;
-      } else {
-        superviseLoading.value = true;
-        let smsData = {
-          recipients: [
-            newLicense.value && newLicense.value.applicant
-              ? "251" + newLicense.value.applicant.phoneNumber
-              : "",
-          ],
-          message: newLicense.value
-            ? "Dear applicant your applied new license of code " +
-              newLicense.value.newLicenseCode +
-              " has been set to be under supervison of MR/MRS:-" +
-              newLicense.value.supervisor +
-              " at institution of " +
-              instSearched.value.name +
-              " for " +
-              minDate +
-              " days  .Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
-            : "",
+      const checkProfessionChanged = (previousProfession, modifiedProfesion) => {
+        let count = 0;
+
+        for (let i = 0; i < previousProfession.length; i++) {
+          for (let j = 0; j < modifiedProfesion.length; j++) {
+            if (
+              previousProfession[i].professionalTypeId != modifiedProfesion[j].professionalTypeId
+            ) {
+              count++;
+            }
+          }
+        }
+        if (count != 0) {
+          return true;
+        } else {
+          return false;
+        }
+      };
+
+      const setInput = (value) => {
+        instSearched.value = value ? value : "";
+        showOptions.value = false;
+      };
+
+      const resultQuery = () => {
+        if (institutions.value) {
+          let data = institutions.value.filter((item) => {
+            return instSearched.value
+              ? instSearched.value.name
+                  .toLowerCase()
+                  .split(" ")
+                  .every((v) => item.name.toLowerCase().includes(v))
+              : "";
+          });
+
+          return data;
+        } else {
+          return [];
+        }
+      };
+      const showPrefix = (id) => {
+        if (showPrefixFor.value[id] == undefined) {
+          showPrefixFor.value[id] = true;
+        } else if (showPrefixFor.value[id] && showPrefixFor.value[id] == true) {
+          showPrefixFor.value[id] = false;
+        } else {
+          showPrefixFor.value[id] = true;
+        }
+      };
+      const supervise = () => {
+        newLicense.value.suspEndDate = endDate.value ? endDate.value : "";
+        newLicense.value.suspStartDate = startDate.value ? startDate.value : "";
+        newLicense.value.supervisor = supervisor.value ? supervisor.value : "";
+        newLicense.value.supervisingInstitutionId = instSearched.value ? instSearched.value.id : "";
+
+        let req = {
+          action: superviseAction.value ? superviseAction.value : "",
+          data: newLicense.value,
         };
+        let minDate = moment(endDate.value).diff(moment(startDate.value), "days");
 
-        store
-          .dispatch("reviewer/editNewLicense", req)
-          .then((res) => {
-            showActionLoading.value = false;
-            if (res.statusText == "Created") {
-              store.dispatch("sms/sendSms", smsData).then(() => {
-                toast.success("Application reviewed Successfully", {
+        if (minDate < 30) {
+          showDateError.value.message =
+            "Minimum supervised time is 3 month please change start and end date.";
+          showDateError.value.show = true;
+          return;
+        } else if (!endDate.value || !startDate.value) {
+          showDateError.value.message = "Please select start/end date.";
+          showDateError.value.show = true;
+          return;
+        } else if (!instSearched.value.id) {
+          showDateError.value.message = "Please select instiution.";
+          showDateError.value.show = true;
+          return;
+        } else {
+          superviseLoading.value = true;
+          let smsData = {
+            recipients: [
+              newLicense.value && newLicense.value.applicant
+                ? "251" + newLicense.value.applicant.phoneNumber
+                : "",
+            ],
+            message: newLicense.value
+              ? "Dear applicant your applied new license of code " +
+                newLicense.value.newLicenseCode +
+                " has been set to be under supervison of MR/MRS:-" +
+                newLicense.value.supervisor +
+                " at institution of " +
+                instSearched.value.name +
+                " for " +
+                minDate +
+                " days  .Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
+              : "",
+          };
+
+          store
+            .dispatch("reviewer/editNewLicense", req)
+            .then((res) => {
+              showActionLoading.value = false;
+              if (res.statusText == "Created") {
+                store.dispatch("sms/sendSms", smsData).then(() => {
+                  toast.success("Application reviewed Successfully", {
+                    timeout: 5000,
+                    position: "bottom-center",
+                    pauseOnFocusLoss: true,
+                    pauseOnHover: true,
+                    icon: true,
+                  });
+                  superviseLoading.value = false;
+
+                  let userNotification = {
+                    user_id:
+                      newLicense.value && newLicense.value.applicant
+                        ? newLicense.value.applicant.id
+                        : null,
+                    reviewer_id: newLicense.value.licenseReviewer
+                      ? newLicense.value.licenseReviewer.reviewerId
+                      : null,
+                    new_license_id: newLicense.value ? newLicense.value.id : null,
+                    message: newLicense.value // eslint-disable-next-line prettier/prettier
+                      ? "Dear applicant your applied new license of code " +
+                        newLicense.value.newLicenseCode +
+                        " has been set to be under supervison of MR/MRS:-" +
+                        newLicense.value.supervisor +
+                        " at institution of " +
+                        instSearched.value.name +
+                        " for " +
+                        minDate +
+                        " days "
+                      : "",
+                    type: "applicant_new_license",
+                    status: "new",
+                  };
+                  store.dispatch("notification/notifyApplicant", userNotification);
+                  location.reload();
+                  router.push({
+                    path: "/admin/newLicense",
+                  });
+                });
+              } else {
+                toast.error("Please try again", {
                   timeout: 5000,
                   position: "bottom-center",
                   pauseOnFocusLoss: true,
                   pauseOnHover: true,
                   icon: true,
                 });
-                superviseLoading.value = false;
-
-                let userNotification = {
-                  user_id:
-                    newLicense.value && newLicense.value.applicant
-                      ? newLicense.value.applicant.id
-                      : null,
-                  reviewer_id: newLicense.value.licenseReviewer
-                    ? newLicense.value.licenseReviewer.reviewerId
-                    : null,
-                  new_license_id: newLicense.value ? newLicense.value.id : null,
-                  message: newLicense.value
-                    ? // eslint-disable-next-line prettier/prettier
-                      "Dear applicant your applied new license of code " +
-                      newLicense.value.newLicenseCode +
-                      " has been set to be under supervison of MR/MRS:-" +
-                      newLicense.value.supervisor +
-                      " at institution of " +
-                      instSearched.value.name +
-                      " for " +
-                      minDate +
-                      " days "
-                    : "",
-                  type: "applicant_new_license",
-                  status: "new",
-                };
-                store.dispatch(
-                  "notification/notifyApplicant",
-                  userNotification
-                );
-                location.reload();
-                router.push({ path: "/admin/newLicense" });
-              });
-            } else {
+                setTimeout(() => {
+                  window.location.reload();
+                }, 2000);
+              }
+            })
+            .catch(() => {
               toast.error("Please try again", {
                 timeout: 5000,
                 position: "bottom-center",
@@ -2825,219 +1964,191 @@ export default {
               setTimeout(() => {
                 window.location.reload();
               }, 2000);
-            }
-          })
-          .catch(() => {
-            toast.error("Please try again", {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
             });
-            setTimeout(() => {
-              window.location.reload();
-            }, 2000);
-          });
-      }
-    };
-    const changeAction = (action) => {
-      superviseAction.value = action;
-    };
-
-    const checkForOther = (education) => {
-      modifiedProfession.forEach((element, index) => {
-        if (element.department.id == education.department.id) {
-          modifiedProfession.splice(index, 1);
         }
-      });
+      };
+      const changeAction = (action) => {
+        superviseAction.value = action;
+      };
 
-      if (
-        tempProf.value[education.department.id] &&
-        tempProf.value[education.department.id].id ==
-          education.professionTypeId &&
-        tempProf.value[education.department.id].departmentId ==
-          education.departmentId
-      ) {
-        modifiedProfession = newLicense.value.educations.filter(
-          (element) => element.oldProfessionTypeId != education.professionTypeId
-        );
-      } else if (
-        tempProf.value[education.department.id] &&
-        tempProf.value[education.department.id].name == "Other"
-      ) {
-        allowOtherProfChange.value[education.department.id] = true;
-
-        education.oldProfessionTypeId = education.professionTypeId;
-        education.professionTypeId = null;
-        modifiedProfession.push({
-          ...education,
+      const checkForOther = (education) => {
+        modifiedProfession.forEach((element, index) => {
+          if (element.department.id == education.department.id) {
+            modifiedProfession.splice(index, 1);
+          }
         });
-      } else {
-        education.oldProfessionTypeId = education.professionTypeId;
-        education.professionTypeId = tempProf.value[education.department.id].id;
-        modifiedProfession.push({
-          ...education,
-        });
-        allowOtherProfChange.value[education.department.id] = false;
-      }
-    };
 
-    onMounted(() => {
-      created(route.params.id);
-      let date = new Date();
-      let year = date.getFullYear();
-      let month = date.getMonth();
-      let day = date.getDate();
-      if (regionId) {
-        store
-          .dispatch("lookups/getLicenseExpirationDateByRegionId", regionId)
-          .then((res) => {
-            licenseExpirationDate.value = new Date(
-              year + res.data.data[0].years,
-              month,
-              day
-            )
+        if (
+          tempProf.value[education.department.id] &&
+          tempProf.value[education.department.id].id == education.professionTypeId &&
+          tempProf.value[education.department.id].departmentId == education.departmentId
+        ) {
+          modifiedProfession = newLicense.value.educations.filter(
+            (element) => element.oldProfessionTypeId != education.professionTypeId
+          );
+        } else if (
+          tempProf.value[education.department.id] &&
+          tempProf.value[education.department.id].name == "Other"
+        ) {
+          allowOtherProfChange.value[education.department.id] = true;
+
+          education.oldProfessionTypeId = education.professionTypeId;
+          education.professionTypeId = null;
+          modifiedProfession.push({
+            ...education,
+          });
+        } else {
+          education.oldProfessionTypeId = education.professionTypeId;
+          education.professionTypeId = tempProf.value[education.department.id].id;
+          modifiedProfession.push({
+            ...education,
+          });
+          allowOtherProfChange.value[education.department.id] = false;
+        }
+      };
+
+      onMounted(() => {
+        created(route.params.id);
+        let date = new Date();
+        let year = date.getFullYear();
+        let month = date.getMonth();
+        let day = date.getDate();
+        if (regionId) {
+          store.dispatch("lookups/getLicenseExpirationDateByRegionId", regionId).then((res) => {
+            licenseExpirationDate.value = new Date(year + res.data.data[0].years, month, day)
               .toISOString()
               .slice(0, 10);
             expirationDateYear.value = res.data.data[0].years;
           });
-      } else {
-        let year = new Date().getFullYear();
-        licenseExpirationDate.value = new Date(year + 3, month, day)
-          .toISOString()
-          .slice(0, 10);
-        expirationDateYear.value = 3;
-      }
-      store.dispatch("goodstanding/getInstitution").then((res) => {
-        institutions.value = res.data.data.filter((elm) => elm.isLocal == true);
+        } else {
+          let year = new Date().getFullYear();
+          licenseExpirationDate.value = new Date(year + 3, month, day).toISOString().slice(0, 10);
+          expirationDateYear.value = 3;
+        }
+        store.dispatch("goodstanding/getInstitution").then((res) => {
+          institutions.value = res.data.data.filter((elm) => elm.isLocal == true);
+        });
+        store.dispatch("lookups/getProfessionalPrefix").then((res) => {
+          prefixes.value = res.data.data;
+        });
       });
-      store.dispatch("lookups/getProfessionalPrefix").then((res) => {
-        prefixes.value = res.data.data;
-      });
-    });
-    return {
-      isPdf,
-      superviseLoading,
-      licenseExpirationDate,
-      newLicense,
-      showDepRemark,
-      index,
-      docs,
-      prefixes,
-      declineButtonStatus,
-      dropedDepartment,
-      resultQuery,
-      next,
-      setInput,
-      previous,
-      nextRemark,
-      previousRemark,
-      droppedDepartment,
-      amount,
-      supervise,
-      showOptions,
-      remarkFilled,
-      isremarkFilled,
-      width,
-      instSearched,
-      institutions,
-      documentTypes,
-      findDocumentType,
-      documentTypeName,
-      accepted,
-      rejected,
-      startDate,
-      expirationDateYear,
-      supervisor,
-      showDateError,
-      endDate,
-      isLoadingAction,
-      nothingDropped,
-      isLoadingStart,
-      accept,
-      transferToFederal,
-      showTransferToFederal,
-      showTransferSuccessMessage,
-      showTransferErrorMessage,
-      reject,
-      buttons,
-      tempPref,
-      changePrefix,
-      action,
-      allowProfessionChange,
-      viewImage,
-      allowProfChange,
-      showButtons,
-      showRemarkError,
-      isToChangeProfession,
-      profileInfo,
-      disableNext,
-      showPrefixFor,
-      changeAction,
-      newProf,
-      checkForOther,
-      allowOtherProfChange,
-      nextClickable,
-      foundInRejected,
-      foundInAcceptted,
-      showRemark,
-      tempProf,
-      activeClass,
-      declineAction,
-      errorClass,
-      showPrefix,
-      submitRemark,
-      applicationType,
-      showFlash,
-      isLoadingName,
-      minimumSuperviseDate,
-      showErrorFlash,
-      showDeclineFlash,
-      sendDeclinedData,
-      fromModalSendDeclinedData,
-      rejectedObj,
-      completedSteps,
-      totalSteps,
-      ind,
-      modalDocumentTypeName,
-      modalFindDocumentType,
-      evaluateRoute,
-      pdfFilePath,
-      openPdfInNewTab,
-      professionalTypes,
-      canChangeName,
-      changeAmharicName,
-      showNameChangeFlash,
-      showNameChangeErrorFlash,
-      showLicenseDateRequirementError,
-      professionalTypeIds,
-      showProfessionChangeError,
-      expirationDateExceedTodayError,
-      prefix,
-      professionalTypeIdss,
-      addPrefix,
-      options,
-      editPersonalData,
-      editPersonalInfo,
-      selectedOptions,
-      newSelectedOptions,
-      modifiedProfession,
-      showOtherProfessionError,
-      checkResult,
-      isProfessionalTypeChanged,
-      checkProfessionChanged,
-      isGoodStanding,
-      showActionLoading,
-      showLoadingButtons,
-      googleApi,
-      setOtherProfession,
-    };
-  },
-};
+      return {
+        isPdf,
+        superviseLoading,
+        licenseExpirationDate,
+        newLicense,
+        showDepRemark,
+        index,
+        docs,
+        prefixes,
+        declineButtonStatus,
+        dropedDepartment,
+        resultQuery,
+        next,
+        setInput,
+        previous,
+        nextRemark,
+        previousRemark,
+        droppedDepartment,
+        amount,
+        supervise,
+        showOptions,
+        remarkFilled,
+        isremarkFilled,
+        width,
+        instSearched,
+        institutions,
+        documentTypes,
+        findDocumentType,
+        documentTypeName,
+        accepted,
+        rejected,
+        startDate,
+        expirationDateYear,
+        supervisor,
+        showDateError,
+        endDate,
+        isLoadingAction,
+        nothingDropped,
+        isLoadingStart,
+        accept,
+        transferToFederal,
+        showTransferToFederal,
+        showTransferSuccessMessage,
+        showTransferErrorMessage,
+        reject,
+        buttons,
+        tempPref,
+        changePrefix,
+        action,
+        allowProfessionChange,
+        viewImage,
+        allowProfChange,
+        showButtons,
+        showRemarkError,
+        isToChangeProfession,
+        profileInfo,
+        disableNext,
+        showPrefixFor,
+        changeAction,
+        newProf,
+        checkForOther,
+        allowOtherProfChange,
+        nextClickable,
+        foundInRejected,
+        foundInAcceptted,
+        showRemark,
+        tempProf,
+        activeClass,
+        declineAction,
+        errorClass,
+        showPrefix,
+        submitRemark,
+        applicationType,
+        showFlash,
+        isLoadingName,
+        minimumSuperviseDate,
+        showErrorFlash,
+        showDeclineFlash,
+        sendDeclinedData,
+        fromModalSendDeclinedData,
+        rejectedObj,
+        completedSteps,
+        totalSteps,
+        ind,
+        modalDocumentTypeName,
+        modalFindDocumentType,
+        evaluateRoute,
+        pdfFilePath,
+        openPdfInNewTab,
+        professionalTypes,
+        canChangeName,
+        changeAmharicName,
+        showNameChangeFlash,
+        showNameChangeErrorFlash,
+        showLicenseDateRequirementError,
+        professionalTypeIds,
+        showProfessionChangeError,
+        expirationDateExceedTodayError,
+        prefix,
+        professionalTypeIdss,
+        addPrefix,
+        options,
+        editPersonalData,
+        editPersonalInfo,
+        selectedOptions,
+        newSelectedOptions,
+        modifiedProfession,
+        showOtherProfessionError,
+        checkResult,
+        isProfessionalTypeChanged,
+        checkProfessionChanged,
+        isGoodStanding,
+        showActionLoading,
+        showLoadingButtons,
+        googleApi,
+        setOtherProfession,
+      };
+    },
+  };
 </script>
-<style scoped>
-.shadow-lg {
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 34%), 0 2px 4px -1px rgb(0 0 0 / 6%);
-}
-</style>
