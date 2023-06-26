@@ -689,9 +689,15 @@ const routes = [
   //Admin Legacy Data
   {
     path: "/admin/legacyData",
-    name: "LwegacyData",
+    name: "LegacyData",
     component: () =>
       import("../components/Reviewer/HomeComponents/LegacyData/legacy.vue"),
+  },
+  {
+    path: "/admin/AALegacyData",
+    name: "AALegacyData",
+    component: () =>
+      import("../components/Reviewer/HomeComponents/LegacyData/AALegacy.vue"),
   },
 
   //Admin Lookup Management

@@ -105,10 +105,22 @@
                             {{ history.toStatus.name }}
                           </span>
                           <span
-                          v-if="history.toStatus.name==history.fromStatus.name"
+                          v-if="history.toStatus.name=='In Review'&&history.toStatus.name==history.fromStatus.name"
                             class="p-2 m-2 text-2xl text-white rounded-md bg-primary-600"
                           >
                             This is a Transfer
+                          </span>
+                          <span
+                          v-if="history.toStatus.name=='Approve'&&history.toStatus.name==history.fromStatus.name"
+                            class="p-2 m-2 text-2xl text-white rounded-md bg-primary-600"
+                          >
+                            This is a license print
+                          </span>
+                          <span
+                          v-if="history.toStatus.name=='Submit'&&history.toStatus.name==history.fromStatus.name"
+                            class="p-2 m-2 text-2xl text-white rounded-md bg-primary-600"
+                          >
+                            This is a license update from applicant side
                           </span>
                         </p>
                       </div>

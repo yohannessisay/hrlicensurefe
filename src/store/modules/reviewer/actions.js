@@ -952,7 +952,22 @@ export default {
 
     return resp.data ? resp.data.data : [];
   },
+  async getAALegacyData(context, detail) {
+    let url = baseUrl + "/legacyData/AAlegacyData?";
 
+    let parameters = detail.params ? detail.params : [];
+
+    if (parameters) {
+      parameters.forEach((param) => {
+        url += param ? `${param.key}=${param.value}&` : "";
+      });
+    }
+    url = url.substring(0, url.length - 1);
+
+    const resp = await ApiService.get(url);
+
+    return resp.data ? resp.data.data : [];
+  },
   async getProfile(context, id) {
     try {
       const url = baseUrl + "/profiles/" + id;
