@@ -176,8 +176,7 @@ export default {
       });
     };
 
-    const tableLoadingFinish = () => {
-      apTitleTable.value.isLoading = false;
+    const tableLoadingFinish = () => { 
       let elements = document.getElementsByClassName("edit-btn");
       Array.prototype.forEach.call(elements, function (element) {
         if (element.classList.contains("edit-btn")) {

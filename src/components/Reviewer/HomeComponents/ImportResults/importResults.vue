@@ -937,8 +937,7 @@ export default {
         if (element.classList.contains("edit-btn")) {
           element.addEventListener("click", rowClicked());
         }
-      });
-      userTable.value.isLoading = false;
+      }); 
     };
 
     const rowClicked = (row) => {

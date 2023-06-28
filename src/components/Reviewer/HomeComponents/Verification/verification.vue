@@ -633,6 +633,8 @@ export default {
                     ? element.renewal.renewalCode
                     : "-------",
                   IsVerified: element.isVerified ? "Verified" : "Not Verified",
+
+              RequestedDate: element.createdAt?element.createdAt.slice(0,10):'----',
                   data: element,
                 });
               })
@@ -671,7 +673,12 @@ export default {
                 width: "20%",
                 sortable: true,
               },
-
+              {
+                label: "Requested Date",
+                field: "RequestedDate",
+                width: "20%",
+                sortable: true,
+              },
               {
                 label: "",
                 field: "quick",
@@ -724,6 +731,7 @@ export default {
                 ? element.renewal.renewalCode
                 : "-------",
               IsVerified: element.isVerified ? "Verified" : "Not Verified",
+              RequestedDate: element.createdAt?element.createdAt.slice(0,10):'----',
               data: element,
             });
           });
@@ -760,7 +768,12 @@ export default {
                 width: "20%",
                 sortable: true,
               },
-
+              {
+                label: "Requested Date",
+                field: "RequestedDate",
+                width: "20%",
+                sortable: true,
+              },
               {
                 label: "",
                 field: "quick",
@@ -791,8 +804,7 @@ export default {
         if (element.classList.contains("edit-btn")) {
           element.addEventListener("click", rowClicked());
         }
-      });
-      verificationTable.value.isLoading = false;
+      }); 
     };
     const tableLoadingFinishOthers = () => {
       let elements = document.getElementsByClassName("edit-btn-others");
@@ -801,8 +813,7 @@ export default {
         if (element.classList.contains("edit-btn-others")) {
           element.addEventListener("click", rowClickedOthers());
         }
-      });
-      verificationTableOthers.value.isLoading = false;
+      }); 
     };
 
     const rowClicked = (row) => {

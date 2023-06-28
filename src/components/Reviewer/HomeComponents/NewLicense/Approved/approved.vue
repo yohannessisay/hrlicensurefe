@@ -177,6 +177,7 @@
                         focus:border-blue-600
                         focus:outline-none
                       "
+                        @change="searchApplication()"
                         v-model="searchTermToDate"
                         aria-label="Default select example"
                       />
@@ -384,6 +385,7 @@
                         focus:border-blue-600
                         focus:outline-none
                       "
+                        @change="searchApplicationOther()"
                         v-model="searchTermToDateOth"
                         aria-label="Default select example"
                       />
@@ -468,17 +470,17 @@ export default {
     NewLicenseMainContent,
     VueTableLite,
     editModal,
-    editModalOthers,
+    editModalOthers
   },
   setup() {
     const store = useStore();
     let modalDataId = ref({
       id: "",
-      change: 0,
+      change: 0
     });
     let modalDataIdOthers = ref({
       id: "",
-      change: 0,
+      change: 0
     });
     let allInfo = [];
     let allInfoOth = [];
@@ -488,29 +490,25 @@ export default {
     let searchTermToDate = ref("");
     let searchTermFromDateOth = ref("");
     let searchTermToDateOth = ref("");
-    let toOthersTable = ref({});
-    let toYouTable = ref({});
+    let toOthersTable = ref({ isLoading: false });
+    let toYouTable = ref({ isLoading: false });
     let tableData = [];
     let toYouTableData = [];
-    toOthersTable.value = {
-      isLoading: false,
-    };
-    toYouTable.value = {
-      isLoading: false,
-    };
 
-    const refreshTable = () => { 
+ 
+
+    const refreshTable = () => {
       toOthersTable.value.rows = [];
 
       toYouTable.value.rows = [];
 
       approvedApplicationsByYou([
         { key: "page", value: 0 },
-        { key: "size", value: 10 },
+        { key: "size", value: 10 }
       ]);
       approvedApplicationsByOthers([
         { key: "page", value: 0 },
-        { key: "size", value: 10 },
+        { key: "size", value: 10 }
       ]);
     };
     const clearFiltersOther = () => {
@@ -521,36 +519,36 @@ export default {
       toOthersTable.value.isLoading = true;
       approvedApplicationsByOthers([
         { key: "page", value: 0 },
-        { key: "size", value: 10 },
+        { key: "size", value: 10 }
       ]);
     };
     const clearFilters = () => {
       searchTerm.value = "";
       searchTermFromDate.value = "";
-      searchTermToDate.value = ""; 
+      searchTermToDate.value = "";
       toYouTable.value.rows = [];
-      toYouTable.value.isLoading = true;
       approvedApplicationsByYou([
         { key: "page", value: 0 },
-        { key: "size", value: 10 },
+        { key: "size", value: 10 }
       ]);
     };
 
-    const approvedApplicationsByYou = (apiParameters) => {
+    const approvedApplicationsByYou = apiParameters => {
       toYouTableData = [];
+      toYouTable.value.isLoading = true;
       store
         .dispatch("reviewerNewLicense/getNewLicenseApproved", [
           {
-            params: apiParameters,
+            params: apiParameters
           },
           {
-            other: false,
-          },
+            other: false
+          }
         ])
-        .then((res) => {
+        .then(res => {
           allInfo = res ? res.rows : [];
           if (allInfo) {
-            allInfo.forEach((element) => {
+            allInfo.forEach(element => {
               toYouTableData.push({
                 LicenseNumber: element.newLicenseCode,
                 ApplicantName:
@@ -566,7 +564,7 @@ export default {
                   .toJSON()
                   .slice(0, 10)
                   .replace(/-/g, "/"),
-                data: element,
+                data: element
               });
             });
           }
@@ -578,25 +576,25 @@ export default {
                 field: "LicenseNumber",
                 width: "15%",
                 sortable: true,
-                isKey: true,
+                isKey: true
               },
               {
                 label: "Applicant Name",
                 field: "ApplicantName",
                 width: "45%",
-                sortable: true,
+                sortable: true
               },
               {
                 label: "Applicant Type",
                 field: "ApplicantType",
                 width: "20%",
-                sortable: true,
+                sortable: true
               },
               {
                 label: "Applied Date",
                 field: "Date",
                 width: "20%",
-                sortable: true,
+                sortable: true
               },
               {
                 label: "Action",
@@ -608,30 +606,29 @@ export default {
                     row +
                     '" ><i class="fa fa-eye"></i>View/Edit</button>'
                   );
-                },
-              },
+                }
+              }
             ],
             rows: toYouTableData,
-            totalRecordCount: res.count,
-          
+            totalRecordCount: res.count
           };
         });
     };
-    const approvedApplicationsByOthers = (apiParameters) => {
+    const approvedApplicationsByOthers = apiParameters => {
       tableData = [];
-     
+
       store
         .dispatch("reviewerNewLicense/getNewLicenseApproved", [
           {
-            params: apiParameters,
+            params: apiParameters
           },
           {
-            other: true,
-          },
+            other: true
+          }
         ])
-        .then((res) => {
+        .then(res => {
           allInfoOth = res ? res.rows : [];
-          allInfoOth.forEach((element) => {
+          allInfoOth.forEach(element => {
             tableData.push({
               LicenseNumber: element.newLicenseCode,
               ApplicantName:
@@ -647,7 +644,7 @@ export default {
                 .toJSON()
                 .slice(0, 10)
                 .replace(/-/g, "/"),
-              data: element,
+              data: element
             });
           });
 
@@ -658,25 +655,25 @@ export default {
                 field: "LicenseNumber",
                 width: "15%",
                 sortable: true,
-                isKey: true,
+                isKey: true
               },
               {
                 label: "Applicant Name",
                 field: "ApplicantName",
                 width: "45%",
-                sortable: true,
+                sortable: true
               },
               {
                 label: "Applicant Type",
                 field: "ApplicantType",
                 width: "20%",
-                sortable: true,
+                sortable: true
               },
               {
                 label: "Applied Date",
                 field: "Date",
                 width: "20%",
-                sortable: true,
+                sortable: true
               },
               {
                 label: "Action",
@@ -688,13 +685,12 @@ export default {
                     row +
                     '" ><i class="fa fa-eye"></i>View/Edit</button>'
                   );
-                },
-              },
+                }
+              }
             ],
 
             rows: tableData,
-            totalRecordCount: res.count,
-          
+            totalRecordCount: res.count
           };
         });
     };
@@ -707,7 +703,6 @@ export default {
           element.addEventListener("click", rowClicked());
         }
       });
-      toYouTable.value.isLoading = false;
     };
     const tableLoadingFinishOthers = () => {
       let elementOthers = document.getElementsByClassName("edit-btn-others");
@@ -715,10 +710,9 @@ export default {
         if (element.classList.contains("edit-btn-others")) {
           element.addEventListener("click", rowClickedOthers());
         }
-      });
-      toOthersTable.value.isLoading = false;
+      }); 
     };
-    const rowClicked = (row) => {
+    const rowClicked = row => {
       if (row != undefined) {
         row = JSON.parse(JSON.stringify(row));
 
@@ -726,7 +720,7 @@ export default {
         modalDataId.value.change++;
       }
     };
-    const rowClickedOthers = (row) => {
+    const rowClickedOthers = row => {
       if (row != undefined) {
         row = JSON.parse(JSON.stringify(row));
         modalDataIdOthers.value.id = row.data ? row.data.id : "-----";
@@ -736,13 +730,12 @@ export default {
 
     const searchApplication = () => {
       toYouTable.value.rows = [];
-      toYouTable.value.isLoading = true;
       approvedApplicationsByYou([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
         { key: "value", value: searchTerm.value },
         { key: "fromDate", value: searchTermFromDate.value },
-        { key: "toDate", value: searchTermToDate.value },
+        { key: "toDate", value: searchTermToDate.value }
       ]);
     };
     const searchApplicationOther = () => {
@@ -753,23 +746,21 @@ export default {
         { key: "size", value: 10 },
         { key: "value", value: searchTermOthers.value },
         { key: "fromDate", value: searchTermFromDateOth.value },
-        { key: "toDate", value: searchTermToDateOth.value },
+        { key: "toDate", value: searchTermToDateOth.value }
       ]);
     };
     onMounted(() => {
-      toYouTable.value.isLoading = true;
       approvedApplicationsByOthers([
         { key: "page", value: 0 },
-        { key: "size", value: 10 },
+        { key: "size", value: 10 }
       ]);
       toOthersTable.value.isLoading = true;
       approvedApplicationsByYou([
         { key: "page", value: 0 },
-        { key: "size", value: 10 },
+        { key: "size", value: 10 }
       ]);
     });
     const doSearch = (offset, limit, order, sort) => {
-      toYouTable.value.isLoading = true;
       setTimeout(() => {
         toYouTable.value.isReSearch = offset == undefined ? true : false;
         offset = offset / 10;
@@ -779,7 +770,7 @@ export default {
             { key: "size", value: limit },
             { key: "value", value: searchTerm.value },
             { key: "fromDate", value: searchTermFromDate.value },
-            { key: "toDate", value: searchTermToDate.value },
+            { key: "toDate", value: searchTermToDate.value }
           ]);
         } else {
           approvedApplicationsByYou([
@@ -787,15 +778,12 @@ export default {
             { key: "size", value: limit },
             { key: "value", value: searchTerm.value },
             { key: "fromDate", value: searchTermFromDate.value },
-            { key: "toDate", value: searchTermToDate.value },
+            { key: "toDate", value: searchTermToDate.value }
           ]);
         }
-         
-       
       }, 600);
     };
     const doSearchOth = (offset, limit, order, sort) => {
-     
       toOthersTable.value.isLoading = true;
       setTimeout(() => {
         toOthersTable.value.isReSearch = offset == undefined ? true : false;
@@ -806,7 +794,7 @@ export default {
             { key: "size", value: limit },
             { key: "value", value: searchTermOthers.value },
             { key: "fromDate", value: searchTermFromDateOth.value },
-            { key: "toDate", value: searchTermToDateOth.value },
+            { key: "toDate", value: searchTermToDateOth.value }
           ]);
         } else {
           approvedApplicationsByOthers([
@@ -814,10 +802,9 @@ export default {
             { key: "size", value: limit },
             { key: "value", value: searchTermOthers.value },
             { key: "fromDate", value: searchTermFromDateOth.value },
-            { key: "toDate", value: searchTermToDateOth.value },
+            { key: "toDate", value: searchTermToDateOth.value }
           ]);
         }
-        
       }, 600);
     };
     return {
@@ -842,9 +829,9 @@ export default {
       rowClicked,
       rowClickedOthers,
       modalDataId,
-      modalDataIdOthers,
+      modalDataIdOthers
     };
-  },
+  }
 };
 </script>
 <style scoped>

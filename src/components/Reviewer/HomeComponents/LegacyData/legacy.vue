@@ -408,7 +408,7 @@ export default {
             : "";
           tempData.forEach((element) => {
             tableData.push({
-              EmployeeId: element.employee_id ? element.employee_id : "",
+              EmployeeId: element.emp_number ? element.emp_number : "",
               FirstName: element.emp_first_name ? element.emp_first_name : "",
               MiddleName: element.emp_middle_name
                 ? element.emp_middle_name

@@ -582,8 +582,7 @@ export default {
       });
     };
 
-    const regionTableLoadingFinish = () => {
-      regionsTable.value.isLoading = false;
+    const regionTableLoadingFinish = () => { 
       let elements = document.getElementsByClassName("edit-btn-region");
       Array.prototype.forEach.call(elements, function (element) {
         if (element.classList.contains("edit-btn-region")) {
@@ -619,8 +618,7 @@ export default {
         : {};
     };
 
-    const zoneTableLoadingFinish = () => {
-      zonesTable.value.isLoading = false;
+    const zoneTableLoadingFinish = () => { 
       let elements = document.getElementsByClassName("edit-btn-zone");
       Array.prototype.forEach.call(elements, function (element) {
         if (element.classList.contains("edit-btn-zone")) {
@@ -669,8 +667,7 @@ export default {
         : {};
     };
 
-    const woredaTableLoadingFinish = () => {
-      woredasTable.value.isLoading = false;
+    const woredaTableLoadingFinish = () => { 
       let elements = document.getElementsByClassName("edit-btn-woreda");
       Array.prototype.forEach.call(elements, function (element) {
         if (element.classList.contains("edit-btn-woreda")) {
