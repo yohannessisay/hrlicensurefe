@@ -66,6 +66,7 @@
                 </select>
                 <button
                   v-show="Object.keys(localData).length != 0"
+                  type="button"
                   class="mt-8 inline-block px-6 py-2.5 bg-white text-main-400 max-w-3xl border hover:bg-main-400 hover:text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:border-main-500 focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
                   @click="clearLocalData()"
                 >
@@ -180,11 +181,11 @@
                 ><span class="text-red-300">*</span>
                 <input
                   type="text"
+                  name="otherProf"
                   v-model="generalInfo.otherProfessionType"
                   class="appearance-none block xl:w-64 md:w-64 sm:w-64 px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
                   autocomplete="off"
-                  placeholder=""
-                  required
+                  placeholder="Profession english title" 
                 />
               </div>
 
@@ -194,11 +195,12 @@
                 ><span class="text-red-300">*</span>
                 <input
                   type="text"
+                  name="otherProfAmh"
                   v-model="generalInfo.otherProfessionTypeAmharic"
                   class="appearance-none block xl:w-64 md:w-64 sm:w-64 px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
                   autocomplete="off"
-                  placeholder=""
-                  required
+                  placeholder="Profession amharic title"
+                
                 />
               </div>
             </div>
@@ -309,6 +311,7 @@
                   ><span class="text-red-300">*</span>
                   <input
                     type="text"
+                    name="whomGS"
                     v-model="generalInfo.whomGoodStandingFor"
                     class="appearance-none block xl:w-64 md:w-64 sm:w-64 px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
                     autocomplete="off"
@@ -358,6 +361,7 @@
 
                   <input
                     type="text"
+                    name="licenseNum"
                     v-model="generalInfo.licenseRegistrationNumber"
                     class="appearance-none block xl:w-64 md:w-64 sm:w-64 px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
                     autocomplete="off"
@@ -377,6 +381,7 @@
                   <span class="text-red-300">*</span>
                   <input
                     type="date"
+                    name="issuedDate"
                     v-model="generalInfo.licenseIssuedDate"
                     class="appearance-none block xl:w-64 md:w-64 sm:w-64 px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
                     autocomplete="off"
@@ -406,8 +411,7 @@
           </button>
           <button
             class="float-right mt-8 inline-block px-6 py-2.5 bg-blue-700 text-main-400 max-w-3xl font-medium text-xs leading-tight uppercase rounded shadow-md bg-white border hover:text-white hover:border-main-500 hover:bg-main-400 focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
-            type="submit"
-            @click="apply()"
+            type="submit" 
           >
             Next
           </button>
@@ -574,7 +578,7 @@ export default {
       fetchProfessionalType(generalInfo.value.departmentId.id);
     };
 
-    const apply = () => {
+    const submit = () => {
       generalInfo.value.applicantTypeId == ""
         ? (errorFields.value.applicantTypeId = true)
         : delete errorFields.value.applicantTypeId;
@@ -633,10 +637,11 @@ export default {
       });
     };
     const clearLocalData = () => {
-      window.localStorage.setItem("GSApplicationData", "");
-      setTimeout(() => {
+      window.localStorage.removeItem("GSApplicationData");
+      window.indexedDB.deleteDatabase("GSdocumentUploads");
+      
         window.location.reload();
-      }, 1000);
+    
     };
     const fetchEducationLevel = () => {
       store.dispatch("lookups/getEducationLevel").then((res) => {
@@ -758,7 +763,7 @@ export default {
       zoneChangeHandler,
       educationalLevelChange,
       setDepartment,
-      apply,
+      submit,
       darkMode,
       fetchZone,
       showOtherProfession,

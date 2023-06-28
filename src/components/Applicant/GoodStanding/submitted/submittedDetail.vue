@@ -839,10 +839,10 @@ export default {
           withdrawData.value = res.data.data;
           generalInfo.value = res.data.data;
           generalInfo.value.whoIssuedId = res.data.data.whoIssued;
-          generalInfo.value.licenseIssuedDate = res.data.data.licenseIssuedDate.slice(
+          generalInfo.value.licenseIssuedDate = res.data.data.licenseIssuedDate? res.data.data.licenseIssuedDate.slice(
             0,
             10
-          );
+          ):'';
           generalInfo.value.regionSelected =
             res.data.data && res.data.data.woreda ? res.data.data.woreda.zone.region : "";
 
