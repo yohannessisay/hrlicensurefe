@@ -256,10 +256,7 @@ export default {
       window.indexedDB.deleteDatabase("NLdocumentUploads");
       window.indexedDB.deleteDatabase("RNdocumentUploads");
       window.indexedDB.deleteDatabase("GSdocumentUploads");
-
-      window.setTimeout(() => {
-        location.reload();
-      }, 1000);
+      router.push({ path: "/landing" });
     };
     const showDropDown = () => {
       showNotificationDropDown.value = false;

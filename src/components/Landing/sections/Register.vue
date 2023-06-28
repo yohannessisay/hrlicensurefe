@@ -9,11 +9,15 @@
     aria-labelledby="staticBackdropLabel"
     aria-hidden="true"
   >
-    <div class="relative w-auto pointer-events-none modal-dialog modal-xl">
+    <div
+      class="relative w-auto pointer-events-none modal-dialog-center modal-dialog modal-xl"
+    >
       <div
-        class="relative flex flex-col w-11/12 text-current bg-white border-none rounded-md shadow-md outline-none pointer-events-auto modal-content md:w-9/12 mdlg:w-9/12 lg:w-10/12 sm:w-full bg-clip-padding"
+        class="relative flex flex-col w-full text-current bg-white border-none rounded-md shadow-md outline-none pointer-events-auto modal-content md:w-9/12 mdlg:w-9/12 lg:w-10/12 sm:w-full bg-clip-padding"
       >
-        <div class="flex justify-end flex-shrink-0 p-2 modal-header rounded-t-md">
+        <div
+          class="flex justify-end flex-shrink-0 p-2 modal-header rounded-t-md"
+        >
           <button
             type="button"
             class="text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded shadow-md bg-main-400 hover:text-main-400 hover:border hover:border-main-400 hover:bg-purple-700 hover:shadow-md"
@@ -202,7 +206,12 @@
                     transform="translate(-303.00873 15.2906) rotate(-5.62529)"
                     fill="#2f2e41"
                   />
-                  <circle cx="640.3925" cy="384.57375" r="24.56103" fill="#ffb8b8" />
+                  <circle
+                    cx="640.3925"
+                    cy="384.57375"
+                    r="24.56103"
+                    fill="#ffb8b8"
+                  />
                   <path
                     d="M849.55636,801.91945a4.47086,4.47086,0,0,1-4.415-3.69726c-6.34571-35.22559-27.08789-150.40528-27.584-153.59571a1.42684,1.42684,0,0,1-.01562-.22168v-8.58789a1.489,1.489,0,0,1,.27929-.87207l2.74024-3.83789a1.47845,1.47845,0,0,1,1.14355-.625c15.62207-.73242,66.78418-2.8789,69.25586.209h0c2.48242,3.10351,1.60547,12.50683,1.4043,14.36035l.00977.19336,22.98535,146.99512a4.51238,4.51238,0,0,1-3.71485,5.13476l-14.35644,2.36524a4.52127,4.52127,0,0,1-5.02539-3.09278c-4.44043-14.18847-19.3291-61.918-24.48926-80.38672a.49922.49922,0,0,0-.98047.13868c.25781,17.60546.88086,62.52343,1.0957,78.0371l.02344,1.6709a4.51811,4.51811,0,0,1-4.09277,4.53614l-13.84375,1.25781C849.83565,801.91359,849.695,801.91945,849.55636,801.91945Z"
                     transform="translate(-227.576 -76.46149)"
@@ -238,19 +247,25 @@
               </div>
               <div class="w-full px-5 py-10 md:w-1/2 md:px-10">
                 <div class="mb-10 text-center">
-                  <h1 class="text-3xl font-bold text-gray-900 text-main-400">REGISTER</h1>
+                  <h1 class="text-3xl font-bold text-gray-900 text-main-400">
+                    REGISTER
+                  </h1>
                   <p>Enter your information</p>
                 </div>
                 <div>
                   <form @submit.prevent="registerSubmit">
                     <div class="flex -mx-3">
                       <div class="w-full px-3 mb-1">
-                        <label for="" class="px-1 text-base font-semibold">Email</label>
+                        <label for="" class="px-1 text-base font-semibold"
+                          >Email</label
+                        >
                         <div class="flex mt-1">
                           <div
                             class="z-10 flex items-center justify-center w-10 pl-1 text-center pointer-events-none"
                           >
-                            <i class="text-lg text-main-400 fa fa-mail-bulk"></i>
+                            <i
+                              class="text-lg text-main-400 fa fa-mail-bulk"
+                            ></i>
                           </div>
                           <input
                             v-model="registerCredentials.emailAddress"
@@ -286,14 +301,18 @@
                             placeholder="912345678"
                           />
                         </div>
-                        <span class="text-xs">(Area code for phone is not needed)</span>
+                        <span class="text-xs"
+                          >(Area code for phone is not needed)</span
+                        >
                         <div
                           v-if="showOtp"
                           class="flex justify-center w-full p-1 mt-2 mb-4 border rounded-md cursor-pointer bg-main-400 sm:w-10/12"
                           @click="sendSmsOtp()"
                         >
                           <i class="mt-2 text-white fa fa-paper-plane"></i
-                          ><span class="ml-4 font-bold text-white">Send OTP</span>
+                          ><span class="ml-4 font-bold text-white"
+                            >Send OTP</span
+                          >
                         </div>
 
                         <div
@@ -317,7 +336,11 @@
                         >
                           Verify Phone Number</span
                         >
-                        <form v-if="enableVerification" action="" class="w-full">
+                        <form
+                          v-if="enableVerification"
+                          action=""
+                          class="w-full"
+                        >
                           <input
                             class="otp"
                             id="opt1"
@@ -417,19 +440,25 @@
                           registerCredentialsErrors.password
                         }}</span>
                         <div class="ml-4">
-                          <password-meter :password="registerCredentials.password" />
+                          <password-meter
+                            :password="registerCredentials.password"
+                          />
                           <div v-if="passwordStrengthDisplay">
                             <ul class="text-sm">
                               Password should be:
                               <div class="pl-4 ml-12">
-                                <li class="text-main-400">Minimum of eight Characters</li>
+                                <li class="text-main-400">
+                                  Minimum of eight Characters
+                                </li>
                                 <li class="text-main-400">
                                   At least one uppercase Character
                                 </li>
                                 <li class="text-main-400">
                                   At least one lowercase Character
                                 </li>
-                                <li class="text-main-400">At least one number</li>
+                                <li class="text-main-400">
+                                  At least one number
+                                </li>
                                 <li class="text-main-400">
                                   At least one special character
                                 </li>
@@ -471,7 +500,9 @@
                         }}</span>
 
                         <div class="mt-2">
-                          <password-meter :password="registerCredentials.repassword" />
+                          <password-meter
+                            :password="registerCredentials.repassword"
+                          />
                         </div>
                       </div>
                     </div>
@@ -480,7 +511,8 @@
                         <button
                           :class="
                             isLoading == false &&
-                            registerCredentials.repassword == registerCredentials.password
+                            registerCredentials.repassword ==
+                              registerCredentials.password
                               ? 'transition duration-200 bg-main-400 text-white hover:text-main-400 hover:bg-white w-full mb-4 h-12 rounded-md text-md font-semibold text-center shadow-xl'
                               : 'pointer-events-none transition duration-200 bg-grey-200 text-white hover:text-main-400 hover:bg-white w-full mb-4 h-12 rounded-md text-md font-semibold text-center shadow-xl'
                           "
@@ -508,8 +540,7 @@
 </template>
 <script>
 import { useStore } from "vuex";
-import { ref, onMounted } from "vue";
-import { useRouter } from "vue-router";
+import { ref, onMounted } from "vue"; 
 import { useToast } from "vue-toastification";
 import PasswordMeter from "vue-simple-password-meter";
 import Loading from "vue3-loading-overlay";
@@ -517,8 +548,7 @@ import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 export default {
   components: { PasswordMeter, Loading },
   setup() {
-    const store = useStore();
-    const router = useRouter();
+    const store = useStore(); 
     const toast = useToast();
     let show = ref(false);
     let isLoading = ref(false);
@@ -533,7 +563,7 @@ export default {
       three: "",
       four: "",
       five: "",
-      six: "",
+      six: ""
     });
 
     const tabChange = () => {
@@ -560,13 +590,13 @@ export default {
           otpInput.value.five +
           otpInput.value.six,
         phone: registerCredentials.value.phoneNumber,
-        hash: localStorage.getItem("secretOtp"),
+        hash: localStorage.getItem("secretOtp")
       };
 
       if (otpData && otpData.phone.length == 9) {
         store
           .dispatch("sms/verifySmsOtp", otpData)
-          .then((res) => {
+          .then(res => {
             if (res && res.status == "Success" && res.data == true) {
               showOtp.value = false;
               isVerified.value = true;
@@ -577,50 +607,55 @@ export default {
                 position: "bottom-center",
                 pauseOnFocusLoss: true,
                 pauseOnHover: true,
-                icon: true,
+                icon: true
               });
             }
           })
-          .catch((err) => console.log(err));
+          .catch(err => console.log(err));
       } else {
         toast.error("Phone number digit must be 9", {
           timeout: 5000,
           position: "bottom-center",
           pauseOnFocusLoss: true,
           pauseOnHover: true,
-          icon: true,
+          icon: true
         });
       }
     };
 
     const sendSmsOtp = () => {
-      let phone = registerCredentials.value ? registerCredentials.value.phoneNumber : "";
+      let phone = registerCredentials.value
+        ? registerCredentials.value.phoneNumber
+        : "";
 
       if (phone.length == 9) {
         store
           .dispatch("sms/sendSmsOtp", { phone: phone })
-          .then((res) => {
+          .then(res => {
             if (res && res.status == "Success") {
               enableVerification.value = true;
-              localStorage.setItem("secretOtp", JSON.stringify(res.data.fullHash));
+              localStorage.setItem(
+                "secretOtp",
+                JSON.stringify(res.data.fullHash)
+              );
             } else {
               toast.error("Service error, please try again", {
                 timeout: 5000,
                 position: "bottom-center",
                 pauseOnFocusLoss: true,
                 pauseOnHover: true,
-                icon: true,
+                icon: true
               });
             }
           })
-          .catch((err) => console.log(err));
+          .catch(err => console.log(err));
       } else {
         toast.error("Phone number digit must be 9", {
           timeout: 5000,
           position: "bottom-center",
           pauseOnFocusLoss: true,
           pauseOnHover: true,
-          icon: true,
+          icon: true
         });
       }
     };
@@ -630,13 +665,13 @@ export default {
       emailAddress: "",
       phoneNumber: "",
       password: "",
-      repassword: "",
+      repassword: ""
     });
     const password = ref("");
     const passwordStrengthDisplay = ref(false);
     const registerCredentialsErrors = ref({});
 
-    const showPasswordStrength = (password) => {
+    const showPasswordStrength = password => {
       if (password != "") {
         passwordStrengthDisplay.value = true;
       } else {
@@ -649,7 +684,7 @@ export default {
       let signup = {
         emailAddress: registerCredentials.value.emailAddress.toLowerCase(),
         phoneNumber: +registerCredentials.value.phoneNumber,
-        password: registerCredentials.value.password,
+        password: registerCredentials.value.password
       };
 
       registerCredentialsErrors.value = {};
@@ -665,7 +700,7 @@ export default {
               position: "bottom-center",
               pauseOnFocusLoss: true,
               pauseOnHover: true,
-              icon: true,
+              icon: true
             }
           );
           return;
@@ -674,22 +709,25 @@ export default {
           recipients: [
             registerCredentials.value.phoneNumber
               ? "251" + registerCredentials.value.phoneNumber
-              : "",
+              : ""
           ],
           message:
-            "Dear applicant you have successfully registered on eHPL for your license/s, please complete the process of creating your account by loging in to your account using the credentials you entered previously and fill remaining data, Thank you for using eHPL.",
+            "Dear applicant you have successfully registered on eHPL for your license/s, please complete the process of creating your account by loging in to your account using the credentials you entered previously and fill remaining data, Thank you for using eHPL."
         };
 
-        store.dispatch("user/signUp", signup).then((res) => {
+        store.dispatch("user/signUp", signup).then(res => {
           if (res.data.status == "Error") {
             show.value = false;
-            toast.error("User with this email exists, please change your email", {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            });
+            toast.error(
+              "User with this email exists, please change your email",
+              {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true
+              }
+            );
             isLoading.value = false;
           } else if (res.data.status == "Success") {
             show.value = false;
@@ -700,7 +738,7 @@ export default {
                 position: "bottom-center",
                 pauseOnFocusLoss: true,
                 pauseOnHover: true,
-                icon: true,
+                icon: true
               });
               setTimeout(() => {
                 location.reload();
@@ -708,22 +746,25 @@ export default {
             });
           } else {
             show.value = false;
-            toast.error("The email is already registered, please change email", {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            });
+            toast.error(
+              "The email is already registered, please change email",
+              {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true
+              }
+            );
           }
         });
       }
     };
-    const isEmail = (email) => {
+    const isEmail = email => {
       const re = /\S+@\S+\.\S+/;
       return re.test(email);
     };
-    const validateRegisterForm = (formData) => {
+    const validateRegisterForm = formData => {
       if (formData.emailAddress && !isEmail(formData.emailAddress)) {
         registerCredentialsErrors.value.email = "Invalid Email";
       }
@@ -731,12 +772,12 @@ export default {
         registerCredentialsErrors.value.repassword = "Passwords don't match";
       }
 
-      if (Object.keys(registerCredentialsErrors.value).length == 0) return false;
+      if (Object.keys(registerCredentialsErrors.value).length == 0)
+        return false;
       return true;
     };
 
-    onMounted(() => {
-      const phoneInputField = document.getElementById("phone");
+    onMounted(() => { 
     });
 
     return {
@@ -758,9 +799,9 @@ export default {
       isLoading,
       verifySmsOtp,
       showPasswordStrength,
-      passwordStrengthDisplay,
+      passwordStrengthDisplay
     };
-  },
+  }
 };
 </script>
 <style scoped>

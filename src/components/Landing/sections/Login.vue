@@ -1,34 +1,33 @@
 <template>
   <!-- Login Part -->
   <div
-    class="fixed top-0 left-0 hidden w-full h-full overflow-x-hidden overflow-y-auto outline-none modal fade"
+    class="fixed  top-0 left-0 hidden w-full h-full overflow-x-hidden overflow-y-auto outline-none modal fade"
     id="staticBackdrop"
+    data-bs-backdrop="static"
     data-bs-keyboard="false"
     tabindex="-1"
     aria-labelledby="staticBackdropLabel"
     aria-hidden="true"
   >
-    <div class="relative pointer-events-none modal-dialog modal-lg">
+    <div class="relative pointer-events-none modal-dialog modal-dialog-centered">
       <div
-        class="relative flex flex-col w-8/12 text-current bg-white border-none rounded-md shadow-md outline-none pointer-events-auto modal-content md:w-9/12 mdlg:w-9/12 lg:w-10/12 sm:w-full bg-clip-padding"
+        class="relative flex flex-col w-full   text-current border-none rounded-md shadow-md outline-none pointer-events-auto modal-content md:w-9/12 mdlg:w-9/12 lg:w-10/12 sm:w-full bg-clip-padding"
       >
-        <div
-          class="flex items-center justify-center flex-shrink-0 p-4 border-b modal-header border-grey-100 rounded-t-md"
-        >
-          <button
-            type="button"
-            class="box-content text-black border-none rounded-sm opacity-50 btn-close h-small focus:shadow-none focus:outline-none focus:opacity-100 hover:text-black hover:opacity-100 hover:no-underline"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-            style="min-height: 28px; min-width: 28px"
-          ></button>
-        </div>
         <div class="relative flex justify-center p-2 modal-body">
           <div class="relative py-3 sm:max-w-xl sm:mx-auto">
             <div
-              class="absolute inset-0 bg-gradient-to-r from-blue-300 bg-main-400 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"
+              class="absolute inset-0 bg-gradient-to-r from-blue-300 bg-main-400 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl rounded-3xl"
             ></div>
-            <div class="relative px-4 py-10 bg-white shadow-md sm:rounded-3xl sm:p-20">
+
+            <div class="relative  bg-white shadow-md sm:rounded-3xl sm:p-10 rounded-3xl p-4">
+              <div class="flex justify-center">
+                <button
+                  type="button"
+                  class="bg-main-400 rounded-md mb-4 text-white border-none  btn-close h-small "
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
               <div class="max-w-md mx-auto">
                 <div>
                   <div class="flex justify-center mb-6 form-group">
@@ -67,9 +66,7 @@
                       </div>
                       <div class="flex -mx-3">
                         <div class="w-full px-3 mb-1">
-                          <label for="" class="px-1 text-base font-semibold"
-                            >Password</label
-                          >
+                          <label for="" class="px-1 text-base font-semibold">Password</label>
                           <div class="flex mt-1">
                             <div
                               @click="showVisibility()"
@@ -93,11 +90,22 @@
                       </div>
 
                       <div class="relative">
+                        <div class="vld-parent ">
+                            <loading
+                            class="rounded-md"
+                              :active="isLoading"
+                              :is-full-page="false"
+                              :color="'#2F639D'"
+                              :opacity="1"
+                            ></loading>
                         <button
                           class="inline-block w-full mt-4 ml-auto font-semibold text-center text-white transition duration-200 rounded-lg shadow-sm bg-main-400 focus:bg-blue-700 focus:shadow-sm focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 hover:text-main-400 hover:bg-white text-md hover:shadow-md"
                         >
-                          Login
+                        
+                            Login
+                         
                         </button>
+                        </div>
                       </div>
                     </form>
                   </div>
@@ -105,48 +113,6 @@
               </div>
             </div>
           </div>
-
-          <!-- <form @submit.prevent="submit">
-       
-           
-           
-
-            <div class="flex items-center justify-between mb-6">
-              <a
-                href="#!"
-                class="text-blue-600 transition duration-200 ease-in-out hover:text-blue-700 focus:text-blue-700"
-                data-bs-toggle="modal"
-                data-bs-target="#forgotPassword"
-                >Forgot password?</a
-              >
-            </div>
-            <button
-              
-            >
-              Login
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                class="inline-block h-4"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M17 8l4 4m0 0l-4 4m4-4H3"
-                />
-              </svg>
-              <vue-element-loading
-                :active="show"
-                spinner="ring"
-                color="white"
-                background-color="#ffffff00"
-                style="margin-left: 110px; margin-top: -3px"
-              />
-            </button>
-          </form> -->
         </div>
       </div>
     </div>
@@ -215,91 +181,102 @@
   <!-- End of forgot password -->
 </template>
 <script>
-import VueElementLoading from "vue-element-loading";
-import Register from "./Register.vue";
-import { useStore } from "vuex";
-import { ref, onMounted } from "vue";
-import { useRouter } from "vue-router";
-import { useToast } from "vue-toastification";
-import PasswordMeter from "vue-simple-password-meter";
-import Loading from "vue3-loading-overlay";
-import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
-export default {
-  components: { VueElementLoading, PasswordMeter, Loading, Register },
-  emits: ["setShowLogin", "setShowSignup"],
-  setup() {
-    const store = useStore();
-    const router = useRouter();
-    const toast = useToast();
-    let show = ref(false);
-    let isLoading = ref(false);
-    let isLoadingReset = ref(false);
-    let forgotEmail = ref("");
-    const credentials = ref({
-      email: "",
-      password: "",
-    });
+  import { useStore } from "vuex";
+  import { ref, onMounted } from "vue";
+  import { useRouter } from "vue-router";
+  import { useToast } from "vue-toastification";
+  import Loading from "vue3-loading-overlay";
+  import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
+  export default {
+    components: { Loading },
+    emits: ["setShowLogin", "setShowSignup"],
+    setup() {
+      const store = useStore();
+      const router = useRouter();
+      const toast = useToast();
+      let show = ref(false);
+      let isLoading = ref(false);
+      let isLoadingReset = ref(false);
+      let forgotEmail = ref("");
+      const credentials = ref({
+        email: "",
+        password: "",
+      });
 
-    const credentialsErrors = ref({
-      email: undefined,
-      password: undefined,
-    });
-    const showVisibility = () => {
-      let x = document.getElementById("password");
+      const credentialsErrors = ref({
+        email: undefined,
+        password: undefined,
+      });
+      const showVisibility = () => {
+        let x = document.getElementById("password");
 
-      if (x.type === "password") {
-        x.type = "text";
-      } else {
-        x.type = "password";
-      }
-    };
-
-    const submit = () => {
-      show.value = true;
-      let email = {
-        emailAddress: credentials.value.email.toLowerCase(),
-        password: credentials.value.password,
+        if (x.type === "password") {
+          x.type = "text";
+        } else {
+          x.type = "password";
+        }
       };
-      store
-        .dispatch("user/login", email)
-        .then((res) => {
-          if (res) {
-            const userId = res.data.data.id;
-            store.dispatch("profile/getProfileByUserId", userId).then((res) => {
-              const getProfiles = res.data ? res.data.data : null;
-              if (getProfiles) {
-                toast.success("Logged In Successfully", {
-                  timeout: 5000,
-                  position: "bottom-center",
-                  pauseOnFocusLoss: true,
-                  pauseOnHover: true,
-                  icon: true,
-                });
-                document.querySelector("#staticBackdrop").classList.remove("show");
-                document.querySelector("body").classList.remove("modal-open");
-                const mdbackdrop = document.querySelector(".modal-backdrop");
-                if (mdbackdrop) {
-                  mdbackdrop.classList.remove("modal-backdrop", "show");
+
+      const submit = () => {
+        isLoading.value = true;
+        let email = {
+          emailAddress: credentials.value.email.toLowerCase(),
+          password: credentials.value.password,
+        };
+        store
+          .dispatch("user/login", email)
+          .then((res) => {
+            isLoading.value = false;
+            if (res) {
+              const userId = res.data.data.id;
+              store.dispatch("profile/getProfileByUserId", userId).then((res) => {
+                const getProfiles = res.data ? res.data.data : null;
+                if (getProfiles) {
+                  toast.success("Logged In Successfully", {
+                    timeout: 5000,
+                    position: "bottom-center",
+                    pauseOnFocusLoss: true,
+                    pauseOnHover: true,
+                    icon: true,
+                  });
+                  document.querySelector("#staticBackdrop").classList.remove("show");
+                  document.querySelector("body").classList.remove("modal-open");
+                  const mdbackdrop = document.querySelector(".modal-backdrop");
+                  if (mdbackdrop) {
+                    mdbackdrop.classList.remove("modal-backdrop", "show");
+                  }
+                  
+                  router.push({ path: "/menu" });
+                } else {
+                  toast.success("Logged In Successfully", {
+                    timeout: 5000,
+                    position: "bottom-center",
+                    pauseOnFocusLoss: true,
+                    pauseOnHover: true,
+                    icon: true,
+                  });
+                  document.querySelector("#staticBackdrop").classList.remove("show");
+                  document.querySelector("body").classList.remove("modal-open");
+                  const mdbackdrop = document.querySelector(".modal-backdrop");
+                  if (mdbackdrop) {
+                    mdbackdrop.classList.remove("modal-backdrop", "show");
+                  }
+                  router.push({ path: "/addProfile" });
                 }
-                router.push({ path: "/menu" });
-              } else {
-                toast.success("Logged In Successfully", {
-                  timeout: 5000,
-                  position: "bottom-center",
-                  pauseOnFocusLoss: true,
-                  pauseOnHover: true,
-                  icon: true,
-                });
-                document.querySelector("#staticBackdrop").classList.remove("show");
-                document.querySelector("body").classList.remove("modal-open");
-                const mdbackdrop = document.querySelector(".modal-backdrop");
-                if (mdbackdrop) {
-                  mdbackdrop.classList.remove("modal-backdrop", "show");
-                }
-                router.push({ path: "/addProfile" });
-              }
-            });
-          } else {
+              });
+            } else {
+              show.value = false;
+              toast.error("Username or password incorrect", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
+              credentials.value.password = "";
+            }
+          })
+          .catch(() => {
             show.value = false;
             toast.error("Username or password incorrect", {
               timeout: 5000,
@@ -309,44 +286,52 @@ export default {
               icon: true,
             });
             credentials.value.password = "";
-          }
-        })
-        .catch(() => {
-          show.value = false;
-          toast.error("Username or password incorrect", {
-            timeout: 5000,
-            position: "bottom-center",
-            pauseOnFocusLoss: true,
-            pauseOnHover: true,
-            icon: true,
           });
-          credentials.value.password = "";
-        });
-    };
-    const isEmail = (email) => {
-      const re = /\S+@\S+\.\S+/;
-      return re.test(email);
-    };
-
-    const validateForm = (formData) => {
-      const errors = {};
-      if (!formData.email) errors.email = "Email Required";
-      if (formData.email && !isEmail(formData.email)) {
-        errors.email = "Invalid Email";
-      }
-      return errors;
-    };
-
-    const resetPassword = () => {
-      let emailToBeSent = {
-        email: forgotEmail.value,
       };
-      isLoadingReset.value = true;
-      store
-        .dispatch("profile/userForgotPassowrd", emailToBeSent)
-        .then((res) => {
-          if (res.data.status === "Success") {
-            toast.success("Sucess, New password has been sent to the email", {
+      const isEmail = (email) => {
+        const re = /\S+@\S+\.\S+/;
+        return re.test(email);
+      };
+
+      const validateForm = (formData) => {
+        const errors = {};
+        if (!formData.email) errors.email = "Email Required";
+        if (formData.email && !isEmail(formData.email)) {
+          errors.email = "Invalid Email";
+        }
+        return errors;
+      };
+
+      const resetPassword = () => {
+        let emailToBeSent = {
+          email: forgotEmail.value,
+        };
+        isLoadingReset.value = true;
+        store
+          .dispatch("profile/userForgotPassowrd", emailToBeSent)
+          .then((res) => {
+            if (res.data.status === "Success") {
+              toast.success("Sucess, New password has been sent to the email", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
+              isLoadingReset.value = false;
+            } else {
+              toast.error("Email does not exist in system", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
+              isLoadingReset.value = false;
+            }
+          })
+          .catch(() => {
+            toast.error("System error,please try again later", {
               timeout: 5000,
               position: "bottom-center",
               pauseOnFocusLoss: true,
@@ -354,55 +339,33 @@ export default {
               icon: true,
             });
             isLoadingReset.value = false;
-          } else {
-            toast.error("Email does not exist in system", {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            });
-            isLoadingReset.value = false;
-          }
-        })
-        .catch(() => {
-          toast.error("System error,please try again later", {
-            timeout: 5000,
-            position: "bottom-center",
-            pauseOnFocusLoss: true,
-            pauseOnHover: true,
-            icon: true,
           });
-          isLoadingReset.value = false;
-        });
-    };
+      };
 
-    onMounted(() => {
-      const phoneInputField = document.getElementById("phone");
-    });
+      onMounted(() => {});
 
-    return {
-      credentials,
-      credentialsErrors,
-      resetPassword,
-      submit,
-      isEmail,
-      showVisibility,
-      validateForm,
-      forgotEmail,
-      isLoading,
-      isLoadingReset,
-      show,
-    };
-  },
-};
+      return {
+        credentials,
+        credentialsErrors,
+        resetPassword,
+        submit,
+        isEmail,
+        showVisibility,
+        validateForm,
+        forgotEmail,
+        isLoading,
+        isLoadingReset,
+        show,
+      };
+    },
+  };
 </script>
 <style lang="postcss" scoped>
-.otp {
-  display: inline-block;
-  width: 43px;
-  height: 43px;
-  margin: 5px;
-  text-align: center;
-}
+  .otp {
+    display: inline-block;
+    width: 43px;
+    height: 43px;
+    margin: 5px;
+    text-align: center;
+  }
 </style>
