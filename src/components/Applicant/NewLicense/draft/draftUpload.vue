@@ -736,6 +736,7 @@ export default {
         success(result) {
           const dataTransfer = new DataTransfer();
           dataTransfer.items.add(new File([result], result.name));
+          event.target.files = dataTransfer.files;
           documentsUploaded.value[data.documentType.code] = "";
           documentsUploaded.value[data.documentType.code] = event?.target?.files[0];
           let reader = new FileReader();
@@ -840,6 +841,7 @@ export default {
         success(result) {
           const dataTransfer = new DataTransfer();
           dataTransfer.items.add(new File([result], result.name));
+          event.target.files = dataTransfer.files;
           documentsUploaded.value[
             data.documentType.code +
               "_" +

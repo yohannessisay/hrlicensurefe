@@ -68,7 +68,7 @@
                       :key="item.id"
                       :class="
                         fileUploadError[`file_upload_row_${item.documentType.code}`]
-                          ? 'accordion-body py-4 px-5 border-2 border-red-300 rounded-lg'
+                          ? 'accordion-body p-2 border-4 border-red-300 rounded-md'
                           : 'accordion-body py-4 px-5 border-b rounded-lg'
                       "
                     >
@@ -252,7 +252,7 @@
                           'file_upload_row_' +
                             `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                         ]
-                          ? 'accordion-body py-4 px-5 border-2 border-red-300 rounded-lg'
+                          ? 'accordion-body py-4 px-5 border-4 border-red-300 rounded-md'
                           : 'accordion-body py-4 px-5 border-b  rounded-lg'
                       "
                     >
@@ -404,7 +404,7 @@
                           'file_upload_row_' +
                             `${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                         ]
-                          ? 'accordion-body py-4 px-5 border-2 border-red-300 rounded-lg'
+                          ? 'accordion-body py-4 px-5 border-4 border-red-300 rounded-md'
                           : 'accordion-body py-4 px-5 border-b  rounded-lg'
                       "
                     >
@@ -563,7 +563,7 @@
                                 parentItem[0].documentType.code
                               }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                           ]
-                            ? 'accordion-body py-4 px-5 border-2 border-red-300 rounded-lg'
+                            ? 'accordion-body py-4 px-5 border-4 border-red-300 rounded-lg'
                             : 'accordion-body py-4 px-5 border-b  rounded-lg'
                         "
                       >
@@ -640,7 +640,7 @@
                                         parentChildItem.documentType.code
                                       }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                   ]
-                                    ? 'accordion-body py-4 px-5 border-2 border-red-300 rounded-lg'
+                                    ? 'accordion-body py-4 px-5 border-4 border-red-300 rounded-md'
                                     : 'accordion-body py-4 px-5 border-b  rounded-lg'
                                 "
                               >
@@ -837,6 +837,21 @@
           </div>
         </div>
       </div>
+      <div
+        class="bg-yellow-300 p-2 m-4 rounded-md shadow-md"
+        v-if="errorDocuments && errorDocuments.length > 0"
+      >
+        <h2 class="text-white font-bold text-3xl">
+          Please attach the following files to proceed
+        </h2>
+        <li
+          class="text-white text-xl font-bold border-2 rounded-md p-2 m-1"
+          v-for="error in errorDocuments"
+          :key="error"
+        >
+          {{ error.name }}
+        </li>
+      </div>
     </div>
     <div class="vld-parent mt-4">
       <loading
@@ -921,12 +936,7 @@ export default {
     let imageData = [];
     let formData = new FormData();
     let newLicenseDocuments = ref([]);
-    let errorDocuments = ref([
-      {
-        name: "",
-        code: "",
-      },
-    ]);
+    let errorDocuments = ref([]);
     let showNestedDocuments = ref({});
 
     const previewFile = (code, name) => {
@@ -945,6 +955,7 @@ export default {
         success(result) {
           const dataTransfer = new DataTransfer();
           dataTransfer.items.add(new File([result], result.name));
+          event.target.files = dataTransfer.files;
           documentsUploaded.value[data.documentType.code] = "";
           documentsUploaded.value[data.documentType.code] = event?.target?.files[0];
           let reader = new FileReader();
@@ -954,7 +965,7 @@ export default {
           isImage.value[data.documentType.code] = true;
           documentsUploaded.value[data.documentType.code] = event?.target?.files[0];
 
-          event.target.files = dataTransfer.files;
+          
           delete fileUploadError.value["file_upload_row_" + data.documentType.code];
           showImage.value = true;
 
@@ -1296,7 +1307,7 @@ export default {
       let CMtemp = "";
       let NSTemp = "";
       var tempVal;
-
+      errorDocuments.value = [];
       // if back button is clicked
       if (isBackButtonClicked.value == true) {
         // check common documents
@@ -1566,15 +1577,6 @@ export default {
           };
         };
       } else {
-        let errors = "";
-        errorDocuments.value.forEach((element) => {
-          if (!errors) {
-            errors = element.name;
-          } else {
-            errors = errors + " , " + element.name;
-          }
-        });
-
         toast.error(
           "Please attach documents marked with red border and this icon (*) next to their name to proceed",
           {
@@ -1833,6 +1835,7 @@ export default {
 
     return {
       documents,
+      errorDocuments,
       fileSizeExceed,
       commonDocuments,
       files,
