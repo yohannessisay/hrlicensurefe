@@ -4,18 +4,22 @@
   >
     <div class="flex items-center justify-center">
       <RenderIllustration illustration="Logo" class="hidden sm:block" />
-      <h3 class="ml-4 text-2xl text-main-400">eHPEL - License</h3>
+      <h3
+        class="ml-4  text-main-400 sm:text-sm md:text-lg lg:text-2xl mdlg:text-2xl"
+      >
+        eHPEL - License
+      </h3>
     </div>
-    <div class="grid grid-cols-3">
+    <div class="grid grid-cols-3 ">
       <span
-        class="mt-1 rounded-lg cursor-pointer"
+        class="mdlg:mt-1 rounded-lg cursor-pointer"
         data-bs-toggle="modal"
         data-bs-target="#showHelp"
       >
-        <h4 class="font-bold text-main-400">How to apply?</h4>
+        <h4 class="font-bold text-main-400 mr-8 sm:text-sm md:text-lg lg:text-2xl mdlg:text-2xl">How to apply?</h4>
       </span>
       <button
-        class="px-6 py-2.5 bg-main-400 text-white hover:text-main-400 hover:bg-white font-medium text-xs ml-4 leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-md focus:bg-blue-700 focus:shadow-md focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-md transition duration-150 ease-in-out"
+        class="px-6 py-2.5 sm:h-16 bg-main-400 text-white hover:text-main-400 hover:bg-white font-medium text-xs sm:mr-1  leading-tight uppercase rounded shadow-md  transition duration-150 ease-in-out"
         data-bs-toggle="modal"
         data-bs-target="#register"
       >
@@ -23,8 +27,7 @@
       </button>
       <button
         type="button"
-        style="margin-left: -15px"
-        class="px-6 py-2.5 bg-main-400 text-white hover:text-main-400 hover:bg-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-md focus:bg-blue-700 focus:shadow-md focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-md transition duration-150 ease-in-out"
+        class="mdlg:-ml-12 lg:-ml-12  md:-ml-12  px-6 py-2.5 sm:h-16 bg-main-400 text-white hover:text-main-400 hover:bg-white font-medium text-xs leading-tight uppercase rounded shadow-md transition duration-150 ease-in-out"
         data-bs-toggle="modal"
         data-bs-target="#staticBackdrop"
       >
@@ -43,7 +46,7 @@
   >
     <div class="relative pointer-events-none modal-dialog modal-xl">
       <div
-        class="relative flex flex-col w-8/12 text-current bg-white border-none rounded-md shadow-md outline-none pointer-events-auto modal-content md:w-9/12 mdlg:w-9/12 lg:w-10/12 sm:w-full bg-clip-padding"
+        class="relative flex flex-col w-full text-current bg-white border-none rounded-md shadow-md outline-none pointer-events-auto modal-content md:w-9/12 mdlg:w-9/12 lg:w-10/12 sm:w-full bg-clip-padding"
       >
         <div
           class="flex items-center justify-center flex-shrink-0 p-4 border-b modal-header border-grey-100 rounded-t-md"
@@ -68,8 +71,8 @@
         <div class="relative p-2 modal-body">
           <div class="flex justify-center">
             <h2 class="text-xl text-main-400">
-              This is a demo video showing you how to use the system if you are new here.
-              Thanks for watching.
+              This is a demo video showing you how to use the system if you are
+              new here. Thanks for watching.
             </h2>
           </div>
           <div class="container bg-secondaryDark">
@@ -104,7 +107,7 @@ export default {
     PasswordMeter,
     Loading,
     Register,
-    Login,
+    Login
   },
   emits: ["setShowLogin", "setShowSignup"],
   setup() {
@@ -114,7 +117,7 @@ export default {
     const downloadHelpVideo = () => {
       store
         .dispatch("user/downloadHelpVideo")
-        .then((res) => {
+        .then(res => {
           var fileURL = window.URL.createObjectURL(new Blob([res.data]));
           var fURL = document.createElement("a");
 
@@ -129,16 +132,19 @@ export default {
               position: "bottom-center",
               pauseOnFocusLoss: true,
               pauseOnHover: true,
-              icon: true,
+              icon: true
             });
           } else {
-            toast.error("Please check permission of site or your download manager", {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            });
+            toast.error(
+              "Please check permission of site or your download manager",
+              {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true
+              }
+            );
           }
         })
         .catch(() => {
@@ -147,7 +153,7 @@ export default {
             position: "bottom-center",
             pauseOnFocusLoss: true,
             pauseOnHover: true,
-            icon: true,
+            icon: true
           });
         });
     };
@@ -155,9 +161,9 @@ export default {
     onMounted(() => {});
 
     return {
-      downloadHelpVideo,
+      downloadHelpVideo
     };
-  },
+  }
 };
 </script>
 <style lang="postcss" scoped>
