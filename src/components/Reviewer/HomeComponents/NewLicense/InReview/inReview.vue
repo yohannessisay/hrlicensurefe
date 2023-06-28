@@ -179,6 +179,7 @@
                         focus:border-blue-600
                         focus:outline-none
                       "
+                      @change="searchApplication()"
                         v-model="searchTermToDate"
                         aria-label="Default select example"
                       />
@@ -391,6 +392,7 @@
                         focus:border-blue-600
                         focus:outline-none
                       "
+                      @change="searchApplicationOther()"
                         v-model="searchTermToDateOth"
                         aria-label="Default select example"
                       />
@@ -738,8 +740,7 @@ export default {
         if (element.classList.contains("edit-btn")) {
           element.addEventListener("click", rowClicked());
         }
-      });
-      toYouTable.value.isLoading = false;
+      }); 
     };
     const tableLoadingFinishOthers = () => {
       let elementOthers = document.getElementsByClassName("edit-btn-others");
@@ -747,8 +748,7 @@ export default {
         if (element.classList.contains("edit-btn-others")) {
           element.addEventListener("click", rowClickedOthers());
         }
-      });
-      toOthersTable.value.isLoading = false;
+      }); 
     };
     const rowClicked = (row) => {
       if (row != undefined) {

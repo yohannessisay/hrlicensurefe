@@ -177,6 +177,7 @@
                         focus:border-blue-600
                         focus:outline-none
                       "
+                      @change="searchApplication()"
                         v-model="searchTermToDate"
                         aria-label="Default select example"
                       />
@@ -387,6 +388,7 @@
                         focus:border-blue-600
                         focus:outline-none
                       "
+                      @change="searchApplicationOther()"
                         v-model="searchTermToDateOth"
                         aria-label="Default select example"
                       />
@@ -495,20 +497,16 @@ export default {
     let searchTermToDate = ref("");
     let searchTermFromDateOth = ref("");
     let searchTermToDateOth = ref("");
-    let toOthersTable = ref({});
-    let toYouTable = ref({});
+    let toOthersTable = ref({isLoading: true,});
+    let toYouTable = ref({ isLoading: true,});
     let tableData = [];
     let toYouTableData = [];
-    toOthersTable.value = {
-      isLoading: true,
-    };
-    toYouTable.value = {
-      isLoading: true,
-    };
+ 
+  
 
     const refreshTable = () => {
       toOthersTable.value.isLoading = true;
-      toYouTable.value.isLoading = true;
+    
       toOthersTable.value.rows = [];
       toYouTable.value.rows = [];
     
@@ -538,7 +536,7 @@ export default {
       searchTerm.value = "";
       searchTermFromDate.value = "";
       searchTermToDate.value = "";
-      toYouTable.value.isLoading = true;
+      
       toYouTable.value.rows = [];
     
       approvedApplicationsByYou([
@@ -548,6 +546,7 @@ export default {
     };
 
     const approvedApplicationsByYou = (apiParameters) => {
+      toYouTable.value.isLoading = true;
       toYouTableData = [];
       store
         .dispatch("reviewerGoodStanding/getGoodStandingAllApproved", [
@@ -719,8 +718,7 @@ export default {
         if (element.classList.contains("edit-btn")) {
           element.addEventListener("click", rowClicked());
         }
-      });
-      toYouTable.value.isLoading = false;
+      }); 
     };
     const tableLoadingFinishOthers = () => {
       let elementOthers = document.getElementsByClassName("edit-btn-others");
@@ -728,8 +726,7 @@ export default {
         if (element.classList.contains("edit-btn-others")) {
           element.addEventListener("click", rowClickedOthers());
         }
-      });
-      toOthersTable.value.isLoading = false;
+      }); 
     };
     const rowClicked = (row) => {
       if (row != undefined) {
@@ -748,7 +745,7 @@ export default {
     };
 
     const searchApplication = () => {
-      toYouTable.value.isLoading = true;
+     
       toYouTable.value.rows = [];
   
       approvedApplicationsByYou([
@@ -781,7 +778,7 @@ export default {
       ]);
     });
     const doSearch = (offset, limit, order, sort) => {
-      toYouTable.value.isLoading = true;
+     
 
       setTimeout(() => {
         toYouTable.value.isReSearch = offset == undefined ? true : false;

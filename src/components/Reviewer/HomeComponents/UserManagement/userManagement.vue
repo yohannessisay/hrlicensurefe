@@ -294,9 +294,7 @@ export default {
       userTable.value.isLoading = true;
       getAdmins([0, 10, searchTerm.value, expertLevelFilter.value]);
     };
-    const tableLoadingFinish = () => {
-      userTable.value.isLoading = false;
-      userTable.value.isLoading = false;
+    const tableLoadingFinish = () => { 
       let elements = document.getElementsByClassName("edit-btn");
 
       Array.prototype.forEach.call(elements, function(element) {

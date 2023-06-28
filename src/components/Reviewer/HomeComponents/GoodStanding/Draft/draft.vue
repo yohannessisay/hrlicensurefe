@@ -175,6 +175,7 @@
                         focus:border-blue-600
                         focus:outline-none
                       "
+                      @change="searchApplication()"
                           v-model="searchTermToDate"
                           aria-label="Default select example"
                         />
@@ -384,6 +385,7 @@
                         focus:border-blue-600
                         focus:outline-none
                       "
+                      @change="searchApplicationResub()"
                         v-model="searchTermToDateResub"
                         aria-label="Default select example"
                       />
@@ -715,8 +717,7 @@ export default {
         if (element.classList.contains("edit-btn")) {
           element.addEventListener("click", rowClicked());
         }
-      });
-      assignedToYouTable.value.isLoading = false;
+      }); 
     };
 
     const tableLoadingFinishOthers = () => {
@@ -725,8 +726,7 @@ export default {
         if (element.classList.contains("edit-btn-others")) {
           element.addEventListener("click", rowClickedOth());
         }
-      });
-      assignedToOthersTable.value.isLoading = false;
+      }); 
     };
 
     const rowClicked = (row) => {
