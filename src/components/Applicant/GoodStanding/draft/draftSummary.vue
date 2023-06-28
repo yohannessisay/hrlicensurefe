@@ -297,6 +297,7 @@
                   <div
                     class="grid grid-cols-4 gap-4 ml-4 sm:w-full sm:grid-cols-1 md:w-full mdlg:grid-cols-2 lg:w-full md:grid-cols-4 mdlg:w-full lg:grid-cols-4"
                   >
+                  {{ localFileImages }}
                     <div
                       class="mt-4 mb-8 bg-white shadow-xl rounded-md transform transition duration-300 ease-in-out p-2 hover:-translate-y-2"
                       v-for="prev in localFileImages"
@@ -358,7 +359,7 @@
               />
             </div>
             <h3
-              class="text-grey-800 mb-2localFileData sm:text-xs lgmd:text-base lg:text-base md:text-base"
+              class="text-grey-800 mb-2 localFileData sm:text-xs lgmd:text-base lg:text-base md:text-base"
             >
               By checking here I hereby verify the documents and details filled
               in are legal.
@@ -680,14 +681,10 @@ export default {
             let getAllIDB = store.getAll();
 
             getAllIDB.onsuccess = function(evt) {
-              localFileImages.value = evt.target.result
-                ? JSON.parse(
-                    JSON.stringify(
-                      evt.target.result[0] ? evt.target.result[0].data : {}
-                    )
-                  )
-                : {};
-
+              localFileData.value = evt.target.result
+            ? evt.target.result[0].data
+            : {};
+            localFileImages.value=localFileData.value;
               if (
                 localFileImages.value &&
                 localFileImages.value.length > 0 &&

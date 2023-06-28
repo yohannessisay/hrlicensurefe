@@ -238,7 +238,7 @@ export default {
     let imageUploader = ref(null);
     let goToNext = ref(false);
     let departmentDocuments = [];
-
+    let isLoading=ref(false);
     let documents = ref([]);
     let filePreviewData = ref({
       isImage: boolean,
@@ -357,6 +357,7 @@ export default {
     const checkDocuments = () => {
       let temp = false;
       documentError.value = [];
+      errorDocuments.value = [];
       existingDocs && existingDocs.length > 0
         ? documents.value
             .filter(cd => cd.isRequired)
@@ -436,7 +437,7 @@ export default {
 
     const next = () => {
       let documentValidation = checkDocuments();
-      console.log(documentValidation);
+     
       if (documentValidation && Object.keys(documentValidation).length == 0) {
         store.dispatch("goodstanding/setTempDocs", formData).then(() => {
           let finalLocalData = {
@@ -504,7 +505,7 @@ export default {
 
     const saveDraft = () => {
       generalInfo.value.licenseFile = [];
-
+      isLoading.value=true;
       let license = {
         action: "DraftEvent",
         data: {
@@ -566,6 +567,7 @@ export default {
           store
             .dispatch("goodstanding/updateDocuments", payload)
             .then(res => {
+              isLoading.value=false;
               if (res.data.status == "Success") {
                 toast.success("Applied successfuly", {
                   timeout: 5000,
@@ -672,6 +674,7 @@ export default {
       filePreviewData,
       errorDocuments,
       next,
+      isLoading,
       back
     };
   }
