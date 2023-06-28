@@ -236,7 +236,9 @@
           <div>
             <span class="text-grey-800 sm:text-sm">
               {{
-                localData && localData.whoIssuedId ? localData.whoIssuedId.name : ""
+                localData && localData.whoIssuedId
+                  ? localData.whoIssuedId.name
+                  : ""
               }}</span
             >
           </div>
@@ -494,11 +496,11 @@
               <span class="text-yellow-300">(optional*)</span>
             </label>
           </div>
-      
-            <div class="mb-3 w-full flex justify-center">
-              <input
-                v-model="generalInfo.feedback"
-                class="
+
+          <div class="mb-3 w-full flex justify-center">
+            <input
+              v-model="generalInfo.feedback"
+              class="
                   form-control
                   block
                   w-full
@@ -515,43 +517,51 @@
                   m-0
                   focus:outline-none
                 "
-                @keyup="checkAgreement()"
-                id="feedback"
-                rows="6"
-                placeholder="Your feedback"
-                type="textarea"
-              />
-            </div>
-          
+              @keyup="checkAgreement()"
+              id="feedback"
+              rows="6"
+              placeholder="Your feedback"
+              type="textarea"
+            />
+          </div>
         </div>
       </div>
     </div>
+    <div class="flex justify-center">
+      <RadialProgress
+        :diameter="200"
+        :completed-steps="progress"
+        :total-steps="totalSteps"
+      >
+        <h1 class="text-3xl text-main-400 font-bold">{{ progress }} %</h1>
+      </RadialProgress>
+    </div>
     <div class="vld-parent mt-4">
-            <loading
-              :active="isLoading"
-              :is-full-page="false"
-              :color="'#2F639D'"
-              :opacity="1"
-            ></loading>
-    <div class="flex justify-center w-full mb-8">
-      <span v-for="button in buttons" :key="button.id">
-        <button
-          v-if="button.action != 'DraftEvent'"
-          type="button"
-          :class="
-            allowSave
-              ? 'inline-block px-6 border text-main-400 hover:bg-main-400 hober:border-main-400 hover:text-white  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded shadow-lg transition  duration-150 ease-in-out'
-              : 'inline-block px-6 disabled text-main-400  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded shadow-lg transition  duration-150 ease-in-out'
-          "
-          @click="checkFinalStatus(button.action)"
-        >
-          <i class="fa fa-save"></i>
-          {{ button.name }}
-        </button>
-        <button
-          v-if="button.action == 'DraftEvent'"
-          type="button"
-          class="
+      <loading
+        :active="isLoading"
+        :is-full-page="false"
+        :color="'#2F639D'"
+        :opacity="1"
+      ></loading>
+      <div class="flex justify-center w-full mb-8">
+        <span v-for="button in buttons" :key="button.id">
+          <button
+            v-if="button.action != 'DraftEvent'"
+            type="button"
+            :class="
+              allowSave
+                ? 'inline-block px-6 border text-main-400 hover:bg-main-400 hober:border-main-400 hover:text-white  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded shadow-lg transition  duration-150 ease-in-out'
+                : 'inline-block px-6 disabled text-main-400  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded shadow-lg transition  duration-150 ease-in-out'
+            "
+            @click="checkFinalStatus(button.action)"
+          >
+            <i class="fa fa-save"></i>
+            {{ button.name }}
+          </button>
+          <button
+            v-if="button.action == 'DraftEvent'"
+            type="button"
+            class="
             inline-block
             px-6
             border
@@ -571,15 +581,15 @@
             duration-150
             ease-in-out
           "
-          @click="checkFinalStatus(button.action)"
-        >
-          <i class="fa fa-save"></i>
-          {{ button.name }}
-        </button>
-      </span>
+            @click="checkFinalStatus(button.action)"
+          >
+            <i class="fa fa-save"></i>
+            {{ button.name }}
+          </button>
+        </span>
 
-      <button
-        class="
+        <button
+          class="
           inline-block
           px-6
           text-main-400
@@ -595,11 +605,11 @@
           duration-150
           ease-in-out
         "
-        @click="back()"
-      >
-        back
-      </button>
-    </div>
+          @click="back()"
+        >
+          back
+        </button>
+      </div>
     </div>
 
     <!-- end row -->
@@ -607,19 +617,23 @@
 </template>
 
 <script>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
 import { useRouter } from "vue-router";
-
+import RadialProgress from "vue3-radial-progress";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 export default {
-  components: { Loading },
+  components: { Loading, RadialProgress },
   setup(props, { emit }) {
     const store = useStore();
     const toast = useToast();
     const router = useRouter();
+    const totalSteps = ref(100);
+    let progress = computed(
+      () => store.getters["goodstanding/getUploadProgress"]
+    );
     let localData = ref({});
     let localFileData = ref({});
     let isLoading = ref(false);
@@ -644,7 +658,7 @@ export default {
         allowSave.value = false;
       }
     };
-    const checkFinalStatus = (action) => {
+    const checkFinalStatus = action => {
       generalInfo.value.licenseFile = [];
       documents.value = localFileData.value;
 
@@ -684,7 +698,7 @@ export default {
             licenseIssuedDate: generalInfo.value.licenseIssuedDate
               ? generalInfo.value.licenseIssuedDate
               : null,
-              whoIssuedId: generalInfo.value.whoIssuedId
+            whoIssuedId: generalInfo.value.whoIssuedId
               ? generalInfo.value.whoIssuedId.id
               : "",
             licenseRegistrationNumber: generalInfo.value
@@ -704,7 +718,7 @@ export default {
               otherProfessionTypeAmharic: generalInfo.value
                 .otherProfessionTypeAmharic
                 ? generalInfo.value.otherProfessionTypeAmharic
-                : "",
+                : ""
             },
             expertLevelId: generalInfo.value.expertLevelId
               ? generalInfo.value.expertLevelId
@@ -716,17 +730,17 @@ export default {
               : null,
             feedback: generalInfo.value.feedback
               ? generalInfo.value.feedback
-              : "",
-          },
+              : ""
+          }
         };
         store
           .dispatch("goodstanding/addGoodstandingLicense", license)
-          .then((res) => {
+          .then(res => {
             let licenseId = res.data.data.id;
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("goodstanding/uploadDocuments", payload)
-              .then((res) => {
+              .then(res => {
                 isLoading.value = false;
                 if (res.data.status == "Success") {
                   localStorage.removeItem("GSApplicationData");
@@ -735,14 +749,12 @@ export default {
                     position: "bottom-center",
                     pauseOnFocusLoss: true,
                     pauseOnHover: true,
-                    icon: true,
+                    icon: true
                   });
                   if (action == "DraftEvent") {
                     router.push({ path: "/Applicant/GoodStanding/draft" });
-                    location.reload();
                   } else {
                     router.push({ path: "/Applicant/GoodStanding/submitted" });
-                    location.reload();
                   }
                 } else {
                   toast.error("Error occured, please try again", {
@@ -750,7 +762,7 @@ export default {
                     position: "bottom-center",
                     pauseOnFocusLoss: true,
                     pauseOnHover: true,
-                    icon: true,
+                    icon: true
                   });
                 }
               })
@@ -760,7 +772,7 @@ export default {
                   position: "bottom-center",
                   pauseOnFocusLoss: true,
                   pauseOnHover: true,
-                  icon: true,
+                  icon: true
                 });
               });
           });
@@ -777,17 +789,17 @@ export default {
         : {};
       let request = indexedDB.open("GSdocumentUploads", 1);
 
-      request.onerror = function () {
+      request.onerror = function() {
         console.error("Unable to open database.");
       };
 
-      request.onsuccess = function () {
+      request.onsuccess = function() {
         let db = request.result;
         const tx = db.transaction("GSdocumentUploads", "readonly");
         const store = tx.objectStore("GSdocumentUploads");
         let getAllIDB = store.getAll();
 
-        getAllIDB.onsuccess = function (evt) {
+        getAllIDB.onsuccess = function(evt) {
           localFileData.value = evt.target.result
             ? evt.target.result[0].data
             : {};
@@ -796,15 +808,15 @@ export default {
       generalInfo.value = localData.value;
       generalInfo.value.feedback = "";
       if (generalInfo.value.applicantTypeId.id == 1) {
-        store.dispatch("goodstanding/getExpertLevel").then((res) => {
-          let expertLevel = res.data.data.filter(function (e) {
+        store.dispatch("goodstanding/getExpertLevel").then(res => {
+          let expertLevel = res.data.data.filter(function(e) {
             return e.code.includes("REG");
           });
           generalInfo.value.expertLevelId = expertLevel[0].id;
         });
       } else {
-        store.dispatch("goodstanding/getExpertLevel").then((res) => {
-          let expertLevel = res.data.data.filter(function (e) {
+        store.dispatch("goodstanding/getExpertLevel").then(res => {
+          let expertLevel = res.data.data.filter(function(e) {
             return e.code.includes("FED");
           });
           generalInfo.value.expertLevelId = expertLevel[0].id;
@@ -823,8 +835,10 @@ export default {
       checkAgreement,
       back,
       allowSave,
+      totalSteps,
+      progress
     };
-  },
+  }
 };
 </script>
 <style>

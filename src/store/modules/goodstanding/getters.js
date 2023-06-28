@@ -1,15 +1,6 @@
 export default {
-  getApplicationId: state => state.applicationId,
-  getLicense: state => state.license,
-  getTempDocs: state => state.tempDocs,
-  getButtons: state => state.buttons,
-  getDocumentSpec: state => state.documentSpec,
-  getDraft: state => state.draft,
-  getDeclinedFields: state => state.declinedFields,
-  getAcceptedFields: state => state.acceptedFields,
-  getRemark: state => state.remark,
-  getLicenseCopy: state => state.licenseCopy,
-  getGoodStandingLetter: state => state.goodStandingLetter,
-  getServiceFee: state => state.serviceFee,
-  getGeneralInfo: state => state.generalInfo
+  getUploadProgress: (state) => state.uploadProgress, 
+  getTempDocs: (state) => state.tempDocs,
+  getButtons: (state) => state.buttons,
+  getGeneralInfo: (state) => state.generalInfo,
 };

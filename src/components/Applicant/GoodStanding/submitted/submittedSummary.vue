@@ -39,7 +39,9 @@
           <div>
             <span class="text-grey-800 sm:text-sm">
               {{
-                localData && localData.applicantType ? localData.applicantType.name : ""
+                localData && localData.applicantType
+                  ? localData.applicantType.name
+                  : ""
               }}</span
             >
           </div>
@@ -55,7 +57,9 @@
           <div>
             <span class="text-grey-800 sm:text-sm">
               {{
-                localData && localData.department ? localData.department.name : ""
+                localData && localData.department
+                  ? localData.department.name
+                  : ""
               }}</span
             >
           </div>
@@ -105,7 +109,9 @@
           <div>
             <span class="text-grey-800 sm:text-sm">
               {{
-                localData && localData.applicantTitle ? localData.applicantTitle.name : ""
+                localData && localData.applicantTitle
+                  ? localData.applicantTitle.name
+                  : ""
               }}</span
             >
           </div>
@@ -137,7 +143,9 @@
           </div>
           <div>
             <span class="text-grey-800 sm:text-sm">
-              {{ localData && localData.whoIssued ? localData.whoIssued.name : "" }}</span
+              {{
+                localData && localData.whoIssued ? localData.whoIssued.name : ""
+              }}</span
             >
           </div>
         </div>
@@ -239,7 +247,10 @@
                     :data-title="changed.docName"
                     data-lightbox="example-1"
                   >
-                    <img :src="changed.prevFile" class="w-full h-48 object-cover" />
+                    <img
+                      :src="changed.prevFile"
+                      class="w-full h-48 object-cover"
+                    />
                   </a>
                 </div>
 
@@ -347,23 +358,19 @@
             <h3
               class="text-grey-800 mb-2localFileData sm:text-xs lgmd:text-base lg:text-base md:text-base"
             >
-              By checking here I hereby verify the documents and details filled in are
-              legal.
+              By checking here I hereby verify the documents and details filled
+              in are legal.
             </h3>
           </div>
           <div class="flex justify-center">
-            <label for="feedback" class="form-label inline-block mb-2 text-main-400"
+            <label
+              for="feedback"
+              class="form-label inline-block mb-2 text-main-400"
               >Feedback on the process and system
               <span class="text-yellow-300">(optional*)</span>
             </label>
           </div>
-          <div class="vld-parent mt-4">
-            <loading
-              :active="isLoading"
-              :is-full-page="false"
-              :color="'#2F639D'"
-              :opacity="1"
-            ></loading>
+     
             <div class="mb-3 w-full flex justify-center">
               <input
                 v-model="generalInfo.feedback"
@@ -375,12 +382,27 @@
                 type="textarea"
               />
             </div>
-          </div>
+        
         </div>
       </div>
     </div>
-
-    <div class="flex justify-end w-1/2 mb-8">
+    <div class="flex justify-center">
+      <RadialProgress
+        :diameter="200"
+        :completed-steps="progress"
+        :total-steps="totalSteps"
+      >
+        <h1 class="text-3xl text-main-400 font-bold">{{ progress }} %</h1>
+      </RadialProgress>
+    </div>
+    <div class="vld-parent mt-4">
+            <loading
+              :active="isLoading"
+              :is-full-page="false"
+              :color="'#2F639D'"
+              :opacity="1"
+            ></loading>
+    <div class="flex justify-center mb-8">
       <span v-for="button in buttons" :key="button.id">
         <button
           v-if="button.action != 'DraftEvent'"
@@ -404,27 +426,32 @@
         back
       </button>
     </div>
-
+</div>
     <!-- end row -->
   </div>
 </template>
 
 <script>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
 import { useRouter, useRoute } from "vue-router";
 import { googleApi } from "@/composables/baseURL";
 import Loading from "vue3-loading-overlay";
 
+import RadialProgress from "vue3-radial-progress";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 export default {
-  components: { Loading },
+  components: { Loading, RadialProgress },
   setup(props, { emit }) {
     const store = useStore();
     const toast = useToast();
     const router = useRouter();
     const route = useRoute();
+    const totalSteps = ref(100);
+    let progress = computed(
+      () => store.getters["goodstanding/getUploadProgress"]
+    );
     let localData = ref({});
     let localFileData = ref({});
     let localFileImages = ref({});
@@ -454,7 +481,7 @@ export default {
         allowSave.value = false;
       }
     };
-    const checkFinalStatus = (action) => {
+    const checkFinalStatus = action => {
       generalInfo.value.licenseFile = [];
       documents.value = localFileData.value;
 
@@ -506,7 +533,8 @@ export default {
             whoIssuedId: generalInfo.value.whoIssuedId
               ? generalInfo.value.whoIssuedId.id
               : "",
-            licenseRegistrationNumber: generalInfo.value.licenseRegistrationNumber
+            licenseRegistrationNumber: generalInfo.value
+              .licenseRegistrationNumber
               ? generalInfo.value.licenseRegistrationNumber
               : "",
             professionType: {
@@ -523,7 +551,7 @@ export default {
                   ? generalInfo.value.GSProfessionals.educationLevel.id
                   : generalInfo.value.GSProfessionals.educationLevelId
                   ? generalInfo.value.GSProfessionals.educationLevelId
-                  : null,
+                  : null
             },
             expertLevelId: generalInfo.value.expertLevelId
               ? generalInfo.value.expertLevelId
@@ -532,7 +560,8 @@ export default {
             otherProfessionalType: generalInfo.value.otherProfessionType
               ? generalInfo.value.otherProfessionType
               : "",
-            otherProfessionalTypeAmharic: generalInfo.value.otherProfessionTypeAmharic
+            otherProfessionalTypeAmharic: generalInfo.value
+              .otherProfessionTypeAmharic
               ? generalInfo.value.otherProfessionTypeAmharic
               : "",
             departmentId: generalInfo.value.department
@@ -540,61 +569,65 @@ export default {
               : generalInfo.value.departmentId
               ? generalInfo.value.departmentId
               : null,
-            feedback: generalInfo.value.feedback ? generalInfo.value.feedback : "",
-            id: route.params.id,
-          },
+            feedback: generalInfo.value.feedback
+              ? generalInfo.value.feedback
+              : "",
+            id: route.params.id
+          }
         };
-        store.dispatch("goodstanding/editGoodstandingLicense", license).then(() => {
-          let licenseId = route.params.id;
-          let payload = { document: formData, id: licenseId };
-          store
-            .dispatch("goodstanding/updateDocuments", payload)
-            .then((res) => {
-              isLoading.value = false;
-              if (res.data.status == "Success") {
-                localStorage.removeItem("GSApplicationData");
-                toast.success("Applied successfuly", {
-                  timeout: 5000,
-                  position: "bottom-center",
-                  pauseOnFocusLoss: true,
-                  pauseOnHover: true,
-                  icon: true,
-                });
-                if (action == "DraftEvent") {
-                  router.push({ path: "/Applicant/GoodStanding/draft" });
+        store
+          .dispatch("goodstanding/editGoodstandingLicense", license)
+          .then(() => {
+            let licenseId = route.params.id;
+            let payload = { document: formData, id: licenseId };
+            store
+              .dispatch("goodstanding/updateDocuments", payload)
+              .then(res => {
+                isLoading.value = false;
+                if (res.data.status == "Success") {
+                  localStorage.removeItem("GSApplicationData");
+                  toast.success("Applied successfuly", {
+                    timeout: 5000,
+                    position: "bottom-center",
+                    pauseOnFocusLoss: true,
+                    pauseOnHover: true,
+                    icon: true
+                  });
+                  if (action == "DraftEvent") {
+                    router.push({ path: "/Applicant/GoodStanding/draft" });
+                  } else {
+                    router.push({ path: "/Applicant/GoodStanding/submitted" });
+                  }
                 } else {
-                  router.push({ path: "/Applicant/GoodStanding/submitted" });
+                  toast.error("Error occured, please try again", {
+                    timeout: 5000,
+                    position: "bottom-center",
+                    pauseOnFocusLoss: true,
+                    pauseOnHover: true,
+                    icon: true
+                  });
                 }
-              } else {
+              })
+              .catch(() => {
                 toast.error("Error occured, please try again", {
                   timeout: 5000,
                   position: "bottom-center",
                   pauseOnFocusLoss: true,
                   pauseOnHover: true,
-                  icon: true,
+                  icon: true
                 });
-              }
-            })
-            .catch(() => {
-              toast.error("Error occured, please try again", {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true,
               });
-            });
-        });
+          });
       }
     };
     const back = () => {
       emit("changeActiveStateMinus");
     };
     const fetchApplicationStatuses = () => {
-      store.dispatch("renewal/getApplicationStatuses").then((res) => {
+      store.dispatch("renewal/getApplicationStatuses").then(res => {
         let results = res.data.data;
 
-        let status = results.filter(function (e) {
+        let status = results.filter(function(e) {
           return e.code == "DRA";
         });
         buttons.value = status[0]["buttons"];
@@ -604,10 +637,10 @@ export default {
       fetchApplicationStatuses();
       store
         .dispatch("goodstanding/getGoodStandingLicenseById", route.params.id)
-        .then((res) => {
+        .then(res => {
           savedData.value = res.data.data;
 
-          buttons.value = buttons.value.filter((ele) => ele.code != "AT");
+          buttons.value = buttons.value.filter(ele => ele.code != "AT");
           tempDocs.value = store.getters["goodstanding/getTempDocs"];
 
           localData.value = window.localStorage.getItem("GSApplicationData")
@@ -617,15 +650,15 @@ export default {
           generalInfo.value = localData.value;
           generalInfo.value.feedback = "";
           if (generalInfo.value.applicantTypeSelected.id == 1) {
-            store.dispatch("newlicense/getExpertLevel").then((res) => {
-              let expertLevel = res.data.data.filter(function (e) {
+            store.dispatch("newlicense/getExpertLevel").then(res => {
+              let expertLevel = res.data.data.filter(function(e) {
                 return e.code.includes("REG");
               });
               generalInfo.value.expertLevelId = expertLevel[0].id;
             });
           } else {
-            store.dispatch("newlicense/getExpertLevel").then((res) => {
-              let expertLevel = res.data.data.filter(function (e) {
+            store.dispatch("newlicense/getExpertLevel").then(res => {
+              let expertLevel = res.data.data.filter(function(e) {
                 return e.code.includes("FED");
               });
               generalInfo.value.expertLevelId = expertLevel[0].id;
@@ -634,20 +667,22 @@ export default {
           //Get images from indexed Db
           let request = indexedDB.open("GSdocumentUploads", 1);
 
-          request.onerror = function () {
+          request.onerror = function() {
             console.error("Unable to open database.");
           };
 
-          request.onsuccess = function () {
+          request.onsuccess = function() {
             let db = request.result;
             const tx = db.transaction("GSdocumentUploads", "readonly");
             const store = tx.objectStore("GSdocumentUploads");
             let getAllIDB = store.getAll();
 
-            getAllIDB.onsuccess = function (evt) {
+            getAllIDB.onsuccess = function(evt) {
               localFileImages.value = evt.target.result
                 ? JSON.parse(
-                    JSON.stringify(evt.target.result[0] ? evt.target.result[0].data : {})
+                    JSON.stringify(
+                      evt.target.result[0] ? evt.target.result[0].data : {}
+                    )
                   )
                 : {};
 
@@ -657,8 +692,8 @@ export default {
                 savedData.value.documents &&
                 savedData.value.documents.length > 0
               ) {
-                savedData.value.documents.forEach((ele) => {
-                  localFileImages.value.forEach((newFile) => {
+                savedData.value.documents.forEach(ele => {
+                  localFileImages.value.forEach(newFile => {
                     if (
                       newFile.documentCode &&
                       newFile.documentCode == ele.documentTypeCode
@@ -667,7 +702,7 @@ export default {
                         docName: newFile.documentName,
                         prevFile: googleApi + ele.filePath,
                         newFile: newFile.image,
-                        id: newFile.documentCode,
+                        id: newFile.documentCode
                       });
                     }
                   });
@@ -677,12 +712,12 @@ export default {
               if (localData.value.professionChanged == true) {
                 professionChanged.value = true;
                 // prevDocs.value = localFileImages.value;
-                localFileImages.value.forEach((element) => {
+                localFileImages.value.forEach(element => {
                   if (!element.documentTypeCode) {
                     prevDocs.value.push({
                       documentType: { name: element.documentName },
                       docName: element.documenttype,
-                      path: element.image,
+                      path: element.image
                     });
                   }
                 });
@@ -710,8 +745,10 @@ export default {
       prevDocs,
       changedDocs,
       googleApi,
+      totalSteps,
+      progress
     };
-  },
+  }
 };
 </script>
 <style>

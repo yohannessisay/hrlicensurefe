@@ -446,13 +446,7 @@
                 <span class="text-yellow-300">(optional*)</span>
               </label>
             </div>
-            <div class="vld-parent mt-4">
-              <loading
-                :active="isLoading"
-                :is-full-page="false"
-                :color="'#2F639D'"
-                :opacity="1"
-              ></loading>
+           
               <div class="mb-3 w-full flex justify-center">
                 <input
                   v-model="generalInfo.feedback"
@@ -480,13 +474,28 @@
                   type="textarea"
                 />
               </div>
-            </div>
+            
           </div>
         </div>
       </div>
     </div>
-
-    <div class="flex justify-end w-1/2">
+    <div class="flex justify-center">
+      <RadialProgress
+        :diameter="200"
+        :completed-steps="progress"
+        :total-steps="totalSteps"
+      >
+        <h1 class="text-3xl text-main-400 font-bold">{{ progress }} %</h1>
+      </RadialProgress>
+    </div>
+    <div class="vld-parent mt-4">
+            <loading
+              :active="isLoading"
+              :is-full-page="false"
+              :color="'#2F639D'"
+              :opacity="1"
+            ></loading>
+    <div class="flex justify-center">
       <button
         v-for="button in buttons"
         :key="button.id"
@@ -523,21 +532,22 @@
         back
       </button>
     </div>
-
+</div>
     <!-- end row -->
   </div>
 </template>
 
 <script>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
 import { useRoute, useRouter } from "vue-router";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 import { googleApi } from "@/composables/baseURL";
+import RadialProgress from "vue3-radial-progress";
 export default {
-  components: { Loading },
+  components: { Loading, RadialProgress },
   setup(props, { emit }) {
     const store = useStore();
     const toast = useToast();
@@ -553,7 +563,8 @@ export default {
     let changedDocs = ref([]);
     let prevDocs = ref([]);
     let professionChanged = ref(false);
-
+    const totalSteps = ref(100);
+    let progress = computed(() => store.getters["renewal/getUploadProgress"]);
     const route = useRoute();
 
     let allowSave = ref(false);
@@ -572,7 +583,7 @@ export default {
         allowSave.value = false;
       }
     };
-    const checkFinalStatus = (action) => {
+    const checkFinalStatus = action => {
       generalInfo.value.licenseFile = [];
 
       if (agreed.value == true) {
@@ -621,17 +632,17 @@ export default {
               isLegal: true,
               feedback: generalInfo.value.feedback
                 ? generalInfo.value.feedback
-                : "",
-            },
-          },
+                : ""
+            }
+          }
         };
 
-        store.dispatch("renewal/updateDraft", license).then((res) => {
+        store.dispatch("renewal/updateDraft", license).then(() => {
           let licenseId = route.params.id;
           let payload = { document: formData, id: licenseId };
           store
             .dispatch("renewal/updateDocuments", payload)
-            .then((res) => {
+            .then(res => {
               isLoading.value = false;
               if (res.data.status == "Success") {
                 toast.success("Applied successfuly", {
@@ -639,7 +650,7 @@ export default {
                   position: "bottom-center",
                   pauseOnFocusLoss: true,
                   pauseOnHover: true,
-                  icon: true,
+                  icon: true
                 });
 
                 router.push({ path: "/Applicant/Renewal/submitted" });
@@ -649,7 +660,7 @@ export default {
                   position: "bottom-center",
                   pauseOnFocusLoss: true,
                   pauseOnHover: true,
-                  icon: true,
+                  icon: true
                 });
               }
             })
@@ -660,7 +671,7 @@ export default {
                 position: "bottom-center",
                 pauseOnFocusLoss: true,
                 pauseOnHover: true,
-                icon: true,
+                icon: true
               });
             });
         });
@@ -672,13 +683,13 @@ export default {
     onMounted(() => {
       store
         .dispatch("renewal/getRenewalApplication", route.params.id)
-        .then((res) => {
+        .then(res => {
           savedData.value = res.data.data;
 
           buttons.value = store.getters["renewal/getButtons"];
 
           buttons.value = buttons.value.filter(
-            (ele) => ele.code != "AT" && ele.code != "DRA"
+            ele => ele.code != "AT" && ele.code != "DRA"
           );
           tempDocs.value = store.getters["renewal/getTempDocs"];
 
@@ -689,15 +700,15 @@ export default {
           generalInfo.value = localData.value;
           generalInfo.value.feedback = "";
           if (generalInfo.value.applicantTypeSelected.id == 1) {
-            store.dispatch("renewal/getExpertLevel").then((res) => {
-              let expertLevel = res.data.data.filter(function (e) {
+            store.dispatch("renewal/getExpertLevel").then(res => {
+              let expertLevel = res.data.data.filter(function(e) {
                 return e.code.includes("REG");
               });
               generalInfo.value.expertLevelId = expertLevel[0].id;
             });
           } else {
-            store.dispatch("renewal/getExpertLevel").then((res) => {
-              let expertLevel = res.data.data.filter(function (e) {
+            store.dispatch("renewal/getExpertLevel").then(res => {
+              let expertLevel = res.data.data.filter(function(e) {
                 return e.code.includes("FED");
               });
               generalInfo.value.expertLevelId = expertLevel[0].id;
@@ -706,17 +717,17 @@ export default {
           //Get images from indexed Db
           let request = indexedDB.open("RNdocumentUploads", 1);
 
-          request.onerror = function () {
+          request.onerror = function() {
             console.error("Unable to open database.");
           };
 
-          request.onsuccess = function () {
+          request.onsuccess = function() {
             let db = request.result;
             const tx = db.transaction("RNdocumentUploads", "readonly");
             const store = tx.objectStore("RNdocumentUploads");
             let getAllIDB = store.getAll();
 
-            getAllIDB.onsuccess = function (evt) {
+            getAllIDB.onsuccess = function(evt) {
               localFileImages.value = evt.target.result
                 ? JSON.parse(
                     JSON.stringify(
@@ -726,8 +737,8 @@ export default {
                 : {};
 
               if (localFileImages.value && savedData.value.documents) {
-                savedData.value.documents.forEach((ele) => {
-                  localFileImages.value.forEach((newFile) => {
+                savedData.value.documents.forEach(ele => {
+                  localFileImages.value.forEach(newFile => {
                     if (
                       (newFile.commonDocCode &&
                         newFile.commonDocCode == ele.fileName) ||
@@ -737,7 +748,7 @@ export default {
                         docName: newFile.documentName,
                         prevFile: googleApi + ele.filePath,
                         newFile: newFile.image,
-                        id: newFile.documenttype,
+                        id: newFile.documenttype
                       });
                     }
                   });
@@ -747,12 +758,12 @@ export default {
               if (localData.value.professionChanged == true) {
                 professionChanged.value = true;
                 // prevDocs.value = localFileImages.value;
-                localFileImages.value.forEach((element) => {
+                localFileImages.value.forEach(element => {
                   if (!element.commonDocCode) {
                     prevDocs.value.push({
                       documentType: { name: element.documentName },
                       docName: element.documenttype,
-                      path: element.image,
+                      path: element.image
                     });
                   }
                 });
@@ -779,8 +790,10 @@ export default {
       allowSave,
       checkFinalStatus,
       changeAgrement,
+      totalSteps,
+      progress
     };
-  },
+  }
 };
 </script>
 <style>

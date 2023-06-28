@@ -41,7 +41,9 @@
             >
           </div>
           <div>
-            <span class="text-grey-800 sm:text-sm"> {{ dep.department.name }}</span>
+            <span class="text-grey-800 sm:text-sm">
+              {{ dep.department.name }}</span
+            >
           </div>
         </div>
         <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
@@ -52,7 +54,9 @@
             >
           </div>
           <div>
-            <span class="text-grey-800 sm:text-sm"> {{ dep.educationalLevel.name }}</span>
+            <span class="text-grey-800 sm:text-sm">
+              {{ dep.educationalLevel.name }}</span
+            >
           </div>
         </div>
         <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
@@ -63,7 +67,9 @@
             >
           </div>
           <div>
-            <span class="text-grey-800 sm:text-sm"> {{ dep.institution.name }}</span>
+            <span class="text-grey-800 sm:text-sm">
+              {{ dep.institution.name }}</span
+            >
           </div>
         </div>
         <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
@@ -75,7 +81,9 @@
             >
           </div>
           <div>
-            <span class="text-grey-800 sm:text-sm"> {{ dep.professionalType.name }}</span>
+            <span class="text-grey-800 sm:text-sm">
+              {{ dep.professionalType.name }}</span
+            >
           </div>
         </div>
       </div>
@@ -104,7 +112,9 @@
           >
             <div
               class="mt-4 mb-8 bg-white shadow-lg hover:shadow-lg rounded-md transform transition duration-300 ease-in-out hover:-translate-y-2"
-              v-for="localFileData in localFileData[0] ? localFileData[0].data : {}"
+              v-for="localFileData in localFileData[0]
+                ? localFileData[0].data
+                : {}"
               :key="localFileData.documenttype"
             >
               <div class="flex justify-center">
@@ -114,10 +124,15 @@
                     :data-title="localFileData.documenttype"
                     data-lightbox="example-2"
                   >
-                    <img :src="localFileData.image" class="w-full h-48 object-cover" />
+                    <img
+                      :src="localFileData.image"
+                      class="w-full h-48 object-cover"
+                    />
                   </a>
 
-                  <h4 class="text-main-400 font-bold border-b m-2">Document Type</h4>
+                  <h4 class="text-main-400 font-bold border-b m-2">
+                    Document Type
+                  </h4>
                   <h6 class="m-2">{{ localFileData.documenttype }}</h6>
                 </div>
               </div>
@@ -148,12 +163,14 @@
               <h3
                 class="text-black mb-2 sm:text-xs lgmd:text-base lg:text-base md:text-base"
               >
-                By checking here I hereby verify the documents and details filled in are
-                legal.
+                By checking here I hereby verify the documents and details
+                filled in are legal.
               </h3>
             </div>
             <div class="flex justify-center">
-              <label for="feedback" class="form-label inline-block mb-2 text-main-400"
+              <label
+                for="feedback"
+                class="form-label inline-block mb-2 text-main-400"
                 >Feedback on the process and system
                 <span class="text-yellow-300">(optional*)</span>
               </label>
@@ -174,6 +191,16 @@
         </div>
       </div>
     </div>
+    <div class="flex justify-center">
+      <RadialProgress
+        :diameter="200"
+        :completed-steps="progress"
+        :total-steps="totalSteps"
+      >
+        <h1 class="text-3xl text-main-400 font-bold">{{ progress }} %</h1>
+      </RadialProgress>
+    </div>
+
     <div class="vld-parent mt-4">
       <div class="flex justify-center bg-yellow-300 p-2 rounded-md">
         <h2 class="text-grey-800 text-xl">
@@ -184,9 +211,10 @@
       </div>
       <div class="flex justify-center bg-yellow-300 p-2 rounded-md">
         <h2 class="text-grey-800 text-xl">
-          Please wait patiently as your files are being uploaded, if for any reason the
-          files you uploaded are not successful you will be redirected to the submitted
-          page automatically so you can re-attach your documents again
+          Please wait patiently as your files are being uploaded, if for any
+          reason the files you uploaded are not successful you will be
+          redirected to the submitted page automatically so you can re-attach
+          your documents again
         </h2>
       </div>
       <div class="vld-parent mt-4">
@@ -236,15 +264,22 @@
 </template>
 
 <script>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
 import { useRouter } from "vue-router";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
+import RadialProgress from "vue3-radial-progress";
 export default {
-  components: { Loading },
+  components: { Loading, RadialProgress },
+
   setup(props, { emit }) {
+    let progress = computed(
+      () => store.getters["newlicense/getUploadProgress"]
+    );
+
+    const totalSteps = ref(100);
     const store = useStore();
     const toast = useToast();
     const router = useRouter();
@@ -273,7 +308,7 @@ export default {
         allowSave.value = false;
       }
     };
-    const checkFinalStatus = (action) => {
+    const checkFinalStatus = action => {
       generalInfo.value.licenseFile = [];
       documents.value = localFileData.value;
       isLoading.value = true;
@@ -315,16 +350,18 @@ export default {
               ? generalInfo.value.expertLevelId
               : null,
             isLegal: true,
-            feedback: generalInfo.value.feedback ? generalInfo.value.feedback : "",
-          },
+            feedback: generalInfo.value.feedback
+              ? generalInfo.value.feedback
+              : ""
+          }
         };
 
-        store.dispatch("newlicense/addNewLicense", license).then((res) => {
+        store.dispatch("newlicense/addNewLicense", license).then(res => {
           let licenseId = res.data.data.id;
           let payload = { document: formData, id: licenseId };
           store
             .dispatch("newlicense/uploadDocuments", payload)
-            .then((res) => {
+            .then(res => {
               isLoading.value = false;
               if (res.data.status == "Success") {
                 window.localStorage.removeItem("applicantTypeSelected");
@@ -335,7 +372,7 @@ export default {
                   position: "bottom-center",
                   pauseOnFocusLoss: true,
                   pauseOnHover: true,
-                  icon: true,
+                  icon: true
                 });
 
                 if (license.action == "DraftEvent") {
@@ -349,7 +386,7 @@ export default {
                   position: "bottom-center",
                   pauseOnFocusLoss: true,
                   pauseOnHover: true,
-                  icon: true,
+                  icon: true
                 });
               }
             })
@@ -359,7 +396,7 @@ export default {
                 position: "bottom-center",
                 pauseOnFocusLoss: true,
                 pauseOnHover: true,
-                icon: true,
+                icon: true
               });
             });
         });
@@ -370,10 +407,10 @@ export default {
     };
 
     const fetchApplicationStatuses = () => {
-      store.dispatch("renewal/getApplicationStatuses").then((res) => {
+      store.dispatch("renewal/getApplicationStatuses").then(res => {
         let results = res.data.data;
 
-        let status = results.filter(function (e) {
+        let status = results.filter(function(e) {
           return e.code == "INIT";
         });
         buttons.value = status[0]["buttons"];
@@ -389,21 +426,23 @@ export default {
 
       let request = indexedDB.open("NLdocumentUploads", 1);
 
-      request.onerror = function () {
+      request.onerror = function() {
         console.error("Unable to open database.");
       };
 
-      request.onsuccess = function () {
+      request.onsuccess = function() {
         let db = request.result;
         const tx = db.transaction("NLdocumentUploads", "readonly");
         const store = tx.objectStore("NLdocumentUploads");
         let getAllIDB = store.getAll();
 
-        getAllIDB.onsuccess = function (evt) {
+        getAllIDB.onsuccess = function(evt) {
           localFileData.value = evt.target.result ? evt.target.result : {};
 
-          localFileData.value[0].data.forEach((element) => {
-            totalSize.value += Number(Math.ceil((element.image.length * 6) / 8 / 1000));
+          localFileData.value[0].data.forEach(element => {
+            totalSize.value += Number(
+              Math.ceil((element.image.length * 6) / 8 / 1000)
+            );
           });
           totalSize.value = totalSize.value / 1000;
         };
@@ -413,15 +452,15 @@ export default {
 
       generalInfo.value.feedback = "";
       if (generalInfo.value.applicantTypeSelected.id == 1) {
-        store.dispatch("newlicense/getExpertLevel").then((res) => {
-          let expertLevel = res.data.data.filter(function (e) {
+        store.dispatch("newlicense/getExpertLevel").then(res => {
+          let expertLevel = res.data.data.filter(function(e) {
             return e.code.includes("REG");
           });
           generalInfo.value.expertLevelId = expertLevel[0].id;
         });
       } else {
-        store.dispatch("newlicense/getExpertLevel").then((res) => {
-          let expertLevel = res.data.data.filter(function (e) {
+        store.dispatch("newlicense/getExpertLevel").then(res => {
+          let expertLevel = res.data.data.filter(function(e) {
             return e.code.includes("FED");
           });
           generalInfo.value.expertLevelId = expertLevel[0].id;
@@ -434,15 +473,17 @@ export default {
       generalInfo,
       agreed,
       buttons,
+      progress,
+      totalSteps,
       totalSize,
       checkAgreement,
       back,
       isLoading,
       allowSave,
       checkFinalStatus,
-      changeAgrement,
+      changeAgrement
     };
-  },
+  }
 };
 </script>
 <style>

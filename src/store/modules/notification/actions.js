@@ -56,4 +56,14 @@ export default {
       console.log(error);
     }
   },
+  async readAllAdminReviewerNotification() {
+    try {
+      const url = baseUrl + "/notification/reviewer/readAllAdminNotifications";
+      const resp = await ApiService.put(url);
+      return resp.data;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  
 };
