@@ -50,7 +50,7 @@
         </li>
       </router-link>
     </ul>
-    <ul class="nav-links">
+    <ul class="nav-links"  v-if="adminData ? adminData.role.code != 'REV' : ''">
       <router-link to="/admin/report/individualReport">
         <li
           :class="
@@ -81,5 +81,12 @@
   </div>
 </template>
 <script>
-export default {};
+export default {
+  setup() {
+  const adminData = JSON.parse(localStorage.getItem("allAdminData"));
+    return{
+      adminData
+    }
+}
+};
 </script>

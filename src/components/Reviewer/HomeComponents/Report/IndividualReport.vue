@@ -24,7 +24,7 @@
 
     <!-- Main Content -->
     <div class="home-content">
-      <div class="container mx-auto px-4 sm:px-8">
+      <div class="container mx-auto px-4 sm:px-8" v-if="isReviewer == false">
         <div class="py-8">
           <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 overflow-x-auto">
             <div class="grid grid-rows-1">
@@ -83,6 +83,7 @@
                         focus:outline-none focus:ring-0
                         transition
                         duration-150
+                        mt-2
                         ease-in-out
                       "
                       @click="clearFilters()"
@@ -111,6 +112,9 @@
             </div>
           </div>
         </div>
+      </div>
+      <div class="flex justify-center" v-else>
+        <h2 class="text-primary-600 font-bold text-2xl">Your role does not allow to visit this page</h2>
       </div>
     </div>
     <!-- Main Content -->
@@ -142,9 +146,9 @@ export default {
     let allData = ref([]);
     let searchData = ref();
     let expertLevelFilter = ref("");
-    const isUserManager =
-      localStorage.getItem("role") == "UM" ||
-      localStorage.getItem("role") == "SA";
+    const isReviewer = localStorage.getItem("role")
+      ? localStorage.getItem("role") == "REV"
+      : false;
     let expertLevels = ref([
       { name: "All", code: "all" },
       { name: "Federal", code: "FED" },
@@ -251,7 +255,7 @@ export default {
       userTable.value.isLoading = true;
       getAdmins([0, 10, searchTerm.value]);
     };
-    const tableLoadingFinish = () => { 
+    const tableLoadingFinish = () => {
       let elements = document.getElementsByClassName("edit-btn");
 
       Array.prototype.forEach.call(elements, function(element) {
@@ -284,14 +288,14 @@ export default {
       }, 600);
     };
     onMounted(() => {
-      getAdmins([0, 10]);
+      isReviewer != true ? getAdmins([0, 10]) : "";
     });
 
     return {
       doSearch,
       clearFilters,
       searchData,
-      isUserManager,
+      isReviewer,
       userTable,
       searchUser,
       rowClicked,
