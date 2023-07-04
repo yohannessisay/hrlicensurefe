@@ -758,6 +758,22 @@ const routes = [
       ),
   },
   {
+    path: "/admin/lookupManagement/documentSpec",
+    name: "DocumentSpecLookupManagement",
+    component: () =>
+      import(
+        "../components/Reviewer/HomeComponents/LookupManagement/documentSpec/documentSpec.vue"
+      ),
+  },
+  {
+    path: "/admin/lookupManagement/documentType",
+    name: "DocumentTypeLookupManagement",
+    component: () =>
+      import(
+        "../components/Reviewer/HomeComponents/LookupManagement/documentType/documentType.vue"
+      ),
+  },
+  {
     path: "/admin/lookupManagement/licenseExpirationDate",
     name: "LicenseExpirationDateLookupManagement",
     component: () =>
