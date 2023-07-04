@@ -15,9 +15,7 @@
         <li><span class="text-gray-500 mx-2">/</span></li>
 
         <li>
-          <a href="#" class="pointer-events-none text-lg text-grey-300"
-            >Dashboard</a
-          >
+          <a href="#" class="pointer-events-none text-lg text-grey-300">Dashboard</a>
         </li>
       </ol></reviewer-nav-bar
     >
@@ -27,9 +25,7 @@
     <div class="home-content">
       <div class="grid grid-cols-2">
         <div class="bg-white shadow-md m-2 rounded-md p-2">
-          <h2 class="text-primary-600 font-bold text-2xl">
-            Applicants gender chart
-          </h2>
+          <h2 class="text-primary-600 font-bold text-2xl">Applicants gender chart</h2>
           <apexchart
             type="bar"
             height="350"
@@ -38,9 +34,7 @@
           ></apexchart>
         </div>
         <div class="bg-white shadow-md m-2 rounded-md p-2">
-          <h2 class="text-primary-600 font-bold text-2xl">
-            Total Applications
-          </h2>
+          <h2 class="text-primary-600 font-bold text-2xl">Total Applications</h2>
           <apexchart
             type="bar"
             height="350"
@@ -50,8 +44,8 @@
         </div>
       </div>
 
-      <div class="grid grid-cols-1  ">
-        <div class="bg-white shadow-md m-2 rounded-md p-2 mb-20 ">
+      <div class="grid grid-cols-1">
+        <div class="bg-white shadow-md m-2 rounded-md p-2 mb-20">
           <h2 class="text-primary-600 font-bold text-2xl">
             Applications based on regions
           </h2>
@@ -64,41 +58,33 @@
           ></apexchart>
         </div>
       </div>
-      <div class="grid grid-cols-3 lg:grid-cols-4 ">
+      <div class="grid grid-cols-3 lg:grid-cols-4">
         <div class="bg-white shadow-md m-2 rounded-md p-2 mb-20">
           <apexchart
             type="pie"
             :options="pieChartOption"
             :series="approvedSeries"
           ></apexchart>
-          <h2 class="text-primary-600 font-bold text-2xl">
-           Approved Applications
-          </h2>
+          <h2 class="text-primary-600 font-bold text-2xl">Approved Applications</h2>
         </div>
-       <div class="bg-white shadow-md m-2 rounded-md p-2 mb-20">
+        <div class="bg-white shadow-md m-2 rounded-md p-2 mb-20">
           <apexchart
             type="pie"
             :options="pieChartOption"
             :series="declinedSeries"
           ></apexchart>
-           
-            <h2 class="font-bold text-2xl text-yellow-300">
-              Declined Licenses/Letters
-            </h2>
-         
+
+          <h2 class="font-bold text-2xl text-yellow-300">Declined Licenses/Letters</h2>
         </div>
-        
+
         <div class="bg-white shadow-md m-2 rounded-md p-2 mb-20">
           <apexchart
             type="pie"
             :options="pieChartOption"
             :series="revokedSeries"
           ></apexchart>
-         
-            <h2 class="text-2xl font-bold text-red-300 mt-2">
-              Revoked Licenses/Letters
-            </h2>
-          
+
+          <h2 class="text-2xl font-bold text-red-300 mt-2">Revoked Licenses/Letters</h2>
         </div>
         <div class="bg-white shadow-md m-2 rounded-md p-2 mb-20">
           <apexchart
@@ -106,24 +92,21 @@
             :options="pieChartOption"
             :series="susupendedSeries"
           ></apexchart>
-         
-            <h2 class="text-2xl font-bold text-main-400 mt-2">
-              Suspended Licenses/Letters
-            </h2>
-          
+
+          <h2 class="text-2xl font-bold text-main-400 mt-2">
+            Suspended Licenses/Letters
+          </h2>
         </div>
         <div class="bg-white shadow-md m-2 rounded-md p-2 mb-20">
-         
           <apexchart
             type="pie"
             :options="pieChartOption"
             :series="underSupervisionSeries"
           ></apexchart>
-          
-            <h2 class="text-2xl font-bold text-yellow-400 mt-2">
-              Licenses Under-Supervision
-            </h2>
-        
+
+          <h2 class="text-2xl font-bold text-yellow-400 mt-2">
+            Licenses Under-Supervision
+          </h2>
         </div>
         <div class="bg-white shadow-md m-2 rounded-md p-2 mb-20">
           <apexchart
@@ -131,12 +114,11 @@
             :options="pieChartOption"
             :series="unassignedSeries"
           ></apexchart>
-         
-            <h2 class="text-2xl font-bold text-grey-800 mt-2">
-              Unassigned Licenses/Letters
-            </h2>
-       
-        </div>  
+
+          <h2 class="text-2xl font-bold text-grey-800 mt-2">
+            Unassigned Licenses/Letters
+          </h2>
+        </div>
       </div>
     </div>
 
@@ -149,10 +131,12 @@ import { ref, onMounted } from "vue";
 import ReviewerNavBar from "./SharedComponents/navBar.vue";
 import ReviewerSideBar from "./SharedComponents/sideNav.vue";
 import { useStore } from "vuex";
+import apexchart from "vue3-apexcharts";
 export default {
   components: {
     ReviewerNavBar,
     ReviewerSideBar,
+    apexchart,
   },
   setup() {
     const store = useStore();

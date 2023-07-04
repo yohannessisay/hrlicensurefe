@@ -144,6 +144,40 @@
           </a>
         </li>
       </router-link>
+      <router-link to="/admin/lookupManagement/documentSpec">
+        <li
+          :class="
+            $route.fullPath === '/admin/lookupManagement/documentSpec'
+              ? 'mb-2 active p-2'
+              : ''
+          "
+        >
+          <a href="#DocumentSpecManagement">
+            <i class="bx bx-book"></i>
+
+            <span class="links_name" style="word-break: break-all"
+              >Document Spec</span
+            >
+          </a>
+        </li>
+      </router-link>
+         <router-link to="/admin/lookupManagement/documentType">
+        <li
+          :class="
+            $route.fullPath === '/admin/lookupManagement/documentType'
+              ? 'mb-2 active p-2'
+              : ''
+          "
+        >
+          <a href="#DocumentTypeManagement">
+            <i class="bx bx-folder"></i>
+
+            <span class="links_name" style="word-break: break-all"
+              >Document Type</span
+            >
+          </a>
+        </li>
+      </router-link>
       <router-link to="/admin/lookupManagement/applicantPosition">
         <li
           :class="
@@ -171,7 +205,7 @@
           "
         >
           <a href="#LicenseExpirationDateManagement">
-            <i class="bx bx-map"></i>
+            <i class="bx bx-calendar"></i>
 
             <span class="links_name" style="word-break: break-all"
               >License ExpirationDate</span
