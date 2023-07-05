@@ -1,4 +1,26 @@
 <template>
+  <div class="   card-wrapper
+      max-w-4xl
+      bg-white 
+      p-4
+      mb-4 
+      justify-center
+  
+      relative
+  
+    
+      shadow-md">
+    <h2 class="text-main-400 font-bold text-base">
+      The Human resource administration system (HRA) for the Ministry of health is a
+      system developed for managing and keeping record of employee data, if you
+      have previously registered by your self or by your institution you may
+      click on YES button and fetch your data from HRA
+    </h2>
+    OR
+    <h2 class="text-main-400 font-bold text-base">
+   You can click on NO and fill out your profile as new
+    </h2>
+  </div>
   <div
     class="
       card-wrapper
@@ -15,7 +37,6 @@
       shadow-lg
     "
   >
-    <div></div>
     <div id="holder" class="flex justify-center rounded mb-medium pb-4">
       <div>
         <div class="flex flex-col pt-medium rounded mb-medium w-72">
@@ -69,7 +90,7 @@
               ease-in-out
             "
             @click="$emit('approvalModal', 2)"
-            type="button" 
+            type="button"
           >
             No
           </button>
@@ -80,16 +101,11 @@
 </template>
 
 <script>
-import { ref, onMounted } from "vue";
-import { useStore } from "vuex";
-import { useRoute, useRouter } from "vue-router";
+import { onMounted } from "vue";
 
 export default {
   components: {},
-  setup(props, { emit }) {
-    const store = useStore();
-    const route = useRoute();
-    const router = useRouter();
+  setup() {
 
     onMounted(() => {});
     return {};

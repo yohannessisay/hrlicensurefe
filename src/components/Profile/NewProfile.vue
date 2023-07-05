@@ -19,15 +19,12 @@
       </transition>
     </div>
     <div
-      class="
-        w-screen 
-       overflow-y-scroll
+      class=" 
         bg-lightBlueB-200
-        flex
-        items-center
+        flex 
         justify-center
-        max-h-screen
-        
+         overflow-y-scroll
+          h-screen
       "
       v-if="this.approvalModal != 0"
     >
@@ -41,10 +38,7 @@
         </div>
       </transition>
       <transition name="fade" mode="out-in">
-        <div
-          v-if="this.activeState == 2"
-          class="w-full m-4"
-        >
+        <div v-if="this.activeState == 2" class="w-full m-4">
           <Preview
             :activeState="2"
             @changeActiveStatePrevious="activeState--"
@@ -64,14 +58,14 @@ import ApprovedMessageModal from "@/components/Profile/HraConfirmationModal.vue"
 
 export default {
   name: "NewProfile",
-  data: function () {
+  data: function() {
     return {
       activeState: 1,
       approvalModal: 0,
     };
   },
   methods: {
-    approverespone: function (value) {
+    approverespone: function(value) {
       this.approvalModal = value;
     },
   },
@@ -83,6 +77,4 @@ export default {
   },
 };
 </script>
-<style>
- 
-</style>
+<style></style>
