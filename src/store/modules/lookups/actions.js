@@ -91,6 +91,23 @@ export default {
       return error;
     }
   },
+  async getDocSpecWithFilter(context, apiParameter) {
+    try {
+      let url = `${baseUrl}/documentSpecs/filter?`;
+
+      if (apiParameter) {
+        apiParameter.forEach((param) => {
+          url += param ? `${param.key}=${param.value}&` : "";
+        });
+      }
+      url = url.substring(0, url.length - 1);
+      const resp = await ApiService.get(url);
+
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
   async getDepartments() {
     try {
       const resp = await ApiService.get(baseUrl + "/lookups/departments");
@@ -377,8 +394,7 @@ export default {
   async updateDocumentType(id, data) {
     try {
       const resp = await ApiService.put(
-        baseUrl + "/documentTypes/"+
-        data.id,
+        baseUrl + "/documentTypes/" + data.id,
         data
       );
       return resp;
