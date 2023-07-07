@@ -300,8 +300,7 @@ export default {
       documentSpecificationTableData = [];
       store
         .dispatch("lookups/getDocSpecWithFilter", apiParameters)
-        .then((res) => {
-          console.log(res);
+        .then((res) => { 
           let data = res.data && res.data.data ? res.data.data.rows : [];
 
           data.forEach((element) => {
