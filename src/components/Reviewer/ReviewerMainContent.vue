@@ -1,41 +1,7 @@
 <template>
   <div class="container mt-4 mx-auto">
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-      <div
-        class="
-          card
-          m-2
-          bg-primary-700
-          border border-grey-400
-          rounded-2xl
-          hover:shadow-2xl  
-          transform
-          shadow-md
-          hover:-translate-y-4
-          transition-all
-          duration-200
-        "
-      >
-        <div class="m-3 text-center">
-          <h2 class="text-xl mb-2 text-white dashboard_card_title">
-            Total Applicants
-          </h2>
-          <i class="fa fa-user fa-2x text-white"></i>
-          <h2
-            class="
-              font-light font-mono
-              transition-all
-              duration-200
-              text-white text-3xl
-            "
-            id="totalApp"
-          >
-            <span style="font-size:38px !important">{{
-              stat.applicantCount
-            }}</span>
-          </h2>
-        </div>
-      </div>
+    <div class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3">
+    
 
       <div
         class="
@@ -54,7 +20,7 @@
       >
         <div class="m-3 text-center">
           <h2 class="text-xl mb-2 text-white dashboard_card_title">
-            Total New Licenses
+            Total Approved New Licenses
           </h2>
           <i class="fa fa-check fa-2x text-white"></i>
           <h2
@@ -90,7 +56,7 @@
       >
         <div class="m-3 text-center">
           <h2 class="text-xl mb-2 text-white dashboard_card_title">
-            Total Renewals
+            Total Approved Renewals
           </h2>
           <i class="fa fa-refresh fa-2x text-white"></i>
           <h2
@@ -128,7 +94,7 @@
       >
         <div class="m-3 text-center">
           <h2 class="text-xl mb-2 text-white dashboard_card_title">
-            Total Good-Standings
+            Total Approved Good-Standings
           </h2>
           <i class="fa fa-thumbs-up fa-2x text-white"></i>
           <h2
