@@ -4,7 +4,9 @@
   >
     <div class="flex items-center justify-center">
       <RenderIllustration illustration="Logo" class="hidden sm:block" />
-      <h3 class="ml-4 text-main-400 sm:text-sm md:text-lg lg:text-2xl mdlg:text-2xl">
+      <h3
+        class="ml-4 text-main-400 sm:text-sm md:text-lg lg:text-2xl mdlg:text-2xl"
+      >
         eHPEL - License
       </h3>
     </div>
@@ -73,8 +75,8 @@
         <div class="relative p-2 modal-body">
           <div class="flex justify-center">
             <h2 class="text-xl text-main-400">
-              This is a demo video showing you how to use the system if you are new here.
-              Thanks for watching.
+              This is a demo video showing you how to use the system if you are
+              new here. Thanks for watching.
             </h2>
           </div>
           <div class="container bg-secondaryDark">
@@ -109,7 +111,7 @@ export default {
   setup() {
     const store = useStore();
     const toast = useToast();
-
+    let options = { quality: { default: "1080p" } };
     const downloadHelpVideo = () => {
       store
         .dispatch("user/downloadHelpVideo")
@@ -131,13 +133,16 @@ export default {
               icon: true,
             });
           } else {
-            toast.error("Please check permission of site or your download manager", {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            });
+            toast.error(
+              "Please check permission of site or your download manager",
+              {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              }
+            );
           }
         })
         .catch(() => {
@@ -155,6 +160,7 @@ export default {
 
     return {
       downloadHelpVideo,
+      options,
     };
   },
 };
