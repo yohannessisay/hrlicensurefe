@@ -1,8 +1,14 @@
 <template>
   <div class="container mt-4 mx-auto">
+    <div class="border rounded-md shadow-md text-main-400 m-4 p-4">
+      <h2 class="text-primary-600 font-bold text-3xl">
+        Welcome back, {{ loggedInUser ? loggedInUser.name : "" }}
+      </h2>
+      <h2 class="text-grey-800 font-bold text-2xl">
+        Here are your current statuses so far
+      </h2>
+    </div>
     <div class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3">
-    
-
       <div
         class="
         card
@@ -307,7 +313,7 @@ export default {
   setup() {
     const store = useStore();
     const stat = ref({});
-    let objApp = document.getElementById("totalApp");
+    const loggedInUser = JSON.parse(localStorage.getItem("allAdminData"));
     let objRen = document.getElementById("totalNew");
     let objNew = document.getElementById("totalRen");
     let objGoo = document.getElementById("totalGoo");
@@ -331,7 +337,6 @@ export default {
           window.requestAnimationFrame(step);
         };
 
-        animateValue(objApp, 0, stat.value.applicantCount, 4000);
         animateValue(objRen, 0, stat.value.newLicenseCount, 3000);
         animateValue(objNew, 0, stat.value.renewalCount, 2000);
         animateValue(objGoo, 0, stat.value.goodStandingCount, 1000);
@@ -339,7 +344,6 @@ export default {
     };
 
     onMounted(() => {
-      objApp = document.getElementById("totalApp");
       objRen = document.getElementById("totalNew");
       objNew = document.getElementById("totalRen");
       objGoo = document.getElementById("totalGoo");
@@ -349,6 +353,7 @@ export default {
 
     return {
       stat,
+      loggedInUser,
     };
   },
 };
