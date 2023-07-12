@@ -443,11 +443,16 @@
                   generalInfo.multipleDepartment.length > 0
                 "
               >
-                Add More Education
+                Add More Department
               </span>
               <span v-else>Add</span>
             </button>
           </div>
+          <div class="flex justify-center">
+              <h2 class="text-2xl text-yellow-300 font-bold">
+                * In order to proceed to the next step please choose one or more department and add to the list
+              </h2>
+            </div>
           <span v-if="multipleDepartmentError" class="text-red-300"
             >Please fill in all fields</span
           >

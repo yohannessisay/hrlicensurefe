@@ -62,6 +62,7 @@
               (finalData.data.applicantType.code == 'ETH' ||
                 finalData.data.applicantType.code == 'ETHABRO')
           "
+          contenteditable="true"
         >
           <!-- if professions are less than 3 -->
 
