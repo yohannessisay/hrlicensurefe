@@ -5,24 +5,20 @@
       class="grid grid-cols-1  
               md:grid-cols-1
               mdlg:grid-cols-1
-              lg:grid-cols-3
-              xl:grid-cols-3
+              lg:grid-cols-4
+              xl:grid-cols-4
               sm:grid-rows-1"
     >
-      <div class="bg-white rounded-md shadow-md p-4 m-2">
+      <div class=" rounded-md  p-4 ">
         <article class="overflow-hidden   p-4">
-          <div class="flex justify-start flex-col mb-large">
-            <div class="flex justify-start">
-              <h2 class="text-main-400 font-bold text-lg">Profile Picture</h2>
-            </div>
-          </div>
+       
 
           <picture>
             <img :src="profilePic" />
           </picture>
         </article>
       </div>
-      <div class="bg-white rounded-md shadow-md p-4 m-2">
+      <div class="bg-white rounded-md shadow-md p-4 m-2 col-span-3">
         <article class="overflow-hidden   p-4">
           <div class="flex justify-start flex-col">
             <div class="flex justify-start border-b-4 text-main-400 mt-4 mb-4">
@@ -120,9 +116,7 @@
             </div>
           </div>
         </article>
-      </div>
-      <div class="bg-white rounded-md shadow-md p-4 m-2">
-        <div class="vld-parent mt-4">
+        <div class="vld-parent ">
           <loading
             :active="isLoading"
             :is-full-page="false"
@@ -130,7 +124,7 @@
             :opacity="1"
           ></loading>
           <article class="overflow-hidden  p-4">
-            <div class="mt-12 flex justify-center mb-medium">
+            <div class="flex justify-center mb-medium">
               <div>
                 <button
                   class="
@@ -191,6 +185,9 @@
           </article>
         </div>
       </div>
+      <!-- <div class="bg-white rounded-md shadow-md p-4 m-2">
+      
+      </div> -->
     </div>
   </div>
 </template>

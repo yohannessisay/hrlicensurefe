@@ -57,6 +57,7 @@
                 finalData.data.applicantType.code == 'ETHABRO')
           "
           class="modal-body relative p-4"
+          contenteditable="true"
         >
           <!-- if professions are less than 3 -->
 

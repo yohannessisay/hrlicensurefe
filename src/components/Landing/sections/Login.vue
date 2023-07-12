@@ -46,7 +46,7 @@
                     <form @submit.prevent="submit">
                       <div class="flex -mx-3">
                         <div class="w-full px-3 mb-1">
-                          <label for="" class="px-1 text-base font-semibold">Email</label>
+                          <label for="" class="px-1 text-base font-thin">Email</label>
                           <div class="flex mt-1">
                             <div
                               class="z-10 flex items-center justify-center w-10 pl-1 text-center pointer-events-none"
