@@ -147,6 +147,63 @@
                                 >{{ prefixNameError }}</small
                               >
                             </div>
+                         
+                            <div class="group w-full md:full lg:w-full ml-4">
+                              <label
+                                for="depName"
+                                class="
+                                  inline-block
+                                  w-full
+                                  text-md
+                                  mb-2
+                                  text-primary-600
+                                  font-bold
+                                  text-gray-500
+                                  transition-all
+                                  duration-200
+                                  ease-in-out
+                                "
+                                >Prefix Amharic Name</label
+                              >
+                              <div class="relative flex items-center">
+                                <input
+                                  id="depName"
+                                  type="text"
+                                  class="
+                                    peer
+                                    relative
+                                    h-18
+                                    w-full
+                                    rounded-sm
+                                    pl-10
+                                    pr-4
+                                    outline-none
+                                    drop-shadow-sm
+                                    transition-all
+                                    duration-200
+                                    ease-in-out
+                                    focus:bg-white
+                                    focus:text-primary-600
+                                    focus:font-bold
+                                    focus:drop-shadow-lg
+                                  "
+                                  required
+                                  placeholder="Enter name"
+                                  v-model="editData.AmharicName"
+                                />
+
+                                <i
+                                  class="
+                                    fa fa-text-width
+                                    ml-4
+                                    absolute
+                                    left-auto
+                                    text-primary-600
+                                  "
+                                ></i>
+                              </div>
+ 
+                            </div>
 
                             <div class="form-group ml-4 mb-2 mt-8">
                               <label
@@ -320,6 +377,7 @@ export default {
       saveData.value = {
         id: editData.value.id,
         name: editData.value.Name ? editData.value.Name : "",
+        amharic_name: editData.value.AmharicName ? editData.value.AmharicName : "",
         code: editData.value
           ? editData.value.Code
           : editData.value.Name

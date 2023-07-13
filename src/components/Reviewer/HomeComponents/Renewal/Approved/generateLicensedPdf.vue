@@ -62,7 +62,6 @@
               (finalData.data.applicantType.code == 'ETH' ||
                 finalData.data.applicantType.code == 'ETHABRO')
           "
-          contenteditable="true"
         >
           <!-- if professions are less than 3 -->
 
@@ -194,7 +193,13 @@
                         {{
                           department.professionType &&
                           department.professionType.amharicProfessionalType
-                            ? department.professionType.amharicProfessionalType
+                            ? department.prefix
+                              ? department.prefix.amharic_name +
+                                " " +
+                                department.professionType
+                                  .amharicProfessionalType
+                              : department.professionType
+                                  .amharicProfessionalType
                             : department.otherProfessionAmharic
                             ? department.otherProfessionAmharic
                             : ""
@@ -286,9 +291,8 @@
                         {{
                           department && department.professionType
                             ? department.prefix
-                              ? "(" +
-                                department.prefix.name +
-                                ")" +
+                              ? department.prefix.name +
+                                " " +
                                 department.professionType.name
                               : department.professionType.name
                             : department.otherProfessionType
@@ -1124,7 +1128,7 @@
             modalData &&
               modalData.data &&
               modalData.data.applicantType &&
-                modalData.data.applicantType.code == 'FOR'
+              modalData.data.applicantType.code == 'FOR'
           "
           contenteditable="true"
           class="p-8 m-8 "
@@ -1222,7 +1226,7 @@
                     {{ (index += 1) }}
                   </td>
                   <td
-                  contenteditable="false"
+                    contenteditable="false"
                     class="whitespace-nowrap border-r px-6 py-4 text-yellow-300"
                   >
                     {{
@@ -1236,14 +1240,15 @@
                     }}
                   </td>
                   <td
-                  contenteditable="false"
+                    contenteditable="false"
                     class="whitespace-nowrap border-r px-6 py-4 text-yellow-300"
                   >
-                  ({{
+                    ({{
                       educations && educations.prefix
                         ? educations.prefix.name
                         : ""
-                    }})  {{
+                    }})
+                    {{
                       educations && educations.professionType
                         ? educations.professionType.name
                         : ""
@@ -1576,8 +1581,13 @@ export default {
             showGenerateModal.value = false;
 
             let smsMessage = req.data
-               // eslint-disable-next-line prettier/prettier
-              ? `Dear applicant your applied renewal of license with number ${req.data.renewalCode} is printed and ready. Visit our office on ${retrivalDate.value.slice(0, 10)} and please do not forget to bring all required legal documents.Thank you for using eHPL. visit https://hrl.moh.gov.et for more.`
+              ? // eslint-disable-next-line prettier/prettier
+                `Dear applicant your applied renewal of license with number ${
+                  req.data.renewalCode
+                } is printed and ready. Visit our office on ${retrivalDate.value.slice(
+                  0,
+                  10
+                )} and please do not forget to bring all required legal documents.Thank you for using eHPL. visit https://hrl.moh.gov.et for more.`
               : "";
             let smsData = {
               recipients: [
@@ -1742,15 +1752,15 @@ export default {
       professionPossition,
       professionListGap
     ) => {
-      doc.setFontSize(17);
-      doc2.setFontSize(17);
+      doc.setFontSize(12);
+      doc2.setFontSize(12);
       let paddingAmharic = 5;
       let paddingEnglish = 0;
       if (code == "DD") {
         paddingAmharic = 10;
         paddingEnglish = 10;
       }
-      
+
       //English name part
       doc.text(
         190,
@@ -1840,26 +1850,18 @@ export default {
             xPosition.value,
             professionPossition + i * professionListGap,
             `${
-              certificateDetail.value.educations.length > 1 ? i + 1 + ". " : ""
+              certificateDetail.value.educations.length > 1
+                ? i + 1 + ". "
+                : "1. "
             }${
-              certificateDetail.value.educations[i].professionType
+              certificateDetail.value.educations[i].prefix
+                ? certificateDetail.value.educations[i].prefix.name
+                : ""
+            }  ${
+              certificateDetail.value.educations[i].professionType &&
+              certificateDetail.value.educations[i].professionType.name
                 ? certificateDetail.value.educations[i].professionType.name
                 : certificateDetail.value.educations[i].otherProfessionType
-                ? `${
-                    certificateDetail.value.educations[i].prefix
-                      ? "(" +
-                        certificateDetail.value.educations[i].prefix.name +
-                        ")"
-                      : ""
-                  }   ${
-                    certificateDetail.value.educations[i].otherProfessionType
-                      ? certificateDetail.value.otherProfessionType
-                        ? certificateDetail.value.otherProfessionType
-                        : ""
-                      : certificateDetail.value.educations[i].professionType
-                          .name
-                  }`
-                : ""
             }`
           );
         }
@@ -1870,26 +1872,18 @@ export default {
             xPosition.value,
             professionPossition + i * professionListGap,
             `${
-              certificateDetail.value.educations.length > 1 ? i + 1 + ". " : ""
+              certificateDetail.value.educations.length > 1
+                ? i + 1 + ". "
+                : "1. "
             }${
-              certificateDetail.value.educations[i].professionType
+              certificateDetail.value.educations[i].prefix
+                ? certificateDetail.value.educations[i].prefix.name
+                : ""
+            }  ${
+              certificateDetail.value.educations[i].professionType &&
+              certificateDetail.value.educations[i].professionType.name
                 ? certificateDetail.value.educations[i].professionType.name
                 : certificateDetail.value.educations[i].otherProfessionType
-                ? `${
-                    certificateDetail.value.educations[i].prefix
-                      ? "(" +
-                        certificateDetail.value.educations[i].prefix.name +
-                        ")"
-                      : ""
-                  }   ${
-                    certificateDetail.value.educations[i].otherProfessionType
-                      ? certificateDetail.value.otherProfessionType
-                        ? certificateDetail.value.otherProfessionType
-                        : ""
-                      : certificateDetail.value.educations[i].professionType
-                          .name
-                  }`
-                : ""
             }`
           );
         }
@@ -1904,22 +1898,14 @@ export default {
                   ? newI + 1 + ". "
                   : ""
               }${
-                certificateDetail.value.educations[i].professionType.name
-                  ? `${
-                      certificateDetail.value.educations[i].prefix
-                        ? "(" +
-                          certificateDetail.value.educations[i].prefix.name +
-                          ")"
-                        : ""
-                    }   ${
-                      certificateDetail.value.educations[i].otherProfessionType
-                        ? certificateDetail.value.otherProfessionType
-                          ? certificateDetail.value.otherProfessionType
-                          : ""
-                        : certificateDetail.value.educations[i].professionType
-                            .name
-                    }`
+                certificateDetail.value.educations[i].prefix
+                  ? certificateDetail.value.educations[i].prefix.name
                   : ""
+              }  ${
+                certificateDetail.value.educations[i].professionType &&
+                certificateDetail.value.educations[i].professionType.name
+                  ? certificateDetail.value.educations[i].professionType.name
+                  : certificateDetail.value.educations[i].otherProfessionType
               }`
             );
           }
@@ -1974,8 +1960,6 @@ export default {
         }`
       );
       // License Number for amharic
-      doc.text(38, 58, `${certificateDetail.value.licenseNumber}`);
-      doc2.text(38, 58, `${certificateDetail.value.licenseNumber}`);
       // doc.addFileToVFS("Amiri-Regular.ttf", AmiriRegular);
       doc.addFileToVFS("Tera-Regular-normal.ttf", AmharicFont);
       doc2.addFileToVFS("Tera-Regular-normal.ttf", AmharicFont);
@@ -1983,8 +1967,8 @@ export default {
       doc2.addFont("Tera-Regular-normal.ttf", "Tera-Regular", "normal");
       doc.setFont("Tera-Regular"); // set font
       doc2.setFont("Tera-Regular");
-//Amharic name part
-doc.text(
+      //Amharic name part
+      doc.text(
         60,
         namePosition - paddingAmharic,
         `${
@@ -2018,6 +2002,11 @@ doc.text(
             : ""
         }`
       );
+      // License Number for amharic
+      doc.text(38, 58, `${certificateDetail.value.licenseNumber}`);
+      doc2.text(38, 58, `${certificateDetail.value.licenseNumber}`);
+      // doc.addFileToVFS("Amiri-Regular.ttf", AmiriRegular);
+
       doc.setFontSize(17);
       doc2.setFontSize(17);
 
@@ -2036,16 +2025,22 @@ doc.text(
       }
       if (certificateDetail.value.educations.length <= 3) {
         for (let i = 0; i < certificateDetail.value.educations.length; i++) {
+        
           doc.text(
             xPosition.value,
             professionPossition + i * professionListGap,
             `${
-              certificateDetail.value.educations.length > 1 ? i + 1 + ". " : ""
+              certificateDetail.value.educations.length > 1
+                ? i + 1 + ". "
+                : "1. "
             }${
-              certificateDetail.value.educations[i].professionType
-                ? certificateDetail.value.educations[i].professionType
-                    .amharicProfessionalType
+              certificateDetail.value.educations[i].prefix
+                ? certificateDetail.value.educations[i].prefix.amharic_name
                 : ""
+            }  ${
+              certificateDetail.value.educations[i].professionType
+                ? certificateDetail.value.educations[i].professionType.amharicProfessionalType
+                : certificateDetail.value.educations[i].otherProfessionAmharic
             }`
           );
         }
@@ -2056,10 +2051,18 @@ doc.text(
             professionPossition + i * professionListGap,
             `${
               certificateDetail.value.educations.length > 1 ? i + 1 + ". " : ""
-            }${
+            }  ${
+              certificateDetail.value.educations[i].prefix
+                ? certificateDetail.value.educations[i].prefix.amharic_name
+                : ""
+            }  ${
+              certificateDetail.value.educations[i].professionType &&
               certificateDetail.value.educations[i].professionType
+                .amharicProfessionalType
                 ? certificateDetail.value.educations[i].professionType
                     .amharicProfessionalType
+                : certificateDetail.value.educations[i].otherProfessionAmharic
+                ? certificateDetail.value.educations[i].otherProfessionAmharic
                 : ""
             }`
           );
@@ -2074,10 +2077,19 @@ doc.text(
                 certificateDetail.value.educations.length > 1
                   ? newI + 1 + ". "
                   : ""
-              }${
+              }
+              ${
+                certificateDetail.value.educations[i].prefix
+                  ? certificateDetail.value.educations[i].prefix.amharic_name
+                  : ""
+              }  ${
+                certificateDetail.value.educations[i].professionType &&
                 certificateDetail.value.educations[i].professionType
+                  .amharicProfessionalType
                   ? certificateDetail.value.educations[i].professionType
                       .amharicProfessionalType
+                  : certificateDetail.value.educations[i].otherProfessionAmharic
+                  ? certificateDetail.value.educations[i].otherProfessionAmharic
                   : ""
               }`
             );
@@ -2085,6 +2097,7 @@ doc.text(
           }
         }
       }
+
       //End of Amharic part for certificate
       doc.setFontSize(12);
       doc2.setFontSize(12);
