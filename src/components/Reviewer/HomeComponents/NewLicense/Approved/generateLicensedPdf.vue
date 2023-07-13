@@ -180,24 +180,31 @@
                       }}</span
                     >
                     ተገቢውን መስፈርት አሟልተው ስለተገኙ ሚኒስቴር መስሪያ ቤቱ <br />
-                    <div
-                      class="flex justify-center mt-8 mb-2"
-                      v-for="department in educations"
-                      :key="department.id"
-                    >
-                      <span
-                        class="underline text-yellow-300 font-bold"
-                        style="word-break: break-word"
+                    <div class="mt-8">
+                      <div
+                        class="flex justify-center  mb-2"
+                        v-for="department in educations"
+                        :key="department.id"
                       >
-                        {{
-                          department.professionType &&
-                          department.professionType.amharicProfessionalType
-                            ? department.professionType.amharicProfessionalType
-                            : department.otherProfessionAmharic
-                            ? department.otherProfessionAmharic
-                            : ""
-                        }} </span
-                      ><br />
+                        <span
+                          class="underline text-yellow-300 font-bold"
+                          style="word-break: break-word"
+                        >
+                          {{
+                            department && department.professionType
+                              ? department.prefix
+                                ? department.prefix.amharic_name +
+                                  " " +
+                                  department.professionType
+                                    .amharicProfessionalType
+                                : department.professionType
+                                    .amharicProfessionalType
+                              : department.otherProfessionAmharic
+                              ? department.otherProfessionAmharic
+                              : ""
+                          }} </span
+                        ><br />
+                      </div>
                     </div>
                     ሙያ መዝግቦ ይህን የሙያ ስራ ፈቃድ ሰጥቷል።
                   </div>
@@ -284,9 +291,8 @@
                         {{
                           department && department.professionType
                             ? department.prefix
-                              ? "(" +
-                                department.prefix.name +
-                                ") " +
+                              ? department.prefix.name +
+                                " " +
                                 department.professionType.name
                               : department.professionType.name
                             : department.otherProfessionType
@@ -515,8 +521,15 @@
                               educations &&
                               educations[0] &&
                               educations[0].professionType
-                                ? educations[0].professionType
-                                    .amharicProfessionalType
+                                ? educations[0].prefix
+                                  ? educations[0].prefix.amharic_name +
+                                    " " +
+                                    educations[0].professionType
+                                      .amharicProfessionalType
+                                  : educations[0].professionType
+                                      .amharicProfessionalType
+                                : educations[0].otherProfessionAmharic
+                                ? educations[0].otherProfessionAmharic
                                 : ""
                             }}</span
                           >
@@ -528,8 +541,15 @@
                               educations &&
                               educations[1] &&
                               educations[1].professionType
-                                ? educations[1].professionType
-                                    .amharicProfessionalType
+                                ? educations[1].prefix
+                                  ? educations[1].prefix.amharic_name +
+                                    " " +
+                                    educations[1].professionType
+                                      .amharicProfessionalType
+                                  : educations[1].professionType
+                                      .amharicProfessionalType
+                                : educations[1].otherProfessionAmharic
+                                ? educations[1].otherProfessionAmharic
                                 : ""
                             }}</span
                           >
@@ -541,8 +561,15 @@
                               educations &&
                               educations[2] &&
                               educations[2].professionType
-                                ? educations[2].professionType
-                                    .amharicProfessionalType
+                                ? educations[2].prefix
+                                  ? educations[2].prefix.amharic_name +
+                                    " " +
+                                    educations[2].professionType
+                                      .amharicProfessionalType
+                                  : educations[2].professionType
+                                      .amharicProfessionalType
+                                : educations[2].otherProfessionAmharic
+                                ? educations[2].otherProfessionAmharic
                                 : ""
                             }}</span
                           >
@@ -628,9 +655,8 @@
                               educations[0] &&
                               educations[0].professionType
                                 ? educations[0].prefix
-                                  ? +"( " +
-                                    educations[0].prefix.name +
-                                    " )" +
+                                  ? educations[0].prefix.name +
+                                    " " +
                                     educations[0].professionType.name
                                   : educations[0].professionType.name
                                 : educations[0].otherProfessionType
@@ -647,9 +673,8 @@
                               educations[1] &&
                               educations[1].professionType
                                 ? educations[1].prefix
-                                  ? +"( " +
-                                    educations[1].prefix.name +
-                                    " )" +
+                                  ? educations[1].prefix.name +
+                                    " " +
                                     educations[1].professionType.name
                                   : educations[1].professionType.name
                                 : educations[1].otherProfessionType
@@ -666,9 +691,8 @@
                               educations[2] &&
                               educations[2].professionType
                                 ? educations[2].prefix
-                                  ? +"( " +
-                                    educations[2].prefix.name +
-                                    " )" +
+                                  ? educations[2].prefix.name +
+                                    " " +
                                     educations[2].professionType.name
                                   : educations[2].professionType.name
                                 : educations[2].otherProfessionType
@@ -891,8 +915,15 @@
                               educations &&
                               educations[3] &&
                               educations[3].professionType
-                                ? educations[3].professionType
-                                    .amharicProfessionalType
+                                ? educations[3].prefix
+                                  ? educations[3].prefix.amharic_name +
+                                    " " +
+                                    educations[3].professionType
+                                      .amharicProfessionalType
+                                  : educations[3].professionType
+                                      .amharicProfessionalType
+                                : educations[3].otherProfessionAmharic
+                                ? educations[3].otherProfessionAmharic
                                 : ""
                             }}</span
                           >
@@ -904,8 +935,15 @@
                               educations &&
                               educations[4] &&
                               educations[4].professionType
-                                ? educations[4].professionType
-                                    .amharicProfessionalType
+                                ? educations[4].prefix
+                                  ? educations[4].prefix.amharic_name +
+                                    " " +
+                                    educations[4].professionType
+                                      .amharicProfessionalType
+                                  : educations[4].professionType
+                                      .amharicProfessionalType
+                                : educations[4].otherProfessionAmharic
+                                ? educations[4].otherProfessionAmharic
                                 : ""
                             }}</span
                           >
@@ -917,8 +955,15 @@
                               educations &&
                               educations[5] &&
                               educations[5].professionType
-                                ? educations[5].professionType
-                                    .amharicProfessionalType
+                                ? educations[5].prefix
+                                  ? educations[5].prefix.amharic_name +
+                                    " " +
+                                    educations[5].professionType
+                                      .amharicProfessionalType
+                                  : educations[5].professionType
+                                      .amharicProfessionalType
+                                : educations[5].otherProfessionAmharic
+                                ? educations[5].otherProfessionAmharic
                                 : ""
                             }}</span
                           >
@@ -1010,9 +1055,8 @@
                               educations[3] &&
                               educations[3].professionType
                                 ? educations[3].prefix
-                                  ? +"( " +
-                                    educations[3].prefix.name +
-                                    " )" +
+                                  ? educations[3].prefix.name +
+                                    " " +
                                     educations[3].professionType.name
                                   : educations[3].professionType.name
                                 : educations[3].otherProfessionType
@@ -1029,9 +1073,8 @@
                               educations[4] &&
                               educations[4].professionType
                                 ? educations[4].prefix
-                                  ? +"( " +
-                                    educations[4].prefix.name +
-                                    " )" +
+                                  ? educations[4].prefix.name +
+                                    " " +
                                     educations[4].professionType.name
                                   : educations[4].professionType.name
                                 : educations[4].otherProfessionType
@@ -1048,9 +1091,8 @@
                               educations[5] &&
                               educations[5].professionType
                                 ? educations[5].prefix
-                                  ? +"( " +
-                                    educations[5].prefix.name +
-                                    " )" +
+                                  ? educations[5].prefix.name +
+                                    " " +
                                     educations[5].professionType.name
                                   : educations[5].professionType.name
                                 : educations[5].otherProfessionType
@@ -1958,7 +2000,7 @@ export default {
       store
         .dispatch("reviewer/getQrCode", qrParam)
         .then((res) => {
-          imageSrc.value = res.data.data; 
+          imageSrc.value = res.data.data;
         })
         .finally(() => {
           downloadPdf();
@@ -2202,24 +2244,20 @@ export default {
             xPosition.value,
             professionPossition + i * professionListGap,
             `${
-              certificateDetail.value.educations.length > 1 ? i + 1 + ". " : ""
+              certificateDetail.value.educations.length > 1
+                ? i + 1 + ". "
+                : "1. "
             }${
-              certificateDetail.value.educations[i].professionType
-                ? certificateDetail.value.educations[i].professionType.name
-                : certificateDetail.value.educations[i].otherProfessionType
+              certificateDetail.value.educations[i].professionType &&
+              certificateDetail.value.educations[i].professionType.name
                 ? `${
                     certificateDetail.value.educations[i].prefix
                       ? certificateDetail.value.educations[i].prefix.name
                       : ""
-                  }   ${
-                    certificateDetail.value.educations[i].otherProfessionType
-                      ? certificateDetail.value.otherProfessionType
-                        ? certificateDetail.value.otherProfessionType
-                        : ""
-                      : certificateDetail.value.educations[i].professionType
-                          .name
+                  }  ${
+                    certificateDetail.value.educations[i].professionType.name
                   }`
-                : ""
+                : certificateDetail.value.educations[i].otherProfessionType
             }`
           );
         }
@@ -2230,24 +2268,20 @@ export default {
             xPosition.value,
             professionPossition + i * professionListGap,
             `${
-              certificateDetail.value.educations.length > 1 ? i + 1 + ". " : ""
+              certificateDetail.value.educations.length > 1
+                ? i + 1 + ". "
+                : "1. "
             }${
-              certificateDetail.value.educations[i].professionType
-                ? certificateDetail.value.educations[i].professionType.name
-                : certificateDetail.value.educations[i].otherProfessionType
+              certificateDetail.value.educations[i].professionType &&
+              certificateDetail.value.educations[i].professionType.name
                 ? `${
                     certificateDetail.value.educations[i].prefix
                       ? certificateDetail.value.educations[i].prefix.name
                       : ""
-                  }   ${
-                    certificateDetail.value.educations[i].otherProfessionType
-                      ? certificateDetail.value.otherProfessionType
-                        ? certificateDetail.value.otherProfessionType
-                        : ""
-                      : certificateDetail.value.educations[i].professionType
-                          .name
+                  }  ${
+                    certificateDetail.value.educations[i].professionType.name
                   }`
-                : ""
+                : certificateDetail.value.educations[i].otherProfessionType
             }`
           );
         }
@@ -2262,20 +2296,16 @@ export default {
                   ? newI + 1 + ". "
                   : ""
               }${
+                certificateDetail.value.educations[i].professionType &&
                 certificateDetail.value.educations[i].professionType.name
                   ? `${
                       certificateDetail.value.educations[i].prefix
                         ? certificateDetail.value.educations[i].prefix.name
                         : ""
-                    }   ${
-                      certificateDetail.value.educations[i].otherProfessionType
-                        ? certificateDetail.value.otherProfessionType
-                          ? certificateDetail.value.otherProfessionType
-                          : ""
-                        : certificateDetail.value.educations[i].professionType
-                            .name
+                    }  ${
+                      certificateDetail.value.educations[i].professionType.name
                     }`
-                  : ""
+                  : certificateDetail.value.otherProfessionType
               }`
             );
           }
@@ -2397,11 +2427,20 @@ export default {
             xPosition.value,
             professionPossition + i * professionListGap,
             `${
-              certificateDetail.value.educations.length > 1 ? i + 1 + ". " : ""
+              certificateDetail.value.educations.length > 1
+                ? i + 1 + ". "
+                : "1. "
             }${
               certificateDetail.value.educations[i].professionType
-                ? certificateDetail.value.educations[i].professionType
-                    .amharicProfessionalType
+                ? certificateDetail.value.educations[i].prefix
+                  ? certificateDetail.value.educations[i].prefix.amharic_name +
+                    " " +
+                    certificateDetail.value.educations[i].professionType
+                      .amharicProfessionalType
+                  : certificateDetail.value.educations[i].professionType
+                      .amharicProfessionalType
+                : certificateDetail.value.educations[i].otherProfessionAmharic
+                ? certificateDetail.value.educations[i].otherProfessionAmharic
                 : ""
             }`
           );
@@ -2415,8 +2454,15 @@ export default {
               certificateDetail.value.educations.length > 1 ? i + 1 + ". " : ""
             }${
               certificateDetail.value.educations[i].professionType
-                ? certificateDetail.value.educations[i].professionType
-                    .amharicProfessionalType
+                ? certificateDetail.value.educations[i].prefix
+                  ? certificateDetail.value.educations[i].prefix.amharic_name +
+                    " " +
+                    certificateDetail.value.educations[i].professionType
+                      .amharicProfessionalType
+                  : certificateDetail.value.educations[i].professionType
+                      .amharicProfessionalType
+                : certificateDetail.value.educations[i].otherProfessionAmharic
+                ? certificateDetail.value.educations[i].otherProfessionAmharic
                 : ""
             }`
           );
@@ -2433,9 +2479,16 @@ export default {
                   : ""
               }${
                 certificateDetail.value.educations[i].professionType
-                  ? certificateDetail.value.educations[i].professionType
+                ? certificateDetail.value.educations[i].prefix
+                  ? certificateDetail.value.educations[i].prefix.amharic_name +
+                    " " +
+                    certificateDetail.value.educations[i].professionType
                       .amharicProfessionalType
-                  : ""
+                  : certificateDetail.value.educations[i].professionType
+                      .amharicProfessionalType
+                : certificateDetail.value.educations[i].otherProfessionAmharic
+                ? certificateDetail.value.educations[i].otherProfessionAmharic
+                : ""
               }`
             );
             newI++;

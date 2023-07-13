@@ -112,6 +112,7 @@ export default {
           proPrefixTableData.push({
             id: element.id ? element.id : "",
             Name: element.name ? element.name : "",
+            AmharicName: element.amharic_name ? element.amharic_name : "",
             Code: element.code ? element.code : "",
             Status: element && element.status == true ? "Active" : "Inactive",
             finalStatus: element.status,
@@ -130,9 +131,16 @@ export default {
             {
               label: "Name",
               field: "Name",
-              width: "50%",
+              width: "30%",
               sortable: true,
             },
+            {
+              label: "AmharicName",
+              field: "AmharicName",
+              width: "20%",
+              sortable: true,
+            },
+            
             {
               label: "Code",
               field: "Code",
