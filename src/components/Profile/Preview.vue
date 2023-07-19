@@ -1,24 +1,24 @@
 <template>
   <div class="container" style="margin-top: 10px;">
-    <h2 class="text-main-400 font-bold text-display">Summary</h2>
+    <h2 class="text-main-400 font-bold text-display border-b-4 mb-4">Summary</h2>
     <div
-      class="grid grid-cols-1  
-              md:grid-cols-1
-              mdlg:grid-cols-1
-              lg:grid-cols-4
-              xl:grid-cols-4
+      class="grid
+              md:grid-cols-6
+              mdlg:grid-cols-6
+              lg:grid-cols-6
+              xl:grid-cols-6
               sm:grid-rows-1"
     >
-      <div class=" rounded-md  p-4 ">
-        <article class="overflow-hidden   p-4">
-       
+      <div class=" rounded-md mr-8 sm:mb-4 ">
+        <article class="overflow-hidden border rounded-md  p-4">
+          <h2 class="text-main-400 font-bold text-base mb-4">Profile Picture</h2>
 
           <picture>
             <img :src="profilePic" />
           </picture>
         </article>
       </div>
-      <div class="bg-white rounded-md shadow-md p-4 m-2 col-span-3">
+      <div class="bg-white border rounded-md shadow-md p-4 mb-8 col-span-5">
         <article class="overflow-hidden   p-4">
           <div class="flex justify-start flex-col">
             <div class="flex justify-start border-b-4 text-main-400 mt-4 mb-4">
@@ -205,6 +205,7 @@ export default {
   computed: {
     moment: () => moment,
   },
+  emits: ["nextStep","changeActiveState"],
   props: ["activeState"],
   setup(props, { emit }) {
     const store = useStore();
@@ -349,6 +350,7 @@ export default {
     };
     const prevStep = () => {
       emit("changeActiveStatePrevious");
+      emit("nextStep","remove");
     };
     personalInfo = store.getters["profile/getPersonalInfo"];
     if (

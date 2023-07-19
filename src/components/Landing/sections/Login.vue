@@ -13,6 +13,7 @@
       <div
         class="relative flex flex-col w-full   text-current border-none rounded-md shadow-md outline-none pointer-events-auto modal-content md:w-9/12 mdlg:w-9/12 lg:w-10/12 sm:w-full bg-clip-padding"
       >
+      
         <div class="relative flex justify-center p-2 modal-body">
           <div class="relative py-3 sm:max-w-xl sm:mx-auto">
             <div
@@ -20,14 +21,21 @@
             ></div>
 
             <div class="relative  bg-white shadow-md sm:rounded-3xl sm:p-10 rounded-3xl p-4">
-              <div class="flex justify-center">
+              
+              <div class="flex justify-end">
                 <button
+                style="
+    margin-right: -26px;
+    margin-top: -30px;
+"
                   type="button"
-                  class="bg-main-400 rounded-md mb-4 text-white border-none  btn-close h-small "
+                  class="text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded shadow-md bg-main-400 hover:text-main-400 hover:border hover:border-main-400  hover:shadow-md"
                   data-bs-dismiss="modal"
                   aria-label="Close"
-                ></button>
+                >  <i class="fa fa-close fa-2x"></i></button>
+                
               </div>
+              
               <div class="max-w-md mx-auto">
                 <div>
                   <div class="flex justify-center mb-6 form-group">

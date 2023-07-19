@@ -1,4 +1,5 @@
 <template>
+  
   <!-- If user clicks HRA -->
   <div class="w-screen max-w-4xl" v-if="approveStatus == 1">
     <div
@@ -61,28 +62,19 @@
   <!-- If user clicks HRA -->
   <!-- If user clicks New profile -->
   <div class="w-screen max-w-4xl   mb-20 p-4" v-if="approveStatus == 2">
+    
     <div
-      class="flex flex-col w-full  form_wrapper bg-white blue-box-shadow-light rounded mb-large"
+      class="flex flex-col w-full  form_wrapper bg-white border shadow-md rounded-md mb-large"
     >
       <div class="flex justify-center  ">
-        <h1 class="text-main-400  ">Complete profile data</h1>
+        <h1 class="text-main-400  text-2xl">Complete profile data</h1>
       </div>
 
       <form
         class="mx-auto max-w-3xl w-full mt-4 p-2"
         @submit.prevent="nextStep"
       >
-        <div class="flex justify-center">
-          <span>
-            <h6 class="text-sm border-b-2 text-main-400">
-              File-{{ photoFile.name ? photoFile.name : "------" }}
-            </h6>
-            <h6 class="text-sm text-main-400">
-              Size-{{ fileSize ? fileSize : "------" }}
-            </h6>
-          </span>
-        </div>
-        <h2 class="text-xl text-justify bg-yellow-300 rounded-md p-2 m-2">
+        <h2 class="text-xl text-justify border text-yellow-300 rounded-md p-2 m-2">
           Please upload your own personal picture where the prefered size is in
           a passport size format which is 3 X 4 as this photo will be used in
           your generated license
@@ -106,6 +98,7 @@
                   or click to browse
                 </p>
               </div>
+           
               <div class="ml-8 mt-4">
                 <span
                   v-if="personalInfoErrors.photo"
@@ -114,7 +107,9 @@
                 >
               </div>
             </label>
+            
           </div>
+          
           <picture v-if="!showUpload && isImage">
             <div class="flex justify-center">
               <span
@@ -129,6 +124,7 @@
             </div>
             <img v-bind:src="filePreview" v-show="showPreview" />
           </picture>
+         
           <span v-if="photoSizeCheck" style="color: red"
             >Image size to big, Upload again. Image must be less than 3 MB</span
           >
@@ -136,6 +132,16 @@
             <img :src="filePreview" alt="" class="preview" />
           </span>
         </div>
+        <div class="flex justify-center">
+                <span>
+                  <h6 class="text-sm border-b-2 text-main-400">
+                 {{ photoFile.name ? photoFile.name : "------" }}
+                  </h6>
+                  <h6 class="text-sm">
+               {{ fileSize ? fileSize : "------" }}
+                  </h6>
+                </span>
+              </div>
 
         <!-- English Name Part -->
         <h2 class="text-main-400">Name (English)</h2>
@@ -146,7 +152,7 @@
             <div class="form-floating ">
               <input
                 type="text"
-                class="form-control block w-full px-3  p-2 h-14 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-2 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                class="form-control block w-full px-3 text-main-400 p-2 h-14 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out mb-4 mt-2 "
                 onkeypress="return /[a-zA-Z]/i.test(event.key)"
                 v-model="personalInfo.name"
                 :disabled="
@@ -155,10 +161,10 @@
                 id="floatingInput"
                 placeholder="First name"
               />
-              <label for="floatingInput" class="text-gray-700">Name</label>
+              <label for="floatingInput" class="text-grey-800">Name</label>
               <span
                 v-if="personalInfoErrors.name"
-                class="mt-2 border p-2 text-sm text-red-300 ml-4"
+                class="border p-2 text-sm text-red-300 ml-4 rounded-md"
                 >{{ personalInfoErrors.name }}</span
               >
             </div>
@@ -167,7 +173,7 @@
             <div class="form-floating  ">
               <input
                 type="text"
-                class="form-control block w-full px-3 p-2 h-14 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-2  focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                class="form-control block text-main-400 w-full px-3 p-2 h-14 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out mb-4 mt-2"
                 onkeypress="return /[a-zA-Z]/i.test(event.key)"
                 v-model="personalInfo.fatherName"
                 :disabled="
@@ -176,12 +182,12 @@
                 id="floatingInput"
                 placeholder="First name"
               />
-              <label for="floatingInput" class="text-gray-700"
+              <label for="floatingInput" class="text-grey-800"
                 >Father Name</label
               >
               <span
                 v-if="personalInfoErrors.fatherName"
-                class="mt-2 border p-2 text-sm text-red-300 ml-4"
+                class="mt-2 border p-2 text-sm text-red-300 ml-4 rounded-md"
                 >{{ personalInfoErrors.fatherName }}</span
               >
             </div>
@@ -190,7 +196,7 @@
             <div class="form-floating   xl:w-96">
               <input
                 type="text"
-                class="form-control block w-full px-3  p-2 h-14 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-2 focus:border-main-400 focus:outline-none"
+                class="form-control block text-main-400 w-full px-3  p-2 h-14 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out mt-2 mb-4"
                 onkeypress="return /[a-zA-Z]/i.test(event.key)"
                 v-model="personalInfo.grandFatherName"
                 :disabled="
@@ -199,12 +205,12 @@
                 id="floatingInput"
                 placeholder="First name"
               />
-              <label for="floatingInput" class="text-gray-700"
+              <label for="floatingInput" class="text-grey-800"
                 >Grandfather Name</label
               >
               <span
                 v-if="personalInfoErrors.grandFatherName"
-                class="mt-2 border p-2 text-sm text-red-300 ml-4"
+                class="mt-2 border p-2 text-sm text-red-300 ml-4 break-all rounded-md"
                 >{{ personalInfoErrors.grandFatherName }}</span
               >
             </div>
@@ -222,39 +228,39 @@
             <div class="form-floating mb-3 xl:w-96">
               <input
                 type="text"
-                class="form-control block w-full px-3  p-2 h-14 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-2 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                class="form-control block w-full px-3 text-main-400  p-2 h-14 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-2 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                 onkeypress="return /[a-zA-Z]/i.test(event.key)"
                 v-model="personalInfo.alternativeName"
                 id="amhName"
                 placeholder="Amharic First name"
               />
-              <label for="amhName" class="text-grey-700">ስም</label>
+              <label for="amhName" class="text-grey-800">ስም</label>
             </div>
           </div>
           <div class="flex">
             <div class="form-floating mb-3 xl:w-96">
               <input
                 type="text"
-                class="form-control block w-full px-3 p-2 h-14 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-2   focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                class="form-control block text-main-400 w-full px-3 p-2 h-14 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-2   focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                 onkeypress="return /[a-zA-Z]/i.test(event.key)"
                 v-model="personalInfo.alternativeFatherName"
                 id="amhFName"
                 placeholder="Amharic Fathers name"
               />
-              <label for="amhFName" class="text-grey-700">የአባት ስም</label>
+              <label for="amhFName" class="text-grey-800">የአባት ስም</label>
             </div>
           </div>
           <div class="flex">
             <div class="form-floating mb-3 xl:w-96">
               <input
                 type="text"
-                class="form-control block w-full px-3  p-2 h-14 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-2 focus:border-main-400 focus:outline-none"
+                class="form-control block text-main-400 w-full px-3  p-2 h-14 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-2 focus:border-main-400 focus:outline-none"
                 onkeypress="return /[a-zA-Z]/i.test(event.key)"
                 v-model="personalInfo.alternativeGrandFatherName"
                 id="amhGName"
                 placeholder="Amharic Grand Father name"
               />
-              <label for="amhGName" class="text-gray-700">የ ኣያት ስም</label>
+              <label for="amhGName" class="text-grey-800">የ ኣያት ስም</label>
             </div>
           </div>
         </div>
@@ -270,7 +276,7 @@
             <div class="form-floating mb-3 w-full mt-2">
               <input
                 type="date"
-                class="form-control block w-full px-3   p-2 h-14 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-2 focus:border-main-400 focus:outline-none"
+                class="form-control block w-full px-3 text-main-400    p-2 h-14 text-base font-normal  bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-2  "
                 :max="minimumBirthDate"
                 min="1899-01-01"
                 v-model="personalInfo.dateOfBirth"
@@ -280,15 +286,15 @@
                 "
                 id="birthDate"
               />
-              <label for="birthDate" class="text-gray-700">Date of Birth</label>
+              <label for="birthDate" class="text-grey-800">Date of Birth</label>
               <div
                 v-if="
                   personalInfoErrors.dateOfBirth ||
                     personalInfoErrors.invalidBirthDate
                 "
-                class="border p-2 text-sm text-red-300 mr-4"
+                class="border p-2 text-sm text-red-300 mr-4 rounded-md w-3/4 ml-4"
               >
-                <span class="mt-2 text-sm text-red-300 ml-4">{{
+                <span class="mt-2 text-sm text-red-300 ">{{
                   personalInfoErrors.dateOfBirth
                 }}</span>
               </div>
@@ -303,7 +309,7 @@
                   <div class="flex flex-col mb-small w-full">
                     <div class="flex py-2">
                       <input
-                        class="flex flex-col"
+                        class="flex flex-col "
                         type="radio"
                         id="male"
                         value="male"
@@ -313,7 +319,7 @@
                         "
                       />
                       <label
-                        class="ml-tiny flex flex-col text-primary-700"
+                        class="ml-tiny flex flex-col text-grey-800"
                         for="male"
                       >
                         Male
@@ -331,14 +337,14 @@
                         isRegisterdHRAuser == true && searchResultData.gender
                       "
                     />
-                    <label class="ml-tiny text-primary-700" for="female">
+                    <label class="ml-tiny text-grey-800" for="female">
                       Female
                     </label>
                   </div>
                 </div>
                 <span
                   v-if="personalInfoErrors.gender"
-                  class="border p-2 text-sm text-red-300 ml-4"
+                  class="border p-2 text-sm text-red-300 ml-4 rounded-md"
                 >
                   {{ personalInfoErrors.gender }}</span
                 >
@@ -352,9 +358,9 @@
           <div class="flex mt-2">
             <div class="flex justify-center">
               <div class="mb-3 w-full ml-2">
-                <label for="">Nationality</label>
+                <label class="text-grey-800">Nationality</label>
                 <select
-                  class="form-select appearance-none block w-full px-3 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 mb-4"
+                  class="form-select text-main-400 appearance-none block w-full px-3 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 mb-4"
                   aria-label="Default select example"
                   v-model="personalInfo.nationalityId"
                   @change="fetchNationalities()"
@@ -372,7 +378,7 @@
                 </select>
                 <span
                   v-if="personalInfoErrors.nationalityId"
-                  class="mt-2 border p-2 text-sm text-red-300 ml-4"
+                  class="mt-2 border p-2 text-sm text-red-300 ml-4 rounded-md"
                   >{{ personalInfoErrors.nationalityId }}</span
                 >
               </div>
@@ -380,9 +386,9 @@
           </div>
           <div class="flex mt-2">
             <div class="mb-3 w-full sm:ml-2 md:ml-2 mdlg:ml-2 ml-2">
-              <label for="">Marital Status</label>
+              <label class="text-grey-800">Marital Status</label>
               <select
-                class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 mb-4"
+                class="form-select text-main-400 appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 mb-4"
                 aria-label="Default select example"
                 v-model="personalInfo.maritalStatusId"
                 :disabled="
@@ -398,29 +404,27 @@
               </select>
               <span
                 v-if="personalInfoErrors.maritalStatus"
-                class="mt-2 border p-2 text-sm text-red-300 ml-4"
+                class="mt-2 border p-2 text-sm text-red-300 ml-4 rounded-md"
                 >{{ personalInfoErrors.maritalStatus }}</span
               >
             </div>
           </div>
           <div class="flex mt-2">
-          <div class="form-floating  w-full ">
-            <input
-              type="number"
-              class="form-control block w-full  text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-2   focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-              v-model="personalInfo.poBox"
-              :disabled="isRegisterdHRAuser == true && searchResultData.pobox"
-              id="pobox"
-              placeholder="Po-box"
-            />
-            <label for="pobox" class="text-grey-700">Po-box</label>
+            <div class="form-floating  w-full ">
+              <input
+                type="number"
+                class="form-control block w-full  text-base font-normal text-main-400 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-2  "
+                v-model="personalInfo.poBox"
+                :disabled="isRegisterdHRAuser == true && searchResultData.pobox"
+                id="pobox"
+                placeholder="Po-box"
+              />
+              <label for="pobox" class="text-grey-700">Po-box</label>
+            </div>
           </div>
         </div>
-        </div>
 
-   
         <!-- General personal info Part -->
-   
 
         <div class="flex justify-center mb-24">
           <button
@@ -442,6 +446,7 @@ import { useToast } from "vue-toastification";
 export default {
   components: {},
   props: ["activeState", "approvalModal"],
+  emits: ["nextStep","changeActiveState"],
   setup(props, { emit }) {
     const store = useStore();
     let approveStatus = ref(props.approvalModal);
@@ -698,7 +703,9 @@ export default {
       } else if (empty == true) {
         store.dispatch("profile/setProfileInfo", personalInfo);
         store.dispatch("profile/setPhoto", photoFile.value);
+       
         emit("changeActiveState");
+        emit("nextStep",'add');
       }
     };
     const validateDate = (dateInput) => {
@@ -729,7 +736,7 @@ export default {
         errors.maritalStatus = "Marital status is required";
       if (!formData.gender) errors.gender = "Gender is required";
       if (!formData.grandFatherName)
-        errors.grandFatherName = "Grandfather's name is required";
+        errors.grandFatherName = "Grandfather's name required";
       if (!formData.nationalityId)
         errors.nationalityId = "Nationality is required";
 
