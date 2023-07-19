@@ -23,7 +23,7 @@
                 class="
                   bg-main-400
                   hover:bg-white
-                  shadow-lg
+                  shadow-md
                   box
                   w-full
                   rounded-lg
@@ -66,7 +66,7 @@
               <div
                 class="
                   bg-main-400
-                  shadow-lg
+                  shadow-md
                   box
                   rounded-2xl
                   hover:shadow-4xl
@@ -108,7 +108,7 @@
               <div
                 class="
                   bg-white
-                  shadow-lg
+                  shadow-md
                   box
                   rounded-2xl
                   hover:shadow-4xl
@@ -176,8 +176,8 @@
       <div
         :class="
           isDarkMode
-            ? 'modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-secondaryDark bg-clip-padding rounded-md outline-none text-current'
-            : 'modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current'
+            ? 'modal-content border-none shadow-md relative flex flex-col w-full pointer-events-auto bg-secondaryDark bg-clip-padding rounded-md outline-none text-current'
+            : 'modal-content border-none shadow-md relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current'
         "
       >
         <div
@@ -191,15 +191,21 @@
             rounded-t-md
           "
         >
-          <h2
-            :class="
-              isDarkMode
-                ? 'text-white xl:mx-12 text-2xl'
-                : 'text-main-400 text-2xl xl:mx-12'
-            "
+          <h1
+            class="
+                    text-2xl
+                    md:text-2xl
+                    lg:text-2xl
+                    mdlg:text-2xl
+                    font-medium
+                    text-main-400
+                    mb-4
+                    sm:text-base
+                    md:mb-6
+                  "
           >
-            Document specification for new License
-          </h2>
+            Required Documents for New License Application
+          </h1>
           <button
             type="button"
             class="
@@ -213,7 +219,7 @@
               leading-tight
               uppercase
               rounded
-              shadow-lg
+              shadow-md
               hover:bg-white hover:text-main-400
               transition
               duration-150
@@ -229,34 +235,24 @@
           <div
             :class="
               isDarkMode
-                ? 'bg-primaryDark rounded-lg p-4 md:py-12'
-                : 'bg-white rounded-lg p-4 md:py-12'
+                ? 'bg-primaryDark rounded-lg p-4  '
+                : 'bg-white rounded-lg p-4  '
             "
           >
             <div class="container mx-auto px-4">
-              <div class="max-w-3xl mx-auto text-center">
-                <h1
-                  class="
-                    text-3xl
-                    md:text-4xl
-                    font-medium
-                    text-main-400
-                    mb-4
-                    border-b-4
-                    md:mb-6
-                  "
-                >
-                  Required Documents for New License Application
-                </h1>
+              <div class="flex justify-center">
+                <h2 class="text-xl text-main-400">
+                  ** Focal persons should use the email address of the
+                  professional they are applying on behalf of
+                </h2>
               </div>
-
               <div class="lg:flex lg:-mx-4 mt-6 md:mt-12">
                 <div class="pricing-plan-wrap lg:w-1/3 my-4 md:my-6 mr-4">
                   <div
                     :class="
                       isDarkMode
-                        ? 'pricing-plan border-t-4 border-solid  bg-secondaryDark rounded-lg shadow-lg text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
-                        : 'pricing-plan border-t-2  border-solid border-grey-200 bg-white rounded-lg shadow-lg  text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
+                        ? 'pricing-plan border-t-4 border  bg-secondaryDark rounded-lg shadow-md text-center max-w-full mx-auto   transition-colors duration-300'
+                        : 'pricing-plan border-t-2  border border-grey-200 bg-white rounded-lg shadow-md  text-center max-w-full mx-auto  transition-colors duration-300'
                     "
                   >
                     <div class="p-2 md:py-4">
@@ -539,8 +535,8 @@
                   <div
                     :class="
                       isDarkMode
-                        ? 'pricing-plan border-t-4 border-solid  bg-secondaryDark rounded-lg shadow-lg text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
-                        : 'pricing-plan border-t-2  border-solid border-grey-200 bg-white rounded-lg shadow-lg text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
+                        ? 'pricing-plan border-t-4 border  bg-secondaryDark rounded-lg shadow-md text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
+                        : 'pricing-plan border-t-2  border border-grey-200 bg-white rounded-lg shadow-md text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
                     "
                   >
                     <div class="p-2 md:py-4">
@@ -749,8 +745,8 @@
                   <div
                     :class="
                       isDarkMode
-                        ? 'pricing-plan border-t-4 border-solid  bg-secondaryDark rounded-lg shadow-lg text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
-                        : 'pricing-plan border-t-2  border-solid border-grey-200 bg-white rounded-lg shadow-lg text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
+                        ? 'pricing-plan border-t-4 border  bg-secondaryDark rounded-lg shadow-md text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
+                        : 'pricing-plan border-t-2  border border-grey-200 bg-white rounded-lg shadow-md text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
                     "
                   >
                     <div class="p-2 md:py-4">
@@ -968,8 +964,8 @@
       <div
         :class="
           isDarkMode
-            ? 'modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-secondaryDark bg-clip-padding rounded-md outline-none text-current'
-            : 'modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current'
+            ? 'modal-content border-none shadow-md relative flex flex-col w-full pointer-events-auto bg-secondaryDark bg-clip-padding rounded-md outline-none text-current'
+            : 'modal-content border-none shadow-md relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current'
         "
       >
         <div
@@ -983,9 +979,22 @@
             rounded-t-md
           "
         >
-          <h2 class="text-xl font-bold leading-normal text-main-400">
+          <h2
+            class="
+                    text-2xl
+                    md:text-2xl
+                    lg:text-2xl
+                    mdlg:text-2xl
+                    font-medium
+                    text-main-400
+                    mb-4
+                    sm:text-base
+                    md:mb-6
+                  "
+          >
             Document specification for license renewal
           </h2>
+
           <button
             type="button"
             class="
@@ -999,7 +1008,7 @@
               leading-tight
               uppercase
               rounded
-              shadow-lg
+              shadow-md
               hover:bg-white hover:text-main-400
               transition
               duration-150
@@ -1020,20 +1029,11 @@
             "
           >
             <div class="container mx-auto px-4">
-              <div class="max-w-3xl mx-auto text-center">
-                <h1
-                  class="
-                    text-3xl
-                    md:text-4xl
-                    font-medium
-                    text-main-400
-                    mb-4
-                    border-b-4
-                    md:mb-6
-                  "
-                >
-                  Required Documents for License Renewal
-                </h1>
+              <div class="flex justify-center">
+                <h2 class="text-xl text-main-400">
+                  ** Focal persons should use the email address of the
+                  professional they are applying on behalf of
+                </h2>
               </div>
 
               <div class="lg:flex lg:-mx-4 mt-6 md:mt-12">
@@ -1041,8 +1041,8 @@
                   <div
                     :class="
                       isDarkMode
-                        ? 'pricing-plan border-t-4 border-solid  bg-secondaryDark rounded-lg shadow-lg text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
-                        : 'pricing-plan border-t-2  border-solid border-grey-200 bg-white rounded-lg shadow-lg text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
+                        ? 'pricing-plan border-t-4 border  bg-secondaryDark rounded-lg shadow-md text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
+                        : 'pricing-plan border-t-2  border border-grey-200 bg-white rounded-lg shadow-md text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
                     "
                   >
                     <div class="p-2 md:py-4">
@@ -1196,8 +1196,8 @@
                   <div
                     :class="
                       isDarkMode
-                        ? 'pricing-plan border-t-4 border-solid  bg-secondaryDark rounded-lg shadow-lg text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
-                        : 'pricing-plan border-t-2  border-solid border-grey-200 bg-white rounded-lg shadow-lg text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
+                        ? 'pricing-plan border-t-4 border  bg-secondaryDark rounded-lg shadow-md text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
+                        : 'pricing-plan border-t-2  border border-grey-200 bg-white rounded-lg shadow-md text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
                     "
                   >
                     <div class="p-2 md:py-4">
@@ -1332,8 +1332,8 @@
                   <div
                     :class="
                       isDarkMode
-                        ? 'pricing-plan border-t-4 border-solid  bg-secondaryDark rounded-lg shadow-lg text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
-                        : 'pricing-plan border-t-2  border-solid border-grey-200 bg-white rounded-lg shadow-lg text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
+                        ? 'pricing-plan border-t-4 border  bg-secondaryDark rounded-lg shadow-md text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
+                        : 'pricing-plan border-t-2  border border-grey-200 bg-white rounded-lg shadow-md text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
                     "
                   >
                     <div class="p-2 md:py-4">
@@ -1495,8 +1495,8 @@
       <div
         :class="
           isDarkMode
-            ? 'modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-secondaryDark bg-clip-padding rounded-md outline-none text-current'
-            : 'modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current'
+            ? 'modal-content border-none shadow-md relative flex flex-col w-full pointer-events-auto bg-secondaryDark bg-clip-padding rounded-md outline-none text-current'
+            : 'modal-content border-none shadow-md relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current'
         "
       >
         <div
@@ -1511,7 +1511,7 @@
           "
         >
           <h2 class="text-xl font-bold leading-normal text-main-400">
-            Document specification for Goodstanding Letter
+            Required Documents for Goodstanding letter
           </h2>
           <button
             type="button"
@@ -1526,7 +1526,7 @@
               leading-tight
               uppercase
               rounded
-              shadow-lg
+              shadow-md
               hover:bg-white hover:text-main-400
               transition
               duration-150
@@ -1557,9 +1557,13 @@
                     mb-4
                     md:mb-6
                   "
-                >
-                  Required Documents for Goodstanding letter
-                </h1>
+                ></h1>
+              </div>
+              <div class="flex justify-center">
+                <h2 class="text-xl text-main-400">
+                  ** Focal persons should use the email address of the
+                  professional they are applying on behalf of
+                </h2>
               </div>
 
               <div class="lg:flex lg:-mx-4 mt-6 md:mt-12 justify-center">
@@ -1567,8 +1571,8 @@
                   <div
                     :class="
                       isDarkMode
-                        ? 'pricing-plan border-t-4 border-solid  bg-secondaryDark rounded-lg shadow-lg text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
-                        : 'pricing-plan border-t-2  border-solid border-grey-200 bg-white rounded-lg shadow-lg text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
+                        ? 'pricing-plan border-t-4 border  bg-secondaryDark rounded-lg shadow-md text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
+                        : 'pricing-plan border-t-2  border border-grey-200 bg-white rounded-lg shadow-md text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
                     "
                   >
                     <div class="p-6 md:py-8">
@@ -1608,54 +1612,44 @@
                         >(hover over lists to see details)</small
                       >
                     </div>
-                    <div class="p-6" v-if="GSdocumentSpecs">
-                      <ul
-                        v-for="doc in GSdocumentSpecs"
-                        :key="doc.id"
-                        class="leading-loose"
+                    <ul class="m-4">
+                      <li
+                        :class="
+                          isDarkMode
+                            ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
+                            : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
+                        "
+                        data-bs-toggle="tooltip"
+                        title=""
                       >
-                        <li
+                        <i
                           :class="
                             isDarkMode
-                              ? '   text-main-400 text-lg mb-2 bg-secondaryDark p-2 cursor-pointer'
-                              : 'text-main-400 text-lg mb-2 bg-white p-2 cursor-pointer'
+                              ? 'text-white  fa fa-arrow-right-long'
+                              : 'fa fa-arrow-right-long'
                           "
-                          data-bs-toggle="tooltip"
-                          :title="
-                            doc && doc.documentType
-                              ? doc.documentType.description
-                              : ''
+                        ></i>
+                        License Copy
+                      </li>
+                      <li
+                        :class="
+                          isDarkMode
+                            ? 'text-main-400 text-lg rounded-lg bg-secondaryDark cursor-pointer'
+                            : 'text-main-400 text-lg rounded-lg bg-white cursor-pointer'
+                        "
+                        data-bs-toggle="tooltip"
+                        title=""
+                      >
+                        <i
+                          :class="
+                            isDarkMode
+                              ? 'text-white  fa fa-arrow-right-long'
+                              : 'fa fa-arrow-right-long'
                           "
-                        >
-                          <i
-                            :class="
-                              isDarkMode
-                                ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long'
-                            "
-                          ></i>
-                          {{
-                            doc && doc.documentType ? doc.documentType.name : ""
-                          }}
-                        </li>
-                      </ul>
-                      <div class="mt-6 py-4">
-                        <a href="/Applicant/GoodStanding">
-                          <button
-                            class="
-                              text-xl text-white
-                              py-2
-                              bg-main-400
-                              hover:text-main-400 hover:border hover:bg-white
-                              px-6
-                              rounded-sm
-                            "
-                          >
-                            Get Started
-                          </button>
-                        </a>
-                      </div>
-                    </div>
+                        ></i>
+                        Work Experiance
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </div>
@@ -1772,72 +1766,6 @@ export default {
         document.querySelector("body").classList.add("dark-mode");
         document.getElementById("options-menu").classList.add("dark-mode");
       }
-      store.dispatch("lookups/getAllDocumentSpecs").then((res) => {
-        if (res.data.status == "Success") {
-          // NewLicense Section
-          NLdocumentSpecs.value.ethiopian = res.data.data.filter(
-            (element) =>
-              element.applicantType.code == "ETH" &&
-              element.isRequired == true &&
-              element.applicationCategory.code == "NA" &&
-              element.parentDocument == null
-          );
-          NLdocumentSpecs.value.foreigner = res.data.data.filter(
-            (element) =>
-              element.applicantType.code == "FOR" &&
-              element.isRequired == true &&
-              element.applicationCategory.code == "NA" &&
-              element.parentDocument == null
-          );
-          NLdocumentSpecs.value.ethiopianAbroad = res.data.data.filter(
-            (element) =>
-              element.applicantType.code == "ETHABRO" &&
-              element.isRequired == true &&
-              element.applicationCategory.code == "NA" &&
-              element.parentDocument == null
-          );
-
-          // Renewal Section
-          RNdocumentSpecs.value.ethiopian = res.data.data.filter(
-            (element) =>
-              element.applicantType.code == "ETH" &&
-              element.isRequired == true &&
-              element.applicationCategory.code == "RA" &&
-              element.parentDocument == null &&
-              element.educationalLevel &&
-              element.educationalLevel.code == "BACH"
-          );
-          RNdocumentSpecs.value.foreigner = res.data.data.filter(
-            (element) =>
-              element.applicantType.code == "FOR" &&
-              element.isRequired == true &&
-              element.applicationCategory.code == "RA" &&
-              element.parentDocument == null &&
-              element.educationalLevel &&
-              element.educationalLevel.code == "BACH"
-          );
-          RNdocumentSpecs.value.ethiopianAbroad = res.data.data.filter(
-            (element) =>
-              element.applicantType.code == "ETHABRO" &&
-              element.isRequired == true &&
-              element.applicationCategory.code == "RA" &&
-              element.parentDocument == null &&
-              element.educationalLevel &&
-              element.educationalLevel.code == "BACH"
-          );
-
-          //Good Standing section
-          GSdocumentSpecs.value = res.data.data.filter(
-            (element) =>
-              element.applicantType.code == "ETH" &&
-              element.isRequired == true &&
-              element.applicationCategory.code == "GSL" &&
-              element.parentDocument == null &&
-              element.educationalLevel &&
-              element.educationalLevel.id == 2
-          );
-        }
-      });
     });
     const dark = () => {
       document.getElementById("mainContent").classList.add("dark-mode");
