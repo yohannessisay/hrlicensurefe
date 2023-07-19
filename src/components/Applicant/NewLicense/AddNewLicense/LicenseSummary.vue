@@ -110,7 +110,7 @@
           <div
             class="grid grid-cols-4 gap-4 ml-4 sm:w-full sm:grid-cols-1 md:w-full mdlg:grid-cols-2 lg:w-full md:grid-cols-4 mdlg:w-full lg:grid-cols-4"
           >
-          {{ localFileData[0] }}
+          
             <div
               class="mt-4 mb-8 bg-white shadow-lg hover:shadow-lg rounded-md transform transition duration-300 ease-in-out hover:-translate-y-2"
               v-for="localFileData in localFileData[0]
