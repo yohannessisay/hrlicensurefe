@@ -1,5 +1,4 @@
 <template>
-  
   <!-- If user clicks HRA -->
   <div class="w-screen max-w-4xl" v-if="approveStatus == 1">
     <div
@@ -62,19 +61,20 @@
   <!-- If user clicks HRA -->
   <!-- If user clicks New profile -->
   <div class="w-screen max-w-4xl   mb-20 p-4" v-if="approveStatus == 2">
-    
     <div
       class="flex flex-col w-full  form_wrapper bg-white border shadow-md rounded-md mb-large"
     >
       <div class="flex justify-center  ">
-        <h1 class="text-main-400  text-2xl">Complete profile data</h1>
+        <h1 class="text-main-400  text-3xl">Complete profile data</h1>
       </div>
 
       <form
         class="mx-auto max-w-3xl w-full mt-4 p-2"
         @submit.prevent="nextStep"
       >
-        <h2 class="text-xl text-justify border text-yellow-300 rounded-md p-2 m-2">
+        <h2
+          class="text-xl text-justify border text-yellow-300 rounded-md p-2 m-2"
+        >
           Please upload your own personal picture where the prefered size is in
           a passport size format which is 3 X 4 as this photo will be used in
           your generated license
@@ -98,7 +98,7 @@
                   or click to browse
                 </p>
               </div>
-           
+
               <div class="ml-8 mt-4">
                 <span
                   v-if="personalInfoErrors.photo"
@@ -107,9 +107,8 @@
                 >
               </div>
             </label>
-            
           </div>
-          
+
           <picture v-if="!showUpload && isImage">
             <div class="flex justify-center">
               <span
@@ -124,7 +123,7 @@
             </div>
             <img v-bind:src="filePreview" v-show="showPreview" />
           </picture>
-         
+
           <span v-if="photoSizeCheck" style="color: red"
             >Image size to big, Upload again. Image must be less than 3 MB</span
           >
@@ -133,18 +132,18 @@
           </span>
         </div>
         <div class="flex justify-center">
-                <span>
-                  <h6 class="text-sm border-b-2 text-main-400">
-                 {{ photoFile.name ? photoFile.name : "------" }}
-                  </h6>
-                  <h6 class="text-sm">
-               {{ fileSize ? fileSize : "------" }}
-                  </h6>
-                </span>
-              </div>
+          <span>
+            <h6 class="text-sm border-b-2 text-main-400">
+              {{ photoFile.name ? photoFile.name : "------" }}
+            </h6>
+            <h6 class="text-sm">
+              {{ fileSize ? fileSize : "------" }}
+            </h6>
+          </span>
+        </div>
 
         <!-- English Name Part -->
-        <h2 class="text-main-400">Name (English)</h2>
+        <h2 class="text-main-400 text-xl">Name (English)</h2>
         <div
           class="grid grid-cols-3 gap-4 sm:grid-cols-1  lg:grid-cols-3 mdlg:grid-cols-3 md:grid-cols-3 border-t-2 mb-8"
         >
@@ -152,16 +151,20 @@
             <div class="form-floating ">
               <input
                 type="text"
-                class="form-control block w-full px-3 text-main-400 p-2 h-14 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out mb-4 mt-2 "
+                class="capitalize form-control block w-full px-3 text-main-400 p-2 h-14 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out mb-4 mt-2 "
                 onkeypress="return /[a-zA-Z]/i.test(event.key)"
                 v-model="personalInfo.name"
                 :disabled="
                   isRegisterdHRAuser == true && searchResultData.firstname
                 "
+                autocapitalize="word"
                 id="floatingInput"
                 placeholder="First name"
               />
-              <label for="floatingInput" class="text-grey-800">Name</label>
+              <label for="floatingInput" class="text-grey-800 text-lg"
+                >Name
+                <span class="text-red-300">*</span>
+              </label>
               <span
                 v-if="personalInfoErrors.name"
                 class="border p-2 text-sm text-red-300 ml-4 rounded-md"
@@ -173,7 +176,7 @@
             <div class="form-floating  ">
               <input
                 type="text"
-                class="form-control block text-main-400 w-full px-3 p-2 h-14 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out mb-4 mt-2"
+                class="capitalize form-control block text-main-400 w-full px-3 p-2 h-14 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out mb-4 mt-2"
                 onkeypress="return /[a-zA-Z]/i.test(event.key)"
                 v-model="personalInfo.fatherName"
                 :disabled="
@@ -182,8 +185,8 @@
                 id="floatingInput"
                 placeholder="First name"
               />
-              <label for="floatingInput" class="text-grey-800"
-                >Father Name</label
+              <label for="floatingInput" class="text-grey-800 text-lg"
+                >Father Name <span class="text-red-300">*</span></label
               >
               <span
                 v-if="personalInfoErrors.fatherName"
@@ -196,7 +199,7 @@
             <div class="form-floating   xl:w-96">
               <input
                 type="text"
-                class="form-control block text-main-400 w-full px-3  p-2 h-14 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out mt-2 mb-4"
+                class="capitalize form-control block text-main-400 w-full px-3  p-2 h-14 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out mt-2 mb-4"
                 onkeypress="return /[a-zA-Z]/i.test(event.key)"
                 v-model="personalInfo.grandFatherName"
                 :disabled="
@@ -205,8 +208,8 @@
                 id="floatingInput"
                 placeholder="First name"
               />
-              <label for="floatingInput" class="text-grey-800"
-                >Grandfather Name</label
+              <label for="floatingInput" class="text-grey-800 text-lg"
+                >Grandfather Name <span class="text-red-300">*</span></label
               >
               <span
                 v-if="personalInfoErrors.grandFatherName"
@@ -220,7 +223,7 @@
         <!-- End Of English Name Part -->
 
         <!-- Amharic Name Part -->
-        <h2 class="text-main-400">Name (Amharic)</h2>
+        <h2 class="text-main-400 text-xl">Name (Amharic)</h2>
         <div
           class="grid grid-cols-3 gap-4 sm:grid-cols-1  lg:grid-cols-3 mdlg:grid-cols-3 md:grid-cols-3  border-t-2 mb-8"
         >
@@ -228,13 +231,13 @@
             <div class="form-floating mb-3 xl:w-96">
               <input
                 type="text"
-                class="form-control block w-full px-3 text-main-400  p-2 h-14 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-2 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                class=" form-control block w-full px-3 text-main-400  p-2 h-14 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-2 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                 onkeypress="return /[a-zA-Z]/i.test(event.key)"
                 v-model="personalInfo.alternativeName"
                 id="amhName"
                 placeholder="Amharic First name"
               />
-              <label for="amhName" class="text-grey-800">ስም</label>
+              <label for="amhName" class="text-grey-800 text-lg">ስም</label>
             </div>
           </div>
           <div class="flex">
@@ -247,7 +250,9 @@
                 id="amhFName"
                 placeholder="Amharic Fathers name"
               />
-              <label for="amhFName" class="text-grey-800">የአባት ስም</label>
+              <label for="amhFName" class="text-grey-800 text-lg"
+                >የአባት ስም</label
+              >
             </div>
           </div>
           <div class="flex">
@@ -260,7 +265,9 @@
                 id="amhGName"
                 placeholder="Amharic Grand Father name"
               />
-              <label for="amhGName" class="text-grey-800">የ ኣያት ስም</label>
+              <label for="amhGName" class="text-grey-800 text-lg"
+                >የ ኣያት ስም</label
+              >
             </div>
           </div>
         </div>
@@ -268,7 +275,7 @@
         <!-- End Of English Name Part -->
 
         <!-- General personal info Part -->
-        <h2 class="text-main-400 ">General Information</h2>
+        <h2 class="text-main-400 text-xl">General Information</h2>
         <div
           class="text-main-400 grid grid-cols-2 sm:grid-cols-1 border-t-2  lg:grid-cols-2 mdlg:grid-cols-2 md:grid-cols-2 "
         >
@@ -286,7 +293,9 @@
                 "
                 id="birthDate"
               />
-              <label for="birthDate" class="text-grey-800">Date of Birth</label>
+              <label for="birthDate" class="text-grey-800 text-lg"
+                >Date of Birth <span class="text-red-300">*</span></label
+              >
               <div
                 v-if="
                   personalInfoErrors.dateOfBirth ||
@@ -304,7 +313,9 @@
           <div class="flex">
             <div class="flex flex-col mb-medium w-1/2 ml-2 mt-2">
               <div class="flex flex-col w-full">
-                <label class="text-main-400">Gender</label>
+                <label class="text-main-400 text-lg"
+                  >Gender <span class="text-red-300">*</span></label
+                >
                 <div class="flex w-full">
                   <div class="flex flex-col mb-small w-full">
                     <div class="flex py-2">
@@ -358,7 +369,9 @@
           <div class="flex mt-2">
             <div class="flex justify-center">
               <div class="mb-3 w-full ml-2">
-                <label class="text-grey-800">Nationality</label>
+                <label class="text-grey-800 text-lg"
+                  >Nationality <span class="text-red-300">*</span></label
+                >
                 <select
                   class="form-select text-main-400 appearance-none block w-full px-3 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 mb-4"
                   aria-label="Default select example"
@@ -386,7 +399,9 @@
           </div>
           <div class="flex mt-2">
             <div class="mb-3 w-full sm:ml-2 md:ml-2 mdlg:ml-2 ml-2">
-              <label class="text-grey-800">Marital Status</label>
+              <label class="text-grey-800 text-lg"
+                >Marital Status <span class="text-red-300">*</span></label
+              >
               <select
                 class="form-select text-main-400 appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 mb-4"
                 aria-label="Default select example"
@@ -446,7 +461,7 @@ import { useToast } from "vue-toastification";
 export default {
   components: {},
   props: ["activeState", "approvalModal"],
-  emits: ["nextStep","changeActiveState"],
+  emits: ["nextStep", "changeActiveState"],
   setup(props, { emit }) {
     const store = useStore();
     let approveStatus = ref(props.approvalModal);
@@ -703,9 +718,9 @@ export default {
       } else if (empty == true) {
         store.dispatch("profile/setProfileInfo", personalInfo);
         store.dispatch("profile/setPhoto", photoFile.value);
-       
+
         emit("changeActiveState");
-        emit("nextStep",'add');
+        emit("nextStep", "add");
       }
     };
     const validateDate = (dateInput) => {
