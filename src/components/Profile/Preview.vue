@@ -1,6 +1,8 @@
 <template>
   <div class="container" style="margin-top: 10px;">
-    <h2 class="text-main-400 font-bold text-display border-b-4 mb-4">Summary</h2>
+    <h2 class="text-main-400 font-bold text-display border-b-4 mb-4">
+      Summary
+    </h2>
     <div
       class="grid
               md:grid-cols-6
@@ -11,7 +13,9 @@
     >
       <div class=" rounded-md mr-8 sm:mb-4 ">
         <article class="overflow-hidden border rounded-md  p-4">
-          <h2 class="text-main-400 font-bold text-base mb-4">Profile Picture</h2>
+          <h2 class="text-main-400 font-bold text-base mb-4">
+            Profile Picture
+          </h2>
 
           <picture>
             <img :src="profilePic" />
@@ -38,11 +42,11 @@
               <label class="text-main-400 font-semibold"> Full Name</label>
               <h5 class=" text-grey-800">
                 {{
-                  personalInfo.name +
+                  capitalized(personalInfo.name) +
                     " " +
-                    personalInfo.fatherName +
+                    capitalized(personalInfo.fatherName) +
                     " " +
-                    personalInfo.grandFatherName
+                    capitalized(personalInfo.grandFatherName)
                 }}
               </h5>
             </div>
@@ -52,11 +56,13 @@
               >
               <h5 class=" text-grey-800">
                 {{
-                  personalInfo.alternativeName +
-                    " " +
-                    personalInfo.alternativeFatherName +
-                    " " +
-                    personalInfo.alternativeGrandFatherName
+                  personalInfo.alternativeName
+                    ? personalInfo.alternativeName
+                    : "----" + " " + personalInfo.alternativeFatherName
+                    ? personalInfo.alternativeFatherName
+                    : "----" + " " + personalInfo.alternativeGrandFatherName
+                    ? personalInfo.alternativeGrandFatherName
+                    : "----"
                 }}
               </h5>
             </div>
@@ -79,7 +85,7 @@
 
           <div class="grid grid-cols-2">
             <label class="text-main-400 font-semibold">PO Box</label>
-            <h5 class=" text-grey-800">{{ personalInfo.poBox }}</h5>
+            <h5 class=" text-grey-800">{{ personalInfo.poBox?personalInfo.poBox:'-----' }}</h5>
           </div>
 
           <div class="flex justify-start border-b-4 text-main-400 mt-4 mb-4">
@@ -101,7 +107,7 @@
               "
             >
               <label class="text-main-400 font-semibold">HRA Employee Id</label>
-              <h5 class=" text-grey-800">{{ personalInfo.employeeId }}</h5>
+              <h5 class=" text-grey-800">{{ personalInfo.employeeId?personalInfo.employeeId:'----' }}</h5>
             </div>
             <div
               class="grid grid-cols-2"
@@ -112,7 +118,7 @@
               <label class=" text-main-400 font-semibold"
                 >HRA File Number</label
               >
-              <h5 class=" text-grey-800">{{ personalInfo.fileNumber }}</h5>
+              <h5 class=" text-grey-800">{{ personalInfo.fileNumber?personalInfo.fileNumber:'----' }}</h5>
             </div>
           </div>
         </article>
@@ -205,7 +211,7 @@ export default {
   computed: {
     moment: () => moment,
   },
-  emits: ["nextStep","changeActiveState"],
+  emits: ["nextStep", "changeActiveState"],
   props: ["activeState"],
   setup(props, { emit }) {
     const store = useStore();
@@ -262,79 +268,77 @@ export default {
       let userId = +localStorage.getItem("userId");
       formData.append("document", photoFormData);
 
-      let payload = { document: formData, id: userId };
+      let data = {
+        name: capitalized(personalInfo.name),
+        fatherName: capitalized(personalInfo.fatherName),
+        grandFatherName: capitalized(personalInfo.grandFatherName),
+        alternativeName: personalInfo.alternativeName
+          ? personalInfo.alternativeName
+          : "",
+        alternativeFatherName: personalInfo.alternativeFatherName
+          ? personalInfo.alternativeFatherName
+          : "",
+        alternativeGrandFatherName: personalInfo.alternativeGrandFatherName
+          ? personalInfo.alternativeGrandFatherName
+          : "",
+        gender: personalInfo.gender,
+        dateOfBirth:
+          personalInfo.dateOfBirth != "" ? personalInfo.dateOfBirth : null,
+        nationalityId: personalInfo.nationalityId,
+        maritalStatusId: parseInt(personalInfo.maritalStatusId),
+        poBox: personalInfo.poBox,
+        photo: personalInfo.photo,
+        userId: +localStorage.getItem("userId"),
+        employeeId: personalInfo.employeeId ? personalInfo.employeeId : null,
+        fileNumber: personalInfo.fileNumber ? personalInfo.fileNumber : null,
+      };
       isLoading.value = true;
-      store
-        .dispatch("profile/addProfile", {
-          name: personalInfo.name,
-          fatherName: personalInfo.fatherName,
-          grandFatherName: personalInfo.grandFatherName,
-          alternativeName: personalInfo.alternativeName
-            ? personalInfo.alternativeName
-            : "",
-          alternativeFatherName: personalInfo.alternativeFatherName
-            ? personalInfo.alternativeFatherName
-            : "",
-          alternativeGrandFatherName: personalInfo.alternativeGrandFatherName
-            ? personalInfo.alternativeGrandFatherName
-            : "",
-          gender: personalInfo.gender,
-          dateOfBirth:
-            personalInfo.dateOfBirth != "" ? personalInfo.dateOfBirth : null,
-          nationalityId: personalInfo.nationalityId,
-          maritalStatusId: parseInt(personalInfo.maritalStatusId),
-          poBox: personalInfo.poBox,
-          photo: personalInfo.photo,
-          userId: +localStorage.getItem("userId"),
-          employeeId: personalInfo.employeeId ? personalInfo.employeeId : null,
-          fileNumber: personalInfo.fileNumber ? personalInfo.fileNumber : null,
-        })
-        .then((response) => {
-          if (response.statusText == "Created") {
-            formData.append("document", photoFormData);
-            let payload = { document: formData, id: userId };
-            store
+      store.dispatch("profile/addProfile", data).then((response) => {
+        if (response.statusText == "Created") {
+          formData.append("document", photoFormData);
+          let payload = { document: formData, id: userId };
+          store
 
-              .dispatch("profile/uploadProfilePicture", payload)
-              .then((res) => {
-                if (res.status == 200) {
-                  toast.success("Successfully updated profile information", {
-                    timeout: 5000,
-                    position: "bottom-center",
-                    pauseOnFocusLoss: true,
-                    pauseOnHover: true,
-                    icon: true,
-                  });
-                  isLoading.value = false;
-                  router.push("/menu");
-                } else {
-                  toast.error("Please try again", {
-                    timeout: 5000,
-                    position: "bottom-center",
-                    pauseOnFocusLoss: true,
-                    pauseOnHover: true,
-                    icon: true,
-                  });
-                  window.location.reload();
-                }
-              })
-              .catch((err) => {
-                console.log(err);
-              });
-          } else {
-            toast.error(response.data.message, {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
+            .dispatch("profile/uploadProfilePicture", payload)
+            .then((res) => {
+              if (res.status == 200) {
+                toast.success("Successfully updated profile information", {
+                  timeout: 5000,
+                  position: "bottom-center",
+                  pauseOnFocusLoss: true,
+                  pauseOnHover: true,
+                  icon: true,
+                });
+                isLoading.value = false;
+                router.push("/menu");
+              } else {
+                toast.error("Please try again", {
+                  timeout: 5000,
+                  position: "bottom-center",
+                  pauseOnFocusLoss: true,
+                  pauseOnHover: true,
+                  icon: true,
+                });
+                window.location.reload();
+              }
+            })
+            .catch((err) => {
+              console.log(err);
             });
-            window.location.reload();
-            setTimeout(() => {
-              message.value.showErrorFlash = false;
-            }, 3000);
-          }
-        });
+        } else {
+          toast.error(response.data.message, {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          });
+          window.location.reload();
+          setTimeout(() => {
+            message.value.showErrorFlash = false;
+          }, 3000);
+        }
+      });
     };
     const fetchUser = async () => {
       message.value.showLoading2 = true;
@@ -350,7 +354,7 @@ export default {
     };
     const prevStep = () => {
       emit("changeActiveStatePrevious");
-      emit("nextStep","remove");
+      emit("nextStep", "remove");
     };
     personalInfo = store.getters["profile/getPersonalInfo"];
     if (
@@ -373,6 +377,12 @@ export default {
         }, 10000);
       });
     });
+    const capitalized = (word) => {
+      const capitalizedFirst = word[0].toUpperCase();
+      const rest = word.slice(1);
+
+      return capitalizedFirst + rest;
+    };
     return {
       profilePic,
       personalInfo,
@@ -388,6 +398,7 @@ export default {
       user,
       fetchUser,
       prevStep,
+      capitalized,
     };
   },
 };
