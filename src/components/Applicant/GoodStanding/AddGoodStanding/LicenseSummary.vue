@@ -445,6 +445,43 @@
         "
       >
         <div class="mb-4">
+      
+          <div class="flex justify-center">
+            <label
+              for="feedback"
+              class="form-label inline-block mb-2 text-xl text-main-400"
+              >Feedback on the process and system
+              <span class="text-yellow-300">( optional/ not required )</span>
+            </label>
+          </div>
+
+          <div class="mb-3 w-full flex justify-center">
+            <input
+              v-model="generalInfo.feedback"
+              class="
+                  form-control
+                  block
+                  w-full
+                  px-3
+                  py-1.5
+                  text-base
+                  font-normal
+                  text-gray-700
+                  border border-solid border-main-400
+                  rounded
+                  focus:border-main-400
+                  transition
+                  ease-in-out
+                  m-0
+                  focus:outline-none
+                "
+              @keyup="checkAgreement()"
+              id="feedback"
+              rows="6"
+              placeholder="Your feedback"
+              type="textarea"
+            />
+          </div>
           <div class="flex justify-center text-gray-900 mb-4">
             <div class="form-check">
               <input
@@ -479,63 +516,19 @@
                 text-grey-800
                 mb-2localFileData
                 sm:text-xs
-                lgmd:text-base
-                lg:text-base
-                md:text-base
+                lgmd:text-xl
+                lg:text-xl
+                md:text-xl
               "
             >
               By checking here I hereby verify the documents and details filled
               in are legal.
-            </h3>
-          </div>
-          <div class="flex justify-center">
-            <label
-              for="feedback"
-              class="form-label inline-block mb-2 text-main-400"
-              >Feedback on the process and system
-              <span class="text-yellow-300">(optional*)</span>
-            </label>
-          </div>
-
-          <div class="mb-3 w-full flex justify-center">
-            <input
-              v-model="generalInfo.feedback"
-              class="
-                  form-control
-                  block
-                  w-full
-                  px-3
-                  py-1.5
-                  text-base
-                  font-normal
-                  text-gray-700
-                  border border-solid border-main-400
-                  rounded
-                  focus:border-main-400
-                  transition
-                  ease-in-out
-                  m-0
-                  focus:outline-none
-                "
-              @keyup="checkAgreement()"
-              id="feedback"
-              rows="6"
-              placeholder="Your feedback"
-              type="textarea"
-            />
+            </h3><span class="text-red-300">*</span>
           </div>
         </div>
       </div>
     </div>
-    <div class="flex justify-center">
-      <RadialProgress
-        :diameter="200"
-        :completed-steps="progress"
-        :total-steps="totalSteps"
-      >
-        <h1 class="text-3xl text-main-400 font-bold">{{ progress }} %</h1>
-      </RadialProgress>
-    </div>
+
     <div class="vld-parent mt-4">
       <loading
         :active="isLoading"
@@ -613,6 +606,47 @@
     </div>
 
     <!-- end row -->
+    <div class="modal-mask" v-if="showModal">
+      <div class="modal-wrapper">
+        <div class="modal-container">
+          <div class="modal-header">
+            <h2 class="text-main-400 text-xl border-b-4">Uploading</h2>
+          </div>
+
+          <div class="modal-body">
+            <div class="flex justify-center text-yellow-300 p-2 rounded-md">
+              <h2 class="text-yellow-300 border rounded p-2 text-xl">
+                Total file size you have uploaded so far is
+                <h2 class="text-grey-800 text-2xl">{{ totalSize }} MB</h2>
+              </h2>
+            </div>
+            <div class="flex justify-center">
+              <RadialProgress
+                :diameter="200"
+                :completed-steps="progress"
+                :total-steps="totalSteps"
+              >
+                <h1 class="text-3xl text-main-400 font-bold">
+                  {{ progress }} %
+                </h1>
+              </RadialProgress>
+            </div>
+            <div>
+              <div
+                class="flex border justify-center text-yellow-300 p-2 rounded-md"
+              >
+                <h2 class=" text-xl">
+                  Please wait patiently as your files are being uploaded, if for
+                  any reason the files you uploaded are not successful you will
+                  be redirected to the submitted page automatically so you can
+                  re-attach your documents again
+                </h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -634,9 +668,11 @@ export default {
     let progress = computed(
       () => store.getters["goodstanding/getUploadProgress"]
     );
+    let totalSize = ref(0);
     let localData = ref({});
     let localFileData = ref({});
     let isLoading = ref(false);
+    let showModal = ref(false);
     let generalInfo = ref({});
     let agreed = ref(false);
     let documents = ref([]);
@@ -658,7 +694,7 @@ export default {
         allowSave.value = false;
       }
     };
-    const checkFinalStatus = action => {
+    const checkFinalStatus = (action) => {
       generalInfo.value.licenseFile = [];
       documents.value = localFileData.value;
 
@@ -718,7 +754,7 @@ export default {
               otherProfessionTypeAmharic: generalInfo.value
                 .otherProfessionTypeAmharic
                 ? generalInfo.value.otherProfessionTypeAmharic
-                : ""
+                : "",
             },
             expertLevelId: generalInfo.value.expertLevelId
               ? generalInfo.value.expertLevelId
@@ -730,17 +766,18 @@ export default {
               : null,
             feedback: generalInfo.value.feedback
               ? generalInfo.value.feedback
-              : ""
-          }
+              : "",
+          },
         };
+        showModal.value=true;
         store
           .dispatch("goodstanding/addGoodstandingLicense", license)
-          .then(res => {
+          .then((res) => {
             let licenseId = res.data.data.id;
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("goodstanding/uploadDocuments", payload)
-              .then(res => {
+              .then((res) => {
                 isLoading.value = false;
                 if (res.data.status == "Success") {
                   localStorage.removeItem("GSApplicationData");
@@ -749,7 +786,7 @@ export default {
                     position: "bottom-center",
                     pauseOnFocusLoss: true,
                     pauseOnHover: true,
-                    icon: true
+                    icon: true,
                   });
                   if (action == "DraftEvent") {
                     router.push({ path: "/Applicant/GoodStanding/draft" });
@@ -762,7 +799,7 @@ export default {
                     position: "bottom-center",
                     pauseOnFocusLoss: true,
                     pauseOnHover: true,
-                    icon: true
+                    icon: true,
                   });
                 }
               })
@@ -772,7 +809,7 @@ export default {
                   position: "bottom-center",
                   pauseOnFocusLoss: true,
                   pauseOnHover: true,
-                  icon: true
+                  icon: true,
                 });
               });
           });
@@ -803,19 +840,25 @@ export default {
           localFileData.value = evt.target.result
             ? evt.target.result[0].data
             : {};
+          localFileData.value[0].data.forEach((element) => {
+            totalSize.value += Number(
+              Math.ceil((element.image.length * 6) / 8 / 1000)
+            );
+          });
+          totalSize.value = totalSize.value / 1000;
         };
       };
       generalInfo.value = localData.value;
       generalInfo.value.feedback = "";
       if (generalInfo.value.applicantTypeId.id == 1) {
-        store.dispatch("goodstanding/getExpertLevel").then(res => {
+        store.dispatch("goodstanding/getExpertLevel").then((res) => {
           let expertLevel = res.data.data.filter(function(e) {
             return e.code.includes("REG");
           });
           generalInfo.value.expertLevelId = expertLevel[0].id;
         });
       } else {
-        store.dispatch("goodstanding/getExpertLevel").then(res => {
+        store.dispatch("goodstanding/getExpertLevel").then((res) => {
           let expertLevel = res.data.data.filter(function(e) {
             return e.code.includes("FED");
           });
@@ -836,9 +879,11 @@ export default {
       back,
       allowSave,
       totalSteps,
-      progress
+      totalSize,
+      showModal,
+      progress,
     };
-  }
+  },
 };
 </script>
 <style>
@@ -856,5 +901,50 @@ export default {
 .disabled {
   pointer-events: none;
   opacity: 0.3;
+}
+
+
+.modal-mask {
+  position: fixed;
+  z-index: 9998;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: table;
+  transition: opacity 0.3s ease;
+}
+
+.modal-wrapper {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.modal-container {
+  width: 600px;
+  margin: 0px auto;
+  padding: 20px 30px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
+  transition: all 0.3s ease;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+.modal-body {
+  margin: 20px 0;
+}
+ 
+
+.modal-enter-from,
+.modal-leave-to {
+  opacity: 0;
+}
+
+.modal-enter-active .modal-container,
+.modal-leave-active .modal-container {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
 }
 </style>

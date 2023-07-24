@@ -30,7 +30,7 @@
           px-12
           mb-12
           bg-gray-50
-          shadow-lg
+          shadow-md
           rounded-md
           transform
           transition
@@ -446,12 +446,12 @@
                 <span class="text-yellow-300">(optional*)</span>
               </label>
             </div>
-         
-              <div class="mb-3 w-full flex justify-center">
-                <input
-                  v-model="generalInfo.feedback"
-                  @keyup="checkAgreement()"
-                  class="
+
+            <div class="mb-3 w-full flex justify-center">
+              <input
+                v-model="generalInfo.feedback"
+                @keyup="checkAgreement()"
+                class="
                     form-control
                     block
                     w-full
@@ -468,50 +468,41 @@
                     m-0
                     focus:outline-none
                   "
-                  id="feedback"
-                  rows="6"
-                  placeholder="Your feedback"
-                  type="textarea"
-                />
-              </div>
-            
+                id="feedback"
+                rows="6"
+                placeholder="Your feedback"
+                type="textarea"
+              />
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="flex justify-center">
-      <RadialProgress
-        :diameter="200"
-        :completed-steps="progress"
-        :total-steps="totalSteps"
-      >
-        <h1 class="text-3xl text-main-400 font-bold">{{ progress }} %</h1>
-      </RadialProgress>
-    </div>
+
     <div class="vld-parent mt-4">
-            <loading
-              :active="isLoading"
-              :is-full-page="false"
-              :color="'#2F639D'"
-              :opacity="1"
-            ></loading>
-    <div class="flex justify-center">
-      <button
-        v-for="button in buttons"
-        :key="button.id"
-        type="button"
-        :class="
-          allowSave
-            ? 'inline-block px-6 border text-main-400 hover:bg-main-400 hober:border-main-400 hover:text-white  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded shadow-lg transition  duration-150 ease-in-out'
-            : 'inline-block px-6 disabled text-main-400  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded shadow-lg transition  duration-150 ease-in-out'
-        "
-        @click="checkFinalStatus(button.action)"
-      >
-        <i class="fa fa-save"></i>
-        {{ button.name }}
-      </button>
-      <button
-        class="
+      <loading
+        :active="isLoading"
+        :is-full-page="false"
+        :color="'#2F639D'"
+        :opacity="1"
+      ></loading>
+      <div class="flex justify-center">
+        <button
+          v-for="button in buttons"
+          :key="button.id"
+          type="button"
+          :class="
+            allowSave
+              ? 'inline-block px-6 border text-main-400 hover:bg-main-400 hober:border-main-400 hover:text-white  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded shadow-md transition  duration-150 ease-in-out'
+              : 'inline-block px-6 disabled text-main-400  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded shadow-md transition  duration-150 ease-in-out'
+          "
+          @click="checkFinalStatus(button.action)"
+        >
+          <i class="fa fa-save"></i>
+          {{ button.name }}
+        </button>
+        <button
+          class="
           inline-block
           px-6
           text-main-400
@@ -522,18 +513,59 @@
           leading-tight
           uppercase
           rounded
-          shadow-lg
+          shadow-md
           transition
           duration-150
           ease-in-out
         "
-        @click="back()"
-      >
-        back
-      </button>
+          @click="back()"
+        >
+          back
+        </button>
+      </div>
     </div>
-</div>
     <!-- end row -->
+    <div class="modal-mask" v-if="showModal">
+      <div class="modal-wrapper">
+        <div class="modal-container">
+          <div class="modal-header">
+            <h2 class="text-main-400 text-xl border-b-4">Uploading</h2>
+          </div>
+
+          <div class="modal-body">
+            <div class="flex justify-center text-yellow-300 p-2 rounded-md">
+              <h2 class="text-yellow-300 border rounded p-2 text-xl">
+                Total file size you have uploaded so far is
+                <h2 class="text-grey-800 text-2xl">{{ totalSize }} MB</h2>
+              </h2>
+            </div>
+            <div class="flex justify-center">
+              <RadialProgress
+                :diameter="200"
+                :completed-steps="progress"
+                :total-steps="totalSteps"
+              >
+                <h1 class="text-3xl text-main-400 font-bold">
+                  {{ progress }} %
+                </h1>
+              </RadialProgress>
+            </div>
+            <div>
+              <div
+                class="flex border justify-center text-yellow-300 p-2 rounded-md"
+              >
+                <h2 class=" text-xl">
+                  Please wait patiently as your files are being uploaded, if for
+                  any reason the files you uploaded are not successful you will
+                  be redirected to the submitted page automatically so you can
+                  re-attach your documents again
+                </h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -557,6 +589,7 @@ export default {
     let generalInfo = ref({});
     let agreed = ref(false);
     let isLoading = ref(false);
+    let  showModal= ref(false);
     let buttons = ref([]);
     let tempDocs = ref({});
     let savedData = ref({});
@@ -586,7 +619,7 @@ export default {
         allowSave.value = false;
       }
     };
-    const checkFinalStatus = action => {
+    const checkFinalStatus = (action) => {
       generalInfo.value.licenseFile = [];
 
       if (agreed.value == true) {
@@ -637,17 +670,17 @@ export default {
               isLegal: true,
               feedback: generalInfo.value.feedback
                 ? generalInfo.value.feedback
-                : ""
-            }
-          }
+                : "",
+            },
+          },
         };
-
+        showModal.value=true;
         store.dispatch("newlicense/updateDraft", license).then(() => {
           let licenseId = route.params.id;
           let payload = { document: formData, id: licenseId };
           store
             .dispatch("newlicense/updateDocuments", payload)
-            .then(res => {
+            .then((res) => {
               isLoading.value = false;
               if (res.data.status == "Success") {
                 toast.success("Applied successfuly", {
@@ -655,7 +688,7 @@ export default {
                   position: "bottom-center",
                   pauseOnFocusLoss: true,
                   pauseOnHover: true,
-                  icon: true
+                  icon: true,
                 });
 
                 router.push({ path: "/Applicant/NewLicense/submitted" });
@@ -665,7 +698,7 @@ export default {
                   position: "bottom-center",
                   pauseOnFocusLoss: true,
                   pauseOnHover: true,
-                  icon: true
+                  icon: true,
                 });
               }
             })
@@ -676,7 +709,7 @@ export default {
                 position: "bottom-center",
                 pauseOnFocusLoss: true,
                 pauseOnHover: true,
-                icon: true
+                icon: true,
               });
             });
         });
@@ -688,13 +721,13 @@ export default {
     onMounted(() => {
       store
         .dispatch("newlicense/getNewLicenseApplication", route.params.id)
-        .then(res => {
+        .then((res) => {
           savedData.value = res.data.data;
 
           buttons.value = store.getters["newlicense/getButtons"];
 
           buttons.value = buttons.value.filter(
-            ele => ele.code != "AT" && ele.code != "DRA"
+            (ele) => ele.code != "AT" && ele.code != "DRA"
           );
           tempDocs.value = store.getters["newlicense/getTempDocs"];
 
@@ -705,14 +738,14 @@ export default {
           generalInfo.value = localData.value;
           generalInfo.value.feedback = "";
           if (generalInfo.value.applicantTypeSelected.id == 1) {
-            store.dispatch("newlicense/getExpertLevel").then(res => {
+            store.dispatch("newlicense/getExpertLevel").then((res) => {
               let expertLevel = res.data.data.filter(function(e) {
                 return e.code.includes("REG");
               });
               generalInfo.value.expertLevelId = expertLevel[0].id;
             });
           } else {
-            store.dispatch("newlicense/getExpertLevel").then(res => {
+            store.dispatch("newlicense/getExpertLevel").then((res) => {
               let expertLevel = res.data.data.filter(function(e) {
                 return e.code.includes("FED");
               });
@@ -742,8 +775,8 @@ export default {
                 : {};
 
               if (localFileImages.value && savedData.value.documents) {
-                savedData.value.documents.forEach(ele => {
-                  localFileImages.value.forEach(newFile => {
+                savedData.value.documents.forEach((ele) => {
+                  localFileImages.value.forEach((newFile) => {
                     if (
                       (newFile.commonDocCode &&
                         newFile.commonDocCode == ele.fileName) ||
@@ -753,7 +786,7 @@ export default {
                         docName: newFile.documentName,
                         prevFile: googleApi + ele.filePath,
                         newFile: newFile.image,
-                        id: newFile.documenttype
+                        id: newFile.documenttype,
                       });
                     }
                   });
@@ -763,12 +796,12 @@ export default {
               if (localData.value.professionChanged == true) {
                 professionChanged.value = true;
                 // prevDocs.value = localFileImages.value;
-                localFileImages.value.forEach(element => {
+                localFileImages.value.forEach((element) => {
                   if (!element.commonDocCode) {
                     prevDocs.value.push({
                       documentType: { name: element.documentName },
                       docName: element.documenttype,
-                      path: element.image
+                      path: element.image,
                     });
                   }
                 });
@@ -789,6 +822,7 @@ export default {
       buttons,
       changedDocs,
       isLoading,
+      showModal,
       checkAgreement,
       back,
       googleApi,
@@ -796,9 +830,9 @@ export default {
       checkFinalStatus,
       changeAgrement,
       progress,
-      totalSteps
+      totalSteps,
     };
-  }
+  },
 };
 </script>
 <style>
@@ -816,5 +850,48 @@ export default {
 .disabled {
   pointer-events: none;
   opacity: 0.3;
+}
+
+.modal-mask {
+  position: fixed;
+  z-index: 9998;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: table;
+  transition: opacity 0.3s ease;
+}
+
+.modal-wrapper {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.modal-container {
+  width: 600px;
+  margin: 0px auto;
+  padding: 20px 30px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
+  transition: all 0.3s ease;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+.modal-body {
+  margin: 20px 0;
+}
+
+.modal-enter-from,
+.modal-leave-to {
+  opacity: 0;
+}
+
+.modal-enter-active .modal-container,
+.modal-leave-active .modal-container {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
 }
 </style>

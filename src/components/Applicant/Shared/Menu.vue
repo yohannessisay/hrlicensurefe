@@ -1,9 +1,9 @@
 <template>
   <div class="main " id="main">
     <side-nav :finalUrl="finalUrl"></side-nav>
-    <div class="content  " id="mainContent">
+    <div class="content" id="mainContent">
       <top-nav :userInfo="userInfo"></top-nav>
-      <div class="mt-8 ml-8  ">
+      <div class="mt-8 p-4 ">
         <!-- <div class="float-container" @click="modeToggle()">
           <a href="#" :class="isDarkMode ? 'icon two' : 'icon one'">
             <span style="margin-left: -16px !important;">{{

@@ -16,7 +16,7 @@
       class="grid grid-cols-2 gap-4 mr-8 md:grid-cols-2 lg:grid-cols-2 mdlg:grid-cols-2 sm:grid-cols-1"
     >
       <div
-        class="py-8 mt-4 px-12 mb-12 bg-gray-50 shadow-lg rounded-md transform transition duration-300 ease-in-out bg-white hover:-translate-y-2"
+        class="py-8 mt-4 px-12 mb-12 bg-gray-50 shadow-md rounded-md transform transition duration-300 ease-in-out bg-white hover:-translate-y-2"
         v-for="dep in localData.multipleDepartment"
         :key="dep"
       >
@@ -92,7 +92,7 @@
     <div
       class="mt-8 grid grid-cols-1 gap-4 md:grid-cols-1 lg:grid-cols-1 mdlg:grid-cols-1 sm:grid-cols-1"
     >
-      <div class="bg-white flex-shrink px-4 w-full rounded-md shadow-lg">
+      <div class="bg-white flex-shrink px-4 w-full rounded-md shadow-md">
         <div class="py-8 px-12 mb-12 bg-gray-50 border-b border-white">
           <div class="border-b-2 text-main-400 mb-4">
             <div class="text-gray-900 mb-4 flex justify-center">
@@ -110,9 +110,8 @@
           <div
             class="grid grid-cols-4 gap-4 ml-4 sm:w-full sm:grid-cols-1 md:w-full mdlg:grid-cols-2 lg:w-full md:grid-cols-4 mdlg:w-full lg:grid-cols-4"
           >
-          
             <div
-              class="mt-4 mb-8 bg-white shadow-lg hover:shadow-lg rounded-md transform transition duration-300 ease-in-out hover:-translate-y-2"
+              class="mt-4 mb-8 bg-white shadow-md hover:shadow-md rounded-md transform transition duration-300 ease-in-out hover:-translate-y-2"
               v-for="localFileData in localFileData[0]
                 ? localFileData[0].data
                 : {}"
@@ -146,12 +145,32 @@
     <div
       class="mt-8 grid grid-cols-1 gap-4 md:grid-cols-1 lg:grid-cols-1 mdlg:grid-cols-1 sm:grid-cols-1"
     >
-      <div class="bg-white flex-shrink px-4 w-full rounded-md shadow-lg">
+      <div class="bg-white flex-shrink px-4 w-full rounded-md shadow-md">
         <div
           class="py-8 px-12 mb-12 bg-gray-50 border-b border-white transform transition duration-300 ease-in-out hover:-translate-y-2"
         >
           <div class="mb-4 border-t text-main-400">
-            <div class="flex justify-center text-gray-900 mb-4 mt-4">
+            <div class="flex justify-center">
+              <label
+                for="feedback"
+                class="form-label inline-block mb-2 text-main-400 text-xl"
+                >Feedback on the process and system
+                <span class="text-yellow-300">( optional / not required)</span>
+              </label>
+            </div>
+
+            <div class="mb-3 w-full flex justify-center">
+              <input
+                v-model="generalInfo.feedback"
+                class="form-control block w-full text-main-400 px-3 py-1.5 text-base font-normal text-gray-700 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:outline-none"
+                id="feedback"
+                rows="6"
+                placeholder="Your feedback"
+                type="textarea"
+              />
+            </div>
+
+            <div class="flex justify-center text-gray-900 mb-4 mt-8">
               <div class="form-check">
                 <input
                   class="form-check-input appearance-none h-5 w-5 border border-gray-300 rounded-sm bg-wmain-400 checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
@@ -162,62 +181,18 @@
                 />
               </div>
               <h3
-                class="text-black mb-2 sm:text-xs lgmd:text-base lg:text-base md:text-base"
+                class="text-grey-800 mb-2 sm:text-xs lgmd:text-xl lg:text-xl md:text-xl"
               >
                 By checking here I hereby verify the documents and details
                 filled in are legal.
-              </h3>
-            </div>
-            <div class="flex justify-center">
-              <label
-                for="feedback"
-                class="form-label inline-block mb-2 text-main-400"
-                >Feedback on the process and system
-                <span class="text-yellow-300">(optional*)</span>
-              </label>
-            </div>
-
-            <div class="mb-3 w-full flex justify-center">
-              <input
-                v-model="generalInfo.feedback"
-                @keyup="checkAgreement()"
-                class="form-control block w-full text-main-400 px-3 py-1.5 text-base font-normal text-gray-700 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:outline-none"
-                id="feedback"
-                rows="6"
-                placeholder="Your feedback"
-                type="textarea"
-              />
+              </h3><span class="text-red-300">*</span>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="flex justify-center">
-      <RadialProgress
-        :diameter="200"
-        :completed-steps="progress"
-        :total-steps="totalSteps"
-      >
-        <h1 class="text-3xl text-main-400 font-bold">{{ progress }} %</h1>
-      </RadialProgress>
-    </div>
 
     <div class="vld-parent mt-4">
-      <div class="flex justify-center bg-yellow-300 p-2 rounded-md">
-        <h2 class="text-grey-800 text-xl">
-          Total file size you have uploaded so far is
-          <h2 class="text-white text-2xl">{{ totalSize }}</h2>
-          MB
-        </h2>
-      </div>
-      <div class="flex justify-center bg-yellow-300 p-2 rounded-md">
-        <h2 class="text-grey-800 text-xl">
-          Please wait patiently as your files are being uploaded, if for any
-          reason the files you uploaded are not successful you will be
-          redirected to the submitted page automatically so you can re-attach
-          your documents again
-        </h2>
-      </div>
       <div class="vld-parent mt-4">
         <loading
           :active="isLoading"
@@ -232,8 +207,8 @@
               type="button"
               :class="
                 allowSave
-                  ? 'inline-block px-6 border text-main-400 hover:bg-main-400 hober:border-main-400 hover:text-white  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded shadow-lg transition  duration-150 ease-in-out'
-                  : 'inline-block px-6 disabled text-main-400  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded shadow-lg transition  duration-150 ease-in-out'
+                  ? 'inline-block px-6 border text-main-400 hover:bg-main-400 hober:border-main-400 hover:text-white  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded shadow-md transition  duration-150 ease-in-out'
+                  : 'inline-block px-6 disabled text-main-400  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded shadow-md transition  duration-150 ease-in-out'
               "
               @click="checkFinalStatus(button.action)"
             >
@@ -243,7 +218,7 @@
             <button
               v-if="button.action == 'DraftEvent'"
               type="button"
-              class="inline-block px-6 border text-main-400 hover:bg-main-400 hober:border-main-400 hover:text-white mt-4 bg-white font-medium text-xs leading-tight uppercase rounded shadow-lg transition duration-150 ease-in-out"
+              class="inline-block px-6 border text-main-400 hover:bg-main-400 hober:border-main-400 hover:text-white mt-4 bg-white font-medium text-xs leading-tight uppercase rounded shadow-md transition duration-150 ease-in-out"
               @click="checkFinalStatus(button.action)"
             >
               <i class="fa fa-save"></i>
@@ -252,7 +227,7 @@
           </span>
 
           <button
-            class="inline-block px-6 text-main-400 mt-4 bg-white font-medium text-xs leading-tight uppercase rounded shadow-lg transition duration-150 ease-in-out"
+            class="inline-block px-6 text-main-400 mt-4 bg-white font-medium text-xs leading-tight uppercase rounded shadow-md transition duration-150 ease-in-out"
             @click="back()"
           >
             back
@@ -261,6 +236,48 @@
       </div>
     </div>
     <!-- end row -->
+
+    <div class="modal-mask" v-if="showModal">
+      <div class="modal-wrapper">
+        <div class="modal-container">
+          <div class="modal-header">
+            <h2 class="text-main-400 text-xl border-b-4">Uploading</h2>
+          </div>
+
+          <div class="modal-body">
+            <div class="flex justify-center text-yellow-300 p-2 rounded-md">
+              <h2 class="text-yellow-300 border rounded p-2 text-xl">
+                Total file size you have uploaded so far is
+                <h2 class="text-grey-800 text-2xl">{{ totalSize }} MB</h2>
+              </h2>
+            </div>
+            <div class="flex justify-center">
+              <RadialProgress
+                :diameter="200"
+                :completed-steps="progress"
+                :total-steps="totalSteps"
+              >
+                <h1 class="text-3xl text-main-400 font-bold">
+                  {{ progress }} %
+                </h1>
+              </RadialProgress>
+            </div>
+            <div>
+              <div
+                class="flex border justify-center text-yellow-300 p-2 rounded-md"
+              >
+                <h2 class=" text-xl">
+                  Please wait patiently as your files are being uploaded, if for
+                  any reason the files you uploaded are not successful you will
+                  be redirected to the submitted page automatically so you can
+                  re-attach your documents again
+                </h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -294,6 +311,7 @@ export default {
     let totalSize = ref(0);
     let tempDocs = ref({});
     let allowSave = ref(false);
+    const showModal = ref(false);
     const changeAgrement = () => {
       agreed.value = !agreed.value;
       if (agreed.value != false) {
@@ -309,7 +327,7 @@ export default {
         allowSave.value = false;
       }
     };
-    const checkFinalStatus = action => {
+    const checkFinalStatus = (action) => {
       generalInfo.value.licenseFile = [];
       documents.value = localFileData.value;
       isLoading.value = true;
@@ -353,16 +371,16 @@ export default {
             isLegal: true,
             feedback: generalInfo.value.feedback
               ? generalInfo.value.feedback
-              : ""
-          }
+              : "",
+          },
         };
-
-        store.dispatch("newlicense/addNewLicense", license).then(res => {
+        showModal.value = true;
+        store.dispatch("newlicense/addNewLicense", license).then((res) => {
           let licenseId = res.data.data.id;
           let payload = { document: formData, id: licenseId };
           store
             .dispatch("newlicense/uploadDocuments", payload)
-            .then(res => {
+            .then((res) => {
               isLoading.value = false;
               if (res.data.status == "Success") {
                 window.localStorage.removeItem("applicantTypeSelected");
@@ -373,7 +391,7 @@ export default {
                   position: "bottom-center",
                   pauseOnFocusLoss: true,
                   pauseOnHover: true,
-                  icon: true
+                  icon: true,
                 });
 
                 if (license.action == "DraftEvent") {
@@ -387,7 +405,7 @@ export default {
                   position: "bottom-center",
                   pauseOnFocusLoss: true,
                   pauseOnHover: true,
-                  icon: true
+                  icon: true,
                 });
               }
             })
@@ -397,7 +415,7 @@ export default {
                 position: "bottom-center",
                 pauseOnFocusLoss: true,
                 pauseOnHover: true,
-                icon: true
+                icon: true,
               });
             });
         });
@@ -408,7 +426,7 @@ export default {
     };
 
     const fetchApplicationStatuses = () => {
-      store.dispatch("renewal/getApplicationStatuses").then(res => {
+      store.dispatch("renewal/getApplicationStatuses").then((res) => {
         let results = res.data.data;
 
         let status = results.filter(function(e) {
@@ -440,7 +458,7 @@ export default {
         getAllIDB.onsuccess = function(evt) {
           localFileData.value = evt.target.result ? evt.target.result : {};
 
-          localFileData.value[0].data.forEach(element => {
+          localFileData.value[0].data.forEach((element) => {
             totalSize.value += Number(
               Math.ceil((element.image.length * 6) / 8 / 1000)
             );
@@ -453,14 +471,14 @@ export default {
 
       generalInfo.value.feedback = "";
       if (generalInfo.value.applicantTypeSelected.id == 1) {
-        store.dispatch("newlicense/getExpertLevel").then(res => {
+        store.dispatch("newlicense/getExpertLevel").then((res) => {
           let expertLevel = res.data.data.filter(function(e) {
             return e.code.includes("REG");
           });
           generalInfo.value.expertLevelId = expertLevel[0].id;
         });
       } else {
-        store.dispatch("newlicense/getExpertLevel").then(res => {
+        store.dispatch("newlicense/getExpertLevel").then((res) => {
           let expertLevel = res.data.data.filter(function(e) {
             return e.code.includes("FED");
           });
@@ -468,6 +486,7 @@ export default {
         });
       }
     });
+    
     return {
       localData,
       localFileData,
@@ -475,6 +494,7 @@ export default {
       agreed,
       buttons,
       progress,
+      showModal,
       totalSteps,
       totalSize,
       checkAgreement,
@@ -482,9 +502,9 @@ export default {
       isLoading,
       allowSave,
       checkFinalStatus,
-      changeAgrement
+      changeAgrement,
     };
-  }
+  },
 };
 </script>
 <style>
@@ -502,5 +522,49 @@ export default {
 .disabled {
   pointer-events: none;
   opacity: 0.3;
+}
+
+.modal-mask {
+  position: fixed;
+  z-index: 9998;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: table;
+  transition: opacity 0.3s ease;
+}
+
+.modal-wrapper {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.modal-container {
+  width: 600px;
+  margin: 0px auto;
+  padding: 20px 30px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
+  transition: all 0.3s ease;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+.modal-body {
+  margin: 20px 0;
+}
+
+ 
+.modal-enter-from,
+.modal-leave-to {
+  opacity: 0;
+}
+
+.modal-enter-active .modal-container,
+.modal-leave-active .modal-container {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
 }
 </style>

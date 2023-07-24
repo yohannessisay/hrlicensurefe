@@ -31,7 +31,7 @@
         class="
             modal-content
             border-none
-            shadow-lg
+            shadow-md
             relative
             flex flex-col
             w-full
@@ -57,13 +57,13 @@
                 leading-tight
                 uppercase
                 rounded
-                shadow-lg
-                hover:bg-purple-700 hover:shadow-lg
+                shadow-md
+                hover:bg-purple-700 hover:shadow-md
                 focus:bg-purple-700
-                focus:shadow-lg
+                focus:shadow-md
                 focus:outline-none
                 focus:ring-0
-                active:bg-purple-800 active:shadow-lg
+                active:bg-purple-800 active:shadow-md
                 transition
                 duration-150
                 ease-in-out

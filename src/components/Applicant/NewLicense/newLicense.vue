@@ -6,10 +6,6 @@
           :activeState="1"
           @changeActiveState="activeState++"
           @changeActiveStateMinus="activeState--"
-          @applicantTypeValue="applicantTypeSet"
-          @nativeLanguageSet="nativeLanguage"
-          @payrollDocumentSet="payrollDocumentSet"
-          @diplomaSet="diplomaSet"
         />
       </div>
     </transition>
@@ -19,10 +15,7 @@
           :activeState="2"
           @changeActiveState="activeState++"
           @changeActiveStateMinus="activeState--"
-          @applicantTypeValue="applicantTypeSet"
-          @nativeLanguageSet="nativeLanguage"
-          @payrollDocumentSet="payrollDocumentSet"
-          @diplomaSet="diplomaSet"
+
         />
       </div>
     </transition>
@@ -32,10 +25,6 @@
           :activeState="3"
           @changeActiveState="activeState++"
           @changeActiveStateMinus="activeState--"
-          @applicantTypeValue="applicantTypeSet"
-          @nativeLanguageSet="nativeLanguage"
-          @payrollDocumentSet="payrollDocumentSet"
-          @diplomaSet="diplomaSet"
         />
       </div>
     </transition>
@@ -62,8 +51,7 @@ export default {
     let store = useStore();
     let applicantType = ref(1);
     let activeState = ref(1);
-    let applicationStatuses = ref("");
-    let applicationCategories = ref("");
+    let applicationStatuses = ref(""); 
     let documentSpecs = ref("");
     let buttons = ref([]);
     let draftStatus = ref("");
@@ -81,17 +69,7 @@ export default {
       activeState.value = n;
     };
 
-    const fetchApplicationCategory = () => {
-      store.dispatch("renewal/getApplicationCategories").then((res) => {
-        const results = res.data.data;
-        applicationCategories.value = results;
-        const renewalData = applicationCategories.value.filter((item) => {
-          return item.name == "Renewal Application";
-        });
-        applicationId.value = renewalData[0]["id"];
-        store.dispatch("renewal/setApplicationId", applicationId.value);
-      });
-    };
+ 
     const fetchApplicationStatuses = () => {
       store.dispatch("renewal/getApplicationStatuses").then((res) => {
         const results = res.data.data;
@@ -141,8 +119,7 @@ export default {
     };
     onMounted(async () => {
       
-      fetchApplicationStatuses();
-      fetchApplicationCategory();
+      fetchApplicationStatuses(); 
     });
 
     
@@ -150,8 +127,7 @@ export default {
     return {
       activeState,
       applicantType,
-      applicationStatuses,
-      applicationCategories,
+      applicationStatuses, 
       documentSpecs,
       buttons,
       submit, 

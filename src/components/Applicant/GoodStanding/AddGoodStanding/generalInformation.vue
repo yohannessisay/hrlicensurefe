@@ -1,5 +1,5 @@
 <template>
-  <nav class="bg-gray-100 px-5 py-3 rounded-md w-full">
+  <nav class="bg-gray-100 px-5 py-3 rounded-md w-full mb-10" id="topNav">
     <ol class="list-reset flex">
       <li>
         <router-link to="/menu">

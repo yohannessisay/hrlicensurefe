@@ -1,32 +1,37 @@
 <template>
   <div class="side-navbar" id="mainSideBar">
-    <router-link class="link" to="/menu">
-      <div
-        class="flex justify-center p-4 cursor-pointer"
-        style="border-bottom: 2px solid white; margin-top: -5px"
+    <div
+      class="flex justify-center p-4 cursor-pointer fixed z-10 bg-main-400"
+      id="sidebarLogo"
+      style="border-bottom: 2px solid white; margin-top: -5px;width: 305px;"
+    >
+      <img
+        src="../../../assets/image.png"
+        style="height: 40px; width: 40px"
+        alt="logo"
+        class="cursor-pointer"
+      />
+      <span
+        class="text-white font-bold mt-2 ml-2 cursor-pointer"
+        id="header-text"
+        >EHPL</span
       >
-        <img
-          src="../../../assets/image.png"
-          style="height: 40px; width: 40px"
-          alt=""
-          srcset=""
-        />
-        <span class="text-white font-bold mt-2 ml-2" id="header-text"
-          >EHPL</span
-        >
-      </div>
-    </router-link>
+    </div>
+
+    <!-- Renewal Routes -->
     <ul class="mt-2" v-if="finalUrl == 'renewal'">
-      <li class="list">
-        <b></b>
-        <b></b>
-        <a href="#Home">
-          <router-link class="link" to="/menu">
-            <span class="icon"><i class="bx bx-home text-white"></i></span>
-            <span class="title text-white font-bold">Home</span>
-          </router-link>
+      <div class="parentList flex justify-start">
+        <a
+          href="#"
+          class="border-4 text-white rounded-md mr-4 ml-1 w-full flex justify-start p-4 pointer-events-none"
+        >
+          <span class="icon"
+            ><i class="bx bx-certification text-white text-2xl mt-1"></i
+          ></span>
+          <h2 class="title text-white text-xl font-bold ml-4">Renewal</h2>
         </a>
-      </li>
+      </div>
+
       <li
         :class="
           $route.fullPath === '/Applicant/Renewal' ? 'list active' : 'list'
@@ -35,10 +40,10 @@
       >
         <b></b>
         <b></b>
-        <a href="#Renewal">
+        <a class="ml-4" href="#Renewal">
           <router-link class="link" to="/Applicant/Renewal">
             <span class="icon"><i class="bx bx-certification"></i></span>
-            <span class="text text-white font-bold">Renewal</span>
+            <span class="text text-white font-bold">Apply for Renewal</span>
           </router-link>
         </a>
       </li>
@@ -55,7 +60,7 @@
       >
         <b></b>
         <b></b>
-        <a href="#Renewal">
+        <a class="ml-4" href="#Renewal">
           <router-link class="link" to="/Applicant/Renewal/submitted">
             <span class="icon"
               ><i
@@ -80,7 +85,7 @@
       >
         <b></b>
         <b></b>
-        <a href="#Verification">
+        <a class="ml-4" href="#Verification">
           <router-link class="link" to="/Applicant/Renewal/draft">
             <span class="icon"
               ><i
@@ -107,7 +112,7 @@
       >
         <b></b>
         <b></b>
-        <a href="#GoodStanding">
+        <a class="ml-4" href="#GoodStanding">
           <router-link class="link" to="/Applicant/Renewal/withdraw">
             <span class="icon"
               ><i
@@ -137,7 +142,7 @@
       >
         <b></b>
         <b></b>
-        <a href="#">
+        <a class="ml-4" href="#">
           <router-link class="link" to="/Applicant/Renewal/inReview">
             <span class="icon"
               ><i
@@ -165,7 +170,7 @@
       >
         <b></b>
         <b></b>
-        <a href="#">
+        <a class="ml-4" href="#">
           <router-link class="link" to="/Applicant/Renewal/approved">
             <span class="icon"
               ><i
@@ -193,7 +198,7 @@
       >
         <b></b>
         <b></b>
-        <a href="#">
+        <a class="ml-4" href="#">
           <router-link class="link" to="/Applicant/Renewal/declined">
             <span class="icon"
               ><i
@@ -223,7 +228,7 @@
       >
         <b></b>
         <b></b>
-        <a href="#">
+        <a class="ml-4" href="#">
           <router-link class="link" to="/Applicant/Renewal/underSupervision">
             <span class="icon"
               ><i
@@ -248,7 +253,7 @@
       >
         <b></b>
         <b></b>
-        <a href="#">
+        <a class="ml-4" href="#">
           <router-link class="link" to="/Applicant/Renewal/pendingPayment">
             <span class="icon"
               ><i
@@ -276,7 +281,7 @@
       >
         <b></b>
         <b></b>
-        <a href="#">
+        <a class="ml-4" href="#">
           <router-link class="link" to="/Applicant/Renewal/returned">
             <span class="icon"
               ><i
@@ -304,7 +309,7 @@
       >
         <b></b>
         <b></b>
-        <a href="#">
+        <a class="ml-4" href="#">
           <router-link class="link" to="/Applicant/Renewal/suspended">
             <span class="icon"
               ><i
@@ -323,8 +328,8 @@
       <li
         :class="
           $route.fullPath === '/Applicant/Renewal/revoked'
-            ? 'list active'
-            : 'list'
+            ? 'list active mb-20'
+            : 'list mb-20'
         "
         :id="
           $route.fullPath === '/Applicant/Renewal/revoked' ? 'activeMenu' : ''
@@ -332,7 +337,7 @@
       >
         <b></b>
         <b></b>
-        <a href="#">
+        <a class="ml-4" href="#">
           <router-link class="link" to="/Applicant/Renewal/revoked">
             <span class="icon"
               ><i
@@ -347,31 +352,46 @@
           </router-link>
         </a>
       </li>
-    </ul>
-    
-    <ul class="mt-2" v-if="finalUrl=='newLicense'">
-      <li class="list">
-        <b></b>
-        <b></b>
-        <a href="#Home">
-          <router-link class="link" to="/menu">
-            <span class="icon"><i class="bx bx-home text-white"></i></span>
-            <span class="title text-white font-bold">Home</span>
-          </router-link>
+
+      <router-link class="" to="/menu">
+        <a class="last_menu flex justify-center hover:bg-main-400 mt-4">
+          <span class="icon"
+            ><i class="bx bx-home text-white text-2xl -ml-8 "></i
+          ></span>
+          <span class="title text-white font-bold ml-2">Home</span>
         </a>
-      </li>
+      </router-link>
+    </ul>
+
+    <!--End of Renewal Routes -->
+    <!-- New License routes -->
+    <ul class="mt-2" v-if="finalUrl == 'newLicense'">
+      <div class="parentList flex justify-start">
+        <a
+          href="#"
+          class="border-4 text-white rounded-md mr-4 ml-1 w-full flex justify-start p-4 pointer-events-none"
+        >
+          <span class="icon"
+            ><i class="bx bx-certification text-white text-2xl mt-1"></i
+          ></span>
+          <h2 class="title text-white text-xl font-bold ml-4">New License</h2>
+        </a>
+      </div>
+
       <li
         :class="
-          $route.fullPath === '/Applicant/NewLicense' ? 'list active' : 'list'
+          $route.fullPath === '/Applicant/NewLicense'
+            ? 'list active'
+            : 'list mt-8'
         "
         :id="$route.fullPath === '/Applicant/NewLicense' ? 'activeMenu' : ''"
       >
         <b></b>
         <b></b>
-        <a href="#NewLicense">
+        <a class="ml-4" href="#NewLicense">
           <router-link class="link" to="/Applicant/NewLicense">
-            <span class="icon"><i class="bx bx-certification"></i></span>
-            <span class="text text-white font-bold">New License</span>
+            <span class="icon"><i class="bx bx-plus"></i></span>
+            <span class="text text-white font-bold">Apply For New License</span>
           </router-link>
         </a>
       </li>
@@ -390,7 +410,7 @@
       >
         <b></b>
         <b></b>
-        <a href="#Renewal">
+        <a class="ml-4" href="#NewLicense">
           <router-link class="link" to="/Applicant/NewLicense/submitted">
             <span class="icon"
               ><i
@@ -417,7 +437,7 @@
       >
         <b></b>
         <b></b>
-        <a href="#Verification">
+        <a class="ml-4" href="#Verification">
           <router-link class="link" to="/Applicant/NewLicense/draft">
             <span class="icon"
               ><i
@@ -446,7 +466,7 @@
       >
         <b></b>
         <b></b>
-        <a href="#GoodStanding">
+        <a class="ml-4" href="#GoodStanding">
           <router-link class="link" to="/Applicant/NewLicense/withdraw">
             <span class="icon"
               ><i
@@ -478,7 +498,7 @@
       >
         <b></b>
         <b></b>
-        <a href="#">
+        <a class="ml-4" href="#">
           <router-link class="link" to="/Applicant/NewLicense/inReview">
             <span class="icon"
               ><i
@@ -508,7 +528,7 @@
       >
         <b></b>
         <b></b>
-        <a href="#">
+        <a class="ml-4" href="#">
           <router-link class="link" to="/Applicant/NewLicense/approved">
             <span class="icon"
               ><i
@@ -538,7 +558,7 @@
       >
         <b></b>
         <b></b>
-        <a href="#">
+        <a class="ml-4" href="#">
           <router-link class="link" to="/Applicant/NewLicense/declined">
             <span class="icon"
               ><i
@@ -568,7 +588,7 @@
       >
         <b></b>
         <b></b>
-        <a href="#">
+        <a class="ml-4" href="#">
           <router-link class="link" to="/Applicant/NewLicense/underSupervision">
             <span class="icon"
               ><i
@@ -593,7 +613,7 @@
       >
         <b></b>
         <b></b>
-        <a href="#">
+        <a class="ml-4" href="#">
           <router-link class="link" to="/Applicant/NewLicense/pendingPayment">
             <span class="icon"
               ><i
@@ -623,7 +643,7 @@
       >
         <b></b>
         <b></b>
-        <a href="#">
+        <a class="ml-4" href="#">
           <router-link class="link" to="/Applicant/NewLicense/returned">
             <span class="icon"
               ><i
@@ -653,7 +673,7 @@
       >
         <b></b>
         <b></b>
-        <a href="#">
+        <a class="ml-4" href="#">
           <router-link class="link" to="/Applicant/NewLicense/suspended">
             <span class="icon"
               ><i
@@ -670,11 +690,13 @@
       </li>
 
       <li
+      
         :class="
           $route.fullPath === '/Applicant/NewLicense/revoked'
             ? 'list active'
             : 'list'
         "
+      
         :id="
           $route.fullPath === '/Applicant/NewLicense/revoked'
             ? 'activeMenu'
@@ -683,7 +705,7 @@
       >
         <b></b>
         <b></b>
-        <a href="#">
+        <a class="ml-4" href="#" style="margin-bottom: 75px !important;">
           <router-link class="link" to="/Applicant/NewLicense/revoked">
             <span class="icon"
               ><i
@@ -698,19 +720,31 @@
           </router-link>
         </a>
       </li>
-    </ul>
 
-    <ul class="mt-2"  v-if="finalUrl=='goodstanding'">
-      <li class="list">
-        <b></b>
-        <b></b>
-        <a href="#Home">
-          <router-link class="link" to="/menu">
-            <span class="icon"><i class="bx bx-home text-white"></i></span>
-            <span class="title text-white font-bold">Home</span>
-          </router-link>
+      <router-link class="" to="/menu">
+        <a class="last_menu flex justify-center hover:bg-main-400 mt-4">
+          <span class="icon"
+            ><i class="bx bx-home text-white text-2xl -ml-8 "></i
+          ></span>
+          <span class="title text-white font-bold ml-2">Home</span>
         </a>
-      </li>
+      </router-link>
+    </ul>
+    <!-- End of New License routes -->
+    <!-- Goodstanding routes -->
+    <ul class="mt-2" v-if="finalUrl == 'goodstanding'">
+      <div class="parentList flex justify-start">
+        <a
+          href="#"
+          class="border-4 text-white rounded-md mr-4 ml-1 w-full flex justify-start p-4 pointer-events-none"
+        >
+          <span class="icon"
+            ><i class="bx bx-certification text-white text-2xl mt-1"></i
+          ></span>
+          <h2 class="title text-white text-xl font-bold ml-4">Goodstanding</h2>
+        </a>
+      </div>
+
       <li
         :class="
           $route.fullPath === '/Applicant/GoodStanding' ? 'list active' : 'list'
@@ -719,10 +753,12 @@
       >
         <b></b>
         <b></b>
-        <a href="#GoodStanding">
+        <a class="ml-4" href="#GoodStanding">
           <router-link class="link" to="/Applicant/GoodStanding">
             <span class="icon"><i class="bx bx-certification"></i></span>
-            <span class="text text-white font-bold">GoodStanding</span>
+            <span class="text text-white font-bold break-all"
+              >Apply for GoodStanding</span
+            >
           </router-link>
         </a>
       </li>
@@ -741,7 +777,7 @@
       >
         <b></b>
         <b></b>
-        <a href="#GoodStanding">
+        <a class="ml-4" href="#GoodStanding">
           <router-link class="link" to="/Applicant/GoodStanding/submitted">
             <span class="icon"
               ><i
@@ -763,12 +799,14 @@
             : 'list'
         "
         :id="
-          $route.fullPath === '/Applicant/GoodStanding/draft' ? 'activeMenu' : ''
+          $route.fullPath === '/Applicant/GoodStanding/draft'
+            ? 'activeMenu'
+            : ''
         "
       >
         <b></b>
         <b></b>
-        <a href="#Verification">
+        <a class="ml-4" href="#Verification">
           <router-link class="link" to="/Applicant/GoodStanding/draft">
             <span class="icon"
               ><i
@@ -797,7 +835,7 @@
       >
         <b></b>
         <b></b>
-        <a href="#GoodStanding">
+        <a class="ml-4" href="#GoodStanding">
           <router-link class="link" to="/Applicant/GoodStanding/withdraw">
             <span class="icon"
               ><i
@@ -829,7 +867,7 @@
       >
         <b></b>
         <b></b>
-        <a href="#">
+        <a class="ml-4" href="#">
           <router-link class="link" to="/Applicant/GoodStanding/assigned">
             <span class="icon"
               ><i
@@ -859,7 +897,7 @@
       >
         <b></b>
         <b></b>
-        <a href="#">
+        <a class="ml-4" href="#">
           <router-link class="link" to="/Applicant/GoodStanding/approved">
             <span class="icon"
               ><i
@@ -878,8 +916,8 @@
       <li
         :class="
           $route.fullPath === '/Applicant/GoodStanding/declined'
-            ? 'list active'
-            : 'list'
+            ? 'list active mb-20'
+            : 'list mb-20'
         "
         :id="
           $route.fullPath === '/Applicant/GoodStanding/declined'
@@ -889,7 +927,7 @@
       >
         <b></b>
         <b></b>
-        <a href="#">
+        <a class="ml-4" href="#">
           <router-link class="link" to="/Applicant/GoodStanding/declined">
             <span class="icon"
               ><i
@@ -904,11 +942,16 @@
           </router-link>
         </a>
       </li>
-
-   
-
-      
+      <router-link class="" to="/menu">
+        <a class="last_menu flex justify-center hover:bg-main-400 mt-4">
+          <span class="icon"
+            ><i class="bx bx-home text-white text-2xl -ml-8 "></i
+          ></span>
+          <span class="title text-white font-bold ml-2">Home</span>
+        </a>
+      </router-link>
     </ul>
+    <!--End of Goodstanding routes -->
   </div>
 </template>
 

@@ -1,6 +1,6 @@
 <template>
   <main-content :url="'goodstanding'">
-    <nav class="bg-gray-100 px-5 py-3 rounded-md w-full">
+    <nav class="bg-gray-100 px-5 py-3 rounded-md w-full mb-10" id="topNav">
       <ol class="list-reset flex">
         <li>
           <router-link to="/menu">
@@ -15,6 +15,10 @@
             <a href="#" class="text-main-400 hover:text-blue-700">Goodstanding</a>
           </router-link>
         </li>
+        <li>
+          <span class="text-gray-500 mx-2">/</span>
+        </li>
+        <li class="text-gray-500">Submitted</li>
         <li>
           <span class="text-gray-500 mx-2">/</span>
         </li>

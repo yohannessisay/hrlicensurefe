@@ -31,7 +31,7 @@
         class="
           modal-content
           border-none
-          shadow-lg
+          shadow-md
           relative
           flex flex-col
           w-full
@@ -57,13 +57,7 @@
               leading-tight
               uppercase
               rounded
-              shadow-lg
-              hover:bg-purple-700 hover:shadow-lg
-              focus:bg-purple-700
-              focus:shadow-lg
-              focus:outline-none
-              focus:ring-0
-              active:bg-purple-800 active:shadow-lg
+              shadow-md
               transition
               duration-150
               ease-in-out
@@ -74,7 +68,7 @@
             <i class="fa fa-close fa-2x"></i>
           </button>
         </div>
-        <div class="vld-parent mt-4">
+        <div class="vld-parent ">
           <loading
             :active="isLoading"
             :is-full-page="false"
