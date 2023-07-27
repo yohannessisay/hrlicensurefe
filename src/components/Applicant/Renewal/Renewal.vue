@@ -180,9 +180,7 @@ export default {
         .then((res) => {
           const results = res.data.data;
           documentSpecs.value = results;
-          store
-            .dispatch("renewal/setDocumentSpecs", documentSpecs.value)
-            .then(() => {});
+        
         });
     };
     const fetchDraft = (id) => {

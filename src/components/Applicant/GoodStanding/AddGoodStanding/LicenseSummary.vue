@@ -660,6 +660,7 @@ import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 export default {
   components: { Loading, RadialProgress },
+  emits: ["darkMode", "changeActiveState", "changeActiveStateMinus"],
   setup(props, { emit }) {
     const store = useStore();
     const toast = useToast();
@@ -837,7 +838,7 @@ export default {
         let getAllIDB = store.getAll();
 
         getAllIDB.onsuccess = function(evt) {
-          localFileData.value = evt.target.result
+          localFileData.value = evt.target.result&& evt.target.result[0]
             ? evt.target.result[0].data
             : {};
           localFileData.value[0].data.forEach((element) => {

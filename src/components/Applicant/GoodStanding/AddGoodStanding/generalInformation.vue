@@ -80,7 +80,7 @@
             </div>
 
             <div>
-              <div class="overflow-hidden shadow-sm">
+              <div class="overflow-hidden  ">
                 <label
                   for=""
                   :class="isDarkMode ? 'text-white' : 'text-main-400'"
@@ -310,7 +310,7 @@
           :class="
             isDarkMode
               ? ' rounded-sm bg-secondaryDark shadow-md mb-8'
-              : ' rounded-sm bg-white shadow-md mb-8'
+              : ' rounded-sm bg-white mb-8'
           "
         >
           <div class="container mx-auto">
@@ -412,14 +412,14 @@
         ></loading>
         <div class="flex justify-end mb-2 mr-1 bg-white">
           <button
-            class="float-right mb-8 inline-block px-6 py-2.5 bg-blue-700 text-main-400 max-w-3xl font-medium text-xs leading-tight uppercase rounded shadow-md bg-white border hover:text-white hover:border-main-500 hover:bg-main-400 focus:bg-blue-700 focus:shadow-md focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-md transition duration-150 ease-in-out"
+            class="float-right mb-8 inline-block px-6 py-2.5 bg-blue-700 text-main-400 max-w-3xl font-medium text-xs leading-tight uppercase rounded   bg-white border hover:text-white hover:border-main-500 hover:bg-main-400 focus:bg-blue-700 focus:shadow-md focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-md transition duration-150 ease-in-out"
             type="submit"
             @click="saveDraft()"
           >
             Save as draft
           </button>
           <button
-            class="float-right mb-8 inline-block px-6 py-2.5 bg-main-400 text-white max-w-3xl font-medium text-xs leading-tight uppercase rounded shadow-md border hover:text-main-400 hover:border-main-500 hover:bg-white focus:bg-blue-700 focus:shadow-md focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-md transition duration-150 ease-in-out"
+            class="float-right mb-8 inline-block px-6 py-2.5 bg-main-400 text-white max-w-3xl font-medium text-xs leading-tight uppercase rounded  border hover:text-main-400 hover:border-main-500 hover:bg-white focus:bg-blue-700 focus:shadow-md focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-md transition duration-150 ease-in-out"
             type="submit"
           >
             Next
@@ -439,7 +439,7 @@ import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 export default {
   props: ["activeState"],
   components: { Loading },
-
+  emits: ["darkMode", "changeActiveState", "changeActiveStateMinus"],
   setup(props, { emit }) {
     const store = useStore();
     const toast = useToast();
