@@ -57,7 +57,7 @@
                     w-full
                     whitespace-nowrap
                     rounded-lg
-                    shadow-lg
+                    shadow-md
                     mb-8
                     bg-white
                     divide-y
@@ -289,7 +289,7 @@
                     whitespace-nowrap
                     rounded-lg
                     bg-white
-                    shadow-lg
+                    shadow-md
                     divide-y divide-gray-300
                     overflow-hidden
                     table-auto
@@ -671,7 +671,7 @@
                       >
                         <div
                           class="
-                            shadow-lg
+                            shadow-md
                             w-full
                             bg-white
                             border border-grey-400
@@ -1552,7 +1552,7 @@ export default {
   border-radius: 5%;
   padding: 7px;
 }
-.shadow-lg {
+.shadow-md {
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 34%), 0 2px 4px -1px rgb(0 0 0 / 6%);
 }
 .document-name {

@@ -1,6 +1,6 @@
 <template>
   <main-content :url="'goodstanding'">
-    <nav class="bg-gray-100 px-5 py-3 rounded-md w-full">
+    <nav class="bg-gray-100 px-5 py-3 rounded-md w-full mb-10" id="topNav">
       <ol class="list-reset flex">
         <li>
           <router-link to="/menu">
@@ -12,9 +12,15 @@
         </li>
         <li>
           <router-link to="/Applicant/GoodStanding">
-            <a href="#" class="text-main-400 hover:text-blue-700">Goodstanding</a>
+            <a href="#" class="text-main-400 hover:text-blue-700"
+              >Goodstanding</a
+            >
           </router-link>
         </li>
+        <li>
+          <span class="text-gray-500 mx-2">/</span>
+        </li>
+        <li class="text-gray-500">Submitted</li>
         <li>
           <span class="text-gray-500 mx-2">/</span>
         </li>
@@ -24,22 +30,27 @@
 
     <div
       v-if="activeState == 1"
-      class="block p-6 rounded-lg shadow-lg bg-primary-200 max-w-full mr-8 mb-8 sm:p-4"
+      class="block p-6 rounded-lg shadow-lg bg-white max-w-full mr-8 mb-8 sm:p-4"
     >
-      <div class="mt-small flex justify-center">
-        <h2 class="text-main-400 text-3xl font-bold">General Information</h2>
-      </div>
-      <div class="vld-parent mt-4">
+      <div class="vld-parent ">
         <loading
           :active="isLoading"
           :is-full-page="false"
           :color="'#2F639D'"
           :opacity="1"
         ></loading>
-        <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-10">
-          <div class="mt-12 rounded-sm bg-white shadow-lg mb-8">
+        <form
+          @submit.prevent="submit"
+          class="mx-auto max-w-4xl p-2 w-full mt-2 "
+        >
+          <div class="mt-small flex justify-center">
+            <h2 class="text-main-400 text-3xl font-bold">
+              General Information
+            </h2>
+          </div>
+          <div class="mt-12 rounded-sm bg-white  mb-8">
             <div class="container mx-auto">
-              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+              <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-6">
                 <div
                   class="flex justify-center text-6xl min-w-full rounded-xl p-6 bg-gray-100"
                 >
@@ -78,7 +89,9 @@
                   </div>
                 </div>
 
-                <div class="flex justify-center text-6xl rounded-none p-2 bg-gray-100">
+                <div
+                  class="flex justify-center text-6xl rounded-none p-2 bg-gray-100"
+                >
                   <div>
                     <div class="overflow-hidden shadow-sm">
                       <label for class="text-main-400">Applicant Title</label>
@@ -118,7 +131,9 @@
 
             <div class="container mx-auto">
               <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-                <div class="flex justify-center text-6xl rounded-xl p-2 bg-gray-100">
+                <div
+                  class="flex justify-center text-6xl rounded-xl p-2 bg-gray-100"
+                >
                   <div>
                     <label class="text-main-400">Department</label>
                     <select
@@ -149,7 +164,9 @@
                     </select>
                   </div>
                 </div>
-                <div class="flex justify-center text-6xl rounded-xl p-2 bg-gray-100">
+                <div
+                  class="flex justify-center text-6xl rounded-xl p-2 bg-gray-100"
+                >
                   <div>
                     <label class="text-main-400">Education Level</label>
                     <select
@@ -196,7 +213,8 @@
                     >
                       <option
                         :value="
-                          generalInfo && generalInfo.GSProfessionals.professionalTypes
+                          generalInfo &&
+                          generalInfo.GSProfessionals.professionalTypes
                             ? generalInfo.GSProfessionals.professionalTypes.id
                             : null
                         "
@@ -234,10 +252,14 @@
                   </div>
 
                   <div v-show="showOtherProfession">
-                    <label class="text-main-400">Other Profession Amharic</label>
+                    <label class="text-main-400"
+                      >Other Profession Amharic</label
+                    >
                     <input
                       type="text"
-                      v-model="generalInfo.GSProfessionals.otherProfessionTypeAmharic"
+                      v-model="
+                        generalInfo.GSProfessionals.otherProfessionTypeAmharic
+                      "
                       class="appearance-none block xl:w-64 md:w-64 sm:w-64 px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
                       autocomplete="off"
                       placeholder
@@ -246,7 +268,9 @@
                   </div>
                 </div>
 
-                <div class="flex justify-center text-6xl rounded-xl p-2 bg-gray-100">
+                <div
+                  class="flex justify-center text-6xl rounded-xl p-2 bg-gray-100"
+                >
                   <div>
                     <label class="text-main-400">Applicant Position</label>
                     <select
@@ -283,7 +307,10 @@
           </div>
 
           <!-- region -->
-          <div v-if="showLocation" class="pt-8 mt-12 rounded bg-white shadow-lg">
+          <div
+            v-if="showLocation"
+            class="pt-8 mt-12 rounded bg-white shadow-lg"
+          >
             <div class="flex">
               <div class="flex flex-col mb-medium w-2/5 ml-medium mr-12">
                 <label class="text-main-400">Region</label>
@@ -386,7 +413,9 @@
           <div class="mt-12 rounded-sm bg-white shadow-lg mb-8">
             <div class="container mx-auto">
               <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-                <div class="flex justify-center text-6xl rounded-xl ml-4 p-2 bg-gray-100">
+                <div
+                  class="flex justify-center text-6xl rounded-xl ml-4 p-2 bg-gray-100"
+                >
                   <div>
                     <div class="overflow-hidden shadow-sm">
                       <label for class="text-main-400"
@@ -405,10 +434,14 @@
                   </div>
                 </div>
 
-                <div class="flex justify-center text-6xl rounded-xl ml-4 p-2 bg-gray-100">
+                <div
+                  class="flex justify-center text-6xl rounded-xl ml-4 p-2 bg-gray-100"
+                >
                   <div>
                     <div class="overflow-hidden shadow-sm">
-                      <label for class="text-main-400">Who Issued Previous License</label>
+                      <label for class="text-main-400"
+                        >Who Issued Previous License</label
+                      >
 
                       <select
                         class="form-select appearance-none block max-w-3xl px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
@@ -436,7 +469,9 @@
                 >
                   <div>
                     <div class="overflow-hidden shadow-sm">
-                      <label for class="text-main-400">License Registration Number</label>
+                      <label for class="text-main-400"
+                        >License Registration Number</label
+                      >
 
                       <input
                         type="text"
@@ -450,10 +485,14 @@
                   </div>
                 </div>
 
-                <div class="flex justify-center text-6xl rounded-xl p-2 bg-gray-100">
+                <div
+                  class="flex justify-center text-6xl rounded-xl p-2 bg-gray-100"
+                >
                   <div>
                     <div class="overflow-hidden shadow-sm">
-                      <label for class="text-main-400">License Issued Date</label>
+                      <label for class="text-main-400"
+                        >License Issued Date</label
+                      >
 
                       <input
                         type="date"
@@ -655,9 +694,11 @@ export default {
       });
     };
     const fetchZone = () => {
-      store.dispatch("goodstanding/getZones", generalInfo.value.regionId).then((res) => {
-        zones.value = res.data.data;
-      });
+      store
+        .dispatch("goodstanding/getZones", generalInfo.value.regionId)
+        .then((res) => {
+          zones.value = res.data.data;
+        });
     };
     const fetchWoredas = () => {
       store
@@ -671,9 +712,11 @@ export default {
         departmentId: departmentId,
         educationalLevelId: educationalLevelId,
       };
-      store.dispatch("newlicense/getProfessionalTypes", profession).then((res) => {
-        professionalTypes.value = res.data.data;
-      });
+      store
+        .dispatch("newlicense/getProfessionalTypes", profession)
+        .then((res) => {
+          professionalTypes.value = res.data.data;
+        });
     };
     const setDepartment = () => {
       isDepartmentSelected.value = true;
@@ -685,9 +728,11 @@ export default {
         "GSApplicationData",
         JSON.stringify(tempApplicationData)
       );
-      store.dispatch("goodstanding/setGeneralInfo", generalInfo.value).then(() => {
-        activeState.value++;
-      });
+      store
+        .dispatch("goodstanding/setGeneralInfo", generalInfo.value)
+        .then(() => {
+          activeState.value++;
+        });
     };
     const clearLocalData = () => {
       window.localStorage.removeItem("GSApplicationData");
@@ -762,7 +807,8 @@ export default {
           otherProfessionalType: generalInfo.value.otherProfessionType
             ? generalInfo.value.otherProfessionType
             : "",
-          otherProfessionalTypeAmharic: generalInfo.value.otherProfessionTypeAmharic
+          otherProfessionalTypeAmharic: generalInfo.value
+            .otherProfessionTypeAmharic
             ? generalInfo.value.otherProfessionTypeAmharic
             : "",
           departmentId: generalInfo.value.department
@@ -770,34 +816,38 @@ export default {
             : generalInfo.value.departmentId
             ? generalInfo.value.departmentId
             : null,
-          feedback: generalInfo.value.feedback ? generalInfo.value.feedback : "",
+          feedback: generalInfo.value.feedback
+            ? generalInfo.value.feedback
+            : "",
           id: route.params.id,
         },
       };
 
-      store.dispatch("goodstanding/editGoodstandingLicense", license).then((res) => {
-        if (res.data.status == "Success") {
-          toast.success("Updated successfuly", {
-            timeout: 5000,
-            position: "bottom-center",
-            pauseOnFocusLoss: true,
-            pauseOnHover: true,
-            icon: true,
-          });
-          isLoading.value = false;
-          localStorage.removeItem("GSApplicationData");
-          loadFunctions();
-        } else {
-          toast.error("Error occured, please try again", {
-            timeout: 5000,
-            position: "bottom-center",
-            pauseOnFocusLoss: true,
-            pauseOnHover: true,
-            icon: true,
-          });
-          isLoading.value = false;
-        }
-      });
+      store
+        .dispatch("goodstanding/editGoodstandingLicense", license)
+        .then((res) => {
+          if (res.data.status == "Success") {
+            toast.success("Updated successfuly", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+            isLoading.value = false;
+            localStorage.removeItem("GSApplicationData");
+            loadFunctions();
+          } else {
+            toast.error("Error occured, please try again", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+            isLoading.value = false;
+          }
+        });
     };
     const fetchLanguages = () => {
       store.dispatch("lookups/getNativeLanguage").then((res) => {
@@ -839,12 +889,13 @@ export default {
           withdrawData.value = res.data.data;
           generalInfo.value = res.data.data;
           generalInfo.value.whoIssuedId = res.data.data.whoIssued;
-          generalInfo.value.licenseIssuedDate = res.data.data.licenseIssuedDate? res.data.data.licenseIssuedDate.slice(
-            0,
-            10
-          ):'';
+          generalInfo.value.licenseIssuedDate = res.data.data.licenseIssuedDate
+            ? res.data.data.licenseIssuedDate.slice(0, 10)
+            : "";
           generalInfo.value.regionSelected =
-            res.data.data && res.data.data.woreda ? res.data.data.woreda.zone.region : "";
+            res.data.data && res.data.data.woreda
+              ? res.data.data.woreda.zone.region
+              : "";
 
           generalInfo.value.zoneSelected =
             res.data.data && res.data.data.woreda

@@ -31,7 +31,7 @@
         class="
           modal-content
           border-none
-          shadow-lg
+          shadow-md
           relative
           flex flex-col
           w-full
@@ -57,13 +57,13 @@
               leading-tight
               uppercase
               rounded
-              shadow-lg
-              hover:bg-purple-700 hover:shadow-lg
+              shadow-md
+              hover:bg-purple-700 hover:shadow-md
               focus:bg-purple-700
-              focus:shadow-lg
+              focus:shadow-md
               focus:outline-none
               focus:ring-0
-              active:bg-purple-800 active:shadow-lg
+              active:bg-purple-800 active:shadow-md
               transition
               duration-150
               ease-in-out
@@ -460,7 +460,7 @@
                     <div class="accordion-body py-4 px-5">
                       <div class="grid grid-cols-4 gap-4">
                         <div
-                          class="mt-4 mb-8 bg-white shadow-lg"
+                          class="mt-4 mb-8 bg-white shadow-md"
                           style="border-radius: 15px; padding: 10px"
                           v-for="document in declinedDocuments"
                           :key="document.id"
@@ -585,7 +585,7 @@
               leading-tight
               uppercase
               rounded
-              shadow-lg
+              shadow-md
               transition
               duration-150
               ease-in-out
@@ -607,7 +607,7 @@
               leading-tight
               uppercase
               rounded
-              shadow-lg
+              shadow-md
               transition
               duration-150
               ease-in-out
@@ -755,7 +755,7 @@ export default {
         },
       };
 
-      store.dispatch("newlicense/updateDeclined", license).then((res) => {
+      store.dispatch("newlicense/updateDeclined", license).then(() => {
         let licenseId = licenseData.value.id;
         let payload = { document: formData, id: licenseId };
         store

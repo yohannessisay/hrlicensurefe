@@ -344,30 +344,7 @@
         </div>
       </div>
     </div>
-    <div class="flex justify-center">
-      <RadialProgress
-        :diameter="200"
-        :completed-steps="progress"
-        :total-steps="totalSteps"
-      >
-        <h1 class="text-3xl text-main-400 font-bold">{{ progress }} %</h1>
-      </RadialProgress>
-    </div>
-    <div class="flex justify-center bg-yellow-300 p-2 rounded-md">
-      <h2 class="text-grey-800 text-xl">
-        Total file size you have uploaded so far is
-        <h2 class="text-white text-2xl">{{ totalSize }}</h2>
-        MB
-      </h2>
-    </div>
-    <div class="flex justify-center bg-yellow-300 p-2 rounded-md">
-      <h2 class="text-grey-800 text-xl">
-        Please wait patiently as your files are being uploaded, if for any
-        reason the files you uploaded are not successful you will be redirected
-        to the submitted page automatically so you can re-attach your documents
-        again
-      </h2>
-    </div>
+
     <div class="vld-parent mt-4">
       <loading
         :active="isLoading"
@@ -425,6 +402,47 @@
       </div>
     </div>
     <!-- end row -->
+    <div class="modal-mask" v-if="showModal">
+      <div class="modal-wrapper">
+        <div class="modal-container">
+          <div class="modal-header">
+            <h2 class="text-main-400 text-xl border-b-4">Uploading</h2>
+          </div>
+
+          <div class="modal-body">
+            <div class="flex justify-center text-yellow-300 p-2 rounded-md">
+              <h2 class="text-yellow-300 border rounded p-2 text-xl">
+                Total file size you have uploaded so far is
+                <h2 class="text-grey-800 text-2xl">{{ totalSize }} MB</h2>
+              </h2>
+            </div>
+            <div class="flex justify-center">
+              <RadialProgress
+                :diameter="200"
+                :completed-steps="progress"
+                :total-steps="totalSteps"
+              >
+                <h1 class="text-3xl text-main-400 font-bold">
+                  {{ progress }} %
+                </h1>
+              </RadialProgress>
+            </div>
+            <div>
+              <div
+                class="flex border justify-center text-yellow-300 p-2 rounded-md"
+              >
+                <h2 class=" text-xl">
+                  Please wait patiently as your files are being uploaded, if for
+                  any reason the files you uploaded are not successful you will
+                  be redirected to the submitted page automatically so you can
+                  re-attach your documents again
+                </h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -454,6 +472,7 @@ export default {
     let buttons = ref([]);
     let tempDocs = ref({});
     let allowSave = ref(false);
+    const showModal = ref(false);
     const changeAgrement = () => {
       agreed.value = !agreed.value;
       if (agreed.value != false) {
@@ -470,7 +489,7 @@ export default {
       }
     };
     const fetchApplicationStatuses = () => {
-      store.dispatch("renewal/getApplicationStatuses").then(res => {
+      store.dispatch("renewal/getApplicationStatuses").then((res) => {
         let results = res.data.data;
 
         let status = results.filter(function(e) {
@@ -479,7 +498,7 @@ export default {
         buttons.value = status[0]["buttons"];
       });
     };
-    const checkFinalStatus = action => {
+    const checkFinalStatus = (action) => {
       generalInfo.value.licenseFile = [];
       documents.value = localFileData.value;
       isLoading.value = true;
@@ -525,15 +544,16 @@ export default {
             newLicenseCode: generalInfo.value.newLicenseCode,
             feedback: generalInfo.value.feedback
               ? generalInfo.value.feedback
-              : ""
-          }
+              : "",
+          },
         };
-        store.dispatch("renewal/addRenewalLicense", license).then(res => {
+        showModal.value = true;
+        store.dispatch("renewal/addRenewalLicense", license).then((res) => {
           let licenseId = res.data.data.id;
           let payload = { document: formData, id: licenseId };
           store
             .dispatch("renewal/uploadDocuments", payload)
-            .then(res => {
+            .then((res) => {
               isLoading.value = false;
               if (res.data.status == "Success") {
                 localStorage.removeItem("RNApplicationData");
@@ -543,7 +563,7 @@ export default {
                   position: "bottom-center",
                   pauseOnFocusLoss: true,
                   pauseOnHover: true,
-                  icon: true
+                  icon: true,
                 });
 
                 if (license.action == "DraftEvent") {
@@ -557,7 +577,7 @@ export default {
                   position: "bottom-center",
                   pauseOnFocusLoss: true,
                   pauseOnHover: true,
-                  icon: true
+                  icon: true,
                 });
               }
             })
@@ -567,7 +587,7 @@ export default {
                 position: "bottom-center",
                 pauseOnFocusLoss: true,
                 pauseOnHover: true,
-                icon: true
+                icon: true,
               });
             });
         });
@@ -597,7 +617,7 @@ export default {
 
         getAllIDB.onsuccess = function(evt) {
           localFileData.value = evt.target.result ? evt.target.result : {};
-          localFileData.value[0].data.forEach(element => {
+          localFileData.value[0].data.forEach((element) => {
             totalSize.value += Number(
               Math.ceil((element.image.length * 6) / 8 / 1000)
             );
@@ -609,14 +629,14 @@ export default {
       generalInfo.value = localData.value;
       generalInfo.value.feedback = "";
       if (generalInfo.value.applicantTypeSelected.id == 1) {
-        store.dispatch("renewal/getExpertLevel").then(res => {
+        store.dispatch("renewal/getExpertLevel").then((res) => {
           let expertLevel = res.data.data.filter(function(e) {
             return e.code.includes("REG");
           });
           generalInfo.value.expertLevelId = expertLevel[0].id;
         });
       } else {
-        store.dispatch("renewal/getExpertLevel").then(res => {
+        store.dispatch("renewal/getExpertLevel").then((res) => {
           let expertLevel = res.data.data.filter(function(e) {
             return e.code.includes("FED");
           });
@@ -638,9 +658,9 @@ export default {
       totalSteps,
       progress,
       checkFinalStatus,
-      changeAgrement
+      changeAgrement,
     };
-  }
+  },
 };
 </script>
 <style>
@@ -658,5 +678,50 @@ export default {
 .disabled {
   pointer-events: none;
   opacity: 0.3;
+}
+
+.modal-mask {
+  position: fixed;
+  z-index: 9998;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: table;
+  transition: opacity 0.3s ease;
+}
+
+.modal-wrapper {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.modal-container {
+  width: 600px;
+  margin: 0px auto;
+  padding: 20px 30px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
+  transition: all 0.3s ease;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+.modal-body {
+  margin: 20px 0;
+}
+
+ 
+
+.modal-enter-from,
+.modal-leave-to {
+  opacity: 0;
+}
+
+.modal-enter-active .modal-container,
+.modal-leave-active .modal-container {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
 }
 </style>

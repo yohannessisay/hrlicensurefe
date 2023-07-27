@@ -28,7 +28,7 @@
           />
         </svg>
 
-        <span class="logo_name ml-4">eHPL</span>
+        <h2 class="logo_name ml-4 text-xl">eHPL</h2>
       </div>
     </router-link>
     <div id="outer">

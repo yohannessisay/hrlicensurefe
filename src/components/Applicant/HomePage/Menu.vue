@@ -4,10 +4,13 @@
     <div class="content" id="mainContent">
       <top-nav :userInfo="userInfo"></top-nav>
       <div class="mt-8 ml-8 mr-8">
-        <nav class="bg-grey-100 p-4 rounded-sm w-full shadow-xl">
+        <nav class="bg-grey-100 p-4 rounded-md w-full shadow-md mt-24">
           <ol class="list-reset flex">
             <li>
-              <a href="#" class="text-main-400 hover:text-main-100">Home</a>
+              <a href="#" class="text-main-400 text-xl hover:text-main-100"
+                >Welcome Back,
+                {{ userInfo.fullName ? userInfo.fullName : "" }}</a
+              >
             </li>
             <li><span class="text-gray-500 mx-2"></span></li>
           </ol>
@@ -1698,9 +1701,16 @@ export default {
         getName(res.data.data);
       });
     };
+    const capitalized = (name) => {
+      const capitalizedFirst = name[0].toUpperCase();
+      const rest = name.slice(1);
+
+      return capitalizedFirst + rest;
+    };
     const getName = (profile) => {
       if (profile) {
-        userInfo.value.fullName = profile.name + " " + profile.fatherName;
+        userInfo.value.fullName =
+          capitalized(profile.name) + " " + capitalized(profile.fatherName);
       }
     };
     const getImage = (profile) => {

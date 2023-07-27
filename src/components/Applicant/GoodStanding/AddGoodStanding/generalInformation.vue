@@ -1,9 +1,11 @@
 <template>
-  <nav class="bg-gray-100 px-5 py-3 rounded-md w-full">
+  <nav class="bg-gray-100 px-5 py-3 rounded-md w-full mb-10" id="topNav">
     <ol class="list-reset flex">
       <li>
         <router-link to="/menu">
-          <a href="#" :class="isDarkMode ? 'text-white' : 'text-main-400'">Home</a>
+          <a href="#" :class="isDarkMode ? 'text-white' : 'text-main-400'"
+            >Home</a
+          >
         </router-link>
       </li>
       <li><span class="text-gray-500 mx-2">/</span></li>
@@ -32,80 +34,152 @@
       :color="'#2F639D'"
       :opacity="1"
     ></loading>
-    <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-10">
+    <form
+      @submit.prevent="submit"
+      class="mx-auto max-w-4xl rounded-md shadow-md w-full mt-10"
+    >
       <div
         :class="
           isDarkMode
-            ? 'mt-12 rounded-sm bg-secondaryDark shadow-lg mb-8'
-            : 'mt-12 rounded-sm bg-white shadow-lg mb-8'
+            ? 'mt-12 rounded-sm bg-secondaryDark '
+            : 'mt-12 rounded-sm bg-white  p-2'
         "
       >
-        <div class="container mx-auto">
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-            <div
-              class="flex justify-center text-6xl min-w-full rounded-xl p-6 bg-gray-100"
-            >
-              <div>
-                <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
-                  >Applicant Type</label
+        <div class="container mx-auto border-b mb-4">
+          <div
+            class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 sm:grid-cols-1 gap-2 mb-4 p-4"
+          >
+            <div>
+              <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
+                >Applicant Type</label
+              ><span class="text-red-300">*</span>
+              <select
+                class="form-select appearance-none block xl:w-64 md:w-64 sm:w-64 px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+                aria-label="Default select example"
+                @change="checkApplicantType(generalInfo.applicantTypeId)"
+                v-model="generalInfo.applicantTypeId"
+                required
+              >
+                <option
+                  v-for="applicant in applicantTypes"
+                  :key="applicant.name"
+                  :value="applicant"
+                >
+                  {{ applicant.name }}
+                </option>
+              </select>
+              <button
+                v-show="Object.keys(localData).length != 0"
+                type="button"
+                class="mt-8 inline-block px-6 py-2.5 bg-white text-main-400 max-w-3xl border hover:bg-main-400 hover:text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:border-main-500 focus:bg-blue-700 focus:shadow-md focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-md transition duration-150 ease-in-out"
+                @click="clearLocalData()"
+              >
+                <i class="fa fa-close"></i>
+                Clear Form
+              </button>
+            </div>
+
+            <div>
+              <div class="overflow-hidden shadow-sm">
+                <label
+                  for=""
+                  :class="isDarkMode ? 'text-white' : 'text-main-400'"
+                  >Applicant Title</label
                 ><span class="text-red-300">*</span>
+
                 <select
                   class="form-select appearance-none block xl:w-64 md:w-64 sm:w-64 px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
                   aria-label="Default select example"
-                  @change="checkApplicantType(generalInfo.applicantTypeId)"
-                  v-model="generalInfo.applicantTypeId"
+                  v-model="generalInfo.applicantTitleId"
                   required
                 >
                   <option
-                    v-for="applicant in applicantTypes"
-                    :key="applicant.name"
-                    :value="applicant"
+                    v-for="title in applicantTitle"
+                    :key="title.name"
+                    :value="title"
                   >
-                    {{ applicant.name }}
+                    {{ title.name }}
                   </option>
                 </select>
-                <button
-                  v-show="Object.keys(localData).length != 0"
-                  type="button"
-                  class="mt-8 inline-block px-6 py-2.5 bg-white text-main-400 max-w-3xl border hover:bg-main-400 hover:text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:border-main-500 focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
-                  @click="clearLocalData()"
-                >
-                  <i class="fa fa-close"></i>
-                  Clear Form
-                </button>
-              </div>
-            </div>
-
-            <div class="flex justify-center text-6xl rounded-none p-2 bg-gray-100">
-              <div>
-                <div class="overflow-hidden shadow-sm">
-                  <label for="" :class="isDarkMode ? 'text-white' : 'text-main-400'"
-                    >Applicant Title</label
-                  ><span class="text-red-300">*</span>
-
-                  <select
-                    class="form-select appearance-none block xl:w-64 md:w-64 sm:w-64 px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
-                    aria-label="Default select example"
-                    v-model="generalInfo.applicantTitleId"
-                    required
-                  >
-                    <option
-                      v-for="title in applicantTitle"
-                      :key="title.name"
-                      :value="title"
-                    >
-                      {{ title.name }}
-                    </option>
-                  </select>
-                </div>
               </div>
             </div>
           </div>
         </div>
-
-        <div class="container mx-auto">
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-            <div class="flex justify-center text-6xl rounded-xl p-2 bg-gray-100">
+        <!-- region -->
+        <div
+          v-if="showLocation"
+          :class="
+            isDarkMode ? ' rounded bg-secondaryDark ' : 'rounded bg-white '
+          "
+        >
+          <div
+            class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 sm:grid-cols-1 gap-2 mb-4 p-4 border-b"
+          >
+            <div class="flex flex-col mb-4">
+              <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
+                >Region<span class="text-red-300">*</span></label
+              >
+              <select
+                class="form-select appearance-none block max-w-3xl px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                v-model="generalInfo.regionSelected"
+                @change="regionChangeHandler()"
+                required
+              >
+                <option
+                  v-for="region in regions"
+                  v-bind:key="region.name"
+                  v-bind:value="region"
+                >
+                  {{ region.name }}
+                </option>
+              </select>
+            </div>
+            <div class="flex flex-col ">
+              <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
+                >Zone<span class="text-red-300">*</span></label
+              >
+              <select
+                class="form-select appearance-none block max-w-3xl px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                @change="zoneChangeHandler()"
+                v-model="generalInfo.zoneSelected"
+              >
+                <option
+                  v-for="zone in zones"
+                  v-bind:key="zone.name"
+                  v-bind:value="zone"
+                >
+                  {{ zone.name }}
+                </option>
+              </select>
+            </div>
+            <div class="flex flex-col ">
+              <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
+                >Woreda<span class="text-red-300">*</span></label
+              >
+              <select
+                class="form-select appearance-none block max-w-3xl px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                v-model="generalInfo.woredaSelected"
+                required
+              >
+                <option
+                  v-for="woreda in woredas"
+                  v-bind:key="woreda.name"
+                  v-bind:value="woreda"
+                >
+                  {{ woreda.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <!-- end -->
+        <div class="container mx-auto border-b mb-4">
+          <div
+            class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 sm:grid-cols-1 gap-2 mb-4 p-4 border-b"
+          >
+            <div
+              class="flex justify-center text-6xl rounded-xl p-2 bg-gray-100"
+            >
               <div>
                 <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
                   >Department</label
@@ -126,7 +200,9 @@
                 </select>
               </div>
             </div>
-            <div class="flex justify-center text-6xl rounded-xl p-2 bg-gray-100">
+            <div
+              class="flex justify-center text-6xl rounded-xl p-2 bg-gray-100"
+            >
               <div>
                 <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
                   >Education Level</label
@@ -138,7 +214,9 @@
                   @change="educationalLevelChange()"
                   required
                 >
-                  <option value="" disabled>Please select department first</option>
+                  <option value="" disabled
+                    >Please select department first</option
+                  >
                   <option
                     v-for="edLevel in educationLevels"
                     v-bind:key="edLevel.name"
@@ -150,62 +228,61 @@
               </div>
             </div>
             <div
-              class="grid grid-rows-3 justify-center text-6xl rounded-xl p-2 bg-gray-100"
+              class="flex justify-center text-6xl rounded-xl p-2 bg-gray-100"
             >
-              <div class="mb-4">
-                <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
-                  >Profession</label
-                ><span class="text-red-300">*</span>
-                <select
-                  class="form-select appearance-none block xl:w-64 md:w-64 sm:w-64 px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
-                  :disabled="!isEdLevelSelected"
-                  @change="checkOtherProfession()"
-                  v-model="generalInfo.professionTypeId"
-                  required
-                >
-                  <option value="" disabled>Please select education level first</option>
-                  <option
-                    v-for="profession in professionalTypes"
-                    v-bind:key="profession.name"
-                    v-bind:value="profession"
+              <div class="grid grid-cols-1">
+                <div class="mb-4 ">
+                  <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
+                    >Profession</label
+                  ><span class="text-red-300">*</span>
+                  <select
+                    class="form-select appearance-none block xl:w-64 md:w-64 sm:w-64 px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+                    :disabled="!isEdLevelSelected"
+                    @change="checkOtherProfession()"
+                    v-model="generalInfo.professionTypeId"
+                    required
                   >
-                    {{ profession.name }}
-                  </option>
-                  <option value=""></option>
-                </select>
-              </div>
+                    <option value="" disabled
+                      >Please select education level first</option
+                    >
+                    <option
+                      v-for="profession in professionalTypes"
+                      v-bind:key="profession.name"
+                      v-bind:value="profession"
+                    >
+                      {{ profession.name }}
+                    </option>
+                    <option value=""></option>
+                  </select>
+                </div>
 
-              <div v-show="showOtherProfession">
-                <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
-                  >Other Profession</label
-                ><span class="text-red-300">*</span>
-                <input
-                  type="text"
-                  name="otherProf"
-                  v-model="generalInfo.otherProfessionType"
-                  class="appearance-none block xl:w-64 md:w-64 sm:w-64 px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
-                  autocomplete="off"
-                  placeholder="Profession english title" 
-                />
-              </div>
+                <div v-show="showOtherProfession">
+                  <input
+                    type="text"
+                    name="otherProf"
+                    v-model="generalInfo.otherProfessionType"
+                    class="mb-2 appearance-none block xl:w-64 md:w-64 sm:w-64 px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+                    autocomplete="off"
+                    placeholder="Profession english title"
+                  />
+                </div>
 
-              <div v-show="showOtherProfession">
-                <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
-                  >Other Profession Amharic</label
-                ><span class="text-red-300">*</span>
-                <input
-                  type="text"
-                  name="otherProfAmh"
-                  v-model="generalInfo.otherProfessionTypeAmharic"
-                  class="appearance-none block xl:w-64 md:w-64 sm:w-64 px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
-                  autocomplete="off"
-                  placeholder="Profession amharic title"
-                
-                />
+                <div v-show="showOtherProfession">
+                  <input
+                    type="text"
+                    name="otherProfAmh"
+                    v-model="generalInfo.otherProfessionTypeAmharic"
+                    class="appearance-none block xl:w-64 md:w-64 sm:w-64 px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+                    autocomplete="off"
+                    placeholder="Profession amharic title"
+                  />
+                </div>
               </div>
             </div>
 
-            <div class="flex justify-center text-6xl rounded-xl p-2 bg-gray-100">
+            <div
+              class="flex justify-center text-6xl rounded-xl p-2 bg-gray-100"
+            >
               <div>
                 <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
                   >Applicant Position</label
@@ -227,86 +304,24 @@
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- region -->
-      <div
-        v-if="showLocation"
-        :class="
-          isDarkMode
-            ? 'pt-8 mt-12 rounded bg-secondaryDark shadow-lg'
-            : 'pt-8 mt-12 rounded bg-white shadow-lg'
-        "
-      >
-        <div class="flex">
-          <div class="flex flex-col mb-medium w-2/5 ml-medium mr-12">
-            <label :class="isDarkMode ? 'text-white' : 'text-main-400'">Region</label
-            ><span class="text-red-300">*</span>
-            <select
-              class="form-select appearance-none block max-w-3xl px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-              v-model="generalInfo.regionSelected"
-              @change="regionChangeHandler()"
-              required
+        <!-- GS details -->
+        <div
+          :class="
+            isDarkMode
+              ? ' rounded-sm bg-secondaryDark shadow-md mb-8'
+              : ' rounded-sm bg-white shadow-md mb-8'
+          "
+        >
+          <div class="container mx-auto">
+            <div
+              class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 sm:grid-cols-1 gap-2 mb-4 p-4 border-b"
             >
-              <option
-                v-for="region in regions"
-                v-bind:key="region.name"
-                v-bind:value="region"
-              >
-                {{ region.name }}
-              </option>
-            </select>
-          </div>
-          <div class="flex flex-col mb-medium w-2/5 mr-12">
-            <label :class="isDarkMode ? 'text-white' : 'text-main-400'">Zone</label
-            ><span class="text-red-300">*</span>
-            <select
-              class="form-select appearance-none block max-w-3xl px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-              @change="zoneChangeHandler()"
-              v-model="generalInfo.zoneSelected"
-            >
-              <option v-for="zone in zones" v-bind:key="zone.name" v-bind:value="zone">
-                {{ zone.name }}
-              </option>
-            </select>
-          </div>
-        </div>
-        <div class="flex">
-          <div class="flex flex-col mb-medium w-2/5 ml-medium mr-12">
-            <label :class="isDarkMode ? 'text-white' : 'text-main-400'">Woreda</label
-            ><span class="text-red-300">*</span>
-            <select
-              class="form-select appearance-none block max-w-3xl px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-              v-model="generalInfo.woredaSelected"
-              required
-            >
-              <option
-                v-for="woreda in woredas"
-                v-bind:key="woreda.name"
-                v-bind:value="woreda"
-              >
-                {{ woreda.name }}
-              </option>
-            </select>
-          </div>
-        </div>
-      </div>
-      <!-- end -->
-
-      <!-- GS details -->
-      <div
-        :class="
-          isDarkMode
-            ? 'mt-12 rounded-sm bg-secondaryDark shadow-lg mb-8'
-            : 'mt-12 rounded-sm bg-white shadow-lg mb-8'
-        "
-      >
-        <div class="container mx-auto">
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-            <div class="flex justify-center text-6xl rounded-xl ml-4 p-2 bg-gray-100">
               <div>
                 <div class="overflow-hidden shadow-sm">
-                  <label for="" :class="isDarkMode ? 'text-white' : 'text-main-400'"
+                  <label
+                    for=""
+                    :class="isDarkMode ? 'text-white' : 'text-main-400'"
                     >Organization Letter written for</label
                   ><span class="text-red-300">*</span>
                   <input
@@ -320,12 +335,51 @@
                   />
                 </div>
               </div>
-            </div>
 
-            <div class="flex justify-center text-6xl rounded-xl ml-4 p-2 bg-gray-100">
               <div>
                 <div class="overflow-hidden shadow-sm">
-                  <label for="" :class="isDarkMode ? 'text-white' : 'text-main-400'"
+                  <label
+                    for=""
+                    :class="isDarkMode ? 'text-white' : 'text-main-400'"
+                    >License Issued Date</label
+                  >
+                  <span class="text-red-300">*</span>
+                  <input
+                    type="date"
+                    name="issuedDate"
+                    v-model="generalInfo.licenseIssuedDate"
+                    class="appearance-none block xl:w-64 md:w-64 sm:w-64 px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+                    autocomplete="off"
+                    placeholder="example-MR,MRS"
+                    required
+                  />
+                </div>
+              </div>
+              <div>
+                <div class="overflow-hidden shadow-sm">
+                  <label
+                    for=""
+                    :class="isDarkMode ? 'text-white' : 'text-main-400'"
+                    >License Registration Number</label
+                  ><span class="text-red-300">*</span>
+
+                  <input
+                    type="text"
+                    name="licenseNum"
+                    v-model="generalInfo.licenseRegistrationNumber"
+                    class="appearance-none block xl:w-64 md:w-64 sm:w-64 px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+                    autocomplete="off"
+                    placeholder=""
+                    required
+                  />
+                </div>
+              </div>
+
+              <div>
+                <div class="overflow-hidden shadow-sm">
+                  <label
+                    for=""
+                    :class="isDarkMode ? 'text-white' : 'text-main-400'"
                     >Who Issued Previous License</label
                   ><span class="text-red-300">*</span>
 
@@ -347,71 +401,26 @@
             </div>
           </div>
         </div>
-
-        <div class="container mx-auto">
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-            <div
-              class="flex justify-center text-6xl ml-4 mb-4 rounded-xl p-2 bg-gray-100"
-            >
-              <div>
-                <div class="overflow-hidden shadow-sm">
-                  <label for="" :class="isDarkMode ? 'text-white' : 'text-main-400'"
-                    >License Registration Number</label
-                  ><span class="text-red-300">*</span>
-
-                  <input
-                    type="text"
-                    name="licenseNum"
-                    v-model="generalInfo.licenseRegistrationNumber"
-                    class="appearance-none block xl:w-64 md:w-64 sm:w-64 px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
-                    autocomplete="off"
-                    placeholder=""
-                    required
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div class="flex justify-center text-6xl rounded-xl p-2 bg-gray-100">
-              <div>
-                <div class="overflow-hidden shadow-sm">
-                  <label for="" :class="isDarkMode ? 'text-white' : 'text-main-400'"
-                    >License Issued Date</label
-                  >
-                  <span class="text-red-300">*</span>
-                  <input
-                    type="date"
-                    name="issuedDate"
-                    v-model="generalInfo.licenseIssuedDate"
-                    class="appearance-none block xl:w-64 md:w-64 sm:w-64 px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
-                    autocomplete="off"
-                    placeholder="example-MR,MRS"
-                    required
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
-      <div class="vld-parent mt-4">
+
+      <div class="vld-parent ">
         <loading
           :active="isLoading"
           :is-full-page="false"
           :color="'#2F639D'"
           :opacity="1"
         ></loading>
-        <div class="flex justify-end mb-2 mr-1">
+        <div class="flex justify-end mb-2 mr-1 bg-white">
           <button
-            class="float-right mt-8 inline-block px-6 py-2.5 bg-blue-700 text-main-400 max-w-3xl font-medium text-xs leading-tight uppercase rounded shadow-md bg-white border hover:text-white hover:border-main-500 hover:bg-main-400 focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+            class="float-right mb-8 inline-block px-6 py-2.5 bg-blue-700 text-main-400 max-w-3xl font-medium text-xs leading-tight uppercase rounded shadow-md bg-white border hover:text-white hover:border-main-500 hover:bg-main-400 focus:bg-blue-700 focus:shadow-md focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-md transition duration-150 ease-in-out"
             type="submit"
             @click="saveDraft()"
           >
             Save as draft
           </button>
           <button
-            class="float-right mt-8 inline-block px-6 py-2.5 bg-blue-700 text-main-400 max-w-3xl font-medium text-xs leading-tight uppercase rounded shadow-md bg-white border hover:text-white hover:border-main-500 hover:bg-main-400 focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
-            type="submit" 
+            class="float-right mb-8 inline-block px-6 py-2.5 bg-main-400 text-white max-w-3xl font-medium text-xs leading-tight uppercase rounded shadow-md border hover:text-main-400 hover:border-main-500 hover:bg-white focus:bg-blue-700 focus:shadow-md focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-md transition duration-150 ease-in-out"
+            type="submit"
           >
             Next
           </button>
@@ -553,9 +562,11 @@ export default {
       });
     };
     const fetchZone = () => {
-      store.dispatch("goodstanding/getZones", generalInfo.value.regionId).then((res) => {
-        zones.value = res.data.data;
-      });
+      store
+        .dispatch("goodstanding/getZones", generalInfo.value.regionId)
+        .then((res) => {
+          zones.value = res.data.data;
+        });
     };
     const fetchWoredas = () => {
       store
@@ -569,9 +580,11 @@ export default {
         departmentId: departmentId,
         educationalLevelId: educationalLevelId,
       };
-      store.dispatch("newlicense/getProfessionalTypes", profession).then((res) => {
-        professionalTypes.value = res.data.data;
-      });
+      store
+        .dispatch("newlicense/getProfessionalTypes", profession)
+        .then((res) => {
+          professionalTypes.value = res.data.data;
+        });
     };
     const setDepartment = () => {
       isDepartmentSelected.value = true;
@@ -632,16 +645,17 @@ export default {
         "GSApplicationData",
         JSON.stringify(tempApplicationData)
       );
-      store.dispatch("goodstanding/setGeneralInfo", generalInfo.value).then(() => {
-        emit("changeActiveState");
-      });
+      store
+        .dispatch("goodstanding/setGeneralInfo", generalInfo.value)
+        .then(() => {
+          emit("changeActiveState");
+        });
     };
     const clearLocalData = () => {
       window.localStorage.removeItem("GSApplicationData");
       window.indexedDB.deleteDatabase("GSdocumentUploads");
-      
-        window.location.reload();
-    
+
+      window.location.reload();
     };
     const fetchEducationLevel = () => {
       store.dispatch("lookups/getEducationLevel").then((res) => {
@@ -699,7 +713,8 @@ export default {
             otherProfessionalType: generalInfo.value.otherProfessionType
               ? generalInfo.value.otherProfessionType
               : "",
-            otherProfessionalTypeAmharic: generalInfo.value.otherProfessionTypeAmharic
+            otherProfessionalTypeAmharic: generalInfo.value
+              .otherProfessionTypeAmharic
               ? generalInfo.value.otherProfessionTypeAmharic
               : "",
           },
@@ -711,32 +726,36 @@ export default {
           departmentId: generalInfo.value.departmentId.id
             ? generalInfo.value.departmentId.id
             : null,
-          feedback: generalInfo.value.feedback ? generalInfo.value.feedback : "",
+          feedback: generalInfo.value.feedback
+            ? generalInfo.value.feedback
+            : "",
         },
       };
-      store.dispatch("goodstanding/addGoodstandingLicense", license).then((res) => {
-        if (res.data.status == "Success") {
-          toast.success("Applied successfuly", {
-            timeout: 5000,
-            position: "bottom-center",
-            pauseOnFocusLoss: true,
-            pauseOnHover: true,
-            icon: true,
-          });
-          isLoading.value = false;
-          localStorage.removeItem("GSApplicationData");
-          router.push({ path: "/Applicant/GoodStanding/draft" });
-        } else {
-          toast.error("Error occured, please try again", {
-            timeout: 5000,
-            position: "bottom-center",
-            pauseOnFocusLoss: true,
-            pauseOnHover: true,
-            icon: true,
-          });
-          isLoading.value = false;
-        }
-      });
+      store
+        .dispatch("goodstanding/addGoodstandingLicense", license)
+        .then((res) => {
+          if (res.data.status == "Success") {
+            toast.success("Applied successfuly", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+            isLoading.value = false;
+            localStorage.removeItem("GSApplicationData");
+            router.push({ path: "/Applicant/GoodStanding/draft" });
+          } else {
+            toast.error("Error occured, please try again", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+            isLoading.value = false;
+          }
+        });
     };
     onMounted(async () => {
       fetchApplicantType();

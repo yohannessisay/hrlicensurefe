@@ -122,7 +122,7 @@ export default {
         applicationStatuses.value = results;
         if (draftId.value != undefined) {
           if (draftStatus.value == "DRA") {
-            let status = applicationStatuses.value.filter(function (e) {
+            let status = applicationStatuses.value.filter(function(e) {
               return e.code == "DRA";
             });
             buttons.value = status[0]["buttons"];
@@ -133,20 +133,19 @@ export default {
             buttons.value[2] = temp2;
           }
           if (draftStatus.value == "SUB") {
-            let status = applicationStatuses.value.filter(function (e) {
+            let status = applicationStatuses.value.filter(function(e) {
               return e.code == "SUB";
             });
             buttons.value = status[0]["buttons"];
-         
           }
           if (draftStatus.value == "USUP") {
-            let status = this.applicationStatuses.filter(function (e) {
+            let status = this.applicationStatuses.filter(function(e) {
               return e.code == "USUP";
             });
             buttons.value = status[0]["buttons"];
           }
           if (draftStatus.value == "DEC") {
-            let status = applicationStatuses.value.filter(function (e) {
+            let status = applicationStatuses.value.filter(function(e) {
               return e.code == "DEC";
             });
             buttons.value = status[0]["buttons"];
@@ -156,7 +155,7 @@ export default {
             buttons.value[2] = temp3;
           }
         } else {
-          let status = applicationStatuses.value.filter(function (e) {
+          let status = applicationStatuses.value.filter(function(e) {
             return e.code == "INIT";
           });
           buttons.value = status[0]["buttons"];
@@ -172,7 +171,6 @@ export default {
           return item.name == "Renewal Application";
         });
         applicationId.value = renewalData[0]["id"];
-        store.dispatch("renewal/setApplicationId", applicationId.value);
         fetchDocumentSpec();
       });
     };
@@ -184,7 +182,7 @@ export default {
           documentSpecs.value = results;
           store
             .dispatch("renewal/setDocumentSpecs", documentSpecs.value)
-            .then((res) => {});
+            .then(() => {});
         });
     };
     const fetchDraft = (id) => {
@@ -209,7 +207,7 @@ export default {
         store.dispatch("renewal/storeRemark", remark.value);
       });
     };
-    const dark = () => { 
+    const dark = () => {
       document.getElementById("mainContent").classList.add("dark-mode");
       document.getElementById("activeMenu")?.classList.add("dark-mode");
       document.getElementById("mainSideBar")?.classList.add("dark-mode");
@@ -238,7 +236,7 @@ export default {
       if (JSON.parse(localStorage.getItem("darkMode")) == true) {
         dark();
       } else {
-      light();
+        light();
       }
     };
     const modeToggle = () => {
@@ -290,7 +288,7 @@ export default {
     Upload,
     LicenseSummary,
     MainContent,
-    Index
+    Index,
   },
 };
 </script>

@@ -107,7 +107,7 @@
           <label class="text-red-200">*password is not the same</label>
         </div>
         <div v-if="oldPasswordError && !showErrorMessage">
-          <label class="text-red-200">*old password doesn't match</label>
+          <label class="text-red-200">*passwords don't match</label>
         </div>
         <div class="flex mb-medium w-full mt-medium justify-center">
           <button
@@ -145,7 +145,7 @@ import { ref } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import Spinner from "@/sharedComponents/Spinner";
-
+import { useToast } from "vue-toastification";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import PasswordMeter from "vue-simple-password-meter";
 
@@ -161,7 +161,7 @@ export default {
     let showLoading = ref(false);
     const isFirstTimeLogin = JSON.parse(localStorage.getItem("allAdminData"))
       .isFirstTime;
-
+    const toast = useToast();
     let passwordInfo = ref({
       email: localStorage.getItem("adminEmail"),
       oldPassword: isFirstTimeLogin ? "password1" : "",
@@ -178,7 +178,6 @@ export default {
 
     const store = useStore();
     const router = useRouter();
-    const adminId = localStorage.getItem("adminId");
 
     const showPasswordStrength = (password) => {
       if (password != "") {
@@ -208,17 +207,36 @@ export default {
             showFlash.value = true;
             setTimeout(() => {
               if (isFirstTimeLogin) {
+                toast.success("Successfully changed password", {
+                  timeout: 5000,
+                  position: "bottom-center",
+                  pauseOnFocusLoss: true,
+                  pauseOnHover: true,
+                  icon: true,
+                });
                 localStorage.clear();
                 router.push({ path: "/admin" });
               } else {
+                toast.success("Successfully changed password", {
+                  timeout: 5000,
+                  position: "bottom-center",
+                  pauseOnFocusLoss: true,
+                  pauseOnHover: true,
+                  icon: true,
+                });
                 router.push({ path: "/admin/review" });
               }
             }, 1000);
           }
         })
         .catch((err) => {
-          showLoading.value = false;
-          oldPasswordError.value = true;
+          toast.error(err, {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          });
         });
     };
 

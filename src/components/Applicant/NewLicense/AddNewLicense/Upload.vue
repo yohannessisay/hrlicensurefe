@@ -33,8 +33,8 @@
                 <table
                   :class="
                     isDarkMode
-                      ? 'max-w-full w-full whitespace-nowrap rounded-lg shadow-lg mb-8 bg-primaryDark divide-y overflow-hidden'
-                      : 'max-w-full w-full whitespace-nowrap rounded-lg shadow-lg mb-8 bg-white divide-y overflow-hidden'
+                      ? 'max-w-full w-full whitespace-nowrap rounded-lg shadow-md mb-8 bg-primaryDark divide-y overflow-hidden'
+                      : 'max-w-full w-full whitespace-nowrap rounded-lg shadow-md mb-8 bg-white divide-y overflow-hidden'
                   "
                 >
                   <thead class="bg-lightMain-500">
@@ -254,7 +254,7 @@
               </h5>
               <div class="overflow-x-auto w-full p-4">
                 <table
-                  class="w-full p-4 whitespace-nowrap rounded-lg bg-white shadow-lg divide-y divide-gray-300 overflow-hidden table-auto"
+                  class="w-full p-4 whitespace-nowrap rounded-lg bg-white shadow-md divide-y divide-gray-300 overflow-hidden table-auto"
                 >
                   <thead class="bg-lightMain-500 p-4">
                     <tr class="text-left">
@@ -682,7 +682,7 @@
                         style="width: max-content"
                       >
                         <div
-                          class="shadow-lg w-full bg-white border border-grey-400 ml-8"
+                          class="shadow-md w-full bg-white border border-grey-400 ml-8"
                         >
                           <div
                             :id="
@@ -2236,7 +2236,7 @@ export default {
   padding: 7px;
 }
 
-.shadow-lg {
+.shadow-md {
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 34%), 0 2px 4px -1px rgb(0 0 0 / 6%);
 }
 

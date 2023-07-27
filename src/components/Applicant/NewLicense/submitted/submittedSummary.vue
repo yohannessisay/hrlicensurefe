@@ -30,7 +30,7 @@
           px-12
           mb-12
           bg-gray-50
-          shadow-lg
+          shadow-md
           rounded-md
           transform
           transition
@@ -76,7 +76,9 @@
             >
           </div>
           <div>
-            <span class="text-grey-800 sm:text-sm"> {{ dep?.department?.name }}</span>
+            <span class="text-grey-800 sm:text-sm">
+              {{ dep?.department?.name }}</span
+            >
           </div>
         </div>
         <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
@@ -94,7 +96,9 @@
             >
           </div>
           <div>
-            <span class="text-grey-800 sm:text-sm"> {{ dep?.educationLevel?.name }}</span>
+            <span class="text-grey-800 sm:text-sm">
+              {{ dep?.educationLevel?.name }}</span
+            >
           </div>
         </div>
         <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
@@ -112,7 +116,9 @@
             >
           </div>
           <div>
-            <span class="text-grey-800 sm:text-sm"> {{ dep.institution?.name }}</span>
+            <span class="text-grey-800 sm:text-sm">
+              {{ dep.institution?.name }}</span
+            >
           </div>
         </div>
         <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
@@ -131,7 +137,9 @@
             >
           </div>
           <div>
-            <span class="text-grey-800 sm:text-sm"> {{ dep.professionType?.name }}</span>
+            <span class="text-grey-800 sm:text-sm">
+              {{ dep.professionType?.name }}</span
+            >
           </div>
         </div>
       </div>
@@ -167,7 +175,9 @@
                 Files Uploaded
               </h3>
             </div>
-            <span class="text-lg" v-if="changedDocs && changedDocs.length > 0"> New files</span>
+            <span class="text-lg" v-if="changedDocs && changedDocs.length > 0">
+              New files</span
+            >
           </div>
 
           <div
@@ -206,7 +216,10 @@
                     :data-title="changed.docName"
                     data-lightbox="example-2"
                   >
-                    <img :src="changed.prevFile" class="w-full h-48 object-cover" />
+                    <img
+                      :src="changed.prevFile"
+                      class="w-full h-48 object-cover"
+                    />
                   </a>
                 </div>
 
@@ -217,7 +230,10 @@
                     :data-title="changed.docName"
                     data-lightbox="example-2"
                   >
-                    <img :src="changed.newFile" class="w-full h-48 object-cover rounded-lg" />
+                    <img
+                      :src="changed.newFile"
+                      class="w-full h-48 object-cover rounded-lg"
+                    />
                   </a>
                 </div>
               </div>
@@ -331,8 +347,15 @@
                       <h6 class="m-2">{{ prev.documentType.name }}</h6>
                       <div class="flex justify-center rounded-lg p-4">
                         <div class="bg-white rounded-md p-2">
-                          <a :href="prev.path" :data-title="prev.docName" data-lightbox="example-2">
-                            <img :src="prev.path" class="w-full h-48 object-cover" />
+                          <a
+                            :href="prev.path"
+                            :data-title="prev.docName"
+                            data-lightbox="example-2"
+                          >
+                            <img
+                              :src="prev.path"
+                              class="w-full h-48 object-cover"
+                            />
                           </a>
                         </div>
                       </div>
@@ -411,21 +434,24 @@
                   md:text-base
                 "
               >
-                By checking here I hereby verify the documents and details filled in are legal.
+                By checking here I hereby verify the documents and details
+                filled in are legal.
               </h3>
             </div>
             <div class="flex justify-center">
-              <label for="feedback" class="form-label inline-block mb-2 text-main-400"
+              <label
+                for="feedback"
+                class="form-label inline-block mb-2 text-main-400"
                 >Feedback on the process and system
                 <span class="text-yellow-300">(optional*)</span>
               </label>
             </div>
-           
-              <div class="mb-3 w-full flex justify-center">
-                <input
-                  v-model="generalInfo.feedback"
-                  @keyup="checkAgreement()"
-                  class="
+
+            <div class="mb-3 w-full flex justify-center">
+              <input
+                v-model="generalInfo.feedback"
+                @keyup="checkAgreement()"
+                class="
                     form-control
                     block
                     w-full
@@ -442,46 +468,41 @@
                     m-0
                     focus:outline-none
                   "
-                  id="feedback"
-                  rows="6"
-                  placeholder="Your feedback"
-                  type="textarea"
-                />
-              </div>
-            
+                id="feedback"
+                rows="6"
+                placeholder="Your feedback"
+                type="textarea"
+              />
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="flex justify-center">
-      <RadialProgress :diameter="200" :completed-steps="progress" :total-steps="totalSteps">
-        <h1 class="text-3xl text-main-400 font-bold">{{ progress }} %</h1>
-      </RadialProgress>
-    </div>
+
     <div class="vld-parent mt-4">
-            <loading
-              :active="isLoading"
-              :is-full-page="false"
-              :color="'#2F639D'"
-              :opacity="1"
-            ></loading>
-    <div class="flex justify-center">
-      <button
-        v-for="button in buttons"
-        :key="button.id"
-        type="button"
-        :class="
-          allowSave
-            ? 'inline-block px-6 border text-main-400 hover:bg-main-400 hober:border-main-400 hover:text-white  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded shadow-lg transition  duration-150 ease-in-out'
-            : 'inline-block px-6 disabled text-main-400  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded shadow-lg transition  duration-150 ease-in-out'
-        "
-        @click="checkFinalStatus(button.action)"
-      >
-        <i class="fa fa-save"></i>
-        {{ button.name }}
-      </button>
-      <button
-        class="
+      <loading
+        :active="isLoading"
+        :is-full-page="false"
+        :color="'#2F639D'"
+        :opacity="1"
+      ></loading>
+      <div class="flex justify-center">
+        <button
+          v-for="button in buttons"
+          :key="button.id"
+          type="button"
+          :class="
+            allowSave
+              ? 'inline-block px-6 border text-main-400 hover:bg-main-400 hober:border-main-400 hover:text-white  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded shadow-md transition  duration-150 ease-in-out'
+              : 'inline-block px-6 disabled text-main-400  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded shadow-md transition  duration-150 ease-in-out'
+          "
+          @click="checkFinalStatus(button.action)"
+        >
+          <i class="fa fa-save"></i>
+          {{ button.name }}
+        </button>
+        <button
+          class="
           inline-block
           px-6
           text-main-400
@@ -492,150 +513,186 @@
           leading-tight
           uppercase
           rounded
-          shadow-lg
+          shadow-md
           transition
           duration-150
           ease-in-out
         "
-        @click="back()"
-      >
-        back
-      </button>
+          @click="back()"
+        >
+          back
+        </button>
+      </div>
     </div>
-</div>
+    <div class="modal-mask" v-if="showModal">
+      <div class="modal-wrapper">
+        <div class="modal-container">
+          <div class="modal-header">
+            <h2 class="text-main-400 text-xl border-b-4">Uploading</h2>
+          </div>
+
+          <div class="modal-body">
+            <div class="flex justify-center text-yellow-300 p-2 rounded-md">
+              <h2 class="text-yellow-300 border rounded p-2 text-xl">
+                Total file size you have uploaded so far is
+                <h2 class="text-grey-800 text-2xl">{{ totalSize }} MB</h2>
+              </h2>
+            </div>
+            <div class="flex justify-center">
+              <RadialProgress
+                :diameter="200"
+                :completed-steps="progress"
+                :total-steps="totalSteps"
+              >
+                <h1 class="text-3xl text-main-400 font-bold">
+                  {{ progress }} %
+                </h1>
+              </RadialProgress>
+            </div>
+            <div>
+              <div
+                class="flex border justify-center text-yellow-300 p-2 rounded-md"
+              >
+                <h2 class=" text-xl">
+                  Please wait patiently as your files are being uploaded, if for
+                  any reason the files you uploaded are not successful you will
+                  be redirected to the submitted page automatically so you can
+                  re-attach your documents again
+                </h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- end row -->
   </div>
 </template>
 
 <script>
-  import { ref, onMounted, computed } from "vue";
-  import { useStore } from "vuex";
-  import { useToast } from "vue-toastification";
-  import { useRoute, useRouter } from "vue-router";
-  import Loading from "vue3-loading-overlay";
-  import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
-  import { googleApi } from "@/composables/baseURL";
-  import RadialProgress from "vue3-radial-progress";
-  export default {
-    components: { Loading, RadialProgress },
-    setup(props, { emit }) {
-      const store = useStore();
-      const toast = useToast();
-      const router = useRouter();
-      const route = useRoute();
-      let localData = ref({});
-      let localFileImages = ref({});
-      let generalInfo = ref({});
-      let agreed = ref(false);
-      let isLoading = ref(false);
-      let buttons = ref([]);
-      let tempDocs = ref({});
-      let savedData = ref({});
-      let changedDocs = ref([]);
-      let prevDocs = ref([]);
-      let professionChanged = ref(false);
+import { ref, onMounted, computed } from "vue";
+import { useStore } from "vuex";
+import { useToast } from "vue-toastification";
+import { useRoute, useRouter } from "vue-router";
+import Loading from "vue3-loading-overlay";
+import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
+import { googleApi } from "@/composables/baseURL";
+import RadialProgress from "vue3-radial-progress";
+export default {
+  components: { Loading, RadialProgress },
+  setup(props, { emit }) {
+    const store = useStore();
+    const toast = useToast();
+    const router = useRouter();
+    const route = useRoute();
+    let localData = ref({});
+    let localFileImages = ref({});
+    let generalInfo = ref({});
+    let agreed = ref(false);
+    let isLoading = ref(false);
+    let showModal = ref(false);
+    let buttons = ref([]);
+    let tempDocs = ref({});
+    let savedData = ref({});
+    let changedDocs = ref([]);
+    let prevDocs = ref([]);
+    let professionChanged = ref(false);
 
-      let progress = computed(() => store.getters["newlicense/getUploadProgress"]);
+    let progress = computed(
+      () => store.getters["newlicense/getUploadProgress"]
+    );
 
-      const totalSteps = ref(100);
-      let allowSave = ref(false);
-      const changeAgrement = () => {
-        agreed.value = !agreed.value;
-        if (generalInfo.value && agreed.value != false) {
-          allowSave.value = true;
-        } else {
-          allowSave.value = false;
-        }
-      };
-      const checkAgreement = () => {
-        if (generalInfo.value && agreed.value != false) {
-          allowSave.value = true;
-        } else {
-          allowSave.value = false;
-        }
-      };
-      const checkFinalStatus = (action) => {
-        generalInfo.value.licenseFile = [];
+    const totalSteps = ref(100);
+    let allowSave = ref(false);
+    const changeAgrement = () => {
+      agreed.value = !agreed.value;
+      if (generalInfo.value && agreed.value != false) {
+        allowSave.value = true;
+      } else {
+        allowSave.value = false;
+      }
+    };
+    const checkAgreement = () => {
+      if (generalInfo.value && agreed.value != false) {
+        allowSave.value = true;
+      } else {
+        allowSave.value = false;
+      }
+    };
+    const checkFinalStatus = (action) => {
+      generalInfo.value.licenseFile = [];
 
-        if (agreed.value == true) {
-          isLoading.value = true;
-          let formData = new FormData();
-          tempDocs.value.forEach((element, index) => {
-            formData.append(index, element);
-          });
+      if (agreed.value == true) {
+        isLoading.value = true;
+        let formData = new FormData();
+        tempDocs.value.forEach((element, index) => {
+          formData.append(index, element);
+        });
 
-          // let smsData = {
-          //   recipients: [
-          //     this.profileInfo.user.phoneNumber
-          //       ? "251" + this.profileInfo.user.phoneNumber
-          //       : "",
-          //   ],
-          //   message:
-          //     "Dear applicant you have successfully applied for a new license, after careful examination of your uploaded documents by our reviewers we will get back and notify you on each steps, Thank you for using eHPL.",
-          // };
+        // let smsData = {
+        //   recipients: [
+        //     this.profileInfo.user.phoneNumber
+        //       ? "251" + this.profileInfo.user.phoneNumber
+        //       : "",
+        //   ],
+        //   message:
+        //     "Dear applicant you have successfully applied for a new license, after careful examination of your uploaded documents by our reviewers we will get back and notify you on each steps, Thank you for using eHPL.",
+        // };
 
-          let license = {
-            licenseId: route.params.id,
-            draftData: {
-              action: action,
-              data: {
-                applicationStatusId: generalInfo.value
-                  ? generalInfo.value.applicationStatusId
+        let license = {
+          licenseId: route.params.id,
+          draftData: {
+            action: action,
+            data: {
+              applicationStatusId: generalInfo.value
+                ? generalInfo.value.applicationStatusId
+                : null,
+              applicantTypeId:
+                generalInfo.value && generalInfo.value.applicantType
+                  ? generalInfo.value.applicantType.id
+                  : generalInfo.value && generalInfo.value.applicantTypeSelected
+                  ? generalInfo.value.applicantTypeSelected.id
                   : null,
-                applicantTypeId:
-                  generalInfo.value && generalInfo.value.applicantType
-                    ? generalInfo.value.applicantType.id
-                    : generalInfo.value && generalInfo.value.applicantTypeSelected
-                    ? generalInfo.value.applicantTypeSelected.id
-                    : null,
-                residenceWoredaId:
-                  generalInfo.value && generalInfo.value.woredaSelected
-                    ? generalInfo.value.woredaSelected.id
-                    : null,
-                educations: generalInfo.value ? generalInfo.value.educations : {},
-                occupationTypeId: generalInfo.value.occupationSelected
-                  ? generalInfo.value.occupationSelected.id
+              residenceWoredaId:
+                generalInfo.value && generalInfo.value.woredaSelected
+                  ? generalInfo.value.woredaSelected.id
                   : null,
-                nativeLanguageId: generalInfo.value.nativeLanguageSelected
-                  ? generalInfo.value.nativeLanguageSelected.id
-                  : null,
-                expertLevelId: generalInfo.value.expertLevelId
-                  ? generalInfo.value.expertLevelId
-                  : null,
-                isLegal: true,
-                feedback: generalInfo.value.feedback ? generalInfo.value.feedback : "",
-              },
+              educations: generalInfo.value ? generalInfo.value.educations : {},
+              occupationTypeId: generalInfo.value.occupationSelected
+                ? generalInfo.value.occupationSelected.id
+                : null,
+              nativeLanguageId: generalInfo.value.nativeLanguageSelected
+                ? generalInfo.value.nativeLanguageSelected.id
+                : null,
+              expertLevelId: generalInfo.value.expertLevelId
+                ? generalInfo.value.expertLevelId
+                : null,
+              isLegal: true,
+              feedback: generalInfo.value.feedback
+                ? generalInfo.value.feedback
+                : "",
             },
-          };
-          store.dispatch("newlicense/updateDraft", license).then(() => {
-            let licenseId = route.params.id;
-            let payload = { document: formData, id: licenseId };
-            store
-              .dispatch("newlicense/updateDocuments", payload)
-              .then((res) => {
-                isLoading.value = false;
-                if (res.data.status == "Success") {
-                  toast.success("Applied successfuly", {
-                    timeout: 5000,
-                    position: "bottom-center",
-                    pauseOnFocusLoss: true,
-                    pauseOnHover: true,
-                    icon: true,
-                  });
+          },
+        };
+        showModal.value = true;
+        store.dispatch("newlicense/updateDraft", license).then(() => {
+          let licenseId = route.params.id;
+          let payload = { document: formData, id: licenseId };
+          store
+            .dispatch("newlicense/updateDocuments", payload)
+            .then((res) => {
+              isLoading.value = false;
+              if (res.data.status == "Success") {
+                toast.success("Applied successfuly", {
+                  timeout: 5000,
+                  position: "bottom-center",
+                  pauseOnFocusLoss: true,
+                  pauseOnHover: true,
+                  icon: true,
+                });
 
-                  router.push({ path: "/Applicant/NewLicense/submitted" });
-                } else {
-                  toast.error("Error occured, please try again", {
-                    timeout: 5000,
-                    position: "bottom-center",
-                    pauseOnFocusLoss: true,
-                    pauseOnHover: true,
-                    icon: true,
-                  });
-                }
-              })
-              .catch(() => {
-                isLoading.value = false;
+                router.push({ path: "/Applicant/NewLicense/submitted" });
+              } else {
                 toast.error("Error occured, please try again", {
                   timeout: 5000,
                   position: "bottom-center",
@@ -643,20 +700,35 @@
                   pauseOnHover: true,
                   icon: true,
                 });
+              }
+            })
+            .catch(() => {
+              isLoading.value = false;
+              toast.error("Error occured, please try again", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
               });
-          });
-        }
-      };
-      const back = () => {
-        emit("changeActiveStateMinus");
-      };
-      onMounted(() => {
-        store.dispatch("newlicense/getNewLicenseApplication", route.params.id).then((res) => {
+            });
+        });
+      }
+    };
+    const back = () => {
+      emit("changeActiveStateMinus");
+    };
+    onMounted(() => {
+      store
+        .dispatch("newlicense/getNewLicenseApplication", route.params.id)
+        .then((res) => {
           savedData.value = res.data.data;
 
           buttons.value = store.getters["newlicense/getButtons"];
 
-          buttons.value = buttons.value.filter((ele) => ele.code != "AT" && ele.code != "DRA");
+          buttons.value = buttons.value.filter(
+            (ele) => ele.code != "AT" && ele.code != "DRA"
+          );
           tempDocs.value = store.getters["newlicense/getTempDocs"];
 
           localData.value = window.localStorage.getItem("NLApplicationData")
@@ -695,14 +767,19 @@
 
             getAllIDB.onsuccess = function(evt) {
               localFileImages.value = evt.target.result
-                ? JSON.parse(JSON.stringify(evt.target.result[0] ? evt.target.result[0].data : {}))
+                ? JSON.parse(
+                    JSON.stringify(
+                      evt.target.result[0] ? evt.target.result[0].data : {}
+                    )
+                  )
                 : {};
 
               if (localFileImages.value && savedData.value.documents) {
                 savedData.value.documents.forEach((ele) => {
                   localFileImages.value.forEach((newFile) => {
                     if (
-                      (newFile.commonDocCode && newFile.commonDocCode == ele.fileName) ||
+                      (newFile.commonDocCode &&
+                        newFile.commonDocCode == ele.fileName) ||
                       newFile.documentCode == ele.fileName
                     ) {
                       changedDocs.value.push({
@@ -735,43 +812,87 @@
             };
           };
         });
-      });
-      return {
-        localData,
-        localFileImages,
-        professionChanged,
-        generalInfo,
-        agreed,
-        prevDocs,
-        buttons,
-        changedDocs,
-        isLoading,
-        checkAgreement,
-        back,
-        googleApi,
-        allowSave,
-        checkFinalStatus,
-        changeAgrement,
-        progress,
-        totalSteps,
-      };
-    },
-  };
+    });
+    return {
+      localData,
+      localFileImages,
+      professionChanged,
+      generalInfo,
+      agreed,
+      prevDocs,
+      buttons,
+      changedDocs,
+      isLoading,
+      checkAgreement,
+      back,
+      googleApi,
+      allowSave,
+      checkFinalStatus,
+      changeAgrement,
+      progress,
+      totalSteps,
+      showModal,
+    };
+  },
+};
 </script>
 <style>
-  .text-danger > label,
-  .text-danger > h5 {
-    color: red;
-  }
+.text-danger > label,
+.text-danger > h5 {
+  color: red;
+}
 
-  .withdraw {
-    background-image: linear-gradient(to right, #d63232, #e63636) !important;
-    color: white;
-    border-color: tomato;
-  }
+.withdraw {
+  background-image: linear-gradient(to right, #d63232, #e63636) !important;
+  color: white;
+  border-color: tomato;
+}
 
-  .disabled {
-    pointer-events: none;
-    opacity: 0.3;
-  }
+.disabled {
+  pointer-events: none;
+  opacity: 0.3;
+}
+
+.modal-mask {
+  position: fixed;
+  z-index: 9998;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: table;
+  transition: opacity 0.3s ease;
+}
+
+.modal-wrapper {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.modal-container {
+  width: 600px;
+  margin: 0px auto;
+  padding: 20px 30px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
+  transition: all 0.3s ease;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+.modal-body {
+  margin: 20px 0;
+}
+
+.modal-enter-from,
+.modal-leave-to {
+  opacity: 0;
+}
+
+.modal-enter-active .modal-container,
+.modal-leave-active .modal-container {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}
 </style>
