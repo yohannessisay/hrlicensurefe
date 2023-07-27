@@ -19,16 +19,16 @@
     </div>
 
     <!-- Renewal Routes -->
-    <ul class="mt-2" v-if="finalUrl == 'renewal'">
-      <div class="parentList flex justify-start">
+    <ul class="mt-5" v-if="finalUrl == 'renewal'">
+      <div class="parentList flex justify-center ">
         <a
           href="#"
-          class="border-4 text-white rounded-md mr-4 ml-1 w-full flex justify-start p-4 pointer-events-none"
+          class="bg-white rounded-md mr-4 ml-1 w-full flex justify-center p-2 pointer-events-none"
         >
           <span class="icon"
-            ><i class="bx bx-certification text-white text-2xl mt-1"></i
+            ><i class="bx bx-certification text-grey-800 text-2xl mt-1"></i
           ></span>
-          <h2 class="title text-white text-xl font-bold ml-4">Renewal</h2>
+          <h2 class="title text-grey-800 text-xl font-bold ml-2">Renewal</h2>
         </a>
       </div>
 
@@ -365,16 +365,16 @@
 
     <!--End of Renewal Routes -->
     <!-- New License routes -->
-    <ul class="mt-2" v-if="finalUrl == 'newLicense'">
-      <div class="parentList flex justify-start">
+    <ul class="mt-5" v-if="finalUrl == 'newLicense'">
+      <div class="parentList flex justify-center">
         <a
           href="#"
-          class="border-4 text-white rounded-md mr-4 ml-1 w-full flex justify-start p-4 pointer-events-none"
+          class=" bg-white rounded-md mr-4 ml-1 w-full flex justify-center p-2 pointer-events-none"
         >
           <span class="icon"
-            ><i class="bx bx-certification text-white text-2xl mt-1"></i
+            ><i class="bx bx-certification text-grey-800 text-2xl mt-1"></i
           ></span>
-          <h2 class="title text-white text-xl font-bold ml-4">New License</h2>
+          <h2 class="title text-grey-800 text-xl font-bold ml-4">New License</h2>
         </a>
       </div>
 
@@ -732,16 +732,16 @@
     </ul>
     <!-- End of New License routes -->
     <!-- Goodstanding routes -->
-    <ul class="mt-2" v-if="finalUrl == 'goodstanding'">
-      <div class="parentList flex justify-start">
+    <ul class="mt-5" v-if="finalUrl == 'goodstanding'">
+      <div class="parentList flex justify-center">
         <a
           href="#"
-          class="border-4 text-white rounded-md mr-4 ml-1 w-full flex justify-start p-4 pointer-events-none"
+          class="bg-white text-white rounded-md mr-4 ml-1 w-full flex justify-center p-2 pointer-events-none"
         >
           <span class="icon"
-            ><i class="bx bx-certification text-white text-2xl mt-1"></i
+            ><i class="bx bx-envelope text-grey-800 text-2xl mt-1"></i
           ></span>
-          <h2 class="title text-white text-xl font-bold ml-4">Goodstanding</h2>
+          <h2 class="title text-grey-800 text-xl font-bold ml-4">Goodstanding</h2>
         </a>
       </div>
 
@@ -755,7 +755,7 @@
         <b></b>
         <a class="ml-4" href="#GoodStanding">
           <router-link class="link" to="/Applicant/GoodStanding">
-            <span class="icon"><i class="bx bx-certification"></i></span>
+            <span class="icon"><i class="bx bx-plus"></i></span>
             <span class="text text-white font-bold break-all"
               >Apply for GoodStanding</span
             >
