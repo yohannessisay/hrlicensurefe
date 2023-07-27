@@ -933,14 +933,14 @@
         </div>
       </div>
       <div
-        class="bg-yellow-300 p-2 m-4 rounded-md shadow-md"
+        class=" p-2 m-4 rounded-md "
         v-if="errorDocuments && errorDocuments.length > 0"
       >
-        <h2 class="text-white font-bold text-3xl">
+        <h2 class="text-yellow-300 font-bold text-3xl">
           Please attach the following files to proceed
         </h2>
         <li
-          class="text-white text-xl font-bold border-2 rounded-md p-2 m-1"
+          class="text-yellow-300  text-xl font-bold border-2 rounded-md p-2 m-1"
           v-for="error in errorDocuments"
           :key="error"
         >
@@ -1050,14 +1050,11 @@ export default {
 
         let fileS = documentsUploaded.value[data.documentType.code].size;
 
-        isImage.value[data.documentType.code] = true;
-        documentsUploaded.value[data.documentType.code] =
-          event?.target?.files[0];
+        isImage.value[data.documentType.code] = false;
 
         delete fileUploadError.value[
           "file_upload_row_" + data.documentType.code
         ];
-        showImage.value = true;
 
         if (fileS > 0 && fileS < 1000) {
           fileSize.value += "B";
@@ -1091,8 +1088,9 @@ export default {
           },
           false
         );
-        isImage.value[data.documentType.code] = false;
+
         isPdf.value[data.documentType.code] = true;
+        formData.append(data.documentType.code, event?.target?.files[0]);
         reader.readAsDataURL(documentsUploaded.value[data.documentType.code]);
         let icon = document.getElementById(
           "common_icon_" + data.documentType.id + data.id
@@ -1137,9 +1135,6 @@ export default {
 
             let fileS = documentsUploaded.value[data.documentType.code].size;
 
-            documentsUploaded.value[data.documentType.code] =
-              event?.target?.files[0];
-
             delete fileUploadError.value[
               "file_upload_row_" + data.documentType.code
             ];
@@ -1178,30 +1173,13 @@ export default {
               false
             );
 
-            if (documentsUploaded.value[data.documentType.code]) {
-              if (
-                /\.(jpe?g|png|gif)$/i.test(
-                  documentsUploaded.value[data.documentType.code].name
-                )
-              ) {
-                isImage.value[data.documentType.code] = true;
-                isPdf.value[data.documentType.code] = false;
+            isImage.value[data.documentType.code] = true;
+            isPdf.value[data.documentType.code] = false;
+            formData.append(data.documentType.code, event?.target?.files[0]);
+            reader.readAsDataURL(
+              documentsUploaded.value[data.documentType.code]
+            );
 
-                reader.readAsDataURL(
-                  documentsUploaded.value[data.documentType.code]
-                );
-              } else if (
-                /\.(pdf)$/i.test(
-                  documentsUploaded.value[data.documentType.code].name
-                )
-              ) {
-                isImage.value[data.documentType.code] = false;
-                isPdf.value[data.documentType.code] = true;
-                reader.readAsDataURL(
-                  documentsUploaded.value[data.documentType.code]
-                );
-              }
-            }
             let icon = document.getElementById(
               "common_icon_" + data.documentType.id + data.id
             );
@@ -1237,11 +1215,8 @@ export default {
     };
 
     const handleFileUpload = (data, event, pro) => {
-      if (
-        /\.(pdf)$/i.test(
-          event?.target?.files[0].name
-        )
-      ) {
+      if (/\.(pdf)$/i.test(event?.target?.files[0].name)) {
+        let reader = new FileReader();
         documentsUploaded.value[
           data.documentType.code +
             "_" +
@@ -1249,6 +1224,7 @@ export default {
             "_" +
             pro.professionType.code.toUpperCase()
         ] = "";
+
         documentsUploaded.value[
           data.documentType.code +
             "_" +
@@ -1256,7 +1232,15 @@ export default {
             "_" +
             pro.professionType.code.toUpperCase()
         ] = event?.target?.files[0];
-        let reader = new FileReader();
+
+        delete fileUploadError.value[
+          "file_upload_row_" +
+            data.documentType.code.toUpperCase() +
+            "_" +
+            data.educationalLevel.code.toUpperCase() +
+            "_" +
+            pro.professionType.code.toUpperCase()
+        ];
 
         let fileS =
           documentsUploaded.value[
@@ -1267,25 +1251,14 @@ export default {
               pro.professionType.code.toUpperCase()
           ].size;
 
-        if (data.parentDocument) {
-          documentsUploaded.value[
-            data.documentType.code +
-              "_" +
-              data.educationalLevel.code.toUpperCase() +
-              "_" +
-              pro.professionType.code.toUpperCase()
-          ] = event?.target?.files[0];
-        } else {
-          documentsUploaded.value[
-            data.documentType.code +
-              "_" +
-              data.educationalLevel.code.toUpperCase() +
-              "_" +
-              pro.professionType.code.toUpperCase()
-          ] = event?.target?.files[0];
-        }
-
         isImage.value[
+          data.documentType.code +
+            "_" +
+            data.educationalLevel.code.toUpperCase() +
+            "_" +
+            pro.professionType.code.toUpperCase()
+        ] = false;
+        isPdf.value[
           data.documentType.code +
             "_" +
             data.educationalLevel.code.toUpperCase() +
@@ -1302,7 +1275,6 @@ export default {
           event?.target?.files[0]
         );
 
-        showImage.value = true;
         if (fileS > 0 && fileS < 1000) {
           fileSize.value += "B";
         } else if (fileS > 1000 && fileS < 1000000) {
@@ -1311,14 +1283,6 @@ export default {
           fileSize.value = fileS / 1000000 + "MB";
         }
 
-        delete fileUploadError.value[
-          "file_upload_row_" +
-            data.documentType.code +
-            "_" +
-            data.educationalLevel.code.toUpperCase() +
-            "_" +
-            pro.professionType.code.toUpperCase()
-        ];
         reader.addEventListener(
           "load",
           function() {
@@ -1353,9 +1317,18 @@ export default {
               fileName: event?.target?.files[0].name,
               image: reader.result,
             });
-            // documentsUploaded.value[data.documentType.code] = reader.result;
           },
           false
+        );
+
+        reader.readAsDataURL(
+          documentsUploaded.value[
+            data.documentType.code +
+              "_" +
+              data.educationalLevel.code.toUpperCase() +
+              "_" +
+              pro.professionType.code.toUpperCase()
+          ]
         );
         let icon = document.getElementById(
           "educational_icon_" +
@@ -1404,7 +1377,7 @@ export default {
           success(result) {
             const dataTransfer = new DataTransfer();
             dataTransfer.items.add(new File([result], result.name));
-
+            let reader = new FileReader();
             event.target.files = dataTransfer.files;
             documentsUploaded.value[
               data.documentType.code +
@@ -1420,7 +1393,6 @@ export default {
                 "_" +
                 pro.professionType.code.toUpperCase()
             ] = event?.target?.files[0];
-            let reader = new FileReader();
 
             let fileS =
               documentsUploaded.value[
@@ -1430,24 +1402,6 @@ export default {
                   "_" +
                   pro.professionType.code.toUpperCase()
               ].size;
-
-            if (data.parentDocument) {
-              documentsUploaded.value[
-                data.documentType.code +
-                  "_" +
-                  data.educationalLevel.code.toUpperCase() +
-                  "_" +
-                  pro.professionType.code.toUpperCase()
-              ] = event?.target?.files[0];
-            } else {
-              documentsUploaded.value[
-                data.documentType.code +
-                  "_" +
-                  data.educationalLevel.code.toUpperCase() +
-                  "_" +
-                  pro.professionType.code.toUpperCase()
-              ] = event?.target?.files[0];
-            }
 
             isImage.value[
               data.documentType.code +
@@ -1522,7 +1476,22 @@ export default {
               false
             );
 
-            if (
+            isImage.value[
+              data.documentType.code +
+                "_" +
+                data.educationalLevel.code.toUpperCase() +
+                "_" +
+                pro.professionType.code.toUpperCase()
+            ] = true;
+            isPdf.value[
+              data.documentType.code +
+                "_" +
+                data.educationalLevel.code.toUpperCase() +
+                "_" +
+                pro.professionType.code.toUpperCase()
+            ] = false;
+
+            reader.readAsDataURL(
               documentsUploaded.value[
                 data.documentType.code +
                   "_" +
@@ -1530,78 +1499,8 @@ export default {
                   "_" +
                   pro.professionType.code.toUpperCase()
               ]
-            ) {
-              if (
-                /\.(jpe?g|png|gif)$/i.test(
-                  documentsUploaded.value[
-                    data.documentType.code +
-                      "_" +
-                      data.educationalLevel.code.toUpperCase() +
-                      "_" +
-                      pro.professionType.code.toUpperCase()
-                  ].name
-                )
-              ) {
-                isImage.value[
-                  data.documentType.code +
-                    "_" +
-                    data.educationalLevel.code.toUpperCase() +
-                    "_" +
-                    pro.professionType.code.toUpperCase()
-                ] = true;
-                isPdf.value[
-                  data.documentType.code +
-                    "_" +
-                    data.educationalLevel.code.toUpperCase() +
-                    "_" +
-                    pro.professionType.code.toUpperCase()
-                ] = false;
+            );
 
-                reader.readAsDataURL(
-                  documentsUploaded.value[
-                    data.documentType.code +
-                      "_" +
-                      data.educationalLevel.code.toUpperCase() +
-                      "_" +
-                      pro.professionType.code.toUpperCase()
-                  ]
-                );
-              } else if (
-                /\.(pdf)$/i.test(
-                  documentsUploaded.value[
-                    data.documentType.code +
-                      "_" +
-                      data.educationalLevel.code.toUpperCase() +
-                      "_" +
-                      pro.professionType.code.toUpperCase()
-                  ].name
-                )
-              ) {
-                isImage.value[
-                  data.documentType.code +
-                    "_" +
-                    data.educationalLevel.code.toUpperCase() +
-                    "_" +
-                    pro.professionType.code.toUpperCase()
-                ] = false;
-                isPdf.value[
-                  data.documentType.code +
-                    "_" +
-                    data.educationalLevel.code.toUpperCase() +
-                    "_" +
-                    pro.professionType.code.toUpperCase()
-                ] = true;
-                reader.readAsDataURL(
-                  documentsUploaded.value[
-                    data.documentType.code +
-                      "_" +
-                      data.educationalLevel.code.toUpperCase() +
-                      "_" +
-                      pro.professionType.code.toUpperCase()
-                  ]
-                );
-              }
-            }
             let icon = document.getElementById(
               "educational_icon_" +
                 data.documentType.code +
@@ -1658,6 +1557,7 @@ export default {
       // if back button is clicked
       if (isBackButtonClicked.value == true) {
         // check common documents
+
         commonDocuments.value
           .filter((cd) => cd.isRequired)
           .forEach((element) => {
@@ -1678,25 +1578,26 @@ export default {
               ];
             }
           });
+
         // check normal docs with no parents
         educationalDocs.value.forEach((ed) => {
           ed.docs
             .filter((docs) => docs.isRequired)
             .forEach((single) => {
-              if (
-                documentsUploaded.value.some(
-                  (docs) =>
-                    docs.documentCode ==
-                    single.documentType.code.toUpperCase() +
-                      "_" +
-                      ed.educationalLevel.code.toUpperCase() +
-                      "_" +
-                      ed.professionType.code.toUpperCase()
-                )
-              ) {
+              let tempEdVal = documentsUploaded.value.filter(
+                (el) =>
+                  el.documentCode ==
+                  single.documentType.code.toUpperCase() +
+                    "_" +
+                    ed.educationalLevel.code.toUpperCase() +
+                    "_" +
+                    ed.professionType.code.toUpperCase()
+              );
+
+              if (tempEdVal) {
                 delete fileUploadError.value[
                   "file_upload_row_" +
-                    single.documentType.code +
+                    single.documentType.code.toUpperCase() +
                     "_" +
                     ed.educationalLevel.code.toUpperCase() +
                     "_" +
@@ -1705,7 +1606,7 @@ export default {
               } else {
                 fileUploadError.value[
                   "file_upload_row_" +
-                    single.documentType.code +
+                    single.documentType.code.toUpperCase() +
                     "_" +
                     ed.educationalLevel.code.toUpperCase() +
                     "_" +
@@ -1714,7 +1615,7 @@ export default {
                 errorDocuments.value.push({
                   name: single.documentType.name,
                   code:
-                    single.documentType.code +
+                    single.documentType.code.toUpperCase() +
                     "_" +
                     ed.educationalLevel.code.toUpperCase() +
                     "_" +
@@ -1722,6 +1623,68 @@ export default {
                 });
               }
             });
+
+          //// check documetns with parents
+          for (var pd in ed.parentDoc) {
+            tempVal = newLicenseDocuments.value.filter(
+              (nld) => nld.parentDocument == pd && nld.isRequired
+            );
+
+            if (
+              tempVal &&
+              tempVal.length > 0 &&
+              tempVal[0] &&
+              tempVal[0].isRequired == true
+            ) {
+              // eslint-disable-next-line no-prototype-builtins
+              NSTemp = documentsUploaded.value.filter(
+                (el) =>
+                  el.documentCode ==
+                  tempVal[0].documentType.code +
+                    "_" +
+                    ed.educationalLevel.code.toUpperCase() +
+                    "_" +
+                    ed.professionType.code.toUpperCase()
+              );
+
+              if (NSTemp && NSTemp != "" && NSTemp[0]) {
+                delete fileUploadError.value[
+                  "file_upload_row_" +
+                    newLicenseDocuments.value.filter(
+                      (nld) => nld.parentDocument == pd && nld.isRequired
+                    )[0].documentType.code +
+                    "_" +
+                    ed.educationalLevel.code.toUpperCase() +
+                    "_" +
+                    ed.professionType.code.toUpperCase()
+                ];
+              } else {
+                fileUploadError.value[
+                  "file_upload_row_" +
+                    newLicenseDocuments.value.filter(
+                      (nld) => nld.parentDocument == pd && nld.isRequired
+                    )[0].documentType.code +
+                    "_" +
+                    ed.educationalLevel.code.toUpperCase() +
+                    "_" +
+                    ed.professionType.code.toUpperCase()
+                ] = true;
+                errorDocuments.value.push({
+                  name: newLicenseDocuments.value.filter(
+                    (nld) => nld.parentDocument == pd && nld.isRequired
+                  )[0].documentType.name,
+                  code:
+                    newLicenseDocuments.value.filter(
+                      (nld) => nld.parentDocument == pd && nld.isRequired
+                    )[0].documentType.code +
+                    "_" +
+                    ed.educationalLevel.code.toUpperCase() +
+                    "_" +
+                    ed.professionType.code.toUpperCase(),
+                });
+              }
+            }
+          }
         });
       } else {
         commonDocuments.value
@@ -1850,7 +1813,9 @@ export default {
       let file = await fetch(url)
         .then((res) => res.blob())
         .then((blob) => {
-          return new File([blob], fileName, { type: "image/png" });
+          return new File([blob], fileName, {
+            type: /\.(pdf)$/i.test(fileName) ? "application/pdf" : "image/png",
+          });
         });
       return file;
     };
@@ -1892,6 +1857,7 @@ export default {
           } else if (isBackButtonClicked.value == true) {
             finalLocalData.data = toRaw(documentsUploaded.value);
             formData = new FormData();
+
             finalLocalData.data.forEach((element) => {
               urltoFile(element.image, element.fileName).then((res) => {
                 let tempImage = res;
@@ -2198,6 +2164,7 @@ export default {
 
     return {
       documents,
+      isLoading,
       errorDocuments,
       fileSizeExceed,
       commonDocuments,

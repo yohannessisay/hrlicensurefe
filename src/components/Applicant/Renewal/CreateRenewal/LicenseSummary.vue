@@ -654,6 +654,7 @@ export default {
       checkAgreement,
       back,
       isLoading,
+      showModal,
       allowSave,
       totalSteps,
       progress,

@@ -756,6 +756,13 @@
                                         'pdf'
                                   "
                                 >
+                                <h5 class="text-2xl text-grey-800">
+                                    {{
+                                      docs[index] && docs[index].documentType
+                                        ? docs[index].documentType.name
+                                        : ""
+                                    }}
+                                  </h5>
                                   <div>
                                     <iframe
                                       v-bind:src="
