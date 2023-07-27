@@ -708,6 +708,13 @@
                                   "
                                 >
                                   <div>
+                                    <h5 class="text-2xl text-grey-800">
+                                    {{
+                                      docs[index] && docs[index].documentType
+                                        ? docs[index].documentType.name
+                                        : ""
+                                    }}
+                                  </h5>
                                     <iframe
                                       v-bind:src="
                                         docs[index] ? googleApi + docs[index].filePath : ''
@@ -719,6 +726,7 @@
                                     @click="
                                       openPdfInNewTab(docs[index] ? docs[index].filePath : '')
                                     "
+                                   class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded shadow-lg bg-primary-400 hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg hover:bg-white hover:text-primary-600"
                                   >
                                     See pdf in detail
                                   </button>

@@ -972,6 +972,84 @@ export default {
     };
 
     const handleCommonFileUpload = (data, event) => {
+      if (/\.(pdf)$/i.test(event?.target?.files[0].name)) {
+        documentsUploaded.value[data.documentType.code] = "";
+        documentsUploaded.value[data.documentType.code] =
+          event?.target?.files[0];
+        let reader = new FileReader();
+
+        let fileS = documentsUploaded.value[data.documentType.code].size;
+
+        isImage.value[data.documentType.code] = false;
+
+        delete fileUploadError.value[
+          "file_upload_row_" + data.documentType.code
+        ];
+
+        if (fileS > 0 && fileS < 1000) {
+          fileSize.value += "B";
+        } else if (fileS > 1000 && fileS < 1000000) {
+          fileSize.value = fileS / 1000 + "kB";
+        } else {
+          fileSize.value = fileS / 1000000 + "MB";
+        }
+
+        reader.addEventListener(
+          "load",
+          function() {
+            showPreview.value = true;
+
+            previewDocuments.value[data.documentType.code] = reader.result;
+            imageData = imageData.filter(
+              (el) => el.documenttype != data.documentType.name
+            );
+            imageData.push({
+              imageId: "common_image_lightbox_" + data.documentType.code,
+              documenttype: data.documentType ? data.documentType.name : "",
+              documentCode: data.documentType ? data.documentType.code : "",
+              educationalLevel: data.educationalLevel
+                ? data.educationalLevel.name
+                : "",
+              fileName: event?.target?.files[0].name,
+              image: reader.result,
+            });
+
+            documentToSave.value[data.documentType.code] = reader.result;
+          },
+          false
+        );
+
+        isPdf.value[data.documentType.code] = true;
+        formData.append(data.documentType.code, event?.target?.files[0]);
+        reader.readAsDataURL(documentsUploaded.value[data.documentType.code]);
+        let icon = document.getElementById(
+          "common_icon_" + data.documentType.id + data.id
+        );
+
+        if (icon.classList.contains("disabled")) {
+          icon.classList.toggle("disabled");
+        }
+
+        let output = document.getElementById(
+          "common_image_lightbox_" + data.documentType.id + data.id
+        );
+
+        let outputHref = document.getElementById(
+          "common_image_" + data.documentType.id + data.id
+        );
+
+        outputHref.href = URL.createObjectURL(event.target.files[0]);
+        if (output && output.src) {
+          output.src = URL.createObjectURL(event.target.files[0]);
+        }
+
+        output
+          ? (output.onload = function() {
+              URL.revokeObjectURL(output.src); // free memory
+            })
+          : "";
+      } 
+      else{
       new Compressor(event?.target?.files[0], {
         quality: 0.5,
 
@@ -1085,10 +1163,164 @@ export default {
         error(err) {
           console.log(err.message);
         },
-      });
+      });}
     };
 
     const handleFileUpload = (data, event, pro) => {
+      if (/\.(pdf)$/i.test(event?.target?.files[0].name)) {
+        let reader = new FileReader();
+        documentsUploaded.value[
+          data.documentType.code +
+            "_" +
+            data.educationalLevel.code.toUpperCase() +
+            "_" +
+            pro.professionType.code.toUpperCase()
+        ] = "";
+
+        documentsUploaded.value[
+          data.documentType.code +
+            "_" +
+            data.educationalLevel.code.toUpperCase() +
+            "_" +
+            pro.professionType.code.toUpperCase()
+        ] = event?.target?.files[0];
+
+        delete fileUploadError.value[
+          "file_upload_row_" +
+            data.documentType.code.toUpperCase() +
+            "_" +
+            data.educationalLevel.code.toUpperCase() +
+            "_" +
+            pro.professionType.code.toUpperCase()
+        ];
+
+        let fileS =
+          documentsUploaded.value[
+            data.documentType.code +
+              "_" +
+              data.educationalLevel.code.toUpperCase() +
+              "_" +
+              pro.professionType.code.toUpperCase()
+          ].size;
+
+        isImage.value[
+          data.documentType.code +
+            "_" +
+            data.educationalLevel.code.toUpperCase() +
+            "_" +
+            pro.professionType.code.toUpperCase()
+        ] = false;
+        isPdf.value[
+          data.documentType.code +
+            "_" +
+            data.educationalLevel.code.toUpperCase() +
+            "_" +
+            pro.professionType.code.toUpperCase()
+        ] = true;
+        formData.append(
+          data.documentType.code +
+            "_" +
+            data.educationalLevel.code.toUpperCase() +
+            "_" +
+            pro.professionType.code.toUpperCase(),
+
+          event?.target?.files[0]
+        );
+
+        if (fileS > 0 && fileS < 1000) {
+          fileSize.value += "B";
+        } else if (fileS > 1000 && fileS < 1000000) {
+          fileSize.value = fileS / 1000 + "kB";
+        } else {
+          fileSize.value = fileS / 1000000 + "MB";
+        }
+
+        reader.addEventListener(
+          "load",
+          function() {
+            showPreview.value = true;
+
+            previewDocuments.value[
+              data.documentType.code +
+                "_" +
+                data.educationalLevel.code.toUpperCase() +
+                "_" +
+                pro.professionType.code.toUpperCase()
+            ] = reader.result;
+
+            imageData.push({
+              imageId:
+                "image_lightbox_" +
+                data.documentType.code +
+                "_" +
+                pro.educationalLevel.code +
+                "_" +
+                pro.professionType.code,
+              documenttype: data.documentType ? data.documentType.name : "",
+              documentCode:
+                data.documentType.code +
+                "_" +
+                data.educationalLevel.code.toUpperCase() +
+                "_" +
+                pro.professionType.code.toUpperCase(),
+              educationalLevel: data.educationalLevel
+                ? data.educationalLevel.name
+                : "",
+              fileName: event?.target?.files[0].name,
+              image: reader.result,
+            });
+          },
+          false
+        );
+
+        reader.readAsDataURL(
+          documentsUploaded.value[
+            data.documentType.code +
+              "_" +
+              data.educationalLevel.code.toUpperCase() +
+              "_" +
+              pro.professionType.code.toUpperCase()
+          ]
+        );
+        let icon = document.getElementById(
+          "educational_icon_" +
+            data.documentType.code +
+            "_" +
+            pro.educationalLevel.code.toUpperCase() +
+            "_" +
+            pro.professionType.code.toUpperCase()
+        );
+        if (icon.classList.contains("disabled")) {
+          icon.classList.toggle("disabled");
+        }
+
+        let output = document.getElementById(
+          "image_lightbox_" +
+            data.documentType.code +
+            "_" +
+            pro.educationalLevel.code.toUpperCase() +
+            "_" +
+            pro.professionType.code.toUpperCase()
+        );
+        let outputHref = document.getElementById(
+          "image_href_" +
+            data.documentType.code +
+            "_" +
+            pro.educationalLevel.code.toUpperCase() +
+            "_" +
+            pro.professionType.code.toUpperCase()
+        );
+        outputHref.href = URL.createObjectURL(event.target.files[0]);
+        if (output && output.src) {
+          output.src = URL.createObjectURL(event.target.files[0]);
+        }
+
+        output
+          ? (output.onload = function() {
+              URL.revokeObjectURL(output.src); // free memory
+            })
+          : "";
+      } else {
       new Compressor(event?.target?.files[0], {
         quality: 0.5,
 
@@ -1343,6 +1575,7 @@ export default {
           console.log(err.message);
         },
       });
+    }
     };
 
     const next = () => {
