@@ -183,8 +183,8 @@
                           </polyline>
                         </svg>
                       </div>
- <!-- Back icon -->
-                      
+                      <!-- Back icon -->
+
                       <div class="flex flex-col items-center justify-center">
                         <div class="mt-8">
                           <label
@@ -193,7 +193,7 @@
                           >
                             {{ documentTypeName }}
                           </label>
-<!-- Review images/pdf section -->
+                          <!-- Review images/pdf section -->
                           <div
                             class="container px-4 mx-auto my-2 md:px-4"
                             v-if="showButtons"
@@ -743,7 +743,7 @@
                               <!-- licesne Exp Card -->
                             </div>
                           </div>
-<!-- Review images/pdf section -->
+                          <!-- Review images/pdf section -->
                           <!-- Final summary -->
                           <div v-else class="flex flex-wrap justify-start">
                             <div>
@@ -756,7 +756,7 @@
                                         'pdf'
                                   "
                                 >
-                                <h5 class="text-2xl text-grey-800">
+                                  <h5 class="text-2xl text-grey-800">
                                     {{
                                       docs[index] && docs[index].documentType
                                         ? docs[index].documentType.name
@@ -838,7 +838,7 @@
                               <h2>No Documents To Show!!</h2>
                             </div>
                           </div>
-                           <!-- Final summary -->
+                          <!-- Final summary -->
                         </div>
                         <!-- Action buttons -->
                         <div class="mt-medium" v-if="!showButtons">
@@ -869,7 +869,7 @@
                             Transfer to Federal
                           </button>
                         </div>
-                          <!-- Action buttons -->
+                        <!-- Action buttons -->
                         <div class="relative pt-1 mt-medium">
                           <div class="flex items-center justify-between">
                             <radial-progress-bar
@@ -899,9 +899,9 @@
                       </div>
                     </div>
                   </div>
-                     <!-- rejected counter -->
+                  <!-- rejected counter -->
                 </div>
-                  <!-- Final Action buttons -->
+                <!-- Final Action buttons -->
                 <div class="vld-parent">
                   <loading
                     :active="isLoadingAction"
@@ -947,7 +947,7 @@
                     </div>
                   </div>
                 </div>
-                 <!-- Final Action buttons -->
+                <!-- Final Action buttons -->
                 <!-- Remark modal -->
                 <Modal v-if="showRemark">
                   <div class="h-screen overflow-y-scroll">
@@ -1701,9 +1701,10 @@ export default {
       });
       // check if applicant has amharic name
       if (
-        newLicense.value.profile.alternativeName.length == 0 ||
-        newLicense.value.profile.alternativeFatherName.length == 0 ||
-        newLicense.value.profile.alternativeGrandFatherName.length == 0
+        (newLicense.value.profile.alternativeName.length == 0 ||
+          newLicense.value.profile.alternativeFatherName.length == 0 ||
+          newLicense.value.profile.alternativeGrandFatherName.length == 0) &&
+        actionValue == "ApproveEvent"
       ) {
         toast.error(
           "Applicant's amharic name | father name | grandfather name| can not be empty",
@@ -1718,7 +1719,10 @@ export default {
         return;
       }
       // check if all the professions has prefix
-      if (proffesionsWithoutPrefix.length > 0) {
+      if (
+        proffesionsWithoutPrefix.length > 0 &&
+        actionValue == "ApproveEvent"
+      ) {
         toast.error(`Prefix for ${proffesionsWithoutPrefix} can not be empty`, {
           timeout: 5000,
           position: "bottom-center",
