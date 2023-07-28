@@ -1227,7 +1227,7 @@
             </h2>
           </div>
           <div class="grid grid-cols-2">
-            <div class="flex justify-start" contenteditable="false">
+            <div class="flex justify-start" contenteditable="true">
               <img :src="qrSrc" alt="" style="height: 150px;width: 150px;" />
             </div>
             <div class="flex justify-end">
@@ -1336,7 +1336,7 @@
                     {{ (index += 1) }}
                   </td>
                   <td
-                    contenteditable="false"
+                    contenteditable="true"
                     class="whitespace-nowrap border-r px-6 py-4 text-yellow-300"
                   >
                     {{
@@ -1350,7 +1350,7 @@
                     }}
                   </td>
                   <td
-                    contenteditable="false"
+                    contenteditable="true"
                     class="whitespace-nowrap border-r px-6 py-4 text-yellow-300"
                   >
                     ({{
@@ -1518,7 +1518,7 @@
                     {{ (index += 1) }}
                   </td>
                   <td
-                    contenteditable="false"
+                    contenteditable="true"
                     class="whitespace-nowrap border-r px-6 py-4 text-yellow-300"
                   >
                     {{
@@ -1532,7 +1532,7 @@
                     }}
                   </td>
                   <td
-                    contenteditable="false"
+                    contenteditable="true"
                     class="whitespace-nowrap border-r px-6 py-4 text-yellow-300"
                   >
                     ({{
@@ -1652,7 +1652,7 @@
                   </td>
                   <td
                     class="whitespace-nowrap border-r px-6 py-4 text-yellow-300"
-                    contenteditable="false"
+                    contenteditable="true"
                   >
                     {{
                       finalData && finalData.data && finalData.data.profile
@@ -1666,7 +1666,7 @@
                   </td>
                   <td
                     class="whitespace-nowrap border-r px-6 py-4 text-yellow-300"
-                    contenteditable="false"
+                    contenteditable="true"
                   >
                     ({{
                       educations && educations.prefix

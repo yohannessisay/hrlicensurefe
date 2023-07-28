@@ -96,7 +96,7 @@
                               <div v-if="!modalData.withExperiance">
                                 <div
                                   class="flex justify-end"
-                                  contenteditable="false"
+                                  contenteditable="true"
                                   height="200"
                                   width="200"
                                 >
@@ -120,7 +120,7 @@
                                   This letter of good standing and confirmation
                                   of registration is written upon request of
                                   <span
-                                    contenteditable="false"
+                                    contenteditable="true"
                                     class="text-yellow-300"
                                     >{{
                                       modalData && modalData.applicantTitle
@@ -129,7 +129,7 @@
                                     }}</span
                                   >
                                   <span
-                                    contenteditable="false"
+                                    contenteditable="true"
                                     class="ml-1 text-yellow-300"
                                   >
                                     {{
@@ -165,7 +165,7 @@
                                 </span>
                                 had been registered and licensed as
                                 <span
-                                  contenteditable="false"
+                                  contenteditable="true"
                                   class="text-yellow-300"
                                   >{{
                                     modalData &&
@@ -192,7 +192,7 @@
                                 >
                                 by
                                 <span
-                                  contenteditable="false"
+                                  contenteditable="true"
                                   class="text-yellow-300"
                                   >{{
                                     modalData && modalData.whoIssued
@@ -202,7 +202,7 @@
                                 >.which is the responsible organ for the
                                 registration and licensing of health
                                 professionals and with registration number
-                                <span contenteditable="false">
+                                <span contenteditable="true">
                                   {{
                                     modalData
                                       ? modalData.licenseRegistrationNumber
@@ -212,7 +212,7 @@
                                 <p class="ml-2 mt-8">
                                   Hence we appreciate any assistance, which will
                                   be rendered to
-                                  <span contenteditable="false">
+                                  <span contenteditable="true">
                                     {{
                                       modalData &&
                                       modalData.profile &&
@@ -232,7 +232,7 @@
                               >
                                 <div
                                   class="flex justify-end"
-                                  contenteditable="false"
+                                  contenteditable="true"
                                
                                 >
                                   <img    height="150"
@@ -257,7 +257,7 @@
                                   This letter of good standing and confirmation
                                   of registration is written upon request of
                                   <span
-                                    contenteditable="false"
+                                    contenteditable="true"
                                     class="text-yellow-300"
                                     >{{
                                       modalData &&
@@ -268,7 +268,7 @@
                                     }}</span
                                   >
                                   <span
-                                    contenteditable="false"
+                                    contenteditable="true"
                                     class="ml-1 text-yellow-300"
                                   >
                                     {{
@@ -295,7 +295,7 @@
                                 </h5>
 
                                 <h4 class="">
-                                  <span contenteditable="false">
+                                  <span contenteditable="true">
                                     {{
                                       modalData &&
                                       modalData.profile &&
@@ -309,7 +309,7 @@
                                   </span>
 
                                   <span
-                                    contenteditable="false"
+                                    contenteditable="true"
                                     class="text-yellow-300"
                                     >{{
                                       modalData &&
@@ -324,7 +324,7 @@
                                   <span contenteditable="true"> on </span>
                                   <span
                                     class="text-yellow-300"
-                                    contenteditable="false"
+                                    contenteditable="true"
                                     >{{
                                       modalData
                                         ? moment(
@@ -339,7 +339,7 @@
                                   <span contenteditable="true"> by </span>
 
                                   <span
-                                    contenteditable="false"
+                                    contenteditable="true"
                                     class="text-yellow-300"
                                     >{{
                                       modalData && modalData.whoIssued
@@ -353,7 +353,7 @@
                                     registration and licensing of health
                                     professionals and with registration number
                                   </span>
-                                  <span contenteditable="false">
+                                  <span contenteditable="true">
                                     {{
                                       modalData
                                         ? modalData.licenseRegistrationNumber
@@ -364,7 +364,7 @@
                                   .
                                 </h4>
                                 <h4 class=" mt-8">
-                                  <span contenteditable="false">
+                                  <span contenteditable="true">
                                     {{
                                       modalData && modalData.profile
                                         ? modalData.profile.gender == "male"
@@ -387,7 +387,7 @@
 
                                   <p contenteditable="true">
                                     Since __/__/__ registration, till __/__/__
-                                    <span contenteditable="false">
+                                    <span contenteditable="true">
                                       {{
                                         modalData && modalData.profile
                                           ? modalData.profile.gender == "male"
@@ -398,7 +398,7 @@
                                     </span>
                                     has no reported medico-legal records and
                                     malpractices while
-                                    <span contenteditable="false">
+                                    <span contenteditable="true">
                                       {{
                                         modalData && modalData.profile
                                           ? modalData.profile.gender == "male"

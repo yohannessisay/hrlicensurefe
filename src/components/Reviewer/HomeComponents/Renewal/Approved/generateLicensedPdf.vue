@@ -1226,7 +1226,7 @@
                     {{ (index += 1) }}
                   </td>
                   <td
-                    contenteditable="false"
+                    contenteditable="true"
                     class="whitespace-nowrap border-r px-6 py-4 text-yellow-300"
                   >
                     {{
@@ -1240,7 +1240,7 @@
                     }}
                   </td>
                   <td
-                    contenteditable="false"
+                    contenteditable="true"
                     class="whitespace-nowrap border-r px-6 py-4 text-yellow-300"
                   >
                     ({{
