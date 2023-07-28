@@ -152,7 +152,7 @@
                           data-lightbox="example-2"
                         >
                           <i
-                            :id="'common_icon' + item.documentType.id + item.id"
+                            :id="'common_icon_' + item.documentType.id + item.id"
                             class="fa fa-eye cursor-pointer text-main-400 disabled"
                             aria-hidden="true"
                           >
@@ -224,13 +224,18 @@
   </div>
 </template>
 <script>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, toRaw } from "vue";
 import { useStore } from "vuex";
 import MAX_FILE_SIZE from "../../../../composables/documentMessage";
 import { boolean } from "yargs";
 import { useToast } from "vue-toastification";
 import { useRouter } from "vue-router";
+import Loading from "vue3-loading-overlay";
+import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
+
 export default {
+  components: { Loading },
+  emits: ["darkMode", "changeActiveState", "changeActiveStateMinus"],
   setup(props, { emit }) {
     let store = useStore();
     let toast = useToast();
@@ -238,13 +243,13 @@ export default {
     let imageUploader = ref(null);
     let goToNext = ref(false);
     let departmentDocuments = [];
-    let isLoading=ref(false);
+    let isLoading = ref(false);
     let documents = ref([]);
     let filePreviewData = ref({
       isImage: boolean,
       isPdf: boolean,
       file: "",
-      name: ""
+      name: "",
     });
     let localData = ref();
     let files = ref("");
@@ -295,7 +300,7 @@ export default {
 
         previewDocuments.value[data.documentType.code] = reader.result;
         imageData = imageData.filter(
-          el => el.documenttype != data.documentType.name
+          (el) => el.documenttype != data.documentType.name
         );
         imageData.push({
           documenttype: data.documentType ? data.documentType.name : "",
@@ -304,7 +309,7 @@ export default {
             ? data.educationalLevel.name
             : "",
           fileName: event?.target?.files[0].name,
-          image: reader.result
+          image: reader.result,
         });
       });
       if (documentUploaded.value[data.documentType.code]) {
@@ -339,7 +344,7 @@ export default {
       );
 
       let outputHref = document.getElementById(
-        "common_image_" + data.documentType.id + data.id
+        "common_image_href_" + data.documentType.id + data.id
       );
 
       outputHref.href = URL.createObjectURL(event.target.files[0]);
@@ -360,18 +365,18 @@ export default {
       errorDocuments.value = [];
       existingDocs && existingDocs.length > 0
         ? documents.value
-            .filter(cd => cd.isRequired)
-            .forEach(element => {
+            .filter((cd) => cd.isRequired)
+            .forEach((element) => {
               temp = existingDocs.filter(
-                el => el.documentCode == element.documentType.code
+                (el) => el.documentCode == element.documentType.code
               );
-              if (temp.length==0||!temp) {
+              if (temp.length == 0 || !temp) {
                 documentError.value[
                   "file_upload_row_" + element.documentType.code
                 ] = true;
                 errorDocuments.value.push({
                   name: element.documentType.name,
-                  code: element.documentType.code
+                  code: element.documentType.code,
                 });
               } else {
                 delete documentError.value[
@@ -380,22 +385,20 @@ export default {
               }
             })
         : documents.value
-            .filter(cd => cd.isRequired)
-            .forEach(element => {
-            
+            .filter((cd) => cd.isRequired)
+            .forEach((element) => {
               temp = imageData.filter(
-                el => el.documentCode == element.documentType.code
+                (el) => el.documentCode == element.documentType.code
               );
-             
-              if (temp.length==0||!temp) {
-                
+
+              if (temp.length == 0 || !temp) {
                 documentError.value[
                   "file_upload_row_" + element.documentType.code
                 ] = true;
-              
+
                 errorDocuments.value.push({
                   name: element.documentType.name,
-                  code: element.documentType.code
+                  code: element.documentType.code,
                 });
               } else {
                 delete documentError.value[
@@ -405,7 +408,17 @@ export default {
             });
       return documentError.value;
     };
-
+    const urltoFile = async (data, fileName) => {
+      let url = data;
+      let file = await fetch(url)
+        .then((res) => res.blob())
+        .then((blob) => {
+          return new File([blob], fileName, {
+            type: /\.(pdf)$/i.test(fileName) ? "application/pdf" : "image/png",
+          });
+        });
+      return file;
+    };
     const initDb = () => {
       let request = indexedDB.open("GSdocumentUploads", 1);
 
@@ -420,7 +433,9 @@ export default {
         let getAllIDB = store.getAll();
         getAllIDB.onsuccess = function(evt) {
           existingDocs =
-            evt.target.result && evt.target.result[0]
+            evt.target.result &&
+            evt.target.result[0] &&
+            evt.target.result[0].data
               ? evt.target.result[0].data
               : {};
         };
@@ -430,72 +445,94 @@ export default {
         let db = request.result;
         db.createObjectStore("GSdocumentUploads", {
           keyPath: "id",
-          autoIncrement: true
+          autoIncrement: true,
         });
       };
     };
 
     const next = () => {
       let documentValidation = checkDocuments();
-     
+
       if (documentValidation && Object.keys(documentValidation).length == 0) {
-        store.dispatch("goodstanding/setTempDocs", formData).then(() => {
-          let finalLocalData = {
-            created: new Date(),
-            data: []
-          };
-          let db;
-          let request = indexedDB.open("GSdocumentUploads", 1);
-          request.onsuccess = function() {
-            db = request.result;
-            let transaction = db.transaction(
-              ["GSdocumentUploads"],
-              "readwrite"
-            );
+        let finalLocalData = {
+          created: new Date(),
+          data: [],
+        };
+        let db;
+        let request = indexedDB.open("GSdocumentUploads", 1);
+        request.onsuccess = function() {
+          db = request.result;
+          let transaction = db.transaction(["GSdocumentUploads"], "readwrite");
 
-            if (existingDocs.length > 0) {
-              imageData.forEach(newImage => {
-                existingDocs.forEach(existing => {
-                  if (existing.documentCode == newImage.documentCode) {
-                    existing.image = newImage.image;
-                  }
-                });
+          if (documentUploaded.value.length > 0 && imageData.length > 0) {
+            documentUploaded.value.forEach((existing) => {
+              imageData.forEach((newImage) => {
+                if (existing.imageId == newImage.imageId) {
+                  existing.image = newImage.image;
+                  existing.fileName = newImage.fileName;
+                }
               });
-              finalLocalData.data = existingDocs;
-            } else {
-              finalLocalData.data = imageData;
-            }
-            finalLocalData.data = [...new Set(finalLocalData.data)];
+            });
 
-            const objectStore = transaction.objectStore("GSdocumentUploads");
+            finalLocalData.data = toRaw(documentUploaded.value);
+            formData = new FormData();
+            finalLocalData.data.forEach((element) => {
+              urltoFile(element.image, element.fileName).then((res) => {
+                let tempImage = res;
 
-            const objectStoreRequest = objectStore.clear();
+                formData.append(element.documentCode, tempImage);
+              });
+            });
 
-            objectStoreRequest.onsuccess = () => {
-              let addReq = transaction
-                .objectStore("GSdocumentUploads")
-                .put(finalLocalData);
+            store.dispatch("goodstanding/setTempDocs", formData);
+          } else if (isBackButtonClicked.value == true) {
+            console.log(documentUploaded);
+            finalLocalData.data = toRaw(documentUploaded.value);
+            formData = new FormData();
 
-              addReq.onerror = function() {
-                console.log(
-                  "Error regarding your browser, please update your browser to the latest version"
-                );
-              };
+            finalLocalData.data.forEach((element) => {
+              urltoFile(element.image, element.fileName).then((res) => {
+                let tempImage = res;
+                formData.append(element.documentCode, tempImage);
+              });
+            });
 
-              transaction.oncomplete = function() {
-                console.log("data stored");
-                emit("changeActiveState");
-              };
+            store.dispatch("goodstanding/setTempDocs", formData);
+          } else {
+            finalLocalData.data = imageData;
+            store.dispatch("goodstanding/setTempDocs", formData);
+          }
+        
+          finalLocalData.data = [...new Set(finalLocalData.data)];
+
+          const objectStore = transaction.objectStore("GSdocumentUploads");
+
+          const objectStoreRequest = objectStore.clear();
+
+          objectStoreRequest.onsuccess = () => {
+            let addReq = transaction
+              .objectStore("GSdocumentUploads")
+              .put(finalLocalData);
+
+            addReq.onerror = function() {
+              console.log(
+                "Error regarding your browser, please update your browser to the latest version"
+              );
+            };
+
+            transaction.oncomplete = function() {
+              console.log("data stored");
+              emit("changeActiveState");
             };
           };
-        });
+        };
       } else {
         toast.error("Please attach the required documents ", {
           timeout: 5000,
           position: "bottom-center",
           pauseOnFocusLoss: true,
           pauseOnHover: true,
-          icon: true
+          icon: true,
         });
       }
     };
@@ -505,7 +542,7 @@ export default {
 
     const saveDraft = () => {
       generalInfo.value.licenseFile = [];
-      isLoading.value=true;
+      isLoading.value = true;
       let license = {
         action: "DraftEvent",
         data: {
@@ -545,7 +582,7 @@ export default {
             otherProfessionalTypeAmharic: generalInfo.value
               .otherProfessionTypeAmharic
               ? generalInfo.value.otherProfessionTypeAmharic
-              : ""
+              : "",
           },
           expertLevelId: generalInfo.value.expertLevelId
             ? generalInfo.value.expertLevelId
@@ -555,26 +592,28 @@ export default {
           departmentId: generalInfo.value.departmentId.id
             ? generalInfo.value.departmentId.id
             : null,
-          feedback: generalInfo.value.feedback ? generalInfo.value.feedback : ""
-        }
+          feedback: generalInfo.value.feedback
+            ? generalInfo.value.feedback
+            : "",
+        },
       };
 
       store
         .dispatch("goodstanding/addGoodstandingLicense", license)
-        .then(res => {
+        .then((res) => {
           let licenseId = res.data.data.id;
           let payload = { document: formData, id: licenseId };
           store
             .dispatch("goodstanding/updateDocuments", payload)
-            .then(res => {
-              isLoading.value=false;
+            .then((res) => {
+              isLoading.value = false;
               if (res.data.status == "Success") {
                 toast.success("Applied successfuly", {
                   timeout: 5000,
                   position: "bottom-center",
                   pauseOnFocusLoss: true,
                   pauseOnHover: true,
-                  icon: true
+                  icon: true,
                 });
                 localStorage.removeItem("GSApplicationData");
                 router.push({ path: "/Applicant/GoodStanding/draft" });
@@ -584,7 +623,7 @@ export default {
                   position: "bottom-center",
                   pauseOnFocusLoss: true,
                   pauseOnHover: true,
-                  icon: true
+                  icon: true,
                 });
               }
             })
@@ -594,7 +633,7 @@ export default {
                 position: "bottom-center",
                 pauseOnFocusLoss: true,
                 pauseOnHover: true,
-                icon: true
+                icon: true,
               });
             });
         });
@@ -614,17 +653,17 @@ export default {
       if (Object.keys(localData.value).length != 0) {
         generalInfo.value = localData.value;
 
-        store.dispatch("goodstanding/getApplicationCategories").then(res => {
+        store.dispatch("goodstanding/getApplicationCategories").then((res) => {
           let categoryResults = res.data.data
-            ? res.data.data.filter(ele => ele.code == "GSL")
+            ? res.data.data.filter((ele) => ele.code == "GSL")
             : "";
 
           store
             .dispatch("goodstanding/getGSdocuments", categoryResults[0].id)
-            .then(res => {
+            .then((res) => {
               let results = res.data.data;
               results = results.filter(
-                (set => f =>
+                ((set) => (f) =>
                   !set.has(f.documentTypeId) && set.add(f.documentTypeId))(
                   new Set()
                 )
@@ -636,8 +675,8 @@ export default {
                 results.length > 0
               ) {
                 isBackButtonClicked.value = true;
-                existingDocs.forEach(existing => {
-                  results.forEach(Cd => {
+                existingDocs.forEach((existing) => {
+                  results.forEach((Cd) => {
                     if (
                       existing.documenttype &&
                       existing.documentCode == Cd.documentType.code
@@ -647,6 +686,7 @@ export default {
                     }
                   });
                 });
+                documentUploaded.value = existingDocs;
                 documents.value = results;
               } else {
                 documents.value = results;
@@ -675,9 +715,9 @@ export default {
       errorDocuments,
       next,
       isLoading,
-      back
+      back,
     };
-  }
+  },
 };
 </script>
 

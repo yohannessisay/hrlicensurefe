@@ -20,10 +20,10 @@
 
     <!-- Renewal Routes -->
     <ul class="mt-5" v-if="finalUrl == 'renewal'">
-      <div class="parentList flex justify-center ">
+      <div class="parentList flex justify-start ">
         <a
           href="#"
-          class="bg-white rounded-md mr-4 ml-1 w-full flex justify-center p-2 pointer-events-none"
+          class="bg-white rounded-md mr-4 ml-1 w-full flex justify-start p-2 pointer-events-none"
         >
           <span class="icon"
             ><i class="bx bx-certification text-grey-800 text-2xl mt-1"></i
@@ -366,10 +366,10 @@
     <!--End of Renewal Routes -->
     <!-- New License routes -->
     <ul class="mt-5" v-if="finalUrl == 'newLicense'">
-      <div class="parentList flex justify-center">
+      <div class="parentList flex justify-start">
         <a
           href="#"
-          class=" bg-white rounded-md mr-4 ml-1 w-full flex justify-center p-2 pointer-events-none"
+          class=" bg-white rounded-md mr-4 ml-1 w-full flex justify-start p-2 pointer-events-none"
         >
           <span class="icon"
             ><i class="bx bx-certification text-grey-800 text-2xl mt-1"></i
@@ -733,10 +733,10 @@
     <!-- End of New License routes -->
     <!-- Goodstanding routes -->
     <ul class="mt-5" v-if="finalUrl == 'goodstanding'">
-      <div class="parentList flex justify-center">
+      <div class="parentList flex justify-start">
         <a
           href="#"
-          class="bg-white text-white rounded-md mr-4 ml-1 w-full flex justify-center p-2 pointer-events-none"
+          class="bg-white text-white rounded-md mr-4 ml-1 w-full flex justify-start p-2 pointer-events-none"
         >
           <span class="icon"
             ><i class="bx bx-envelope text-grey-800 text-2xl mt-1"></i
