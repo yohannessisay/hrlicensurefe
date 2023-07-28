@@ -412,15 +412,33 @@
                         </div>
                         <div class="grid grid-cols-4 gap-4">
                           <div
-                            class="mt-4 mb-8 bg-white"
+                            class="mt-4 mb-8 bg-white shadow-lg"
                             style="border-radius: 15px; padding: 10px"
                             v-for="document in modalData.documents"
                             :key="document.id"
                           >
-                            <div class="flex justify-center">
+                            <div
+                              v-if="
+                                document &&
+                                  document.fileType &&
+                                  document.fileType.split('/')[1] == 'pdf'
+                              "
+                            >
+                              <button
+                                class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded shadow-lg bg-primary-400 hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg hover:bg-white hover:text-primary-600"
+                                @click="openPdfInNewTab(document.filePath)"
+                              >
+                                See pdf in detail
+                              </button>
+                            </div>
+                            <div class="flex justify-center" v-else>
                               <div class="mt-large bg-white">
                                 <a
-                                  :href="googleApi + document.filePath"
+                                  :href="
+                                    document.filePath
+                                      ? googleApi + document.filePath
+                                      : ''
+                                  "
                                   :data-title="
                                     document.documentType
                                       ? document.documentType.name
@@ -429,7 +447,11 @@
                                   data-lightbox="example-2"
                                 >
                                   <img
-                                    :src="googleApi + document.filePath"
+                                    :src="
+                                      document.filePath
+                                        ? googleApi + document.filePath
+                                        : ''
+                                    "
                                     class="w-full h-48 object-cover"
                                   />
                                 </a>
@@ -555,10 +577,13 @@ export default {
     const showModal = () => {
       show.value = true;
     };
-
+    let pdfFilePath = ref("");
     const modalData = ref({});
     let result = {};
-
+    const openPdfInNewTab = (pdfPath) => {
+      pdfFilePath.value = pdfPath;
+      window.open(googleApi + "" + pdfPath, "_blank");
+    };
     const check = () => {
       store
         .dispatch("reviewer/getGoodStandingApplication", props.modalDataId.id)
@@ -629,6 +654,8 @@ export default {
       check,
       isLoading,
       modalData,
+      openPdfInNewTab,
+      pdfFilePath,
       googleApi,
       modalDataGenerate,
     };

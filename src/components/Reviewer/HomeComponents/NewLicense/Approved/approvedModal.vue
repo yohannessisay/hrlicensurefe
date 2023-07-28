@@ -149,7 +149,8 @@
                                   >Full Name:</span
                                 >
                                 <span class="font-semibold text-grey-800 mb-1">
-                                {{ modalData.name }}</span>
+                                  {{ modalData.name }}</span
+                                >
                               </p>
                               <p class="text-gray-500">
                                 <span
@@ -166,7 +167,8 @@
                                   >Nationality:</span
                                 >
                                 <span class="font-semibold text-grey-800 mb-1">
-                                {{ modalData.nationality }}</span>
+                                  {{ modalData.nationality }}</span
+                                >
                               </p>
                               <p class="text-gray-500">
                                 <span
@@ -174,11 +176,12 @@
                                   >Date Of Birth:</span
                                 >
                                 <span class="font-semibold text-grey-800 mb-1">
-                                {{
-                                  modalData.dateOfBirth
-                                    ? modalData.dateOfBirth.slice(0, 10)
-                                    : ""
-                                }}</span>
+                                  {{
+                                    modalData.dateOfBirth
+                                      ? modalData.dateOfBirth.slice(0, 10)
+                                      : ""
+                                  }}</span
+                                >
                               </p>
                               <p class="text-gray-500">
                                 <span
@@ -186,7 +189,8 @@
                                   >Martial Status:</span
                                 >
                                 <span class="font-semibold text-grey-800 mb-1">
-                                {{ modalData.maritalStatus }}</span>
+                                  {{ modalData.maritalStatus }}</span
+                                >
                               </p>
                             </div>
                           </div>
@@ -223,23 +227,27 @@
                             </div>
                           </div>
                           <div class="grow ml-6">
-                            <h2 class="font-bold mb-1 text-2xl ">Contact Info</h2>
+                            <h2 class="font-bold mb-1 text-2xl ">
+                              Contact Info
+                            </h2>
                             <div class="border text-primary-600 rounded-lg p-2">
-                            <p class="text-gray-500">
-                              <span class="font-medium text-primary-700 mb-1"
-                                >Mobile Number:</span
-                              >
-                              <span class="font-semibold text-grey-800 mb-1">
-                              {{ modalData.mobileNumber }}</span>
-                            </p>
-                            <p class="text-gray-500">
-                              <span class="font-medium text-primary-700 mb-1"
-                                >Email:</span
-                              >
-                              <span class="font-semibold text-grey-800 mb-1">
-                              {{ modalData.email }}</span>
-                            </p>
-                          </div>
+                              <p class="text-gray-500">
+                                <span class="font-medium text-primary-700 mb-1"
+                                  >Mobile Number:</span
+                                >
+                                <span class="font-semibold text-grey-800 mb-1">
+                                  {{ modalData.mobileNumber }}</span
+                                >
+                              </p>
+                              <p class="text-gray-500">
+                                <span class="font-medium text-primary-700 mb-1"
+                                  >Email:</span
+                                >
+                                <span class="font-semibold text-grey-800 mb-1">
+                                  {{ modalData.email }}</span
+                                >
+                              </p>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -273,7 +281,9 @@
                             </div>
                           </div>
                           <div class="grow ml-6 mb-4">
-                            <h2 class="font-bold mb-1 text-2xl ">Education Detail</h2>
+                            <h2 class="font-bold mb-1 text-2xl ">
+                              Education Detail
+                            </h2>
 
                             <div
                               class="
@@ -351,7 +361,7 @@
                         >
                         <br />
                         <button
-                        v-if="adminRole!='REV'"
+                          v-if="adminRole != 'REV'"
                           class="
                             inline-block
                             px-6
@@ -379,7 +389,7 @@
                           Suspend
                         </button>
                         <button
-                        v-if="adminRole!='REV'"
+                          v-if="adminRole != 'REV'"
                           class="
                             inline-block
                             px-6
@@ -428,14 +438,22 @@
                           type="button"
                           data-bs-toggle="modal"
                           data-bs-target="#generatePdf"
-                          @click="changePrintType(modalData&&modalData.data&&modalData.data.applicantType&&
-                          modalData.data.applicantType.code=='FOR'?'foreigners':'')"
+                          @click="
+                            changePrintType(
+                              modalData &&
+                                modalData.data &&
+                                modalData.data.applicantType &&
+                                modalData.data.applicantType.code == 'FOR'
+                                ? 'foreigners'
+                                : ''
+                            )
+                          "
                         >
                           <i class="fa fa-file-text"></i>
                           Generate License
                         </button>
                         <button
-                          v-if="showGenerate&&adminExpLevel!='REG'"
+                          v-if="showGenerate && adminExpLevel != 'REG'"
                           class="
                             inline-block
                             px-6
@@ -462,7 +480,7 @@
                           Externship
                         </button>
                         <button
-                          v-if="showGenerate&&adminExpLevel!='REG'"
+                          v-if="showGenerate && adminExpLevel != 'REG'"
                           class="
                             inline-block
                             px-6
@@ -532,7 +550,21 @@
                             v-for="document in modalData.documents"
                             :key="document.id"
                           >
-                            <div class="flex justify-center">
+                            <div
+                              v-if="
+                                document &&
+                                  document.fileType &&
+                                  document.fileType.split('/')[1] == 'pdf'
+                              "
+                            >
+                              <button
+                                class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded shadow-lg bg-primary-400 hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg hover:bg-white hover:text-primary-600"
+                                @click="openPdfInNewTab(document.filePath)"
+                              >
+                                See pdf in detail
+                              </button>
+                            </div>
+                            <div class="flex justify-center" v-else>
                               <div class="mt-large bg-white">
                                 <a
                                   :href="
@@ -677,7 +709,8 @@ export default {
     let adminRole = localStorage.getItem("role");
     let show = ref(true);
     let adminId = +localStorage.getItem("adminId");
-    let adminExpLevel=JSON.parse(localStorage.getItem("allAdminData")).expertLevel.code;
+    let adminExpLevel = JSON.parse(localStorage.getItem("allAdminData"))
+      .expertLevel.code;
     let userId = ref("");
     let isLoading = ref(false);
     let reviewerAdminId = ref(0);
@@ -685,6 +718,7 @@ export default {
     const showModal = () => {
       show.value = true;
     };
+    let pdfFilePath = ref("");
     let showGenerate = ref(false);
     let previousLicenseData = ref([]);
     const modalData = ref({ educations: [] });
@@ -692,6 +726,10 @@ export default {
     let toBeGeneratedProfs = [];
     const changePrintType = (type) => {
       modalData.value.printType = type;
+    };
+    const openPdfInNewTab = (pdfPath) => {
+      pdfFilePath.value = pdfPath;
+      window.open(googleApi + "" + pdfPath, "_blank");
     };
     const check = () => {
       modalData.value = {};
@@ -730,7 +768,7 @@ export default {
                     }
                   });
                   tempEd.forEach((element) => {
-                    if (element.length ==1) {
+                    if (element.length == 1) {
                       toBeGeneratedProfs.push(element[0]);
                     } else {
                       element.forEach((element) => {
@@ -817,8 +855,10 @@ export default {
       showPreviousLicense,
       previousLicenseData,
       check,
+      pdfFilePath,
       isLoading,
       modalData,
+      openPdfInNewTab,
       adminRole,
       googleApi,
       changePrintType,
