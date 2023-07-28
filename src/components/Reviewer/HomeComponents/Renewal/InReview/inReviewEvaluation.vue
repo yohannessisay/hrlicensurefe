@@ -1807,7 +1807,8 @@ export default {
         (renewal.value.profile.alternativeName.length == 0 ||
           renewal.value.profile.alternativeFatherName.length == 0 ||
           renewal.value.profile.alternativeGrandFatherName.length == 0) &&
-        actionValue == "ApproveEvent"
+        actionValue == "ApproveEvent" &&
+        renewal.value.applicantType.code != "FOR"
       ) {
         toast.error(
           "Applicant's amharic name | father name | grandfather name| can not be empty",
@@ -1823,7 +1824,8 @@ export default {
       }
       if (
         proffesionsWithoutPrefix.length > 0 &&
-        actionValue == "ApproveEvent"
+        actionValue == "ApproveEvent" &&
+        renewal.value.applicantType.code != "FOR"
       ) {
         toast.error(`Prefix for ${proffesionsWithoutPrefix} can not be empty`, {
           timeout: 5000,
