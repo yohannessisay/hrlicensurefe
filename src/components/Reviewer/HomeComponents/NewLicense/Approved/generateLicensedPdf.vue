@@ -26,7 +26,7 @@
         finalData.data.applicantType &&
         (finalData.data.applicantType.code == 'ETH' ||
           finalData.data.applicantType.code == 'ETHABRO')
-          ? 'modal-dialog modal-dialog-centered modal-xl relative w-auto pointer-events-none'
+          ? 'modal-dialog modal-dialog-centered modal-xl ml-8 mr-8 relative w-auto pointer-events-none'
           : 'modal-dialog modal-dialog-centered modal-lg  relative w-auto pointer-events-none'
       "
     >
@@ -2384,18 +2384,21 @@ export default {
       professionPossition,
       professionListGap
     ) => {
-      doc.setFontSize(17);
-      doc2.setFontSize(17);
+      doc.setFontSize(15);
+      doc2.setFontSize(15);
+      doc.text(38, 58, `${certificateDetail.value.licenseNumber}`);
+      doc2.text(38, 58, `${certificateDetail.value.licenseNumber}`);
+     
       let paddingAmharic = 5;
       let paddingEnglish = 0;
       if (code == "DD") {
         paddingAmharic = 10;
         paddingEnglish = 10;
       }
-
+   
       //English name part
       doc.text(
-        190,
+        175,
         namePosition - paddingEnglish,
         `${certifiedUser.value.name} ${certifiedUser.value.fatherName} ${
           certifiedUser.value.grandFatherName
@@ -2404,7 +2407,7 @@ export default {
         }`
       );
       doc2.text(
-        190,
+        175,
         namePosition - paddingEnglish,
         `${certifiedUser.value.name} ${certifiedUser.value.fatherName} ${
           certifiedUser.value.grandFatherName
@@ -2607,6 +2610,9 @@ export default {
       doc2.addFont("Tera-Regular-normal.ttf", "Tera-Regular", "normal");
       doc.setFont("Tera-Regular"); // set font
       doc2.setFont("Tera-Regular");
+      
+      doc.setFontSize(15);
+      doc2.setFontSize(15);
       //Amharic name part
       doc.text(
         60,
@@ -2642,13 +2648,7 @@ export default {
             : ""
         }`
       );
-      // License Number for amharic
-      doc.text(38, 58, `${certificateDetail.value.licenseNumber}`);
-      doc2.text(38, 58, `${certificateDetail.value.licenseNumber}`);
-      // doc.addFileToVFS("Amiri-Regular.ttf", AmiriRegular);
-
-      doc.setFontSize(17);
-      doc2.setFontSize(17);
+ 
 
       if (changeWidth.value) {
         doc.setFontSize(11);
@@ -2739,9 +2739,7 @@ export default {
         }
       }
       //End of Amharic part for certificate
-      doc.setFontSize(12);
-      doc2.setFontSize(12);
-      // doc.text(80)
+  
       let getAmharicLicensedDate = doc.getTextWidth(
         toEthiopian(
           moment(certificateDetail.value.certifiedDate)._d.toISOString(),
@@ -2907,12 +2905,12 @@ export default {
             };
             store.dispatch("profile/converProfilePicture", path).then((res) => {
               doc.addImage(res.data.data, "JPG", 33, 20, 30, 30);
-              doc.setFontSize(10);
+             
               window.open(doc.output("bloburl"));
               updateLicenseGenerated();
             });
           } else {
-            doc.setFontSize(10);
+           
             window.open(doc.output("bloburl"));
             updateLicenseGenerated();
           }
