@@ -1752,8 +1752,11 @@ export default {
       professionPossition,
       professionListGap
     ) => {
-      doc.setFontSize(12);
-      doc2.setFontSize(12);
+      doc.setFontSize(15);
+      doc2.setFontSize(15);
+      doc.text(38, 58, `${certificateDetail.value.licenseNumber}`);
+      doc2.text(38, 58, `${certificateDetail.value.licenseNumber}`);
+ 
       let paddingAmharic = 5;
       let paddingEnglish = 0;
       if (code == "DD") {
@@ -1763,7 +1766,7 @@ export default {
 
       //English name part
       doc.text(
-        190,
+        175,
         namePosition - paddingEnglish,
         `${certifiedUser.value.name} ${certifiedUser.value.fatherName} ${
           certifiedUser.value.grandFatherName
@@ -1772,7 +1775,7 @@ export default {
         }`
       );
       doc2.text(
-        190,
+        175,
         namePosition - paddingEnglish,
         `${certifiedUser.value.name} ${certifiedUser.value.fatherName} ${
           certifiedUser.value.grandFatherName
@@ -2001,10 +2004,7 @@ export default {
             ? certifiedUser.value.alternativeGrandFatherName
             : ""
         }`
-      );
-      // License Number for amharic
-      doc.text(38, 58, `${certificateDetail.value.licenseNumber}`);
-      doc2.text(38, 58, `${certificateDetail.value.licenseNumber}`);
+      ); 
       // doc.addFileToVFS("Amiri-Regular.ttf", AmiriRegular);
 
       doc.setFontSize(17);
