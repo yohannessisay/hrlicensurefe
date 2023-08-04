@@ -1187,10 +1187,14 @@
           contenteditable="true"
           id="foreignersPrintedDiv"
         >
-          <div class="grid grid-cols-3 mb-12" id="applicantCopyHeader">
+          <div
+            class="grid grid-cols-3 "
+            id="applicantCopyHeader"
+            contenteditable="false"
+          >
             <h2 class="text-primary-600 font-bold text-xl">
               ጤና ሚኒስቴር-ኢትዮጵያ <br />
-              <span>የዜጎች ጤና ለሁገር ብልፅግና</span>
+              <span>የዜጎች ጤና ለሀገር ብልፅግና</span>
             </h2>
             <div class="ml-12 ">
               <svg
@@ -1244,10 +1248,10 @@
               </div>
             </div>
           </div>
-          <h2 class="mt-8" contenteditable="true">
+          <h2 class="mt-20 ml-8" contenteditable="true">
             ለ፡____________________________________
           </h2>
-          <p class=" mt-12 p-2 tracking-widest">
+          <p class=" mt-12 px-8  tracking-widest">
             ስለ ውጭ ሀገር የጤና ባለሙያዎች ምዝገባ ጉዳይ በቀን
             <span class="text-yellow-300">
               {{
@@ -1264,10 +1268,8 @@
                   : ""
               }}
             </span>
-            የተጻፈውን ደብዳቤ ይመለከታል፡፡
-          </p>
-          <p class="p-2 tracking-widest ">
-            በቀረበው ጥያቄ መሰረት የተጠቃሾቹ የትምህርት ማስረጃ ከተገመገመ በኋላ በስማቸው ትይዩ በተጠቀሰው ስያሜ ከ
+            የተጻፈውን ደብዳቤ ይመለከታል፡፡ በቀረበው ጥያቄ መሰረት የተጠቃሾቹ የትምህርት ማስረጃ ከተገመገመ በኋላ
+            በስማቸው ትይዩ በተጠቀሰው ስያሜ ከ
             <span class="text-yellow-300">
               {{
                 finalData && finalData.data && finalData.data.certifiedDate
@@ -1299,7 +1301,12 @@
             ዓመት በኋላ በሀገር ውስጥ ካሉ ፈቃዳቸውን ማደስ እንደሚገባ እየገለጽን ይህን ፈቃድ ሰጥተናቸዋል፡፡
           </p>
 
-          <div class="grid justify-items-center mt-8">
+          <p class="px-8 tracking-widest "></p>
+
+          <div
+            class="grid justify-items-center mt-8 mb-20"
+            contenteditable="false"
+          >
             <table class=" border text-center text-sm font-light ">
               <thead class="border-b font-medium bg-primary-200 ">
                 <tr>
@@ -1370,13 +1377,15 @@
               </tbody>
             </table>
           </div>
-          <div class="text-left mt-12"></div>
-          <h5>ግልባጭ</h5>
-          <h5>ለ፡ብቃትና ሰው ሀብት አስተዳደር ስራ አስፈጻሚ አዲስ አበባ</h5>
-          <h5 class="mt-8 text-right">//ከሰላምታ ጋር//</h5>
+          <div class="text-left ml-4">
+            <h5>ግልባጭ</h5>
+            <h5>ለ፡ብቃትና ሰው ሀብት አስተዳደር ስራ አስፈጻሚ አዲስ አበባ</h5>
+          </div>
+          <h5 class="mt-20   text-right">//ከሰላምታ ጋር//</h5>
           <div
-            class="text-primary-600 border-t-2 mt-10 mb-8"
+            class="text-primary-600 border-t-2 mt-4 mb-8"
             id="applicantCopyFooter"
+            contenteditable="false"
           >
             <div class="grid grid-cols-4">
               <div class="grid grid-cols-4 col-span-1">
@@ -1447,7 +1456,7 @@
           <div class="grid grid-cols-3 mb-12" id="applicantCopyHeader">
             <h2 class="text-primary-600 font-bold text-xl">
               ጤና ሚኒስቴር-ኢትዮጵያ <br />
-              <span>የዜጎች ጤና ለሁገር ብልፅግና</span>
+              <span>የዜጎች ጤና ለሀገር ብልፅግና</span>
             </h2>
             <div class="ml-12 ">
               <svg
@@ -2388,14 +2397,14 @@ export default {
       doc2.setFontSize(15);
       doc.text(38, 58, `${certificateDetail.value.licenseNumber}`);
       doc2.text(38, 58, `${certificateDetail.value.licenseNumber}`);
-     
+
       let paddingAmharic = 5;
       let paddingEnglish = 0;
       if (code == "DD") {
         paddingAmharic = 10;
         paddingEnglish = 10;
       }
-   
+
       //English name part
       doc.text(
         175,
@@ -2610,7 +2619,7 @@ export default {
       doc2.addFont("Tera-Regular-normal.ttf", "Tera-Regular", "normal");
       doc.setFont("Tera-Regular"); // set font
       doc2.setFont("Tera-Regular");
-      
+
       doc.setFontSize(15);
       doc2.setFontSize(15);
       //Amharic name part
@@ -2648,7 +2657,6 @@ export default {
             : ""
         }`
       );
- 
 
       if (changeWidth.value) {
         doc.setFontSize(11);
@@ -2739,7 +2747,7 @@ export default {
         }
       }
       //End of Amharic part for certificate
-  
+
       let getAmharicLicensedDate = doc.getTextWidth(
         toEthiopian(
           moment(certificateDetail.value.certifiedDate)._d.toISOString(),
@@ -2905,12 +2913,11 @@ export default {
             };
             store.dispatch("profile/converProfilePicture", path).then((res) => {
               doc.addImage(res.data.data, "JPG", 33, 20, 30, 30);
-             
+
               window.open(doc.output("bloburl"));
               updateLicenseGenerated();
             });
           } else {
-           
             window.open(doc.output("bloburl"));
             updateLicenseGenerated();
           }
