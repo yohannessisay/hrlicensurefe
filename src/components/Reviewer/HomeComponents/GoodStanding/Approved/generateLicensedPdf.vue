@@ -494,7 +494,7 @@
                         </div>
                       </div>
                       <div
-                        class="text-primary-600 border-t-2  mb-8 mt-32"
+                        class="text-primary-600 border-t-2  mb-8 mt-24"
                         id="applicantCopyFooter"
                         contenteditable="false"
                       >
