@@ -703,7 +703,7 @@
             <div class="grid grid-cols-3 mb-12" id="applicantCopyHeader">
               <h2 class="text-primary-600 font-bold text-xl">
                 ጤና ሚኒስቴር-ኢትዮጵያ <br />
-                <span>የዜጎች ጤና ለሁገር ብልፅግና</span>
+                <span>የዜጎች ጤና ለሀገር ብልፅግና</span>
               </h2>
               <div class="ml-12 ">
                 <svg
