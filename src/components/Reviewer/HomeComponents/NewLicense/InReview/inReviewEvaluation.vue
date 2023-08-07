@@ -990,6 +990,14 @@
                             class="flex flex-col items-center justify-center"
                           >
                             <div class="mt-2">
+                              <h5 class="text-2xl text-grey-800">
+                                {{
+                                  rejectedObj[ind] &&
+                                  rejectedObj[ind].documentType
+                                    ? rejectedObj[ind].documentType.name
+                                    : ""
+                                }}
+                              </h5>
                               <div class="flex justify-center  rounded">
                                 <div v-if="rejectedObj.length > 0">
                                   <div
@@ -1001,15 +1009,6 @@
                                         )[1] == 'pdf'
                                     "
                                   >
-                                    <h5 class="text-2xl text-grey-800">
-                                      {{
-                                        rejectedObj[ind] &&
-                                        rejectedObj[ind].documentType
-                                          ? rejectedObj[ind].documentType.name
-                                          : ""
-                                      }}
-                                    </h5>
-
                                     <button
                                       class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded shadow-lg bg-primary-400 hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg hover:bg-white hover:text-primary-600"
                                       @click="
@@ -1039,7 +1038,9 @@
                             </div>
                           </div>
 
-                          <div class="mt-2">
+                          <div
+                            class="mt-2 cursor-pointer bg-grey-200 rounded mr-4"
+                          >
                             <svg
                               width="40"
                               height="60"
@@ -1054,7 +1055,7 @@
                                 stroke="rgba(103,128,159,1)"
                                 stroke-width="3"
                                 stroke-linecap="butt"
-                                fill="none"
+                                fill="#ffffff"
                                 stroke-linejoin="round"
                               >
                                 &gt;
@@ -1255,7 +1256,7 @@
 import { useStore } from "vuex";
 import { useRoute, useRouter } from "vue-router";
 import { ref, onMounted } from "vue";
-import { googleApi } from "@/composables/baseURL"; 
+import { googleApi } from "@/composables/baseURL";
 import { useToast } from "vue-toastification";
 import moment from "moment";
 import ReviewerSideNav from "../../../SharedComponents/sideNav.vue";

@@ -716,62 +716,45 @@ export default {
 
       store
         .dispatch("reviewer/assignGoodStandingReviewer", assign.value)
-        .then((response) => {
-          if (response.statusText == "Created") {
-            store.dispatch("sms/sendSms", smsData).then(() => {
-              toast.success("Selected Rviewer assigned Successfully", {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true,
-              });
-              isLoading.value = false;
-
-              store
-                .dispatch("notification/notifyApplicant", userNotification)
-                .then((res) => {
-                  if (res && res.status == "Success") {
-                    let notification = {
-                      user_id:
-                        modalData.value.data && modalData.value.data.applicant
-                          ? modalData.value.data.applicant.id
-                          : null,
-                      reviewer_id: assign.value.reviewerId,
-                      goodstanding_id: modalData.value.data
-                        ? modalData.value.data.id
-                        : null,
-                      message: modalData.value.data
-                        ? // eslint-disable-next-line prettier/prettier
-                          `Dear reviewer , a  new submitted goodstanding application with code ${modalData.value.data.goodStandingCode} has been assigned to you.`
-                        : "",
-                      type: "reviewer_good_standing",
-                      status: "new",
-                    };
-                    store.dispatch("notification/notifyReviewer", notification);
-                    router.push({ path: "/admin/goodStanding/assigned" });
-                    setTimeout(() => {
-                      location.reload();
-                    }, 100);
-                  }
-                });
+        .then(() => {
+          store.dispatch("sms/sendSms", smsData).then(() => {
+            toast.success("Selected Rviewer assigned Successfully", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
             });
-          } else {
-            toast.error(
-              "Sorry there seems to be a problem, please try again.",
-              {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true,
-              }
-            );
             isLoading.value = false;
-            setTimeout(() => {
-              window.location.reload();
-            }, 3000);
-          }
+
+            store
+              .dispatch("notification/notifyApplicant", userNotification)
+              .then((res) => {
+                if (res && res.status == "Success") {
+                  let notification = {
+                    user_id:
+                      modalData.value.data && modalData.value.data.applicant
+                        ? modalData.value.data.applicant.id
+                        : null,
+                    reviewer_id: assign.value.reviewerId,
+                    goodstanding_id: modalData.value.data
+                      ? modalData.value.data.id
+                      : null,
+                    message: modalData.value.data
+                      ? // eslint-disable-next-line prettier/prettier
+                        `Dear reviewer , a  new submitted goodstanding application with code ${modalData.value.data.goodStandingCode} has been assigned to you.`
+                      : "",
+                    type: "reviewer_good_standing",
+                    status: "new",
+                  };
+                  store.dispatch("notification/notifyReviewer", notification);
+                  router.push({ path: "/admin/goodStanding/assigned" });
+                  setTimeout(() => {
+                    location.reload();
+                  }, 100);
+                }
+              });
+          });
         })
         .catch(() => {
           toast.error("Sorry there seems to be a problem, please try again.", {
