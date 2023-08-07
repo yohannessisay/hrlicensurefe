@@ -361,7 +361,7 @@
                     <div class="accordion-body py-4 px-5">
                       <div class="grid grid-cols-4 gap-4">
                         <div
-                          class="mt-4 mb-8 bg-white shadow-lg"
+                          class="mt-4 mb-8 bg-white shadow-md"
                           style="border-radius: 15px; padding: 10px"
                           v-for="document in declinedDocuments"
                           :key="document.id"
@@ -378,14 +378,24 @@
 
                           <a
                             :id="
-                              `re_image_href_${document.documentType.id}_${document.id}`
+                              `re_image_href_${
+                                document && document.documentType
+                                  ? document.documentType.id
+                                  : null
+                              }_${document && document.id ? document.id : null}`
                             "
                             href=""
                             data-lightbox="example-2"
                           >
                             <i
                               :id="
-                                `re_educational_icon_${document.documentType.id}_${document.id}`
+                                `re_educational_icon_${
+                                  document && document.documentType
+                                    ? document.documentType.id
+                                    : null
+                                }_${
+                                  document && document.id ? document.id : null
+                                }`
                               "
                               class="
                                 fa fa-eye fa-2x
@@ -398,7 +408,11 @@
                             >
                               <img
                                 :id="
-                                  `re_image_lightbox_${document.documentType.id}_${document.id}`
+                                  `re_image_lightbox_${
+                                    document && document.documentType
+                                      ? document.documentType.id
+                                      : null
+                                  }_${document ? document.id : null}`
                                 "
                                 src=""
                                 class="w-full h-2 object-cover"
@@ -410,7 +424,11 @@
                               type="file"
                               required
                               :id="
-                                `re_image_href_${document.documentType.id}_${document.id}`
+                                `re_image_href_${
+                                  document && document.documentType
+                                    ? document.documentType.id
+                                    : null
+                                }_${document ? document.id : null}`
                               "
                               accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
                               :ref="`imageUploader${document.id}`"
@@ -533,7 +551,6 @@ export default {
     let documentUploaded = ref({});
     let formData = new FormData();
     let isImage = ref({});
-    let fileSizeExceed = ref({});
     let showImage = ref(false);
     let fileSize = ref("");
     let declinedDocuments = ref([]);
@@ -571,86 +588,76 @@ export default {
     const handleFileUpload = (data, event) => {
       documentUploaded.value[data.documentType.code] = event?.target?.files[0];
       let reader = new FileReader();
-      formData.append(data.fileName, event?.target?.files[0]);
+      formData.append(data.documentType.code, event?.target?.files[0]);
 
       isImage.value[data.documentType.code] = true;
       let fileS = documentUploaded.value[data.documentType.code].size;
-      if (fileS <= maxFileSize.value / 1000) {
-        fileSizeExceed.value[data.documentType.code] = false;
-        showImage.value = true;
 
-        if (fileS > 0 && fileS < 1000) {
-          fileSize.value += "B";
-        } else if (fileS > 1000 && fileS < 1000000) {
-          fileSize.value = fileS / 1000 + "kB";
-        } else {
-          fileSize.value = fileS / 1000000 + "MB";
-        }
-        reader.addEventListener(
-          "load",
-          function() {
-            showPreview.value = true;
-            previewDocuments.value[data.documentType.code] = reader.result;
-          },
-          false
-        );
-        if (documentUploaded.value[data.documentType.code]) {
-          if (
-            /\.(jpe?g|png|gif)$/i.test(
-              documentUploaded.value[data.documentType.code].name
-            )
-          ) {
-            isImage.value[data.documentType.code] = true;
-            isPdf.value[data.documentType.code] = false;
+      showImage.value = true;
 
-            reader.readAsDataURL(
-              documentUploaded.value[data.documentType.code]
-            );
-          } else if (
-            /\.(pdf)$/i.test(
-              documentUploaded.value[data.documentType.code].name
-            )
-          ) {
-            isImage.value[data.documentType.code] = false;
-            isPdf.value[data.documentType.code] = true;
-            reader.readAsDataURL(
-              documentUploaded.value[data.documentType.code]
-            );
-          }
-        }
-        let icon = document.getElementById(
-          "re_educational_icon_" + data.documentType.id + "_" + data.id
-        );
-
-        if (icon.classList.contains("disabled")) {
-          icon.classList.toggle("disabled");
-        }
-
-        let output = document.getElementById(
-          "re_image_lightbox_" + data.documentType.id + "_" + data.id
-        );
-
-        let outputHref = document.getElementById(
-          "re_image_href_" + data.documentType.id + "_" + data.id
-        );
-
-        outputHref.href = URL.createObjectURL(event.target.files[0]);
-        if (output && output.src) {
-          output.src = URL.createObjectURL(event.target.files[0]);
-        }
-
-        output
-          ? (output.onload = function() {
-              URL.revokeObjectURL(output.src); // free memory
-            })
-          : "";
+      if (fileS > 0 && fileS < 1000) {
+        fileSize.value += "B";
+      } else if (fileS > 1000 && fileS < 1000000) {
+        fileSize.value = fileS / 1000 + "kB";
       } else {
-        fileSizeExceed.value[data.documentType.code] = true;
-        documentUploaded.value[data.documentType.code] = "";
+        fileSize.value = fileS / 1000000 + "MB";
       }
+      reader.addEventListener(
+        "load",
+        function() {
+          showPreview.value = true;
+          previewDocuments.value[data.documentType.code] = reader.result;
+        },
+        false
+      );
+      if (documentUploaded.value[data.documentType.code]) {
+        if (
+          /\.(jpe?g|png|gif)$/i.test(
+            documentUploaded.value[data.documentType.code].name
+          )
+        ) {
+          isImage.value[data.documentType.code] = true;
+          isPdf.value[data.documentType.code] = false;
+
+          reader.readAsDataURL(documentUploaded.value[data.documentType.code]);
+        } else if (
+          /\.(pdf)$/i.test(documentUploaded.value[data.documentType.code].name)
+        ) {
+          isImage.value[data.documentType.code] = false;
+          isPdf.value[data.documentType.code] = true;
+          reader.readAsDataURL(documentUploaded.value[data.documentType.code]);
+        }
+      }
+      let icon = document.getElementById(
+        "re_educational_icon_" + data.documentType.id + "_" + data.id
+      );
+
+      if (icon.classList.contains("disabled")) {
+        icon.classList.toggle("disabled");
+      }
+
+      let output = document.getElementById(
+        "re_image_lightbox_" + data.documentType.id + "_" + data.id
+      );
+
+      let outputHref = document.getElementById(
+        "re_image_href_" + data.documentType.id + "_" + data.id
+      );
+
+      outputHref.href = URL.createObjectURL(event.target.files[0]);
+      if (output && output.src) {
+        output.src = URL.createObjectURL(event.target.files[0]);
+      }
+
+      output
+        ? (output.onload = function() {
+            URL.revokeObjectURL(output.src); // free memory
+          })
+        : "";
     };
 
     const reApply = () => {
+      licenseData.value.declinedFields=[];
       let license = {
         licenseId: licenseData.value.id,
         declinedData: {
@@ -658,11 +665,10 @@ export default {
           data: licenseData.value,
         },
       };
-
-      store.dispatch("goodstanding/updateDeclined", license).then((res) => {
+      isLoading.value = true;
+      store.dispatch("goodstanding/updateDeclined", license).then(() => {
         let licenseId = licenseData.value.id;
         let payload = { document: formData, id: licenseId };
-        isLoading.value = true;
         store
           .dispatch("goodstanding/updateDocuments", payload)
           .then((res) => {
@@ -676,9 +682,7 @@ export default {
                 icon: true,
               });
               router.push({ path: "/Applicant/GoodStanding/submitted" });
-              setTimeout(() => {
-                window.location.reload();
-              }, 1000);
+              location.reload();
             } else {
               toast.error("Error occured, please try again", {
                 timeout: 5000,
@@ -697,9 +701,6 @@ export default {
               pauseOnHover: true,
               icon: true,
             });
-            setTimeout(() => {
-              window.location.reload();
-            }, 3000);
           });
       });
     };

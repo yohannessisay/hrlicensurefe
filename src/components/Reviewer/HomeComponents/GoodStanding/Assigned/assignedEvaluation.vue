@@ -651,20 +651,29 @@
                               <picture v-if="docs.length > 0">
                                 <div
                                   v-if="
-                                    docs[index].fileType.split('/')[1] == 'pdf'
+                                    docs[index] &&
+                                      docs[index].fileType.split('/')[1] ==
+                                        'pdf'
                                   "
                                 >
                                   <div>
                                     <iframe
                                       v-bind:src="
-                                        googleApi + '' + docs[index].filePath
+                                        googleApi + '' + docs[index] &&
+                                        docs[index].filePath
+                                          ? docs[index].filePath
+                                          : ''
                                       "
                                     ></iframe>
                                   </div>
                                   <br />
                                   <a
                                     @click="
-                                      openPdfInNewTab(docs[index].filePath)
+                                      openPdfInNewTab(
+                                        docs[index] && docs[index].filePath
+                                          ? docs[index].filePath
+                                          : ''
+                                      )
                                     "
                                     >see pdf in detail</a
                                   >
@@ -676,16 +685,21 @@
                                     @click="
                                       viewImage([
                                         {
-                                          src: docs[index]
-                                            ? googleApi + docs[index].filePath
-                                            : '',
+                                          src:
+                                            googleApi + docs[index] &&
+                                            docs[index].filePath
+                                              ? docs[index].filePath
+                                              : '',
                                           title: 'Image Caption 1',
                                         },
                                       ])
                                     "
                                     style="height: 600px; width: 800px"
                                     v-bind:src="
-                                      googleApi + '' + docs[index].filePath
+                                      googleApi + '' + docs[index] &&
+                                      docs[index].filePath
+                                        ? docs[index].filePath
+                                        : ''
                                     "
                                   />
                                   <div style="width: 400px"></div>
@@ -1009,11 +1023,7 @@
                         </button>
                         <button
                           type="button"
-                          :class="
-                            goodStanding.remark &&
-                            goodStanding.remark.length > 10
-                              ? 'inline-block px-6 text-white mt-4 bg-grey-300 font-medium text-xs leading-tight uppercase rounded shadow-lg hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 hover:bg-primary-400 hover:text-white ease-in-out pointer-events-none'
-                              : 'inline-block px-6 text-white mt-4 bg-primary-600 font-medium text-xs leading-tight uppercase rounded shadow-lg hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 hover:bg-primary-400 hover:text-white ease-in-out '
+                          class="inline-block px-6 text-white mt-4 bg-primary-600 font-medium text-xs leading-tight uppercase rounded shadow-lg hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 hover:bg-primary-400 hover:text-white ease-in-out
                           "
                           v-on:click="submitRemark()"
                         >
