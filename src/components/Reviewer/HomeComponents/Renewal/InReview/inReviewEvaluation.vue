@@ -330,7 +330,7 @@
                                   <div
                                     class="container flex items-center justify-between p-2 leading-tight md:p-4"
                                   >
-                                    <div class="font-bold">Martial Status</div>
+                                    <div class="font-bold">marital Status</div>
                                     <div>
                                       {{
                                         profileInfo.maritalStatus
@@ -1012,156 +1012,169 @@
                     </div>
                   </div>
                 </div>
-                <Modal v-if="showRemark">
-                  <div class="h-screen overflow-y-hidden">
-                    <div
-                      class="relative flex justify-center w-full mt-20 bg-white card-wrapper sm:rounded-lg"
-                    >
-                      <!--content-->
-                      <div class="w-full p-2 m-4">
-                        <!--header-->
-                        <div
-                          class="flex items-start justify-between p-2 m-4 border-b border-solid rounded-t border-grey-100"
-                        >
-                          <h3 class="text-3xl font-semibold">Remark</h3>
+                <modal v-if="showRemark">
+                  <template v-slot:modalHeader>
+                    Decline Documents Reason
+                  </template>
+                  <template v-slot:modalBody>
+                    <div class="w-full p-2 m-4">
+                      <div
+                        class="modalBody pb-xl"
+                        v-if="nothingDropped == true"
+                      >
+                        <div class="flex justify-center">
                           <div
-                            class="float-right text-3xl font-semibold leading-none text-black bg-transparent border-0 outline-none cursor-pointer opacity-5"
-                            v-on:click="showRemark = false"
+                            class="mt-2 cursor-pointer bg-grey-200 rounded mr-4"
                           >
-                            <span class="text-3xl">
-                              <i class="fa fa-close "></i
-                            ></span>
-                          </div>
-                        </div>
-                        <!--body-->
-                        <div
-                          class="modalBody pb-xl"
-                          v-if="nothingDropped == true"
-                        >
-                          <div class="flex justify-center mt-medium">
-                            <h2>Declined documents</h2>
-                          </div>
-                          <div class="relative flex-auto w-full p-6">
-                            <div class="flex justify-center">
-                              <div class="mt-12">
-                                <svg
-                                  width="40"
-                                  height="60"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  version="1.1"
-                                  @click="previousRemark()"
-                                  v-if="ind != 0"
-                                >
-                                  <polyline
-                                    points="30 10 10 30 30 50"
-                                    stroke="rgba(103,128,159,1)"
-                                    stroke-width="3"
-                                    stroke-linecap="butt"
-                                    fill="none"
-                                    stroke-linejoin="round"
-                                  >
-                                    &gt;
-                                  </polyline>
-                                </svg>
-                              </div>
-
-                              <div
-                                class="flex flex-col items-center justify-center"
+                            <svg
+                              width="40"
+                              height="60"
+                              xmlns="http://www.w3.org/2000/svg"
+                              version="1.1"
+                              class="text-black mt-2"
+                              @click="previousRemark()"
+                              v-if="ind != 0"
+                            >
+                              <polyline
+                                points="30 10 10 30 30 50"
+                                stroke="rgba(103,128,159,1)"
+                                stroke-width="3"
+                                stroke-linecap="butt"
+                                fill="#ffffff"
+                                stroke-linejoin="round"
                               >
-                                <div class="mt-8">
-                                  <label
-                                    class="items-center justify-center text-2xl text-grey-800"
-                                  >
-                                    {{ modalDocumentTypeName }}
-                                  </label>
-                                  <div
-                                    class="flex flex-wrap justify-center max-w-sm overflow-hidden rounded "
-                                  >
-                                    <picture
-                                      class="imageViewer"
-                                      v-if="rejectedObj.length > 0"
-                                    >
-                                      <img
-                                        v-bind:src="
-                                          rejectedObj[ind]
-                                            ? googleApi +
-                                              rejectedObj[ind].filePath
-                                            : ''
-                                        "
-                                      />
-                                    </picture>
-                                  </div>
-                                </div>
-                              </div>
+                                &gt;
+                              </polyline>
+                            </svg>
+                          </div>
 
-                              <div class="mt-12">
-                                <svg
-                                  width="40"
-                                  height="60"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  version="1.1"
-                                  @click="nextRemark()"
-                                  v-if="ind != rejected.length - 1"
-                                  class="hover:text-primary-60"
-                                >
-                                  <polyline
-                                    points="10 10 30 30 10 50"
-                                    stroke="rgba(103,128,159,1)"
-                                    stroke-width="3"
-                                    stroke-linecap="butt"
-                                    fill="none"
-                                    stroke-linejoin="round"
+                          <div
+                            class="flex flex-col items-center justify-center"
+                          >
+                            <div class="mt-2">
+                              <div class="flex justify-center  rounded">
+                                <div v-if="rejectedObj.length > 0">
+                                  <div
+                                    v-if="
+                                      rejectedObj[ind] &&
+                                        rejectedObj[ind].fileType &&
+                                        rejectedObj[ind].fileType.split(
+                                          '/'
+                                        )[1] == 'pdf'
+                                    "
                                   >
-                                    &gt;
-                                  </polyline>
-                                </svg>
+                                    <h5 class="text-2xl text-grey-800">
+                                      {{
+                                        rejectedObj[ind] &&
+                                        rejectedObj[ind].documentType
+                                          ? rejectedObj[ind].documentType.name
+                                          : ""
+                                      }}
+                                    </h5>
+
+                                    <button
+                                      class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded shadow-lg bg-primary-400 hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg hover:bg-white hover:text-primary-600"
+                                      @click="
+                                        openPdfInNewTab(
+                                          rejectedObj[ind]
+                                            ? rejectedObj[ind].filePath
+                                            : ''
+                                        )
+                                      "
+                                    >
+                                      See pdf in detail
+                                    </button>
+                                  </div>
+
+                                  <picture class="imageViewer" v-else>
+                                    <img
+                                      v-bind:src="
+                                        rejectedObj[ind]
+                                          ? googleApi +
+                                            rejectedObj[ind].filePath
+                                          : ''
+                                      "
+                                    />
+                                  </picture>
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                        <!--footer-->
-                        <label for="" class="m-4">{{
-                          nothingDropped
-                            ? "Remark on why you are declining the license"
-                            : "Remark on why you have dropped the department/s"
-                        }}</label>
-                        <div class="mr-4">
-                          <textarea
-                            v-model="renewal.remark"
-                            @keyup="isremarkFilled()"
-                            class="flex w-full m-4 border rounded-sm resize-none tArea"
-                            rows="6"
-                          ></textarea>
-                        </div>
-                        <small class="m-8 text-red-300" v-if="showRemarkError"
-                          >Remark note must be more than 10 letters</small
-                        >
-                        <div
-                          class="flex items-center justify-center p-6 border-t border-solid rounded-b border-blueGray-200"
-                        >
-                          <button
-                            class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded shadow-lg bg-primary-600 hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg hover:bg-primary-400 hover:text-white"
-                            type="button"
-                            v-on:click="showRemark = false"
+
+                          <div
+                            class="mt-2 cursor-pointer bg-grey-200 rounded ml-4"
                           >
-                            Close
-                          </button>
-                          <button
-                            type="button"
-                            :class="
-                              remarkFilled == false
-                                ? 'inline-block px-6 text-white bg-grey-300 font-medium text-xs leading-tight uppercase rounded shadow-lg hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 hover:bg-primary-400 hover:text-white ease-in-out pointer-events-none'
-                                : 'inline-block px-6 text-white bg-primary-600 font-medium text-xs leading-tight uppercase rounded shadow-lg hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 hover:bg-primary-400 hover:text-white ease-in-out '
-                            "
-                            v-on:click="submitRemark()"
-                          >
-                            Submit
-                          </button>
+                            <svg
+                              width="40"
+                              height="60"
+                              xmlns="http://www.w3.org/2000/svg"
+                              version="1.1"
+                              class="text-black mt-2"
+                              @click="nextRemark()"
+                              v-if="ind != rejected.length - 1"
+                            >
+                              <polyline
+                                points="10 10 30 30 10 50"
+                                stroke="rgba(103,128,159,1)"
+                                stroke-width="3"
+                                stroke-linecap="butt"
+                                fill="#ffffff"
+                                stroke-linejoin="round"
+                              >
+                                &gt;
+                              </polyline>
+                            </svg>
+                          </div>
                         </div>
                       </div>
+                      <!--footer-->
+                      <div class="flex justify-center">
+                        <div class="grid grid-cols-1">
+                          <label for="" class="mb-4 text-xl">{{
+                            nothingDropped
+                              ? "Remark on why you are declining the license"
+                              : "Remark on why you have dropped the department/s"
+                          }}</label>
+                          <div class="w-full">
+                            <textarea
+                              v-model="renewal.remark"
+                              @keyup="isremarkFilled()"
+                              class="w-full border rounded-sm"
+                              rows="6"
+                            ></textarea>
+                          </div>
+                          <small
+                            class="mt-4 mb-2 text-red-300"
+                            v-if="showRemarkError"
+                            >Remark note must be more than 10 letters</small
+                          >
+                        </div>
+                      </div>
+                      <div
+                        class="flex items-center justify-center border-t border-solid rounded-b border-blueGray-200"
+                      >
+                        <button
+                          class="inline-block px-6 text-xs mt-4 font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded shadow-lg bg-primary-600 hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg hover:bg-primary-400 hover:text-white"
+                          type="button"
+                          v-on:click="showRemark = false"
+                        >
+                          Close
+                        </button>
+                        <button
+                          type="button"
+                          :class="
+                            remarkFilled == false
+                              ? 'inline-block px-6 text-white mt-4 bg-grey-300 font-medium text-xs leading-tight uppercase rounded shadow-lg hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 hover:bg-primary-400 hover:text-white ease-in-out pointer-events-none'
+                              : 'inline-block px-6 text-white mt-4 bg-primary-600 font-medium text-xs leading-tight uppercase rounded shadow-lg hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 hover:bg-primary-400 hover:text-white ease-in-out '
+                          "
+                          v-on:click="submitRemark()"
+                        >
+                          Submit
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                </Modal>
+                  </template>
+                </modal>
               </div>
             </div>
           </div>
@@ -1365,7 +1378,6 @@ import { useStore } from "vuex";
 import { useRoute, useRouter } from "vue-router";
 import { ref, onMounted } from "vue";
 import { googleApi } from "@/composables/baseURL";
-import Modal from "@/sharedComponents/Modal";
 import { useToast } from "vue-toastification";
 import moment from "moment";
 import ReviewerSideNav from "../../../SharedComponents/sideNav.vue";
@@ -1375,9 +1387,10 @@ import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 import RadialProgressBar from "vue3-radial-progress";
 import PhotoViewer from "photoviewer";
 import "photoviewer/dist/photoviewer.css";
+import modal from "../../../../../sharedComponents/modal.vue";
 export default {
   components: {
-    Modal,
+    modal,
     Loading,
     ReviewerSideNav,
     ReviewerNavBar,
@@ -1392,6 +1405,7 @@ export default {
     let remarkFilled = ref(false);
     const store = useStore();
     const toast = useToast();
+    let showModal = ref(true);
     let declineAction = ref("DeclineEvent");
     let nothingDropped = ref(true);
     const options = ref([0, 1, 2]);
@@ -2444,6 +2458,7 @@ export default {
       showPrefixFor,
       changeAction,
       newProf,
+      showModal,
       checkForOther,
       allowOtherProfChange,
       nextClickable,

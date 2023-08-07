@@ -199,7 +199,7 @@
                               <p class="text-gray-500">
                                 <span
                                   class="font-semibold text-primary-700 mb-1"
-                                  >Martial Status:</span
+                                  >marital Status:</span
                                 >
                                 <span class="text-grey-800">{{
                                   modalData.maritalStatus
