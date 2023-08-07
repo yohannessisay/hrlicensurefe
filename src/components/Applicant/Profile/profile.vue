@@ -330,7 +330,7 @@
                                 text-main-400
                               "
                             >
-                              Martial Status
+                              marital Status
                             </div>
                             <div class="mb-3 xl:w-96">
                               <select

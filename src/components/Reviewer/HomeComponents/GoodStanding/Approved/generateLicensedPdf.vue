@@ -495,7 +495,7 @@
                       </div>
                       <div
                         class="text-primary-600 border-t-2  mb-8 mt-24"
-                        id="applicantCopyFooter"
+                          id="applicantCopyFooter"
                         contenteditable="false"
                       >
                         <div class="grid grid-cols-4">

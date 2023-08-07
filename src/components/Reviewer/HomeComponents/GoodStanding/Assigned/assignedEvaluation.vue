@@ -273,7 +273,7 @@
                                   <div
                                     class="container flex items-center justify-between p-2 leading-tight  md:p-4"
                                   >
-                                    <div class="font-bold">Martial Status</div>
+                                    <div class="font-bold">marital Status</div>
                                     <div>
                                       {{
                                         profileInfo.maritalStatus

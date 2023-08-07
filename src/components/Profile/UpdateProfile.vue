@@ -231,7 +231,7 @@
             <div class="flex">
               <div class="flex w-1/2 mb-small m1-12">
                 <div class="flex flex-col w-full">
-                  <label class="text-primary-700">Martial Status</label>
+                  <label class="text-primary-700">marital Status</label>
                   <div class="flex w-full">
                     <div class="flex flex-col w-1/3">
                       <div class="flex py-2">
