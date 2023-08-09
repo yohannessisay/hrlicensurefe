@@ -246,7 +246,7 @@
               class="border-b-4 text-main-400 mb-8"
             >
               <h4 class="text-main-400 font-bold">
-                {{ table.educationalLevel ? table.educationalLevel.name : "" }}
+                {{ table.professionType ? table.professionType.name : "" }}
                 Related Files
               </h4>
               <h5 v-if="existingDocs && existingDocs.length > 0">
@@ -280,9 +280,9 @@
                         View
                       </th>
                       <th
-                        class="font-semibold text-sm uppercase px-6 py-4 text-white"
+                        class="font-semibold text-sm uppercase px-6 py-4 text-center text-white"
                       >
-                        Remark
+                        Action
                       </th>
                     </tr>
                   </thead>
@@ -424,24 +424,6 @@
                             />
                           </i>
                         </a>
-                      </td>
-                      <td class="px-6 py-4">
-                        <div class="flex items-center p-4">
-                          <div>
-                            <p
-                              v-if="
-                                fileSizeExceed[
-                                  `${
-                                    item.documentType.code
-                                  }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                                ]
-                              "
-                              class="text-red-300"
-                            >
-                              Uploaded file Size has exceeded the limit (3 MB)
-                            </p>
-                          </div>
-                        </div>
                       </td>
                     </tr>
                   </tbody>
@@ -599,24 +581,6 @@
                           </i>
                         </a>
                       </td>
-                      <td class="px-6 py-4">
-                        <div class="flex items-center p-4">
-                          <div>
-                            <p
-                              v-if="
-                                fileSizeExceed[
-                                  `${
-                                    parentItem[0].documentType.code
-                                  }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                                ]
-                              "
-                              class="text-red-300"
-                            >
-                              Uploaded file Size has exceeded the limit (3 MB)
-                            </p>
-                          </div>
-                        </div>
-                      </td>
                     </tr>
                     <!-- if parent doc has more than 1 elements -->
                     <tr v-else class="border-b text-main-400 bg-lightGrey-100">
@@ -697,7 +661,7 @@
                               `#accordion_${parentItem[0].documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
                             "
                           >
-                            <div class="accordion-body py-4 px-5">
+                            <div class="accordion-body py-4 px-5 w-full">
                               <div class="bg-lightMain-500 rounded-sm p-2">
                                 <small class="text-white"
                                   >Only the first file upload is required, the
@@ -707,7 +671,7 @@
 
                               <tr
                                 v-for="(parentChildItem, index) in parentItem"
-                                :key="parentChildItem"
+                                :key="index"
                                 :class="
                                   fileUploadError[
                                     'file_upload_row_' +
@@ -897,22 +861,20 @@
                                     </i>
                                   </a>
                                 </td>
-                                <td class="px-6 py-4">
-                                  <div class="flex items-center p-4">
-                                    <div>
-                                      <p
-                                        v-if="
-                                          fileSizeExceed[
-                                            `${parentChildItem.documentType.code.toUpperCase()}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                                          ]
-                                        "
-                                        class="text-red-300"
-                                      >
-                                        Uploaded file Size has exceeded the
-                                        limit (3 MB)
-                                      </p>
-                                    </div>
-                                  </div>
+                                <td
+                                  v-if="
+                                    showNestedDocuments[
+                                      parentItem[0].documentType.code
+                                    ] >= index
+                                  "
+                                >
+                                  <span
+                                    class="ml-4"
+                                    @click="removeChildUpload(index)"
+                                    ><i
+                                      class="fa-solid fa-trash text-red-300 "
+                                    ></i
+                                  ></span>
                                 </td>
                               </tr>
                             </div>
@@ -1992,7 +1954,10 @@ export default {
           showNestedDocuments.value[parentItem.documentType.code] + 1;
       }
     };
-
+    const removeChildUpload = (childItem) => {
+      console.log(childItem, showNestedDocuments.value);
+      // showNestedDocuments.value
+    };
     const initDb = () => {
       existingDocs;
       let request = indexedDB.open("NLdocumentUploads", dbVersion);
@@ -2163,6 +2128,7 @@ export default {
     });
 
     return {
+      removeChildUpload,
       documents,
       isLoading,
       errorDocuments,

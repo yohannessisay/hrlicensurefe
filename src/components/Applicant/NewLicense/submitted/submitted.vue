@@ -250,7 +250,7 @@
     >
       <!-- Article -->
 
-      <h2 class="text-main-400 border-b-2 text-xl p-2">
+      <h2 class="text-main-400 border-b-2 text-xl p-2 mt-8">
         There are no submitted applications currently.
       </h2>
     </div>

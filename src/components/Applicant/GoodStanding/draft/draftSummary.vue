@@ -297,7 +297,7 @@
                   <div
                     class="grid grid-cols-4 gap-4 ml-4 sm:w-full sm:grid-cols-1 md:w-full mdlg:grid-cols-2 lg:w-full md:grid-cols-4 mdlg:w-full lg:grid-cols-4"
                   >
-                  {{ localFileImages }}
+                 
                     <div
                       class="mt-4 mb-8 bg-white shadow-xl rounded-md transform transition duration-300 ease-in-out p-2 hover:-translate-y-2"
                       v-for="prev in localFileImages"
@@ -389,15 +389,7 @@
         </div>
       </div>
     </div>
-    <div class="flex justify-center">
-      <RadialProgress
-        :diameter="200"
-        :completed-steps="progress"
-        :total-steps="totalSteps"
-      >
-        <h1 class="text-3xl text-main-400 font-bold">{{ progress }} %</h1>
-      </RadialProgress>
-    </div>
+ 
     <div class="vld-parent mt-4">
             <loading
               :active="isLoading"
@@ -432,6 +424,38 @@
 </div>
     <!-- end row -->
   </div>
+  <modal v-if="showModal">
+    <template v-slot:modalHeader>
+      Uploading
+    </template>
+    <template v-slot:modalBody>
+      <div class="flex justify-center text-yellow-300 p-2 rounded-md">
+        <h2 class="text-yellow-300 border rounded p-2 text-xl">
+          Total file size you have uploaded so far is
+          <h2 class="text-grey-800 text-2xl">{{ totalSize }} MB</h2>
+        </h2>
+      </div>
+      <div class="flex justify-center">
+        <RadialProgress
+          :diameter="200"
+          :completed-steps="progress"
+          :total-steps="totalSteps"
+        >
+          <h1 class="text-3xl text-main-400 font-bold">{{ progress }} %</h1>
+        </RadialProgress>
+      </div>
+      <div>
+        <div class="flex border justify-center text-yellow-300 p-2 rounded-md">
+          <h2 class=" text-xl">
+            Please wait patiently as your files are being uploaded, if for any
+            reason the files you uploaded are not successful you will be
+            redirected to the submitted page automatically so you can re-attach
+            your documents again
+          </h2>
+        </div>
+      </div>
+    </template>
+  </modal>
 </template>
 
 <script>
@@ -441,11 +465,11 @@ import { useToast } from "vue-toastification";
 import { useRouter, useRoute } from "vue-router";
 import { googleApi } from "@/composables/baseURL";
 import Loading from "vue3-loading-overlay";
-
+import modal from "../../../../sharedComponents/modal.vue";
 import RadialProgress from "vue3-radial-progress";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 export default {
-  components: { Loading, RadialProgress },
+  components: { Loading, RadialProgress,modal },
   setup(props, { emit }) {
     const store = useStore();
     const toast = useToast();
@@ -455,6 +479,7 @@ export default {
     let progress = computed(
       () => store.getters["goodstanding/getUploadProgress"]
     );
+    let showModal = ref(false);
     let localData = ref({});
     let localFileData = ref({});
     let localFileImages = ref({});
@@ -494,15 +519,7 @@ export default {
           formData.append(index, element);
         });
         isLoading.value = true;
-        // let smsData = {
-        //   recipients: [
-        //     this.profileInfo.user.phoneNumber
-        //       ? "251" + this.profileInfo.user.phoneNumber
-        //       : "",
-        //   ],
-        //   message:
-        //     "Dear applicant you have successfully applied for a new license, after careful examination of your uploaded documents by our reviewers we will get back and notify you on each steps, Thank you for using eHPL.",
-        // };
+        showModal.value = true;
 
         let license = {
           action: action,
@@ -745,7 +762,8 @@ export default {
       changedDocs,
       googleApi,
       totalSteps,
-      progress
+      progress,
+      showModal
     };
   }
 };

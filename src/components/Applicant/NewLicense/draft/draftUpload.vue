@@ -58,12 +58,15 @@
                         Upload
                       </th>
                       <th
-                        class="font-semibold text-sm uppercase px-6 py-4 text-center text-white"
-                      ></th>
-
+                        class="font-semibold text-sm uppercase px-6 py-4 text-left text-white"
+                      >
+                        Previous File
+                      </th>
                       <th
-                        class="font-semibold text-sm uppercase px-6 py-4 text-white"
-                      ></th>
+                        class="font-semibold text-sm uppercase px-6 py-4 text-center text-white"
+                      >
+                        View
+                      </th>
                     </tr>
                   </thead>
                   <tbody class="">
@@ -196,7 +199,7 @@
               class="accordion-body py-4 px-5 rounded-lg"
             >
               <h4 class="text-main-400 font-bold">
-                {{ table.educationalLevel ? table.educationalLevel.name : "" }}
+                {{ table.professionType ? table.professionType.name : "" }}
                 Related Files
               </h4>
 
@@ -225,13 +228,21 @@
                       <th
                         class="font-semibold text-sm uppercase px-6 py-4 text-center text-white"
                       >
-                        Upload Document
+                        Previous File
+                      </th>
+                      <th
+                        class="font-semibold text-sm uppercase px-6 py-4 text-center text-white"
+                      >
+                        View
                       </th>
                       <th
                         class="font-semibold text-sm uppercase px-6 py-4 text-white"
-                      ></th>
+                      >
+                        Action
+                      </th>
                     </tr>
                   </thead>
+                  <!-- for single file uploads -->
                   <tbody class="p-4">
                     <tr
                       v-for="item in table.docs"
@@ -352,7 +363,8 @@
                       </td>
                     </tr>
                   </tbody>
-
+                  <!-- end for single file uploads -->
+                  <!-- multiple file uploads -->
                   <tbody
                     class="divide-y p-4"
                     v-for="parentItem in table.parentDoc"
@@ -362,7 +374,9 @@
                       v-if="parentItem.length < 2"
                       class="border-b text-main-400 bg-lightGrey-100"
                     >
-                      <td class="px-6 py-4">
+                      <td
+                        class="px-6 py-4"
+                      >
                         <div class="flex items-center ml-4">
                           <div>
                             <p class="">
@@ -498,7 +512,7 @@
                       <td class="px-6"></td>
 
                       <td class="px-6 py-4"></td>
-
+                      <td class="px-6 py-4"></td>
                       <td class="px-6 py-4 text-center"></td>
 
                       <td class="px-6 text-center">
@@ -543,7 +557,7 @@
 
                               <tr
                                 v-for="(parentChildItem, index) in parentItem"
-                                :key="parentChildItem"
+                                :key="index"
                                 class="border-b text-main-400 mt-4"
                               >
                                 <td
@@ -613,7 +627,14 @@
                                     />
                                   </p>
                                 </td>
-                                <td class="px-6 py-4">
+                                <td
+                                  v-if="
+                                    showNestedDocuments[
+                                      parentItem[0].documentType.code
+                                    ] >= index
+                                  "
+                                  class="px-6 py-4"
+                                >
                                   <span
                                     class="document-name"
                                     v-if="
@@ -695,6 +716,7 @@
                       </div>
                     </tr>
                   </tbody>
+                  <!-- end for multiple file uploads -->
                 </table>
                 <small
                   >Note:-document names marked with
@@ -706,6 +728,21 @@
           </div>
         </div>
       </div>
+    </div>
+    <div
+      class=" p-2 m-4 rounded-md "
+      v-if="errorDocuments && errorDocuments.length > 0"
+    >
+      <h2 class="text-yellow-300 font-bold text-3xl">
+        Please attach the following files to proceed
+      </h2>
+      <li
+        class="text-yellow-300  text-xl font-bold border-2 rounded-md p-2 m-1"
+        v-for="error in errorDocuments"
+        :key="error"
+      >
+        {{ error.name }}
+      </li>
     </div>
     <div class="flex justify-end mr-8 mb-12">
       <button
@@ -734,6 +771,7 @@ import { googleApi } from "@/composables/baseURL";
 import { useRoute } from "vue-router";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
+import { useToast } from "vue-toastification";
 export default {
   components: { Loading },
 
@@ -753,6 +791,7 @@ export default {
       file: "",
       name: "",
     });
+    const toast = useToast();
     let files = ref("");
     let maxFileSize = ref(5000000);
     let isImage = ref({});
@@ -1198,7 +1237,7 @@ export default {
 
               event?.target?.files[0]
             );
-      
+
             showImage.value = true;
 
             if (fileS > 0 && fileS < 1000) {
@@ -1382,45 +1421,189 @@ export default {
     };
 
     const next = () => {
-      store.dispatch("newlicense/setTempDocs", formData).then(() => {
-        //Save images to indexed Db
+      let documentValidation = checkDocuments();
 
-        let finalLocalData = {
-          created: new Date(),
-          data: [],
-        };
-        let db;
-        let request = indexedDB.open("NLdocumentUploads", 1);
-        request.onsuccess = function() {
-          db = request.result;
-          let transaction = db.transaction(["NLdocumentUploads"], "readwrite");
+      if (documentValidation && Object.keys(documentValidation).length == 0) {
+        store.dispatch("newlicense/setTempDocs", formData).then(() => {
+          //Save images to indexed Db
 
-          finalLocalData.data = imageData;
+          let finalLocalData = {
+            created: new Date(),
+            data: [],
+          };
+          let db;
+          let request = indexedDB.open("NLdocumentUploads", 1);
+          request.onsuccess = function() {
+            db = request.result;
+            let transaction = db.transaction(
+              ["NLdocumentUploads"],
+              "readwrite"
+            );
 
-          const objectStore = transaction.objectStore("NLdocumentUploads");
+            finalLocalData.data = imageData;
 
-          const objectStoreRequest = objectStore.clear();
+            const objectStore = transaction.objectStore("NLdocumentUploads");
 
-          objectStoreRequest.onsuccess = () => {
-            let addReq = transaction
-              .objectStore("NLdocumentUploads")
-              .put(finalLocalData);
+            const objectStoreRequest = objectStore.clear();
 
-            addReq.onerror = function() {
-              console.log(
-                "Error regarding your browser, please update your browser to the latest version"
-              );
-            };
+            objectStoreRequest.onsuccess = () => {
+              let addReq = transaction
+                .objectStore("NLdocumentUploads")
+                .put(finalLocalData);
 
-            transaction.oncomplete = function() {
-              console.log("data stored");
-              emit("changeActiveState");
+              addReq.onerror = function() {
+                console.log(
+                  "Error regarding your browser, please update your browser to the latest version"
+                );
+              };
+
+              transaction.oncomplete = function() {
+                console.log("data stored");
+                emit("changeActiveState");
+              };
             };
           };
-        };
-      });
+        });
+      } else {
+        toast.error(
+          "Please attach documents marked with red border and this icon (*) next to their name to proceed",
+          {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          }
+        );
+      }
     };
+    const checkDocuments = () => {
+      let temp = "";
+      let CMtemp = "";
+      let NSTemp = "";
+      var tempVal;
+      errorDocuments.value = [];
 
+      commonDocuments.value
+        .filter((cd) => cd.isRequired)
+        .forEach((element) => {
+          // eslint-disable-next-line no-prototype-builtins
+          CMtemp = documentsUploaded.value.hasOwnProperty(
+            element.documentType.code
+          );
+
+          if (!CMtemp) {
+            fileUploadError.value[
+              "file_upload_row_" + element.documentType.code
+            ] = true;
+
+            errorDocuments.value.push({
+              isCommon: true,
+              name: element.documentType.name,
+              code: element.documentType.code,
+            });
+          } else {
+            delete fileUploadError.value[
+              "file_upload_row_" + element.documentType.code
+            ];
+          }
+        });
+
+      educationalDocs.value.forEach((ed) => {
+        // check normal docs with no parents
+
+        ed.docs
+          .filter((docs) => docs.isRequired)
+          .forEach((single) => {
+            // eslint-disable-next-line no-prototype-builtins
+            temp = documentsUploaded.value.hasOwnProperty(
+              single.documentType.code +
+                "_" +
+                ed.educationalLevel.code.toUpperCase() +
+                "_" +
+                ed.professionType.code.toUpperCase()
+            );
+            if (!temp) {
+              fileUploadError.value[
+                "file_upload_row_" +
+                  single.documentType.code +
+                  "_" +
+                  ed.educationalLevel.code.toUpperCase() +
+                  "_" +
+                  ed.professionType.code.toUpperCase()
+              ] = true;
+              errorDocuments.value.push({
+                name: single.documentType.name,
+                code:
+                  single.documentType.code +
+                  "_" +
+                  ed.educationalLevel.code.toUpperCase() +
+                  "_" +
+                  ed.professionType.code.toUpperCase(),
+              });
+            } else {
+              delete fileUploadError.value[
+                "file_upload_row_" +
+                  single.documentType.code +
+                  "_" +
+                  ed.educationalLevel.code.toUpperCase() +
+                  "_" +
+                  ed.professionType.code.toUpperCase()
+              ];
+            }
+          });
+
+        //// check documetns with parents
+        for (var pd in ed.parentDoc) {
+          tempVal = newLicenseDocuments.value.filter(
+            (nld) => nld.parentDocument == pd && nld.isRequired
+          );
+
+          if (
+            tempVal &&
+            tempVal.length > 0 &&
+            tempVal[0] &&
+            tempVal[0].isRequired == true
+          ) {
+            // eslint-disable-next-line no-prototype-builtins
+            NSTemp = documentsUploaded.value.hasOwnProperty(
+              tempVal[0].documentType.code +
+                "_" +
+                ed.educationalLevel.code.toUpperCase() +
+                "_" +
+                ed.professionType.code.toUpperCase()
+            );
+            if (NSTemp == "") {
+              fileUploadError.value[
+                "file_upload_row_" +
+                  newLicenseDocuments.value.filter(
+                    (nld) => nld.parentDocument == pd && nld.isRequired
+                  )[0].documentType.code +
+                  "_" +
+                  ed.educationalLevel.code.toUpperCase() +
+                  "_" +
+                  ed.professionType.code.toUpperCase()
+              ] = true;
+              errorDocuments.value.push({
+                name: newLicenseDocuments.value.filter(
+                  (nld) => nld.parentDocument == pd && nld.isRequired
+                )[0].documentType.name,
+                code:
+                  newLicenseDocuments.value.filter(
+                    (nld) => nld.parentDocument == pd && nld.isRequired
+                  )[0].documentType.code +
+                  "_" +
+                  ed.educationalLevel.code.toUpperCase() +
+                  "_" +
+                  ed.professionType.code.toUpperCase(),
+              });
+            }
+          }
+        }
+      });
+
+      return fileUploadError.value;
+    };
     const groupByKey = (array, key) => {
       return array.reduce((hash, obj) => {
         if (obj[key] === undefined || obj[key] == null) return hash;

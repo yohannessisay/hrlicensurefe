@@ -289,8 +289,7 @@
                       lg:grid-cols-4
                     "
                   >
-                    <div
-                      v-if="!professionChanged"
+                    <div 
                       class="
                         mt-4
                         mb-8
@@ -325,41 +324,7 @@
                       </div>
                     </div>
 
-                    <div
-                      v-else
-                      class="
-                        mt-4
-                        mb-8
-                        bg-white
-                        shadow-xl
-                        rounded-md
-                        transform
-                        transition
-                        duration-300
-                        ease-in-out
-                        p-2
-                        hover:-translate-y-2
-                      "
-                      v-for="prev in prevDocs"
-                      :key="prev.docName"
-                    >
-                      <h4 class="text-main-400 font-bold m-2">Document Type</h4>
-                      <h6 class="m-2">{{ prev.documentType.name }}</h6>
-                      <div class="flex justify-center rounded-lg p-4">
-                        <div class="bg-white rounded-md p-2">
-                          <a
-                            :href="prev.path"
-                            :data-title="prev.docName"
-                            data-lightbox="example-2"
-                          >
-                            <img
-                              :src="prev.path"
-                              class="w-full h-48 object-cover"
-                            />
-                          </a>
-                        </div>
-                      </div>
-                    </div>
+                  
                   </div>
                 </div>
               </div>
