@@ -1653,6 +1653,53 @@
                         Work Experiance
                       </li>
                     </ul>
+                    <div class="grid grid-cols-3 p-2">
+                      <a href="/Applicant/GoodStanding">
+                        <button
+                          class="
+                              text-xl text-white
+                              py-2
+                              bg-main-400
+                              hover:text-main-400 hover:border hover:bg-white
+                              px-6
+                              rounded-sm
+                            "
+                          @click="setApplicantType('Ethiopian')"
+                        >
+                          Ethiopian
+                        </button>
+                      </a>
+                      <a href="/Applicant/GoodStanding">
+                        <button
+                          class="
+                              text-base text-white
+                              py-3
+                              bg-main-400
+                              hover:text-main-400 hover:border hover:bg-white
+                              px-6
+                              rounded-sm
+                            "
+                          @click="setApplicantType('EthiopianFromAbroad')"
+                        >
+                          Ethiopian From Abroad
+                        </button>
+                      </a>
+                      <a href="/Applicant/GoodStanding">
+                        <button
+                          class="
+                              text-xl text-white
+                              py-2
+                              bg-main-400
+                              hover:text-main-400 hover:border hover:bg-white
+                              px-6
+                              rounded-sm
+                            "
+                          @click="setApplicantType('Foreign')"
+                        >
+                          Foreigner
+                        </button>
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>

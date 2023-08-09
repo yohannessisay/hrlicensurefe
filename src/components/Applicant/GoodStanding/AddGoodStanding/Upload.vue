@@ -269,12 +269,7 @@ export default {
     maxFileSize.value = MAX_FILE_SIZE.MAX_FILE_SIZE;
     let generalInfo = ref({});
     let documentUploaded = ref([]);
-    const previewFile = (code, name) => {
-      filePreviewData.value.isImage = isImage.value[code];
-      filePreviewData.value.isPdf = isPdf.value[code];
-      filePreviewData.value.file = previewDocuments.value[code];
-      filePreviewData.value.name = name;
-    };
+ 
     let formData = new FormData();
 
     const handleFileUpload = (data, event) => {
@@ -702,8 +697,7 @@ export default {
       handleFileUpload,
       showImage,
       previewDocuments,
-      showPreview,
-      previewFile,
+      showPreview, 
       saveDraft,
       documentError,
       generalInfo,

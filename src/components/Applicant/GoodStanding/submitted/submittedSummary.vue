@@ -370,65 +370,88 @@
               <span class="text-yellow-300">(optional*)</span>
             </label>
           </div>
-     
-            <div class="mb-3 w-full flex justify-center">
-              <input
-                v-model="generalInfo.feedback"
-                class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 border border-solid border-main-400 rounded focus:border-main-400 transition ease-in-out m-0 focus:outline-none"
-                @keyup="checkAgreement()"
-                id="feedback"
-                rows="6"
-                placeholder="Your feedback"
-                type="textarea"
-              />
-            </div>
-        
+
+          <div class="mb-3 w-full flex justify-center">
+            <input
+              v-model="generalInfo.feedback"
+              class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 border border-solid border-main-400 rounded focus:border-main-400 transition ease-in-out m-0 focus:outline-none"
+              @keyup="checkAgreement()"
+              id="feedback"
+              rows="6"
+              placeholder="Your feedback"
+              type="textarea"
+            />
+          </div>
         </div>
       </div>
     </div>
-    <div class="flex justify-center">
-      <RadialProgress
-        :diameter="200"
-        :completed-steps="progress"
-        :total-steps="totalSteps"
-      >
-        <h1 class="text-3xl text-main-400 font-bold">{{ progress }} %</h1>
-      </RadialProgress>
-    </div>
+ 
     <div class="vld-parent mt-4">
-            <loading
-              :active="isLoading"
-              :is-full-page="false"
-              :color="'#2F639D'"
-              :opacity="1"
-            ></loading>
-    <div class="flex justify-center mb-8">
-      <span v-for="button in buttons" :key="button.id">
-        <button
-          v-if="button.action != 'DraftEvent'"
-          type="button"
-          :class="
-            allowSave
-              ? 'inline-block px-6 border text-main-400 hover:bg-main-400 hober:border-main-400 hover:text-white  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded shadow-lg transition  duration-150 ease-in-out'
-              : 'inline-block px-6 disabled text-main-400  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded shadow-lg transition  duration-150 ease-in-out'
-          "
-          @click="checkFinalStatus(button.action)"
-        >
-          <i class="fa fa-save"></i>
-          {{ button.name }}
-        </button>
-      </span>
+      <loading
+        :active="isLoading"
+        :is-full-page="false"
+        :color="'#2F639D'"
+        :opacity="1"
+      ></loading>
+      <div class="flex justify-center mb-8">
+        <span v-for="button in buttons" :key="button.id">
+          <button
+            v-if="button.action != 'DraftEvent'"
+            type="button"
+            :class="
+              allowSave
+                ? 'inline-block px-6 border text-main-400 hover:bg-main-400 hober:border-main-400 hover:text-white  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded shadow-lg transition  duration-150 ease-in-out'
+                : 'inline-block px-6 disabled text-main-400  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded shadow-lg transition  duration-150 ease-in-out'
+            "
+            @click="checkFinalStatus(button.action)"
+          >
+            <i class="fa fa-save"></i>
+            {{ button.name }}
+          </button>
+        </span>
 
-      <button
-        class="inline-block px-6 text-main-400 mt-4 bg-white font-medium text-xs leading-tight uppercase rounded shadow-lg transition duration-150 ease-in-out"
-        @click="back()"
-      >
-        back
-      </button>
+        <button
+          class="inline-block px-6 text-main-400 mt-4 bg-white font-medium text-xs leading-tight uppercase rounded shadow-lg transition duration-150 ease-in-out"
+          @click="back()"
+        >
+          back
+        </button>
+      </div>
     </div>
-</div>
     <!-- end row -->
   </div>
+  <modal v-if="showModal">
+    <template v-slot:modalHeader>
+      Uploading
+    </template>
+    <template v-slot:modalBody>
+      <div class="flex justify-center text-yellow-300 p-2 rounded-md">
+        <h2 class="text-yellow-300 border rounded p-2 text-xl">
+          Total file size you have uploaded so far is
+          <h2 class="text-grey-800 text-2xl">{{ totalSize }} MB</h2>
+        </h2>
+      </div>
+      <div class="flex justify-center">
+        <RadialProgress
+          :diameter="200"
+          :completed-steps="progress"
+          :total-steps="totalSteps"
+        >
+          <h1 class="text-3xl text-main-400 font-bold">{{ progress }} %</h1>
+        </RadialProgress>
+      </div>
+      <div>
+        <div class="flex border justify-center text-yellow-300 p-2 rounded-md">
+          <h2 class=" text-xl">
+            Please wait patiently as your files are being uploaded, if for any
+            reason the files you uploaded are not successful you will be
+            redirected to the submitted page automatically so you can re-attach
+            your documents again
+          </h2>
+        </div>
+      </div>
+    </template>
+  </modal>
 </template>
 
 <script>
@@ -438,11 +461,11 @@ import { useToast } from "vue-toastification";
 import { useRouter, useRoute } from "vue-router";
 import { googleApi } from "@/composables/baseURL";
 import Loading from "vue3-loading-overlay";
-
+import modal from "../../../../sharedComponents/modal.vue";
 import RadialProgress from "vue3-radial-progress";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 export default {
-  components: { Loading, RadialProgress },
+  components: { Loading, RadialProgress, modal },
   setup(props, { emit }) {
     const store = useStore();
     const toast = useToast();
@@ -452,6 +475,7 @@ export default {
     let progress = computed(
       () => store.getters["goodstanding/getUploadProgress"]
     );
+    let showModal = ref(false);
     let localData = ref({});
     let localFileData = ref({});
     let localFileImages = ref({});
@@ -481,7 +505,7 @@ export default {
         allowSave.value = false;
       }
     };
-    const checkFinalStatus = action => {
+    const checkFinalStatus = (action) => {
       generalInfo.value.licenseFile = [];
       documents.value = localFileData.value;
 
@@ -491,16 +515,7 @@ export default {
           formData.append(index, element);
         });
         isLoading.value = true;
-        // let smsData = {
-        //   recipients: [
-        //     this.profileInfo.user.phoneNumber
-        //       ? "251" + this.profileInfo.user.phoneNumber
-        //       : "",
-        //   ],
-        //   message:
-        //     "Dear applicant you have successfully applied for a new license, after careful examination of your uploaded documents by our reviewers we will get back and notify you on each steps, Thank you for using eHPL.",
-        // };
-
+        showModal.value=true;
         let license = {
           action: action,
           data: {
@@ -551,7 +566,7 @@ export default {
                   ? generalInfo.value.GSProfessionals.educationLevel.id
                   : generalInfo.value.GSProfessionals.educationLevelId
                   ? generalInfo.value.GSProfessionals.educationLevelId
-                  : null
+                  : null,
             },
             expertLevelId: generalInfo.value.expertLevelId
               ? generalInfo.value.expertLevelId
@@ -572,8 +587,8 @@ export default {
             feedback: generalInfo.value.feedback
               ? generalInfo.value.feedback
               : "",
-            id: route.params.id
-          }
+            id: route.params.id,
+          },
         };
         store
           .dispatch("goodstanding/editGoodstandingLicense", license)
@@ -582,7 +597,7 @@ export default {
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("goodstanding/updateDocuments", payload)
-              .then(res => {
+              .then((res) => {
                 isLoading.value = false;
                 if (res.data.status == "Success") {
                   localStorage.removeItem("GSApplicationData");
@@ -591,7 +606,7 @@ export default {
                     position: "bottom-center",
                     pauseOnFocusLoss: true,
                     pauseOnHover: true,
-                    icon: true
+                    icon: true,
                   });
                   if (action == "DraftEvent") {
                     router.push({ path: "/Applicant/GoodStanding/draft" });
@@ -604,7 +619,7 @@ export default {
                     position: "bottom-center",
                     pauseOnFocusLoss: true,
                     pauseOnHover: true,
-                    icon: true
+                    icon: true,
                   });
                 }
               })
@@ -614,7 +629,7 @@ export default {
                   position: "bottom-center",
                   pauseOnFocusLoss: true,
                   pauseOnHover: true,
-                  icon: true
+                  icon: true,
                 });
               });
           });
@@ -624,7 +639,7 @@ export default {
       emit("changeActiveStateMinus");
     };
     const fetchApplicationStatuses = () => {
-      store.dispatch("renewal/getApplicationStatuses").then(res => {
+      store.dispatch("renewal/getApplicationStatuses").then((res) => {
         let results = res.data.data;
 
         let status = results.filter(function(e) {
@@ -637,10 +652,10 @@ export default {
       fetchApplicationStatuses();
       store
         .dispatch("goodstanding/getGoodStandingLicenseById", route.params.id)
-        .then(res => {
+        .then((res) => {
           savedData.value = res.data.data;
 
-          buttons.value = buttons.value.filter(ele => ele.code != "AT");
+          buttons.value = buttons.value.filter((ele) => ele.code != "AT");
           tempDocs.value = store.getters["goodstanding/getTempDocs"];
 
           localData.value = window.localStorage.getItem("GSApplicationData")
@@ -650,14 +665,14 @@ export default {
           generalInfo.value = localData.value;
           generalInfo.value.feedback = "";
           if (generalInfo.value.applicantTypeSelected.id == 1) {
-            store.dispatch("newlicense/getExpertLevel").then(res => {
+            store.dispatch("newlicense/getExpertLevel").then((res) => {
               let expertLevel = res.data.data.filter(function(e) {
                 return e.code.includes("REG");
               });
               generalInfo.value.expertLevelId = expertLevel[0].id;
             });
           } else {
-            store.dispatch("newlicense/getExpertLevel").then(res => {
+            store.dispatch("newlicense/getExpertLevel").then((res) => {
               let expertLevel = res.data.data.filter(function(e) {
                 return e.code.includes("FED");
               });
@@ -692,8 +707,8 @@ export default {
                 savedData.value.documents &&
                 savedData.value.documents.length > 0
               ) {
-                savedData.value.documents.forEach(ele => {
-                  localFileImages.value.forEach(newFile => {
+                savedData.value.documents.forEach((ele) => {
+                  localFileImages.value.forEach((newFile) => {
                     if (
                       newFile.documentCode &&
                       newFile.documentCode == ele.documentTypeCode
@@ -702,7 +717,7 @@ export default {
                         docName: newFile.documentName,
                         prevFile: googleApi + ele.filePath,
                         newFile: newFile.image,
-                        id: newFile.documentCode
+                        id: newFile.documentCode,
                       });
                     }
                   });
@@ -712,12 +727,12 @@ export default {
               if (localData.value.professionChanged == true) {
                 professionChanged.value = true;
                 // prevDocs.value = localFileImages.value;
-                localFileImages.value.forEach(element => {
+                localFileImages.value.forEach((element) => {
                   if (!element.documentTypeCode) {
                     prevDocs.value.push({
                       documentType: { name: element.documentName },
                       docName: element.documenttype,
-                      path: element.image
+                      path: element.image,
                     });
                   }
                 });
@@ -746,9 +761,10 @@ export default {
       changedDocs,
       googleApi,
       totalSteps,
-      progress
+      progress,
+      showModal,
     };
-  }
+  },
 };
 </script>
 <style>

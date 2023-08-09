@@ -127,6 +127,21 @@
         </div>
       </div>
     </div>
+    <div
+      class="text-yellow-300 p-2 m-4 rounded-md border"
+      v-if="errorDocuments && errorDocuments.length > 0"
+    >
+      <h2 class="text-yellow-300 font-bold text-3xl">
+        Please attach the following files to proceed
+      </h2>
+      <li
+        class="text-yellow-300 text-xl font-bold border-2 rounded-md p-2 m-1"
+        v-for="error in errorDocuments"
+        :key="error"
+      >
+        {{ error.name }}
+      </li>
+    </div>
     <div class="vld-parent mt-4">
       <loading
         :active="isLoading"

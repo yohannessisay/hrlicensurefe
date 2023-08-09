@@ -331,6 +331,7 @@
             ? 'list active mb-20'
             : 'list mb-20'
         "
+        style="margin-bottom: 75px !important;"
         :id="
           $route.fullPath === '/Applicant/Renewal/revoked' ? 'activeMenu' : ''
         "
@@ -696,7 +697,7 @@
             ? 'list active'
             : 'list'
         "
-      
+      style="margin-bottom: 75px !important;"
         :id="
           $route.fullPath === '/Applicant/NewLicense/revoked'
             ? 'activeMenu'
@@ -705,7 +706,7 @@
       >
         <b></b>
         <b></b>
-        <a class="ml-4" href="#" style="margin-bottom: 75px !important;">
+        <a class="ml-4" href="#" >
           <router-link class="link" to="/Applicant/NewLicense/revoked">
             <span class="icon"
               ><i
@@ -919,6 +920,7 @@
             ? 'list active mb-20'
             : 'list mb-20'
         "
+        
         :id="
           $route.fullPath === '/Applicant/GoodStanding/declined'
             ? 'activeMenu'

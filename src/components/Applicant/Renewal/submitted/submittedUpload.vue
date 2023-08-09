@@ -274,7 +274,7 @@
               class="accordion-body py-4 px-5 rounded-lg"
             >
               <h4 class="text-main-400 font-bold">
-                {{ table.educationalLevel ? table.educationalLevel.name : "" }}
+                {{ table.professionType ? table.professionType.name : "" }}
                 Related Files
               </h4>
 
@@ -683,7 +683,7 @@
                                 class="border-b text-main-400 mt-4"
                               >
                                 <td
-                                  v-if="
+                                v-if="
                                     showNestedDocuments[
                                       parentItem[0].documentType.code
                                     ] >= index
@@ -699,7 +699,7 @@
                                   </div>
                                 </td>
                                 <td
-                                  v-if="
+                                v-if="
                                     showNestedDocuments[
                                       parentItem[0].documentType.code
                                     ] >= index
@@ -722,7 +722,7 @@
                                 </td>
 
                                 <td
-                                  v-if="
+                                v-if="
                                     showNestedDocuments[
                                       parentItem[0].documentType.code
                                     ] >= index
@@ -749,7 +749,11 @@
                                     />
                                   </p>
                                 </td>
-                                <td class="px-6 py-4">
+                                <td       v-if="
+                                    showNestedDocuments[
+                                      parentItem[0].documentType.code
+                                    ] >= index
+                                  " class="px-6 py-4">
                                   <span
                                     class="document-name"
                                     v-if="
@@ -769,7 +773,7 @@
                                   >
                                 </td>
                                 <td
-                                  v-if="
+                                v-if="
                                     showNestedDocuments[
                                       parentItem[0].documentType.code
                                     ] >= index

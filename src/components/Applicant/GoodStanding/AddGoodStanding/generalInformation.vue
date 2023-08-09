@@ -36,7 +36,7 @@
     ></loading>
     <form
       @submit.prevent="submit"
-      class="mx-auto max-w-4xl rounded-md shadow-md w-full mt-10"
+      class="mx-auto max-w-4xl rounded-md shadow-lg w-full mt-10"
     >
       <div
         :class="
@@ -447,7 +447,9 @@ export default {
     let isLoading = ref(false);
     let generalInfo = ref({
       applicantId: +localStorage.getItem("userId"),
-      applicantTypeId: "",
+      applicantTypeId: JSON.parse(
+        localStorage.getItem("applicantTypeSelected")
+      ),
       residenceWoredaId: "",
       whomGoodStandingFor: "",
       licenseIssuedDate: "",
@@ -467,7 +469,7 @@ export default {
       woredaSelected: "",
       departmentId: "",
       expertLevelId: "",
-      licenseFile: [],
+      licenseFile: []
     });
     let showOtherProfession = ref(false);
     let localData = ref([]);
@@ -487,7 +489,7 @@ export default {
     let isDarkMode = ref(JSON.parse(localStorage.getItem("darkMode")));
     let professionalTypes = ref([]);
 
-    const checkApplicantType = (applicantType) => {
+    const checkApplicantType = applicantType => {
       generalInfo.value.regionId = null;
       generalInfo.value.zoneId = null;
       generalInfo.value.woredaId = null;
@@ -518,7 +520,7 @@ export default {
       store
 
         .dispatch("newlicense/getZones", generalInfo.value.regionSelected.id)
-        .then((res) => {
+        .then(res => {
           const zonesResult = res.data.data;
           zones.value = zonesResult;
         });
@@ -536,53 +538,53 @@ export default {
     };
 
     const fetchApplicantType = () => {
-      store.dispatch("goodstanding/getApplicantType").then((res) => {
+      store.dispatch("goodstanding/getApplicantType").then(res => {
         applicantTypes.value = res.data.data;
       });
     };
     const fetchApplicantTitle = () => {
-      store.dispatch("goodstanding/getApplicantTitle").then((res) => {
+      store.dispatch("goodstanding/getApplicantTitle").then(res => {
         applicantTitle.value = res.data.data;
       });
     };
 
     const fetchDepartments = () => {
-      store.dispatch("goodstanding/getDepartmentType").then((res) => {
+      store.dispatch("goodstanding/getDepartmentType").then(res => {
         departments.value = res.data.data;
       });
     };
     const fetchApplicationPositions = () => {
-      store.dispatch("goodstanding/getApplicantPosition").then((res) => {
+      store.dispatch("goodstanding/getApplicantPosition").then(res => {
         applicationPositions.value = res.data.data;
       });
     };
     const fetchRegions = () => {
-      store.dispatch("goodstanding/getRegions").then((res) => {
+      store.dispatch("goodstanding/getRegions").then(res => {
         regions.value = res.data.data;
       });
     };
     const fetchZone = () => {
       store
         .dispatch("goodstanding/getZones", generalInfo.value.regionId)
-        .then((res) => {
+        .then(res => {
           zones.value = res.data.data;
         });
     };
     const fetchWoredas = () => {
       store
         .dispatch("goodstanding/getWoredas", generalInfo.value.zoneSelected.id)
-        .then((res) => {
+        .then(res => {
           woredas.value = res.data.data;
         });
     };
     const fetchProfessionalType = (departmentId, educationalLevelId) => {
       let profession = {
         departmentId: departmentId,
-        educationalLevelId: educationalLevelId,
+        educationalLevelId: educationalLevelId
       };
       store
         .dispatch("newlicense/getProfessionalTypes", profession)
-        .then((res) => {
+        .then(res => {
           professionalTypes.value = res.data.data;
         });
     };
@@ -635,7 +637,7 @@ export default {
           position: "bottom-center",
           pauseOnFocusLoss: true,
           pauseOnHover: true,
-          icon: true,
+          icon: true
         });
         return;
       }
@@ -658,7 +660,7 @@ export default {
       window.location.reload();
     };
     const fetchEducationLevel = () => {
-      store.dispatch("lookups/getEducationLevel").then((res) => {
+      store.dispatch("lookups/getEducationLevel").then(res => {
         educationLevels.value = res.data.data;
       });
     };
@@ -716,7 +718,7 @@ export default {
             otherProfessionalTypeAmharic: generalInfo.value
               .otherProfessionTypeAmharic
               ? generalInfo.value.otherProfessionTypeAmharic
-              : "",
+              : ""
           },
           expertLevelId: generalInfo.value.expertLevelId
             ? generalInfo.value.expertLevelId
@@ -726,35 +728,22 @@ export default {
           departmentId: generalInfo.value.departmentId.id
             ? generalInfo.value.departmentId.id
             : null,
-          feedback: generalInfo.value.feedback
-            ? generalInfo.value.feedback
-            : "",
-        },
+          feedback: generalInfo.value.feedback ? generalInfo.value.feedback : ""
+        }
       };
       store
         .dispatch("goodstanding/addGoodstandingLicense", license)
-        .then((res) => {
-          if (res.data.status == "Success") {
-            toast.success("Applied successfuly", {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            });
-            isLoading.value = false;
-            localStorage.removeItem("GSApplicationData");
-            router.push({ path: "/Applicant/GoodStanding/draft" });
-          } else {
-            toast.error("Error occured, please try again", {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            });
-            isLoading.value = false;
-          }
+        .then(() => {
+          toast.success("Applied successfuly", {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true
+          });
+          isLoading.value = false;
+          localStorage.removeItem("GSApplicationData");
+          router.push({ path: "/Applicant/GoodStanding/draft" });
         });
     };
     onMounted(async () => {
@@ -772,6 +761,15 @@ export default {
         : {};
       if (Object.keys(localData.value).length != 0) {
         generalInfo.value = localData.value;
+      }
+      if (
+        localStorage.getItem("applicantTypeSelected") &&
+        Object.keys(JSON.parse(localStorage.getItem("applicantTypeSelected")))
+          .length != 0
+      ) {
+        checkApplicantType(
+          JSON.parse(localStorage.getItem("applicantTypeSelected"))
+        );
       }
     });
     return {
@@ -804,9 +802,9 @@ export default {
       departments,
       clearLocalData,
       localData,
-      isLoading,
+      isLoading
     };
-  },
+  }
 };
 </script>
 <style>

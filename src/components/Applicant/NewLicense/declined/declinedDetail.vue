@@ -747,7 +747,7 @@ export default {
     };
 
     const reApply = () => {
-      licenseData.value.declinedFields=[];
+      licenseData.value.declinedFields = [];
       let license = {
         licenseId: licenseData.value.id,
         declinedData: {
@@ -761,32 +761,18 @@ export default {
         let payload = { document: formData, id: licenseId };
         store
           .dispatch("newlicense/updateDocuments", payload)
-          .then((res) => {
-            if (res.data.status == "Success") {
-              toast.success("Applied successfuly", {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true,
-              });
-              setTimeout(() => {
-                window.location.reload();
-              }, 1000);
-              router.push({ path: "/Applicant/NewLicense/submitted" });
-         
-            } else {
-              toast.error("Error occured, please try again", {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true,
-              });
-              setTimeout(() => {
-                window.location.reload();
-              }, 3000);
-            }
+          .then(() => {
+            toast.success("Applied successfuly", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+            setTimeout(() => {
+              window.location.reload();
+            }, 1000);
+            router.push({ path: "/Applicant/NewLicense/submitted" });
           })
           .catch(() => {
             toast.error("Error occured, please try again", {
@@ -800,7 +786,7 @@ export default {
               window.location.reload();
             }, 3000);
           });
-      }); 
+      });
     };
     onMounted(() => {
       userInfo.value = JSON.parse(window.localStorage.getItem("personalInfo"));
