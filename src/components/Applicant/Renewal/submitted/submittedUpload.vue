@@ -832,6 +832,25 @@
                                     </i>
                                   </a>
                                 </td>
+                                <td
+                                  v-if="
+                                    showNestedDocuments[
+                                      parentItem[0].documentType.code
+                                    ] >= index
+                                  "
+                                >
+                                  <span
+                                    class="ml-4 cursor-pointer"
+                                    @click="
+                                      removeChildUpload(
+                                        parentItem[0].documentType.code
+                                      )
+                                    "
+                                    ><i
+                                      class="fa-solid fa-trash text-red-300 "
+                                    ></i
+                                  ></span>
+                                </td>
                               </tr>
                             </div>
                           </div>
@@ -1485,9 +1504,11 @@ export default {
     const back = () => {
       emit("changeActiveStateMinus");
     };
-    // emit("changeActiveStateMinus");
-
+    const removeChildUpload = (docCode) => {
+      showNestedDocuments.value[docCode] -= 1;
+    };
     return {
+      removeChildUpload,
       isLoading,
       documents,
       commonDocuments,

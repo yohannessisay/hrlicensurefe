@@ -418,24 +418,7 @@
                           </i>
                         </a>
                       </td>
-                      <td class="px-6 py-4">
-                        <div class="flex items-center p-4">
-                          <div>
-                            <p
-                              v-if="
-                                fileSizeExceed[
-                                  `${
-                                    item.documentType.code
-                                  }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                                ]
-                              "
-                              class="text-red-300"
-                            >
-                              Uploaded file Size has exceeded the limit (3 MB)
-                            </p>
-                          </div>
-                        </div>
-                      </td>
+                   
                     </tr>
                   </tbody>
 
@@ -592,24 +575,7 @@
                           </i>
                         </a>
                       </td>
-                      <td class="px-6 py-4">
-                        <div class="flex items-center p-4">
-                          <div>
-                            <p
-                              v-if="
-                                fileSizeExceed[
-                                  `${
-                                    parentItem[0].documentType.code
-                                  }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                                ]
-                              "
-                              class="text-red-300"
-                            >
-                              Uploaded file Size has exceeded the limit (3 MB)
-                            </p>
-                          </div>
-                        </div>
-                      </td>
+               
                     </tr>
                     <!-- if parent doc has more than 1 elements -->
                     <tr v-else class="border-b text-main-400 bg-lightGrey-100">
@@ -884,22 +850,24 @@
                                     </i>
                                   </a>
                                 </td>
-                                <td class="px-6 py-4">
-                                  <div class="flex items-center p-4">
-                                    <div>
-                                      <p
-                                        v-if="
-                                          fileSizeExceed[
-                                            `${parentChildItem.documentType.code.toUpperCase()}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                                          ]
-                                        "
-                                        class="text-red-300"
-                                      >
-                                        Uploaded file Size has exceeded the
-                                        limit (3 MB)
-                                      </p>
-                                    </div>
-                                  </div>
+                                <td
+                                  v-if="
+                                    showNestedDocuments[
+                                      parentItem[0].documentType.code
+                                    ] >= index
+                                  "
+                                >
+                                  <span
+                                    class="ml-4 cursor-pointer"
+                                    @click="
+                                      removeChildUpload(
+                                        parentItem[0].documentType.code
+                                      )
+                                    "
+                                    ><i
+                                      class="fa-solid fa-trash text-red-300 "
+                                    ></i
+                                  ></span>
                                 </td>
                               </tr>
                             </div>
@@ -2139,8 +2107,11 @@ export default {
         });
       }
     });
-
+    const removeChildUpload = (docCode) => {
+      showNestedDocuments.value[docCode] -= 1;
+    };
     return {
+      removeChildUpload,
       documents,
       commonDocuments,
       files,
