@@ -659,9 +659,9 @@
                                   <div>
                                     <iframe
                                       v-bind:src="
-                                        googleApi + '' + docs[index] &&
+                                      docs[index] &&
                                         docs[index].filePath
-                                          ? docs[index].filePath
+                                          ?  googleApi + ''+docs[index].filePath
                                           : ''
                                       "
                                     ></iframe>
@@ -686,9 +686,9 @@
                                       viewImage([
                                         {
                                           src:
-                                            googleApi + docs[index] &&
+                                           docs[index] &&
                                             docs[index].filePath
-                                              ? docs[index].filePath
+                                              ?  googleApi + ''+docs[index].filePath
                                               : '',
                                           title: 'Image Caption 1',
                                         },
@@ -696,9 +696,9 @@
                                     "
                                     style="height: 600px; width: 800px"
                                     v-bind:src="
-                                      googleApi + '' + docs[index] &&
-                                      docs[index].filePath
-                                        ? docs[index].filePath
+                                      docs[index] &&
+                                   docs[index].filePath
+                                        ? googleApi + ''+ docs[index].filePath
                                         : ''
                                     "
                                   />
