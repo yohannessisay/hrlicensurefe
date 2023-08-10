@@ -869,8 +869,12 @@
                                   "
                                 >
                                   <span
-                                    class="ml-4"
-                                    @click="removeChildUpload(index)"
+                                    class="ml-4 cursor-pointer"
+                                    @click="
+                                      removeChildUpload(
+                                        parentItem[0].documentType.code
+                                      )
+                                    "
                                     ><i
                                       class="fa-solid fa-trash text-red-300 "
                                     ></i
@@ -1954,9 +1958,8 @@ export default {
           showNestedDocuments.value[parentItem.documentType.code] + 1;
       }
     };
-    const removeChildUpload = (childItem) => {
-      console.log(childItem, showNestedDocuments.value);
-      // showNestedDocuments.value
+    const removeChildUpload = (docCode) => {
+      showNestedDocuments.value[docCode] -= 1;
     };
     const initDb = () => {
       existingDocs;
