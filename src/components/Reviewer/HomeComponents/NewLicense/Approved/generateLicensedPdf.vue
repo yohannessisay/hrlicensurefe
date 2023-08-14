@@ -2327,15 +2327,16 @@ export default {
                 : "1. "
             }${
               certificateDetail.value.educations[i].professionType &&
-              certificateDetail.value.educations[i].professionType.name
+              certificateDetail.value.educations[i].professionType.name ==
+                "other"
                 ? `${
                     certificateDetail.value.educations[i].prefix
                       ? certificateDetail.value.educations[i].prefix.name
                       : ""
                   }  ${
-                    certificateDetail.value.educations[i].professionType.name
+                    certificateDetail.value.educations[i].otherProfessionType
                   }`
-                : certificateDetail.value.educations[i].otherProfessionType
+                : certificateDetail.value.educations[i].professionType.name
             }`
           );
         }
@@ -2511,16 +2512,24 @@ export default {
             `${
               certificateDetail.value.educations.length > 1 ? i + 1 + ". " : ""
             }${
-              certificateDetail.value.educations[i].professionType
-                ? certificateDetail.value.educations[i].prefix
-                  ? certificateDetail.value.educations[i].prefix.amharic_name +
+              certificateDetail.value.educations[i].prefix
+                ? certificateDetail.value.educations[i].prefix.amharic_name +
                     " " +
-                    certificateDetail.value.educations[i].professionType
-                      .amharicProfessionalType
+                    certificateDetail.value.educations[i].professionType &&
+                  certificateDetail.value.educations[i].professionType.name ==
+                    "other"
+                  ? certificateDetail.value.educations[i].otherProfessionAmharic
                   : certificateDetail.value.educations[i].professionType
+                  ? certificateDetail.value.educations[i].professionType
                       .amharicProfessionalType
-                : certificateDetail.value.educations[i].otherProfessionAmharic
+                  : ""
+                : certificateDetail.value.educations[i].professionType &&
+                  certificateDetail.value.educations[i].professionType.name ==
+                    "other"
                 ? certificateDetail.value.educations[i].otherProfessionAmharic
+                : certificateDetail.value.educations[i].professionType
+                ? certificateDetail.value.educations[i].professionType
+                    .amharicProfessionalType
                 : ""
             }`
           );
@@ -2536,18 +2545,25 @@ export default {
                   ? newI + 1 + ". "
                   : ""
               }${
-                certificateDetail.value.educations[i].professionType
-                  ? certificateDetail.value.educations[i].prefix
-                    ? certificateDetail.value.educations[i].prefix
-                        .amharic_name +
-                      " " +
-                      certificateDetail.value.educations[i].professionType
-                        .amharicProfessionalType
-                    : certificateDetail.value.educations[i].professionType
-                        .amharicProfessionalType
-                  : certificateDetail.value.educations[i].otherProfessionAmharic
+                certificateDetail.value.educations[i].prefix
+                ? certificateDetail.value.educations[i].prefix.amharic_name +
+                    " " +
+                    certificateDetail.value.educations[i].professionType &&
+                  certificateDetail.value.educations[i].professionType.name ==
+                    "other"
                   ? certificateDetail.value.educations[i].otherProfessionAmharic
+                  : certificateDetail.value.educations[i].professionType
+                  ? certificateDetail.value.educations[i].professionType
+                      .amharicProfessionalType
                   : ""
+                : certificateDetail.value.educations[i].professionType &&
+                  certificateDetail.value.educations[i].professionType.name ==
+                    "other"
+                ? certificateDetail.value.educations[i].otherProfessionAmharic
+                : certificateDetail.value.educations[i].professionType
+                ? certificateDetail.value.educations[i].professionType
+                    .amharicProfessionalType
+                : ""
               }`
             );
             newI++;
