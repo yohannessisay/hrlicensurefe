@@ -191,17 +191,16 @@
                           style="word-break: break-word"
                         >
                           {{
-                            department && department.professionType
-                              ? department.prefix
-                                ? department.prefix.amharic_name +
-                                  " " +
-                                  department.professionType
-                                    .amharicProfessionalType
-                                : department.professionType
-                                    .amharicProfessionalType
-                              : department.otherProfessionAmharic
-                              ? department.otherProfessionAmharic
+                            department.prefix
+                              ? department.prefix.amharic_name + " "
                               : ""
+                          }}
+                          {{
+                            department.professionType &&
+                            department.professionType.name == "other"
+                              ? department.otherProfessionAmharic
+                              : department.professionType
+                                  .amharicProfessionalType
                           }} </span
                         ><br />
                       </div>
@@ -288,17 +287,14 @@
                         class="underline  font-bold"
                         style="word-break: break-word"
                       >
+                        {{ department.prefix ? department.prefix.name : "" }}
+
                         {{
-                          department && department.professionType
-                            ? department.prefix
-                              ? department.prefix.name +
-                                " " +
-                                department.professionType.name
-                              : department.professionType.name
-                            : department.otherProfessionType
+                          department.professionType &&
+                          department.professionType.name == "other"
                             ? department.otherProfessionType
-                            : ""
-                        }} </span
+                            : department.professionType.name
+                        }}</span
                       ><br />
                     </div>
                     Having duly satisfied the requirements of the Ministry
@@ -1346,7 +1342,6 @@
           contenteditable="true"
           id="externshipPrintedDiv"
         >
-       
           <div class="grid grid-cols-2 mb-8 mt-48">
             <div class="flex justify-start" contenteditable="false">
               <img :src="qrSrc" alt="" style="height: 150px;width: 150px;" />
@@ -1385,19 +1380,13 @@
               >ስትከታተል/ሲከታተል ቆይታ/ቶ</span
             >
             ኤክስተርንሺፕ ሀገር ውስጥ ለመስራት በቀን ባቀረቡት ማመልከቻ ጠይቀዋል፡፡ በዚህም መሠረት ጉዳያቸው በ
-            <span contenteditable="true" class=" font-bold"
-              >_____________</span
-            >
+            <span contenteditable="true" class=" font-bold">_____________</span>
             ቀርቦ ከታየ ከተገመገመ በኃላ To Work externship as a
-            <span contenteditable="true" class=" font-bold"
-              >_____________</span
+            <span contenteditable="true" class=" font-bold">_____________</span
             >በሚል ፀድቆቸው ተመዝገበዋል፡፡ ስለዚህም ልምምዱን ከ
-            <span contenteditable="true" class=" font-bold"
-              >___/___/___</span
-            >
+            <span contenteditable="true" class=" font-bold">___/___/___</span>
             ጀምሮ ለ
-            <span contenteditable="true" class=" font-bold"
-              >_____________</span
+            <span contenteditable="true" class=" font-bold">_____________</span
             >እንዲከታተሉ የተመደቡ መሆኑን እየገለጽን፤ ሆስፒታሉ በአንድ አመት መጨረሻ አስፈላጊውን ሁሉ በመፈጸም
             የባለሙያዋን ውጤቱን እንድታሳውቁን እንጠይቃለን፡፡
           </p>
@@ -1476,8 +1465,6 @@
           <div class="text-left mt-12"></div>
 
           <h5 class="mt-8 text-right">//ከሰላምታ ጋር//</h5>
-
-          
         </div>
         <!-- end of question being asked is externship-->
 
@@ -1493,7 +1480,7 @@
           class="p-8 m-8 "
           id="temporaryPrintedDiv"
         >
-        <div class="grid grid-cols-2 mb-8 mt-48">
+          <div class="grid grid-cols-2 mb-8 mt-48">
             <div class="flex justify-start" contenteditable="false">
               <img :src="qrSrc" alt="" style="height: 150px;width: 150px;" />
             </div>
@@ -2236,10 +2223,11 @@ export default {
               ? certificateDetail.value.educations[i].prefix.name
               : ""
           }  ${
-            certificateDetail.value.educations[i].professionType
-              ? certificateDetail.value.educations[i].professionType.name
-              : certificateDetail.value.educations[i].otherProfessionType
+            certificateDetail.value.educations[i].professionType &&
+            certificateDetail.value.educations[i].professionType.name == "other"
               ? certificateDetail.value.educations[i].otherProfessionType
+              : certificateDetail.value.educations[i].professionType.name
+              ? certificateDetail.value.educations[i].professionType.name
               : ""
           }`;
           let getLength = doc.getTextWidth(professionPrefix);
@@ -2260,10 +2248,11 @@ export default {
               ? certificateDetail.value.educations[i].prefix.name
               : ""
           }  ${
-            certificateDetail.value.educations[i].professionType
-              ? certificateDetail.value.educations[i].professionType.name
-              : certificateDetail.value.educations[i].otherProfessionType
+            certificateDetail.value.educations[i].professionType &&
+            certificateDetail.value.educations[i].professionType.name == "other"
               ? certificateDetail.value.educations[i].otherProfessionType
+              : certificateDetail.value.educations[i].professionType.name
+              ? certificateDetail.value.educations[i].professionType.name
               : ""
           }`;
           let getLength = doc.getTextWidth(professionPrefix);
@@ -2304,15 +2293,16 @@ export default {
                 : "1. "
             }${
               certificateDetail.value.educations[i].professionType &&
-              certificateDetail.value.educations[i].professionType.name
+              certificateDetail.value.educations[i].professionType.name ==
+                "other"
                 ? `${
                     certificateDetail.value.educations[i].prefix
                       ? certificateDetail.value.educations[i].prefix.name
                       : ""
                   }  ${
-                    certificateDetail.value.educations[i].professionType.name
+                    certificateDetail.value.educations[i].otherProfessionType
                   }`
-                : certificateDetail.value.educations[i].otherProfessionType
+                : certificateDetail.value.educations[i].professionType.name
             }`
           );
         }
@@ -2482,16 +2472,24 @@ export default {
                 ? i + 1 + ". "
                 : "1. "
             }${
-              certificateDetail.value.educations[i].professionType
-                ? certificateDetail.value.educations[i].prefix
-                  ? certificateDetail.value.educations[i].prefix.amharic_name +
+              certificateDetail.value.educations[i].prefix
+                ? certificateDetail.value.educations[i].prefix.amharic_name +
                     " " +
-                    certificateDetail.value.educations[i].professionType
-                      .amharicProfessionalType
+                    certificateDetail.value.educations[i].professionType &&
+                  certificateDetail.value.educations[i].professionType.name ==
+                    "other"
+                  ? certificateDetail.value.educations[i].otherProfessionAmharic
                   : certificateDetail.value.educations[i].professionType
+                  ? certificateDetail.value.educations[i].professionType
                       .amharicProfessionalType
-                : certificateDetail.value.educations[i].otherProfessionAmharic
+                  : ""
+                : certificateDetail.value.educations[i].professionType &&
+                  certificateDetail.value.educations[i].professionType.name ==
+                    "other"
                 ? certificateDetail.value.educations[i].otherProfessionAmharic
+                : certificateDetail.value.educations[i].professionType
+                ? certificateDetail.value.educations[i].professionType
+                    .amharicProfessionalType
                 : ""
             }`
           );
