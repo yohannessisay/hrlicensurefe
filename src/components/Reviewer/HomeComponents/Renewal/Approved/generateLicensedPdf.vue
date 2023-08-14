@@ -194,19 +194,16 @@
                         style="word-break: break-word"
                       >
                         {{
-                          department.professionType &&
-                          department.professionType.amharicProfessionalType
-                            ? department.prefix
-                              ? department.prefix.amharic_name +
-                                " " +
-                                department.professionType
-                                  .amharicProfessionalType
-                              : department.professionType
-                                  .amharicProfessionalType
-                            : department.otherProfessionAmharic
-                            ? department.otherProfessionAmharic
+                          department.prefix
+                            ? department.prefix.amharic_name + " "
                             : ""
-                        }} </span
+                        }}
+                        {{
+                          department.professionType &&
+                          department.professionType.name == "other"
+                            ? department.otherProfessionAmharic
+                            : department.professionType.amharicProfessionalType
+                        }}</span
                       ><br />
                     </div>
                     ሙያ መዝግቦ ይህን የሙያ ስራ ፈቃድ ሰጥቷል።
@@ -291,14 +288,13 @@
                         class="underline  font-bold"
                         style="word-break: break-word"
                       >
+                        {{ department.prefix ? department.prefix.name : "" }}
+
                         {{
-                          department && department.professionType
-                            ? department.prefix
-                              ? department.prefix.name +
-                                " " +
-                                department.professionType.name
-                              : department.professionType.name
-                            : department.otherProfessionType
+                          department.professionType &&
+                          department.professionType.name == "other"
+                            ? department.otherProfessionType
+                            : department.professionType.name
                         }} </span
                       ><br />
                     </div>
@@ -518,12 +514,16 @@
                             style="word-break: break-word"
                           >
                             {{
-                              educations &&
-                              educations[0] &&
-                              educations[0].professionType
-                                ? educations[0].professionType
-                                    .amharicProfessionalType
+                              educations[0].prefix
+                                ? educations[0].prefix.amharic_name + " "
                                 : ""
+                            }}
+                            {{
+                              educations[0].professionType &&
+                              educations[0].professionType.name == "other"
+                                ? educations[0].otherProfessionAmharic
+                                : educations[0].professionType
+                                    .amharicProfessionalType
                             }}</span
                           >
                           <span
@@ -531,12 +531,16 @@
                             style="word-break: break-word"
                           >
                             {{
-                              educations &&
-                              educations[1] &&
-                              educations[1].professionType
-                                ? educations[1].professionType
-                                    .amharicProfessionalType
+                              educations[1].prefix
+                                ? educations[1].prefix.amharic_name + " "
                                 : ""
+                            }}
+                            {{
+                              educations[1].professionType &&
+                              educations[1].professionType.name == "other"
+                                ? educations[1].otherProfessionAmharic
+                                : educations[1].professionType
+                                    .amharicProfessionalType
                             }}</span
                           >
                           <span
@@ -544,12 +548,16 @@
                             style="word-break: break-word"
                           >
                             {{
-                              educations &&
-                              educations[2] &&
-                              educations[2].professionType
-                                ? educations[2].professionType
-                                    .amharicProfessionalType
+                              educations[2].prefix
+                                ? educations[2].prefix.amharic_name + " "
                                 : ""
+                            }}
+                            {{
+                              educations[2].professionType &&
+                              educations[2].professionType.name == "other"
+                                ? educations[2].otherProfessionAmharic
+                                : educations[2].professionType
+                                    .amharicProfessionalType
                             }}</span
                           >
                         </div>
@@ -630,16 +638,15 @@
                             style="word-break: break-word"
                           >
                             {{
-                              educations &&
-                              educations[0] &&
-                              educations[0].professionType
-                                ? educations[0].prefix
-                                  ? +"( " +
-                                    educations[0].prefix.name +
-                                    " )" +
-                                    educations[0].professionType.name
-                                  : educations[0].professionType.name
-                                : educations[0].otherProfessionType
+                              educations[0].prefix
+                                ? educations[0].prefix.amharic_name + " "
+                                : ""
+                            }}
+                            {{
+                              educations[0].professionType &&
+                              educations[0].professionType.name == "other"
+                                ? educations[0].otherProfessionType
+                                : educations[0].professionType.name
                             }}</span
                           >
                           <span
@@ -647,33 +654,31 @@
                             style="word-break: break-word"
                           >
                             {{
-                              educations &&
-                              educations[1] &&
-                              educations[1].professionType
-                                ? educations[1].prefix
-                                  ? +"( " +
-                                    educations[1].prefix.name +
-                                    " )" +
-                                    educations[1].professionType.name
-                                  : educations[1].professionType.name
-                                : educations[1].otherProfessionType
+                              educations[1].prefix
+                                ? educations[1].prefix.amharic_name + " "
+                                : ""
+                            }}
+                            {{
+                              educations[1].professionType &&
+                              educations[1].professionType.name == "other"
+                                ? educations[1].otherProfessionType
+                                : educations[1].professionType.name
                             }}</span
                           >
                           <span
                             class="underline  font-bold"
                             style="word-break: break-word"
                           >
+                          {{
+                              educations[2].prefix
+                                ? educations[2].prefix.amharic_name + " "
+                                : ""
+                            }}
                             {{
-                              educations &&
-                              educations[2] &&
-                              educations[2].professionType
-                                ? educations[2].prefix
-                                  ? +"( " +
-                                    educations[2].prefix.name +
-                                    " )" +
-                                    educations[2].professionType.name
-                                  : educations[2].professionType.name
-                                : educations[2].otherProfessionType
+                              educations[2].professionType &&
+                              educations[2].professionType.name == "other"
+                                ? educations[2].otherProfessionType
+                                : educations[2].professionType.name
                             }}</span
                           ><br />
                           <span
@@ -887,39 +892,51 @@
                             class="underline  font-bold"
                             style="word-break: break-word"
                           >
-                            {{
-                              educations &&
-                              educations[3] &&
-                              educations[3].professionType
-                                ? educations[3].professionType
-                                    .amharicProfessionalType
+                          {{
+                              educations[3].prefix
+                                ? educations[3].prefix.amharic_name + " "
                                 : ""
+                            }}
+                            {{
+                              educations[3].professionType &&
+                              educations[3].professionType.name == "other"
+                                ? educations[3].otherProfessionAmharic
+                                : educations[3].professionType
+                                    .amharicProfessionalType
                             }}</span
                           >
                           <span
                             class="underline  font-bold"
                             style="word-break: break-word"
                           >
-                            {{
-                              educations &&
-                              educations[4] &&
-                              educations[4].professionType
-                                ? educations[4].professionType
-                                    .amharicProfessionalType
+                          {{
+                              educations[4].prefix
+                                ? educations[4].prefix.amharic_name + " "
                                 : ""
+                            }}
+                            {{
+                              educations[4].professionType &&
+                              educations[4].professionType.name == "other"
+                                ? educations[4].otherProfessionAmharic
+                                : educations[4].professionType
+                                    .amharicProfessionalType
                             }}</span
                           >
                           <span
                             class="underline  font-bold"
                             style="word-break: break-word"
                           >
-                            {{
-                              educations &&
-                              educations[5] &&
-                              educations[5].professionType
-                                ? educations[5].professionType
-                                    .amharicProfessionalType
+                          {{
+                              educations[5].prefix
+                                ? educations[5].prefix.amharic_name + " "
                                 : ""
+                            }}
+                            {{
+                              educations[5].professionType &&
+                              educations[5].professionType.name == "other"
+                                ? educations[5].otherProfessionAmharic
+                                : educations[5].professionType
+                                    .amharicProfessionalType
                             }}</span
                           >
                         </div>
@@ -1005,51 +1022,48 @@
                             class="underline  font-bold"
                             style="word-break: break-word"
                           >
+                          {{
+                              educations[3].prefix
+                                ? educations[3].prefix.amharic_name + " "
+                                : ""
+                            }}
                             {{
-                              educations &&
-                              educations[3] &&
-                              educations[3].professionType
-                                ? educations[3].prefix
-                                  ? +"( " +
-                                    educations[3].prefix.name +
-                                    " )" +
-                                    educations[3].professionType.name
-                                  : educations[3].professionType.name
-                                : educations[3].otherProfessionType
+                              educations[3].professionType &&
+                              educations[3].professionType.name == "other"
+                                ? educations[3].otherProfessionType
+                                : educations[3].professionType.name
                             }}</span
                           >
                           <span
                             class="underline  font-bold"
                             style="word-break: break-word"
                           >
+                          {{
+                              educations[4].prefix
+                                ? educations[4].prefix.amharic_name + " "
+                                : ""
+                            }}
                             {{
-                              educations &&
-                              educations[4] &&
-                              educations[4].professionType
-                                ? educations[4].prefix
-                                  ? +"( " +
-                                    educations[4].prefix.name +
-                                    " )" +
-                                    educations[4].professionType.name
-                                  : educations[4].professionType.name
-                                : educations[4].otherProfessionType
+                              educations[4].professionType &&
+                              educations[4].professionType.name == "other"
+                                ? educations[4].otherProfessionType
+                                : educations[4].professionType.name
                             }}</span
                           >
                           <span
                             class="underline  font-bold"
                             style="word-break: break-word"
                           >
+                          {{
+                              educations[5].prefix
+                                ? educations[5].prefix.amharic_name + " "
+                                : ""
+                            }}
                             {{
-                              educations &&
-                              educations[5] &&
-                              educations[5].professionType
-                                ? educations[5].prefix
-                                  ? +"( " +
-                                    educations[5].prefix.name +
-                                    " )" +
-                                    educations[5].professionType.name
-                                  : educations[5].professionType.name
-                                : educations[5].otherProfessionType
+                              educations[5].professionType &&
+                              educations[5].professionType.name == "other"
+                                ? educations[5].otherProfessionType
+                                : educations[5].professionType.name
                             }}</span
                           ><br />
                           <span
@@ -1139,7 +1153,6 @@
           contenteditable="true"
           id="foreignersPrintedDiv"
         >
-       
           <div class="grid grid-cols-2 mt-48">
             <div class="flex justify-start" contenteditable="false">
               <img :src="qrSrc" alt="" style="height: 150px;width: 150px;" />
@@ -1276,10 +1289,13 @@
                         : ""
                     }})
                     {{
-                      educations &&
-                      educations.isDropped != true &&
-                      educations.professionType
-                        ? educations.professionType.name
+                      educations && educations.isDropped != true
+                        ? educations.professionType &&
+                          educations.professionType.name == "other"
+                          ? educations.otherProfessionType
+                          : educations.professionType
+                          ? educations.professionType.name
+                          : ""
                         : ""
                     }}
                   </td>
@@ -1292,7 +1308,6 @@
             <h5>ለ፡ብቃትና ሰው ሀብት አስተዳደር ስራ አስፈጻሚ አዲስ አበባ</h5>
           </div>
           <h5 class="mt-12   text-right">//ከሰላምታ ጋር//</h5>
-        
         </div>
         <!-- end of applicant as foreigner -->
 
@@ -1743,8 +1758,7 @@ export default {
                     " " +
                     new Date().toISOString().slice(0, 10)
                 : ""
-            )
-     
+            );
 
           updateLicenseGenerated();
         })
@@ -1844,9 +1858,12 @@ export default {
               ? certificateDetail.value.educations[i].prefix.name
               : ""
           }  ${
-            certificateDetail.value.educations[i].professionType
+            certificateDetail.value.educations[i].professionType &&
+            certificateDetail.value.educations[i].professionType.name == "other"
+              ? certificateDetail.value.educations[i].otherProfessionType
+              : certificateDetail.value.educations[i].professionType.name
               ? certificateDetail.value.educations[i].professionType.name
-              : certificateDetail.value.educations[i].otherProfessionType
+              : ""
           }`;
           let getLength = doc.getTextWidth(professionPrefix);
           if (getLength > 125 && getLength <= 132) {
@@ -1866,9 +1883,12 @@ export default {
               ? certificateDetail.value.educations[i].prefix.name
               : ""
           }  ${
-            certificateDetail.value.educations[i].professionType
+            certificateDetail.value.educations[i].professionType &&
+            certificateDetail.value.educations[i].professionType.name == "other"
+              ? certificateDetail.value.educations[i].otherProfessionType
+              : certificateDetail.value.educations[i].professionType.name
               ? certificateDetail.value.educations[i].professionType.name
-              : certificateDetail.value.educations[i].otherProfessionType
+              : ""
           }`;
           let getLength = doc.getTextWidth(professionPrefix);
           if (getLength > 125 && getLength <= 132) {
@@ -1907,14 +1927,17 @@ export default {
                 ? i + 1 + ". "
                 : "1. "
             }${
-              certificateDetail.value.educations[i].prefix
-                ? certificateDetail.value.educations[i].prefix.name
-                : ""
-            }  ${
               certificateDetail.value.educations[i].professionType &&
-              certificateDetail.value.educations[i].professionType.name
-                ? certificateDetail.value.educations[i].professionType.name
-                : certificateDetail.value.educations[i].otherProfessionType
+              certificateDetail.value.educations[i].professionType.name ==
+                "other"
+                ? `${
+                    certificateDetail.value.educations[i].prefix
+                      ? certificateDetail.value.educations[i].prefix.name
+                      : ""
+                  }  ${
+                    certificateDetail.value.educations[i].otherProfessionType
+                  }`
+                : certificateDetail.value.educations[i].professionType.name
             }`
           );
         }
@@ -1929,14 +1952,17 @@ export default {
                 ? i + 1 + ". "
                 : "1. "
             }${
-              certificateDetail.value.educations[i].prefix
-                ? certificateDetail.value.educations[i].prefix.name
-                : ""
-            }  ${
               certificateDetail.value.educations[i].professionType &&
-              certificateDetail.value.educations[i].professionType.name
-                ? certificateDetail.value.educations[i].professionType.name
-                : certificateDetail.value.educations[i].otherProfessionType
+              certificateDetail.value.educations[i].professionType.name ==
+                "other"
+                ? `${
+                    certificateDetail.value.educations[i].prefix
+                      ? certificateDetail.value.educations[i].prefix.name
+                      : ""
+                  }  ${
+                    certificateDetail.value.educations[i].otherProfessionType
+                  }`
+                : certificateDetail.value.educations[i].professionType.name
             }`
           );
         }
@@ -1951,14 +1977,17 @@ export default {
                   ? newI + 1 + ". "
                   : ""
               }${
-                certificateDetail.value.educations[i].prefix
-                  ? certificateDetail.value.educations[i].prefix.name
-                  : ""
-              }  ${
                 certificateDetail.value.educations[i].professionType &&
-                certificateDetail.value.educations[i].professionType.name
-                  ? certificateDetail.value.educations[i].professionType.name
-                  : certificateDetail.value.educations[i].otherProfessionType
+                certificateDetail.value.educations[i].professionType.name ==
+                  "other"
+                  ? `${
+                      certificateDetail.value.educations[i].prefix
+                        ? certificateDetail.value.educations[i].prefix.name
+                        : ""
+                    }  ${
+                      certificateDetail.value.educations[i].otherProfessionType
+                    }`
+                  : certificateDetail.value.educations[i].professionType.name
               }`
             );
           }
@@ -2084,13 +2113,24 @@ export default {
                 : "1. "
             }${
               certificateDetail.value.educations[i].prefix
-                ? certificateDetail.value.educations[i].prefix.amharic_name
-                : ""
-            }  ${
-              certificateDetail.value.educations[i].professionType
+                ? certificateDetail.value.educations[i].prefix.amharic_name +
+                    " " +
+                    certificateDetail.value.educations[i].professionType &&
+                  certificateDetail.value.educations[i].professionType.name ==
+                    "other"
+                  ? certificateDetail.value.educations[i].otherProfessionAmharic
+                  : certificateDetail.value.educations[i].professionType
+                  ? certificateDetail.value.educations[i].professionType
+                      .amharicProfessionalType
+                  : ""
+                : certificateDetail.value.educations[i].professionType &&
+                  certificateDetail.value.educations[i].professionType.name ==
+                    "other"
+                ? certificateDetail.value.educations[i].otherProfessionAmharic
+                : certificateDetail.value.educations[i].professionType
                 ? certificateDetail.value.educations[i].professionType
                     .amharicProfessionalType
-                : certificateDetail.value.educations[i].otherProfessionAmharic
+                : ""
             }`
           );
         }
@@ -2103,16 +2143,23 @@ export default {
               certificateDetail.value.educations.length > 1 ? i + 1 + ". " : ""
             }  ${
               certificateDetail.value.educations[i].prefix
-                ? certificateDetail.value.educations[i].prefix.amharic_name
-                : ""
-            }  ${
-              certificateDetail.value.educations[i].professionType &&
-              certificateDetail.value.educations[i].professionType
-                .amharicProfessionalType
+                ? certificateDetail.value.educations[i].prefix.amharic_name +
+                    " " +
+                    certificateDetail.value.educations[i].professionType &&
+                  certificateDetail.value.educations[i].professionType.name ==
+                    "other"
+                  ? certificateDetail.value.educations[i].otherProfessionAmharic
+                  : certificateDetail.value.educations[i].professionType
+                  ? certificateDetail.value.educations[i].professionType
+                      .amharicProfessionalType
+                  : ""
+                : certificateDetail.value.educations[i].professionType &&
+                  certificateDetail.value.educations[i].professionType.name ==
+                    "other"
+                ? certificateDetail.value.educations[i].otherProfessionAmharic
+                : certificateDetail.value.educations[i].professionType
                 ? certificateDetail.value.educations[i].professionType
                     .amharicProfessionalType
-                : certificateDetail.value.educations[i].otherProfessionAmharic
-                ? certificateDetail.value.educations[i].otherProfessionAmharic
                 : ""
             }`
           );
@@ -2130,16 +2177,24 @@ export default {
               }
               ${
                 certificateDetail.value.educations[i].prefix
-                  ? certificateDetail.value.educations[i].prefix.amharic_name
-                  : ""
-              }  ${
-                certificateDetail.value.educations[i].professionType &&
-                certificateDetail.value.educations[i].professionType
-                  .amharicProfessionalType
+                  ? certificateDetail.value.educations[i].prefix.amharic_name +
+                      " " +
+                      certificateDetail.value.educations[i].professionType &&
+                    certificateDetail.value.educations[i].professionType.name ==
+                      "other"
+                    ? certificateDetail.value.educations[i]
+                        .otherProfessionAmharic
+                    : certificateDetail.value.educations[i].professionType
+                    ? certificateDetail.value.educations[i].professionType
+                        .amharicProfessionalType
+                    : ""
+                  : certificateDetail.value.educations[i].professionType &&
+                    certificateDetail.value.educations[i].professionType.name ==
+                      "other"
+                  ? certificateDetail.value.educations[i].otherProfessionAmharic
+                  : certificateDetail.value.educations[i].professionType
                   ? certificateDetail.value.educations[i].professionType
                       .amharicProfessionalType
-                  : certificateDetail.value.educations[i].otherProfessionAmharic
-                  ? certificateDetail.value.educations[i].otherProfessionAmharic
                   : ""
               }`
             );
