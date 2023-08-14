@@ -1311,10 +1311,13 @@
                         : ""
                     }})
                     {{
-                      educations &&
-                      educations.isDropped != true &&
-                      educations.professionType
-                        ? educations.professionType.name
+                      educations && educations.isDropped != true
+                        ? educations.professionType &&
+                          educations.professionType.name == "other"
+                          ? educations.otherProfessionType
+                          : educations.professionType
+                          ? educations.professionType.name
+                          : ""
                         : ""
                     }}
                   </td>
@@ -1445,15 +1448,18 @@
                     contenteditable="false"
                     class="whitespace-nowrap border-r px-6 py-4 "
                   >
-                    ({{
+                    {{
                       educations && educations.prefix
                         ? educations.prefix.name
                         : ""
-                    }})
+                    }}
                     {{
                       educations &&
                       educations.isDropped != true &&
-                      educations.professionType
+                      educations.professionType &&
+                      educations.professionType.name == "other"
+                        ? educations.otherProfessionType
+                        : educations.professionType
                         ? educations.professionType.name
                         : ""
                     }}
@@ -1596,16 +1602,19 @@
                     class="whitespace-nowrap border-r px-6 py-4 "
                     contenteditable="false"
                   >
-                    ({{
+                    {{
                       educations && educations.prefix
                         ? educations.prefix.name
                         : ""
-                    }})
+                    }}
                     {{
-                      educations &&
-                      educations.isDropped != true &&
-                      educations.professionType
-                        ? educations.professionType.name
+                      educations && educations.isDropped != true
+                        ? educations.professionType &&
+                          educations.professionType.name == "other"
+                          ? educations.otherProfessionType
+                          : educations.professionType
+                          ? educations.professionType.name
+                          : ""
                         : ""
                     }}
                   </td>
