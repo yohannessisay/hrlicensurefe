@@ -183,7 +183,14 @@
                                 <span contenteditable="false" class="">{{
                                   modalData &&
                                   modalData.GSProfessionals &&
+                                  modalData.GSProfessionals.professionalTypes &&
                                   modalData.GSProfessionals.professionalTypes
+                                    .name == "other"
+                                    ? modalData.GSProfessionals
+                                        .otherProfessionType
+                                    : modalData.GSProfessionals &&
+                                      modalData.GSProfessionals
+                                        .professionalTypes
                                     ? modalData.GSProfessionals
                                         .professionalTypes.name
                                     : ""
@@ -315,7 +322,14 @@
                                 <span contenteditable="false" class="">{{
                                   modalData &&
                                   modalData.GSProfessionals &&
+                                  modalData.GSProfessionals.professionalTypes &&
                                   modalData.GSProfessionals.professionalTypes
+                                    .name == "other"
+                                    ? modalData.GSProfessionals
+                                        .otherProfessionType
+                                    : modalData.GSProfessionals &&
+                                      modalData.GSProfessionals
+                                        .professionalTypes
                                     ? modalData.GSProfessionals
                                         .professionalTypes.name
                                     : ""
@@ -400,7 +414,14 @@
                                       modalData &&
                                       modalData.GSProfessionals &&
                                       modalData.GSProfessionals
-                                        .professionalTypes
+                                        .professionalTypes &&
+                                      modalData.GSProfessionals
+                                        .professionalTypes.name == "other"
+                                        ? modalData.GSProfessionals
+                                            .otherProfessionType
+                                        : modalData.GSProfessionals &&
+                                          modalData.GSProfessionals
+                                            .professionalTypes
                                         ? modalData.GSProfessionals
                                             .professionalTypes.name
                                         : ""
