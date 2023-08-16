@@ -729,30 +729,28 @@ export default {
 
             store
               .dispatch("notification/notifyApplicant", userNotification)
-              .then((res) => {
-                if (res && res.status == "Success") {
-                  let notification = {
-                    user_id:
-                      modalData.value.data && modalData.value.data.applicant
-                        ? modalData.value.data.applicant.id
-                        : null,
-                    reviewer_id: assign.value.reviewerId,
-                    goodstanding_id: modalData.value.data
-                      ? modalData.value.data.id
+              .then(() => {
+                let notification = {
+                  user_id:
+                    modalData.value.data && modalData.value.data.applicant
+                      ? modalData.value.data.applicant.id
                       : null,
-                    message: modalData.value.data
-                      ? // eslint-disable-next-line prettier/prettier
-                        `Dear reviewer , a  new submitted goodstanding application with code ${modalData.value.data.goodStandingCode} has been assigned to you.`
-                      : "",
-                    type: "reviewer_good_standing",
-                    status: "new",
-                  };
-                  store.dispatch("notification/notifyReviewer", notification);
-                  router.push({ path: "/admin/goodStanding/assigned" });
-                  setTimeout(() => {
-                    location.reload();
-                  }, 100);
-                }
+                  reviewer_id: assign.value.reviewerId,
+                  goodstanding_id: modalData.value.data
+                    ? modalData.value.data.id
+                    : null,
+                  message: modalData.value.data
+                    ? // eslint-disable-next-line prettier/prettier
+                      `Dear reviewer , a  new submitted goodstanding application with code ${modalData.value.data.goodStandingCode} has been assigned to you.`
+                    : "",
+                  type: "reviewer_good_standing",
+                  status: "new",
+                };
+                store.dispatch("notification/notifyReviewer", notification);
+                router.push({ path: "/admin/goodStanding/assigned" });
+                setTimeout(() => {
+                  location.reload();
+                }, 100);
               });
           });
         })
