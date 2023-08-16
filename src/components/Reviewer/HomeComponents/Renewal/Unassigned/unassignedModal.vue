@@ -736,6 +736,11 @@ export default {
                   type: "reviewer_renewal",
                   status: "new",
                 };
+                store.dispatch("notification/notifyReviewer", notification);
+                router.push({ path: "/admin/renewal/inReview" });
+                setTimeout(() => {
+                  location.reload();
+                }, 100);
                 toast.success("Selected reiewer assigned Successfully", {
                   timeout: 5000,
                   position: "bottom-center",
@@ -743,12 +748,6 @@ export default {
                   pauseOnHover: true,
                   icon: true,
                 });
-                store.dispatch("notification/notifyReviewer", notification);
-                router.push({ path: "/admin/renewal/inReview" });
-
-                setTimeout(() => {
-                  location.reload();
-                }, 100);
               });
           });
         })
