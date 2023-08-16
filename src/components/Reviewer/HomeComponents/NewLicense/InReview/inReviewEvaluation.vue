@@ -1836,63 +1836,49 @@ export default {
           isLoadingAction.value = true;
           store
             .dispatch("reviewer/editNewLicense", req)
-            .then((res) => {
+            .then(() => {
               showActionLoading.value = false;
               isLoadingAction.value = false;
-              if (res.statusText == "Created") {
-                store.dispatch("sms/sendSms", smsData).then(() => {
-                  toast.success("Application reviewed Successfully", {
-                    timeout: 5000,
-                    position: "bottom-center",
-                    pauseOnFocusLoss: true,
-                    pauseOnHover: true,
-                    icon: true,
-                  });
-                  router.push({
-                    path: "/admin/newLicense/approved",
-                  });
-                  let userNotification = {
-                    user_id:
-                      newLicense.value && newLicense.value.applicant
-                        ? newLicense.value.data.applicant.id
-                        : null,
-                    reviewer_id: newLicense.value.licenseReviewer
-                      ? newLicense.value.licenseReviewer.reviewerId
-                      : null,
-                    new_license_id: newLicense.value
-                      ? newLicense.value.id
-                      : null,
-                    message: newLicense.value // eslint-disable-next-line prettier/prettier
-                      ? `Dear applicant your submitted new license application of code ${
-                          newLicense.value.newLicenseCode
-                        } has been ${
-                          actionValue == "ApproveEvent"
-                            ? "approved"
-                            : actionValue == "DeclineEvent"
-                            ? "declined"
-                            : ""
-                        }by a reviewer.`
-                      : "",
-                    type: "applicant_new_license",
-                    status: "new",
-                  };
-                  store.dispatch(
-                    "notification/notifyApplicant",
-                    userNotification
-                  );
-                });
-              } else {
-                toast.error("Please try again", {
+
+              store.dispatch("sms/sendSms", smsData).then(() => {
+                toast.success("Application reviewed Successfully", {
                   timeout: 5000,
                   position: "bottom-center",
                   pauseOnFocusLoss: true,
                   pauseOnHover: true,
                   icon: true,
                 });
-                setTimeout(() => {
-                  window.location.reload();
-                }, 3000);
-              }
+                router.push({
+                  path: "/admin/newLicense/approved",
+                });
+                let userNotification = {
+                  user_id:
+                    newLicense.value && newLicense.value.applicant
+                      ? newLicense.value.data.applicant.id
+                      : null,
+                  reviewer_id: newLicense.value.licenseReviewer
+                    ? newLicense.value.licenseReviewer.reviewerId
+                    : null,
+                  new_license_id: newLicense.value ? newLicense.value.id : null,
+                  message: newLicense.value // eslint-disable-next-line prettier/prettier
+                    ? `Dear applicant your submitted new license application of code ${
+                        newLicense.value.newLicenseCode
+                      } has been ${
+                        actionValue == "ApproveEvent"
+                          ? "approved"
+                          : actionValue == "DeclineEvent"
+                          ? "declined"
+                          : ""
+                      }by a reviewer.`
+                    : "",
+                  type: "applicant_new_license",
+                  status: "new",
+                };
+                store.dispatch(
+                  "notification/notifyApplicant",
+                  userNotification
+                );
+              });
             })
             .catch(() => {
               toast.error("Please try again", {

@@ -713,61 +713,44 @@ export default {
           action: data.action,
           data: assign.value,
         })
-        .then((response) => {
-          if (response.statusText == "Created") {
-            store.dispatch("sms/sendSms", smsData).then(() => {
-              isLoading.value = false;
-           
-              store
-                .dispatch("notification/notifyApplicant", userNotification)
-                .then((res) => {
-                  if (res && res.status == "Success") {
-                    let notification = {
-                      user_id:
-                        modalData.value.data && modalData.value.data.applicant
-                          ? modalData.value.data.applicant.id
-                          : null,
-                      reviewer_id: assign.value.reviewerId,
-                      renewal_id: modalData.value.data
-                        ? modalData.value.data.id
-                        : null,
-                      message: modalData.value.data
-                        ? // eslint-disable-next-line prettier/prettier
-                          `Dear reviewer , a renewal application with code ${modalData.value.data.renewalCode} has been assigned to you.`
-                        : "",
-                      type: "reviewer_renewal",
-                      status: "new",
-                    };
-                    store.dispatch("notification/notifyReviewer", notification);
-                    router.push({ path: "/admin/renewal/inReview" });
-                    setTimeout(() => {
-                      location.reload();
-                    }, 100);
-                  } else {
-                    isLoading.value = false;
-                  }
-                });
-              toast.success("Selected reiewer assigned Successfully", {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true,
-              });
-            });
-          } else {
-            toast.error(
-              "Sorry there seems to be a problem, please try again.",
-              {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true,
-              }
-            );
+        .then(() => {
+          store.dispatch("sms/sendSms", smsData).then(() => {
             isLoading.value = false;
-          }
+
+            store
+              .dispatch("notification/notifyApplicant", userNotification)
+              .then(() => {
+                let notification = {
+                  user_id:
+                    modalData.value.data && modalData.value.data.applicant
+                      ? modalData.value.data.applicant.id
+                      : null,
+                  reviewer_id: assign.value.reviewerId,
+                  renewal_id: modalData.value.data
+                    ? modalData.value.data.id
+                    : null,
+                  message: modalData.value.data
+                    ? // eslint-disable-next-line prettier/prettier
+                      `Dear reviewer , a renewal application with code ${modalData.value.data.renewalCode} has been assigned to you.`
+                    : "",
+                  type: "reviewer_renewal",
+                  status: "new",
+                };
+                toast.success("Selected reiewer assigned Successfully", {
+                  timeout: 5000,
+                  position: "bottom-center",
+                  pauseOnFocusLoss: true,
+                  pauseOnHover: true,
+                  icon: true,
+                });
+                store.dispatch("notification/notifyReviewer", notification);
+                router.push({ path: "/admin/renewal/inReview" });
+
+                setTimeout(() => {
+                  location.reload();
+                }, 100);
+              });
+          });
         })
         .catch(() => {
           toast.error("Sorry there seems to be a problem, please try again.", {
