@@ -805,8 +805,7 @@ export default {
                     });
                   }
                 });
-              } else {
-                console.log(savedData.value.documents);
+              } else { 
                 prevDocs.value = savedData.value.documents;
               }
             };

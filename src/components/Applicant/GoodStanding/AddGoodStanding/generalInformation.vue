@@ -256,9 +256,13 @@
                   </select>
                 </div>
 
-                <div v-show="showOtherProfession">
+                <div v-if="showOtherProfession">
                   <input
                     type="text"
+                    :required="
+                      generalInfo.otherProfessionType &&
+                        generalInfo.otherProfessionType.length > 0
+                    "
                     name="otherProf"
                     v-model="generalInfo.otherProfessionType"
                     class="mb-2 appearance-none block xl:w-64 md:w-64 sm:w-64 px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
@@ -267,10 +271,14 @@
                   />
                 </div>
 
-                <div v-show="showOtherProfession">
+                <div v-if="showOtherProfession">
                   <input
                     type="text"
                     name="otherProfAmh"
+                    :required="
+                      generalInfo.otherProfessionTypeAmharic &&
+                        generalInfo.otherProfessionTypeAmharic.length > 0
+                    "
                     v-model="generalInfo.otherProfessionTypeAmharic"
                     class="appearance-none block xl:w-64 md:w-64 sm:w-64 px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
                     autocomplete="off"
@@ -469,7 +477,7 @@ export default {
       woredaSelected: "",
       departmentId: "",
       expertLevelId: "",
-      licenseFile: []
+      licenseFile: [],
     });
     let showOtherProfession = ref(false);
     let localData = ref([]);
@@ -489,7 +497,7 @@ export default {
     let isDarkMode = ref(JSON.parse(localStorage.getItem("darkMode")));
     let professionalTypes = ref([]);
 
-    const checkApplicantType = applicantType => {
+    const checkApplicantType = (applicantType) => {
       generalInfo.value.regionId = null;
       generalInfo.value.zoneId = null;
       generalInfo.value.woredaId = null;
@@ -520,7 +528,7 @@ export default {
       store
 
         .dispatch("newlicense/getZones", generalInfo.value.regionSelected.id)
-        .then(res => {
+        .then((res) => {
           const zonesResult = res.data.data;
           zones.value = zonesResult;
         });
@@ -538,53 +546,53 @@ export default {
     };
 
     const fetchApplicantType = () => {
-      store.dispatch("goodstanding/getApplicantType").then(res => {
+      store.dispatch("goodstanding/getApplicantType").then((res) => {
         applicantTypes.value = res.data.data;
       });
     };
     const fetchApplicantTitle = () => {
-      store.dispatch("goodstanding/getApplicantTitle").then(res => {
+      store.dispatch("goodstanding/getApplicantTitle").then((res) => {
         applicantTitle.value = res.data.data;
       });
     };
 
     const fetchDepartments = () => {
-      store.dispatch("goodstanding/getDepartmentType").then(res => {
+      store.dispatch("goodstanding/getDepartmentType").then((res) => {
         departments.value = res.data.data;
       });
     };
     const fetchApplicationPositions = () => {
-      store.dispatch("goodstanding/getApplicantPosition").then(res => {
+      store.dispatch("goodstanding/getApplicantPosition").then((res) => {
         applicationPositions.value = res.data.data;
       });
     };
     const fetchRegions = () => {
-      store.dispatch("goodstanding/getRegions").then(res => {
+      store.dispatch("goodstanding/getRegions").then((res) => {
         regions.value = res.data.data;
       });
     };
     const fetchZone = () => {
       store
         .dispatch("goodstanding/getZones", generalInfo.value.regionId)
-        .then(res => {
+        .then((res) => {
           zones.value = res.data.data;
         });
     };
     const fetchWoredas = () => {
       store
         .dispatch("goodstanding/getWoredas", generalInfo.value.zoneSelected.id)
-        .then(res => {
+        .then((res) => {
           woredas.value = res.data.data;
         });
     };
     const fetchProfessionalType = (departmentId, educationalLevelId) => {
       let profession = {
         departmentId: departmentId,
-        educationalLevelId: educationalLevelId
+        educationalLevelId: educationalLevelId,
       };
       store
         .dispatch("newlicense/getProfessionalTypes", profession)
-        .then(res => {
+        .then((res) => {
           professionalTypes.value = res.data.data;
         });
     };
@@ -637,7 +645,7 @@ export default {
           position: "bottom-center",
           pauseOnFocusLoss: true,
           pauseOnHover: true,
-          icon: true
+          icon: true,
         });
         return;
       }
@@ -660,7 +668,7 @@ export default {
       window.location.reload();
     };
     const fetchEducationLevel = () => {
-      store.dispatch("lookups/getEducationLevel").then(res => {
+      store.dispatch("lookups/getEducationLevel").then((res) => {
         educationLevels.value = res.data.data;
       });
     };
@@ -718,7 +726,7 @@ export default {
             otherProfessionalTypeAmharic: generalInfo.value
               .otherProfessionTypeAmharic
               ? generalInfo.value.otherProfessionTypeAmharic
-              : ""
+              : "",
           },
           expertLevelId: generalInfo.value.expertLevelId
             ? generalInfo.value.expertLevelId
@@ -728,8 +736,10 @@ export default {
           departmentId: generalInfo.value.departmentId.id
             ? generalInfo.value.departmentId.id
             : null,
-          feedback: generalInfo.value.feedback ? generalInfo.value.feedback : ""
-        }
+          feedback: generalInfo.value.feedback
+            ? generalInfo.value.feedback
+            : "",
+        },
       };
       store
         .dispatch("goodstanding/addGoodstandingLicense", license)
@@ -739,7 +749,7 @@ export default {
             position: "bottom-center",
             pauseOnFocusLoss: true,
             pauseOnHover: true,
-            icon: true
+            icon: true,
           });
           isLoading.value = false;
           localStorage.removeItem("GSApplicationData");
@@ -802,9 +812,9 @@ export default {
       departments,
       clearLocalData,
       localData,
-      isLoading
+      isLoading,
     };
-  }
+  },
 };
 </script>
 <style>

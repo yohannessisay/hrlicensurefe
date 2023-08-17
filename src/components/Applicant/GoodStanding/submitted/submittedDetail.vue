@@ -325,7 +325,7 @@
                     </select>
                   </div>
 
-                  <div v-show="showOtherProfession">
+                  <div v-if="generalInfo.GSProfessionals.otherProfessionType">
                     <label class="text-main-400">Other Profession</label>
                     <input
                       type="text"
@@ -337,7 +337,11 @@
                     />
                   </div>
 
-                  <div v-show="showOtherProfession">
+                  <div
+                    v-if="
+                      generalInfo.GSProfessionals.otherProfessionTypeAmharic
+                    "
+                  >
                     <label class="text-main-400"
                       >Other Profession Amharic</label
                     >

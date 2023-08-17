@@ -616,7 +616,7 @@ export default {
     };
 
     const fetchWoredas = () => {
-      console.log(generalInfo.value.zoneSelected);
+      
       store
         .dispatch("renewal/getWoredas", generalInfo.value.zoneSelected.id)
         .then((res) => {
@@ -702,13 +702,31 @@ export default {
       generalInfo.value.educations.splice(index, 1);
     };
     const addMultiple = () => {
-      console.log(generalInfo.value);
+     
       if (
         generalInfo.value.departmentSelected &&
         generalInfo.value.educationalLevelSelected &&
         generalInfo.value.institutionSelected &&
         generalInfo.value.professionalTypeSelected
       ) {
+        if (
+          showOtherProfession.value &&
+          showOtherProfession.value == true &&
+          (generalInfo.value.otherProfessionalType == undefined ||
+            generalInfo.value.otherProfessionalTypeAmharic == undefined)
+        ) {
+          toast.error(
+            "Please fill other profession name in amharic and english",
+            {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            }
+          );
+          return;
+        }
         if (generalInfo.value.multipleDepartment.length > 3) {
           multipleDepartmentMaxError.value = true;
         } else {
@@ -841,7 +859,7 @@ export default {
         .then((res) => {
           withdrawData.value = res.data.data;
           generalInfo.value = res.data.data;
-          console.log(generalInfo.value.applicationStatus);
+      
           if (
             generalInfo.value.applicationStatus.code == "UPD" ||
             generalInfo.value.applicationStatus.code == "SUB"

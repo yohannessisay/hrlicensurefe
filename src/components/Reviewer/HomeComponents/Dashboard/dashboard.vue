@@ -397,7 +397,7 @@ export default {
           });
         }
       });
-      console.log(approvedSeries);
+      
     };
     let tempRegions = [];
 

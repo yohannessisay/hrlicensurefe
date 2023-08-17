@@ -714,6 +714,24 @@ export default {
         generalInfo.value.institutionSelected &&
         generalInfo.value.professionalTypeSelected
       ) {
+        if (
+          showOtherProfession.value &&
+          showOtherProfession.value == true &&
+          (generalInfo.value.otherProfessionalType == undefined ||
+            generalInfo.value.otherProfessionalTypeAmharic == undefined)
+        ) {
+          toast.error(
+            "Please fill other profession name in amharic and english",
+            {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            }
+          );
+          return;
+        }
         if (generalInfo.value.multipleDepartment.length > 3) {
           multipleDepartmentMaxError.value = true;
         } else {
