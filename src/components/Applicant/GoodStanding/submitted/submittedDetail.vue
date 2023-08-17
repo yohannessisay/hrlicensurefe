@@ -325,7 +325,13 @@
                     </select>
                   </div>
 
-                  <div v-if="generalInfo.GSProfessionals.otherProfessionType">
+                  <div
+                    v-if="
+                      generalInfo.GSProfessionals.professionalTypes &&
+                        generalInfo.GSProfessionals.professionalTypes.name ==
+                          'other'
+                    "
+                  >
                     <label class="text-main-400">Other Profession</label>
                     <input
                       type="text"
@@ -339,7 +345,9 @@
 
                   <div
                     v-if="
-                      generalInfo.GSProfessionals.otherProfessionTypeAmharic
+                      generalInfo.GSProfessionals.professionalTypes &&
+                        generalInfo.GSProfessionals.professionalTypes.name ==
+                          'other'
                     "
                   >
                     <label class="text-main-400"
@@ -619,8 +627,11 @@ export default {
     };
     const checkOtherProfession = () => {
       if (
-        generalInfo.value.professionTypeId.name &&
-        generalInfo.value.professionTypeId.name.toLowerCase() == "other"
+        generalInfo.value.GSProfessionals &&
+        generalInfo.value.GSProfessionals.professionTypeId &&
+        generalInfo.value.GSProfessionals.professionTypeId.name &&
+        generalInfo.value.GSProfessionals.professionTypeId.name.toLowerCase() ==
+          "other"
       ) {
         showOtherProfession.value = true;
       } else {

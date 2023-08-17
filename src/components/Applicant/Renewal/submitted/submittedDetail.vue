@@ -466,10 +466,10 @@
         </transition>
       </div>
       <div v-if="invalidLicenseStat == true">
-      <h2 class="text-main-400 font-bold text-2xl">
-        License is currently being reviewed and editing is not allowed
-      </h2>
-    </div>
+        <h2 class="text-main-400 font-bold text-2xl">
+          License is currently being reviewed and editing is not allowed
+        </h2>
+      </div>
     </div>
   </main-content>
 </template>
@@ -616,7 +616,6 @@ export default {
     };
 
     const fetchWoredas = () => {
-      
       store
         .dispatch("renewal/getWoredas", generalInfo.value.zoneSelected.id)
         .then((res) => {
@@ -702,7 +701,6 @@ export default {
       generalInfo.value.educations.splice(index, 1);
     };
     const addMultiple = () => {
-     
       if (
         generalInfo.value.departmentSelected &&
         generalInfo.value.educationalLevelSelected &&
@@ -710,6 +708,7 @@ export default {
         generalInfo.value.professionalTypeSelected
       ) {
         if (
+          generalInfo.value.applicantTypeSelected.code != "FOR" &&
           showOtherProfession.value &&
           showOtherProfession.value == true &&
           (generalInfo.value.otherProfessionalType == undefined ||
@@ -859,7 +858,7 @@ export default {
         .then((res) => {
           withdrawData.value = res.data.data;
           generalInfo.value = res.data.data;
-      
+
           if (
             generalInfo.value.applicationStatus.code == "UPD" ||
             generalInfo.value.applicationStatus.code == "SUB"

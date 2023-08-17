@@ -255,12 +255,13 @@
                     <option value=""></option>
                   </select>
                 </div>
-
+              
                 <div v-if="showOtherProfession">
                   <input
                     type="text"
                     :required="
-                      generalInfo.otherProfessionType &&
+                      generalInfo.applicantTypeId.code != 'FOR' &&
+                        generalInfo.otherProfessionType &&
                         generalInfo.otherProfessionType.length > 0
                     "
                     name="otherProf"
@@ -276,7 +277,8 @@
                     type="text"
                     name="otherProfAmh"
                     :required="
-                      generalInfo.otherProfessionTypeAmharic &&
+                      generalInfo.applicantTypeId.code != 'FOR' &&
+                        generalInfo.otherProfessionTypeAmharic &&
                         generalInfo.otherProfessionTypeAmharic.length > 0
                     "
                     v-model="generalInfo.otherProfessionTypeAmharic"

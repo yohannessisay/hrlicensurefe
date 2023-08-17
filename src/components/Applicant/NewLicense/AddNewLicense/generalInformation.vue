@@ -905,6 +905,7 @@ export default {
         generalInfo.value.professionalTypeSelected
       ) {
         if (
+          generalInfo.value.applicantTypeSelected.code != "FOR" &&
           showOtherProfession.value &&
           showOtherProfession.value == true &&
           (generalInfo.value.otherProfessionalType == undefined ||
