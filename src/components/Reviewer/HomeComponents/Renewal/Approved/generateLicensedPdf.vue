@@ -669,7 +669,7 @@
                             class="underline  font-bold"
                             style="word-break: break-word"
                           >
-                          {{
+                            {{
                               educations[2].prefix
                                 ? educations[2].prefix.amharic_name + " "
                                 : ""
@@ -892,7 +892,7 @@
                             class="underline  font-bold"
                             style="word-break: break-word"
                           >
-                          {{
+                            {{
                               educations[3].prefix
                                 ? educations[3].prefix.amharic_name + " "
                                 : ""
@@ -909,7 +909,7 @@
                             class="underline  font-bold"
                             style="word-break: break-word"
                           >
-                          {{
+                            {{
                               educations[4].prefix
                                 ? educations[4].prefix.amharic_name + " "
                                 : ""
@@ -926,7 +926,7 @@
                             class="underline  font-bold"
                             style="word-break: break-word"
                           >
-                          {{
+                            {{
                               educations[5].prefix
                                 ? educations[5].prefix.amharic_name + " "
                                 : ""
@@ -1022,7 +1022,7 @@
                             class="underline  font-bold"
                             style="word-break: break-word"
                           >
-                          {{
+                            {{
                               educations[3].prefix
                                 ? educations[3].prefix.amharic_name + " "
                                 : ""
@@ -1038,7 +1038,7 @@
                             class="underline  font-bold"
                             style="word-break: break-word"
                           >
-                          {{
+                            {{
                               educations[4].prefix
                                 ? educations[4].prefix.amharic_name + " "
                                 : ""
@@ -1054,7 +1054,7 @@
                             class="underline  font-bold"
                             style="word-break: break-word"
                           >
-                          {{
+                            {{
                               educations[5].prefix
                                 ? educations[5].prefix.amharic_name + " "
                                 : ""
@@ -1938,7 +1938,8 @@ export default {
                     certificateDetail.value.educations[i].otherProfessionType
                   }`
                 : certificateDetail.value.educations[i].professionType.name
-            }`
+            }`,
+            { maxWidth: 130 }
           );
         }
       }
@@ -1963,7 +1964,8 @@ export default {
                     certificateDetail.value.educations[i].otherProfessionType
                   }`
                 : certificateDetail.value.educations[i].professionType.name
-            }`
+            }`,
+            { maxWidth: 130 }
           );
         }
         let newI = 0;
@@ -1988,7 +1990,8 @@ export default {
                       certificateDetail.value.educations[i].otherProfessionType
                     }`
                   : certificateDetail.value.educations[i].professionType.name
-              }`
+              }`,
+              { maxWidth: 130 }
             );
           }
           newI += 1;
@@ -2131,7 +2134,8 @@ export default {
                 ? certificateDetail.value.educations[i].professionType
                     .amharicProfessionalType
                 : ""
-            }`
+            }`,
+            { maxWidth: 130 }
           );
         }
       } else {
@@ -2161,7 +2165,8 @@ export default {
                 ? certificateDetail.value.educations[i].professionType
                     .amharicProfessionalType
                 : ""
-            }`
+            }`,
+            { maxWidth: 130 }
           );
         }
         let newI = 0;
@@ -2196,7 +2201,8 @@ export default {
                   ? certificateDetail.value.educations[i].professionType
                       .amharicProfessionalType
                   : ""
-              }`
+              }`,
+              { maxWidth: 130 }
             );
             newI++;
           }
