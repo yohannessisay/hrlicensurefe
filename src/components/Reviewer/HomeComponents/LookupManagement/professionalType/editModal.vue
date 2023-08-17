@@ -137,14 +137,14 @@
                                     <option
                                       v-for="department in departments"
                                       :key="department.id"
-                                      :value="department"
+                                      :value="department.id"
                                     >
                                       {{ department.name }}
                                     </option>
                                   </select>
                                 </div>
                               </div>
-                            </div>
+                            </div> 
                             <!-- Professional Type Department -->
                             <!-- Professional Type Education Level -->
                             <div class="group w-full md:full lg:w-full ml-4">
@@ -194,7 +194,7 @@
                                   <option
                                     v-for="education in educationLevels"
                                     :key="education.id"
-                                    :value="education"
+                                    :value="education.id"
                                   >
                                     {{ education.name }}
                                   </option>
@@ -487,7 +487,7 @@ export default {
         name: editData.value ? editData.value.Name : "",
         departmentId:
           editData.value && editData.value.selectedDepartment
-            ? editData.value.selectedDepartment.id
+            ? editData.value.selectedDepartment
             : "",
             code: editData.value
           ? editData.value.Code
@@ -496,7 +496,7 @@ export default {
           : "",
         educationalLevelId:
           editData.value && editData.value.selectedEdLevel
-            ? editData.value.selectedEdLevel.id
+            ? editData.value.selectedEdLevel
             : "",
         amharicProfessionalType: editData.value.amharicProfessionalType
           ? editData.value.amharicProfessionalType

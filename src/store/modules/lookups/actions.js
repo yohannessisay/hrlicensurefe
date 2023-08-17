@@ -40,9 +40,18 @@ export default {
       return resp;
     }
   },
-  async getProfessionalType() {
+  async getProfessionalType(context,apiParameter) {
     try {
-      const resp = await ApiService.get(baseUrl + "/lookups/professionalTypes");
+      let url = `${baseUrl + "/lookups/professionalTypes"}?`;
+      let parameters = apiParameter[0].params ? apiParameter[0].params : [];
+    
+      if (parameters) {
+        parameters.forEach((param) => {
+          url += param ? `${param.key}=${param.value}&` : "";
+        });
+      }
+      url = url.substring(0, url.length - 1);
+      const resp = await ApiService.get(url);
       return resp;
     } catch (error) {
       const resp = error;
