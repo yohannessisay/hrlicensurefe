@@ -330,7 +330,7 @@
                                   class="font-semibold text-primary-700 mb-1"
                                   >Profession:</span
                                 >
-                                <span style="color:black">
+                                <span style="color:black" class="break-all">
                                   {{
                                     education.professionType
                                       ? education.professionType.name
