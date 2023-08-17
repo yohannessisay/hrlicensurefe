@@ -484,23 +484,20 @@
             </span>
             <span v-else>Add</span>
           </button>
-
         </div>
 
         <div
-            class="flex justify-center m-4"
-            v-if="
-              generalInfo.multipleDepartment &&
-                generalInfo.multipleDepartment.length == 0
-            "
-          >
-            <h2
-              class="text-xl text-yellow-300 font-bold border p-2 rounded-md"
-            >
-              * In order to proceed to the next step please choose one or more
-              department and add to the list
-            </h2>
-          </div>
+          class="flex justify-center m-4"
+          v-if="
+            generalInfo.multipleDepartment &&
+              generalInfo.multipleDepartment.length == 0
+          "
+        >
+          <h2 class="text-xl text-yellow-300 font-bold border p-2 rounded-md">
+            * In order to proceed to the next step please choose one or more
+            department and add to the list
+          </h2>
+        </div>
         <span v-if="multipleDepartmentError" class="text-red-300 m-4 "
           >Please fill in all fields</span
         >
@@ -907,6 +904,24 @@ export default {
         generalInfo.value.institutionSelected &&
         generalInfo.value.professionalTypeSelected
       ) {
+        if (
+          showOtherProfession.value &&
+          showOtherProfession.value == true &&
+          (generalInfo.value.otherProfessionalType == undefined ||
+            generalInfo.value.otherProfessionalTypeAmharic == undefined)
+        ) {
+          toast.error(
+            "Please fill other profession name in amharic and english",
+            {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            }
+          );
+          return;
+        }
         if (generalInfo.value.multipleDepartment.length > 3) {
           multipleDepartmentMaxError.value = true;
         } else {
@@ -1211,7 +1226,7 @@ export default {
       multipleDepartmentError,
       multipleDepartmentMaxError,
       generalInfo,
-      isLoading
+      isLoading,
     };
   },
 };

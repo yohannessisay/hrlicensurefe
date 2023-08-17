@@ -1638,7 +1638,7 @@ export default {
                     : generalInfo.value.educations
                     ? generalInfo.value.educations
                     : [];
-                console.log(educationLevels);
+                
                 //Get department docs
                 educationLevels.forEach((element) => {
                   store

@@ -481,7 +481,7 @@ export default {
 
             store.dispatch("goodstanding/setTempDocs", formData);
           } else if (isBackButtonClicked.value == true) {
-            console.log(documentUploaded);
+          
             finalLocalData.data = toRaw(documentUploaded.value);
             formData = new FormData();
 

@@ -1877,7 +1877,7 @@ export default {
       allowProfChange.value[depId] = !allowProfChange.value[depId];
       allowOtherProfChange.value[depId] = false;
 
-      console.log(allowProfChange.value);
+    
     };
 
     const changeNewProfession = (profession) => {

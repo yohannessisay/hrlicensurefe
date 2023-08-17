@@ -253,7 +253,7 @@
       let education_levels = ref([]);
 
       const fetchLicenseReport = (apiParameters) => {
-        console.log(apiParameters);
+      
         store
           .dispatch("reviewer/getAALegacyData", {
             params: apiParameters.params ? apiParameters.params : apiParameters,
