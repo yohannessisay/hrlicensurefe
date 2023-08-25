@@ -757,54 +757,40 @@ export default {
 
         store
           .dispatch("reviewer/transferLicenseReview", transfer.value)
-          .then((response) => {
-            if (response.statusText == "Created") {
-              toast.success("Selected application transfered Successfully", {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true,
-              });
-              isLoading.value = false;
-              transfer.value = {};
-              reviewer.value = {};
-              transferRemark.value = "";
-              emit("refreshTable");
-              if (document.getElementById("closeButton")) {
-                document.getElementById("closeButton").click();
-              }
-
-              let notification = {
-                user_id:
-                  modalData.value.data && modalData.value.data.applicant
-                    ? modalData.value.data.applicant.id
-                    : null,
-                reviewer_id: transfer.value.reviewerId,
-                new_license_id: modalData.value.data
-                  ? modalData.value.data.id
-                  : null,
-                message: modalData.value.data
-                  ? // eslint-disable-next-line prettier/prettier
-                    `Dear reviewer , a re-submitted new license application with code ${modalData.value.data.newLicenseCode} has been transfered to you.`
-                  : "",
-                type: "reviewer_new_license",
-                status: "new",
-              };
-              store.dispatch("notification/notifyReviewer", notification);
-            } else {
-              toast.error("Error transfering", {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true,
-              });
-              isLoading.value = false;
-              setTimeout(() => {
-                window.location.reload();
-              }, 3000);
+          .then(() => {
+            toast.success("Selected application transfered Successfully", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+            isLoading.value = false;
+            transfer.value = {};
+            reviewer.value = {};
+            transferRemark.value = "";
+            emit("refreshTable");
+            if (document.getElementById("closeButton")) {
+              document.getElementById("closeButton").click();
             }
+
+            let notification = {
+              user_id:
+                modalData.value.data && modalData.value.data.applicant
+                  ? modalData.value.data.applicant.id
+                  : null,
+              reviewer_id: transfer.value.reviewerId,
+              new_license_id: modalData.value.data
+                ? modalData.value.data.id
+                : null,
+              message: modalData.value.data
+                ? // eslint-disable-next-line prettier/prettier
+                  `Dear reviewer , a re-submitted new license application with code ${modalData.value.data.newLicenseCode} has been transfered to you.`
+                : "",
+              type: "reviewer_new_license",
+              status: "new",
+            };
+            store.dispatch("notification/notifyReviewer", notification);
           })
           .catch(() => {
             toast.error("Error transfering", {

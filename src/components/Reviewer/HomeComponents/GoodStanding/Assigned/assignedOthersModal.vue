@@ -542,7 +542,7 @@
                                   <span class="text-grey-800 ml-2">
                                     {{
                                       modalData.data &&
-                                      modalData.data.GSProfessionals&&
+                                      modalData.data.GSProfessionals &&
                                       modalData.data.GSProfessionals
                                         .professionalTypes
                                         ? modalData.data.GSProfessionals
@@ -750,32 +750,18 @@ export default {
         isLoading.value = true;
         store
           .dispatch("reviewer/transferGoodStandingReview", transfer.value)
-          .then((response) => {
-            if (response.statusText == "Created") {
-              toast.success("Selected reviewer is successfully assigned", {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true,
-              });
-              isLoading.value = false;
-              setTimeout(() => {
-                window.location.reload();
-              }, 1000);
-            } else {
-              toast.error("Error Occured", {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true,
-              });
-              isLoading.value = false;
-              setTimeout(() => {
-                window.location.reload();
-              }, 1000);
-            }
+          .then(() => {
+            toast.success("Selected reviewer is successfully assigned", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+            isLoading.value = false;
+            setTimeout(() => {
+              window.location.reload();
+            }, 1000);
           })
           .catch(() => {
             toast.error("Error Occured", {
