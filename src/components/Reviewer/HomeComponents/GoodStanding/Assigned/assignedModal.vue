@@ -730,8 +730,8 @@ export default {
         isLoading.value = true;
         store
           .dispatch("reviewer/transferGoodStandingReview", transfer.value)
-          .then((response) => {
-            if (response.statusText == "Created") {
+          .then(() => {
+          
               toast.success("Selected reviewer is successfully assigned", {
                 timeout: 5000,
                 position: "bottom-center",
@@ -743,19 +743,7 @@ export default {
               setTimeout(() => {
                 window.location.reload();
               }, 1000);
-            } else {
-              toast.error("Error Occured", {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true,
-              });
-              isLoading.value = false;
-              setTimeout(() => {
-                window.location.reload();
-              }, 3000);
-            }
+           
           })
           .catch(() => {
             toast.error("Error Occured", {

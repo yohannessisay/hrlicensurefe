@@ -398,14 +398,14 @@ export default {
         offset = offset / 10;
         if (sort == "asc") {
           fetchprofessionalType([
-            { key: "page", value: 0 },
-            { key: "size", value: 10 },
+            { key: "page", value: offset },
+            { key: "size", value: limit },
             { key: "value", value: searchTerm.value },
           ]);
         } else {
           fetchprofessionalType([
-            { key: "page", value: 0 },
-            { key: "size", value: 10 },
+            { key: "page", value: offset },
+            { key: "size", value: limit },
             { key: "value", value: searchTerm.value },
           ]);
         }

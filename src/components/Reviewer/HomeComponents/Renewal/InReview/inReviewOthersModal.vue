@@ -371,7 +371,6 @@
                                       Transfer
                                     </button>
                                   </div>
-                               
                                 </div>
                               </div>
                             </label>
@@ -659,10 +658,10 @@ import { googleApi } from "@/composables/baseURL";
 export default {
   props: ["modalDataIdOthers", "reviewers"],
   components: {
-    Loading
+    Loading,
   },
   computed: {
-    moment: () => moment
+    moment: () => moment,
   },
   setup(props, { emit }) {
     const store = useStore();
@@ -680,7 +679,7 @@ export default {
       reviewerId: null,
       licenseId: null,
       createdByAdminId: null,
-      transferRemark: ""
+      transferRemark: "",
     });
     let role = ref({});
     let isLoading = ref(false);
@@ -689,8 +688,8 @@ export default {
     const evaluationData = ref({});
     let reviewerAdminId = ref(0);
 
-    const fetchRole = id => {
-      store.dispatch("reviewer/getRoles", id).then(res => {
+    const fetchRole = (id) => {
+      store.dispatch("reviewer/getRoles", id).then((res) => {
         role.value = res.data.data.role;
       });
     };
@@ -707,7 +706,7 @@ export default {
             position: "bottom-center",
             pauseOnFocusLoss: true,
             pauseOnHover: true,
-            icon: true
+            icon: true,
           }
         );
         return;
@@ -717,47 +716,36 @@ export default {
           reviewerId: transfer.value.reviewerId,
           expertLevelId: modalData.value.data.expertLevelId,
           createdByAdminId: +localStorage.getItem("adminId"),
-          transferRemark: transferRemark.value
+          transferRemark: transferRemark.value,
         };
 
         store
           .dispatch("reviewer/transferRenewalReview", transfer.value)
-          .then(response => {
-            if (response.statusText == "Created") {
-              toast.success("Selected application transfered Successfully", {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true
-              });
-              isLoading.value = false;
-              transfer.value = {};
-              reviewer.value = {};
-              transferRemark.value = "";
-              if (document.getElementById("closeButtonOther")) {
-                document.getElementById("closeButtonOther").click();
-              }
-              emit("refreshTable");
-            } else {
-              toast.error("Error transfering", {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true
-              });
-              isLoading.value = false;
+          .then(() => {
+            toast.success("Selected application transfered Successfully", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+            isLoading.value = false;
+            transfer.value = {};
+            reviewer.value = {};
+            transferRemark.value = "";
+            if (document.getElementById("closeButtonOther")) {
+              document.getElementById("closeButtonOther").click();
             }
+            emit("refreshTable");
           })
-          .catch(error => {
+          .catch((error) => {
             console.log(error);
             toast.error("Error transfering", {
               timeout: 5000,
               position: "bottom-center",
               pauseOnFocusLoss: true,
               pauseOnHover: true,
-              icon: true
+              icon: true,
             });
             isLoading.value = false;
           });
@@ -769,11 +757,11 @@ export default {
     };
     const resultQuery = () => {
       if (reviewer.value.name) {
-        let data = props.reviewers.filter(item => {
+        let data = props.reviewers.filter((item) => {
           return reviewer.value.name
             .toLowerCase()
             .split(" ")
-            .every(v => item.name.toLowerCase().includes(v));
+            .every((v) => item.name.toLowerCase().includes(v));
         });
 
         return data;
@@ -782,12 +770,12 @@ export default {
       }
     };
 
-    const setInput = value => {
+    const setInput = (value) => {
       reviewer.value = {
         id: value.id,
         name: value.name,
         expertLevel: value.expertLevel.code,
-        role: value.role.code
+        role: value.role.code,
       };
       transfer.value.reviewerId = value.id;
       showOptions.value = false;
@@ -806,11 +794,8 @@ export default {
     let result;
     const check = () => {
       store
-        .dispatch(
-          "reviewer/getRenewalApplication",
-          props.modalDataIdOthers.id
-        )
-        .then(res => {
+        .dispatch("reviewer/getRenewalApplication", props.modalDataIdOthers.id)
+        .then((res) => {
           if (res.data.status == "Success") {
             result = res.data.data;
             modalData.value.name =
@@ -877,9 +862,9 @@ export default {
       fullPage,
       adminRole,
       evaluationData,
-      transferReviewer
+      transferReviewer,
     };
-  }
+  },
 };
 </script>
 
