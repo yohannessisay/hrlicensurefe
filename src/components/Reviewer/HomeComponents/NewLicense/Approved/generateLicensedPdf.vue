@@ -24,6 +24,8 @@
         finalData &&
         finalData.data &&
         finalData.data.applicantType &&
+        finalData.printType != 'externship' &&
+        finalData.printType != 'temporary' &&
         (finalData.data.applicantType.code == 'ETH' ||
           finalData.data.applicantType.code == 'ETHABRO')
           ? 'modal-dialog modal-dialog-centered modal-xl ml-8 mr-8 relative w-auto pointer-events-none'
@@ -1161,73 +1163,42 @@
           contenteditable="true"
           id="foreignersPrintedDiv"
         >
-          <div class="grid grid-cols-2 mt-48">
+          <div class="grid grid-cols-2 mt-32">
             <div class="flex justify-start" contenteditable="false">
               <img :src="qrSrc" alt="" style="height: 150px;width: 150px;" />
             </div>
-            <div class="flex justify-end">
-              <div class="grid grid-cols-1">
-                <h2 class="text-primary-600 font-bold text-xl">
-                  ቀን
-                  <span class="ml-4 ">{{
-                    new Date().toISOString().slice(0, 10)
-                  }}</span>
-                </h2>
-                <h2 class="text-primary-600 font-bold text-xl -mt-12">
-                  ቁጥር _________________________
-                </h2>
-              </div>
-            </div>
           </div>
-          <h2 class="mt-20 ml-8" contenteditable="true">
+          <h2 class="mt-8 ml-8" contenteditable="true">
             ለ፡____________________________________
           </h2>
-          <p class=" mt-12 px-8  tracking-widest">
-            ስለ ውጭ ሀገር የጤና ባለሙያዎች ምዝገባ ጉዳይ በቀን
+          <h2 class="mt-8 ml-8" contenteditable="true">
+            ጉዳዩ፡-የሙያ ስራ ፍቃድ ምዝገባን ይመለከታል
+          </h2>
+          <p class=" mt-8 px-12  tracking-widest">
+            በቀን
             {{
               finalData && finalData.data && finalData.data.certifiedDate
                 ? finalData.data.certifiedDate.slice(0, 10)
                 : ""
             }}
-
-            በቁጥር
+            ዓ.ም በቁጥር
             {{
               finalData && finalData.data && finalData.data.newLicenseCode
                 ? finalData.data.newLicenseCode
                 : ""
-            }}
-            የተጻፈውን ደብዳቤ ይመለከታል፡፡ በቀረበው ጥያቄ መሰረት የተጠቃሾቹ የትምህርት ማስረጃ ከተገመገመ በኋላ
-            በስማቸው ትይዩ በተጠቀሰው ስያሜ ከ
+            }}. የተጻፈውን ደብዳቤ ለውጭ ሀገር ዜጋ የጤና ባለሙያ የሙያ ፍቃድ መጠየቃችሁ ይታወቃል፡፡ በዚህም መሰረት
+            የቀረቡ የትምህርት ማስረጃዎች ከተገመገሙ በኃላ በስማቸው ትይዩ በተጠቀሰው ሥያሜ ከቀን
             {{
               finalData && finalData.data && finalData.data.certifiedDate
                 ? finalData.data.certifiedDate.slice(0, 10)
                 : ""
             }}
-            .ዓ.ም ጀምሮ ለ
-            {{
-              finalData &&
-              finalData.data &&
-              finalData.data.licenseExpirationDate
-                ? Number(finalData.data.licenseExpirationDate.slice(0, 4)) -
-                  Number(new Date().toISOString().slice(0, 4))
-                : ""
-            }}
-            ዓመት የተመዘገቡ መሆኑንና ከ
-            {{
-              finalData &&
-              finalData.data &&
-              finalData.data.licenseExpirationDate
-                ? Number(finalData.data.licenseExpirationDate.slice(0, 4)) -
-                  Number(new Date().toISOString().slice(0, 4))
-                : ""
-            }}
-            ዓመት በኋላ በሀገር ውስጥ ካሉ ፈቃዳቸውን ማደስ እንደሚገባ እየገለጽን ይህን ፈቃድ ሰጥተናቸዋል፡፡
+            ጀምሮ ለ ___. የተመዘገቡና የሙያ ፍቃድ የተሰጣቸው መሆኑን እየገለጽን፤ ጊዜአቸውን ጨርሰው ወይም አቋርጠው
+            ተቋሙን ከለቀቁ ይህን የሙያ ፍቃድ ደብዳቤ ተመላሽ እንድታደርጉ እናሳስባለን፡፡
           </p>
 
-          <p class="px-8 tracking-widest "></p>
-
           <div
-            class="grid justify-items-center mt-8 mb-20"
+            class="grid justify-items-center mt-8 mb-12"
             contenteditable="false"
           >
             <table class=" border text-center text-sm font-light ">
@@ -1240,7 +1211,7 @@
                     scope="col"
                     class="border-r px-6 py-4 dark:border-neutral-500"
                   >
-                    የስም ዝርዝር
+                    የባለሙያ ስም
                   </th>
                   <th
                     scope="col"
@@ -1303,11 +1274,14 @@
               </tbody>
             </table>
           </div>
-          <div class="text-left ml-4">
-            <h5>ግልባጭ</h5>
+          <div class="text-left ml-4 px-8">
+            <h5 class="mt-4   text-right">//ከሰላምታ ጋር//</h5>
+            <h5 class="mt-8">ግልባጭ</h5>
             <h5>ለ፡ብቃትና ሰው ሀብት አስተዳደር ስራ አስፈጻሚ አዲስ አበባ</h5>
+            <h5>ጤና ሚኒስቴር</h5>
+            <h5>ለ፡ጤናና ጤና-ነክ ተቋማት እና ባለሙያዎች ቁጥጥር መሪ ሥራ አስፈፃሚ</h5>
+            <h5>ጤና ሚኒስቴር</h5>
           </div>
-          <h5 class="mt-12   text-right">//ከሰላምታ ጋር//</h5>
         </div>
         <!-- end of applicant as foreigner -->
 
@@ -1323,53 +1297,49 @@
           contenteditable="true"
           id="externshipPrintedDiv"
         >
-          <div class="grid grid-cols-2 mb-8 mt-48">
+          <div class="grid grid-cols-2 mb-8 mt-24">
             <div class="flex justify-start" contenteditable="false">
               <img :src="qrSrc" alt="" style="height: 150px;width: 150px;" />
             </div>
-            <div class="flex justify-end">
-              <div class="grid grid-cols-1">
-                <h2 class="text-primary-600 font-bold text-xl">
-                  ቀን
-                  <span class="ml-4 ">{{
-                    new Date().toISOString().slice(0, 10)
-                  }}</span>
-                </h2>
-                <h2 class="text-primary-600 font-bold text-xl -mt-12">
-                  ቁጥር _________________________
-                </h2>
-              </div>
-            </div>
           </div>
-          <h2 contenteditable="true">ለ፡_________________________</h2>
-          <p>አዲስ አበባ</p>
-
-          <p class="p-4 mt-8">
-            <span class="ml-4">ከዚህ</span> በታች
-            <span contenteditable="true">ስሟ/ሙ</span> በሰንጠረዥ የተመለከቱት ባለሙያ በ
-            <span contenteditable="true" class=" font-bold">
-              __________________
-            </span>
-            ከሚገኘው
-            <span class=" font-bold">{{
-              finalData.data && finalData.data.educations
-                ? finalData.data.educations[0].institution.name
-                : ""
-            }}</span>
-            የህክምና ትምህርቷን
-            <span contenteditable="true" class=" font-bold"
-              >ስትከታተል/ሲከታተል ቆይታ/ቶ</span
+          <h5 class="mt-4">ለ፡____________________________________</h5>
+          <h5 class="mt-4">
+            ጉዳዩ፡-ከውጭ ሀገር ትምህርታቸውን አጠናቀው ስለመጡ ኢትዮጵያዊያን Externship መመደብን ይመለከታል፡፡
+          </h5>
+          <p class="mt-8 px-8 tracking-widest">
+            ከዚህ በታች ስሟ（ሙ） በሰንጠረዡ የተገለፁው የጤና ባለሙያ
+            <span
+              v-for="education in finalData &&
+              finalData.data &&
+              finalData.data.educations
+                ? finalData.data.educations
+                : []"
+              :key="education.id"
             >
-            ኤክስተርንሺፕ ሀገር ውስጥ ለመስራት በቀን ባቀረቡት ማመልከቻ ጠይቀዋል፡፡ በዚህም መሠረት ጉዳያቸው በ
-            <span contenteditable="true" class=" font-bold">_____________</span>
-            ቀርቦ ከታየ ከተገመገመ በኃላ To Work externship as a
-            <span contenteditable="true" class=" font-bold">_____________</span
-            >በሚል ፀድቆቸው ተመዝገበዋል፡፡ ስለዚህም ልምምዱን ከ
-            <span contenteditable="true" class=" font-bold">___/___/___</span>
-            ጀምሮ ለ
-            <span contenteditable="true" class=" font-bold">_____________</span
-            >እንዲከታተሉ የተመደቡ መሆኑን እየገለጽን፤ ሆስፒታሉ በአንድ አመት መጨረሻ አስፈላጊውን ሁሉ በመፈጸም
-            የባለሙያዋን ውጤቱን እንድታሳውቁን እንጠይቃለን፡፡
+              {{
+                `በ ________ ሀገር ከሚገኘው  
+                  ${education.institution.name} 
+                  በ
+                  ${
+                    education && education.prefix ? education.prefix.name : ""
+                  } ${
+                  education &&
+                  education.isDropped != true &&
+                  education.professionType &&
+                  education.professionType.name == "other"
+                    ? education.otherProfessionType
+                    : education.professionType
+                    ? education.professionType.name
+                    : ""
+                }, `
+              }}
+            </span>
+            የትምህርት መስክ በመከታተል ኢትዮጵያ ውስጥ ኤክስተርንሽፕ (Externship) ለመስራት
+            በቀን___________ቀርቦ ከተገመገመ በኃላ____________________________በሚል
+            ፀድቆላቸዋል፡፡ ስለዚህም ልምምዱን ከ__/__/__ ጀምሮ
+            ለ_________________________እንዲከታተሉ የተመደቡ መሆኑን እየገለጽን፤የትምህርት ተቋሙ
+            በ_______________________መጨረሻ ላይ አስፈላጊውን፤ግምገማ በማድረግ የባለሙያዋን/ውን ውጤት
+            እንድታሣውቁን እንጠይቃለን፡፡
           </p>
 
           <div class="grid justify-items-center mt-8">
@@ -1383,30 +1353,16 @@
                     scope="col"
                     class="border-r px-6 py-4 dark:border-neutral-500"
                   >
-                    የስም ዝርዝር
-                  </th>
-                  <th
-                    scope="col"
-                    class="border-r px-6 py-4 dark:border-neutral-500"
-                  >
-                    የሙያ ስያሜ
+                    የባለሙያ ስም
                   </th>
                 </tr>
               </thead>
               <tbody>
-                <tr
-                  class="border-b dark:border-neutral-500"
-                  v-for="(educations, index) in finalData &&
-                  finalData.data &&
-                  finalData.data.educations
-                    ? finalData.data.educations
-                    : []"
-                  :key="educations.id"
-                >
+                <tr class="border-b dark:border-neutral-500">
                   <td
                     class="whitespace-nowrap border-r px-6 py-4 font-medium dark:border-neutral-500"
                   >
-                    {{ (index += 1) }}
+                    1
                   </td>
                   <td
                     contenteditable="false"
@@ -1422,33 +1378,15 @@
                         : []
                     }}
                   </td>
-                  <td
-                    contenteditable="false"
-                    class="whitespace-nowrap border-r px-6 py-4 "
-                  >
-                    {{
-                      educations && educations.prefix
-                        ? educations.prefix.name
-                        : ""
-                    }}
-                    {{
-                      educations &&
-                      educations.isDropped != true &&
-                      educations.professionType &&
-                      educations.professionType.name == "other"
-                        ? educations.otherProfessionType
-                        : educations.professionType
-                        ? educations.professionType.name
-                        : ""
-                    }}
-                  </td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <div class="text-left mt-12"></div>
-
           <h5 class="mt-8 text-right">//ከሰላምታ ጋር//</h5>
+          <div class="text-left mt-8">
+            <h5>ግልባጭ</h5>
+            <h5>ለ፡ጤናና ጤና-ነክ ተቋማት እና ባለሙያዎች ቁጥጥር መሪ ሥራ አስፈፃሚ ጤና ሚኒስቴር</h5>
+          </div>
         </div>
         <!-- end of question being asked is externship-->
 
@@ -1464,22 +1402,9 @@
           class="p-8 m-8 "
           id="temporaryPrintedDiv"
         >
-          <div class="grid grid-cols-2 mb-8 mt-48">
+          <div class="grid grid-cols-2 mb-8 mt-24">
             <div class="flex justify-start" contenteditable="false">
               <img :src="qrSrc" alt="" style="height: 150px;width: 150px;" />
-            </div>
-            <div class="flex justify-end">
-              <div class="grid grid-cols-1">
-                <h2 class="text-primary-600 font-bold text-xl">
-                  ቀን
-                  <span class="ml-4 ">{{
-                    new Date().toISOString().slice(0, 10)
-                  }}</span>
-                </h2>
-                <h2 class="text-primary-600 font-bold text-xl -mt-12">
-                  ቁጥር _________________________
-                </h2>
-              </div>
             </div>
           </div>
           <h2 contenteditable="true">ለ__________________________</h2>
@@ -1501,7 +1426,7 @@
           የተጻፈውን ደብዳቤ ይመለከታል። በቀረበው ጥያቄ መሰረት የተጠቃሹ የትምህርት ማስረጃ ከተገመገመ በሁዋላ በስማችው
           ትይዩ በተጠቀሰው ስያሜ
           <p>
-            ከ <span contenteditable="true">___/___/___</span> ዓ.ም ጀምሮ ለ
+            ከ <span >___/___/___</span> ዓ.ም ጀምሮ ለ
             <span class="">
               {{
                 finalData &&
@@ -1537,34 +1462,34 @@
                     scope="col"
                     class="border-r px-6 py-4 dark:border-neutral-500"
                   >
-                    የስም ዝርዝር
+                    የባለሙያ ስም
                   </th>
                   <th
                     scope="col"
                     class="border-r px-6 py-4 dark:border-neutral-500"
                   >
-                    የሙያ ስያሜ
+                  የሙያ ስያሜ
                   </th>
                 </tr>
               </thead>
               <tbody>
                 <tr
-                  class="border-b dark:border-neutral-500"
                   v-for="(educations, index) in finalData &&
                   finalData.data &&
                   finalData.data.educations
                     ? finalData.data.educations
                     : []"
                   :key="educations.id"
+                  class="border-b dark:border-neutral-500"
                 >
                   <td
                     class="whitespace-nowrap border-r px-6 py-4 font-medium dark:border-neutral-500"
                   >
-                    {{ (index += 1) }}
+                    {{ index+1 }}
                   </td>
                   <td
-                    class="whitespace-nowrap border-r px-6 py-4 "
                     contenteditable="false"
+                    class="whitespace-nowrap border-r px-6 py-4 "
                   >
                     {{
                       finalData && finalData.data && finalData.data.profile
@@ -1600,7 +1525,6 @@
               </tbody>
             </table>
           </div>
-          <div class="text-left mt-12"></div>
 
           <h5 class="mt-8 text-right">//ከሰላምታ ጋር//</h5>
         </div>

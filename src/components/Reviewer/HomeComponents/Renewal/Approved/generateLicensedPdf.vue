@@ -1149,85 +1149,46 @@
               modalData.printType != 'temporary' &&
               modalData.data.applicantType.code == 'FOR'
           "
-          class="p-2 m-2 "
+          class="p-8 m-8 "
           contenteditable="true"
           id="foreignersPrintedDiv"
         >
-          <div class="grid grid-cols-2 mt-48">
+        <div class="grid grid-cols-2 mt-20">
             <div class="flex justify-start" contenteditable="false">
               <img :src="qrSrc" alt="" style="height: 150px;width: 150px;" />
             </div>
-            <div class="flex justify-end">
-              <div class="grid grid-cols-1">
-                <h2 class="text-primary-600 font-bold text-xl">
-                  ቀን
-                  <span class="ml-4 ">{{
-                    new Date().toISOString().slice(0, 10)
-                  }}</span>
-                </h2>
-                <h2 class="text-primary-600 font-bold text-xl -mt-12">
-                  ቁጥር _________________________
-                </h2>
-              </div>
-            </div>
           </div>
-          <h2 class="mt-20 ml-8" contenteditable="true">
+          <h2 class="mt-8 ml-8" contenteditable="true">
             ለ፡____________________________________
           </h2>
-          <p class=" mt-12 px-8  tracking-widest">
-            ስለ ውጭ ሀገር የጤና ባለሙያዎች ምዝገባ ጉዳይ በቀን
-            <span class="">
-              {{
-                modalData && modalData.data && modalData.data.certifiedDate
-                  ? modalData.data.certifiedDate.slice(0, 10)
-                  : ""
-              }}
-            </span>
-            በቁጥር
-            <span class="">
-              {{
-                modalData && modalData.data && modalData.data.renewalCode
-                  ? modalData.data.renewalCode
-                  : ""
-              }}
-            </span>
-            የተጻፈውን ደብዳቤ ይመለከታል፡፡ በቀረበው ጥያቄ መሰረት የተጠቃሾቹ የትምህርት ማስረጃ ከተገመገመ በኋላ
-            በስማቸው ትይዩ በተጠቀሰው ስያሜ ከ
-            <span class="">
-              {{
-                modalData && modalData.data && modalData.data.certifiedDate
-                  ? modalData.data.certifiedDate.slice(0, 10)
-                  : ""
-              }} </span
-            >.ዓ.ም ጀምሮ ለ
-            <span class="">
-              {{
-                modalData &&
-                modalData.data &&
-                modalData.data.licenseExpirationDate
-                  ? Number(modalData.data.licenseExpirationDate.slice(0, 4)) -
-                    Number(new Date().toISOString().slice(0, 4))
-                  : ""
-              }}
-            </span>
-            ዓመት የተመዘገቡ መሆኑንና ከ
-            <span class="">
-              {{
-                modalData &&
-                modalData.data &&
-                modalData.data.licenseExpirationDate
-                  ? Number(modalData.data.licenseExpirationDate.slice(0, 4)) -
-                    Number(new Date().toISOString().slice(0, 4))
-                  : ""
-              }}
-            </span>
-            ዓመት በኋላ በሀገር ውስጥ ካሉ ፈቃዳቸውን ማደስ እንደሚገባ እየገለጽን ይህን ፈቃድ ሰጥተናቸዋል፡፡
+          <h2 class="mt-4 ml-8" contenteditable="true">
+            ጉዳዩ፡-የሙያ ስራ ፍቃድ ምዝገባን ይመለከታል
+          </h2>
+          <p class=" mt-4 px-12  tracking-widest">
+            በቀን
+            {{
+              modalData && modalData.data && modalData.data.certifiedDate
+                ? modalData.data.certifiedDate.slice(0, 10)
+                : ""
+            }}
+            ዓ.ም በቁጥር
+            {{
+              modalData && modalData.data && modalData.data.newLicenseCode
+                ? finalData.data.newLicenseCode
+                : ""
+            }}. የተጻፈውን ደብዳቤ ለውጭ ሀገር ዜጋ የጤና ባለሙያ የሙያ ፍቃድ መጠየቃችሁ ይታወቃል፡፡ በዚህም መሰረት
+            የቀረቡ የትምህርት ማስረጃዎች ከተገመገሙ በኃላ በስማቸው ትይዩ በተጠቀሰው ሥያሜ ከቀን
+            {{
+              modalData && modalData.data && modalData.data.certifiedDate
+                ? modalData.data.certifiedDate.slice(0, 10)
+                : ""
+            }}
+            ጀምሮ ለ ___. የተመዘገቡና የሙያ ፍቃድ የተሰጣቸው መሆኑን እየገለጽን፤ ጊዜአቸውን ጨርሰው ወይም አቋርጠው
+            ተቋሙን ከለቀቁ ይህን የሙያ ፍቃድ ደብዳቤ ተመላሽ እንድታደርጉ እናሳስባለን፡፡
           </p>
 
-          <p class="px-8 tracking-widest "></p>
-
           <div
-            class="grid justify-items-center mt-8 mb-20"
+            class="grid justify-items-center mt-8 mb-12"
             contenteditable="false"
           >
             <table class=" border text-center text-sm font-light ">
@@ -1240,7 +1201,7 @@
                     scope="col"
                     class="border-r px-6 py-4 dark:border-neutral-500"
                   >
-                    የስም ዝርዝር
+                    የባለሙያ ስም
                   </th>
                   <th
                     scope="col"
@@ -1267,7 +1228,7 @@
                   </td>
                   <td
                     contenteditable="false"
-                    class="whitespace-nowrap border-r px-6 py-4 "
+                    class="whitespace-nowrap border-r px-6 py-4"
                   >
                     {{
                       modalData && modalData.data && modalData.data.profile
@@ -1303,11 +1264,14 @@
               </tbody>
             </table>
           </div>
-          <div class="text-left ml-4">
-            <h5>ግልባጭ</h5>
+          <div class="text-left ml-4 px-8">
+            <h5 class="mt-4   text-right">//ከሰላምታ ጋር//</h5>
+            <h5 class="mt-8">ግልባጭ</h5>
             <h5>ለ፡ብቃትና ሰው ሀብት አስተዳደር ስራ አስፈጻሚ አዲስ አበባ</h5>
+            <h5>ጤና ሚኒስቴር</h5>
+            <h5>ለ፡ጤናና ጤና-ነክ ተቋማት እና ባለሙያዎች ቁጥጥር መሪ ሥራ አስፈፃሚ</h5>
+            <h5>ጤና ሚኒስቴር</h5>
           </div>
-          <h5 class="mt-12   text-right">//ከሰላምታ ጋር//</h5>
         </div>
         <!-- end of applicant as foreigner -->
 
