@@ -621,6 +621,8 @@ export default {
       });
     };
     const applicantTypeChangeHandler = async () => {
+      generalInfo.value.applicantTypeSelected = generalInfo.value.applicantType;
+      generalInfo.value.applicantTypeId = generalInfo.value.applicantType.id;
       if (generalInfo.value.applicantType.code == "ETH") {
         showLocation.value = true;
         showOccupation.value = true;

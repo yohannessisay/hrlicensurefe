@@ -916,9 +916,9 @@
           inline-block
           px-6
           py-2.5
-          bg-white
-          hover:bg-main-400 hover:text-white
-          text-main-400 text-xs
+          bg-main-400
+          hover:bg-white hover:text-main-400
+          text-white text-xs
           font-bold
           leading-tight
           uppercase

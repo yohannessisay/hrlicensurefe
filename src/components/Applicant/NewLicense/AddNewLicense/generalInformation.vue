@@ -1018,14 +1018,16 @@ export default {
         existingLicense.value.length > 0
       ) {
         existingLicense.value.forEach((element) => {
-          if (element.educations) {
+          if (element.educations && element.applicationStatus.code != "WD") {
             tempComparision.push({
               licenseId: element.id,
+              licenseStatus: element.applicationStatus.code,
               educations: element.educations,
             });
           }
         });
       }
+      console.log(tempComparision);
       let tempError = false;
       tempComparision.forEach((existingEd) => {
         generalInfo.value.education.forEach((newEd) => {
