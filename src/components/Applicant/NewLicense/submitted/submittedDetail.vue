@@ -22,26 +22,26 @@
       </ol>
     </nav>
     <div class="vld-parent">
-          <loading
-            :active="isLoading"
-            :can-cancel="true"
-            :is-full-page="false"
-            :color="'#2F639D'"
-            :opacity="0.7"
-          ></loading>
-    <div v-if="invalidLicenseStat == false">
-      <div
-        v-if="activeState == 1"
-        class="block p-6 rounded-lg shadow-md bg-white max-w-full mb-8 "
-      >
-        <div class="mt-small flex justify-center">
-          <h2
-            class="text-main-400 text-xl lg:text-3xl font-bold sm:text-xl border-b-4"
-          >
-            General Information
-          </h2>
-        </div>
-  
+      <loading
+        :active="isLoading"
+        :can-cancel="true"
+        :is-full-page="false"
+        :color="'#2F639D'"
+        :opacity="0.7"
+      ></loading>
+      <div v-if="invalidLicenseStat == false">
+        <div
+          v-if="activeState == 1"
+          class="block p-6 rounded-lg shadow-md bg-white max-w-full mb-8 "
+        >
+          <div class="mt-small flex justify-center">
+            <h2
+              class="text-main-400 text-xl lg:text-3xl font-bold sm:text-xl border-b-4"
+            >
+              General Information
+            </h2>
+          </div>
+
           <form @submit.prevent="submit" class="mx-auto w-full mt-10">
             <div class="mb-4 border-b-2">
               <!-- applican type -->
@@ -71,6 +71,12 @@
                       {{ applicant.name }}
                     </option>
                   </select>
+                  <small
+                    class="text-main-400"
+                    v-if="generalInfo.multipleDepartment.length > 0"
+                    >*To change this field please clear any department related
+                    information below by clicking the delete icon</small
+                  >
                 </div>
                 <div v-if="showLanguage" class="">
                   <label class="text-main-400">Language Type</label>
@@ -431,6 +437,13 @@
 
             <div class="flex justify-end mb-2 mr-1">
               <button
+                class="px-6 mr-2 mb-2 py-2.5 bg-yellow-300 text-white font-medium border text-xs leading-tight uppercase rounded shadow-md hover:text-yellow-300 hover:border-yellow-300 hover:bg-white transition duration-150 ease-in-out"
+                type="submit"
+                @click="withdraw()"
+              >
+                Withdraw
+              </button>
+              <button
                 :class="
                   generalInfo.educations.length > 0
                     ? 'px-6 mr-2 mb-2 py-2.5 bg-white text-main-400 font-medium border text-xs leading-tight uppercase rounded shadow-md hover:text-white hover:border-main-400 hover:bg-main-400 transition duration-150   ease-in-out'
@@ -441,41 +454,33 @@
               >
                 Next
               </button>
-              <button
-                class="px-6 mr-2 mb-2 py-2.5 bg-yellow-300 text-white font-medium border text-xs leading-tight uppercase rounded shadow-md hover:text-yellow-300 hover:border-yellow-300 hover:bg-white transition duration-150 ease-in-out"
-                type="submit"
-                @click="withdraw()"
-              >
-                Withdraw
-              </button>
             </div>
           </form>
-      
+        </div>
+        <transition name="fade" mode="out-in">
+          <div v-if="activeState == 2">
+            <Upload
+              :activeState="2"
+              @changeActiveState="activeState++"
+              @changeActiveStateMinus="activeState--"
+            />
+          </div>
+        </transition>
+        <transition name="fade" mode="out-in">
+          <div v-if="activeState == 3">
+            <LicenseSummary
+              :activeState="3"
+              @changeActiveState="activeState++"
+              @changeActiveStateMinus="activeState--"
+            />
+          </div>
+        </transition>
       </div>
-      <transition name="fade" mode="out-in">
-        <div v-if="activeState == 2">
-          <Upload
-            :activeState="2"
-            @changeActiveState="activeState++"
-            @changeActiveStateMinus="activeState--"
-          />
-        </div>
-      </transition>
-      <transition name="fade" mode="out-in">
-        <div v-if="activeState == 3">
-          <LicenseSummary
-            :activeState="3"
-            @changeActiveState="activeState++"
-            @changeActiveStateMinus="activeState--"
-          />
-        </div>
-      </transition>
-    </div>
-    <div v-if="invalidLicenseStat == true">
-      <h2 class="text-main-400 font-bold text-2xl">
-        License is currently being reviewed and editing is not allowed
-      </h2>
-    </div>
+      <div v-if="invalidLicenseStat == true">
+        <h2 class="text-main-400 font-bold text-2xl">
+          License is currently being reviewed and editing is not allowed
+        </h2>
+      </div>
     </div>
   </main-content>
 </template>
@@ -642,9 +647,12 @@ export default {
         });
     };
     const applicantTypeChangeHandler = async () => {
+      generalInfo.value.applicantTypeSelected = generalInfo.value.applicantType;
+      generalInfo.value.applicantTypeId = generalInfo.value.applicantType.id;
       if (generalInfo.value.applicantType.code == "ETH") {
         showLocation.value = true;
         showOccupation.value = true;
+
         fetchInstitutions(true);
       } else {
         showLocation.value = false;
@@ -718,7 +726,7 @@ export default {
         generalInfo.value.professionalTypeSelected
       ) {
         if (
-           generalInfo.value.applicantTypeSelected.code != "FOR" &&
+          generalInfo.value.applicantTypeSelected.code != "FOR" &&
           showOtherProfession.value &&
           showOtherProfession.value == true &&
           (generalInfo.value.otherProfessionalType == undefined ||
@@ -829,7 +837,7 @@ export default {
       window.localStorage.setItem(
         "NLApplicationData",
         JSON.stringify(tempApplicationData)
-      ); 
+      );
       store
         .dispatch("newlicense/setGeneralInfo", generalInfo.value)
         .then(() => {

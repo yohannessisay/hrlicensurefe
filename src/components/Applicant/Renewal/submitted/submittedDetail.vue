@@ -425,6 +425,13 @@
 
             <div class="flex justify-end mb-2 mr-1">
               <button
+                class="px-6 mr-2 mb-2 py-2.5 bg-yellow-300 text-white font-medium border text-xs leading-tight uppercase rounded shadow-md hover:text-yellow-300 hover:border-yellow-300 hover:bg-white transition duration-150 ease-in-out"
+                type="submit"
+                @click="withdraw()"
+              >
+                Withdraw
+              </button>
+              <button
                 :class="
                   generalInfo.educations.length > 0
                     ? 'px-6 mr-2 mb-2 py-2.5 bg-white text-main-400 font-medium border text-xs leading-tight uppercase rounded shadow-md hover:text-white hover:border-main-400 hover:bg-main-400 transition duration-150   ease-in-out'
@@ -435,13 +442,7 @@
               >
                 Next
               </button>
-              <button
-                class="px-6 mr-2 mb-2 py-2.5 bg-yellow-300 text-white font-medium border text-xs leading-tight uppercase rounded shadow-md hover:text-yellow-300 hover:border-yellow-300 hover:bg-white transition duration-150 ease-in-out"
-                type="submit"
-                @click="withdraw()"
-              >
-                Withdraw
-              </button>
+        
             </div>
           </form>
         </div>
@@ -633,6 +634,8 @@ export default {
       });
     };
     const applicantTypeChangeHandler = async () => {
+      generalInfo.value.applicantTypeSelected = generalInfo.value.applicantType;
+      generalInfo.value.applicantTypeId = generalInfo.value.applicantType.id;
       if (generalInfo.value.applicantType.code == "ETH") {
         showLocation.value = true;
         showOccupation.value = true;

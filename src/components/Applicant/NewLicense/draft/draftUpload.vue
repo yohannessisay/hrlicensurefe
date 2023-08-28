@@ -374,9 +374,7 @@
                       v-if="parentItem.length < 2"
                       class="border-b text-main-400 bg-lightGrey-100"
                     >
-                      <td
-                        class="px-6 py-4"
-                      >
+                      <td class="px-6 py-4">
                         <div class="flex items-center ml-4">
                           <div>
                             <p class="">
@@ -771,7 +769,23 @@
         back
       </button>
       <button
-        class="mt-8 inline-block px-6 py-2.5 bg-white hover:bg-main-400 hover:text-white text-main-400 text-xs font-bold leading-tight uppercase rounded shadow-md active:border-main-400 transition duration-150 ease-in-out border"
+        class="      mt-8
+          inline-block
+          px-6
+          py-2.5
+          bg-main-400
+          hover:bg-white hover:text-main-400
+          text-white text-xs
+          font-bold
+          leading-tight
+          uppercase
+          rounded
+          shadow-md
+          active:border-main-400
+          transition
+          duration-150
+          ease-in-out
+          border"
         @click="next()"
       >
         next
