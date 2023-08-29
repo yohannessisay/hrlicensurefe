@@ -420,7 +420,7 @@
                 </div>
               </section>
 
-              <div class="accordion" id="accordionExample">
+              <div class="accordion " id="accordionExample">
                 <div class="accordion-item bg-white">
                   <h2 class="accordion-header mb-0" id="headingTwo">
                     <button
@@ -453,7 +453,7 @@
                   </h2>
                   <div
                     id="collapseTwo"
-                    class="accordion-collapse collapse"
+                    class="accordion-collapse collapse show"
                     aria-labelledby="headingTwo"
                     data-bs-parent="#accordionExample"
                   >
@@ -485,15 +485,9 @@
                             <i
                               :id="
                                 're_educational_icon_' +
-                                  `${document.documentTypeCode}`
+                                  document.documentTypeCode
                               "
-                              class="
-                                fa fa-eye fa-2x
-                                pointer-events-none
-                                text-main-400
-                                disabled
-                                ml-4
-                              "
+                              class="fa fa-eye cursor-pointer text-main-400 disabled"
                               aria-hidden="true"
                             >
                               <img
@@ -510,14 +504,13 @@
                             <input
                               type="file"
                               required
-                              :id="`files${document.id}`"
+                              :id="`re_image_href_${document.documentTypeCode}`"
                               accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
                               :ref="`imageUploader${document.id}`"
                               class="custom-file-input"
                               v-on:change="handleFileUpload(document, $event)"
                             />
                           </div>
-
                           <div
                             class="
                               flex
@@ -527,7 +520,13 @@
                               mt-2
                             "
                           >
-                            <div class="mt-large bg-white">
+                            <div
+                              v-if="
+                                document.fileType &&
+                                  document.fileType != 'application/pdf'
+                              "
+                              class="mt-large bg-white"
+                            >
                               <a
                                 :href="googleApi + document.filePath"
                                 :data-title="
@@ -551,6 +550,18 @@
                                     : ""
                                 }}
                               </h6>
+                            </div>
+                            <div v-else>
+                              <button
+                                class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded shadow-md mt-8 bg-primary-400 hover:bg-white hover:text-primary-600"
+                                @click="
+                                  openPdfInNewTab(
+                                    document ? document.filePath : ''
+                                  )
+                                "
+                              >
+                                See pdf in detail
+                              </button>
                             </div>
                           </div>
                         </div>
@@ -651,6 +662,7 @@ export default {
     let previewDocuments = ref({});
     let isPdf = ref({});
     let maxFileSize = ref();
+    let pdfFilePath = ref("");
     maxFileSize.value = MAX_FILE_SIZE.MAX_FILE_SIZE;
     let isLoading = ref(false);
     watch(props.modalDataId, () => {
@@ -682,72 +694,72 @@ export default {
 
       isImage.value[data.documentType.code] = true;
       let fileS = documentUploaded.value[data.documentType.code].size;
-      if (fileS <= maxFileSize.value / 1000) {
-        fileSizeExceed.value[data.documentType.code] = false;
-        showImage.value = true;
 
-        if (fileS > 0 && fileS < 1000) {
-          fileSize.value += "B";
-        } else if (fileS > 1000 && fileS < 1000000) {
-          fileSize.value = fileS / 1000 + "kB";
-        } else {
-          fileSize.value = fileS / 1000000 + "MB";
-        }
-        reader.addEventListener(
-          "load",
-          function() {
-            showPreview.value = true;
-            previewDocuments.value[data.documentType.code] = reader.result;
-          },
-          false
-        );
-        if (documentUploaded.value[data.documentType.code]) {
-          if (
-            /\.(jpe?g|png|gif)$/i.test(
-              documentUploaded.value[data.documentType.code].name
-            )
-          ) {
-            isImage.value[data.documentType.code] = true;
-            isPdf.value[data.documentType.code] = false;
+      fileSizeExceed.value[data.documentType.code] = false;
+      showImage.value = true;
 
-            reader.readAsDataURL(
-              documentUploaded.value[data.documentType.code]
-            );
-          } else if (
-            /\.(pdf)$/i.test(
-              documentUploaded.value[data.documentType.code].name
-            )
-          ) {
-            isImage.value[data.documentType.code] = false;
-            isPdf.value[data.documentType.code] = true;
-            reader.readAsDataURL(
-              documentUploaded.value[data.documentType.code]
-            );
-          }
-        }
+      if (fileS > 0 && fileS < 1000) {
+        fileSize.value += "B";
+      } else if (fileS > 1000 && fileS < 1000000) {
+        fileSize.value = fileS / 1000 + "kB";
       } else {
-        fileSizeExceed.value[data.documentType.code] = true;
-        documentUploaded.value[data.documentType.code] = "";
+        fileSize.value = fileS / 1000000 + "MB";
+      }
+      reader.addEventListener(
+        "load",
+        function() {
+          showPreview.value = true;
+          previewDocuments.value[data.documentType.code] = reader.result;
+        },
+        false
+      );
+      if (documentUploaded.value[data.documentType.code]) {
+        if (
+          /\.(jpe?g|png|gif)$/i.test(
+            documentUploaded.value[data.documentType.code].name
+          )
+        ) {
+          isImage.value[data.documentType.code] = true;
+          isPdf.value[data.documentType.code] = false;
+
+          reader.readAsDataURL(documentUploaded.value[data.documentType.code]);
+        } else if (
+          /\.(pdf)$/i.test(documentUploaded.value[data.documentType.code].name)
+        ) {
+          isImage.value[data.documentType.code] = false;
+          isPdf.value[data.documentType.code] = true;
+          reader.readAsDataURL(documentUploaded.value[data.documentType.code]);
+        }
       }
       let icon = document.getElementById(
         "re_educational_icon_" + data.documentTypeCode
       );
-      icon.classList.toggle("disabled");
+
+      if (icon && icon.classList.contains("disabled")) {
+        icon.classList.toggle("disabled");
+      }
+
       let output = document.getElementById(
-        "re_image_lightbox_" + data.documentType.code + data.documentTypeCode
+        "re_image_lightbox_" + data.documentTypeCode
       );
+
       let outputHref = document.getElementById(
         "re_image_href_" + data.documentTypeCode
       );
+
       outputHref.href = URL.createObjectURL(event.target.files[0]);
-      output.src = URL.createObjectURL(event.target.files[0]);
-      output.onload = function() {
-        URL.revokeObjectURL(output.src); // free memory
-      };
+      if (output && output.src) {
+        output.src = URL.createObjectURL(event.target.files[0]);
+      }
+
+      output
+        ? (output.onload = function() {
+            URL.revokeObjectURL(output.src); // free memory
+          })
+        : "";
     };
 
     const reApply = () => {
-      licenseData.value.declinedFields = [];
       let license = {
         licenseId: licenseData.value.id,
         declinedData: {
@@ -755,7 +767,7 @@ export default {
           data: licenseData.value,
         },
       };
-
+      isLoading.value=true;
       store.dispatch("newlicense/updateDeclined", license).then(() => {
         let licenseId = licenseData.value.id;
         let payload = { document: formData, id: licenseId };
@@ -775,6 +787,7 @@ export default {
             router.push({ path: "/Applicant/NewLicense/submitted" });
           })
           .catch(() => {
+            isLoading.value=false;
             toast.error("Error occured, please try again", {
               timeout: 5000,
               position: "bottom-center",
@@ -791,9 +804,13 @@ export default {
     onMounted(() => {
       userInfo.value = JSON.parse(window.localStorage.getItem("personalInfo"));
     });
-
+    const openPdfInNewTab = (pdfPath) => {
+      pdfFilePath.value = pdfPath;
+      window.open(googleApi + "" + pdfPath, "_blank");
+    };
     return {
       licenseData,
+      openPdfInNewTab,
       isLoading,
       handleFileUpload,
       googleApi,

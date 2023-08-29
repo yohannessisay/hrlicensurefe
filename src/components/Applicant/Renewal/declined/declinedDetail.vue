@@ -747,7 +747,7 @@ export default {
     };
 
     const reApply = () => {
-      licenseData.value.declinedFields = [];
+     
       let license = {
         licenseId: licenseData.value.id,
         declinedData: {

@@ -4,7 +4,7 @@
     <div class="home-content">
       <div class="parent">
         <div class="bg-gray-100">
-          <div class="container mx-auto my-5 p-5">
+          <div class="container mx-auto my-5 ">
             <div class="md:flex no-wrap md:-mx-2">
               <!-- Left Side -->
               <div class="w-full md:w-3/12 md:mx-2 mt-5">
@@ -17,9 +17,11 @@
                       :color="'#2F639D'"
                       :opacity="1"
                     ></loading>
-                    <div class="image overflow-hidden">
-                      <img :src="userInfo ? userInfo.pic : ''" />
-                    </div>
+
+                    <img
+                      class="roundProfile"
+                      :src="userInfo ? userInfo.pic : ''"
+                    />
                   </div>
                   <div class="flex justify-center mt-4">
                     <input
@@ -943,3 +945,11 @@ export default {
   },
 };
 </script>
+<style>
+.roundProfile {
+  border-radius: 0.5rem 0.5rem 0 0;
+  width: 100%;
+  object-fit: cover;
+  aspect-ratio: 4/3;
+}
+</style>

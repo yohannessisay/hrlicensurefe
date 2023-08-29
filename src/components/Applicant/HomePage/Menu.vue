@@ -239,7 +239,7 @@
             :class="
               isDarkMode
                 ? 'bg-primaryDark rounded-lg p-4  '
-                : 'bg-white rounded-lg p-4  '
+                : 'bg-white rounded-lg  '
             "
           >
             <div class="container mx-auto px-4">
@@ -1023,12 +1023,12 @@
             X
           </button>
         </div>
-        <div class="modal-body relative p-4 overflow-y-scroll">
+        <div class="modal-body relative p-4 sm:p-2 overflow-y-scroll">
           <div
             :class="
               isDarkMode
                 ? 'bg-primaryDark  rounded-lg p-4 md:py-12'
-                : 'bg-white rounded-lg p-4 md:py-12'
+                : 'bg-white rounded-lg  md:py-12'
             "
           >
             <div class="container mx-auto px-4">
@@ -1545,8 +1545,8 @@
           <div
             :class="
               isDarkMode
-                ? 'bg-primaryDark  rounded-lg p-4 md:py-12'
-                : 'bg-white rounded-lg p-4 md:py-12'
+                ? 'bg-primaryDark  rounded-lg md:py-12'
+                : 'bg-white rounded-lg md:py-12'
             "
           >
             <div class="container mx-auto px-4">
@@ -1653,7 +1653,9 @@
                         Work Experiance
                       </li>
                     </ul>
-                    <div class="grid grid-cols-3 p-2">
+                    <div
+                      class="grid lg:grid-cols-3 sm:grid-cols-1 md:grid-cols-1 p-2"
+                    >
                       <a href="/Applicant/GoodStanding">
                         <button
                           class="
