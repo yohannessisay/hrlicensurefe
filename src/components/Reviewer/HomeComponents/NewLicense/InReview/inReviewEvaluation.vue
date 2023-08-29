@@ -815,8 +815,8 @@
                                                 ? googleApi +
                                                   docs[index].filePath
                                                 : '',
-                                              title: 'Image Caption 1',
-                                            },
+                                              title: 'Image Caption 1'
+                                            }
                                           ])
                                         "
                                         class="duration-500 ease-in scale-50 cursor-pointer hover:scale-75"
@@ -1273,10 +1273,10 @@ export default {
     ReviewerSideNav,
     ReviewerNavBar,
     RadialProgressBar,
-    modal,
+    modal
   },
   computed: {
-    moment: () => moment,
+    moment: () => moment
   },
   setup() {
     const route = useRoute();
@@ -1324,7 +1324,7 @@ export default {
     let adminId = localStorage.getItem("adminId");
 
     let newLicense = ref({
-      licenseExpirationDate: new Date(),
+      licenseExpirationDate: new Date()
     });
     let buttons = ref([]);
     let isLoadingName = ref(false);
@@ -1357,7 +1357,7 @@ export default {
     let showRemarkError = ref(false);
     let showDateError = ref({
       show: false,
-      message: "",
+      message: ""
     });
     let supervisor = ref("");
     let showFlash = ref(false);
@@ -1372,7 +1372,7 @@ export default {
     let superviseLoading = ref(false);
     let allowProfChange = ref({});
     let instSearched = ref({
-      name: "",
+      name: ""
     });
     let newProf = ref([]);
     let expirationDateYear = ref(0);
@@ -1387,7 +1387,7 @@ export default {
     const editPersonalInfo = () => {
       editPersonalData.value = !editPersonalData.value;
     };
-    const allowProfessionChange = (profType) => {
+    const allowProfessionChange = profType => {
       getProfessionalTypesByDepartmentId(profType);
       allowProfChange.value[profType.department.id]
         ? allowProfChange.value[profType.department.id]
@@ -1398,14 +1398,14 @@ export default {
       allowOtherProfChange.value[profType.department.id] = false;
     };
 
-    const created = async (applicationId) => {
+    const created = async applicationId => {
       applicationType.value = "New License";
 
       store
         .dispatch("reviewer/getNewLicenseApplication", applicationId)
-        .then((res) => {
+        .then(res => {
           newLicense.value = res.data.data ? res.data.data : {};
-          newLicense.value.educations.forEach((element) => {
+          newLicense.value.educations.forEach(element => {
             if (element.isDropped != true) {
               element.isDropped = false;
             }
@@ -1438,13 +1438,8 @@ export default {
             newLicense.value.acceptedFields.length > 0
               ? newLicense.value.acceptedFields
               : (accepted.value = []);
-          rejected.value =
-            newLicense.value &&
-            newLicense.value.declinedFields &&
-            newLicense.value.declinedFields.length > 0
-              ? newLicense.value.declinedFields
-              : (rejected.value = []);
-          completedSteps.value = accepted.value.length + rejected.value.length;
+
+          completedSteps.value = accepted.value.length;
           index.value = completedSteps.value;
           if (completedSteps.value == docs.value.length) {
             showButtons.value = true;
@@ -1452,20 +1447,20 @@ export default {
           fetchDocumentTypes();
         });
     };
-    const viewImage = (image) => {
+    const viewImage = image => {
       var options = {
-        index: 0, // this option means you will start at first image
+        index: 0 // this option means you will start at first image
       };
       new PhotoViewer(image, options);
     };
     const fetchDocumentTypes = async () => {
-      store.dispatch("reviewer/getDocumentTypes").then((res) => {
+      store.dispatch("reviewer/getDocumentTypes").then(res => {
         documentTypes.value = res.data.data;
         isLoadingStart.value = false;
         findDocumentType(documentTypes.value, docs.value[0]);
       });
     };
-    const next = (doc) => {
+    const next = doc => {
       if (nextClickable.value == true) {
         index.value = index.value + 1;
         completedSteps.value += 1;
@@ -1525,41 +1520,39 @@ export default {
       }
     };
     const transferToFederal = () => {
-      store.dispatch("newlicense/getExpertLevel").then((res) => {
-        let federalData = res.data.data.filter((r) => r.code == "FED");
+      store.dispatch("newlicense/getExpertLevel").then(res => {
+        let federalData = res.data.data.filter(r => r.code == "FED");
         let transferData = {
           licenseId: route.params.id,
           expertLevelId: federalData[0].id,
-          createdByAdminId: adminId,
+          createdByAdminId: adminId
         };
-        store
-          .dispatch("reviewer/transferToFederal", transferData)
-          .then((res) => {
-            if (res.data?.status == "Success") {
-              toast.success("Application transfered Successfully", {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true,
-              });
-              router.push({
-                path: "/admin/newLicense",
-              });
-            } else {
-              toast.error("Failed to transfer application", {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true,
-              });
-            }
-          });
+        store.dispatch("reviewer/transferToFederal", transferData).then(res => {
+          if (res.data?.status == "Success") {
+            toast.success("Application transfered Successfully", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true
+            });
+            router.push({
+              path: "/admin/newLicense"
+            });
+          } else {
+            toast.error("Failed to transfer application", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true
+            });
+          }
+        });
       });
     };
 
-    const accept = (doc) => {
+    const accept = doc => {
       nextClickable.value = true;
       completedSteps.value += 1;
       if (accepted.value.length > 0) {
@@ -1610,7 +1603,7 @@ export default {
       }
     };
 
-    const reject = (doc) => {
+    const reject = doc => {
       completedSteps.value += 1;
       nextClickable.value = true;
       for (let i = 0; i < buttons.value.length; i++) {
@@ -1677,7 +1670,7 @@ export default {
           others.value[id]["otherProfessionType"] = event.target.value;
         }
         education.otherProfessionType = others.value[id]["otherProfessionType"];
-        modifiedProfession.forEach((element) => {
+        modifiedProfession.forEach(element => {
           if (element.department.id == education.department.id) {
             element.otherProfessionType =
               others.value[id]["otherProfessionType"];
@@ -1694,7 +1687,7 @@ export default {
         }
         education.otherProfessionAmharic =
           others.value[id]["otherProfessionAmharic"];
-        modifiedProfession.forEach((element) => {
+        modifiedProfession.forEach(element => {
           if (element.department.id == education.department.id) {
             element.otherProfessionAmharic =
               others.value[id]["otherProfessionAmharic"];
@@ -1702,10 +1695,10 @@ export default {
         });
       }
     };
-    const action = (actionValue) => {
+    const action = actionValue => {
       let smsMessage = "";
       let proffesionsWithoutPrefix = "";
-      newLicense.value.educations.forEach((element) => {
+      newLicense.value.educations.forEach(element => {
         if (
           (element.prefixId && element.prefixId.length == 0) ||
           element.prefixId == null
@@ -1728,7 +1721,7 @@ export default {
             position: "bottom-center",
             pauseOnFocusLoss: true,
             pauseOnHover: true,
-            icon: true,
+            icon: true
           }
         );
         return;
@@ -1744,7 +1737,7 @@ export default {
           position: "bottom-center",
           pauseOnFocusLoss: true,
           pauseOnHover: true,
-          icon: true,
+          icon: true
         });
         return;
       }
@@ -1808,20 +1801,20 @@ export default {
         newLicense.value.certifiedDate = new Date();
         let req = {
           action: actionValue,
-          data: newLicense.value,
+          data: newLicense.value
         };
         let smsData = {
           recipients: [
             newLicense.value && newLicense.value.applicant
               ? "251" + newLicense.value.applicant.phoneNumber
-              : "",
+              : ""
           ],
-          message: smsMessage ? smsMessage : "",
+          message: smsMessage ? smsMessage : ""
         };
 
         newLicense.value.licenseExpirationDate = licenseExpirationDate.value;
         let tempRemarkValue = true;
-        newLicense.value.educations.forEach((element) => {
+        newLicense.value.educations.forEach(element => {
           if (element && element.isDropped == true) {
             tempRemarkValue = false;
           } else {
@@ -1846,10 +1839,10 @@ export default {
                   position: "bottom-center",
                   pauseOnFocusLoss: true,
                   pauseOnHover: true,
-                  icon: true,
+                  icon: true
                 });
                 router.push({
-                  path: "/admin/newLicense/approved",
+                  path: "/admin/newLicense/approved"
                 });
                 let userNotification = {
                   user_id:
@@ -1872,7 +1865,7 @@ export default {
                       }by a reviewer.`
                     : "",
                   type: "applicant_new_license",
-                  status: "new",
+                  status: "new"
                 };
                 store.dispatch(
                   "notification/notifyApplicant",
@@ -1886,7 +1879,7 @@ export default {
                 position: "bottom-center",
                 pauseOnFocusLoss: true,
                 pauseOnHover: true,
-                icon: true,
+                icon: true
               });
               setTimeout(() => {
                 window.location.reload();
@@ -1895,15 +1888,15 @@ export default {
         }
       }
     };
-    const changePrefix = (education) => {
-      newLicense.value.educations.forEach((element) => {
+    const changePrefix = education => {
+      newLicense.value.educations.forEach(element => {
         if (element.departmentId == education.departmentId) {
           element = education;
         }
       });
     };
     const submitRemark = () => {
-      newLicense.value.educations.forEach((element) => {
+      newLicense.value.educations.forEach(element => {
         if (element && element.isDropped == true) {
           nothingDropped.value = false;
         }
@@ -1917,7 +1910,7 @@ export default {
     };
     const droppedDepartment = () => {
       JSON.parse(JSON.stringify(newLicense.value.educations)).forEach(
-        (element) => {
+        element => {
           if (element && element.isDropped && element.isDropped == true) {
             declineAction.value = "ApproveEvent";
             if (rejected.value && rejected.value.length == 0) {
@@ -1933,19 +1926,19 @@ export default {
         }
       );
     };
-    const openPdfInNewTab = (pdfPath) => {
+    const openPdfInNewTab = pdfPath => {
       pdfFilePath.value = pdfPath;
       window.open(googleApi + "" + pdfPath, "_blank");
     };
 
-    const getProfessionalTypesByDepartmentId = async (profType) => {
+    const getProfessionalTypesByDepartmentId = async profType => {
       let profId = {
         departmentId: profType.department.id,
-        educationalLevelId: profType.educationLevel.id,
+        educationalLevelId: profType.educationLevel.id
       };
       await store
         .dispatch("reviewer/getProfessionalTypeByDepartmentId", profId)
-        .then((res) => {
+        .then(res => {
           newProf.value[profType.department.id] = res.data.data;
         });
     };
@@ -1961,7 +1954,7 @@ export default {
         alternativeName: newLicense.value.profile.alternativeName,
         alternativeFatherName: newLicense.value.profile.alternativeFatherName,
         alternativeGrandFatherName:
-          newLicense.value.profile.alternativeGrandFatherName,
+          newLicense.value.profile.alternativeGrandFatherName
       };
       const profileData = [id, newProfile];
       store
@@ -1973,7 +1966,7 @@ export default {
             position: "bottom-center",
             pauseOnFocusLoss: true,
             pauseOnHover: true,
-            icon: true,
+            icon: true
           });
           isLoadingName.value = false;
           editPersonalData.value = false;
@@ -1985,7 +1978,7 @@ export default {
             position: "bottom-center",
             pauseOnFocusLoss: true,
             pauseOnHover: true,
-            icon: true,
+            icon: true
           });
           isLoadingName.value = false;
         });
@@ -1998,7 +1991,7 @@ export default {
       if (professionalTypePrefixes.value.length === 0) {
         professionalTypePrefixes.value.push({
           professionalTypeId: professionId,
-          prefix: event.target.value,
+          prefix: event.target.value
         });
         return;
       }
@@ -2011,7 +2004,7 @@ export default {
           if (countProLength.value === professionalTypePrefixes.value.length) {
             professionalTypePrefixes.value.push({
               professionalTypeId: professionId,
-              prefix: event.target.value,
+              prefix: event.target.value
             });
             countProLength.value = 0;
             return;
@@ -2019,7 +2012,7 @@ export default {
         } else {
           professionalTypePrefixes.value.splice(
             professionalTypePrefixes.value.indexOf({
-              professionalTypeId: professionId,
+              professionalTypeId: professionId
             }),
             1
           );
@@ -2028,7 +2021,7 @@ export default {
           }
           professionalTypePrefixes.value.push({
             professionalTypeId: professionId,
-            prefix: event.target.value,
+            prefix: event.target.value
           });
           countProLength.value = 0;
           return;
@@ -2056,19 +2049,19 @@ export default {
       }
     };
 
-    const setInput = (value) => {
+    const setInput = value => {
       instSearched.value = value ? value : "";
       showOptions.value = false;
     };
 
     const resultQuery = () => {
       if (institutions.value) {
-        let data = institutions.value.filter((item) => {
+        let data = institutions.value.filter(item => {
           return instSearched.value
             ? instSearched.value.name
                 .toLowerCase()
                 .split(" ")
-                .every((v) => item.name.toLowerCase().includes(v))
+                .every(v => item.name.toLowerCase().includes(v))
             : "";
         });
 
@@ -2077,7 +2070,7 @@ export default {
         return [];
       }
     };
-    const showPrefix = (id) => {
+    const showPrefix = id => {
       if (showPrefixFor.value[id] == undefined) {
         showPrefixFor.value[id] = true;
       } else if (showPrefixFor.value[id] && showPrefixFor.value[id] == true) {
@@ -2096,7 +2089,7 @@ export default {
 
       let req = {
         action: superviseAction.value ? superviseAction.value : "",
-        data: newLicense.value,
+        data: newLicense.value
       };
       let minDate = moment(endDate.value).diff(moment(startDate.value), "days");
 
@@ -2119,7 +2112,7 @@ export default {
           recipients: [
             newLicense.value && newLicense.value.applicant
               ? "251" + newLicense.value.applicant.phoneNumber
-              : "",
+              : ""
           ],
           message: newLicense.value
             ? "Dear applicant your applied new license of code " +
@@ -2131,12 +2124,12 @@ export default {
               " for " +
               minDate +
               " days  .Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
-            : "",
+            : ""
         };
 
         store
           .dispatch("reviewer/editNewLicense", req)
-          .then((res) => {
+          .then(res => {
             showActionLoading.value = false;
             if (res.statusText == "Created") {
               store.dispatch("sms/sendSms", smsData).then(() => {
@@ -2145,7 +2138,7 @@ export default {
                   position: "bottom-center",
                   pauseOnFocusLoss: true,
                   pauseOnHover: true,
-                  icon: true,
+                  icon: true
                 });
                 superviseLoading.value = false;
 
@@ -2170,7 +2163,7 @@ export default {
                       " days "
                     : "",
                   type: "applicant_new_license",
-                  status: "new",
+                  status: "new"
                 };
                 store.dispatch(
                   "notification/notifyApplicant",
@@ -2178,7 +2171,7 @@ export default {
                 );
                 location.reload();
                 router.push({
-                  path: "/admin/newLicense",
+                  path: "/admin/newLicense"
                 });
               });
             } else {
@@ -2187,7 +2180,7 @@ export default {
                 position: "bottom-center",
                 pauseOnFocusLoss: true,
                 pauseOnHover: true,
-                icon: true,
+                icon: true
               });
               setTimeout(() => {
                 window.location.reload();
@@ -2200,7 +2193,7 @@ export default {
               position: "bottom-center",
               pauseOnFocusLoss: true,
               pauseOnHover: true,
-              icon: true,
+              icon: true
             });
             setTimeout(() => {
               window.location.reload();
@@ -2208,11 +2201,11 @@ export default {
           });
       }
     };
-    const changeAction = (action) => {
+    const changeAction = action => {
       superviseAction.value = action;
     };
 
-    const checkForOther = (education) => {
+    const checkForOther = education => {
       modifiedProfession.forEach((element, index) => {
         if (element.department.id == education.department.id) {
           modifiedProfession.splice(index, 1);
@@ -2227,7 +2220,7 @@ export default {
           education.departmentId
       ) {
         modifiedProfession = newLicense.value.educations.filter(
-          (element) => element.oldProfessionTypeId != education.professionTypeId
+          element => element.oldProfessionTypeId != education.professionTypeId
         );
       } else if (
         tempProf.value[education.department.id] &&
@@ -2238,13 +2231,13 @@ export default {
         education.oldProfessionTypeId = education.professionTypeId;
         education.professionTypeId = null;
         modifiedProfession.push({
-          ...education,
+          ...education
         });
       } else {
         education.oldProfessionTypeId = education.professionTypeId;
         education.professionTypeId = tempProf.value[education.department.id].id;
         modifiedProfession.push({
-          ...education,
+          ...education
         });
         allowOtherProfChange.value[education.department.id] = false;
       }
@@ -2259,7 +2252,7 @@ export default {
       if (regionId) {
         store
           .dispatch("lookups/getLicenseExpirationDateByRegionId", regionId)
-          .then((res) => {
+          .then(res => {
             licenseExpirationDate.value = new Date(
               year + res.data.data[0].years,
               month,
@@ -2276,10 +2269,10 @@ export default {
           .slice(0, 10);
         expirationDateYear.value = 3;
       }
-      store.dispatch("goodstanding/getInstitution").then((res) => {
-        institutions.value = res.data.data.filter((elm) => elm.isLocal == true);
+      store.dispatch("goodstanding/getInstitution").then(res => {
+        institutions.value = res.data.data.filter(elm => elm.isLocal == true);
       });
-      store.dispatch("lookups/getProfessionalPrefix").then((res) => {
+      store.dispatch("lookups/getProfessionalPrefix").then(res => {
         prefixes.value = res.data.data;
       });
     });
@@ -2399,8 +2392,8 @@ export default {
       showActionLoading,
       showLoadingButtons,
       googleApi,
-      setOtherProfession,
+      setOtherProfession
     };
-  },
+  }
 };
 </script>

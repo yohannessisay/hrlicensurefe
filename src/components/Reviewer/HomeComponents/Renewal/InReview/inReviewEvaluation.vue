@@ -1543,13 +1543,8 @@ export default {
             renewal.value.acceptedFields.length > 0
               ? renewal.value.acceptedFields
               : (accepted.value = []);
-          rejected.value =
-            renewal.value &&
-            renewal.value.declinedFields &&
-            renewal.value.declinedFields.length > 0
-              ? renewal.value.declinedFields
-              : (rejected.value = []);
-          completedSteps.value = accepted.value.length + rejected.value.length;
+         
+          completedSteps.value = accepted.value.length;
           index.value = completedSteps.value;
           if (completedSteps.value == docs.value.length) {
             showButtons.value = true;
