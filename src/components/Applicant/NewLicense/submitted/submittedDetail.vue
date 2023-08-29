@@ -259,14 +259,14 @@
                     <input
                       v-model="generalInfo.otherProfessionalType"
                       v-if="showOtherProfession"
-                      class="mb-2 xl:w-64 md:w-64 sm:w-64 w-full"
+                      class="mb-2 w-full w-full"
                       placeholder="Other profession title"
                       type="text"
                     />
                     <input
                       v-model="generalInfo.otherProfessionalTypeAmharic"
                       v-if="showOtherProfession"
-                      class="mb-2 xl:w-64 md:w-64 sm:w-64 w-full"
+                      class="mb-2 w-full w-full"
                       placeholder="Amharic other profession name"
                       type="text"
                     />
@@ -293,7 +293,7 @@
                   <input
                     v-model="generalInfo.otherEducationalInstitution"
                     v-if="showOtherEducation"
-                    class="mb-2 xl:w-64 md:w-64 sm:w-64 w-full"
+                    class="mb-2 w-full w-full"
                     placeholder="Write Educational Institution"
                     type="text"
                   />
@@ -328,8 +328,7 @@
               </h2>
 
               <div class="flex flex-col">
-                <div class="">
-                  <div class="py-2 ">
+               
                     <div class="overflow-x-scroll">
                       <div
                         class="flex justify-center"
@@ -429,8 +428,7 @@
                         </table>
                       </div>
                     </div>
-                  </div>
-                </div>
+                 
               </div>
             </div>
             <!-- Table for selected departments data -->

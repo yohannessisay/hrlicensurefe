@@ -46,7 +46,7 @@
                   <label class="text-main-400">Applicant Type</label>
 
                   <select
-                    class="form-select appearance-none block xl:w-64 md:w-64 sm:w-full w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+                    class="form-select appearance-none block  w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
                     aria-label="Default select example"
                     @change="applicantTypeChangeHandler()"
                     v-model="generalInfo.applicantType"
@@ -67,9 +67,9 @@
                   </select>
                 </div>
                 <div v-if="showLanguage" class="">
-                  <label class="text-main-400">Language Type</label>
+                  <label class="text-main-400 lg:ml-4">Language Type</label>
                   <select
-                    class="form-select appearance-none block xl:w-64 md:w-64 sm:w-full w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+                    class="form-select appearance-none block  lg:ml-4 w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
                     v-model="generalInfo.nativeLanguageSelected"
                   >
                     <option
@@ -82,9 +82,9 @@
                   </select>
                 </div>
                 <div v-if="showOccupation">
-                  <label class="text-main-400">Occupation Type</label>
+                  <label class="text-main-400 lg:ml-4">Occupation Type</label>
                   <select
-                    class="form-select appearance-none block xl:w-64 md:w-64 sm:w-full w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+                    class="form-select appearance-none block lg:ml-4 w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
                     v-model="generalInfo.occupationTypes"
                   >
                     <option
@@ -107,7 +107,7 @@
                 <div class="mr-4">
                   <label class="text-main-400">Region</label>
                   <select
-                    class="form-select appearance-none block xl:w-64 md:w-64 sm:w-full w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+                    class="form-select appearance-none block  w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
                     :disabled="
                       generalInfo.multipleDepartment
                         ? generalInfo.multipleDepartment.length > 0
@@ -129,7 +129,7 @@
                 <div class="mr-4">
                   <label class="text-main-400">Zone</label>
                   <select
-                    class="form-select appearance-none block xl:w-64 md:w-64 sm:w-full w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+                    class="form-select appearance-none block  w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
                     :disabled="
                       generalInfo.multipleDepartment
                         ? generalInfo.multipleDepartment.length > 0
@@ -191,12 +191,12 @@
               v-if="generalInfo.educations.length < 3"
             >
               <div
-                class="grid grid-cols-1 sm:grid-rows-1 lg:grid-cols-4 mdlg:grid-cols-2 md:grid-cols-2 p-2"
+                class="grid grid-cols-1 gap-4 sm:grid-rows-1 lg:grid-cols-4 mdlg:grid-cols-2 md:grid-cols-2 p-2"
               >
                 <div class="">
                   <label class="text-main-400">Department</label>
                   <select
-                    class="form-select mb-2 appearance-none block xl:w-64 md:w-64 sm:w-full w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+                    class="form-select mb-2 appearance-none block  w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
                     v-model="generalInfo.departmentSelected"
                     @change="departmentChange()"
                   >
@@ -212,7 +212,7 @@
                 <div>
                   <label class="text-main-400">Education Level </label>
                   <select
-                    class="form-select mb-2 appearance-none block xl:w-64 md:w-64 sm:w-full w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+                    class="form-select mb-2 appearance-none block  w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
                     :disabled="!isDepartmentSelected"
                     v-model="generalInfo.educationalLevelSelected"
                     @change="educationalLevelChange()"
@@ -229,7 +229,7 @@
                 <div>
                   <label class="text-main-400">Professional Types</label>
                   <select
-                    class="form-select mb-2 appearance-none block xl:w-64 md:w-64 sm:w-full w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+                    class="form-select mb-2 appearance-none block  w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
                     :disabled="!isEdLevelSelected"
                     v-model="generalInfo.professionalTypeSelected"
                     @change="ProfessionTypeChange(institution)"
@@ -247,14 +247,14 @@
                     <input
                       v-model="generalInfo.otherProfessionalType"
                       v-if="showOtherProfession"
-                      class="mb-2 xl:w-64 md:w-64 sm:w-64 w-full"
+                      class="mb-2 w-full "
                       placeholder="Other profession title"
                       type="text"
                     />
                     <input
                       v-model="generalInfo.otherProfessionalTypeAmharic"
                       v-if="showOtherProfession"
-                      class="mb-2 xl:w-64 md:w-64 sm:w-64 w-full"
+                      class="mb-2 w-full "
                       placeholder="Amharic other profession name"
                       type="text"
                     />
@@ -265,7 +265,7 @@
                   <label class="text-main-400">Educational Institution</label>
 
                   <select
-                    class="form-select mb-2 appearance-none block xl:w-64 md:w-64 sm:w-full w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+                    class="form-select mb-2 appearance-none block  w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
                     v-model="generalInfo.institutionSelected"
                     @change="institutionChange(institution)"
                   >
@@ -281,7 +281,7 @@
                   <input
                     v-model="generalInfo.otherEducationalInstitution"
                     v-if="showOtherEducation"
-                    class="mb-2 xl:w-64 md:w-64 sm:w-64 w-full"
+                    class="mb-2 w-full "
                     placeholder="Write Educational Institution"
                     type="text"
                   />
@@ -316,8 +316,7 @@
               </h2>
 
               <div class="flex flex-col">
-                <div class="">
-                  <div class="py-2 ">
+               
                     <div class="overflow-x-scroll">
                       <div
                         class="flex justify-center"
@@ -417,8 +416,7 @@
                         </table>
                       </div>
                     </div>
-                  </div>
-                </div>
+                
               </div>
             </div>
             <!-- Table for selected departments data -->
