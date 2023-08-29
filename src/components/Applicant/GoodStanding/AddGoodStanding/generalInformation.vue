@@ -54,7 +54,7 @@
                 >Applicant Type</label
               ><span class="text-red-300">*</span>
               <select
-                class="form-select appearance-none block xl:w-64 md:w-64 sm:w-64 px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+                class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
                 aria-label="Default select example"
                 @change="checkApplicantType(generalInfo.applicantTypeId)"
                 v-model="generalInfo.applicantTypeId"
@@ -88,7 +88,7 @@
                 ><span class="text-red-300">*</span>
 
                 <select
-                  class="form-select appearance-none block xl:w-64 md:w-64 sm:w-64 px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+                  class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
                   aria-label="Default select example"
                   v-model="generalInfo.applicantTitleId"
                   required
@@ -173,19 +173,17 @@
           </div>
         </div>
         <!-- end -->
-        <div class="container mx-auto border-b mb-4">
+        <div class="container border-b mb-4">
           <div
             class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 sm:grid-cols-1 gap-2 mb-4 p-4 border-b"
           >
-            <div
-              class="flex justify-center text-6xl rounded-xl p-2 bg-gray-100"
-            >
+         
               <div>
                 <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
                   >Department</label
                 ><span class="text-red-300">*</span>
                 <select
-                  class="form-select appearance-none block xl:w-64 md:w-64 sm:w-64 px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+                  class="form-select appearance-none block w-full  px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
                   v-model="generalInfo.departmentId"
                   @change="setDepartment()"
                   required
@@ -199,16 +197,14 @@
                   </option>
                 </select>
               </div>
-            </div>
-            <div
-              class="flex justify-center text-6xl rounded-xl p-2 bg-gray-100"
-            >
+           
+         
               <div>
                 <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
                   >Education Level</label
                 ><span class="text-red-300">*</span>
                 <select
-                  class="form-select appearance-none block xl:w-64 md:w-64 sm:w-64 px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+                  class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
                   :disabled="!isDepartmentSelected"
                   v-model="generalInfo.educationLevelId"
                   @change="educationalLevelChange()"
@@ -226,17 +222,14 @@
                   </option>
                 </select>
               </div>
-            </div>
-            <div
-              class="flex justify-center text-6xl rounded-xl p-2 bg-gray-100"
-            >
+         
               <div class="grid grid-cols-1">
                 <div class="mb-4 ">
                   <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
                     >Profession</label
                   ><span class="text-red-300">*</span>
                   <select
-                    class="form-select appearance-none block xl:w-64 md:w-64 sm:w-64 px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+                    class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
                     :disabled="!isEdLevelSelected"
                     @change="checkOtherProfession()"
                     v-model="generalInfo.professionTypeId"
@@ -266,7 +259,7 @@
                     "
                     name="otherProf"
                     v-model="generalInfo.otherProfessionType"
-                    class="mb-2 appearance-none block xl:w-64 md:w-64 sm:w-64 px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+                    class="mb-2 appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
                     autocomplete="off"
                     placeholder="Profession english title"
                   />
@@ -282,23 +275,21 @@
                         generalInfo.otherProfessionTypeAmharic.length > 0
                     "
                     v-model="generalInfo.otherProfessionTypeAmharic"
-                    class="appearance-none block xl:w-64 md:w-64 sm:w-64 px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+                    class="appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
                     autocomplete="off"
                     placeholder="Profession amharic title"
                   />
                 </div>
               </div>
-            </div>
+            
 
-            <div
-              class="flex justify-center text-6xl rounded-xl p-2 bg-gray-100"
-            >
+          
               <div>
                 <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
                   >Applicant Position</label
                 ><span class="text-red-300">*</span>
                 <select
-                  class="form-select appearance-none block xl:w-64 md:w-64 sm:w-64 px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+                  class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
                   v-model="generalInfo.applicantPosition"
                   required
                 >
@@ -311,7 +302,7 @@
                   </option>
                 </select>
               </div>
-            </div>
+            
           </div>
         </div>
 
@@ -338,7 +329,7 @@
                     type="text"
                     name="whomGS"
                     v-model="generalInfo.whomGoodStandingFor"
-                    class="appearance-none block xl:w-64 md:w-64 sm:w-64 px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+                    class="appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
                     autocomplete="off"
                     placeholder=""
                     required
@@ -358,7 +349,7 @@
                     type="date"
                     name="issuedDate"
                     v-model="generalInfo.licenseIssuedDate"
-                    class="appearance-none block xl:w-64 md:w-64 sm:w-64 px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+                    class="appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
                     autocomplete="off"
                     placeholder="example-MR,MRS"
                     required
@@ -377,7 +368,7 @@
                     type="text"
                     name="licenseNum"
                     v-model="generalInfo.licenseRegistrationNumber"
-                    class="appearance-none block xl:w-64 md:w-64 sm:w-64 px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+                    class="appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
                     autocomplete="off"
                     placeholder=""
                     required

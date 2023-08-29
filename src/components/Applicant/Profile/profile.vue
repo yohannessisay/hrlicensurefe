@@ -104,7 +104,7 @@
                 <div class="my-4"></div>
               </div>
               <!-- Right Side -->
-              <div class="w-full md:w-9/12 mx-2 mt-1 ">
+              <div class="w-full md:w-9/12  mt-1 ">
                 <!-- About Section -->
                 <div class="vld-parent mt-4">
                   <loading
