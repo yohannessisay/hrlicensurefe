@@ -1240,5 +1240,6 @@ export default {
 }
 .table-multiple {
   border-radius: 5px;
+  overflow-x: scroll;
 }
 </style>
