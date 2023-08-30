@@ -220,7 +220,6 @@
                   "
               >
                 <vue-table-lite
-                    
                   :is-loading="toYouTable.isLoading"
                   :columns="toYouTable.columns"
                   :rows="toYouTable.rows"
@@ -230,10 +229,7 @@
                   @row-clicked="rowClicked"
                   @do-search="doSearch"
                 ></vue-table-lite>
-                <edit-modal
-                  v-if="showModal"
-                  :modalDataId="modalDataId" 
-                >
+                <edit-modal v-if="showModal" :modalDataId="modalDataId">
                 </edit-modal>
               </div>
             </div>
@@ -274,7 +270,7 @@ export default {
       id: "",
       change: 0,
     });
-    let allInfo =[]; 
+    let allInfo = [];
     let searchTerm = ref("");
     let searchTermFromDate = ref("");
     let searchTermToDate = ref("");
@@ -302,7 +298,6 @@ export default {
     };
 
     const licensed = (apiParameters) => {
-      
       store
         .dispatch(
           "reviewerNewLicense/getNewLicenseLicensed",
@@ -311,7 +306,7 @@ export default {
         )
         .then((res) => {
           allInfo = res && res.rows ? res.rows : [];
-          toYouTableData=[];
+          toYouTableData = [];
           allInfo.forEach((element) => {
             toYouTableData.push({
               LicenseNumber: element ? element.newLicenseCode : "",
@@ -325,10 +320,14 @@ export default {
                 (element.profile.grandFatherName
                   ? element.profile.grandFatherName
                   : "------"),
-              ApplicationType: element.applicationType
-                ? element.applicationType.name
+              ApplicationType: element.applicantType
+                ? element.applicantType.name
                 : "",
-              Date: new Date(element.createdAt)
+              ReviewerName:
+                element.licenseReviewer && element.licenseReviewer.reviewer
+                  ? element.licenseReviewer.reviewer.name
+                  : "",
+              AppliedDate: new Date(element.createdAt)
                 .toJSON()
                 .slice(0, 10)
                 .replace(/-/g, "/"),
@@ -358,8 +357,14 @@ export default {
                 sortable: true,
               },
               {
-                label: "Date",
-                field: "Date",
+                label: "Reviewer Name",
+                field: "ReviewerName",
+                width: "40%",
+                sortable: true,
+              },
+              {
+                label: "Applied Date",
+                field: "AppliedDate",
                 width: "15%",
                 sortable: true,
               },
@@ -389,13 +394,11 @@ export default {
         if (element.classList.contains("edit-btn")) {
           element.addEventListener("click", rowClicked());
         }
-      }); 
+      });
     };
 
     const rowClicked = (row) => {
       if (row != undefined) {
-    
-
         row = JSON.parse(JSON.stringify(row));
 
         modalDataId.value.id = row.data ? row.data.id : "-----";
@@ -430,7 +433,7 @@ export default {
     });
     const doSearch = (offset, limit, order, sort) => {
       toYouTable.value.isLoading = true;
-     
+
       setTimeout(() => {
         toYouTable.value.isReSearch = offset == undefined ? true : false;
         offset = offset / 10;
@@ -465,7 +468,7 @@ export default {
       searchTermFromDate,
       searchTermToDate,
       toYouTable,
-      showModal, 
+      showModal,
       tableLoadingFinish,
       rowClicked,
       modalDataId,

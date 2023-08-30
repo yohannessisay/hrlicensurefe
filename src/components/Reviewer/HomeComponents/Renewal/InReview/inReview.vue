@@ -177,7 +177,7 @@
                         focus:border-blue-600
                         focus:outline-none
                       "
-                      @change="searchApplication()"
+                        @change="searchApplication()"
                         v-model="searchTermToDate"
                         aria-label="Default select example"
                       />
@@ -223,7 +223,6 @@
                   "
                 >
                   <vue-table-lite
-                    
                     :is-loading="toYouTable.isLoading"
                     :columns="toYouTable.columns"
                     :rows="toYouTable.rows"
@@ -391,7 +390,7 @@
                         focus:border-blue-600
                         focus:outline-none
                       "
-                      @change="searchApplicationOther()"
+                        @change="searchApplicationOther()"
                         v-model="searchTermToDateOth"
                         aria-label="Default select example"
                       />
@@ -437,7 +436,6 @@
                   "
                 >
                   <vue-table-lite
-                    
                     :is-loading="toOthersTable.isLoading"
                     :columns="toOthersTable.columns"
                     :rows="toOthersTable.rows"
@@ -521,9 +519,8 @@ export default {
       toOthersTable.value.isLoading = true;
       toYouTable.value.isLoading = true;
       toOthersTable.value.rows = [];
-    
+
       toYouTable.value.rows = [];
-   
 
       inReviewAssignedToOthers([
         { key: "page", value: 0 },
@@ -541,7 +538,7 @@ export default {
       searchTermToDateOth.value = "";
       toOthersTable.value.isLoading = true;
       toOthersTable.value.rows = [];
-     
+
       inReviewAssignedToOthers([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
@@ -553,7 +550,7 @@ export default {
       searchTermToDate.value = "";
       toYouTable.value.isLoading = true;
       toYouTable.value.rows = [];
-    
+
       inReviewAssignedToYou([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
@@ -563,7 +560,7 @@ export default {
       let statId = statuses
         ? statuses.filter((stat) => stat.code == "IRV")[0].id
         : "";
-        toYouTableData = [];
+      toYouTableData = [];
       store
         .dispatch("reviewerRenewal/getRenewalByStatus", [
           {
@@ -648,7 +645,7 @@ export default {
       let statId = statuses
         ? statuses.filter((stat) => stat.code == "IRV")[0].id
         : "";
-        tableData = [];
+      tableData = [];
       store
         .dispatch("reviewerRenewal/getOtherRenewalByStatus", [
           {
@@ -677,7 +674,11 @@ export default {
               ApplicationType: element.applicantType
                 ? element.applicantType.name
                 : "",
-              Date: new Date(element.createdAt)
+              ReviewerName:
+                element.renewalReviewer && element.renewalReviewer.reviewer
+                  ? element.renewalReviewer.reviewer.name
+                  : "",
+                  AppliedDate: new Date(element.createdAt)
                 .toJSON()
                 .slice(0, 10)
                 .replace(/-/g, "/"),
@@ -706,8 +707,14 @@ export default {
                 sortable: true,
               },
               {
-                label: "Date",
-                field: "Date",
+                label: "Reviewer Name",
+                field: "ReviewerName",
+                width: "40%",
+                sortable: true,
+              },
+              {
+                label: "Applied Date",
+                field: "AppliedDate",
                 width: "20%",
                 sortable: true,
               },
@@ -741,7 +748,7 @@ export default {
         if (element.classList.contains("edit-btn")) {
           element.addEventListener("click", rowClicked());
         }
-      }); 
+      });
     };
     const tableLoadingFinishOthers = () => {
       let elementOthers = document.getElementsByClassName("edit-btn-others");
@@ -749,7 +756,7 @@ export default {
         if (element.classList.contains("edit-btn-others")) {
           element.addEventListener("click", rowClickedOthers());
         }
-      }); 
+      });
     };
     const rowClicked = (row) => {
       if (row != undefined) {
@@ -770,7 +777,7 @@ export default {
     const searchApplication = () => {
       toYouTable.value.isLoading = true;
       toYouTable.value.rows = [];
-     
+
       inReviewAssignedToYou([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
@@ -782,7 +789,7 @@ export default {
     const searchApplicationOther = () => {
       toOthersTable.value.isLoading = true;
       toOthersTable.value.rows = [];
-  
+
       inReviewAssignedToOthers([
         { key: "page", value: 0 },
         { key: "size", value: 10 },

@@ -179,7 +179,7 @@
                         focus:border-blue-600
                         focus:outline-none
                       "
-                      @change="searchApplication()"
+                        @change="searchApplication()"
                         v-model="searchTermToDate"
                         aria-label="Default select example"
                       />
@@ -392,7 +392,7 @@
                         focus:border-blue-600
                         focus:outline-none
                       "
-                      @change="searchApplicationOther()"
+                        @change="searchApplicationOther()"
                         v-model="searchTermToDateOth"
                         aria-label="Default select example"
                       />
@@ -676,7 +676,11 @@ export default {
               ApplicationType: element.applicantType
                 ? element.applicantType.name
                 : "",
-              Date: new Date(element.createdAt)
+              ReviewerName:
+                element.licenseReviewer && element.licenseReviewer.reviewer
+                  ? element.licenseReviewer.reviewer.name
+                  : "",
+                  AppliedDate: new Date(element.createdAt)
                 .toJSON()
                 .slice(0, 10)
                 .replace(/-/g, "/"),
@@ -699,14 +703,20 @@ export default {
                 sortable: true,
               },
               {
+                label: "Reviewer Name",
+                field: "ReviewerName",
+                width: "40%",
+                sortable: true,
+              },
+              {
                 label: "Applicant Type",
                 field: "ApplicationType",
                 width: "20%",
                 sortable: true,
               },
               {
-                label: "Date",
-                field: "Date",
+                label: "Applied Date",
+                field: "AppliedDate",
                 width: "20%",
                 sortable: true,
               },
@@ -740,7 +750,7 @@ export default {
         if (element.classList.contains("edit-btn")) {
           element.addEventListener("click", rowClicked());
         }
-      }); 
+      });
     };
     const tableLoadingFinishOthers = () => {
       let elementOthers = document.getElementsByClassName("edit-btn-others");
@@ -748,7 +758,7 @@ export default {
         if (element.classList.contains("edit-btn-others")) {
           element.addEventListener("click", rowClickedOthers());
         }
-      }); 
+      });
     };
     const rowClicked = (row) => {
       if (row != undefined) {
