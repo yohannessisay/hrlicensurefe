@@ -820,7 +820,7 @@
 
                           <div v-else class="flex flex-wrap justify-start">
                             <div>
-                              <picture v-if="docs.length > 0">
+                              <div v-if="docs.length > 0">
                                 <div
                                   v-if="
                                     docs[index] &&
@@ -868,41 +868,24 @@
                                   </h5>
 
                                   <div class="flex items-center">
-                                    <a
-                                      :data-src="
+                                    <img
+                                      @click="
+                                        viewImage(
+                                          docs[index]
+                                            ? googleApi + docs[index].filePath
+                                            : ''
+                                        )
+                                      "
+                                      class="duration-500 ease-in scale-50 cursor-pointer hover:scale-75"
+                                      :src="
                                         docs[index]
                                           ? googleApi + docs[index].filePath
                                           : ''
                                       "
-                                      :data-caption="
-                                        docs[index] && docs[index].documentType
-                                          ? docs[index].documentType.name
-                                          : ''
-                                      "
-                                    >
-                                      <img
-                                        @click="
-                                          viewImage([
-                                            {
-                                              src: docs[index]
-                                                ? googleApi +
-                                                  docs[index].filePath
-                                                : '',
-                                              title: 'Image Caption 1',
-                                            },
-                                          ])
-                                        "
-                                        class="duration-500 ease-in scale-50 cursor-pointer hover:scale-75"
-                                        :src="
-                                          docs[index]
-                                            ? googleApi + docs[index].filePath
-                                            : ''
-                                        "
-                                      />
-                                    </a>
+                                    />
                                   </div>
                                 </div>
-                              </picture>
+                              </div>
                             </div>
                             <div
                               class="flex content-center justify-center pb-large"
@@ -1385,8 +1368,7 @@ import ReviewerNavBar from "../../../SharedComponents/navBar.vue";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 import RadialProgressBar from "vue3-radial-progress";
-import PhotoViewer from "photoviewer";
-import "photoviewer/dist/photoviewer.css";
+import { v3ImgPreviewFn } from "v3-img-preview";
 import modal from "../../../../../sharedComponents/modal.vue";
 export default {
   components: {
@@ -1543,7 +1525,7 @@ export default {
             renewal.value.acceptedFields.length > 0
               ? renewal.value.acceptedFields
               : (accepted.value = []);
-         
+
           completedSteps.value = accepted.value.length;
           index.value = completedSteps.value;
           if (completedSteps.value == docs.value.length) {
@@ -1552,12 +1534,7 @@ export default {
           fetchDocumentTypes();
         });
     };
-    const viewImage = (image) => {
-      var options = {
-        index: 0, // this option means you will start at first image
-      };
-      new PhotoViewer(image, options);
-    };
+
     const fetchDocumentTypes = async () => {
       store.dispatch("reviewer/getDocumentTypes").then((res) => {
         documentTypes.value = res.data.data;
@@ -2345,7 +2322,9 @@ export default {
         allowOtherProfChange.value[education.department.id] = false;
       }
     };
-
+    const viewImage = (url) => {
+      v3ImgPreviewFn(url);
+    };
     onMounted(() => {
       created(route.params.id);
       let date = new Date();
@@ -2498,8 +2477,8 @@ export default {
   },
 };
 </script>
-<style scoped>
-.shadow-lg {
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 34%), 0 2px 4px -1px rgb(0 0 0 / 6%);
+<style>
+#v3-img-preview-container-id > div > div.v3-img-preview-toolbar > section {
+  background: black !important;
 }
 </style>

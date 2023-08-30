@@ -6,7 +6,7 @@
   <section class="home-section">
     <!-- Header -->
     <reviewer-nav-bar>
-      <h2 class="dashboard">Evaluate</h2>
+      <h2 class="dashboard">Evaluation</h2>
     </reviewer-nav-bar>
     <!-- Header -->
 
@@ -14,14 +14,14 @@
     <div class="home-content">
       <div class="container px-4 mx-auto mb-12 sm:px-4">
         <div class="w-full rounded-lg shadow-md bg-primary-800">
-          <h2 class="ml-4 text-white">
+          <h2 class="ml-4 text-xl text-white">
             Evaluating
             {{
               goodStanding && goodStanding.profile && goodStanding.profile.name
                 ? goodStanding.profile.name
                 : ""
             }}
-            's License
+            's Letter
           </h2>
           <div class="vld-parent">
             <loading
@@ -34,7 +34,7 @@
               <div class="box-shadow-pop bg-lightGrey-100">
                 <div class="flex justify-content-evenly">
                   <div
-                    class="container w-64 h-40 mt-8 ml-8 rounded-lg shadow-lg  box-shadow-pop"
+                    class="container w-64 h-40 mt-8 ml-8 rounded-lg shadow-md  box-shadow-pop"
                   >
                     <div class="mt-8">
                       <div class="flex items-center justify-center my-auto">
@@ -47,14 +47,14 @@
                       </div>
                     </div>
                     <div
-                      class="container max-w-md mx-auto my-2 mt-8 overflow-hidden bg-white rounded-lg shadow-lg"
+                      class="container max-w-md mx-auto my-2 mt-8 overflow-hidden bg-white rounded-lg shadow-md"
                     >
                       <div
                         class="relative z-10 h-auto"
                         style="clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - 5vw));"
                       >
                         <img
-                          class="w-full"
+                          class="w-full h-32"
                           :src="
                             goodStanding &&
                             goodStanding.profile &&
@@ -175,7 +175,7 @@
                               <div class="w-full mx-4 my-1 mb-4">
                                 <!-- Article -->
                                 <article
-                                  class="overflow-hidden rounded-lg shadow-lg"
+                                  class="overflow-hidden rounded-lg shadow-md"
                                 >
                                   <header
                                     class="flex items-center justify-between p-2 leading-tight  md:p-4"
@@ -253,7 +253,7 @@
                                       ></loading>
                                       <button
                                         v-if="editPersonalData"
-                                        class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded shadow-lg  hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg"
+                                        class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded shadow-md  hover:bg-purple-700 hover:shadow-md focus:bg-purple-700 focus:shadow-md focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-md"
                                         @click="changeAmharicName"
                                       >
                                         Save
@@ -330,7 +330,7 @@
                               >
                                 <!-- Article -->
                                 <article
-                                  class="overflow-hidden rounded-lg shadow-lg"
+                                  class="overflow-hidden rounded-lg shadow-md"
                                 >
                                   <header
                                     class="flex items-center justify-between p-2 leading-tight  md:p-4"
@@ -379,7 +379,7 @@
                               >
                                 <!-- Article -->
                                 <article
-                                  class="overflow-hidden rounded-lg shadow-lg"
+                                  class="overflow-hidden rounded-lg shadow-md"
                                 >
                                   <header
                                     class="flex items-center justify-between p-2 leading-tight  md:p-4"
@@ -417,7 +417,7 @@
                               <div class="w-full mx-4 my-1 mb-4">
                                 <!-- Article -->
                                 <article
-                                  class="overflow-hidden rounded-lg shadow-lg"
+                                  class="overflow-hidden rounded-lg shadow-md"
                                 >
                                   <header
                                     class="flex items-center justify-between p-2 leading-tight  md:p-4"
@@ -647,65 +647,55 @@
                           </div>
 
                           <div v-else class="flex flex-wrap justify-start">
-                            <div>
-                              <picture v-if="docs.length > 0">
-                                <div
-                                  v-if="
-                                    docs[index] &&
-                                      docs[index].fileType.split('/')[1] ==
-                                        'pdf'
-                                  "
-                                >
-                                  <div>
-                                    <iframe
-                                      v-bind:src="
-                                      docs[index] &&
-                                        docs[index].filePath
-                                          ?  googleApi + ''+docs[index].filePath
-                                          : ''
-                                      "
-                                    ></iframe>
-                                  </div>
-                                  <br />
-                                  <a
-                                    @click="
-                                      openPdfInNewTab(
-                                        docs[index] && docs[index].filePath
-                                          ? docs[index].filePath
-                                          : ''
-                                      )
-                                    "
-                                    >see pdf in detail</a
-                                  >
-                                </div>
-
-                                <div v-else>
-                                  <img
-                                    class="duration-500 ease-in scale-50 cursor-pointer  hover:scale-75"
-                                    @click="
-                                      viewImage([
-                                        {
-                                          src:
-                                           docs[index] &&
-                                            docs[index].filePath
-                                              ?  googleApi + ''+docs[index].filePath
-                                              : '',
-                                          title: 'Image Caption 1',
-                                        },
-                                      ])
-                                    "
-                                    style="height: 600px; width: 800px"
+                            <div v-if="docs.length > 0">
+                              <div
+                                v-if="
+                                  docs[index] &&
+                                    docs[index].fileType.split('/')[1] == 'pdf'
+                                "
+                              >
+                                <div>
+                                  <iframe
                                     v-bind:src="
-                                      docs[index] &&
-                                   docs[index].filePath
-                                        ? googleApi + ''+ docs[index].filePath
+                                      docs[index] && docs[index].filePath
+                                        ? googleApi + '' + docs[index].filePath
                                         : ''
                                     "
-                                  />
-                                  <div style="width: 400px"></div>
+                                  ></iframe>
                                 </div>
-                              </picture>
+                                <br />
+                                <a
+                                  @click="
+                                    openPdfInNewTab(
+                                      docs[index] && docs[index].filePath
+                                        ? docs[index].filePath
+                                        : ''
+                                    )
+                                  "
+                                  >see pdf in detail</a
+                                >
+                              </div>
+
+                              <div v-else>
+                                <img
+                                  class="duration-500 ease-in scale-50 cursor-pointer hover:scale-75 h-64 w-64"
+                                  @click="
+                                    viewImage(
+                                      docs[index]
+                                        ? googleApi + docs[index].filePath
+                                        : ''
+                                    )
+                                  " 
+                                  v-bind:src="
+                                    docs[index] && docs[index].filePath
+                                      ? googleApi + '' + docs[index].filePath
+                                      : ''
+                                  "
+                                />
+                                <div style="width: 400px"></div>
+                              </div>
                             </div>
+
                             <div
                               class="flex content-center justify-center pb-large"
                               v-if="docs.length == 0"
@@ -728,7 +718,7 @@
                             leading-tight
                             uppercase
                             rounded
-                            shadow-lg
+                            shadow-md
                             transition
                             duration-150
                             ease-in-out
@@ -750,7 +740,7 @@
                             leading-tight
                             uppercase
                             rounded
-                            shadow-lg
+                            shadow-md
                             transition
                             duration-150
                             ease-in-out
@@ -772,7 +762,7 @@
                             leading-tight
                             uppercase
                             rounded
-                            shadow-lg
+                            shadow-md
                             transition
                             duration-150
                             ease-in-out
@@ -795,7 +785,7 @@
                             leading-tight
                             uppercase
                             rounded
-                            shadow-lg
+                            shadow-md
                             transition
                             duration-150
                             ease-in-out
@@ -816,23 +806,11 @@
                             </radial-progress-bar>
                           </div>
                         </div>
-
-                        <div>
-                          <div
-                            class="relative h-3 max-w-xl ml-10 overflow-hidden rounded-full "
-                          >
-                            <div class="absolute w-full h-full"></div>
-                            <div
-                              id="bar"
-                              class="relative w-0 h-full transition-all duration-1000 ease-out bg-green-500 "
-                            ></div>
-                          </div>
-                        </div>
                       </div>
                     </div>
                   </div>
                   <div
-                    class="container w-64 h-40 p-4 mt-8 mr-8 rounded-lg shadow-lg  box-shadow-pop"
+                    class="container w-64 h-40 p-4 mt-8 mr-8 rounded-lg shadow-md  box-shadow-pop"
                   >
                     <div class="mt-8">
                       <div class="flex items-center justify-center my-auto">
@@ -865,7 +843,7 @@
                       ></loading>
                       <button
                         v-if="button.code != 'US'"
-                        class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded shadow-lg  bg-primary-700 hover:text-primary-600 hover:border"
+                        class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded shadow-md  bg-primary-700 hover:text-primary-600 hover:border"
                         @click="action(button.action)"
                       >
                         {{ button.name }}
@@ -935,7 +913,7 @@
                                   </h5>
 
                                   <button
-                                    class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded shadow-lg bg-primary-400 hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg hover:bg-white hover:text-primary-600"
+                                    class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded shadow-md bg-primary-400 hover:bg-purple-700 hover:shadow-md focus:bg-purple-700 focus:shadow-md focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-md hover:bg-white hover:text-primary-600"
                                     @click="
                                       openPdfInNewTab(
                                         rejectedObj[ind]
@@ -1015,7 +993,7 @@
                         class="flex items-center justify-center border-t border-solid rounded-b border-blueGray-200"
                       >
                         <button
-                          class="inline-block px-6 text-xs mt-4 font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded shadow-lg bg-primary-600 hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg hover:bg-primary-400 hover:text-white"
+                          class="inline-block px-6 text-xs mt-4 font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded shadow-md bg-primary-600 hover:bg-purple-700 hover:shadow-md focus:bg-purple-700 focus:shadow-md focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-md hover:bg-primary-400 hover:text-white"
                           type="button"
                           v-on:click="showRemark = false"
                         >
@@ -1023,7 +1001,7 @@
                         </button>
                         <button
                           type="button"
-                          class="inline-block px-6 text-white mt-4 bg-primary-600 font-medium text-xs leading-tight uppercase rounded shadow-lg hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 hover:bg-primary-400 hover:text-white ease-in-out
+                          class="inline-block px-6 text-white mt-4 bg-primary-600 font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-purple-700 hover:shadow-md focus:bg-purple-700 focus:shadow-md focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-md transition duration-150 hover:bg-primary-400 hover:text-white ease-in-out
                           "
                           v-on:click="submitRemark()"
                         >
@@ -1058,8 +1036,7 @@ import Loading from "vue3-loading-overlay";
 // Import stylesheet
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 import RadialProgressBar from "vue3-radial-progress";
-import PhotoViewer from "photoviewer";
-import "photoviewer/dist/photoviewer.css";
+import { v3ImgPreviewFn } from "v3-img-preview";
 export default {
   components: {
     modal,
@@ -1876,18 +1853,13 @@ export default {
       allowProfChange.value[depId] ? allowProfChange.value[depId] : false;
       allowProfChange.value[depId] = !allowProfChange.value[depId];
       allowOtherProfChange.value[depId] = false;
-
-    
     };
 
     const changeNewProfession = (profession) => {
       console.log(profession);
     };
-    const viewImage = (image) => {
-      var options = {
-        index: 0, // this option means you will start at first image
-      };
-      new PhotoViewer(image, options);
+    const viewImage = (url) => {
+      v3ImgPreviewFn(url);
     };
     onMounted(() => {
       isLoadingStart.value = true;
@@ -2005,8 +1977,8 @@ export default {
   },
 };
 </script>
-<style scoped>
-.shadow-lg {
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 34%), 0 2px 4px -1px rgb(0 0 0 / 6%);
+<style>
+#v3-img-preview-container-id > div > div.v3-img-preview-toolbar > section {
+  background: black !important;
 }
 </style>

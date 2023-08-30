@@ -175,7 +175,7 @@
                         focus:border-blue-600
                         focus:outline-none
                       "
-                      @change="searchApplication()"
+                        @change="searchApplication()"
                         v-model="searchTermToDate"
                         aria-label="Default select example"
                       />
@@ -220,7 +220,7 @@
                     bg-primary-800
                   "
                 >
-                  <vue-table-lite 
+                  <vue-table-lite
                     :is-loading="toYouTable.isLoading"
                     :columns="toYouTable.columns"
                     :rows="toYouTable.rows"
@@ -384,7 +384,7 @@
                         focus:border-blue-600
                         focus:outline-none
                       "
-                      @change="searchApplicationOther()"
+                        @change="searchApplicationOther()"
                         v-model="searchTermToDateOth"
                         aria-label="Default select example"
                       />
@@ -429,7 +429,7 @@
                     bg-primary-800
                   "
                 >
-                  <vue-table-lite 
+                  <vue-table-lite
                     :is-loading="toOthersTable.isLoading"
                     :columns="toOthersTable.columns"
                     :rows="toOthersTable.rows"
@@ -510,7 +510,7 @@ export default {
       toYouTable.value.isLoading = true;
       toOthersTable.value.rows = [];
       toYouTable.value.rows = [];
-      
+
       approvedApplicationsByYou([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
@@ -525,7 +525,7 @@ export default {
       searchTermFromDateOth.value = "";
       searchTermToDateOth.value = "";
       toOthersTable.value.isLoading = true;
-      toOthersTable.value.rows = []; 
+      toOthersTable.value.rows = [];
       approvedApplicationsByOthers([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
@@ -536,7 +536,7 @@ export default {
       searchTermFromDate.value = "";
       searchTermToDate.value = "";
       toYouTable.value.isLoading = true;
-      toYouTable.value.rows = []; 
+      toYouTable.value.rows = [];
       approvedApplicationsByYou([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
@@ -628,7 +628,6 @@ export default {
         });
     };
     const approvedApplicationsByOthers = (apiParameters) => {
-
       tableData = [];
       store
         .dispatch("reviewerRenewal/getRenewalApproved", [
@@ -655,6 +654,10 @@ export default {
               ApplicationType: element.applicantType
                 ? element.applicantType.name
                 : "",
+              ReviewerName:
+                element.renewalReviewer && element.renewalReviewer.reviewer
+                  ? element.renewalReviewer.reviewer.name
+                  : "",
               Date: new Date(element.createdAt)
                 .toJSON()
                 .slice(0, 10)
@@ -684,11 +687,18 @@ export default {
                 sortable: true,
               },
               {
+                label: "Reviewer Name",
+                field: "ReviewerName",
+                width: "40%",
+                sortable: true,
+              },
+              {
                 label: "Date",
                 field: "Date",
                 width: "20%",
                 sortable: true,
               },
+           
               {
                 label: "Action",
                 field: "quick",
@@ -720,7 +730,7 @@ export default {
         if (element.classList.contains("edit-btn")) {
           element.addEventListener("click", rowClicked());
         }
-      }); 
+      });
     };
     const tableLoadingFinishOthers = () => {
       let elementOthers = document.getElementsByClassName("edit-btn-others");
@@ -728,7 +738,7 @@ export default {
         if (element.classList.contains("edit-btn-others")) {
           element.addEventListener("click", rowClickedOthers());
         }
-      }); 
+      });
     };
     const rowClicked = (row) => {
       if (row != undefined) {
@@ -748,7 +758,7 @@ export default {
 
     const searchApplication = () => {
       toYouTable.value.isLoading = true;
-      toYouTable.value.rows = []; 
+      toYouTable.value.rows = [];
       approvedApplicationsByYou([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
@@ -759,7 +769,7 @@ export default {
     };
     const searchApplicationOther = () => {
       toOthersTable.value.isLoading = true;
-      toOthersTable.value.rows = []; 
+      toOthersTable.value.rows = [];
       approvedApplicationsByOthers([
         { key: "page", value: 0 },
         { key: "size", value: 10 },
@@ -801,7 +811,6 @@ export default {
             { key: "toDate", value: searchTermToDate.value },
           ]);
         }
-        
       }, 600);
     };
     const doSearchOth = (offset, limit, order, sort) => {
@@ -827,7 +836,6 @@ export default {
             { key: "toDate", value: searchTermToDateOth.value },
           ]);
         }
-      
       }, 600);
     };
     return {

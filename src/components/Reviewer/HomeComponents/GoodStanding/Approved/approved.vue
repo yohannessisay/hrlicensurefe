@@ -653,7 +653,11 @@ export default {
               ApplicationType: element.applicantType
                 ? element.applicantType.name
                 : "",
-              Date: new Date(element.createdAt)
+                ReviewerName:
+                element.goodstandingReviewer && element.goodstandingReviewer.reviewer
+                  ? element.goodstandingReviewer.reviewer.name
+                  : "",
+              AppliedDate: new Date(element.createdAt)
                 .toJSON()
                 .slice(0, 10)
                 .replace(/-/g, "/"),
@@ -682,8 +686,14 @@ export default {
                 sortable: true,
               },
               {
-                label: "Date",
-                field: "Date",
+                label: "Reviewer Name",
+                field: "ReviewerName",
+                width: "40%",
+                sortable: true,
+              },
+              {
+                label: "Applied Date",
+                field: "AppliedDate",
                 width: "20%",
                 sortable: true,
               },
