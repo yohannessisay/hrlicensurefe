@@ -67,26 +67,26 @@
               id="printedDiv"
               class="grow-0 shrink-0 basis-auto w-full px-8 "
             >
-              <div class="grid grid-cols-2 mt-20">
+              <div class="grid grid-cols-2 mt-32">
                 <div class="flex justify-start mt-1" contenteditable="false">
                   <img
                     :src="qrSrc"
                     alt=""
-                    style="height: 150px;width: 150px;"
+                    style="height: 120px;width: 120px;"
                   />
                 </div>
               </div>
-              <div class="mt-2 px-8" contenteditable="true">
-                <h5 class="text-xl mt-2 normalFont">
+              <div class="mt-2 px-8" contenteditable="true mainText">
+                <h5 class="text-xl mt-8">
                   To: {{ modalData ? modalData.whomGoodStandingFor : "" }}
                 </h5>
                 <div class="flex justify-center">
-                  <h5 class="text-xl mt-4 mb-8 normalFont">
+                  <h5 class="text-xl mt-4 mb-8 mainText">
                     LETTER OF GOOD STANDING
                   </h5>
                 </div>
                 <div>
-                  <h5 class="text-xl normalFont">
+                  <h5 class="text-xl mainText">
                     This letter of good standing and confirmation of
                     registration is written upon the request of
                     {{
@@ -113,7 +113,7 @@
                     }}
                   </h5>
 
-                  <h5 class="mt-3 text-xl normalFont">
+                  <h5 class="mt-3 text-xl mainText">
                     {{
                       modalData && modalData.applicantTitle
                         ? modalData.applicantTitle.name
@@ -168,19 +168,19 @@
                     From __/__/__ to __/__/__ has been working here in Ethiopia.
                   </h5>
 
-                  <h5 class="mt-4 text-xl normalFont">
+                  <h5 class="mt-4 text-xl mainText">
                     Since his registration, till
                     {{ new Date().toISOString().slice(0, 10) }}, he has no any
                     reported medico legal records and malpractices while he has
                     practiced his medical profession in Ethiopia.
                   </h5>
 
-                  <h5 class="text-xl mt-4 normalFont">
+                  <h5 class="text-xl mt-4 mainText ">
                     Hence we appreciate any assistance, which will be rendered
                     to ………...
                   </h5>
                 </div>
-                <h5 class="text-xl mt-4 normalFont mb-48">With best regards</h5>
+                <h5 class="text-xl mt-12 mb-48 mainText">With best regards</h5>
               </div>
             </div>
           </div>
@@ -489,6 +489,10 @@ export default {
 };
 </script>
 <style>
+@import url("https://fonts.cdnfonts.com/css/times-new-roman");
+.mainText {
+  font-family: "Times New Roman", sans-serif !important;
+}
 .text-danger > label,
 .text-danger > h5 {
   color: red;
