@@ -347,7 +347,10 @@ export default {
       objRen = document.getElementById("totalNew");
       objNew = document.getElementById("totalRen");
       objGoo = document.getElementById("totalGoo");
-
+      store.dispatch("admin/getAdminStatus").then((res) => {
+        let result = res && res.data && res.data.data ? res.data.data : {};
+        localStorage.setItem("adminStats", JSON.stringify(result));
+      });
       getStats();
     });
 

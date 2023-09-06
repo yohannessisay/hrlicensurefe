@@ -61,6 +61,20 @@
           <a href="">
             <i class="bx bx-refresh"></i>
             <span class="links_name">Assigned</span>
+            <h6
+              v-if="
+                statList && statList.filter((el) => el.name == 'In Review')[0]
+              "
+              id="nlIRVCounter"
+              class="ml-4 text-primary-600 font-bold text-xl  p-1"
+            >
+              {{
+                statList && statList.filter((el) => el.name == "In Review")[0]
+                  ? statList.filter((el) => el.name == "In Review")[0]
+                      .statusCount
+                  : ""
+              }}
+            </h6>
           </a>
         </li>
       </router-link>
@@ -73,9 +87,21 @@
           <a href="">
             <i class="bx bx-pencil"></i>
             <span class="links_name">Draft</span>
+            <h6
+              v-if="statList && statList.filter((el) => el.name == 'Draft')[0]"
+              id="nlIRVCounter"
+              class="ml-4 text-primary-600 font-bold text-xl  p-1"
+            >
+              {{
+                statList && statList.filter((el) => el.name == "Draft")[0]
+                  ? statList.filter((el) => el.name == "Draft")[0].statusCount
+                  : ""
+              }}
+            </h6>
           </a>
         </li>
       </router-link>
+
       <router-link to="/admin/goodStanding/approved">
         <li
           :class="
@@ -136,5 +162,20 @@
   </div>
 </template>
 <script>
-export default {};
+import { ref } from "vue";
+export default {
+  setup() {
+    let adminStats = ref(
+      localStorage.getItem("adminStats")
+        ? JSON.parse(localStorage.getItem("adminStats"))
+        : []
+    );
+
+    let statList = adminStats.value.goodStanding;
+
+    return {
+      statList,
+    };
+  },
+};
 </script>

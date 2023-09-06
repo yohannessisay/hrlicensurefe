@@ -1,6 +1,6 @@
 <template>
   <!-- Sidebar -->
-  <reviewer-side-nav :finalUrl="'renewal'"></reviewer-side-nav>
+  <reviewer-side-nav :finalUrl="'renewal'"  :inReviewCount="inReviewCount"></reviewer-side-nav>
   <!-- Sidebar -->
 
   <section class="home-section">
@@ -507,6 +507,7 @@ export default {
     let toOthersTable = ref({});
     let toYouTable = ref({});
     let tableData = [];
+    let inReviewCount = ref(0);
     let toYouTableData = [];
     toOthersTable.value = {
       isLoading: true,
@@ -572,6 +573,7 @@ export default {
         ])
         .then((res) => {
           allInfo = res ? res.rows : [];
+          inReviewCount.value = res.count;
           allInfo.forEach((element) => {
             toYouTableData.push({
               LicenseNumber: element.renewalCode,
@@ -894,6 +896,7 @@ export default {
       refreshTable,
       modalDataId,
       modalDataIdOthers,
+      inReviewCount
     };
   },
 };

@@ -1,6 +1,9 @@
 <template>
   <!-- Sidebar -->
-  <reviewer-side-nav :finalUrl="'newLicense'"></reviewer-side-nav>
+  <reviewer-side-nav
+    :finalUrl="'newLicense'"
+    :inReviewCount="inReviewCount"
+  ></reviewer-side-nav>
   <!-- Sidebar -->
 
   <section class="home-section">
@@ -500,6 +503,7 @@ export default {
     let statuses = JSON.parse(localStorage.getItem("applicationStatuses"));
     let allInfo = [];
     let reviewers = ref([]);
+    let inReviewCount = ref(0);
     let searchTerm = ref("");
     let searchTermOthers = ref("");
     let searchTermFromDate = ref("");
@@ -574,6 +578,7 @@ export default {
         ])
         .then((res) => {
           allInfo = res ? res.rows : [];
+          inReviewCount.value = res.count;
           allInfo.forEach((element) => {
             toYouTableData.push({
               LicenseNumber: element.newLicenseCode,
@@ -680,7 +685,7 @@ export default {
                 element.licenseReviewer && element.licenseReviewer.reviewer
                   ? element.licenseReviewer.reviewer.name
                   : "",
-                  AppliedDate: new Date(element.createdAt)
+              AppliedDate: new Date(element.createdAt)
                 .toJSON()
                 .slice(0, 10)
                 .replace(/-/g, "/"),
@@ -888,6 +893,7 @@ export default {
       searchTermToDateOth,
       toYouTable,
       reviewers,
+      inReviewCount,
       tableLoadingFinish,
       inReviewAssignedToOthers,
       tableLoadingFinishOthers,
