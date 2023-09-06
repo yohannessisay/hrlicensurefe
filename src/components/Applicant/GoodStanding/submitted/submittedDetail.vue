@@ -158,7 +158,13 @@
                     </option>
                   </select>
                 </div>
-                <div class="flex flex-col">
+                <div
+                  class="flex flex-col"
+                  v-if="
+                    generalInfo.regionSelected &&
+                      generalInfo.regionSelected.code != 'FED'
+                  "
+                >
                   <label class="text-main-400">Zone</label>
                   <select
                     class="form-select appearance-none block max-w-3xl px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
@@ -188,7 +194,13 @@
                     </option>
                   </select>
                 </div>
-                <div class="flex flex-col">
+                <div
+                  class="flex flex-col"
+                  v-if="
+                    generalInfo.regionSelected &&
+                      generalInfo.regionSelected.code != 'FED'
+                  "
+                >
                   <label class="text-main-400">Woreda</label>
                   <select
                     class="form-select appearance-none block max-w-3xl px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
@@ -695,6 +707,12 @@ export default {
     };
 
     const apply = () => {
+      if (
+        generalInfo.value.regionSelected &&
+        generalInfo.value.regionSelected.code == "FED"
+      ) {
+        generalInfo.value.expertLevelId = 3;
+      }
       let tempApplicationData = generalInfo.value;
       window.localStorage.setItem(
         "GSApplicationData",
@@ -721,6 +739,12 @@ export default {
     const saveDraft = () => {
       generalInfo.value.licenseFile = [];
       isLoading.value = true;
+      if (
+        generalInfo.value.regionSelected &&
+        generalInfo.value.regionSelected.code == "FED"
+      ) {
+        generalInfo.value.expertLevelId = 3;
+      }
       let license = {
         action: "SubmitEvent",
         data: {

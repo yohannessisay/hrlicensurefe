@@ -134,7 +134,13 @@
                 </option>
               </select>
             </div>
-            <div class="flex flex-col ">
+            <div
+              class="flex flex-col "
+              v-if="
+                generalInfo.regionSelected &&
+                  generalInfo.regionSelected.code != 'FED'
+              "
+            >
               <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
                 >Zone<span class="text-red-300">*</span></label
               >
@@ -152,7 +158,13 @@
                 </option>
               </select>
             </div>
-            <div class="flex flex-col ">
+            <div
+              class="flex flex-col "
+              v-if="
+                generalInfo.regionSelected &&
+                  generalInfo.regionSelected.code != 'FED'
+              "
+            >
               <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
                 >Woreda<span class="text-red-300">*</span></label
               >
@@ -177,132 +189,127 @@
           <div
             class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 sm:grid-cols-1 gap-2 mb-4 p-4 border-b"
           >
-         
-              <div>
-                <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
-                  >Department</label
-                ><span class="text-red-300">*</span>
-                <select
-                  class="form-select appearance-none block w-full  px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
-                  v-model="generalInfo.departmentId"
-                  @change="setDepartment()"
-                  required
+            <div>
+              <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
+                >Department</label
+              ><span class="text-red-300">*</span>
+              <select
+                class="form-select appearance-none block w-full  px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+                v-model="generalInfo.departmentId"
+                @change="setDepartment()"
+                required
+              >
+                <option
+                  v-for="department in departments"
+                  v-bind:key="department.id"
+                  v-bind:value="department"
                 >
-                  <option
-                    v-for="department in departments"
-                    v-bind:key="department.id"
-                    v-bind:value="department"
-                  >
-                    {{ department.name }}
-                  </option>
-                </select>
-              </div>
-           
-         
-              <div>
+                  {{ department.name }}
+                </option>
+              </select>
+            </div>
+
+            <div>
+              <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
+                >Education Level</label
+              ><span class="text-red-300">*</span>
+              <select
+                class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+                :disabled="!isDepartmentSelected"
+                v-model="generalInfo.educationLevelId"
+                @change="educationalLevelChange()"
+                required
+              >
+                <option value="" disabled
+                  >Please select department first</option
+                >
+                <option
+                  v-for="edLevel in educationLevels"
+                  v-bind:key="edLevel.name"
+                  v-bind:value="edLevel"
+                >
+                  {{ edLevel.name }}
+                </option>
+              </select>
+            </div>
+
+            <div class="grid grid-cols-1">
+              <div class="mb-4 ">
                 <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
-                  >Education Level</label
+                  >Profession</label
                 ><span class="text-red-300">*</span>
                 <select
                   class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
-                  :disabled="!isDepartmentSelected"
-                  v-model="generalInfo.educationLevelId"
-                  @change="educationalLevelChange()"
+                  :disabled="!isEdLevelSelected"
+                  @change="checkOtherProfession()"
+                  v-model="generalInfo.professionTypeId"
                   required
                 >
                   <option value="" disabled
-                    >Please select department first</option
+                    >Please select education level first</option
                   >
                   <option
-                    v-for="edLevel in educationLevels"
-                    v-bind:key="edLevel.name"
-                    v-bind:value="edLevel"
+                    v-for="profession in professionalTypes"
+                    v-bind:key="profession.name"
+                    v-bind:value="profession"
                   >
-                    {{ edLevel.name }}
+                    {{ profession.name }}
                   </option>
+                  <option value=""></option>
                 </select>
               </div>
-         
-              <div class="grid grid-cols-1">
-                <div class="mb-4 ">
-                  <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
-                    >Profession</label
-                  ><span class="text-red-300">*</span>
-                  <select
-                    class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
-                    :disabled="!isEdLevelSelected"
-                    @change="checkOtherProfession()"
-                    v-model="generalInfo.professionTypeId"
-                    required
-                  >
-                    <option value="" disabled
-                      >Please select education level first</option
-                    >
-                    <option
-                      v-for="profession in professionalTypes"
-                      v-bind:key="profession.name"
-                      v-bind:value="profession"
-                    >
-                      {{ profession.name }}
-                    </option>
-                    <option value=""></option>
-                  </select>
-                </div>
-              
-                <div v-if="showOtherProfession">
-                  <input
-                    type="text"
-                    :required="
-                      generalInfo.applicantTypeId.code != 'FOR' &&
-                        generalInfo.otherProfessionType &&
-                        generalInfo.otherProfessionType.length > 0
-                    "
-                    name="otherProf"
-                    v-model="generalInfo.otherProfessionType"
-                    class="mb-2 appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
-                    autocomplete="off"
-                    placeholder="Profession english title"
-                  />
-                </div>
 
-                <div v-if="showOtherProfession">
-                  <input
-                    type="text"
-                    name="otherProfAmh"
-                    :required="
-                      generalInfo.applicantTypeId.code != 'FOR' &&
-                        generalInfo.otherProfessionTypeAmharic &&
-                        generalInfo.otherProfessionTypeAmharic.length > 0
-                    "
-                    v-model="generalInfo.otherProfessionTypeAmharic"
-                    class="appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
-                    autocomplete="off"
-                    placeholder="Profession amharic title"
-                  />
-                </div>
+              <div v-if="showOtherProfession">
+                <input
+                  type="text"
+                  :required="
+                    generalInfo.applicantTypeId.code != 'FOR' &&
+                      generalInfo.otherProfessionType &&
+                      generalInfo.otherProfessionType.length > 0
+                  "
+                  name="otherProf"
+                  v-model="generalInfo.otherProfessionType"
+                  class="mb-2 appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+                  autocomplete="off"
+                  placeholder="Profession english title"
+                />
               </div>
-            
 
-          
-              <div>
-                <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
-                  >Applicant Position</label
-                ><span class="text-red-300">*</span>
-                <select
-                  class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
-                  v-model="generalInfo.applicantPosition"
-                  required
+              <div v-if="showOtherProfession">
+                <input
+                  type="text"
+                  name="otherProfAmh"
+                  :required="
+                    generalInfo.applicantTypeId.code != 'FOR' &&
+                      generalInfo.otherProfessionTypeAmharic &&
+                      generalInfo.otherProfessionTypeAmharic.length > 0
+                  "
+                  v-model="generalInfo.otherProfessionTypeAmharic"
+                  class="appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+                  autocomplete="off"
+                  placeholder="Profession amharic title"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
+                >Applicant Position</label
+              ><span class="text-red-300">*</span>
+              <select
+                class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+                v-model="generalInfo.applicantPosition"
+                required
+              >
+                <option
+                  v-for="position in applicationPositions"
+                  v-bind:key="position.id"
+                  v-bind:value="position"
                 >
-                  <option
-                    v-for="position in applicationPositions"
-                    v-bind:key="position.id"
-                    v-bind:value="position"
-                  >
-                    {{ position.name }}
-                  </option>
-                </select>
-              </div>
-            
+                  {{ position.name }}
+                </option>
+              </select>
+            </div>
           </div>
         </div>
 
@@ -507,7 +514,15 @@ export default {
       fetchWoredas();
     };
     const regionChangeHandler = () => {
-      fetchZones();
+      if (
+        generalInfo.value.regionSelected &&
+        generalInfo.value.regionSelected.code != "FED"
+      ) {
+        fetchZones();
+      } else {
+        generalInfo.value.zoneSelected = null;
+        generalInfo.value.woredaSelected = null;
+      }
     };
     const educationalLevelChange = () => {
       isEdLevelSelected.value = true;
@@ -561,7 +576,7 @@ export default {
     };
     const fetchRegions = () => {
       store.dispatch("goodstanding/getRegions").then((res) => {
-        regions.value = res.data.data;
+        regions.value = res.data.data; 
       });
     };
     const fetchZone = () => {
@@ -595,6 +610,12 @@ export default {
     };
 
     const submit = () => {
+      if (
+        generalInfo.value.regionSelected &&
+        generalInfo.value.regionSelected.code == "FED"
+      ) {
+        generalInfo.value.expertLevelId = 3;
+      }
       generalInfo.value.applicantTypeId == ""
         ? (errorFields.value.applicantTypeId = true)
         : delete errorFields.value.applicantTypeId;
@@ -680,6 +701,12 @@ export default {
     const saveDraft = () => {
       generalInfo.value.licenseFile = [];
       isLoading.value = true;
+      if (
+        generalInfo.value.regionSelected &&
+        generalInfo.value.regionSelected.code == "FED"
+      ) {
+        generalInfo.value.expertLevelId = 3;
+      }
       let license = {
         action: "DraftEvent",
         data: {

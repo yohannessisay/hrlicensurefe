@@ -87,7 +87,7 @@
                             type="file"
                             required
                             :id="`files${item.id}`"
-                            accept=".jpeg, .jpg, .pdf"
+                            accept=".jpeg, .jpg,.png, .pdf"
                             :ref="`imageUploader${item.id}`"
                             class="custom-file-input"
                             v-on:change="handleFileUpload(item, $event)"
@@ -152,7 +152,9 @@
                           data-lightbox="example-2"
                         >
                           <i
-                            :id="'common_icon_' + item.documentType.id + item.id"
+                            :id="
+                              'common_icon_' + item.documentType.id + item.id
+                            "
                             class="fa fa-eye cursor-pointer text-main-400 disabled"
                             aria-hidden="true"
                           >
@@ -269,7 +271,7 @@ export default {
     maxFileSize.value = MAX_FILE_SIZE.MAX_FILE_SIZE;
     let generalInfo = ref({});
     let documentUploaded = ref([]);
- 
+
     let formData = new FormData();
 
     const handleFileUpload = (data, event) => {
@@ -481,7 +483,6 @@ export default {
 
             store.dispatch("goodstanding/setTempDocs", formData);
           } else if (isBackButtonClicked.value == true) {
-          
             finalLocalData.data = toRaw(documentUploaded.value);
             formData = new FormData();
 
@@ -497,7 +498,7 @@ export default {
             finalLocalData.data = imageData;
             store.dispatch("goodstanding/setTempDocs", formData);
           }
-        
+
           finalLocalData.data = [...new Set(finalLocalData.data)];
 
           const objectStore = transaction.objectStore("GSdocumentUploads");
@@ -697,7 +698,7 @@ export default {
       handleFileUpload,
       showImage,
       previewDocuments,
-      showPreview, 
+      showPreview,
       saveDraft,
       documentError,
       generalInfo,

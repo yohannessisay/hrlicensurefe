@@ -80,7 +80,7 @@
                             type="file"
                             required
                             :id="'common_image_' + item.documentType.id + item.id"
-                            accept=".jpeg, .jpg, .pdf"
+                            accept=".jpeg,.png, .jpg, .pdf"
                             :ref="`imageUploader${item.id}`"
                             class="custom-file-input"
                             v-on:change="handleFileUpload(item, $event)"
