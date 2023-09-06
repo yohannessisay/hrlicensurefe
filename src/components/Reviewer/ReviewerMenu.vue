@@ -2,7 +2,10 @@
   <!-- Sidebar -->
   <reviewer-side-bar>
     <ul class="nav-links">
-      <router-link to="/admin/dashboard" v-if="adminData ? adminData.role.code != 'SA' : ''">
+      <router-link
+        to="/admin/dashboard"
+        v-if="adminData ? adminData.role.code != 'SA' : ''"
+      >
         <li class="mb-2">
           <a href="#Dashboard">
             <i class="bx bx-chart"></i>
@@ -10,7 +13,10 @@
           </a>
         </li>
       </router-link>
-      <router-link to="/admin/newLicense/" v-if="adminData ? adminData.role.code != 'SA' : ''">
+      <router-link
+        to="/admin/newLicense/"
+        v-if="adminData ? adminData.role.code != 'SA' : ''"
+      >
         <li class="mb-2">
           <a href="#NewLicense">
             <i class="bx bx-certification"></i>
@@ -18,7 +24,10 @@
           </a>
         </li>
       </router-link>
-      <router-link to="/admin/renewal/" v-if="adminData ? adminData.role.code != 'SA' : ''">
+      <router-link
+        to="/admin/renewal/"
+        v-if="adminData ? adminData.role.code != 'SA' : ''"
+      >
         <li class="mb-2">
           <a href="#Renewal">
             <i class="bx bx-refresh"></i>
@@ -26,7 +35,10 @@
           </a>
         </li>
       </router-link>
-      <router-link to="/admin/verification/" v-if="adminData ? adminData.role.code != 'SA' : ''">
+      <router-link
+        to="/admin/verification/"
+        v-if="adminData ? adminData.role.code != 'SA' : ''"
+      >
         <li class="mb-2">
           <a href="#Verification">
             <i class="bx bx-message-check"></i>
@@ -34,7 +46,10 @@
           </a>
         </li>
       </router-link>
-      <router-link to="/admin/goodStanding/" v-if="adminData ? adminData.role.code != 'SA' : ''">
+      <router-link
+        to="/admin/goodStanding/"
+        v-if="adminData ? adminData.role.code != 'SA' : ''"
+      >
         <li class="mb-2">
           <a href="#GoodStanding">
             <i class="bx bx-mail-send"></i>
@@ -42,7 +57,10 @@
           </a>
         </li>
       </router-link>
-      <router-link to="/admin/cpdCertified" v-if="adminData ? adminData.role.code != 'SA' : ''">
+      <router-link
+        to="/admin/cpdCertified"
+        v-if="adminData ? adminData.role.code != 'SA' : ''"
+      >
         <li class="mb-2">
           <a href="#CpdCertified">
             <i class="bx bx-badge-check"></i>
@@ -53,7 +71,11 @@
 
       <router-link
         to="/admin/userManagement"
-        v-if="adminData ? adminData.role.code == 'UM' || adminData.role.code == 'SA' : ''"
+        v-if="
+          adminData
+            ? adminData.role.code == 'UM' || adminData.role.code == 'SA'
+            : ''
+        "
       >
         <li class="mb-2">
           <a href="#UserManagement">
@@ -90,7 +112,10 @@
         </li>
       </router-link>
 
-      <router-link to="/admin/legacyData" v-if="adminData ? adminData.role.code != 'SA' : ''">
+      <router-link
+        to="/admin/legacyData"
+        v-if="adminData ? adminData.role.code != 'SA' : ''"
+      >
         <li class="mb-2">
           <a href="#LegacyData">
             <i class="bx bx-skip-previous-circle"></i>
@@ -101,7 +126,11 @@
 
       <router-link
         to="/admin/lookupManagement"
-        v-if="adminData ? adminData.role.code == 'SA' && adminData.expertLevel.code == 'FED' : ''"
+        v-if="
+          adminData
+            ? adminData.role.code == 'SA' && adminData.expertLevel.code == 'FED'
+            : ''
+        "
       >
         <li class="mb-2">
           <a href="#LookupManagement">
@@ -113,7 +142,11 @@
 
       <router-link
         to="/admin/lookupManagement/regional/licenseExpirationDate"
-        v-if="adminData ? adminData.role.code == 'SA' && adminData.expertLevel.code == 'REG' : ''"
+        v-if="
+          adminData
+            ? adminData.role.code == 'SA' && adminData.expertLevel.code == 'REG'
+            : ''
+        "
       >
         <li class="mb-2">
           <a href="#LookupManagementRegional">
@@ -151,119 +184,122 @@
 </template>
 
 <script>
-  import ReviewerNavBar from "./SharedComponents/navBar.vue";
-  import ReviewerSideBar from "./ReviewerSideNav.vue";
-  import ReviewerMainContent from "./ReviewerMainContent.vue";
-  import { useStore } from "vuex";
-  import { useToast } from "vue-toastification";
-  export default {
-    components: {
-      ReviewerNavBar,
-      ReviewerSideBar,
-      ReviewerMainContent,
-    },
-    setup() {
-      const store = useStore();
-      const toast = useToast();
-      navigator.browserSpecs = (function() {
-        var ua = navigator.userAgent,
-          tem,
-          M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
-        if (/trident/i.test(M[1])) {
-          tem = /\brv[ :]+(\d+)/g.exec(ua) || [];
-          return {
-            name: "IE",
-            version: tem[1] || "",
-          };
-        }
-        if (M[1] === "Chrome") {
-          tem = ua.match(/\b(OPR|Edge)\/(\d+)/);
-          if (tem != null)
-            return {
-              name: tem[1].replace("OPR", "Opera"),
-              version: tem[2],
-            };
-        }
-        M = M[2] ? [M[1], M[2]] : [navigator.appName, navigator.appVersion, "-?"];
-        if ((tem = ua.match(/version\/(\d+)/i)) != null) M.splice(1, 1, tem[1]);
+import ReviewerNavBar from "./SharedComponents/navBar.vue";
+import ReviewerSideBar from "./ReviewerSideNav.vue";
+import ReviewerMainContent from "./ReviewerMainContent.vue";
+import { useStore } from "vuex";
+import { useToast } from "vue-toastification";
+export default {
+  components: {
+    ReviewerNavBar,
+    ReviewerSideBar,
+    ReviewerMainContent,
+  },
+  setup() {
+    const store = useStore();
+    const toast = useToast();
+    navigator.browserSpecs = (function() {
+      var ua = navigator.userAgent,
+        tem,
+        M =
+          ua.match(
+            /(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i
+          ) || [];
+      if (/trident/i.test(M[1])) {
+        tem = /\brv[ :]+(\d+)/g.exec(ua) || [];
         return {
-          name: M[0],
-          version: M[1],
+          name: "IE",
+          version: tem[1] || "",
         };
-      })();
-
-      switch (navigator.browserSpecs.name) {
-        case "Chrome":
-          if (Number(navigator.browserSpecs.version) < 80) {
-            toast.warning(
-              `Your browser version ${navigator.browserSpecs.version} is below the recomended version for eHPEL, please update before going any further`,
-              {
-                timeout: 10000,
-                position: "bottom-right",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true,
-              }
-            );
-          }
-          break;
-        case "Opera":
-          if (Number(navigator.browserSpecs.version) < 80) {
-            toast.warning(
-              `Your browser version ${navigator.browserSpecs.version} is below the recomended version for eHPEL, please update before going any further`,
-              {
-                timeout: 10000,
-                position: "bottom-right",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true,
-              }
-            );
-          }
-          break;
-        case "Edge":
-          if (Number(navigator.browserSpecs.version) < 44) {
-            toast.warning(
-              `Your browser version ${navigator.browserSpecs.version} is below the recomended version for eHPEL, please update before going any further`,
-              {
-                timeout: 10000,
-                position: "bottom-right",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true,
-              }
-            );
-          }
-          break;
-        case "Firefox":
-          if (Number(navigator.browserSpecs.version) < 80) {
-            toast.warning(
-              `Your browser version ${navigator.browserSpecs.version} is below the recomended version for eHPEL, please update before going any further`,
-              {
-                timeout: 10000,
-                position: "bottom-right",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true,
-              }
-            );
-          }
-          break;
-        default:
-          break;
       }
-      const adminData = JSON.parse(localStorage.getItem("allAdminData"));
-      store.dispatch("ReviewerSideNav/assignSelectedSideBar", "mainPage");
-      let currentMenu = store.getters["ReviewerSideNav/getSelectedSideBar"];
-
-      function updateMenu(menu) {
-        currentMenu = menu;
+      if (M[1] === "Chrome") {
+        tem = ua.match(/\b(OPR|Edge)\/(\d+)/);
+        if (tem != null)
+          return {
+            name: tem[1].replace("OPR", "Opera"),
+            version: tem[2],
+          };
       }
+      M = M[2] ? [M[1], M[2]] : [navigator.appName, navigator.appVersion, "-?"];
+      if ((tem = ua.match(/version\/(\d+)/i)) != null) M.splice(1, 1, tem[1]);
       return {
-        currentMenu,
-        updateMenu,
-        adminData,
+        name: M[0],
+        version: M[1],
       };
-    },
-  };
+    })();
+
+    switch (navigator.browserSpecs.name) {
+      case "Chrome":
+        if (Number(navigator.browserSpecs.version) < 80) {
+          toast.warning(
+            `Your browser version ${navigator.browserSpecs.version} is below the recomended version for eHPEL, please update before going any further`,
+            {
+              timeout: 10000,
+              position: "bottom-right",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            }
+          );
+        }
+        break;
+      case "Opera":
+        if (Number(navigator.browserSpecs.version) < 80) {
+          toast.warning(
+            `Your browser version ${navigator.browserSpecs.version} is below the recomended version for eHPEL, please update before going any further`,
+            {
+              timeout: 10000,
+              position: "bottom-right",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            }
+          );
+        }
+        break;
+      case "Edge":
+        if (Number(navigator.browserSpecs.version) < 44) {
+          toast.warning(
+            `Your browser version ${navigator.browserSpecs.version} is below the recomended version for eHPEL, please update before going any further`,
+            {
+              timeout: 10000,
+              position: "bottom-right",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            }
+          );
+        }
+        break;
+      case "Firefox":
+        if (Number(navigator.browserSpecs.version) < 80) {
+          toast.warning(
+            `Your browser version ${navigator.browserSpecs.version} is below the recomended version for eHPEL, please update before going any further`,
+            {
+              timeout: 10000,
+              position: "bottom-right",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            }
+          );
+        }
+        break;
+      default:
+        break;
+    }
+    const adminData = JSON.parse(localStorage.getItem("allAdminData"));
+    store.dispatch("ReviewerSideNav/assignSelectedSideBar", "mainPage");
+    let currentMenu = store.getters["ReviewerSideNav/getSelectedSideBar"];
+
+    function updateMenu(menu) {
+      currentMenu = menu;
+    }
+    return {
+      currentMenu,
+      updateMenu,
+      adminData,
+    };
+  },
+};
 </script>

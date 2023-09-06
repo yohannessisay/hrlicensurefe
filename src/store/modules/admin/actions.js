@@ -5,7 +5,7 @@ import {
   ADD_ADMIN_LOADING,
   ADD_ADMIN_SUCCESS,
   ADD_ADMIN_ERROR,
-  SET_APPLICATION_STATUSES
+  SET_APPLICATION_STATUSES,
 } from "./mutation-types";
 
 export default {
@@ -40,6 +40,14 @@ export default {
         baseUrl + "/applicationStatuses"
       );
       commit(SET_APPLICATION_STATUSES, AppStatuses.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  async getAdminStatus() {
+    try {
+      const AdminStats = await ApiService.get(baseUrl + "/admins/adminStats");
+      return AdminStats;
     } catch (error) {
       console.log(error);
     }
@@ -153,5 +161,5 @@ export default {
     } catch (error) {
       return error;
     }
-  }
+  },
 };
