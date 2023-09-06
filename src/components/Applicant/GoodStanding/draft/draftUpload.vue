@@ -94,7 +94,7 @@
                               type="file"
                               required
                               :id="`files${item.id}`"
-                              accept=".jpeg, .jpg, .pdf"
+                              accept=".jpeg, .jpg, .png, .pdf"
                               :ref="`imageUploader${item.id}`"
                               class="custom-file-input"
                               v-on:change="handleFileUpload(item, $event)"
@@ -365,8 +365,9 @@ export default {
         ? documents.value
             .filter((cd) => cd.isRequired)
             .forEach((element) => {
+             
               temp = existingDocs.filter(
-                (el) => el.documentCode == element.documentType.code
+                (el) => el.documentTypeCode == element.documentType.code
               );
               if (temp.length == 0 || !temp) {
                 documentError.value[
@@ -436,9 +437,7 @@ export default {
                     tempStat = true;
                     return 0;
                   } else {
-                    finalLocalData.data.push(
-                      JSON.parse(JSON.stringify(existing))
-                    );
+                    finalLocalData.data.push(existing);
                   }
                 });
                 if (tempStat == true) {
