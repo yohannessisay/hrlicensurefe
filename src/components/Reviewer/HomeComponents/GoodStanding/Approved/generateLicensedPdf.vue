@@ -76,8 +76,8 @@
                   />
                 </div>
               </div>
-              <div class="mt-2 px-8" contenteditable="true mainText">
-                <h5 class="text-xl mt-8">
+              <div class="mt-2 px-8" contenteditable="true">
+                <h5 class="text-xl mt-8 mainText">
                   To: {{ modalData ? modalData.whomGoodStandingFor : "" }}
                 </h5>
                 <div class="flex justify-center">
