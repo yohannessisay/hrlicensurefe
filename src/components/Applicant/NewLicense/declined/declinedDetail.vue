@@ -448,9 +448,10 @@
                       data-bs-target="#collapseTwo"
                       aria-expanded="false"
                     >
-                      Reapply
+                      Re-apply
                     </button>
                   </h2>
+                  <h2>Re-apply here by uploading the declined documents</h2>
                   <div
                     id="collapseTwo"
                     class="accordion-collapse collapse show"
@@ -458,7 +459,7 @@
                     data-bs-parent="#accordionExample"
                   >
                     <div class="accordion-body py-4 px-5">
-                      <div class="grid grid-cols-4 gap-4">
+                      <div class="grid grid-cols-1 lg:grid-cols-4 gap-4">
                         <div
                           class="mt-4 mb-8 bg-white shadow-md"
                           style="border-radius: 15px; padding: 10px"
@@ -795,9 +796,7 @@ export default {
               pauseOnHover: true,
               icon: true,
             });
-            setTimeout(() => {
-              window.location.reload();
-            }, 3000);
+         
           });
       });
     };
