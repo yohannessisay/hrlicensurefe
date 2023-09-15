@@ -43,7 +43,7 @@
                 mt-3
                 py-4
                 rounded-lg
-                shadow-md
+                 
                 uppercase
                 ease-linear
                 cursor-pointer 
@@ -96,7 +96,7 @@
                   bg-primary-600
                   rounded-lg
                   cursor-pointer 
-                  shadow-md
+                   
                   uppercase
                   hover:bg-purple-600 hover:text-lightBlue-1000
                   ease-linear
@@ -120,11 +120,11 @@
           bg-white
           rounded-lg
         
-          shadow-md
+           
          
         "
       >
-        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <div class="relative overflow-x-auto   sm:rounded-lg">
           <hr />
           <h1 class="ml-4 mt-4 text-xl">
             These are the previously added records
@@ -375,7 +375,7 @@
           rounded-lg
           text-left
           overflow-hidden
-          shadow-xl
+           
           transform
           max-w-3xl
           transition-all
@@ -528,7 +528,7 @@
           rounded-lg
           text-left
           overflow-hidden
-          shadow-xl
+           
           transform
           max-w-3xl
           transition-all
@@ -912,7 +912,7 @@ export default {
                 width: "10%",
                 display: function(row) {
                   return (
-                    '<button data-bs-toggle="modal" data-bs-target="#viewResult" class="edit-btn hover:text-primary-600  inline-block px-6 py-2.5 bg-primary-700 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" data="' +
+                    '<button data-bs-toggle="modal" data-bs-target="#viewResult" class="edit-btn hover:text-primary-600  inline-block px-6 py-2.5 bg-primary-700 text-white font-medium text-xs leading-tight uppercase rounded   hover:bg-blue-700 hover:  focus:bg-blue-700 focus:  focus:outline-none focus:ring-0 active:bg-blue-800 active:  transition duration-150 ease-in-out" data="' +
                     row +
                     '" ><i class="fa fa-eye"></i> View</button>'
                   );

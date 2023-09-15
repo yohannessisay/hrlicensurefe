@@ -13,7 +13,7 @@
     <!-- Main Content -->
     <div class="home-content">
       <div class="container px-4 mx-auto mb-12 sm:px-4">
-        <div class="w-full rounded-lg shadow-md bg-primary-800">
+        <div class="w-full rounded-lg   bg-primary-800">
           <h2 class="ml-4 text-xl text-white">
             Evaluating
             {{
@@ -34,7 +34,7 @@
               <div class="box-shadow-pop bg-lightGrey-100">
                 <div class="flex justify-content-evenly">
                   <div
-                    class="container w-64 h-40 mt-8 ml-8 rounded-lg shadow-md  box-shadow-pop"
+                    class="container w-64 h-40 mt-8 ml-8 rounded-lg    box-shadow-pop"
                   >
                     <div class="mt-8">
                       <div class="flex items-center justify-center my-auto">
@@ -47,7 +47,7 @@
                       </div>
                     </div>
                     <div
-                      class="container max-w-md mx-auto my-2 mt-8 overflow-hidden bg-white rounded-lg shadow-md"
+                      class="container max-w-md mx-auto my-2 mt-8 overflow-hidden bg-white rounded-lg  "
                     >
                       <div
                         class="relative z-10 h-auto"
@@ -175,7 +175,7 @@
                               <div class="w-full mx-4 my-1 mb-4">
                                 <!-- Article -->
                                 <article
-                                  class="overflow-hidden rounded-lg shadow-md"
+                                  class="overflow-hidden rounded-lg  "
                                 >
                                   <header
                                     class="flex items-center justify-between p-2 leading-tight  md:p-4"
@@ -253,7 +253,7 @@
                                       ></loading>
                                       <button
                                         v-if="editPersonalData"
-                                        class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded shadow-md  hover:bg-purple-700 hover:shadow-md focus:bg-purple-700 focus:shadow-md focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-md"
+                                        class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded    hover:bg-purple-700 hover:  focus:bg-purple-700 focus:  focus:outline-none focus:ring-0 active:bg-purple-800 active: "
                                         @click="changeAmharicName"
                                       >
                                         Save
@@ -330,7 +330,7 @@
                               >
                                 <!-- Article -->
                                 <article
-                                  class="overflow-hidden rounded-lg shadow-md"
+                                  class="overflow-hidden rounded-lg  "
                                 >
                                   <header
                                     class="flex items-center justify-between p-2 leading-tight  md:p-4"
@@ -379,7 +379,7 @@
                               >
                                 <!-- Article -->
                                 <article
-                                  class="overflow-hidden rounded-lg shadow-md"
+                                  class="overflow-hidden rounded-lg  "
                                 >
                                   <header
                                     class="flex items-center justify-between p-2 leading-tight  md:p-4"
@@ -417,7 +417,7 @@
                               <div class="w-full mx-4 my-1 mb-4">
                                 <!-- Article -->
                                 <article
-                                  class="overflow-hidden rounded-lg shadow-md"
+                                  class="overflow-hidden rounded-lg  "
                                 >
                                   <header
                                     class="flex items-center justify-between p-2 leading-tight  md:p-4"
@@ -718,7 +718,7 @@
                             leading-tight
                             uppercase
                             rounded
-                            shadow-md
+                             
                             transition
                             duration-150
                             ease-in-out
@@ -740,7 +740,7 @@
                             leading-tight
                             uppercase
                             rounded
-                            shadow-md
+                             
                             transition
                             duration-150
                             ease-in-out
@@ -762,7 +762,7 @@
                             leading-tight
                             uppercase
                             rounded
-                            shadow-md
+                             
                             transition
                             duration-150
                             ease-in-out
@@ -785,7 +785,7 @@
                             leading-tight
                             uppercase
                             rounded
-                            shadow-md
+                             
                             transition
                             duration-150
                             ease-in-out
@@ -810,7 +810,7 @@
                     </div>
                   </div>
                   <div
-                    class="container w-64 h-40 p-4 mt-8 mr-8 rounded-lg shadow-md  box-shadow-pop"
+                    class="container w-64 h-40 p-4 mt-8 mr-8 rounded-lg    box-shadow-pop"
                   >
                     <div class="mt-8">
                       <div class="flex items-center justify-center my-auto">
@@ -843,7 +843,7 @@
                       ></loading>
                       <button
                         v-if="button.code != 'US'"
-                        class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded shadow-md  bg-primary-700 hover:text-primary-600 hover:border"
+                        class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded    bg-primary-700 hover:text-primary-600 hover:border"
                         @click="action(button.action)"
                       >
                         {{ button.name }}
@@ -913,7 +913,7 @@
                                   </h5>
 
                                   <button
-                                    class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded shadow-md bg-primary-400 hover:bg-purple-700 hover:shadow-md focus:bg-purple-700 focus:shadow-md focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-md hover:bg-white hover:text-primary-600"
+                                    class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded   bg-primary-400 hover:bg-purple-700 hover:  focus:bg-purple-700 focus:  focus:outline-none focus:ring-0 active:bg-purple-800 active:  hover:bg-white hover:text-primary-600"
                                     @click="
                                       openPdfInNewTab(
                                         rejectedObj[ind]
@@ -993,7 +993,7 @@
                         class="flex items-center justify-center border-t border-solid rounded-b border-blueGray-200"
                       >
                         <button
-                          class="inline-block px-6 text-xs mt-4 font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded shadow-md bg-primary-600 hover:bg-purple-700 hover:shadow-md focus:bg-purple-700 focus:shadow-md focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-md hover:bg-primary-400 hover:text-white"
+                          class="inline-block px-6 text-xs mt-4 font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded   bg-primary-600 hover:bg-purple-700 hover:  focus:bg-purple-700 focus:  focus:outline-none focus:ring-0 active:bg-purple-800 active:  hover:bg-primary-400 hover:text-white"
                           type="button"
                           v-on:click="showRemark = false"
                         >
@@ -1001,7 +1001,7 @@
                         </button>
                         <button
                           type="button"
-                          class="inline-block px-6 text-white mt-4 bg-primary-600 font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-purple-700 hover:shadow-md focus:bg-purple-700 focus:shadow-md focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-md transition duration-150 hover:bg-primary-400 hover:text-white ease-in-out
+                          class="inline-block px-6 text-white mt-4 bg-primary-600 font-medium text-xs leading-tight uppercase rounded   hover:bg-purple-700 hover:  focus:bg-purple-700 focus:  focus:outline-none focus:ring-0 active:bg-purple-800 active:  transition duration-150 hover:bg-primary-400 hover:text-white ease-in-out
                           "
                           v-on:click="submitRemark()"
                         >

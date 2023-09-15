@@ -31,7 +31,7 @@
         class="
           modal-content
           border-none
-          shadow-lg
+           
           relative
           flex flex-col
           w-full
@@ -209,7 +209,7 @@
               uppercase
               rounded
               hover:border-primary-600
-              shadow-lg
+               
               hover:bg-white hover:text-primary-700
               transition
               duration-150
@@ -233,7 +233,7 @@
               uppercase
               rounded
               hover:border-primary-600
-              shadow-lg
+               
               hover:bg-white hover:text-primary-700
               transition
               duration-150

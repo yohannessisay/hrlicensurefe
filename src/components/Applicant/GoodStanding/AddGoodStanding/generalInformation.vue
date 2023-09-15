@@ -3,9 +3,7 @@
     <ol class="list-reset flex">
       <li>
         <router-link to="/menu">
-          <a href="#" :class="isDarkMode ? 'text-white' : 'text-main-400'"
-            >Home</a
-          >
+          <a href="#" :class="isDarkMode ? 'text-white' : 'text-main-400'">Home</a>
         </router-link>
       </li>
       <li><span class="text-gray-500 mx-2">/</span></li>
@@ -36,7 +34,7 @@
     ></loading>
     <form
       @submit.prevent="submit"
-      class="mx-auto max-w-4xl rounded-md shadow-lg w-full mt-10"
+      class="mx-auto max-w-4xl rounded-md   w-full mt-10"
     >
       <div
         :class="
@@ -71,7 +69,7 @@
               <button
                 v-show="Object.keys(localData).length != 0"
                 type="button"
-                class="mt-8 inline-block px-6 py-2.5 bg-white text-main-400 max-w-3xl border hover:bg-main-400 hover:text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:border-main-500 focus:bg-blue-700 focus:shadow-md focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-md transition duration-150 ease-in-out"
+                class="mt-8 inline-block px-6 py-2.5 bg-white text-main-400 max-w-3xl border hover:bg-main-400 hover:text-white font-medium text-xs leading-tight uppercase rounded   hover:border-main-500 focus:bg-blue-700 focus:  focus:outline-none focus:ring-0 active:bg-blue-800 active:  transition duration-150 ease-in-out"
                 @click="clearLocalData()"
               >
                 <i class="fa fa-close"></i>
@@ -80,10 +78,8 @@
             </div>
 
             <div>
-              <div class="overflow-hidden  ">
-                <label
-                  for=""
-                  :class="isDarkMode ? 'text-white' : 'text-main-400'"
+              <div class="overflow-hidden">
+                <label for="" :class="isDarkMode ? 'text-white' : 'text-main-400'"
                   >Applicant Title</label
                 ><span class="text-red-300">*</span>
 
@@ -108,10 +104,13 @@
         <!-- region -->
         <div
           v-if="showLocation"
-          :class="
-            isDarkMode ? ' rounded bg-secondaryDark ' : 'rounded bg-white '
-          "
+          :class="isDarkMode ? ' rounded bg-secondaryDark ' : 'rounded bg-white '"
         >
+          <h2 class="text-yellow-300 font-bold text-base">
+            *To select the facility where you want the service to be given, please select
+            the region, zone, and woreda. If you do not know the woreda, you can select
+            any woreda from the correct zone.
+          </h2>
           <div
             class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 sm:grid-cols-1 gap-2 mb-4 p-4 border-b"
           >
@@ -135,10 +134,9 @@
               </select>
             </div>
             <div
-              class="flex flex-col "
+              class="flex flex-col"
               v-if="
-                generalInfo.regionSelected &&
-                  generalInfo.regionSelected.code != 'FED'
+                generalInfo.regionSelected && generalInfo.regionSelected.code != 'FED'
               "
             >
               <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
@@ -149,20 +147,15 @@
                 @change="zoneChangeHandler()"
                 v-model="generalInfo.zoneSelected"
               >
-                <option
-                  v-for="zone in zones"
-                  v-bind:key="zone.name"
-                  v-bind:value="zone"
-                >
+                <option v-for="zone in zones" v-bind:key="zone.name" v-bind:value="zone">
                   {{ zone.name }}
                 </option>
               </select>
             </div>
             <div
-              class="flex flex-col "
+              class="flex flex-col"
               v-if="
-                generalInfo.regionSelected &&
-                  generalInfo.regionSelected.code != 'FED'
+                generalInfo.regionSelected && generalInfo.regionSelected.code != 'FED'
               "
             >
               <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
@@ -194,7 +187,7 @@
                 >Department</label
               ><span class="text-red-300">*</span>
               <select
-                class="form-select appearance-none block w-full  px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+                class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
                 v-model="generalInfo.departmentId"
                 @change="setDepartment()"
                 required
@@ -220,9 +213,7 @@
                 @change="educationalLevelChange()"
                 required
               >
-                <option value="" disabled
-                  >Please select department first</option
-                >
+                <option value="" disabled>Please select department first</option>
                 <option
                   v-for="edLevel in educationLevels"
                   v-bind:key="edLevel.name"
@@ -234,7 +225,7 @@
             </div>
 
             <div class="grid grid-cols-1">
-              <div class="mb-4 ">
+              <div class="mb-4">
                 <label :class="isDarkMode ? 'text-white' : 'text-main-400'"
                   >Profession</label
                 ><span class="text-red-300">*</span>
@@ -245,9 +236,7 @@
                   v-model="generalInfo.professionTypeId"
                   required
                 >
-                  <option value="" disabled
-                    >Please select education level first</option
-                  >
+                  <option value="" disabled>Please select education level first</option>
                   <option
                     v-for="profession in professionalTypes"
                     v-bind:key="profession.name"
@@ -264,8 +253,8 @@
                   type="text"
                   :required="
                     generalInfo.applicantTypeId.code != 'FOR' &&
-                      generalInfo.otherProfessionType &&
-                      generalInfo.otherProfessionType.length > 0
+                    generalInfo.otherProfessionType &&
+                    generalInfo.otherProfessionType.length > 0
                   "
                   name="otherProf"
                   v-model="generalInfo.otherProfessionType"
@@ -281,8 +270,8 @@
                   name="otherProfAmh"
                   :required="
                     generalInfo.applicantTypeId.code != 'FOR' &&
-                      generalInfo.otherProfessionTypeAmharic &&
-                      generalInfo.otherProfessionTypeAmharic.length > 0
+                    generalInfo.otherProfessionTypeAmharic &&
+                    generalInfo.otherProfessionTypeAmharic.length > 0
                   "
                   v-model="generalInfo.otherProfessionTypeAmharic"
                   class="appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
@@ -317,7 +306,7 @@
         <div
           :class="
             isDarkMode
-              ? ' rounded-sm bg-secondaryDark shadow-md mb-8'
+              ? ' rounded-sm bg-secondaryDark   mb-8'
               : ' rounded-sm bg-white mb-8'
           "
         >
@@ -327,9 +316,7 @@
             >
               <div>
                 <div class="overflow-hidden shadow-sm">
-                  <label
-                    for=""
-                    :class="isDarkMode ? 'text-white' : 'text-main-400'"
+                  <label for="" :class="isDarkMode ? 'text-white' : 'text-main-400'"
                     >Organization Letter written for</label
                   ><span class="text-red-300">*</span>
                   <input
@@ -346,9 +333,7 @@
 
               <div>
                 <div class="overflow-hidden shadow-sm">
-                  <label
-                    for=""
-                    :class="isDarkMode ? 'text-white' : 'text-main-400'"
+                  <label for="" :class="isDarkMode ? 'text-white' : 'text-main-400'"
                     >License Issued Date</label
                   >
                   <span class="text-red-300">*</span>
@@ -365,9 +350,7 @@
               </div>
               <div>
                 <div class="overflow-hidden shadow-sm">
-                  <label
-                    for=""
-                    :class="isDarkMode ? 'text-white' : 'text-main-400'"
+                  <label for="" :class="isDarkMode ? 'text-white' : 'text-main-400'"
                     >License Registration Number</label
                   ><span class="text-red-300">*</span>
 
@@ -385,9 +368,7 @@
 
               <div>
                 <div class="overflow-hidden shadow-sm">
-                  <label
-                    for=""
-                    :class="isDarkMode ? 'text-white' : 'text-main-400'"
+                  <label for="" :class="isDarkMode ? 'text-white' : 'text-main-400'"
                     >Who Issued Previous License</label
                   ><span class="text-red-300">*</span>
 
@@ -411,7 +392,7 @@
         </div>
       </div>
 
-      <div class="vld-parent ">
+      <div class="vld-parent">
         <loading
           :active="isLoading"
           :is-full-page="false"
@@ -420,14 +401,14 @@
         ></loading>
         <div class="flex justify-end mb-2 mr-1 bg-white">
           <button
-            class="float-right mb-8 inline-block px-6 py-2.5 bg-blue-700 text-main-400 max-w-3xl font-medium text-xs leading-tight uppercase rounded   bg-white border hover:text-white hover:border-main-500 hover:bg-main-400 focus:bg-blue-700 focus:shadow-md focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-md transition duration-150 ease-in-out"
+            class="float-right mb-8 inline-block px-6 py-2.5 bg-blue-700 text-main-400 max-w-3xl font-medium text-xs leading-tight uppercase rounded bg-white border hover:text-white hover:border-main-500 hover:bg-main-400 focus:bg-blue-700 focus:  focus:outline-none focus:ring-0 active:bg-blue-800 active:  transition duration-150 ease-in-out"
             type="submit"
             @click="saveDraft()"
           >
             Save as draft
           </button>
           <button
-            class="float-right mb-8 inline-block px-6 py-2.5 bg-main-400 text-white max-w-3xl font-medium text-xs leading-tight uppercase rounded  border hover:text-main-400 hover:border-main-500 hover:bg-white focus:bg-blue-700 focus:shadow-md focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-md transition duration-150 ease-in-out"
+            class="float-right mb-8 inline-block px-6 py-2.5 bg-main-400 text-white max-w-3xl font-medium text-xs leading-tight uppercase rounded border hover:text-main-400 hover:border-main-500 hover:bg-white focus:bg-blue-700 focus:  focus:outline-none focus:ring-0 active:bg-blue-800 active:  transition duration-150 ease-in-out"
             type="submit"
           >
             Next
@@ -455,9 +436,7 @@ export default {
     let isLoading = ref(false);
     let generalInfo = ref({
       applicantId: +localStorage.getItem("userId"),
-      applicantTypeId: JSON.parse(
-        localStorage.getItem("applicantTypeSelected")
-      ),
+      applicantTypeId: JSON.parse(localStorage.getItem("applicantTypeSelected")),
       residenceWoredaId: "",
       whomGoodStandingFor: "",
       licenseIssuedDate: "",
@@ -576,15 +555,13 @@ export default {
     };
     const fetchRegions = () => {
       store.dispatch("goodstanding/getRegions").then((res) => {
-        regions.value = res.data.data; 
+        regions.value = res.data.data;
       });
     };
     const fetchZone = () => {
-      store
-        .dispatch("goodstanding/getZones", generalInfo.value.regionId)
-        .then((res) => {
-          zones.value = res.data.data;
-        });
+      store.dispatch("goodstanding/getZones", generalInfo.value.regionId).then((res) => {
+        zones.value = res.data.data;
+      });
     };
     const fetchWoredas = () => {
       store
@@ -598,11 +575,9 @@ export default {
         departmentId: departmentId,
         educationalLevelId: educationalLevelId,
       };
-      store
-        .dispatch("newlicense/getProfessionalTypes", profession)
-        .then((res) => {
-          professionalTypes.value = res.data.data;
-        });
+      store.dispatch("newlicense/getProfessionalTypes", profession).then((res) => {
+        professionalTypes.value = res.data.data;
+      });
     };
     const setDepartment = () => {
       isDepartmentSelected.value = true;
@@ -669,11 +644,9 @@ export default {
         "GSApplicationData",
         JSON.stringify(tempApplicationData)
       );
-      store
-        .dispatch("goodstanding/setGeneralInfo", generalInfo.value)
-        .then(() => {
-          emit("changeActiveState");
-        });
+      store.dispatch("goodstanding/setGeneralInfo", generalInfo.value).then(() => {
+        emit("changeActiveState");
+      });
     };
     const clearLocalData = () => {
       window.localStorage.removeItem("GSApplicationData");
@@ -743,8 +716,7 @@ export default {
             otherProfessionalType: generalInfo.value.otherProfessionType
               ? generalInfo.value.otherProfessionType
               : "",
-            otherProfessionalTypeAmharic: generalInfo.value
-              .otherProfessionTypeAmharic
+            otherProfessionalTypeAmharic: generalInfo.value.otherProfessionTypeAmharic
               ? generalInfo.value.otherProfessionTypeAmharic
               : "",
           },
@@ -756,25 +728,21 @@ export default {
           departmentId: generalInfo.value.departmentId.id
             ? generalInfo.value.departmentId.id
             : null,
-          feedback: generalInfo.value.feedback
-            ? generalInfo.value.feedback
-            : "",
+          feedback: generalInfo.value.feedback ? generalInfo.value.feedback : "",
         },
       };
-      store
-        .dispatch("goodstanding/addGoodstandingLicense", license)
-        .then(() => {
-          toast.success("Applied successfuly", {
-            timeout: 5000,
-            position: "bottom-center",
-            pauseOnFocusLoss: true,
-            pauseOnHover: true,
-            icon: true,
-          });
-          isLoading.value = false;
-          localStorage.removeItem("GSApplicationData");
-          router.push({ path: "/Applicant/GoodStanding/draft" });
+      store.dispatch("goodstanding/addGoodstandingLicense", license).then(() => {
+        toast.success("Applied successfuly", {
+          timeout: 5000,
+          position: "bottom-center",
+          pauseOnFocusLoss: true,
+          pauseOnHover: true,
+          icon: true,
         });
+        isLoading.value = false;
+        localStorage.removeItem("GSApplicationData");
+        router.push({ path: "/Applicant/GoodStanding/draft" });
+      });
     };
     onMounted(async () => {
       fetchApplicantType();
@@ -794,12 +762,9 @@ export default {
       }
       if (
         localStorage.getItem("applicantTypeSelected") &&
-        Object.keys(JSON.parse(localStorage.getItem("applicantTypeSelected")))
-          .length != 0
+        Object.keys(JSON.parse(localStorage.getItem("applicantTypeSelected"))).length != 0
       ) {
-        checkApplicantType(
-          JSON.parse(localStorage.getItem("applicantTypeSelected"))
-        );
+        checkApplicantType(JSON.parse(localStorage.getItem("applicantTypeSelected")));
       }
     });
     return {

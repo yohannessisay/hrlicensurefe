@@ -50,8 +50,8 @@
                       leading-tight
                       uppercase
                       rounded
-                      shadow-md
-                      focus:shadow-lg focus:outline-none focus:ring-0
+                       
+                      focus:  focus:outline-none focus:ring-0
                       transition
                       duration-150
                       mt-0
@@ -288,7 +288,7 @@
                           class="
                             inline-block
                             min-w-full
-                            shadow-md
+                             
                             rounded-lg
                             overflow-hidden
                             bg-primary-800
@@ -513,7 +513,7 @@
                           class="
                             inline-block
                             min-w-full
-                            shadow-md
+                             
                             rounded-lg
                             overflow-hidden
                             bg-primary-800
@@ -685,7 +685,7 @@ export default {
                 width: "10%",
                 display: function(row) {
                   return (
-                    '<button data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
+                    '<button data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded     hover:     transition duration-150 ease-in-out" data-id="' +
                     row +
                     '" >View</button>'
                   );
@@ -780,7 +780,7 @@ export default {
                 width: "10%",
                 display: function(row) {
                   return (
-                    '<button data-bs-toggle="modal" data-bs-target="#staticBackdropOthers" class="edit-btn-others bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
+                    '<button data-bs-toggle="modal" data-bs-target="#staticBackdropOthers" class="edit-btn-others bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded     hover:     transition duration-150 ease-in-out" data-id="' +
                     row +
                     '" >View</button>'
                   );

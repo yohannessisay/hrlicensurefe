@@ -24,7 +24,7 @@
     <!-- Main Content -->
     <div class="home-content">
       <div class="grid grid-cols-2">
-        <div class="bg-white shadow-md m-2 rounded-md p-2">
+        <div class="bg-white   m-2 rounded-md p-2">
           <h2 class="text-primary-600 font-bold text-2xl">Applicants gender chart</h2>
           <apexchart
             type="bar"
@@ -33,7 +33,7 @@
             :series="genderSeries"
           ></apexchart>
         </div>
-        <div class="bg-white shadow-md m-2 rounded-md p-2">
+        <div class="bg-white   m-2 rounded-md p-2">
           <h2 class="text-primary-600 font-bold text-2xl">Total Applications</h2>
           <apexchart
             type="bar"
@@ -45,7 +45,7 @@
       </div>
 
       <div class="grid grid-cols-1">
-        <div class="bg-white shadow-md m-2 rounded-md p-2 mb-20">
+        <div class="bg-white   m-2 rounded-md p-2 mb-20">
           <h2 class="text-primary-600 font-bold text-2xl">
             Applications based on regions
           </h2>
@@ -59,7 +59,7 @@
         </div>
       </div>
       <div class="grid grid-cols-3 lg:grid-cols-4">
-        <div class="bg-white shadow-md m-2 rounded-md p-2 mb-20">
+        <div class="bg-white   m-2 rounded-md p-2 mb-20">
           <apexchart
             type="pie"
             :options="pieChartOption"
@@ -67,7 +67,7 @@
           ></apexchart>
           <h2 class="text-primary-600 font-bold text-2xl">Approved Applications</h2>
         </div>
-        <div class="bg-white shadow-md m-2 rounded-md p-2 mb-20">
+        <div class="bg-white   m-2 rounded-md p-2 mb-20">
           <apexchart
             type="pie"
             :options="pieChartOption"
@@ -77,7 +77,7 @@
           <h2 class="font-bold text-2xl text-yellow-300">Declined Licenses/Letters</h2>
         </div>
 
-        <div class="bg-white shadow-md m-2 rounded-md p-2 mb-20">
+        <div class="bg-white   m-2 rounded-md p-2 mb-20">
           <apexchart
             type="pie"
             :options="pieChartOption"
@@ -86,7 +86,7 @@
 
           <h2 class="text-2xl font-bold text-red-300 mt-2">Revoked Licenses/Letters</h2>
         </div>
-        <div class="bg-white shadow-md m-2 rounded-md p-2 mb-20">
+        <div class="bg-white   m-2 rounded-md p-2 mb-20">
           <apexchart
             type="pie"
             :options="pieChartOption"
@@ -97,7 +97,7 @@
             Suspended Licenses/Letters
           </h2>
         </div>
-        <div class="bg-white shadow-md m-2 rounded-md p-2 mb-20">
+        <div class="bg-white   m-2 rounded-md p-2 mb-20">
           <apexchart
             type="pie"
             :options="pieChartOption"
@@ -108,7 +108,7 @@
             Licenses Under-Supervision
           </h2>
         </div>
-        <div class="bg-white shadow-md m-2 rounded-md p-2 mb-20">
+        <div class="bg-white   m-2 rounded-md p-2 mb-20">
           <apexchart
             type="pie"
             :options="pieChartOption"

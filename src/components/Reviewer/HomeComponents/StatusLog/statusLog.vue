@@ -25,7 +25,7 @@
 
     <!-- Main Content -->
     <div class="home-content">
-      <div class="p-2 m-4 bg-white rounded-md shadow-md">
+      <div class="p-2 m-4 bg-white rounded-md  ">
         <div class="grid grid-cols-4 gap-8">
           <div class="mb-3 xl:w-full">
             <label for="" class="ml-4">License Type</label>
@@ -60,7 +60,7 @@
           :color="'#2F639D'"
           :opacity="0.7"
         ></loading>
-        <div class="p-2 m-4 bg-white rounded-md shadow-md">
+        <div class="p-2 m-4 bg-white rounded-md  ">
           <div class="p-4 mt-4">
             <h1 class="mb-6 text-2xl font-semibold text-center">License History</h1>
             <div class="container">
@@ -81,7 +81,7 @@
                     </div>
                   </div>
                   <div
-                    class="w-full col-start-4 col-end-12 p-4 my-4 mr-auto shadow-md bg-main-500 rounded-xl"
+                    class="w-full col-start-4 col-end-12 p-4 my-4 mr-auto   bg-main-500 rounded-xl"
                   >
                     <div class="grid grid-cols-2">
                       <div>

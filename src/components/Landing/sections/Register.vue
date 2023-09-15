@@ -13,14 +13,14 @@
       class="relative w-auto pointer-events-none modal-dialog-center modal-dialog modal-xl"
     >
       <div
-        class="relative flex flex-col w-full text-current bg-white border-none rounded-md shadow-md outline-none pointer-events-auto modal-content md:w-9/12 mdlg:w-9/12 lg:w-10/12 sm:w-full bg-clip-padding"
+        class="relative flex flex-col w-full text-current bg-white border-none rounded-md   outline-none pointer-events-auto modal-content md:w-9/12 mdlg:w-9/12 lg:w-10/12 sm:w-full bg-clip-padding"
       >
         <div
           class="flex justify-end flex-shrink-0 p-2 modal-header rounded-t-md"
         >
           <button
             type="button"
-            class="text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded shadow-md bg-main-400 hover:text-main-400 hover:border hover:border-main-400 hover:bg-purple-700 hover:shadow-md"
+            class="text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded   bg-main-400 hover:text-main-400 hover:border hover:border-main-400 hover:bg-purple-700 hover: "
             data-bs-dismiss="modal"
             aria-label="Close"
           >
@@ -29,7 +29,7 @@
         </div>
 
         <div
-          class="w-full overflow-hidden text-gray-500 bg-gray-100 shadow-xl rounded-3xl"
+          class="w-full overflow-hidden text-gray-500 bg-gray-100   rounded-3xl"
           style="max-width: 1000px"
         >
           <div class="vld-parent">
@@ -513,8 +513,8 @@
                             isLoading == false &&
                             registerCredentials.repassword ==
                               registerCredentials.password
-                              ? 'transition duration-200 bg-main-400 text-white hover:text-main-400 hover:bg-white w-full mb-4 h-12 rounded-md text-md font-semibold text-center shadow-xl'
-                              : 'pointer-events-none transition duration-200 bg-grey-200 text-white hover:text-main-400 hover:bg-white w-full mb-4 h-12 rounded-md text-md font-semibold text-center shadow-xl'
+                              ? 'transition duration-200 bg-main-400 text-white hover:text-main-400 hover:bg-white w-full mb-4 h-12 rounded-md text-md font-semibold text-center  '
+                              : 'pointer-events-none transition duration-200 bg-grey-200 text-white hover:text-main-400 hover:bg-white w-full mb-4 h-12 rounded-md text-md font-semibold text-center  '
                           "
                         >
                           REGISTER NOW

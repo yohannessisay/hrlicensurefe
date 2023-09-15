@@ -60,8 +60,8 @@
   <div
     :class="
       isDarkMode && isDarkMode == true
-        ? '    block p-6 rounded-lg shadow-md bg-primaryDark  max-w-full mb-8 '
-        : '  block p-6 rounded-lg shadow-md bg-white max-w-full mb-8 '
+        ? '    block p-6 rounded-lg   bg-primaryDark  max-w-full mb-8 '
+        : '  block p-6 rounded-lg   bg-white max-w-full mb-8 '
     "
   >
     <div class=" flex justify-center ">
@@ -180,7 +180,7 @@
       </div>
       <button
         v-show="Object.keys(localData).length != 0"
-        class="inline-block px-6 bg-main-400 text-white max-w-3xl font-medium text-xs leading-tight uppercase rounded shadow-md hover:text-main-500 hover:border-main-500 focus:bg-blue-700 focus:shadow-md focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-md transition duration-150 ease-in-out"
+        class="inline-block px-6 bg-main-400 text-white max-w-3xl font-medium text-xs leading-tight uppercase rounded   hover:text-main-500 hover:border-main-500 focus:bg-blue-700 focus:  focus:outline-none focus:ring-0 active:bg-blue-800 active:  transition duration-150 ease-in-out"
         @click="clearLocalData()"
       >
         <i class="fa fa-close"></i>
@@ -469,7 +469,7 @@
         <div class="text-right">
           <button
             type="button"
-            class="px-6 mr-2 mb-2 py-2.5 bg-white text-main-400 font-medium border text-xs leading-tight uppercase rounded  hover:text-white hover:border-main-400 hover:bg-main-400 focus:bg-blue-700 focus:shadow-md focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-md transition duration-150 ease-in-out"
+            class="px-6 mr-2 mb-2 py-2.5 bg-white text-main-400 font-medium border text-xs leading-tight uppercase rounded  hover:text-white hover:border-main-400 hover:bg-main-400 focus:bg-blue-700 focus:  focus:outline-none focus:ring-0 active:bg-blue-800 active:  transition duration-150 ease-in-out"
             @click="addMultiple()"
           >
             <i class="fa fa-plus"></i>
@@ -514,7 +514,7 @@
       <div
         :class="
           isDarkMode && isDarkMode == true
-            ? 'generalInfoCard  table-multiple border  shadow-md mt-2 mb-8 rounded-sm  '
+            ? 'generalInfoCard  table-multiple border    mt-2 mb-8 rounded-sm  '
             : ' table-multiple border mt-2 mb-8 rounded-sm bg-white'
         "
       >
@@ -662,8 +662,8 @@
           <button
             :class="
               generalInfo.multipleDepartment.length > 0
-                ? 'px-6 mr-2 mb-2 py-2.5 bg-white text-main-400  border text-base leading-tight font-bold   rounded shadow-md hover:text-white hover:border-main-400 hover:bg-main-400 transition duration-150   ease-in-out'
-                : 'px-6 mr-2 mb-2 py-2.5 bg-white text-main-400 font-bold border text-base leading-tight   rounded shadow-md hover:text-white hover:border-main-400 hover:bg-main-400 transition duration-150   ease-in-out  disabled'
+                ? 'px-6 mr-2 mb-2 py-2.5 bg-white text-main-400  border text-base leading-tight font-bold   rounded   hover:text-white hover:border-main-400 hover:bg-main-400 transition duration-150   ease-in-out'
+                : 'px-6 mr-2 mb-2 py-2.5 bg-white text-main-400 font-bold border text-base leading-tight   rounded   hover:text-white hover:border-main-400 hover:bg-main-400 transition duration-150   ease-in-out  disabled'
             "
             type="submit"
             @click="saveDraft()"
@@ -673,8 +673,8 @@
           <button
             :class="
               generalInfo.multipleDepartment.length > 0
-                ? 'px-6 mr-2 mb-2 py-2.5 bg-main-400 text-white font-medium border text-base leading-tight  rounded shadow-md hover:text-main-400 hover:border-main-400 hover:bg-white transition duration-150   ease-in-out'
-                : 'px-6 mr-2 mb-2 py-2.5 bg-main-400 text-white font-medium border text-base leading-tight  rounded shadow-md hover:text-main-400 hover:border-main-400 hover:bg-white transition duration-150   ease-in-out  disabled'
+                ? 'px-6 mr-2 mb-2 py-2.5 bg-main-400 text-white font-medium border text-base leading-tight  rounded   hover:text-main-400 hover:border-main-400 hover:bg-white transition duration-150   ease-in-out'
+                : 'px-6 mr-2 mb-2 py-2.5 bg-main-400 text-white font-medium border text-base leading-tight  rounded   hover:text-main-400 hover:border-main-400 hover:bg-white transition duration-150   ease-in-out  disabled'
             "
             type="submit"
             @click="apply()"

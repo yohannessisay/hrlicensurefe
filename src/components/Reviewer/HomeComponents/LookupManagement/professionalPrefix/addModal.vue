@@ -32,7 +32,7 @@
         class="
           modal-content
           border-none
-          shadow-lg
+           
           relative
           flex flex-col
           w-full
@@ -125,7 +125,7 @@
                                     focus:bg-white
                                     focus:text-primary-600
                                     focus:font-bold
-                                    focus:drop-shadow-lg
+                                    focus:drop- 
                                   "
                                   @keyup="enableSaveButton()"
                                   required
@@ -192,7 +192,7 @@
                                     focus:bg-white
                                     focus:text-primary-600
                                     focus:font-bold
-                                    focus:drop-shadow-lg
+                                    focus:drop- 
                                   "
                                   required
                                   placeholder="Enter name"
@@ -234,8 +234,8 @@
             type="button"
             :class="
               professionalPrefixNameFilled
-                ? 'inline-block px-6 text-white bg-primary-700 font-medium text-xs leading-tight uppercase  rounded shadow-lg hover:bg-white hover:text-primary-600 hover:border-primary-600 transition duration-150 ease-in-out'
-                : 'inline-block px-6 text-white bg-primary-700 font-medium text-xs leading-tight uppercase  rounded shadow-lg hover:bg-white hover:text-primary-600 hover:border-primary-600 transition duration-150 ease-in-out pointer-events-none opacity-75'
+                ? 'inline-block px-6 text-white bg-primary-700 font-medium text-xs leading-tight uppercase  rounded   hover:bg-white hover:text-primary-600 hover:border-primary-600 transition duration-150 ease-in-out'
+                : 'inline-block px-6 text-white bg-primary-700 font-medium text-xs leading-tight uppercase  rounded   hover:bg-white hover:text-primary-600 hover:border-primary-600 transition duration-150 ease-in-out pointer-events-none opacity-75'
             "
             @click="saveProfessionalPrefix()"
           >
@@ -254,7 +254,7 @@
               leading-tight
               uppercase
               rounded
-              shadow-lg
+               
               hover:bg-white hover:text-primary-600 hover:border-primary-600
               transition
               duration-150
@@ -358,8 +358,4 @@ export default {
   },
 };
 </script>
-<style scoped>
-.shadow-lg {
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 34%), 0 2px 4px -1px rgb(0 0 0 / 6%);
-}
-</style>
+ 

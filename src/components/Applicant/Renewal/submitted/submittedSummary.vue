@@ -30,7 +30,7 @@
           px-12
           mb-12
           bg-gray-50
-          shadow-lg
+           
           rounded-md
           transform
           transition
@@ -156,7 +156,7 @@
         sm:grid-cols-1
       "
     >
-      <div class="bg-white flex-shrink px-4 w-full rounded-md shadow-xl">
+      <div class="bg-white flex-shrink px-4 w-full rounded-md  ">
         <div class="py-8 px-12 mb-12 bg-gray-50 border-b border-white">
           <div class="border-b-2 text-main-400 mb-4">
             <div class="text-gray-900 mb-4 flex justify-center">
@@ -194,7 +194,7 @@
                 bg-white
                 border-4
                 text-main-400
-                shadow-xl
+                 
                 rounded-md
                 transform
                 transition
@@ -295,7 +295,7 @@
                         mt-4
                         mb-8
                         bg-white
-                        shadow-xl
+                         
                         rounded-md
                         transform
                         transition
@@ -331,7 +331,7 @@
                         mt-4
                         mb-8
                         bg-white
-                        shadow-xl
+                         
                         rounded-md
                         transform
                         transition
@@ -380,7 +380,7 @@
         sm:grid-cols-1
       "
     >
-      <div class="bg-white flex-shrink px-4 w-full rounded-md shadow-xl">
+      <div class="bg-white flex-shrink px-4 w-full rounded-md  ">
         <div
           class="
             py-8
@@ -493,8 +493,8 @@
           type="button"
           :class="
             allowSave
-              ? 'inline-block px-6 border text-main-400 hover:bg-main-400 hober:border-main-400 hover:text-white  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded shadow-lg transition  duration-150 ease-in-out'
-              : 'inline-block px-6 disabled text-main-400  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded shadow-lg transition  duration-150 ease-in-out'
+              ? 'inline-block px-6 border text-main-400 hover:bg-main-400 hober:border-main-400 hover:text-white  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded   transition  duration-150 ease-in-out'
+              : 'inline-block px-6 disabled text-main-400  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded   transition  duration-150 ease-in-out'
           "
           @click="checkFinalStatus(button.action)"
         >
@@ -513,7 +513,7 @@
           leading-tight
           uppercase
           rounded
-          shadow-lg
+           
           transition
           duration-150
           ease-in-out

@@ -47,7 +47,7 @@
               leading-tight
               uppercase
               rounded
-              shadow-md
+               
               hover:bg-white hover:text-primary-700
               transition
               duration-150

@@ -29,8 +29,8 @@
           :key="license.id"
           :class="
             isDarkMode
-              ? 'bg-secondaryDark my-1 px-1 md:w-1/4 lg:w-1/4 mdlg:w-1/4 sm:w-full sm:mr-4 shadow-md rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2'
-              : 'bg-white my-1 px-1 md:w-1/4 lg:w-1/4 mdlg:w-1/4 sm:w-full sm:mr-4 shadow-md rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2'
+              ? 'bg-secondaryDark my-1 px-1 md:w-1/4 lg:w-1/4 mdlg:w-1/4 sm:w-full sm:mr-4   rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2'
+              : 'bg-white my-1 px-1 md:w-1/4 lg:w-1/4 mdlg:w-1/4 sm:w-full sm:mr-4   rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2'
           "
         >
           <!-- Article -->
@@ -182,7 +182,7 @@
                   font-bold
                   uppercase
                   rounded
-                  shadow-md
+                   
                   mb-4
                   transition
                   duration-150
@@ -209,7 +209,7 @@
                     font-bold
                     uppercase
                     rounded
-                    shadow-md
+                     
                     mb-4
                     transition
                     duration-150
@@ -239,7 +239,7 @@
         lg:w-1/4
         mdlg:w-1/4
         sm:w-full sm:mr-4
-        shadow-md
+         
         rounded-lg
         transform
         transition

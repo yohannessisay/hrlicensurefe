@@ -22,7 +22,7 @@
           </picture>
         </article>
       </div>
-      <div class="bg-white border rounded-md shadow-md p-4 mb-8 col-span-5">
+      <div class="bg-white border rounded-md   p-4 mb-8 col-span-5">
         <article class="overflow-hidden   p-4">
           <div class="flex justify-start flex-col">
             <div class="flex justify-start border-b-4 text-main-400 mt-4 mb-4">
@@ -144,8 +144,8 @@
                   leading-tight
                   uppercase
                   rounded
-                  shadow-md
-                  hover:bg-white hover:shadow-lg hover:text-main-400
+                   
+                  hover:bg-white hover:  hover:text-main-400
                   transition
                   duration-150
                   ease-in-out
@@ -177,8 +177,8 @@
                   leading-tight
                   uppercase
                   rounded
-                  shadow-md
-                  hover:bg-white hover:shadow-lg hover:text-main-400
+                   
+                  hover:bg-white hover:  hover:text-main-400
                   transition
                   duration-150
                   ease-in-out
@@ -191,7 +191,7 @@
           </article>
         </div>
       </div>
-      <!-- <div class="bg-white rounded-md shadow-md p-4 m-2">
+      <!-- <div class="bg-white rounded-md   p-4 m-2">
       
       </div> -->
     </div>

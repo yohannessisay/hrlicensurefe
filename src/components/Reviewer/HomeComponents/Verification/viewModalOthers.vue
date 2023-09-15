@@ -25,7 +25,7 @@
         class="
           modal-content
           border-none
-          shadow-lg
+           
           relative
           flex flex-col
           w-full
@@ -346,13 +346,13 @@
                 </div>
               </div>
               <hr class="text-primary-600 " />
-              <div class="bg-white shadow-md p-4 m-4">
+              <div class="bg-white   p-4 m-4">
                 <h2 class="text-primary-600 font-bold text-xl">
                   License Detail
                 </h2>
               </div>
               <div class="grid grid-cols-2">
-                <div class="bg-white shadow-md p-4 m-4">
+                <div class="bg-white   p-4 m-4">
                   <h4 class="text-primary-600 font-bold text-xl">
                     Applicant Detail
                   </h4>
@@ -406,7 +406,7 @@
                   </div>
                 </div>
 
-                <div class="bg-white shadow-md p-4 m-4">
+                <div class="bg-white   p-4 m-4">
                   <h4 class="text-primary-600 font-bold text-xl">
                     Reviewer Detail
                   </h4>
@@ -493,7 +493,7 @@
                 class="grid grid-cols-3"
               >
                 <div
-                  class="bg-white shadow-md p-4 m-4"
+                  class="bg-white   p-4 m-4"
                   v-for="education in licenseInfo && licenseInfo.newLicense
                     ? licenseInfo.newLicense.educations
                     : licenseInfo && licenseInfo.renewal
@@ -560,7 +560,7 @@
               (licenseInfo && licenseInfo.renewal)
           "
         >
-          <div class="block p-6 rounded-lg shadow-md m-4 bg-white">
+          <div class="block p-6 rounded-lg   m-4 bg-white">
             <div class="flex justify-content-evenly align-center">
               <h1>Attached Documents</h1>
             </div>
@@ -632,7 +632,7 @@
               leading-tight
               uppercase
               rounded
-              shadow-lg
+               
               hover:bg-white hover:text-primary-600
               transition
               duration-150
@@ -659,8 +659,8 @@
               modalDataOthers &&
               modalDataOthers.data &&
               modalDataOthers.data.isVerified == true
-                ? 'pointer-events-none disabled inline-block px-6 text-white font-medium text-xs leading-tight uppercase rounded shadow-md bg-grey-300 hover:bg-whitehover:shadow-lg hover:text-primary-600 hover:border transition duration-150 ease-in-out'
-                : 'inline-block px-6 text-white font-medium text-xs leading-tight uppercase rounded shadow-md bg-primary-700 hover:bg-whitehover:shadow-lg hover:text-primary-600 hover:border transition duration-150 ease-in-out'
+                ? 'pointer-events-none disabled inline-block px-6 text-white font-medium text-xs leading-tight uppercase rounded   bg-grey-300 hover:bg-whitehover:  hover:text-primary-600 hover:border transition duration-150 ease-in-out'
+                : 'inline-block px-6 text-white font-medium text-xs leading-tight uppercase rounded   bg-primary-700 hover:bg-whitehover:  hover:text-primary-600 hover:border transition duration-150 ease-in-out'
             "
           >
             Save
@@ -676,9 +676,9 @@
               leading-tight
               uppercase
               rounded
-              shadow-md
+               
               bg-primary-700
-              hover:bg-whitehover:shadow-lg hover:text-primary-600 hover:border
+              hover:bg-whitehover:  hover:text-primary-600 hover:border
               transition
               duration-150
               ease-in-out
@@ -787,8 +787,4 @@ export default {
   },
 };
 </script>
-<style scoped>
-.shadow-md {
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 34%), 0 2px 4px -1px rgb(0 0 0 / 6%);
-}
-</style>
+ 

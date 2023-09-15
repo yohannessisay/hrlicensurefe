@@ -94,7 +94,7 @@
                         leading-tight
                         uppercase
                         rounded
-                        shadow-md
+                         
                         hover:bg-white hover:text-primary-600  
                         transition
                         focus:border-blue-600
@@ -215,7 +215,7 @@
                   class="
                     inline-block
                     min-w-full
-                    shadow-md
+                     
                     rounded-lg
                     overflow-hidden
                     bg-primary-800
@@ -303,7 +303,7 @@
                         leading-tight
                         uppercase
                         rounded
-                        shadow-md
+                         
                         hover:bg-white hover:text-primary-600  
                         transition
                         focus:border-blue-600
@@ -424,7 +424,7 @@
                   class="
                     inline-block
                     min-w-full
-                    shadow-md
+                     
                     rounded-lg
                     overflow-hidden
                     bg-primary-800
@@ -615,7 +615,7 @@ export default {
                 width: "10%",
                 display: function(row) {
                   return (
-                    '<button data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded shadow-md   hover:shadow-lg    transition duration-150 ease-in-out" data-id="' +
+                    '<button data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded     hover:     transition duration-150 ease-in-out" data-id="' +
                     row.id +
                     '" ><i class="fa fa-eye"></i>View/Edit</button>'
                   );
@@ -707,7 +707,7 @@ export default {
                   return (
                     '<button  data-set="' +
                     row +
-                    '"  data-bs-toggle="modal" data-bs-target="#othersModal" class="edit-btn-others inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-white  hover:shadow-lg hover:border hover:text-primary-600 focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" data-id="' +
+                    '"  data-bs-toggle="modal" data-bs-target="#othersModal" class="edit-btn-others inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded   hover:bg-white  hover:  hover:border hover:text-primary-600 focus:outline-none focus:ring-0 active:bg-blue-800 active:  transition duration-150 ease-in-out" data-id="' +
                     row.id +
                     '" ><i class="fa fa-eye"></i>View/Edit</button>'
                   );

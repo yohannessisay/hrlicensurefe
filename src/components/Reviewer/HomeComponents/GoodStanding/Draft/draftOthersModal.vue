@@ -31,7 +31,7 @@
         class="
           modal-content
           border-none
-          shadow-md
+           
           relative
           flex flex-col
           w-full
@@ -65,13 +65,13 @@
               uppercase
               rounded
               hover:border-primary-600
-              shadow-md
-              hover:bg-purple-700 hover:shadow-md
+               
+              hover:bg-purple-700 hover: 
               focus:bg-purple-700
-              focus:shadow-md
+              focus: 
               focus:outline-none
               focus:ring-0
-              active:bg-purple-800 active:shadow-md
+              active:bg-purple-800 active: 
               transition
               duration-150
               ease-in-out"
@@ -125,7 +125,7 @@
                                 p-4
                                 bg-blue-600
                                 rounded-md
-                                shadow-md
+                                 
                                 w-48
                                 h-48
                                 flex
@@ -217,7 +217,7 @@
                                 p-4
                                 bg-blue-600
                                 rounded-md
-                                shadow-md
+                                 
                                 w-48
                                 h-48
                                 flex
@@ -263,7 +263,7 @@
                                 p-4
                                 bg-blue-600
                                 rounded-md
-                                shadow-md
+                                 
                                 w-48
                                 h-48
                                 flex

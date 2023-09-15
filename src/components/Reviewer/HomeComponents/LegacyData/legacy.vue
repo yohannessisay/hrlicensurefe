@@ -32,7 +32,7 @@
           </h2>
           <p class="absolute right-0">
             <button
-              class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out border rounded shadow-md bg-primary-700 hover:bg-white hover:text-primary-600"
+              class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out border rounded   bg-primary-700 hover:bg-white hover:text-primary-600"
               @click="exportTable()"
             >
               <i class="text-xl fa fa-file-excel"></i>
@@ -204,9 +204,9 @@
               </div>
             </div>
 
-            <div class="p-6 bg-white rounded-lg shadow-md">
+            <div class="p-6 bg-white rounded-lg  ">
               <div
-                class="inline-block min-w-full overflow-hidden rounded-lg shadow-md bg-primary-800"
+                class="inline-block min-w-full overflow-hidden rounded-lg   bg-primary-800"
               >
                 <vue-table-lite
                   :is-loading="reportTable.isLoading"
@@ -225,7 +225,7 @@
 
     <div
       id="printable"
-      class="min-w-full rounded-lg shadow-md"
+      class="min-w-full rounded-lg  "
       style="display: none"
     >
       <table class="w-full" id="myTable">

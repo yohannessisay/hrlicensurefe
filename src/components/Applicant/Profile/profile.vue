@@ -9,7 +9,7 @@
               <!-- Left Side -->
               <div class="w-full md:w-3/12 md:mx-2 mt-5">
                 <!-- Profile Card -->
-                <div class="bg-white p-3 shadow-xl border-green-400">
+                <div class="bg-white p-3   border-green-400">
                   <div class="vld-parent mt-4">
                     <loading
                       :active="isLoadingProfile"
@@ -45,7 +45,7 @@
                         bg-main-400
                         font-semibold
                         rounded-lg
-                        hover:bg-white hover:text-main-400 hover:shadow-lg
+                        hover:bg-white hover:text-main-400 hover: 
                       "
                     >
                       <i class="fa fa-camera"></i>
@@ -114,7 +114,7 @@
                     :opacity="1"
                   ></loading>
                   <form @submit.prevent="submit">
-                    <div class="bg-white p-3 shadow-xl rounded-sm mb-4">
+                    <div class="bg-white p-3   rounded-sm mb-4">
                       <div
                         class="
                           flex
@@ -500,7 +500,7 @@
                       </div>
                     </div>
 
-                    <div class="bg-white p-3 shadow-xl rounded-sm">
+                    <div class="bg-white p-3   rounded-sm">
                       <div
                         class="
                           flex
@@ -654,7 +654,7 @@
                           text-base
                           font-bold
                           rounded-lg
-                          hover:bg-white hover:text-main-400 hover:shadow-lg
+                          hover:bg-white hover:text-main-400 hover: 
                           p-3
                           my-4
                         "
@@ -668,7 +668,7 @@
                 </div>
                 <!-- When education feature is added to reviewer  -->
                 <!-- Experience and education -->
-                <!--   <div class="bg-white p-3 shadow-lg rounded-sm">
+                <!--   <div class="bg-white p-3   rounded-sm">
                  <div class="grid grid-cols-2">
                     <div>
                       <div

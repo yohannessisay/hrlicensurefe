@@ -17,13 +17,7 @@
           </div>
           <table
             id="printable"
-            class="
-              vtl-table
-              vtl-table-hover
-              vtl-table-bordered
-              vtl-table-responsive
-              vtl-table-responsive-sm
-            "
+            class="vtl-table vtl-table-hover vtl-table-bordered vtl-table-responsive vtl-table-responsive-sm"
             ref="localTable"
           >
             <thead class="vtl-thead">
@@ -56,10 +50,8 @@
                     :class="{
                       'vtl-sortable': col.sortable,
                       'vtl-both': col.sortable,
-                      'vtl-asc':
-                        setting.order === col.field && setting.sort === 'asc',
-                      'vtl-desc':
-                        setting.order === col.field && setting.sort === 'desc',
+                      'vtl-asc': setting.order === col.field && setting.sort === 'asc',
+                      'vtl-desc': setting.order === col.field && setting.sort === 'desc',
                     }"
                     @click="col.sortable ? doSort(col.field) : false"
                   >
@@ -74,11 +66,7 @@
                   v-for="(row, i) in localRows"
                   :key="i"
                   class="vtl-tbody-tr"
-                  :class="
-                    typeof rowClasses === 'function'
-                      ? rowClasses(row)
-                      : rowClasses
-                  "
+                  :class="typeof rowClasses === 'function' ? rowClasses(row) : rowClasses"
                   @click="$emit('row-clicked', row)"
                 >
                   <td v-if="hasCheckbox" class="vtl-tbody-td">
@@ -118,11 +106,7 @@
                   v-for="(row, i) in rows"
                   :key="i"
                   class="vtl-tbody-tr"
-                  :class="
-                    typeof rowClasses === 'function'
-                      ? rowClasses(row)
-                      : rowClasses
-                  "
+                  :class="typeof rowClasses === 'function' ? rowClasses(row) : rowClasses"
                   @click="$emit('row-clicked', row)"
                 >
                   <td v-if="hasCheckbox" class="vtl-tbody-td">
@@ -166,19 +150,12 @@
           <div class="vtl-paging-info col-sm-12 col-md-4">
             <div role="status" aria-live="polite">
               {{
-                stringFormat(
-                  messages.pagingInfo,
-                  setting.offset,
-                  setting.limit,
-                  total
-                )
+                stringFormat(messages.pagingInfo, setting.offset, setting.limit, total)
               }}
             </div>
           </div>
           <div class="vtl-paging-change-div col-sm-12 col-md-4">
-            <span class="vtl-paging-count-label">{{
-              messages.pageSizeChangeLabel
-            }}</span>
+            <span class="vtl-paging-count-label">{{ messages.pageSizeChangeLabel }}</span>
             <select class="" v-model="setting.pageSize" style="width: 8%">
               <option
                 v-for="pageOption in pageOptions"
@@ -189,15 +166,9 @@
               </option>
             </select>
 
-            <span class="vtl-paging-page-label">{{
-              messages.gotoPageLabel
-            }}</span>
+            <span class="vtl-paging-page-label">{{ messages.gotoPageLabel }}</span>
             <select class="vtl-paging-page-dropdown" v-model="setting.page">
-              <option
-                v-for="n in setting.maxPage"
-                :key="n"
-                :value="parseInt(n)"
-              >
+              <option v-for="n in setting.maxPage" :key="n" :value="parseInt(n)">
                 {{ n }}
               </option>
             </select>
@@ -206,19 +177,11 @@
             <div class="dataTables_paginate">
               <ul class="vtl-paging-pagination-ul vtl-pagination">
                 <li
-                  class="
-                    vtl-paging-pagination-page-li
-                    vtl-paging-pagination-page-li-first
-                    page-item
-                  "
+                  class="vtl-paging-pagination-page-li vtl-paging-pagination-page-li-first page-item"
                   :class="{ disabled: setting.page <= 1 }"
                 >
                   <a
-                    class="
-                      vtl-paging-pagination-page-link
-                      vtl-paging-pagination-page-link-first
-                      page-link
-                    "
+                    class="vtl-paging-pagination-page-link vtl-paging-pagination-page-link-first page-link"
                     href="javascript:void(0)"
                     aria-label="Previous"
                     @click="setting.page = 1"
@@ -228,19 +191,11 @@
                   </a>
                 </li>
                 <li
-                  class="
-                    vtl-paging-pagination-page-li
-                    vtl-paging-pagination-page-li-prev
-                    page-item
-                  "
+                  class="vtl-paging-pagination-page-li vtl-paging-pagination-page-li-prev page-item"
                   :class="{ disabled: setting.page <= 1 }"
                 >
                   <a
-                    class="
-                      vtl-paging-pagination-page-link
-                      vtl-paging-pagination-page-link-prev
-                      page-link
-                    "
+                    class="vtl-paging-pagination-page-link vtl-paging-pagination-page-link-prev page-link"
                     href="javascript:void(0)"
                     aria-label="Previous"
                     @click="prevPage"
@@ -250,40 +205,24 @@
                   </a>
                 </li>
                 <li
-                  class="
-                    vtl-paging-pagination-page-li
-                    vtl-paging-pagination-page-li-number
-                    page-item
-                  "
+                  class="vtl-paging-pagination-page-li vtl-paging-pagination-page-li-number page-item"
                   v-for="n in setting.paging"
                   :key="n"
                   :class="{ disabled: setting.page === n }"
                 >
                   <a
-                    class="
-                      vtl-paging-pagination-page-link
-                      vtl-paging-pagination-page-link-number
-                      page-link
-                    "
+                    class="vtl-paging-pagination-page-link vtl-paging-pagination-page-link-number page-link"
                     href="javascript:void(0)"
                     @click="movePage(n)"
                     >{{ n }}</a
                   >
                 </li>
                 <li
-                  class="
-                    vtl-paging-pagination-page-li
-                    vtl-paging-pagination-page-li-next
-                    page-item
-                  "
+                  class="vtl-paging-pagination-page-li vtl-paging-pagination-page-li-next page-item"
                   :class="{ disabled: setting.page >= setting.maxPage }"
                 >
                   <a
-                    class="
-                      vtl-paging-pagination-page-link
-                      vtl-paging-pagination-page-link-next
-                      page-link
-                    "
+                    class="vtl-paging-pagination-page-link vtl-paging-pagination-page-link-next page-link"
                     href="javascript:void(0)"
                     aria-label="Next"
                     @click="nextPage"
@@ -293,19 +232,11 @@
                   </a>
                 </li>
                 <li
-                  class="
-                    vtl-paging-pagination-page-li
-                    vtl-paging-pagination-page-li-last
-                    page-item
-                  "
+                  class="vtl-paging-pagination-page-li vtl-paging-pagination-page-li-last page-item"
                   :class="{ disabled: setting.page >= setting.maxPage }"
                 >
                   <a
-                    class="
-                      vtl-paging-pagination-page-link
-                      vtl-paging-pagination-page-link-last
-                      page-link
-                    "
+                    class="vtl-paging-pagination-page-link vtl-paging-pagination-page-link-last page-link"
                     href="javascript:void(0)"
                     aria-label="Next"
                     @click="setting.page = setting.maxPage"
@@ -701,26 +632,16 @@ export default defineComponent({
             LastName: element.emp_last_name ? element.emp_last_name : "",
             LicenseNumber: element.license_no ? element.license_no : "",
             AlternativeFullName:
-              (element.alternative_first_name
-                ? element.alternative_first_name
-                : "") +
+              (element.alternative_first_name ? element.alternative_first_name : "") +
               " " +
-              (element.alternative_middle_name
-                ? element.alternative_last_name
-                : "") +
+              (element.alternative_middle_name ? element.alternative_last_name : "") +
               " " +
-              (element.alternative_middle_name
-                ? element.alternative_middle_name
-                : ""),
+              (element.alternative_middle_name ? element.alternative_middle_name : ""),
             EmployeePrefix: element.prefix_id ? element.prefix_id : "",
             ExpireDate: element.expiry_date ? element.expiry_date : "",
             LicenseType: element.license_type_id ? element.license_type_id : "",
-            LicenseStatus: element.license_status_id
-              ? element.license_status_id
-              : "",
-            LicensePrefix: element.license_prefix_id
-              ? element.license_prefix_id
-              : "",
+            LicenseStatus: element.license_status_id ? element.license_status_id : "",
+            LicensePrefix: element.license_prefix_id ? element.license_prefix_id : "",
             IssuedDate: element.issued_date ? element.issued_date : "",
             EmployeeMobile: element.emp_mobile ? element.emp_mobile : "",
             EmployeeEmail: element.emp_work_email ? element.emp_work_email : "",
@@ -756,12 +677,12 @@ export default defineComponent({
     const changePageSize = () => {
       if (setting.page === 1) {
         //  changePage()
-           localRows.value=[]
-        changeRows(setting.page,setting.pageSize)
+        localRows.value = [];
+        changeRows(setting.page, setting.pageSize);
       } else {
         // changePage()
-           localRows.value=[]
-    changeRows(setting.page,setting.pageSize)
+        localRows.value = [];
+        changeRows(setting.page, setting.pageSize);
       }
     };
     //  (Monitor display number switch from component)
@@ -828,14 +749,12 @@ export default defineComponent({
     // Call 「is-finished」 Method
     const callIsFinished = () => {
       if (localTable.value) {
-        let localElement =
-          localTable.value.getElementsByClassName("is-rows-el");
+        let localElement = localTable.value.getElementsByClassName("is-rows-el");
         emit("is-finished", localElement);
       }
       emit("get-now-page", setting.page);
     };
     let changeRows = (page, rowSize) => {
-   
       let apiParameters = [page, rowSize];
       store.dispatch("reviewer/getLegacyData", apiParameters).then((res) => {
         let tableData = [];
@@ -848,26 +767,16 @@ export default defineComponent({
             LastName: element.emp_last_name ? element.emp_last_name : "",
             LicenseNumber: element.license_no ? element.license_no : "",
             AlternativeFullName:
-              (element.alternative_first_name
-                ? element.alternative_first_name
-                : "") +
+              (element.alternative_first_name ? element.alternative_first_name : "") +
               " " +
-              (element.alternative_middle_name
-                ? element.alternative_last_name
-                : "") +
+              (element.alternative_middle_name ? element.alternative_last_name : "") +
               " " +
-              (element.alternative_middle_name
-                ? element.alternative_middle_name
-                : ""),
+              (element.alternative_middle_name ? element.alternative_middle_name : ""),
             EmployeePrefix: element.prefix_id ? element.prefix_id : "",
             ExpireDate: element.expiry_date ? element.expiry_date : "",
             LicenseType: element.license_type_id ? element.license_type_id : "",
-            LicenseStatus: element.license_status_id
-              ? element.license_status_id
-              : "",
-            LicensePrefix: element.license_prefix_id
-              ? element.license_prefix_id
-              : "",
+            LicenseStatus: element.license_status_id ? element.license_status_id : "",
+            LicensePrefix: element.license_prefix_id ? element.license_prefix_id : "",
             IssuedDate: element.issued_date ? element.issued_date : "",
             EmployeeMobile: element.emp_mobile ? element.emp_mobile : "",
             EmployeeEmail: element.emp_work_email ? element.emp_work_email : "",
@@ -875,7 +784,7 @@ export default defineComponent({
             BirthDate: element.emp_birthday ? element.emp_birthday : "",
           });
         });
-        
+
         isLoading.value = false;
         localRows.value = rows(tableData);
       });
@@ -952,7 +861,7 @@ export default defineComponent({
 
 .vtl-loading-mask {
   position: absolute;
-  z-index: 1;
+  z-index: 1 !important;
   top: 0;
   left: 0;
   width: 100%;
@@ -984,7 +893,7 @@ export default defineComponent({
 
 select {
   width: auto;
-  
+
   background-color: #ffffff;
   height: auto;
   padding: 0;
