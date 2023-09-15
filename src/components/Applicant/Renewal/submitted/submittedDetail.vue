@@ -28,7 +28,7 @@
       <div v-if="invalidLicenseStat != true">
         <div
           v-if="activeState == 1"
-          class="block p-6 rounded-lg shadow-md bg-white max-w-full mr-8 mb-8 sm:p-4 ml-8"
+          class="block p-6 rounded-lg   bg-white max-w-full mr-8 mb-8 sm:p-4 ml-8"
         >
           <div class="mt-small flex justify-center">
             <h2 class="text-main-400 text-3xl font-bold">
@@ -291,7 +291,7 @@
               <div class="text-right">
                 <button
                   type="button"
-                  class="px-6 mr-2 mb-8 py-2.5 bg-white text-main-400 font-medium border text-xs leading-tight uppercase rounded shadow-md hover:text-white hover:border-main-400 hover:bg-main-400 focus:bg-blue-700 focus:shadow-md focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-md transition duration-150 ease-in-out"
+                  class="px-6 mr-2 mb-8 py-2.5 bg-white text-main-400 font-medium border text-xs leading-tight uppercase rounded   hover:text-white hover:border-main-400 hover:bg-main-400 focus:bg-blue-700 focus:  focus:outline-none focus:ring-0 active:bg-blue-800 active:  transition duration-150 ease-in-out"
                   @click="addMultiple()"
                 >
                   <i class="fa fa-plus"></i>
@@ -423,7 +423,7 @@
 
             <div class="flex justify-end mb-2 mr-1">
               <button
-                class="px-6 mr-2 mb-2 py-2.5 bg-yellow-300 text-white font-medium border text-xs leading-tight uppercase rounded shadow-md hover:text-yellow-300 hover:border-yellow-300 hover:bg-white transition duration-150 ease-in-out"
+                class="px-6 mr-2 mb-2 py-2.5 bg-yellow-300 text-white font-medium border text-xs leading-tight uppercase rounded   hover:text-yellow-300 hover:border-yellow-300 hover:bg-white transition duration-150 ease-in-out"
                 type="submit"
                 @click="withdraw()"
               >
@@ -432,8 +432,8 @@
               <button
                 :class="
                   generalInfo.educations.length > 0
-                    ? 'px-6 mr-2 mb-2 py-2.5 bg-white text-main-400 font-medium border text-xs leading-tight uppercase rounded shadow-md hover:text-white hover:border-main-400 hover:bg-main-400 transition duration-150   ease-in-out'
-                    : 'px-6 mr-2 mb-2 py-2.5 bg-white text-main-400 font-medium border text-xs leading-tight uppercase rounded shadow-md hover:text-white hover:border-main-400 hover:bg-main-400 transition duration-150   ease-in-out  disabled'
+                    ? 'px-6 mr-2 mb-2 py-2.5 bg-white text-main-400 font-medium border text-xs leading-tight uppercase rounded   hover:text-white hover:border-main-400 hover:bg-main-400 transition duration-150   ease-in-out'
+                    : 'px-6 mr-2 mb-2 py-2.5 bg-white text-main-400 font-medium border text-xs leading-tight uppercase rounded   hover:text-white hover:border-main-400 hover:bg-main-400 transition duration-150   ease-in-out  disabled'
                 "
                 type="submit"
                 @click="apply()"

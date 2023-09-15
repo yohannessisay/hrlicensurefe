@@ -50,7 +50,7 @@
                     w-full
                     whitespace-nowrap
                     rounded-lg
-                    shadow-lg
+                     
                     mb-8
                     bg-white
                     divide-y
@@ -282,7 +282,7 @@
                     whitespace-nowrap
                     rounded-lg
                     bg-white
-                    shadow-lg
+                     
                     divide-y divide-gray-300
                     overflow-hidden
                     table-auto
@@ -633,7 +633,7 @@
                             leading-tight
                             uppercase
                             rounded
-                            shadow-md
+                             
                             active:border-main-400
                             transition
                             duration-150
@@ -662,7 +662,7 @@
                       >
                         <div
                           class="
-                            shadow-lg
+                             
                             w-full
                             bg-white
                             border border-grey-400
@@ -915,7 +915,7 @@
           leading-tight
           uppercase
           rounded
-          shadow-md
+           
           active:border-main-400
           transition
           duration-150
@@ -939,7 +939,7 @@
           leading-tight
           uppercase
           rounded
-          shadow-md
+           
           active:border-main-400
           transition
           duration-150
@@ -1726,7 +1726,7 @@ export default {
   border-radius: 5%;
   padding: 7px;
 }
-.shadow-lg {
+.  {
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 34%), 0 2px 4px -1px rgb(0 0 0 / 6%);
 }
 .document-name {

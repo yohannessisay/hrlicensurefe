@@ -1,6 +1,6 @@
 <template>
   <section
-    class="fixed top-0 z-50 flex items-center justify-between w-full bg-white shadow-md h-large px-tiny sm:px-small glass"
+    class="fixed top-0 z-50 flex items-center justify-between w-full bg-white   h-large px-tiny sm:px-small glass"
   >
     <div class="flex items-center justify-center">
       <RenderIllustration illustration="Logo" class="hidden sm:block" />
@@ -23,7 +23,7 @@
         </h4>
       </span>
       <button
-        class="px-6 py-2.5 sm:h-16 bg-white border text-main-400 hover:text-white hover:bg-main-400 font-medium text-base sm:mr-1  rounded shadow-md transition duration-150 ease-in-out"
+        class="px-6 py-2.5 sm:h-16 bg-white border text-main-400 hover:text-white hover:bg-main-400 font-medium text-base sm:mr-1  rounded   transition duration-150 ease-in-out"
         data-bs-toggle="modal"
         data-bs-target="#register"
       >
@@ -31,7 +31,7 @@
       </button>
       <button
         type="button"
-        class="mdlg:-ml-12 lg:-ml-12 md:-ml-12 px-6 py-2.5 sm:h-16 bg-main-400 text-white hover:text-main-400 hover:bg-white   text-base     rounded shadow-md transition duration-150 ease-in-out"
+        class="mdlg:-ml-12 lg:-ml-12 md:-ml-12 px-6 py-2.5 sm:h-16 bg-main-400 text-white hover:text-main-400 hover:bg-white   text-base     rounded   transition duration-150 ease-in-out"
         data-bs-toggle="modal"
         data-bs-target="#staticBackdrop"
       >
@@ -50,14 +50,14 @@
   >
     <div class="relative pointer-events-none modal-dialog modal-xl">
       <div
-        class="relative flex flex-col w-full text-current bg-white border-none rounded-md shadow-md outline-none pointer-events-auto modal-content md:w-9/12 mdlg:w-9/12 lg:w-10/12 sm:w-full bg-clip-padding"
+        class="relative flex flex-col w-full text-current bg-white border-none rounded-md   outline-none pointer-events-auto modal-content md:w-9/12 mdlg:w-9/12 lg:w-10/12 sm:w-full bg-clip-padding"
       >
         <div
           class="flex items-center justify-center flex-shrink-0 p-4 border-b modal-header border-grey-100 rounded-t-md"
         >
           <button
             type="button"
-            class="px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out bg-yellow-300 rounded shadow-md hover:bg-white hover:text-primary-700"
+            class="px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out bg-yellow-300 rounded   hover:bg-white hover:text-primary-700"
             @click="downloadHelpVideo()"
           >
             <i class="fa fa-download"></i>
@@ -65,7 +65,7 @@
           </button>
           <button
             type="button"
-            class="px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded shadow-md bg-main-400 hover:border-main-400 hover:text-main-400 active:bg-purple-800 active:shadow-md"
+            class="px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded   bg-main-400 hover:border-main-400 hover:text-main-400 active:bg-purple-800 active: "
             data-bs-dismiss="modal"
             aria-label="Close"
           >

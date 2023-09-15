@@ -16,7 +16,7 @@
       class="grid grid-cols-2 gap-4 mr-8 md:grid-cols-2 lg:grid-cols-2 mdlg:grid-cols-2 sm:grid-cols-1"
     >
       <div
-        class="py-8 mt-4 px-12 mb-12 bg-gray-50 shadow-md rounded-md transform transition duration-300 ease-in-out bg-white hover:-translate-y-2"
+        class="py-8 mt-4 px-12 mb-12 bg-gray-50   rounded-md transform transition duration-300 ease-in-out bg-white hover:-translate-y-2"
         v-for="dep in localData.multipleDepartment"
         :key="dep"
       >
@@ -92,7 +92,7 @@
     <div
       class="mt-8 grid grid-cols-1 gap-4 md:grid-cols-1 lg:grid-cols-1 mdlg:grid-cols-1 sm:grid-cols-1"
     >
-      <div class="bg-white flex-shrink px-4 w-full rounded-md shadow-md">
+      <div class="bg-white flex-shrink px-4 w-full rounded-md  ">
         <div class="py-8 px-12 mb-12 bg-gray-50 border-b border-white">
           <div class="border-b-2 text-main-400 mb-4">
             <div class="text-gray-900 mb-4 flex justify-center">
@@ -111,7 +111,7 @@
             class="grid grid-cols-4 gap-4 ml-4 sm:w-full sm:grid-cols-1 md:w-full mdlg:grid-cols-2 lg:w-full md:grid-cols-4 mdlg:w-full lg:grid-cols-4"
           >
             <div
-              class="mt-4 mb-8 bg-white shadow-md hover:shadow-md rounded-md transform transition duration-300 ease-in-out hover:-translate-y-2"
+              class="mt-4 mb-8 bg-white   hover:  rounded-md transform transition duration-300 ease-in-out hover:-translate-y-2"
               v-for="localFileData in localFileData[0]
                 ? localFileData[0].data
                 : {}"
@@ -145,7 +145,7 @@
     <div
       class="mt-8 grid grid-cols-1 gap-4 md:grid-cols-1 lg:grid-cols-1 mdlg:grid-cols-1 sm:grid-cols-1"
     >
-      <div class="bg-white flex-shrink px-4 w-full rounded-md shadow-md">
+      <div class="bg-white flex-shrink px-4 w-full rounded-md  ">
         <div
           class="py-8 px-12 mb-12 bg-gray-50 border-b border-white transform transition duration-300 ease-in-out hover:-translate-y-2"
         >
@@ -207,8 +207,8 @@
               type="button"
               :class="
                 allowSave
-                  ? 'inline-block px-6 border text-main-400 hover:bg-main-400 hober:border-main-400 hover:text-white  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded shadow-md transition  duration-150 ease-in-out'
-                  : 'inline-block px-6 disabled text-main-400  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded shadow-md transition  duration-150 ease-in-out'
+                  ? 'inline-block px-6 border text-main-400 hover:bg-main-400 hober:border-main-400 hover:text-white  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded   transition  duration-150 ease-in-out'
+                  : 'inline-block px-6 disabled text-main-400  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded   transition  duration-150 ease-in-out'
               "
               @click="checkFinalStatus(button.action)"
             >
@@ -218,7 +218,7 @@
             <button
               v-if="button.action == 'DraftEvent'"
               type="button"
-              class="inline-block px-6 border text-main-400 hover:bg-main-400 hober:border-main-400 hover:text-white mt-4 bg-white font-medium text-xs leading-tight uppercase rounded shadow-md transition duration-150 ease-in-out"
+              class="inline-block px-6 border text-main-400 hover:bg-main-400 hober:border-main-400 hover:text-white mt-4 bg-white font-medium text-xs leading-tight uppercase rounded   transition duration-150 ease-in-out"
               @click="checkFinalStatus(button.action)"
             >
               <i class="fa fa-save"></i>
@@ -227,7 +227,7 @@
           </span>
 
           <button
-            class="inline-block px-6 text-main-400 mt-4 bg-white font-medium text-xs leading-tight uppercase rounded shadow-md transition duration-150 ease-in-out"
+            class="inline-block px-6 text-main-400 mt-4 bg-white font-medium text-xs leading-tight uppercase rounded   transition duration-150 ease-in-out"
             @click="back()"
           >
             back

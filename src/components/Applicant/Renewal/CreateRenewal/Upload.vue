@@ -28,7 +28,7 @@
             <div class="bg-red-800 py-5">
               <div class="overflow-x-auto w-full p-4">
                 <table
-                  class="max-w-full w-full whitespace-nowrap rounded-lg shadow-lg mb-8 bg-white divide-y overflow-hidden"
+                  class="max-w-full w-full whitespace-nowrap rounded-lg   mb-8 bg-white divide-y overflow-hidden"
                 >
                   <thead class="bg-lightMain-500">
                     <tr class="text-left">
@@ -247,7 +247,7 @@
               </h5>
               <div class="overflow-x-auto w-full p-4">
                 <table
-                  class="w-full p-4 whitespace-nowrap rounded-lg bg-white shadow-lg divide-y divide-gray-300 overflow-hidden table-auto"
+                  class="w-full p-4 whitespace-nowrap rounded-lg bg-white   divide-y divide-gray-300 overflow-hidden table-auto"
                 >
                   <thead class="bg-lightMain-500 p-4">
                     <tr class="text-left">
@@ -617,7 +617,7 @@
 
                       <td class="px-6 text-center">
                         <button
-                          class="inline-block px-6 py-2.5 bg-white hover:bg-main-400 hover:text-white text-main-400 text-xs font-bold leading-tight uppercase rounded shadow-md active:border-main-400 transition duration-150 ease-in-out border"
+                          class="inline-block px-6 py-2.5 bg-white hover:bg-main-400 hover:text-white text-main-400 text-xs font-bold leading-tight uppercase rounded   active:border-main-400 transition duration-150 ease-in-out border"
                           type="button"
                           @click="addMore(parentItem[0])"
                         >
@@ -641,7 +641,7 @@
                         style="width: max-content"
                       >
                         <div
-                          class="shadow-lg w-full bg-white border border-grey-400 ml-8"
+                          class="  w-full bg-white border border-grey-400 ml-8"
                         >
                           <div
                             :id="
@@ -912,20 +912,20 @@
       ></loading>
       <div class="flex justify-end mr-8 mb-8">
         <button
-          class="mt-8 inline-block px-6 py-2.5 bg-white hover:bg-main-400 hover:text-white text-main-400 text-xs font-bold leading-tight uppercase rounded shadow-md active:border-main-400 transition duration-150 ease-in-out border"
+          class="mt-8 inline-block px-6 py-2.5 bg-white hover:bg-main-400 hover:text-white text-main-400 text-xs font-bold leading-tight uppercase rounded   active:border-main-400 transition duration-150 ease-in-out border"
           type="submit"
           @click="saveDraft()"
         >
           Save as draft
         </button>
         <button
-          class="mt-8 inline-block px-6 py-2.5 bg-white hover:bg-main-400 hover:text-white text-main-400 text-xs font-bold leading-tight uppercase rounded shadow-md active:border-main-400 transition duration-150 ease-in-out border"
+          class="mt-8 inline-block px-6 py-2.5 bg-white hover:bg-main-400 hover:text-white text-main-400 text-xs font-bold leading-tight uppercase rounded   active:border-main-400 transition duration-150 ease-in-out border"
           @click="back()"
         >
           back
         </button>
         <button
-          class="mt-8 inline-block px-6 py-2.5 bg-white hover:bg-main-400 hover:text-white text-main-400 text-xs font-bold leading-tight uppercase rounded shadow-md active:border-main-400 transition duration-150 ease-in-out border"
+          class="mt-8 inline-block px-6 py-2.5 bg-white hover:bg-main-400 hover:text-white text-main-400 text-xs font-bold leading-tight uppercase rounded   active:border-main-400 transition duration-150 ease-in-out border"
           @click="next()"
         >
           next
@@ -2150,7 +2150,7 @@ errorDocuments,
   padding: 7px;
 }
 
-.shadow-lg {
+.  {
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 34%), 0 2px 4px -1px rgb(0 0 0 / 6%);
 }
 

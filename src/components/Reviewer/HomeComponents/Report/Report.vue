@@ -41,8 +41,8 @@
                 leading-tight
                 uppercase
                 rounded
-                shadow-md
-                focus:shadow-lg focus:outline-none focus:ring-0
+                 
+                focus:  focus:outline-none focus:ring-0
                 transition
                 duration-150
                 mt-0
@@ -153,13 +153,13 @@
                       leading-tight
                       uppercase
                       rounded
-                      shadow-md
-                      hover:bg-blue-700 hover:shadow-lg
+                       
+                      hover:bg-blue-700 hover: 
                       focus:bg-blue-700
-                      focus:shadow-lg
+                      focus: 
                       focus:outline-none
                       focus:ring-0
-                      active:bg-blue-800 active:shadow-lg
+                      active:bg-blue-800 active: 
                       transition
                       duration-150
                       ease-in-out
@@ -212,13 +212,13 @@
                       leading-tight
                       uppercase
                       rounded
-                      shadow-md
-                      hover:bg-blue-700 hover:shadow-lg
+                       
+                      hover:bg-blue-700 hover: 
                       focus:bg-blue-700
-                      focus:shadow-lg
+                      focus: 
                       focus:outline-none
                       focus:ring-0
-                      active:bg-blue-800 active:shadow-lg
+                      active:bg-blue-800 active: 
                       transition
                       duration-150
                       ease-in-out
@@ -440,7 +440,7 @@
                 class="
                   inline-block
                   min-w-full
-                  shadow-md
+                   
                   rounded-lg
                   overflow-hidden
                   bg-primary-800

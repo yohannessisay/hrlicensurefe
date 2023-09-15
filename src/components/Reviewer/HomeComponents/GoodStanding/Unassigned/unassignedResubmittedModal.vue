@@ -32,7 +32,7 @@
           class="
             modal-content
             border-none
-            shadow-lg
+             
             relative
             flex flex-col
             w-full
@@ -104,7 +104,7 @@
                                   p-4
                                   bg-blue-600
                                   rounded-md
-                                  shadow-lg
+                                   
                                   w-48
                                   h-48
                                   flex
@@ -197,7 +197,7 @@
                                   p-4
                                   bg-blue-600
                                   rounded-md
-                                  shadow-lg
+                                   
                                   w-48
                                   h-48
                                   flex
@@ -268,7 +268,7 @@
                                         max-height-12
                                         overflow-hidden overflow-y-scroll
                                         rounded-lg
-                                        shadow-lg
+                                         
                                         text-left
                                         dropdown-menu
                                       "
@@ -310,7 +310,7 @@
                                           leading-tight
                                           uppercase
                                           rounded
-                                          shadow-lg
+                                           
                                           hover:bg-white hover:text-primary-600
                                           transition
                                           duration-150
@@ -355,7 +355,7 @@
                                           leading-tight
                                           uppercase
                                           rounded
-                                          shadow-lg
+                                           
                                           hover:bg-white hover:text-primary-600
                                           transition
                                           duration-150
@@ -394,7 +394,7 @@
                                   p-4
                                   bg-blue-600
                                   rounded-md
-                                  shadow-lg
+                                   
                                   w-48
                                   h-48
                                   flex
@@ -413,7 +413,7 @@
                                   p-2
                                   rounded-lg
                                   m-1
-                                  shadow-md
+                                   
                                   text-primary-500
                                 "
                               >
@@ -484,7 +484,7 @@
                                   p-4
                                   bg-blue-600
                                   rounded-md
-                                  shadow-lg
+                                   
                                   w-48
                                   h-48
                                   flex
@@ -540,7 +540,7 @@
                 leading-tight
                 uppercase
                 rounded
-                shadow-lg
+                 
               bg-primary-700
               hover:text-primary-600
                 transition
@@ -850,8 +850,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.shadow-lg {
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 34%), 0 2px 4px -1px rgb(0 0 0 / 6%);
-}
-</style>
+ 

@@ -3,7 +3,7 @@
     class="
       w-full
       bg-white
-      shadow-md
+       
       h-large
       px-tiny
       sm:px-small

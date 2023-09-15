@@ -35,7 +35,7 @@
         ></loading>
         <form
           @submit.prevent="submit"
-          class="mx-auto max-w-4xl p-2 w-full mt-2 shadow-lg "
+          class="mx-auto max-w-4xl p-2 w-full mt-2   "
         >
           <div class="mt-small flex justify-center">
             <h2 class="text-main-400 text-3xl font-bold">
@@ -484,14 +484,14 @@
           <!-- GS details -->
           <div class="flex justify-end mb-2 mr-1">
             <button
-              class="float-right mt-8 inline-block px-6 py-2.5 bg-blue-700 text-main-400 max-w-3xl font-medium text-xs leading-tight uppercase rounded shadow-md bg-white border hover:text-white hover:border-main-500 hover:bg-main-400 focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+              class="float-right mt-8 inline-block px-6 py-2.5 bg-blue-700 text-main-400 max-w-3xl font-medium text-xs leading-tight uppercase rounded   bg-white border hover:text-white hover:border-main-500 hover:bg-main-400 focus:bg-blue-700 focus:  focus:outline-none focus:ring-0 active:bg-blue-800 active:  transition duration-150 ease-in-out"
               type="submit"
               @click="saveDraft()"
             >
               Update
             </button>
             <button
-              class="float-right mt-8 inline-block px-6 py-2.5 bg-blue-700 text-white max-w-3xl font-medium text-xs leading-tight uppercase rounded shadow-md bg-main-400  border hover:text-main-400 hover:border-main-500 hover:bg-white focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+              class="float-right mt-8 inline-block px-6 py-2.5 bg-blue-700 text-white max-w-3xl font-medium text-xs leading-tight uppercase rounded   bg-main-400  border hover:text-main-400 hover:border-main-500 hover:bg-white focus:bg-blue-700 focus:  focus:outline-none focus:ring-0 active:bg-blue-800 active:  transition duration-150 ease-in-out"
               type="submit"
               @click="apply()"
             >

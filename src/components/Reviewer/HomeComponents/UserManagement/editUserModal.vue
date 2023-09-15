@@ -1,18 +1,7 @@
 <template>
   <!-- Modal -->
   <div
-    class="
-      modal
-      fade
-      fixed
-      top-0
-      left-0
-      hidden
-      w-full
-      h-full
-      outline-none
-      overflow-x-hidden overflow-y-auto
-    "
+    class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
     id="editUser"
     data-bs-backdrop="static"
     data-bs-keyboard="false"
@@ -22,47 +11,12 @@
   >
     <div class="modal-dialog modal-xl relative w-auto pointer-events-none">
       <div
-        class="
-          modal-content
-          border-none
-          shadow-lg
-          relative
-          flex flex-col
-          w-full
-          pointer-events-auto
-          bg-white bg-clip-padding
-          rounded-md
-          outline-none
-          text-current
-        "
+        class="modal-content border-none relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current"
       >
-        <div
-          class="modal-header flex flex-shrink-0 justify-end p-2 rounded-t-md"
-        >
+        <div class="modal-header flex flex-shrink-0 justify-end p-2 rounded-t-md">
           <button
             type="button"
-            class="
-              px-6
-              text-white
-              bg-primary-600
-              hover:text-primary-600 hover:border
-              font-medium
-              text-xs
-              leading-tight
-              uppercase
-              rounded
-              hover:border-primary-600
-              shadow-lg
-              hover:bg-purple-700 hover:shadow-lg
-              focus:bg-purple-700
-              focus:shadow-lg
-              focus:outline-none
-              focus:ring-0
-              active:bg-purple-800 active:shadow-lg
-              transition
-              duration-150
-              ease-in-out
-            "
+            class="px-6 text-white bg-primary-600 hover:text-primary-600 hover:border font-medium text-xs leading-tight uppercase rounded hover:border-primary-600 hover:bg-purple-700 hover: focus:bg-purple-700 focus: focus:outline-none focus:ring-0 active:bg-purple-800 active: transition duration-150 ease-in-out"
             data-bs-dismiss="modal"
             aria-label="Close"
           >
@@ -76,15 +30,13 @@
               <div class="flex justify-center">
                 <div class="text-center lg:max-w-3xl md:max-w-full">
                   <h2 class="text-2xl font-bold mb-8 px-6">
-                    {{
-                      !isUserManager ? "View Admin Details" : "Edit Admin User"
-                    }}
+                    {{ !isUserManager ? "View Admin Details" : "Edit Admin User" }}
                   </h2>
                 </div>
               </div>
 
               <div class="flex justify-center">
-                <div class="block rounded-lg shadow-md bg-white max-w-full">
+                <div class="block rounded-lg bg-white max-w-full">
                   <div class="vld-parent">
                     <loading
                       :active="isLoading"
@@ -93,82 +45,35 @@
                       :opacity="0.7"
                     ></loading>
 
-                    <form
-                      class="w-full mt-10 shadow-lg p-4"
-                      @submit.prevent="registerAdmin"
-                    >
+                    <form class="w-full mt-10 p-4" @submit.prevent="registerAdmin">
                       <div class="flex w-full">
                         <div class="flex flex-col w-1/2 mr-12">
                           <label class="ml-4 text-primary-600 font-bold"
                             >First Name</label
                           >
                           <input
-                            class="
-                              form-control
-                              block
-                              w-full
-                              px-3
-                              py-1.5
-                              text-base
-                              font-normal
-                              text-gray-700
-                              bg-white bg-clip-padding
-                              border border-solid border-gray-300
-                              rounded
-                              transition
-                              ease-in-out
-                              m-4
-                              mt-0
-                              focus:text-gray-700
-                              focus:bg-white
-                              focus:border-blue-600
-                              focus:outline-none
-                            "
+                            class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-4 mt-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                             type="text"
                             v-model="admin.firstName"
                             :disabled="!isUserManager"
                           />
-                          <span
-                            style="color: red"
-                            v-if="state.showErrorMessages"
-                            >{{ state.validationErrors.firstName }}</span
-                          >
+                          <span style="color: red" v-if="state.showErrorMessages">{{
+                            state.validationErrors.firstName
+                          }}</span>
                         </div>
                         <div class="flex flex-col mb-medium w-1/2 mr-12">
                           <label class="ml-4 text-primary-600 font-bold"
                             >Father's Name</label
                           >
                           <input
-                            class="
-                              form-control
-                              block
-                              w-full
-                              px-3
-                              py-1.5
-                              text-base
-                              font-normal
-                              text-gray-700
-                              bg-white bg-clip-padding
-                              border border-solid border-gray-300
-                              rounded
-                              transition
-                              ease-in-out
-                              m-4
-                              mt-0
-                              focus:text-gray-700
-                              focus:bg-white
-                              focus:border-blue-600
-                              focus:outline-none
-                            "
+                            class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-4 mt-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                             type="text"
                             v-model="admin.fatherName"
                             :disabled="!isUserManager"
                           />
-                          <span
-                            style="color: red"
-                            v-if="state.showErrorMessages"
-                            >{{ state.validationErrors.fatherName }}</span
-                          >
+                          <span style="color: red" v-if="state.showErrorMessages">{{
+                            state.validationErrors.fatherName
+                          }}</span>
                         </div>
                       </div>
                       <div class="flex">
@@ -177,72 +82,26 @@
                             >Grandfather's Name</label
                           >
                           <input
-                            class="
-                              form-control
-                              block
-                              w-full
-                              px-3
-                              py-1.5
-                              text-base
-                              font-normal
-                              text-gray-700
-                              bg-white bg-clip-padding
-                              border border-solid border-gray-300
-                              rounded
-                              transition
-                              ease-in-out
-                              m-4
-                              mt-0
-                              focus:text-gray-700
-                              focus:bg-white
-                              focus:border-blue-600
-                              focus:outline-none
-                            "
+                            class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-4 mt-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                             type="text"
                             v-model="admin.grandfatherName"
                             :disabled="!isUserManager"
                           />
-                          <span
-                            style="color: red"
-                            v-if="state.showErrorMessages"
-                            >{{ state.validationErrors.grandfatherName }}</span
-                          >
+                          <span style="color: red" v-if="state.showErrorMessages">{{
+                            state.validationErrors.grandfatherName
+                          }}</span>
                         </div>
                         <div class="flex flex-col mb-medium w-1/2 mr-12">
-                          <label class="ml-4 text-primary-600 font-bold"
-                            >Email</label
-                          >
+                          <label class="ml-4 text-primary-600 font-bold">Email</label>
                           <input
-                            class="
-                              form-control
-                              block
-                              w-full
-                              px-3
-                              py-1.5
-                              text-base
-                              font-normal
-                              text-gray-700
-                              bg-white bg-clip-padding
-                              border border-solid border-gray-300
-                              rounded
-                              transition
-                              ease-in-out
-                              m-4
-                              mt-0
-                              focus:text-gray-700
-                              focus:bg-white
-                              focus:border-blue-600
-                              focus:outline-none
-                            "
+                            class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-4 mt-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                             type="text"
                             v-model="admin.email"
                             :disabled="!isUserManager"
                           />
-                          <span
-                            style="color: red"
-                            v-if="state.showErrorMessages"
-                            >{{ state.validationErrors.email }}</span
-                          >
+                          <span style="color: red" v-if="state.showErrorMessages">{{
+                            state.validationErrors.email
+                          }}</span>
                         </div>
                       </div>
                       <div class="flex">
@@ -251,65 +110,20 @@
                             >Phone Number</label
                           >
                           <input
-                            class="
-                              form-control
-                              block
-                              w-full
-                              px-3
-                              py-1.5
-                              text-base
-                              font-normal
-                              text-gray-700
-                              bg-white bg-clip-padding
-                              border border-solid border-gray-300
-                              rounded
-                              transition
-                              ease-in-out
-                              m-4
-                              mt-0
-                              focus:text-gray-700
-                              focus:bg-white
-                              focus:border-blue-600
-                              focus:outline-none
-                            "
+                            class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-4 mt-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                             type="text"
                             v-model="admin.phoneNumber"
                             :disabled="!isUserManager"
                           />
-                          <span
-                            style="color: red"
-                            v-if="state.showErrorMessages"
-                            >{{ state.validationErrors.phoneNumber }}</span
-                          >
+                          <span style="color: red" v-if="state.showErrorMessages">{{
+                            state.validationErrors.phoneNumber
+                          }}</span>
                         </div>
                         <div class="flex flex-col mb-medium w-1/2 mr-12">
-                          <label class="ml-4 text-primary-600 font-bold"
-                            >Role</label
-                          >
+                          <label class="ml-4 text-primary-600 font-bold">Role</label>
 
                           <select
-                            class="
-                              form-control
-                              block
-                              w-full
-                              px-3
-                              py-1
-                              h-full
-                              text-base
-                              font-normal
-                              text-gray-700
-                              bg-white bg-clip-padding
-                              border border-solid border-gray-300
-                              rounded
-                              transition
-                              ease-in-out
-                              m-4
-                              mt-0
-                              focus:text-gray-700
-                              focus:bg-white
-                              focus:border-blue-600
-                              focus:outline-none
-                            "
+                            class="form-control block w-full px-3 py-1 h-full text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-4 mt-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                             v-model="admin.roleId"
                             :disabled="!isUserManager"
                           >
@@ -318,24 +132,17 @@
                               :value="
                                 state &&
                                 state.roles &&
-                                state.roles.find(
-                                  (role) => role.id == admin.roleId
-                                )
-                                  ? state.roles.find(
-                                      (role) => role.id == admin.roleId
-                                    ).id
+                                state.roles.find((role) => role.id == admin.roleId)
+                                  ? state.roles.find((role) => role.id == admin.roleId).id
                                   : ''
                               "
                             >
                               {{
                                 state &&
                                 state.roles &&
-                                state.roles.find(
-                                  (role) => role.id == admin.roleId
-                                )
-                                  ? state.roles.find(
-                                      (role) => role.id == admin.roleId
-                                    ).name
+                                state.roles.find((role) => role.id == admin.roleId)
+                                  ? state.roles.find((role) => role.id == admin.roleId)
+                                      .name
                                   : ""
                               }}
                             </option>
@@ -347,11 +154,9 @@
                               {{ role.name }}
                             </option>
                           </select>
-                          <span
-                            style="color: red"
-                            v-if="state.showErrorMessages"
-                            >{{ state.validationErrors.role }}</span
-                          >
+                          <span style="color: red" v-if="state.showErrorMessages">{{
+                            state.validationErrors.role
+                          }}</span>
                         </div>
                       </div>
                       <div class="flex">
@@ -364,28 +169,7 @@
                           >
 
                           <select
-                            class="
-                              form-control
-                              block
-                              w-full
-                              px-3
-                              ml-4
-                              py-1
-                              h-12
-                              text-base
-                              font-normal
-                              text-gray-700
-                              bg-white bg-clip-padding
-                              border border-solid border-gray-300
-                              rounded
-                              transition
-                              ease-in-out
-                              mt-0
-                              focus:text-gray-700
-                              focus:bg-white
-                              focus:border-blue-600
-                              focus:outline-none
-                            "
+                            class="form-control block w-full px-3 ml-4 py-1 h-12 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out mt-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                             v-model="admin.expertLevel"
                             @change="selectedExpertLevel()"
                             :disabled="!isUserManager"
@@ -398,40 +182,15 @@
                               {{ expertLevel.name }}
                             </option>
                           </select>
-                          <span
-                            style="color: red"
-                            v-if="state.showErrorMessages"
-                            >{{ state.validationErrors.expertLevel }}</span
-                          >
+                          <span style="color: red" v-if="state.showErrorMessages">{{
+                            state.validationErrors.expertLevel
+                          }}</span>
                         </div>
                         <span v-show="showRegion == 4">
-                          <label class="text-primary-600 font-bold ml-4"
-                            >Region</label
-                          >
+                          <label class="text-primary-600 font-bold ml-4">Region</label>
                           <div>
                             <select
-                              class="
-                                form-control
-                                block
-                                w-full
-                                px-3
-                                ml-4
-                                py-1
-                                h-12
-                                text-base
-                                font-normal
-                                text-gray-700
-                                bg-white bg-clip-padding
-                                border border-solid border-gray-300
-                                rounded
-                                transition
-                                ease-in-out
-                                mt-0
-                                focus:text-gray-700
-                                focus:bg-white
-                                focus:border-blue-600
-                                focus:outline-none
-                              "
+                              class="form-control block w-full px-3 ml-4 py-1 h-12 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out mt-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                               v-model="admin.region"
                               @change="selectedRegion()"
                               :disabled="!isUserManager"
@@ -445,43 +204,20 @@
                               </option>
                             </select>
                           </div>
-                          <span
-                            style="color: red"
-                            v-if="state.showErrorMessages"
-                            >{{ state.validationErrors.region }}</span
-                          >
+                          <span style="color: red" v-if="state.showErrorMessages">{{
+                            state.validationErrors.region
+                          }}</span>
                         </span>
                         <span
                           v-show="
-                            showRegion == 4 &&
-                              admin.region &&
-                              admin.region.code == 'AMH'
+                            showRegion == 4 && admin.region && admin.region.code == 'AMH'
                           "
                           class="mr-2 ml-2"
                         >
                           <label class="ml-2">Zone</label>
                           <div>
                             <select
-                              class="
-                                form-control
-                                block
-                                w-full
-                                h-12
-                                text-base
-                                font-normal
-                                text-gray-700
-                                bg-white bg-clip-padding
-                                border border-solid border-gray-300
-                                rounded
-                                transition
-                                ease-in-out
-                                ml-4
-                                mt-0
-                                focus:text-gray-700
-                                focus:bg-white
-                                focus:border-blue-600
-                                focus:outline-none
-                              "
+                              class="form-control block w-full h-12 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out ml-4 mt-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                               v-model="admin.zoneId"
                             >
                               <option
@@ -501,28 +237,9 @@
                         </span>
                       </div>
 
-                      <div
-                        class="flex justify-center ml-4"
-                        v-if="isUserManager"
-                      >
+                      <div class="flex justify-center ml-4" v-if="isUserManager">
                         <button
-                          class="
-                            inline-block
-                            px-6
-                            text-white
-                            bg-primary-700
-                            font-medium
-                            text-xs
-                            leading-tight
-                            uppercase
-                            border
-                            rounded
-                            shadow-lg
-                            hover:bg-white hover:text-primary-600
-                            transition
-                            duration-150
-                            ease-in-out
-                          "
+                          class="inline-block px-6 text-white bg-primary-700 font-medium text-xs leading-tight uppercase border rounded hover:bg-white hover:text-primary-600 transition duration-150 ease-in-out"
                           @click="saveAdmin()"
                         >
                           Save
@@ -537,34 +254,11 @@
         </div>
 
         <div
-          class="
-            modal-footer
-            flex flex-shrink-0 flex-wrap
-            items-center
-            justify-end
-            border-t border-grey-100
-            rounded-b-md
-          "
+          class="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end border-t border-grey-100 rounded-b-md"
         >
           <button
             type="button"
-            class="
-              inline-block
-              px-6
-              text-white
-              bg-primary-700
-              font-medium
-              text-xs
-              leading-tight
-              uppercase
-              border
-              rounded
-              shadow-lg
-              hover:bg-white hover:text-primary-600
-              transition
-              duration-150
-              ease-in-out
-            "
+            class="inline-block px-6 text-white bg-primary-700 font-medium text-xs leading-tight uppercase border rounded hover:bg-white hover:text-primary-600 transition duration-150 ease-in-out"
             data-bs-dismiss="modal"
           >
             Close
@@ -576,7 +270,7 @@
 </template>
 <script>
 import { useStore } from "vuex";
-import { ref, onMounted, computed, watch } from "vue";
+import { ref, onMounted, watch } from "vue";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 import { useToast } from "vue-toastification";
@@ -590,11 +284,9 @@ export default {
     const store = useStore();
     let isLoading = ref(false);
     const toast = useToast();
-    const adminExpertId = JSON.parse(localStorage.getItem("allAdminData"))
-      .expertLevelId;
+    const adminExpertId = JSON.parse(localStorage.getItem("allAdminData")).expertLevelId;
     const isUserManager =
-      localStorage.getItem("role") == "UM" ||
-      localStorage.getItem("role") == "SA";
+      localStorage.getItem("role") == "UM" || localStorage.getItem("role") == "SA";
     const adminRole = JSON.parse(localStorage.getItem("allAdminData")).role;
     let errorMessage = ref("");
     let admin = ref({
@@ -669,11 +361,9 @@ export default {
     const selectedRegion = () => {
       admin.value.zoneId = null;
       if (admin.value.region.code == "AMH") {
-        store
-          .dispatch("renewal/getZones", admin.value.region.id)
-          .then((res) => {
-            zones.value = res.data.data;
-          });
+        store.dispatch("renewal/getZones", admin.value.region.id).then((res) => {
+          zones.value = res.data.data;
+        });
       }
     };
 
@@ -730,8 +420,6 @@ export default {
                 icon: true,
               });
               isLoading.value = false;
-
-             
             }
           })
           .catch(() => {
@@ -743,8 +431,6 @@ export default {
               pauseOnHover: true,
               icon: true,
             });
-
-             
           });
       }
     };
@@ -752,19 +438,13 @@ export default {
     const validateForm = (formData) => {
       const errors = {};
       if (!formData.email) errors.email = "Email is Required";
-      if (!formData.phoneNumber)
-        errors.phoneNumber = "Phone Number is Required";
+      if (!formData.phoneNumber) errors.phoneNumber = "Phone Number is Required";
       if (formData.email && !isValidEmail(formData.email)) {
         errors.email = "Invalid Email";
       }
 
-      if (!formData.expertLevel.id)
-        errors.expertLevel = "Expert Level is required";
-      if (
-        formData.region &&
-        !formData.region.id &&
-        formData.expertLevel.id == 4
-      )
+      if (!formData.expertLevel.id) errors.expertLevel = "Expert Level is required";
+      if (formData.region && !formData.region.id && formData.expertLevel.id == 4)
         errors.region = "Region is required";
       if (
         (formData.region &&
@@ -785,11 +465,7 @@ export default {
         errors.grandfatherName = "Grandfather name is Required";
       if (!formData.roleId) errors.role = "Role is Required";
 
-      if (
-        errors &&
-        Object.keys(errors).length === 0 &&
-        errors.constructor === Object
-      ) {
+      if (errors && Object.keys(errors).length === 0 && errors.constructor === Object) {
         return null;
       } else {
         isLoading.value = false;
@@ -803,9 +479,7 @@ export default {
     };
     watch(props.modalData, () => {
       admin.value.id =
-        props.modalData.data && props.modalData.data
-          ? props.modalData.data.id
-          : "";
+        props.modalData.data && props.modalData.data ? props.modalData.data.id : "";
       admin.value.firstName = props.modalData.data
         ? props.modalData.data.name.split(" ")[0]
         : "";
@@ -815,27 +489,19 @@ export default {
       admin.value.grandfatherName = props.modalData.data
         ? props.modalData.data.name.split(" ")[2]
         : "";
-      admin.value.email = props.modalData.data
-        ? props.modalData.data.email
-        : "";
+      admin.value.email = props.modalData.data ? props.modalData.data.email : "";
       admin.value.phoneNumber = props.modalData.data
         ? props.modalData.data.phoneNumber
         : "";
       admin.value.roleId =
-        props.modalData.data && props.modalData.data
-          ? props.modalData.data.roleId
-          : "";
+        props.modalData.data && props.modalData.data ? props.modalData.data.roleId : "";
       admin.value.expertLevel = props.modalData.data
         ? props.modalData.data.expertLevel
         : "";
       admin.value.region =
-        props.modalData.data && props.modalData.data
-          ? props.modalData.data.region
-          : "";
+        props.modalData.data && props.modalData.data ? props.modalData.data.region : "";
       admin.value.zoneId =
-        props.modalData.data && props.modalData.data
-          ? props.modalData.data.zoneId
-          : "";
+        props.modalData.data && props.modalData.data ? props.modalData.data.zoneId : "";
       showRegion.value =
         props.modalData.data && props.modalData.data
           ? props.modalData.data.expertLevelId
@@ -874,8 +540,4 @@ export default {
   },
 };
 </script>
-<style scoped>
-.shadow-md {
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 34%), 0 2px 4px -1px rgb(0 0 0 / 6%);
-}
-</style>
+<style scoped></style>

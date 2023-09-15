@@ -57,7 +57,7 @@
                 right-0
                 w-64
                 rounded-md
-                shadow-lg
+                 
                 bg-white
                 focus:outline-none
               "
@@ -131,7 +131,7 @@
                 mt-1
                 w-56
                 rounded-md
-                shadow-lg
+                 
                 bg-white
                 focus:outline-none
               "

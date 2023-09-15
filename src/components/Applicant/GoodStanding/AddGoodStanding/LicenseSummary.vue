@@ -29,7 +29,7 @@
           mb-12
           bg-white
           mt-8
-          shadow-lg
+           
           rounded-lg
           transform
           transition
@@ -196,7 +196,7 @@
           transition
           duration-300
           ease-in-out
-          shadow-lg
+           
           hover:-translate-y-2
         "
       >
@@ -344,7 +344,7 @@
           hover:-translate-y-2
         "
       >
-        <div class="bg-white shadow-lg rounded-lg p-2 mb-8">
+        <div class="bg-white   rounded-lg p-2 mb-8">
           <div class="text-gray-900 mb-4 flex justify-center">
             <i class="fa fa-folder fa-3x text-main-400"></i>
           </div>
@@ -387,7 +387,7 @@
             "
           >
             <div
-              class="mt-4 mb-8 bg-white shadow-lg rounded-md p-4"
+              class="mt-4 mb-8 bg-white   rounded-md p-4"
               v-for="localFile in localFileData"
               :key="localFile.documenttype"
             >
@@ -436,7 +436,7 @@
           text-main-400
           transform
           rounded-lg
-          shadow-lg
+           
           mt-4
           transition
           duration-300
@@ -543,8 +543,8 @@
             type="button"
             :class="
               allowSave
-                ? 'inline-block px-6 border text-main-400 hover:bg-main-400 hober:border-main-400 hover:text-white  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded shadow-lg transition  duration-150 ease-in-out'
-                : 'inline-block px-6 disabled text-main-400  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded shadow-lg transition  duration-150 ease-in-out'
+                ? 'inline-block px-6 border text-main-400 hover:bg-main-400 hober:border-main-400 hover:text-white  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded   transition  duration-150 ease-in-out'
+                : 'inline-block px-6 disabled text-main-400  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded   transition  duration-150 ease-in-out'
             "
             @click="checkFinalStatus(button.action)"
           >
@@ -569,7 +569,7 @@
             leading-tight
             uppercase
             rounded
-            shadow-lg
+             
             transition
             duration-150
             ease-in-out
@@ -593,7 +593,7 @@
           leading-tight
           uppercase
           rounded
-          shadow-lg
+           
           transition
           duration-150
           ease-in-out

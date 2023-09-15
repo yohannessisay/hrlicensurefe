@@ -173,20 +173,20 @@
 
     <div class="flex justify-end mr-8">
       <button
-        class="mt-8 inline-block px-6 py-2.5 bg-white hover:bg-main-400 hover:text-white text-main-400 text-xs font-bold leading-tight uppercase rounded shadow-md active:border-main-400 transition duration-150 ease-in-out border"
+        class="mt-8 inline-block px-6 py-2.5 bg-white hover:bg-main-400 hover:text-white text-main-400 text-xs font-bold leading-tight uppercase rounded   active:border-main-400 transition duration-150 ease-in-out border"
         type="submit"
         @click="saveDraft()"
       >
         Update
       </button>
       <button
-        class="mt-8 inline-block px-6 py-2.5 bg-white hover:bg-main-400 hover:text-white text-main-400 text-xs font-bold leading-tight uppercase rounded shadow-md active:border-main-400 transition duration-150 ease-in-out border"
+        class="mt-8 inline-block px-6 py-2.5 bg-white hover:bg-main-400 hover:text-white text-main-400 text-xs font-bold leading-tight uppercase rounded   active:border-main-400 transition duration-150 ease-in-out border"
         @click="back()"
       >
         back
       </button>
       <button
-        class="mt-8 inline-block px-6 py-2.5 bg-main-400 hover:text-main-400 text-white text-xs font-bold leading-tight uppercase rounded shadow-md active:border-main-400 transition duration-150 ease-in-out"
+        class="mt-8 inline-block px-6 py-2.5 bg-main-400 hover:text-main-400 text-white text-xs font-bold leading-tight uppercase rounded   active:border-main-400 transition duration-150 ease-in-out"
         @click="next()"
       >
         next
@@ -704,7 +704,7 @@ export default {
   border-radius: 5%;
   padding: 7px;
 }
-.shadow-lg {
+.  {
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 34%), 0 2px 4px -1px rgb(0 0 0 / 6%);
 }
 .document-name {

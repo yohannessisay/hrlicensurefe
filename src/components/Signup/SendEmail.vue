@@ -40,7 +40,7 @@
         w-1/2
         bg-lightBlue-500
         hover:bg-lightBlue-600
-        hover:shadow-lg
+        hover: 
       "
       v-on:click="sendEmails()"
     >

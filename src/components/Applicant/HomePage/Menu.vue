@@ -4,7 +4,7 @@
     <div class="content" id="mainContent">
       <top-nav :userInfo="userInfo"></top-nav>
       <div class="mt-8 ml-8 mr-8">
-        <nav class="bg-grey-100 p-4 rounded-md w-full shadow-md mt-24">
+        <nav class="bg-grey-100 p-4 rounded-md w-full   mt-24">
           <ol class="list-reset flex">
             <li>
               <a href="#" class="text-main-400 text-xl hover:text-main-100"
@@ -26,7 +26,7 @@
                 class="
                   bg-main-400
                   hover:bg-white
-                  shadow-md
+                   
                   box
                   w-full
                   rounded-lg
@@ -69,7 +69,7 @@
               <div
                 class="
                   bg-main-400
-                  shadow-md
+                   
                   box
                   rounded-2xl
                   hover:shadow-4xl
@@ -111,7 +111,7 @@
               <div
                 class="
                   bg-white
-                  shadow-md
+                   
                   box
                   rounded-2xl
                   hover:shadow-4xl
@@ -179,8 +179,8 @@
       <div
         :class="
           isDarkMode
-            ? 'modal-content border-none shadow-md relative flex flex-col w-full pointer-events-auto bg-secondaryDark bg-clip-padding rounded-md outline-none text-current'
-            : 'modal-content border-none shadow-md relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current'
+            ? 'modal-content border-none   relative flex flex-col w-full pointer-events-auto bg-secondaryDark bg-clip-padding rounded-md outline-none text-current'
+            : 'modal-content border-none   relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current'
         "
       >
         <div
@@ -222,7 +222,7 @@
               leading-tight
               uppercase
               rounded
-              shadow-md
+               
               hover:bg-white hover:text-main-400
               transition
               duration-150
@@ -254,8 +254,8 @@
                   <div
                     :class="
                       isDarkMode
-                        ? 'pricing-plan border-t-4 border  bg-secondaryDark rounded-lg shadow-md text-center max-w-full mx-auto   transition-colors duration-300'
-                        : 'pricing-plan border-t-2  border border-grey-200 bg-white rounded-lg shadow-md  text-center max-w-full mx-auto  transition-colors duration-300'
+                        ? 'pricing-plan border-t-4 border  bg-secondaryDark rounded-lg   text-center max-w-full mx-auto   transition-colors duration-300'
+                        : 'pricing-plan border-t-2  border border-grey-200 bg-white rounded-lg    text-center max-w-full mx-auto  transition-colors duration-300'
                     "
                   >
                     <div class="p-2 md:py-4">
@@ -538,8 +538,8 @@
                   <div
                     :class="
                       isDarkMode
-                        ? 'pricing-plan border-t-4 border  bg-secondaryDark rounded-lg shadow-md text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
-                        : 'pricing-plan border-t-2  border border-grey-200 bg-white rounded-lg shadow-md text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
+                        ? 'pricing-plan border-t-4 border  bg-secondaryDark rounded-lg   text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
+                        : 'pricing-plan border-t-2  border border-grey-200 bg-white rounded-lg   text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
                     "
                   >
                     <div class="p-2 md:py-4">
@@ -748,8 +748,8 @@
                   <div
                     :class="
                       isDarkMode
-                        ? 'pricing-plan border-t-4 border  bg-secondaryDark rounded-lg shadow-md text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
-                        : 'pricing-plan border-t-2  border border-grey-200 bg-white rounded-lg shadow-md text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
+                        ? 'pricing-plan border-t-4 border  bg-secondaryDark rounded-lg   text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
+                        : 'pricing-plan border-t-2  border border-grey-200 bg-white rounded-lg   text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
                     "
                   >
                     <div class="p-2 md:py-4">
@@ -967,8 +967,8 @@
       <div
         :class="
           isDarkMode
-            ? 'modal-content border-none shadow-md relative flex flex-col w-full pointer-events-auto bg-secondaryDark bg-clip-padding rounded-md outline-none text-current'
-            : 'modal-content border-none shadow-md relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current'
+            ? 'modal-content border-none   relative flex flex-col w-full pointer-events-auto bg-secondaryDark bg-clip-padding rounded-md outline-none text-current'
+            : 'modal-content border-none   relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current'
         "
       >
         <div
@@ -1011,7 +1011,7 @@
               leading-tight
               uppercase
               rounded
-              shadow-md
+               
               hover:bg-white hover:text-main-400
               transition
               duration-150
@@ -1044,8 +1044,8 @@
                   <div
                     :class="
                       isDarkMode
-                        ? 'pricing-plan border-t-4 border  bg-secondaryDark rounded-lg shadow-md text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
-                        : 'pricing-plan border-t-2  border border-grey-200 bg-white rounded-lg shadow-md text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
+                        ? 'pricing-plan border-t-4 border  bg-secondaryDark rounded-lg   text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
+                        : 'pricing-plan border-t-2  border border-grey-200 bg-white rounded-lg   text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
                     "
                   >
                     <div class="p-2 md:py-4">
@@ -1199,8 +1199,8 @@
                   <div
                     :class="
                       isDarkMode
-                        ? 'pricing-plan border-t-4 border  bg-secondaryDark rounded-lg shadow-md text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
-                        : 'pricing-plan border-t-2  border border-grey-200 bg-white rounded-lg shadow-md text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
+                        ? 'pricing-plan border-t-4 border  bg-secondaryDark rounded-lg   text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
+                        : 'pricing-plan border-t-2  border border-grey-200 bg-white rounded-lg   text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
                     "
                   >
                     <div class="p-2 md:py-4">
@@ -1335,8 +1335,8 @@
                   <div
                     :class="
                       isDarkMode
-                        ? 'pricing-plan border-t-4 border  bg-secondaryDark rounded-lg shadow-md text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
-                        : 'pricing-plan border-t-2  border border-grey-200 bg-white rounded-lg shadow-md text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
+                        ? 'pricing-plan border-t-4 border  bg-secondaryDark rounded-lg   text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
+                        : 'pricing-plan border-t-2  border border-grey-200 bg-white rounded-lg   text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
                     "
                   >
                     <div class="p-2 md:py-4">
@@ -1498,8 +1498,8 @@
       <div
         :class="
           isDarkMode
-            ? 'modal-content border-none shadow-md relative flex flex-col w-full pointer-events-auto bg-secondaryDark bg-clip-padding rounded-md outline-none text-current'
-            : 'modal-content border-none shadow-md relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current'
+            ? 'modal-content border-none   relative flex flex-col w-full pointer-events-auto bg-secondaryDark bg-clip-padding rounded-md outline-none text-current'
+            : 'modal-content border-none   relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current'
         "
       >
         <div
@@ -1529,7 +1529,7 @@
               leading-tight
               uppercase
               rounded
-              shadow-md
+               
               hover:bg-white hover:text-main-400
               transition
               duration-150
@@ -1574,8 +1574,8 @@
                   <div
                     :class="
                       isDarkMode
-                        ? 'pricing-plan border-t-4 border  bg-secondaryDark rounded-lg shadow-md text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
-                        : 'pricing-plan border-t-2  border border-grey-200 bg-white rounded-lg shadow-md text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
+                        ? 'pricing-plan border-t-4 border  bg-secondaryDark rounded-lg   text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
+                        : 'pricing-plan border-t-2  border border-grey-200 bg-white rounded-lg   text-center max-w-full mx-auto hover:border-indigo-600 transition-colors duration-300'
                     "
                   >
                     <div class="p-6 md:py-8">

@@ -290,7 +290,7 @@
               class="flex mb-medium w-full mt-medium"
             >
               <button
-                class="block mx-auto w-1/4  bg-lightBlue-500 hover:bg-lightBlue-600 hover:shadow-lg"
+                class="block mx-auto w-1/4  bg-lightBlue-500 hover:bg-lightBlue-600 hover: "
               >
                 Update Profile
               </button>

@@ -22,13 +22,13 @@
       <div class="flex flex-row">
         <div
           v-if="showNotif == true"
-          class="absolute right-0 h-64 p-4 mt-10 overflow-y-scroll origin-top-right bg-white rounded-md shadow-lg sm:w-40 lg:w-64 focus:outline-none"
+          class="absolute right-0 h-64 p-4 mt-10 overflow-y-scroll origin-top-right bg-white rounded-md   sm:w-40 lg:w-64 focus:outline-none"
           role="menu"
           aria-orientation="vertical"
           aria-labelledby="options-menu"
         >
           <button
-            class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out border rounded shadow-md bg-primary-700 hover:bg-white hover:text-primary-600"
+            class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out border rounded   bg-primary-700 hover:bg-white hover:text-primary-600"
             @click="readAll()"
             >
             <i class="mr-1 text-xl fa fa-close"></i>
@@ -72,7 +72,7 @@
           </a>
           <div
             v-if="showDD == true"
-            class="absolute right-0 w-56 mt-2 text-white origin-top-right rounded-md shadow-lg bg-primary-600 focus:outline-none"
+            class="absolute right-0 w-56 mt-2 text-white origin-top-right rounded-md   bg-primary-600 focus:outline-none"
             role="menu"
             aria-orientation="vertical"
             aria-labelledby="options-menu"

@@ -120,7 +120,7 @@
               text-xs
               uppercase
               rounded
-              shadow-md
+               
               hover:bg-white hover:text-primary-600
               transition
               duration-150

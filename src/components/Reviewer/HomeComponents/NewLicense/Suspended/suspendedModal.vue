@@ -32,7 +32,7 @@
         class="
           modal-content
           border-none
-          shadow-lg
+           
           relative
           flex flex-col
           w-full
@@ -59,13 +59,13 @@
               uppercase
               rounded
               hover:border-primary-600
-              shadow-lg
-              hover:bg-purple-700 hover:shadow-lg
+               
+              hover:bg-purple-700 hover: 
               focus:bg-purple-700
-              focus:shadow-lg
+              focus: 
               focus:outline-none
               focus:ring-0
-              active:bg-purple-800 active:shadow-lg
+              active:bg-purple-800 active: 
               transition
               duration-150
               ease-in-out
@@ -119,7 +119,7 @@
                                 p-4
                                 bg-blue-600
                                 rounded-md
-                                shadow-lg
+                                 
                                 w-48
                                 h-48
                                 flex
@@ -220,7 +220,7 @@
                                 p-4
                                 bg-blue-600
                                 rounded-md
-                                shadow-lg
+                                 
                                 w-48
                                 h-48
                                 flex
@@ -283,7 +283,7 @@
                                 p-4
                                 bg-blue-600
                                 rounded-md
-                                shadow-lg
+                                 
                                 w-48
                                 h-48
                                 flex
@@ -334,7 +334,7 @@
                                 p-4
                                 bg-blue-600
                                 rounded-md
-                                shadow-lg
+                                 
                                 w-48
                                 h-48
                                 flex
@@ -360,7 +360,7 @@
                                 leading-tight
                                 uppercase
                                 rounded
-                                shadow-lg
+                                 
                                 hover:bg-white hover:text-primary-700
                                 transition
                                 duration-150
@@ -383,7 +383,7 @@
                                 leading-tight
                                 uppercase
                                 rounded
-                                shadow-lg
+                                 
                                 hover:bg-white hover:text-yellow-300
                                 transition
                                 duration-150
@@ -401,7 +401,7 @@
 
                       <div
                         class="
-                        shadow-lg
+                         
                           grow-0
                           shrink-0
                           basis-auto
@@ -420,7 +420,7 @@
                                 p-4
                                 bg-blue-600
                                 rounded-md
-                                shadow-lg
+                                 
                                 w-48
                                 h-48
                                 flex
@@ -440,7 +440,7 @@
                                   p-2
                                   rounded-lg
                                   w-full
-                                  shadow-md
+                                   
                                   text-primary-500
                                 "
                                 v-for="education in modalData.data
@@ -500,7 +500,7 @@
                     </div>
 
                     <div class="collapse mt-12" id="collapseExample">
-                      <div class="block p-6 rounded-lg shadow-lg bg-white">
+                      <div class="block p-6 rounded-lg   bg-white">
                         <div class="flex justify-content-evenly align-center">
                           <h1>Attached Documents</h1>
                         </div>
@@ -572,7 +572,7 @@
               leading-tight
               uppercase
               rounded
-              shadow-lg
+               
               hover:bg-white hover:text-primary-600
               transition
               duration-150
@@ -599,7 +599,7 @@
               leading-tight
               uppercase
               rounded
-              shadow-lg
+               
               hover:bg-white hover:text-primary-700
               transition
               duration-150
@@ -647,7 +647,7 @@
         class="
           modal-content
           border-none
-          shadow-lg
+           
           relative
           flex flex-col
           w-full
@@ -790,14 +790,14 @@
               leading-tight
               uppercase
               rounded
-              shadow-lg
+               
               bg-yellow-300
-              hover:bg-white hover:text-yellow-300 hover:shadow-lg
+              hover:bg-white hover:text-yellow-300 hover: 
               focus:bg-purple-700
-              focus:shadow-lg
+              focus: 
               focus:outline-none
               focus:ring-0
-              active:bg-purple-800 active:shadow-lg
+              active:bg-purple-800 active: 
               transition
               duration-150
               ease-in-out
@@ -819,7 +819,7 @@
               leading-tight
               uppercase
               rounded
-              shadow-lg
+               
               hover:bg-white hover:text-primary-700
               transition
               duration-150
@@ -1056,8 +1056,4 @@ export default {
   },
 };
 </script>
-<style scoped>
-.shadow-lg {
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 34%), 0 2px 4px -1px rgb(0 0 0 / 6%);
-}
-</style>
+ 

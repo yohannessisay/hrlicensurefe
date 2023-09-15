@@ -1,8 +1,4 @@
-<style scoped>
-.shadow-lg {
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 34%), 0 2px 4px -1px rgb(0 0 0 / 6%);
-}
-</style>
+ 
 
 <template>
   <!-- Sidebar -->
@@ -33,7 +29,7 @@
                 (newLicense.applicationStatus.code == 'IRV' ||
                   newLicense.applicationStatus.code == 'REVDRA')
             "
-            class="w-full rounded-lg shadow-md bg-primary-800"
+            class="w-full rounded-lg   bg-primary-800"
           >
             <h2 class="ml-4 text-xl text-white">
               Evaluating
@@ -49,7 +45,7 @@
               <div class="box-shadow-pop bg-lightGrey-100">
                 <div class="flex justify-content-evenly">
                   <div
-                    class="container w-64 h-40 p-4 mt-8 ml-8 rounded-lg shadow-lg box-shadow-pop"
+                    class="container w-64 h-40 p-4 mt-8 ml-8 rounded-lg   box-shadow-pop"
                   >
                     <!-- Accepted Documents -->
                     <div class="mt-8">
@@ -65,7 +61,7 @@
                     <!-- Accepted Documents -->
                     <!-- Applicant profile area -->
                     <div
-                      class="container my-2 mt-8 overflow-hidden bg-white rounded-lg shadow-lg"
+                      class="container my-2 mt-8 overflow-hidden bg-white rounded-lg  "
                     >
                       <div
                         class="relative z-10 h-auto"
@@ -156,7 +152,7 @@
                   </div>
                   <div class="flex flex-wrap justify-start p-4 mt-4">
                     <div
-                      class="p-4 mb-8 shadow-lg box-shadow-pop bg-lightGrey-100"
+                      class="p-4 mb-8   box-shadow-pop bg-lightGrey-100"
                     >
                       <div class="flex justify-center">
                         <h1 class="text-primary-600">Evaluation</h1>
@@ -200,10 +196,10 @@
                           >
                             <div class="flex flex-wrap md:-mx-4 lg:-mx-8">
                               <!-- Personal Info card -->
-                              <div class="w-full mx-4 my-1 mb-4 shadow-xl">
+                              <div class="w-full mx-4 my-1 mb-4  ">
                                 <!-- Article -->
                                 <article
-                                  class="overflow-hidden rounded-lg shadow-lg"
+                                  class="overflow-hidden rounded-lg  "
                                 >
                                   <header
                                     class="flex items-center justify-between p-2 leading-tight md:p-4"
@@ -293,7 +289,7 @@
                                       ></loading>
                                       <button
                                         v-if="editPersonalData"
-                                        class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded shadow-lg bg-primary-600 hover:text-primary-600 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg"
+                                        class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded   bg-primary-600 hover:text-primary-600 hover:  focus:bg-purple-700 focus:  focus:outline-none focus:ring-0 active:bg-purple-800 active: "
                                         @click="changeAmharicName"
                                       >
                                         Save
@@ -370,7 +366,7 @@
                               >
                                 <!-- Article -->
                                 <article
-                                  class="overflow-hidden rounded-lg shadow-lg"
+                                  class="overflow-hidden rounded-lg  "
                                 >
                                   <header
                                     class="flex items-center justify-between p-2 leading-tight md:p-4"
@@ -416,7 +412,7 @@
                               <div class="w-full mx-4 my-1 mb-4">
                                 <!-- Article -->
                                 <article
-                                  class="overflow-hidden rounded-lg shadow-lg"
+                                  class="overflow-hidden rounded-lg  "
                                 >
                                   <header
                                     class="flex items-center justify-between p-2 leading-tight border-b-2 text-grey-300 md:p-4"
@@ -661,7 +657,7 @@
                                           class="text-base font-bold text-black"
                                         >
                                           <button
-                                            class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded shadow-lg bg-primary-600 hover:text-primary-600 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg"
+                                            class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded   bg-primary-600 hover:text-primary-600 hover:  focus:bg-purple-700 focus:  focus:outline-none focus:ring-0 active:bg-purple-800 active: "
                                             @click="
                                               showPrefix(education.departmentId)
                                             "
@@ -707,7 +703,7 @@
                               <div class="w-full mx-4 my-1">
                                 <!-- Article -->
                                 <article
-                                  class="overflow-hidden rounded-lg shadow-lg"
+                                  class="overflow-hidden rounded-lg  "
                                 >
                                   <header
                                     class="flex items-center justify-between p-2 leading-tight md:p-4"
@@ -774,7 +770,7 @@
                                   </div>
                                   <br />
                                   <button
-                                    class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded shadow-lg bg-primary-400 hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg hover:bg-white hover:text-primary-600"
+                                    class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded   bg-primary-400 hover:bg-purple-700 hover:  focus:bg-purple-700 focus:  focus:outline-none focus:ring-0 active:bg-purple-800 active:  hover:bg-white hover:text-primary-600"
                                     @click="
                                       openPdfInNewTab(
                                         docs[index] ? docs[index].filePath : ''
@@ -826,19 +822,19 @@
                         <!-- Action buttons -->
                         <div class="mt-medium" v-if="!showButtons">
                           <button
-                            class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded shadow-lg bg-primary-600 hover:text-primary-600 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg"
+                            class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded   bg-primary-600 hover:text-primary-600 hover:  focus:bg-purple-700 focus:  focus:outline-none focus:ring-0 active:bg-purple-800 active: "
                             @click="accept(docs[index])"
                           >
                             Accept
                           </button>
                           <button
-                            class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out bg-red-300 rounded shadow-lg hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-white active:shadow-lg hover:bg-white hover:text-primary-600"
+                            class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out bg-red-300 rounded   hover:bg-purple-700 hover:  focus:bg-purple-700 focus:  focus:outline-none focus:ring-0 active:bg-white active:  hover:bg-white hover:text-primary-600"
                             @click="reject(docs[index])"
                           >
                             Reject
                           </button>
                           <button
-                            class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out bg-yellow-300 rounded shadow-lg hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg hover:bg-white hover:text-primary-600"
+                            class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out bg-yellow-300 rounded   hover:bg-purple-700 hover:  focus:bg-purple-700 focus:  focus:outline-none focus:ring-0 active:bg-purple-800 active:  hover:bg-white hover:text-primary-600"
                             @click="action('ReviewerDraftEvent')"
                           >
                             Save as Draft
@@ -846,7 +842,7 @@
 
                           <button
                             v-if="showTransferToFederal == true"
-                            class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded shadow-lg bg-primary-600 hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg hover:bg-primary-400 hover:text-white"
+                            class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded   bg-primary-600 hover:bg-purple-700 hover:  focus:bg-purple-700 focus:  focus:outline-none focus:ring-0 active:bg-purple-800 active:  hover:bg-primary-400 hover:text-white"
                             @click="transferToFederal()"
                           >
                             Transfer to Federal
@@ -869,7 +865,7 @@
                   </div>
                   <!-- rejected counter -->
                   <div
-                    class="container w-64 h-40 p-4 mt-8 mr-8 rounded-lg shadow-lg box-shadow-pop"
+                    class="container w-64 h-40 p-4 mt-8 mr-8 rounded-lg   box-shadow-pop"
                   >
                     <div class="mt-8">
                       <div class="flex items-center justify-center my-auto">
@@ -905,8 +901,8 @@
                         v-if="button.code == 'DEC'"
                         :class="
                           declineButtonStatus
-                            ? 'inline-block px-6 text-white bg-primary-600 font-medium text-xs leading-tight uppercase rounded shadow-lg hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 hover:bg-primary-400 hover:text-white ease-in-out'
-                            : 'inline-block px-6 text-white bg-grey-300 font-medium text-xs leading-tight uppercase rounded shadow-lg hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 hover:bg-primary-400 hover:text-white ease-in-out pointer-events-none'
+                            ? 'inline-block px-6 text-white bg-primary-600 font-medium text-xs leading-tight uppercase rounded   hover:bg-purple-700 hover:  focus:bg-purple-700 focus:  focus:outline-none focus:ring-0 active:bg-purple-800 active:  transition duration-150 hover:bg-primary-400 hover:text-white ease-in-out'
+                            : 'inline-block px-6 text-white bg-grey-300 font-medium text-xs leading-tight uppercase rounded   hover:bg-purple-700 hover:  focus:bg-purple-700 focus:  focus:outline-none focus:ring-0 active:bg-purple-800 active:  transition duration-150 hover:bg-primary-400 hover:text-white ease-in-out pointer-events-none'
                         "
                         @click="action(button.action)"
                       >
@@ -914,7 +910,7 @@
                       </button>
                       <button
                         v-else
-                        class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded shadow-lg bg-primary-600 hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg hover:bg-primary-400 hover:text-white"
+                        class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded   bg-primary-600 hover:bg-purple-700 hover:  focus:bg-purple-700 focus:  focus:outline-none focus:ring-0 active:bg-purple-800 active:  hover:bg-primary-400 hover:text-white"
                         :data-bs-toggle="button.code == 'US' ? 'modal' : ''"
                         :data-bs-target="
                           button.code == 'US' ? '#superviseModal' : ''
@@ -993,7 +989,7 @@
                                     "
                                   >
                                     <button
-                                      class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded shadow-lg bg-primary-400 hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg hover:bg-white hover:text-primary-600"
+                                      class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded   bg-primary-400 hover:bg-purple-700 hover:  focus:bg-purple-700 focus:  focus:outline-none focus:ring-0 active:bg-purple-800 active:  hover:bg-white hover:text-primary-600"
                                       @click="
                                         openPdfInNewTab(
                                           rejectedObj[ind]
@@ -1074,7 +1070,7 @@
                         class="flex items-center justify-center border-t border-solid rounded-b border-blueGray-200"
                       >
                         <button
-                          class="inline-block px-6 text-xs mt-4 font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded shadow-lg bg-primary-600 hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg hover:bg-primary-400 hover:text-white"
+                          class="inline-block px-6 text-xs mt-4 font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded   bg-primary-600 hover:bg-purple-700 hover:  focus:bg-purple-700 focus:  focus:outline-none focus:ring-0 active:bg-purple-800 active:  hover:bg-primary-400 hover:text-white"
                           type="button"
                           v-on:click="showRemark = false"
                         >
@@ -1084,8 +1080,8 @@
                           type="button"
                           :class="
                             remarkFilled == false
-                              ? 'inline-block px-6 text-white mt-4 bg-grey-300 font-medium text-xs leading-tight uppercase rounded shadow-lg hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 hover:bg-primary-400 hover:text-white ease-in-out pointer-events-none'
-                              : 'inline-block px-6 text-white mt-4 bg-primary-600 font-medium text-xs leading-tight uppercase rounded shadow-lg hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 hover:bg-primary-400 hover:text-white ease-in-out '
+                              ? 'inline-block px-6 text-white mt-4 bg-grey-300 font-medium text-xs leading-tight uppercase rounded   hover:bg-purple-700 hover:  focus:bg-purple-700 focus:  focus:outline-none focus:ring-0 active:bg-purple-800 active:  transition duration-150 hover:bg-primary-400 hover:text-white ease-in-out pointer-events-none'
+                              : 'inline-block px-6 text-white mt-4 bg-primary-600 font-medium text-xs leading-tight uppercase rounded   hover:bg-purple-700 hover:  focus:bg-purple-700 focus:  focus:outline-none focus:ring-0 active:bg-purple-800 active:  transition duration-150 hover:bg-primary-400 hover:text-white ease-in-out '
                           "
                           v-on:click="submitRemark()"
                         >
@@ -1121,7 +1117,7 @@
       class="relative w-auto pointer-events-none modal-dialog modal-dialog-centered"
     >
       <div
-        class="relative flex flex-col w-full text-current bg-white border-none rounded-md shadow-lg outline-none pointer-events-auto modal-content bg-clip-padding"
+        class="relative flex flex-col w-full text-current bg-white border-none rounded-md   outline-none pointer-events-auto modal-content bg-clip-padding"
       >
         <div class="vld-parent">
           <loading
@@ -1168,7 +1164,7 @@
                   <div></div>
                   <div
                     v-show="resultQuery().length && showOptions"
-                    class="w-full mt-2 ml-1 overflow-hidden overflow-y-scroll text-left bg-white border border-gray-300 rounded-lg shadow-lg max-height-12 dropdown-menu"
+                    class="w-full mt-2 ml-1 overflow-hidden overflow-y-scroll text-left bg-white border border-gray-300 rounded-lg   max-height-12 dropdown-menu"
                     style="height: 148px; border: none"
                   >
                     <ul class="py-1">
@@ -1217,13 +1213,13 @@
         >
           <button
             type="button"
-            class="inline-block px-6 py-2.5 bg-primary-700 text-white font-medium text-xs leading-tight uppercase rounded shadow-lg hover:bg-white hover:text-primary-600 transition duration-150 ease-in-out"
+            class="inline-block px-6 py-2.5 bg-primary-700 text-white font-medium text-xs leading-tight uppercase rounded   hover:bg-white hover:text-primary-600 transition duration-150 ease-in-out"
             data-bs-dismiss="modal"
           >
             Close
           </button>
           <button
-            class="inline-block px-6 py-2.5 bg-primary-700 text-white font-medium text-xs leading-tight uppercase rounded shadow-lg hover:bg-white hover:text-primary-600 transition duration-150 ease-in-out"
+            class="inline-block px-6 py-2.5 bg-primary-700 text-white font-medium text-xs leading-tight uppercase rounded   hover:bg-white hover:text-primary-600 transition duration-150 ease-in-out"
             @click="supervise()"
           >
             Save

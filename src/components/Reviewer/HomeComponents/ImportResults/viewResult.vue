@@ -25,7 +25,7 @@
         class="
           modal-content
           border-none
-          shadow-lg
+           
           relative
           flex flex-col
           w-full
@@ -59,13 +59,13 @@
               uppercase
               rounded
               hover:border-primary-600
-              shadow-lg
-              hover:bg-purple-700 hover:shadow-lg
+               
+              hover:bg-purple-700 hover: 
               focus:bg-purple-700
-              focus:shadow-lg
+              focus: 
               focus:outline-none
               focus:ring-0
-              active:bg-purple-800 active:shadow-lg
+              active:bg-purple-800 active: 
               transition
               duration-150
               ease-in-out"
@@ -91,7 +91,7 @@
                             max-w-full
                             rounded-lg
                             border border-gray-200
-                            shadow-md
+                             
                             bg-primary-600
                           "
                     >
@@ -185,7 +185,7 @@
                             max-w-full
                             rounded-lg
                             border border-gray-200
-                            shadow-md
+                             
                             dark:bg-gray-200 dark:border-gray-700
                             bg-primary-600
                           "
@@ -285,11 +285,11 @@
               leading-tight
               uppercase
               rounded
-              shadow-md
+               
            bg-primary-600
            hover:text-primary-600
            hover:border-primary-600
-              active:bg-purple-800 active:shadow-lg
+              active:bg-purple-800 active: 
               transition
               duration-150
               ease-in-out
@@ -310,11 +310,11 @@
               leading-tight
               uppercase
               rounded
-              shadow-md
+               
            bg-primary-600
            hover:text-primary-600
            hover:border-primary-600
-              active:bg-purple-800 active:shadow-lg
+              active:bg-purple-800 active: 
               transition
               duration-150
               ease-in-out
@@ -362,8 +362,4 @@ export default {
   },
 };
 </script>
-<style scoped>
-.shadow-md {
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 34%), 0 2px 4px -1px rgb(0 0 0 / 6%);
-}
-</style>
+ 

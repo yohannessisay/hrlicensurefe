@@ -27,7 +27,7 @@
             lg:w-1/4
             mdlg:w-1/4
             sm:w-full sm:mr-4
-            shadow-lg
+             
             rounded-lg
             transform
             transition
@@ -169,7 +169,7 @@
                   font-bold
                   uppercase
                   rounded
-                  shadow-lg
+                   
                   mb-4
                   transition
                   duration-150
@@ -201,7 +201,7 @@
         lg:w-1/4
         mdlg:w-1/4
         sm:w-full sm:mr-4
-        shadow-lg
+         
         rounded-lg
         transform
         transition

@@ -8,7 +8,7 @@
       justify-center
       tracking-wide
       relative
-      shadow-md"
+       "
   >
     <div class="border p-4 rounded-md">
       <h2 class="text-main-400 font-bold text-xl  tracking-wide">
@@ -51,7 +51,7 @@
               leading-tight
               uppercase
               rounded
-              shadow-md
+               
               transition
               duration-150
               ease-in-out
@@ -74,7 +74,7 @@
               leading-tight
               uppercase
               rounded
-              shadow-md
+               
               transition
               duration-150
               ease-in-out

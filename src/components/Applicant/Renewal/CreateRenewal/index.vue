@@ -72,14 +72,14 @@
     </div>
     <div class="flex justify-center m-4 ">
       <div
-        class="bg-white p-4 rounded-lg m-4 shadow-md  hover:-translate-y-2  transition-all
+        class="bg-white p-4 rounded-lg m-4    hover:-translate-y-2  transition-all
           duration-200   transform"
       >
         <button
           :class="
             previousLicense && previousLicense.length > 0
-              ? 'inline-block px-6 text-white bg-main-400 hover:text-main-400 hover:border text-sm font-bold uppercase rounded shadow-lg mb-4 transition duration-150 ease-in-out'
-              : 'inline-block px-6 text-white bg-grey-300 hover:text-main-400 hover:border text-sm font-bold uppercase rounded shadow-lg mb-4 transition duration-150 ease-in-out pointer-events-none'
+              ? 'inline-block px-6 text-white bg-main-400 hover:text-main-400 hover:border text-sm font-bold uppercase rounded   mb-4 transition duration-150 ease-in-out'
+              : 'inline-block px-6 text-white bg-grey-300 hover:text-main-400 hover:border text-sm font-bold uppercase rounded   mb-4 transition duration-150 ease-in-out pointer-events-none'
           "
           type="button"
           data-bs-toggle="collapse"
@@ -100,11 +100,11 @@
         </p>
       </div>
       <div
-        class="bg-white p-4 rounded-lg m-4 shadow-md  hover:-translate-y-2  transition-all
+        class="bg-white p-4 rounded-lg m-4    hover:-translate-y-2  transition-all
           duration-200   transform"
       >
         <button
-          class="inline-block px-6 text-white bg-main-400 hover:text-main-400 hover:border text-sm font-bold uppercase rounded shadow-lg mb-4 transition duration-150 ease-in-out"
+          class="inline-block px-6 text-white bg-main-400 hover:text-main-400 hover:border text-sm font-bold uppercase rounded   mb-4 transition duration-150 ease-in-out"
           type="button"
           @click="applyForNew()"
           title="Your License exists before this system and you want to renew it"
@@ -121,8 +121,8 @@
       <div
         :class="
           isDarkMode && isDarkMode == true
-            ? 'block rounded-lg darkModeSecondLayer p-6 dark:bg-neutral-700 dark:text-neutral-50 shadow-md'
-            : 'block rounded-lg bg-primary-200 p-6 dark:bg-neutral-700 dark:text-neutral-50 shadow-md'
+            ? 'block rounded-lg darkModeSecondLayer p-6 dark:bg-neutral-700 dark:text-neutral-50  '
+            : 'block rounded-lg bg-primary-200 p-6 dark:bg-neutral-700 dark:text-neutral-50  '
         "
       >
         <div
@@ -139,7 +139,7 @@
                     ? license.licenseExpirationDate.slice(0, 10)
                     : new Date().toISOString().slice(0, 10)
                 ) < 90
-                  ? 'bg-white border-4 text-red-300 my-1 px-1 md:w-1/4 lg:w-1/4 mdlg:w-1/4 sm:w-full sm:mr-3 shadow-lg rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2'
+                  ? 'bg-white border-4 text-red-300 my-1 px-1 md:w-1/4 lg:w-1/4 mdlg:w-1/4 sm:w-full sm:mr-3   rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2'
                   : expirationDatesHelper(
                       license.licenseExpirationDate
                         ? license.licenseExpirationDate.slice(0, 10)
@@ -150,8 +150,8 @@
                         ? license.licenseExpirationDate.slice(0, 10)
                         : new Date().toISOString().slice(0, 10)
                     ) < 90
-                  ? 'bg-white border-4 text-yellow-300 my-1 px-1 md:w-1/4 lg:w-1/4 mdlg:w-1/4 sm:w-full sm:mr-3 shadow-lg rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2'
-                  : 'bg-white my-1 px-1 md:w-1/4 lg:w-1/4 mdlg:w-1/4 sm:w-full sm:mr-3 shadow-lg rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2'
+                  ? 'bg-white border-4 text-yellow-300 my-1 px-1 md:w-1/4 lg:w-1/4 mdlg:w-1/4 sm:w-full sm:mr-3   rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2'
+                  : 'bg-white my-1 px-1 md:w-1/4 lg:w-1/4 mdlg:w-1/4 sm:w-full sm:mr-3   rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2'
               "
             >
               <!-- Article -->
@@ -251,8 +251,8 @@
                           ? license.licenseExpirationDate.slice(0, 10)
                           : new Date().toISOString().slice(0, 10)
                       ) < 90
-                        ? 'inline-block px-6 text-white bg-main-400 hover:text-main-400 hover:border text-sm font-bold uppercase rounded shadow-lg mb-4 transition duration-150 ease-in-out'
-                        : 'inline-block px-6 text-white bg-grey-400 hover:text-main-400 hover:border text-sm font-bold uppercase rounded shadow-lg mb-4 transition duration-150 ease-in-out pointer-events-none'
+                        ? 'inline-block px-6 text-white bg-main-400 hover:text-main-400 hover:border text-sm font-bold uppercase rounded   mb-4 transition duration-150 ease-in-out'
+                        : 'inline-block px-6 text-white bg-grey-400 hover:text-main-400 hover:border text-sm font-bold uppercase rounded   mb-4 transition duration-150 ease-in-out pointer-events-none'
                     "
                     data-bs-toggle="modal"
                     data-bs-target="#declinedDetail"

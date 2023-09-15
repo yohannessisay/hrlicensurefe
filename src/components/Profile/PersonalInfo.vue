@@ -31,7 +31,7 @@
               required
             />
             <button
-              class="btn inline-block px-6 py-2.5 bg-primary-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out hover:text-primary-600 hover:border items-center"
+              class="btn inline-block px-6 py-2.5 bg-primary-600 text-white font-medium text-xs leading-tight uppercase rounded   hover:bg-blue-700 hover:  focus:bg-blue-700 focus:  focus:outline-none focus:ring-0 active:bg-blue-800 active:  transition duration-150 ease-in-out hover:text-primary-600 hover:border items-center"
               type="button"
               id="button-addon2"
               @click="searchUser()"
@@ -62,7 +62,7 @@
   <!-- If user clicks New profile -->
   <div class="w-screen max-w-4xl   mb-20 p-4" v-if="approveStatus == 2">
     <div
-      class="flex flex-col w-full  form_wrapper bg-white border shadow-md rounded-md mb-large"
+      class="flex flex-col w-full  form_wrapper bg-white border   rounded-md mb-large"
     >
       <div class="flex justify-center  ">
         <h1 class="text-main-400  text-3xl">Complete profile data</h1>
@@ -443,7 +443,7 @@
 
         <div class="flex justify-center mb-24">
           <button
-            class="transition duration-200 bg-main-400 text-white hover:text-main-400 hover:bg-white w-full ml-auto mt-4 rounded-lg text-md shadow-sm hover:shadow-md font-semibold text-center inline-block"
+            class="transition duration-200 bg-main-400 text-white hover:text-main-400 hover:bg-white w-full ml-auto mt-4 rounded-lg text-md shadow-sm hover:  font-semibold text-center inline-block"
           >
             Next
           </button>

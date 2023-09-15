@@ -16,7 +16,7 @@
       class="grid grid-cols-2 gap-4 md:grid-cols-2 lg:grid-cols-2 mdlg:grid-cols-2 sm:grid-cols-1"
     >
       <div
-        class="py-8 px-12 mb-12 bg-white mt-8 shadow-lg rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2"
+        class="py-8 px-12 mb-12 bg-white mt-8   rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2"
       >
         <div class="border-b-2 text-main-400 mb-4">
           <div class="text-gray-900 mb-4 flex justify-center">
@@ -119,7 +119,7 @@
       </div>
 
       <div
-        class="py-8 px-12 mb-12 bg-white rounded-lg mt-8 text-main-400 transform transition duration-300 ease-in-out shadow-lg hover:-translate-y-2"
+        class="py-8 px-12 mb-12 bg-white rounded-lg mt-8 text-main-400 transform transition duration-300 ease-in-out   hover:-translate-y-2"
       >
         <div class="border-b-2 text-main-400 mb-4">
           <div class="text-gray-900 mb-4 flex justify-center">
@@ -207,7 +207,7 @@
     <div
       class="mt-8 grid grid-cols-1 gap-4 md:grid-cols-1 lg:grid-cols-1 mdlg:grid-cols-1 sm:grid-cols-1"
     >
-      <div class="bg-white flex-shrink px-4 w-full rounded-md shadow-xl">
+      <div class="bg-white flex-shrink px-4 w-full rounded-md  ">
         <div class="py-8 px-12 mb-12 bg-gray-50 border-b border-white">
           <div class="border-b-2 text-main-400 mb-4">
             <div class="text-gray-900 mb-4 flex justify-center">
@@ -233,7 +233,7 @@
             "
           >
             <div
-              class="mt-4 mb-8 bg-white border-4 text-main-400 shadow-xl rounded-md transform transition duration-300 ease-in-out p-2 hover:-translate-y-2"
+              class="mt-4 mb-8 bg-white border-4 text-main-400   rounded-md transform transition duration-300 ease-in-out p-2 hover:-translate-y-2"
               v-for="changed in changedDocs"
               :key="changed.id"
             >
@@ -296,7 +296,7 @@
                     class="grid grid-cols-4 gap-4 ml-4 sm:w-full sm:grid-cols-1 md:w-full mdlg:grid-cols-2 lg:w-full md:grid-cols-4 mdlg:w-full lg:grid-cols-4"
                   >
                     <div
-                      class="mt-4 mb-8 bg-white shadow-xl rounded-md transform transition duration-300 ease-in-out p-2 hover:-translate-y-2"
+                      class="mt-4 mb-8 bg-white   rounded-md transform transition duration-300 ease-in-out p-2 hover:-translate-y-2"
                       v-for="prev in localFileImages"
                       :key="prev.docName"
                     >
@@ -342,7 +342,7 @@
       class="mt-8 grid grid-cols-1 gap-4 md:grid-cols-1 lg:grid-cols-1 mdlg:grid-cols-1 sm:grid-cols-1"
     >
       <div
-        class="py-8 px-12 mb-12 bg-white text-main-400 transform rounded-lg shadow-lg mt-4 transition duration-300 ease-in-out hover:-translate-y-2"
+        class="py-8 px-12 mb-12 bg-white text-main-400 transform rounded-lg   mt-4 transition duration-300 ease-in-out hover:-translate-y-2"
       >
         <div class="mb-4">
           <div class="flex justify-center text-gray-900 mb-4">
@@ -400,8 +400,8 @@
             type="button"
             :class="
               allowSave
-                ? 'inline-block px-6 border text-main-400 hover:bg-main-400 hober:border-main-400 hover:text-white  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded shadow-lg transition  duration-150 ease-in-out'
-                : 'inline-block px-6 disabled text-main-400  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded shadow-lg transition  duration-150 ease-in-out'
+                ? 'inline-block px-6 border text-main-400 hover:bg-main-400 hober:border-main-400 hover:text-white  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded   transition  duration-150 ease-in-out'
+                : 'inline-block px-6 disabled text-main-400  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded   transition  duration-150 ease-in-out'
             "
             @click="checkFinalStatus(button.action)"
           >
@@ -411,7 +411,7 @@
         </span>
 
         <button
-          class="inline-block px-6 text-main-400 mt-4 bg-white font-medium text-xs leading-tight uppercase rounded shadow-lg transition duration-150 ease-in-out"
+          class="inline-block px-6 text-main-400 mt-4 bg-white font-medium text-xs leading-tight uppercase rounded   transition duration-150 ease-in-out"
           @click="back()"
         >
           back

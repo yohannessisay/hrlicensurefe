@@ -66,7 +66,7 @@
               w-56
               p-4
               rounded-md
-              shadow-lg
+               
               bg-white
               focus:outline-none
             "

@@ -32,7 +32,7 @@
         class="
           modal-content
           border-none
-          shadow-lg
+           
           relative
           flex flex-col
           w-full
@@ -123,7 +123,7 @@
                                     focus:bg-white
                                     focus:text-primary-600
                                     focus:font-bold
-                                    focus:drop-shadow-lg
+                                    focus:drop- 
                                   "
                                   required
                                   placeholder="Enter name"
@@ -232,7 +232,7 @@
               leading-tight
               uppercase
               rounded
-              shadow-lg
+               
               hover:bg-white hover:text-primary-600 hover:border-primary-600
               transition
               duration-150
@@ -255,7 +255,7 @@
               leading-tight
               uppercase
               rounded
-              shadow-lg
+               
               hover:bg-white hover:text-primary-600 hover:border-primary-600
               transition
               duration-150
@@ -359,8 +359,4 @@ export default {
   },
 };
 </script>
-<style scoped>
-.shadow-lg {
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 34%), 0 2px 4px -1px rgb(0 0 0 / 6%);
-}
-</style>
+ 
