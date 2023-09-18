@@ -4,9 +4,7 @@
     <div
       class="flex flex-col mt-medium w-full bg-white blue-box-shadow-light rounded mb-large"
     >
-      <h2 class="font-bold ml-56 mt-4">
-        Search here if you are registered in HRA
-      </h2>
+      <h2 class="font-bold ml-56 mt-4">Search here if you are registered in HRA</h2>
       <div class="flex justify-center mt-4">
         <div class="mb-3 xl:w-96">
           <div
@@ -31,7 +29,7 @@
               required
             />
             <button
-              class="btn inline-block px-6 py-2.5 bg-primary-600 text-white font-medium text-xs leading-tight uppercase rounded   hover:bg-blue-700 hover:  focus:bg-blue-700 focus:  focus:outline-none focus:ring-0 active:bg-blue-800 active:  transition duration-150 ease-in-out hover:text-primary-600 hover:border items-center"
+              class="btn inline-block px-6 py-2.5 bg-primary-600 text-white font-medium text-xs leading-tight uppercase rounded hover:bg-blue-700 hover: focus:bg-blue-700 focus: focus:outline-none focus:ring-0 active:bg-blue-800 active: transition duration-150 ease-in-out hover:text-primary-600 hover:border items-center"
               type="button"
               id="button-addon2"
               @click="searchUser()"
@@ -60,24 +58,16 @@
   </div>
   <!-- If user clicks HRA -->
   <!-- If user clicks New profile -->
-  <div class="w-screen max-w-4xl   mb-20 p-4" v-if="approveStatus == 2">
-    <div
-      class="flex flex-col w-full  form_wrapper bg-white border   rounded-md mb-large"
-    >
-      <div class="flex justify-center  ">
-        <h1 class="text-main-400  text-3xl">Complete profile data</h1>
+  <div class="w-screen max-w-4xl mb-20 p-4" v-if="approveStatus == 2">
+    <div class="flex flex-col w-full form_wrapper bg-white border rounded-md mb-large">
+      <div class="flex justify-center">
+        <h1 class="text-main-400 text-3xl">Complete profile data</h1>
       </div>
 
-      <form
-        class="mx-auto max-w-3xl w-full mt-4 p-2"
-        @submit.prevent="nextStep"
-      >
-        <h2
-          class="text-xl text-justify border text-yellow-300 rounded-md p-2 m-2"
-        >
-          Please upload your own personal picture where the prefered size is in
-          a passport size format which is 3 X 4 as this photo will be used in
-          your generated license
+      <form class="mx-auto max-w-3xl w-full mt-4 p-2" @submit.prevent="nextStep">
+        <h2 class="text-xl text-justify border text-yellow-300 rounded-md p-2 m-2">
+          Please upload your own personal picture where the prefered size is in a passport
+          size format which is 3 X 4 as this photo will be used in your generated license
         </h2>
         <div class="flex mb-4 justify-center">
           <div class="flex mb-2 justify-center" v-if="showUpload">
@@ -115,9 +105,7 @@
                 @click="reset()"
                 class="ml-4 mb-4 cursor-pointer border text-white hover:text-main-400 rounded-lg p-2 hover:bg-white bg-main-400"
               >
-                <i
-                  class="fa fa-upload cursor-pointer hover:text-main-400 text-white"
-                ></i
+                <i class="fa fa-upload cursor-pointer hover:text-main-400 text-white"></i
                 >Upload again
               </span>
             </div>
@@ -145,18 +133,16 @@
         <!-- English Name Part -->
         <h2 class="text-main-400 text-xl">Name (English)</h2>
         <div
-          class="grid grid-cols-3 gap-4 sm:grid-cols-1  lg:grid-cols-3 mdlg:grid-cols-3 md:grid-cols-3 border-t-2 mb-8"
+          class="grid grid-cols-3 gap-4 sm:grid-cols-1 lg:grid-cols-3 mdlg:grid-cols-3 md:grid-cols-3 border-t-2 mb-8"
         >
           <div class="flex">
-            <div class="form-floating ">
+            <div class="form-floating">
               <input
                 type="text"
-                class="capitalize form-control block w-full px-3 text-main-400 p-2 h-14 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out mb-4 mt-2 "
+                class="capitalize form-control block w-full px-3 text-main-400 p-2 h-14 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out mb-4 mt-2"
                 onkeypress="return /[a-zA-Z]/i.test(event.key)"
                 v-model="personalInfo.name"
-                :disabled="
-                  isRegisterdHRAuser == true && searchResultData.firstname
-                "
+                :disabled="isRegisterdHRAuser == true && searchResultData.firstname"
                 autocapitalize="word"
                 id="floatingInput"
                 placeholder="First name"
@@ -173,15 +159,13 @@
             </div>
           </div>
           <div class="flex">
-            <div class="form-floating  ">
+            <div class="form-floating">
               <input
                 type="text"
                 class="capitalize form-control block text-main-400 w-full px-3 p-2 h-14 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out mb-4 mt-2"
                 onkeypress="return /[a-zA-Z]/i.test(event.key)"
                 v-model="personalInfo.fatherName"
-                :disabled="
-                  isRegisterdHRAuser == true && searchResultData.middlename
-                "
+                :disabled="isRegisterdHRAuser == true && searchResultData.middlename"
                 id="floatingInput"
                 placeholder="First name"
               />
@@ -196,15 +180,13 @@
             </div>
           </div>
           <div class="flex">
-            <div class="form-floating   xl:w-96">
+            <div class="form-floating xl:w-96">
               <input
                 type="text"
-                class="capitalize form-control block text-main-400 w-full px-3  p-2 h-14 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out mt-2 mb-4"
+                class="capitalize form-control block text-main-400 w-full px-3 p-2 h-14 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out mt-2 mb-4"
                 onkeypress="return /[a-zA-Z]/i.test(event.key)"
                 v-model="personalInfo.grandFatherName"
-                :disabled="
-                  isRegisterdHRAuser == true && searchResultData.lastname
-                "
+                :disabled="isRegisterdHRAuser == true && searchResultData.lastname"
                 id="floatingInput"
                 placeholder="First name"
               />
@@ -225,13 +207,13 @@
         <!-- Amharic Name Part -->
         <h2 class="text-main-400 text-xl">Name (Amharic)</h2>
         <div
-          class="grid grid-cols-3 gap-4 sm:grid-cols-1  lg:grid-cols-3 mdlg:grid-cols-3 md:grid-cols-3  border-t-2 mb-8"
+          class="grid grid-cols-3 gap-4 sm:grid-cols-1 lg:grid-cols-3 mdlg:grid-cols-3 md:grid-cols-3 border-t-2 mb-8"
         >
           <div class="flex">
             <div class="form-floating mb-3 xl:w-96">
               <input
                 type="text"
-                class=" form-control block w-full px-3 text-main-400  p-2 h-14 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-2 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                class="form-control block w-full px-3 text-main-400 p-2 h-14 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-2 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                 onkeypress="return /[a-zA-Z]/i.test(event.key)"
                 v-model="personalInfo.alternativeName"
                 id="amhName"
@@ -244,30 +226,26 @@
             <div class="form-floating mb-3 xl:w-96">
               <input
                 type="text"
-                class="form-control block text-main-400 w-full px-3 p-2 h-14 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-2   focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                class="form-control block text-main-400 w-full px-3 p-2 h-14 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-2 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                 onkeypress="return /[a-zA-Z]/i.test(event.key)"
                 v-model="personalInfo.alternativeFatherName"
                 id="amhFName"
                 placeholder="Amharic Fathers name"
               />
-              <label for="amhFName" class="text-grey-800 text-lg"
-                >የአባት ስም</label
-              >
+              <label for="amhFName" class="text-grey-800 text-lg">የአባት ስም</label>
             </div>
           </div>
           <div class="flex">
             <div class="form-floating mb-3 xl:w-96">
               <input
                 type="text"
-                class="form-control block text-main-400 w-full px-3  p-2 h-14 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-2 focus:border-main-400 focus:outline-none"
+                class="form-control block text-main-400 w-full px-3 p-2 h-14 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-2 focus:border-main-400 focus:outline-none"
                 onkeypress="return /[a-zA-Z]/i.test(event.key)"
                 v-model="personalInfo.alternativeGrandFatherName"
                 id="amhGName"
                 placeholder="Amharic Grand Father name"
               />
-              <label for="amhGName" class="text-grey-800 text-lg"
-                >የ ኣያት ስም</label
-              >
+              <label for="amhGName" class="text-grey-800 text-lg">የ ኣያት ስም</label>
             </div>
           </div>
         </div>
@@ -277,20 +255,18 @@
         <!-- General personal info Part -->
         <h2 class="text-main-400 text-xl">General Information</h2>
         <div
-          class="text-main-400 grid grid-cols-2 sm:grid-cols-1 border-t-2  lg:grid-cols-2 mdlg:grid-cols-2 md:grid-cols-2 "
+          class="text-main-400 grid grid-cols-2 sm:grid-cols-1 border-t-2 lg:grid-cols-2 mdlg:grid-cols-2 md:grid-cols-2"
         >
           <div class="flex">
             <div class="form-floating mb-3 w-full mt-2">
               <input
                 type="date"
-                class="form-control block w-full px-3 text-main-400    p-2 h-14 text-base font-normal  bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-2  "
+                class="form-control block w-full px-3 text-main-400 p-2 h-14 text-base font-normal bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-2"
                 :max="minimumBirthDate"
                 min="1899-01-01"
                 v-model="personalInfo.dateOfBirth"
                 @change="validateDate(personalInfo.dateOfBirth)"
-                :disabled="
-                  isRegisterdHRAuser == true && searchResultData.birthdate
-                "
+                :disabled="isRegisterdHRAuser == true && searchResultData.birthdate"
                 id="birthDate"
               />
               <label for="birthDate" class="text-grey-800 text-lg"
@@ -298,12 +274,11 @@
               >
               <div
                 v-if="
-                  personalInfoErrors.dateOfBirth ||
-                    personalInfoErrors.invalidBirthDate
+                  personalInfoErrors.dateOfBirth || personalInfoErrors.invalidBirthDate
                 "
                 class="border p-2 text-sm text-red-300 mr-4 rounded-md w-3/4 ml-4"
               >
-                <span class="mt-2 text-sm text-red-300 ">{{
+                <span class="mt-2 text-sm text-red-300">{{
                   personalInfoErrors.dateOfBirth
                 }}</span>
               </div>
@@ -320,19 +295,14 @@
                   <div class="flex flex-col mb-small w-full">
                     <div class="flex py-2">
                       <input
-                        class="flex flex-col "
+                        class="flex flex-col"
                         type="radio"
                         id="male"
                         value="male"
                         v-model="personalInfo.gender"
-                        :disabled="
-                          isRegisterdHRAuser == true && searchResultData.gender
-                        "
+                        :disabled="isRegisterdHRAuser == true && searchResultData.gender"
                       />
-                      <label
-                        class="ml-tiny flex flex-col text-grey-800"
-                        for="male"
-                      >
+                      <label class="ml-tiny flex flex-col text-grey-800" for="male">
                         Male
                       </label>
                     </div>
@@ -344,13 +314,9 @@
                       id="female"
                       value="female"
                       v-model="personalInfo.gender"
-                      :disabled="
-                        isRegisterdHRAuser == true && searchResultData.gender
-                      "
+                      :disabled="isRegisterdHRAuser == true && searchResultData.gender"
                     />
-                    <label class="ml-tiny text-grey-800" for="female">
-                      Female
-                    </label>
+                    <label class="ml-tiny text-grey-800" for="female"> Female </label>
                   </div>
                 </div>
                 <span
@@ -364,7 +330,7 @@
           </div>
         </div>
         <div
-          class="grid grid-cols-2 sm:grid-cols-1  lg:grid-cols-3 mdlg:grid-cols-3 md:grid-cols-3  "
+          class="grid grid-cols-2 sm:grid-cols-1 lg:grid-cols-3 mdlg:grid-cols-3 md:grid-cols-3"
         >
           <div class="flex mt-2">
             <div class="flex justify-center">
@@ -377,9 +343,7 @@
                   aria-label="Default select example"
                   v-model="personalInfo.nationalityId"
                   @change="fetchNationalities()"
-                  :disabled="
-                    isRegisterdHRAuser == true && searchResultData.nationality
-                  "
+                  :disabled="isRegisterdHRAuser == true && searchResultData.nationality"
                 >
                   <option
                     v-for="types in state.nationalities"
@@ -406,9 +370,7 @@
                 class="form-select text-main-400 appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 mb-4"
                 aria-label="Default select example"
                 v-model="personalInfo.maritalStatusId"
-                :disabled="
-                  isRegisterdHRAuser == true && searchResultData.maritalStatus
-                "
+                :disabled="isRegisterdHRAuser == true && searchResultData.maritalStatus"
               >
                 >
                 <option value="1">Single</option>
@@ -425,10 +387,10 @@
             </div>
           </div>
           <div class="flex mt-2">
-            <div class="form-floating  w-full ">
+            <div class="form-floating w-full">
               <input
                 type="number"
-                class="form-control block w-full  text-base font-normal text-main-400 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-2  "
+                class="form-control block w-full text-base font-normal text-main-400 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-2"
                 v-model="personalInfo.poBox"
                 :disabled="isRegisterdHRAuser == true && searchResultData.pobox"
                 id="pobox"
@@ -443,7 +405,7 @@
 
         <div class="flex justify-center mb-24">
           <button
-            class="transition duration-200 bg-main-400 text-white hover:text-main-400 hover:bg-white w-full ml-auto mt-4 rounded-lg text-md shadow-sm hover:  font-semibold text-center inline-block"
+            class="transition duration-200 bg-main-400 text-white hover:text-main-400 hover:bg-white w-full ml-auto mt-4 rounded-lg text-md shadow-sm hover: font-semibold text-center inline-block"
           >
             Next
           </button>
@@ -554,7 +516,7 @@ export default {
         }
         reader.addEventListener(
           "load",
-          async function() {
+          async function () {
             showPreview.value = true;
             filePreview.value = reader.result;
             var base64 = reader.result;
@@ -579,87 +541,77 @@ export default {
         employeeId: searchEmployee.value,
         fileNumber: searchByFileNumber.value,
       };
-      store
-        .dispatch("profile/checkHrlRegistration", searchparamters)
-        .then((res) => {
-          if (res.data.data) {
-            let searchResult = res.data.data;
-            let nationalityId = 0;
-            searchResultData.value = searchResult;
-            let nationality =
-              state.value?.nationalities == null
-                ? null
-                : state.value.nationalities;
-            let maritalStatusId = 0;
-            if (searchResult.maritalStatus) {
-              maritalStatusId =
-                searchResult.maritalStatus == "Married"
-                  ? 2
-                  : searchResult.maritalStatus == "Single"
-                  ? 1
-                  : searchResult.maritalStatus == "Divorced"
-                  ? 3
-                  : 0;
-            }
-            if (searchResult.nationality) {
-              nationalityId = nationality.find(
-                (nat) => nat.name == searchResult?.nationality
-              ).id;
-            }
-            // let maritalStatusId = maritalStatus.find(
-            //   nat => nat.name == searchResult?.maritalStatus
-            // ).id;
-
-            let data = {
-              name: searchResult.firstname,
-              fatherName: searchResult?.middlename,
-              grandFatherName: searchResult?.lastname,
-              alternativeName: searchResult?.alternativeName,
-              alternativeFatherName: searchResult?.alternativeFatherName,
-              alternativeGrandFatherName:
-                searchResult?.alternativeGrandFatherName,
-              gender: searchResult?.gender,
-              dateOfBirth: searchResult?.birthdate,
-              nationalityId: nationalityId,
-              maritalStatusId: maritalStatusId,
-              poBox: searchResult?.pobox,
-              employeeId: searchResult.employeeId
-                ? searchResult.employeeId
-                : null,
-              fileNumber: searchResult.fileNumber,
-            };
-
-            store.dispatch("profile/setProfileInfo", data);
-            personalInfo.value = data;
-            approveStatus.value = 2;
-            isRegisterdHRAuser.value = true;
-            toast.success(res.data.message, {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            });
-          } else {
-            toast.error(res.data.message, {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            });
+      store.dispatch("profile/checkHrlRegistration", searchparamters).then((res) => {
+        if (res.data.data) {
+          let searchResult = res.data.data;
+          let nationalityId = 0;
+          searchResultData.value = searchResult;
+          let nationality =
+            state.value?.nationalities == null ? null : state.value.nationalities;
+          let maritalStatusId = 0;
+          if (searchResult.maritalStatus) {
+            maritalStatusId =
+              searchResult.maritalStatus == "Married"
+                ? 2
+                : searchResult.maritalStatus == "Single"
+                ? 1
+                : searchResult.maritalStatus == "Divorced"
+                ? 3
+                : 0;
           }
-        });
+          if (searchResult.nationality) {
+            nationalityId = nationality.find(
+              (nat) => nat.name == searchResult?.nationality
+            ).id;
+          }
+          // let maritalStatusId = maritalStatus.find(
+          //   nat => nat.name == searchResult?.maritalStatus
+          // ).id;
+
+          let data = {
+            name: searchResult.firstname,
+            fatherName: searchResult?.middlename,
+            grandFatherName: searchResult?.lastname,
+            alternativeName: searchResult?.alternativeName,
+            alternativeFatherName: searchResult?.alternativeFatherName,
+            alternativeGrandFatherName: searchResult?.alternativeGrandFatherName,
+            gender: searchResult?.gender,
+            dateOfBirth: searchResult?.birthdate,
+            nationalityId: nationalityId,
+            maritalStatusId: maritalStatusId,
+            poBox: searchResult?.pobox,
+            employeeId: searchResult.employeeId ? searchResult.employeeId : null,
+            fileNumber: searchResult.fileNumber,
+          };
+
+          store.dispatch("profile/setProfileInfo", data);
+          personalInfo.value = data;
+          approveStatus.value = 2;
+          isRegisterdHRAuser.value = true;
+          toast.success(res.data.message, {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          });
+        } else {
+          toast.error(res.data.message, {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          });
+        }
+      });
     };
 
     const fetchUserTypes = () => {
       store.dispatch("profile/getUserTypes").then((res) => {
         const utResults = res.data;
         state.value.userTypes = utResults.data;
-        state.value.userTypes.splice(
-          state.value.userTypes.indexOf("Reviewer"),
-          1
-        );
+        state.value.userTypes.splice(state.value.userTypes.indexOf("Reviewer"), 1);
       });
     };
     const fetchRegions = () => {
@@ -690,18 +642,13 @@ export default {
       personalInfo.value.employeeId = searchResultData.value.employeeId;
       personalInfoErrors.value = validateForm(personalInfo.value);
       for (let i = 0; i < state.value.nationalities.length; i++) {
-        if (
-          state.value.nationalities[i].id == personalInfo.value.nationalityId
-        ) {
+        if (state.value.nationalities[i].id == personalInfo.value.nationalityId) {
           nationality.value = state.value.nationalities[i].name;
         }
       }
-      if (personalInfo.value.maritalStatusId == 1)
-        maritalStatus.value = "Single";
-      if (personalInfo.value.maritalStatusId == 2)
-        maritalStatus.value = "Married";
-      if (personalInfo.value.maritalStatusId == 3)
-        maritalStatus.value = "Divorced";
+      if (personalInfo.value.maritalStatusId == 1) maritalStatus.value = "Single";
+      if (personalInfo.value.maritalStatusId == 2) maritalStatus.value = "Married";
+      if (personalInfo.value.maritalStatusId == 3) maritalStatus.value = "Divorced";
       store.dispatch("profile/setNationality", nationality.value);
       store.dispatch("profile/setMaritalStatus", maritalStatus.value);
       let empty = isEmpty(personalInfoErrors.value);
@@ -745,15 +692,12 @@ export default {
       if (!formData.photo) errors.photo = "Profile picture is required";
       if (!formData.name) errors.name = "First name is required";
       if (!formData.fatherName) errors.fatherName = "Father's name is required";
-      if (!formData.dateOfBirth)
-        errors.dateOfBirth = "Date of birth is required";
-      if (!formData.maritalStatusId)
-        errors.maritalStatus = "Marital status is required";
+      if (!formData.dateOfBirth) errors.dateOfBirth = "Date of birth is required";
+      if (!formData.maritalStatusId) errors.maritalStatus = "Marital status is required";
       if (!formData.gender) errors.gender = "Gender is required";
       if (!formData.grandFatherName)
         errors.grandFatherName = "Grandfather's name required";
-      if (!formData.nationalityId)
-        errors.nationalityId = "Nationality is required";
+      if (!formData.nationalityId) errors.nationalityId = "Nationality is required";
 
       let today = new Date().getFullYear();
       let age = today - new Date(formData.dateOfBirth).getFullYear();
@@ -765,6 +709,7 @@ export default {
     };
     const isEmpty = (obj) => {
       for (var prop in obj) {
+        // eslint-disable-next-line no-prototype-builtins
         if (obj.hasOwnProperty(prop)) {
           return false;
         }
@@ -793,7 +738,7 @@ export default {
           }
           reader.addEventListener(
             "load",
-            async function() {
+            async function () {
               showPreview.value = true;
               filePreview.value = reader.result;
               var base64 = reader.result;
