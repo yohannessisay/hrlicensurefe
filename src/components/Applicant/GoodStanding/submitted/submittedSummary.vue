@@ -16,7 +16,7 @@
       class="grid grid-cols-2 gap-4 md:grid-cols-2 lg:grid-cols-2 mdlg:grid-cols-2 sm:grid-cols-1"
     >
       <div
-        class="py-8 px-12 mb-12 bg-white mt-8   rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2"
+        class="py-8 px-12 mb-12 bg-white mt-8 rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2"
       >
         <div class="border-b-2 text-main-400 mb-4">
           <div class="text-gray-900 mb-4 flex justify-center">
@@ -39,9 +39,7 @@
           <div>
             <span class="text-grey-800 sm:text-sm">
               {{
-                localData && localData.applicantType
-                  ? localData.applicantType.name
-                  : ""
+                localData && localData.applicantType ? localData.applicantType.name : ""
               }}</span
             >
           </div>
@@ -57,9 +55,7 @@
           <div>
             <span class="text-grey-800 sm:text-sm">
               {{
-                localData && localData.department
-                  ? localData.department.name
-                  : ""
+                localData && localData.department ? localData.department.name : ""
               }}</span
             >
           </div>
@@ -109,9 +105,7 @@
           <div>
             <span class="text-grey-800 sm:text-sm">
               {{
-                localData && localData.applicantTitle
-                  ? localData.applicantTitle.name
-                  : ""
+                localData && localData.applicantTitle ? localData.applicantTitle.name : ""
               }}</span
             >
           </div>
@@ -119,7 +113,7 @@
       </div>
 
       <div
-        class="py-8 px-12 mb-12 bg-white rounded-lg mt-8 text-main-400 transform transition duration-300 ease-in-out   hover:-translate-y-2"
+        class="py-8 px-12 mb-12 bg-white rounded-lg mt-8 text-main-400 transform transition duration-300 ease-in-out hover:-translate-y-2"
       >
         <div class="border-b-2 text-main-400 mb-4">
           <div class="text-gray-900 mb-4 flex justify-center">
@@ -143,9 +137,7 @@
           </div>
           <div>
             <span class="text-grey-800 sm:text-sm">
-              {{
-                localData && localData.whoIssued ? localData.whoIssued.name : ""
-              }}</span
+              {{ localData && localData.whoIssued ? localData.whoIssued.name : "" }}</span
             >
           </div>
         </div>
@@ -207,7 +199,7 @@
     <div
       class="mt-8 grid grid-cols-1 gap-4 md:grid-cols-1 lg:grid-cols-1 mdlg:grid-cols-1 sm:grid-cols-1"
     >
-      <div class="bg-white flex-shrink px-4 w-full rounded-md  ">
+      <div class="bg-white flex-shrink px-4 w-full rounded-md">
         <div class="py-8 px-12 mb-12 bg-gray-50 border-b border-white">
           <div class="border-b-2 text-main-400 mb-4">
             <div class="text-gray-900 mb-4 flex justify-center">
@@ -233,7 +225,7 @@
             "
           >
             <div
-              class="mt-4 mb-8 bg-white border-4 text-main-400   rounded-md transform transition duration-300 ease-in-out p-2 hover:-translate-y-2"
+              class="mt-4 mb-8 bg-white border-4 text-main-400 rounded-md transform transition duration-300 ease-in-out p-2 hover:-translate-y-2"
               v-for="changed in changedDocs"
               :key="changed.id"
             >
@@ -247,10 +239,7 @@
                     :data-title="changed.docName"
                     data-lightbox="example-1"
                   >
-                    <img
-                      :src="changed.prevFile"
-                      class="w-full h-48 object-cover"
-                    />
+                    <img :src="changed.prevFile" class="w-full h-48 object-cover" />
                   </a>
                 </div>
 
@@ -296,7 +285,7 @@
                     class="grid grid-cols-4 gap-4 ml-4 sm:w-full sm:grid-cols-1 md:w-full mdlg:grid-cols-2 lg:w-full md:grid-cols-4 mdlg:w-full lg:grid-cols-4"
                   >
                     <div
-                      class="mt-4 mb-8 bg-white   rounded-md transform transition duration-300 ease-in-out p-2 hover:-translate-y-2"
+                      class="mt-4 mb-8 bg-white rounded-md transform transition duration-300 ease-in-out p-2 hover:-translate-y-2"
                       v-for="prev in localFileImages"
                       :key="prev.docName"
                     >
@@ -342,7 +331,7 @@
       class="mt-8 grid grid-cols-1 gap-4 md:grid-cols-1 lg:grid-cols-1 mdlg:grid-cols-1 sm:grid-cols-1"
     >
       <div
-        class="py-8 px-12 mb-12 bg-white text-main-400 transform rounded-lg   mt-4 transition duration-300 ease-in-out hover:-translate-y-2"
+        class="py-8 px-12 mb-12 bg-white text-main-400 transform rounded-lg mt-4 transition duration-300 ease-in-out hover:-translate-y-2"
       >
         <div class="mb-4">
           <div class="flex justify-center text-gray-900 mb-4">
@@ -358,14 +347,12 @@
             <h3
               class="text-grey-800 mb-2localFileData sm:text-xs lgmd:text-base lg:text-base md:text-base"
             >
-              By checking here I hereby verify the documents and details filled
-              in are legal.
+              By checking here I hereby verify the documents and details filled in are
+              legal.
             </h3>
           </div>
           <div class="flex justify-center">
-            <label
-              for="feedback"
-              class="form-label inline-block mb-2 text-main-400"
+            <label for="feedback" class="form-label inline-block mb-2 text-main-400"
               >Feedback on the process and system
               <span class="text-yellow-300">(optional*)</span>
             </label>
@@ -385,7 +372,7 @@
         </div>
       </div>
     </div>
- 
+
     <div class="vld-parent mt-4">
       <loading
         :active="isLoading"
@@ -411,7 +398,7 @@
         </span>
 
         <button
-          class="inline-block px-6 text-main-400 mt-4 bg-white font-medium text-xs leading-tight uppercase rounded   transition duration-150 ease-in-out"
+          class="inline-block px-6 text-main-400 mt-4 bg-white font-medium text-xs leading-tight uppercase rounded transition duration-150 ease-in-out"
           @click="back()"
         >
           back
@@ -421,9 +408,7 @@
     <!-- end row -->
   </div>
   <modal v-if="showModal">
-    <template v-slot:modalHeader>
-      Uploading
-    </template>
+    <template v-slot:modalHeader> Uploading </template>
     <template v-slot:modalBody>
       <div class="flex justify-center text-yellow-300 p-2 rounded-md">
         <h2 class="text-yellow-300 border rounded p-2 text-xl">
@@ -442,11 +427,10 @@
       </div>
       <div>
         <div class="flex border justify-center text-yellow-300 p-2 rounded-md">
-          <h2 class=" text-xl">
-            Please wait patiently as your files are being uploaded, if for any
-            reason the files you uploaded are not successful you will be
-            redirected to the submitted page automatically so you can re-attach
-            your documents again
+          <h2 class="text-xl">
+            Please wait patiently as your files are being uploaded, if for any reason the
+            files you uploaded are not successful you will be redirected to the submitted
+            page automatically so you can re-attach your documents again
           </h2>
         </div>
       </div>
@@ -472,9 +456,7 @@ export default {
     const router = useRouter();
     const route = useRoute();
     const totalSteps = ref(100);
-    let progress = computed(
-      () => store.getters["goodstanding/getUploadProgress"]
-    );
+    let progress = computed(() => store.getters["goodstanding/getUploadProgress"]);
     let showModal = ref(false);
     let localData = ref({});
     let localFileData = ref({});
@@ -515,7 +497,7 @@ export default {
           formData.append(index, element);
         });
         isLoading.value = true;
-        showModal.value=true;
+        showModal.value = true;
         let license = {
           action: action,
           data: {
@@ -548,8 +530,7 @@ export default {
             whoIssuedId: generalInfo.value.whoIssuedId
               ? generalInfo.value.whoIssuedId.id
               : "",
-            licenseRegistrationNumber: generalInfo.value
-              .licenseRegistrationNumber
+            licenseRegistrationNumber: generalInfo.value.licenseRegistrationNumber
               ? generalInfo.value.licenseRegistrationNumber
               : "",
             professionType: {
@@ -575,8 +556,7 @@ export default {
             otherProfessionalType: generalInfo.value.otherProfessionType
               ? generalInfo.value.otherProfessionType
               : "",
-            otherProfessionalTypeAmharic: generalInfo.value
-              .otherProfessionTypeAmharic
+            otherProfessionalTypeAmharic: generalInfo.value.otherProfessionTypeAmharic
               ? generalInfo.value.otherProfessionTypeAmharic
               : "",
             departmentId: generalInfo.value.department
@@ -584,46 +564,32 @@ export default {
               : generalInfo.value.departmentId
               ? generalInfo.value.departmentId
               : null,
-            feedback: generalInfo.value.feedback
-              ? generalInfo.value.feedback
-              : "",
+            feedback: generalInfo.value.feedback ? generalInfo.value.feedback : "",
             id: route.params.id,
           },
         };
-        store
-          .dispatch("goodstanding/editGoodstandingLicense", license)
-          .then(() => {
-            let licenseId = route.params.id;
-            let payload = { document: formData, id: licenseId };
-            store
-              .dispatch("goodstanding/updateDocuments", payload)
-              .then((res) => {
-                isLoading.value = false;
-                if (res.data.status == "Success") {
-                  localStorage.removeItem("GSApplicationData");
-                  toast.success("Applied successfuly", {
-                    timeout: 5000,
-                    position: "bottom-center",
-                    pauseOnFocusLoss: true,
-                    pauseOnHover: true,
-                    icon: true,
-                  });
-                  if (action == "DraftEvent") {
-                    router.push({ path: "/Applicant/GoodStanding/draft" });
-                  } else {
-                    router.push({ path: "/Applicant/GoodStanding/submitted" });
-                  }
+        store.dispatch("goodstanding/editGoodstandingLicense", license).then(() => {
+          let licenseId = route.params.id;
+          let payload = { document: formData, id: licenseId };
+          store
+            .dispatch("goodstanding/updateDocuments", payload)
+            .then((res) => {
+              isLoading.value = false;
+              if (res.data.status == "Success") {
+                localStorage.removeItem("GSApplicationData");
+                toast.success("Applied successfuly", {
+                  timeout: 5000,
+                  position: "bottom-center",
+                  pauseOnFocusLoss: true,
+                  pauseOnHover: true,
+                  icon: true,
+                });
+                if (action == "DraftEvent") {
+                  router.push({ path: "/Applicant/GoodStanding/draft" });
                 } else {
-                  toast.error("Error occured, please try again", {
-                    timeout: 5000,
-                    position: "bottom-center",
-                    pauseOnFocusLoss: true,
-                    pauseOnHover: true,
-                    icon: true,
-                  });
+                  router.push({ path: "/Applicant/GoodStanding/submitted" });
                 }
-              })
-              .catch(() => {
+              } else {
                 toast.error("Error occured, please try again", {
                   timeout: 5000,
                   position: "bottom-center",
@@ -631,8 +597,18 @@ export default {
                   pauseOnHover: true,
                   icon: true,
                 });
+              }
+            })
+            .catch(() => {
+              toast.error("Error occured, please try again", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
               });
-          });
+            });
+        });
       }
     };
     const back = () => {
@@ -642,7 +618,7 @@ export default {
       store.dispatch("renewal/getApplicationStatuses").then((res) => {
         let results = res.data.data;
 
-        let status = results.filter(function(e) {
+        let status = results.filter(function (e) {
           return e.code == "DRA";
         });
         buttons.value = status[0]["buttons"];
@@ -664,40 +640,34 @@ export default {
 
           generalInfo.value = localData.value;
           generalInfo.value.feedback = "";
-          if (generalInfo.value.applicantTypeSelected.id == 1) {
-            store.dispatch("newlicense/getExpertLevel").then((res) => {
-              let expertLevel = res.data.data.filter(function(e) {
-                return e.code.includes("REG");
-              });
-              generalInfo.value.expertLevelId = expertLevel[0].id;
-            });
+          if (
+            generalInfo.value &&
+            generalInfo.value.regionSelected &&
+            generalInfo.value.regionSelected.code == "FED"
+          ) {
+            generalInfo.value.expertLevelId = 3;
+          } else if (generalInfo.value.applicantTypeSelected.id == 1) {
+            generalInfo.value.expertLevelId = 3;
           } else {
-            store.dispatch("newlicense/getExpertLevel").then((res) => {
-              let expertLevel = res.data.data.filter(function(e) {
-                return e.code.includes("FED");
-              });
-              generalInfo.value.expertLevelId = expertLevel[0].id;
-            });
+            generalInfo.value.expertLevelId = 4;
           }
           //Get images from indexed Db
           let request = indexedDB.open("GSdocumentUploads", 1);
 
-          request.onerror = function() {
+          request.onerror = function () {
             console.error("Unable to open database.");
           };
 
-          request.onsuccess = function() {
+          request.onsuccess = function () {
             let db = request.result;
             const tx = db.transaction("GSdocumentUploads", "readonly");
             const store = tx.objectStore("GSdocumentUploads");
             let getAllIDB = store.getAll();
 
-            getAllIDB.onsuccess = function(evt) {
+            getAllIDB.onsuccess = function (evt) {
               localFileImages.value = evt.target.result
                 ? JSON.parse(
-                    JSON.stringify(
-                      evt.target.result[0] ? evt.target.result[0].data : {}
-                    )
+                    JSON.stringify(evt.target.result[0] ? evt.target.result[0].data : {})
                   )
                 : {};
 

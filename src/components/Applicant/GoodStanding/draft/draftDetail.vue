@@ -10,9 +10,7 @@
         <li><span class="text-gray-500 mx-2">/</span></li>
         <li>
           <router-link to="/Applicant/GoodStanding">
-            <a href="#" class="text-main-400 hover:text-blue-700"
-              >Goodstanding</a
-            >
+            <a href="#" class="text-main-400 hover:text-blue-700">Goodstanding</a>
           </router-link>
         </li>
         <li><span class="text-gray-500 mx-2">/</span></li>
@@ -22,10 +20,7 @@
       </ol>
     </nav>
 
-    <div
-      v-if="activeState == 1"
-      class="block p-6 rounded-lg   max-w-full mr-8 mb-8 sm:p-4"
-    >
+    <div v-if="activeState == 1" class="block p-6 rounded-lg max-w-full mr-8 mb-8 sm:p-4">
       <div class="vld-parent mt-4">
         <loading
           :active="isLoading"
@@ -33,16 +28,11 @@
           :color="'#2F639D'"
           :opacity="1"
         ></loading>
-        <form
-          @submit.prevent="submit"
-          class="mx-auto max-w-4xl p-2 w-full mt-2   "
-        >
+        <form @submit.prevent="submit" class="mx-auto max-w-4xl p-2 w-full mt-2">
           <div class="mt-small flex justify-center">
-            <h2 class="text-main-400 text-3xl font-bold">
-              General Information
-            </h2>
+            <h2 class="text-main-400 text-3xl font-bold">General Information</h2>
           </div>
-          <div class="mt-12 rounded-sm bg-white ">
+          <div class="mt-12 rounded-sm bg-white">
             <div class="container mx-auto border-b-2">
               <div
                 class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 sm:grid-cols-1 gap-2 mb-4 p-4"
@@ -155,8 +145,7 @@
                 <div
                   class="flex flex-col"
                   v-if="
-                    generalInfo.regionSelected &&
-                      generalInfo.regionSelected.code != 'FED'
+                    generalInfo.regionSelected && generalInfo.regionSelected.code != 'FED'
                   "
                 >
                   <label class="text-main-400">Zone</label>
@@ -191,8 +180,7 @@
                 <div
                   class="flex flex-col"
                   v-if="
-                    generalInfo.regionSelected &&
-                      generalInfo.regionSelected.code != 'FED'
+                    generalInfo.regionSelected && generalInfo.regionSelected.code != 'FED'
                   "
                 >
                   <label class="text-main-400">Woreda</label>
@@ -305,8 +293,7 @@
                     >
                       <option
                         :value="
-                          generalInfo &&
-                          generalInfo.GSProfessionals.professionalTypes
+                          generalInfo && generalInfo.GSProfessionals.professionalTypes
                             ? generalInfo.GSProfessionals.professionalTypes.id
                             : null
                         "
@@ -334,8 +321,7 @@
                   <div
                     v-if="
                       generalInfo.GSProfessionals.professionalTypes &&
-                        generalInfo.GSProfessionals.professionalTypes.name ==
-                          'other'
+                      generalInfo.GSProfessionals.professionalTypes.name == 'other'
                     "
                   >
                     <label class="text-main-400">Other Profession</label>
@@ -351,18 +337,13 @@
                   <div
                     v-if="
                       generalInfo.GSProfessionals.professionalTypes &&
-                        generalInfo.GSProfessionals.professionalTypes.name ==
-                          'other'
+                      generalInfo.GSProfessionals.professionalTypes.name == 'other'
                     "
                   >
-                    <label class="text-main-400"
-                      >Other Profession Amharic</label
-                    >
+                    <label class="text-main-400">Other Profession Amharic</label>
                     <input
                       type="text"
-                      v-model="
-                        generalInfo.GSProfessionals.otherProfessionTypeAmharic
-                      "
+                      v-model="generalInfo.GSProfessionals.otherProfessionTypeAmharic"
                       class="appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
                       autocomplete="off"
                       placeholder
@@ -412,9 +393,7 @@
             >
               <div>
                 <div class="overflow-hidden shadow-sm">
-                  <label for class="text-main-400"
-                    >Organization Letter written for</label
-                  >
+                  <label for class="text-main-400">Organization Letter written for</label>
 
                   <input
                     type="text"
@@ -429,9 +408,7 @@
 
               <div>
                 <div class="overflow-hidden shadow-sm">
-                  <label for class="text-main-400"
-                    >Who Issued Previous License</label
-                  >
+                  <label for class="text-main-400">Who Issued Previous License</label>
 
                   <select
                     class="form-select appearance-none block max-w-3xl px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
@@ -450,9 +427,7 @@
               </div>
               <div>
                 <div class="overflow-hidden shadow-sm">
-                  <label for class="text-main-400"
-                    >License Registration Number</label
-                  >
+                  <label for class="text-main-400">License Registration Number</label>
 
                   <input
                     type="text"
@@ -484,14 +459,14 @@
           <!-- GS details -->
           <div class="flex justify-end mb-2 mr-1">
             <button
-              class="float-right mt-8 inline-block px-6 py-2.5 bg-blue-700 text-main-400 max-w-3xl font-medium text-xs leading-tight uppercase rounded   bg-white border hover:text-white hover:border-main-500 hover:bg-main-400 focus:bg-blue-700 focus:  focus:outline-none focus:ring-0 active:bg-blue-800 active:  transition duration-150 ease-in-out"
+              class="float-right mt-8 inline-block px-6 py-2.5 bg-blue-700 text-main-400 max-w-3xl font-medium text-xs leading-tight uppercase rounded bg-white border hover:text-white hover:border-main-500 hover:bg-main-400 focus:bg-blue-700 focus: focus:outline-none focus:ring-0 active:bg-blue-800 active: transition duration-150 ease-in-out"
               type="submit"
               @click="saveDraft()"
             >
               Update
             </button>
             <button
-              class="float-right mt-8 inline-block px-6 py-2.5 bg-blue-700 text-white max-w-3xl font-medium text-xs leading-tight uppercase rounded   bg-main-400  border hover:text-main-400 hover:border-main-500 hover:bg-white focus:bg-blue-700 focus:  focus:outline-none focus:ring-0 active:bg-blue-800 active:  transition duration-150 ease-in-out"
+              class="float-right mt-8 inline-block px-6 py-2.5 bg-blue-700 text-white max-w-3xl font-medium text-xs leading-tight uppercase rounded bg-main-400 border hover:text-main-400 hover:border-main-500 hover:bg-white focus:bg-blue-700 focus: focus:outline-none focus:ring-0 active:bg-blue-800 active: transition duration-150 ease-in-out"
               type="submit"
               @click="apply()"
             >
@@ -563,6 +538,7 @@ export default {
       zoneSelected: "",
       woredaSelected: "",
       departmentId: "",
+      applicantTypeSelected: "",
       expertLevelId: "",
       licenseFile: [],
     });
@@ -627,8 +603,7 @@ export default {
         generalInfo.value.GSProfessionals &&
         generalInfo.value.GSProfessionals.professionTypeId &&
         generalInfo.value.GSProfessionals.professionTypeId.name &&
-        generalInfo.value.GSProfessionals.professionTypeId.name.toLowerCase() ==
-          "other"
+        generalInfo.value.GSProfessionals.professionTypeId.name.toLowerCase() == "other"
       ) {
         showOtherProfession.value = true;
       } else {
@@ -657,8 +632,8 @@ export default {
         applicationPositions.value = res.data.data;
       });
     };
-    const fetchRegions = () => {
-      store.dispatch("goodstanding/getRegions").then((res) => {
+    const fetchRegions = async () => {
+      await store.dispatch("goodstanding/getRegions").then((res) => {
         regions.value = res.data.data;
       });
     };
@@ -683,11 +658,9 @@ export default {
         departmentId: departmentId,
         educationalLevelId: educationalLevelId,
       };
-      store
-        .dispatch("newlicense/getProfessionalTypes", profession)
-        .then((res) => {
-          professionalTypes.value = res.data.data;
-        });
+      store.dispatch("newlicense/getProfessionalTypes", profession).then((res) => {
+        professionalTypes.value = res.data.data;
+      });
     };
     const setDepartment = () => {
       isDepartmentSelected.value = true;
@@ -705,11 +678,9 @@ export default {
         "GSApplicationData",
         JSON.stringify(tempApplicationData)
       );
-      store
-        .dispatch("goodstanding/setGeneralInfo", generalInfo.value)
-        .then(() => {
-          activeState.value++;
-        });
+      store.dispatch("goodstanding/setGeneralInfo", generalInfo.value).then(() => {
+        activeState.value++;
+      });
     };
     const clearLocalData = () => {
       window.localStorage.removeItem("GSApplicationData");
@@ -791,8 +762,7 @@ export default {
           otherProfessionalType: generalInfo.value.otherProfessionType
             ? generalInfo.value.otherProfessionType
             : "",
-          otherProfessionalTypeAmharic: generalInfo.value
-            .otherProfessionTypeAmharic
+          otherProfessionalTypeAmharic: generalInfo.value.otherProfessionTypeAmharic
             ? generalInfo.value.otherProfessionTypeAmharic
             : "",
           departmentId: generalInfo.value.department
@@ -800,38 +770,34 @@ export default {
             : generalInfo.value.departmentId
             ? generalInfo.value.departmentId
             : null,
-          feedback: generalInfo.value.feedback
-            ? generalInfo.value.feedback
-            : "",
+          feedback: generalInfo.value.feedback ? generalInfo.value.feedback : "",
           id: route.params.id,
         },
       };
 
-      store
-        .dispatch("goodstanding/editGoodstandingLicense", license)
-        .then((res) => {
-          if (res.data.status == "Success") {
-            toast.success("Updated successfuly", {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            });
-            isLoading.value = false;
-            localStorage.removeItem("GSApplicationData");
-            loadFunctions();
-          } else {
-            toast.error("Error occured, please try again", {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            });
-            isLoading.value = false;
-          }
-        });
+      store.dispatch("goodstanding/editGoodstandingLicense", license).then((res) => {
+        if (res.data.status == "Success") {
+          toast.success("Updated successfuly", {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          });
+          isLoading.value = false;
+          localStorage.removeItem("GSApplicationData");
+          loadFunctions();
+        } else {
+          toast.error("Error occured, please try again", {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          });
+          isLoading.value = false;
+        }
+      });
     };
     const fetchLanguages = () => {
       store.dispatch("lookups/getNativeLanguage").then((res) => {
@@ -855,14 +821,14 @@ export default {
         showLanguage.value = false;
       }
     };
-    const loadFunctions = () => {
+    const loadFunctions = async () => {
       isLoading.value = true;
       fetchApplicantType();
       fetchDepartments();
       fetchProfessionalType();
       fetchEducationLevel();
 
-      fetchRegions();
+      await fetchRegions();
       fetchZone();
       fetchWoredas();
       fetchApplicantTitle();
@@ -877,9 +843,7 @@ export default {
             ? res.data.data.licenseIssuedDate.slice(0, 10)
             : "";
           generalInfo.value.regionSelected =
-            res.data.data && res.data.data.woreda
-              ? res.data.data.woreda.zone.region
-              : "";
+            res.data.data && res.data.data.woreda ? res.data.data.woreda.zone.region : "";
 
           generalInfo.value.zoneSelected =
             res.data.data && res.data.data.woreda
@@ -916,6 +880,16 @@ export default {
 
           generalInfo.value.applicantTypeSelected = res.data.data.applicantType;
           educationalLevelChange();
+          if (
+            res.data.data.residenceWoredaId == null &&
+            res.data.data.applicantTypeId == 1
+          ) {
+            generalInfo.value.regionSelected = regions.value.filter(
+              (el) => el.code == "FED"
+            )
+              ? regions.value.filter((el) => el.code == "FED")[0]
+              : [];
+          }
           isLoading.value = false;
         });
     };
