@@ -226,6 +226,7 @@ export default {
           ? personalInfo.alternativeGrandFatherName
           : "",
         gender: personalInfo.gender,
+        photo: "photo",
         dateOfBirth: personalInfo.dateOfBirth != "" ? personalInfo.dateOfBirth : null,
         nationalityId: personalInfo.nationalityId,
         maritalStatusId: parseInt(personalInfo.maritalStatusId),
