@@ -103,7 +103,7 @@ export default {
       return error;
     }
   },
-  async uploadProfilePicture({ commit }, documents) {
+  async uploadProfilePicture(context, documents) {
     try {
       const resp = await ApiService.post(
         baseUrl + "/profiles/profilePicture/" + documents.id,

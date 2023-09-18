@@ -16,7 +16,7 @@
       class="grid grid-cols-2 gap-4 md:grid-cols-2 lg:grid-cols-2 mdlg:grid-cols-2 sm:grid-cols-1"
     >
       <div
-        class="py-8 px-12 mb-12 bg-white mt-8   rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2"
+        class="py-8 px-12 mb-12 bg-white mt-8 rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2"
       >
         <div class="border-b-2 text-main-400 mb-4">
           <div class="text-gray-900 mb-4 flex justify-center">
@@ -41,9 +41,7 @@
           <div>
             <span class="text-grey-800 sm:text-sm">
               {{
-                localData && localData.applicantType
-                  ? localData.applicantType.name
-                  : ""
+                localData && localData.applicantType ? localData.applicantType.name : ""
               }}</span
             >
           </div>
@@ -59,9 +57,7 @@
           <div>
             <span class="text-grey-800 sm:text-sm">
               {{
-                localData && localData.department
-                  ? localData.department.name
-                  : ""
+                localData && localData.department ? localData.department.name : ""
               }}</span
             >
           </div>
@@ -111,9 +107,7 @@
           <div>
             <span class="text-grey-800 sm:text-sm">
               {{
-                localData && localData.applicantTitle
-                  ? localData.applicantTitle.name
-                  : ""
+                localData && localData.applicantTitle ? localData.applicantTitle.name : ""
               }}</span
             >
           </div>
@@ -121,7 +115,7 @@
       </div>
 
       <div
-        class="py-8 px-12 mb-12 bg-white rounded-lg mt-8 text-main-400 transform transition duration-300 ease-in-out   hover:-translate-y-2"
+        class="py-8 px-12 mb-12 bg-white rounded-lg mt-8 text-main-400 transform transition duration-300 ease-in-out hover:-translate-y-2"
       >
         <div class="border-b-2 text-main-400 mb-4">
           <div class="text-gray-900 mb-4 flex justify-center">
@@ -145,9 +139,7 @@
           </div>
           <div>
             <span class="text-grey-800 sm:text-sm">
-              {{
-                localData && localData.whoIssued ? localData.whoIssued.name : ""
-              }}</span
+              {{ localData && localData.whoIssued ? localData.whoIssued.name : "" }}</span
             >
           </div>
         </div>
@@ -209,7 +201,7 @@
     <div
       class="mt-8 grid grid-cols-1 gap-4 md:grid-cols-1 lg:grid-cols-1 mdlg:grid-cols-1 sm:grid-cols-1"
     >
-      <div class="bg-white flex-shrink px-4 w-full rounded-md  ">
+      <div class="bg-white flex-shrink px-4 w-full rounded-md">
         <div class="py-8 px-12 mb-12 bg-gray-50 border-b border-white">
           <div class="border-b-2 text-main-400 mb-4">
             <div class="text-gray-900 mb-4 flex justify-center">
@@ -235,7 +227,7 @@
             "
           >
             <div
-              class="mt-4 mb-8 bg-white border-4 text-main-400   rounded-md transform transition duration-300 ease-in-out p-2 hover:-translate-y-2"
+              class="mt-4 mb-8 bg-white border-4 text-main-400 rounded-md transform transition duration-300 ease-in-out p-2 hover:-translate-y-2"
               v-for="changed in changedDocs"
               :key="changed.id"
             >
@@ -249,10 +241,7 @@
                     :data-title="changed.docName"
                     data-lightbox="example-1"
                   >
-                    <img
-                      :src="changed.prevFile"
-                      class="w-full h-48 object-cover"
-                    />
+                    <img :src="changed.prevFile" class="w-full h-48 object-cover" />
                   </a>
                 </div>
 
@@ -297,9 +286,8 @@
                   <div
                     class="grid grid-cols-4 gap-4 ml-4 sm:w-full sm:grid-cols-1 md:w-full mdlg:grid-cols-2 lg:w-full md:grid-cols-4 mdlg:w-full lg:grid-cols-4"
                   >
-                 
                     <div
-                      class="mt-4 mb-8 bg-white   rounded-md transform transition duration-300 ease-in-out p-2 hover:-translate-y-2"
+                      class="mt-4 mb-8 bg-white rounded-md transform transition duration-300 ease-in-out p-2 hover:-translate-y-2"
                       v-for="prev in localFileImages"
                       :key="prev.docName"
                     >
@@ -345,7 +333,7 @@
       class="mt-8 grid grid-cols-1 gap-4 md:grid-cols-1 lg:grid-cols-1 mdlg:grid-cols-1 sm:grid-cols-1"
     >
       <div
-        class="py-8 px-12 mb-12 bg-white text-main-400 transform rounded-lg   mt-4 transition duration-300 ease-in-out hover:-translate-y-2"
+        class="py-8 px-12 mb-12 bg-white text-main-400 transform rounded-lg mt-4 transition duration-300 ease-in-out hover:-translate-y-2"
       >
         <div class="mb-4">
           <div class="flex justify-center text-gray-900 mb-4">
@@ -361,73 +349,68 @@
             <h3
               class="text-grey-800 mb-2 localFileData sm:text-xs lgmd:text-base lg:text-base md:text-base"
             >
-              By checking here I hereby verify the documents and details filled
-              in are legal.
+              By checking here I hereby verify the documents and details filled in are
+              legal.
             </h3>
           </div>
           <div class="flex justify-center">
-            <label
-              for="feedback"
-              class="form-label inline-block mb-2 text-main-400"
+            <label for="feedback" class="form-label inline-block mb-2 text-main-400"
               >Feedback on the process and system
               <span class="text-yellow-300">(optional*)</span>
             </label>
           </div>
-       
-            <div class="mb-3 w-full flex justify-center">
-              <input
-                v-model="generalInfo.feedback"
-                class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 border border-solid border-main-400 rounded focus:border-main-400 transition ease-in-out m-0 focus:outline-none"
-                @keyup="checkAgreement()"
-                id="feedback"
-                rows="6"
-                placeholder="Your feedback"
-                type="textarea"
-              />
-            </div>
-           
+
+          <div class="mb-3 w-full flex justify-center">
+            <input
+              v-model="generalInfo.feedback"
+              class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 border border-solid border-main-400 rounded focus:border-main-400 transition ease-in-out m-0 focus:outline-none"
+              @keyup="checkAgreement()"
+              id="feedback"
+              rows="6"
+              placeholder="Your feedback"
+              type="textarea"
+            />
+          </div>
         </div>
       </div>
     </div>
- 
-    <div class="vld-parent mt-4">
-            <loading
-              :active="isLoading"
-              :is-full-page="false"
-              :color="'#2F639D'"
-              :opacity="1"
-            ></loading>
-    <div class="flex justify-center mb-8">
-      <span v-for="button in buttons" :key="button.id">
-        <button
-          v-if="button.action != 'DraftEvent'"
-          type="button"
-          :class="
-            allowSave
-              ? 'inline-block px-6 border text-main-400 hover:bg-main-400 hober:border-main-400 hover:text-white  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded   transition  duration-150 ease-in-out'
-              : 'inline-block px-6 disabled text-main-400  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded   transition  duration-150 ease-in-out'
-          "
-          @click="checkFinalStatus(button.action)"
-        >
-          <i class="fa fa-save"></i>
-          {{ button.name }}
-        </button>
-      </span>
 
-      <button
-        class="inline-block px-6 text-main-400 mt-4 bg-white font-medium text-xs leading-tight uppercase rounded   transition duration-150 ease-in-out"
-        @click="back()"
-      >
-        back
-      </button>
+    <div class="vld-parent mt-4">
+      <loading
+        :active="isLoading"
+        :is-full-page="false"
+        :color="'#2F639D'"
+        :opacity="1"
+      ></loading>
+      <div class="flex justify-center mb-8">
+        <span v-for="button in buttons" :key="button.id">
+          <button
+            v-if="button.action != 'DraftEvent'"
+            type="button"
+            :class="
+              allowSave
+                ? 'inline-block px-6 border text-main-400 hover:bg-main-400 hober:border-main-400 hover:text-white  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded   transition  duration-150 ease-in-out'
+                : 'inline-block px-6 disabled text-main-400  mt-4 bg-white font-medium text-xs leading-tight uppercase rounded   transition  duration-150 ease-in-out'
+            "
+            @click="checkFinalStatus(button.action)"
+          >
+            <i class="fa fa-save"></i>
+            {{ button.name }}
+          </button>
+        </span>
+
+        <button
+          class="inline-block px-6 text-main-400 mt-4 bg-white font-medium text-xs leading-tight uppercase rounded transition duration-150 ease-in-out"
+          @click="back()"
+        >
+          back
+        </button>
+      </div>
     </div>
-</div>
     <!-- end row -->
   </div>
   <modal v-if="showModal">
-    <template v-slot:modalHeader>
-      Uploading
-    </template>
+    <template v-slot:modalHeader> Uploading </template>
     <template v-slot:modalBody>
       <div class="flex justify-center text-yellow-300 p-2 rounded-md">
         <h2 class="text-yellow-300 border rounded p-2 text-xl">
@@ -446,11 +429,10 @@
       </div>
       <div>
         <div class="flex border justify-center text-yellow-300 p-2 rounded-md">
-          <h2 class=" text-xl">
-            Please wait patiently as your files are being uploaded, if for any
-            reason the files you uploaded are not successful you will be
-            redirected to the submitted page automatically so you can re-attach
-            your documents again
+          <h2 class="text-xl">
+            Please wait patiently as your files are being uploaded, if for any reason the
+            files you uploaded are not successful you will be redirected to the submitted
+            page automatically so you can re-attach your documents again
           </h2>
         </div>
       </div>
@@ -469,16 +451,14 @@ import modal from "../../../../sharedComponents/modal.vue";
 import RadialProgress from "vue3-radial-progress";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 export default {
-  components: { Loading, RadialProgress,modal },
+  components: { Loading, RadialProgress, modal },
   setup(props, { emit }) {
     const store = useStore();
     const toast = useToast();
     const router = useRouter();
     const route = useRoute();
     const totalSteps = ref(100);
-    let progress = computed(
-      () => store.getters["goodstanding/getUploadProgress"]
-    );
+    let progress = computed(() => store.getters["goodstanding/getUploadProgress"]);
     let showModal = ref(false);
     let localData = ref({});
     let localFileData = ref({});
@@ -509,7 +489,7 @@ export default {
         allowSave.value = false;
       }
     };
-    const checkFinalStatus = action => {
+    const checkFinalStatus = (action) => {
       generalInfo.value.licenseFile = [];
       documents.value = localFileData.value;
 
@@ -553,8 +533,7 @@ export default {
             whoIssuedId: generalInfo.value.whoIssuedId
               ? generalInfo.value.whoIssuedId.id
               : "",
-            licenseRegistrationNumber: generalInfo.value
-              .licenseRegistrationNumber
+            licenseRegistrationNumber: generalInfo.value.licenseRegistrationNumber
               ? generalInfo.value.licenseRegistrationNumber
               : "",
             professionType: {
@@ -571,7 +550,7 @@ export default {
                   ? generalInfo.value.GSProfessionals.educationLevel.id
                   : generalInfo.value.GSProfessionals.educationLevelId
                   ? generalInfo.value.GSProfessionals.educationLevelId
-                  : null
+                  : null,
             },
             expertLevelId: generalInfo.value.expertLevelId
               ? generalInfo.value.expertLevelId
@@ -580,8 +559,7 @@ export default {
             otherProfessionalType: generalInfo.value.otherProfessionType
               ? generalInfo.value.otherProfessionType
               : "",
-            otherProfessionalTypeAmharic: generalInfo.value
-              .otherProfessionTypeAmharic
+            otherProfessionalTypeAmharic: generalInfo.value.otherProfessionTypeAmharic
               ? generalInfo.value.otherProfessionTypeAmharic
               : "",
             departmentId: generalInfo.value.department
@@ -589,65 +567,61 @@ export default {
               : generalInfo.value.departmentId
               ? generalInfo.value.departmentId
               : null,
-            feedback: generalInfo.value.feedback
-              ? generalInfo.value.feedback
-              : "",
-            id: route.params.id
-          }
+            feedback: generalInfo.value.feedback ? generalInfo.value.feedback : "",
+            id: route.params.id,
+          },
         };
-        store
-          .dispatch("goodstanding/editGoodstandingLicense", license)
-          .then(() => {
-            let licenseId = route.params.id;
-            let payload = { document: formData, id: licenseId };
-            store
-              .dispatch("goodstanding/updateDocuments", payload)
-              .then(res => {
-                isLoading.value = false;
-                if (res.data.status == "Success") {
-                  localStorage.removeItem("GSApplicationData");
-                  toast.success("Applied successfuly", {
-                    timeout: 5000,
-                    position: "bottom-center",
-                    pauseOnFocusLoss: true,
-                    pauseOnHover: true,
-                    icon: true
-                  });
-                  if (action == "DraftEvent") {
-                    router.push({ path: "/Applicant/GoodStanding/draft" });
-                  } else {
-                    router.push({ path: "/Applicant/GoodStanding/submitted" });
-                  }
+        store.dispatch("goodstanding/editGoodstandingLicense", license).then(() => {
+          let licenseId = route.params.id;
+          let payload = { document: formData, id: licenseId };
+          store
+            .dispatch("goodstanding/updateDocuments", payload)
+            .then((res) => {
+              isLoading.value = false;
+              if (res.data.status == "Success") {
+                localStorage.removeItem("GSApplicationData");
+                toast.success("Applied successfuly", {
+                  timeout: 5000,
+                  position: "bottom-center",
+                  pauseOnFocusLoss: true,
+                  pauseOnHover: true,
+                  icon: true,
+                });
+                if (action == "DraftEvent") {
+                  router.push({ path: "/Applicant/GoodStanding/draft" });
                 } else {
-                  toast.error("Error occured, please try again", {
-                    timeout: 5000,
-                    position: "bottom-center",
-                    pauseOnFocusLoss: true,
-                    pauseOnHover: true,
-                    icon: true
-                  });
+                  router.push({ path: "/Applicant/GoodStanding/submitted" });
                 }
-              })
-              .catch(() => {
+              } else {
                 toast.error("Error occured, please try again", {
                   timeout: 5000,
                   position: "bottom-center",
                   pauseOnFocusLoss: true,
                   pauseOnHover: true,
-                  icon: true
+                  icon: true,
                 });
+              }
+            })
+            .catch(() => {
+              toast.error("Error occured, please try again", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
               });
-          });
+            });
+        });
       }
     };
     const back = () => {
       emit("changeActiveStateMinus");
     };
     const fetchApplicationStatuses = () => {
-      store.dispatch("renewal/getApplicationStatuses").then(res => {
+      store.dispatch("renewal/getApplicationStatuses").then((res) => {
         let results = res.data.data;
 
-        let status = results.filter(function(e) {
+        let status = results.filter(function (e) {
           return e.code == "DRA";
         });
         buttons.value = status[0]["buttons"];
@@ -657,10 +631,10 @@ export default {
       fetchApplicationStatuses();
       store
         .dispatch("goodstanding/getGoodStandingLicenseById", route.params.id)
-        .then(res => {
+        .then((res) => {
           savedData.value = res.data.data;
 
-          buttons.value = buttons.value.filter(ele => ele.code != "AT");
+          buttons.value = buttons.value.filter((ele) => ele.code != "AT");
           tempDocs.value = store.getters["goodstanding/getTempDocs"];
 
           localData.value = window.localStorage.getItem("GSApplicationData")
@@ -669,47 +643,41 @@ export default {
 
           generalInfo.value = localData.value;
           generalInfo.value.feedback = "";
-          if (generalInfo.value.applicantTypeSelected.id == 1) {
-            store.dispatch("newlicense/getExpertLevel").then(res => {
-              let expertLevel = res.data.data.filter(function(e) {
-                return e.code.includes("REG");
-              });
-              generalInfo.value.expertLevelId = expertLevel[0].id;
-            });
+          if (
+            generalInfo.value &&
+            generalInfo.value.regionSelected &&
+            generalInfo.value.regionSelected.code == "FED"
+          ) {
+            generalInfo.value.expertLevelId = 3;
+          } else if (generalInfo.value.applicantTypeSelected.id == 1) {
+            generalInfo.value.expertLevelId = 3;
           } else {
-            store.dispatch("newlicense/getExpertLevel").then(res => {
-              let expertLevel = res.data.data.filter(function(e) {
-                return e.code.includes("FED");
-              });
-              generalInfo.value.expertLevelId = expertLevel[0].id;
-            });
+            generalInfo.value.expertLevelId = 4;
           }
           //Get images from indexed Db
           let request = indexedDB.open("GSdocumentUploads", 1);
 
-          request.onerror = function() {
+          request.onerror = function () {
             console.error("Unable to open database.");
           };
 
-          request.onsuccess = function() {
+          request.onsuccess = function () {
             let db = request.result;
             const tx = db.transaction("GSdocumentUploads", "readonly");
             const store = tx.objectStore("GSdocumentUploads");
             let getAllIDB = store.getAll();
 
-            getAllIDB.onsuccess = function(evt) {
-              localFileData.value = evt.target.result
-            ? evt.target.result[0].data
-            : {};
-            localFileImages.value=localFileData.value;
+            getAllIDB.onsuccess = function (evt) {
+              localFileData.value = evt.target.result ? evt.target.result[0].data : {};
+              localFileImages.value = localFileData.value;
               if (
                 localFileImages.value &&
                 localFileImages.value.length > 0 &&
                 savedData.value.documents &&
                 savedData.value.documents.length > 0
               ) {
-                savedData.value.documents.forEach(ele => {
-                  localFileImages.value.forEach(newFile => {
+                savedData.value.documents.forEach((ele) => {
+                  localFileImages.value.forEach((newFile) => {
                     if (
                       newFile.documentCode &&
                       newFile.documentCode == ele.documentTypeCode
@@ -718,7 +686,7 @@ export default {
                         docName: newFile.documentName,
                         prevFile: googleApi + ele.filePath,
                         newFile: newFile.image,
-                        id: newFile.documentCode
+                        id: newFile.documentCode,
                       });
                     }
                   });
@@ -728,12 +696,12 @@ export default {
               if (localData.value.professionChanged == true) {
                 professionChanged.value = true;
                 // prevDocs.value = localFileImages.value;
-                localFileImages.value.forEach(element => {
+                localFileImages.value.forEach((element) => {
                   if (!element.documentTypeCode) {
                     prevDocs.value.push({
                       documentType: { name: element.documentName },
                       docName: element.documenttype,
-                      path: element.image
+                      path: element.image,
                     });
                   }
                 });
@@ -763,9 +731,9 @@ export default {
       googleApi,
       totalSteps,
       progress,
-      showModal
+      showModal,
     };
-  }
+  },
 };
 </script>
 <style>
