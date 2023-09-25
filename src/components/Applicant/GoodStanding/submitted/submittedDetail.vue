@@ -683,6 +683,11 @@ export default {
         generalInfo.value.regionSelected.code == "FED"
       ) {
         generalInfo.value.expertLevelId = 3;
+      } else if (
+        generalInfo.value.regionSelected &&
+        generalInfo.value.regionSelected.code != "FED"
+      ) {
+        generalInfo.value.expertLevelId = 4;
       }
       let tempApplicationData = generalInfo.value;
       window.localStorage.setItem(
@@ -713,6 +718,11 @@ export default {
         generalInfo.value.regionSelected.code == "FED"
       ) {
         generalInfo.value.expertLevelId = 3;
+      } else if (
+        generalInfo.value.regionSelected &&
+        generalInfo.value.regionSelected.code != "FED"
+      ) {
+        generalInfo.value.expertLevelId = 4;
       }
       let license = {
         action: "SubmitEvent",
