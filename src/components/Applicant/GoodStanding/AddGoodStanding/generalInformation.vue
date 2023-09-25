@@ -32,10 +32,7 @@
       :color="'#2F639D'"
       :opacity="1"
     ></loading>
-    <form
-      @submit.prevent="submit"
-      class="mx-auto max-w-4xl rounded-md   w-full mt-10"
-    >
+    <form @submit.prevent="submit" class="mx-auto max-w-4xl rounded-md w-full mt-10">
       <div
         :class="
           isDarkMode
@@ -69,7 +66,7 @@
               <button
                 v-show="Object.keys(localData).length != 0"
                 type="button"
-                class="mt-8 inline-block px-6 py-2.5 bg-white text-main-400 max-w-3xl border hover:bg-main-400 hover:text-white font-medium text-xs leading-tight uppercase rounded   hover:border-main-500 focus:bg-blue-700 focus:  focus:outline-none focus:ring-0 active:bg-blue-800 active:  transition duration-150 ease-in-out"
+                class="mt-8 inline-block px-6 py-2.5 bg-white text-main-400 max-w-3xl border hover:bg-main-400 hover:text-white font-medium text-xs leading-tight uppercase rounded hover:border-main-500 focus:bg-blue-700 focus: focus:outline-none focus:ring-0 active:bg-blue-800 active: transition duration-150 ease-in-out"
                 @click="clearLocalData()"
               >
                 <i class="fa fa-close"></i>
@@ -401,14 +398,14 @@
         ></loading>
         <div class="flex justify-end mb-2 mr-1 bg-white">
           <button
-            class="float-right mb-8 inline-block px-6 py-2.5 bg-blue-700 text-main-400 max-w-3xl font-medium text-xs leading-tight uppercase rounded bg-white border hover:text-white hover:border-main-500 hover:bg-main-400 focus:bg-blue-700 focus:  focus:outline-none focus:ring-0 active:bg-blue-800 active:  transition duration-150 ease-in-out"
+            class="float-right mb-8 inline-block px-6 py-2.5 bg-blue-700 text-main-400 max-w-3xl font-medium text-xs leading-tight uppercase rounded bg-white border hover:text-white hover:border-main-500 hover:bg-main-400 focus:bg-blue-700 focus: focus:outline-none focus:ring-0 active:bg-blue-800 active: transition duration-150 ease-in-out"
             type="submit"
             @click="saveDraft()"
           >
             Save as draft
           </button>
           <button
-            class="float-right mb-8 inline-block px-6 py-2.5 bg-main-400 text-white max-w-3xl font-medium text-xs leading-tight uppercase rounded border hover:text-main-400 hover:border-main-500 hover:bg-white focus:bg-blue-700 focus:  focus:outline-none focus:ring-0 active:bg-blue-800 active:  transition duration-150 ease-in-out"
+            class="float-right mb-8 inline-block px-6 py-2.5 bg-main-400 text-white max-w-3xl font-medium text-xs leading-tight uppercase rounded border hover:text-main-400 hover:border-main-500 hover:bg-white focus:bg-blue-700 focus: focus:outline-none focus:ring-0 active:bg-blue-800 active: transition duration-150 ease-in-out"
             type="submit"
           >
             Next
@@ -590,6 +587,11 @@ export default {
         generalInfo.value.regionSelected.code == "FED"
       ) {
         generalInfo.value.expertLevelId = 3;
+      } else if (
+        generalInfo.value.regionSelected &&
+        generalInfo.value.regionSelected.code != "FED"
+      ) {
+        generalInfo.value.expertLevelId = 4;
       }
       generalInfo.value.applicantTypeId == ""
         ? (errorFields.value.applicantTypeId = true)
@@ -679,6 +681,11 @@ export default {
         generalInfo.value.regionSelected.code == "FED"
       ) {
         generalInfo.value.expertLevelId = 3;
+      } else if (
+        generalInfo.value.regionSelected &&
+        generalInfo.value.regionSelected.code != "FED"
+      ) {
+        generalInfo.value.expertLevelId = 4;
       }
       let license = {
         action: "DraftEvent",
