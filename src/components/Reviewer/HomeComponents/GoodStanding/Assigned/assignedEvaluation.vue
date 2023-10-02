@@ -13,7 +13,7 @@
     <!-- Main Content -->
     <div class="home-content">
       <div class="container px-4 mx-auto mb-12 sm:px-4">
-        <div class="w-full rounded-lg   bg-primary-800">
+        <div class="w-full rounded-lg bg-primary-800">
           <h2 class="ml-4 text-xl text-white">
             Evaluating
             {{
@@ -33,9 +33,7 @@
             <div class="w-full">
               <div class="box-shadow-pop bg-lightGrey-100">
                 <div class="flex justify-content-evenly">
-                  <div
-                    class="container w-64 h-40 mt-8 ml-8 rounded-lg    box-shadow-pop"
-                  >
+                  <div class="container w-64 h-40 mt-8 ml-8 rounded-lg box-shadow-pop">
                     <div class="mt-8">
                       <div class="flex items-center justify-center my-auto">
                         <h2 class="text-3xl">
@@ -47,11 +45,13 @@
                       </div>
                     </div>
                     <div
-                      class="container max-w-md mx-auto my-2 mt-8 overflow-hidden bg-white rounded-lg  "
+                      class="container max-w-md mx-auto my-2 mt-8 overflow-hidden bg-white rounded-lg"
                     >
                       <div
                         class="relative z-10 h-auto"
-                        style="clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - 5vw));"
+                        style="
+                          clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - 5vw));
+                        "
                       >
                         <img
                           class="w-full h-32"
@@ -59,8 +59,7 @@
                             goodStanding &&
                             goodStanding.profile &&
                             goodStanding.profile.profilePicture
-                              ? googleApi +
-                                goodStanding.profile.profilePicture.filePath
+                              ? googleApi + goodStanding.profile.profilePicture.filePath
                               : ''
                           "
                           alt="Profile image"
@@ -69,18 +68,14 @@
                       <div
                         class="relative z-50 flex flex-row items-center justify-between px-6 -mt-10"
                       >
-                        <h2
-                          class="text-xl font-bold underline text-primary-600"
-                        >
+                        <h2 class="text-xl font-bold underline text-primary-600">
                           Applicant's Profile
                         </h2>
                       </div>
                       <div class="p-2 pt-6 pb-8 text-gray-600">
                         <div class="grid grid-cols-3">
-                          <div class="col-span-1 mt-4 text-primary-600">
-                            Name
-                          </div>
-                          <div class="col-span-2 mt-4 break-all ">
+                          <div class="col-span-1 mt-4 text-primary-600">Name</div>
+                          <div class="col-span-2 mt-4 break-all">
                             {{
                               goodStanding &&
                               goodStanding.profile &&
@@ -93,10 +88,8 @@
                                 : ""
                             }}
                           </div>
-                          <div class="col-span-1 mt-2 text-primary-600">
-                            Email
-                          </div>
-                          <div class="col-span-2 mt-2 break-all ">
+                          <div class="col-span-1 mt-2 text-primary-600">Email</div>
+                          <div class="col-span-2 mt-2 break-all">
                             {{
                               goodStanding &&
                               goodStanding.applicant &&
@@ -105,10 +98,8 @@
                                 : ""
                             }}
                           </div>
-                          <div class="col-span-1 mt-2 text-primary-600">
-                            Phone
-                          </div>
-                          <div class="col-span-2 mt-2 break-all ">
+                          <div class="col-span-1 mt-2 text-primary-600">Phone</div>
+                          <div class="col-span-2 mt-2 break-all">
                             {{
                               goodStanding &&
                               goodStanding.applicant &&
@@ -117,10 +108,8 @@
                                 : ""
                             }}
                           </div>
-                          <div class="col-span-1 mt-2 text-primary-600">
-                            Gender
-                          </div>
-                          <div class="col-span-2 mt-2 break-all ">
+                          <div class="col-span-1 mt-2 text-primary-600">Gender</div>
+                          <div class="col-span-2 mt-2 break-all">
                             {{
                               goodStanding &&
                               goodStanding.profile &&
@@ -161,7 +150,7 @@
                         <div class="mt-8">
                           <label
                             v-if="!showButtons"
-                            class="items-center justify-center text-2xl  text-grey-800"
+                            class="items-center justify-center text-2xl text-grey-800"
                           >
                             {{ documentTypeName }}
                           </label>
@@ -174,51 +163,48 @@
                               <!-- Personal Info card -->
                               <div class="w-full mx-4 my-1 mb-4">
                                 <!-- Article -->
-                                <article
-                                  class="overflow-hidden rounded-lg  "
-                                >
+                                <article class="overflow-hidden rounded-lg">
                                   <header
-                                    class="flex items-center justify-between p-2 leading-tight  md:p-4"
+                                    class="flex items-center justify-between p-2 leading-tight md:p-4"
                                   >
-                                    <h2 class="font-bold">
-                                      Personal Information
-                                    </h2>
-                                    <i
-                                      class="fa fa-user fa-2x text-primary-600"
-                                    ></i>
+                                    <h2 class="font-bold">Personal Information</h2>
+                                    <i class="fa fa-user fa-2x text-primary-600"></i>
                                   </header>
                                   <hr class="text-grey-100" />
                                   <div
-                                    class="container flex items-center justify-between p-2 leading-tight  md:p-4"
+                                    class="container flex items-center justify-between p-2 leading-tight md:p-4"
                                   >
                                     <div class="font-bold">Full Name</div>
 
                                     <div>
                                       {{
-                                        (profileInfo.name
-                                          ? profileInfo.name
+                                        (profileInfo.name ? profileInfo.name : "-") +
+                                        " " +
+                                        (profileInfo.fatherName
+                                          ? profileInfo.fatherName
                                           : "-") +
-                                          " " +
-                                          (profileInfo.fatherName
-                                            ? profileInfo.fatherName
-                                            : "-") +
-                                          " " +
-                                          (profileInfo.grandFatherName
-                                            ? profileInfo.grandFatherName
-                                            : "-")
+                                        " " +
+                                        (profileInfo.grandFatherName
+                                          ? profileInfo.grandFatherName
+                                          : "-")
                                       }}
                                     </div>
                                   </div>
                                   <div
-                                    class="container flex items-center justify-between p-2 leading-tight  md:p-4"
+                                    class="container flex items-center justify-between p-2 leading-tight md:p-4"
                                   >
-                                    <div class="font-bold">
-                                      Full Name In Amharic
+                                    <div class="font-bold">Full Name In Amharic</div>
+                                    <div v-if="editPersonalData">
+                                      <input
+                                        v-model="goodStanding.profile.alternativeName"
+                                        class="w-48 mr-1"
+                                        type="text"
+                                      />
                                     </div>
                                     <div v-if="editPersonalData">
                                       <input
                                         v-model="
-                                          goodStanding.profile.alternativeName
+                                          goodStanding.profile.alternativeFatherName
                                         "
                                         class="w-48 mr-1"
                                         type="text"
@@ -227,18 +213,7 @@
                                     <div v-if="editPersonalData">
                                       <input
                                         v-model="
-                                          goodStanding.profile
-                                            .alternativeFatherName
-                                        "
-                                        class="w-48 mr-1"
-                                        type="text"
-                                      />
-                                    </div>
-                                    <div v-if="editPersonalData">
-                                      <input
-                                        v-model="
-                                          goodStanding.profile
-                                            .alternativeGrandFatherName
+                                          goodStanding.profile.alternativeGrandFatherName
                                         "
                                         class="w-48"
                                         type="text"
@@ -253,7 +228,7 @@
                                       ></loading>
                                       <button
                                         v-if="editPersonalData"
-                                        class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded    hover:bg-purple-700 hover:  focus:bg-purple-700 focus:  focus:outline-none focus:ring-0 active:bg-purple-800 active: "
+                                        class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded hover:bg-purple-700 hover: focus:bg-purple-700 focus: focus:outline-none focus:ring-0 active:bg-purple-800 active:"
                                         @click="changeAmharicName"
                                       >
                                         Save
@@ -265,19 +240,19 @@
                                         (profileInfo.alternativeName
                                           ? profileInfo.alternativeName
                                           : "-") +
-                                          " " +
-                                          (profileInfo.alternativeFatherName
-                                            ? profileInfo.alternativeFatherName
-                                            : "-") +
-                                          " " +
-                                          (profileInfo.alternativeGrandFatherName
-                                            ? profileInfo.alternativeGrandFatherName
-                                            : "-")
+                                        " " +
+                                        (profileInfo.alternativeFatherName
+                                          ? profileInfo.alternativeFatherName
+                                          : "-") +
+                                        " " +
+                                        (profileInfo.alternativeGrandFatherName
+                                          ? profileInfo.alternativeGrandFatherName
+                                          : "-")
                                       }}
                                     </div>
                                   </div>
                                   <div
-                                    class="container flex items-center justify-between p-2 leading-tight  md:p-4"
+                                    class="container flex items-center justify-between p-2 leading-tight md:p-4"
                                   >
                                     <div class="font-bold">Nationality</div>
                                     <div>
@@ -290,20 +265,18 @@
                                   </div>
 
                                   <div
-                                    class="container flex items-center justify-between p-2 leading-tight  md:p-4"
+                                    class="container flex items-center justify-between p-2 leading-tight md:p-4"
                                   >
                                     <div class="font-bold">gender</div>
                                     <div>
                                       {{
-                                        profileInfo.gender
-                                          ? profileInfo["gender"]
-                                          : "-"
+                                        profileInfo.gender ? profileInfo["gender"] : "-"
                                       }}
                                     </div>
                                   </div>
 
                                   <div
-                                    class="container flex items-center justify-between p-2 leading-tight  md:p-4"
+                                    class="container flex items-center justify-between p-2 leading-tight md:p-4"
                                   >
                                     <div class="font-bold">marital Status</div>
                                     <div>
@@ -316,7 +289,7 @@
                                   </div>
                                   <hr class="text-grey-100" />
                                   <footer
-                                    class="flex items-center justify-center p-2 leading-none  md:p-4"
+                                    class="flex items-center justify-center p-2 leading-none md:p-4"
                                   >
                                     {{ new Date().toISOString().slice(0, 10) }}
                                   </footer>
@@ -326,25 +299,19 @@
                               <!-- Personal Info card -->
                               <!-- Contact card -->
                               <div
-                                class="w-full px-1 my-1 mb-3  md:w-1/2 lg:my-4 lg:px-4 lg:w-1/2"
+                                class="w-full px-1 my-1 mb-3 md:w-1/2 lg:my-4 lg:px-4 lg:w-1/2"
                               >
                                 <!-- Article -->
-                                <article
-                                  class="overflow-hidden rounded-lg  "
-                                >
+                                <article class="overflow-hidden rounded-lg">
                                   <header
-                                    class="flex items-center justify-between p-2 leading-tight  md:p-4"
+                                    class="flex items-center justify-between p-2 leading-tight md:p-4"
                                   >
-                                    <h2 class="font-bold">
-                                      Contact Information
-                                    </h2>
-                                    <i
-                                      class="fa fa-phone text-primary-600 fa-2xl"
-                                    ></i>
+                                    <h2 class="font-bold">Contact Information</h2>
+                                    <i class="fa fa-phone text-primary-600 fa-2xl"></i>
                                   </header>
                                   <hr class="text-grey-100" />
                                   <div
-                                    class="container flex items-center justify-between p-2 leading-tight  md:p-4"
+                                    class="container flex items-center justify-between p-2 leading-tight md:p-4"
                                   >
                                     <div class="font-bold">Mobile Number</div>
                                     <div>
@@ -357,7 +324,7 @@
                                   </div>
 
                                   <div
-                                    class="container flex items-center justify-between p-2 mb-10 leading-tight  md:p-4"
+                                    class="container flex items-center justify-between p-2 mb-10 leading-tight md:p-4"
                                   >
                                     <div class="mb-1 font-bold">Email</div>
                                     <div>
@@ -375,25 +342,19 @@
 
                               <!-- Institution Card -->
                               <div
-                                class="w-full px-1 my-1  md:w-1/2 lg:my-4 lg:px-4 lg:w-1/2"
+                                class="w-full px-1 my-1 md:w-1/2 lg:my-4 lg:px-4 lg:w-1/2"
                               >
                                 <!-- Article -->
-                                <article
-                                  class="overflow-hidden rounded-lg  "
-                                >
+                                <article class="overflow-hidden rounded-lg">
                                   <header
-                                    class="flex items-center justify-between p-2 leading-tight  md:p-4"
+                                    class="flex items-center justify-between p-2 leading-tight md:p-4"
                                   >
-                                    <h2 class="font-bold">
-                                      Institution Informatiom
-                                    </h2>
-                                    <i
-                                      class=" fa fa-building text-primary-600 fa-2xl"
-                                    ></i>
+                                    <h2 class="font-bold">Institution Informatiom</h2>
+                                    <i class="fa fa-building text-primary-600 fa-2xl"></i>
                                   </header>
                                   <hr class="text-grey-100" />
                                   <div
-                                    class="container flex items-center justify-between p-2 mb-24 leading-tight  md:p-4"
+                                    class="container flex items-center justify-between p-2 mb-24 leading-tight md:p-4"
                                   >
                                     <div class="font-bold">Department</div>
                                     <div>
@@ -402,8 +363,7 @@
                                           ? goodStanding.department.name
                                           : goodStanding.education
                                           ? goodStanding.education.department
-                                            ? goodStanding.education.department
-                                                .name
+                                            ? goodStanding.education.department.name
                                             : "-"
                                           : "-"
                                       }}
@@ -416,42 +376,31 @@
                               <!-- Profession Card -->
                               <div class="w-full mx-4 my-1 mb-4">
                                 <!-- Article -->
-                                <article
-                                  class="overflow-hidden rounded-lg  "
-                                >
+                                <article class="overflow-hidden rounded-lg">
                                   <header
-                                    class="flex items-center justify-between p-2 leading-tight  md:p-4"
+                                    class="flex items-center justify-between p-2 leading-tight md:p-4"
                                   >
-                                    <h2 class="font-bold">
-                                      Profession Information
-                                    </h2>
+                                    <h2 class="font-bold">Profession Information</h2>
                                     <i
-                                      class=" fa fa-briefcase text-primary-600 fa-2xl"
+                                      class="fa fa-briefcase text-primary-600 fa-2xl"
                                     ></i>
                                   </header>
                                   <hr class="mb-2 text-grey-100" />
                                   <div class="flex flex-row">
                                     <div>
-                                      <div
-                                        class="flex flex-col ml-8 mr-12 mb-medium"
-                                      >
+                                      <div class="flex flex-col ml-8 mr-12 mb-medium">
                                         <div>
-                                          <div
-                                            class="flex flex-col ml-8 mr-12  mb-medium"
-                                          >
+                                          <div class="flex flex-col ml-8 mr-12 mb-medium">
                                             <div class="grid grid-cols-2 gap-4">
                                               <p
-                                                class="text-base font-bold  text-primary-600"
+                                                class="text-base font-bold text-primary-600"
                                               >
                                                 Department Name
                                               </p>
-                                              <p
-                                                class="text-base font-bold text-black "
-                                              >
+                                              <p class="text-base font-bold text-black">
                                                 {{
                                                   goodStanding.department
-                                                    ? goodStanding.department
-                                                        .name
+                                                    ? goodStanding.department.name
                                                     : ""
                                                 }}
                                               </p>
@@ -459,35 +408,27 @@
 
                                             <div class="grid grid-cols-2 gap-4">
                                               <p
-                                                class="text-base font-bold  text-primary-600"
+                                                class="text-base font-bold text-primary-600"
                                               >
                                                 Profession
                                               </p>
-                                              <div
-                                                class="text-base font-bold text-black "
-                                              >
+                                              <div class="text-base font-bold text-black">
                                                 {{
                                                   goodStanding.GSProfessionals
                                                     .professionalTypes
-                                                    ? goodStanding
-                                                        .GSProfessionals
-                                                        .professionalTypes
-                                                        .name != "Other"
-                                                      ? goodStanding
-                                                          .GSProfessionals
-                                                          .professionalTypes
-                                                          .name
-                                                      : goodStanding
-                                                          .GSProfessionals
+                                                    ? goodStanding.GSProfessionals
+                                                        .professionalTypes.name != "Other"
+                                                      ? goodStanding.GSProfessionals
+                                                          .professionalTypes.name
+                                                      : goodStanding.GSProfessionals
                                                           .otherProfessionType +
                                                         "/" +
-                                                        goodStanding
-                                                          .GSProfessionals
+                                                        goodStanding.GSProfessionals
                                                           .otherProfessionTypeAmharic
                                                     : ""
                                                 }}
                                                 <span
-                                                  class="cursor-pointer  text-primary-500"
+                                                  class="cursor-pointer text-primary-500"
                                                   @click="
                                                     allowProfessionChange(
                                                       goodStanding.departmentId,
@@ -496,15 +437,13 @@
                                                   "
                                                 >
                                                   <i
-                                                    class="text-green-200  fa fa-pencil"
+                                                    class="text-green-200 fa fa-pencil"
                                                   ></i
                                                   >Edit
                                                 </span>
 
                                                 <div
-                                                  :id="
-                                                    goodStanding.departmentId
-                                                  "
+                                                  :id="goodStanding.departmentId"
                                                   class="flex justify-center"
                                                   v-if="
                                                     allowProfChange[
@@ -514,39 +453,14 @@
                                                 >
                                                   <div class="w-full mb-3">
                                                     <select
-                                                      class="
-                                                      form-select
-                                                      appearance-none
-                                                      block
-                                                      w-full
-                                                      px-3
-                                                      py-1.5
-                                                      text-base
-                                                      font-normal
-                                                      text-gray-700
-                                                      bg-white
-                                                      bg-clip-padding
-                                                      bg-no-repeat
-                                                      border
-                                                      border-solid
-                                                      border-gray-300
-                                                      rounded
-                                                      transition
-                                                      ease-in-out
-                                                      m-0
-                                                      focus:text-gray-700
-                                                      focus:bg-white
-                                                      focus:border-blue-600
-                                                      focus:oProfessionutline-none
-                                                    "
+                                                      class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:oProfessionutline-none"
                                                       @click="
                                                         changeNewProfession(
                                                           goodStanding.GSProfessionals
                                                         )
                                                       "
                                                       v-model="
-                                                        goodStanding
-                                                          .GSProfessionals
+                                                        goodStanding.GSProfessionals
                                                           .professionalTypeId
                                                       "
                                                       aria-label="Default select example"
@@ -556,8 +470,7 @@
                                                       </option>
                                                       <option
                                                         v-for="prof in newProf[
-                                                          goodStanding
-                                                            .departmentId
+                                                          goodStanding.departmentId
                                                         ]"
                                                         :key="prof.id"
                                                         :value="prof.id"
@@ -572,13 +485,11 @@
 
                                             <div class="grid grid-cols-2 gap-4">
                                               <p
-                                                class="text-base font-bold  text-primary-600"
+                                                class="text-base font-bold text-primary-600"
                                               >
                                                 Prefix
                                               </p>
-                                              <div
-                                                class="text-base font-bold text-black "
-                                              >
+                                              <div class="text-base font-bold text-black">
                                                 <div
                                                   class="w-full mb-3"
                                                   v-if="
@@ -588,34 +499,9 @@
                                                   "
                                                 >
                                                   <select
-                                                    class="
-                                                    form-select
-                                                    appearance-none
-                                                    block
-                                                    w-full
-                                                    px-3
-                                                    py-1.5
-                                                    text-base
-                                                    font-normal
-                                                    text-gray-700
-                                                    bg-white
-                                                    bg-clip-padding
-                                                    bg-no-repeat
-                                                    border
-                                                    border-solid
-                                                    border-gray-300
-                                                    rounded
-                                                    transition
-                                                    ease-in-out
-                                                    m-0
-                                                    focus:text-gray-700
-                                                    focus:bg-white
-                                                    focus:border-blue-600
-                                                    focus:oProfessionutline-none
-                                                  "
+                                                    class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:oProfessionutline-none"
                                                     v-model="
-                                                      goodStanding
-                                                        .GSProfessionals
+                                                      goodStanding.GSProfessionals
                                                         .prefixId
                                                     "
                                                     aria-label="Default select example"
@@ -651,7 +537,7 @@
                               <div
                                 v-if="
                                   docs[index] &&
-                                    docs[index].fileType.split('/')[1] == 'pdf'
+                                  docs[index].fileType.split('/')[1] == 'pdf'
                                 "
                               >
                                 <div>
@@ -681,11 +567,9 @@
                                   class="duration-500 ease-in scale-50 cursor-pointer hover:scale-75 h-64 w-64"
                                   @click="
                                     viewImage(
-                                      docs[index]
-                                        ? googleApi + docs[index].filePath
-                                        : ''
+                                      docs[index] ? googleApi + docs[index].filePath : ''
                                     )
-                                  " 
+                                  "
                                   v-bind:src="
                                     docs[index] && docs[index].filePath
                                       ? googleApi + '' + docs[index].filePath
@@ -706,90 +590,26 @@
                         </div>
                         <div class="mt-medium" v-if="!showButtons">
                           <button
-                            class="
-                            inline-block
-                            px-6
-                            py-2.5
-                            bg-primary-700
-                            hover:text-primary-600 hover:bg-white hover:border
-                            text-white
-                            font-medium
-                            text-xs
-                            leading-tight
-                            uppercase
-                            rounded
-                             
-                            transition
-                            duration-150
-                            ease-in-out
-                          "
+                            class="inline-block px-6 py-2.5 bg-primary-700 hover:text-primary-600 hover:bg-white hover:border text-white font-medium text-xs leading-tight uppercase rounded transition duration-150 ease-in-out"
                             @click="accept(docs[index])"
                           >
                             Accept
                           </button>
                           <button
-                            class="
-                            inline-block
-                            px-6
-                            py-2.5
-                            bg-red-300
-                            hover:text-red-300 hover:bg-white hover:border
-                            text-white
-                            font-medium
-                            text-xs
-                            leading-tight
-                            uppercase
-                            rounded
-                             
-                            transition
-                            duration-150
-                            ease-in-out
-                          "
+                            class="inline-block px-6 py-2.5 bg-red-300 hover:text-red-300 hover:bg-white hover:border text-white font-medium text-xs leading-tight uppercase rounded transition duration-150 ease-in-out"
                             @click="reject(docs[index])"
                           >
                             Reject
                           </button>
                           <button
-                            class="
-                            inline-block
-                            px-6
-                            py-2.5
-                            bg-yellow-300
-                            hover:text-yellow-300 hover:bg-white hover:border
-                            text-white
-                            font-medium
-                            text-xs
-                            leading-tight
-                            uppercase
-                            rounded
-                             
-                            transition
-                            duration-150
-                            ease-in-out
-                          "
+                            class="inline-block px-6 py-2.5 bg-yellow-300 hover:text-yellow-300 hover:bg-white hover:border text-white font-medium text-xs leading-tight uppercase rounded transition duration-150 ease-in-out"
                             @click="action('ReviewerDraftEvent')"
                           >
                             Save as Draft
                           </button>
                           <button
                             v-if="showTransferToAdminButton"
-                            class="
-                            inline-block
-                            px-6
-                            py-2.5
-                            bg-primary-700
-                            hover:text-primary-600 hover:bg-white hover:border
-                            text-white
-                            font-medium
-                            text-xs
-                            leading-tight
-                            uppercase
-                            rounded
-                             
-                            transition
-                            duration-150
-                            ease-in-out
-                          "
+                            class="inline-block px-6 py-2.5 bg-primary-700 hover:text-primary-600 hover:bg-white hover:border text-white font-medium text-xs leading-tight uppercase rounded transition duration-150 ease-in-out"
                             @click="transferToFederal()"
                           >
                             Transfer to Federal
@@ -810,7 +630,7 @@
                     </div>
                   </div>
                   <div
-                    class="container w-64 h-40 p-4 mt-8 mr-8 rounded-lg    box-shadow-pop"
+                    class="container w-64 h-40 p-4 mt-8 mr-8 rounded-lg box-shadow-pop"
                   >
                     <div class="mt-8">
                       <div class="flex items-center justify-center my-auto">
@@ -843,7 +663,7 @@
                       ></loading>
                       <button
                         v-if="button.code != 'US'"
-                        class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded    bg-primary-700 hover:text-primary-600 hover:border"
+                        class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded bg-primary-700 hover:text-primary-600 hover:border"
                         @click="action(button.action)"
                       >
                         {{ button.name }}
@@ -853,15 +673,11 @@
                 </div>
 
                 <modal v-if="showRemark">
-                  <template v-slot:modalHeader>
-                    Decline Documents Reason
-                  </template>
+                  <template v-slot:modalHeader> Decline Documents Reason </template>
                   <template v-slot:modalBody>
                     <div class="w-full p-2 m-4">
                       <div class="flex justify-center">
-                        <div
-                          class="mt-2 cursor-pointer bg-grey-200 rounded mr-4"
-                        >
+                        <div class="mt-2 cursor-pointer bg-grey-200 rounded mr-4">
                           <svg
                             width="40"
                             height="60"
@@ -893,32 +709,28 @@
                             }}
                           </h5>
                           <div class="mt-2">
-                            <div class="flex justify-center  rounded">
+                            <div class="flex justify-center rounded">
                               <div v-if="rejectedObj.length > 0">
                                 <div
                                   v-if="
                                     rejectedObj[ind] &&
-                                      rejectedObj[ind].fileType &&
-                                      rejectedObj[ind].fileType.split('/')[1] ==
-                                        'pdf'
+                                    rejectedObj[ind].fileType &&
+                                    rejectedObj[ind].fileType.split('/')[1] == 'pdf'
                                   "
                                 >
                                   <h5 class="text-2xl text-grey-800">
                                     {{
-                                      rejectedObj[ind] &&
-                                      rejectedObj[ind].documentType
+                                      rejectedObj[ind] && rejectedObj[ind].documentType
                                         ? rejectedObj[ind].documentType.name
                                         : ""
                                     }}
                                   </h5>
 
                                   <button
-                                    class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded   bg-primary-400 hover:bg-purple-700 hover:  focus:bg-purple-700 focus:  focus:outline-none focus:ring-0 active:bg-purple-800 active:  hover:bg-white hover:text-primary-600"
+                                    class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded bg-primary-400 hover:bg-purple-700 hover: focus:bg-purple-700 focus: focus:outline-none focus:ring-0 active:bg-purple-800 active: hover:bg-white hover:text-primary-600"
                                     @click="
                                       openPdfInNewTab(
-                                        rejectedObj[ind]
-                                          ? rejectedObj[ind].filePath
-                                          : ''
+                                        rejectedObj[ind] ? rejectedObj[ind].filePath : ''
                                       )
                                     "
                                   >
@@ -945,9 +757,7 @@
                           </div>
                         </div>
 
-                        <div
-                          class="mt-2 cursor-pointer bg-grey-200 rounded mr-4"
-                        >
+                        <div class="mt-2 cursor-pointer bg-grey-200 rounded mr-4">
                           <svg
                             width="40"
                             height="60"
@@ -993,7 +803,7 @@
                         class="flex items-center justify-center border-t border-solid rounded-b border-blueGray-200"
                       >
                         <button
-                          class="inline-block px-6 text-xs mt-4 font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded   bg-primary-600 hover:bg-purple-700 hover:  focus:bg-purple-700 focus:  focus:outline-none focus:ring-0 active:bg-purple-800 active:  hover:bg-primary-400 hover:text-white"
+                          class="inline-block px-6 text-xs mt-4 font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded bg-primary-600 hover:bg-purple-700 hover: focus:bg-purple-700 focus: focus:outline-none focus:ring-0 active:bg-purple-800 active: hover:bg-primary-400 hover:text-white"
                           type="button"
                           v-on:click="showRemark = false"
                         >
@@ -1001,8 +811,7 @@
                         </button>
                         <button
                           type="button"
-                          class="inline-block px-6 text-white mt-4 bg-primary-600 font-medium text-xs leading-tight uppercase rounded   hover:bg-purple-700 hover:  focus:bg-purple-700 focus:  focus:outline-none focus:ring-0 active:bg-purple-800 active:  transition duration-150 hover:bg-primary-400 hover:text-white ease-in-out
-                          "
+                          class="inline-block px-6 text-white mt-4 bg-primary-600 font-medium text-xs leading-tight uppercase rounded hover:bg-purple-700 hover: focus:bg-purple-700 focus: focus:outline-none focus:ring-0 active:bg-purple-800 active: transition duration-150 hover:bg-primary-400 hover:text-white ease-in-out"
                           v-on:click="submitRemark()"
                         >
                           Submit
@@ -1162,85 +971,76 @@ export default {
     const created = async (applicationTypeName, applicationId) => {
       applicationType.value = applicationTypeName;
 
-      store
-        .dispatch("reviewer/getGoodStandingApplication", applicationId)
-        .then((res) => {
-          goodStanding.value = res.data.data;
-          departmentId.value =
-            goodStanding.value && goodStanding.value.department
-              ? goodStanding.value.department.id
-              : "";
-          profileInfo.value = goodStanding.value.profile;
-          buttons.value = res.data.data.applicationStatus.buttons;
-          docs.value = res.data.data.documents;
-          totalSteps.value = docs.value ? docs.value.length : 0;
-          accepted.value =
-            goodStanding.value &&
-            goodStanding.value.acceptedFields &&
-            goodStanding.value.acceptedFields.length > 0
-              ? goodStanding.value.acceptedFields
-              : (accepted.value = []);
-          rejected.value =
-            goodStanding.value &&
-            goodStanding.value.declinedFields &&
-            goodStanding.value.declinedFields.length > 0
-              ? goodStanding.value.declinedFields
-              : (rejected.value = []);
-          completedSteps.value = accepted.value.length + rejected.value.length;
-          index.value = completedSteps.value;
-          if (completedSteps.value == docs.value.length) {
-            showButtons.value = true;
-          }
-          if (docs.value.length == 0) {
-            showButtons.value = true;
-          }
-          fetchDocumentTypes();
-          for (let i = 0; i < goodStanding.value.GSProfessionals.length; i++) {
-            goodStanding.value.GSProfessionals[i].showPrefix = false;
-            goodStanding.value.GSProfessionals[i].showPrefixLink = true;
-            professionalTypeIdss.value.push(
-              goodStanding.value.GSProfessionals[i].professionalTypeId
-            );
-          }
-          if (goodStanding.value.applicationStatus.code == "REVDRA") {
-            rejected.value = goodStanding.value.declinedFields;
-            for (let i in goodStanding.value.documents) {
-              for (let j in rejected.value) {
-                if (
-                  goodStanding.value.documents[i].documentTypeCode ==
-                  rejected.value[j]
-                ) {
-                  rejectedObj.value.push(goodStanding.value.documents[i]);
-                  break;
-                }
-              }
-            }
-            accepted.value = goodStanding.value.acceptedFields;
-            index.value = rejected.value.length + accepted.value.length;
-            if (index.value == docs.value.length) {
-              index.value -= 1;
-            }
-            amount.value = ((index.value + 1) / docs.value.length) * 100;
-            width.value = "width:" + amount.value + "%";
-            if (
-              accepted.value.includes(
-                docs.value[index.value - 1].documentTypeCode
-              ) ||
-              rejected.value.includes(
-                docs.value[index.value - 1].documentTypeCode
-              )
-            ) {
-              if (goodStanding.value.documnets) {
-                findDocumentType(documentTypes.value, docs.value[index.value]);
+      store.dispatch("reviewer/getGoodStandingApplication", applicationId).then((res) => {
+        goodStanding.value = res.data.data;
+        departmentId.value =
+          goodStanding.value && goodStanding.value.department
+            ? goodStanding.value.department.id
+            : "";
+        profileInfo.value = goodStanding.value.profile;
+        buttons.value = res.data.data.applicationStatus.buttons;
+        docs.value = res.data.data.documents;
+        totalSteps.value = docs.value ? docs.value.length : 0;
+        accepted.value =
+          goodStanding.value &&
+          goodStanding.value.acceptedFields &&
+          goodStanding.value.acceptedFields.length > 0
+            ? goodStanding.value.acceptedFields
+            : (accepted.value = []);
+        rejected.value =
+          goodStanding.value &&
+          goodStanding.value.declinedFields &&
+          goodStanding.value.declinedFields.length > 0
+            ? goodStanding.value.declinedFields
+            : (rejected.value = []);
+        completedSteps.value = accepted.value.length + rejected.value.length;
+        index.value = completedSteps.value;
+        if (completedSteps.value == docs.value.length) {
+          showButtons.value = true;
+        }
+        if (docs.value.length == 0) {
+          showButtons.value = true;
+        }
+        fetchDocumentTypes();
+        for (let i = 0; i < goodStanding.value.GSProfessionals.length; i++) {
+          goodStanding.value.GSProfessionals[i].showPrefix = false;
+          goodStanding.value.GSProfessionals[i].showPrefixLink = true;
+          professionalTypeIdss.value.push(
+            goodStanding.value.GSProfessionals[i].professionalTypeId
+          );
+        }
+        if (goodStanding.value.applicationStatus.code == "REVDRA") {
+          rejected.value = goodStanding.value.declinedFields;
+          for (let i in goodStanding.value.documents) {
+            for (let j in rejected.value) {
+              if (goodStanding.value.documents[i].documentTypeCode == rejected.value[j]) {
+                rejectedObj.value.push(goodStanding.value.documents[i]);
+                break;
               }
             }
           }
+          accepted.value = goodStanding.value.acceptedFields;
+          index.value = rejected.value.length + accepted.value.length;
+          if (index.value == docs.value.length) {
+            index.value -= 1;
+          }
+          amount.value = ((index.value + 1) / docs.value.length) * 100;
+          width.value = "width:" + amount.value + "%";
+          if (
+            accepted.value.includes(docs.value[index.value - 1].documentTypeCode) ||
+            rejected.value.includes(docs.value[index.value - 1].documentTypeCode)
+          ) {
+            if (goodStanding.value.documnets) {
+              findDocumentType(documentTypes.value, docs.value[index.value]);
+            }
+          }
+        }
 
-          if (admin && admin.expertLevelId == 3) {
-            showTransferToAdminButton.value = false;
-          }
-          isLoadingStart.value = false;
-        });
+        if (admin && admin.expertLevelId == 3) {
+          showTransferToAdminButton.value = false;
+        }
+        isLoadingStart.value = false;
+      });
 
       applicationType.value = route.params.applicationType;
     };
@@ -1263,9 +1063,7 @@ export default {
         accepted.value.includes(
           doc && doc.documentTypeCode ? doc.documentTypeCode : ""
         ) ||
-        rejected.value.includes(
-          doc && doc.documentTypeCode ? doc.documentTypeCode : ""
-        )
+        rejected.value.includes(doc && doc.documentTypeCode ? doc.documentTypeCode : "")
       ) {
         nextClickable.value = true;
       }
@@ -1284,10 +1082,7 @@ export default {
     const nextRemark = () => {
       if (ind.value != rejectedObj.value.length - 1) {
         ind.value = ind.value + 1;
-        modalFindDocumentType(
-          documentTypes.value,
-          rejectedObj.value[ind.value]
-        );
+        modalFindDocumentType(documentTypes.value, rejectedObj.value[ind.value]);
         nextClickable.value = false;
       }
     };
@@ -1321,29 +1116,27 @@ export default {
           createdByAdminId: adminId,
         };
         isLoadingFinalAction.value = true;
-        store
-          .dispatch("reviewer/transferToFederal", transferData)
-          .then((res) => {
-            isLoadingStart.value = false;
-            if (res.data?.status == "Success") {
-              toast.success("Application  transfered Successfully", {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true,
-              });
-              isLoadingFinalAction.value = false;
-            } else {
-              toast.success("Error occured", {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true,
-              });
-            }
-          });
+        store.dispatch("reviewer/transferToFederal", transferData).then((res) => {
+          isLoadingStart.value = false;
+          if (res.data?.status == "Success") {
+            toast.success("Application  transfered Successfully", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+            isLoadingFinalAction.value = false;
+          } else {
+            toast.success("Error occured", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+          }
+        });
       });
     };
     const accept = (doc) => {
@@ -1356,9 +1149,7 @@ export default {
             doc && doc.documentTypeCode ? doc.documentTypeCode : ""
           )
         ) {
-          accepted.value.push(
-            doc && doc.documentTypeCode ? doc.documentTypeCode : ""
-          );
+          accepted.value.push(doc && doc.documentTypeCode ? doc.documentTypeCode : "");
           if (index.value == docs.value.length - 1) {
             showButtons.value = true;
           } else {
@@ -1427,9 +1218,7 @@ export default {
             doc && doc.documentTypeCode ? doc.documentTypeCode : ""
           )
         ) {
-          rejected.value.push(
-            doc && doc.documentTypeCode ? doc.documentTypeCode : ""
-          );
+          rejected.value.push(doc && doc.documentTypeCode ? doc.documentTypeCode : "");
           rejectedObj.value.push(doc);
           if (index.value == docs.value.length - 1) {
             showButtons.value = true;
@@ -1462,9 +1251,7 @@ export default {
           }
         }
       } else {
-        rejected.value.push(
-          doc && doc.documentTypeCode ? doc.documentTypeCode : ""
-        );
+        rejected.value.push(doc && doc.documentTypeCode ? doc.documentTypeCode : "");
         rejectedObj.value.push(doc);
         if (index.value == docs.value.length - 1) {
           showButtons.value = true;
@@ -1475,9 +1262,7 @@ export default {
           findDocumentType(documentTypes.value, docs.value[index.value]);
         }
         if (
-          accepted.value.includes(
-            doc && doc.documentTypeCode ? doc.documentTypeCode : ""
-          )
+          accepted.value.includes(doc && doc.documentTypeCode ? doc.documentTypeCode : "")
         ) {
           accepted.value.splice(
             accepted.value.indexOf(
@@ -1522,8 +1307,9 @@ export default {
       }
 
       isLoadingStart.value = true;
-      goodStanding.value.declinedFields = rejected.value;
-      goodStanding.value.acceptedFields = accepted.value;
+      goodStanding.value.declinedFields = [...new Set(rejected.value)];
+      goodStanding.value.acceptedFields = [...new Set(accepted.value)];
+
       goodStanding.value.certified = true;
       goodStanding.value.certifiedDate = new Date();
       actionValue == "DeclineEventFinal" ? (actionValue = "DeclineEvent") : "";
@@ -1650,8 +1436,7 @@ export default {
       let newProfile = {
         alternativeName: goodStanding.value.profile.alternativeName,
         alternativeFatherName: goodStanding.value.profile.alternativeFatherName,
-        alternativeGrandFatherName:
-          goodStanding.value.profile.alternativeGrandFatherName,
+        alternativeGrandFatherName: goodStanding.value.profile.alternativeGrandFatherName,
       };
       const profileData = [id, newProfile];
       store
@@ -1693,9 +1478,7 @@ export default {
             : (professionalTypes.value[index].showPrefixLink = false);
           previousProfession
             ? professionalTypeIdss.value.splice(
-                professionalTypeIdss.value.indexOf(
-                  profession.professionalTypes.id
-                ),
+                professionalTypeIdss.value.indexOf(profession.professionalTypes.id),
                 1
               )
             : professionalTypeIdss.value.splice(
@@ -1706,9 +1489,7 @@ export default {
           if (previousProfession) {
             professionalTypePrefixes.value = professionalTypePrefixes.value.filter(
               (data) => {
-                return (
-                  data.professionalTypeId != profession.professionalTypes.id
-                );
+                return data.professionalTypeId != profession.professionalTypes.id;
               }
             );
           } else {
@@ -1719,10 +1500,7 @@ export default {
             );
           }
 
-          if (
-            previousProfession &&
-            profession.professionalTypes.name == "Other"
-          ) {
+          if (previousProfession && profession.professionalTypes.name == "Other") {
             goodStanding.value.otherProfessionalType = null;
             goodStanding.value.otherProfessionalTypeAmharic = null;
           } else if (!previousProfession && profession.name == "Other") {
@@ -1762,9 +1540,7 @@ export default {
         return;
       }
       for (let i = 0; i < professionalTypePrefixes.value.length; i++) {
-        if (
-          professionId !== professionalTypePrefixes.value[i].professionalTypeId
-        ) {
+        if (professionId !== professionalTypePrefixes.value[i].professionalTypeId) {
           countProLength.value++;
           if (countProLength.value === professionalTypePrefixes.value.length) {
             professionalTypePrefixes.value.push({
