@@ -1,6 +1,6 @@
 <template>
   <div class="container mt-4 mx-auto">
-    <div class="border rounded-md   text-main-400 m-4 p-4">
+    <div class="border rounded-md text-main-400 m-4 p-4">
       <h2 class="text-primary-600 font-bold text-3xl">
         Welcome back, {{ loggedInUser ? loggedInUser.name : "" }}
       </h2>
@@ -10,7 +10,7 @@
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3">
       <div
-        class="card m-2 bg-primary-700 border border-grey-400 rounded-2xl transform   hover:-translate-y-4 transition-all duration-200"
+        class="card m-2 bg-primary-700 border border-grey-400 rounded-2xl transform hover:-translate-y-4 transition-all duration-200"
       >
         <div class="m-3 text-center">
           <h2 class="text-xl mb-2 text-white dashboard_card_title">
@@ -27,7 +27,7 @@
       </div>
 
       <div
-        class="card m-2 bg-primary-700 border border-grey-400 rounded-2xl ransform   hover:-translate-y-4 transition-all duration-200"
+        class="card m-2 bg-primary-700 border border-grey-400 rounded-2xl ransform hover:-translate-y-4 transition-all duration-200"
       >
         <div class="m-3 text-center">
           <h2 class="text-xl mb-2 text-white dashboard_card_title">
@@ -44,7 +44,7 @@
       </div>
 
       <div
-        class="card m-2 bg-primary-700 border border-grey-400 rounded-2xl transform   hover:-translate-y-4 transition-all duration-200"
+        class="card m-2 bg-primary-700 border border-grey-400 rounded-2xl transform hover:-translate-y-4 transition-all duration-200"
       >
         <div class="m-3 text-center">
           <h2 class="text-xl mb-2 text-white dashboard_card_title">
@@ -67,7 +67,7 @@
       <div class="mr-12 mb-8 overview-boxes">
         <router-link to="/admin/newLicense/">
           <div
-            class="bg-white   box rounded-2xl hover:   transition duration-500 transform hover:scale-110 cursor-pointer cart"
+            class="bg-white box rounded-2xl transition duration-500 transform hover:scale-110 cursor-pointer cart"
             style="height: 200px; width: 300px"
           >
             <p
@@ -90,7 +90,7 @@
       <div class="mr-12 mb-8 overview-boxes">
         <router-link to="/admin/renewal/">
           <div
-            class="bg-white   box rounded-2xl hover:   transition duration-500 transform hover:scale-110 cursor-pointer"
+            class="bg-white box rounded-2xl transition duration-500 transform hover:scale-110 cursor-pointer"
             style="height: 200px; width: 300px"
           >
             <p
@@ -117,7 +117,7 @@
       <div class="mr-12 mb-8 overview-boxes">
         <router-link to="/admin/verification/">
           <div
-            class="bg-white   box rounded-2xl hover:shadow-4xl transition duration-500 transform hover:scale-110 cursor-pointer"
+            class="bg-white box rounded-2xl transition duration-500 transform hover:scale-110 cursor-pointer"
             style="height: 200px; width: 300px"
           >
             <p
@@ -140,7 +140,7 @@
       <div class="mr-12 mb-8 overview-boxes">
         <router-link to="/admin/goodStanding/">
           <div
-            class="bg-white   box rounded-2xl hover:shadow-3xl transition duration-500 transform hover:scale-110 cursor-pointer"
+            class="bg-white box rounded-2xl transition duration-500 transform hover:scale-110 cursor-pointer"
             style="height: 200px; width: 300px"
           >
             <p

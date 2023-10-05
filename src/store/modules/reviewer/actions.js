@@ -135,6 +135,87 @@ export default {
       return resp;
     }
   },
+
+  async addNewLicenseRequest(context, request) {
+    try {
+      const url = baseUrl + "/requests/newLicenseRequests/add";
+      const resp = await ApiService.post(url, request);
+      return resp;
+    } catch (error) {
+      const resp = { status: "Error" };
+      return resp;
+    }
+  },
+  async addRenewalRequest(context, request) {
+    try {
+      const url = baseUrl + "/requests/renewalRequests/add";
+      const resp = await ApiService.post(url, request);
+      return resp;
+    } catch (error) {
+      const resp = { status: "Error" };
+      return resp;
+    }
+  },
+
+  async addGoodStandingRequest(context, request) {
+    try {
+      const url = baseUrl + "/requests/goodStandingRequests/add";
+      const resp = await ApiService.post(url, request);
+      return resp;
+    } catch (error) {
+      const resp = { status: "Error" };
+      return resp;
+    }
+  },
+  async updateNewLicenseRequest(context, request) {
+    try {
+      const url = baseUrl + "/requests/newLicenseRequests/" + request.id;
+      const resp = await ApiService.put(url, request);
+      return resp;
+    } catch (error) {
+      const resp = { status: "Error" };
+      return resp;
+    }
+  },
+  async updateRenewalRequest(context, request) {
+    try {
+      const url = baseUrl + "/requests/renewalRequests/" + request.id;
+      const resp = await ApiService.put(url, request);
+      return resp;
+    } catch (error) {
+      const resp = { status: "Error" };
+      return resp;
+    }
+  },
+  async updateGoodStandingRequest(context, request) {
+    try {
+      const url = baseUrl + "/requests/goodStandingRequests/" + request.id;
+      const resp = await ApiService.put(url, request);
+      return resp;
+    } catch (error) {
+      const resp = { status: "Error" };
+      return resp;
+    }
+  },
+  async getRequestsByAdminRegion(context, typeParam) {
+    try {
+      let finalType =
+        typeParam && typeParam.type == "newLicense"
+          ? "newLicenseRequests"
+          : typeParam && typeParam.type == "renewal"
+          ? "renewalRequests"
+          : typeParam && typeParam.type == "goodStanding"
+          ? "goodStandingRequests"
+          : "";
+      const url = baseUrl + `/requests/${finalType}/getByAdminRegion/`;
+      const resp = await ApiService.get(url);
+      return resp;
+    } catch (error) {
+      const resp = { status: "Error" };
+      return resp;
+    }
+  },
+
   async getScannedCertificate(context, params) {
     try {
       const url =

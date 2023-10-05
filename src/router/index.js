@@ -790,6 +790,13 @@ const routes = [
       ),
   },
 
+  //Admin Requests Management
+  {
+    path: "/admin/requests",
+    name: "AdminRequestManagement",
+    component: () =>
+      import("../components/Reviewer/HomeComponents/Requests/requests.vue"),
+  },
   //Admin Profile Management
   {
     path: "/admin/profile",

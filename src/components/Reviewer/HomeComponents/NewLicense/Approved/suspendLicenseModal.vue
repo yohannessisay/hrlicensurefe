@@ -1,17 +1,6 @@
 <template>
   <div
-    class="
-      modal
-      fade
-      fixed
-      top-0
-      left-0
-      hidden
-      w-full
-      h-full
-      outline-none
-      overflow-x-hidden overflow-y-auto
-    "
+    class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
     id="suspendLicense"
     data-bs-backdrop="static"
     data-bs-keyboard="false"
@@ -20,43 +9,15 @@
     aria-hidden="true"
   >
     <div
-      class="
-        modal-dialog modal-dialog-centered modal-md
-        relative
-        w-auto
-        pointer-events-none
-      "
+      class="modal-dialog modal-dialog-centered modal-md relative w-auto pointer-events-none"
     >
       <div
-        class="
-          modal-content
-          border-none
-           
-          relative
-          flex flex-col
-          w-full
-          pointer-events-auto
-          bg-white bg-clip-padding
-          rounded-md
-          outline-none
-          text-current
-          justify-center
-        "
+        class="modal-content border-none relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current justify-center"
       >
         <div
-          class="
-            modal-header
-            flex flex-shrink-0
-            items-center
-            justify-center
-            p-2
-            rounded-t-md
-            border-b border-grey-100
-          "
+          class="modal-header flex flex-shrink-0 items-center justify-center p-2 rounded-t-md border-b border-grey-100"
         >
-          <label class="mb-4 text-lg text-yellow-300 font-bold"
-            >Suspend License</label
-          >
+          <label class="mb-4 text-lg text-yellow-300 font-bold">Suspend License</label>
         </div>
 
         <div class="modal-body relative p-4">
@@ -83,51 +44,13 @@
                       <input
                         v-model="startDate"
                         type="date"
-                        class="
-                          form-control
-                          block
-                          w-full
-                          px-3
-                          py-1.5
-                          text-base
-                          font-normal
-                          text-gray-700
-                          bg-white bg-clip-padding
-                          border border-solid border-gray-300
-                          rounded
-                          transition
-                          ease-in-out
-                          m-0
-                          focus:text-gray-700
-                          focus:bg-white
-                          focus:border-blue-600
-                          focus:outline-none
-                        "
+                        class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                       />
                     </div>
                     <div class="form-group mb-6 mt-4">
                       <label for="" class="ml-2">End Date</label>
                       <input
-                        class="
-                          form-control
-                          block
-                          w-full
-                          px-3
-                          py-1.5
-                          text-base
-                          font-normal
-                          text-gray-700
-                          bg-white bg-clip-padding
-                          border border-solid border-gray-300
-                          rounded
-                          transition
-                          ease-in-out
-                          m-0
-                          focus:text-gray-700
-                          focus:bg-white
-                          focus:border-blue-600
-                          focus:outline-none
-                        "
+                        class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                         v-model="endDate"
                         type="date"
                       />
@@ -151,38 +74,11 @@
         </div>
 
         <div
-          class="
-            modal-footer
-            flex flex-shrink-0 flex-wrap
-            items-center
-            justify-center
-            border-t border-grey-100
-            rounded-b-md
-          "
+          class="modal-footer flex flex-shrink-0 flex-wrap items-center justify-center border-t border-grey-100 rounded-b-md"
         >
           <button
             type="button"
-            class="
-              inline-block
-              px-6
-              text-white
-              font-medium
-              text-xs
-              leading-tight
-              uppercase
-              rounded
-               
-              bg-yellow-300
-              hover:bg-white hover:text-yellow-300 hover: 
-              focus:bg-purple-700
-              focus: 
-              focus:outline-none
-              focus:ring-0
-              active:bg-purple-800 active: 
-              transition
-              duration-150
-              ease-in-out
-            "
+            class="inline-block px-6 text-white font-medium text-xs leading-tight uppercase rounded bg-yellow-300 hover:bg-white hover:text-yellow-300 hover: focus:bg-purple-700 focus: focus:outline-none focus:ring-0 active:bg-purple-800 active: transition duration-150 ease-in-out"
             @click="suspend()"
           >
             <i class="fa fa-times-circle"></i>
@@ -190,22 +86,7 @@
           </button>
           <button
             type="button"
-            class="
-              inline-block
-              px-6
-              text-white
-              font-medium
-              text-xs
-              bg-primary-700
-              leading-tight
-              uppercase
-              rounded
-               
-              hover:bg-white hover:text-primary-700
-              transition
-              duration-150
-              ease-in-out
-            "
+            class="inline-block px-6 text-white font-medium text-xs bg-primary-700 leading-tight uppercase rounded hover:bg-white hover:text-primary-700 transition duration-150 ease-in-out"
             data-bs-dismiss="modal"
           >
             <i class="fa fa-times-circle"></i>
@@ -292,31 +173,21 @@ export default {
       };
       store
         .dispatch("reviewer/editNewLicense", suspendedData)
-        .then((res) => {
+        .then(() => {
           isLoading.value = false;
-          if (res.statusText == "Created") {
-            store.dispatch("sms/sendSms", smsData).then(() => {
-              toast.success("Application suspended Successfully", {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true,
-              });
-              setTimeout(() => {
-                location.reload();
-              }, 1000);
-            });
-          } else {
-            toast.error(res.data.message, {
+
+          store.dispatch("sms/sendSms", smsData).then(() => {
+            toast.success("Application suspended Successfully", {
               timeout: 5000,
               position: "bottom-center",
               pauseOnFocusLoss: true,
               pauseOnHover: true,
               icon: true,
             });
-           
-          }
+            setTimeout(() => {
+              location.reload();
+            }, 1000);
+          });
         })
         .catch((err) => {
           console.log(err);

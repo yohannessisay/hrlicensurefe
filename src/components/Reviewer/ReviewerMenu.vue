@@ -36,17 +36,6 @@
         </li>
       </router-link>
       <router-link
-        to="/admin/verification/"
-        v-if="adminData ? adminData.role.code != 'SA' : ''"
-      >
-        <li class="mb-2">
-          <a href="#Verification">
-            <i class="bx bx-message-check"></i>
-            <span class="links_name">Verification</span>
-          </a>
-        </li>
-      </router-link>
-      <router-link
         to="/admin/goodStanding/"
         v-if="adminData ? adminData.role.code != 'SA' : ''"
       >
@@ -57,6 +46,29 @@
           </a>
         </li>
       </router-link>
+      <router-link
+        to="/admin/requests/"
+        v-if="adminData ? adminData.role.code == 'ADM' : ''"
+      >
+        <li class="mb-2">
+          <a href="#Requests">
+            <i class="bx bx-question-mark"></i>
+            <span class="links_name">Requests</span>
+          </a>
+        </li>
+      </router-link>
+      <router-link
+        to="/admin/verification/"
+        v-if="adminData ? adminData.role.code != 'SA' : ''"
+      >
+        <li class="mb-2">
+          <a href="#Verification">
+            <i class="bx bx-message-check"></i>
+            <span class="links_name">Verification</span>
+          </a>
+        </li>
+      </router-link>
+
       <router-link
         to="/admin/cpdCertified"
         v-if="adminData ? adminData.role.code != 'SA' : ''"
@@ -71,11 +83,7 @@
 
       <router-link
         to="/admin/userManagement"
-        v-if="
-          adminData
-            ? adminData.role.code == 'UM' || adminData.role.code == 'SA'
-            : ''
-        "
+        v-if="adminData ? adminData.role.code == 'UM' || adminData.role.code == 'SA' : ''"
       >
         <li class="mb-2">
           <a href="#UserManagement">
@@ -198,13 +206,11 @@ export default {
   setup() {
     const store = useStore();
     const toast = useToast();
-    navigator.browserSpecs = (function() {
+    navigator.browserSpecs = (function () {
       var ua = navigator.userAgent,
         tem,
         M =
-          ua.match(
-            /(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i
-          ) || [];
+          ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
       if (/trident/i.test(M[1])) {
         tem = /\brv[ :]+(\d+)/g.exec(ua) || [];
         return {

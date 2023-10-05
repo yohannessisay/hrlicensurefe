@@ -1,17 +1,6 @@
 <template>
   <div
-    class="
-      modal
-      fade
-      fixed
-      top-0
-      left-0
-      hidden
-      w-full
-      h-full
-      outline-none
-      overflow-x-hidden overflow-y-auto
-    "
+    class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
     id="revokeLicense"
     data-bs-backdrop="static"
     data-bs-keyboard="false"
@@ -20,43 +9,15 @@
     aria-hidden="true"
   >
     <div
-      class="
-        modal-dialog modal-dialog-centered modal-md
-        relative
-        w-auto
-        pointer-events-none
-      "
+      class="modal-dialog modal-dialog-centered modal-md relative w-auto pointer-events-none"
     >
       <div
-        class="
-          modal-content
-          border-none
-           
-          relative
-          flex flex-col
-          w-full
-          pointer-events-auto
-          bg-white bg-clip-padding
-          rounded-md
-          outline-none
-          text-current
-          justify-center
-        "
+        class="modal-content border-none relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current justify-center"
       >
         <div
-          class="
-            modal-header
-            flex flex-shrink-0
-            items-center
-            justify-center
-            p-2
-            rounded-t-md
-            border-b border-grey-100
-          "
+          class="modal-header flex flex-shrink-0 items-center justify-center p-2 rounded-t-md border-b border-grey-100"
         >
-          <label class="mb-4 text-lg text-red-300 font-bold"
-            >Revoke License</label
-          >
+          <label class="mb-4 text-lg text-red-300 font-bold">Revoke License</label>
         </div>
 
         <div class="modal-body relative p-4">
@@ -74,9 +35,7 @@
                   :opacity="0.7"
                 ></loading>
                 <div class="flex flex-wrap justify-center">
-                  <label for="" class="text-lg text-primary-600 font-bold"
-                    >Remark</label
-                  >
+                  <label for="" class="text-lg text-primary-600 font-bold">Remark</label>
                 </div>
                 <div class="flex flex-wrap justify-center">
                   <textarea
@@ -92,38 +51,11 @@
         </div>
 
         <div
-          class="
-            modal-footer
-            flex flex-shrink-0 flex-wrap
-            items-center
-            justify-center
-            border-t border-grey-100
-            rounded-b-md
-          "
+          class="modal-footer flex flex-shrink-0 flex-wrap items-center justify-center border-t border-grey-100 rounded-b-md"
         >
           <button
             type="button"
-            class="
-              inline-block
-              px-6
-              text-white
-              font-medium
-              text-xs
-              leading-tight
-              uppercase
-              rounded
-               
-              bg-red-300
-              hover:bg-white hover:text-red-300 hover: 
-              focus:bg-purple-700
-              focus: 
-              focus:outline-none
-              focus:ring-0
-              active:bg-purple-800 active: 
-              transition
-              duration-150
-              ease-in-out
-            "
+            class="inline-block px-6 text-white font-medium text-xs leading-tight uppercase rounded bg-red-300 hover:bg-white hover:text-red-300 hover: focus:bg-purple-700 focus: focus:outline-none focus:ring-0 active:bg-purple-800 active: transition duration-150 ease-in-out"
             @click="revoke()"
           >
             <i class="fa fa-times-circle"></i>
@@ -131,24 +63,7 @@
           </button>
           <button
             type="button"
-            class="
-         inline-block
-              px-6
-              text-white
-              font-medium
-              text-xs
-              bg-primary-700
-              leading-tight
-              uppercase
-              rounded
-              hover:border-primary-600
-               
-              hover:bg-white 
-              hover:text-primary-700
-              transition
-              duration-150
-              ease-in-out
-            "
+            class="inline-block px-6 text-white font-medium text-xs bg-primary-700 leading-tight uppercase rounded hover:border-primary-600 hover:bg-white hover:text-primary-700 transition duration-150 ease-in-out"
             data-bs-dismiss="modal"
           >
             <i class="fa fa-times-circle"></i>
@@ -203,23 +118,11 @@ export default {
       isLoading.value = true;
       store
         .dispatch("reviewer/editNewLicense", revokedData)
-        .then((res) => {
+        .then(() => {
           isLoading.value = false;
-          if (res.statusText == "Created") {
-            store.dispatch("sms/sendSms", smsData).then(() => {
-              toast.success("Application revoked Successfully", {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true,
-              });
-              setTimeout(() => {
-                location.reload();
-              }, 2000);
-            });
-          } else {
-            toast.error(res.data.message, {
+
+          store.dispatch("sms/sendSms", smsData).then(() => {
+            toast.success("Application revoked Successfully", {
               timeout: 5000,
               position: "bottom-center",
               pauseOnFocusLoss: true,
@@ -227,9 +130,9 @@ export default {
               icon: true,
             });
             setTimeout(() => {
-              window.location.reload();
-            }, 3000);
-          }
+              location.reload();
+            }, 2000);
+          });
         })
         .catch((err) => {
           console.log(err);
