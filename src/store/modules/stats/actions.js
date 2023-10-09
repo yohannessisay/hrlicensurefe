@@ -29,6 +29,26 @@ export default {
       console.log(error);
     }
   },
+  async getLicensesCountByProfession() {
+    try {
+      const url = baseUrl + "/admins/dashboard/getLicensesCountByProfession";
+      const resp = await ApiService.get(url);
+      return resp.data;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  async getLicensesCountByDepartment() {
+    try {
+      const url = baseUrl + "/admins/dashboard/getLicensesCountByDepartment";
+      const resp = await ApiService.get(url);
+      return resp.data;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  
+  
   async getApplicationsCount() {
     try {
       const url = baseUrl + "/admins/dashboard/getApplicationsCount";
