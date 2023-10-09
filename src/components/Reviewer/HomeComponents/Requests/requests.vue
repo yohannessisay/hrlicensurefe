@@ -31,21 +31,68 @@
         </div>
         <div class="p-4 bg-grey-200 mb-4 rounded-lg mt-4">
           <h1 class="text-2xl mb-1">Filters</h1>
-          <div class="grid grid-cols-3">
-            <div class="col-span-1">
-              <div class="mb-3 xl:w-full">
-                <label class="">Request Type</label>
-                <select
-                  class="form-select appearance-none block w-full px-6 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                  @change="applyFilter()"
-                  aria-label="Default select example"
-                  v-model="requestTypeFilter"
+          <div class="grid grid-cols-4 gap-4">
+            <div class="mb-3">
+              <label class="">Request Type</label>
+              <select
+                class="form-select appearance-none block w-full px-6 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                @change="applyFilter()"
+                aria-label="Default select example"
+                v-model="requestTypeFilter"
+              >
+                <option value="newLicense">New License</option>
+                <option value="renewal">Renewal</option>
+                <option value="goodStanding">Goodstanding</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="">Request Status</label>
+              <select
+                class="form-select appearance-none block w-full px-6 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                @change="applyFilter()"
+                aria-label="Default select example"
+                v-model="requestStatusFilter"
+              >
+                <option value="all">All</option>
+                <option value="new">New</option>
+                <option value="finalized">Finalized</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="">Current Status</label>
+              <select
+                class="form-select appearance-none block w-full px-6 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                @change="applyFilter()"
+                aria-label="Default select example"
+                v-model="currentStatusFilter"
+              >
+                <option value="all">All</option>
+                <option
+                  v-for="stat in applicationStatuses"
+                  :key="stat.id"
+                  :value="stat.id"
                 >
-                  <option value="newLicense">New License</option>
-                  <option value="renewal">Renewal</option>
-                  <option value="goodStanding">Goodstanding</option>
-                </select>
-              </div>
+                  {{ stat.name }}
+                </option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="">Requested Status</label>
+              <select
+                class="form-select appearance-none block w-full px-6 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                @change="applyFilter()"
+                aria-label="Default select example"
+                v-model="requestedStatusFilter"
+              >
+                <option value="all">All</option>
+                <option
+                  v-for="stat in applicationStatuses"
+                  :key="stat.id"
+                  :value="stat.id"
+                >
+                  {{ stat.name }}
+                </option>
+              </select>
             </div>
           </div>
         </div>
@@ -95,43 +142,73 @@ export default {
     let showAddButton = ref(false);
     let editModalData = ref({});
     let requestTypeFilter = ref("newLicense");
+    let currentStatusFilter = ref("");
+    let requestStatusFilter = ref("");
+    let requestedStatusFilter = ref("");
+    let applicationStatuses = ref([]);
+
     const fetchRequests = async () => {
       store
         .dispatch("reviewer/getRequestsByAdminRegion", {
-          type: requestTypeFilter.value,
+          params: [
+            { key: "type", value: requestTypeFilter.value },
+            {
+              key: "currentStatus",
+              value:
+                currentStatusFilter.value && currentStatusFilter.value != "all"
+                  ? currentStatusFilter.value
+                  : "",
+            },
+            {
+              key: "requestedStatus",
+              value:
+                requestedStatusFilter.value && requestedStatusFilter.value != "all"
+                  ? requestedStatusFilter.value
+                  : "",
+            },
+            {
+              key: "requestStatus",
+              value:
+                requestStatusFilter.value && requestStatusFilter.value != "all"
+                  ? requestStatusFilter.value
+                  : "",
+            },
+          ],
         })
         .then(async (res) => {
           let result = (await res.data) && res.data.data ? res.data.data : [];
           requestsTableData = [];
-          result.rows.forEach((element) => {
-            requestsTableData.push({
-              id: element.id ? element.id : "",
-              Status: element.status ? element.status : "",
-              RequestedBy: element.requestedBy ? element.requestedBy.name : "",
-              ApprovedBy: element.approvedBy ? element.approvedBy.name : "",
-              CurrentStatus: element.currentStatus ? element.currentStatus.name : "",
-              RequestedStatus: element.requestedStatus
-                ? element.requestedStatus.name
-                : "",
-              Code:
-                element && element.newLicense
-                  ? element.newLicense.newLicenseCode
-                  : element && element.renewal
-                  ? element.renewal.renewalCode
-                  : element && element.goodStanding
-                  ? element.goodStanding.goodStandingCode
-                  : "",
-              RequestType:
-                element && element.newLicense
-                  ? "NewLicense"
-                  : element && element.renewal
-                  ? "Renewal"
-                  : element && element.goodStanding
-                  ? "Goodstanding"
-                  : "",
-              data: element,
-            });
-          });
+          result.rows
+            ? result.rows.forEach((element) => {
+                requestsTableData.push({
+                  id: element.id ? element.id : "",
+                  Status: element.status ? element.status : "",
+                  RequestedBy: element.requestedBy ? element.requestedBy.name : "",
+                  ApprovedBy: element.approvedBy ? element.approvedBy.name : "",
+                  CurrentStatus: element.currentStatus ? element.currentStatus.name : "",
+                  RequestedStatus: element.requestedStatus
+                    ? element.requestedStatus.name
+                    : "",
+                  Code:
+                    element && element.newLicense
+                      ? element.newLicense.newLicenseCode
+                      : element && element.renewal
+                      ? element.renewal.renewalCode
+                      : element && element.goodStanding
+                      ? element.goodStanding.goodStandingCode
+                      : "",
+                  RequestType:
+                    element && element.newLicense
+                      ? "NewLicense"
+                      : element && element.renewal
+                      ? "Renewal"
+                      : element && element.goodStanding
+                      ? "Goodstanding"
+                      : "",
+                  data: element,
+                });
+              })
+            : "";
           requestsTable.value = {
             isLoading: false,
             columns: [
@@ -207,7 +284,7 @@ export default {
     };
     const applyFilter = async () => {
       requestsTable.value.isLoading = true;
-      await fetchRequests(requestTypeFilter.value);
+      await fetchRequests();
     };
     const tableLoadingFinish = () => {
       let elements = document.getElementsByClassName("edit-btn");
@@ -222,12 +299,37 @@ export default {
     };
     onMounted(() => {
       fetchRequests();
+      let tempAp = JSON.parse(localStorage.getItem("applicationStatuses"))
+        ? JSON.parse(localStorage.getItem("applicationStatuses"))
+        : [];
+      tempAp.forEach((el) => {
+        switch (el.code) {
+          case "DEC":
+            el.action = "DeclineEvent";
+            applicationStatuses.value.push(el);
+            break;
+          case "IRV":
+            el.action = "InReviewEvent";
+            applicationStatuses.value.push(el);
+            break;
+          case "SUB":
+            el.action = "SubmitEvent";
+            applicationStatuses.value.push(el);
+            break;
+          default:
+            break;
+        }
+      });
     });
     return {
       requestsTable,
+      applicationStatuses,
       applyFilter,
       showAddButton,
+      currentStatusFilter,
+      requestedStatusFilter,
       editModalData,
+      requestStatusFilter,
       requestTypeFilter,
       rowClicked,
       tableLoadingFinish,

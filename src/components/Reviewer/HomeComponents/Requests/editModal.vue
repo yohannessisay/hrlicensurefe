@@ -74,7 +74,7 @@
                         <option
                           v-for="req in applicationStatuses"
                           v-bind:key="req.id"
-                          v-bind:value="req.id"
+                          v-bind:value="req"
                         >
                           {{ req.name }}
                         </option>
@@ -150,7 +150,7 @@ export default {
     let finalizedStatus = ref("");
     let approverComment = ref("");
 
-    let applicationStatuses = ref("");
+    let applicationStatuses = ref([]);
     let saveData = ref({});
     let editData = computed(() =>
       props.editModalData ? props.editModalData : { Name: "" }
@@ -176,9 +176,10 @@ export default {
 
       saveData.value = {
         id: editData.value.id,
-        current_status_id: finalizedStatus.value,
+        current_status_id: finalizedStatus.value.id,
         status: "finalized",
         approved_by_id: +localStorage.getItem("adminId"),
+        action: finalizedStatus.value.action,
       };
 
       store.dispatch(`reviewer/update${finalRequestType}`, saveData.value).then(() => {
@@ -196,12 +197,26 @@ export default {
       });
     };
     onMounted(() => {
-      let allowedRequests = ["DEC", "IRV", "SUB"];
-      applicationStatuses.value = JSON.parse(localStorage.getItem("applicationStatuses"))
+      let tempAp = JSON.parse(localStorage.getItem("applicationStatuses"))
         ? JSON.parse(localStorage.getItem("applicationStatuses"))
         : [];
-      applicationStatuses.value = applicationStatuses.value.filter((el) => {
-        return allowedRequests.includes(el.code);
+      tempAp.forEach((el) => {
+        switch (el.code) {
+          case "DEC":
+            el.action = "DeclineEvent";
+            applicationStatuses.value.push(el);
+            break;
+          case "IRV":
+            el.action = "InReviewEvent";
+            applicationStatuses.value.push(el);
+            break;
+          case "SUB":
+            el.action = "SubmitEvent";
+            applicationStatuses.value.push(el);
+            break;
+          default:
+            break;
+        }
       });
     });
     return {

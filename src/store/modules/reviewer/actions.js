@@ -197,17 +197,30 @@ export default {
       return resp;
     }
   },
-  async getRequestsByAdminRegion(context, typeParam) {
+  async getRequestsByAdminRegion(context, params) {
     try {
       let finalType =
-        typeParam && typeParam.type == "newLicense"
+        params && params.params[0].value == "newLicense"
           ? "newLicenseRequests"
-          : typeParam && typeParam.type == "renewal"
+          : params && params.params[0].value == "renewal"
           ? "renewalRequests"
-          : typeParam && typeParam.type == "goodStanding"
+          : params && params.params[0].value == "goodStanding"
           ? "goodStandingRequests"
           : "";
-      const url = baseUrl + `/requests/${finalType}/getByAdminRegion/`;
+      let url = `${baseUrl}/requests/${finalType}/getByAdminRegion?`;
+      let parameters = params ? params.params : [];
+     
+      if (parameters) {
+        parameters.forEach((param) => {
+          url +=
+            param && param.value!=''
+              ? `${param.key}=${param.value}&`
+              : "";
+        });
+      }
+      console.log(url);
+      url = url.substring(0, url.length - 1);
+
       const resp = await ApiService.get(url);
       return resp;
     } catch (error) {

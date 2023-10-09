@@ -22,9 +22,9 @@
     <!-- Header -->
 
     <!-- Main Content -->
-    <div class="home-content">
+    <div class="home-content bg-grey-100 shadow-none p-2">
       <div class="grid grid-cols-2">
-        <div class="bg-white   m-2 rounded-md p-2">
+        <div class="bg-white m-2 rounded-md p-2 shadow-md">
           <h2 class="text-primary-600 font-bold text-2xl">Applicants gender chart</h2>
           <apexchart
             type="bar"
@@ -33,7 +33,7 @@
             :series="genderSeries"
           ></apexchart>
         </div>
-        <div class="bg-white   m-2 rounded-md p-2">
+        <div class="bg-white m-2 rounded-md p-2 shadow-md">
           <h2 class="text-primary-600 font-bold text-2xl">Total Applications</h2>
           <apexchart
             type="bar"
@@ -45,21 +45,21 @@
       </div>
 
       <div class="grid grid-cols-1">
-        <div class="bg-white   m-2 rounded-md p-2 mb-20">
+        <div class="bg-white m-2 rounded-md p-2 mb-20 shadow-md">
           <h2 class="text-primary-600 font-bold text-2xl">
             Applications based on regions
           </h2>
 
           <apexchart
             type="bar"
-            height="830"
+            height="630"
             :options="regionChartOptions"
             :series="regionSeries"
           ></apexchart>
         </div>
       </div>
-      <div class="grid grid-cols-3 lg:grid-cols-4">
-        <div class="bg-white   m-2 rounded-md p-2 mb-20">
+      <div class="grid grid-cols-3 lg:grid-cols-3">
+        <div class="bg-white m-2 rounded-md p-2 mb-20 shadow-md">
           <apexchart
             type="pie"
             :options="pieChartOption"
@@ -67,7 +67,7 @@
           ></apexchart>
           <h2 class="text-primary-600 font-bold text-2xl">Approved Applications</h2>
         </div>
-        <div class="bg-white   m-2 rounded-md p-2 mb-20">
+        <div class="bg-white m-2 rounded-md p-2 mb-20 shadow-md">
           <apexchart
             type="pie"
             :options="pieChartOption"
@@ -77,7 +77,7 @@
           <h2 class="font-bold text-2xl text-yellow-300">Declined Licenses/Letters</h2>
         </div>
 
-        <div class="bg-white   m-2 rounded-md p-2 mb-20">
+        <div class="bg-white m-2 rounded-md p-2 mb-20 shadow-md">
           <apexchart
             type="pie"
             :options="pieChartOption"
@@ -86,7 +86,7 @@
 
           <h2 class="text-2xl font-bold text-red-300 mt-2">Revoked Licenses/Letters</h2>
         </div>
-        <div class="bg-white   m-2 rounded-md p-2 mb-20">
+        <div class="bg-white m-2 rounded-md p-2 mb-20 shadow-md">
           <apexchart
             type="pie"
             :options="pieChartOption"
@@ -97,7 +97,7 @@
             Suspended Licenses/Letters
           </h2>
         </div>
-        <div class="bg-white   m-2 rounded-md p-2 mb-20">
+        <div class="bg-white m-2 rounded-md p-2 mb-20 shadow-md">
           <apexchart
             type="pie"
             :options="pieChartOption"
@@ -108,9 +108,10 @@
             Licenses Under-Supervision
           </h2>
         </div>
-        <div class="bg-white   m-2 rounded-md p-2 mb-20">
+        <div class="bg-white m-2 rounded-md p-2 mb-20 shadow-md">
           <apexchart
             type="pie"
+            class="w-1/2"
             :options="pieChartOption"
             :series="unassignedSeries"
           ></apexchart>
@@ -118,6 +119,41 @@
           <h2 class="text-2xl font-bold text-grey-800 mt-2">
             Unassigned Licenses/Letters
           </h2>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 mb-8 gap-4">
+        <div class="p-4 rounded-md shadow-md bg-white">
+          <h2 class="text-primary-600 font-bold text-2xl">New License Professions Map</h2>
+          <apexchart
+            type="bar"
+            height="600"
+            class="p-4"
+            :options="professionChartOptions"
+            :series="professionSeries"
+          ></apexchart>
+        </div>
+        <div class="p-4 rounded-md mt-2 shadow-md bg-white">
+          <h2 class="text-primary-600 font-bold text-2xl">Renewal Professions Map</h2>
+          <apexchart
+            type="bar"
+            height="600"
+            class="p-4"
+            :options="RNprofessionChartOptions"
+            :series="renewalProfessionSeries"
+          ></apexchart>
+        </div>
+        <div class="p-4 rounded-md mt-2 shadow-md bg-white">
+          <h2 class="text-primary-600 font-bold text-2xl">
+            Goodstanding Professions Map
+          </h2>
+          <apexchart
+            type="bar"
+            height="600"
+            class="p-4"
+            :options="GSprofessionChartOptions"
+            :series="goodStandingProfessionSeries"
+          ></apexchart>
         </div>
       </div>
     </div>
@@ -273,6 +309,63 @@ export default {
         opacity: 1,
       },
     };
+    let professionSeries = ref([
+      {
+        name: "NewLicense",
+        data: [],
+      },
+    ]);
+    let renewalProfessionSeries = ref([
+      {
+        name: "Renewal",
+        data: [],
+      },
+    ]);
+    let goodStandingProfessionSeries = ref([
+      {
+        name: "Goodstanding",
+        data: [],
+      },
+    ]);
+    let professionChartOptions = ref({
+      chart: {
+        type: "bar",
+      },
+      plotOptions: {
+        bar: {
+          horizontal: true,
+        },
+      },
+      xaxis: {
+        categories: [],
+      },
+    });
+    let RNprofessionChartOptions = ref({
+      chart: {
+        type: "bar",
+      },
+      plotOptions: {
+        bar: {
+          horizontal: true,
+        },
+      },
+      xaxis: {
+        categories: [],
+      },
+    });
+    let GSprofessionChartOptions = ref({
+      chart: {
+        type: "bar",
+      },
+      plotOptions: {
+        bar: {
+          horizontal: true,
+        },
+      },
+      xaxis: {
+        categories: [],
+      },
+    });
 
     let approvedSeries = ref([]);
     let declinedSeries = ref([]);
@@ -315,6 +408,24 @@ export default {
             Number(res.data.goodStanding)
           );
           applicationSeries.value[0].data = tempData;
+        }
+      });
+    };
+    const getLicensesCountByDepartment = () => {
+      store.dispatch("stats/getLicensesCountByDepartment").then((res) => {
+        if (res && res.data) {
+          res.data.newLicense.forEach((newL) => {
+            professionSeries.value[0].data.push(newL.departmentCount);
+            professionChartOptions.value.xaxis.categories.push(newL.departmentName);
+          });
+          res.data.renewal.forEach((renw) => {
+            renewalProfessionSeries.value[0].data.push(renw.departmentCount);
+            RNprofessionChartOptions.value.xaxis.categories.push(renw.departmentName);
+          });
+          res.data.goodStanding.forEach((gsp) => {
+            goodStandingProfessionSeries.value[0].data.push(gsp.departmentCount);
+            GSprofessionChartOptions.value.xaxis.categories.push(gsp.departmentName);
+          });
         }
       });
     };
@@ -397,7 +508,6 @@ export default {
           });
         }
       });
-      
     };
     let tempRegions = [];
 
@@ -546,6 +656,7 @@ export default {
       getLicensesCount();
       getApplicationsCount();
       getRegionsCount();
+      getLicensesCountByDepartment();
     });
     return {
       genderSeries,
@@ -562,6 +673,12 @@ export default {
       regionSeries,
       chartOption,
       regionChartOptions,
+      professionSeries,
+      professionChartOptions,
+      renewalProfessionSeries,
+      RNprofessionChartOptions,
+      goodStandingProfessionSeries,
+      GSprofessionChartOptions,
     };
   },
 };
@@ -577,5 +694,14 @@ export default {
 .parent iframe {
   border: none;
   flex-grow: 1;
+}
+
+.shadow-md {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.apexcharts-tooltip {
+  white-space: pre-wrap !important;
+  max-width: 200px;
 }
 </style>

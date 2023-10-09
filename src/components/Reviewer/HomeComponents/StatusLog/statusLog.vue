@@ -25,7 +25,7 @@
 
     <!-- Main Content -->
     <div class="home-content">
-      <div class="p-2 m-4 bg-white rounded-md  ">
+      <div class="p-2 m-4 bg-white rounded-md">
         <div class="grid grid-cols-4 gap-8">
           <div class="mb-3 xl:w-full">
             <label for="" class="ml-4">License Type</label>
@@ -42,7 +42,13 @@
             </select>
           </div>
           <div>
-            <h2 class="font-bold text-primary-600">License/Letter Code</h2>
+            <h2 class="font-bold text-primary-600">
+              {{
+                licenseType && licenseType == "goodstanding"
+                  ? "Letter Code"
+                  : "License Code"
+              }}
+            </h2>
             <input
               type="search"
               class="form-control relative flex-auto min-w-0 block w-full px-6 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
@@ -60,9 +66,15 @@
           :color="'#2F639D'"
           :opacity="0.7"
         ></loading>
-        <div class="p-2 m-4 bg-white rounded-md  ">
+        <div class="p-2 m-4 bg-white rounded-md">
           <div class="p-4 mt-4">
-            <h1 class="mb-6 text-2xl font-semibold text-center">License History</h1>
+            <h1 class="mb-6 text-2xl font-semibold text-center">
+              {{
+                licenseType && licenseType == "goodstanding"
+                  ? "Letter History"
+                  : "License History"
+              }}
+            </h1>
             <div class="container">
               <div class="flex flex-col grid-cols-12 md:grid text-gray-50">
                 <div
@@ -81,7 +93,7 @@
                     </div>
                   </div>
                   <div
-                    class="w-full col-start-4 col-end-12 p-4 my-4 mr-auto   bg-main-500 rounded-xl"
+                    class="w-full col-start-4 col-end-12 p-4 my-4 mr-auto bg-main-500 rounded-xl"
                   >
                     <div class="grid grid-cols-2">
                       <div>
@@ -105,19 +117,28 @@
                             {{ history.toStatus.name }}
                           </span>
                           <span
-                          v-if="history.toStatus.name=='In Review'&&history.toStatus.name==history.fromStatus.name"
+                            v-if="
+                              history.toStatus.name == 'In Review' &&
+                              history.toStatus.name == history.fromStatus.name
+                            "
                             class="p-2 m-2 text-2xl text-white rounded-md bg-primary-600"
                           >
                             This is a Transfer
                           </span>
                           <span
-                          v-if="history.toStatus.name=='Approve'&&history.toStatus.name==history.fromStatus.name"
+                            v-if="
+                              history.toStatus.name == 'Approve' &&
+                              history.toStatus.name == history.fromStatus.name
+                            "
                             class="p-2 m-2 text-2xl text-white rounded-md bg-primary-600"
                           >
                             This is a license print
                           </span>
                           <span
-                          v-if="history.toStatus.name=='Submit'&&history.toStatus.name==history.fromStatus.name"
+                            v-if="
+                              history.toStatus.name == 'Submit' &&
+                              history.toStatus.name == history.fromStatus.name
+                            "
                             class="p-2 m-2 text-2xl text-white rounded-md bg-primary-600"
                           >
                             This is a license update from applicant side
