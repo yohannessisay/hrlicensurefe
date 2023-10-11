@@ -1638,17 +1638,6 @@ export default {
         };
 
         newLicense.value.licenseExpirationDate = licenseExpirationDate.value;
-        let tempRemarkValue = true;
-        newLicense.value.educations.forEach((element) => {
-          if (element && element.isDropped == true) {
-            tempRemarkValue = false;
-          } else {
-            tempRemarkValue = true;
-          }
-        });
-        if (tempRemarkValue == true) {
-          newLicense.value.remark = "";
-        }
 
         if (applicationType.value == "New License") {
           isLoadingAction.value = true;
