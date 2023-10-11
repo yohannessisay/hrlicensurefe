@@ -1,18 +1,7 @@
 <template>
   <!-- Modal -->
   <div
-    class="
-      modal
-      fade
-      fixed
-      top-0
-      left-0
-      hidden
-      w-full
-      h-full
-      outline-none
-      overflow-x-hidden overflow-y-auto
-    "
+    class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
     id="staticBackdrop"
     data-bs-backdrop="static"
     data-bs-keyboard="false"
@@ -21,55 +10,15 @@
     aria-hidden="true"
   >
     <div
-      class="
-        modal-dialog modal-dialog-centered modal-xl
-        relative
-        w-auto
-        pointer-events-none
-      "
+      class="modal-dialog modal-dialog-centered modal-xl relative w-auto pointer-events-none"
     >
       <div
-        class="
-          modal-content
-          border-none
-           
-          relative
-          flex flex-col
-          w-full
-          pointer-events-auto
-          bg-white bg-clip-padding
-          rounded-md
-          outline-none
-          text-current
-        "
+        class="modal-content border-none relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current"
       >
-        <div
-          class="modal-header flex flex-shrink-0 justify-end p-2 rounded-t-md"
-        >
+        <div class="modal-header flex flex-shrink-0 justify-end p-2 rounded-t-md">
           <button
             type="button"
-            class="
-              px-6
-              text-white
-              bg-primary-600
-              hover:text-primary-600 hover:border
-              font-medium
-              text-xs
-              leading-tight
-              uppercase
-              rounded
-              hover:border-primary-600
-               
-              hover:bg-purple-700 hover: 
-              focus:bg-purple-700
-              focus: 
-              focus:outline-none
-              focus:ring-0
-              active:bg-purple-800 active: 
-              transition
-              duration-150
-              ease-in-out
-            "
+            class="px-6 text-white bg-primary-600 hover:text-primary-600 hover:border font-medium text-xs leading-tight uppercase rounded hover:border-primary-600 hover:bg-purple-700 hover: focus:bg-purple-700 focus: focus:outline-none focus:ring-0 active:bg-purple-800 active: transition duration-150 ease-in-out"
             data-bs-dismiss="modal"
             aria-label="Close"
           >
@@ -102,40 +51,19 @@
                   <div class="grow-0 shrink-0 basis-auto w-full lg:w-11/12">
                     <div class="flex flex-wrap">
                       <div
-                        class="
-                          grow-0
-                          shrink-0
-                          basis-auto
-                          w-full
-                          lg:w-6/12
-                          px-3
-                          lg:px-6
-                        "
+                        class="grow-0 shrink-0 basis-auto w-full lg:w-6/12 px-3 lg:px-6"
                       >
                         <div class="flex items-start">
                           <div class="shrink-0">
                             <div
-                              class="
-                                p-4
-                                bg-blue-600
-                                rounded-md
-                                 
-                                w-48
-                                h-48
-                                flex
-                                mb-12
-                                items-center
-                                justify-center
-                              "
+                              class="p-4 bg-blue-600 rounded-md w-48 h-48 flex mb-12 items-center justify-center"
                             >
                               <picture>
                                 <source
                                   :srcset="
-                                    modalData.profile &&
-                                    modalData.profile.profilePicture
+                                    modalData.profile && modalData.profile.profilePicture
                                       ? googleApi +
-                                        modalData.profile.profilePicture
-                                          .filePath
+                                        modalData.profile.profilePicture.filePath
                                       : ''
                                   "
                                   style="height: 177px"
@@ -150,16 +78,9 @@
                             </div>
                           </div>
                           <div class="grow ml-6">
-                            <h2 class="font-extrabold text-2xl mb-1">
-                              Personal Info
-                            </h2>
+                            <h2 class="font-extrabold text-2xl mb-1">Personal Info</h2>
                             <p class="text-gray-500">
-                              <span
-                                class="
-                                  font-semibold
-                                  text-lg text-primary-700
-                                  mb-1
-                                "
+                              <span class="font-semibold text-lg text-primary-700 mb-1"
                                 >Full Name:</span
                               >
                               {{ modalData.name ? modalData.name : "" }}
@@ -174,11 +95,7 @@
                               <span class="font-semibold text-primary-700 mb-1"
                                 >Nationality:</span
                               >
-                              {{
-                                modalData.nationality
-                                  ? modalData.nationality
-                                  : ""
-                              }}
+                              {{ modalData.nationality ? modalData.nationality : "" }}
                             </p>
                             <p class="text-gray-500">
                               <span class="font-semibold text-primary-700 mb-1"
@@ -194,54 +111,31 @@
                               <span class="font-semibold text-primary-700 mb-1"
                                 >marital Status:</span
                               >
-                              {{
-                                modalData.maritalStatus
-                                  ? modalData.maritalStatus
-                                  : ""
-                              }}
+                              {{ modalData.maritalStatus ? modalData.maritalStatus : "" }}
                             </p>
                           </div>
                         </div>
                       </div>
 
                       <div
-                        class="
-                          grow-0
-                          shrink-0
-                          basis-auto
-                          w-full
-                          lg:w-6/12
-                          px-3
-                          lg:px-6
-                        "
+                        class="grow-0 shrink-0 basis-auto w-full lg:w-6/12 px-3 lg:px-6"
                       >
                         <div class="flex items-start">
                           <div class="shrink-0">
                             <div
-                              class="
-                                p-4
-                                bg-blue-600
-                                rounded-md
-                                 
-                                w-48
-                                h-48
-                                flex
-                                items-center
-                                justify-center
-                              "
+                              class="p-4 bg-blue-600 rounded-md w-48 h-48 flex items-center justify-center"
                             >
                               <i class="fa fa-phone fa-4x"></i>
                             </div>
                           </div>
                           <div class="grow ml-6">
-                            <h2 class="font-bold mb-1">Revoke Info</h2>
+                            <h2 class="font-bold mb-1">Decline Info</h2>
                             <p class="text-gray-500">
                               <span class="font-medium text-primary-700 mb-1"
                                 >Reviewer:</span
                               >
                               {{
-                                modalData.reviewer &&
-                                modalData.reviewer.reviewer
+                                modalData.reviewer && modalData.reviewer.reviewer
                                   ? modalData.reviewer.reviewer.name
                                   : ""
                               }}
@@ -251,8 +145,7 @@
                                 >Reviewer Phone:</span
                               >
                               {{
-                                modalData.reviewer &&
-                                modalData.reviewer.reviewer
+                                modalData.reviewer && modalData.reviewer.reviewer
                                   ? modalData.reviewer.reviewer.phoneNumber
                                   : ""
                               }}
@@ -262,8 +155,7 @@
                                 >Reviewer Email:</span
                               >
                               {{
-                                modalData.reviewer &&
-                                modalData.reviewer.reviewer
+                                modalData.reviewer && modalData.reviewer.reviewer
                                   ? modalData.reviewer.reviewer.email
                                   : ""
                               }}
@@ -272,37 +164,21 @@
                               <span class="font-medium text-primary-700 mb-1"
                                 >Revoked Reason:</span
                               >
-                              {{ modalData ? modalData.remark : "" }}
+                              {{
+                                modalData && modalData.data ? modalData.data.remark : ""
+                              }}
                             </p>
                           </div>
                         </div>
                       </div>
 
                       <div
-                        class="
-                          grow-0
-                          shrink-0
-                          basis-auto
-                          w-full
-                          lg:w-6/12
-                          px-3
-                          lg:px-6
-                        "
+                        class="grow-0 shrink-0 basis-auto w-full lg:w-6/12 px-3 lg:px-6"
                       >
                         <div class="flex items-start">
                           <div class="shrink-0">
                             <div
-                              class="
-                                p-4
-                                bg-blue-600
-                                rounded-md
-                                 
-                                w-48
-                                h-48
-                                flex
-                                items-center
-                                justify-center
-                              "
+                              class="p-4 bg-blue-600 rounded-md w-48 h-48 flex items-center justify-center"
                             >
                               <i class="fa fa-phone fa-4x"></i>
                             </div>
@@ -313,11 +189,7 @@
                               <span class="font-medium text-primary-700 mb-1"
                                 >Mobile Number:</span
                               >
-                              {{
-                                modalData.mobileNumber
-                                  ? modalData.mobileNumber
-                                  : ""
-                              }}
+                              {{ modalData.mobileNumber ? modalData.mobileNumber : "" }}
                             </p>
                             <p class="text-gray-500">
                               <span class="font-medium text-primary-700 mb-1"
@@ -330,30 +202,12 @@
                       </div>
 
                       <div
-                        class="
-                          grow-0
-                          shrink-0
-                          basis-auto
-                          w-full
-                          lg:w-6/12
-                          px-3
-                          lg:px-6
-                        "
+                        class="grow-0 shrink-0 basis-auto w-full lg:w-6/12 px-3 lg:px-6"
                       >
                         <div class="flex items-start">
                           <div class="shrink-0">
                             <div
-                              class="
-                                p-4
-                                bg-blue-600
-                                rounded-md
-                                 
-                                w-48
-                                h-48
-                                flex
-                                items-center
-                                justify-center
-                              "
+                              class="p-4 bg-blue-600 rounded-md w-48 h-48 flex items-center justify-center"
                             >
                               <i class="fa fa-phone fa-4x"></i>
                             </div>
@@ -361,33 +215,18 @@
                           <div
                             class="grow ml-6"
                             v-if="
-                            (adminData.expertLevel.code == 'FED' &&
+                              (adminData.expertLevel.code == 'FED' &&
                                 adminData.role.code == 'ADM') ||
                               (adminData.expertLevel.code == 'REG' &&
-                                adminData.role.code == 'ADM')||
-                            (adminData.expertLevel.code == 'REG' &&
-                              adminData.role.code == 'TL')
+                                adminData.role.code == 'ADM') ||
+                              (adminData.expertLevel.code == 'REG' &&
+                                adminData.role.code == 'TL')
                             "
                           >
                             <h2 class="font-bold mb-1">Action</h2>
                             <button
                               type="button"
-                              class="
-                                inline-block
-                                px-6
-                                text-white
-                                font-medium
-                                text-xs
-                                bg-main-400
-                                leading-tight
-                                uppercase
-                                rounded
-                                 
-                                hover:bg-white hover:text-main-400
-                                transition
-                                duration-150
-                                ease-in-out
-                              "
+                              class="inline-block px-6 text-white font-medium text-xs bg-main-400 leading-tight uppercase rounded hover:bg-white hover:text-main-400 transition duration-150 ease-in-out"
                               @click="release()"
                             >
                               <i class="fa fa-refresh"></i>
@@ -397,20 +236,12 @@
                         </div>
                       </div>
                       <div
-                        class="
-                          grow-0
-                          shrink-0
-                          basis-auto
-                          w-full
-                          lg:w-6/12
-                          px-3
-                          lg:px-6
-                        "
+                        class="grow-0 shrink-0 basis-auto w-full lg:w-6/12 px-3 lg:px-6"
                       ></div>
                     </div>
 
                     <div class="collapse mt-12" id="collapseExample">
-                      <div class="block p-6 rounded-lg   bg-white">
+                      <div class="block p-6 rounded-lg bg-white">
                         <div class="flex justify-content-evenly align-center">
                           <h1>Attached Documents</h1>
                         </div>
@@ -438,9 +269,7 @@
                                   />
                                 </a>
 
-                                <h4 style="font-weight: bold">
-                                  Document Type:-
-                                </h4>
+                                <h4 style="font-weight: bold">Document Type:-</h4>
                                 <h6>
                                   {{
                                     document.documentType
@@ -461,33 +290,10 @@
           </div>
         </div>
         <div
-          class="
-            modal-footer
-            flex flex-shrink-0 flex-wrap
-            items-center
-            justify-end
-            border-t border-grey-100
-            rounded-b-md
-          "
+          class="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end border-t border-grey-100 rounded-b-md"
         >
           <button
-            class="
-              inline-block
-              px-6
-              py-2.5
-              bg-primary-700
-              text-white
-              font-medium
-              text-xs
-              leading-tight
-              uppercase
-              rounded
-               
-              hover:bg-white hover:text-primary-600
-              transition
-              duration-150
-              ease-in-out
-            "
+            class="inline-block px-6 py-2.5 bg-primary-700 text-white font-medium text-xs leading-tight uppercase rounded hover:bg-white hover:text-primary-600 transition duration-150 ease-in-out"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#collapseExample"
@@ -499,22 +305,7 @@
           </button>
           <button
             type="button"
-            class="
-              inline-block
-              px-6
-              text-white
-              font-medium
-              text-xs
-              bg-primary-700
-              leading-tight
-              uppercase
-              rounded
-               
-              hover:bg-white hover:text-primary-700
-              transition
-              duration-150
-              ease-in-out
-            "
+            class="inline-block px-6 text-white font-medium text-xs bg-primary-700 leading-tight uppercase rounded hover:bg-white hover:text-primary-700 transition duration-150 ease-in-out"
             data-bs-dismiss="modal"
           >
             <i class="fa fa-times-circle"></i>
@@ -589,8 +380,7 @@ export default {
             modalData.value.professionalTypes = result.licenseProfessions;
             modalData.value.profile = result.profile;
             modalData.value.certifiedDate = result.certifiedDate;
-            modalData.value.licenseExpirationDate =
-              result.licenseExpirationDate;
+            modalData.value.licenseExpirationDate = result.licenseExpirationDate;
             modalData.value.documents = result.documents;
             modalData.value.remark = result ? result.remark : "";
             modalData.value.id = result.id;
@@ -687,4 +477,3 @@ export default {
   },
 };
 </script>
- 

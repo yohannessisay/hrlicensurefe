@@ -1,18 +1,7 @@
 <template>
   <!-- Modal -->
   <div
-    class="
-      modal
-      fade
-      fixed
-      top-0
-      left-0
-      hidden
-      w-full
-      h-full
-      outline-none
-      overflow-x-hidden overflow-y-auto
-    "
+    class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
     id="staticBackdrop"
     data-bs-backdrop="static"
     data-bs-keyboard="false"
@@ -21,55 +10,15 @@
     aria-hidden="true"
   >
     <div
-      class="
-        modal-dialog modal-dialog-centered modal-xl
-        relative
-        w-auto
-        pointer-events-none
-      "
+      class="modal-dialog modal-dialog-centered modal-xl relative w-auto pointer-events-none"
     >
       <div
-        class="
-          modal-content
-          border-none
-           
-          relative
-          flex flex-col
-          w-full
-          pointer-events-auto
-          bg-white bg-clip-padding
-          rounded-md
-          outline-none
-          text-current
-        "
+        class="modal-content border-none relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current"
       >
-        <div
-          class="modal-header flex flex-shrink-0 justify-end p-2 rounded-t-md"
-        >
+        <div class="modal-header flex flex-shrink-0 justify-end p-2 rounded-t-md">
           <button
             type="button"
-            class="
-              px-6
-              text-white
-              bg-primary-600
-              hover:text-primary-600 hover:border
-              font-medium
-              text-xs
-              leading-tight
-              uppercase
-              rounded
-              hover:border-primary-600
-               
-              hover:bg-purple-700 hover: 
-              focus:bg-purple-700
-              focus: 
-              focus:outline-none
-              focus:ring-0
-              active:bg-purple-800 active: 
-              transition
-              duration-150
-              ease-in-out
-            "
+            class="px-6 text-white bg-primary-600 hover:text-primary-600 hover:border font-medium text-xs leading-tight uppercase rounded hover:border-primary-600 hover:bg-purple-700 hover: focus:bg-purple-700 focus: focus:outline-none focus:ring-0 active:bg-purple-800 active: transition duration-150 ease-in-out"
             data-bs-dismiss="modal"
             aria-label="Close"
           >
@@ -102,32 +51,12 @@
                   <div class="grow-0 shrink-0 basis-auto w-full lg:w-11/12">
                     <div class="flex flex-wrap">
                       <div
-                        class="
-                            grow-0
-                            shrink-0
-                            basis-auto
-                            w-full
-                            lg:w-6/12
-                            px-3
-                            lg:px-6
-                            
-                          "
+                        class="grow-0 shrink-0 basis-auto w-full lg:w-6/12 px-3 lg:px-6"
                       >
                         <div class="flex items-start">
                           <div class="shrink-0">
                             <div
-                              class="
-                                  p-4
-                                  bg-blue-600
-                                  rounded-md
-                                   
-                                  w-48
-                                  h-48
-                                  flex
-                                  mb-12
-                                  items-center
-                                  justify-center
-                                "
+                              class="p-4 bg-blue-600 rounded-md w-48 h-48 flex mb-12 items-center justify-center"
                             >
                               <img
                                 src="../../../../../assets/showLicense/profile.png"
@@ -137,61 +66,36 @@
                             </div>
                           </div>
                           <div class="grow ml-6">
-                            <h2 class="font-extrabold text-2xl mb-1">
-                              Personal Info
-                            </h2>
-                            <div
-                              class="
-                                  border-2
-                                  p-2
-                                  rounded-lg
-                                  m-1
-                                   
-                                  text-primary-500
-                                "
-                            >
+                            <h2 class="font-extrabold text-2xl mb-1">Personal Info</h2>
+                            <div class="border-2 p-2 rounded-lg m-1 text-primary-500">
                               <p class="text-gray-500">
-                                <span
-                                  class="
-                                    font-semibold
-                                    text-lg text-primary-700
-                                    mb-1
-                                  "
+                                <span class="font-semibold text-lg text-primary-700 mb-1"
                                   >Full Name:</span
                                 >
                                 <span class="text-grey-800 ml-1">
-                                  {{
-                                    modalData.name ? modalData.name : ""
-                                  }}</span
+                                  {{ modalData.name ? modalData.name : "" }}</span
                                 >
                               </p>
                               <p class="text-gray-500">
-                                <span
-                                  class="font-semibold text-primary-700 mb-1"
+                                <span class="font-semibold text-primary-700 mb-1"
                                   >Gender:</span
                                 >
                                 <span class="text-grey-800 ml-1">
-                                  {{
-                                    modalData.gender ? modalData.gender : ""
-                                  }}</span
+                                  {{ modalData.gender ? modalData.gender : "" }}</span
                                 >
                               </p>
                               <p class="text-gray-500">
-                                <span
-                                  class="font-semibold text-primary-700 mb-1"
+                                <span class="font-semibold text-primary-700 mb-1"
                                   >Nationality:</span
                                 >
                                 <span class="text-grey-800 ml-1">
                                   {{
-                                    modalData.nationality
-                                      ? modalData.nationality
-                                      : ""
+                                    modalData.nationality ? modalData.nationality : ""
                                   }}</span
                                 >
                               </p>
                               <p class="text-gray-500">
-                                <span
-                                  class="font-semibold text-primary-700 mb-1"
+                                <span class="font-semibold text-primary-700 mb-1"
                                   >Date Of Birth:</span
                                 >
                                 <span class="text-grey-800 ml-1">
@@ -203,14 +107,11 @@
                                 >
                               </p>
                               <p class="text-gray-500">
-                                <span
-                                  class="font-semibold text-primary-700 mb-1"
+                                <span class="font-semibold text-primary-700 mb-1"
                                   >marital Status:</span
                                 >
                                 <span class="text-grey-800 ml-1">{{
-                                  modalData.maritalStatus
-                                    ? modalData.maritalStatus
-                                    : ""
+                                  modalData.maritalStatus ? modalData.maritalStatus : ""
                                 }}</span>
                               </p>
                             </div>
@@ -218,54 +119,26 @@
                         </div>
                       </div>
                       <div
-                        class="
-                          grow-0
-                          shrink-0
-                          basis-auto
-                          w-full
-                          lg:w-6/12
-                          px-3
-                          lg:px-6
-                        "
+                        class="grow-0 shrink-0 basis-auto w-full lg:w-6/12 px-3 lg:px-6"
                       >
                         <div class="flex items-start">
                           <div class="shrink-0">
                             <div
-                              class="
-                                p-4
-                                bg-blue-600
-                                rounded-md
-                                 
-                                w-48
-                                h-48
-                                flex
-                                items-center
-                                justify-center
-                              "
+                              class="p-4 bg-blue-600 rounded-md w-48 h-48 flex items-center justify-center"
                             >
                               <i class="fa fa-phone fa-4x"></i>
                             </div>
                           </div>
                           <div class="grow ml-6">
                             <h2 class="font-bold mb-1">Decline Detail</h2>
-                            <div
-                              class="
-                                  border-2
-                                  p-2
-                                  rounded-lg
-                                  m-1
-                                   
-                                  text-primary-500
-                                "
-                            >
+                            <div class="border-2 p-2 rounded-lg m-1 text-primary-500">
                               <p class="text-gray-500">
                                 <span class="font-medium text-primary-700 mb-1"
                                   >Reviewer:</span
                                 >
                                 <span class="text-grey-800">
                                   {{
-                                    modalData.reviewer &&
-                                    modalData.reviewer.reviewer
+                                    modalData.reviewer && modalData.reviewer.reviewer
                                       ? modalData.reviewer.reviewer.name
                                       : ""
                                   }}</span
@@ -277,8 +150,7 @@
                                 >
                                 <span class="text-grey-800">
                                   {{
-                                    modalData.reviewer &&
-                                    modalData.reviewer.reviewer
+                                    modalData.reviewer && modalData.reviewer.reviewer
                                       ? modalData.reviewer.reviewer.phoneNumber
                                       : ""
                                   }}</span
@@ -290,19 +162,22 @@
                                 >
                                 <span class="text-grey-800">
                                   {{
-                                    modalData.reviewer &&
-                                    modalData.reviewer.reviewer
+                                    modalData.reviewer && modalData.reviewer.reviewer
                                       ? modalData.reviewer.reviewer.email
                                       : ""
                                   }}</span
                                 >
                               </p>
-                              <p class="text-gray-500  break-all">
+                              <p class="text-gray-500 break-all">
                                 <span class="font-medium text-primary-700 mb-1"
                                   >Declined Reason:</span
                                 >
                                 <span class="text-grey-800">
-                                  {{ modalData ? modalData.remark : "" }}</span
+                                  {{
+                                    modalData && modalData.data
+                                      ? modalData.data.remark
+                                      : ""
+                                  }}</span
                                 >
                               </p>
                             </div>
@@ -311,68 +186,35 @@
                       </div>
 
                       <div
-                        class="
-                            grow-0
-                            shrink-0
-                            basis-auto
-                            w-full
-                            lg:w-6/12
-                            px-3
-                            lg:px-6
-                          "
+                        class="grow-0 shrink-0 basis-auto w-full lg:w-6/12 px-3 lg:px-6"
                       >
                         <div class="flex items-start">
                           <div class="shrink-0">
                             <div
-                              class="
-                                  p-4
-                                  bg-blue-600
-                                  rounded-md
-                                   
-                                  w-48
-                                  h-48
-                                  flex
-                                  items-center
-                                  justify-center
-                                "
+                              class="p-4 bg-blue-600 rounded-md w-48 h-48 flex items-center justify-center"
                             >
                               <i class="fa fa-phone fa-4x"></i>
                             </div>
                           </div>
                           <div class="grow ml-6">
                             <h2 class="font-bold mb-1">Contact Info</h2>
-                            <div
-                              class="
-                                  border-2
-                                  p-2
-                                  rounded-lg
-                                  m-1
-                                   
-                                  text-primary-500
-                                "
-                            >
+                            <div class="border-2 p-2 rounded-lg m-1 text-primary-500">
                               <p class="text-gray-500">
-                                <span
-                                  class="font-semibold text-primary-700 mb-1"
+                                <span class="font-semibold text-primary-700 mb-1"
                                   >Mobile Number:</span
                                 >
                                 <span class="text-grey-800 ml-1">
                                   {{
-                                    modalData.mobileNumber
-                                      ? modalData.mobileNumber
-                                      : ""
+                                    modalData.mobileNumber ? modalData.mobileNumber : ""
                                   }}</span
                                 >
                               </p>
                               <p class="text-gray-500">
-                                <span
-                                  class="font-semibold text-primary-700 mb-1"
+                                <span class="font-semibold text-primary-700 mb-1"
                                   >Email:</span
                                 >
                                 <span class="text-grey-800 ml-1">
-                                  {{
-                                    modalData.email ? modalData.email : ""
-                                  }}</span
+                                  {{ modalData.email ? modalData.email : "" }}</span
                                 >
                               </p>
                             </div>
@@ -381,30 +223,12 @@
                       </div>
 
                       <div
-                        class="
-                          grow-0
-                          shrink-0
-                          basis-auto
-                          w-full
-                          lg:w-6/12
-                          px-3
-                          lg:px-6
-                        "
+                        class="grow-0 shrink-0 basis-auto w-full lg:w-6/12 px-3 lg:px-6"
                       >
                         <div class="flex items-start">
                           <div class="shrink-0">
                             <div
-                              class="
-                                p-4
-                                bg-blue-600
-                                rounded-md
-                                 
-                                w-48
-                                h-48
-                                flex
-                                items-center
-                                justify-center
-                              "
+                              class="p-4 bg-blue-600 rounded-md w-48 h-48 flex items-center justify-center"
                             >
                               <i class="fa fa-phone fa-4x"></i>
                             </div>
@@ -414,33 +238,18 @@
                             v-if="
                               (adminData.expertLevel.code == 'FED' &&
                                 adminData.role.code == 'ADM') ||
-                                (adminData.expertLevel.code == 'FED' &&
-                                  adminData.role.code == 'TL') ||
-                                (adminData.expertLevel.code == 'REG' &&
-                                  adminData.role.code == 'ADM') ||
-                                (adminData.expertLevel.code == 'REG' &&
-                                  adminData.role.code == 'TL')
+                              (adminData.expertLevel.code == 'FED' &&
+                                adminData.role.code == 'TL') ||
+                              (adminData.expertLevel.code == 'REG' &&
+                                adminData.role.code == 'ADM') ||
+                              (adminData.expertLevel.code == 'REG' &&
+                                adminData.role.code == 'TL')
                             "
                           >
                             <h2 class="font-bold mb-1">Action</h2>
                             <button
                               type="button"
-                              class="
-                                inline-block
-                                px-6
-                                text-white
-                                font-medium
-                                text-xs
-                                bg-main-400
-                                leading-tight
-                                uppercase
-                                rounded
-                                 
-                                hover:bg-white hover:text-main-400
-                                transition
-                                duration-150
-                                ease-in-out
-                              "
+                              class="inline-block px-6 text-white font-medium text-xs bg-main-400 leading-tight uppercase rounded hover:bg-white hover:text-main-400 transition duration-150 ease-in-out"
                               @click="release()"
                             >
                               <i class="fa fa-refresh"></i>
@@ -451,70 +260,36 @@
                       </div>
                     </div>
                     <div
-                      class="
-                       
-                          grow-0
-                          shrink-0
-                          basis-auto
-                          w-full 
-                          rounded-lg
-                          p-2
-                          text-primary-600
-                          mt-12
-                          lg:px-6
-                        "
+                      class="grow-0 shrink-0 basis-auto w-full rounded-lg p-2 text-primary-600 mt-12 lg:px-6"
                     >
                       <div class="flex items-start m-2">
                         <div class="shrink-0">
                           <div
-                            class="
-                                p-4
-                                bg-blue-600
-                                rounded-md
-                                 
-                                w-48
-                                h-48
-                                flex
-                                items-center
-                                justify-center
-                              "
+                            class="p-4 bg-blue-600 rounded-md w-48 h-48 flex items-center justify-center"
                           >
                             <i class="fa fa-building fa-4x"></i>
                           </div>
                         </div>
                         <div class="grow ml-6 mb-4">
-                          <h2 class="font-bold mb-1 text-grey-800">
-                            Education Detail
-                          </h2>
+                          <h2 class="font-bold mb-1 text-grey-800">Education Detail</h2>
                           <div class="grid grid-cols-3 w-full">
                             <div
-                              class="
-                                  border-2
-                                  p-2
-                                  rounded-lg
-                                  m-1
-                                   
-                                  text-primary-500
-                                "
+                              class="border-2 p-2 rounded-lg m-1 text-primary-500"
                               v-for="education in modalData.data
                                 ? modalData.data.educations
                                 : []"
                               :key="education.id"
                             >
                               <p class="text-gray-500">
-                                <span
-                                  class="font-semibold text-primary-700 mb-1"
+                                <span class="font-semibold text-primary-700 mb-1"
                                   >Department:</span
                                 >
                                 <span class="text-grey-800 ml-1">{{
-                                  education.department
-                                    ? education.department.name
-                                    : ""
+                                  education.department ? education.department.name : ""
                                 }}</span>
                               </p>
                               <p class="text-gray-500">
-                                <span
-                                  class="font-semibold text-primary-700 mb-1"
+                                <span class="font-semibold text-primary-700 mb-1"
                                   >Education Level:</span
                                 >
                                 <span class="text-grey-800 ml-1">{{
@@ -524,8 +299,7 @@
                                 }}</span>
                               </p>
                               <p class="text-gray-500">
-                                <span
-                                  class="font-semibold text-primary-700 mb-1"
+                                <span class="font-semibold text-primary-700 mb-1"
                                   >Profession:</span
                                 >
                                 <span class="text-grey-800 ml-1">{{
@@ -535,14 +309,11 @@
                                 }}</span>
                               </p>
                               <p class="text-gray-500">
-                                <span
-                                  class="font-semibold text-primary-700 mb-1"
+                                <span class="font-semibold text-primary-700 mb-1"
                                   >Institution:</span
                                 >
                                 <span class="text-grey-800 ml-1">{{
-                                  education.institution
-                                    ? education.institution.name
-                                    : ""
+                                  education.institution ? education.institution.name : ""
                                 }}</span>
                               </p>
                             </div>
@@ -552,7 +323,7 @@
                     </div>
 
                     <div class="collapse mt-12" id="collapseExample">
-                      <div class="block p-6 rounded-lg   bg-white">
+                      <div class="block p-6 rounded-lg bg-white">
                         <div class="flex justify-content-evenly align-center">
                           <h1>Attached Documents</h1>
                         </div>
@@ -580,9 +351,7 @@
                                   />
                                 </a>
 
-                                <h4 style="font-weight: bold">
-                                  Document Type:-
-                                </h4>
+                                <h4 style="font-weight: bold">Document Type:-</h4>
                                 <h6>
                                   {{
                                     document.documentType
@@ -603,33 +372,10 @@
           </div>
         </div>
         <div
-          class="
-            modal-footer
-            flex flex-shrink-0 flex-wrap
-            items-center
-            justify-end
-            border-t border-grey-100
-            rounded-b-md
-          "
+          class="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end border-t border-grey-100 rounded-b-md"
         >
           <button
-            class="
-              inline-block
-              px-6
-              py-2.5
-              bg-primary-700
-              text-white
-              font-medium
-              text-xs
-              leading-tight
-              uppercase
-              rounded
-               
-              hover:bg-white hover:text-primary-600
-              transition
-              duration-150
-              ease-in-out
-            "
+            class="inline-block px-6 py-2.5 bg-primary-700 text-white font-medium text-xs leading-tight uppercase rounded hover:bg-white hover:text-primary-600 transition duration-150 ease-in-out"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#collapseExample"
@@ -641,22 +387,7 @@
           </button>
           <button
             type="button"
-            class="
-              inline-block
-              px-6
-              text-white
-              font-medium
-              text-xs
-              bg-primary-700
-              leading-tight
-              uppercase
-              rounded
-               
-              hover:bg-white hover:text-primary-700
-              transition
-              duration-150
-              ease-in-out
-            "
+            class="inline-block px-6 text-white font-medium text-xs bg-primary-700 leading-tight uppercase rounded hover:bg-white hover:text-primary-700 transition duration-150 ease-in-out"
             data-bs-dismiss="modal"
           >
             <i class="fa fa-times-circle"></i>
@@ -731,8 +462,7 @@ export default {
             modalData.value.professionalTypes = result.licenseProfessions;
             modalData.value.profile = result.profile;
             modalData.value.certifiedDate = result.certifiedDate;
-            modalData.value.licenseExpirationDate =
-              result.licenseExpirationDate;
+            modalData.value.licenseExpirationDate = result.licenseExpirationDate;
             modalData.value.documents = result.documents;
             modalData.value.remark = result ? result.remark : "";
             modalData.value.id = result.id;
@@ -830,4 +560,3 @@ export default {
   },
 };
 </script>
- 
