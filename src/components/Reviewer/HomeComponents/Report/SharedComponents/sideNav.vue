@@ -50,7 +50,7 @@
         </li>
       </router-link>
     </ul>
-    <ul class="nav-links"  v-if="adminData ? adminData.role.code != 'REV' : ''">
+    <ul class="nav-links" v-if="adminData ? adminData.role.code != 'REV' : ''">
       <router-link to="/admin/report/individualReport">
         <li
           :class="
@@ -66,9 +66,24 @@
       </router-link>
     </ul>
     <ul class="nav-links">
+      <router-link to="/admin/report/professionReport">
+        <li
+          :class="
+            $route.fullPath === '/admin/report/professionReport' ? 'mb-2 active' : ''
+          "
+        >
+          <a href="#ProfessionReport">
+            <i class="bx bx-briefcase-alt-2"></i>
+
+            <span class="links_name">Profession Report</span>
+          </a>
+        </li>
+      </router-link>
+    </ul>
+    <ul class="nav-links">
       <div class="profile-details mb-8 ml-4">
         <router-link to="/admin/review/">
-          <li style="margin-top:100px;">
+          <li style="margin-top: 100px">
             <a href="" class="ml-6">
               <i class="bx bx-arrow-to-left text-white"></i>
 
@@ -83,10 +98,10 @@
 <script>
 export default {
   setup() {
-  const adminData = JSON.parse(localStorage.getItem("allAdminData"));
-    return{
-      adminData
-    }
-}
+    const adminData = JSON.parse(localStorage.getItem("allAdminData"));
+    return {
+      adminData,
+    };
+  },
 };
 </script>
