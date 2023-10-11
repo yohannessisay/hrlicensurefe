@@ -1593,17 +1593,6 @@ export default {
         message: smsMessage ? smsMessage : "",
       };
       renewal.value.licenseExpirationDate = licenseExpirationDate.value;
-      // let tempRemarkValue = true;
-      // renewal.value.educations.forEach((element) => {
-      //   if (element && element.isDropped == true) {
-      //     tempRemarkValue = false;
-      //   } else {
-      //     tempRemarkValue = true;
-      //   }
-      // });
-      // if (tempRemarkValue == true) {
-      //   renewal.value.remark = "";
-      // }
 
       if (applicationType.value == "Renewal") {
         isLoadingAction.value = true;
