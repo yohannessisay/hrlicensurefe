@@ -124,7 +124,7 @@
 
       <div class="grid grid-cols-1 mb-8 gap-4">
         <div class="p-4 rounded-md shadow-md bg-white">
-          <h2 class="text-primary-600 font-bold text-2xl">New License Professions Map</h2>
+          <h2 class="text-primary-600 font-bold text-2xl">New License Department Map</h2>
           <apexchart
             type="bar"
             height="600"
@@ -134,7 +134,7 @@
           ></apexchart>
         </div>
         <div class="p-4 rounded-md mt-2 shadow-md bg-white">
-          <h2 class="text-primary-600 font-bold text-2xl">Renewal Professions Map</h2>
+          <h2 class="text-primary-600 font-bold text-2xl">Renewal Department Map</h2>
           <apexchart
             type="bar"
             height="600"
@@ -144,9 +144,7 @@
           ></apexchart>
         </div>
         <div class="p-4 rounded-md mt-2 shadow-md bg-white">
-          <h2 class="text-primary-600 font-bold text-2xl">
-            Goodstanding Professions Map
-          </h2>
+          <h2 class="text-primary-600 font-bold text-2xl">Goodstanding Department Map</h2>
           <apexchart
             type="bar"
             height="600"

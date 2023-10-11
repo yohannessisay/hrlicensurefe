@@ -678,6 +678,14 @@ const routes = [
       import("../components/Reviewer/HomeComponents/Report/Report.vue"),
   },
   {
+    path: "/admin/report/professionReport",
+    name: "AdminProfessionReport",
+    component: () =>
+      import(
+        "../components/Reviewer/HomeComponents/Report/ProfessionReport.vue"
+      ),
+  },
+  {
     path: "/admin/report/individualReport",
     name: "IndividualAdminReport",
     component: () =>
