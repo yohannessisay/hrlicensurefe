@@ -145,7 +145,9 @@
                 <div
                   class="flex flex-col"
                   v-if="
-                    generalInfo.regionSelected && generalInfo.regionSelected.code != 'FED'
+                    generalInfo.regionSelected &&
+                    generalInfo.regionSelected.code != 'FED' &&
+                    generalInfo.regionSelected.code != 'HAR'
                   "
                 >
                   <label class="text-main-400">Zone</label>
@@ -581,7 +583,25 @@ export default {
       fetchWoredas();
     };
     const regionChangeHandler = () => {
-      fetchZones();
+      if (generalInfo.value.regionSelected && generalInfo.value.regionSelected.code) {
+        switch (generalInfo.value.regionSelected.code) {
+          case "FED":
+            generalInfo.value.zoneSelected = null;
+            generalInfo.value.woredaSelected = null;
+            break;
+          case "HAR":
+            generalInfo.value.zoneSelected = {
+              name: "Default Harar",
+              id: 464,
+              code: "ZN_HAR_DEF_54",
+            };
+            fetchWoredas();
+            break;
+          default:
+            fetchZones();
+            break;
+        }
+      }
     };
     const educationalLevelChange = () => {
       isEdLevelSelected.value = true;

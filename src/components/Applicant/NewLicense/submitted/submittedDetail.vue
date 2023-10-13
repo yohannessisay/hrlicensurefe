@@ -10,9 +10,7 @@
         <li><span class="text-gray-500 mx-2">/</span></li>
         <li>
           <router-link to="/Applicant/NewLicense">
-            <a href="#" class="text-main-400 hover:text-blue-700"
-              >New License</a
-            >
+            <a href="#" class="text-main-400 hover:text-blue-700">New License</a>
           </router-link>
         </li>
         <li><span class="text-gray-500 mx-2">/</span></li>
@@ -32,12 +30,10 @@
       <div v-if="invalidLicenseStat == false">
         <div
           v-if="activeState == 1"
-          class="block p-6 rounded-lg   bg-white max-w-full mb-8 "
+          class="block p-6 rounded-lg bg-white max-w-full mb-8"
         >
           <div class="mt-small flex justify-center">
-            <h2
-              class="text-main-400 text-xl lg:text-3xl font-bold sm:text-xl border-b-4"
-            >
+            <h2 class="text-main-400 text-xl lg:text-3xl font-bold sm:text-xl border-b-4">
               General Information
             </h2>
           </div>
@@ -74,8 +70,8 @@
                   <small
                     class="text-main-400"
                     v-if="generalInfo.multipleDepartment.length > 0"
-                    >*To change this field please clear any department related
-                    information below by clicking the delete icon</small
+                    >*To change this field please clear any department related information
+                    below by clicking the delete icon</small
                   >
                 </div>
                 <div v-if="showLanguage" class="">
@@ -112,7 +108,7 @@
             </div>
 
             <!-- region -->
-            <div v-if="showLocation" class="  border-b-2">
+            <div v-if="showLocation" class="border-b-2">
               <div
                 class="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 mdlg:grid-cols-3 md:grid-cols-3 p-2"
               >
@@ -138,7 +134,7 @@
                     </option>
                   </select>
                 </div>
-                <div class="mr-4">
+                <div class="mr-4" v-if="generalInfo.regionSelected.code != 'HAR'">
                   <label class="text-main-400">Zone</label>
                   <select
                     class="form-select appearance-none block xl:w-64 md:w-64 sm:w-full w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
@@ -198,10 +194,7 @@
             <!-- end -->
 
             <!-- educational institution and department -->
-            <div
-              class="border-b-2 mb-4"
-              v-if="generalInfo.educations.length < 3"
-            >
+            <div class="border-b-2 mb-4" v-if="generalInfo.educations.length < 3">
               <div
                 class="grid grid-cols-1 sm:grid-rows-1 lg:grid-cols-4 mdlg:grid-cols-2 md:grid-cols-2 p-2"
               >
@@ -303,7 +296,7 @@
               <div class="text-right">
                 <button
                   type="button"
-                  class="px-6 mr-2 mb-8 py-2.5 bg-white text-main-400 font-medium border text-xs leading-tight uppercase rounded   hover:text-white hover:border-main-400 hover:bg-main-400 focus:bg-blue-700 focus:  focus:outline-none focus:ring-0 active:bg-blue-800 active:  transition duration-150 ease-in-out"
+                  class="px-6 mr-2 mb-8 py-2.5 bg-white text-main-400 font-medium border text-xs leading-tight uppercase rounded hover:text-white hover:border-main-400 hover:bg-main-400 focus:bg-blue-700 focus: focus:outline-none focus:ring-0 active:bg-blue-800 active: transition duration-150 ease-in-out"
                   @click="addMultiple()"
                 >
                   <i class="fa fa-plus"></i>
@@ -322,120 +315,99 @@
               >
             </div>
             <!-- Table for selected departments data -->
-            <div class="table-multiple border    mb-8  bg-white">
-              <h2 class="text-main-400 font-bold m-2 text-2xl">
-                Selected Departments
-              </h2>
+            <div class="table-multiple border mb-8 bg-white">
+              <h2 class="text-main-400 font-bold m-2 text-2xl">Selected Departments</h2>
 
               <div class="flex flex-col">
-               
-                    <div class="overflow-x-scroll">
-                      <div
-                        class="flex justify-center"
-                        v-if="generalInfo.multipleDepartment.length < 1"
-                      >
-                        No Data
-                      </div>
-                      <div v-else>
-                        <table class="min-w-full p-4">
-                          <thead class="border-b border-t text-main-400 p-4">
-                            <tr>
-                              <th
-                                scope="col"
-                                class="text-sm text-gray-900 p-5 text-left font-bold text-main-400"
-                              >
-                                Department
-                              </th>
-                              <th
-                                scope="col"
-                                class="text-sm text-gray-900 px-6 py-4 text-left font-bold text-main-400"
-                              >
-                                Education Level
-                              </th>
-                              <th
-                                scope="col"
-                                class="text-sm text-gray-900 px-6 py-4 text-left font-bold text-main-400"
-                              >
-                                Institution
-                              </th>
-                              <th
-                                scope="col"
-                                class="text-sm text-gray-900 px-6 py-4 text-left font-bold text-main-400"
-                              >
-                                Professional Type
-                              </th>
-                              <th
-                                scope="col"
-                                class="text-sm text-gray-900 px-6 py-4 text-left font-bold text-main-400"
-                              >
-                                Action
-                              </th>
-                            </tr>
-                          </thead>
-                          <tbody></tbody>
-                          <tbody>
-                            <tr
-                              class="border-b border-main-400 p-4"
-                              v-for="(item,
-                              index) in generalInfo.multipleDepartment"
-                              :key="item.id"
-                            >
-                              <td
-                                class="p-4 whitespace-nowrap text-sm font-medium text-gray-900"
-                              >
-                                {{
-                                  item.department ? item.department.name : ""
-                                }}
-                              </td>
-                              <td
-                                class="text-sm text-gray-900 font-light p-4 whitespace-nowrap"
-                              >
-                                {{
-                                  item.educationLevel
-                                    ? item.educationLevel.name
-                                    : ""
-                                }}
-                              </td>
-                              <td
-                                class="text-sm text-gray-900 font-light p-4 whitespace-nowrap"
-                              >
-                                {{
-                                  item.institution ? item.institution.name : ""
-                                }}
-                              </td>
-                              <td
-                                class="text-sm text-gray-900 font-light p-4 whitespace-nowrap"
-                              >
-                                {{
-                                  item.professionType
-                                    ? item.professionType.name
-                                    : ""
-                                }}
-                              </td>
-                              <td
-                                class="text-sm text-gray-900 font-light p-5 whitespace-nowrap"
-                              >
-                                <span
-                                  @click="removeDepartment(index)"
-                                  title="Remove"
-                                  ><i
-                                    class="fa fa-trash text-red-300 cursor-pointer"
-                                  ></i
-                                ></span>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                 
+                <div class="overflow-x-scroll">
+                  <div
+                    class="flex justify-center"
+                    v-if="generalInfo.multipleDepartment.length < 1"
+                  >
+                    No Data
+                  </div>
+                  <div v-else>
+                    <table class="min-w-full p-4">
+                      <thead class="border-b border-t text-main-400 p-4">
+                        <tr>
+                          <th
+                            scope="col"
+                            class="text-sm text-gray-900 p-5 text-left font-bold text-main-400"
+                          >
+                            Department
+                          </th>
+                          <th
+                            scope="col"
+                            class="text-sm text-gray-900 px-6 py-4 text-left font-bold text-main-400"
+                          >
+                            Education Level
+                          </th>
+                          <th
+                            scope="col"
+                            class="text-sm text-gray-900 px-6 py-4 text-left font-bold text-main-400"
+                          >
+                            Institution
+                          </th>
+                          <th
+                            scope="col"
+                            class="text-sm text-gray-900 px-6 py-4 text-left font-bold text-main-400"
+                          >
+                            Professional Type
+                          </th>
+                          <th
+                            scope="col"
+                            class="text-sm text-gray-900 px-6 py-4 text-left font-bold text-main-400"
+                          >
+                            Action
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody></tbody>
+                      <tbody>
+                        <tr
+                          class="border-b border-main-400 p-4"
+                          v-for="(item, index) in generalInfo.multipleDepartment"
+                          :key="item.id"
+                        >
+                          <td
+                            class="p-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                          >
+                            {{ item.department ? item.department.name : "" }}
+                          </td>
+                          <td
+                            class="text-sm text-gray-900 font-light p-4 whitespace-nowrap"
+                          >
+                            {{ item.educationLevel ? item.educationLevel.name : "" }}
+                          </td>
+                          <td
+                            class="text-sm text-gray-900 font-light p-4 whitespace-nowrap"
+                          >
+                            {{ item.institution ? item.institution.name : "" }}
+                          </td>
+                          <td
+                            class="text-sm text-gray-900 font-light p-4 whitespace-nowrap"
+                          >
+                            {{ item.professionType ? item.professionType.name : "" }}
+                          </td>
+                          <td
+                            class="text-sm text-gray-900 font-light p-5 whitespace-nowrap"
+                          >
+                            <span @click="removeDepartment(index)" title="Remove"
+                              ><i class="fa fa-trash text-red-300 cursor-pointer"></i
+                            ></span>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </div>
             </div>
             <!-- Table for selected departments data -->
 
             <div class="flex justify-end mb-2 mr-1">
               <button
-                class="px-6 mr-2 mb-2 py-2.5 bg-yellow-300 text-white font-medium border text-xs leading-tight uppercase rounded   hover:text-yellow-300 hover:border-yellow-300 hover:bg-white transition duration-150 ease-in-out"
+                class="px-6 mr-2 mb-2 py-2.5 bg-yellow-300 text-white font-medium border text-xs leading-tight uppercase rounded hover:text-yellow-300 hover:border-yellow-300 hover:bg-white transition duration-150 ease-in-out"
                 type="submit"
                 @click="withdraw()"
               >
@@ -577,7 +549,7 @@ export default {
     const fetchRegions = () => {
       store.dispatch("newlicense/getRegions").then((res) => {
         const regionsResult = res.data.data;
-        regions.value = regionsResult;
+        regions.value = regionsResult.filter((el) => el.code != "FED");
       });
     };
 
@@ -638,11 +610,9 @@ export default {
         departmentId: departmentId,
         educationalLevelId: educationalLevelId,
       };
-      store
-        .dispatch("newlicense/getProfessionalTypes", profession)
-        .then((res) => {
-          professionalTypes.value = res.data.data;
-        });
+      store.dispatch("newlicense/getProfessionalTypes", profession).then((res) => {
+        professionalTypes.value = res.data.data;
+      });
     };
     const applicantTypeChangeHandler = async () => {
       generalInfo.value.applicantTypeSelected = generalInfo.value.applicantType;
@@ -665,7 +635,17 @@ export default {
       }
     };
     const regionChangeHandler = () => {
-      fetchZones();
+      if (
+        generalInfo.value.regionSelected &&
+        generalInfo.value.regionSelected.code == "HAR"
+      ) {
+        generalInfo.value.zoneSelected = {
+          name: "Default Harar",
+          id: 464,
+          code: "ZN_HAR_DEF_54",
+        };
+        fetchWoredas();
+      }
     };
     const zoneChangeHandler = () => {
       fetchWoredas();
@@ -730,16 +710,13 @@ export default {
           (generalInfo.value.otherProfessionalType == undefined ||
             generalInfo.value.otherProfessionalTypeAmharic == undefined)
         ) {
-          toast.error(
-            "Please fill other profession name in amharic and english",
-            {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            }
-          );
+          toast.error("Please fill other profession name in amharic and english", {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          });
           return;
         }
         if (generalInfo.value.multipleDepartment.length > 3) {
@@ -775,8 +752,7 @@ export default {
               });
               generalInfo.value.educations.push({
                 departmentId: generalInfo.value.departmentSelected.id,
-                educationalLevelId:
-                  generalInfo.value.educationalLevelSelected.id,
+                educationalLevelId: generalInfo.value.educationalLevelSelected.id,
                 institutionId: generalInfo.value.institutionSelected.id,
                 professionTypeId: generalInfo.value.professionalTypeSelected.id,
                 otherInstitution: generalInfo.value.otherEducationalInstitution,
@@ -794,8 +770,7 @@ export default {
               institution: generalInfo.value.institutionSelected,
               professionType: generalInfo.value.professionalTypeSelected,
 
-              otherEducationalInstitution:
-                generalInfo.value.otherEducationalInstitution,
+              otherEducationalInstitution: generalInfo.value.otherEducationalInstitution,
               otherProfessionalTypeAmharic:
                 generalInfo.value.otherProfessionalTypeAmharic,
               otherProfessionalType: generalInfo.value.otherProfessionalType,
@@ -806,8 +781,7 @@ export default {
               institutionId: generalInfo.value.institutionSelected.id,
               professionTypeId: generalInfo.value.professionalTypeSelected.id,
               otherInstitution: generalInfo.value.otherEducationalInstitution,
-              otherProfessionTypeAmharic:
-                generalInfo.value.otherProfessionalTypeAmharic,
+              otherProfessionTypeAmharic: generalInfo.value.otherProfessionalTypeAmharic,
               otherProfessionType: generalInfo.value.otherProfessionalType,
             });
           }
@@ -836,19 +810,17 @@ export default {
         "NLApplicationData",
         JSON.stringify(tempApplicationData)
       );
-      store
-        .dispatch("newlicense/setGeneralInfo", generalInfo.value)
-        .then(() => {
-          emit("changeActiveState");
-          activeState.value += 1;
-        });
+      store.dispatch("newlicense/setGeneralInfo", generalInfo.value).then(() => {
+        emit("changeActiveState");
+        activeState.value += 1;
+      });
     };
     const fetchApplicationStatuses = () => {
       store.dispatch("newlicense/getApplicationStatuses").then((res) => {
         const results = res.data.data;
         applicationStatuses.value = results;
 
-        let status = applicationStatuses.value.filter(function(e) {
+        let status = applicationStatuses.value.filter(function (e) {
           return e.code == "DRA";
         });
         store.dispatch("newlicense/setButtons", status[0].buttons);
@@ -878,9 +850,7 @@ export default {
           generalInfo.value = res.data.data;
 
           generalInfo.value.regionSelected =
-            res.data.data && res.data.data.woreda
-              ? res.data.data.woreda.zone.region
-              : "";
+            res.data.data && res.data.data.woreda ? res.data.data.woreda.zone.region : "";
 
           generalInfo.value.zoneSelected =
             res.data.data && res.data.data.woreda
