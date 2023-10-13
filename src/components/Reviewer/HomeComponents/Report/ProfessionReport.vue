@@ -30,7 +30,7 @@
             View profession reports for all applications
           </h2>
 
-          <p class="absolute right-0">
+          <p class="absolute right-0" v-if="expertLevel == 'REG'">
             <button
               class="px-6 text-white bg-primary-600 hover:text-primary-600 font-medium text-xs leading-tight uppercase rounded focus: focus:outline-none focus:ring-0 transition duration-150 mt-0 ease-in-out text-right"
               @click="exportTable()"
@@ -51,6 +51,24 @@
             <h2 class="text-yellow-300">Goodstanding</h2>
           </div>
         </div>
+        <div class="mt-4 border p-2 shadow-md">
+          <label for="" class="">License Status</label>
+          <select
+            class="form-select appearance-none block w-full px-6 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+            v-model="searchTermStatus"
+            aria-label="Default select example"
+            @change="applyFilter()"
+          >
+            <option value="">All</option>
+            <option
+              v-for="appStatus in applicationStatuses"
+              :key="appStatus.id"
+              :value="appStatus"
+            >
+              {{ appStatus.name }}
+            </option>
+          </select>
+        </div>
         <div class="vld-parent mt-2">
           <loading
             :active="isLoading"
@@ -58,11 +76,11 @@
             :color="'#2F639D'"
             :opacity="1"
           ></loading>
-          <div class="mt-12">
+          <div class="mt-8">
             <div class="bg-white p-6 rounded-lg border overflow-x-scroll">
               <div class="inline-block min-w-full rounded-lg overflow-hidden">
                 <div class="flex flex-col items-center justify-center py-10">
-                  <table class="min-w-full text-sm text-gray-400">
+                  <table class="min-w-full text-sm text-gray-400" id="chebude">
                     <thead
                       class="bg-primary-700 text-white uppercase font-medium"
                       v-if="expertLevel == 'REG'"
@@ -93,13 +111,18 @@
                     </thead>
                     <thead class="bg-primary-700 text-white uppercase" v-else>
                       <tr>
-                        <th
-                          colspan="12"
-                          class="px-6 py-3 text-left border rounded-tl-md"
-                        ></th>
+                        <th>
+                          <h2 class="text-white text-2xl m-2">
+                            {{
+                              searchTermStatus && searchTermStatus != ""
+                                ? searchTermStatus.name + " licenses and letters"
+                                : "All"
+                            }}
+                          </h2>
+                        </th>
                       </tr>
                       <tr>
-                        <th colspan="2" class="border">Region Name</th>
+                        <th class="border">Region Name</th>
                         <th></th>
 
                         <th class="px-6 py-3 text-left border">Profession Name</th>
@@ -125,16 +148,33 @@
                           }}
                         </td>
                       </tr>
+                      <tr class="border-b">
+                        <td></td>
+                        <td class="text-yellow-300 p-2 border">Total</td>
+                        <td class="text-yellow-300 p-2 border">
+                          {{ totalValues.newLicense }}
+                        </td>
+                        <td class="text-yellow-300 p-2 border">
+                          {{ totalValues.renewal }}
+                        </td>
+                        <td class="text-yellow-300 p-2 border">
+                          {{ totalValues.goodStanding }}
+                        </td>
+                      </tr>
                     </tbody>
                     <tbody class="bg-gray-800" v-else>
                       <tr v-for="(prof, index) in allData" :key="index" class="border-b">
-                        <td colspan="2" class="text-main-400 p-2 border text-xl">
+                        <td class="text-main-400 p-4 border-4 text-xl">
                           {{ prof.name }}
                         </td>
                         <td></td>
                         <td>
+                          <tr>
+                            <td class="bg-primary-600 text-white px-4 text-lg border-t-8">
+                              New License
+                            </td>
+                          </tr>
                           <tr class="border">
-                            <td class="text-primary-600 px-4 text-lg">New License</td>
                             <td class="border">
                               <tr>
                                 <td
@@ -158,8 +198,10 @@
                               </tr>
                             </td>
                           </tr>
+                          <tr>
+                            <td class="bg-green-200 text-white px-4 text-lg">Renewal</td>
+                          </tr>
                           <tr class="border">
-                            <td class="text-green-200 px-4 text-lg">Renewal</td>
                             <td class="border">
                               <tr class="border">
                                 <td
@@ -183,8 +225,12 @@
                               </tr>
                             </td>
                           </tr>
+                          <tr>
+                            <td class="bg-yellow-300 text-white px-4 text-lg">
+                              Good Standing
+                            </td>
+                          </tr>
                           <tr class="border">
-                            <td class="text-yellow-300 px-4 text-lg">Good Standing</td>
                             <td class="border">
                               <tr>
                                 <td
@@ -231,6 +277,7 @@ import { useStore } from "vuex";
 import ReviewerNavBar from "./SharedComponents/navBar.vue";
 import ReviewerSideBar from "./SharedComponents/sideNav.vue";
 import * as XLSX from "xlsx";
+
 import "@ocrv/vue-tailwind-pagination/dist/style.css";
 import Loading from "vue3-loading-overlay";
 export default {
@@ -244,74 +291,225 @@ export default {
     const store = useStore();
     let allData = ref([]);
     let isLoading = ref(true);
-
-    let licenseTypeFilter = ref("newLicense");
+    let searchTermStatus = ref("");
+    let totalValues = ref({ newLicense: 0, renewal: 0, goodStanding: 0 });
+    let applicationStatuses = ref([]);
     let expertLevel = JSON.parse(localStorage.getItem("allAdminData"))
       ? JSON.parse(localStorage.getItem("allAdminData")).expertLevel.code
       : {};
-    const fetchProfessionReport = () => {
+    const fetchProfessionReport = (param) => {
       isLoading.value = true;
 
-      store.dispatch("stats/getLicensesCountByProfession").then((res) => {
+      store.dispatch("stats/getLicensesCountByProfession", param).then((res) => {
         let tempList = [];
+        allData.value = [];
+        totalValues.value.newLicense = 0;
+        totalValues.value.renewal = 0;
+        totalValues.value.goodStanding = 0;
         let tempData = res && res.data ? res.data : [];
         if (expertLevel == "REG") {
-          tempData.newLicense.forEach((newL) => {
-            tempData.renewal.forEach((renw) => {
-              if (newL.professionName == renw.professionName) {
-                tempList.push({
-                  name: newL.professionName,
-                  newLicense: newL.professionCount,
-                  renewal: renw.professionCount,
-                });
-              }
-            });
-          });
+          // if filter is applied, otherwise the count and distniction is already done on the backend
+          if (param[0].value.length == 0) {
+            tempData = mergeSameValues(
+              tempData.newLicense,
+              tempData.renewal,
+              tempData.goodStanding
+            );
+          }
 
-          tempList.forEach((tmpp) => {
-            tempData.goodStanding.forEach((goos) => {
-              if (tmpp.name == goos.professionName) {
-                tmpp.goodStanding = goos.professionCount;
-              }
-            });
-          });
+          tempList = returnFilteredValues(
+            tempData.newLicense,
+            tempData.renewal,
+            tempData.goodStanding
+          );
         } else {
           tempList = res && res.data ? res.data : [];
         }
 
         allData.value = tempList;
+
+        allData.value.forEach((element) => {
+          totalValues.value.newLicense += Number(element.newLicense)
+            ? Number(element.newLicense)
+            : 0;
+          totalValues.value.renewal += Number(element.renewal)
+            ? Number(element.renewal)
+            : 0;
+          totalValues.value.goodStanding += Number(element.goodStanding)
+            ? Number(element.goodStanding)
+            : 0;
+        });
+
         isLoading.value = false;
       });
     };
+    const mergeSameValues = (arrayA, arrayB, arrayC) => {
+      let tempData = { newLicense: [], renewal: [], goodStanding: [] };
+      tempData.newLicense = Object.values(
+        arrayA.reduce((value, object) => {
+          if (value[object.professionName]) {
+            value[object.professionName].professionCount = Number(
+              value[object.professionName].professionCount
+            );
+            value[object.professionName].professionCount += Number(
+              object.professionCount
+            );
+          } else {
+            value[object.professionName] = { ...object };
+          }
+          return value;
+        }, {})
+      );
+
+      tempData.renewal = Object.values(
+        arrayB.reduce((value, object) => {
+          if (value[object.professionName]) {
+            value[object.professionName].professionCount = Number(
+              value[object.professionName].professionCount
+            );
+            value[object.professionName].professionCount += Number(
+              object.professionCount
+            );
+          } else {
+            value[object.professionName] = { ...object };
+          }
+          return value;
+        }, {})
+      );
+      tempData.goodStanding = Object.values(
+        arrayC.reduce((value, object) => {
+          if (value[object.professionName]) {
+            value[object.professionName].professionCount = Number(
+              value[object.professionName].professionCount
+            );
+            value[object.professionName].professionCount += Number(
+              object.professionCount
+            );
+          } else {
+            value[object.professionName] = { ...object };
+          }
+          return value;
+        }, {})
+      );
+      return tempData;
+    };
+    const returnFilteredValues = (arrayA, arrayB, arrayC) => {
+      const mergedArray = [];
+      for (const object of arrayA) {
+        const matchingObject = arrayB.find(
+          (element) => element.professionName == object.professionName
+        );
+        if (matchingObject) {
+          mergedArray.push({
+            name: object.professionName,
+            newLicense: Number(object.professionCount),
+            renewal: Number(matchingObject.professionCount),
+            goodStanding: "----",
+          });
+        } else {
+          mergedArray.push({
+            name: object.professionName,
+            newLicense: Number(object.professionCount),
+            renewal: "----",
+            goodStanding: "----",
+          });
+        }
+      }
+      for (const object of arrayB) {
+        if (!arrayA.find((element) => element.professionName == object.professionName)) {
+          mergedArray.push({
+            name: object.professionName,
+            renewal: Number(object.professionCount),
+            newLicense: "----",
+            goodStanding: "----",
+          });
+        }
+      }
+      for (const object of arrayC) {
+        const matchingObject = mergedArray.find(
+          (element) => element.name == object.professionName
+        );
+        if (matchingObject) {
+          mergedArray.goodStanding = Number(object.professionCount);
+        } else {
+          mergedArray.push({
+            name: object.professionName,
+            goodStanding: Number(object.professionCount),
+            renewal: "----",
+            newLicense: "----",
+          });
+        }
+      }
+      return mergedArray;
+    };
 
     const exportTable = () => {
-      let tempData = [];
-
-      allData.value.forEach((element) => {
-        tempData.push({
-          "Profession Name": element.name,
-          "New License": element.newLicense,
-          Renewal: element.renewal,
-          "Good Standing": element.goodStanding,
+      if (expertLevel == "REG") {
+        let tempData = [];
+        allData.value.forEach((element) => {
+          tempData.push({
+            "Profession Name": element.name,
+            "New License": element.newLicense,
+            Renewal: element.renewal,
+            "Good Standing": element.goodStanding,
+          });
         });
-      });
-      var exportWS = XLSX.utils.json_to_sheet(tempData);
+        tempData.push({
+          "Profession Name": "Total",
+          "New License": allData.value.totalNewLicense,
+          Renewal: allData.value.totalGoodStanding,
+          "Good Standing": allData.value.totalGoodStanding,
+        });
 
-      var wb = XLSX.utils.book_new();
+        const exportWS = XLSX.utils.json_to_sheet(tempData);
 
-      XLSX.utils.book_append_sheet(wb, exportWS, "professions");
+        const wb = XLSX.utils.book_new();
 
-      XLSX.writeFile(wb, new Date().toISOString().slice(0, 10) + "_professions.xlsx");
+        XLSX.utils.book_append_sheet(wb, exportWS, "professions");
+
+        XLSX.writeFile(wb, new Date().toISOString().slice(0, 10) + "_professions.xlsx");
+      }
+    };
+    const applyFilter = () => {
+      fetchProfessionReport([
+        {
+          key: "applicationStatus",
+          value: searchTermStatus.value ? searchTermStatus.value.id : "",
+        },
+      ]);
     };
 
     onMounted(() => {
-      fetchProfessionReport([{ key: "type", value: licenseTypeFilter.value }]);
+      fetchProfessionReport([
+        {
+          key: "applicationStatus",
+          value: searchTermStatus.value ? searchTermStatus.value.id : "",
+        },
+      ]);
+      let tempAp = JSON.parse(localStorage.getItem("applicationStatuses"))
+        ? JSON.parse(localStorage.getItem("applicationStatuses"))
+        : [];
+
+      applicationStatuses.value = tempAp.filter((application) => {
+        return (
+          application.code == "APP" ||
+          application.code == "DEC" ||
+          application.code == "SUSP" ||
+          application.code == "RTN" ||
+          application.code == "USUP" ||
+          application.code == "RVK"
+        );
+      });
     });
     return {
       exportTable,
       isLoading,
       allData,
       expertLevel,
+      searchTermStatus,
+      applyFilter,
+      applicationStatuses,
+      totalValues,
     };
   },
 };

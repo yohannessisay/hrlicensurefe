@@ -29,9 +29,14 @@ export default {
       console.log(error);
     }
   },
-  async getLicensesCountByProfession() {
-    try {
-      const url = baseUrl + "/admins/dashboard/getLicensesCountByProfession";
+  async getLicensesCountByProfession(context, param) {
+    try { 
+      const url = `${baseUrl}/admins/dashboard/getLicensesCountByProfession${
+        param[0] && param[0].value && param[0].value != ""
+          ? "?" + param[0].key + "=" + param[0].value
+          : ""
+      }`;
+    
       const resp = await ApiService.get(url);
       return resp.data;
     } catch (error) {
@@ -47,8 +52,7 @@ export default {
       console.log(error);
     }
   },
-  
-  
+
   async getApplicationsCount() {
     try {
       const url = baseUrl + "/admins/dashboard/getApplicationsCount";
@@ -67,6 +71,4 @@ export default {
       console.log(error);
     }
   },
-  
-  
 };
