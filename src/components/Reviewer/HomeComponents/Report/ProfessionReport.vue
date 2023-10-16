@@ -30,7 +30,7 @@
             View profession reports for all applications
           </h2>
 
-          <p class="absolute right-0" v-if="expertLevel == 'REG'">
+          <p class="absolute right-0">
             <button
               class="px-6 text-white bg-primary-600 hover:text-primary-600 font-medium text-xs leading-tight uppercase rounded focus: focus:outline-none focus:ring-0 transition duration-150 mt-0 ease-in-out text-right"
               @click="exportTable()"
@@ -86,25 +86,17 @@
                       v-if="expertLevel == 'REG'"
                     >
                       <tr>
-                        <th
-                          scope="col"
-                          class="px-6 py-3 text-left tracking-wider rounded-l-md"
-                        >
+                        <th class="px-6 py-3 text-left tracking-wider rounded-l-md">
                           NO
                         </th>
-                        <th scope="col" class="px-6 py-3 text-left tracking-wider">
+                        <th class="px-6 py-3 text-left tracking-wider">
                           Profession Name
                         </th>
-                        <th scope="col" class="px-6 py-3 text-left tracking-wider">
+                        <th class="px-6 py-3 text-left tracking-wider">
                           New License Total
                         </th>
-                        <th scope="col" class="px-6 py-3 text-left tracking-wider">
-                          Renewal Total
-                        </th>
-                        <th
-                          scope="col"
-                          class="px-6 py-3 text-left tracking-wider rounded-tr-md"
-                        >
+                        <th class="px-6 py-3 text-left tracking-wider">Renewal Total</th>
+                        <th class="px-6 py-3 text-left tracking-wider rounded-tr-md">
                           Goodstanding Total
                         </th>
                       </tr>
@@ -125,7 +117,9 @@
                         <th class="border">Region Name</th>
                         <th></th>
 
-                        <th class="px-6 py-3 text-left border">Profession Name</th>
+                    <td>   </td>
+                        <td>    <th class="px-6 py-3 text-left border">Appliction Type</th>
+                        <th class="px-6 py-3 text-left ">Profession Name</th> </td>
                       </tr>
                     </thead>
                     <tbody class="bg-gray-800" v-if="expertLevel == 'REG'">
@@ -164,17 +158,13 @@
                     </tbody>
                     <tbody class="bg-gray-800" v-else>
                       <tr v-for="(prof, index) in allData" :key="index" class="border-b">
-                        <td class="text-main-400 p-4 border-4 text-xl">
+                        <td colspan="2" class="text-main-400 p-2 border text-xl">
                           {{ prof.name }}
                         </td>
                         <td></td>
                         <td>
-                          <tr>
-                            <td class="bg-primary-600 text-white px-4 text-lg border-t-8">
-                              New License
-                            </td>
-                          </tr>
                           <tr class="border">
+                            <td class="text-primary-600 px-4 text-lg">New License</td>
                             <td class="border">
                               <tr>
                                 <td
@@ -198,10 +188,8 @@
                               </tr>
                             </td>
                           </tr>
-                          <tr>
-                            <td class="bg-green-200 text-white px-4 text-lg">Renewal</td>
-                          </tr>
                           <tr class="border">
+                            <td class="text-green-200 px-4 text-lg">Renewal</td>
                             <td class="border">
                               <tr class="border">
                                 <td
@@ -225,12 +213,8 @@
                               </tr>
                             </td>
                           </tr>
-                          <tr>
-                            <td class="bg-yellow-300 text-white px-4 text-lg">
-                              Good Standing
-                            </td>
-                          </tr>
                           <tr class="border">
+                            <td class="text-yellow-300 px-4 text-lg">Good Standing</td>
                             <td class="border">
                               <tr>
                                 <td
@@ -277,7 +261,6 @@ import { useStore } from "vuex";
 import ReviewerNavBar from "./SharedComponents/navBar.vue";
 import ReviewerSideBar from "./SharedComponents/sideNav.vue";
 import * as XLSX from "xlsx";
-
 import "@ocrv/vue-tailwind-pagination/dist/style.css";
 import Loading from "vue3-loading-overlay";
 export default {
@@ -468,6 +451,61 @@ export default {
         XLSX.utils.book_append_sheet(wb, exportWS, "professions");
 
         XLSX.writeFile(wb, new Date().toISOString().slice(0, 10) + "_professions.xlsx");
+      } else {
+        var wb = XLSX.utils.book_new();
+        wb.Props = {
+          Title: "Professions report",
+          Subject: "Professions Report",
+          Author: "MOH",
+          CreatedDate: new Date(2017, 12, 19),
+        };
+        wb.SheetNames.push("Professions Report");
+        var ws_data = [["ALL"], ["Region Name", "Application Type", "Profession Name"]];
+
+        let j = 2;
+        let tempVar = 0;
+        allData.value.forEach((element) => {
+          if (tempVar > 0) {
+            j += 1;
+          }
+          ws_data.push([element.name, "New License"]);
+          ws_data.push([
+            { t: "z", v: "" },
+            { t: "z", v: "" },
+          ]);
+          element.newLicense.forEach((element) => {
+            ws_data[j].push(element.professionName);
+            ws_data[j + 1].push(element.professionCount);
+          });
+
+          ws_data.push([{ t: "z", v: "" }, "Renewal"]);
+          ws_data.push([
+            { t: "z", v: "" },
+            { t: "z", v: "" },
+          ]);
+          element.renewal.forEach((element) => {
+            ws_data[j + 2].push(element.professionName);
+            ws_data[j + 3].push(element.professionCount);
+          });
+
+          ws_data.push([{ t: "z", v: "" }, "Goodstanding"]);
+          ws_data.push([
+            { t: "z", v: "" },
+            { t: "z", v: "" },
+          ]);
+          element.goodStanding.forEach((element) => {
+            ws_data[j + 4].push(element.professionName);
+            ws_data[j + 5].push(element.professionCount);
+          });
+          j += 5;
+          tempVar++;
+        });
+
+        console.log(ws_data);
+        var ws = XLSX.utils.aoa_to_sheet(ws_data);
+        wb.Sheets["Professions Report"] = ws;
+        XLSX.writeFile(wb, new Date().toISOString().slice(0, 10) + "_professions.xlsx");
+        console.log(allData.value);
       }
     };
     const applyFilter = () => {
