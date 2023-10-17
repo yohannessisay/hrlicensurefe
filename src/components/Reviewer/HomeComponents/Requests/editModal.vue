@@ -38,7 +38,7 @@
                   <div class="grid grid-cols-3 gap-4">
                     <div>
                       <h2 class="text-primary-600 font-bold text-xl">Reviewer Reason</h2>
-                      <p class="border-2 shadow-md rounded-md p- break-words">
+                      <p class="border-2 shadow-md rounded-md p-2 break-words">
                         {{
                           editData && editData.data ? editData.data.reviewer_reason : ""
                         }}
@@ -64,7 +64,7 @@
                         }}
                       </p>
                     </div>
-                    <div>
+                    <div v-if="editData && editData.Status == 'new'">
                       <label class="text-main-400 text-xl">Final Status </label>
                       <select
                         class="form-select appearance-none block w-full mb-2 px-3 py-2 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
@@ -93,12 +93,17 @@
                     <div>
                       <h2 class="text-primary-600 font-bold text-xl">Approver Comment</h2>
                       <textarea
+                        v-if="editData && editData.Status == 'new'"
                         class="w-full shadow-inner p-4 border-grey-100"
                         placeholder="Write a remark note of why the license is being revoked."
                         rows="6"
-                        :disabled="editData && editData.Status == 'finalized'"
                         v-model="approverComment"
                       ></textarea>
+                      <p class="border-2 shadow-md rounded-md p-2 break-words" v-else>
+                        {{
+                          editData && editData.data ? editData.data.approver_reason : ""
+                        }}
+                      </p>
                     </div>
                   </div>
                 </div>
