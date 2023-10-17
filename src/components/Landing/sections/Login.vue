@@ -1,7 +1,7 @@
 <template>
   <!-- Login Part -->
   <div
-    class="fixed  top-0 left-0 hidden w-full h-full overflow-x-hidden overflow-y-auto outline-none modal fade"
+    class="fixed top-0 left-0 hidden w-full h-full overflow-x-hidden overflow-y-auto outline-none modal fade"
     id="staticBackdrop"
     data-bs-backdrop="static"
     data-bs-keyboard="false"
@@ -9,29 +9,22 @@
     aria-labelledby="staticBackdropLabel"
     aria-hidden="true"
   >
-    <div
-      class="relative pointer-events-none modal-dialog modal-dialog-centered"
-    >
+    <div class="relative pointer-events-none modal-dialog modal-dialog-centered">
       <div
-        class="relative flex flex-col w-full   text-current border-none rounded-md   outline-none pointer-events-auto modal-content md:w-9/12 mdlg:w-9/12 lg:w-10/12 sm:w-full bg-clip-padding"
+        class="relative flex flex-col w-full text-current border-none rounded-md outline-none pointer-events-auto modal-content md:w-9/12 mdlg:w-9/12 lg:w-10/12 sm:w-full bg-clip-padding"
       >
         <div class="relative flex justify-center p-2 modal-body">
           <div class="relative py-3 sm:max-w-xl sm:mx-auto">
             <div
-              class="absolute inset-0 bg-gradient-to-r from-blue-300 bg-main-400   transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl rounded-3xl"
+              class="absolute inset-0 bg-gradient-to-r from-blue-300 bg-main-400 transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl rounded-3xl"
             ></div>
 
-            <div
-              class="relative  bg-white   sm:rounded-3xl sm:p-10 rounded-3xl p-4"
-            >
+            <div class="relative bg-white sm:rounded-3xl sm:p-10 rounded-3xl p-4">
               <div class="flex justify-end">
                 <button
-                  style="
-    margin-right: -26px;
-    margin-top: -30px;
-"
+                  style="margin-right: -26px; margin-top: -30px"
                   type="button"
-                  class="text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded   bg-main-400 hover:text-main-400 hover:border hover:border-main-400  hover: "
+                  class="text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded bg-main-400 hover:text-main-400 hover:border hover:border-main-400 hover:"
                   data-bs-dismiss="modal"
                   aria-label="Close"
                 >
@@ -57,16 +50,12 @@
                     <form @submit.prevent="submit">
                       <div class="flex -mx-3">
                         <div class="w-full px-3 mb-1">
-                          <label for="" class="px-1 text-base font-thin"
-                            >Email</label
-                          >
+                          <label for="" class="px-1 text-base font-thin">Email</label>
                           <div class="flex mt-1">
                             <div
                               class="z-10 flex items-center justify-center w-10 pl-1 text-center pointer-events-none"
                             >
-                              <i
-                                class="text-lg text-main-400 fa fa-mail-bulk"
-                              ></i>
+                              <i class="text-lg text-main-400 fa fa-mail-bulk"></i>
                             </div>
                             <input
                               v-model="credentials.email"
@@ -106,17 +95,17 @@
                         </div>
                       </div>
 
-                      <div class="relative">
-                        <div class="vld-parent ">
+                      <div class="relative padding-2">
+                        <div class="vld-parent">
                           <loading
-                            class="rounded-md"
+                            class="rounded-md -m-2"
                             :active="isLoading"
                             :is-full-page="false"
                             :color="'#2F639D'"
                             :opacity="1"
                           ></loading>
                           <button
-                            class="inline-block w-full mt-4 mb-4 ml-auto font-semibold text-center text-white transition duration-200 rounded-lg shadow-sm bg-main-400 focus:bg-blue-700 focus:shadow-sm focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 hover:text-main-400 hover:bg-white text-md hover: "
+                            class="inline-block w-full mt-4 mb-4 ml-auto font-semibold text-center text-white transition duration-200 rounded-lg shadow-sm bg-main-400 focus:bg-blue-700 focus:shadow-sm focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 hover:text-main-400 hover:bg-white text-md hover:"
                           >
                             Login
                           </button>
@@ -124,15 +113,7 @@
                       </div>
                       <a
                         href="#!"
-                        class="
-                  text-main-400
-                  hover:text-blue-700
-                  focus:text-blue-700
-                  transition
-                  duration-200
-                  ease-in-out
-                  
-                "
+                        class="text-main-400 hover:text-blue-700 focus:text-blue-700 transition duration-200 ease-in-out"
                         data-bs-toggle="modal"
                         data-bs-target="#forgotPassword"
                         >Forgot password?</a
@@ -159,14 +140,14 @@
   >
     <div class="relative pointer-events-none modal-dialog modal-md">
       <div
-        class="relative flex flex-col w-8/12 text-current bg-white border-none rounded-md   outline-none pointer-events-auto modal-content md:w-9/12 mdlg:w-9/12 lg:w-10/12 sm:w-full bg-clip-padding"
+        class="relative flex flex-col w-8/12 text-current bg-white border-none rounded-md outline-none pointer-events-auto modal-content md:w-9/12 mdlg:w-9/12 lg:w-10/12 sm:w-full bg-clip-padding"
       >
         <div
           class="flex items-center justify-center flex-shrink-0 p-4 border-b modal-header border-grey-100 rounded-t-md"
         >
           <button
             type="button"
-            class="px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded   bg-main-400 hover:border-main-400 hover:text-main-400 active:bg-purple-800 active: "
+            class="px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded bg-main-400 hover:border-main-400 hover:text-main-400 active:bg-purple-800 active:"
             data-bs-dismiss="modal"
             aria-label="Close"
           >
@@ -196,7 +177,7 @@
             <div class="flex justify-center">
               <button
                 type="button"
-                class="px-6 mt-4 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded   bg-main-400 hover:bg-white hover:text-primary-700"
+                class="px-6 mt-4 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded bg-main-400 hover:bg-white hover:text-primary-700"
                 @click="resetPassword()"
               >
                 <i class="fa fa-refresh"></i>
@@ -269,9 +250,7 @@ export default {
                   pauseOnHover: true,
                   icon: true,
                 });
-                document
-                  .querySelector("#staticBackdrop")
-                  .classList.remove("show");
+                document.querySelector("#staticBackdrop").classList.remove("show");
                 document.querySelector("body").classList.remove("modal-open");
                 const mdbackdrop = document.querySelector(".modal-backdrop");
                 if (mdbackdrop) {
@@ -287,9 +266,7 @@ export default {
                   pauseOnHover: true,
                   icon: true,
                 });
-                document
-                  .querySelector("#staticBackdrop")
-                  .classList.remove("show");
+                document.querySelector("#staticBackdrop").classList.remove("show");
                 document.querySelector("body").classList.remove("modal-open");
                 const mdbackdrop = document.querySelector(".modal-backdrop");
                 if (mdbackdrop) {

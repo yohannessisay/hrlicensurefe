@@ -1,17 +1,6 @@
 <template>
   <div
-    class="
-      modal
-      fade
-      fixed
-      top-0
-      left-0
-      hidden
-      w-full
-      h-full
-      outline-none
-      overflow-x-hidden overflow-y-auto
-    "
+    class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
     id="declinedDetail"
     data-bs-backdrop="static"
     data-bs-keyboard="false"
@@ -20,54 +9,15 @@
     aria-hidden="true"
   >
     <div
-      class="
-        modal-dialog modal-dialog-centered modal-xl
-        relative
-        w-auto
-        pointer-events-none
-      "
+      class="modal-dialog modal-dialog-centered modal-xl relative w-auto pointer-events-none"
     >
       <div
-        class="
-          modal-content
-          border-none
-           
-          relative
-          flex flex-col
-          w-full
-          pointer-events-auto
-          bg-white bg-clip-padding
-          rounded-md
-          outline-none
-          text-current
-        "
+        class="modal-content border-none relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current"
       >
-        <div
-          class="modal-header flex flex-shrink-0 justify-end p-2 rounded-t-md"
-        >
+        <div class="modal-header flex flex-shrink-0 justify-end p-2 rounded-t-md">
           <button
             type="button"
-            class="
-              px-6
-              text-white
-              bg-main-400
-              hover:text-main-400 hover:border
-              font-medium
-              text-xs
-              leading-tight
-              uppercase
-              rounded
-               
-              hover:bg-purple-700 hover: 
-              focus:bg-purple-700
-              focus: 
-              focus:outline-none
-              focus:ring-0
-              active:bg-purple-800 active: 
-              transition
-              duration-150
-              ease-in-out
-            "
+            class="px-6 text-white bg-main-400 hover:text-main-400 hover:border font-medium text-xs leading-tight uppercase rounded hover:bg-purple-700 hover: focus:bg-purple-700 focus: focus:outline-none focus:ring-0 active:bg-purple-800 active: transition duration-150 ease-in-out"
             data-bs-dismiss="modal"
             aria-label="Close"
           >
@@ -100,28 +50,14 @@
                 >
                   <div class="flex flex-wrap -mx-1 lg:-mx-4">
                     <!-- Column -->
-                    <div
-                      class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
-                    >
+                    <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
                       <!-- Article -->
-                      <article class="overflow-hidden rounded-lg  ">
+                      <article class="overflow-hidden rounded-lg">
                         <header
-                          class="
-                            flex
-                            items-center
-                            justify-between
-                            leading-tight
-                            p-2
-                            md:p-4
-                            border-b-4
-                            text-main-400
-                          "
+                          class="flex items-center justify-between leading-tight p-2 md:p-4 border-b-4 text-main-400"
                         >
                           <h1 class="text-lg">
-                            <a
-                              class="no-underline hover:underline text-black"
-                              href="#"
-                            >
+                            <a class="no-underline hover:underline text-black" href="#">
                               Applicant Profile
                             </a>
                           </h1>
@@ -138,14 +74,14 @@
                                 (licenseData && licenseData.profile
                                   ? licenseData.profile.name
                                   : "-") +
-                                  " " +
-                                  (licenseData && licenseData.profile
-                                    ? licenseData.profile.fatherName
-                                    : "-") +
-                                  " " +
-                                  (licenseData && licenseData.profile
-                                    ? licenseData.profile.grandFatherName
-                                    : "-")
+                                " " +
+                                (licenseData && licenseData.profile
+                                  ? licenseData.profile.fatherName
+                                  : "-") +
+                                " " +
+                                (licenseData && licenseData.profile
+                                  ? licenseData.profile.grandFatherName
+                                  : "-")
                               }}
                             </div>
                           </div>
@@ -172,14 +108,7 @@
                         </div>
 
                         <footer
-                          class="
-                            flex
-                            items-center
-                            justify-between
-                            leading-none
-                            p-2
-                            md:p-4
-                          "
+                          class="flex items-center justify-between leading-none p-2 md:p-4"
                         ></footer>
                       </article>
                       <!-- END Article -->
@@ -187,28 +116,14 @@
                     <!-- END Column -->
 
                     <!-- Column -->
-                    <div
-                      class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
-                    >
+                    <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
                       <!-- Article -->
-                      <article class="overflow-hidden rounded-lg  ">
+                      <article class="overflow-hidden rounded-lg">
                         <header
-                          class="
-                            flex
-                            items-center
-                            justify-between
-                            leading-tight
-                            p-2
-                            md:p-4
-                            border-b-4
-                            text-main-400
-                          "
+                          class="flex items-center justify-between leading-tight p-2 md:p-4 border-b-4 text-main-400"
                         >
                           <h1 class="text-lg">
-                            <a
-                              class="no-underline hover:underline text-black"
-                              href="#"
-                            >
+                            <a class="no-underline hover:underline text-black" href="#">
                               Reviewer Detail
                             </a>
                           </h1>
@@ -227,8 +142,7 @@
                                 licenseData.licenseReviewer &&
                                 licenseData.licenseReviewer.reviewer &&
                                 licenseData.licenseReviewer.reviewer.expertLevel
-                                  ? licenseData.licenseReviewer.reviewer
-                                      .expertLevel.name
+                                  ? licenseData.licenseReviewer.reviewer.expertLevel.name
                                   : "-"
                               }}
                             </div>
@@ -248,8 +162,7 @@
                             <div class="text-main-400 font-bold">
                               {{
                                 licenseData && licenseData.licenseReviewer
-                                  ? licenseData.licenseReviewer.reviewer
-                                      .phoneNumber
+                                  ? licenseData.licenseReviewer.reviewer.phoneNumber
                                   : "-"
                               }}
                             </div>
@@ -257,14 +170,7 @@
                         </div>
 
                         <footer
-                          class="
-                            flex
-                            items-center
-                            justify-between
-                            leading-none
-                            p-2
-                            md:p-4
-                          "
+                          class="flex items-center justify-between leading-none p-2 md:p-4"
                         ></footer>
                       </article>
                       <!-- END Article -->
@@ -272,28 +178,14 @@
                     <!-- END Column -->
 
                     <!-- Column -->
-                    <div
-                      class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
-                    >
+                    <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
                       <!-- Article -->
-                      <article class="overflow-hidden rounded-lg  ">
+                      <article class="overflow-hidden rounded-lg">
                         <header
-                          class="
-                            flex
-                            items-center
-                            justify-between
-                            leading-tight
-                            p-2
-                            md:p-4
-                            border-b-4
-                            text-main-400
-                          "
+                          class="flex items-center justify-between leading-tight p-2 md:p-4 border-b-4 text-main-400"
                         >
                           <h1 class="text-lg">
-                            <a
-                              class="no-underline hover:underline text-black"
-                              href="#"
-                            >
+                            <a class="no-underline hover:underline text-black" href="#">
                               Applicants Education Detail
                             </a>
                           </h1>
@@ -344,14 +236,7 @@
                         </div>
 
                         <footer
-                          class="
-                            flex
-                            items-center
-                            justify-between
-                            leading-none
-                            p-2
-                            md:p-4
-                          "
+                          class="flex items-center justify-between leading-none p-2 md:p-4"
                         ></footer>
                       </article>
                       <!-- END Article -->
@@ -360,28 +245,14 @@
                     <!-- END Column -->
 
                     <!-- Column -->
-                    <div
-                      class="my-1 px-1 w-1/2 md:w-1/2 lg:my-4 lg:px-4 lg:w-8/12"
-                    >
+                    <div class="my-1 px-1 w-1/2 md:w-1/2 lg:my-4 lg:px-4 lg:w-8/12">
                       <!-- Article -->
-                      <article class="overflow-hidden rounded-lg  ">
+                      <article class="overflow-hidden rounded-lg">
                         <header
-                          class="
-                            flex
-                            items-center
-                            justify-between
-                            leading-tight
-                            p-2
-                            md:p-4
-                            border-b-4
-                            text-main-400
-                          "
+                          class="flex items-center justify-between leading-tight p-2 md:p-4 border-b-4 text-main-400"
                         >
                           <h1 class="text-lg">
-                            <a
-                              class="no-underline hover:underline text-black"
-                              href="#"
-                            >
+                            <a class="no-underline hover:underline text-black" href="#">
                               Remark on why the license is declined
                             </a>
                           </h1>
@@ -403,14 +274,7 @@
                         </div>
 
                         <footer
-                          class="
-                            flex
-                            items-center
-                            justify-between
-                            leading-none
-                            p-2
-                            md:p-4
-                          "
+                          class="flex items-center justify-between leading-none p-2 md:p-4"
                         ></footer>
                       </article>
                       <!-- END Article -->
@@ -424,24 +288,7 @@
                 <div class="accordion-item bg-white">
                   <h2 class="accordion-header mb-0" id="headingTwo">
                     <button
-                      class="
-                        accordion-button
-                        collapsed
-                        relative
-                        flex
-                        items-center
-                        text-white
-                        bg-main-400
-                        focus:bg-main-400 focus:text-white
-                        w-full
-                        py-4
-                        px-5
-                        text-base text-left
-                        hover:border-main-400 hover:text-main-400
-                        border-0
-                        rounded-none
-                        transition
-                      "
+                      class="accordion-button collapsed relative flex items-center text-white bg-main-400 focus:bg-main-400 focus:text-white w-full py-4 px-5 text-base text-left hover:border-main-400 hover:text-main-400 border-0 rounded-none transition"
                       type="button"
                       aria-controls="collapseTwo"
                       data-bs-toggle="collapse"
@@ -460,46 +307,26 @@
                     <div class="accordion-body py-4 px-5">
                       <div class="grid grid-cols-4 gap-4">
                         <div
-                          class="mt-4 mb-8 bg-white  "
-                          style="border-radius: 15px; padding: 10px"
+                          class="mt-4 mb-8 bg-white border p-2 rounded-md shadow-md"
                           v-for="document in declinedDocuments"
                           :key="document.id"
                         >
-                          <i
-                            class="
-                              fa fa-upload fa-2x
-                              text-main-400
-                              cursor-pointer
-                            "
-                          >
-                          </i
+                          <i class="fa fa-upload fa-2x text-main-400 cursor-pointer"> </i
                           ><span class="text-main-400 ml-2">Re-upload</span>
                           <a
                             :id="'image_href_' + `${document.documentTypeCode}`"
                             href=""
-                            :data-title="
-                              document.name ? document.name : '-----'
-                            "
+                            :data-title="document.name ? document.name : '-----'"
                             data-lightbox="example-2"
                           >
                             <i
-                              :id="
-                                're_educational_icon_' +
-                                  `${document.documentTypeCode}`
-                              "
-                              class="
-                                fa fa-eye fa-2x
-                                pointer-events-none
-                                text-main-400
-                                disabled
-                                ml-4
-                              "
+                              :id="'re_educational_icon_' + document.documentTypeCode"
+                              class="fa fa-eye cursor-pointer text-main-400 disabled"
                               aria-hidden="true"
                             >
                               <img
                                 :id="
-                                  're_image_lightbox_' +
-                                    `${document.documentTypeCode}`
+                                  're_image_lightbox_' + `${document.documentTypeCode}`
                                 "
                                 src=""
                                 class="w-full h-2 object-cover"
@@ -510,30 +337,25 @@
                             <input
                               type="file"
                               required
-                              :id="`files${document.id}`"
+                              :id="`re_image_href_${document.documentTypeCode}`"
                               accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
                               :ref="`imageUploader${document.id}`"
                               class="custom-file-input"
                               v-on:change="handleFileUpload(document, $event)"
                             />
                           </div>
-
-                          <div
-                            class="
-                              flex
-                              justify-center
-                              border-t-4
-                              text-main-400
-                              mt-2
-                            "
-                          >
-                            <div class="mt-large bg-white">
+                          <div class="flex justify-center border-t-4 text-main-400 mt-2">
+                            <div
+                              v-if="
+                                document.fileType &&
+                                document.fileType != 'application/pdf'
+                              "
+                              class="mt-large bg-white"
+                            >
                               <a
                                 :href="googleApi + document.filePath"
                                 :data-title="
-                                  document.documentType
-                                    ? document.documentType.name
-                                    : ''
+                                  document.documentType ? document.documentType.name : ''
                                 "
                                 data-lightbox="example-2"
                               >
@@ -543,14 +365,28 @@
                                 />
                               </a>
 
-                              <h4 style="font-weight: bold">Document Type:-</h4>
+                              <h4 class="font-bold text-grey-800">Document Type:-</h4>
                               <h6>
                                 {{
-                                  document.documentType
-                                    ? document.documentType.name
-                                    : ""
+                                  document.documentType ? document.documentType.name : ""
                                 }}
                               </h6>
+                            </div>
+                            <div v-else>
+                              <h4 class="font-bold text-grey-800">Document Type:-</h4>
+                              <h6>
+                                {{
+                                  document.documentType ? document.documentType.name : ""
+                                }}
+                              </h6>
+                              <button
+                                class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded mt-8 bg-primary-400 hover:bg-white hover:text-primary-600"
+                                @click="
+                                  openPdfInNewTab(document ? document.filePath : '')
+                                "
+                              >
+                                See pdf in detail
+                              </button>
                             </div>
                           </div>
                         </div>
@@ -563,55 +399,18 @@
           </div>
         </div>
         <div
-          class="
-            modal-footer
-            flex flex-shrink-0 flex-wrap
-            items-center
-            justify-end
-            border-t border-grey-100
-            rounded-b-md
-          "
+          class="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end border-t border-grey-100 rounded-b-md p-2"
         >
           <button
             type="button"
-            class="
-              inline-block
-              px-6
-              text-white
-              bg-main-400
-              hover:text-main-400 hover:border
-              font-semibold
-              text-xs
-              leading-tight
-              uppercase
-              rounded
-               
-              transition
-              duration-150
-              ease-in-out
-            "
+            class="inline-block px-6 text-white bg-main-400 hover:text-main-400 hover:border font-semibold text-xs leading-tight uppercase rounded transition duration-150 ease-in-out"
             @click="reApply()"
           >
             Re-apply
           </button>
           <button
             type="button"
-            class="
-              inline-block
-              px-6
-              text-white
-              bg-main-400
-              hover:text-main-400 hover:border
-              font-semibold
-              text-xs
-              leading-tight
-              uppercase
-              rounded
-               
-              transition
-              duration-150
-              ease-in-out
-            "
+            class="inline-block px-6 text-white bg-main-400 hover:text-main-400 hover:border font-semibold text-xs leading-tight uppercase rounded transition duration-150 ease-in-out"
             data-bs-dismiss="modal"
           >
             Close
@@ -695,7 +494,7 @@ export default {
         }
         reader.addEventListener(
           "load",
-          function() {
+          function () {
             showPreview.value = true;
             previewDocuments.value[data.documentType.code] = reader.result;
           },
@@ -710,44 +509,33 @@ export default {
             isImage.value[data.documentType.code] = true;
             isPdf.value[data.documentType.code] = false;
 
-            reader.readAsDataURL(
-              documentUploaded.value[data.documentType.code]
-            );
+            reader.readAsDataURL(documentUploaded.value[data.documentType.code]);
           } else if (
-            /\.(pdf)$/i.test(
-              documentUploaded.value[data.documentType.code].name
-            )
+            /\.(pdf)$/i.test(documentUploaded.value[data.documentType.code].name)
           ) {
             isImage.value[data.documentType.code] = false;
             isPdf.value[data.documentType.code] = true;
-            reader.readAsDataURL(
-              documentUploaded.value[data.documentType.code]
-            );
+            reader.readAsDataURL(documentUploaded.value[data.documentType.code]);
           }
         }
       } else {
         fileSizeExceed.value[data.documentType.code] = true;
         documentUploaded.value[data.documentType.code] = "";
       }
-      let icon = document.getElementById(
-        "re_educational_icon_" + data.documentTypeCode
-      );
+      let icon = document.getElementById("re_educational_icon_" + data.documentTypeCode);
       icon.classList.toggle("disabled");
       let output = document.getElementById(
         "re_image_lightbox_" + data.documentType.code + data.documentTypeCode
       );
-      let outputHref = document.getElementById(
-        "re_image_href_" + data.documentTypeCode
-      );
+      let outputHref = document.getElementById("re_image_href_" + data.documentTypeCode);
       outputHref.href = URL.createObjectURL(event.target.files[0]);
       output.src = URL.createObjectURL(event.target.files[0]);
-      output.onload = function() {
+      output.onload = function () {
         URL.revokeObjectURL(output.src); // free memory
       };
     };
 
     const reApply = () => {
-     
       let license = {
         licenseId: licenseData.value.id,
         declinedData: {

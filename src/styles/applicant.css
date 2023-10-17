@@ -159,7 +159,7 @@ justify-content: start;
 .top-navbar {
   position: fixed;
   z-index: 1;
-  width: 81%;
+  width: calc(100% - 14%);
   display: flex;
   align-items: center;
   justify-content: space-between;
