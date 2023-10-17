@@ -954,7 +954,6 @@ export default {
           }
         });
       }
-      console.log(tempComparision);
       let tempError = false;
       tempComparision.forEach((existingEd) => {
         generalInfo.value.education.forEach((newEd) => {
