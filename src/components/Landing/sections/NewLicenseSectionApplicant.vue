@@ -1,28 +1,11 @@
 <template>
   <!-- w-full blue-gradient flex justify-center items-center -->
   <div
-    class="
-      w-full
-    bg-main-400
-      flex
-      justify-center
-      items-center
-      py-large
-      sm:py-xl
-      box-border
-    "
+    class="w-full bg-main-400 flex justify-center items-center py-large sm:py-xl box-border"
     ref="wrapperRef"
   >
     <section
-      class="
-        content-wrapper-new-license
-        w-full
-        flex flex-col
-        md:flex-row
-        justify-center
-        md:justify-start
-        items-center
-      "
+      class="content-wrapper-new-license w-full flex flex-col md:flex-row justify-center md:justify-start items-center"
     >
       <transition name="slide-fade-to-right">
         <svg
@@ -51,8 +34,8 @@
             x2="677"
             y2="328.8946"
           >
-            <stop offset="0" style="stop-color: #B8B8B8" />
-            <stop offset="1" style="stop-color: #07677e;" />
+            <stop offset="0" style="stop-color: #b8b8b8" />
+            <stop offset="1" style="stop-color: #07677e" />
           </linearGradient>
           <path
             class="st0"
@@ -97,27 +80,21 @@
         >
           <div class="flex flex-col items-center">
             <h1
-              class="
-                text-3xl
-                sm:text-largeDisplay
-                white-text-gradient
-                -mb-tiny
-                sm:-mb-small
-              "
+              class="text-3xl sm:text-largeDisplay white-text-gradient -mb-tiny sm:-mb-small"
             >
               Ethiopian Applicants
-            </h1> 
+            </h1>
           </div>
           <h3 class="mt-small text-primary-100 text-center block relative">
             <h4>
-              Diploma graduates should pass level 4 COC exam before applying. If
-              you are a degree graduate and your profession is under licensure
-              examination, you should pass the exam to be able to apply.
+              Diploma graduates should pass level 4 COC exam before applying. If you are a
+              degree graduate and your profession is under licensure examination, you
+              should pass the exam to be able to apply.
             </h4>
             <p>
-              If your profession type is not under the licensure exam please
-              have your university send your graduation list to the ministry of
-              health through this email nhpled.moh@gmail.com.
+              If your profession type is not under the licensure exam please have your
+              university send your graduation list to the ministry of health through this
+              email nhpled.moh@gmail.com.
             </p>
           </h3>
         </section>

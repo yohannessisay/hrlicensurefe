@@ -587,9 +587,9 @@ export default {
       ) {
         generalInfo.value.expertLevelId = 3;
       } else if (generalInfo.value.applicantTypeId.id == 1) {
-        generalInfo.value.expertLevelId = 3;
-      } else {
         generalInfo.value.expertLevelId = 4;
+      } else {
+        generalInfo.value.expertLevelId = 3;
       }
     });
     return {
