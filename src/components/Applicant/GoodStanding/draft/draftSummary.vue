@@ -650,9 +650,9 @@ export default {
           ) {
             generalInfo.value.expertLevelId = 3;
           } else if (generalInfo.value.applicantTypeSelected.id == 1) {
-            generalInfo.value.expertLevelId = 3;
-          } else {
             generalInfo.value.expertLevelId = 4;
+          } else {
+            generalInfo.value.expertLevelId = 3;
           }
           //Get images from indexed Db
           let request = indexedDB.open("GSdocumentUploads", 1);
