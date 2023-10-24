@@ -1725,7 +1725,7 @@ export default {
                 ? certificateDetail.value.educations[i].prefix.amharic_name
                 : ""
             } ${
-              +certificateDetail.value.educations[i].professionType &&
+              certificateDetail.value.educations[i].professionType &&
               certificateDetail.value.educations[i].professionType.name == "other"
                 ? certificateDetail.value.educations[i].otherProfessionAmharic
                 : certificateDetail.value.educations[i].professionType
@@ -1746,7 +1746,7 @@ export default {
                 ? certificateDetail.value.educations[i].prefix.amharic_name
                 : ""
             } ${
-              +certificateDetail.value.educations[i].professionType &&
+              certificateDetail.value.educations[i].professionType &&
               certificateDetail.value.educations[i].professionType.name == "other"
                 ? certificateDetail.value.educations[i].otherProfessionAmharic
                 : certificateDetail.value.educations[i].professionType
@@ -1768,7 +1768,7 @@ export default {
                   ? certificateDetail.value.educations[i].prefix.amharic_name
                   : ""
               } ${
-                +certificateDetail.value.educations[i].professionType &&
+                certificateDetail.value.educations[i].professionType &&
                 certificateDetail.value.educations[i].professionType.name == "other"
                   ? certificateDetail.value.educations[i].otherProfessionAmharic
                   : certificateDetail.value.educations[i].professionType
