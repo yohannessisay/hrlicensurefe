@@ -1,17 +1,6 @@
 <template>
   <div
-    class="
-      modal
-      fade
-      fixed
-      top-0
-      left-0
-      hidden
-      w-full
-      h-full
-      outline-none
-      overflow-x-hidden overflow-y-auto
-    "
+    class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
     id="generatePdf"
     data-bs-backdrop="static"
     data-bs-keyboard="false"
@@ -31,39 +20,20 @@
       "
     >
       <div
-        class="
-          modal-content
-          border-none
-           
-          relative
-          flex flex-col
-          w-full
-          pointer-events-auto
-          bg-white
-          rounded-md
-          outline-none
-          text-current
-        "
+        class="modal-content border-none relative flex flex-col w-full pointer-events-auto bg-white rounded-md outline-none text-current"
       >
         <div
-          class="
-            modal-header
-            flex flex-shrink-0
-            items-center
-            justify-between
-            p-2
-            rounded-t-md
-          "
+          class="modal-header flex flex-shrink-0 items-center justify-between p-2 rounded-t-md"
         ></div>
         <!-- if applicant is ethiopian -->
         <div
           class="modal-body relative p-4"
           v-if="
             modalData &&
-              modalData.data &&
-              modalData.data.applicantType &&
-              (finalData.data.applicantType.code == 'ETH' ||
-                finalData.data.applicantType.code == 'ETHABRO')
+            modalData.data &&
+            modalData.data.applicantType &&
+            (finalData.data.applicantType.code == 'ETH' ||
+              finalData.data.applicantType.code == 'ETHABRO')
           "
         >
           <!-- if professions are less than 3 -->
@@ -78,30 +48,22 @@
 
             <span v-if="educations ? educations.length <= 3 : 0">
               <div class="flex justify-center">
-                <div
-                  class="grid grid-rows-1 text-primary-600 font-bold text-2xl"
-                >
+                <div class="grid grid-rows-1 text-primary-600 font-bold text-2xl">
                   በኢትዮፕያ ፌደራላዊ ዴሞክራሲያዊ ሪፐብሊክ
                 </div>
               </div>
               <div class="flex justify-center">
-                <div
-                  class="grid grid-rows-1 text-primary-600 font-bold text-2xl"
-                >
+                <div class="grid grid-rows-1 text-primary-600 font-bold text-2xl">
                   Federal Democratic Republic Ethiopia
                 </div>
               </div>
               <div class="flex justify-center">
-                <div
-                  class="grid grid-rows-1 text-primary-600 font-bold text-xl"
-                >
+                <div class="grid grid-rows-1 text-primary-600 font-bold text-xl">
                   የጤና ሚኒስቴር
                 </div>
               </div>
               <div class="flex justify-center">
-                <div
-                  class="grid grid-rows-1 text-primary-600 font-bold text-xl"
-                >
+                <div class="grid grid-rows-1 text-primary-600 font-bold text-xl">
                   Ministry of Health
                 </div>
               </div>
@@ -120,20 +82,17 @@
                       modalData.data &&
                       modalData.data.renewalReviewer &&
                       modalData.data.renewalReviewer.reviewer &&
-                      modalData.data.renewalReviewer.reviewer.expertLevelId ===
-                        3
+                      modalData.data.renewalReviewer.reviewer.expertLevelId === 3
                         ? "1112/2011"
                         : modalData.data &&
                           modalData.data.renewalReviewer &&
                           modalData.data.renewalReviewer.reviewer.regionId &&
-                          modalData.data.renewalReviewer.reviewer.region
-                            .code === "AA"
+                          modalData.data.renewalReviewer.reviewer.region.code === "AA"
                         ? "64/2011"
                         : modalData.data &&
                           modalData.data.renewalReviewer &&
                           modalData.data.renewalReviewer.reviewer.regionId &&
-                          modalData.data.renewalReviewer.reviewer.region
-                            .code === "ORO"
+                          modalData.data.renewalReviewer.reviewer.region.code === "ORO"
                         ? "661/2009"
                         : "-"
                     }}
@@ -142,27 +101,24 @@
                       modalData.data &&
                       modalData.data.renewalReviewer &&
                       modalData.data.renewalReviewer.reviewer &&
-                      modalData.data.renewalReviewer.reviewer.expertLevelId ===
-                        3
+                      modalData.data.renewalReviewer.reviewer.expertLevelId === 3
                         ? "73"
                         : modalData.data &&
                           modalData.data.renewalReviewer &&
                           modalData.data.renewalReviewer.reviewer &&
                           modalData.data.renewalReviewer.reviewer.region &&
-                          modalData.data.renewalReviewer.reviewer.region
-                            .code === "AA"
+                          modalData.data.renewalReviewer.reviewer.region.code === "AA"
                         ? "44/8"
                         : modalData.data &&
                           modalData.data.renewalReviewer &&
                           modalData.data.renewalReviewer.reviewer &&
                           modalData.data.renewalReviewer.reviewer.region &&
-                          modalData.data.renewalReviewer.reviewer.region
-                            .code === "ORO"
+                          modalData.data.renewalReviewer.reviewer.region.code === "ORO"
                         ? "3/3"
                         : "-"
                     }}
                     ስልጣን መሰረት
-                    <span class="font-bold  underline"
+                    <span class="font-bold underline"
                       >{{
                         modalData &&
                         modalData.profile &&
@@ -190,13 +146,11 @@
                       <span
                         v-for="department in educations"
                         :key="department.id"
-                        class="underline  font-bold"
+                        class="underline font-bold"
                         style="word-break: break-word"
                       >
                         {{
-                          department.prefix
-                            ? department.prefix.amharic_name + " "
-                            : ""
+                          department.prefix ? department.prefix.amharic_name + " " : ""
                         }}
                         {{
                           department.professionType &&
@@ -209,29 +163,26 @@
                     ሙያ መዝግቦ ይህን የሙያ ስራ ፈቃድ ሰጥቷል።
                   </div>
                   <div>
-                    Under the Federal Democratic Republic of Ethiopia the
-                    Minstry of Health by Virtue of proclamation No.
+                    Under the Federal Democratic Republic of Ethiopia the Minstry of
+                    Health by Virtue of proclamation No.
                     {{
                       modalData.data &&
                       modalData.data.renewalReviewer &&
                       modalData.data.renewalReviewer.reviewer &&
                       modalData.data.renewalReviewer.reviewer.expertLevel &&
-                      modalData.data.renewalReviewer.reviewer.expertLevel
-                        .code === "FED"
+                      modalData.data.renewalReviewer.reviewer.expertLevel.code === "FED"
                         ? "1112/2019"
                         : modalData.data &&
                           modalData.data.renewalReviewer &&
                           modalData.data.renewalReviewer.reviewer &&
                           modalData.data.renewalReviewer.reviewer.region &&
-                          modalData.data.renewalReviewer.reviewer.region
-                            .code === "AA"
+                          modalData.data.renewalReviewer.reviewer.region.code === "AA"
                         ? "64/2019"
                         : modalData.data &&
                           modalData.data.renewalReviewer &&
                           modalData.data.renewalReviewer.reviewer &&
                           modalData.data.renewalReviewer.reviewer.region &&
-                          modalData.data.renewalReviewer.reviewer.region
-                            .code === "ORO"
+                          modalData.data.renewalReviewer.reviewer.region.code === "ORO"
                         ? "661/2002"
                         : "-"
                     }}
@@ -241,35 +192,30 @@
                       modalData.data.renewalReviewer &&
                       modalData.data.renewalReviewer.reviewer &&
                       modalData.data.renewalReviewer.reviewer.expertLevel &&
-                      modalData.data.renewalReviewer.reviewer.expertLevel
-                        .code === "FED"
+                      modalData.data.renewalReviewer.reviewer.expertLevel.code === "FED"
                         ? "73"
                         : modalData.data &&
                           modalData.data.renewalReviewer &&
                           modalData.data.renewalReviewer.reviewer &&
                           modalData.data.renewalReviewer.reviewer.region &&
-                          modalData.data.renewalReviewer.reviewer.region
-                            .code === "AA"
+                          modalData.data.renewalReviewer.reviewer.region.code === "AA"
                         ? "44/8"
                         : modalData.data &&
                           modalData.data.renewalReviewer &&
                           modalData.data.renewalReviewer.reviewer &&
                           modalData.data.renewalReviewer.reviewer.region &&
-                          modalData.data.renewalReviewer.reviewer.region
-                            .code === "ORO"
+                          modalData.data.renewalReviewer.reviewer.region.code === "ORO"
                         ? "3/3"
                         : "-"
                     }}is given the authority to issue
-                    <span class="font-bold  underline"
+                    <span class="font-bold underline"
                       >{{
                         modalData && modalData.profile && modalData.profile.name
                           ? modalData.profile.name
                           : ""
                       }}
                       {{
-                        modalData &&
-                        modalData.profile &&
-                        modalData.profile.fatherName
+                        modalData && modalData.profile && modalData.profile.fatherName
                           ? modalData.profile.fatherName
                           : ""
                       }}
@@ -285,7 +231,7 @@
                       <span
                         v-for="department in educations"
                         :key="department.id"
-                        class="underline  font-bold"
+                        class="underline font-bold"
                         style="word-break: break-word"
                       >
                         {{ department.prefix ? department.prefix.name : "" }}
@@ -298,8 +244,8 @@
                         }} </span
                       ><br />
                     </div>
-                    Having duly satisfied the requirements of the Ministry
-                    hereby registered and licensed as
+                    Having duly satisfied the requirements of the Ministry hereby
+                    registered and licensed as
                   </div>
                 </div>
               </div>
@@ -307,7 +253,7 @@
               <div class="grid grid-cols-2 mt-8">
                 <div class="flex justify-start">
                   ይህ የሙያ የስራ ፈቃድ የሚያገለግለው ከ
-                  <span class="font-bold ">
+                  <span class="font-bold">
                     {{
                       modalData.certifiedDate
                         ? toEthiopian(
@@ -318,13 +264,11 @@
                     }}</span
                   >
                   -እስከ-
-                  <span class="font-bold ">
+                  <span class="font-bold">
                     {{
                       modalData.licenseExpirationDate !== null
                         ? toEthiopian(
-                            moment(
-                              modalData.licenseExpirationDate
-                            )._d.toISOString(),
+                            moment(modalData.licenseExpirationDate)._d.toISOString(),
                             false
                           )
                         : " አልተገለጸም"
@@ -333,7 +277,7 @@
                 </div>
                 <div>
                   The license is valid from
-                  <span class="font-bold ">
+                  <span class="font-bold">
                     {{
                       modalData.certifiedDate
                         ? moment(modalData.certifiedDate).format("MMM DD, YYYY")
@@ -341,12 +285,10 @@
                     }}</span
                   >
                   -To-
-                  <span class="font-bold ">
+                  <span class="font-bold">
                     {{
                       modalData.licenseExpirationDate
-                        ? moment(modalData.licenseExpirationDate).format(
-                            "MMM DD, YYYY"
-                          )
+                        ? moment(modalData.licenseExpirationDate).format("MMM DD, YYYY")
                         : " Not specified"
                     }}</span
                   >
@@ -376,59 +318,29 @@
                   </div>
 
                   <div class="flex justify-center">
-                    <div
-                      class="
-                        grid grid-rows-1
-                        text-primary-600
-                        font-bold
-                        text-2xl
-                      "
-                    >
+                    <div class="grid grid-rows-1 text-primary-600 font-bold text-2xl">
                       በኢትዮፕያ ፌደራላዊ ዴሞክራሲያዊ ሪፐብሊክ
                     </div>
                   </div>
                   <div class="flex justify-center">
-                    <div
-                      class="
-                        grid grid-rows-1
-                        text-primary-600
-                        font-bold
-                        text-2xl
-                      "
-                    >
+                    <div class="grid grid-rows-1 text-primary-600 font-bold text-2xl">
                       Federal Democratic Republic Ethiopia
                     </div>
                   </div>
                   <div class="flex justify-center">
-                    <div
-                      class="
-                        grid grid-rows-1
-                        text-primary-600
-                        font-bold
-                        text-xl
-                      "
-                    >
+                    <div class="grid grid-rows-1 text-primary-600 font-bold text-xl">
                       የጤና ሚኒስቴር
                     </div>
                   </div>
                   <div class="flex justify-center">
-                    <div
-                      class="
-                        grid grid-rows-1
-                        text-primary-600
-                        font-bold
-                        text-xl
-                      "
-                    >
+                    <div class="grid grid-rows-1 text-primary-600 font-bold text-xl">
                       Ministry of Health
                     </div>
                   </div>
                   <div class="flex justify-center mt-4">
                     <div class="grid grid-cols-2">
                       <div>የጤና ባለሙያዎች የሙያ ምዝገባና ፈቃድ የምስከር ወረቀት</div>
-                      <div>
-                        Health Professionals Registration and Certification
-                      </div>
+                      <div>Health Professionals Registration and Certification</div>
                     </div>
                   </div>
 
@@ -440,22 +352,18 @@
                           modalData.data &&
                           modalData.data.renewalReviewer &&
                           modalData.data.renewalReviewer.reviewer &&
-                          modalData.data.renewalReviewer.reviewer
-                            .expertLevelId === 3
+                          modalData.data.renewalReviewer.reviewer.expertLevelId === 3
                             ? "1112/2011"
                             : modalData.data &&
                               modalData.data.renewalReviewer &&
-                              modalData.data.renewalReviewer.reviewer
-                                .regionId &&
-                              modalData.data.renewalReviewer.reviewer.region
-                                .code === "AA"
+                              modalData.data.renewalReviewer.reviewer.regionId &&
+                              modalData.data.renewalReviewer.reviewer.region.code === "AA"
                             ? "64/2011"
                             : modalData.data &&
                               modalData.data.renewalReviewer &&
-                              modalData.data.renewalReviewer.reviewer
-                                .regionId &&
-                              modalData.data.renewalReviewer.reviewer.region
-                                .code === "ORO"
+                              modalData.data.renewalReviewer.reviewer.regionId &&
+                              modalData.data.renewalReviewer.reviewer.region.code ===
+                                "ORO"
                             ? "661/2009"
                             : "-"
                         }}
@@ -464,27 +372,25 @@
                           modalData.data &&
                           modalData.data.renewalReviewer &&
                           modalData.data.renewalReviewer.reviewer &&
-                          modalData.data.renewalReviewer.reviewer
-                            .expertLevelId === 3
+                          modalData.data.renewalReviewer.reviewer.expertLevelId === 3
                             ? "73"
                             : modalData.data &&
                               modalData.data.renewalReviewer &&
                               modalData.data.renewalReviewer.reviewer &&
                               modalData.data.renewalReviewer.reviewer.region &&
-                              modalData.data.renewalReviewer.reviewer.region
-                                .code === "AA"
+                              modalData.data.renewalReviewer.reviewer.region.code === "AA"
                             ? "44/8"
                             : modalData.data &&
                               modalData.data.renewalReviewer &&
                               modalData.data.renewalReviewer.reviewer &&
                               modalData.data.renewalReviewer.reviewer.region &&
-                              modalData.data.renewalReviewer.reviewer.region
-                                .code === "ORO"
+                              modalData.data.renewalReviewer.reviewer.region.code ===
+                                "ORO"
                             ? "3/3"
                             : "-"
                         }}
                         ስልጣን መሰረት
-                        <span class="font-bold  underline"
+                        <span class="font-bold underline"
                           >{{
                             modalData &&
                             modalData.profile &&
@@ -510,7 +416,7 @@
                         ተገቢውን መስፈርት አሟልተው ስለተገኙ ሚኒስቴር መስሪያ ቤቱ <br />
                         <div class="grid grid-rows-3 justify-center mt-8 mb-2">
                           <span
-                            class="underline  font-bold"
+                            class="underline font-bold"
                             style="word-break: break-word"
                           >
                             {{
@@ -522,12 +428,11 @@
                               educations[0].professionType &&
                               educations[0].professionType.name == "other"
                                 ? educations[0].otherProfessionAmharic
-                                : educations[0].professionType
-                                    .amharicProfessionalType
+                                : educations[0].professionType.amharicProfessionalType
                             }}</span
                           >
                           <span
-                            class="underline  font-bold"
+                            class="underline font-bold"
                             style="word-break: break-word"
                           >
                             {{
@@ -539,12 +444,11 @@
                               educations[1].professionType &&
                               educations[1].professionType.name == "other"
                                 ? educations[1].otherProfessionAmharic
-                                : educations[1].professionType
-                                    .amharicProfessionalType
+                                : educations[1].professionType.amharicProfessionalType
                             }}</span
                           >
                           <span
-                            class="underline  font-bold"
+                            class="underline font-bold"
                             style="word-break: break-word"
                           >
                             {{
@@ -556,37 +460,35 @@
                               educations[2].professionType &&
                               educations[2].professionType.name == "other"
                                 ? educations[2].otherProfessionAmharic
-                                : educations[2].professionType
-                                    .amharicProfessionalType
+                                : educations[2].professionType.amharicProfessionalType
                             }}</span
                           >
                         </div>
                         ሙያ መዝግቦ ይህን የሙያ ስራ ፈቃድ ሰጥቷል።
                       </div>
                       <div>
-                        Under the Federal Democratic Republic of Ethiopia the
-                        Minstry of Health by Virtue of proclamation No.
+                        Under the Federal Democratic Republic of Ethiopia the Minstry of
+                        Health by Virtue of proclamation No.
                         {{
                           modalData.data &&
                           modalData.data.renewalReviewer &&
                           modalData.data.renewalReviewer.reviewer &&
                           modalData.data.renewalReviewer.reviewer.expertLevel &&
-                          modalData.data.renewalReviewer.reviewer.expertLevel
-                            .code === "FED"
+                          modalData.data.renewalReviewer.reviewer.expertLevel.code ===
+                            "FED"
                             ? "1112/2019"
                             : modalData.data &&
                               modalData.data.renewalReviewer &&
                               modalData.data.renewalReviewer.reviewer &&
                               modalData.data.renewalReviewer.reviewer.region &&
-                              modalData.data.renewalReviewer.reviewer.region
-                                .code === "AA"
+                              modalData.data.renewalReviewer.reviewer.region.code === "AA"
                             ? "64/2019"
                             : modalData.data &&
                               modalData.data.renewalReviewer &&
                               modalData.data.renewalReviewer.reviewer &&
                               modalData.data.renewalReviewer.reviewer.region &&
-                              modalData.data.renewalReviewer.reviewer.region
-                                .code === "ORO"
+                              modalData.data.renewalReviewer.reviewer.region.code ===
+                                "ORO"
                             ? "661/2002"
                             : "-"
                         }}
@@ -596,30 +498,27 @@
                           modalData.data.renewalReviewer &&
                           modalData.data.renewalReviewer.reviewer &&
                           modalData.data.renewalReviewer.reviewer.expertLevel &&
-                          modalData.data.renewalReviewer.reviewer.expertLevel
-                            .code === "FED"
+                          modalData.data.renewalReviewer.reviewer.expertLevel.code ===
+                            "FED"
                             ? "73"
                             : modalData.data &&
                               modalData.data.renewalReviewer &&
                               modalData.data.renewalReviewer.reviewer &&
                               modalData.data.renewalReviewer.reviewer.region &&
-                              modalData.data.renewalReviewer.reviewer.region
-                                .code === "AA"
+                              modalData.data.renewalReviewer.reviewer.region.code === "AA"
                             ? "44/8"
                             : modalData.data &&
                               modalData.data.renewalReviewer &&
                               modalData.data.renewalReviewer.reviewer &&
                               modalData.data.renewalReviewer.reviewer.region &&
-                              modalData.data.renewalReviewer.reviewer.region
-                                .code === "ORO"
+                              modalData.data.renewalReviewer.reviewer.region.code ===
+                                "ORO"
                             ? "3/3"
                             : "-"
                         }}is given the authority to issue
-                        <span class="font-bold  underline"
+                        <span class="font-bold underline"
                           >{{
-                            modalData && modalData.profile
-                              ? modalData.profile.name
-                              : ""
+                            modalData && modalData.profile ? modalData.profile.name : ""
                           }}
                           {{
                             modalData && modalData.profile
@@ -634,7 +533,7 @@
                         ><br />
                         <div class="grid grid-rows-3 justify-center mt-8 mb-2">
                           <span
-                            class="underline  font-bold"
+                            class="underline font-bold"
                             style="word-break: break-word"
                           >
                             {{
@@ -650,7 +549,7 @@
                             }}</span
                           >
                           <span
-                            class="underline  font-bold"
+                            class="underline font-bold"
                             style="word-break: break-word"
                           >
                             {{
@@ -666,7 +565,7 @@
                             }}</span
                           >
                           <span
-                            class="underline  font-bold"
+                            class="underline font-bold"
                             style="word-break: break-word"
                           >
                             {{
@@ -682,13 +581,13 @@
                             }}</span
                           ><br />
                           <span
-                            class="underline  font-bold"
+                            class="underline font-bold"
                             style="word-break: break-word"
                           >
                           </span>
                         </div>
-                        Having duly satisfied the requirements of the Ministry
-                        hereby registered and licensed as
+                        Having duly satisfied the requirements of the Ministry hereby
+                        registered and licensed as
                       </div>
                     </div>
                   </div>
@@ -696,26 +595,22 @@
                   <div class="grid grid-cols-2 mt-8">
                     <div class="flex justify-start">
                       ይህ የሙያ የስራ ፈቃድ የሚያገለግለው ከ
-                      <span class="font-bold ">
+                      <span class="font-bold">
                         {{
                           modalData.certifiedDate
                             ? toEthiopian(
-                                moment(
-                                  modalData.certifiedDate
-                                )._d.toISOString(),
+                                moment(modalData.certifiedDate)._d.toISOString(),
                                 false
                               )
                             : ""
                         }}</span
                       >
                       -እስከ-
-                      <span class="font-bold ">
+                      <span class="font-bold">
                         {{
                           modalData.licenseExpirationDate !== null
                             ? toEthiopian(
-                                moment(
-                                  modalData.licenseExpirationDate
-                                )._d.toISOString(),
+                                moment(modalData.licenseExpirationDate)._d.toISOString(),
                                 false
                               )
                             : " አልተገለጸም"
@@ -724,17 +619,15 @@
                     </div>
                     <div>
                       The license is valid from
-                      <span class="font-bold ">
+                      <span class="font-bold">
                         {{
                           modalData.certifiedDate
-                            ? moment(modalData.certifiedDate).format(
-                                "MMM DD, YYYY"
-                              )
+                            ? moment(modalData.certifiedDate).format("MMM DD, YYYY")
                             : ""
                         }}</span
                       >
                       -To-
-                      <span class="font-bold ">
+                      <span class="font-bold">
                         {{
                           modalData.licenseExpirationDate
                             ? moment(modalData.licenseExpirationDate).format(
@@ -755,59 +648,29 @@
                   </div>
 
                   <div class="flex justify-center">
-                    <div
-                      class="
-                        grid grid-rows-1
-                        text-primary-600
-                        font-bold
-                        text-2xl
-                      "
-                    >
+                    <div class="grid grid-rows-1 text-primary-600 font-bold text-2xl">
                       በኢትዮፕያ ፌደራላዊ ዴሞክራሲያዊ ሪፐብሊክ
                     </div>
                   </div>
                   <div class="flex justify-center">
-                    <div
-                      class="
-                        grid grid-rows-1
-                        text-primary-600
-                        font-bold
-                        text-2xl
-                      "
-                    >
+                    <div class="grid grid-rows-1 text-primary-600 font-bold text-2xl">
                       Federal Democratic Republic Ethiopia
                     </div>
                   </div>
                   <div class="flex justify-center">
-                    <div
-                      class="
-                        grid grid-rows-1
-                        text-primary-600
-                        font-bold
-                        text-xl
-                      "
-                    >
+                    <div class="grid grid-rows-1 text-primary-600 font-bold text-xl">
                       የጤና ሚኒስቴር
                     </div>
                   </div>
                   <div class="flex justify-center">
-                    <div
-                      class="
-                        grid grid-rows-1
-                        text-primary-600
-                        font-bold
-                        text-xl
-                      "
-                    >
+                    <div class="grid grid-rows-1 text-primary-600 font-bold text-xl">
                       Ministry of Health
                     </div>
                   </div>
                   <div class="flex justify-center mt-4">
                     <div class="grid grid-cols-2">
                       <div>የጤና ባለሙያዎች የሙያ ምዝገባና ፈቃድ የምስከር ወረቀት</div>
-                      <div>
-                        Health Professionals Registration and Certification
-                      </div>
+                      <div>Health Professionals Registration and Certification</div>
                     </div>
                   </div>
 
@@ -819,22 +682,18 @@
                           modalData.data &&
                           modalData.data.renewalReviewer &&
                           modalData.data.renewalReviewer.reviewer &&
-                          modalData.data.renewalReviewer.reviewer
-                            .expertLevelId === 3
+                          modalData.data.renewalReviewer.reviewer.expertLevelId === 3
                             ? "1112/2011"
                             : modalData.data &&
                               modalData.data.renewalReviewer &&
-                              modalData.data.renewalReviewer.reviewer
-                                .regionId &&
-                              modalData.data.renewalReviewer.reviewer.region
-                                .code === "AA"
+                              modalData.data.renewalReviewer.reviewer.regionId &&
+                              modalData.data.renewalReviewer.reviewer.region.code === "AA"
                             ? "64/2011"
                             : modalData.data &&
                               modalData.data.renewalReviewer &&
-                              modalData.data.renewalReviewer.reviewer
-                                .regionId &&
-                              modalData.data.renewalReviewer.reviewer.region
-                                .code === "ORO"
+                              modalData.data.renewalReviewer.reviewer.regionId &&
+                              modalData.data.renewalReviewer.reviewer.region.code ===
+                                "ORO"
                             ? "661/2009"
                             : "-"
                         }}
@@ -843,27 +702,25 @@
                           modalData.data &&
                           modalData.data.renewalReviewer &&
                           modalData.data.renewalReviewer.reviewer &&
-                          modalData.data.renewalReviewer.reviewer
-                            .expertLevelId === 3
+                          modalData.data.renewalReviewer.reviewer.expertLevelId === 3
                             ? "73"
                             : modalData.data &&
                               modalData.data.renewalReviewer &&
                               modalData.data.renewalReviewer.reviewer &&
                               modalData.data.renewalReviewer.reviewer.region &&
-                              modalData.data.renewalReviewer.reviewer.region
-                                .code === "AA"
+                              modalData.data.renewalReviewer.reviewer.region.code === "AA"
                             ? "44/8"
                             : modalData.data &&
                               modalData.data.renewalReviewer &&
                               modalData.data.renewalReviewer.reviewer &&
                               modalData.data.renewalReviewer.reviewer.region &&
-                              modalData.data.renewalReviewer.reviewer.region
-                                .code === "ORO"
+                              modalData.data.renewalReviewer.reviewer.region.code ===
+                                "ORO"
                             ? "3/3"
                             : "-"
                         }}
                         ስልጣን መሰረት
-                        <span class="font-bold  underline"
+                        <span class="font-bold underline"
                           >{{
                             modalData &&
                             modalData.profile &&
@@ -889,7 +746,7 @@
                         ተገቢውን መስፈርት አሟልተው ስለተገኙ ሚኒስቴር መስሪያ ቤቱ <br />
                         <div class="grid grid-rows-3 justify-center mt-8 mb-2">
                           <span
-                            class="underline  font-bold"
+                            class="underline font-bold"
                             style="word-break: break-word"
                           >
                             {{
@@ -901,12 +758,11 @@
                               educations[3].professionType &&
                               educations[3].professionType.name == "other"
                                 ? educations[3].otherProfessionAmharic
-                                : educations[3].professionType
-                                    .amharicProfessionalType
+                                : educations[3].professionType.amharicProfessionalType
                             }}</span
                           >
                           <span
-                            class="underline  font-bold"
+                            class="underline font-bold"
                             style="word-break: break-word"
                           >
                             {{
@@ -918,12 +774,11 @@
                               educations[4].professionType &&
                               educations[4].professionType.name == "other"
                                 ? educations[4].otherProfessionAmharic
-                                : educations[4].professionType
-                                    .amharicProfessionalType
+                                : educations[4].professionType.amharicProfessionalType
                             }}</span
                           >
                           <span
-                            class="underline  font-bold"
+                            class="underline font-bold"
                             style="word-break: break-word"
                           >
                             {{
@@ -935,37 +790,35 @@
                               educations[5].professionType &&
                               educations[5].professionType.name == "other"
                                 ? educations[5].otherProfessionAmharic
-                                : educations[5].professionType
-                                    .amharicProfessionalType
+                                : educations[5].professionType.amharicProfessionalType
                             }}</span
                           >
                         </div>
                         ሙያ መዝግቦ ይህን የሙያ ስራ ፈቃድ ሰጥቷል።
                       </div>
                       <div>
-                        Under the Federal Democratic Republic of Ethiopia the
-                        Minstry of Health by Virtue of proclamation No.
+                        Under the Federal Democratic Republic of Ethiopia the Minstry of
+                        Health by Virtue of proclamation No.
                         {{
                           modalData.data &&
                           modalData.data.renewalReviewer &&
                           modalData.data.renewalReviewer.reviewer &&
                           modalData.data.renewalReviewer.reviewer.expertLevel &&
-                          modalData.data.renewalReviewer.reviewer.expertLevel
-                            .code === "FED"
+                          modalData.data.renewalReviewer.reviewer.expertLevel.code ===
+                            "FED"
                             ? "1112/2019"
                             : modalData.data &&
                               modalData.data.renewalReviewer &&
                               modalData.data.renewalReviewer.reviewer &&
                               modalData.data.renewalReviewer.reviewer.region &&
-                              modalData.data.renewalReviewer.reviewer.region
-                                .code === "AA"
+                              modalData.data.renewalReviewer.reviewer.region.code === "AA"
                             ? "64/2019"
                             : modalData.data &&
                               modalData.data.renewalReviewer &&
                               modalData.data.renewalReviewer.reviewer &&
                               modalData.data.renewalReviewer.reviewer.region &&
-                              modalData.data.renewalReviewer.reviewer.region
-                                .code === "ORO"
+                              modalData.data.renewalReviewer.reviewer.region.code ===
+                                "ORO"
                             ? "661/2002"
                             : "-"
                         }}
@@ -975,37 +828,32 @@
                           modalData.data.renewalReviewer &&
                           modalData.data.renewalReviewer.reviewer &&
                           modalData.data.renewalReviewer.reviewer.expertLevel &&
-                          modalData.data.renewalReviewer.reviewer.expertLevel
-                            .code === "FED"
+                          modalData.data.renewalReviewer.reviewer.expertLevel.code ===
+                            "FED"
                             ? "73"
                             : modalData.data &&
                               modalData.data.renewalReviewer &&
                               modalData.data.renewalReviewer.reviewer &&
                               modalData.data.renewalReviewer.reviewer.region &&
-                              modalData.data.renewalReviewer.reviewer.region
-                                .code === "AA"
+                              modalData.data.renewalReviewer.reviewer.region.code === "AA"
                             ? "44/8"
                             : modalData.data &&
                               modalData.data.renewalReviewer &&
                               modalData.data.renewalReviewer.reviewer &&
                               modalData.data.renewalReviewer.reviewer.region &&
-                              modalData.data.renewalReviewer.reviewer.region
-                                .code === "ORO"
+                              modalData.data.renewalReviewer.reviewer.region.code ===
+                                "ORO"
                             ? "3/3"
                             : "-"
                         }}is given the authority to issue
-                        <span class="font-bold  underline"
+                        <span class="font-bold underline"
                           >{{
-                            modalData &&
-                            modalData.profile &&
-                            modalData.profile.name
+                            modalData && modalData.profile && modalData.profile.name
                               ? modalData.profile.name
                               : ""
                           }}
                           {{
-                            modalData &&
-                            modalData.profile &&
-                            modalData.profile.fatherName
+                            modalData && modalData.profile && modalData.profile.fatherName
                               ? modalData.profile.fatherName
                               : ""
                           }}
@@ -1019,7 +867,7 @@
                         ><br />
                         <div class="grid grid-rows-3 justify-center mt-8 mb-2">
                           <span
-                            class="underline  font-bold"
+                            class="underline font-bold"
                             style="word-break: break-word"
                           >
                             {{
@@ -1035,7 +883,7 @@
                             }}</span
                           >
                           <span
-                            class="underline  font-bold"
+                            class="underline font-bold"
                             style="word-break: break-word"
                           >
                             {{
@@ -1051,7 +899,7 @@
                             }}</span
                           >
                           <span
-                            class="underline  font-bold"
+                            class="underline font-bold"
                             style="word-break: break-word"
                           >
                             {{
@@ -1067,13 +915,13 @@
                             }}</span
                           ><br />
                           <span
-                            class="underline  font-bold"
+                            class="underline font-bold"
                             style="word-break: break-word"
                           >
                           </span>
                         </div>
-                        Having duly satisfied the requirements of the Ministry
-                        hereby registered and licensed as
+                        Having duly satisfied the requirements of the Ministry hereby
+                        registered and licensed as
                       </div>
                     </div>
                   </div>
@@ -1081,26 +929,22 @@
                   <div class="grid grid-cols-2 mt-8">
                     <div class="flex justify-start">
                       ይህ የሙያ የስራ ፈቃድ የሚያገለግለው ከ
-                      <span class="font-bold ">
+                      <span class="font-bold">
                         {{
                           modalData.certifiedDate
                             ? toEthiopian(
-                                moment(
-                                  modalData.certifiedDate
-                                )._d.toISOString(),
+                                moment(modalData.certifiedDate)._d.toISOString(),
                                 false
                               )
                             : ""
                         }}</span
                       >
                       -እስከ-
-                      <span class="font-bold ">
+                      <span class="font-bold">
                         {{
                           modalData.licenseExpirationDate !== null
                             ? toEthiopian(
-                                moment(
-                                  modalData.licenseExpirationDate
-                                )._d.toISOString(),
+                                moment(modalData.licenseExpirationDate)._d.toISOString(),
                                 false
                               )
                             : " አልተገለጸም"
@@ -1109,17 +953,15 @@
                     </div>
                     <div>
                       The license is valid from
-                      <span class="font-bold ">
+                      <span class="font-bold">
                         {{
                           modalData.certifiedDate
-                            ? moment(modalData.certifiedDate).format(
-                                "MMM DD, YYYY"
-                              )
+                            ? moment(modalData.certifiedDate).format("MMM DD, YYYY")
                             : ""
                         }}</span
                       >
                       -To-
-                      <span class="font-bold ">
+                      <span class="font-bold">
                         {{
                           modalData.licenseExpirationDate
                             ? moment(modalData.licenseExpirationDate).format(
@@ -1143,28 +985,26 @@
         <div
           v-if="
             modalData &&
-              modalData.data &&
-              modalData.data.applicantType &&
-              modalData.printType != 'externship' &&
-              modalData.printType != 'temporary' &&
-              modalData.data.applicantType.code == 'FOR'
+            modalData.data &&
+            modalData.data.applicantType &&
+            modalData.printType != 'externship' &&
+            modalData.printType != 'temporary' &&
+            modalData.data.applicantType.code == 'FOR'
           "
-          class="p-8 m-8 "
+          class="p-8 m-8"
           contenteditable="true"
           id="foreignersPrintedDiv"
         >
-        <div class="grid grid-cols-2 mt-20">
+          <div class="grid grid-cols-2 mt-20">
             <div class="flex justify-start" contenteditable="false">
-              <img :src="qrSrc" alt="" style="height: 150px;width: 150px;" />
+              <img :src="qrSrc" alt="" style="height: 150px; width: 150px" />
             </div>
           </div>
           <h2 class="mt-8 ml-8" contenteditable="true">
             ለ፡____________________________________
           </h2>
-          <h2 class="mt-4 ml-8" contenteditable="true">
-            ጉዳዩ፡-የሙያ ስራ ፍቃድ ምዝገባን ይመለከታል
-          </h2>
-          <p class=" mt-4 px-12  tracking-widest">
+          <h2 class="mt-4 ml-8" contenteditable="true">ጉዳዩ፡-የሙያ ስራ ፍቃድ ምዝገባን ይመለከታል</h2>
+          <p class="mt-4 px-12 tracking-widest">
             በቀን
             {{
               modalData && modalData.data && modalData.data.certifiedDate
@@ -1176,37 +1016,26 @@
               modalData && modalData.data && modalData.data.newLicenseCode
                 ? finalData.data.newLicenseCode
                 : ""
-            }}. የተጻፈውን ደብዳቤ ለውጭ ሀገር ዜጋ የጤና ባለሙያ የሙያ ፍቃድ መጠየቃችሁ ይታወቃል፡፡ በዚህም መሰረት
-            የቀረቡ የትምህርት ማስረጃዎች ከተገመገሙ በኃላ በስማቸው ትይዩ በተጠቀሰው ሥያሜ ከቀን
+            }}. የተጻፈውን ደብዳቤ ለውጭ ሀገር ዜጋ የጤና ባለሙያ የሙያ ፍቃድ መጠየቃችሁ ይታወቃል፡፡ በዚህም መሰረት የቀረቡ
+            የትምህርት ማስረጃዎች ከተገመገሙ በኃላ በስማቸው ትይዩ በተጠቀሰው ሥያሜ ከቀን
             {{
               modalData && modalData.data && modalData.data.certifiedDate
                 ? modalData.data.certifiedDate.slice(0, 10)
                 : ""
             }}
-            ጀምሮ ለ ___. የተመዘገቡና የሙያ ፍቃድ የተሰጣቸው መሆኑን እየገለጽን፤ ጊዜአቸውን ጨርሰው ወይም አቋርጠው
-            ተቋሙን ከለቀቁ ይህን የሙያ ፍቃድ ደብዳቤ ተመላሽ እንድታደርጉ እናሳስባለን፡፡
+            ጀምሮ ለ ___. የተመዘገቡና የሙያ ፍቃድ የተሰጣቸው መሆኑን እየገለጽን፤ ጊዜአቸውን ጨርሰው ወይም አቋርጠው ተቋሙን ከለቀቁ
+            ይህን የሙያ ፍቃድ ደብዳቤ ተመላሽ እንድታደርጉ እናሳስባለን፡፡
           </p>
 
-          <div
-            class="grid justify-items-center mt-8 mb-12"
-            contenteditable="false"
-          >
-            <table class=" border text-center text-sm font-light ">
-              <thead class="border-b font-medium bg-primary-200 ">
+          <div class="grid justify-items-center mt-8 mb-12" contenteditable="false">
+            <table class="border text-center text-sm font-light">
+              <thead class="border-b font-medium bg-primary-200">
                 <tr>
-                  <th scope="col" class="border-r px-6 py-4 ">
-                    #ተ.ቁ
-                  </th>
-                  <th
-                    scope="col"
-                    class="border-r px-6 py-4 dark:border-neutral-500"
-                  >
+                  <th scope="col" class="border-r px-6 py-4">#ተ.ቁ</th>
+                  <th scope="col" class="border-r px-6 py-4 dark:border-neutral-500">
                     የባለሙያ ስም
                   </th>
-                  <th
-                    scope="col"
-                    class="border-r px-6 py-4 dark:border-neutral-500"
-                  >
+                  <th scope="col" class="border-r px-6 py-4 dark:border-neutral-500">
                     የሙያ ስያሜ
                   </th>
                 </tr>
@@ -1242,13 +1071,9 @@
                   </td>
                   <td
                     contenteditable="false"
-                    class="whitespace-nowrap border-r px-6 py-4 "
+                    class="whitespace-nowrap border-r px-6 py-4"
                   >
-                    {{
-                      educations && educations.prefix
-                        ? educations.prefix.name
-                        : ""
-                    }}
+                    {{ educations && educations.prefix ? educations.prefix.name : "" }}
                     {{
                       educations && educations.isDropped != true
                         ? educations.professionType &&
@@ -1265,7 +1090,7 @@
             </table>
           </div>
           <div class="text-left ml-4 px-8">
-            <h5 class="mt-4   text-right">//ከሰላምታ ጋር//</h5>
+            <h5 class="mt-4 text-right">//ከሰላምታ ጋር//</h5>
             <h5 class="mt-8">ግልባጭ</h5>
             <h5>ለ፡ብቃትና ሰው ሀብት አስተዳደር ስራ አስፈጻሚ አዲስ አበባ</h5>
             <h5>ጤና ሚኒስቴር</h5>
@@ -1276,33 +1101,11 @@
         <!-- end of applicant as foreigner -->
 
         <div
-          class="
-            modal-footer
-            flex flex-shrink-0 flex-wrap
-            items-center
-            justify-end
-            border-t border-grey-100
-            rounded-b-md
-          "
+          class="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end border-t border-grey-100 rounded-b-md"
         >
           <button
             type="button"
-            class="
-              inline-block
-              px-6
-              text-white
-              font-medium
-              text-xs
-              bg-primary-700
-              leading-tight
-              uppercase
-              rounded
-               
-              hover:bg-white hover:text-primary-700
-              transition
-              duration-150
-              ease-in-out
-            "
+            class="inline-block px-6 text-white font-medium text-xs bg-primary-700 leading-tight uppercase rounded hover:bg-white hover:text-primary-700 transition duration-150 ease-in-out"
             data-bs-toggle="modal"
             data-bs-target="#retrivalModal"
           >
@@ -1312,22 +1115,7 @@
 
           <button
             type="button"
-            class="
-              inline-block
-              px-6
-              text-white
-              font-medium
-              text-xs
-              bg-primary-700
-              leading-tight
-              uppercase
-              rounded
-               
-              hover:bg-white hover:text-primary-700
-              transition
-              duration-150
-              ease-in-out
-            "
+            class="inline-block px-6 text-white font-medium text-xs bg-primary-700 leading-tight uppercase rounded hover:bg-white hover:text-primary-700 transition duration-150 ease-in-out"
             data-bs-dismiss="modal"
           >
             <i class="fa fa-times-circle"></i>
@@ -1339,57 +1127,19 @@
   </div>
 
   <div
-    class="
-      modal
-      fade
-      fixed
-      top-0
-      left-0
-      hidden
-      w-full
-      h-full
-      outline-none
-      overflow-x-hidden overflow-y-auto
-    "
+    class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
     id="retrivalModal"
     tabindex="-1"
     aria-labelledby="retrivalModalTitle"
     aria-modal="true"
     role="dialog"
   >
-    <div
-      class="
-        modal-dialog modal-dialog-centered
-        relative
-        w-auto
-        pointer-events-none
-      "
-    >
+    <div class="modal-dialog modal-dialog-centered relative w-auto pointer-events-none">
       <div
-        class="
-          modal-content
-          border-none
-           
-          relative
-          flex flex-col
-          w-full
-          pointer-events-auto
-          bg-white bg-clip-padding
-          rounded-md
-          outline-none
-          text-current
-        "
+        class="modal-content border-none relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current"
       >
         <div
-          class="
-            modal-header
-            flex flex-shrink-0
-            items-center
-            justify-between
-            p-4
-            border-b border-grey-200
-            rounded-t-md
-          "
+          class="modal-header flex flex-shrink-0 items-center justify-between p-4 border-b border-grey-200 rounded-t-md"
         ></div>
         <div class="modal-body relative p-4">
           <div class="vld-parent">
@@ -1408,28 +1158,7 @@
                 type="date"
                 v-model="retrivalDate"
                 :min="today"
-                class="
-                  appearance-none
-                  block
-                  xl:w-64
-                  md:w-64
-                  sm:w-64
-                  px-3
-                  py-1.5
-                  text-base
-                  font-normal
-                  text-gray-700
-                  hover:text-main-500 hover:border-main-500
-                  border border-solid border-gray-300
-                  rounded
-                  transition
-                  ease-in-out
-                  m-0
-                  focus:text-gray-700
-                  focus:bg-white
-                  focus:border-main-400
-                  focus:outline-none
-                "
+                class="appearance-none block xl:w-64 md:w-64 sm:w-64 px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
                 autocomplete="off"
                 placeholder=""
                 required
@@ -1438,56 +1167,18 @@
           </div>
         </div>
         <div
-          class="
-            modal-footer
-            flex flex-shrink-0 flex-wrap
-            items-center
-            justify-end
-            p-2
-            border-t border-grey-200
-            rounded-b-md
-          "
+          class="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-2 border-t border-grey-200 rounded-b-md"
         >
           <button
             type="button"
-            class="
-              inline-block
-              px-6
-              text-white
-              font-medium
-              text-xs
-              bg-primary-700
-              leading-tight
-              uppercase
-              rounded
-               
-              hover:bg-white hover:text-primary-700
-              transition
-              duration-150
-              ease-in-out
-            "
+            class="inline-block px-6 text-white font-medium text-xs bg-primary-700 leading-tight uppercase rounded hover:bg-white hover:text-primary-700 transition duration-150 ease-in-out"
             data-bs-dismiss="modal"
           >
             Close
           </button>
           <button
             type="button"
-            class="
-              inline-block
-              px-6
-              text-white
-              font-medium
-              text-xs
-              bg-primary-700
-              leading-tight
-              uppercase
-              rounded
-               
-              hover:bg-white hover:text-primary-700
-              transition
-              duration-150
-              ease-in-out
-            "
+            class="inline-block px-6 text-white font-medium text-xs bg-primary-700 leading-tight uppercase rounded hover:bg-white hover:text-primary-700 transition duration-150 ease-in-out"
             @click="generateRetrival()"
           >
             Generate
@@ -1543,11 +1234,10 @@ export default {
     let today = new Date().toISOString().split("T")[0];
     let retrivalDate = ref("");
 
-    const adminRegionId = JSON.parse(localStorage.getItem("allAdminData"))
-      .regionId;
+    const adminRegionId = JSON.parse(localStorage.getItem("allAdminData")).regionId;
 
-    const expertLevelCode = JSON.parse(localStorage.getItem("allAdminData"))
-      .expertLevel.code;
+    const expertLevelCode = JSON.parse(localStorage.getItem("allAdminData")).expertLevel
+      .code;
 
     let isLicenseGenerated = ref(false);
 
@@ -1569,9 +1259,7 @@ export default {
     );
 
     const updateLicenseGenerated = () => {
-      finalData.value.data
-        ? (finalData.value.data.isLicenseGenerated = true)
-        : null;
+      finalData.value.data ? (finalData.value.data.isLicenseGenerated = true) : null;
       finalData.value.data ? (finalData.value.data.isReprint = true) : null;
       let req = {
         action: null,
@@ -1715,9 +1403,7 @@ export default {
             .set(opt)
             .from(element)
             .save(
-              finalData.value &&
-                finalData.value.profile &&
-                finalData.value.profile.name
+              finalData.value && finalData.value.profile && finalData.value.profile.name
                 ? finalData.value.profile.name +
                     " " +
                     new Date().toISOString().slice(0, 10)
@@ -1748,14 +1434,11 @@ export default {
           : []
       );
       certificateDetail.value.educations = certificateDetail.value.educations
-        ? certificateDetail.value.educations.filter(
-            (edu) => edu.isDropped != true
-          )
+        ? certificateDetail.value.educations.filter((edu) => edu.isDropped != true)
         : {};
       applicationStatus.value = props.modalData.data.applicationStatus.code;
       isLicenseGenerated.value = props.modalData.data.isLicenseGenerated;
-      certificateDetail.value.licenseNumber =
-        certificateDetail.value.renewalCode;
+      certificateDetail.value.licenseNumber = certificateDetail.value.renewalCode;
       if (props.modalData.data.certified != true) {
         isUserCertified.value = false;
       }
@@ -1797,18 +1480,14 @@ export default {
         175,
         namePosition - paddingEnglish,
         `${certifiedUser.value.name} ${certifiedUser.value.fatherName} ${
-          certifiedUser.value.grandFatherName
-            ? certifiedUser.value.grandFatherName
-            : ""
+          certifiedUser.value.grandFatherName ? certifiedUser.value.grandFatherName : ""
         }`
       );
       doc2.text(
         175,
         namePosition - paddingEnglish,
         `${certifiedUser.value.name} ${certifiedUser.value.fatherName} ${
-          certifiedUser.value.grandFatherName
-            ? certifiedUser.value.grandFatherName
-            : ""
+          certifiedUser.value.grandFatherName ? certifiedUser.value.grandFatherName : ""
         }`
       );
 
@@ -1886,18 +1565,13 @@ export default {
           doc.text(
             xPosition.value,
             professionPossition + i * professionListGap,
-            `${
-              certificateDetail.value.educations.length > 1
-                ? i + 1 + ". "
-                : "1. "
-            }${
+            `${certificateDetail.value.educations.length > 1 ? i + 1 + ". " : "1. "}${
               certificateDetail.value.educations[i].prefix
                 ? certificateDetail.value.educations[i].prefix.name
                 : ""
             } ${
               certificateDetail.value.educations[i].professionType &&
-              certificateDetail.value.educations[i].professionType.name ==
-                "other"
+              certificateDetail.value.educations[i].professionType.name == "other"
                 ? certificateDetail.value.educations[i].otherProfessionType
                 : certificateDetail.value.educations[i].professionType.name
             }`,
@@ -1910,18 +1584,13 @@ export default {
           doc.text(
             xPosition.value,
             professionPossition + i * professionListGap,
-            `${
-              certificateDetail.value.educations.length > 1
-                ? i + 1 + ". "
-                : "1. "
-            }${
+            `${certificateDetail.value.educations.length > 1 ? i + 1 + ". " : "1. "}${
               certificateDetail.value.educations[i].prefix
                 ? certificateDetail.value.educations[i].prefix.name
                 : ""
             } ${
               certificateDetail.value.educations[i].professionType &&
-              certificateDetail.value.educations[i].professionType.name ==
-                "other"
+              certificateDetail.value.educations[i].professionType.name == "other"
                 ? certificateDetail.value.educations[i].otherProfessionType
                 : certificateDetail.value.educations[i].professionType.name
             }`,
@@ -1934,18 +1603,13 @@ export default {
             doc2.text(
               xPosition.value,
               professionPossition + newI * professionListGap,
-              `${
-                certificateDetail.value.educations.length > 1
-                  ? newI + 1 + ". "
-                  : ""
-              }${
+              `${certificateDetail.value.educations.length > 1 ? newI + 1 + ". " : ""}${
                 certificateDetail.value.educations[i].prefix
                   ? certificateDetail.value.educations[i].prefix.name
                   : ""
               } ${
                 certificateDetail.value.educations[i].professionType &&
-                certificateDetail.value.educations[i].professionType.name ==
-                  "other"
+                certificateDetail.value.educations[i].professionType.name == "other"
                   ? certificateDetail.value.educations[i].otherProfessionType
                   : certificateDetail.value.educations[i].professionType.name
               }`,
@@ -1963,9 +1627,7 @@ export default {
         164,
         `${
           certificateDetail.value.certifiedDate
-            ? moment(certificateDetail.value.certifiedDate).format(
-                "MMM DD, YYYY"
-              ) + " - "
+            ? moment(certificateDetail.value.certifiedDate).format("MMM DD, YYYY") + " - "
             : "Not Specified"
         }`
       );
@@ -1974,9 +1636,7 @@ export default {
         164,
         `${
           certificateDetail.value.certifiedDate
-            ? moment(certificateDetail.value.certifiedDate).format(
-                "MMM DD, YYYY"
-              ) + " - "
+            ? moment(certificateDetail.value.certifiedDate).format("MMM DD, YYYY") + " - "
             : "Not Specified"
         }`
       );
@@ -1985,9 +1645,7 @@ export default {
         164,
         `${
           certificateDetail.value.licenseExpirationDate
-            ? moment(certificateDetail.value.licenseExpirationDate).format(
-                "MMM DD, YYYY"
-              )
+            ? moment(certificateDetail.value.licenseExpirationDate).format("MMM DD, YYYY")
             : "Not Specified"
         }`
       );
@@ -1996,9 +1654,7 @@ export default {
         164,
         `${
           certificateDetail.value.licenseExpirationDate
-            ? moment(certificateDetail.value.licenseExpirationDate).format(
-                "MMM DD, YYYY"
-              )
+            ? moment(certificateDetail.value.licenseExpirationDate).format("MMM DD, YYYY")
             : "Not Specified"
         }`
       );
@@ -2015,9 +1671,7 @@ export default {
         60,
         namePosition - paddingAmharic,
         `${
-          certifiedUser.value.alternativeName
-            ? certifiedUser.value.alternativeName
-            : ""
+          certifiedUser.value.alternativeName ? certifiedUser.value.alternativeName : ""
         } ${
           certifiedUser.value.alternativeFatherName
             ? certifiedUser.value.alternativeFatherName
@@ -2032,9 +1686,7 @@ export default {
         60,
         namePosition - paddingAmharic,
         `${
-          certifiedUser.value.alternativeName
-            ? certifiedUser.value.alternativeName
-            : ""
+          certifiedUser.value.alternativeName ? certifiedUser.value.alternativeName : ""
         } ${
           certifiedUser.value.alternativeFatherName
             ? certifiedUser.value.alternativeFatherName
@@ -2068,25 +1720,13 @@ export default {
           doc.text(
             xPosition.value,
             professionPossition + i * professionListGap,
-            `${
-              certificateDetail.value.educations.length > 1
-                ? i + 1 + ". "
-                : "1. "
-            }${
+            `${certificateDetail.value.educations.length > 1 ? i + 1 + ". " : "1. "}${
               certificateDetail.value.educations[i].prefix
-                ? certificateDetail.value.educations[i].prefix.amharic_name +
-                    " " +
-                    certificateDetail.value.educations[i].professionType &&
-                  certificateDetail.value.educations[i].professionType.name ==
-                    "other"
-                  ? certificateDetail.value.educations[i].otherProfessionAmharic
-                  : certificateDetail.value.educations[i].professionType
-                  ? certificateDetail.value.educations[i].professionType
-                      .amharicProfessionalType
-                  : ""
-                : certificateDetail.value.educations[i].professionType &&
-                  certificateDetail.value.educations[i].professionType.name ==
-                    "other"
+                ? certificateDetail.value.educations[i].prefix.amharic_name
+                : ""
+            } ${
+              +certificateDetail.value.educations[i].professionType &&
+              certificateDetail.value.educations[i].professionType.name == "other"
                 ? certificateDetail.value.educations[i].otherProfessionAmharic
                 : certificateDetail.value.educations[i].professionType
                 ? certificateDetail.value.educations[i].professionType
@@ -2101,23 +1741,13 @@ export default {
           doc.text(
             xPosition.value,
             professionPossition + i * professionListGap,
-            `${
-              certificateDetail.value.educations.length > 1 ? i + 1 + ". " : ""
-            }  ${
+            `${certificateDetail.value.educations.length > 1 ? i + 1 + ". " : "1. "}${
               certificateDetail.value.educations[i].prefix
-                ? certificateDetail.value.educations[i].prefix.amharic_name +
-                    " " +
-                    certificateDetail.value.educations[i].professionType &&
-                  certificateDetail.value.educations[i].professionType.name ==
-                    "other"
-                  ? certificateDetail.value.educations[i].otherProfessionAmharic
-                  : certificateDetail.value.educations[i].professionType
-                  ? certificateDetail.value.educations[i].professionType
-                      .amharicProfessionalType
-                  : ""
-                : certificateDetail.value.educations[i].professionType &&
-                  certificateDetail.value.educations[i].professionType.name ==
-                    "other"
+                ? certificateDetail.value.educations[i].prefix.amharic_name
+                : ""
+            } ${
+              +certificateDetail.value.educations[i].professionType &&
+              certificateDetail.value.educations[i].professionType.name == "other"
                 ? certificateDetail.value.educations[i].otherProfessionAmharic
                 : certificateDetail.value.educations[i].professionType
                 ? certificateDetail.value.educations[i].professionType
@@ -2133,27 +1763,13 @@ export default {
             doc2.text(
               xPosition.value,
               professionPossition + newI * professionListGap,
-              `${
-                certificateDetail.value.educations.length > 1
-                  ? newI + 1 + ". "
-                  : ""
-              }
-              ${
+              `${certificateDetail.value.educations.length > 1 ? i + 1 + ". " : "1. "}${
                 certificateDetail.value.educations[i].prefix
-                  ? certificateDetail.value.educations[i].prefix.amharic_name +
-                      " " +
-                      certificateDetail.value.educations[i].professionType &&
-                    certificateDetail.value.educations[i].professionType.name ==
-                      "other"
-                    ? certificateDetail.value.educations[i]
-                        .otherProfessionAmharic
-                    : certificateDetail.value.educations[i].professionType
-                    ? certificateDetail.value.educations[i].professionType
-                        .amharicProfessionalType
-                    : ""
-                  : certificateDetail.value.educations[i].professionType &&
-                    certificateDetail.value.educations[i].professionType.name ==
-                      "other"
+                  ? certificateDetail.value.educations[i].prefix.amharic_name
+                  : ""
+              } ${
+                +certificateDetail.value.educations[i].professionType &&
+                certificateDetail.value.educations[i].professionType.name == "other"
                   ? certificateDetail.value.educations[i].otherProfessionAmharic
                   : certificateDetail.value.educations[i].professionType
                   ? certificateDetail.value.educations[i].professionType
@@ -2213,9 +1829,7 @@ export default {
         `${
           certificateDetail.value.licenseExpirationDate
             ? toEthiopian(
-                moment(
-                  certificateDetail.value.licenseExpirationDate
-                )._d.toISOString(),
+                moment(certificateDetail.value.licenseExpirationDate)._d.toISOString(),
                 false
               )
             : " አልተገለጸም"
@@ -2227,9 +1841,7 @@ export default {
         `${
           certificateDetail.value.licenseExpirationDate
             ? toEthiopian(
-                moment(
-                  certificateDetail.value.licenseExpirationDate
-                )._d.toISOString(),
+                moment(certificateDetail.value.licenseExpirationDate)._d.toISOString(),
                 false
               )
             : " አልተገለጸም"
@@ -2263,8 +1875,7 @@ export default {
           certificateDetail.value.educations.length <= 3
         ) {
           if (
-            certificateDetail.value.renewalReviewer.reviewer.expertLevel
-              .code === "FED"
+            certificateDetail.value.renewalReviewer.reviewer.expertLevel.code === "FED"
           ) {
             defaultBackground = backgroundImage;
             defaultCode = "FED";
@@ -2272,8 +1883,7 @@ export default {
             defaultProfPos = 125;
             defaultProfGap = 7;
           } else if (
-            certificateDetail.value.renewalReviewer.reviewer.region.code ===
-            "ORO"
+            certificateDetail.value.renewalReviewer.reviewer.region.code === "ORO"
           ) {
             defaultBackground = oromiaCertificateBackground;
             defaultCode = "ORO";
@@ -2281,8 +1891,7 @@ export default {
             defaultProfPos = 133;
             defaultProfGap = 4;
           } else if (
-            certificateDetail.value.renewalReviewer.reviewer.region.code ===
-            "AA"
+            certificateDetail.value.renewalReviewer.reviewer.region.code === "AA"
           ) {
             defaultBackground = addisAbabaCertificateBackground;
             defaultCode = "AA";
@@ -2290,8 +1899,7 @@ export default {
             defaultProfPos = 133;
             defaultProfGap = 4;
           } else if (
-            certificateDetail.value.renewalReviewer.reviewer.region.code ===
-            "DD"
+            certificateDetail.value.renewalReviewer.reviewer.region.code === "DD"
           ) {
             defaultBackground = direDawaCertificateBackground;
             defaultCode = "DD";
@@ -2299,8 +1907,7 @@ export default {
             defaultProfPos = 120;
             defaultProfGap = 4;
           } else if (
-            certificateDetail.value.renewalReviewer.reviewer.region.code ===
-            "AFA"
+            certificateDetail.value.renewalReviewer.reviewer.region.code === "AFA"
           ) {
             defaultBackground = afarCertificateBackground;
             defaultCode = "AFA";
@@ -2309,16 +1916,7 @@ export default {
             defaultProfGap = 4;
           }
 
-          doc.addImage(
-            defaultBackground,
-            "JPG",
-            0,
-            0,
-            298,
-            213,
-            undefined,
-            "FAST"
-          );
+          doc.addImage(defaultBackground, "JPG", 0, 0, 298, 213, undefined, "FAST");
 
           handleRegionsLayout(
             doc,
@@ -2358,10 +1956,7 @@ export default {
         let multipleProfPos = 0;
         let multipleProfGap = 0;
 
-        if (
-          certificateDetail.value.renewalReviewer.reviewer.expertLevel.code ===
-          "FED"
-        ) {
+        if (certificateDetail.value.renewalReviewer.reviewer.expertLevel.code === "FED") {
           multipleBackground = backgroundImage;
           multipleCode = "FED";
           multipleNamePos = 100;
@@ -2401,26 +1996,8 @@ export default {
           defaultProfGap = 4;
         }
 
-        doc.addImage(
-          multipleBackground,
-          "JPG",
-          0,
-          0,
-          298,
-          213,
-          undefined,
-          "FAST"
-        );
-        doc2.addImage(
-          multipleBackground,
-          "JPG",
-          0,
-          0,
-          298,
-          213,
-          undefined,
-          "FAST"
-        );
+        doc.addImage(multipleBackground, "JPG", 0, 0, 298, 213, undefined, "FAST");
+        doc2.addImage(multipleBackground, "JPG", 0, 0, 298, 213, undefined, "FAST");
 
         handleRegionsLayout(
           doc,
