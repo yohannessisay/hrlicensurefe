@@ -193,6 +193,17 @@ export default {
       return error;
     }
   },
+  async updateDeclined(context, payload) {
+    try {
+      const resp = await ApiService.put(
+        baseUrl + "/renewals/" + payload.renewalId,
+        payload.declinedData
+      );
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
   async updateDraft(context, payload) {
     try {
       const resp = await ApiService.put(
