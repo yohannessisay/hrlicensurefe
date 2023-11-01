@@ -396,16 +396,16 @@ export default {
           : "",
       };
       store
-        .dispatch("reviewer/assignReviewer", {
+        .dispatch("reviewer/assignRenewalReviewer", {
           action: action,
           data: assign.value,
         })
         .then(() => {
           store.dispatch("sms/sendSms", smsData).then(() => {
             isLoading.value = false;
-            setTimeout(() => {
-              window.location.reload();
-            }, 1000);
+            // setTimeout(() => {
+            //   window.location.reload();
+            // }, 1000);
             toast.success("Selected Rviewer assigned Successfully", {
               timeout: 5000,
               position: "bottom-center",
