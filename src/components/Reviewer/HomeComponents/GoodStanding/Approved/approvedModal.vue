@@ -372,7 +372,6 @@ export default {
     let adminId = +localStorage.getItem("adminId");
     let adminRole = localStorage.getItem("role");
     let isLoading = ref(false);
-    const licenseData = ref({});
     let reviewerAdminId = ref(0);
     const modalDataGenerate = ref({});
     const showModal = () => {
@@ -422,15 +421,14 @@ export default {
             modalData.value.certifiedDate = result.certifiedDate;
             modalData.value.licenseExpirationDate = result.licenseExpirationDate;
 
-            licenseData.value = result;
             modalData.value.data = result;
 
             modalData.value.documents = result.documents;
             modalDataGenerate.value = result;
             modalDataGenerate.value.withExperiance = false;
 
-            licenseData.value && licenseData.value.documents
-              ? licenseData.value.documents.forEach((element) => {
+            result && result.documents
+              ? result.documents.forEach((element) => {
                   if (element.documentTypeCode == "WESLFO") {
                     modalDataGenerate.value.withExperiance = true;
                   }

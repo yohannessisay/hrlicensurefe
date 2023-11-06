@@ -406,10 +406,10 @@ import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 import { googleApi } from "@/composables/baseURL";
 
 import generatePdf from "./generateLicensedPdf.vue";
-import revokeLicenseModal from "./revokeLicenseModal.vue";
-import suspendLicenseModal from "./suspendLicenseModal.vue";
-import previousLicense from "./returnPreviousLicense.vue";
-import requestStatusChangeModal from "./requestStatusChange.vue";
+import revokeLicenseModal from "./sharedComponents/byYou/revokeLicenseModal.vue";
+import suspendLicenseModal from "./sharedComponents/byYou/suspendLicenseModal.vue";
+import previousLicense from "./sharedComponents/byYou/returnPreviousLicense.vue";
+import requestStatusChangeModal from "./sharedComponents/byYou/requestStatusChange.vue";
 
 export default {
   props: ["modalDataId"],

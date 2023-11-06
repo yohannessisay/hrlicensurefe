@@ -430,10 +430,10 @@ import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 import { googleApi } from "@/composables/baseURL";
 
 import generatePdf from "./generateLicensedPdf.vue";
-import revokeLicenseModal from "./revokeLicenseModal.vue";
-import requestStatusChangeModal from "./requestStatusChange.vue";
-import suspendLicenseModal from "./suspendLicenseModal.vue";
-import previousLicense from "./returnPreviousLicense.vue";
+import revokeLicenseModal from "./sharedComponents/byYou/revokeLicenseModal.vue";
+import requestStatusChangeModal from "./sharedComponents/byYou/requestStatusChange.vue";
+import suspendLicenseModal from "./sharedComponents/byYou/suspendLicenseModal.vue";
+import previousLicense from "./sharedComponents/byYou/returnPreviousLicense.vue";
 
 export default {
   props: ["modalDataId"],
@@ -464,7 +464,7 @@ export default {
     let pdfFilePath = ref("");
     let showGenerate = ref(false);
     let previousLicenseData = ref([]);
-    const modalData = ref({ educations: [] });
+    let modalData = ref({ educations: [] });
     let result = {};
     let toBeGeneratedProfs = [];
     const changePrintType = (type) => {

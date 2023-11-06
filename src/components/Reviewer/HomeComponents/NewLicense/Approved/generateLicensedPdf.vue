@@ -1,17 +1,6 @@
 <template>
   <div
-    class="
-      modal
-      fade
-      fixed
-      top-0
-      left-0
-      hidden
-      w-full
-      h-full
-      outline-none
-      overflow-x-hidden overflow-y-auto
-    "
+    class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
     id="generatePdf"
     data-bs-backdrop="static"
     data-bs-keyboard="false"
@@ -26,1537 +15,66 @@
         finalData.data.applicantType &&
         finalData.printType != 'externship' &&
         finalData.printType != 'temporary' &&
-        (finalData.data.applicantType.code == 'ETH' ||
-          finalData.data.applicantType.code == 'ETHABRO')
+        finalData.data.applicantType.code != 'FOR'
           ? 'modal-dialog modal-dialog-centered modal-xl ml-8 mr-8 relative w-auto pointer-events-none'
           : 'modal-dialog modal-dialog-centered modal-lg  relative w-auto pointer-events-none'
       "
     >
       <div
-        class="
-          modal-content
-          border-none
-           
-          relative
-          flex flex-col
-          w-full
-          pointer-events-auto
-          bg-white
-          rounded-md
-          outline-none
-          text-current
-        "
+        class="modal-content border-none relative flex flex-col w-full pointer-events-auto bg-white rounded-md outline-none text-current"
       >
-        <!-- if applicant is ethiopian -->
-        <div
-          v-if="
-            finalData &&
-              finalData.data &&
-              finalData.data.applicantType &&
-              finalData.printType != 'externship' &&
-              finalData.printType != 'temporary' &&
-              finalData.data.applicantType.code != 'FOR'
-          "
-          class="modal-body relative p-4"
-          contenteditable="true"
-        >
-          <!-- if professions are less than 3 -->
-
-          <div class="vld-parent">
-            <loading
-              :active="isLoading"
-              :can-cancel="true"
-              :is-full-page="true"
-              :color="'#2F639D'"
-              :opacity="0.7"
-            ></loading>
-
-            <span v-if="educations ? educations.length <= 3 : 0">
-              <div class="flex justify-center">
-                <div
-                  class="grid grid-rows-1 text-primary-600 font-bold text-2xl"
-                >
-                  በኢትዮፕያ ፌደራላዊ ዴሞክራሲያዊ ሪፐብሊክ
-                </div>
-              </div>
-              <div class="flex justify-center">
-                <div
-                  class="grid grid-rows-1 text-primary-600 font-bold text-2xl"
-                >
-                  Federal Democratic Republic Ethiopia
-                </div>
-              </div>
-              <div class="flex justify-center">
-                <div
-                  class="grid grid-rows-1 text-primary-600 font-bold text-xl"
-                >
-                  የጤና ሚኒስቴር
-                </div>
-              </div>
-              <div class="flex justify-center">
-                <div
-                  class="grid grid-rows-1 text-primary-600 font-bold text-xl"
-                >
-                  Ministry of Health
-                </div>
-              </div>
-              <div class="flex justify-center mt-4">
-                <div class="grid grid-cols-2">
-                  <div>የጤና ባለሙያዎች የሙያ ምዝገባና ፈቃድ የምስከር ወረቀት</div>
-                  <div>Health Professionals Registration and Certification</div>
-                </div>
-              </div>
-
-              <div class="flex justify-center mt-8">
-                <div class="grid grid-cols-2">
-                  <div>
-                    በኢትዮጵያ ፌዴራላዊ ዴሞክራሲያዊ ረፐብሊክ የጤና ሚንስቴር በአዋጅ ቁጥር
-                    {{
-                      modalData.data &&
-                      modalData.data.licenseReviewer &&
-                      modalData.data.licenseReviewer.reviewer &&
-                      modalData.data.licenseReviewer.reviewer.expertLevelId ===
-                        3
-                        ? "1112/2011"
-                        : modalData.data &&
-                          modalData.data.licenseReviewer &&
-                          modalData.data.licenseReviewer.reviewer.regionId &&
-                          modalData.data.licenseReviewer.reviewer.region
-                            .code === "AA"
-                        ? "64/2011"
-                        : modalData.data &&
-                          modalData.data.licenseReviewer &&
-                          modalData.data.licenseReviewer.reviewer.regionId &&
-                          modalData.data.licenseReviewer.reviewer.region
-                            .code === "ORO"
-                        ? "661/2009"
-                        : "-"
-                    }}
-                    አንቀጽ
-                    {{
-                      modalData.data &&
-                      modalData.data.licenseReviewer &&
-                      modalData.data.licenseReviewer.reviewer &&
-                      modalData.data.licenseReviewer.reviewer.expertLevelId ===
-                        3
-                        ? "73"
-                        : modalData.data &&
-                          modalData.data.licenseReviewer &&
-                          modalData.data.licenseReviewer.reviewer &&
-                          modalData.data.licenseReviewer.reviewer.region &&
-                          modalData.data.licenseReviewer.reviewer.region
-                            .code === "AA"
-                        ? "44/8"
-                        : modalData.data &&
-                          modalData.data.licenseReviewer &&
-                          modalData.data.licenseReviewer.reviewer &&
-                          modalData.data.licenseReviewer.reviewer.region &&
-                          modalData.data.licenseReviewer.reviewer.region
-                            .code === "ORO"
-                        ? "3/3"
-                        : "-"
-                    }}
-                    ስልጣን መሰረት
-                    <span class="font-bold  underline"
-                      >{{
-                        modalData &&
-                        modalData.profile &&
-                        modalData.profile.alternativeName
-                          ? modalData.profile.alternativeName
-                          : ""
-                      }}
-                      {{
-                        modalData &&
-                        modalData.profile &&
-                        modalData.profile.alternativeFatherName
-                          ? modalData.profile.alternativeFatherName
-                          : ""
-                      }}
-                      {{
-                        modalData &&
-                        modalData.profile &&
-                        modalData.profile.alternativeGrandFatherName
-                          ? modalData.profile.alternativeGrandFatherName
-                          : ""
-                      }}</span
-                    >
-                    ተገቢውን መስፈርት አሟልተው ስለተገኙ ሚኒስቴር መስሪያ ቤቱ <br />
-                    <div class="mt-8">
-                      <div
-                        class="flex justify-center  mb-2"
-                        v-for="department in educations"
-                        :key="department.id"
-                      >
-                        <span
-                          class="underline  font-bold"
-                          style="word-break: break-word"
-                        >
-                          {{
-                            department.prefix
-                              ? department.prefix.amharic_name + " "
-                              : ""
-                          }}
-                          {{
-                            department.professionType &&
-                            department.professionType.name == "other"
-                              ? department.otherProfessionAmharic
-                              : department.professionType
-                                  .amharicProfessionalType
-                          }} </span
-                        ><br />
-                      </div>
-                    </div>
-                    ሙያ መዝግቦ ይህን የሙያ ስራ ፈቃድ ሰጥቷል።
-                  </div>
-                  <div>
-                    Under the Federal Democratic Republic of Ethiopia the
-                    Minstry of Health by Virtue of proclamation No.
-                    {{
-                      modalData.data &&
-                      modalData.data.licenseReviewer &&
-                      modalData.data.licenseReviewer.reviewer &&
-                      modalData.data.licenseReviewer.reviewer.expertLevel &&
-                      modalData.data.licenseReviewer.reviewer.expertLevel
-                        .code === "FED"
-                        ? "1112/2019"
-                        : modalData.data &&
-                          modalData.data.licenseReviewer &&
-                          modalData.data.licenseReviewer.reviewer &&
-                          modalData.data.licenseReviewer.reviewer.region &&
-                          modalData.data.licenseReviewer.reviewer.region
-                            .code === "AA"
-                        ? "64/2019"
-                        : modalData.data &&
-                          modalData.data.licenseReviewer &&
-                          modalData.data.licenseReviewer.reviewer &&
-                          modalData.data.licenseReviewer.reviewer.region &&
-                          modalData.data.licenseReviewer.reviewer.region
-                            .code === "ORO"
-                        ? "661/2002"
-                        : "-"
-                    }}
-                    Article
-                    {{
-                      modalData.data &&
-                      modalData.data.licenseReviewer &&
-                      modalData.data.licenseReviewer.reviewer &&
-                      modalData.data.licenseReviewer.reviewer.expertLevel &&
-                      modalData.data.licenseReviewer.reviewer.expertLevel
-                        .code === "FED"
-                        ? "73"
-                        : modalData.data &&
-                          modalData.data.licenseReviewer &&
-                          modalData.data.licenseReviewer.reviewer &&
-                          modalData.data.licenseReviewer.reviewer.region &&
-                          modalData.data.licenseReviewer.reviewer.region
-                            .code === "AA"
-                        ? "44/8"
-                        : modalData.data &&
-                          modalData.data.licenseReviewer &&
-                          modalData.data.licenseReviewer.reviewer &&
-                          modalData.data.licenseReviewer.reviewer.region &&
-                          modalData.data.licenseReviewer.reviewer.region
-                            .code === "ORO"
-                        ? "3/3"
-                        : "-"
-                    }}is given the authority to issue
-                    <span class="font-bold  underline"
-                      >{{
-                        modalData && modalData.profile && modalData.profile.name
-                          ? modalData.profile.name
-                          : ""
-                      }}
-                      {{
-                        modalData &&
-                        modalData.profile &&
-                        modalData.profile.fatherName
-                          ? modalData.profile.fatherName
-                          : ""
-                      }}
-                      {{
-                        modalData &&
-                        modalData.profile &&
-                        modalData.profile.grandFatherName
-                          ? modalData.profile.grandFatherName
-                          : ""
-                      }}</span
-                    ><br />
-                    <div class="grid grid-rows-3 justify-center mt-8 mb-2">
-                      <span
-                        v-for="department in educations"
-                        :key="department.id"
-                        class="underline  font-bold"
-                        style="word-break: break-word"
-                      >
-                        {{ department.prefix ? department.prefix.name : "" }}
-
-                        {{
-                          department.professionType &&
-                          department.professionType.name == "other"
-                            ? department.otherProfessionType
-                            : department.professionType.name
-                        }}</span
-                      ><br />
-                    </div>
-                    Having duly satisfied the requirements of the Ministry
-                    hereby registered and licensed as
-                  </div>
-                </div>
-              </div>
-
-              <div class="grid grid-cols-2 mt-8">
-                <div class="flex justify-start">
-                  ይህ የሙያ የስራ ፈቃድ የሚያገለግለው ከ
-                  <span class="font-bold ">
-                    {{
-                      modalData.certifiedDate
-                        ? toEthiopian(
-                            moment(modalData.certifiedDate)._d.toISOString(),
-                            false
-                          )
-                        : ""
-                    }}</span
-                  >
-                  -እስከ-
-                  <span class="font-bold ">
-                    {{
-                      modalData.licenseExpirationDate !== null
-                        ? toEthiopian(
-                            moment(
-                              modalData.licenseExpirationDate
-                            )._d.toISOString(),
-                            false
-                          )
-                        : " አልተገለጸም"
-                    }}</span
-                  >
-                </div>
-                <div>
-                  The license is valid from
-                  <span class="font-bold ">
-                    {{
-                      modalData.certifiedDate
-                        ? moment(modalData.certifiedDate).format("MMM DD, YYYY")
-                        : ""
-                    }}</span
-                  >
-                  -To-
-                  <span class="font-bold ">
-                    {{
-                      modalData.licenseExpirationDate
-                        ? moment(modalData.licenseExpirationDate).format(
-                            "MMM DD, YYYY"
-                          )
-                        : " Not specified"
-                    }}</span
-                  >
-                </div>
-              </div>
-            </span>
-          </div>
-          <!-- End of professions that are less than 3 part -->
-
-          <!-- if professions are greater than 3 -->
-          <div
-            class="container px-6 mx-auto"
-            v-if="educations ? educations.length > 4 : 0"
-          >
-            <section class="text-gray-800">
-              <div class="vld-parent">
-                <loading
-                  :active="isLoading"
-                  :can-cancel="true"
-                  :is-full-page="true"
-                  :color="'#2F639D'"
-                  :opacity="0.7"
-                ></loading>
-                <!-- upto the 3rd profession -->
-                <div class="w-full mb-8 border-b-8 p-4">
-                  <div class="flex justify-center mb-4">
-                    <h1>License 1</h1>
-                  </div>
-
-                  <div class="flex justify-center">
-                    <div
-                      class="
-                        grid grid-rows-1
-                        text-primary-600
-                        font-bold
-                        text-2xl
-                      "
-                    >
-                      በኢትዮፕያ ፌደራላዊ ዴሞክራሲያዊ ሪፐብሊክ
-                    </div>
-                  </div>
-                  <div class="flex justify-center">
-                    <div
-                      class="
-                        grid grid-rows-1
-                        text-primary-600
-                        font-bold
-                        text-2xl
-                      "
-                    >
-                      Federal Democratic Republic Ethiopia
-                    </div>
-                  </div>
-                  <div class="flex justify-center">
-                    <div
-                      class="
-                        grid grid-rows-1
-                        text-primary-600
-                        font-bold
-                        text-xl
-                      "
-                    >
-                      የጤና ሚኒስቴር
-                    </div>
-                  </div>
-                  <div class="flex justify-center">
-                    <div
-                      class="
-                        grid grid-rows-1
-                        text-primary-600
-                        font-bold
-                        text-xl
-                      "
-                    >
-                      Ministry of Health
-                    </div>
-                  </div>
-                  <div class="flex justify-center mt-4">
-                    <div class="grid grid-cols-2">
-                      <div>የጤና ባለሙያዎች የሙያ ምዝገባና ፈቃድ የምስከር ወረቀት</div>
-                      <div>
-                        Health Professionals Registration and Certification
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="flex justify-center mt-8">
-                    <div class="grid grid-cols-2">
-                      <div>
-                        በኢትዮጵያ ፌዴራላዊ ዴሞክራሲያዊ ረፐብሊክ የጤና ሚንስቴር በአዋጅ ቁጥር
-                        {{
-                          modalData.data &&
-                          modalData.data.licenseReviewer &&
-                          modalData.data.licenseReviewer.reviewer &&
-                          modalData.data.licenseReviewer.reviewer
-                            .expertLevelId === 3
-                            ? "1112/2011"
-                            : modalData.data &&
-                              modalData.data.licenseReviewer &&
-                              modalData.data.licenseReviewer.reviewer
-                                .regionId &&
-                              modalData.data.licenseReviewer.reviewer.region
-                                .code === "AA"
-                            ? "64/2011"
-                            : modalData.data &&
-                              modalData.data.licenseReviewer &&
-                              modalData.data.licenseReviewer.reviewer
-                                .regionId &&
-                              modalData.data.licenseReviewer.reviewer.region
-                                .code === "ORO"
-                            ? "661/2009"
-                            : "-"
-                        }}
-                        አንቀጽ
-                        {{
-                          modalData.data &&
-                          modalData.data.licenseReviewer &&
-                          modalData.data.licenseReviewer.reviewer &&
-                          modalData.data.licenseReviewer.reviewer
-                            .expertLevelId === 3
-                            ? "73"
-                            : modalData.data &&
-                              modalData.data.licenseReviewer &&
-                              modalData.data.licenseReviewer.reviewer &&
-                              modalData.data.licenseReviewer.reviewer.region &&
-                              modalData.data.licenseReviewer.reviewer.region
-                                .code === "AA"
-                            ? "44/8"
-                            : modalData.data &&
-                              modalData.data.licenseReviewer &&
-                              modalData.data.licenseReviewer.reviewer &&
-                              modalData.data.licenseReviewer.reviewer.region &&
-                              modalData.data.licenseReviewer.reviewer.region
-                                .code === "ORO"
-                            ? "3/3"
-                            : "-"
-                        }}
-                        ስልጣን መሰረት
-                        <span class="font-bold  underline"
-                          >{{
-                            modalData &&
-                            modalData.profile &&
-                            modalData.profile.alternativeName
-                              ? modalData.profile.alternativeName
-                              : ""
-                          }}
-                          {{
-                            modalData &&
-                            modalData.profile &&
-                            modalData.profile.alternativeFatherName
-                              ? modalData.profile.alternativeFatherName
-                              : ""
-                          }}
-                          {{
-                            modalData &&
-                            modalData.profile &&
-                            modalData.profile.alternativeGrandFatherName
-                              ? modalData.profile.alternativeGrandFatherName
-                              : ""
-                          }}</span
-                        >
-                        ተገቢውን መስፈርት አሟልተው ስለተገኙ ሚኒስቴር መስሪያ ቤቱ <br />
-                        <div class="grid grid-rows-3 justify-center mt-8 mb-2">
-                          <span
-                            class="underline  font-bold"
-                            style="word-break: break-word"
-                          >
-                            {{
-                              educations[0].prefix
-                                ? educations[0].prefix.amharic_name + " "
-                                : ""
-                            }}
-                            {{
-                              educations[0].professionType &&
-                              educations[0].professionType.name == "other"
-                                ? educations[0].otherProfessionAmharic
-                                : educations[0].professionType
-                                    .amharicProfessionalType
-                            }}</span
-                          >
-                          <span
-                            class="underline  font-bold"
-                            style="word-break: break-word"
-                          >
-                            {{
-                              educations[1].prefix
-                                ? educations[1].prefix.amharic_name + " "
-                                : ""
-                            }}
-                            {{
-                              educations[1].professionType &&
-                              educations[1].professionType.name == "other"
-                                ? educations[1].otherProfessionAmharic
-                                : educations[1].professionType
-                                    .amharicProfessionalType
-                            }}</span
-                          >
-                          <span
-                            class="underline  font-bold"
-                            style="word-break: break-word"
-                          >
-                            {{
-                              educations[2].prefix
-                                ? educations[2].prefix.amharic_name + " "
-                                : ""
-                            }}
-                            {{
-                              educations[2].professionType &&
-                              educations[2].professionType.name == "other"
-                                ? educations[2].otherProfessionAmharic
-                                : educations[2].professionType
-                                    .amharicProfessionalType
-                            }}</span
-                          >
-                        </div>
-                        ሙያ መዝግቦ ይህን የሙያ ስራ ፈቃድ ሰጥቷል።
-                      </div>
-                      <div>
-                        Under the Federal Democratic Republic of Ethiopia the
-                        Minstry of Health by Virtue of proclamation No.
-                        {{
-                          modalData.data &&
-                          modalData.data.licenseReviewer &&
-                          modalData.data.licenseReviewer.reviewer &&
-                          modalData.data.licenseReviewer.reviewer.expertLevel &&
-                          modalData.data.licenseReviewer.reviewer.expertLevel
-                            .code === "FED"
-                            ? "1112/2019"
-                            : modalData.data &&
-                              modalData.data.licenseReviewer &&
-                              modalData.data.licenseReviewer.reviewer &&
-                              modalData.data.licenseReviewer.reviewer.region &&
-                              modalData.data.licenseReviewer.reviewer.region
-                                .code === "AA"
-                            ? "64/2019"
-                            : modalData.data &&
-                              modalData.data.licenseReviewer &&
-                              modalData.data.licenseReviewer.reviewer &&
-                              modalData.data.licenseReviewer.reviewer.region &&
-                              modalData.data.licenseReviewer.reviewer.region
-                                .code === "ORO"
-                            ? "661/2002"
-                            : "-"
-                        }}
-                        Article
-                        {{
-                          modalData.data &&
-                          modalData.data.licenseReviewer &&
-                          modalData.data.licenseReviewer.reviewer &&
-                          modalData.data.licenseReviewer.reviewer.expertLevel &&
-                          modalData.data.licenseReviewer.reviewer.expertLevel
-                            .code === "FED"
-                            ? "73"
-                            : modalData.data &&
-                              modalData.data.licenseReviewer &&
-                              modalData.data.licenseReviewer.reviewer &&
-                              modalData.data.licenseReviewer.reviewer.region &&
-                              modalData.data.licenseReviewer.reviewer.region
-                                .code === "AA"
-                            ? "44/8"
-                            : modalData.data &&
-                              modalData.data.licenseReviewer &&
-                              modalData.data.licenseReviewer.reviewer &&
-                              modalData.data.licenseReviewer.reviewer.region &&
-                              modalData.data.licenseReviewer.reviewer.region
-                                .code === "ORO"
-                            ? "3/3"
-                            : "-"
-                        }}is given the authority to issue
-                        <span class="font-bold  underline"
-                          >{{
-                            modalData && modalData.profile
-                              ? modalData.profile.name
-                              : ""
-                          }}
-                          {{
-                            modalData && modalData.profile
-                              ? modalData.profile.fatherName
-                              : ""
-                          }}
-                          {{
-                            modalData && modalData.profile
-                              ? modalData.profile.grandFatherName
-                              : ""
-                          }}</span
-                        ><br />
-                        <div class="grid grid-rows-3 justify-center mt-8 mb-2">
-                          <span
-                            class="underline  font-bold"
-                            style="word-break: break-word"
-                          >
-                            {{
-                              educations[0].prefix
-                                ? educations[0].prefix.amharic_name + " "
-                                : ""
-                            }}
-                            {{
-                              educations[0].professionType &&
-                              educations[0].professionType.name == "other"
-                                ? educations[0].otherProfessionType
-                                : educations[0].professionType.name
-                            }}</span
-                          >
-                          <span
-                            class="underline  font-bold"
-                            style="word-break: break-word"
-                          >
-                            {{
-                              educations[1].prefix
-                                ? educations[1].prefix.amharic_name + " "
-                                : ""
-                            }}
-                            {{
-                              educations[1].professionType &&
-                              educations[1].professionType.name == "other"
-                                ? educations[1].otherProfessionType
-                                : educations[1].professionType.name
-                            }}</span
-                          >
-                          <span
-                            class="underline  font-bold"
-                            style="word-break: break-word"
-                          >
-                            {{
-                              educations[2].prefix
-                                ? educations[2].prefix.amharic_name + " "
-                                : ""
-                            }}
-                            {{
-                              educations[2].professionType &&
-                              educations[2].professionType.name == "other"
-                                ? educations[2].otherProfessionType
-                                : educations[2].professionType.name
-                            }}</span
-                          ><br />
-                          <span
-                            class="underline  font-bold"
-                            style="word-break: break-word"
-                          >
-                          </span>
-                        </div>
-                        Having duly satisfied the requirements of the Ministry
-                        hereby registered and licensed as
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="grid grid-cols-2 mt-8">
-                    <div class="flex justify-start">
-                      ይህ የሙያ የስራ ፈቃድ የሚያገለግለው ከ
-                      <span class="font-bold ">
-                        {{
-                          modalData.certifiedDate
-                            ? toEthiopian(
-                                moment(
-                                  modalData.certifiedDate
-                                )._d.toISOString(),
-                                false
-                              )
-                            : ""
-                        }}</span
-                      >
-                      -እስከ-
-                      <span class="font-bold ">
-                        {{
-                          modalData.licenseExpirationDate !== null
-                            ? toEthiopian(
-                                moment(
-                                  modalData.licenseExpirationDate
-                                )._d.toISOString(),
-                                false
-                              )
-                            : " አልተገለጸም"
-                        }}</span
-                      >
-                    </div>
-                    <div>
-                      The license is valid from
-                      <span class="font-bold ">
-                        {{
-                          modalData.certifiedDate
-                            ? moment(modalData.certifiedDate).format(
-                                "MMM DD, YYYY"
-                              )
-                            : ""
-                        }}</span
-                      >
-                      -To-
-                      <span class="font-bold ">
-                        {{
-                          modalData.licenseExpirationDate
-                            ? moment(modalData.licenseExpirationDate).format(
-                                "MMM DD, YYYY"
-                              )
-                            : " Not specified"
-                        }}</span
-                      >
-                    </div>
-                  </div>
-                </div>
-                <!--End of upto the 3rd profession part-->
-
-                <!--from 3rd to 6th profession -->
-                <div class="w-full">
-                  <div class="flex justify-center mb-4">
-                    <h1>License 2</h1>
-                  </div>
-
-                  <div class="flex justify-center">
-                    <div
-                      class="
-                        grid grid-rows-1
-                        text-primary-600
-                        font-bold
-                        text-2xl
-                      "
-                    >
-                      በኢትዮፕያ ፌደራላዊ ዴሞክራሲያዊ ሪፐብሊክ
-                    </div>
-                  </div>
-                  <div class="flex justify-center">
-                    <div
-                      class="
-                        grid grid-rows-1
-                        text-primary-600
-                        font-bold
-                        text-2xl
-                      "
-                    >
-                      Federal Democratic Republic Ethiopia
-                    </div>
-                  </div>
-                  <div class="flex justify-center">
-                    <div
-                      class="
-                        grid grid-rows-1
-                        text-primary-600
-                        font-bold
-                        text-xl
-                      "
-                    >
-                      የጤና ሚኒስቴር
-                    </div>
-                  </div>
-                  <div class="flex justify-center">
-                    <div
-                      class="
-                        grid grid-rows-1
-                        text-primary-600
-                        font-bold
-                        text-xl
-                      "
-                    >
-                      Ministry of Health
-                    </div>
-                  </div>
-                  <div class="flex justify-center mt-4">
-                    <div class="grid grid-cols-2">
-                      <div>የጤና ባለሙያዎች የሙያ ምዝገባና ፈቃድ የምስከር ወረቀት</div>
-                      <div>
-                        Health Professionals Registration and Certification
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="flex justify-center mt-8">
-                    <div class="grid grid-cols-2">
-                      <div>
-                        በኢትዮጵያ ፌዴራላዊ ዴሞክራሲያዊ ረፐብሊክ የጤና ሚንስቴር በአዋጅ ቁጥር
-                        {{
-                          modalData.data &&
-                          modalData.data.licenseReviewer &&
-                          modalData.data.licenseReviewer.reviewer &&
-                          modalData.data.licenseReviewer.reviewer
-                            .expertLevelId === 3
-                            ? "1112/2011"
-                            : modalData.data &&
-                              modalData.data.licenseReviewer &&
-                              modalData.data.licenseReviewer.reviewer
-                                .regionId &&
-                              modalData.data.licenseReviewer.reviewer.region
-                                .code === "AA"
-                            ? "64/2011"
-                            : modalData.data &&
-                              modalData.data.licenseReviewer &&
-                              modalData.data.licenseReviewer.reviewer
-                                .regionId &&
-                              modalData.data.licenseReviewer.reviewer.region
-                                .code === "ORO"
-                            ? "661/2009"
-                            : "-"
-                        }}
-                        አንቀጽ
-                        {{
-                          modalData.data &&
-                          modalData.data.licenseReviewer &&
-                          modalData.data.licenseReviewer.reviewer &&
-                          modalData.data.licenseReviewer.reviewer
-                            .expertLevelId === 3
-                            ? "73"
-                            : modalData.data &&
-                              modalData.data.licenseReviewer &&
-                              modalData.data.licenseReviewer.reviewer &&
-                              modalData.data.licenseReviewer.reviewer.region &&
-                              modalData.data.licenseReviewer.reviewer.region
-                                .code === "AA"
-                            ? "44/8"
-                            : modalData.data &&
-                              modalData.data.licenseReviewer &&
-                              modalData.data.licenseReviewer.reviewer &&
-                              modalData.data.licenseReviewer.reviewer.region &&
-                              modalData.data.licenseReviewer.reviewer.region
-                                .code === "ORO"
-                            ? "3/3"
-                            : "-"
-                        }}
-                        ስልጣን መሰረት
-                        <span class="font-bold  underline"
-                          >{{
-                            modalData &&
-                            modalData.profile &&
-                            modalData.profile.alternativeName
-                              ? modalData.profile.alternativeName
-                              : ""
-                          }}
-                          {{
-                            modalData &&
-                            modalData.profile &&
-                            modalData.profile.alternativeFatherName
-                              ? modalData.profile.alternativeFatherName
-                              : ""
-                          }}
-                          {{
-                            modalData &&
-                            modalData.profile &&
-                            modalData.profile.alternativeGrandFatherName
-                              ? modalData.profile.alternativeGrandFatherName
-                              : ""
-                          }}</span
-                        >
-                        ተገቢውን መስፈርት አሟልተው ስለተገኙ ሚኒስቴር መስሪያ ቤቱ <br />
-                        <div class="grid grid-rows-3 justify-center mt-8 mb-2">
-                          <span
-                            class="underline  font-bold"
-                            style="word-break: break-word"
-                          >
-                            {{
-                              educations &&
-                              educations[3] &&
-                              educations[3].professionType
-                                ? educations[3].prefix
-                                  ? educations[3].prefix.amharic_name +
-                                    " " +
-                                    educations[3].professionType
-                                      .amharicProfessionalType
-                                  : educations[3].professionType
-                                      .amharicProfessionalType
-                                : educations[3].otherProfessionAmharic
-                                ? educations[3].otherProfessionAmharic
-                                : ""
-                            }}</span
-                          >
-                          <span
-                            class="underline  font-bold"
-                            style="word-break: break-word"
-                          >
-                            {{
-                              educations &&
-                              educations[4] &&
-                              educations[4].professionType
-                                ? educations[4].prefix
-                                  ? educations[4].prefix.amharic_name +
-                                    " " +
-                                    educations[4].professionType
-                                      .amharicProfessionalType
-                                  : educations[4].professionType
-                                      .amharicProfessionalType
-                                : educations[4].otherProfessionAmharic
-                                ? educations[4].otherProfessionAmharic
-                                : ""
-                            }}</span
-                          >
-                          <span
-                            class="underline  font-bold"
-                            style="word-break: break-word"
-                          >
-                            {{
-                              educations &&
-                              educations[5] &&
-                              educations[5].professionType
-                                ? educations[5].prefix
-                                  ? educations[5].prefix.amharic_name +
-                                    " " +
-                                    educations[5].professionType
-                                      .amharicProfessionalType
-                                  : educations[5].professionType
-                                      .amharicProfessionalType
-                                : educations[5].otherProfessionAmharic
-                                ? educations[5].otherProfessionAmharic
-                                : ""
-                            }}</span
-                          >
-                        </div>
-                        ሙያ መዝግቦ ይህን የሙያ ስራ ፈቃድ ሰጥቷል።
-                      </div>
-                      <div>
-                        Under the Federal Democratic Republic of Ethiopia the
-                        Minstry of Health by Virtue of proclamation No.
-                        {{
-                          modalData.data &&
-                          modalData.data.licenseReviewer &&
-                          modalData.data.licenseReviewer.reviewer &&
-                          modalData.data.licenseReviewer.reviewer.expertLevel &&
-                          modalData.data.licenseReviewer.reviewer.expertLevel
-                            .code === "FED"
-                            ? "1112/2019"
-                            : modalData.data &&
-                              modalData.data.licenseReviewer &&
-                              modalData.data.licenseReviewer.reviewer &&
-                              modalData.data.licenseReviewer.reviewer.region &&
-                              modalData.data.licenseReviewer.reviewer.region
-                                .code === "AA"
-                            ? "64/2019"
-                            : modalData.data &&
-                              modalData.data.licenseReviewer &&
-                              modalData.data.licenseReviewer.reviewer &&
-                              modalData.data.licenseReviewer.reviewer.region &&
-                              modalData.data.licenseReviewer.reviewer.region
-                                .code === "ORO"
-                            ? "661/2002"
-                            : "-"
-                        }}
-                        Article
-                        {{
-                          modalData.data &&
-                          modalData.data.licenseReviewer &&
-                          modalData.data.licenseReviewer.reviewer &&
-                          modalData.data.licenseReviewer.reviewer.expertLevel &&
-                          modalData.data.licenseReviewer.reviewer.expertLevel
-                            .code === "FED"
-                            ? "73"
-                            : modalData.data &&
-                              modalData.data.licenseReviewer &&
-                              modalData.data.licenseReviewer.reviewer &&
-                              modalData.data.licenseReviewer.reviewer.region &&
-                              modalData.data.licenseReviewer.reviewer.region
-                                .code === "AA"
-                            ? "44/8"
-                            : modalData.data &&
-                              modalData.data.licenseReviewer &&
-                              modalData.data.licenseReviewer.reviewer &&
-                              modalData.data.licenseReviewer.reviewer.region &&
-                              modalData.data.licenseReviewer.reviewer.region
-                                .code === "ORO"
-                            ? "3/3"
-                            : "-"
-                        }}is given the authority to issue
-                        <span class="font-bold  underline"
-                          >{{
-                            modalData &&
-                            modalData.profile &&
-                            modalData.profile.name
-                              ? modalData.profile.name
-                              : ""
-                          }}
-                          {{
-                            modalData &&
-                            modalData.profile &&
-                            modalData.profile.fatherName
-                              ? modalData.profile.fatherName
-                              : ""
-                          }}
-                          {{
-                            modalData &&
-                            modalData.profile &&
-                            modalData.profile.grandFatherName
-                              ? modalData.profile.grandFatherName
-                              : ""
-                          }}</span
-                        ><br />
-                        <div class="grid grid-rows-3 justify-center mt-8 mb-2">
-                          <span
-                            class="underline  font-bold"
-                            style="word-break: break-word"
-                          >
-                            {{
-                              educations[3].prefix
-                                ? educations[3].prefix.amharic_name + " "
-                                : ""
-                            }}
-                            {{
-                              educations[3].professionType &&
-                              educations[3].professionType.name == "other"
-                                ? educations[3].otherProfessionType
-                                : educations[3].professionType.name
-                            }}</span
-                          >
-                          <span
-                            class="underline  font-bold"
-                            style="word-break: break-word"
-                          >
-                            {{
-                              educations[4].prefix
-                                ? educations[4].prefix.amharic_name + " "
-                                : ""
-                            }}
-                            {{
-                              educations[4].professionType &&
-                              educations[4].professionType.name == "other"
-                                ? educations[4].otherProfessionType
-                                : educations[4].professionType.name
-                            }}</span
-                          >
-                          <span
-                            class="underline  font-bold"
-                            style="word-break: break-word"
-                          >
-                            {{
-                              educations[5].prefix
-                                ? educations[5].prefix.amharic_name + " "
-                                : ""
-                            }}
-                            {{
-                              educations[5].professionType &&
-                              educations[5].professionType.name == "other"
-                                ? educations[5].otherProfessionType
-                                : educations[5].professionType.name
-                            }}</span
-                          ><br />
-                          <span
-                            class="underline  font-bold"
-                            style="word-break: break-word"
-                          >
-                          </span>
-                        </div>
-                        Having duly satisfied the requirements of the Ministry
-                        hereby registered and licensed as
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="grid grid-cols-2 mt-8">
-                    <div class="flex justify-start">
-                      ይህ የሙያ የስራ ፈቃድ የሚያገለግለው ከ
-                      <span class="font-bold ">
-                        {{
-                          modalData.certifiedDate
-                            ? toEthiopian(
-                                moment(
-                                  modalData.certifiedDate
-                                )._d.toISOString(),
-                                false
-                              )
-                            : ""
-                        }}</span
-                      >
-                      -እስከ-
-                      <span class="font-bold ">
-                        {{
-                          modalData.licenseExpirationDate !== null
-                            ? toEthiopian(
-                                moment(
-                                  modalData.licenseExpirationDate
-                                )._d.toISOString(),
-                                false
-                              )
-                            : " አልተገለጸም"
-                        }}</span
-                      >
-                    </div>
-                    <div>
-                      The license is valid from
-                      <span class="font-bold ">
-                        {{
-                          modalData.certifiedDate
-                            ? moment(modalData.certifiedDate).format(
-                                "MMM DD, YYYY"
-                              )
-                            : ""
-                        }}</span
-                      >
-                      -To-
-                      <span class="font-bold ">
-                        {{
-                          modalData.licenseExpirationDate
-                            ? moment(modalData.licenseExpirationDate).format(
-                                "MMM DD, YYYY"
-                              )
-                            : " Not specified"
-                        }}</span
-                      >
-                    </div>
-                  </div>
-                </div>
-                <!--End of from 3rd to 6th profession part-->
-              </div>
-            </section>
-          </div>
-          <!-- End of professions that are greater than 3 part-->
+        <div class="vld-parent">
+          <loading
+            :active="isLoading"
+            :can-cancel="true"
+            :is-full-page="true"
+            :color="'#2F639D'"
+            :opacity="0.7"
+          ></loading>
+          <!-- Ethiopian -->
+          <ethiopian-license
+            v-if="
+              modalData &&
+              modalData.data &&
+              modalData.data.applicantType &&
+              modalData.printType != 'externship' &&
+              modalData.printType != 'temporary' &&
+              modalData.data.applicantType.code != 'FOR'
+            "
+            :modalData="modalData"
+          ></ethiopian-license>
+          <!-- Foreginers -->
+          <foreigner-license
+            v-if="
+              modalData &&
+              modalData.data &&
+              modalData.data.applicantType &&
+              modalData.printType != 'externship' &&
+              modalData.printType != 'temporary' &&
+              modalData.data.applicantType.code == 'FOR'
+            "
+            :modalData="modalData"
+            :qrSrc="qrSrc"
+          ></foreigner-license>
+          <!-- Externship -->
+          <externship
+            v-if="modalData && modalData.printType && modalData.printType == 'externship'"
+            :modalData="modalData"
+            :qrSrc="qrSrc"
+          ></externship>
+          <!-- Temporary -->
+          <temporary
+            v-if="modalData && modalData.printType && modalData.printType == 'temporary'"
+            :modalData="modalData"
+            :qrSrc="qrSrc"
+          ></temporary>
         </div>
-
-        <!-- end of applicant as ethiopian -->
-        <!-- if applicant is foreigner -->
         <div
-          v-if="
-            finalData &&
-              finalData.data &&
-              finalData.data.applicantType &&
-              finalData.printType != 'externship' &&
-              finalData.printType != 'temporary' &&
-              finalData.data.applicantType.code == 'FOR'
-          "
-          class="p-2 m-2 "
-          contenteditable="true"
-          id="foreignersPrintedDiv"
-        >
-          <div class="grid grid-cols-2 mt-32">
-            <div class="flex justify-start" contenteditable="false">
-              <img :src="qrSrc" alt="" style="height: 150px;width: 150px;" />
-            </div>
-          </div>
-          <h2 class="mt-8 ml-8" contenteditable="true">
-            ለ፡____________________________________
-          </h2>
-          <h2 class="mt-8 ml-8" contenteditable="true">
-            ጉዳዩ፡-የሙያ ስራ ፍቃድ ምዝገባን ይመለከታል
-          </h2>
-          <p class=" mt-8 px-12  tracking-widest">
-            በቀን
-            {{
-              finalData && finalData.data && finalData.data.certifiedDate
-                ? finalData.data.certifiedDate.slice(0, 10)
-                : ""
-            }}
-            ዓ.ም በቁጥር
-            {{
-              finalData && finalData.data && finalData.data.newLicenseCode
-                ? finalData.data.newLicenseCode
-                : ""
-            }}. የተጻፈውን ደብዳቤ ለውጭ ሀገር ዜጋ የጤና ባለሙያ የሙያ ፍቃድ መጠየቃችሁ ይታወቃል፡፡ በዚህም መሰረት
-            የቀረቡ የትምህርት ማስረጃዎች ከተገመገሙ በኃላ በስማቸው ትይዩ በተጠቀሰው ሥያሜ ከቀን
-            {{
-              finalData && finalData.data && finalData.data.certifiedDate
-                ? finalData.data.certifiedDate.slice(0, 10)
-                : ""
-            }}
-            ጀምሮ ለ ___. የተመዘገቡና የሙያ ፍቃድ የተሰጣቸው መሆኑን እየገለጽን፤ ጊዜአቸውን ጨርሰው ወይም አቋርጠው
-            ተቋሙን ከለቀቁ ይህን የሙያ ፍቃድ ደብዳቤ ተመላሽ እንድታደርጉ እናሳስባለን፡፡
-          </p>
-
-          <div
-            class="grid justify-items-center mt-8 mb-12"
-            contenteditable="false"
-          >
-            <table class=" border text-center text-sm font-light ">
-              <thead class="border-b font-medium bg-primary-200 ">
-                <tr>
-                  <th scope="col" class="border-r px-6 py-4 ">
-                    #ተ.ቁ
-                  </th>
-                  <th
-                    scope="col"
-                    class="border-r px-6 py-4 dark:border-neutral-500"
-                  >
-                    የባለሙያ ስም
-                  </th>
-                  <th
-                    scope="col"
-                    class="border-r px-6 py-4 dark:border-neutral-500"
-                  >
-                    የሙያ ስያሜ
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  class="border-b dark:border-neutral-500"
-                  v-for="(educations, index) in finalData &&
-                  finalData.data &&
-                  finalData.data.educations
-                    ? finalData.data.educations
-                    : []"
-                  :key="educations.id"
-                >
-                  <td
-                    class="whitespace-nowrap border-r px-6 py-4 font-medium dark:border-neutral-500"
-                  >
-                    {{ (index += 1) }}
-                  </td>
-                  <td
-                    contenteditable="false"
-                    class="whitespace-nowrap border-r px-6 py-4"
-                  >
-                    {{
-                      finalData && finalData.data && finalData.data.profile
-                        ? finalData.data.profile.name +
-                          " " +
-                          finalData.data.profile.fatherName +
-                          " " +
-                          finalData.data.profile.grandFatherName
-                        : []
-                    }}
-                  </td>
-                  <td
-                    contenteditable="false"
-                    class="whitespace-nowrap border-r px-6 py-4 "
-                  >
-                    {{
-                      educations && educations.prefix
-                        ? educations.prefix.name
-                        : ""
-                    }}
-                    {{
-                      educations && educations.isDropped != true
-                        ? educations.professionType &&
-                          educations.professionType.name == "other"
-                          ? educations.otherProfessionType
-                          : educations.professionType
-                          ? educations.professionType.name
-                          : ""
-                        : ""
-                    }}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="text-left ml-4 px-8">
-            <h5 class="mt-4   text-right">//ከሰላምታ ጋር//</h5>
-            <h5 class="mt-8">ግልባጭ</h5>
-            <h5>ለ፡ብቃትና ሰው ሀብት አስተዳደር ስራ አስፈጻሚ አዲስ አበባ</h5>
-            <h5>ጤና ሚኒስቴር</h5>
-            <h5>ለ፡ጤናና ጤና-ነክ ተቋማት እና ባለሙያዎች ቁጥጥር መሪ ሥራ አስፈፃሚ</h5>
-            <h5>ጤና ሚኒስቴር</h5>
-          </div>
-        </div>
-        <!-- end of applicant as foreigner -->
-
-        <!-- if question being asked is externship -->
-        <div
-          v-if="
-            finalData &&
-              finalData.printType &&
-              finalData.printType != 'temporary' &&
-              finalData.printType == 'externship'
-          "
-          class="p-8 m-8 "
-          contenteditable="true"
-          id="externshipPrintedDiv"
-        >
-          <div class="grid grid-cols-2 mb-8 mt-24">
-            <div class="flex justify-start" contenteditable="false">
-              <img :src="qrSrc" alt="" style="height: 150px;width: 150px;" />
-            </div>
-          </div>
-          <h5 class="mt-4">ለ፡____________________________________</h5>
-          <h5 class="mt-4">
-            ጉዳዩ፡-ከውጭ ሀገር ትምህርታቸውን አጠናቀው ስለመጡ ኢትዮጵያዊያን Externship መመደብን ይመለከታል፡፡
-          </h5>
-          <p class="mt-8 px-8 tracking-widest">
-            ከዚህ በታች ስሟ（ሙ） በሰንጠረዡ የተገለፁው የጤና ባለሙያ
-            <span
-              v-for="education in finalData &&
-              finalData.data &&
-              finalData.data.educations
-                ? finalData.data.educations
-                : []"
-              :key="education.id"
-            >
-              {{
-                `በ ________ ሀገር ከሚገኘው  
-                  ${education.institution.name} 
-                  በ
-                  ${
-                    education && education.prefix ? education.prefix.name : ""
-                  } ${
-                  education &&
-                  education.isDropped != true &&
-                  education.professionType &&
-                  education.professionType.name == "other"
-                    ? education.otherProfessionType
-                    : education.professionType
-                    ? education.professionType.name
-                    : ""
-                }, `
-              }}
-            </span>
-            የትምህርት መስክ በመከታተል ኢትዮጵያ ውስጥ ኤክስተርንሽፕ (Externship) ለመስራት
-            በቀን___________ቀርቦ ከተገመገመ በኃላ____________________________በሚል
-            ፀድቆላቸዋል፡፡ ስለዚህም ልምምዱን ከ__/__/__ ጀምሮ
-            ለ_________________________እንዲከታተሉ የተመደቡ መሆኑን እየገለጽን፤የትምህርት ተቋሙ
-            በ_______________________መጨረሻ ላይ አስፈላጊውን፤ግምገማ በማድረግ የባለሙያዋን/ውን ውጤት
-            እንድታሣውቁን እንጠይቃለን፡፡
-          </p>
-
-          <div class="grid justify-items-center mt-8">
-            <table class=" border text-center text-sm font-light ">
-              <thead class="border-b font-medium bg-primary-200 ">
-                <tr>
-                  <th scope="col" class="border-r px-6 py-4 ">
-                    #ተ.ቁ
-                  </th>
-                  <th
-                    scope="col"
-                    class="border-r px-6 py-4 dark:border-neutral-500"
-                  >
-                    የባለሙያ ስም
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr class="border-b dark:border-neutral-500">
-                  <td
-                    class="whitespace-nowrap border-r px-6 py-4 font-medium dark:border-neutral-500"
-                  >
-                    1
-                  </td>
-                  <td
-                    contenteditable="false"
-                    class="whitespace-nowrap border-r px-6 py-4 "
-                  >
-                    {{
-                      finalData && finalData.data && finalData.data.profile
-                        ? finalData.data.profile.name +
-                          " " +
-                          finalData.data.profile.fatherName +
-                          " " +
-                          finalData.data.profile.grandFatherName
-                        : []
-                    }}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <h5 class="mt-8 text-right">//ከሰላምታ ጋር//</h5>
-          <div class="text-left mt-8">
-            <h5>ግልባጭ</h5>
-            <h5>ለ፡ጤናና ጤና-ነክ ተቋማት እና ባለሙያዎች ቁጥጥር መሪ ሥራ አስፈፃሚ ጤና ሚኒስቴር</h5>
-          </div>
-        </div>
-        <!-- end of question being asked is externship-->
-
-        <!-- temp license -->
-        <div
-          v-if="
-            finalData &&
-              finalData.printType &&
-              finalData.printType == 'temporary' &&
-              finalData.printType != 'externship'
-          "
-          contenteditable="true"
-          class="p-8 m-8 "
-          id="temporaryPrintedDiv"
-        >
-          <div class="grid grid-cols-2 mb-8 mt-24">
-            <div class="flex justify-start" contenteditable="false">
-              <img :src="qrSrc" alt="" style="height: 150px;width: 150px;" />
-            </div>
-          </div>
-          <h2 contenteditable="true">ለ__________________________</h2>
-          <div class="text-center mb-8">
-            <h2 class="mt-8">ስለ ውጭ ሃገር የጤና ባለሙያዎች ምዝገባ ጉዳይ</h2>
-          </div>
-          በቀን
-          <span class="">
-            {{
-              finalData && finalData.data && finalData.data.certifiedDate
-                ? finalData.data.certifiedDate.slice(0, 10)
-                : ""
-            }}
-          </span>
-          በቁጥር
-          <span class="" contenteditable="true">
-            ___________________
-          </span>
-          የተጻፈውን ደብዳቤ ይመለከታል። በቀረበው ጥያቄ መሰረት የተጠቃሹ የትምህርት ማስረጃ ከተገመገመ በሁዋላ በስማችው
-          ትይዩ በተጠቀሰው ስያሜ
-          <p>
-            ከ <span >___/___/___</span> ዓ.ም ጀምሮ ለ
-            <span class="">
-              {{
-                finalData &&
-                finalData.data &&
-                finalData.data.licenseExpirationDate
-                  ? Number(finalData.data.licenseExpirationDate.slice(0, 4)) -
-                    Number(new Date().toISOString().slice(0, 4))
-                  : ""
-              }}</span
-            >
-            ዓመት የተመዘገቡ መሆኑን እና ከ
-            <span class="">
-              {{
-                finalData &&
-                finalData.data &&
-                finalData.data.licenseExpirationDate
-                  ? Number(finalData.data.licenseExpirationDate.slice(0, 4)) -
-                    Number(new Date().toISOString().slice(0, 4))
-                  : ""
-              }}</span
-            >
-            ዓመት በሁዋላ በሃገር ውስጥ ካሉ ፈቃዳቸው ማደስ እንደሚገባ እየገለጽን ይህን ፈቃድ ሰጥተናችዋል።
-          </p>
-
-          <div class="grid justify-items-center mt-8">
-            <table class=" border text-center text-sm font-light ">
-              <thead class="border-b font-medium bg-primary-200 ">
-                <tr>
-                  <th scope="col" class="border-r px-6 py-4 ">
-                    #ተ.ቁ
-                  </th>
-                  <th
-                    scope="col"
-                    class="border-r px-6 py-4 dark:border-neutral-500"
-                  >
-                    የባለሙያ ስም
-                  </th>
-                  <th
-                    scope="col"
-                    class="border-r px-6 py-4 dark:border-neutral-500"
-                  >
-                  የሙያ ስያሜ
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  v-for="(educations, index) in finalData &&
-                  finalData.data &&
-                  finalData.data.educations
-                    ? finalData.data.educations
-                    : []"
-                  :key="educations.id"
-                  class="border-b dark:border-neutral-500"
-                >
-                  <td
-                    class="whitespace-nowrap border-r px-6 py-4 font-medium dark:border-neutral-500"
-                  >
-                    {{ index+1 }}
-                  </td>
-                  <td
-                    contenteditable="false"
-                    class="whitespace-nowrap border-r px-6 py-4 "
-                  >
-                    {{
-                      finalData && finalData.data && finalData.data.profile
-                        ? finalData.data.profile.name +
-                          " " +
-                          finalData.data.profile.fatherName +
-                          " " +
-                          finalData.data.profile.grandFatherName
-                        : []
-                    }}
-                  </td>
-                  <td
-                    class="whitespace-nowrap border-r px-6 py-4 "
-                    contenteditable="false"
-                  >
-                    {{
-                      educations && educations.prefix
-                        ? educations.prefix.name
-                        : ""
-                    }}
-                    {{
-                      educations && educations.isDropped != true
-                        ? educations.professionType &&
-                          educations.professionType.name == "other"
-                          ? educations.otherProfessionType
-                          : educations.professionType
-                          ? educations.professionType.name
-                          : ""
-                        : ""
-                    }}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h5 class="mt-8 text-right">//ከሰላምታ ጋር//</h5>
-        </div>
-        <!-- end of temp license -->
-        <div
-          class="
-            modal-footer
-            flex flex-shrink-0 flex-wrap
-            items-center
-            justify-end
-            border-t border-grey-100
-            rounded-b-md
-          "
+          class="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end border-t border-grey-100 rounded-b-md"
         >
           <button
             type="button"
-            class="
-              inline-block
-              px-6
-              text-white
-              font-medium
-              text-xs
-              bg-primary-700
-              leading-tight
-              uppercase
-              rounded
-               
-              hover:bg-white hover:text-primary-700
-              transition
-              duration-150
-              ease-in-out
-            "
+            class="inline-block px-6 text-white font-medium text-xs bg-primary-700 leading-tight uppercase rounded hover:bg-white hover:text-primary-700 transition duration-150 ease-in-out"
             data-bs-toggle="modal"
             data-bs-target="#retrivalModal"
           >
@@ -1566,22 +84,7 @@
 
           <button
             type="button"
-            class="
-              inline-block
-              px-6
-              text-white
-              font-medium
-              text-xs
-              bg-primary-700
-              leading-tight
-              uppercase
-              rounded
-               
-              hover:bg-white hover:text-primary-700
-              transition
-              duration-150
-              ease-in-out
-            "
+            class="inline-block px-6 text-white font-medium text-xs bg-primary-700 leading-tight uppercase rounded hover:bg-white hover:text-primary-700 transition duration-150 ease-in-out"
             data-bs-dismiss="modal"
           >
             <i class="fa fa-times-circle"></i>
@@ -1593,57 +96,19 @@
   </div>
 
   <div
-    class="
-      modal
-      fade
-      fixed
-      top-0
-      left-0
-      hidden
-      w-full
-      h-full
-      outline-none
-      overflow-x-hidden overflow-y-auto
-    "
+    class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
     id="retrivalModal"
     tabindex="-1"
     aria-labelledby="retrivalModalTitle"
     aria-modal="true"
     role="dialog"
   >
-    <div
-      class="
-        modal-dialog modal-dialog-centered
-        relative
-        w-auto
-        pointer-events-none
-      "
-    >
+    <div class="modal-dialog modal-dialog-centered relative w-auto pointer-events-none">
       <div
-        class="
-          modal-content
-          border-none
-           
-          relative
-          flex flex-col
-          w-full
-          pointer-events-auto
-          bg-white bg-clip-padding
-          rounded-md
-          outline-none
-          text-current
-        "
+        class="modal-content border-none relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current"
       >
         <div
-          class="
-            modal-header
-            flex flex-shrink-0
-            items-center
-            justify-between
-            p-4
-            border-b border-grey-200
-            rounded-t-md
-          "
+          class="modal-header flex flex-shrink-0 items-center justify-between p-4 border-b border-grey-200 rounded-t-md"
         ></div>
         <div class="modal-body relative p-4">
           <div class="vld-parent">
@@ -1663,28 +128,7 @@
                 type="date"
                 v-model="retrivalDate"
                 :min="today"
-                class="
-                  appearance-none
-                  block
-                  xl:w-64
-                  md:w-64
-                  sm:w-64
-                  px-3
-                  py-1.5
-                  text-base
-                  font-normal
-                  text-gray-700
-                  hover:text-main-500 hover:border-main-500
-                  border border-solid border-gray-300
-                  rounded
-                  transition
-                  ease-in-out
-                  m-0
-                  focus:text-gray-700
-                  focus:bg-white
-                  focus:border-main-400
-                  focus:outline-none
-                "
+                class="appearance-none block xl:w-64 md:w-64 sm:w-64 px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
                 autocomplete="off"
                 placeholder=""
                 required
@@ -1693,56 +137,18 @@
           </div>
         </div>
         <div
-          class="
-            modal-footer
-            flex flex-shrink-0 flex-wrap
-            items-center
-            justify-end
-            p-2
-            border-t border-grey-200
-            rounded-b-md
-          "
+          class="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-2 border-t border-grey-200 rounded-b-md"
         >
           <button
             type="button"
-            class="
-              inline-block
-              px-6
-              text-white
-              font-medium
-              text-xs
-              bg-primary-700
-              leading-tight
-              uppercase
-              rounded
-               
-              hover:bg-white hover:text-primary-700
-              transition
-              duration-150
-              ease-in-out
-            "
+            class="inline-block px-6 text-white font-medium text-xs bg-primary-700 leading-tight uppercase rounded hover:bg-white hover:text-primary-700 transition duration-150 ease-in-out"
             data-bs-dismiss="modal"
           >
             Close
           </button>
           <button
             type="button"
-            class="
-              inline-block
-              px-6
-              text-white
-              font-medium
-              text-xs
-              bg-primary-700
-              leading-tight
-              uppercase
-              rounded
-               
-              hover:bg-white hover:text-primary-700
-              transition
-              duration-150
-              ease-in-out
-            "
+            class="inline-block px-6 text-white font-medium text-xs bg-primary-700 leading-tight uppercase rounded hover:bg-white hover:text-primary-700 transition duration-150 ease-in-out"
             @click="generateRetrival()"
           >
             Generate
@@ -1755,7 +161,10 @@
 <script>
 import { ref, computed } from "vue";
 import { useStore } from "vuex";
-
+import ethiopianLicense from "./sharedComponents/ethiopianLicense.vue";
+import foreignerLicense from "./sharedComponents/foreignerLicense.vue";
+import externship from "./sharedComponents/externship.vue";
+import temporary from "./sharedComponents/temporary.vue";
 import jsPDF from "jspdf";
 import backgroundImage from "../../../../../assets/Federal_Certificate.jpg";
 import oromiaCertificateBackground from "../../../../../assets/Oromia_Certificate.jpg";
@@ -1778,7 +187,13 @@ export default {
     STATIC_CERTIFICATE_URL: () => STATIC_CERTIFICATE_URL,
   },
   props: ["modalData"],
-  components: { Loading },
+  components: {
+    Loading,
+    ethiopianLicense,
+    foreignerLicense,
+    externship,
+    temporary,
+  },
   setup(props) {
     const store = useStore();
     const toast = useToast();
@@ -1797,11 +212,10 @@ export default {
     let today = new Date().toISOString().split("T")[0];
     let retrivalDate = ref("");
 
-    const adminRegionId = JSON.parse(localStorage.getItem("allAdminData"))
-      .regionId;
+    const adminRegionId = JSON.parse(localStorage.getItem("allAdminData")).regionId;
 
-    const expertLevelCode = JSON.parse(localStorage.getItem("allAdminData"))
-      .expertLevel.code;
+    const expertLevelCode = JSON.parse(localStorage.getItem("allAdminData")).expertLevel
+      .code;
 
     let isLicenseGenerated = ref(false);
 
@@ -1824,9 +238,7 @@ export default {
     let isForeignApplicant = ref(false);
 
     const updateLicenseGenerated = () => {
-      finalData.value.data
-        ? (finalData.value.data.isLicenseGenerated = true)
-        : null;
+      finalData.value.data ? (finalData.value.data.isLicenseGenerated = true) : null;
       finalData.value.data ? (finalData.value.data.isReprint = true) : null;
       let req = {
         action: null,
@@ -1855,15 +267,13 @@ export default {
         status: "new",
       };
       isLoading.value = false;
-      store
-        .dispatch("notification/notifyApplicant", notification)
-        .then((res) => {
-          if (res && res.status == "Success") {
-            editApplication(req);
-          } else {
-            isLoading.value = false;
-          }
-        });
+      store.dispatch("notification/notifyApplicant", notification).then((res) => {
+        if (res && res.status == "Success") {
+          editApplication(req);
+        } else {
+          isLoading.value = false;
+        }
+      });
     };
 
     const editApplication = (req) => {
@@ -2026,9 +436,7 @@ export default {
             .set(opt)
             .from(element)
             .save(
-              finalData.value &&
-                finalData.value.profile &&
-                finalData.value.profile.name
+              finalData.value && finalData.value.profile && finalData.value.profile.name
                 ? finalData.value.profile.name +
                     " " +
                     new Date().toISOString().slice(0, 10)
@@ -2060,14 +468,11 @@ export default {
           : []
       );
       certificateDetail.value.educations = certificateDetail.value.educations
-        ? certificateDetail.value.educations.filter(
-            (edu) => edu.isDropped != true
-          )
+        ? certificateDetail.value.educations.filter((edu) => edu.isDropped != true)
         : {};
       applicationStatus.value = props.modalData.data.applicationStatus.code;
       isLicenseGenerated.value = props.modalData.data.isLicenseGenerated;
-      certificateDetail.value.licenseNumber =
-        certificateDetail.value.newLicenseCode;
+      certificateDetail.value.licenseNumber = certificateDetail.value.newLicenseCode;
       if (props.modalData.data.certified != true) {
         isUserCertified.value = false;
       }
@@ -2109,18 +514,14 @@ export default {
         175,
         namePosition - paddingEnglish,
         `${certifiedUser.value.name} ${certifiedUser.value.fatherName} ${
-          certifiedUser.value.grandFatherName
-            ? certifiedUser.value.grandFatherName
-            : ""
+          certifiedUser.value.grandFatherName ? certifiedUser.value.grandFatherName : ""
         }`
       );
       doc2.text(
         175,
         namePosition - paddingEnglish,
         `${certifiedUser.value.name} ${certifiedUser.value.fatherName} ${
-          certifiedUser.value.grandFatherName
-            ? certifiedUser.value.grandFatherName
-            : ""
+          certifiedUser.value.grandFatherName ? certifiedUser.value.grandFatherName : ""
         }`
       );
 
@@ -2198,18 +599,13 @@ export default {
           doc.text(
             xPosition.value,
             professionPossition + i * professionListGap,
-            `${
-              certificateDetail.value.educations.length > 1
-                ? i + 1 + ". "
-                : "1. "
-            }${
+            `${certificateDetail.value.educations.length > 1 ? i + 1 + ". " : "1. "}${
               certificateDetail.value.educations[i].prefix
                 ? certificateDetail.value.educations[i].prefix.name
                 : ""
             } ${
               certificateDetail.value.educations[i].professionType &&
-              certificateDetail.value.educations[i].professionType.name ==
-                "other"
+              certificateDetail.value.educations[i].professionType.name == "other"
                 ? certificateDetail.value.educations[i].otherProfessionType
                 : certificateDetail.value.educations[i].professionType.name
             }`,
@@ -2222,18 +618,13 @@ export default {
           doc.text(
             xPosition.value,
             professionPossition + i * professionListGap,
-            `${
-              certificateDetail.value.educations.length > 1
-                ? i + 1 + ". "
-                : "1. "
-            }${
+            `${certificateDetail.value.educations.length > 1 ? i + 1 + ". " : "1. "}${
               certificateDetail.value.educations[i].prefix
                 ? certificateDetail.value.educations[i].prefix.name
                 : ""
             } ${
               certificateDetail.value.educations[i].professionType &&
-              certificateDetail.value.educations[i].professionType.name ==
-                "other"
+              certificateDetail.value.educations[i].professionType.name == "other"
                 ? certificateDetail.value.educations[i].otherProfessionType
                 : certificateDetail.value.educations[i].professionType.name
             }`,
@@ -2246,18 +637,13 @@ export default {
             doc2.text(
               xPosition.value,
               professionPossition + newI * professionListGap,
-              `${
-                certificateDetail.value.educations.length > 1
-                  ? newI + 1 + ". "
-                  : ""
-              }${
+              `${certificateDetail.value.educations.length > 1 ? newI + 1 + ". " : ""}${
                 certificateDetail.value.educations[i].prefix
                   ? certificateDetail.value.educations[i].prefix.name
                   : ""
               } ${
                 certificateDetail.value.educations[i].professionType &&
-                certificateDetail.value.educations[i].professionType.name ==
-                  "other"
+                certificateDetail.value.educations[i].professionType.name == "other"
                   ? certificateDetail.value.educations[i].otherProfessionType
                   : certificateDetail.value.educations[i].professionType.name
               }`,
@@ -2275,9 +661,7 @@ export default {
         164,
         `${
           certificateDetail.value.certifiedDate
-            ? moment(certificateDetail.value.certifiedDate).format(
-                "MMM DD, YYYY"
-              ) + " - "
+            ? moment(certificateDetail.value.certifiedDate).format("MMM DD, YYYY") + " - "
             : "Not Specified"
         }`
       );
@@ -2286,9 +670,7 @@ export default {
         164,
         `${
           certificateDetail.value.certifiedDate
-            ? moment(certificateDetail.value.certifiedDate).format(
-                "MMM DD, YYYY"
-              ) + " - "
+            ? moment(certificateDetail.value.certifiedDate).format("MMM DD, YYYY") + " - "
             : "Not Specified"
         }`
       );
@@ -2297,9 +679,7 @@ export default {
         164,
         `${
           certificateDetail.value.licenseExpirationDate
-            ? moment(certificateDetail.value.licenseExpirationDate).format(
-                "MMM DD, YYYY"
-              )
+            ? moment(certificateDetail.value.licenseExpirationDate).format("MMM DD, YYYY")
             : "Not Specified"
         }`
       );
@@ -2308,9 +688,7 @@ export default {
         164,
         `${
           certificateDetail.value.licenseExpirationDate
-            ? moment(certificateDetail.value.licenseExpirationDate).format(
-                "MMM DD, YYYY"
-              )
+            ? moment(certificateDetail.value.licenseExpirationDate).format("MMM DD, YYYY")
             : "Not Specified"
         }`
       );
@@ -2328,9 +706,7 @@ export default {
         60,
         namePosition - paddingAmharic,
         `${
-          certifiedUser.value.alternativeName
-            ? certifiedUser.value.alternativeName
-            : ""
+          certifiedUser.value.alternativeName ? certifiedUser.value.alternativeName : ""
         } ${
           certifiedUser.value.alternativeFatherName
             ? certifiedUser.value.alternativeFatherName
@@ -2345,9 +721,7 @@ export default {
         60,
         namePosition - paddingAmharic,
         `${
-          certifiedUser.value.alternativeName
-            ? certifiedUser.value.alternativeName
-            : ""
+          certifiedUser.value.alternativeName ? certifiedUser.value.alternativeName : ""
         } ${
           certifiedUser.value.alternativeFatherName
             ? certifiedUser.value.alternativeFatherName
@@ -2377,18 +751,13 @@ export default {
           doc.text(
             xPosition.value,
             professionPossition + i * professionListGap,
-            `${
-              certificateDetail.value.educations.length > 1
-                ? i + 1 + ". "
-                : "1. "
-            }${
+            `${certificateDetail.value.educations.length > 1 ? i + 1 + ". " : "1. "}${
               certificateDetail.value.educations[i].prefix
                 ? certificateDetail.value.educations[i].prefix.amharic_name
                 : ""
             } ${
               certificateDetail.value.educations[i].professionType &&
-              certificateDetail.value.educations[i].professionType.name ==
-                "other"
+              certificateDetail.value.educations[i].professionType.name == "other"
                 ? certificateDetail.value.educations[i].otherProfessionAmharic
                 : certificateDetail.value.educations[i].professionType
                 ? certificateDetail.value.educations[i].professionType
@@ -2403,16 +772,13 @@ export default {
           doc.text(
             xPosition.value,
             professionPossition + i * professionListGap,
-            `${
-              certificateDetail.value.educations.length > 1 ? i + 1 + ". " : ""
-            }${
+            `${certificateDetail.value.educations.length > 1 ? i + 1 + ". " : ""}${
               certificateDetail.value.educations[i].prefix
                 ? certificateDetail.value.educations[i].prefix.amharic_name
                 : ""
             } ${
               certificateDetail.value.educations[i].professionType &&
-              certificateDetail.value.educations[i].professionType.name ==
-                "other"
+              certificateDetail.value.educations[i].professionType.name == "other"
                 ? certificateDetail.value.educations[i].otherProfessionAmharic
                 : certificateDetail.value.educations[i].professionType
                 ? certificateDetail.value.educations[i].professionType
@@ -2428,19 +794,13 @@ export default {
             doc2.text(
               xPosition.value,
               professionPossition + newI * professionListGap,
-              `${
-                certificateDetail.value.educations.length > 1
-                  ? newI + 1 + ". "
-                  : ""
-              }${
+              `${certificateDetail.value.educations.length > 1 ? newI + 1 + ". " : ""}${
                 certificateDetail.value.educations[i].prefix
-                  ? certificateDetail.value.educations[i].prefix.amharic_name +
-                    " "
+                  ? certificateDetail.value.educations[i].prefix.amharic_name + " "
                   : ""
               } ${
                 certificateDetail.value.educations[i].professionType &&
-                certificateDetail.value.educations[i].professionType.name ==
-                  "other"
+                certificateDetail.value.educations[i].professionType.name == "other"
                   ? certificateDetail.value.educations[i].otherProfessionAmharic
                   : certificateDetail.value.educations[i].professionType
                   ? certificateDetail.value.educations[i].professionType
@@ -2497,9 +857,7 @@ export default {
         `${
           certificateDetail.value.licenseExpirationDate
             ? toEthiopian(
-                moment(
-                  certificateDetail.value.licenseExpirationDate
-                )._d.toISOString(),
+                moment(certificateDetail.value.licenseExpirationDate)._d.toISOString(),
                 false
               )
             : " አልተገለጸም"
@@ -2511,9 +869,7 @@ export default {
         `${
           certificateDetail.value.licenseExpirationDate
             ? toEthiopian(
-                moment(
-                  certificateDetail.value.licenseExpirationDate
-                )._d.toISOString(),
+                moment(certificateDetail.value.licenseExpirationDate)._d.toISOString(),
                 false
               )
             : " አልተገለጸም"
@@ -2547,8 +903,7 @@ export default {
           certificateDetail.value.educations.length <= 3
         ) {
           if (
-            certificateDetail.value.licenseReviewer.reviewer.expertLevel
-              .code === "FED"
+            certificateDetail.value.licenseReviewer.reviewer.expertLevel.code === "FED"
           ) {
             defaultBackground = backgroundImage;
             defaultCode = "FED";
@@ -2556,8 +911,7 @@ export default {
             defaultProfPos = 125;
             defaultProfGap = 7;
           } else if (
-            certificateDetail.value.licenseReviewer.reviewer.region.code ===
-            "ORO"
+            certificateDetail.value.licenseReviewer.reviewer.region.code === "ORO"
           ) {
             defaultBackground = oromiaCertificateBackground;
             defaultCode = "ORO";
@@ -2565,8 +919,7 @@ export default {
             defaultProfPos = 133;
             defaultProfGap = 4;
           } else if (
-            certificateDetail.value.licenseReviewer.reviewer.region.code ===
-            "AA"
+            certificateDetail.value.licenseReviewer.reviewer.region.code === "AA"
           ) {
             defaultBackground = addisAbabaCertificateBackground;
             defaultCode = "AA";
@@ -2574,8 +927,7 @@ export default {
             defaultProfPos = 133;
             defaultProfGap = 4;
           } else if (
-            certificateDetail.value.licenseReviewer.reviewer.region.code ===
-            "DD"
+            certificateDetail.value.licenseReviewer.reviewer.region.code === "DD"
           ) {
             defaultBackground = direDawaCertificateBackground;
             defaultCode = "DD";
@@ -2583,8 +935,7 @@ export default {
             defaultProfPos = 120;
             defaultProfGap = 4;
           } else if (
-            certificateDetail.value.licenseReviewer.reviewer.region.code ===
-            "AFA"
+            certificateDetail.value.licenseReviewer.reviewer.region.code === "AFA"
           ) {
             defaultBackground = afarCertificateBackground;
             defaultCode = "AFA";
@@ -2593,16 +944,7 @@ export default {
             defaultProfGap = 4;
           }
 
-          doc.addImage(
-            defaultBackground,
-            "JPG",
-            0,
-            0,
-            298,
-            213,
-            undefined,
-            "FAST"
-          );
+          doc.addImage(defaultBackground, "JPG", 0, 0, 298, 213, undefined, "FAST");
 
           handleRegionsLayout(
             doc,
@@ -2641,10 +983,7 @@ export default {
         let multipleProfPos = 0;
         let multipleProfGap = 0;
 
-        if (
-          certificateDetail.value.licenseReviewer.reviewer.expertLevel.code ===
-          "FED"
-        ) {
+        if (certificateDetail.value.licenseReviewer.reviewer.expertLevel.code === "FED") {
           multipleBackground = backgroundImage;
           multipleCode = "FED";
           multipleNamePos = 100;
@@ -2684,26 +1023,8 @@ export default {
           defaultProfGap = 4;
         }
 
-        doc.addImage(
-          multipleBackground,
-          "JPG",
-          0,
-          0,
-          298,
-          213,
-          undefined,
-          "FAST"
-        );
-        doc2.addImage(
-          multipleBackground,
-          "JPG",
-          0,
-          0,
-          298,
-          213,
-          undefined,
-          "FAST"
-        );
+        doc.addImage(multipleBackground, "JPG", 0, 0, 298, 213, undefined, "FAST");
+        doc2.addImage(multipleBackground, "JPG", 0, 0, 298, 213, undefined, "FAST");
 
         handleRegionsLayout(
           doc,

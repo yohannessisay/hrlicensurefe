@@ -1,20 +1,21 @@
 <template>
   <div
     class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
-    id="generatePdf"
+    id="generatePdfOth"
     data-bs-backdrop="static"
     data-bs-keyboard="false"
     tabindex="-1"
-    aria-labelledby="generatePdfLabel"
+    aria-labelledby="generatePdfOthLabel"
     aria-hidden="true"
   >
     <div
       :class="
-        modalData &&
-        modalData.data &&
-        modalData.data.applicantType &&
-        (modalData.data.applicantType.code == 'ETH' ||
-          modalData.data.applicantType.code == 'ETHABRO')
+        finalData &&
+        finalData.data &&
+        finalData.data.applicantType &&
+        finalData.printType != 'externship' &&
+        finalData.printType != 'temporary' &&
+        finalData.data.applicantType.code != 'FOR'
           ? 'modal-dialog modal-dialog-centered modal-xl ml-8 mr-8 relative w-auto pointer-events-none'
           : 'modal-dialog modal-dialog-centered modal-lg  relative w-auto pointer-events-none'
       "
@@ -22,43 +23,45 @@
       <div
         class="modal-content border-none relative flex flex-col w-full pointer-events-auto bg-white rounded-md outline-none text-current"
       >
+        <!-- Ethiopian -->
+        <ethiopian-license
+          v-if="
+            modalData &&
+            modalData.data &&
+            modalData.data.applicantType &&
+            modalData.printType != 'externship' &&
+            modalData.printType != 'temporary' &&
+            modalData.data.applicantType.code != 'FOR'
+          "
+          :modalData="modalData"
+        ></ethiopian-license>
+        <!-- Foreginers -->
+        <foreigner-license
+          v-if="
+            modalData &&
+            modalData.data &&
+            modalData.data.applicantType &&
+            modalData.printType != 'externship' &&
+            modalData.printType != 'temporary' &&
+            modalData.data.applicantType.code == 'FOR'
+          "
+          :modalData="modalData"
+          :qrSrc="qrSrc"
+        ></foreigner-license>
+        <!-- Externship -->
+        <externship
+          v-if="modalData && modalData.printType && modalData.printType == 'externship'"
+          :modalData="modalData"
+          :qrSrc="qrSrc"
+        ></externship>
+        <!-- Temporary -->
+        <temporary
+          v-if="modalData && modalData.printType && modalData.printType == 'temporary'"
+          :modalData="modalData"
+          :qrSrc="qrSrc"
+        ></temporary>
         <div
-          class="modal-header flex flex-shrink-0 items-center justify-between p-2 rounded-t-md"
-        ></div>
-        <div class="vld-parent">
-          <loading
-            :active="isLoading"
-            :is-full-page="true"
-            :color="'#2F639D'"
-            :opacity="0.7"
-          ></loading>
-          <!-- Ethiopian -->
-          <ethiopian-license
-            v-if="
-              modalData &&
-              modalData.data &&
-              modalData.data.applicantType &&
-              (finalData.data.applicantType.code == 'ETH' ||
-                finalData.data.applicantType.code == 'ETHABRO')
-            "
-            :modalData="modalData"
-          ></ethiopian-license>
-          <!-- Foreginers -->
-          <foreigner-license
-            v-if="
-              modalData &&
-              modalData.data &&
-              modalData.data.applicantType &&
-              modalData.printType != 'externship' &&
-              modalData.printType != 'temporary' &&
-              modalData.data.applicantType.code == 'FOR'
-            "
-            :modalData="modalData"
-            :qrSrc="qrSrc"
-          ></foreigner-license>
-        </div>
-        <div
-          class="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end border-t border-grey-100 rounded-b-md"
+          class="modal-footer p-2 flex flex-shrink-0 flex-wrap items-center justify-end border-t border-grey-100 rounded-b-md"
         >
           <button
             type="button"
@@ -102,6 +105,7 @@
           <div class="vld-parent">
             <loading
               :active="isLoading"
+              :can-cancel="true"
               :is-full-page="true"
               :color="'#2F639D'"
               :opacity="0.7"
@@ -150,6 +154,8 @@ import { ref, computed } from "vue";
 import { useStore } from "vuex";
 import ethiopianLicense from "./sharedComponents/ethiopianLicense.vue";
 import foreignerLicense from "./sharedComponents/foreignerLicense.vue";
+import externship from "./sharedComponents/externship.vue";
+import temporary from "./sharedComponents/temporary.vue";
 import jsPDF from "jspdf";
 import backgroundImage from "../../../../../assets/Federal_Certificate.jpg";
 import oromiaCertificateBackground from "../../../../../assets/Oromia_Certificate.jpg";
@@ -172,7 +178,13 @@ export default {
     STATIC_CERTIFICATE_URL: () => STATIC_CERTIFICATE_URL,
   },
   props: ["modalData"],
-  components: { Loading, ethiopianLicense, foreignerLicense },
+  components: {
+    Loading,
+    ethiopianLicense,
+    foreignerLicense,
+    externship,
+    temporary,
+  },
   setup(props) {
     const store = useStore();
     const toast = useToast();
@@ -182,7 +194,6 @@ export default {
     let certifiedUser = ref({});
     let certificateDetail = ref({});
     let isLoading = ref(false);
-    let showLoading = ref(false);
     let showActionLoading = ref(false);
     const fullPage = ref(false);
     let isUserCertified = ref(true);
@@ -191,7 +202,6 @@ export default {
     let imageSrc = ref("");
     let today = new Date().toISOString().split("T")[0];
     let retrivalDate = ref("");
-
     const adminRegionId = JSON.parse(localStorage.getItem("allAdminData")).regionId;
 
     const expertLevelCode = JSON.parse(localStorage.getItem("allAdminData")).expertLevel
@@ -215,6 +225,7 @@ export default {
           )
         : props.modalData.newEducations
     );
+    let isForeignApplicant = ref(false);
 
     const updateLicenseGenerated = () => {
       finalData.value.data ? (finalData.value.data.isLicenseGenerated = true) : null;
@@ -223,14 +234,42 @@ export default {
         action: null,
         data: { ...finalData.value.data },
       };
-
-      editApplication(req);
+      let notification = {
+        user_id:
+          finalData.value.data && finalData.value.data.applicant
+            ? finalData.value.data.applicant.id
+            : null,
+        reviewer_id:
+          finalData.value.data && finalData.value.data.licenseReviewer
+            ? finalData.value.data.licenseReviewer.reviewerId
+            : null,
+        new_license_id: finalData.value.data ? finalData.value.data.id : null,
+        message: finalData.value.data
+          ? // eslint-disable-next-line prettier/prettier
+            `Dear applicant your applied new license of number ${
+              finalData.value.data.newLicenseCode
+            } is printed and ready. You can pick up your license on date ${retrivalDate.value.slice(
+              0,
+              10
+            )}.`
+          : "",
+        type: "",
+        status: "new",
+      };
+      isLoading.value = false;
+      store.dispatch("notification/notifyApplicant", notification).then((res) => {
+        if (res && res.status == "Success") {
+          editApplication(req);
+        } else {
+          isLoading.value = false;
+        }
+      });
     };
 
     const editApplication = (req) => {
       delete req.data.educations;
       store
-        .dispatch("reviewer/editRenewal", req)
+        .dispatch("reviewer/editNewLicense", req)
         .then((res) => {
           isLoading.value = false;
           if (res.statusText == "Created") {
@@ -238,12 +277,12 @@ export default {
 
             let smsMessage = req.data
               ? // eslint-disable-next-line prettier/prettier
-                `Dear applicant your applied renewal of license with number ${
-                  req.data.renewalCode
-                } is printed and ready. Visit our office on ${retrivalDate.value.slice(
+                `Dear applicant your applied new license of number ${
+                  req.data.newLicenseCode
+                } is printed and ready. You can pick up your license on date ${retrivalDate.value.slice(
                   0,
                   10
-                )} and please do not forget to bring all required legal documents.Thank you for using eHPL. visit https://hrl.moh.gov.et for more.`
+                )}.Thank you for using eHPL. visit https://hrl.moh.gov.et for more.`
               : "";
             let smsData = {
               recipients: [
@@ -300,7 +339,7 @@ export default {
       const staticUrl = STATIC_CERTIFICATE_URL;
       const userId = props.modalData.profile.id;
       const applicationId = props.modalData.data.id;
-      const applicationType = "Renewal";
+      const applicationType = "NewLicense";
 
       const qrParam = { url: null };
 
@@ -321,8 +360,14 @@ export default {
     const generateRetrival = () => {
       if (retrivalDate.value != "") {
         finalData.value.data.retrivalDate = retrivalDate.value;
-
-        generate();
+        finalData.value.data &&
+        finalData.value.data.applicantType &&
+        finalData.value.printType != "externship" &&
+        finalData.value.printType != "temporary" &&
+        (finalData.value.data.applicantType.code == "ETH" ||
+          finalData.value.data.applicantType.code == "ETHABRO")
+          ? generate()
+          : generateForeigner();
       } else {
         toast.error("Please select retrival date", {
           timeout: 5000,
@@ -333,8 +378,28 @@ export default {
         });
       }
     };
+
     const generateForeigner = async () => {
-      var element = document.getElementById("foreignersPrintedDiv");
+      var data;
+
+      if (finalData.value && finalData.value.printType) {
+        switch (finalData.value.printType) {
+          case "externship":
+            data = document.getElementById("externshipPrintedDiv");
+            break;
+          case "temporary":
+            data = document.getElementById("temporaryPrintedDiv");
+            break;
+          case "foreigners":
+            data = document.getElementById("foreignersPrintedDiv");
+            break;
+
+          default:
+            break;
+        }
+      }
+
+      var element = data;
       var opt = {
         margin: 1,
         filename: "myfile.pdf",
@@ -383,6 +448,7 @@ export default {
         generateForeigner();
         return;
       }
+
       isLoading.value = true;
       certifiedUser.value = props.modalData.profile;
       certificateDetail.value = props.modalData.data;
@@ -396,7 +462,7 @@ export default {
         : {};
       applicationStatus.value = props.modalData.data.applicationStatus.code;
       isLicenseGenerated.value = props.modalData.data.isLicenseGenerated;
-      certificateDetail.value.licenseNumber = certificateDetail.value.renewalCode;
+      certificateDetail.value.licenseNumber = certificateDetail.value.newLicenseCode;
       if (props.modalData.data.certified != true) {
         isUserCertified.value = false;
       }
@@ -616,14 +682,15 @@ export default {
             : "Not Specified"
         }`
       );
-      // License Number for amharic
-      // doc.addFileToVFS("Amiri-Regular.ttf", AmiriRegular);
       doc.addFileToVFS("Tera-Regular-normal.ttf", AmharicFont);
       doc2.addFileToVFS("Tera-Regular-normal.ttf", AmharicFont);
       doc.addFont("Tera-Regular-normal.ttf", "Tera-Regular", "normal");
       doc2.addFont("Tera-Regular-normal.ttf", "Tera-Regular", "normal");
       doc.setFont("Tera-Regular"); // set font
       doc2.setFont("Tera-Regular");
+
+      doc.setFontSize(15);
+      doc2.setFontSize(15);
       //Amharic name part
       doc.text(
         60,
@@ -655,10 +722,6 @@ export default {
             : ""
         }`
       );
-      // doc.addFileToVFS("Amiri-Regular.ttf", AmiriRegular);
-
-      doc.setFontSize(17);
-      doc2.setFontSize(17);
 
       if (changeWidth.value) {
         doc.setFontSize(11);
@@ -699,7 +762,7 @@ export default {
           doc.text(
             xPosition.value,
             professionPossition + i * professionListGap,
-            `${certificateDetail.value.educations.length > 1 ? i + 1 + ". " : "1. "}${
+            `${certificateDetail.value.educations.length > 1 ? i + 1 + ". " : ""}${
               certificateDetail.value.educations[i].prefix
                 ? certificateDetail.value.educations[i].prefix.amharic_name
                 : ""
@@ -721,9 +784,9 @@ export default {
             doc2.text(
               xPosition.value,
               professionPossition + newI * professionListGap,
-              `${certificateDetail.value.educations.length > 1 ? i + 1 + ". " : "1. "}${
+              `${certificateDetail.value.educations.length > 1 ? newI + 1 + ". " : ""}${
                 certificateDetail.value.educations[i].prefix
-                  ? certificateDetail.value.educations[i].prefix.amharic_name
+                  ? certificateDetail.value.educations[i].prefix.amharic_name + " "
                   : ""
               } ${
                 certificateDetail.value.educations[i].professionType &&
@@ -740,11 +803,8 @@ export default {
           }
         }
       }
-
       //End of Amharic part for certificate
-      doc.setFontSize(12);
-      doc2.setFontSize(12);
-      // doc.text(80)
+
       let getAmharicLicensedDate = doc.getTextWidth(
         toEthiopian(
           moment(certificateDetail.value.certifiedDate)._d.toISOString(),
@@ -833,7 +893,7 @@ export default {
           certificateDetail.value.educations.length <= 3
         ) {
           if (
-            certificateDetail.value.renewalReviewer.reviewer.expertLevel.code === "FED"
+            certificateDetail.value.licenseReviewer.reviewer.expertLevel.code === "FED"
           ) {
             defaultBackground = backgroundImage;
             defaultCode = "FED";
@@ -841,7 +901,7 @@ export default {
             defaultProfPos = 125;
             defaultProfGap = 7;
           } else if (
-            certificateDetail.value.renewalReviewer.reviewer.region.code === "ORO"
+            certificateDetail.value.licenseReviewer.reviewer.region.code === "ORO"
           ) {
             defaultBackground = oromiaCertificateBackground;
             defaultCode = "ORO";
@@ -849,7 +909,7 @@ export default {
             defaultProfPos = 133;
             defaultProfGap = 4;
           } else if (
-            certificateDetail.value.renewalReviewer.reviewer.region.code === "AA"
+            certificateDetail.value.licenseReviewer.reviewer.region.code === "AA"
           ) {
             defaultBackground = addisAbabaCertificateBackground;
             defaultCode = "AA";
@@ -857,7 +917,7 @@ export default {
             defaultProfPos = 133;
             defaultProfGap = 4;
           } else if (
-            certificateDetail.value.renewalReviewer.reviewer.region.code === "DD"
+            certificateDetail.value.licenseReviewer.reviewer.region.code === "DD"
           ) {
             defaultBackground = direDawaCertificateBackground;
             defaultCode = "DD";
@@ -865,7 +925,7 @@ export default {
             defaultProfPos = 120;
             defaultProfGap = 4;
           } else if (
-            certificateDetail.value.renewalReviewer.reviewer.region.code === "AFA"
+            certificateDetail.value.licenseReviewer.reviewer.region.code === "AFA"
           ) {
             defaultBackground = afarCertificateBackground;
             defaultCode = "AFA";
@@ -892,12 +952,11 @@ export default {
             };
             store.dispatch("profile/converProfilePicture", path).then((res) => {
               doc.addImage(res.data.data, "JPG", 33, 20, 30, 30);
-              doc.setFontSize(10);
+
               window.open(doc.output("bloburl"));
               updateLicenseGenerated();
             });
           } else {
-            doc.setFontSize(10);
             window.open(doc.output("bloburl"));
             updateLicenseGenerated();
           }
@@ -914,14 +973,14 @@ export default {
         let multipleProfPos = 0;
         let multipleProfGap = 0;
 
-        if (certificateDetail.value.renewalReviewer.reviewer.expertLevel.code === "FED") {
+        if (certificateDetail.value.licenseReviewer.reviewer.expertLevel.code === "FED") {
           multipleBackground = backgroundImage;
           multipleCode = "FED";
           multipleNamePos = 100;
           multipleProfPos = 125;
           multipleProfGap = 7;
         } else if (
-          certificateDetail.value.renewalReviewer.reviewer.region.code === "ORO"
+          certificateDetail.value.licenseReviewer.reviewer.region.code === "ORO"
         ) {
           multipleBackground = oromiaCertificateBackground;
           multipleCode = "ORO";
@@ -929,7 +988,7 @@ export default {
           defaultProfPos = 133;
           defaultProfGap = 4;
         } else if (
-          certificateDetail.value.renewalReviewer.reviewer.region.code === "AA"
+          certificateDetail.value.licenseReviewer.reviewer.region.code === "AA"
         ) {
           multipleBackground = addisAbabaCertificateBackground;
           multipleCode = "AA";
@@ -937,7 +996,7 @@ export default {
           defaultProfPos = 133;
           defaultProfGap = 4;
         } else if (
-          certificateDetail.value.renewalReviewer.reviewer.region.code === "DD"
+          certificateDetail.value.licenseReviewer.reviewer.region.code === "DD"
         ) {
           multipleBackground = direDawaCertificateBackground;
           multipleCode = "DD";
@@ -945,7 +1004,7 @@ export default {
           defaultProfPos = 120;
           defaultProfGap = 4;
         } else if (
-          certificateDetail.value.renewalReviewer.reviewer.region.code === "AFA"
+          certificateDetail.value.licenseReviewer.reviewer.region.code === "AFA"
         ) {
           multipleBackground = afarCertificateBackground;
           multipleCode = "AFA";
@@ -982,6 +1041,7 @@ export default {
             setTimeout(() => {
               window.open(doc2.output("bloburl"), "w2");
             }, 100);
+
             updateLicenseGenerated();
           });
         } else {
@@ -1001,12 +1061,12 @@ export default {
       show,
       downloadPdf,
       certifiedUser,
-      showLoading,
       certificateDetail,
       isUserCertified,
       isUserFound,
       myRegion,
       generate,
+      isForeignApplicant,
       fullPage,
       educations,
       showGenerateModal,
@@ -1015,11 +1075,11 @@ export default {
       showActionLoading,
       applicationStatus,
       isReprint,
+      finalData,
       retrivalDate,
+      qrSrc,
       generateRetrival,
       today,
-      finalData,
-      qrSrc,
     };
   },
 };
