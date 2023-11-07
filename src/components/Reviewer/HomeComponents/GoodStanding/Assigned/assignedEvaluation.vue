@@ -1325,34 +1325,34 @@ export default {
         ],
         message: smsMessage ? smsMessage : "",
       };
-      isLoadingFinalAction.value = true;
-      store
-        .dispatch("reviewer/editGoodStanding", req)
-        .then(() => {
-          isLoadingStart.value = false;
-          showActionLoading.value = false;
+      isLoadingFinalAction.value = false;
+      // store
+      //   .dispatch("reviewer/editGoodStanding", req)
+      //   .then(() => {
+      //     isLoadingStart.value = false;
+      //     showActionLoading.value = false;
 
-          store.dispatch("sms/sendSms", smsData).then(() => {
-            toast.success("Application reviewed Successfully", {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            });
-          });
-          isLoadingFinalAction.value = false;
-          router.push({ name: "GoodStandingApproved" });
-        })
-        .catch(() => {
-          toast.error("Error occured", {
-            timeout: 5000,
-            position: "bottom-center",
-            pauseOnFocusLoss: true,
-            pauseOnHover: true,
-            icon: true,
-          });
-        });
+      //     store.dispatch("sms/sendSms", smsData).then(() => {
+      //       toast.success("Application reviewed Successfully", {
+      //         timeout: 5000,
+      //         position: "bottom-center",
+      //         pauseOnFocusLoss: true,
+      //         pauseOnHover: true,
+      //         icon: true,
+      //       });
+      //     });
+      //     isLoadingFinalAction.value = false;
+      //     router.push({ name: "GoodStandingApproved" });
+      //   })
+      //   .catch(() => {
+      //     toast.error("Error occured", {
+      //       timeout: 5000,
+      //       position: "bottom-center",
+      //       pauseOnFocusLoss: true,
+      //       pauseOnHover: true,
+      //       icon: true,
+      //     });
+      //   });
     };
 
     const submitRemark = () => {

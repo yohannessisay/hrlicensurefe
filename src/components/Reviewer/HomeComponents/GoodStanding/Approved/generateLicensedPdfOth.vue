@@ -30,7 +30,7 @@
 
             <div id="printedDiv" class="grow-0 shrink-0 basis-auto w-full px-8">
               <div class="grid grid-cols-2 mt-32">
-                <div class="flex justify-start mt-1" contenteditable="false">
+                <div class="flex justify-start mt-4" contenteditable="false">
                   <img :src="qrSrc" alt="" style="height: 120px; width: 120px" />
                 </div>
               </div>

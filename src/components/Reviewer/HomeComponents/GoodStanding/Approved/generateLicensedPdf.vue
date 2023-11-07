@@ -1,17 +1,6 @@
 <template>
   <div
-    class="
-      modal
-      fade
-      fixed
-      top-0
-      left-0
-      hidden
-      w-full
-      h-full
-      outline-none
-      overflow-x-hidden overflow-y-auto
-    "
+    class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
     id="generatePdf"
     data-bs-backdrop="static"
     data-bs-keyboard="false"
@@ -20,37 +9,13 @@
     aria-hidden="true"
   >
     <div
-      class="
-        modal-dialog modal-dialog-centered modal-xl
-        relative
-        w-auto
-        pointer-events-none
-      "
+      class="modal-dialog modal-dialog-centered modal-xl relative w-auto pointer-events-none"
     >
       <div
-        class="
-          modal-content
-          border-none
-           
-          relative
-          flex flex-col
-          w-full
-          pointer-events-auto
-          bg-white bg-clip-padding
-          rounded-md
-          outline-none
-          text-current
-        "
+        class="modal-content border-none relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current"
       >
         <div
-          class="
-            modal-header
-            flex flex-shrink-0
-            items-center
-            justify-between
-            p-2
-            rounded-t-md
-          "
+          class="modal-header flex flex-shrink-0 items-center justify-between p-2 rounded-t-md"
         ></div>
 
         <div class="modal-body relative p-4">
@@ -63,17 +28,10 @@
               :opacity="0.7"
             ></loading>
 
-            <div
-              id="printedDiv"
-              class="grow-0 shrink-0 basis-auto w-full px-8 "
-            >
+            <div id="printedDiv" class="grow-0 shrink-0 basis-auto w-full px-8">
               <div class="grid grid-cols-2 mt-32">
-                <div class="flex justify-start mt-1" contenteditable="false">
-                  <img
-                    :src="qrSrc"
-                    alt=""
-                    style="height: 120px;width: 120px;"
-                  />
+                <div class="flex justify-start mt-4" contenteditable="false">
+                  <img :src="qrSrc" alt="" style="height: 120px; width: 120px" />
                 </div>
               </div>
               <div class="mt-2 px-8" contenteditable="true">
@@ -81,14 +39,12 @@
                   To: {{ modalData ? modalData.whomGoodStandingFor : "" }}
                 </h5>
                 <div class="flex justify-center">
-                  <h5 class="text-xl mt-4 mb-8 mainText">
-                    LETTER OF GOOD STANDING
-                  </h5>
+                  <h5 class="text-xl mt-4 mb-8 mainText">LETTER OF GOOD STANDING</h5>
                 </div>
                 <div>
                   <h5 class="text-xl mainText">
-                    This letter of good standing and confirmation of
-                    registration is written upon the request of
+                    This letter of good standing and confirmation of registration is
+                    written upon the request of
                     {{
                       modalData && modalData.applicantTitle
                         ? modalData.applicantTitle.name
@@ -98,18 +54,14 @@
                       (modalData && modalData.profile && modalData.profile.name
                         ? modalData.profile.name
                         : "") +
-                        " " +
-                        (modalData &&
-                        modalData.profile &&
-                        modalData.profile.fatherName
-                          ? modalData.profile.fatherName
-                          : "") +
-                        " " +
-                        (modalData &&
-                        modalData.profile &&
-                        modalData.profile.grandFatherName
-                          ? modalData.profile.grandFatherName
-                          : "")
+                      " " +
+                      (modalData && modalData.profile && modalData.profile.fatherName
+                        ? modalData.profile.fatherName
+                        : "") +
+                      " " +
+                      (modalData && modalData.profile && modalData.profile.grandFatherName
+                        ? modalData.profile.grandFatherName
+                        : "")
                     }}
                   </h5>
 
@@ -123,26 +75,21 @@
                       (modalData && modalData.profile && modalData.profile.name
                         ? modalData.profile.name
                         : "") +
-                        " " +
-                        (modalData &&
-                        modalData.profile &&
-                        modalData.profile.fatherName
-                          ? modalData.profile.fatherName
-                          : "") +
-                        " " +
-                        (modalData &&
-                        modalData.profile &&
-                        modalData.profile.grandFatherName
-                          ? modalData.profile.grandFatherName
-                          : "")
+                      " " +
+                      (modalData && modalData.profile && modalData.profile.fatherName
+                        ? modalData.profile.fatherName
+                        : "") +
+                      " " +
+                      (modalData && modalData.profile && modalData.profile.grandFatherName
+                        ? modalData.profile.grandFatherName
+                        : "")
                     }}
                     has been registered as
                     {{
                       modalData &&
                       modalData.GSProfessionals &&
                       modalData.GSProfessionals.professionalTypes &&
-                      modalData.GSProfessionals.professionalTypes.name ==
-                        "other"
+                      modalData.GSProfessionals.professionalTypes.name == "other"
                         ? modalData.GSProfessionals.otherProfessionType
                         : modalData.GSProfessionals &&
                           modalData.GSProfessionals.professionalTypes
@@ -151,9 +98,9 @@
                     }},on
                     {{
                       modalData
-                        ? moment(
-                            modalData ? modalData.licenseIssuedDate : ""
-                          ).format("MMMM D, YYYY")
+                        ? moment(modalData ? modalData.licenseIssuedDate : "").format(
+                            "MMMM D, YYYY"
+                          )
                         : ""
                     }}
                     by
@@ -161,23 +108,21 @@
                       modalData && modalData.whoIssued
                         ? modalData.whoIssued.name + ", "
                         : ""
-                    }}, which is the responsible organ for registration and
-                    licensing of health professionals, and the registration
-                    number is
-                    {{ modalData ? modalData.licenseRegistrationNumber : "" }}.
-                    From __/__/__ to __/__/__ has been working here in Ethiopia.
+                    }}, which is the responsible organ for registration and licensing of
+                    health professionals, and the registration number is
+                    {{ modalData ? modalData.licenseRegistrationNumber : "" }}. From
+                    __/__/__ to __/__/__ has been working here in Ethiopia.
                   </h5>
 
                   <h5 class="mt-4 text-xl mainText">
                     Since his registration, till
-                    {{ new Date().toISOString().slice(0, 10) }}, he has no any
-                    reported medico legal records and malpractices while he has
-                    practiced his medical profession in Ethiopia.
+                    {{ new Date().toISOString().slice(0, 10) }}, he has no any reported
+                    medico legal records and malpractices while he has practiced his
+                    medical profession in Ethiopia.
                   </h5>
 
-                  <h5 class="text-xl mt-4 mainText ">
-                    Hence we appreciate any assistance, which will be rendered
-                    to ………...
+                  <h5 class="text-xl mt-4 mainText">
+                    Hence we appreciate any assistance, which will be rendered to ………...
                   </h5>
                 </div>
                 <h5 class="text-xl mt-12 mb-48 mainText">With best regards</h5>
@@ -187,34 +132,11 @@
         </div>
 
         <div
-          class="
-            modal-footer
-            flex flex-shrink-0 flex-wrap
-            items-center
-            justify-end
-            border-t border-grey-100
-            rounded-b-md
-          "
+          class="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end border-t border-grey-100 rounded-b-md"
         >
           <button
             type="button"
-            class="
-              inline-block
-              px-6
-              text-white
-              font-medium
-              text-xs
-              bg-primary-700
-              leading-tight
-              uppercase
-              rounded
-              hover:border-primary-600
-               
-              hover:bg-white hover:text-primary-700
-              transition
-              duration-150
-              ease-in-out
-            "
+            class="inline-block px-6 text-white font-medium text-xs bg-primary-700 leading-tight uppercase rounded hover:border-primary-600 hover:bg-white hover:text-primary-700 transition duration-150 ease-in-out"
             @click="printPdf"
           >
             <i class="fa fa-check"></i>
@@ -222,23 +144,7 @@
           </button>
           <button
             type="button"
-            class="
-              inline-block
-              px-6
-              text-white
-              font-medium
-              text-xs
-              bg-primary-700
-              leading-tight
-              uppercase
-              rounded
-              hover:border-primary-600
-               
-              hover:bg-white hover:text-primary-700
-              transition
-              duration-150
-              ease-in-out
-            "
+            class="inline-block px-6 text-white font-medium text-xs bg-primary-700 leading-tight uppercase rounded hover:border-primary-600 hover:bg-white hover:text-primary-700 transition duration-150 ease-in-out"
             data-bs-dismiss="modal"
           >
             <i class="fa fa-times-circle"></i>
@@ -271,11 +177,9 @@ export default {
     const toast = useToast();
     let isLoading = ref(false);
     let myRegion = ref(true);
-    const expertLevelId = JSON.parse(localStorage.getItem("allAdminData"))
-      .expertLevelId;
+    const expertLevelId = JSON.parse(localStorage.getItem("allAdminData")).expertLevelId;
 
-    const adminRegionId = JSON.parse(localStorage.getItem("allAdminData"))
-      .regionId;
+    const adminRegionId = JSON.parse(localStorage.getItem("allAdminData")).regionId;
 
     let show = ref(false);
     let qrSrc = ref("");
@@ -347,12 +251,8 @@ export default {
             .set(opt)
             .from(element)
             .save(
-              license.value &&
-                license.value.profile &&
-                license.value.profile.name
-                ? license.value.profile.name +
-                    " " +
-                    new Date().toISOString().slice(0, 10)
+              license.value && license.value.profile && license.value.profile.name
+                ? license.value.profile.name + " " + new Date().toISOString().slice(0, 10)
                 : ""
             );
 
@@ -431,9 +331,7 @@ export default {
     }
 
     userProfile.value.name =
-      modalData.value && modalData.value.profile
-        ? modalData.value.profile.name
-        : "";
+      modalData.value && modalData.value.profile ? modalData.value.profile.name : "";
     userProfile.value.fatherName =
       modalData.value && modalData.value.profile
         ? modalData.value.profile.fatherName
@@ -443,17 +341,11 @@ export default {
         ? modalData.value.profilegrandFatherName
         : "";
     userProfile.value.gender =
-      modalData.value && modalData.value.profile
-        ? modalData.value.profile.gender
-        : "";
+      modalData.value && modalData.value.profile ? modalData.value.profile.gender : "";
 
-    const apPosition = ref(
-      modalData.value ? modalData.value.applicantPosition : {}
-    );
+    const apPosition = ref(modalData.value ? modalData.value.applicantPosition : {});
     if (apPosition.value) {
-      applicantPosition.value = apPosition.value.name
-        ? apPosition.value.name
-        : "-";
+      applicantPosition.value = apPosition.value.name ? apPosition.value.name : "-";
     }
     getReviewId.value = modalData.value ? modalData.value.reviewerId : "";
     show.value = true;
