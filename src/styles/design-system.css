@@ -88,8 +88,7 @@
   [type="submit"],
   button {
     @apply px-medium text-white blue-box-shadow text-lg cursor-pointer rounded-full transition duration-500;
-    min-width: 80px;
-    min-height: 40px;
+  
     width: fit-content;
     outline: none;
     font-weight: 600;
