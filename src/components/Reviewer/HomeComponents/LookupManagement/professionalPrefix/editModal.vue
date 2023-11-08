@@ -271,7 +271,7 @@
         </div>
         <div
           class="
-            modal-footer
+            modal-footer p-2
             flex
             p-2
             justify-center

@@ -538,7 +538,7 @@
         </div>
         <div
           class="
-            modal-footer
+            modal-footer p-2
             flex flex-shrink-0 flex-wrap
             items-center
             justify-end

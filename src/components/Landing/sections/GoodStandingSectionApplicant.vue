@@ -39,16 +39,17 @@
           v-if="showElement"
         >
           <div class="flex flex-col items-center">
-                      <!-- <h5 class="mt-small text-primary-100 text-center">
+            <!-- <h5 class="mt-small text-primary-100 text-center">
 
               If your application is approved, you are expected to pay a service fee and take your license. Please note that foreigners will pay in dollars and Ethiopians will pay in birr. 
             </h5> -->
             <!-- <hr class="yellow-gradient glow separator border-none" /> -->
           </div>
-                       <h5 class="mt-small text-main-400 text-center">
-
-              If your application is approved, you are expected to pay a service fee and take your license. Please note that foreigners will pay in dollars and Ethiopians will pay in birr. 
-            </h5>
+          <h5 class="mt-small text-2xl text-main-400 text-center">
+            If your application is approved, you are expected to pay a service fee and
+            take your license. Please note that foreigners will pay in dollars and
+            Ethiopians will pay in birr.
+          </h5>
         </section>
       </transition>
     </section>
@@ -61,9 +62,9 @@ export default {
     const { showElement, wrapperRef } = useIntersectionObserver();
     return {
       showElement,
-      wrapperRef
+      wrapperRef,
     };
-  }
+  },
 };
 </script>
 <style lang="postcss" scoped>

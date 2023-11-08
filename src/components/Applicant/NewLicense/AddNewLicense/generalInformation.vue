@@ -166,7 +166,7 @@
       </div>
       <button
         v-show="Object.keys(localData).length != 0"
-        class="inline-block px-6 bg-main-400 text-white max-w-3xl font-medium text-xs leading-tight uppercase rounded hover:text-main-500 hover:border-main-500 focus:bg-blue-700 focus: focus:outline-none focus:ring-0 active:bg-blue-800 active: transition duration-150 ease-in-out"
+        class="inline-block px-4 bg-main-400 text-white max-w-3xl font-medium text-xs leading-tight uppercase rounded hover:text-main-500 hover:border-main-500 focus:bg-blue-700 focus: focus:outline-none focus:ring-0 active:bg-blue-800 active: transition duration-150 ease-in-out"
         @click="clearLocalData()"
       >
         <i class="fa fa-close"></i>
@@ -415,7 +415,7 @@
         <div class="text-right">
           <button
             type="button"
-            class="px-6 mr-2 mb-2 py-2.5 bg-white text-main-400 font-medium border text-xs leading-tight uppercase rounded hover:text-white hover:border-main-400 hover:bg-main-400 focus:bg-blue-700 focus: focus:outline-none focus:ring-0 active:bg-blue-800 active: transition duration-150 ease-in-out"
+            class="px-4 mr-2 mb-2 bg-white text-main-400 font-medium border text-xs leading-tight uppercase rounded hover:text-white hover:border-main-400 hover:bg-main-400 focus:bg-blue-700 focus: focus:outline-none focus:ring-0 active:bg-blue-800 active: transition duration-150 ease-in-out"
             @click="addMultiple()"
           >
             <i class="fa fa-plus"></i>
@@ -474,7 +474,7 @@
         </h2>
 
         <div class="flex flex-col">
-          <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+          <div class="py-2 inline-block min-w-full sm:px-4 lg:px-8">
             <div class="overflow-x-scroll">
               <div
                 class="flex justify-center"
@@ -596,8 +596,8 @@
           <button
             :class="
               generalInfo.multipleDepartment.length > 0
-                ? 'px-6 mr-2 mb-2 py-2.5 bg-white text-main-400  border text-base leading-tight font-bold   rounded   hover:text-white hover:border-main-400 hover:bg-main-400 transition duration-150   ease-in-out'
-                : 'px-6 mr-2 mb-2 py-2.5 bg-white text-main-400 font-bold border text-base leading-tight   rounded   hover:text-white hover:border-main-400 hover:bg-main-400 transition duration-150   ease-in-out  disabled'
+                ? 'px-4 mr-2 mb-2 py-2.5 bg-white text-main-400  border text-base leading-tight font-bold   rounded   hover:text-white hover:border-main-400 hover:bg-main-400 transition duration-150   ease-in-out'
+                : 'px-4 mr-2 mb-2 py-2.5 bg-white text-main-400 font-bold border text-base leading-tight   rounded   hover:text-white hover:border-main-400 hover:bg-main-400 transition duration-150   ease-in-out  disabled'
             "
             type="submit"
             @click="saveDraft()"
@@ -607,8 +607,8 @@
           <button
             :class="
               generalInfo.multipleDepartment.length > 0
-                ? 'px-6 mr-2 mb-2 py-2.5 bg-main-400 text-white font-medium border text-base leading-tight  rounded   hover:text-main-400 hover:border-main-400 hover:bg-white transition duration-150   ease-in-out'
-                : 'px-6 mr-2 mb-2 py-2.5 bg-main-400 text-white font-medium border text-base leading-tight  rounded   hover:text-main-400 hover:border-main-400 hover:bg-white transition duration-150   ease-in-out  disabled'
+                ? 'px-4  mr-2 mb-2 pb-4 bg-main-400 text-white font-medium border text-base leading-tight  rounded   hover:text-main-400 hover:border-main-400 hover:bg-white transition duration-150   ease-in-out'
+                : 'px-4 mr-2 mb-2 pb-4 bg-main-400 text-white font-medium border text-base leading-tight  rounded   hover:text-main-400 hover:border-main-400 hover:bg-white transition duration-150   ease-in-out  disabled'
             "
             type="submit"
             @click="apply()"
