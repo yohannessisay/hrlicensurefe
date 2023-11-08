@@ -34,11 +34,6 @@
               v-model:value="model"
             ></froala>
             <div id="printedDiv" class="grow-0 shrink-0 basis-auto w-full px-8">
-              <div class="grid grid-cols-2 mt-32">
-                <div class="flex justify-start mt-1" contenteditable="false">
-                  <img :src="qrSrc" alt="" style="height: 120px; width: 120px" />
-                </div>
-              </div>
               <div :v-html="model"></div>
             </div>
           </div>
@@ -75,7 +70,6 @@ import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 import STATIC_CERTIFICATE_URL from "../../../../../sharedComponents/constants/message.js";
 import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
-import html2pdf from "html2pdf.js";
 
 export default {
   props: ["modalDataGenerate"],
@@ -132,8 +126,11 @@ export default {
     let applicationType = ref("");
     let getReviewId = ref(0);
     let modalData = computed(() => props.modalDataGenerate);
-    let model = computed(
-      () => `
+    let tempModel = computed(
+      () => `<br> 
+      <div class="grid grid-cols-2 mt-32"><div class="flex justify-start mt-1" contenteditable="false"> <img src="${
+        qrSrc.value
+      }" alt="" style="height: 120px; width: 120px" /></div></div>
    <h5   style='box-sizing: border-box; border-width: 0px; border-style: solid; border-color: currentcolor; margin: 2rem 0px 0px; padding: 0px; font-family: "Times New Roman", sans-serif !important; font-weight: 700; font-size: 20px; letter-spacing: 0.3px; color: rgb(0, 0, 0); font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;' id="isPasted">To:${
      modalData.value ? modalData.value.whomGoodStandingFor : ""
    }</h5><div   style="box-sizing: border-box; border-width: 0px; border-style: solid; border-color: currentcolor; margin: 0px; padding: 0px; font-family: Dosis-Bold, sans-serif; font-weight: 800; font-size: 16px; letter-spacing: 0.3px; display: flex; justify-content: center; color: rgb(0, 0, 0); font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;"><h5   style='box-sizing: border-box; border-width: 0px; border-style: solid; border-color: currentcolor; margin: 1rem 0px 2rem; padding: 0px; font-family: "Times New Roman", sans-serif !important; font-weight: 700; font-size: 20px; letter-spacing: 0.3px;'>LETTER OF GOOD STANDING</h5></div><div   style="box-sizing: border-box; border-width: 0px; border-style: solid; border-color: currentcolor; margin: 0px; padding: 0px; font-family: Dosis-Bold, sans-serif; font-weight: 800; font-size: 16px; letter-spacing: 0.3px; color: rgb(0, 0, 0); font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;"><h5   style='box-sizing: border-box; border-width: 0px; border-style: solid; border-color: currentcolor; margin: 0px; padding: 0px; font-family: "Times New Roman", sans-serif !important; font-weight: 700; font-size: 20px; letter-spacing: 0.3px;'>This letter of good standing and confirmation of registration is written upon the request of  ${
@@ -154,7 +151,7 @@ export default {
         modalData.value.profile.grandFatherName
           ? modalData.value.profile.grandFatherName
           : ""
-      } </h5><h5   style='box-sizing: border-box; border-width: 0px; border-style: solid; border-color: currentcolor; margin: 0.75rem 0px 0px; padding: 0px; font-family: "Times New Roman", sans-serif !important; font-weight: 700; font-size: 20px; letter-spacing: 0.3px;'>ATO. daro cala daraje has been registered as${
+      } </h5><h5   style='box-sizing: border-box; border-width: 0px; border-style: solid; border-color: currentcolor; margin: 0.75rem 0px 0px; padding: 0px; font-family: "Times New Roman", sans-serif !important; font-weight: 700; font-size: 20px; letter-spacing: 0.3px;'>ATO. daro cala daraje has been registered as a ${
         modalData.value &&
         modalData.value.GSProfessionals &&
         modalData.value.GSProfessionals.professionalTypes &&
@@ -164,7 +161,7 @@ export default {
             modalData.value.GSProfessionals.professionalTypes
           ? modalData.value.GSProfessionals.professionalTypes.name
           : ""
-      } ,on ${
+      }, on ${
         modalData.value
           ? moment(modalData.value ? modalData.value.licenseIssuedDate : "").format(
               "MMMM D, YYYY"
@@ -174,90 +171,66 @@ export default {
         modalData.value && modalData.value.whoIssued
           ? modalData.value.whoIssued.name + ", "
           : ""
-      }, , which is the responsible organ for registration and licensing of health professionals, and the registration number is ${
+      } which is the responsible organ for the registration and licensing of health professionals, and the registration number is ${
         modalData.value ? modalData.value.licenseRegistrationNumber : ""
       }. From __/__/__ to __/__/__ has been working here in Ethiopia.</h5><h5   style='box-sizing: border-box; border-width: 0px; border-style: solid; border-color: currentcolor; margin: 1rem 0px 0px; padding: 0px; font-family: "Times New Roman", sans-serif !important; font-weight: 700; font-size: 20px; letter-spacing: 0.3px;'>Since his registration, till ${new Date()
         .toISOString()
         .slice(
           0,
           10
-        )}, he has no any reported medico legal records and malpractices while he has practiced his medical profession in Ethiopia.</h5><h5  style='box-sizing: border-box; border-width: 0px; border-style: solid; border-color: currentcolor; margin: 1rem 0px 0px; padding: 0px; font-family: "Times New Roman", sans-serif !important; font-weight: 700; font-size: 20px; letter-spacing: 0.3px;'>Hence we appreciate any assistance, which will be rendered to &hellip;&hellip;&hellip;...</h5></div><h5   style='box-sizing: border-box; border-width: 0px; border-style: solid; border-color: currentcolor; margin: 3rem 0px 12rem; padding: 0px; font-family: "Times New Roman", sans-serif !important; font-weight: 700; font-size: 20px; letter-spacing: 0.3px; color: rgb(0, 0, 0); font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;'>With best regards</h5>`
+        )}, he has no reported medico-legal records and malpractices while he has practiced his medical profession in Ethiopia.</h5><h5  style='box-sizing: border-box; border-width: 0px; border-style: solid; border-color: currentcolor; margin: 1rem 0px 0px; padding: 0px; font-family: "Times New Roman", sans-serif !important; font-weight: 700; font-size: 20px; letter-spacing: 0.3px;'>Hence we appreciate any assistance, that will be rendered to  ${
+        modalData.value && modalData.value.profile && modalData.value.profile.name
+          ? modalData.value.profile.name
+          : ""
+      } ${
+        modalData.value && modalData.value.profile && modalData.value.profile.fatherName
+          ? modalData.value.profile.fatherName
+          : ""
+      } ${
+        modalData.value &&
+        modalData.value.profile &&
+        modalData.value.profile.grandFatherName
+          ? modalData.value.profile.grandFatherName
+          : ""
+      } </h5></div><h5   style='box-sizing: border-box; border-width: 0px; border-style: solid; border-color: currentcolor; margin: 3rem 0px 12rem; padding: 0px; font-family: "Times New Roman", sans-serif !important; font-weight: 700; font-size: 20px; letter-spacing: 0.3px; color: rgb(0, 0, 0); font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;'>With best regards</h5>`
     );
+    let model = ref(tempModel);
+    const printPdf = async () => {
+      if (license.value.isReprint == false) {
+        license.value.isReprint = true;
+        license.value.isLicenseGenerated = true;
+        let req = {
+          data: { ...license.value, isLicenseGenerated: true },
+        };
 
-    const printPdf = () => {
-      var element = document.getElementById("printedDiv");
-      var opt = {
-        margin: 1,
-        filename: "myfile.pdf",
-        image: { type: "jpeg", quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { orientation: "p", unit: "mm", format: "a4" },
-      };
-
-      let staticUrl = STATIC_CERTIFICATE_URL;
-      let userId = modalData.value.profile.id;
-      let applicationId = modalData.value.id;
-      let applicationType = "GoodStanding";
-
-      const qrParam = { url: null };
-      console.log(model.value);
-      // qrParam.url =
-      //   staticUrl + "/" + applicationType + "/" + userId + "/" + applicationId;
-      // store
-      //   .dispatch("reviewer/getQrCode", qrParam)
-      //   .then((res) => {
-      //     qrSrc.value = res.data.data;
-      //   })
-      //   .finally(() => {
-      //     html2pdf()
-      //       .set(opt)
-      //       .from(element)
-      //       .save(
-      //         license.value && license.value.profile && license.value.profile.name
-      //           ? license.value.profile.name + " " + new Date().toISOString().slice(0, 10)
-      //           : ""
-      //       );
-
-      //     license.value.isReprint = true;
-      //     license.value.isLicenseGenerated = true;
-
-      //     let req = {
-      //       data: { ...license.value, isLicenseGenerated: true },
-      //     };
-      //     store
-      //       .dispatch("reviewer/editGoodStanding", req)
-      //       .then((res) => {
-      //         if (res.statusText == "Created") {
-      //           toast.success("Done", {
-      //             timeout: 5000,
-      //             position: "bottom-center",
-      //             pauseOnFocusLoss: true,
-      //             pauseOnHover: true,
-      //             icon: true,
-      //           });
-      //           isLoading.value = false;
-      //           setTimeout(() => {
-      //             location.reload();
-      //           }, 1000);
-      //         } else {
-      //           toast.error(res, {
-      //             timeout: 5000,
-      //             position: "bottom-center",
-      //             pauseOnFocusLoss: true,
-      //             pauseOnHover: true,
-      //             icon: true,
-      //           });
-      //           isLoading.value = false;
-      //         }
-      //       })
-      //       .catch((err) => {
-      //         console.log(err);
-      //         isLoading.value = false;
-      //       });
-      //   })
-      //   .catch((err) => {
-      //     console.log(err);
-      //   });
+        store
+          .dispatch("reviewer/editGoodStanding", req)
+          .then((res) => {
+            if (res.statusText == "Created") {
+              toast.success("Letter updated successfully", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
+              isLoading.value = false;
+            } else {
+              toast.error(res, {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
+              isLoading.value = false;
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+            isLoading.value = false;
+          });
+      }
     };
 
     if (
@@ -335,7 +308,6 @@ export default {
         "indent",
         "quote",
         "-",
-        "insertFile",
         "insertTable",
         "|",
         "emoticons",
@@ -354,7 +326,29 @@ export default {
         "markdown",
       ],
       events: {
-        initialized: function () {},
+        initialized: async function () {
+          const printButton = document.getElementById("print-1");
+          if (printButton) {
+            printButton.addEventListener("click", function (event) {
+              event.preventDefault();
+              printPdf();
+            });
+          }
+
+          let staticUrl = STATIC_CERTIFICATE_URL;
+          let userId =
+            modalData.value && modalData.value.profile
+              ? modalData.value.profile.id
+              : null;
+          let applicationId = modalData.value ? modalData.value.id : null;
+          let applicationType = "GoodStanding";
+          const qrParam = { url: null };
+          qrParam.url =
+            staticUrl + "/" + applicationType + "/" + userId + "/" + applicationId;
+          await store.dispatch("reviewer/getQrCode", qrParam).then((res) => {
+            qrSrc.value = res.data.data;
+          });
+        },
       },
     });
 

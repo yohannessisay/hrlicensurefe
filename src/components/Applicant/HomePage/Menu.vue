@@ -1,15 +1,14 @@
 <template>
-  <div class="main " id="main">
+  <div class="main" id="main">
     <side-nav></side-nav>
     <div class="content" id="mainContent">
       <top-nav :userInfo="userInfo"></top-nav>
       <div class="mt-8 ml-8 mr-8">
-        <nav class="bg-grey-100 p-4 rounded-md w-full   mt-24">
+        <nav class="bg-grey-100 p-4 rounded-md w-full mt-24">
           <ol class="list-reset flex">
             <li>
               <a href="#" class="text-main-400 text-xl hover:text-main-100"
-                >Welcome Back,
-                {{ userInfo.fullName ? userInfo.fullName : "" }}</a
+                >Welcome Back, {{ userInfo.fullName ? userInfo.fullName : "" }}</a
               >
             </li>
             <li><span class="text-gray-500 mx-2"></span></li>
@@ -23,34 +22,13 @@
           <div class="flex flex-col md:flex-row justify-center flex-wrap gap-2">
             <div class="mr-12 mb-8 overview-boxes rounded-xl">
               <div
-                class="
-                  bg-main-400
-                  hover:bg-white
-                   
-                  box
-                  w-full
-                  rounded-lg
-                  transition
-                  duration-500
-                  transform
-                  hover:scale-110
-                  cursor-pointer
-                  cart
-                "
+                class="bg-main-400 hover:bg-white box w-full rounded-lg transition duration-500 transform hover:scale-110 cursor-pointer cart"
                 data-bs-toggle="modal"
                 data-bs-target="#newLicenseDetail"
                 style="height: 200px; width: 300px"
               >
                 <p
-                  class="
-                    py-6
-                    px-6
-                    text-lg
-                    tracking-wide
-                    text-center
-                    flex flex-row
-                    justify-center
-                  "
+                  class="py-6 px-4 text-lg tracking-wide text-center flex flex-row justify-center"
                 >
                   <img
                     src="../../../assets/applicant/newLicense.png"
@@ -67,32 +45,13 @@
 
             <div class="mr-12 mb-8 overview-boxes">
               <div
-                class="
-                  bg-main-400
-                   
-                  box
-                  rounded-2xl
-                  hover:shadow-4xl
-                  transition
-                  duration-500
-                  transform
-                  hover:scale-110
-                  cursor-pointer
-                "
+                class="bg-main-400 box rounded-2xl hover:shadow-4xl transition duration-500 transform hover:scale-110 cursor-pointer"
                 data-bs-toggle="modal"
                 data-bs-target="#renewalDetail"
                 style="height: 200px; width: 300px"
               >
                 <p
-                  class="
-                    py-6
-                    px-6
-                    text-lg
-                    tracking-wide
-                    text-center
-                    flex flex-row
-                    justify-center
-                  "
+                  class="py-6 px-4 text-lg tracking-wide text-center flex flex-row justify-center"
                 >
                   <img
                     src="../../../assets/applicant/renewal.png"
@@ -109,32 +68,13 @@
 
             <div class="mr-12 mb-8 overview-boxes">
               <div
-                class="
-                  bg-white
-                   
-                  box
-                  rounded-2xl
-                  hover:shadow-4xl
-                  transition
-                  duration-500
-                  transform
-                  hover:scale-110
-                  cursor-pointer
-                "
+                class="bg-white box rounded-2xl hover:shadow-4xl transition duration-500 transform hover:scale-110 cursor-pointer"
                 data-bs-toggle="modal"
                 data-bs-target="#goodStandingDetail"
                 style="height: 200px; width: 300px"
               >
                 <p
-                  class="
-                    py-6
-                    px-6
-                    text-lg
-                    tracking-wide
-                    text-center
-                    flex flex-row
-                    justify-center
-                  "
+                  class="py-6 px-4 text-lg tracking-wide text-center flex flex-row justify-center"
                 >
                   <img
                     src="../../../assets/applicant/goodStanding.png"
@@ -157,18 +97,7 @@
   <!-- Modal Section -->
   <!-- New License -->
   <div
-    class="
-      modal
-      fade
-      fixed
-      top-0
-      left-0
-      hidden
-      w-full
-      h-full
-      outline-none
-      overflow-x-hidden overflow-y-auto
-    "
+    class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
     id="newLicenseDetail"
     tabindex="-1"
     aria-labelledby="newLicenseLabel"
@@ -184,50 +113,16 @@
         "
       >
         <div
-          class="
-            modal-header
-            flex flex-shrink-0
-            items-center
-            justify-between
-            p-4
-            border-b border-grey-100
-            rounded-t-md
-          "
+          class="modal-header flex flex-shrink-0 items-center justify-between p-4 border-b border-grey-100 rounded-t-md"
         >
           <h1
-            class="
-                    text-2xl
-                    md:text-2xl
-                    lg:text-2xl
-                    mdlg:text-2xl
-                    font-medium
-                    text-main-400
-                    mb-4
-                    sm:text-base
-                    md:mb-6
-                  "
+            class="text-2xl md:text-2xl lg:text-2xl mdlg:text-2xl font-medium text-main-400 mb-4 sm:text-base md:mb-6"
           >
             Required Documents for New License Application
           </h1>
           <button
             type="button"
-            class="
-              inline-block
-              px-6
-              py-2.5
-              bg-main-400
-              text-white
-              font-medium
-              text-lg
-              leading-tight
-              uppercase
-              rounded
-               
-              hover:bg-white hover:text-main-400
-              transition
-              duration-150
-              ease-in-out
-            "
+            class="inline-block px-4 py-2.5 bg-main-400 text-white font-medium text-lg leading-tight uppercase rounded hover:bg-white hover:text-main-400 transition duration-150 ease-in-out"
             data-bs-dismiss="modal"
             aria-label="Close"
           >
@@ -237,16 +132,14 @@
         <div class="modal-body relative p-4">
           <div
             :class="
-              isDarkMode
-                ? 'bg-primaryDark rounded-lg p-4  '
-                : 'bg-white rounded-lg  '
+              isDarkMode ? 'bg-primaryDark rounded-lg p-4  ' : 'bg-white rounded-lg  '
             "
           >
             <div class="container mx-auto px-4">
               <div class="flex justify-center">
                 <h2 class="text-xl text-main-400">
-                  ** Focal persons should use the email address of the
-                  professional they are applying on behalf of
+                  ** Focal persons should use the email address of the professional they
+                  are applying on behalf of
                 </h2>
               </div>
               <div class="lg:flex lg:-mx-4 mt-6 md:mt-12">
@@ -281,9 +174,7 @@
                         >
                       </div>
                       <small
-                        :class="
-                          isDarkMode ? 'text-white ml-2' : 'text-main-400 ml-2'
-                        "
+                        :class="isDarkMode ? 'text-white ml-2' : 'text-main-400 ml-2'"
                         >(hover over lists to see details)</small
                       >
                     </div>
@@ -517,14 +408,7 @@
                       <div class="mt-6 py-4">
                         <a href="/Applicant/NewLicense">
                           <button
-                            class="
-                              text-xl text-white
-                              py-2
-                              bg-main-400
-                              hover:text-main-400 hover:border hover:bg-white
-                              px-6
-                              rounded-sm
-                            "
+                            class="font-medium leading-tight rounded-md hover:border-main-400 focus:bg-blue-700 focus: focus:outline-none focus:ring-0 active:bg-blue-800 active: transition duration-150 ease-in-out text-xl text-white pt-2 pb-4 bg-main-400 hover:text-main-400 hover:border hover:bg-white px-4"
                             @click="setApplicantType('Ethiopian')"
                           >
                             Get Started
@@ -565,9 +449,7 @@
                         >
                       </div>
                       <small
-                        :class="
-                          isDarkMode ? 'text-white ml-2' : 'text-main-400 ml-2'
-                        "
+                        :class="isDarkMode ? 'text-white ml-2' : 'text-main-400 ml-2'"
                         >(hover over lists to see details)</small
                       >
                     </div>
@@ -681,8 +563,7 @@
                                 : 'fa fa-arrow-right-long'
                             "
                           ></i>
-                          Authenticated Professional License from Country of
-                          Origin
+                          Authenticated Professional License from Country of Origin
                         </li>
 
                         <li
@@ -726,14 +607,7 @@
                       <div class="mt-6 py-4">
                         <a href="/Applicant/NewLicense">
                           <button
-                            class="
-                              text-xl text-white
-                              py-2
-                              bg-main-400
-                              hover:text-main-400 hover:border hover:bg-white
-                              px-6
-                              rounded-sm
-                            "
+                            class="text-xl text-white py-2 bg-main-400 hover:text-main-400 hover:border hover:bg-white px-4 rounded-sm"
                             @click="setApplicantType('Foreign')"
                           >
                             Get Started
@@ -775,9 +649,7 @@
                         >
                       </div>
                       <small
-                        :class="
-                          isDarkMode ? 'text-white ml-2' : 'text-main-400 ml-2'
-                        "
+                        :class="isDarkMode ? 'text-white ml-2' : 'text-main-400 ml-2'"
                         >(hover over lists to see details)</small
                       >
                     </div>
@@ -856,8 +728,7 @@
                                 : 'fa fa-arrow-right-long'
                             "
                           ></i>
-                          Authenticated Professional License from Country of
-                          Origin
+                          Authenticated Professional License from Country of Origin
                         </li>
 
                         <li
@@ -919,14 +790,7 @@
                       <div class="mt-6 py-4">
                         <a href="/Applicant/NewLicense">
                           <button
-                            class="
-                              text-xl text-white
-                              py-2
-                              bg-main-400
-                              hover:text-main-400 hover:border hover:bg-white
-                              px-6
-                              rounded-sm
-                            "
+                            class="text-xl text-white py-2 bg-main-400 hover:text-main-400 hover:border hover:bg-white px-4 rounded-sm"
                             @click="setApplicantType('EthiopianFromAbroad')"
                           >
                             Get Started
@@ -945,18 +809,7 @@
   </div>
   <!-- Renewal -->
   <div
-    class="
-      modal
-      fade
-      fixed
-      top-0
-      left-0
-      hidden
-      w-full
-      h-full
-      outline-none
-      overflow-x-hidden overflow-y-auto
-    "
+    class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
     id="renewalDetail"
     tabindex="-1"
     aria-labelledby="renewalLabel"
@@ -972,51 +825,17 @@
         "
       >
         <div
-          class="
-            modal-header
-            flex flex-shrink-0
-            items-center
-            justify-between
-            p-4
-            border-b border-grey-100
-            rounded-t-md
-          "
+          class="modal-header flex flex-shrink-0 items-center justify-between p-4 border-b border-grey-100 rounded-t-md"
         >
           <h2
-            class="
-                    text-2xl
-                    md:text-2xl
-                    lg:text-2xl
-                    mdlg:text-2xl
-                    font-medium
-                    text-main-400
-                    mb-4
-                    sm:text-base
-                    md:mb-6
-                  "
+            class="text-2xl md:text-2xl lg:text-2xl mdlg:text-2xl font-medium text-main-400 mb-4 sm:text-base md:mb-6"
           >
             Document specification for license renewal
           </h2>
 
           <button
             type="button"
-            class="
-              inline-block
-              px-6
-              py-2.5
-              bg-main-400
-              text-white
-              font-medium
-              text-lg
-              leading-tight
-              uppercase
-              rounded
-               
-              hover:bg-white hover:text-main-400
-              transition
-              duration-150
-              ease-in-out
-            "
+            class="inline-block px-4 py-2.5 bg-main-400 text-white font-medium text-lg leading-tight uppercase rounded hover:bg-white hover:text-main-400 transition duration-150 ease-in-out"
             data-bs-dismiss="modal"
             aria-label="Close"
           >
@@ -1034,8 +853,8 @@
             <div class="container mx-auto px-4">
               <div class="flex justify-center">
                 <h2 class="text-xl text-main-400">
-                  ** Focal persons should use the email address of the
-                  professional they are applying on behalf of
+                  ** Focal persons should use the email address of the professional they
+                  are applying on behalf of
                 </h2>
               </div>
 
@@ -1071,9 +890,7 @@
                         >
                       </div>
                       <small
-                        :class="
-                          isDarkMode ? 'text-white ml-2' : 'text-main-400 ml-2'
-                        "
+                        :class="isDarkMode ? 'text-white ml-2' : 'text-main-400 ml-2'"
                         >(hover over lists to see details)</small
                       >
                     </div>
@@ -1177,14 +994,7 @@
                       <div class="mt-6 py-4">
                         <a href="/Applicant/Renewal">
                           <button
-                            class="
-                              text-xl text-white
-                              py-2
-                              bg-main-400
-                              hover:text-main-400 hover:border hover:bg-white
-                              px-6
-                              rounded-sm
-                            "
+                            class="text-xl text-white py-2 bg-main-400 hover:text-main-400 hover:border hover:bg-white px-4 rounded-sm"
                             @click="setApplicantType('Ethiopian')"
                           >
                             Get Started
@@ -1226,9 +1036,7 @@
                         >
                       </div>
                       <small
-                        :class="
-                          isDarkMode ? 'text-white ml-2' : 'text-main-400 ml-2'
-                        "
+                        :class="isDarkMode ? 'text-white ml-2' : 'text-main-400 ml-2'"
                         >(hover over lists to see details)</small
                       >
                     </div>
@@ -1313,14 +1121,7 @@
                       <div class="mt-6 py-4">
                         <a href="/Applicant/Renewal">
                           <button
-                            class="
-                              text-xl text-white
-                              py-2
-                              bg-main-400
-                              hover:text-main-400 hover:border hover:bg-white
-                              px-6
-                              rounded-sm
-                            "
+                            class="text-xl text-white py-2 bg-main-400 hover:text-main-400 hover:border hover:bg-white px-4 rounded-sm"
                             @click="setApplicantType('EthiopianFromAbroad')"
                           >
                             Get Started
@@ -1362,9 +1163,7 @@
                         >
                       </div>
                       <small
-                        :class="
-                          isDarkMode ? 'text-white ml-2' : 'text-main-400 ml-2'
-                        "
+                        :class="isDarkMode ? 'text-white ml-2' : 'text-main-400 ml-2'"
                         >(hover over lists to see details)</small
                       >
                     </div>
@@ -1449,14 +1248,7 @@
                       <div class="mt-6 py-4">
                         <a href="/Applicant/Renewal">
                           <button
-                            class="
-                              text-xl text-white
-                              py-2
-                              bg-main-400
-                              hover:text-main-400 hover:border hover:bg-white
-                              px-6
-                              rounded-sm
-                            "
+                            class="text-xl text-white py-2 bg-main-400 hover:text-main-400 hover:border hover:bg-white px-4 rounded-sm"
                             @click="setApplicantType('Foreign')"
                           >
                             Get Started
@@ -1476,18 +1268,7 @@
 
   <!-- Good Standing -->
   <div
-    class="
-      modal
-      fade
-      fixed
-      top-0
-      left-0
-      hidden
-      w-full
-      h-full
-      outline-none
-      overflow-x-hidden overflow-y-auto
-    "
+    class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
     id="goodStandingDetail"
     tabindex="-1"
     aria-labelledby="goodStandingDetailLabel"
@@ -1503,38 +1284,14 @@
         "
       >
         <div
-          class="
-            modal-header
-            flex flex-shrink-0
-            items-center
-            justify-between
-            p-4
-            border-b border-grey-200
-            rounded-t-md
-          "
+          class="modal-header flex flex-shrink-0 items-center justify-between p-4 border-b border-grey-200 rounded-t-md"
         >
           <h2 class="text-xl font-bold leading-normal text-main-400">
             Required Documents for Goodstanding letter
           </h2>
           <button
             type="button"
-            class="
-              inline-block
-              px-6
-              py-2.5
-              bg-main-400
-              text-white
-              font-medium
-              text-lg
-              leading-tight
-              uppercase
-              rounded
-               
-              hover:bg-white hover:text-main-400
-              transition
-              duration-150
-              ease-in-out
-            "
+            class="inline-block px-4 py-2.5 bg-main-400 text-white font-medium text-lg leading-tight uppercase rounded hover:bg-white hover:text-main-400 transition duration-150 ease-in-out"
             data-bs-dismiss="modal"
             aria-label="Close"
           >
@@ -1552,20 +1309,13 @@
             <div class="container mx-auto px-4">
               <div class="max-w-3xl mx-auto text-center">
                 <h1
-                  class="
-                    text-3xl
-                    md:text-4xl
-                    font-medium
-                    text-main-400
-                    mb-4
-                    md:mb-6
-                  "
+                  class="text-3xl md:text-4xl font-medium text-main-400 mb-4 md:mb-6"
                 ></h1>
               </div>
               <div class="flex justify-center">
                 <h2 class="text-xl text-main-400">
-                  ** Focal persons should use the email address of the
-                  professional they are applying on behalf of
+                  ** Focal persons should use the email address of the professional they
+                  are applying on behalf of
                 </h2>
               </div>
 
@@ -1590,13 +1340,7 @@
                       </h4>
                     </div>
                     <div
-                      class="
-                        pricing-amount
-                        bg-indigo-100
-                        p-6
-                        transition-colors
-                        duration-300
-                      "
+                      class="pricing-amount bg-indigo-100 p-6 transition-colors duration-300"
                     >
                       <div>
                         <span
@@ -1609,9 +1353,7 @@
                         >
                       </div>
                       <small
-                        :class="
-                          isDarkMode ? 'text-white ml-2' : 'text-main-400 ml-2'
-                        "
+                        :class="isDarkMode ? 'text-white ml-2' : 'text-main-400 ml-2'"
                         >(hover over lists to see details)</small
                       >
                     </div>
@@ -1653,19 +1395,10 @@
                         Work Experiance
                       </li>
                     </ul>
-                    <div
-                      class="grid lg:grid-cols-3 sm:grid-cols-1 md:grid-cols-1 p-2"
-                    >
+                    <div class="grid lg:grid-cols-3 sm:grid-cols-1 md:grid-cols-1 p-2">
                       <a href="/Applicant/GoodStanding">
                         <button
-                          class="
-                              text-xl text-white
-                              py-2
-                              bg-main-400
-                              hover:text-main-400 hover:border hover:bg-white
-                              px-6
-                              rounded-sm
-                            "
+                          class="text-xl text-white py-2 bg-main-400 hover:text-main-400 hover:border hover:bg-white px-4 rounded-sm"
                           @click="setApplicantType('Ethiopian')"
                         >
                           Ethiopian
@@ -1673,14 +1406,7 @@
                       </a>
                       <a href="/Applicant/GoodStanding">
                         <button
-                          class="
-                              text-base text-white
-                              py-3
-                              bg-main-400
-                              hover:text-main-400 hover:border hover:bg-white
-                              px-6
-                              rounded-sm
-                            "
+                          class="text-base text-white py-3 bg-main-400 hover:text-main-400 hover:border hover:bg-white px-4 rounded-sm"
                           @click="setApplicantType('EthiopianFromAbroad')"
                         >
                           Ethiopian From Abroad
@@ -1688,14 +1414,7 @@
                       </a>
                       <a href="/Applicant/GoodStanding">
                         <button
-                          class="
-                              text-xl text-white
-                              py-2
-                              bg-main-400
-                              hover:text-main-400 hover:border hover:bg-white
-                              px-6
-                              rounded-sm
-                            "
+                          class="text-xl text-white py-2 bg-main-400 hover:text-main-400 hover:border hover:bg-white px-4 rounded-sm"
                           @click="setApplicantType('Foreign')"
                         >
                           Foreigner

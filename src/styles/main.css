@@ -504,7 +504,7 @@ nav .profile-details i {
 .nav-tabs:hover.nav-link {
   color: #4185d0;
 }
-
+ 
 .vtl-loading-mask {
   position: absolute;
   z-index: 1 !important;
@@ -1706,7 +1706,7 @@ button {
   height: 35px;
   outline: none;
   font-weight: 600;
-  padding: 1;
+  padding: 6px;
   line-height: inherit;
   margin: 2px;
 }

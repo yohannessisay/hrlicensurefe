@@ -92,7 +92,10 @@
     width: fit-content;
     outline: none;
     font-weight: 600;
-    padding: 1;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    padding-bottom: 2rem !important;
+    border-radius: 5px !important;
     line-height: inherit;
     margin: 2px;
 
