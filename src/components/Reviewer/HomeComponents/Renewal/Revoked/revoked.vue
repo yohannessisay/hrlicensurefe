@@ -623,9 +623,9 @@ export default {
                 width: "10%",
                 display: function(row) {
                   return (
-                    '<button data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded     hover:     transition duration-150 ease-in-out" data-id="' +
+                    '<button data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block  font-medium text-xs leading-tight uppercase rounded-md   transition duration-150 ease-in-out" data-id="' +
                     row.id +
-                    '" ><i class="fa fa-eye"></i>View/Edit</button>'
+                    '" ><i class="fa fa-eye mr-2"></i>View/Edit</button>'
                   );
                 }
               }
