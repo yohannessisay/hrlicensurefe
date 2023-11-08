@@ -875,7 +875,7 @@ router.beforeResolve((to, from, next) => {
   if (to.name) {
     // Start the route progress bar.
     // eslint-disable-next-line no-undef
-    NProgress.start();
+   
   }
   next();
 });
@@ -883,7 +883,7 @@ router.beforeResolve((to, from, next) => {
 router.afterEach(() => {
   // Complete the animation of the route progress bar.
   // eslint-disable-next-line no-undef
-  NProgress.done();
+ 
 });
 
 export default router;
