@@ -428,7 +428,6 @@ import moment from "moment";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 import { googleApi } from "@/composables/baseURL";
-
 import generatePdf from "./generateLicensedPdf.vue";
 import revokeLicenseModal from "./sharedComponents/byYou/revokeLicenseModal.vue";
 import requestStatusChangeModal from "./sharedComponents/byYou/requestStatusChange.vue";
@@ -467,6 +466,14 @@ export default {
     let modalData = ref({ educations: [] });
     let result = {};
     let toBeGeneratedProfs = [];
+    let year = new Date().getFullYear();
+    let expirationDate = localStorage.getItem("regionExpDate")
+      ? new Date(
+          `${
+            Number(year) + Number(JSON.parse(localStorage.getItem("regionExpDate")))
+          }T00:00`
+        ).toISOString()
+      : "";
     const changePrintType = (type) => {
       modalData.value.printType = type;
     };
@@ -563,7 +570,7 @@ export default {
             modalData.value.newEducations = result.educations ? result.educations : {};
             modalData.value.profile = result.profile;
             modalData.value.certifiedDate = result.certifiedDate;
-            modalData.value.licenseExpirationDate = result.licenseExpirationDate;
+
             modalData.value.documents = result.documents;
             modalData.value.data = result;
             modalData.value.id = result.id;
@@ -571,6 +578,7 @@ export default {
               result.profile && result.profile.profilePicture
                 ? googleApi + result.profile.profilePicture.filePath
                 : "";
+            modalData.value.licenseExpirationDate = expirationDate;
             isLoading.value = false;
           }
         });

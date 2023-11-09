@@ -64,7 +64,7 @@
             type="button"
             class="inline-block px-6 text-white font-medium text-xs bg-primary-700 leading-tight uppercase rounded hover:bg-white hover:text-primary-700 transition duration-150 ease-in-out"
             data-bs-toggle="modal"
-            data-bs-target="#retrivalModal"
+            data-bs-target="#retrivalModalOth"
           >
             <i class="fa fa-check"></i>
             Set Retrival Date
@@ -85,9 +85,9 @@
 
   <div
     class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
-    id="retrivalModal"
+    id="retrivalModalOth"
     tabindex="-1"
-    aria-labelledby="retrivalModalTitle"
+    aria-labelledby="retrivalModalOthTitle"
     aria-modal="true"
     role="dialog"
   >
@@ -191,7 +191,14 @@ export default {
     let imageSrc = ref("");
     let today = new Date().toISOString().split("T")[0];
     let retrivalDate = ref("");
-
+    let year = new Date().getFullYear();
+    let expirationDate = localStorage.getItem("regionExpDate")
+      ? new Date(
+          `${
+            Number(year) + Number(JSON.parse(localStorage.getItem("regionExpDate")))
+          }T00:00`
+        ).toISOString()
+      : "";
     const adminRegionId = JSON.parse(localStorage.getItem("allAdminData")).regionId;
 
     const expertLevelCode = JSON.parse(localStorage.getItem("allAdminData")).expertLevel
@@ -602,7 +609,9 @@ export default {
         226,
         164,
         `${
-          certificateDetail.value.licenseExpirationDate
+          expirationDate
+            ? moment(expirationDate).format("MMM DD, YYYY")
+            : certificateDetail.value.licenseExpirationDate
             ? moment(certificateDetail.value.licenseExpirationDate).format("MMM DD, YYYY")
             : "Not Specified"
         }`
@@ -611,7 +620,9 @@ export default {
         226,
         164,
         `${
-          certificateDetail.value.licenseExpirationDate
+          expirationDate
+            ? moment(expirationDate).format("MMM DD, YYYY")
+            : certificateDetail.value.licenseExpirationDate
             ? moment(certificateDetail.value.licenseExpirationDate).format("MMM DD, YYYY")
             : "Not Specified"
         }`
@@ -785,7 +796,9 @@ export default {
         75 + getAmharicLicensedDate,
         164,
         `${
-          certificateDetail.value.licenseExpirationDate
+          expirationDate
+            ? toEthiopian(moment(expirationDate)._d.toISOString(), false)
+            : certificateDetail.value.licenseExpirationDate
             ? toEthiopian(
                 moment(certificateDetail.value.licenseExpirationDate)._d.toISOString(),
                 false
@@ -797,7 +810,9 @@ export default {
         75 + getAmharicLicensedDate2,
         164,
         `${
-          certificateDetail.value.licenseExpirationDate
+          expirationDate
+            ? toEthiopian(moment(expirationDate)._d.toISOString(), false)
+            : certificateDetail.value.licenseExpirationDate
             ? toEthiopian(
                 moment(certificateDetail.value.licenseExpirationDate)._d.toISOString(),
                 false

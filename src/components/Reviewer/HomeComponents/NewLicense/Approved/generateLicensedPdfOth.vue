@@ -67,7 +67,7 @@
             type="button"
             class="inline-block px-6 text-white font-medium text-xs bg-primary-700 leading-tight uppercase rounded hover:bg-white hover:text-primary-700 transition duration-150 ease-in-out"
             data-bs-toggle="modal"
-            data-bs-target="#retrivalModal"
+            data-bs-target="#retrivalModalOth"
           >
             <i class="fa fa-check"></i>
             Set Retrival Date
@@ -88,9 +88,9 @@
 
   <div
     class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
-    id="retrivalModal"
+    id="retrivalModalOth"
     tabindex="-1"
-    aria-labelledby="retrivalModalTitle"
+    aria-labelledby="retrivalModalOthTitle"
     aria-modal="true"
     role="dialog"
   >
@@ -206,7 +206,14 @@ export default {
 
     const expertLevelCode = JSON.parse(localStorage.getItem("allAdminData")).expertLevel
       .code;
-
+    let year = new Date().getFullYear();
+    let expirationDate = localStorage.getItem("regionExpDate")
+      ? new Date(
+          `${
+            Number(year) + Number(JSON.parse(localStorage.getItem("regionExpDate")))
+          }T00:00`
+        ).toISOString()
+      : "";
     let isLicenseGenerated = ref(false);
 
     let applicationStatus = ref("");
@@ -364,8 +371,7 @@ export default {
         finalData.value.data.applicantType &&
         finalData.value.printType != "externship" &&
         finalData.value.printType != "temporary" &&
-        (finalData.value.data.applicantType.code == "ETH" ||
-          finalData.value.data.applicantType.code == "ETHABRO")
+        finalData.value.data.applicantType.code != "FOR"
           ? generate()
           : generateForeigner();
       } else {
@@ -518,6 +524,7 @@ export default {
       let changeWidth = ref(false);
       let changeWidthTooSmall = ref(false);
       let xPosition = ref(147);
+      //Get the total length of the profession including its prefix
       if (certificateDetail.value.educations.length <= 3) {
         for (let i = 0; i < certificateDetail.value.educations.length; i++) {
           let professionPrefix = `${
@@ -569,6 +576,7 @@ export default {
           }
         }
       }
+      //end of getting length
 
       if (changeWidth.value) {
         doc.setFontSize(10);
@@ -589,7 +597,7 @@ export default {
           doc.text(
             xPosition.value,
             professionPossition + i * professionListGap,
-            `${certificateDetail.value.educations.length > 1 ? i + 1 + ". " : "1. "}${
+            `${certificateDetail.value.educations.length > 1 ? i + 1 + ". " : ""}${
               certificateDetail.value.educations[i].prefix
                 ? certificateDetail.value.educations[i].prefix.name
                 : ""
@@ -608,7 +616,7 @@ export default {
           doc.text(
             xPosition.value,
             professionPossition + i * professionListGap,
-            `${certificateDetail.value.educations.length > 1 ? i + 1 + ". " : "1. "}${
+            `${certificateDetail.value.educations.length > 1 ? i + 1 + ". " : ""}${
               certificateDetail.value.educations[i].prefix
                 ? certificateDetail.value.educations[i].prefix.name
                 : ""
@@ -668,7 +676,9 @@ export default {
         226,
         164,
         `${
-          certificateDetail.value.licenseExpirationDate
+          expirationDate
+            ? moment(expirationDate).format("MMM DD, YYYY")
+            : certificateDetail.value.licenseExpirationDate
             ? moment(certificateDetail.value.licenseExpirationDate).format("MMM DD, YYYY")
             : "Not Specified"
         }`
@@ -677,7 +687,9 @@ export default {
         226,
         164,
         `${
-          certificateDetail.value.licenseExpirationDate
+          expirationDate
+            ? moment(expirationDate).format("MMM DD, YYYY")
+            : certificateDetail.value.licenseExpirationDate
             ? moment(certificateDetail.value.licenseExpirationDate).format("MMM DD, YYYY")
             : "Not Specified"
         }`
@@ -741,7 +753,7 @@ export default {
           doc.text(
             xPosition.value,
             professionPossition + i * professionListGap,
-            `${certificateDetail.value.educations.length > 1 ? i + 1 + ". " : "1. "}${
+            `${certificateDetail.value.educations.length > 1 ? i + 1 + ". " : ""}${
               certificateDetail.value.educations[i].prefix
                 ? certificateDetail.value.educations[i].prefix.amharic_name
                 : ""
@@ -845,7 +857,9 @@ export default {
         75 + getAmharicLicensedDate,
         164,
         `${
-          certificateDetail.value.licenseExpirationDate
+          expirationDate
+            ? toEthiopian(moment(expirationDate)._d.toISOString(), false)
+            : certificateDetail.value.licenseExpirationDate
             ? toEthiopian(
                 moment(certificateDetail.value.licenseExpirationDate)._d.toISOString(),
                 false
@@ -857,7 +871,9 @@ export default {
         75 + getAmharicLicensedDate2,
         164,
         `${
-          certificateDetail.value.licenseExpirationDate
+          expirationDate
+            ? toEthiopian(moment(expirationDate)._d.toISOString(), false)
+            : certificateDetail.value.licenseExpirationDate
             ? toEthiopian(
                 moment(certificateDetail.value.licenseExpirationDate)._d.toISOString(),
                 false
@@ -881,9 +897,9 @@ export default {
       });
       let defaultCode = "";
       let defaultBackground = "";
-      let defaultNamePos = 0;
-      let defaultProfPos = 0;
-      let defaultProfGap = 0;
+      let defaultNamePos = 110;
+      let defaultProfPos = 133;
+      let defaultProfGap = 4;
       if (
         certificateDetail.value.educations &&
         certificateDetail.value.educations.length <= 3
@@ -905,17 +921,11 @@ export default {
           ) {
             defaultBackground = oromiaCertificateBackground;
             defaultCode = "ORO";
-            defaultNamePos = 110;
-            defaultProfPos = 133;
-            defaultProfGap = 4;
           } else if (
             certificateDetail.value.licenseReviewer.reviewer.region.code === "AA"
           ) {
             defaultBackground = addisAbabaCertificateBackground;
             defaultCode = "AA";
-            defaultNamePos = 110;
-            defaultProfPos = 133;
-            defaultProfGap = 4;
           } else if (
             certificateDetail.value.licenseReviewer.reviewer.region.code === "DD"
           ) {
@@ -923,7 +933,6 @@ export default {
             defaultCode = "DD";
             defaultNamePos = 110;
             defaultProfPos = 120;
-            defaultProfGap = 4;
           } else if (
             certificateDetail.value.licenseReviewer.reviewer.region.code === "AFA"
           ) {
@@ -933,7 +942,6 @@ export default {
             defaultProfPos = 130;
             defaultProfGap = 4;
           }
-
           doc.addImage(defaultBackground, "JPG", 0, 0, 298, 213, undefined, "FAST");
 
           handleRegionsLayout(

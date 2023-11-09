@@ -442,6 +442,14 @@ export default {
     const modalData = ref({ educations: [] });
     let result = {};
     let toBeGeneratedProfs = [];
+    let year = new Date().getFullYear();
+    let expirationDate = localStorage.getItem("regionExpDate")
+      ? new Date(
+          `${
+            Number(year) + Number(JSON.parse(localStorage.getItem("regionExpDate")))
+          }T00:00`
+        ).toISOString()
+      : "";
     const changePrintType = (type) => {
       modalData.value.printType = type;
     };
@@ -538,7 +546,7 @@ export default {
             modalData.value.newEducations = result.educations ? result.educations : {};
             modalData.value.profile = result.profile;
             modalData.value.certifiedDate = result.certifiedDate;
-            modalData.value.licenseExpirationDate = result.licenseExpirationDate;
+
             modalData.value.documents = result.documents;
             modalData.value.data = result;
             modalData.value.id = result.id;
@@ -546,6 +554,7 @@ export default {
               result.profile && result.profile.profilePicture
                 ? googleApi + result.profile.profilePicture.filePath
                 : "";
+            modalData.value.licenseExpirationDate = expirationDate;
             isLoading.value = false;
           }
         });

@@ -279,7 +279,7 @@
                         </div>
                         <div
                           v-if="adminRole == 'ADM'"
-                          class="grid grid-cols-5 gap-2 w-full border rounded-md p-2 mt-4"
+                          class="grid grid-cols-4 gap-2 w-full border rounded-md p-2 mt-4"
                         >
                           <button
                             v-if="adminRole != 'REV'"
@@ -304,7 +304,7 @@
                           </button>
 
                           <button
-                            class="inline-block mt-4 px-6 py-2.5 bg-primary-700 text-white font-medium text-xs leading-tight uppercase rounded hover:bg-white hover:text-primary-600 transition duration-150 ease-in-out"
+                            class="col-span-2 mt-4 inline-block px-6 py-2.5 bg-primary-700 text-white font-medium text-xs leading-tight uppercase rounded hover:bg-white hover:text-primary-600 transition duration-150 ease-in-out"
                             type="button"
                             data-bs-toggle="modal"
                             data-bs-target="#generatePdfOther"
@@ -449,7 +449,14 @@ export default {
       : "";
     let isLoading = ref(false);
     let reviewerAdminId = ref(0);
-
+    let year = new Date().getFullYear();
+    let expirationDate = localStorage.getItem("regionExpDate")
+      ? new Date(
+          `${
+            Number(year) + Number(JSON.parse(localStorage.getItem("regionExpDate")))
+          }T00:00`
+        ).toISOString()
+      : "";
     const showModal = () => {
       show.value = true;
     };
@@ -496,7 +503,7 @@ export default {
             modalData.value.newEducations = result.educations ? result.educations : {};
             modalData.value.profile = result.profile;
             modalData.value.certifiedDate = result.certifiedDate;
-            modalData.value.licenseExpirationDate = result.licenseExpirationDate;
+
             modalData.value.documents = result.documents;
             modalData.value.data = result;
             modalData.value.id = result.id;
@@ -504,6 +511,7 @@ export default {
               result.profile && result.profile.profilePicture
                 ? googleApi + result.profile.profilePicture.filePath
                 : "";
+            modalData.value.licenseExpirationDate = expirationDate;
             isLoading.value = false;
           }
         });

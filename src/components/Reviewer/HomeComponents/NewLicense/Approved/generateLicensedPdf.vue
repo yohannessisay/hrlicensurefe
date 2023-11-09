@@ -216,7 +216,14 @@ export default {
 
     const expertLevelCode = JSON.parse(localStorage.getItem("allAdminData")).expertLevel
       .code;
-
+    let year = new Date().getFullYear();
+    let expirationDate = localStorage.getItem("regionExpDate")
+      ? new Date(
+          `${
+            Number(year) + Number(JSON.parse(localStorage.getItem("regionExpDate")))
+          }T00:00`
+        ).toISOString()
+      : "";
     let isLicenseGenerated = ref(false);
 
     let applicationStatus = ref("");
@@ -528,6 +535,7 @@ export default {
       let changeWidth = ref(false);
       let changeWidthTooSmall = ref(false);
       let xPosition = ref(147);
+      //Get the total length of the profession including its prefix
       if (certificateDetail.value.educations.length <= 3) {
         for (let i = 0; i < certificateDetail.value.educations.length; i++) {
           let professionPrefix = `${
@@ -579,7 +587,7 @@ export default {
           }
         }
       }
-
+      //End of getting length of profession
       if (changeWidth.value) {
         doc.setFontSize(10);
         doc2.setFontSize(10);
@@ -599,7 +607,7 @@ export default {
           doc.text(
             xPosition.value,
             professionPossition + i * professionListGap,
-            `${certificateDetail.value.educations.length > 1 ? i + 1 + ". " : "1. "}${
+            `${certificateDetail.value.educations.length > 1 ? i + 1 + ". " : ""}${
               certificateDetail.value.educations[i].prefix
                 ? certificateDetail.value.educations[i].prefix.name
                 : ""
@@ -618,7 +626,7 @@ export default {
           doc.text(
             xPosition.value,
             professionPossition + i * professionListGap,
-            `${certificateDetail.value.educations.length > 1 ? i + 1 + ". " : "1. "}${
+            `${certificateDetail.value.educations.length > 1 ? i + 1 + ". " : ""}${
               certificateDetail.value.educations[i].prefix
                 ? certificateDetail.value.educations[i].prefix.name
                 : ""
@@ -678,7 +686,9 @@ export default {
         226,
         164,
         `${
-          certificateDetail.value.licenseExpirationDate
+          expirationDate
+            ? moment(expirationDate).format("MMM DD, YYYY")
+            : certificateDetail.value.licenseExpirationDate
             ? moment(certificateDetail.value.licenseExpirationDate).format("MMM DD, YYYY")
             : "Not Specified"
         }`
@@ -687,7 +697,9 @@ export default {
         226,
         164,
         `${
-          certificateDetail.value.licenseExpirationDate
+          expirationDate
+            ? moment(expirationDate).format("MMM DD, YYYY")
+            : certificateDetail.value.licenseExpirationDate
             ? moment(certificateDetail.value.licenseExpirationDate).format("MMM DD, YYYY")
             : "Not Specified"
         }`
@@ -751,7 +763,7 @@ export default {
           doc.text(
             xPosition.value,
             professionPossition + i * professionListGap,
-            `${certificateDetail.value.educations.length > 1 ? i + 1 + ". " : "1. "}${
+            `${certificateDetail.value.educations.length > 1 ? i + 1 + ". " : ""}${
               certificateDetail.value.educations[i].prefix
                 ? certificateDetail.value.educations[i].prefix.amharic_name
                 : ""
@@ -855,7 +867,9 @@ export default {
         75 + getAmharicLicensedDate,
         164,
         `${
-          certificateDetail.value.licenseExpirationDate
+          expirationDate
+            ? toEthiopian(moment(expirationDate)._d.toISOString(), false)
+            : certificateDetail.value.licenseExpirationDate
             ? toEthiopian(
                 moment(certificateDetail.value.licenseExpirationDate)._d.toISOString(),
                 false
@@ -867,7 +881,9 @@ export default {
         75 + getAmharicLicensedDate2,
         164,
         `${
-          certificateDetail.value.licenseExpirationDate
+          expirationDate
+            ? toEthiopian(moment(expirationDate)._d.toISOString(), false)
+            : certificateDetail.value.licenseExpirationDate
             ? toEthiopian(
                 moment(certificateDetail.value.licenseExpirationDate)._d.toISOString(),
                 false

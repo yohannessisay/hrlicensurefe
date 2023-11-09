@@ -14,15 +14,11 @@
         </li>
         <li><span class="text-gray-500 mx-2">/</span></li>
         <li>
-          <a href="#" class="hover:text-primary-600 text-grey-300"
-            >New License</a
-          >
+          <a href="#" class="hover:text-primary-600 text-grey-300">New License</a>
         </li>
         <li><span class="text-gray-500 mx-2">/</span></li>
         <li>
-          <a href="#" class="pointer-events-none text-lg text-grey-300"
-            >Approved</a
-          >
+          <a href="#" class="pointer-events-none text-lg text-grey-300">Approved</a>
         </li>
       </ol>
     </reviewer-nav-bar>
@@ -45,64 +41,18 @@
                   <div class="mb-3 xl:w-full">
                     <h2 class="text-primary-800 text-lg">Applicant Name</h2>
                     <div
-                      class="
-                      input-group
-                      relative
-                      flex flex-wrap
-                      items-stretch
-                      w-full
-                      mb-4
-                    "
+                      class="input-group relative flex flex-wrap items-stretch w-full mb-4"
                     >
                       <input
                         type="search"
-                        class="
-                        form-control
-                        relative
-                        flex-auto
-                        min-w-0
-                        block
-                        w-full
-                        px-6
-                        py-1.5
-                        text-base
-                        font-normal
-                        text-gray-700
-                        bg-white bg-clip-padding
-                        border border-solid border-gray-300
-                        rounded
-                        transition
-                        ease-in-out
-                        focus:text-gray-700
-                        focus:bg-white
-                        focus:border-blue-600
-                        focus:outline-none
-                      "
+                        class="form-control relative flex-auto min-w-0 block w-full px-6 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                         placeholder="Search Using Applicant's Name"
                         aria-label="Search"
                         aria-describedby="button-addon2"
                         v-model="searchTerm"
                       />
                       <button
-                        class="
-                        inline-block
-                        px-6
-                        py-2
-                        bg-primary-600
-                        border-primary-300
-                        text-white
-                        font-medium
-                        text-xs
-                        leading-tight
-                        uppercase
-                        rounded
-                         
-                        hover:bg-white hover:text-primary-600  
-                        transition
-                        duration-150
-                        ease-in-out
-                        items-center
-                      "
+                        class="inline-block px-6 py-2 bg-primary-600 border-primary-300 text-white font-medium text-xs leading-tight uppercase rounded hover:bg-white hover:text-primary-600 transition duration-150 ease-in-out items-center"
                         @click="searchApplication()"
                       >
                         <svg
@@ -130,26 +80,7 @@
                       <input
                         v-model="searchTermFromDate"
                         type="date"
-                        class="
-                        appearance-none
-                        block
-                        w-full
-                        px-6
-                        ml-2
-                        py-2
-                        text-base
-                        font-normal
-                        text-gray-700
-                        bg-white bg-clip-padding bg-no-repeat
-                        border border-solid border-gray-300
-                        rounded
-                        transition
-                        ease-in-out
-                        focus:text-gray-700
-                        focus:bg-white
-                        focus:border-blue-600
-                        focus:outline-none
-                      "
+                        class="appearance-none block w-full px-6 ml-2 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                         aria-label="Default select example"
                       />
                     </div>
@@ -157,26 +88,7 @@
                       <label for="" class="ml-4"> To</label>
                       <input
                         type="date"
-                        class="
-                        appearance-none
-                        block
-                        w-full
-                        px-6
-                        ml-4
-                        py-2
-                        text-base
-                        font-normal
-                        text-gray-700
-                        bg-white bg-clip-padding bg-no-repeat
-                        border border-solid border-gray-300
-                        rounded
-                        transition
-                        ease-in-out
-                        focus:text-gray-700
-                        focus:bg-white
-                        focus:border-blue-600
-                        focus:outline-none
-                      "
+                        class="appearance-none block w-full px-6 ml-4 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                         @change="searchApplication()"
                         v-model="searchTermToDate"
                         aria-label="Default select example"
@@ -185,25 +97,7 @@
                     <div class="ml-8 mt-4">
                       <button
                         type="button"
-                        class="
-                        inline-block
-                        px-6
-                        py-2
-                        mt-2
-                        border-2 border-primary-300
-                        text-white
-                        font-medium
-                        text-xs
-                        leading-tight
-                        uppercase
-                        rounded
-                        bg-primary-600
-                        hover:bg-white hover:bg-opacity-5 hover:text-primary-600
-                        focus:outline-none focus:ring-0
-                        transition
-                        duration-150
-                        ease-in-out
-                      "
+                        class="inline-block px-6 py-2 mt-2 border-2 border-primary-300 text-white font-medium text-xs leading-tight uppercase rounded bg-primary-600 hover:bg-white hover:bg-opacity-5 hover:text-primary-600 focus:outline-none focus:ring-0 transition duration-150 ease-in-out"
                         @click="clearFilters()"
                       >
                         <i class="fa fa-close"></i>
@@ -213,14 +107,7 @@
                   </div>
                 </div>
                 <div
-                  class="
-                    inline-block
-                    min-w-full
-                     
-                    rounded-lg
-                    overflow-hidden
-                    bg-primary-800
-                  "
+                  class="inline-block min-w-full rounded-lg overflow-hidden bg-primary-800"
                 >
                   <vue-table-lite
                     :is-loading="toYouTable.isLoading"
@@ -252,65 +139,18 @@
                   <div class="mb-3 xl:w-full">
                     <h2 class="text-primary-800 text-lg">Applicant Name</h2>
                     <div
-                      class="
-                      input-group
-                      relative
-                      flex flex-wrap
-                      items-stretch
-                      w-full
-                      mb-4
-                    "
+                      class="input-group relative flex flex-wrap items-stretch w-full mb-4"
                     >
                       <input
                         type="search"
-                        class="
-                        form-control
-                        relative
-                        flex-auto
-                        min-w-0
-                        block
-                        w-full
-                        px-6
-                        py-1.5
-                        text-base
-                        font-normal
-                        text-gray-700
-                        bg-white bg-clip-padding
-                        border border-solid border-gray-300
-                        rounded
-                        transition
-                        ease-in-out
-                        focus:text-gray-700
-                        focus:bg-white
-                        focus:border-blue-600
-                        focus:outline-none
-                      "
+                        class="form-control relative flex-auto min-w-0 block w-full px-6 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                         placeholder="Search Using Applicant's Name"
                         aria-label="Search"
                         aria-describedby="button-addon2"
                         v-model="searchTermOthers"
                       />
                       <button
-                        class="
-                      inline-block
-                        px-6
-                        py-2
-                        bg-primary-600
-                        border-primary-300
-                        text-white
-                        font-medium
-                        text-xs
-                        leading-tight
-                        uppercase
-                        rounded
-                         
-                        hover:bg-white hover:text-primary-600  
-                        transition
-                        focus:border-blue-600
-                        duration-150
-                        ease-in-out
-                        items-center
-                      "
+                        class="inline-block px-6 py-2 bg-primary-600 border-primary-300 text-white font-medium text-xs leading-tight uppercase rounded hover:bg-white hover:text-primary-600 transition focus:border-blue-600 duration-150 ease-in-out items-center"
                         @click="searchApplicationOther()"
                       >
                         <svg
@@ -338,26 +178,7 @@
                       <input
                         v-model="searchTermFromDateOth"
                         type="date"
-                        class="
-                        appearance-none
-                        block
-                        w-full
-                        px-6
-                        ml-2
-                        py-2
-                        text-base
-                        font-normal
-                        text-gray-700
-                        bg-white bg-clip-padding bg-no-repeat
-                        border border-solid border-gray-300
-                        rounded
-                        transition
-                        ease-in-out
-                        focus:text-gray-700
-                        focus:bg-white
-                        focus:border-blue-600
-                        focus:outline-none
-                      "
+                        class="appearance-none block w-full px-6 ml-2 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                         aria-label="Default select example"
                       />
                     </div>
@@ -365,26 +186,7 @@
                       <label for="" class="ml-4"> To</label>
                       <input
                         type="date"
-                        class="
-                        appearance-none
-                        block
-                        w-full
-                        px-6
-                        ml-4
-                        py-2
-                        text-base
-                        font-normal
-                        text-gray-700
-                        bg-white bg-clip-padding bg-no-repeat
-                        border border-solid border-gray-300
-                        rounded
-                        transition
-                        ease-in-out
-                        focus:text-gray-700
-                        focus:bg-white
-                        focus:border-blue-600
-                        focus:outline-none
-                      "
+                        class="appearance-none block w-full px-6 ml-4 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                         @change="searchApplicationOther()"
                         v-model="searchTermToDateOth"
                         aria-label="Default select example"
@@ -393,25 +195,7 @@
                     <div class="ml-8 mt-4">
                       <button
                         type="button"
-                        class="
-                      inline-block
-                        px-6
-                        py-2
-                        mt-2
-                        border-2 border-primary-300
-                        text-white
-                        font-medium
-                        text-xs
-                        leading-tight
-                        uppercase
-                        rounded
-                        bg-primary-600
-                        hover:bg-white hover:bg-opacity-5 hover:text-primary-600
-                        focus:outline-none focus:ring-0
-                        transition
-                        duration-150
-                        ease-in-out
-                      "
+                        class="inline-block px-6 py-2 mt-2 border-2 border-primary-300 text-white font-medium text-xs leading-tight uppercase rounded bg-primary-600 hover:bg-white hover:bg-opacity-5 hover:text-primary-600 focus:outline-none focus:ring-0 transition duration-150 ease-in-out"
                         @click="clearFiltersOther()"
                       >
                         <i class="fa fa-close"></i>
@@ -421,14 +205,7 @@
                   </div>
                 </div>
                 <div
-                  class="
-                    inline-block
-                    min-w-full
-                     
-                    rounded-lg
-                    overflow-hidden
-                    bg-primary-800
-                  "
+                  class="inline-block min-w-full rounded-lg overflow-hidden bg-primary-800"
                 >
                   <vue-table-lite
                     :is-loading="toOthersTable.isLoading"
@@ -492,6 +269,9 @@ export default {
     let searchTermToDateOth = ref("");
     let toOthersTable = ref({ isLoading: false });
     let toYouTable = ref({ isLoading: false });
+    let adminRegionId = localStorage.getItem("allAdminData")
+      ? JSON.parse(localStorage.getItem("allAdminData")).regionId
+      : "";
     let tableData = [];
     let toYouTableData = [];
 
@@ -555,9 +335,7 @@ export default {
                   (element.profile ? element.profile.fatherName : "") +
                   " " +
                   (element.profile ? element.profile.grandFatherName : ""),
-                ApplicantType: element.applicantType
-                  ? element.applicantType.name
-                  : "",
+                ApplicantType: element.applicantType ? element.applicantType.name : "",
                 Date: new Date(element.createdAt)
                   .toJSON()
                   .slice(0, 10)
@@ -598,7 +376,7 @@ export default {
                 label: "Action",
                 field: "quick",
                 width: "10%",
-                display: function(row) {
+                display: function (row) {
                   return (
                     '<button data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block  font-medium text-xs leading-tight uppercase rounded-md   transition duration-150 ease-in-out" data-id="' +
                     row +
@@ -635,17 +413,12 @@ export default {
                 element.profile.fatherName +
                 " " +
                 element.profile.grandFatherName,
-                ApplicantType: element.applicantType
-                  ? element.applicantType.name
-                  : "",
+              ApplicantType: element.applicantType ? element.applicantType.name : "",
               ReviewerName:
                 element.licenseReviewer && element.licenseReviewer.reviewer
                   ? element.licenseReviewer.reviewer.name
                   : "",
-              Date: new Date(element.createdAt)
-                .toJSON()
-                .slice(0, 10)
-                .replace(/-/g, "/"),
+              Date: new Date(element.createdAt).toJSON().slice(0, 10).replace(/-/g, "/"),
               data: element,
             });
           });
@@ -687,7 +460,7 @@ export default {
                 label: "Action",
                 field: "quick",
                 width: "10%",
-                display: function(row) {
+                display: function (row) {
                   return (
                     '<button data-bs-toggle="modal" data-bs-target="#staticBackdropOthers" class="edit-btn-others bg-primary-700 text-white hover:bg-white hover:text-primary-600 inline-block px-6 py-2.5    font-medium text-xs leading-tight uppercase rounded     hover:     transition duration-150 ease-in-out" data-id="' +
                     row +
@@ -706,7 +479,7 @@ export default {
     const tableLoadingFinish = () => {
       let elements = document.getElementsByClassName("edit-btn");
 
-      Array.prototype.forEach.call(elements, function(element) {
+      Array.prototype.forEach.call(elements, function (element) {
         if (element.classList.contains("edit-btn")) {
           element.addEventListener("click", rowClicked());
         }
@@ -714,7 +487,7 @@ export default {
     };
     const tableLoadingFinishOthers = () => {
       let elementOthers = document.getElementsByClassName("edit-btn-others");
-      Array.prototype.forEach.call(elementOthers, function(element) {
+      Array.prototype.forEach.call(elementOthers, function (element) {
         if (element.classList.contains("edit-btn-others")) {
           element.addEventListener("click", rowClickedOthers());
         }
@@ -767,6 +540,18 @@ export default {
         { key: "page", value: 0 },
         { key: "size", value: 10 },
       ]);
+
+      store.dispatch("lookups/getLicenseExpirationDates").then((res) => {
+        if (res.data && res.data.data) {
+          let result = res.data.data;
+          localStorage.removeItem("regionExpDate");
+          let expiryDate = "";
+          expiryDate = result.filter((el) => (el.regionId = adminRegionId))[0]
+            ? result.filter((el) => (el.regionId = adminRegionId))[0].years
+            : "";
+          localStorage.setItem("regionExpDate", JSON.stringify(expiryDate));
+        }
+      });
     });
     const doSearch = (offset, limit, order, sort) => {
       setTimeout(() => {
