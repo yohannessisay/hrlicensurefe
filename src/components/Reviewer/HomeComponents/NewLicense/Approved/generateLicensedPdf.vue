@@ -665,8 +665,8 @@ export default {
       doc.setFontSize(12);
       doc2.setFontSize(12);
       doc.text(
-        197,
-        164,
+        code == "AA" ? 202 : 197,
+        code == "AA" ? 160 : 164,
         `${
           certificateDetail.value.certifiedDate
             ? moment(certificateDetail.value.certifiedDate).format("MMM DD, YYYY") + " - "
@@ -675,7 +675,7 @@ export default {
       );
       doc2.text(
         197,
-        164,
+        code == "AA" ? 160 : 164,
         `${
           certificateDetail.value.certifiedDate
             ? moment(certificateDetail.value.certifiedDate).format("MMM DD, YYYY") + " - "
@@ -683,8 +683,8 @@ export default {
         }`
       );
       doc.text(
-        226,
-        164,
+        code == "AA" ? 231 : 197,
+        code == "AA" ? 160 : 164,
         `${
           expirationDate
             ? moment(expirationDate).format("MMM DD, YYYY")
@@ -694,8 +694,8 @@ export default {
         }`
       );
       doc2.text(
-        226,
-        164,
+        code == "AA" ? 231 : 197,
+        code == "AA" ? 160 : 164,
         `${
           expirationDate
             ? moment(expirationDate).format("MMM DD, YYYY")
@@ -704,6 +704,20 @@ export default {
             : "Not Specified"
         }`
       );
+
+      //Reviewer name incase of addis ababa
+      code == "AA"
+        ? doc.text(
+            163,
+            200,
+            `${
+              certificateDetail.value.licenseReviewer &&
+              certificateDetail.value.licenseReviewer.reviewer
+                ? certificateDetail.value.licenseReviewer.reviewer.name
+                : ""
+            }`
+          )
+        : "";
       doc.addFileToVFS("Tera-Regular-normal.ttf", AmharicFont);
       doc2.addFileToVFS("Tera-Regular-normal.ttf", AmharicFont);
       doc.addFont("Tera-Regular-normal.ttf", "Tera-Regular", "normal");
@@ -713,10 +727,15 @@ export default {
 
       doc.setFontSize(15);
       doc2.setFontSize(15);
+      let aaNamePosVer = 0;
+      let aaNamePosHor = 0;
+      code == "AA" ? (aaNamePosVer = 3) : (aaNamePosVer = 0);
+      code == "AA" ? (aaNamePosHor = -15) : (aaNamePosVer = 0);
+
       //Amharic name part
       doc.text(
-        60,
-        namePosition - paddingAmharic,
+        60 + aaNamePosHor,
+        namePosition - paddingAmharic + aaNamePosVer,
         `${
           certifiedUser.value.alternativeName ? certifiedUser.value.alternativeName : ""
         } ${
@@ -730,8 +749,8 @@ export default {
         }`
       );
       doc2.text(
-        60,
-        namePosition - paddingAmharic,
+        60 + aaNamePosHor,
+        namePosition - paddingAmharic + aaNamePosVer,
         `${
           certifiedUser.value.alternativeName ? certifiedUser.value.alternativeName : ""
         } ${
@@ -752,7 +771,7 @@ export default {
       } else if (changeWidthTooSmall.value) {
         doc.setFontSize(11);
         doc2.setFontSize(11);
-        xPosition.value = 22;
+        xPosition.value = 28;
       } else {
         doc.setFontSize(14);
         doc2.setFontSize(14);
@@ -761,7 +780,7 @@ export default {
       if (certificateDetail.value.educations.length <= 3) {
         for (let i = 0; i < certificateDetail.value.educations.length; i++) {
           doc.text(
-            xPosition.value,
+            xPosition.value + aaNamePosHor,
             professionPossition + i * professionListGap,
             `${certificateDetail.value.educations.length > 1 ? i + 1 + ". " : ""}${
               certificateDetail.value.educations[i].prefix
@@ -782,7 +801,7 @@ export default {
       } else {
         for (let i = 0; i < 3; i++) {
           doc.text(
-            xPosition.value,
+            xPosition.value + aaNamePosHor,
             professionPossition + i * professionListGap,
             `${certificateDetail.value.educations.length > 1 ? i + 1 + ". " : ""}${
               certificateDetail.value.educations[i].prefix
@@ -804,7 +823,7 @@ export default {
         for (let i = 3; i < 6; i++) {
           if (certificateDetail.value.educations[i]) {
             doc2.text(
-              xPosition.value,
+              xPosition.value + aaNamePosHor,
               professionPossition + newI * professionListGap,
               `${certificateDetail.value.educations.length > 1 ? newI + 1 + ". " : ""}${
                 certificateDetail.value.educations[i].prefix
@@ -841,7 +860,7 @@ export default {
       );
       doc.text(
         75,
-        164,
+        code == "AA" ? 159 : 164,
         `${
           certificateDetail.value.certifiedDate
             ? toEthiopian(
@@ -853,7 +872,7 @@ export default {
       );
       doc2.text(
         75,
-        164,
+        code == "AA" ? 159 : 164,
         `${
           certificateDetail.value.certifiedDate
             ? toEthiopian(
@@ -865,7 +884,7 @@ export default {
       );
       doc.text(
         75 + getAmharicLicensedDate,
-        164,
+        code == "AA" ? 159 : 164,
         `${
           expirationDate
             ? toEthiopian(moment(expirationDate)._d.toISOString(), false)
@@ -879,7 +898,7 @@ export default {
       );
       doc2.text(
         75 + getAmharicLicensedDate2,
-        164,
+        code == "AA" ? 159 : 164,
         `${
           expirationDate
             ? toEthiopian(moment(expirationDate)._d.toISOString(), false)
