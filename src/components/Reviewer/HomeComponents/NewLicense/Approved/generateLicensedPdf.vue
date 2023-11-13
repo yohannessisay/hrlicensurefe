@@ -683,7 +683,7 @@ export default {
         }`
       );
       doc.text(
-        code == "AA" ? 231 : 197,
+        code == "AA" ? 231 : 226,
         code == "AA" ? 160 : 164,
         `${
           expirationDate
@@ -694,7 +694,7 @@ export default {
         }`
       );
       doc2.text(
-        code == "AA" ? 231 : 197,
+        code == "AA" ? 231 : 226,
         code == "AA" ? 160 : 164,
         `${
           expirationDate

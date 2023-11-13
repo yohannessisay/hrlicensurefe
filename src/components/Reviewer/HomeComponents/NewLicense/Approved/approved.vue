@@ -272,6 +272,9 @@ export default {
     let adminRegionId = localStorage.getItem("allAdminData")
       ? JSON.parse(localStorage.getItem("allAdminData")).regionId
       : "";
+    let adminRegionExpLevel = localStorage.getItem("allAdminData")
+      ? JSON.parse(localStorage.getItem("allAdminData")).expertLevel.code
+      : "";
     let tableData = [];
     let toYouTableData = [];
 
@@ -546,8 +549,10 @@ export default {
           let result = res.data.data;
           localStorage.removeItem("regionExpDate");
           let expiryDate = "";
-          expiryDate = result.filter((el) => (el.regionId = adminRegionId))[0]
-            ? result.filter((el) => (el.regionId = adminRegionId))[0].years
+          adminRegionExpLevel && adminRegionExpLevel == "FED"
+            ? (expiryDate = 3)
+            : result.filter((el) => (el.regionId = adminRegionId))[0]
+            ? (expiryDate = result.filter((el) => (el.regionId = adminRegionId))[0].years)
             : "";
           localStorage.setItem("regionExpDate", JSON.stringify(expiryDate));
         }
