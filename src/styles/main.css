@@ -490,7 +490,9 @@ nav .profile-details i {
 . {
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.829);
 }
-
+#staticBackdrop > div > div > div.vld-parent.mt-4 > div.modal-body.relative.p-4 > div > section > div.flex.flex-wrap > div > div.flex.flex-wrap > div:nth-child(1) > div > div.shrink-0 > div{
+  overflow: hidden;
+}
 .nav-tabs .nav-link.active {
   color: white;
   border-color: #4185d0;
