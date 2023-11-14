@@ -584,7 +584,7 @@ export default {
       } else if (changeWidthTooSmall.value) {
         doc.setFontSize(10);
         doc2.setFontSize(10);
-        xPosition.value = 163;
+        xPosition.value = 158;
       } else {
         doc.setFontSize(14);
         doc2.setFontSize(14);
@@ -654,8 +654,8 @@ export default {
       doc.setFontSize(12);
       doc2.setFontSize(12);
       doc.text(
-        code == "AA" ? 202 : 197,
-        code == "AA" ? 160 : 164,
+        code == "AA" ? 207 : 197,
+        code == "AA" ? 160.5 : 164,
         `${
           certificateDetail.value.certifiedDate
             ? moment(certificateDetail.value.certifiedDate).format("MMM DD, YYYY") + " - "
@@ -663,8 +663,8 @@ export default {
         }`
       );
       doc2.text(
-        197,
-        code == "AA" ? 160 : 164,
+        code == "AA" ? 207 : 197,
+        code == "AA" ? 160.5 : 164,
         `${
           certificateDetail.value.certifiedDate
             ? moment(certificateDetail.value.certifiedDate).format("MMM DD, YYYY") + " - "
@@ -672,8 +672,8 @@ export default {
         }`
       );
       doc.text(
-        code == "AA" ? 231 : 226,
-        code == "AA" ? 160 : 164,
+        code == "AA" ? 238 : 226,
+        code == "AA" ? 160.5 : 164,
         `${
           expirationDate
             ? moment(expirationDate).format("MMM DD, YYYY")
@@ -683,8 +683,8 @@ export default {
         }`
       );
       doc2.text(
-        code == "AA" ? 231 : 226,
-        code == "AA" ? 160 : 164,
+        code == "AA" ? 238 : 226,
+        code == "AA" ? 160.5 : 164,
         `${
           expirationDate
             ? moment(expirationDate).format("MMM DD, YYYY")
@@ -697,7 +697,7 @@ export default {
       //Reviewer name incase of addis ababa
       code == "AA"
         ? doc.text(
-            163,
+            123,
             200,
             `${
               certificateDetail.value.licenseReviewer &&
@@ -718,7 +718,7 @@ export default {
       doc2.setFontSize(15);
       let aaNamePosVer = 0;
       let aaNamePosHor = 0;
-      code == "AA" ? (aaNamePosVer = 3) : (aaNamePosVer = 0);
+      code == "AA" ? (aaNamePosVer = -2) : (aaNamePosVer = 0);
       code == "AA" ? (aaNamePosHor = -15) : (aaNamePosVer = 0);
 
       //Amharic name part
@@ -790,7 +790,7 @@ export default {
       } else {
         for (let i = 0; i < 3; i++) {
           doc.text(
-            xPosition.value,
+            xPosition.value + aaNamePosHor,
             professionPossition + i * professionListGap,
             `${certificateDetail.value.educations.length > 1 ? i + 1 + ". " : ""}${
               certificateDetail.value.educations[i].prefix
@@ -812,7 +812,7 @@ export default {
         for (let i = 3; i < 6; i++) {
           if (certificateDetail.value.educations[i]) {
             doc2.text(
-              xPosition.value,
+              xPosition.value + aaNamePosHor,
               professionPossition + newI * professionListGap,
               `${certificateDetail.value.educations.length > 1 ? newI + 1 + ". " : ""}${
                 certificateDetail.value.educations[i].prefix
@@ -848,7 +848,7 @@ export default {
         ) + " - "
       );
       doc.text(
-        75,
+        77,
         code == "AA" ? 159 : 164,
         `${
           certificateDetail.value.certifiedDate
@@ -860,7 +860,7 @@ export default {
         }`
       );
       doc2.text(
-        75,
+        77,
         code == "AA" ? 159 : 164,
         `${
           certificateDetail.value.certifiedDate
@@ -872,7 +872,7 @@ export default {
         }`
       );
       doc.text(
-        75 + getAmharicLicensedDate,
+        77 + getAmharicLicensedDate,
         code == "AA" ? 159 : 164,
         `${
           expirationDate
@@ -886,7 +886,7 @@ export default {
         }`
       );
       doc2.text(
-        75 + getAmharicLicensedDate2,
+        77 + getAmharicLicensedDate2,
         code == "AA" ? 159 : 164,
         `${
           expirationDate

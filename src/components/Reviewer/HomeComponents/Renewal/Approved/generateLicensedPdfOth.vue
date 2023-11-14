@@ -588,8 +588,8 @@ export default {
       doc.setFontSize(12);
       doc2.setFontSize(12);
       doc.text(
-        code == "AA" ? 202 : 197,
-        code == "AA" ? 160 : 164,
+        code == "AA" ? 207 : 197,
+        code == "AA" ? 160.5 : 164,
         `${
           certificateDetail.value.certifiedDate
             ? moment(certificateDetail.value.certifiedDate).format("MMM DD, YYYY") + " - "
@@ -597,8 +597,8 @@ export default {
         }`
       );
       doc2.text(
-        code == "AA" ? 202 : 197,
-        code == "AA" ? 160 : 164,
+        code == "AA" ? 207 : 197,
+        code == "AA" ? 160.5 : 164,
         `${
           certificateDetail.value.certifiedDate
             ? moment(certificateDetail.value.certifiedDate).format("MMM DD, YYYY") + " - "
@@ -606,8 +606,8 @@ export default {
         }`
       );
       doc.text(
-        code == "AA" ? 231 : 226,
-        code == "AA" ? 160 : 164,
+        code == "AA" ? 238 : 226,
+        code == "AA" ? 160.5 : 164,
         `${
           expirationDate
             ? moment(expirationDate).format("MMM DD, YYYY")
@@ -617,8 +617,8 @@ export default {
         }`
       );
       doc2.text(
-        code == "AA" ? 231 : 226,
-        code == "AA" ? 160 : 164,
+        code == "AA" ? 238 : 226,
+        code == "AA" ? 160.5 : 164,
         `${
           expirationDate
             ? moment(expirationDate).format("MMM DD, YYYY")
@@ -630,7 +630,7 @@ export default {
       //Reviewer name incase of addis ababa
       code == "AA"
         ? doc.text(
-            163,
+            123,
             200,
             `${
               certificateDetail.value.renewalReviewer &&
@@ -650,7 +650,7 @@ export default {
       doc2.setFont("Tera-Regular");
       let aaNamePosVer = 0;
       let aaNamePosHor = 0;
-      code == "AA" ? (aaNamePosVer = 3) : (aaNamePosVer = 0);
+      code == "AA" ? (aaNamePosVer = -2) : (aaNamePosVer = 0);
       code == "AA" ? (aaNamePosHor = -15) : (aaNamePosVer = 0);
       //Amharic name part
       doc.text(
@@ -786,7 +786,7 @@ export default {
         ) + " - "
       );
       doc.text(
-        75,
+        77,
         code == "AA" ? 159 : 164,
         `${
           certificateDetail.value.certifiedDate
@@ -798,7 +798,7 @@ export default {
         }`
       );
       doc2.text(
-        75,
+        77,
         code == "AA" ? 159 : 164,
         `${
           certificateDetail.value.certifiedDate
@@ -810,7 +810,7 @@ export default {
         }`
       );
       doc.text(
-        75 + getAmharicLicensedDate,
+        77 + getAmharicLicensedDate,
         code == "AA" ? 159 : 164,
         `${
           expirationDate
@@ -824,7 +824,7 @@ export default {
         }`
       );
       doc2.text(
-        75 + getAmharicLicensedDate2,
+        77 + getAmharicLicensedDate2,
         code == "AA" ? 159 : 164,
         `${
           expirationDate
