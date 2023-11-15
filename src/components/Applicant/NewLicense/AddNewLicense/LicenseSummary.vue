@@ -352,14 +352,15 @@ export default {
             feedback: generalInfo.value.feedback ? generalInfo.value.feedback : "",
           },
         };
-        showModal.value = true;
+        // showModal.value = true;
+        isLoading.value = false;
         store.dispatch("newlicense/addNewLicense", license).then((res) => {
           let licenseId = res.data.data.id;
           let payload = { document: formData, id: licenseId };
           store
             .dispatch("newlicense/uploadDocuments", payload)
             .then((res) => {
-              isLoading.value = false;
+              
               if (res.data.status == "Success") {
                 window.localStorage.removeItem("applicantTypeSelected");
                 window.localStorage.removeItem("NLApplicationData");

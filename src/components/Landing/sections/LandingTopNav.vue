@@ -2,26 +2,28 @@
   <section
     class="fixed top-0 z-50 flex items-center justify-between w-full bg-white h-large px-tiny sm:px-small glass"
   >
-    <div class="flex items-center justify-center">
+    <div class="flex items-center justify-center ">
       <RenderIllustration illustration="Logo" class="hidden sm:block" />
-      <h3 class="ml-4 text-main-400 sm:text-sm md:text-lg lg:text-2xl mdlg:text-2xl">
+      <h3
+        class="ml-4 text-main-400 text-sm md:text-lg lg:text-2xl mdlg:text-2xl mt-6 sm:mt-0"
+      >
         eHPEL - License
       </h3>
     </div>
-    <div class="grid grid-cols-3">
+    <div class="grid grid-cols-3 mt-6 sm:mt-0">
       <span
         class="mdlg:mt-1 rounded-lg cursor-pointer"
         data-bs-toggle="modal"
         data-bs-target="#showHelp"
       >
         <h4
-          class="font-bold text-main-400 mr-8 sm:text-sm md:text-lg lg:text-2xl mdlg:text-2xl"
+          class="font-bold text-main-400 mr-8 text-sm md:text-lg lg:text-2xl mdlg:text-2xl mt-1 sm:mt-0"
         >
           How to apply?
         </h4>
       </span>
       <button
-        class="px-4 mr-2 mb-2 bg-white text-main-400 font-medium border text-base leading-tight rounded hover:text-white hover:border-main-400 hover:bg-main-400 transition duration-150 ease-in-out"
+        class=" -ml-8 sm:-ml-1 px-4 mr-2 mb-2 bg-white text-main-400 font-medium border text-base leading-tight rounded hover:text-white hover:border-main-400 hover:bg-main-400 transition duration-150 ease-in-out"
         data-bs-toggle="modal"
         data-bs-target="#register"
       >
@@ -29,7 +31,7 @@
       </button>
       <button
         type="button"
-        class="mdlg:-ml-12 lg:-ml-12 md:-ml-12 px-4 mr-2 mb-2 py-2.5 bg-main-400 text-white font-medium text-base leading-tight rounded-md hover:text-main-400 hover:border-main-400 hover:bg-white transition duration-150 ease-in-out"
+        class="-ml-2 mdlg:-ml-12 lg:-ml-12 md:-ml-12  px-4 mr-2 mb-2 py-2.5 bg-main-400 text-white font-medium text-base leading-tight rounded-md hover:text-main-400 hover:border-main-400 hover:bg-white transition duration-150 ease-in-out"
         data-bs-toggle="modal"
         data-bs-target="#staticBackdrop"
       >
@@ -73,8 +75,8 @@
         <div class="relative p-2 modal-body">
           <div class="flex justify-center">
             <h2 class="text-xl text-main-400">
-              This is a demo video showing you how to use the system if you are new here.
-              Thanks for watching.
+              This is a demo video showing you how to use the system if you are
+              new here. Thanks for watching.
             </h2>
           </div>
           <div class="container bg-secondaryDark">
@@ -131,13 +133,16 @@ export default {
               icon: true,
             });
           } else {
-            toast.error("Please check permission of site or your download manager", {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            });
+            toast.error(
+              "Please check permission of site or your download manager",
+              {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              }
+            );
           }
         })
         .catch(() => {
