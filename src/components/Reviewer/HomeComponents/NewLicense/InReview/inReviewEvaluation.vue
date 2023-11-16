@@ -460,11 +460,13 @@
                                         <div class="text-base font-bold text-black">
                                           {{
                                             education.professionType
-                                              ? education.professionType.name != "Other"
+                                              ? education.professionType.name != "other"
                                                 ? education.professionType.name
-                                                : education.otherProfessionType +
-                                                  "/" +
-                                                  education.otherProfessionAmharic
+                                                : "Other -> " +
+                                                  education.otherProfessionType +
+                                                  " ( " +
+                                                  education.otherProfessionAmharic +
+                                                  " )"
                                               : ""
                                           }}
                                           <span
@@ -508,11 +510,10 @@
                                           </div>
                                           <!-- Other Profession  -->
                                           <div
-                                            class="flex justify-center"
+                                            class="grid grid-cols-1"
                                             v-if="
-                                              allowOtherProfChange[
-                                                education.department.id
-                                              ] && education.professionType
+                                              education.professionType &&
+                                              education.professionType.name == 'other'
                                             "
                                           >
                                             <div class="mb-3 xl:w-96">
@@ -530,6 +531,12 @@
                                                     $event,
                                                     'english'
                                                   )
+                                                "
+                                                :value="
+                                                  education.professionType &&
+                                                  education.professionType.name == 'other'
+                                                    ? education.otherProfessionType
+                                                    : ''
                                                 "
                                                 class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                                 id="exampleFormControlInput1"
@@ -551,6 +558,12 @@
                                                     $event,
                                                     'amharic'
                                                   )
+                                                "
+                                                :value="
+                                                  education.professionType &&
+                                                  education.professionType.name == 'other'
+                                                    ? education.otherProfessionAmharic
+                                                    : ''
                                                 "
                                                 class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                                 id="exampleFormControlInput1"
