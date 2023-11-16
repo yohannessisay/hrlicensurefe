@@ -887,8 +887,7 @@ export default {
                 institutionId: generalInfo.value.institutionSelected.id,
                 professionTypeId: generalInfo.value.professionalTypeSelected.id,
                 otherInstitution: generalInfo.value.otherEducationalInstitution,
-                otherProfessionTypeAmharic:
-                  generalInfo.value.otherProfessionalTypeAmharic,
+                otherProfessionAmharic: generalInfo.value.otherProfessionalTypeAmharic,
                 otherProfessionType: generalInfo.value.otherProfessionalType,
               });
             }
@@ -911,7 +910,7 @@ export default {
               institutionId: generalInfo.value.institutionSelected.id,
               professionTypeId: generalInfo.value.professionalTypeSelected.id,
               otherInstitution: generalInfo.value.otherEducationalInstitution,
-              otherProfessionTypeAmharic: generalInfo.value.otherProfessionalTypeAmharic,
+              otherProfessionAmharic: generalInfo.value.otherProfessionalTypeAmharic,
               otherProfessionType: generalInfo.value.otherProfessionalType,
             });
           }

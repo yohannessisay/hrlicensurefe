@@ -564,7 +564,7 @@
                       </td>
                       <td class="text-sm text-gray-900 font-light p-4 whitespace-nowrap">
                         {{
-                          item.professionalType && item.professionalType.code != "OTH"
+                          item.professionalType && item.professionalType.name != "other"
                             ? item.professionalType.name
                             : item.otherProfessionalType +
                               " ( " +
@@ -879,8 +879,7 @@ export default {
 
                 otherEducationalInstitution:
                   generalInfo.value.otherEducationalInstitution,
-                otherProfessionalTypeAmharic:
-                  generalInfo.value.otherProfessionalTypeAmharic,
+                otherProfessionAmharic: generalInfo.value.otherProfessionalTypeAmharic,
                 otherProfessionalType: generalInfo.value.otherProfessionalType,
               });
               generalInfo.value.education.push({
@@ -889,8 +888,7 @@ export default {
                 institutionId: generalInfo.value.institutionSelected.id,
                 professionTypeId: generalInfo.value.professionalTypeSelected.id,
                 otherInstitution: generalInfo.value.otherEducationalInstitution,
-                otherProfessionTypeAmharic:
-                  generalInfo.value.otherProfessionalTypeAmharic,
+                otherProfessionAmharic: generalInfo.value.otherProfessionalTypeAmharic,
                 otherProfessionType: generalInfo.value.otherProfessionalType,
               });
             }
@@ -913,7 +911,7 @@ export default {
               institutionId: generalInfo.value.institutionSelected.id,
               professionTypeId: generalInfo.value.professionalTypeSelected.id,
               otherInstitution: generalInfo.value.otherEducationalInstitution,
-              otherProfessionTypeAmharic: generalInfo.value.otherProfessionalTypeAmharic,
+              otherProfessionAmharic: generalInfo.value.otherProfessionalTypeAmharic,
               otherProfessionType: generalInfo.value.otherProfessionalType,
             });
           }

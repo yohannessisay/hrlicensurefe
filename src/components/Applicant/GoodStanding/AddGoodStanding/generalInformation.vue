@@ -735,7 +735,7 @@ export default {
             otherProfessionalType: generalInfo.value.otherProfessionType
               ? generalInfo.value.otherProfessionType
               : "",
-            otherProfessionalTypeAmharic: generalInfo.value.otherProfessionTypeAmharic
+            otherProfessionTypeAmharic: generalInfo.value.otherProfessionTypeAmharic
               ? generalInfo.value.otherProfessionTypeAmharic
               : "",
           },

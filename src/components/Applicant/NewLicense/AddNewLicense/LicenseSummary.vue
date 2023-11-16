@@ -352,18 +352,18 @@ export default {
             feedback: generalInfo.value.feedback ? generalInfo.value.feedback : "",
           },
         };
-        // showModal.value = true;
-        isLoading.value = false;
+        showModal.value = true;
+
         store.dispatch("newlicense/addNewLicense", license).then((res) => {
           let licenseId = res.data.data.id;
           let payload = { document: formData, id: licenseId };
           store
             .dispatch("newlicense/uploadDocuments", payload)
             .then((res) => {
-              
-              if (res.data.status == "Success") {
-                window.localStorage.removeItem("applicantTypeSelected");
-                window.localStorage.removeItem("NLApplicationData");
+              isLoading.value = false;
+              if (res) {
+                localStorage.removeItem("applicantTypeSelected");
+                localStorage.removeItem("NLApplicationData");
                 indexedDB.deleteDatabase("NLdocumentUploads");
                 toast.success("Applied successfuly", {
                   timeout: 5000,
