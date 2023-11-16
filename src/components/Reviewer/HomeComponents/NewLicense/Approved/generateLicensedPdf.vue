@@ -216,14 +216,7 @@ export default {
 
     const expertLevelCode = JSON.parse(localStorage.getItem("allAdminData")).expertLevel
       .code;
-    let year = new Date().getFullYear();
-    let expirationDate = localStorage.getItem("regionExpDate")
-      ? new Date(
-          `${
-            Number(year) + Number(JSON.parse(localStorage.getItem("regionExpDate")))
-          }T00:00`
-        ).toISOString()
-      : "";
+
     let isLicenseGenerated = ref(false);
 
     let applicationStatus = ref("");
@@ -686,9 +679,7 @@ export default {
         code == "AA" ? 238 : 226,
         code == "AA" ? 160.5 : 164,
         `${
-          expirationDate
-            ? moment(expirationDate).format("MMM DD, YYYY")
-            : certificateDetail.value.licenseExpirationDate
+          certificateDetail.value.licenseExpirationDate
             ? moment(certificateDetail.value.licenseExpirationDate).format("MMM DD, YYYY")
             : "Not Specified"
         }`
@@ -697,9 +688,7 @@ export default {
         code == "AA" ? 238 : 226,
         code == "AA" ? 160.5 : 164,
         `${
-          expirationDate
-            ? moment(expirationDate).format("MMM DD, YYYY")
-            : certificateDetail.value.licenseExpirationDate
+          certificateDetail.value.licenseExpirationDate
             ? moment(certificateDetail.value.licenseExpirationDate).format("MMM DD, YYYY")
             : "Not Specified"
         }`
@@ -886,9 +875,7 @@ export default {
         77 + getAmharicLicensedDate,
         code == "AA" ? 159 : 164,
         `${
-          expirationDate
-            ? toEthiopian(moment(expirationDate)._d.toISOString(), false)
-            : certificateDetail.value.licenseExpirationDate
+          certificateDetail.value.licenseExpirationDate
             ? toEthiopian(
                 moment(certificateDetail.value.licenseExpirationDate)._d.toISOString(),
                 false
@@ -900,9 +887,7 @@ export default {
         77 + getAmharicLicensedDate2,
         code == "AA" ? 159 : 164,
         `${
-          expirationDate
-            ? toEthiopian(moment(expirationDate)._d.toISOString(), false)
-            : certificateDetail.value.licenseExpirationDate
+          certificateDetail.value.licenseExpirationDate
             ? toEthiopian(
                 moment(certificateDetail.value.licenseExpirationDate)._d.toISOString(),
                 false

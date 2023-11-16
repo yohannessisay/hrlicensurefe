@@ -231,16 +231,14 @@
             The license is valid from
             <span class="font-bold">
               {{
-                modalData.data.certifiedDate
-                  ? moment(modalData.data.certifiedDate).format("MMM DD, YYYY")
-                  : ""
+                modalData.data.certifiedDate ? dateFormatter(modalData.certifiedDate) : ""
               }}</span
             >
             -To-
             <span class="font-bold">
               {{
                 modalData.licenseExpirationDate
-                  ? moment(modalData.licenseExpirationDate).format("MMM DD, YYYY")
+                  ? dateFormatter(modalData.licenseExpirationDate)
                   : " Not specified"
               }}</span
             >
@@ -854,7 +852,7 @@
               <span class="font-bold">
                 {{
                   modalData.data.certifiedDate
-                    ? moment(modalData.certifiedDate).format("MMM DD, YYYY")
+                    ? dateFormatter(modalData.certifiedDate)
                     : ""
                 }}</span
               >
@@ -862,7 +860,7 @@
               <span class="font-bold">
                 {{
                   modalData.data.licenseExpirationDate
-                    ? moment(modalData.licenseExpirationDate).format("MMM DD, YYYY")
+                    ? dateFormatter(modalData.licenseExpirationDate)
                     : " Not specified"
                 }}</span
               >
@@ -884,6 +882,16 @@ export default {
     moment: () => moment,
     toEthiopian: () => toEthiopian,
   },
-  setup() {},
+  setup() {
+    const dateFormatter = (date) => {
+      const inputDate = new Date(date);
+      console.log(date, inputDate);
+      const options = { year: "numeric", month: "short", day: "numeric" };
+      return inputDate.toLocaleDateString("en-US", options);
+    };
+    return {
+      dateFormatter,
+    };
+  },
 };
 </script>
