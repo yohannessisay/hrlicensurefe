@@ -1142,7 +1142,9 @@ export default {
     let startDate = ref("");
     let endDate = ref("");
     let showOtherProfessionError = ref(false);
-    let regionId = JSON.parse(window.localStorage.getItem("allAdminData")).regionId;
+    let regionId = localStorage.getItem("allAdminData")
+      ? JSON.parse(localStorage.getItem("allAdminData")).regionId
+      : "";
     let professionalTypeIds = ref([]);
     let professionalTypeIdss = ref([]);
     let licenseExpirationDate = ref(new Date());
@@ -2003,23 +2005,17 @@ export default {
       let month = date.getMonth();
       let day = date.getDate();
       if (regionId) {
-        store
-          .dispatch("lookups/getLicenseExpirationDateByRegionId", regionId)
-          .then((res) => {
-            licenseExpirationDate.value = new Date(
-              year + res.data.data[0].years,
-              month,
-              day
-            )
-              .toISOString()
-              .slice(0, 10);
-            expirationDateYear.value = res.data.data[0].years;
-          });
+        store.dispatch("lookups/getLicenseExpirationDates").then((res) => {
+          licenseExpirationDate.value = new Date(
+            year + res.data.data.filter((el) => el.regionId == regionId)[0].years,
+            month,
+            day
+          ).toISOString();
+          expirationDateYear.value = res.data.data[0].years;
+        });
       } else {
         let year = new Date().getFullYear();
-        licenseExpirationDate.value = new Date(year + 3, month, day)
-          .toISOString()
-          .slice(0, 10);
+        licenseExpirationDate.value = new Date(year + 3, month, day).toISOString();
         expirationDateYear.value = 3;
       }
       store.dispatch("goodstanding/getInstitution").then((res) => {

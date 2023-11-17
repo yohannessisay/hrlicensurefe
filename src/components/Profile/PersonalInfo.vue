@@ -132,9 +132,7 @@
 
         <!-- English Name Part -->
         <h2 class="text-main-400 text-xl">Name (English)</h2>
-        <div
-          class="grid grid-cols-3 gap-4 sm:grid-cols-1 lg:grid-cols-3 mdlg:grid-cols-3 md:grid-cols-3 border-t-2 mb-8"
-        >
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-3 border-t-2 mb-8">
           <div class="flex">
             <div class="form-floating">
               <input
@@ -206,9 +204,7 @@
 
         <!-- Amharic Name Part -->
         <h2 class="text-main-400 text-xl">Name (Amharic)</h2>
-        <div
-          class="grid grid-cols-3 gap-4 sm:grid-cols-1 lg:grid-cols-3 mdlg:grid-cols-3 md:grid-cols-3 border-t-2 mb-8"
-        >
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-3 border-t-2 mb-8">
           <div class="flex">
             <div class="form-floating mb-3 xl:w-96">
               <input
@@ -254,9 +250,7 @@
 
         <!-- General personal info Part -->
         <h2 class="text-main-400 text-xl">General Information</h2>
-        <div
-          class="text-main-400 grid grid-cols-2 sm:grid-cols-1 border-t-2 lg:grid-cols-2 mdlg:grid-cols-2 md:grid-cols-2"
-        >
+        <div class="text-main-400 grid grid-cols-1 gap-4 sm:grid-cols-3 border-t-2">
           <div class="flex">
             <div class="form-floating mb-3 w-full mt-2">
               <input
@@ -329,9 +323,7 @@
             </div>
           </div>
         </div>
-        <div
-          class="grid grid-cols-2 sm:grid-cols-1 lg:grid-cols-3 mdlg:grid-cols-3 md:grid-cols-3"
-        >
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
           <div class="flex mt-2">
             <div class="flex justify-center">
               <div class="mb-3 w-full ml-2">

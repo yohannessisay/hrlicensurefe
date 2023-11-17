@@ -1653,7 +1653,7 @@ export default {
         };
 
         newLicense.value.licenseExpirationDate = licenseExpirationDate.value;
-        console.log(newLicense.value);
+
         if (applicationType.value == "New License") {
           isLoadingAction.value = true;
           store
