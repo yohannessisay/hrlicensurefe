@@ -515,7 +515,7 @@ export default {
       } else {
         doc.setFontSize(14);
         doc2.setFontSize(14);
-        xPosition.value = 158;
+        xPosition.value = 178;
       }
 
       if (certificateDetail.value.educations.length <= 3) {
@@ -680,15 +680,15 @@ export default {
       if (changeWidth.value) {
         doc.setFontSize(11);
         doc2.setFontSize(11);
-        xPosition.value = 28;
+        xPosition.value = 38;
       } else if (changeWidthTooSmall.value) {
         doc.setFontSize(11);
         doc2.setFontSize(11);
-        xPosition.value = 28;
+        xPosition.value = 35;
       } else {
         doc.setFontSize(14);
         doc2.setFontSize(14);
-        xPosition.value = 40;
+        xPosition.value = 60;
       }
       if (certificateDetail.value.educations.length <= 3) {
         for (let i = 0; i < certificateDetail.value.educations.length; i++) {
