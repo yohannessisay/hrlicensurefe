@@ -548,17 +548,22 @@ export default {
                   : generalInfo.value.GSProfessionals.educationLevelId
                   ? generalInfo.value.GSProfessionals.educationLevelId
                   : null,
+              otherProfessionType: generalInfo.value.GSProfessionals.otherProfessionType
+                ? generalInfo.value.GSProfessionals.otherProfessionType
+                : "",
+              otherProfessionTypeAmharic: generalInfo.value.GSProfessionals
+                .otherProfessionTypeAmharic
+                ? generalInfo.value.GSProfessionals.otherProfessionTypeAmharic
+                : "",
             },
             expertLevelId: generalInfo.value.expertLevelId
               ? generalInfo.value.expertLevelId
               : null,
             islegal: true,
-            otherProfessionalType: generalInfo.value.otherProfessionType
-              ? generalInfo.value.otherProfessionType
+            other_applicant_position: generalInfo.value.otherApplicantPosition
+              ? generalInfo.value.otherApplicantPosition
               : "",
-            otherProfessionalTypeAmharic: generalInfo.value.otherProfessionTypeAmharic
-              ? generalInfo.value.otherProfessionTypeAmharic
-              : "",
+
             departmentId: generalInfo.value.department
               ? generalInfo.value.department.id
               : generalInfo.value.departmentId

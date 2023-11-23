@@ -103,7 +103,7 @@
               v-on:click="showDropDown()"
             >
               <div v-if="!isFirstTime" class="w-12 h-12">
-                <img v-bind:src="pic" alt="image here" class="w-20 h-12" />
+                <img :src="pic" alt="image here" class="w-20 h-12" />
               </div>
               <div v-if="isFirstTime">
                 <svg

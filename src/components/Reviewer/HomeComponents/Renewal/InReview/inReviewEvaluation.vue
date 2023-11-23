@@ -41,9 +41,9 @@
 
             <div class="w-full">
               <div class="box-shadow-pop bg-lightGrey-100">
-                <div class="flex justify-content-evenly">
+                <div class="grid grid-cols-1 sm:grid-cols-8">
                   <div
-                    class="container w-64 h-40 p-4 mt-8 ml-8 rounded-lg box-shadow-pop"
+                    class="sm:col-span-2 col-span-8 container w-64 h-40 p-4 mt-8 ml-8 rounded-lg box-shadow-pop"
                   >
                     <div class="mt-8">
                       <div class="flex items-center justify-center my-auto">
@@ -126,7 +126,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="flex flex-wrap justify-start p-4 mt-4">
+                  <div class="sm:col-span-4 col-span-8 w-full p-4 mt-4">
                     <div class="p-4 mb-8 box-shadow-pop bg-lightGrey-100">
                       <div class="flex justify-center">
                         <h1 class="text-primary-600">Evaluation</h1>
@@ -158,9 +158,15 @@
                         <div class="mt-8">
                           <label
                             v-if="!showButtons"
-                            class="items-center justify-center text-2xl text-grey-800"
+                            class="flex items-center justify-center text-2xl text-grey-800"
                           >
-                            {{ documentTypeName }}
+                            <h5 class="text-2xl text-grey-800">
+                              {{
+                                docs[index] && docs[index].documentType
+                                  ? docs[index].documentType.name
+                                  : ""
+                              }}
+                            </h5>
                           </label>
 
                           <div
@@ -642,77 +648,63 @@
                             </div>
                           </div>
 
-                          <div v-else class="flex flex-wrap justify-start">
-                            <div>
-                              <div v-if="docs.length > 0">
-                                <div
-                                  v-if="
-                                    docs[index] &&
-                                    docs[index].fileType &&
-                                    docs[index].fileType.split('/')[1] == 'pdf'
+                          <div v-else class="flex content-center justify-center">
+                            <div v-if="docs.length > 0">
+                              <div
+                                v-if="
+                                  docs[index] &&
+                                  docs[index].fileType &&
+                                  docs[index].fileType.split('/')[1] == 'pdf'
+                                "
+                              >
+                                <div>
+                                  <iframe
+                                    class="duration-500 ease-in scale-75 cursor-pointer transition-transform transform hover:scale-100"
+                                    :src="
+                                      docs[index] ? googleApi + docs[index].filePath : ''
+                                    "
+                                  ></iframe>
+                                </div>
+                                <br />
+                                <button
+                                  @click="
+                                    openPdfInNewTab(
+                                      docs[index] ? docs[index].filePath : ''
+                                    )
                                   "
+                                  class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded bg-primary-400 hover:bg-purple-700 hover: focus:bg-purple-700 focus: focus:outline-none focus:ring-0 active:bg-purple-800 active: hover:bg-white hover:text-primary-600"
                                 >
-                                  <div>
-                                    <h5 class="text-2xl text-grey-800">
-                                      {{
-                                        docs[index] && docs[index].documentType
-                                          ? docs[index].documentType.name
-                                          : ""
-                                      }}
-                                    </h5>
-                                    <iframe
-                                      v-bind:src="
+                                  See pdf in detail
+                                </button>
+                              </div>
+
+                              <div v-else>
+                                <div>
+                                  <img
+                                    @click="
+                                      viewImage(
                                         docs[index]
                                           ? googleApi + docs[index].filePath
                                           : ''
-                                      "
-                                    ></iframe>
-                                  </div>
-                                  <br />
-                                  <button
-                                    @click="
-                                      openPdfInNewTab(
-                                        docs[index] ? docs[index].filePath : ''
                                       )
                                     "
-                                    class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded bg-primary-400 hover:bg-purple-700 hover: focus:bg-purple-700 focus: focus:outline-none focus:ring-0 active:bg-purple-800 active: hover:bg-white hover:text-primary-600"
+                                    class="duration-500 ease-in scale-75 cursor-pointer transition-transform transform hover:scale-100"
+                                    :src="
+                                      docs[index] ? googleApi + docs[index].filePath : ''
+                                    "
+                                    style="height: 400px; width: 400px"
+                                  />
+                                  <small class="ml-12 font-bold text-base text-green-200">
+                                    <i class="fa-regular fa-circle-question"></i>
+                                    Click the image to zoom</small
                                   >
-                                    See pdf in detail
-                                  </button>
-                                </div>
-
-                                <div v-else>
-                                  <h5 class="text-2xl text-grey-800">
-                                    {{
-                                      docs[index] && docs[index].documentType
-                                        ? docs[index].documentType.name
-                                        : ""
-                                    }}
-                                  </h5>
-
-                                  <div class="flex items-center">
-                                    <img
-                                      @click="
-                                        viewImage(
-                                          docs[index]
-                                            ? googleApi + docs[index].filePath
-                                            : ''
-                                        )
-                                      "
-                                      class="duration-500 ease-in scale-50 cursor-pointer hover:scale-75"
-                                      :src="
-                                        docs[index]
-                                          ? googleApi + docs[index].filePath
-                                          : ''
-                                      "
-                                    />
-                                  </div>
                                 </div>
                               </div>
                             </div>
+
                             <div
                               class="flex content-center justify-center pb-large"
-                              v-if="docs.length == 0"
+                              v-else
                             >
                               <h2>No Documents To Show!!</h2>
                             </div>
@@ -761,7 +753,7 @@
                     </div>
                   </div>
                   <div
-                    class="container w-64 h-40 p-4 mt-8 mr-8 rounded-lg box-shadow-pop"
+                    class="sm:col-span-2 col-span-8 container w-64 h-40 p-4 mt-8 rounded-lg shadow-lg ml-8 sm:mr-4 sm:ml-2 mb-12 sm:mb-0"
                   >
                     <div class="mt-8">
                       <div class="flex items-center justify-center my-auto">
@@ -773,8 +765,65 @@
                         <h2 class="text-3xl text-red-300">Rejected</h2>
                       </div>
                     </div>
+                    <!-- Right side license  detail view -->
+                    <div
+                      class="container max-w-md mx-auto my-2 mt-8 p-2 overflow-hidden bg-white rounded-lg"
+                    >
+                      <h2 class="text-xl font-bold underline text-primary-600">
+                        Application Detail
+                      </h2>
+
+                      <div
+                        class="p-1 pb-8 text-gray-600 border-b-2"
+                        v-for="education in renewal && renewal.educations
+                          ? renewal.educations
+                          : []"
+                        :key="education.id"
+                      >
+                        <div class="grid grid-cols-3">
+                          <div class="col-span-1 mt-2 text-primary-600">
+                            Profession Name
+                          </div>
+                          <div class="col-span-2 mt-2 ml-8 break-all">
+                            {{
+                              education &&
+                              education.professionType &&
+                              education.professionType.name.toLowerCase() != "other"
+                                ? education.professionType.name
+                                : education && education.professionType && education
+                                ? education &&
+                                  education.professionType &&
+                                  education.otherProfessionType + " (" + education &&
+                                  education.professionType &&
+                                  education.otherProfessionAmharic + ")"
+                                : ""
+                            }}
+                          </div>
+                          <div class="col-span-1 mt-2 text-primary-600">
+                            Education Level
+                          </div>
+                          <div class="col-span-2 mt-2 ml-8 break-all">
+                            {{
+                              education && education.educationLevel
+                                ? education.educationLevel.name
+                                : ""
+                            }}
+                          </div>
+                          <div class="col-span-1 mt-2 text-primary-600">Department</div>
+                          <div class="col-span-2 mt-2 break-all ml-8">
+                            {{
+                              education && education.department
+                                ? education.department.name
+                                : ""
+                            }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End of license view -->
                   </div>
                 </div>
+
                 <div class="vld-parent">
                   <loading
                     :active="isLoadingAction"
@@ -786,11 +835,7 @@
                     class="flex items-center justify-center mb-medium"
                     v-if="showButtons && !showLoadingButtons"
                   >
-                    <div
-                      v-for="button in buttons"
-                      v-bind:key="button.name"
-                      v-bind:value="button.id"
-                    >
+                    <div v-for="button in buttons" :key="button.name" :value="button.id">
                       <button
                         v-if="button.code == 'DEC'"
                         :class="
@@ -882,7 +927,7 @@
 
                                   <picture class="imageViewer" v-else>
                                     <img
-                                      v-bind:src="
+                                      :src="
                                         rejectedObj[ind]
                                           ? googleApi + rejectedObj[ind].filePath
                                           : ''

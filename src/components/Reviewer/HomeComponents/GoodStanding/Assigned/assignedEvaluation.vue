@@ -32,8 +32,10 @@
             ></loading>
             <div class="w-full">
               <div class="box-shadow-pop bg-lightGrey-100">
-                <div class="flex justify-content-evenly">
-                  <div class="container w-64 h-40 mt-8 ml-8 rounded-lg box-shadow-pop">
+                <div class="grid grid-cols-1 sm:grid-cols-8">
+                  <div
+                    class="sm:col-span-2 col-span-8 container w-64 h-40 p-4 mt-8 ml-8 rounded-lg box-shadow-pop"
+                  >
                     <div class="mt-8">
                       <div class="flex items-center justify-center my-auto">
                         <h2 class="text-3xl">
@@ -126,7 +128,7 @@
                     </div>
                     <!-- End of profile view -->
                   </div>
-                  <div class="flex flex-wrap justify-start p-4 mt-4">
+                  <div class="sm:col-span-4 col-span-8 w-full p-4 mt-4">
                     <div class="p-4 mb-8 box-shadow-pop bg-lightGrey-100">
                       <div class="">
                         <svg
@@ -151,16 +153,12 @@
                       </div>
 
                       <div class="flex flex-col items-center justify-center">
-                        <div class="mt-8">
-                          <label
-                            v-if="!showButtons"
-                            class="items-center justify-center text-2xl text-grey-800"
-                          >
-                            {{ documentTypeName }}
-                          </label>
-
+                        <label v-if="!showButtons" class="text-2xl text-grey-800">
+                          {{ documentTypeName }}
+                        </label>
+                        <div class="flex content-center justify-center">
                           <div
-                            class="container px-4 mx-auto my-2 md:px-4"
+                            class="container px-4 mx-auto my-2 md:px-4 mt-8 flex justify-center"
                             v-if="showButtons"
                           >
                             <div class="flex flex-wrap md:-mx-4 lg:-mx-8">
@@ -486,44 +484,6 @@
                                                 </div>
                                               </div>
                                             </div>
-
-                                            <div class="grid grid-cols-2 gap-4">
-                                              <p
-                                                class="text-base font-bold text-primary-600"
-                                              >
-                                                Prefix
-                                              </p>
-                                              <div class="text-base font-bold text-black">
-                                                <div
-                                                  class="w-full mb-3"
-                                                  v-if="
-                                                    showPrefixFor[
-                                                      goodStanding.departmentId
-                                                    ]
-                                                  "
-                                                >
-                                                  <select
-                                                    class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:oProfessionutline-none"
-                                                    v-model="
-                                                      goodStanding.GSProfessionals
-                                                        .prefixId
-                                                    "
-                                                    aria-label="Default select example"
-                                                  >
-                                                    <option selected disabled>
-                                                      Choose prefix
-                                                    </option>
-                                                    <option
-                                                      v-for="prefix in prefixes"
-                                                      :key="prefix.id"
-                                                      :value="prefix.id"
-                                                    >
-                                                      {{ prefix.name }}
-                                                    </option>
-                                                  </select>
-                                                </div>
-                                              </div>
-                                            </div>
                                           </div>
                                         </div>
                                       </div>
@@ -536,17 +496,24 @@
                             </div>
                           </div>
 
-                          <div v-else class="flex flex-wrap justify-start">
-                            <div v-if="docs.length > 0">
+                          <div v-else class="flex content-center justify-center">
+                            <div
+                              v-if="docs.length > 0"
+                              class="flex content-center justify-center"
+                            >
                               <div
                                 v-if="
                                   docs[index] &&
                                   docs[index].fileType.split('/')[1] == 'pdf'
                                 "
                               >
-                                <div>
+                                <div
+                                  width="300"
+                                  height="200"
+                                  class="duration-500 ease-in scale-75 cursor-pointer transition-transform transform hover:scale-125"
+                                >
                                   <iframe
-                                    v-bind:src="
+                                    :src="
                                       docs[index] && docs[index].filePath
                                         ? googleApi + '' + docs[index].filePath
                                         : ''
@@ -568,25 +535,29 @@
 
                               <div v-else>
                                 <img
-                                  class="duration-500 ease-in scale-50 cursor-pointer hover:scale-75 h-64 w-64"
+                                  class="duration-500 ease-in scale-75 cursor-pointer transition-transform transform hover:scale-100"
                                   @click="
                                     viewImage(
                                       docs[index] ? googleApi + docs[index].filePath : ''
                                     )
                                   "
-                                  v-bind:src="
+                                  :src="
                                     docs[index] && docs[index].filePath
                                       ? googleApi + '' + docs[index].filePath
                                       : ''
                                   "
+                                  style="height: 400px; width: 400px"
                                 />
-                                <div style="width: 400px"></div>
+                                <small class="ml-12 font-bold text-base text-green-200">
+                                  <i class="fa-regular fa-circle-question"></i>
+                                  Click the image to zoom</small
+                                >
                               </div>
                             </div>
 
                             <div
                               class="flex content-center justify-center pb-large"
-                              v-if="docs.length == 0"
+                              v-else
                             >
                               <h2>No Documents To Show!!</h2>
                             </div>
@@ -634,7 +605,7 @@
                     </div>
                   </div>
                   <div
-                    class="container w-64 h-40 p-4 mt-8 mr-8 rounded-lg box-shadow-pop"
+                    class="sm:col-span-2 col-span-8 container w-64 h-40 p-4 mt-8 rounded-lg shadow-lg ml-8 sm:mr-4 sm:ml-2 mb-12 sm:mb-0"
                   >
                     <div class="mt-8">
                       <div class="flex items-center justify-center my-auto">
@@ -709,11 +680,7 @@
                   class="flex items-center justify-center mb-medium"
                   v-if="showButtons && !showLoadingButtons"
                 >
-                  <div
-                    v-for="button in buttons"
-                    v-bind:key="button.name"
-                    v-bind:value="button.id"
-                  >
+                  <div v-for="button in buttons" :key="button.name" :value="button.id">
                     <div class="vld-parent">
                       <loading
                         :active="isLoadingFinalAction"
@@ -800,13 +767,12 @@
                                 </div>
 
                                 <picture
-                                  height="400"
-                                  width="400"
+                                  style="height: 400px; width: 400px"
                                   class="imageViewer"
                                   v-else
                                 >
                                   <img
-                                    v-bind:src="
+                                    :src="
                                       rejectedObj[ind]
                                         ? googleApi + rejectedObj[ind].filePath
                                         : ''

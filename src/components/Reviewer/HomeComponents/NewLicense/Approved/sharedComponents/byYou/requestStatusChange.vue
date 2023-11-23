@@ -42,8 +42,8 @@
                   >
                     <option
                       v-for="req in applicationStatuses"
-                      v-bind:key="req.id"
-                      v-bind:value="req.id"
+                      :key="req.id"
+                      :value="req.id"
                     >
                       {{ req.name }}
                     </option>

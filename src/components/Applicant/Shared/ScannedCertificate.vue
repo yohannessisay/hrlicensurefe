@@ -20,7 +20,7 @@
           You are here requesting the validity of the professional's license
         </h2>
         <img
-          v-bind:src="certifiedUser.pic"
+          :src="certifiedUser.pic"
           alt="image here"
           style="height:200px;width:200px"
         />

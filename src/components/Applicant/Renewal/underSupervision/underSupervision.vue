@@ -112,7 +112,7 @@
                   hover:underline
                   text-black
                 " href="#">
-                <img alt="Placeholder" class="block rounded-full h-8" v-bind:src="
+                <img alt="Placeholder" class="block rounded-full h-8" :src="
                   userInfo.profilePicturePath
                     ? googleApi + userInfo.profilePicturePath
                     : ''

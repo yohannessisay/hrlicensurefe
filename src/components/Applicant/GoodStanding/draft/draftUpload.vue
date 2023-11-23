@@ -1,9 +1,7 @@
 <template>
   <div>
     <div class="accordion mr-8" id="FilesAccordion">
-      <div
-        class="accordion-item bg-white border border-grey-200 p-4 rounded-lg"
-      >
+      <div class="accordion-item bg-white border border-grey-200 p-4 rounded-lg">
         <h2 class="accordion-header mb-0" id="headingOne">
           <span
             class="rounded-md collapsed relative flex items-center w-full py-4 px-5 text-base text-gray-800 text-left bg-main-400 hover:text-main-400 text-white border-0 transition focus:outline-none"
@@ -35,14 +33,10 @@
                   <table class="max-w-4xl w-full whitespace-nowrap bg-white">
                     <thead class="bg-lightMain-500">
                       <tr class="text-left">
-                        <th
-                          class="font-semibold text-sm uppercase px-6 py-4 text-white"
-                        >
+                        <th class="font-semibold text-sm uppercase px-6 py-4 text-white">
                           Document Name
                         </th>
-                        <th
-                          class="font-semibold text-sm uppercase px-6 py-4 text-white"
-                        >
+                        <th class="font-semibold text-sm uppercase px-6 py-4 text-white">
                           Document Description
                         </th>
                         <th
@@ -50,14 +44,14 @@
                         >
                           Upload
                         </th>
+                        <th class="font-semibold text-sm uppercase px-6 py-4 text-white">
+                          Previously Uploaded File
+                        </th>
                         <th
                           class="font-semibold text-sm uppercase px-6 py-4 text-center text-white"
                         >
                           View
                         </th>
-                        <th
-                          class="font-semibold text-sm uppercase px-6 py-4 text-white"
-                        ></th>
                       </tr>
                     </thead>
                     <tbody class="divide-y">
@@ -65,9 +59,7 @@
                         v-for="item in documents"
                         :key="item.id"
                         :class="
-                          documentError[
-                            'file_upload_row_' + item.documentType.code
-                          ]
+                          documentError['file_upload_row_' + item.documentType.code]
                             ? 'border text-red-300'
                             : 'border-b text-main-400'
                         "
@@ -106,40 +98,28 @@
                             class="text-grey-800"
                             v-if="
                               documentsSaved[item.documentType.code] &&
-                                documentsSaved[item.documentType.code].fileName
-                            "
-                            >{{
                               documentsSaved[item.documentType.code].fileName
-                            }}</span
+                            "
+                            >{{ documentsSaved[item.documentType.code].fileName }}</span
                           >
                         </td>
                         <td class="px-6 py-4 text-center">
                           <a
-                            :id="
-                              'common_image_href' +
-                                item.documentType.id +
-                                item.id
-                            "
+                            :id="'common_image_href' + item.documentType.id + item.id"
                             :href="documentsSaved[item.documentType.code]?.path"
                             :data-title="item.name ? item.name : '-----'"
                             data-lightbox="example-2"
                           >
                             <i
-                              :id="
-                                'common_icon' + item.documentType.id + item.id
-                              "
+                              :id="'common_icon' + item.documentType.id + item.id"
                               class="fa fa-eye cursor-pointer text-main-400"
                               aria-hidden="true"
                             >
                               <img
                                 :id="
-                                  'common_image_lightbox' +
-                                    item.documentType.id +
-                                    item.id
+                                  'common_image_lightbox' + item.documentType.id + item.id
                                 "
-                                v-bind:src="
-                                  documentsSaved[item.documentType.code]
-                                "
+                                :src="documentsSaved[item.documentType.code]"
                                 class="w-full h-2 object-cover"
                               />
                             </i>
@@ -173,20 +153,20 @@
 
     <div class="flex justify-end mr-8">
       <button
-        class="mt-8 inline-block px-6 py-2.5 bg-white hover:bg-main-400 hover:text-white text-main-400 text-xs font-bold leading-tight uppercase rounded   active:border-main-400 transition duration-150 ease-in-out border"
+        class="mt-8 inline-block px-6 py-2.5 bg-white hover:bg-main-400 hover:text-white text-main-400 text-xs font-bold leading-tight uppercase rounded active:border-main-400 transition duration-150 ease-in-out border"
         type="submit"
         @click="saveDraft()"
       >
         Update
       </button>
       <button
-        class="mt-8 inline-block px-6 py-2.5 bg-white hover:bg-main-400 hover:text-white text-main-400 text-xs font-bold leading-tight uppercase rounded   active:border-main-400 transition duration-150 ease-in-out border"
+        class="mt-8 inline-block px-6 py-2.5 bg-white hover:bg-main-400 hover:text-white text-main-400 text-xs font-bold leading-tight uppercase rounded active:border-main-400 transition duration-150 ease-in-out border"
         @click="back()"
       >
         back
       </button>
       <button
-        class="mt-8 inline-block px-6 py-2.5 bg-main-400 hover:text-main-400 text-white text-xs font-bold leading-tight uppercase rounded   active:border-main-400 transition duration-150 ease-in-out"
+        class="mt-8 inline-block px-6 py-2.5 bg-main-400 hover:text-main-400 text-white text-xs font-bold leading-tight uppercase rounded active:border-main-400 transition duration-150 ease-in-out"
         @click="next()"
       >
         next
@@ -267,28 +247,22 @@ export default {
       } else {
         fileSize.value = fileS / 1000000 + "MB";
       }
-      reader.addEventListener("load", function() {
+      reader.addEventListener("load", function () {
         showPreview.value = true;
 
         previewDocuments.value[data.documentType.code] = reader.result;
 
-        imageData = imageData.filter(
-          (el) => el.documenttype != data.documentType.name
-        );
+        imageData = imageData.filter((el) => el.documenttype != data.documentType.name);
         imageData.push({
           documenttype: data.documentType ? data.documentType.name : "",
           documentCode: data.documentType ? data.documentType.code : "",
-          educationalLevel: data.educationalLevel
-            ? data.educationalLevel.name
-            : "",
+          educationalLevel: data.educationalLevel ? data.educationalLevel.name : "",
           image: reader.result,
         });
       });
       if (documentUploaded.value[data.documentType.code]) {
         if (
-          /\.(jpe?g|png|gif)$/i.test(
-            documentUploaded.value[data.documentType.code].name
-          )
+          /\.(jpe?g|png|gif)$/i.test(documentUploaded.value[data.documentType.code].name)
         ) {
           isImage.value[data.documentType.code] = true;
           isPdf.value[data.documentType.code] = false;
@@ -303,9 +277,7 @@ export default {
         }
       }
 
-      let icon = document.getElementById(
-        "common_icon" + data.documentType.id + data.id
-      );
+      let icon = document.getElementById("common_icon" + data.documentType.id + data.id);
       if (icon.classList.contains("disabled")) {
         icon.classList.toggle("disabled");
       }
@@ -323,7 +295,7 @@ export default {
       }
 
       output
-        ? (output.onload = function() {
+        ? (output.onload = function () {
             URL.revokeObjectURL(output.src); // free memory
           })
         : "";
@@ -332,24 +304,22 @@ export default {
     const initDb = () => {
       let request = indexedDB.open("GSdocumentUploads", 1);
 
-      request.onerror = function() {
+      request.onerror = function () {
         console.error("Unable to open database.");
       };
 
-      request.onsuccess = function() {
+      request.onsuccess = function () {
         let db = request.result;
         const tx = db.transaction("GSdocumentUploads", "readwrite");
         const store = tx.objectStore("GSdocumentUploads");
         let getAllIDB = store.getAll();
-        getAllIDB.onsuccess = function(evt) {
+        getAllIDB.onsuccess = function (evt) {
           existingDocs =
-            evt.target.result && evt.target.result[0]
-              ? evt.target.result[0].data
-              : {};
+            evt.target.result && evt.target.result[0] ? evt.target.result[0].data : {};
         };
       };
 
-      request.onupgradeneeded = function() {
+      request.onupgradeneeded = function () {
         let db = request.result;
         db.createObjectStore("GSdocumentUploads", {
           keyPath: "id",
@@ -365,7 +335,6 @@ export default {
         ? documents.value
             .filter((cd) => cd.isRequired)
             .forEach((element) => {
-             
               temp = existingDocs.filter(
                 (el) => el.documentTypeCode == element.documentType.code
               );
@@ -417,12 +386,9 @@ export default {
           };
           let db;
           let request = indexedDB.open("GSdocumentUploads", 1);
-          request.onsuccess = function() {
+          request.onsuccess = function () {
             db = request.result;
-            let transaction = db.transaction(
-              ["GSdocumentUploads"],
-              "readwrite"
-            );
+            let transaction = db.transaction(["GSdocumentUploads"], "readwrite");
             let tempStat = false;
 
             if (
@@ -458,13 +424,13 @@ export default {
                 .objectStore("GSdocumentUploads")
                 .put(finalLocalData);
 
-              addReq.onerror = function() {
+              addReq.onerror = function () {
                 console.log(
                   "Error regarding your browser, please update your browser to the latest version"
                 );
               };
 
-              transaction.oncomplete = function() {
+              transaction.oncomplete = function () {
                 console.log("data stored");
 
                 emit("changeActiveState");
@@ -519,9 +485,7 @@ export default {
           licenseIssuedDate: generalInfo.value.licenseIssuedDate
             ? generalInfo.value.licenseIssuedDate
             : null,
-          whoIssuedId: generalInfo.value.whoIssued
-            ? generalInfo.value.whoIssued.id
-            : "",
+          whoIssuedId: generalInfo.value.whoIssued ? generalInfo.value.whoIssued.id : "",
           licenseRegistrationNumber: generalInfo.value.licenseRegistrationNumber
             ? generalInfo.value.licenseRegistrationNumber
             : "",
@@ -540,69 +504,57 @@ export default {
                 : generalInfo.value.GSProfessionals.educationLevelId
                 ? generalInfo.value.GSProfessionals.educationLevelId
                 : null,
+            otherProfessionType: generalInfo.value.GSProfessionals.otherProfessionType
+              ? generalInfo.value.GSProfessionals.otherProfessionType
+              : "",
+            otherProfessionTypeAmharic: generalInfo.value.GSProfessionals
+              .otherProfessionTypeAmharic
+              ? generalInfo.value.GSProfessionals.otherProfessionTypeAmharic
+              : "",
           },
           expertLevelId: generalInfo.value.expertLevelId
             ? generalInfo.value.expertLevelId
             : null,
           islegal: true,
-          otherProfessionalType: generalInfo.value.otherProfessionType
-            ? generalInfo.value.otherProfessionType
-            : "",
-          otherProfessionalTypeAmharic: generalInfo.value
-            .otherProfessionTypeAmharic
-            ? generalInfo.value.otherProfessionTypeAmharic
+          other_applicant_position: generalInfo.value.otherApplicantPosition
+            ? generalInfo.value.otherApplicantPosition
             : "",
           departmentId: generalInfo.value.department
             ? generalInfo.value.department.id
             : generalInfo.value.departmentId
             ? generalInfo.value.departmentId
             : null,
-          feedback: generalInfo.value.feedback
-            ? generalInfo.value.feedback
-            : "",
+          feedback: generalInfo.value.feedback ? generalInfo.value.feedback : "",
           id: route.params.id,
         },
       };
 
-      store
-        .dispatch("goodstanding/editGoodstandingLicense", license)
-        .then(() => {
-          let licenseId = route.params.id;
-          let payload = { document: formData, id: licenseId };
+      store.dispatch("goodstanding/editGoodstandingLicense", license).then(() => {
+        let licenseId = route.params.id;
+        let payload = { document: formData, id: licenseId };
 
-          store
-            .dispatch(
-              generalInfo.value &&
-                generalInfo.value.documents &&
-                generalInfo.value.documents.length > 0
-                ? "goodstanding/updateDocuments"
-                : "goodstanding/uploadDocuments",
-              payload
-            )
-            .then((res) => {
-              if (res.data.status == "Success") {
-                toast.success("Applied successfuly", {
-                  timeout: 5000,
-                  position: "bottom-center",
-                  pauseOnFocusLoss: true,
-                  pauseOnHover: true,
-                  icon: true,
-                });
-                isLoading.value = false;
-                localStorage.removeItem("GSApplicationData");
-                location.reload();
-              } else {
-                toast.error("Error occured, please try again", {
-                  timeout: 5000,
-                  position: "bottom-center",
-                  pauseOnFocusLoss: true,
-                  pauseOnHover: true,
-                  icon: true,
-                });
-                isLoading.value = false;
-              }
-            })
-            .catch(() => {
+        store
+          .dispatch(
+            generalInfo.value &&
+              generalInfo.value.documents &&
+              generalInfo.value.documents.length > 0
+              ? "goodstanding/updateDocuments"
+              : "goodstanding/uploadDocuments",
+            payload
+          )
+          .then((res) => {
+            if (res.data.status == "Success") {
+              toast.success("Applied successfuly", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
+              isLoading.value = false;
+              localStorage.removeItem("GSApplicationData");
+              location.reload();
+            } else {
               toast.error("Error occured, please try again", {
                 timeout: 5000,
                 position: "bottom-center",
@@ -611,8 +563,19 @@ export default {
                 icon: true,
               });
               isLoading.value = false;
+            }
+          })
+          .catch(() => {
+            toast.error("Error occured, please try again", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
             });
-        });
+            isLoading.value = false;
+          });
+      });
     };
 
     onMounted(() => {
@@ -636,8 +599,7 @@ export default {
               element.documentType.name;
             documentsSaved.value[element.documentTypeCode].code =
               element.documentType.code;
-            documentsSaved.value[element.documentTypeCode].fileName =
-              element.fileName;
+            documentsSaved.value[element.documentTypeCode].fileName = element.fileName;
           });
 
           existingDocs = generalInfo.value?.documents;
@@ -659,8 +621,7 @@ export default {
             let results = res.data.data;
 
             documents.value = results.filter(
-              ((set) => (f) =>
-                !set.has(f.documentTypeId) && set.add(f.documentTypeId))(
+              ((set) => (f) => !set.has(f.documentTypeId) && set.add(f.documentTypeId))(
                 new Set()
               )
             );
@@ -704,7 +665,7 @@ export default {
   border-radius: 5%;
   padding: 7px;
 }
-.  {
+. {
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 34%), 0 2px 4px -1px rgb(0 0 0 / 6%);
 }
 .document-name {

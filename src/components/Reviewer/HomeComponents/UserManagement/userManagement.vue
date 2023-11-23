@@ -93,8 +93,8 @@
                       <option selected disabled>Expert Level</option>
                       <option
                         v-for="status in expertLevels"
-                        v-bind:key="status.code"
-                        v-bind:value="status.code"
+                        :key="status.code"
+                        :value="status.code"
                       >
                         {{ status.name }}
                       </option>

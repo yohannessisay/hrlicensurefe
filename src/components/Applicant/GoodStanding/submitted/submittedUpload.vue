@@ -38,9 +38,9 @@
                         Upload
                       </th>
 
-                      <th
-                        class="font-semibold text-sm uppercase px-6 py-4 text-white"
-                      ></th>
+                      <th class="font-semibold text-sm uppercase px-6 py-4 text-white">
+                        Previously Uploaded
+                      </th>
                       <th
                         class="font-semibold text-sm uppercase px-6 py-4 text-center text-white"
                       >
@@ -112,7 +112,7 @@
                               :id="
                                 'common_image_lightbox_' + item.documentType.id + item.id
                               "
-                              v-bind:src="documentsSaved[item.documentType.code]"
+                              :src="documentsSaved[item.documentType.code]"
                               class="w-full h-2 object-cover"
                             />
                           </i>
@@ -151,20 +151,20 @@
       ></loading>
       <div class="flex justify-end mr-8">
         <button
-          class="mt-8 inline-block px-6 py-2.5 bg-white hover:bg-main-400 hover:text-white text-main-400 text-xs font-bold leading-tight uppercase rounded   active:border-main-400 transition duration-150 ease-in-out border"
+          class="mt-8 inline-block px-6 py-2.5 bg-white hover:bg-main-400 hover:text-white text-main-400 text-xs font-bold leading-tight uppercase rounded active:border-main-400 transition duration-150 ease-in-out border"
           type="submit"
           @click="saveDraft()"
         >
           Update
         </button>
         <button
-          class="mt-8 inline-block px-6 py-2.5 bg-white hover:bg-main-400 hover:text-white text-main-400 text-xs font-bold leading-tight uppercase rounded   active:border-main-400 transition duration-150 ease-in-out border"
+          class="mt-8 inline-block px-6 py-2.5 bg-white hover:bg-main-400 hover:text-white text-main-400 text-xs font-bold leading-tight uppercase rounded active:border-main-400 transition duration-150 ease-in-out border"
           @click="back()"
         >
           back
         </button>
         <button
-          class="mt-8 inline-block px-6 py-2.5 bg-main-400 hover:text-main-400 text-white text-xs font-bold leading-tight uppercase rounded   active:border-main-400 transition duration-150 ease-in-out"
+          class="mt-8 inline-block px-6 py-2.5 bg-main-400 hover:text-main-400 text-white text-xs font-bold leading-tight uppercase rounded active:border-main-400 transition duration-150 ease-in-out"
           @click="next()"
         >
           next
@@ -451,22 +451,27 @@ export default {
                 : generalInfo.value.GSProfessionals.educationLevelId
                 ? generalInfo.value.GSProfessionals.educationLevelId
                 : null,
+            otherProfessionType: generalInfo.value.GSProfessionals.otherProfessionType
+              ? generalInfo.value.GSProfessionals.otherProfessionType
+              : "",
+            otherProfessionTypeAmharic: generalInfo.value.GSProfessionals
+              .otherProfessionTypeAmharic
+              ? generalInfo.value.GSProfessionals.otherProfessionTypeAmharic
+              : "",
           },
           expertLevelId: generalInfo.value.expertLevelId
             ? generalInfo.value.expertLevelId
             : null,
           islegal: true,
-          otherProfessionalType: generalInfo.value.otherProfessionType
-            ? generalInfo.value.otherProfessionType
-            : "",
-          otherProfessionalTypeAmharic: generalInfo.value.otherProfessionTypeAmharic
-            ? generalInfo.value.otherProfessionTypeAmharic
-            : "",
+
           departmentId: generalInfo.value.department
             ? generalInfo.value.department.id
             : generalInfo.value.departmentId
             ? generalInfo.value.departmentId
             : null,
+          other_applicant_position: generalInfo.value.otherApplicantPosition
+            ? generalInfo.value.otherApplicantPosition
+            : "",
           feedback: generalInfo.value.feedback ? generalInfo.value.feedback : "",
           id: route.params.id,
         },
@@ -604,11 +609,12 @@ export default {
   border-radius: 5%;
   padding: 7px;
 }
-.  {
+. {
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 34%), 0 2px 4px -1px rgb(0 0 0 / 6%);
 }
 .document-name {
   font-size: small;
+  color: black;
 }
 .custom-file-input::-webkit-file-upload-button {
   visibility: hidden;

@@ -109,7 +109,7 @@
                 >Upload again
               </span>
             </div>
-            <img v-bind:src="filePreview" v-show="showPreview" />
+            <img :src="filePreview" v-show="showPreview" />
           </picture>
 
           <span v-if="photoSizeCheck" style="color: red"
@@ -339,8 +339,8 @@
                 >
                   <option
                     v-for="types in state.nationalities"
-                    v-bind:key="types.name"
-                    v-bind:value="types.id"
+                    :key="types.name"
+                    :value="types.id"
                   >
                     {{ types.name }}
                   </option>

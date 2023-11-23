@@ -66,8 +66,8 @@
                 >
                   <option
                     v-for="language in languages"
-                    v-bind:key="language.name"
-                    v-bind:value="language"
+                    :key="language.name"
+                    :value="language"
                   >
                     {{ language.name }}
                   </option>
@@ -81,8 +81,8 @@
                 >
                   <option
                     v-for="occupation in occupations"
-                    v-bind:key="occupation.name"
-                    v-bind:value="occupation"
+                    :key="occupation.name"
+                    :value="occupation"
                   >
                     {{ occupation.name }}
                   </option>
@@ -111,8 +111,8 @@
                 >
                   <option
                     v-for="region in regions"
-                    v-bind:key="region.name"
-                    v-bind:value="region"
+                    :key="region.name"
+                    :value="region"
                   >
                     {{ region.name }}
                   </option>
@@ -140,8 +140,8 @@
                   </option>
                   <option
                     v-for="zone in zones"
-                    v-bind:key="zone.name"
-                    v-bind:value="zone"
+                    :key="zone.name"
+                    :value="zone"
                   >
                     {{ zone.name }}
                   </option>
@@ -162,8 +162,8 @@
                 >
                   <option
                     v-for="woreda in woredas"
-                    v-bind:key="woreda.name"
-                    v-bind:value="woreda"
+                    :key="woreda.name"
+                    :value="woreda"
                   >
                     {{ woreda.name }}
                   </option>
@@ -191,8 +191,8 @@
                 >
                   <option
                     v-for="department in departments"
-                    v-bind:key="department.name"
-                    v-bind:value="department"
+                    :key="department.name"
+                    :value="department"
                   >
                     {{ department.name }}
                   </option>
@@ -208,8 +208,8 @@
                 >
                   <option
                     v-for="educationalLevel in educationalLevels"
-                    v-bind:key="educationalLevel.name"
-                    v-bind:value="educationalLevel"
+                    :key="educationalLevel.name"
+                    :value="educationalLevel"
                   >
                     {{ educationalLevel.name }}
                   </option>
@@ -226,8 +226,8 @@
                   <option disabled>First Select Department from above</option>
                   <option
                     v-for="pf in professionalTypes"
-                    v-bind:key="pf.id"
-                    v-bind:value="pf"
+                    :key="pf.id"
+                    :value="pf"
                   >
                     {{ pf.name }}
                   </option>
@@ -261,8 +261,8 @@
                   <option disabled>Please Select Applicant Type first</option>
                   <option
                     v-for="institution in institutions"
-                    v-bind:key="institution.name"
-                    v-bind:value="institution"
+                    :key="institution.name"
+                    :value="institution"
                   >
                     {{ institution.name }}
                   </option>

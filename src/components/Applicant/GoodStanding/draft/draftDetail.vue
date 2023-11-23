@@ -133,11 +133,7 @@
                           : ""
                       }}
                     </option>
-                    <option
-                      v-for="region in regions"
-                      v-bind:key="region.name"
-                      v-bind:value="region"
-                    >
+                    <option v-for="region in regions" :key="region.name" :value="region">
                       {{ region.name }}
                     </option>
                   </select>
@@ -170,11 +166,7 @@
                           : ""
                       }}
                     </option>
-                    <option
-                      v-for="zone in zones"
-                      v-bind:key="zone.name"
-                      v-bind:value="zone"
-                    >
+                    <option v-for="zone in zones" :key="zone.name" :value="zone">
                       {{ zone.name }}
                     </option>
                   </select>
@@ -205,11 +197,7 @@
                           : ""
                       }}
                     </option>
-                    <option
-                      v-for="woreda in woredas"
-                      v-bind:key="woreda.name"
-                      v-bind:value="woreda"
-                    >
+                    <option v-for="woreda in woredas" :key="woreda.name" :value="woreda">
                       {{ woreda.name }}
                     </option>
                   </select>
@@ -243,8 +231,8 @@
                     </option>
                     <option
                       v-for="department in departments"
-                      v-bind:key="department.id"
-                      v-bind:value="department"
+                      :key="department.id"
+                      :value="department"
                     >
                       {{ department.name }}
                     </option>
@@ -277,8 +265,8 @@
 
                     <option
                       v-for="edLevel in educationLevels"
-                      v-bind:key="edLevel.name"
-                      v-bind:value="edLevel"
+                      :key="edLevel.name"
+                      :value="edLevel"
                     >
                       {{ edLevel.name }}
                     </option>
@@ -311,8 +299,8 @@
                       </option>
                       <option
                         v-for="profession in professionalTypes"
-                        v-bind:key="profession.name"
-                        v-bind:value="profession"
+                        :key="profession.name"
+                        :value="profession"
                       >
                         {{ profession.name }}
                       </option>
@@ -359,29 +347,27 @@
                     class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
                     v-model="generalInfo.applicantPosition"
                     required
+                    @change="checkOtherApplicantPosition"
                   >
                     <option
-                      :value="
-                        generalInfo && generalInfo.applicantPositionId
-                          ? generalInfo.applicantPositionId
-                          : null
-                      "
-                      selected
-                    >
-                      {{
-                        generalInfo && generalInfo.applicantPosition
-                          ? generalInfo.applicantPosition.name
-                          : ""
-                      }}
-                    </option>
-                    <option
                       v-for="position in applicationPositions"
-                      v-bind:key="position.id"
-                      v-bind:value="position"
+                      :key="position.id"
+                      :value="position"
                     >
                       {{ position.name }}
                     </option>
                   </select>
+                </div>
+                <div v-if="showOtherApplicantPosition" class="mt-5">
+                  <input
+                    type="text"
+                    name="otherProfAmh"
+                    required
+                    v-model="generalInfo.otherApplicantPosition"
+                    class="mt-1 appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+                    autocomplete="off"
+                    placeholder="Other Applicant Position"
+                  />
                 </div>
               </div>
             </div>
@@ -417,11 +403,7 @@
                     v-model="generalInfo.whoIssuedId"
                     required
                   >
-                    <option
-                      v-for="region in regions"
-                      v-bind:key="region.id"
-                      v-bind:value="region"
-                    >
+                    <option v-for="region in regions" :key="region.id" :value="region">
                       {{ region.name }}
                     </option>
                   </select>
@@ -542,6 +524,7 @@ export default {
       departmentId: "",
       applicantTypeSelected: "",
       expertLevelId: "",
+      otherApplicantPosition: "",
       licenseFile: [],
     });
 
@@ -551,6 +534,7 @@ export default {
     let localData = ref([]);
     let regions = ref([]);
     let isDepartmentSelected = ref(false);
+    let showOtherApplicantPosition = ref(false);
     let isEdLevelSelected = ref(false);
     let isAppTypeSelected = ref(false);
     let educationLevels = ref([]);
@@ -630,7 +614,17 @@ export default {
         showOtherProfession.value = false;
       }
     };
-
+    const checkOtherApplicantPosition = () => {
+      if (
+        generalInfo.value.applicantPosition.name &&
+        generalInfo.value.applicantPosition.name.toLowerCase() == "other"
+      ) {
+        showOtherApplicantPosition.value = true;
+      } else {
+        showOtherApplicantPosition.value = false;
+        generalInfo.value.otherApplicantPosition = "";
+      }
+    };
     const fetchApplicantType = () => {
       store.dispatch("goodstanding/getApplicantType").then((res) => {
         applicantTypes.value = res.data.data;
@@ -784,16 +778,20 @@ export default {
                 : generalInfo.value.GSProfessionals.educationLevelId
                 ? generalInfo.value.GSProfessionals.educationLevelId
                 : null,
+            otherProfessionType: generalInfo.value.GSProfessionals.otherProfessionType
+              ? generalInfo.value.GSProfessionals.otherProfessionType
+              : "",
+            otherProfessionTypeAmharic: generalInfo.value.GSProfessionals
+              .otherProfessionTypeAmharic
+              ? generalInfo.value.GSProfessionals.otherProfessionTypeAmharic
+              : "",
           },
           expertLevelId: generalInfo.value.expertLevelId
             ? generalInfo.value.expertLevelId
             : null,
           islegal: true,
-          otherProfessionalType: generalInfo.value.otherProfessionType
-            ? generalInfo.value.otherProfessionType
-            : "",
-          otherProfessionalTypeAmharic: generalInfo.value.otherProfessionTypeAmharic
-            ? generalInfo.value.otherProfessionTypeAmharic
+          other_applicant_position: generalInfo.value.otherApplicantPosition
+            ? generalInfo.value.otherApplicantPosition
             : "",
           departmentId: generalInfo.value.department
             ? generalInfo.value.department.id
@@ -853,17 +851,8 @@ export default {
     };
     const loadFunctions = async () => {
       isLoading.value = true;
-      fetchApplicantType();
-      fetchDepartments();
-      fetchProfessionalType();
-      fetchEducationLevel();
 
-      await fetchRegions();
-      fetchZone();
-      fetchWoredas();
-      fetchApplicantTitle();
-      fetchApplicationPositions();
-      store
+      await store
         .dispatch("goodstanding/getGoodStandingLicenseById", route.params.id)
         .then((res) => {
           withdrawData.value = res.data.data;
@@ -874,6 +863,10 @@ export default {
             : "";
           generalInfo.value.regionSelected =
             res.data.data && res.data.data.woreda ? res.data.data.woreda.zone.region : "";
+          generalInfo.value.otherApplicantPosition = generalInfo.value
+            .other_applicant_position
+            ? generalInfo.value.other_applicant_position
+            : "";
 
           generalInfo.value.zoneSelected =
             res.data.data && res.data.data.woreda
@@ -920,6 +913,21 @@ export default {
               ? regions.value.filter((el) => el.code == "FED")[0]
               : [];
           }
+          checkOtherApplicantPosition();
+          fetchProfessionalType(generalInfo.value.departmentId.id);
+          checkOtherProfession();
+
+          isDepartmentSelected.value = true;
+          isEdLevelSelected.value = true;
+          fetchApplicantType();
+          fetchDepartments();
+          fetchEducationLevel();
+
+          fetchRegions();
+          fetchZone();
+          fetchWoredas();
+          fetchApplicantTitle();
+          fetchApplicationPositions();
           isLoading.value = false;
         });
     };
@@ -956,6 +964,8 @@ export default {
       applicantTypes,
       departments,
       clearLocalData,
+      showOtherApplicantPosition,
+      checkOtherApplicantPosition,
       localData,
     };
   },

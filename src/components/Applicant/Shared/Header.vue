@@ -102,7 +102,7 @@
           >
             <div v-if="!userInfo.isFirstTime" class="w-12 h-12">
               <img
-                v-bind:src="userInfo.pic"
+                :src="userInfo.pic"
                 alt="image here"
                 class="w-20 h-12"
               />

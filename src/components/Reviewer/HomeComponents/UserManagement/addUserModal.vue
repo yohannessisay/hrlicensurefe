@@ -130,8 +130,8 @@
                           >
                             <option
                               v-for="role in state.roles"
-                              v-bind:key="role.name"
-                              v-bind:value="role.id"
+                              :key="role.name"
+                              :value="role.id"
                             >
                               {{ role.name }}
                             </option>
@@ -158,8 +158,8 @@
                           >
                             <option
                               v-for="expertLevel in expertLevels"
-                              v-bind:key="expertLevel.name"
-                              v-bind:value="expertLevel"
+                              :key="expertLevel.name"
+                              :value="expertLevel"
                             >
                               {{ expertLevel.name }}
                             </option>
@@ -180,8 +180,8 @@
                             >
                               <option
                                 v-for="region in regions"
-                                v-bind:key="region.name"
-                                v-bind:value="region"
+                                :key="region.name"
+                                :value="region"
                               >
                                 {{ region.name }}
                               </option>
@@ -206,8 +206,8 @@
                             >
                               <option
                                 v-for="zone in zones"
-                                v-bind:key="zone.id"
-                                v-bind:value="zone.id"
+                                :key="zone.id"
+                                :value="zone.id"
                               >
                                 {{ zone.name }}
                               </option>

@@ -496,7 +496,7 @@ export default {
             expertLevelId: generalInfo.value.expertLevelId
               ? generalInfo.value.expertLevelId
               : null,
-            otherApplicantPosition: generalInfo.value.otherApplicantPosition
+            other_applicant_position: generalInfo.value.otherApplicantPosition
               ? generalInfo.value.otherApplicantPosition
               : "",
             islegal: true,

@@ -212,7 +212,7 @@
                                   item.documentType.id +
                                   item.id
                               "
-                              v-bind:src="
+                              :src="
                                 documentsSaved[item.documentType.code]
                               "
                               class="w-full h-2 object-cover"

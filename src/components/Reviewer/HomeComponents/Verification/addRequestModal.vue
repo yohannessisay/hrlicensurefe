@@ -284,8 +284,8 @@
                   >
                     <option
                       v-for="region in allRegions"
-                      v-bind:key="region.name"
-                      v-bind:value="region.id"
+                      :key="region.name"
+                      :value="region.id"
                     >
                       {{ region.name }}
                     </option>

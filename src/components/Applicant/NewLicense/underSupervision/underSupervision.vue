@@ -142,7 +142,7 @@
                 <img
                   alt="Placeholder"
                   class="block rounded-full h-8"
-                  v-bind:src="
+                  :src="
                     userInfo.profilePicturePath
                       ? googleApi + userInfo.profilePicturePath
                       : ''

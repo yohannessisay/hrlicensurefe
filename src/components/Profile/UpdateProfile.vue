@@ -61,7 +61,7 @@
                 <p class="ml-4">
                   <a href="javascript:void(0)" @click="reset()">Upload again</a>
                 </p>
-                <img v-bind:src="filePreview" v-show="showPreview" />
+                <img :src="filePreview" v-show="showPreview" />
               </picture>
               <span v-if="photoSizeCheck" style="color: red"
                 >Image size to big, Upload again. Image must be less than 3
@@ -154,8 +154,8 @@
                 >
                   <option
                     v-for="types in state.nationalities"
-                    v-bind:key="types.name"
-                    v-bind:value="types.id"
+                    :key="types.name"
+                    :value="types.id"
                   >
                     {{ types.name }}
                   </option>
@@ -306,7 +306,7 @@
       <FlashMessage message="Login Successful!" />
     </div>
     <div v-if="message.showErrorFlash">
-      <ErrorFlashMessage v-bind:message="message.errorMessage" />
+      <ErrorFlashMessage :message="message.errorMessage" />
     </div>
   </div>
 </template>
