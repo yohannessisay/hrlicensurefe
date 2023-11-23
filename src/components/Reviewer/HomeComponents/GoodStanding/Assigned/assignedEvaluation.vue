@@ -44,6 +44,7 @@
                         <h2 class="text-3xl">Accepted</h2>
                       </div>
                     </div>
+                    <!-- Left side profile view -->
                     <div
                       class="container max-w-md mx-auto my-2 mt-8 overflow-hidden bg-white rounded-lg"
                     >
@@ -65,6 +66,7 @@
                           alt="Profile image"
                         />
                       </div>
+
                       <div
                         class="relative z-50 flex flex-row items-center justify-between px-6 -mt-10"
                       >
@@ -72,6 +74,7 @@
                           Applicant's Profile
                         </h2>
                       </div>
+
                       <div class="p-2 pt-6 pb-8 text-gray-600">
                         <div class="grid grid-cols-3">
                           <div class="col-span-1 mt-4 text-primary-600">Name</div>
@@ -121,6 +124,7 @@
                         </div>
                       </div>
                     </div>
+                    <!-- End of profile view -->
                   </div>
                   <div class="flex flex-wrap justify-start p-4 mt-4">
                     <div class="p-4 mb-8 box-shadow-pop bg-lightGrey-100">
@@ -642,6 +646,62 @@
                         <h2 class="text-3xl text-red-300">Rejected</h2>
                       </div>
                     </div>
+                    <!-- Right side letter detail view -->
+                    <div
+                      class="container max-w-md mx-auto my-2 mt-8 p-2 overflow-hidden bg-white rounded-lg"
+                    >
+                      <h2 class="text-xl font-bold underline text-primary-600">
+                        Application Detail
+                      </h2>
+
+                      <div class="p-2 pb-8 text-gray-600">
+                        <div class="grid grid-cols-3">
+                          <div class="col-span-1 mt-2 text-primary-600">
+                            Profession Name
+                          </div>
+                          <div class="col-span-2 mt-2 ml-8 break-all">
+                            {{
+                              goodStanding &&
+                              goodStanding.GSProfessionals &&
+                              goodStanding.GSProfessionals.professionalTypes &&
+                              goodStanding.GSProfessionals.professionalTypes.name.toLowerCase() !=
+                                "other"
+                                ? goodStanding.GSProfessionals.professionalTypes.name
+                                : goodStanding &&
+                                  goodStanding.GSProfessionals &&
+                                  goodStanding.GSProfessionals.professionalTypes
+                                ? goodStanding.GSProfessionals.otherProfessionType +
+                                  " (" +
+                                  goodStanding.GSProfessionals
+                                    .otherProfessionTypeAmharic +
+                                  ")"
+                                : ""
+                            }}
+                          </div>
+                          <div class="col-span-1 mt-2 text-primary-600">
+                            Education Level
+                          </div>
+                          <div class="col-span-2 mt-2 ml-8 break-all">
+                            {{
+                              goodStanding &&
+                              goodStanding.GSProfessionals &&
+                              goodStanding.GSProfessionals.educationLevel
+                                ? goodStanding.GSProfessionals.educationLevel.name
+                                : ""
+                            }}
+                          </div>
+                          <div class="col-span-1 mt-2 text-primary-600">Department</div>
+                          <div class="col-span-2 mt-2 break-all ml-8">
+                            {{
+                              goodStanding && goodStanding.department
+                                ? goodStanding.department.name
+                                : ""
+                            }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End of letter view -->
                   </div>
                 </div>
 
@@ -660,7 +720,8 @@
                         :is-full-page="false"
                         :color="'#2F639D'"
                         :opacity="1"
-                      ></loading>
+                      >
+                      </loading>
                       <button
                         v-if="button.code != 'US'"
                         class="inline-block px-6 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out rounded bg-primary-700 hover:text-primary-600 hover:border"

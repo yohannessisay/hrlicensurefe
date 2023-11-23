@@ -121,11 +121,7 @@
                 @change="regionChangeHandler()"
                 required
               >
-                <option
-                  v-for="region in regions"
-                  v-bind:key="region.name"
-                  v-bind:value="region"
-                >
+                <option v-for="region in regions" :key="region.name" :value="region">
                   {{ region.name }}
                 </option>
               </select>
@@ -146,7 +142,7 @@
                 @change="zoneChangeHandler()"
                 v-model="generalInfo.zoneSelected"
               >
-                <option v-for="zone in zones" v-bind:key="zone.name" v-bind:value="zone">
+                <option v-for="zone in zones" :key="zone.name" :value="zone">
                   {{ zone.name }}
                 </option>
               </select>
@@ -165,11 +161,7 @@
                 v-model="generalInfo.woredaSelected"
                 required
               >
-                <option
-                  v-for="woreda in woredas"
-                  v-bind:key="woreda.name"
-                  v-bind:value="woreda"
-                >
+                <option v-for="woreda in woredas" :key="woreda.name" :value="woreda">
                   {{ woreda.name }}
                 </option>
               </select>
@@ -193,8 +185,8 @@
               >
                 <option
                   v-for="department in departments"
-                  v-bind:key="department.id"
-                  v-bind:value="department"
+                  :key="department.id"
+                  :value="department"
                 >
                   {{ department.name }}
                 </option>
@@ -212,11 +204,10 @@
                 @change="educationalLevelChange()"
                 required
               >
-                <option value="" disabled>Please select department first</option>
                 <option
                   v-for="edLevel in educationLevels"
-                  v-bind:key="edLevel.name"
-                  v-bind:value="edLevel"
+                  :key="edLevel.name"
+                  :value="edLevel"
                 >
                   {{ edLevel.name }}
                 </option>
@@ -235,11 +226,10 @@
                   v-model="generalInfo.professionTypeId"
                   required
                 >
-                  <option value="" disabled>Please select education level first</option>
                   <option
                     v-for="profession in professionalTypes"
-                    v-bind:key="profession.name"
-                    v-bind:value="profession"
+                    :key="profession.name"
+                    :value="profession"
                   >
                     {{ profession.name }}
                   </option>
@@ -288,15 +278,27 @@
                 class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
                 v-model="generalInfo.applicantPosition"
                 required
+                @change="checkOtherApplicantPosition"
               >
                 <option
                   v-for="position in applicationPositions"
-                  v-bind:key="position.id"
-                  v-bind:value="position"
+                  :key="position.id"
+                  :value="position"
                 >
                   {{ position.name }}
                 </option>
               </select>
+            </div>
+            <div v-if="showOtherApplicantPosition" class="mt-5">
+              <input
+                type="text"
+                name="otherProfAmh"
+                required
+                v-model="generalInfo.otherApplicantPosition"
+                class="mt-1 appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 hover:text-main-500 hover:border-main-500 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-main-400 focus:outline-none"
+                autocomplete="off"
+                placeholder="Other Applicant Position"
+              />
             </div>
           </div>
         </div>
@@ -376,11 +378,7 @@
                     v-model="generalInfo.whoIssuedId"
                     required
                   >
-                    <option
-                      v-for="region in regions"
-                      v-bind:key="region.id"
-                      v-bind:value="region"
-                    >
+                    <option v-for="region in regions" :key="region.id" :value="region">
                       {{ region.name }}
                     </option>
                   </select>
@@ -455,13 +453,14 @@ export default {
       woredaSelected: "",
       departmentId: "",
       expertLevelId: "",
+      otherApplicantPosition: "",
       licenseFile: [],
     });
     let showOtherProfession = ref(false);
     let localData = ref([]);
     let regions = ref([]);
-    let errorFields = ref({});
     let isDepartmentSelected = ref(false);
+    let showOtherApplicantPosition = ref(false);
     let isEdLevelSelected = ref(false);
     let isAppTypeSelected = ref(false);
     let educationLevels = ref([]);
@@ -538,6 +537,19 @@ export default {
         showOtherProfession.value = true;
       } else {
         showOtherProfession.value = false;
+        generalInfo.value.otherProfessionTypeAmharic = "";
+        generalInfo.value.otherProfessionType = "";
+      }
+    };
+    const checkOtherApplicantPosition = () => {
+      if (
+        generalInfo.value.applicantPosition.name &&
+        generalInfo.value.applicantPosition.name.toLowerCase() == "other"
+      ) {
+        showOtherApplicantPosition.value = true;
+      } else {
+        showOtherApplicantPosition.value = false;
+        generalInfo.value.otherApplicantPosition = "";
       }
     };
 
@@ -579,7 +591,7 @@ export default {
           woredas.value = res.data.data;
         });
     };
-    const fetchProfessionalType = (departmentId, educationalLevelId) => {
+    const fetchProfessionalType = async (departmentId, educationalLevelId) => {
       let profession = {
         departmentId: departmentId,
         educationalLevelId: educationalLevelId,
@@ -604,53 +616,6 @@ export default {
         generalInfo.value.regionSelected.code != "FED"
       ) {
         generalInfo.value.expertLevelId = 4;
-      }
-      generalInfo.value.applicantTypeId == ""
-        ? (errorFields.value.applicantTypeId = true)
-        : delete errorFields.value.applicantTypeId;
-
-      generalInfo.value.applicantTitleId == ""
-        ? (errorFields.value.applicantTitleId = true)
-        : delete errorFields.value.applicantTitleId;
-
-      generalInfo.value.departmentId == ""
-        ? (errorFields.value.departmentId = true)
-        : delete errorFields.value.departmentId;
-
-      generalInfo.value.educationLevelId == ""
-        ? (errorFields.value.educationLevelId = true)
-        : delete errorFields.value.educationLevelId;
-
-      generalInfo.value.professionTypeId == ""
-        ? (errorFields.value.professionTypeId = true)
-        : delete errorFields.value.professionTypeId;
-
-      generalInfo.value.applicantPosition == ""
-        ? (errorFields.value.applicantPosition = true)
-        : delete errorFields.value.applicantPosition;
-
-      generalInfo.value.whomGoodStandingFor == ""
-        ? (errorFields.value.whomGoodStandingFor = true)
-        : delete errorFields.value.whomGoodStandingFor;
-      generalInfo.value.whoIssuedId == ""
-        ? (errorFields.value.whoIssuedId = true)
-        : delete errorFields.value.whoIssuedId;
-      generalInfo.value.licenseRegistrationNumber == ""
-        ? (errorFields.value.licenseRegistrationNumber = true)
-        : delete errorFields.value.licenseRegistrationNumber;
-      generalInfo.value.licenseIssuedDate == ""
-        ? (errorFields.value.licenseIssuedDate = true)
-        : delete errorFields.value.licenseIssuedDate;
-
-      if (Object.keys(errorFields.value).length > 0) {
-        toast.error("Fill out fileds marked red", {
-          timeout: 5000,
-          position: "bottom-center",
-          pauseOnFocusLoss: true,
-          pauseOnHover: true,
-          icon: true,
-        });
-        return;
       }
 
       let tempApplicationData = generalInfo.value;
@@ -739,6 +704,9 @@ export default {
               ? generalInfo.value.otherProfessionTypeAmharic
               : "",
           },
+          other_applicant_position: generalInfo.value.otherApplicantPosition
+            ? generalInfo.value.otherApplicantPosition
+            : "",
           expertLevelId: generalInfo.value.expertLevelId
             ? generalInfo.value.expertLevelId
             : null,
@@ -763,10 +731,11 @@ export default {
         router.push({ path: "/Applicant/GoodStanding/draft" });
       });
     };
+
     onMounted(async () => {
       fetchApplicantType();
       fetchDepartments();
-      fetchProfessionalType();
+
       fetchEducationLevel();
       fetchRegions();
       fetchZone();
@@ -774,10 +743,15 @@ export default {
       fetchApplicantTitle();
       fetchApplicationPositions();
       localData.value = window.localStorage.getItem("GSApplicationData")
-        ? JSON.parse(window.localStorage.getItem("GSApplicationData"))
+        ? await JSON.parse(window.localStorage.getItem("GSApplicationData"))
         : {};
       if (Object.keys(localData.value).length != 0) {
         generalInfo.value = localData.value;
+        checkOtherApplicantPosition();
+        await fetchProfessionalType(generalInfo.value.departmentId.id);
+        checkOtherProfession();
+        isDepartmentSelected.value = true;
+        isEdLevelSelected.value = true;
       }
       if (
         localStorage.getItem("applicantTypeSelected") &&
@@ -788,6 +762,7 @@ export default {
     });
     return {
       checkApplicantType,
+      showOtherApplicantPosition,
       checkOtherProfession,
       fetchProfessionalType,
       regionChangeHandler,
@@ -798,6 +773,7 @@ export default {
       darkMode,
       fetchZone,
       showOtherProfession,
+      checkOtherApplicantPosition,
       saveDraft,
       applicantTitle,
       isDepartmentSelected,
@@ -825,6 +801,7 @@ export default {
 #main {
   border-radius: 5px;
 }
+
 .table-multiple {
   border-radius: 5px;
 }

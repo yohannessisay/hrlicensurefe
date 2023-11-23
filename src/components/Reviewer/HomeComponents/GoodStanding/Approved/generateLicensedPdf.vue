@@ -331,10 +331,15 @@ export default {
           if (printButton) {
             printButton.addEventListener("click", function (event) {
               event.preventDefault();
-              printPdf();
             });
           }
+          var logo = document.getElementById("Layer_1");
+          var text = document.getElementsByClassName("fr-second-toolbar");
 
+          // Apply CSS properties using JavaScript
+          if (text || logo) {
+            text.style.display = "none";
+          }
           let staticUrl = STATIC_CERTIFICATE_URL;
           let userId =
             modalData.value && modalData.value.profile
@@ -404,5 +409,9 @@ button {
 }
 a {
   border: 1px solid black;
+}
+.fr-second-toolbar,
+#Layer_1 {
+  display: none;
 }
 </style>
