@@ -354,6 +354,12 @@ export default {
             newLicenseId: generalInfo.value.newLicenseId,
             newLicenseCode: generalInfo.value.newLicenseCode,
             feedback: generalInfo.value.feedback ? generalInfo.value.feedback : "",
+            regionId: generalInfo.value.regionSelected
+              ? generalInfo.value.regionSelected.id
+              : "",
+            regionCode: generalInfo.value.regionSelected
+              ? generalInfo.value.regionSelected.code
+              : "FED",
           },
         };
         showModal.value = true;

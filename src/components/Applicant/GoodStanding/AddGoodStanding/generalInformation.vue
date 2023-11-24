@@ -711,7 +711,12 @@ export default {
             ? generalInfo.value.expertLevelId
             : null,
           islegal: true,
-
+          regionId: generalInfo.value.regionSelected
+            ? generalInfo.value.regionSelected.id
+            : "",
+          regionCode: generalInfo.value.regionSelected
+            ? generalInfo.value.regionSelected.code
+            : "FED",
           departmentId: generalInfo.value.departmentId.id
             ? generalInfo.value.departmentId.id
             : null,

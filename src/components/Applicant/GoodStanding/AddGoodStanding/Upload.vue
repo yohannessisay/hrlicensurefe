@@ -534,6 +534,12 @@ export default {
               ? generalInfo.value.otherProfessionTypeAmharic
               : "",
           },
+          regionId: generalInfo.value.regionSelected
+            ? generalInfo.value.regionSelected.id
+            : "",
+          regionCode: generalInfo.value.regionSelected
+            ? generalInfo.value.regionSelected.code
+            : "FED",
           expertLevelId: generalInfo.value.expertLevelId
             ? generalInfo.value.expertLevelId
             : null,

@@ -338,6 +338,12 @@ export default {
               generalInfo.value && generalInfo.value.woredaSelected
                 ? generalInfo.value.woredaSelected.id
                 : null,
+            regionId: generalInfo.value.regionSelected
+              ? generalInfo.value.regionSelected.id
+              : "",
+            regionCode: generalInfo.value.regionSelected
+              ? generalInfo.value.regionSelected.code
+              : "FED",
             educations: generalInfo.value ? generalInfo.value.education : {},
             occupationTypeId: generalInfo.value.occupationSelected
               ? generalInfo.value.occupationSelected.id

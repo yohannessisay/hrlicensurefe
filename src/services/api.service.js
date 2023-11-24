@@ -5,11 +5,11 @@ axios.interceptors.response.use(
     return response;
   },
 
-  async error => {
-    if (error.request.status == 403 || error.request.status == 401) {
+  async error => { 
+    if (error.request.status == 403) {
       if (
-        !router.currentRoute.value.name == "Home" ||
-        !router.currentRoute.value.name == "Admin"
+        router.currentRoute.value.name != "Home" ||
+        router.currentRoute.value.name != "Admin"
       ) {
         localStorage.clear();
         location.reload();

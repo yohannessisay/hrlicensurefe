@@ -204,11 +204,7 @@
               @change="regionChangeHandler()"
               required
             >
-              <option
-                v-for="region in regions"
-                :key="region.name"
-                :value="region"
-              >
+              <option v-for="region in regions" :key="region.name" :value="region">
                 {{ region.name }}
               </option>
             </select>
@@ -270,11 +266,7 @@
               v-model="generalInfo.woredaSelected"
               required
             >
-              <option
-                v-for="woreda in woredas"
-                :key="woreda.name"
-                :value="woreda"
-              >
+              <option v-for="woreda in woredas" :key="woreda.name" :value="woreda">
                 {{ woreda.name }}
               </option>
             </select>
@@ -359,11 +351,7 @@
               v-model="generalInfo.professionalTypeSelected"
               @change="ProfessionTypeChange(institution)"
             >
-              <option
-                v-for="pf in professionalTypes"
-                :key="pf.id"
-                :value="pf"
-              >
+              <option v-for="pf in professionalTypes" :key="pf.id" :value="pf">
                 {{ pf.name }}
               </option>
             </select>
@@ -1008,6 +996,12 @@ export default {
             ? generalInfo.value.nativeLanguageSelected.id
             : null,
           isLegal: true,
+          regionId: generalInfo.value.regionSelected
+            ? generalInfo.value.regionSelected.id
+            : "",
+          regionCode: generalInfo.value.regionSelected
+            ? generalInfo.value.regionSelected.code
+            : "FED",
         },
       };
       store.dispatch("renewal/addRenewalLicense", license).then((res) => {
