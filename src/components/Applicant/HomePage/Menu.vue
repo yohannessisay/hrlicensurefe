@@ -3,7 +3,7 @@
     <side-nav></side-nav>
     <div class="content" id="mainContent">
       <top-nav :userInfo="userInfo"></top-nav>
-      <div class="mt-8 ml-8 mr-8">
+      <div class="mt-8 sm:ml-8 sm:mr-8">
         <nav class="bg-grey-100 p-4 rounded-md w-full mt-24">
           <ol class="list-reset flex">
             <li>
@@ -15,12 +15,12 @@
           </ol>
         </nav>
 
-        <div id="home" class="flex flex-row justify-center ml-4 mt-12">
+        <div id="home" class="flex flex-row justify-center sm:ml-4 mt-12">
           <!-- <div class="float-container" @click="modeToggle()">
             <a href="#" class="icon one"> </a>
           </div> -->
           <div class="flex flex-col md:flex-row justify-center flex-wrap gap-2">
-            <div class="mr-12 mb-8 overview-boxes rounded-xl">
+            <div class="mr-0 sm:mr-12 mb-8 overview-boxes rounded-xl">
               <div
                 class="bg-main-400 hover:bg-white box w-full rounded-lg transition duration-500 transform hover:scale-110 cursor-pointer cart"
                 data-bs-toggle="modal"
@@ -43,7 +43,7 @@
               </div>
             </div>
 
-            <div class="mr-12 mb-8 overview-boxes">
+            <div class="sm:mr-12 mb-8 overview-boxes">
               <div
                 class="bg-main-400 box rounded-2xl hover:shadow-4xl transition duration-500 transform hover:scale-110 cursor-pointer"
                 data-bs-toggle="modal"
@@ -66,7 +66,7 @@
               </div>
             </div>
 
-            <div class="mr-12 mb-8 overview-boxes">
+            <div class="sm:mr-12 mb-8 overview-boxes">
               <div
                 class="bg-white box rounded-2xl hover:shadow-4xl transition duration-500 transform hover:scale-110 cursor-pointer"
                 data-bs-toggle="modal"
@@ -113,13 +113,13 @@
         "
       >
         <div
-          class="modal-header flex flex-shrink-0 items-center justify-between p-4 border-b border-grey-100 rounded-t-md"
+          class="modal-header flex flex-shrink-0 items-center justify-between p-1 border-b border-grey-100 rounded-t-md"
         >
-          <h1
-            class="text-2xl md:text-2xl lg:text-2xl mdlg:text-2xl font-medium text-main-400 mb-4 sm:text-base md:mb-6"
+          <h2
+            class="text-2xl md:text-2xl lg:text-2xl mdlg:text-2xl ml-4 font-medium text-main-400 mb-2 sm:text-base md:mb-6"
           >
             Required Documents for New License Application
-          </h1>
+          </h2>
           <button
             type="button"
             class="inline-block px-4 py-2.5 bg-main-400 text-white font-medium text-lg leading-tight uppercase rounded hover:bg-white hover:text-main-400 transition duration-150 ease-in-out"
@@ -129,21 +129,15 @@
             X
           </button>
         </div>
-        <div class="modal-body relative p-4">
+        <div class="modal-body relative p-1 sm:p-4">
           <div
             :class="
-              isDarkMode ? 'bg-primaryDark rounded-lg p-4  ' : 'bg-white rounded-lg  '
+              isDarkMode ? 'bg-primaryDark rounded-lg p-4' : 'bg-white rounded-lg  '
             "
           >
-            <div class="container mx-auto px-4">
-              <div class="flex justify-center">
-                <h2 class="text-xl text-main-400">
-                  ** Focal persons should use the email address of the professional they
-                  are applying on behalf of
-                </h2>
-              </div>
+            <div class="container mx-auto px-1 sm:px-4">
               <div class="lg:flex lg:-mx-4 mt-6 md:mt-12">
-                <div class="pricing-plan-wrap lg:w-1/3 my-4 md:my-6 mr-4">
+                <div class="pricing-plan-wrap lg:w-1/3 my-4 md:my-6 sm:mr-4">
                   <div
                     :class="
                       isDarkMode
@@ -193,7 +187,7 @@
                             :class="
                               isDarkMode
                                 ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long text-grey-800'
                             "
                           ></i>
                           Residence Id
@@ -211,7 +205,7 @@
                             :class="
                               isDarkMode
                                 ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long text-grey-800'
                             "
                           ></i>
                           Medical Certificate
@@ -229,7 +223,7 @@
                             :class="
                               isDarkMode
                                 ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long text-grey-800'
                             "
                           ></i>
                           COC Certificate
@@ -248,7 +242,7 @@
                             :class="
                               isDarkMode
                                 ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long text-grey-800'
                             "
                           ></i>
                           8th, 10th, 12th Grade Certificate
@@ -267,7 +261,7 @@
                             :class="
                               isDarkMode
                                 ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long text-grey-800'
                             "
                           ></i>
                           Academic Document
@@ -285,7 +279,7 @@
                             :class="
                               isDarkMode
                                 ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long text-grey-800'
                             "
                           ></i>
                           Authenticated Professional License
@@ -304,7 +298,7 @@
                             :class="
                               isDarkMode
                                 ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long text-grey-800'
                             "
                           ></i>
                           9th - 10th Grade Transcript
@@ -323,7 +317,7 @@
                             :class="
                               isDarkMode
                                 ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long text-grey-800'
                             "
                           ></i>
                           11th - 12th Grade Transcript
@@ -342,7 +336,7 @@
                             :class="
                               isDarkMode
                                 ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long text-grey-800'
                             "
                           ></i>
                           Payroll Document
@@ -361,7 +355,7 @@
                             :class="
                               isDarkMode
                                 ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long text-grey-800'
                             "
                           ></i>
                           Support Letter from Sponsored Institution
@@ -380,7 +374,7 @@
                             :class="
                               isDarkMode
                                 ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long text-grey-800'
                             "
                           ></i>
                           Work Experience
@@ -399,7 +393,7 @@
                             :class="
                               isDarkMode
                                 ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long text-grey-800'
                             "
                           ></i>
                           Academic Transcript
@@ -418,7 +412,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="pricing-plan-wrap lg:w-1/3 my-4 md:my-6 mr-4">
+                <div class="pricing-plan-wrap lg:w-1/3 my-4 md:my-6 sm:mr-4">
                   <div
                     :class="
                       isDarkMode
@@ -468,7 +462,7 @@
                             :class="
                               isDarkMode
                                 ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long text-grey-800'
                             "
                           ></i>
                           Passport
@@ -486,7 +480,7 @@
                             :class="
                               isDarkMode
                                 ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long text-grey-800'
                             "
                           ></i>
                           Medical Certificate
@@ -504,7 +498,7 @@
                             :class="
                               isDarkMode
                                 ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long text-grey-800'
                             "
                           ></i>
                           English Language Proficiency Certificate
@@ -523,7 +517,7 @@
                             :class="
                               isDarkMode
                                 ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long text-grey-800'
                             "
                           ></i>
                           Higher Education Relevance and Quality Agency
@@ -542,7 +536,7 @@
                             :class="
                               isDarkMode
                                 ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long text-grey-800'
                             "
                           ></i>
                           Authenticated Academic Document
@@ -560,7 +554,7 @@
                             :class="
                               isDarkMode
                                 ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long text-grey-800'
                             "
                           ></i>
                           Authenticated Professional License from Country of Origin
@@ -579,7 +573,7 @@
                             :class="
                               isDarkMode
                                 ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long text-grey-800'
                             "
                           ></i>
                           Current Work Experience / Goodstanding Letter
@@ -598,7 +592,7 @@
                             :class="
                               isDarkMode
                                 ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long text-grey-800'
                             "
                           ></i>
                           Request Letter from Hiring Health Facility
@@ -618,7 +612,7 @@
                   </div>
                 </div>
 
-                <div class="pricing-plan-wrap lg:w-1/3 my-4 md:my-6 mr-4">
+                <div class="pricing-plan-wrap lg:w-1/3 my-4 md:my-6">
                   <div
                     :class="
                       isDarkMode
@@ -668,7 +662,7 @@
                             :class="
                               isDarkMode
                                 ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long text-grey-800'
                             "
                           ></i>
                           Higher Education Relevance and Quality Agency
@@ -687,7 +681,7 @@
                             :class="
                               isDarkMode
                                 ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long text-grey-800'
                             "
                           ></i>
                           Authenticated Academic Document
@@ -706,7 +700,7 @@
                             :class="
                               isDarkMode
                                 ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long text-grey-800'
                             "
                           ></i>
                           Residence ID or Passport or Yellow Card
@@ -725,7 +719,7 @@
                             :class="
                               isDarkMode
                                 ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long text-grey-800'
                             "
                           ></i>
                           Authenticated Professional License from Country of Origin
@@ -744,7 +738,7 @@
                             :class="
                               isDarkMode
                                 ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long text-grey-800'
                             "
                           ></i>
                           Current Work Experience/ Goodstanding Letter
@@ -763,7 +757,7 @@
                             :class="
                               isDarkMode
                                 ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long text-grey-800'
                             "
                           ></i>
                           Support Letter from Sponsored Institution
@@ -781,7 +775,7 @@
                             :class="
                               isDarkMode
                                 ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long text-grey-800'
                             "
                           ></i>
                           Medical Certificate
@@ -825,10 +819,10 @@
         "
       >
         <div
-          class="modal-header flex flex-shrink-0 items-center justify-between p-4 border-b border-grey-100 rounded-t-md"
+          class="modal-header flex flex-shrink-0 items-center justify-between p-1 border-b border-grey-100 rounded-t-md"
         >
           <h2
-            class="text-2xl md:text-2xl lg:text-2xl mdlg:text-2xl font-medium text-main-400 mb-4 sm:text-base md:mb-6"
+            class="text-2xl md:text-2xl lg:text-2xl mdlg:text-2xl ml-4 font-medium text-main-400 mb-2 sm:text-base md:mb-6"
           >
             Document specification for license renewal
           </h2>
@@ -842,7 +836,7 @@
             X
           </button>
         </div>
-        <div class="modal-body relative p-4 sm:p-2 overflow-y-scroll">
+        <div class="modal-body relative p-1 sm:p-4 overflow-y-scroll">
           <div
             :class="
               isDarkMode
@@ -850,16 +844,11 @@
                 : 'bg-white rounded-lg  md:py-12'
             "
           >
-            <div class="container mx-auto px-4">
-              <div class="flex justify-center">
-                <h2 class="text-xl text-main-400">
-                  ** Focal persons should use the email address of the professional they
-                  are applying on behalf of
-                </h2>
-              </div>
+            <div class="container mx-auto px-1 sm:px-4">
+              <div class="flex justify-center"></div>
 
               <div class="lg:flex lg:-mx-4 mt-6 md:mt-12">
-                <div class="pricing-plan-wrap lg:w-1/3 my-4 md:my-6 mr-4">
+                <div class="pricing-plan-wrap lg:w-1/3 my-4 md:my-6 sm:mr-4">
                   <div
                     :class="
                       isDarkMode
@@ -909,7 +898,7 @@
                             :class="
                               isDarkMode
                                 ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long text-grey-800'
                             "
                           ></i>
                           Health Exam Certificate
@@ -928,7 +917,7 @@
                             :class="
                               isDarkMode
                                 ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long text-grey-800'
                             "
                           ></i>
                           Letter from Hiring Organization
@@ -947,7 +936,7 @@
                             :class="
                               isDarkMode
                                 ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long text-grey-800'
                             "
                           ></i>
                           Previous License
@@ -966,7 +955,7 @@
                             :class="
                               isDarkMode
                                 ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long text-grey-800'
                             "
                           ></i>
                           CPD Certificate
@@ -985,7 +974,7 @@
                             :class="
                               isDarkMode
                                 ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long text-grey-800'
                             "
                           ></i>
                           Work Experience
@@ -1005,7 +994,7 @@
                   </div>
                 </div>
 
-                <div class="pricing-plan-wrap lg:w-1/3 my-4 md:my-6 mr-4">
+                <div class="pricing-plan-wrap lg:w-1/3 my-4 md:my-6 sm:mr-4">
                   <div
                     :class="
                       isDarkMode
@@ -1055,7 +1044,7 @@
                             :class="
                               isDarkMode
                                 ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long text-grey-800'
                             "
                           ></i>
                           Health Exam Certificate
@@ -1074,7 +1063,7 @@
                             :class="
                               isDarkMode
                                 ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long text-grey-800'
                             "
                           ></i>
                           CPD Certificate
@@ -1093,7 +1082,7 @@
                             :class="
                               isDarkMode
                                 ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long text-grey-800'
                             "
                           ></i>
                           Previous License
@@ -1112,7 +1101,7 @@
                             :class="
                               isDarkMode
                                 ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long text-grey-800'
                             "
                           ></i>
                           Work Experience
@@ -1132,7 +1121,7 @@
                   </div>
                 </div>
 
-                <div class="pricing-plan-wrap lg:w-1/3 my-4 md:my-6 mr-4">
+                <div class="pricing-plan-wrap lg:w-1/3 my-4 md:my-6">
                   <div
                     :class="
                       isDarkMode
@@ -1182,7 +1171,7 @@
                             :class="
                               isDarkMode
                                 ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long text-grey-800'
                             "
                           ></i>
                           Health Exam Certificate
@@ -1201,7 +1190,7 @@
                             :class="
                               isDarkMode
                                 ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long text-grey-800'
                             "
                           ></i>
                           CPD Certificate
@@ -1220,7 +1209,7 @@
                             :class="
                               isDarkMode
                                 ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long text-grey-800'
                             "
                           ></i>
                           Previous License
@@ -1239,7 +1228,7 @@
                             :class="
                               isDarkMode
                                 ? 'text-white  fa fa-arrow-right-long'
-                                : 'fa fa-arrow-right-long'
+                                : 'fa fa-arrow-right-long text-grey-800'
                             "
                           ></i>
                           Work Experience
@@ -1275,7 +1264,7 @@
     aria-modal="true"
     role="dialog"
   >
-    <div class="modal-dialog modal-xl relative w-auto pointer-events-none">
+    <div class="modal-dialog modal-lg relative w-auto pointer-events-none">
       <div
         :class="
           isDarkMode
@@ -1284,9 +1273,9 @@
         "
       >
         <div
-          class="modal-header flex flex-shrink-0 items-center justify-between p-4 border-b border-grey-200 rounded-t-md"
+          class="modal-header flex flex-shrink-0 items-center justify-between p-1 border-b border-grey-200 rounded-t-md"
         >
-          <h2 class="text-xl font-bold leading-normal text-main-400">
+          <h2 class="text-xl ml-4 font-bold leading-normal text-main-400">
             Required Documents for Goodstanding letter
           </h2>
           <button
@@ -1298,7 +1287,7 @@
             X
           </button>
         </div>
-        <div class="modal-body relative p-4">
+        <div class="modal-body relative p-1 sm:p-4">
           <div
             :class="
               isDarkMode
@@ -1306,21 +1295,16 @@
                 : 'bg-white rounded-lg md:py-12'
             "
           >
-            <div class="container mx-auto px-4">
+            <div class="container mx-auto px-1 sm:px-4">
               <div class="max-w-3xl mx-auto text-center">
                 <h1
                   class="text-3xl md:text-4xl font-medium text-main-400 mb-4 md:mb-6"
                 ></h1>
               </div>
-              <div class="flex justify-center">
-                <h2 class="text-xl text-main-400">
-                  ** Focal persons should use the email address of the professional they
-                  are applying on behalf of
-                </h2>
-              </div>
+              <div class="flex justify-center"></div>
 
-              <div class="lg:flex lg:-mx-4 mt-6 md:mt-12 justify-center">
-                <div class="pricing-plan-wrap lg:w-1/2 my-4 md:my-6">
+              <div class="lg:flex lg:-mx-4 mt-2 md:mt-2 justify-center">
+                <div class="pricing-plan-wrap lg:w-1/2 my-2 md:my-2">
                   <div
                     :class="
                       isDarkMode
@@ -1371,7 +1355,7 @@
                           :class="
                             isDarkMode
                               ? 'text-white  fa fa-arrow-right-long'
-                              : 'fa fa-arrow-right-long'
+                              : 'fa fa-arrow-right-long text-grey-800'
                           "
                         ></i>
                         License Copy
@@ -1389,7 +1373,7 @@
                           :class="
                             isDarkMode
                               ? 'text-white  fa fa-arrow-right-long'
-                              : 'fa fa-arrow-right-long'
+                              : 'fa fa-arrow-right-long text-grey-800'
                           "
                         ></i>
                         Work Experiance
@@ -1398,7 +1382,7 @@
                     <div class="grid lg:grid-cols-3 sm:grid-cols-1 md:grid-cols-1 p-2">
                       <a href="/Applicant/GoodStanding">
                         <button
-                          class="text-xl text-white py-2 bg-main-400 hover:text-main-400 hover:border hover:bg-white px-4 rounded-sm"
+                          class="text-base text-white py-3 bg-main-400 hover:text-main-400 hover:border hover:bg-white px-4 rounded-sm"
                           @click="setApplicantType('Ethiopian')"
                         >
                           Ethiopian
@@ -1414,7 +1398,7 @@
                       </a>
                       <a href="/Applicant/GoodStanding">
                         <button
-                          class="text-xl text-white py-2 bg-main-400 hover:text-main-400 hover:border hover:bg-white px-4 rounded-sm"
+                          class="text-base text-white py-3 bg-main-400 hover:text-main-400 hover:border hover:bg-white px-4 rounded-sm"
                           @click="setApplicantType('Foreign')"
                         >
                           Foreigner

@@ -159,7 +159,7 @@ justify-content: start;
 .top-navbar {
   position: fixed;
   z-index: 1;
-  width: calc(100% - 14%);
+  width: calc(100% - 20%);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -202,9 +202,7 @@ justify-content: start;
   width: 80px;  
   left: 0;
 }
-.side-navbar.active ul li a .icon  {
-  margin-left: -20px;
-  }
+ 
   .side-navbar.active ul li a .text  {
     margin-left: 5px;
     }
@@ -750,5 +748,13 @@ body.dark-mode {
 
   thead tr:not(:first-child) {
     display: none;
+  }
+}
+ 
+@media screen and (min-width: 1920px) {
+  .top-navbar {
+    position: fixed;
+    z-index: 1;
+    width: calc(100% - 15%);
   }
 }

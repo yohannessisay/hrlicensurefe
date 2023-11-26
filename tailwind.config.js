@@ -9,7 +9,7 @@ module.exports = {
       DosisBold: ["Dosis-Bold"],
     },
     screens: {
-      sm: "400px",
+      sm: "600px",
       // => @media (min-width: 576px) { ... }
 
       md: "960px",
