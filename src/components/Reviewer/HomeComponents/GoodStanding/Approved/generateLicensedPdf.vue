@@ -42,13 +42,13 @@
         <div
           class="modal-footer p-2 flex flex-shrink-0 flex-wrap items-center justify-end border-t border-grey-100 rounded-b-md"
         >
-          <a
+          <!-- <a
             class="py-3 mr-2 cursor-pointer inline-block px-6 text-white font-medium text-xs bg-primary-700 leading-tight uppercase rounded hover:bg-white hover:text-primary-700 transition duration-150 ease-in-out"
             @click="printPdf"
           >
             <i class="fa fa-check"></i>
             Generate
-          </a>
+          </a> -->
           <a
             class="py-3 w-auto cursor-pointer inline-block px-6 text-white font-medium text-xs bg-primary-700 leading-tight uppercase rounded hover:border-primary-600 hover:bg-white hover:text-primary-700 transition duration-150 ease-in-out"
             data-bs-dismiss="modal"
