@@ -960,12 +960,17 @@ export default {
             JSON.stringify(tempApplicationData)
           );
           store.dispatch("newlicense/setGeneralInfo", generalInfo.value).then(() => {
+            let tempNL = { step: 2 };
+            localStorage.setItem("tempNL", JSON.stringify(tempNL));
             emit("changeActiveState");
           });
         }
       } else {
-        localStorage.setItem("tempNL", JSON.stringify(existingData));
-
+        let tempNL = localStorage.getItem("tempNL")
+          ? JSON.parse(localStorage.getItem("tempNL"))
+          : JSON.stringify(existingData);
+        existingData ? (tempNL.step = 3) : (tempNL.step = 2);
+        localStorage.setItem("tempNL", JSON.stringify(tempNL));
         emit("changeActiveState");
       }
     };
@@ -1066,6 +1071,7 @@ export default {
             });
             isLoading.value = false;
             localStorage.removeItem("NLApplicationData");
+            localStorage.removeItem("tempNL");
             location.reload();
           } else {
             toast.error("Error occured, please try again", {
@@ -1095,24 +1101,39 @@ export default {
       window.addEventListener("darkModeChanged", (data) => {
         isDarkMode.value = data.detail ? data.detail.content : "";
       });
-      applicantTypeChangeHandler();
-      fetchApplicantType();
-      fetchDepartments();
-      fetchEducationLevel();
-      fetchRegions();
-      fetchOccupation();
-      localData.value = window.localStorage.getItem("NLApplicationData")
-        ? JSON.parse(window.localStorage.getItem("NLApplicationData"))
+      let tryAgain = localStorage.getItem("tempNL")
+        ? JSON.parse(localStorage.getItem("tempNL"))
         : {};
-      if (Object.keys(localData.value).length != 0) {
-        generalInfo.value = localData.value;
-        isAppTypeSelected.value = true;
+
+      if (tryAgain && tryAgain.id != null && tryAgain.backButtonClicked == false) {
+        tryAgain.step = 3;
+        localStorage.setItem("tempNL", JSON.stringify(tryAgain));
+
+        emit("changeActiveState");
+      } else {
+        if (tryAgain && tryAgain.backButtonClicked) {
+          tryAgain.step = 1;
+          localStorage.setItem("tempNL", JSON.stringify(tryAgain));
+        }
         applicantTypeChangeHandler();
+        fetchApplicantType();
+        fetchDepartments();
+        fetchEducationLevel();
+        fetchRegions();
+        fetchOccupation();
+        localData.value = window.localStorage.getItem("NLApplicationData")
+          ? JSON.parse(window.localStorage.getItem("NLApplicationData"))
+          : {};
+        if (Object.keys(localData.value).length != 0) {
+          generalInfo.value = localData.value;
+          isAppTypeSelected.value = true;
+          applicantTypeChangeHandler();
+        }
+        let userId = JSON.parse(window.localStorage.getItem("userId"));
+        store.dispatch("newlicense/getNewLicenseByUser", userId).then((res) => {
+          existingLicense.value = res.data.data;
+        });
       }
-      let userId = JSON.parse(window.localStorage.getItem("userId"));
-      store.dispatch("newlicense/getNewLicenseByUser", userId).then((res) => {
-        existingLicense.value = res.data.data;
-      });
     });
     return {
       applicantTypeChangeHandler,
