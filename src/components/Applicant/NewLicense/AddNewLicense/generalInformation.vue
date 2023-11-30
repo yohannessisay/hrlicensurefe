@@ -965,6 +965,17 @@ export default {
             emit("changeActiveState");
           });
         }
+      } else if (tempError == 1) {
+        toast.error(
+          "You have already submitted for this department and professional type combination,pleas contact the office for further enquires",
+          {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          }
+        );
       } else {
         let tempNL = localStorage.getItem("tempNL")
           ? JSON.parse(localStorage.getItem("tempNL"))
@@ -976,6 +987,7 @@ export default {
     };
     const checkForExistingLicense = () => {
       let tempError = false;
+      let alreadySubmitted = 0;
       let tempComparision = [];
       if (
         existingLicense.value &&
@@ -992,6 +1004,8 @@ export default {
               licenseStatus: element.applicationStatus.code,
               educations: element.educations,
             });
+          } else if (element.educations && element.applicationStatus.code == "SUB") {
+            alreadySubmitted = 1;
           }
         });
       }
@@ -1012,7 +1026,7 @@ export default {
           }
         });
       });
-      return tempError;
+      return alreadySubmitted ? alreadySubmitted : tempError;
     };
     const clearLocalData = () => {
       window.localStorage.removeItem("NLApplicationData");
@@ -1083,7 +1097,20 @@ export default {
             });
           }
         });
+      } else if (tempError == 1) {
+        isLoading.value = false;
+        toast.error(
+          "You have already submitted for this department and professional type combination,pleas contact the office for further enquires",
+          {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          }
+        );
       } else {
+        isLoading.value = false;
         toast.warning(
           "Sorry,seems like you already applied using this department and profession type,please check your draft or submitted page",
           {
