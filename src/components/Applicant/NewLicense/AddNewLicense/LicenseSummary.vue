@@ -225,7 +225,7 @@
 
     <div class="modal-mask" v-if="showModal">
       <div class="modal-wrapper">
-        <div class="modal-container">
+        <div class="modal-container sm:w-1/2 w-5/6">
           <div class="modal-header">
             <h2 class="text-main-400 text-xl border-b-4">Uploading</h2>
           </div>
@@ -359,17 +359,20 @@ export default {
           },
         };
         showModal.value = true;
-
-        store.dispatch("newlicense/addNewLicense", license).then((res) => {
-          let licenseId = res.data.data.id;
+        let tryAgain = localStorage.getItem("tempNL")
+          ? JSON.parse(localStorage.getItem("tempNL"))
+          : false;
+        if (tryAgain && tryAgain.id != null && tryAgain.step == 3) {
+          let licenseId = tryAgain.id;
           let payload = { document: formData, id: licenseId };
           store
-            .dispatch("newlicense/uploadDocuments", payload)
+            .dispatch("newlicense/updateDocuments", payload)
             .then((res) => {
               isLoading.value = false;
               if (res) {
                 localStorage.removeItem("applicantTypeSelected");
                 localStorage.removeItem("NLApplicationData");
+                localStorage.removeItem("tempNL");
                 indexedDB.deleteDatabase("NLdocumentUploads");
                 toast.success("Applied successfuly", {
                   timeout: 5000,
@@ -403,7 +406,55 @@ export default {
                 icon: true,
               });
             });
-        });
+        } else {
+          store.dispatch("newlicense/addNewLicense", license).then((res) => {
+            let licenseId = res.data.data.id;
+            let payload = { document: formData, id: licenseId };
+            let tempNL = { id: licenseId, step: 3 };
+            localStorage.setItem("tempNL", JSON.stringify(tempNL));
+            store
+              .dispatch("newlicense/uploadDocuments", payload)
+              .then((res) => {
+                isLoading.value = false;
+                if (res) {
+                  localStorage.removeItem("applicantTypeSelected");
+                  localStorage.removeItem("NLApplicationData");
+                  localStorage.removeItem("tempNL");
+                  indexedDB.deleteDatabase("NLdocumentUploads");
+                  toast.success("Applied successfuly", {
+                    timeout: 5000,
+                    position: "bottom-center",
+                    pauseOnFocusLoss: true,
+                    pauseOnHover: true,
+                    icon: true,
+                  });
+
+                  if (license.action == "DraftEvent") {
+                    router.push({ path: "/Applicant/NewLicense/draft" });
+                  } else {
+                    router.push({ path: "/Applicant/NewLicense/submitted" });
+                  }
+                } else {
+                  toast.error("Error occured, please try again", {
+                    timeout: 5000,
+                    position: "bottom-center",
+                    pauseOnFocusLoss: true,
+                    pauseOnHover: true,
+                    icon: true,
+                  });
+                }
+              })
+              .catch(() => {
+                toast.error("Error occured, please try again", {
+                  timeout: 5000,
+                  position: "bottom-center",
+                  pauseOnFocusLoss: true,
+                  pauseOnHover: true,
+                  icon: true,
+                });
+              });
+          });
+        }
       }
     };
     const back = () => {
@@ -525,7 +576,6 @@ export default {
 }
 
 .modal-container {
-  width: 600px;
   margin: 0px auto;
   padding: 20px 30px;
   background-color: #fff;

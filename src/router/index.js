@@ -838,18 +838,7 @@ router.beforeEach(async (to, from, next) => {
   ) {
     next("/admin/list");
   }
-  if (to.path != "/Applicant/NewLicense") {
-    window.localStorage.removeItem("NLApplicationData");
-    window.indexedDB.deleteDatabase("NLdocumentUploads");
-  }
-  if (to.path != "/Applicant/Renewal") {
-    window.localStorage.removeItem("RNApplicationData");
-    window.indexedDB.deleteDatabase("RNdocumentUploads");
-  }
-  if (to.path != "/Applicant/GoodStanding") {
-    window.localStorage.removeItem("GSApplicationData");
-    window.indexedDB.deleteDatabase("GSdocumentUploads");
-  }
+ 
 
   if (to.matched.some((record) => record.meta.RedirectExternalUrl)) {
     const url = to.meta.RedirectExternalUrl;

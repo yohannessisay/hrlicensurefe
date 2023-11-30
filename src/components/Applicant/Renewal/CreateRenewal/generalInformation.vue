@@ -615,10 +615,12 @@
 import { useStore } from "vuex";
 import { ref, onMounted, getCurrentInstance } from "vue";
 import { useToast } from "vue-toastification";
+import Loading from "vue3-loading-overlay";
+import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 export default {
   props: ["activeState"],
-  components: {},
-
+  components: { Loading },
+  emits: ["darkMode", "changeActiveState", "changeActiveStateMinus"],
   setup(props, { emit }) {
     let applicantTypes = ref("");
     const toast = useToast();
@@ -637,6 +639,7 @@ export default {
     let localData = ref({});
     let store = useStore();
     let showLocation = ref(false);
+    let isLoading = ref(false);
     let regionSelected = ref({});
     let zoneSelected = ref({});
     let woredaSelected = ref({});
@@ -955,12 +958,18 @@ export default {
           JSON.stringify(tempApplicationData)
         );
         store.dispatch("renewal/setGeneralInfo", generalInfo.value).then(() => {
+          let tempRN = localStorage.getItem("tempRN")
+            ? JSON.parse(localStorage.getItem("tempRN"))
+            : {};
+          tempRN.step = 2;
+          localStorage.setItem("tempRN", JSON.stringify(tempRN));
           emit("changeActiveState");
         });
       }
     };
     const clearLocalData = () => {
-      window.localStorage.setItem("RNApplicationData", "");
+      window.localStorage.removeItem("RNApplicationData");
+      window.localStorage.removeItem("tempRN");
       window.indexedDB.deleteDatabase("RNdocumentUploads");
       setTimeout(() => {
         window.location.reload();
@@ -1004,8 +1013,15 @@ export default {
             : "FED",
         },
       };
+      isLoading.value = true;
       store.dispatch("renewal/addRenewalLicense", license).then((res) => {
+        isLoading.value = false;
         if (res.data.status == "Success") {
+          isLoading.value = true;
+          localStorage.setItem(
+            "tempRN",
+            JSON.stringify({ id: res.data.data.id, step: 2 })
+          );
           toast.success("Applied successfuly", {
             timeout: 5000,
             position: "bottom-center",
@@ -1040,17 +1056,24 @@ export default {
       }
     };
     onMounted(async () => {
-      applicantTypeChangeHandler();
-      fetchApplicantType();
-      fetchDepartments();
-      fetchEducationLevel();
-      fetchRegions();
-      fetchOccupation();
-      localData.value = window.localStorage.getItem("RNApplicationData")
-        ? JSON.parse(window.localStorage.getItem("RNApplicationData"))
-        : {};
-      if (Object.keys(localData.value).length != 0) {
-        generalInfo.value = localData.value;
+      let tryAgain = localStorage.getItem("tempRN")
+        ? JSON.parse(localStorage.getItem("tempRN"))
+        : false;
+      if (tryAgain && tryAgain.id != null && tryAgain.step != 1) {
+        emit("changeActiveState");
+      } else {
+        applicantTypeChangeHandler();
+        fetchApplicantType();
+        fetchDepartments();
+        fetchEducationLevel();
+        fetchRegions();
+        fetchOccupation();
+        localData.value = window.localStorage.getItem("RNApplicationData")
+          ? JSON.parse(window.localStorage.getItem("RNApplicationData"))
+          : {};
+        if (Object.keys(localData.value).length != 0) {
+          generalInfo.value = localData.value;
+        }
       }
     });
     return {
@@ -1063,6 +1086,7 @@ export default {
       addMultiple,
       removeDepartment,
       apply,
+      isLoading,
       saveDraft,
       fetchOccupation,
       educationalLevelChange,

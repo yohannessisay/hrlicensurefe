@@ -658,6 +658,8 @@ export default {
     let multipleDepartmentMaxError = ref(false);
     let checkForAddedError = ref(false);
     let existingLicense = ref({});
+
+    let existingData = { id: null, step: 1 };
     let generalInfo = ref({
       educationalLevelSelected: "",
       applicantTypeSelected: JSON.parse(localStorage.getItem("applicantTypeSelected")),
@@ -924,38 +926,8 @@ export default {
     };
     const apply = () => {
       let tempFieldError = {};
-      let tempComparision = [];
-      if (
-        existingLicense.value &&
-        generalInfo.value.education &&
-        existingLicense.value.length > 0
-      ) {
-        existingLicense.value.forEach((element) => {
-          if (element.educations && element.applicationStatus.code != "WD") {
-            tempComparision.push({
-              licenseId: element.id,
-              licenseStatus: element.applicationStatus.code,
-              educations: element.educations,
-            });
-          }
-        });
-      }
-      let tempError = false;
-      tempComparision.forEach((existingEd) => {
-        generalInfo.value.education.forEach((newEd) => {
-          if (existingEd.educations) {
-            existingEd.educations.forEach((element) => {
-              if (
-                element.departmentId == newEd.departmentId &&
-                element.professionTypeId == newEd.professionTypeId
-              ) {
-                tempError = true;
-                return;
-              }
-            });
-          }
-        });
-      });
+
+      let tempError = checkForExistingLicense();
       generalInfo.value.applicantTypeSelected == ""
         ? (tempFieldError.applicantTypeSelected = true)
         : delete tempFieldError.applicantTypeSelected;
@@ -992,17 +964,50 @@ export default {
           });
         }
       } else {
-        toast.error(
-          "Sorry, seems like you have applied for this department and profession already",
-          {
-            timeout: 5000,
-            position: "bottom-center",
-            pauseOnFocusLoss: true,
-            pauseOnHover: true,
-            icon: true,
-          }
-        );
+        localStorage.setItem("tempNL", JSON.stringify(existingData));
+
+        emit("changeActiveState");
       }
+    };
+    const checkForExistingLicense = () => {
+      let tempError = false;
+      let tempComparision = [];
+      if (
+        existingLicense.value &&
+        generalInfo.value.education &&
+        existingLicense.value.length > 0
+      ) {
+        existingLicense.value.forEach((element) => {
+          if (
+            (element.educations && element.applicationStatus.code != "WD") ||
+            element.applicationStatus.code != "DEC"
+          ) {
+            tempComparision.push({
+              licenseId: element.id,
+              licenseStatus: element.applicationStatus.code,
+              educations: element.educations,
+            });
+          }
+        });
+      }
+      tempComparision.forEach((existingEd) => {
+        generalInfo.value.education.forEach((newEd) => {
+          if (existingEd.educations) {
+            existingEd.educations.forEach((element) => {
+              if (
+                element.departmentId == newEd.departmentId &&
+                element.professionTypeId == newEd.professionTypeId
+              ) {
+                tempError = true;
+                existingData.id = existingEd.licenseId;
+                existingData.step = 2;
+                return;
+              }
+            });
+          }
+        });
+      });
+      return tempError;
     };
     const clearLocalData = () => {
       window.localStorage.removeItem("NLApplicationData");
@@ -1048,28 +1053,42 @@ export default {
             : "FED",
         },
       };
-      store.dispatch("newlicense/addNewLicense", license).then((res) => {
-        if (res.data.status == "Success") {
-          toast.success("Applied successfuly", {
-            timeout: 5000,
+      let tempError = checkForExistingLicense();
+      if (!tempError) {
+        store.dispatch("newlicense/addNewLicense", license).then((res) => {
+          if (res.data.status == "Success") {
+            toast.success("Applied successfuly", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+            isLoading.value = false;
+            localStorage.removeItem("NLApplicationData");
+            location.reload();
+          } else {
+            toast.error("Error occured, please try again", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+          }
+        });
+      } else {
+        toast.warning(
+          "Sorry,seems like you already applied using this department and profession type,please check your draft or submitted page",
+          {
+            timeout: 10000,
             position: "bottom-center",
             pauseOnFocusLoss: true,
             pauseOnHover: true,
             icon: true,
-          });
-          isLoading.value = false;
-          localStorage.removeItem("NLApplicationData");
-          location.reload();
-        } else {
-          toast.error("Error occured, please try again", {
-            timeout: 5000,
-            position: "bottom-center",
-            pauseOnFocusLoss: true,
-            pauseOnHover: true,
-            icon: true,
-          });
-        }
-      });
+          }
+        );
+      }
     };
 
     onMounted(async () => {
