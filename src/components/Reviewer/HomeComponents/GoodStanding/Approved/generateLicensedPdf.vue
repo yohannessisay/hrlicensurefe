@@ -333,13 +333,7 @@ export default {
               event.preventDefault();
             });
           }
-          var logo = document.getElementById("Layer_1");
-          var text = document.getElementsByClassName("fr-second-toolbar");
 
-          // Apply CSS properties using JavaScript
-          if (text || logo) {
-            text.style.display = "none";
-          }
           let staticUrl = STATIC_CERTIFICATE_URL;
           let userId =
             modalData.value && modalData.value.profile
@@ -350,6 +344,7 @@ export default {
           const qrParam = { url: null };
           qrParam.url =
             staticUrl + "/" + applicationType + "/" + userId + "/" + applicationId;
+          console.log(qrParam.url);
           await store.dispatch("reviewer/getQrCode", qrParam).then((res) => {
             qrSrc.value = res.data.data;
           });
