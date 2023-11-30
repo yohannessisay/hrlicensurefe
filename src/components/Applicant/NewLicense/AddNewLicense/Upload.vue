@@ -1,6 +1,14 @@
 <template>
   <div>
-    <div class="accordion mr-8" id="FilesAccordion">
+    <div class="accordion mr-0 sm:mr-8 mt-24" id="FilesAccordion">
+      <h2
+        v-if="alreadyUploaded"
+        class="text-xl sm:text-2xl text-yellow-300 border mb-2 rounded-md p-2"
+      >
+        It seems like you have already attached the documents required to go to the next
+        step, if you wish to change any file upload you can do so, else click next at the
+        bottom of the screen
+      </h2>
       <div
         :class="
           isDarkMode
@@ -874,6 +882,7 @@ export default {
       file: "",
       name: "",
     });
+    let alreadyUploaded = ref(false);
     let existingDocs = [];
     let files = ref("");
     let maxFileSize = ref();
@@ -2008,6 +2017,7 @@ export default {
                 result.length > 0
               ) {
                 isBackButtonClicked.value = true;
+                alreadyUploaded.value = true;
                 documentsUploaded.value = existingDocs;
                 existingDocs.forEach((existing) => {
                   result.forEach((Cd) => {
@@ -2038,6 +2048,7 @@ export default {
       files,
       handleFileUpload,
       showImage,
+      alreadyUploaded,
       previewDocuments,
       showPreview,
       existingDocs,
