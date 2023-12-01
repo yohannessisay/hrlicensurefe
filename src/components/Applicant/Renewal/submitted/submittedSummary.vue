@@ -176,7 +176,9 @@
                       :key="prev.id"
                     >
                       <h4 class="text-main-400 font-bold m-2">Document Type</h4>
-                      <h6 class="m-2">{{ prev.documentType.name }}</h6>
+                      <h6 class="m-2">
+                        {{ prev.documentType ? prev.documentType.name : "" }}
+                      </h6>
                       <div class="flex justify-center rounded-lg p-4">
                         <div class="bg-white rounded-md p-2">
                           <a
@@ -200,7 +202,9 @@
                       :key="prev.docName"
                     >
                       <h4 class="text-main-400 font-bold m-2">Document Type</h4>
-                      <h6 class="m-2">{{ prev.documentType.name }}</h6>
+                      <h6 class="m-2">
+                        {{ prev.documentType ? prev.documentType.name : "" }}
+                      </h6>
                       <div class="flex justify-center rounded-lg p-4">
                         <div class="bg-white rounded-md p-2">
                           <a
