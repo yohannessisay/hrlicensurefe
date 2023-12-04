@@ -217,8 +217,7 @@ export default {
               ? `${param.key}=${param.value}&`
               : "";
         });
-      }
-      console.log(url);
+      } 
       url = url.substring(0, url.length - 1);
 
       const resp = await ApiService.get(url);
