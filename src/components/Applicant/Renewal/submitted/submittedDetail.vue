@@ -115,11 +115,7 @@
                     @change="regionChangeHandler()"
                     required
                   >
-                    <option
-                      v-for="region in regions"
-                      :key="region.name"
-                      :value="region"
-                    >
+                    <option v-for="region in regions" :key="region.name" :value="region">
                       {{ region.name }}
                     </option>
                   </select>
@@ -144,11 +140,7 @@
                     >
                       {{ generalInfo.zoneSelected.name }}
                     </option>
-                    <option
-                      v-for="zone in zones"
-                      :key="zone.name"
-                      :value="zone"
-                    >
+                    <option v-for="zone in zones" :key="zone.name" :value="zone">
                       {{ zone.name }}
                     </option>
                   </select>
@@ -166,11 +158,7 @@
                     v-model="generalInfo.woredaSelected"
                     required
                   >
-                    <option
-                      v-for="woreda in woredas"
-                      :key="woreda.name"
-                      :value="woreda"
-                    >
+                    <option v-for="woreda in woredas" :key="woreda.name" :value="woreda">
                       {{ woreda.name }}
                     </option>
                     <option selected>
@@ -230,11 +218,7 @@
                     @change="ProfessionTypeChange(institution)"
                   >
                     <option disabled>First Select Department from above</option>
-                    <option
-                      v-for="pf in professionalTypes"
-                      :key="pf.id"
-                      :value="pf"
-                    >
+                    <option v-for="pf in professionalTypes" :key="pf.id" :value="pf">
                       {{ pf.name }}
                     </option>
                   </select>
@@ -634,8 +618,9 @@ export default {
           code: "ZN_HAR_DEF_54",
         };
         fetchWoredas();
+      } else {
+        fetchZones();
       }
-      fetchZones();
     };
     const zoneChangeHandler = () => {
       fetchWoredas();

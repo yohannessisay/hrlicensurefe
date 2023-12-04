@@ -620,8 +620,9 @@ export default {
           code: "ZN_HAR_DEF_54",
         };
         fetchWoredas();
+      } else {
+        fetchZones();
       }
-      fetchZones();
     };
     const zoneChangeHandler = () => {
       fetchWoredas();
