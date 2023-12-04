@@ -573,13 +573,12 @@ export default {
         });
     };
     const fetchProfessionalType = (departmentId, educationalLevelId) => {
-      let profession = {
-        departmentId: departmentId,
-        educationalLevelId: educationalLevelId,
-      };
-      store.dispatch("renewal/getProfessionalTypes", profession).then((res) => {
-        professionalTypes.value = res.data.data;
-      });
+      console.log(departmentId, educationalLevelId);
+      store
+        .dispatch("renewal/getProfessionalTypes", { departmentId, educationalLevelId })
+        .then((res) => {
+          professionalTypes.value = res.data.data;
+        });
     };
     const applicantTypeChangeHandler = async () => {
       generalInfo.value.applicantTypeSelected = generalInfo.value.applicantType;
@@ -796,6 +795,7 @@ export default {
     };
     const educationalLevelChange = () => {
       isEdLevelSelected.value = true;
+
       fetchProfessionalType(
         generalInfo.value.departmentSelected.id,
         generalInfo.value.educationalLevelSelected.id
