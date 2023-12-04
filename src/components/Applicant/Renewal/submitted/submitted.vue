@@ -1,5 +1,5 @@
 <template>
-<main-content :url="'renewal'">
+  <main-content :url="'renewal'">
     <nav class="bg-gray-100 px-5 py-3 rounded-md w-full mb-10" id="topNav">
       <ol class="list-reset flex">
         <li><a href="#" class="text-main-400 hover:text-blue-700">Home</a></li>
@@ -21,51 +21,23 @@
         <div
           v-for="license in userDraftLicenses"
           :key="license.id"
-          class="
-            bg-white
-            my-1
-            px-1
-            md:w-1/4
-            lg:w-1/4
-            mdlg:w-1/4
-            sm:w-full sm:mr-4
-             
-            rounded-lg
-            transform
-            transition
-            duration-300
-            ease-in-out
-            hover:-translate-y-2
-          "
+          class="bg-white my-1 px-1 md:w-1/4 lg:w-1/4 mdlg:w-1/4 sm:w-full sm:mr-4 rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2"
         >
           <!-- Article -->
           <div>
             <h2 class="text-main-400 border-b-2 text-xl p-2">
               License Number-
-              <span class="text-base text-main-400">{{
-                license.renewalCode
-              }}</span>
+              <span class="text-base text-main-400">{{ license.renewalCode }}</span>
             </h2>
 
             <header
-              class="
-                flex
-                items-center
-                justify-between
-                leading-tight
-                p-2
-                md:p-2
-                mt-2
-              "
+              class="flex items-center justify-between leading-tight p-2 md:p-2 mt-2"
             ></header>
 
             <div class="border-b-2 text-main-400">
               <div class="grid grid-cols-2 p-2">
                 <h1 class="text-lg">
-                  <a
-                    class="no-underline hover:underline text-main-400"
-                    href="#"
-                  >
+                  <a class="no-underline hover:underline text-main-400" href="#">
                     Profession Name
                   </a>
                 </h1>
@@ -84,78 +56,40 @@
                             : "-"
                           : "-"
                       }}
-                      <span v-if="index != license.educations.length - 1">
-                        ,
-                      </span>
+                      <span v-if="index != license.educations.length - 1"> , </span>
                     </span>
                   </li>
                 </ul>
               </div>
 
-              <div
-                class="
-                  flex
-                  items-center
-                  justify-between
-                  leading-tight
-                  p-2
-                  md:p-2
-                "
-              >
+              <div class="flex items-center justify-between leading-tight p-2 md:p-2">
                 <h1 class="text-lg">
-                  <a
-                    class="no-underline hover:underline text-main-400"
-                    href="#"
-                  >
+                  <a class="no-underline hover:underline text-main-400" href="#">
                     Certified Date
                   </a>
                 </h1>
                 <p class="text-black text-sm">
                   {{
-                    license.certifiedDate
-                      ? license.certifiedDate
-                      : "Waiting for review"
+                    license.certifiedDate ? license.certifiedDate : "Waiting for review"
                   }}
                 </p>
               </div>
-              <div
-                class="
-                  flex
-                  items-center
-                  justify-between
-                  leading-tight
-                  p-2
-                  md:p-2
-                "
-              >
+              <div class="flex items-center justify-between leading-tight p-2 md:p-2">
                 <h1 class="text-lg">
-                  <a
-                    class="no-underline hover:underline text-main-400"
-                    href="#"
-                  >
+                  <a class="no-underline hover:underline text-main-400" href="#">
                     Expiry Date
                   </a>
                 </h1>
                 <p class="text-black text-sm">
                   {{
-                    license.certifiedDate
-                      ? license.certifiedDate
-                      : "Waiting for review"
+                    license.certifiedDate ? license.certifiedDate : "Waiting for review"
                   }}
                 </p>
               </div>
             </div>
-            <footer
-              class="flex items-center justify-between leading-none p-2 md:p-4"
-            >
+            <footer class="flex items-center justify-between leading-none p-2 md:p-4">
               <a
-                class="
-                  flex
-                  items-center
-                  no-underline
-                  hover:underline
-                  text-black
-                "
+                class="flex items-center no-underline hover:underline text-black"
                 href="#"
               >
                 <img
@@ -177,22 +111,7 @@
 
             <div class="flex justify-center">
               <button
-                class="
-        inline-block
-        px-6
-        text-white
-        bg-main-400
-        hover:text-main-400 hover:border
-        text-sm
-        font-bold
-        uppercase
-        rounded
-         
-        mb-4
-        transition
-        duration-150
-        ease-in-out
-      "
+                class="inline-block px-6 text-white bg-main-400 hover:text-main-400 hover:border text-sm font-bold uppercase rounded mb-4 transition duration-150 ease-in-out"
                 @click="openSubmittedDetail(license.id)"
                 data-bs-toggle="modal"
                 data-bs-target="#submittedModalInfo"
@@ -200,26 +119,9 @@
                 View Detail
               </button>
 
-              <router-link
-                :to="'/Applicant/Renewal/submitted/detail/' + license.id"
-              >
+              <router-link :to="'/Applicant/Renewal/submitted/detail/' + license.id">
                 <button
-                  class="
-        inline-block
-        px-6
-        text-white
-        bg-main-400
-        hover:text-main-400 hover:border
-        text-sm
-        font-bold
-        uppercase
-        rounded
-         
-        mb-4
-        transition
-        duration-150
-        ease-in-out
-      "
+                  class="inline-block px-6 text-white bg-main-400 hover:text-main-400 hover:border text-sm font-bold uppercase rounded mb-4 transition duration-150 ease-in-out"
                 >
                   Edit
                 </button>
@@ -236,22 +138,7 @@
     </div>
     <div
       v-else
-      class="
-        bg-white
-        my-1
-        px-1
-        md:w-1/4
-        lg:w-1/4
-        mdlg:w-1/4
-        sm:w-full sm:mr-4
-         
-        rounded-lg
-        transform
-        transition
-        duration-300
-        ease-in-out
-        hover:-translate-y-2
-      "
+      class="bg-white my-1 px-1 md:w-1/4 lg:w-1/4 mdlg:w-1/4 sm:w-full sm:mr-4 rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2"
     >
       <!-- Article -->
 
@@ -286,17 +173,17 @@ export default {
       let userId = JSON.parse(window.localStorage.getItem("userId"));
 
       store.dispatch("renewal/getRenewalLicense", userId).then((res) => {
-        const results =  res.data.data?res.data.data:[];
+        const results = res.data.data ? res.data.data : [];
 
-        if (results&&results.length > 0) {
+        if (results && results.length > 0) {
           userDraftLicenses.value = results.filter((draftLicenses) => {
             return (
               draftLicenses.applicationStatus.code === "UPD" ||
-              draftLicenses.applicationStatus.code === "SUB" 
+              draftLicenses.applicationStatus.code === "SUB"
             );
           });
 
-          if (userDraftLicenses&&userDraftLicenses.value.length === 0) {
+          if (userDraftLicenses && userDraftLicenses.value.length === 0) {
             noData.value = true;
           }
 

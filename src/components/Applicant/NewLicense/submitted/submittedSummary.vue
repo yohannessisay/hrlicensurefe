@@ -458,7 +458,10 @@ export default {
                   pauseOnHover: true,
                   icon: true,
                 });
-
+                localStorage.removeItem("applicantTypeSelected");
+                localStorage.removeItem("NLApplicationData");
+                localStorage.removeItem("tempNL");
+                indexedDB.deleteDatabase("NLdocumentUploads");
                 router.push({ path: "/Applicant/NewLicense/submitted" });
               } else {
                 toast.error("Error occured, please try again", {

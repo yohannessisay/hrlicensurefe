@@ -102,8 +102,9 @@
                         <span
                           class="document-name"
                           v-if="documentsSaved[item.documentType.code]"
-                          >{{ documentsSaved[item.documentType.code].name }}</span
-                        >
+                          >{{ documentsSaved[item.documentType.code].name }}
+                          <i class="fa fa-check-circle text-green-300"></i
+                        ></span>
                       </td>
                       <td class="px-6 py-4 text-center">
                         <a
@@ -403,8 +404,9 @@
                                 parentItem[0].documentType.code
                               }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                             ]?.name
-                          }}</span
-                        >
+                          }}
+                          <i class="fa fa-check-circle text-green-300"></i
+                        ></span>
                       </td>
                       <td class="px-6 py-4 text-center">
                         <a
@@ -602,8 +604,9 @@
                                           parentChildItem.documentType.code
                                         }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                       ]?.name
-                                    }}</span
-                                  >
+                                    }}
+                                    <i class="fa fa-check-circle text-green-300"></i
+                                  ></span>
                                 </td>
                                 <td
                                   v-if="

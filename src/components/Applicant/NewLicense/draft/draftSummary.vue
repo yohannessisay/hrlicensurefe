@@ -427,6 +427,10 @@ export default {
             .then((res) => {
               isLoading.value = false;
               if (res) {
+                localStorage.removeItem("applicantTypeSelected");
+                localStorage.removeItem("NLApplicationData");
+                localStorage.removeItem("tempNL");
+                indexedDB.deleteDatabase("NLdocumentUploads");
                 toast.success("Applied successfuly", {
                   timeout: 5000,
                   position: "bottom-center",

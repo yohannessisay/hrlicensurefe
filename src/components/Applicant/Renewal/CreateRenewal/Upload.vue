@@ -7,8 +7,8 @@
         class="text-xl sm:text-2xl text-yellow-300 border mb-2 rounded-md p-2"
       >
         It seems like you have already attached the documents required to go to the next
-        step, if you wish to change any file upload you can do so, else click next at the
-        bottom of the screen
+        step, if you wish to change any file, you can do so, else click next at the bottom
+        of the screen
       </h2>
       <div class="accordion-item bg-white border border-grey-200 p-4 rounded-lg">
         <h2 class="accordion-header mb-0" id="headingOne">

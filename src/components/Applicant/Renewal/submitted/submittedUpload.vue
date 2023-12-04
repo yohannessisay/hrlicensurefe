@@ -111,8 +111,9 @@
                         <span
                           class="document-name"
                           v-if="documentsSaved[item.documentType.code]"
-                          >{{ documentsSaved[item.documentType.code].name }}</span
-                        >
+                          >{{ documentsSaved[item.documentType.code].name }}
+                          <i class="fa fa-check-circle text-green-300"></i
+                        ></span>
                       </td>
                       <td class="px-6 py-4 text-center">
                         <a
@@ -196,11 +197,11 @@
                       <th
                         class="font-semibold text-sm uppercase px-6 py-4 text-center text-white"
                       >
-                        Upload Document
+                        Uploaded Document
                       </th>
-                      <th
-                        class="font-semibold text-sm uppercase px-6 py-4 text-white"
-                      ></th>
+                      <th class="font-semibold text-sm uppercase px-6 py-4 text-white">
+                        View
+                      </th>
                     </tr>
                   </thead>
                   <tbody class="p-4">
@@ -256,13 +257,16 @@
                         </p>
                       </td>
                       <td class="px-6 py-4">
-                        <span class="document-name">{{
-                          documentsSaved[
-                            `${
-                              item.documentType && item.documentType.code
-                            }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                          ]?.name
-                        }}</span>
+                        <span class="document-name"
+                          >{{
+                            documentsSaved[
+                              `${
+                                item.documentType && item.documentType.code
+                              }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                            ]?.name
+                          }}
+                          <i class="fa fa-check-circle text-green-300"></i
+                        ></span>
                       </td>
                       <td class="px-6 py-4 text-center">
                         <a
@@ -408,8 +412,9 @@
                                 parentItem[0].documentType.code
                               }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                             ]?.name
-                          }}</span
-                        >
+                          }}
+                          <i class="fa fa-check-circle text-green-300"></i
+                        ></span>
                       </td>
                       <td class="px-6 py-4 text-center">
                         <a
@@ -607,8 +612,9 @@
                                           parentChildItem.documentType.code
                                         }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                       ]?.name
-                                    }}</span
-                                  >
+                                    }}
+                                    <i class="fa fa-check-circle text-green-300"></i
+                                  ></span>
                                 </td>
                                 <td
                                   v-if="
