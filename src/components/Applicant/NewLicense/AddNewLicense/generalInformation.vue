@@ -181,6 +181,10 @@
             : ' bg-white border-b-2 mt-2 p-4'
         "
       >
+        <h2 class="text-yellow-300 text-xl">
+          ***Please select the region you are applying for, not where you are currently
+          living***
+        </h2>
         <div
           class="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 mdlg:grid-cols-3 md:grid-cols-3 p-4"
         >
