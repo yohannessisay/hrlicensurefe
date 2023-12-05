@@ -88,14 +88,13 @@
           data-ripple-init
           data-ripple-color="light"
         >
-          Show Existing License/s
+          {{
+            previousLicense && previousLicense.length == 0
+              ? "No existing license"
+              : "Show Existing License/s"
+          }}
         </button>
-        <p
-          v-if="previousLicense && previousLicense.length == 0"
-          class="flex justify-center"
-        >
-          <small>No existing license</small>
-        </p>
+        <br />
       </div>
       <div
         class="flex justify-center bg-white p-4 rounded-lg m-4 hover:-translate-y-2 transition-all duration-200 transform"

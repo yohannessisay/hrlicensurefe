@@ -664,6 +664,7 @@ export default {
     let multipleDepartmentError = ref(false);
     let multipleDepartmentMaxError = ref(false);
     let checkForAddedError = ref(false);
+    let existingLicense = ref({});
     let generalInfo = ref({
       educationalLevelSelected: "",
       applicantTypeSelected: JSON.parse(localStorage.getItem("applicantTypeSelected")),
@@ -928,7 +929,50 @@ export default {
         }
       });
     };
+
+    const checkForExistingLicense = () => {
+      let tempError = false;
+      let tempComparision = [];
+      if (
+        existingLicense.value &&
+        generalInfo.value.education &&
+        existingLicense.value.length > 0
+      ) {
+        existingLicense.value.forEach((element) => {
+          if (
+            element.educations &&
+            element.applicationStatus.code != "WD" &&
+            element.applicationStatus.code != "DEC"
+          ) {
+            tempComparision.push({
+              licenseId: element.id,
+              licenseStatus: element.applicationStatus.code,
+              educations: element.educations,
+            });
+          }
+        });
+      }
+      tempComparision.forEach((existingEd) => {
+        generalInfo.value.education.forEach((newEd) => {
+          if (existingEd.educations) {
+            existingEd.educations.forEach((element) => {
+              if (
+                element.departmentId == newEd.departmentId &&
+                element.professionTypeId == newEd.professionTypeId
+              ) {
+                tempError = true;
+                return;
+              }
+            });
+          }
+        });
+      });
+      return tempError;
+    };
+
     const apply = () => {
+      let tempError = checkForExistingLicense();
+
       let tempApplicationData = generalInfo.value;
       let tempFieldError = {};
 
@@ -947,28 +991,40 @@ export default {
       generalInfo.value.applicantTypeSelected.code == "ETH"
         ? (tempFieldError.occupationSelected = true)
         : delete tempFieldError.occupationSelected;
-
-      if (Object.keys(tempFieldError).length > 0) {
-        toast.error("Fill out fileds marked red", {
-          timeout: 5000,
-          position: "bottom-center",
-          pauseOnFocusLoss: true,
-          pauseOnHover: true,
-          icon: true,
-        });
+      if (tempError == false) {
+        if (Object.keys(tempFieldError).length > 0) {
+          toast.error("Fill out fileds marked red", {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          });
+        } else {
+          window.localStorage.setItem(
+            "RNApplicationData",
+            JSON.stringify(tempApplicationData)
+          );
+          store.dispatch("renewal/setGeneralInfo", generalInfo.value).then(() => {
+            let tempRN = localStorage.getItem("tempRN")
+              ? JSON.parse(localStorage.getItem("tempRN"))
+              : {};
+            tempRN.step = 2;
+            localStorage.setItem("tempRN", JSON.stringify(tempRN));
+            emit("changeActiveState");
+          });
+        }
       } else {
-        window.localStorage.setItem(
-          "RNApplicationData",
-          JSON.stringify(tempApplicationData)
+        toast.warning(
+          "You have already submitted or saved it as a draft application for this department and professional type combination",
+          {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          }
         );
-        store.dispatch("renewal/setGeneralInfo", generalInfo.value).then(() => {
-          let tempRN = localStorage.getItem("tempRN")
-            ? JSON.parse(localStorage.getItem("tempRN"))
-            : {};
-          tempRN.step = 2;
-          localStorage.setItem("tempRN", JSON.stringify(tempRN));
-          emit("changeActiveState");
-        });
       }
     };
     const clearLocalData = () => {
@@ -1018,33 +1074,48 @@ export default {
         },
       };
       isLoading.value = true;
-      store.dispatch("renewal/addRenewalLicense", license).then((res) => {
+      let tempError = checkForExistingLicense();
+      if (!tempError) {
+        store.dispatch("renewal/addRenewalLicense", license).then((res) => {
+          isLoading.value = false;
+          if (res.data.status == "Success") {
+            isLoading.value = true;
+            localStorage.setItem(
+              "tempRN",
+              JSON.stringify({ id: res.data.data.id, step: 2 })
+            );
+            toast.success("Applied successfuly", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+            localStorage.removeItem("RNApplicationData");
+            location.reload();
+          } else {
+            toast.error("Error occured, please try again", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+          }
+        });
+      } else {
         isLoading.value = false;
-        if (res.data.status == "Success") {
-          isLoading.value = true;
-          localStorage.setItem(
-            "tempRN",
-            JSON.stringify({ id: res.data.data.id, step: 2 })
-          );
-          toast.success("Applied successfuly", {
+        toast.warning(
+          "You have already submitted or saved it as a draft application for this department and professional type combination",
+          {
             timeout: 5000,
             position: "bottom-center",
             pauseOnFocusLoss: true,
             pauseOnHover: true,
             icon: true,
-          });
-          localStorage.removeItem("RNApplicationData");
-          location.reload();
-        } else {
-          toast.error("Error occured, please try again", {
-            timeout: 5000,
-            position: "bottom-center",
-            pauseOnFocusLoss: true,
-            pauseOnHover: true,
-            icon: true,
-          });
-        }
-      });
+          }
+        );
+      }
     };
     const darkMode = () => {
       emit("darkMode");
@@ -1078,6 +1149,10 @@ export default {
         if (Object.keys(localData.value).length != 0) {
           generalInfo.value = localData.value;
         }
+        let userId = JSON.parse(window.localStorage.getItem("userId"));
+        store.dispatch("renewal/getRenewalsByUser", userId).then((res) => {
+          existingLicense.value = res.data.data;
+        });
       }
     });
     return {

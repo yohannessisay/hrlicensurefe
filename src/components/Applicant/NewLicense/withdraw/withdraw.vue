@@ -1,5 +1,5 @@
 <template>
- <main-content :url="'newLicense'">
+  <main-content :url="'newLicense'">
     <nav class="bg-gray-100 px-5 py-3 rounded-md w-full mb-10" id="topNav">
       <ol class="list-reset flex">
         <li><a href="#" class="text-main-400 hover:text-blue-700">Home</a></li>
@@ -19,36 +19,19 @@
         <div
           v-for="license in withdrawnLicenses"
           :key="license.id"
-          class="
-            bg-white
-            my-1
-            px-1
-            md:w-1/4
-            lg:w-1/4
-            mdlg:w-1/4
-            sm:w-full sm:mr-4
-             
-            rounded-lg
-            transform
-            transition
-            duration-300
-            ease-in-out
-            hover:-translate-y-2
-          "
+          class="bg-white my-1 px-1 md:w-1/4 lg:w-1/4 mdlg:w-1/4 sm:w-full sm:mr-4 rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2"
         >
           <!-- Article -->
           <div>
             <h2 class="text-main-400 border-b-2 text-xl p-2">
               License Number-
-              <span class="text-base text-main-400">{{
-                license.newLicenseCode
-              }}</span>
+              <span class="text-base text-main-400">{{ license.newLicenseCode }}</span>
             </h2>
 
             <div class="border-b-2 text-main-400">
               <div class="grid grid-rows-2 p-2 mb-2 border-b-2">
                 <h1 class="text-lg">
-                  <a class=" hover:underline underline text-main-400" href="#">
+                  <a class="hover:underline underline text-main-400" href="#">
                     Department
                   </a>
                 </h1>
@@ -60,79 +43,55 @@
                     style="display: inline"
                   >
                     <span class="text-black text-sm">
-                      {{ education.department ? "*" + education.department.name : "-" }}</span
+                      {{
+                        education.department ? "*" + education.department.name : "-"
+                      }}</span
                     >
-                    <span v-if="index != license.educations.length - 1">
-                      ,
-                    </span>
+                    <span v-if="index != license.educations.length - 1"> , </span>
                   </li>
                 </ul>
               </div>
 
-              <div
-                class="
-                  flex
-                  items-center
-                  justify-between
-                  leading-tight
-                  p-2
-                  md:p-2
-                "
-              >
+              <div class="flex items-center justify-between leading-tight p-2 md:p-2">
                 <h1 class="text-lg">
-                  <a
-                    class="no-underline hover:underline text-main-400"
-                    href="#"
-                  >
+                  <a class="no-underline hover:underline text-main-400" href="#">
                     Certified Date
                   </a>
                 </h1>
-                <p class="text-black text-sm">
+                <p
+                  :class="
+                    license.certifiedDate ? 'text-black text-sm' : 'text-red-300 text-sm'
+                  "
+                >
                   {{
                     license.certifiedDate
                       ? license.certifiedDate.slice(0, 10)
-                      : "Waiting for review"
+                      : "Withdrawed"
                   }}
                 </p>
               </div>
-              <div
-                class="
-                  flex
-                  items-center
-                  justify-between
-                  leading-tight
-                  p-2
-                  md:p-2
-                "
-              >
+              <div class="flex items-center justify-between leading-tight p-2 md:p-2">
                 <h1 class="text-lg">
-                  <a
-                    class="no-underline hover:underline text-main-400"
-                    href="#"
-                  >
+                  <a class="no-underline hover:underline text-main-400" href="#">
                     Expiry Date
                   </a>
                 </h1>
-                <p class="text-black text-sm">
+                <p
+                  :class="
+                    license.certifiedDate ? 'text-black text-sm' : 'text-red-300 text-sm'
+                  "
+                >
                   {{
                     license.certifiedDate
                       ? license.certifiedDate.slice(0, 10)
-                      : "Waiting for review"
+                      : "Withdrawed"
                   }}
                 </p>
               </div>
             </div>
-            <footer
-              class="flex items-center justify-between leading-none p-2 md:p-4"
-            >
+            <footer class="flex items-center justify-between leading-none p-2 md:p-4">
               <a
-                class="
-                  flex
-                  items-center
-                  no-underline
-                  hover:underline
-                  text-black
-                "
+                class="flex items-center no-underline hover:underline text-black"
                 href="#"
               >
                 <img
@@ -153,22 +112,7 @@
             </footer>
             <div class="flex justify-center">
               <button
-                class="
-                  inline-block
-                  px-6
-                  text-white
-                  bg-main-400
-                  hover:text-main-400 hover:border
-                  text-sm
-                  font-bold
-                  uppercase
-                  rounded
-                   
-                  mb-4
-                  transition
-                  duration-150
-                  ease-in-out
-                "
+                class="inline-block px-6 text-white bg-main-400 hover:text-main-400 hover:border text-sm font-bold uppercase rounded mb-4 transition duration-150 ease-in-out"
                 @click="changeLicenseId(license.id)"
                 data-bs-toggle="modal"
                 data-bs-target="#withdrawnDetail"
@@ -187,22 +131,7 @@
     </div>
     <div
       v-else
-      class="
-        bg-white
-        my-1
-        px-1
-        md:w-1/4
-        lg:w-1/4
-        mdlg:w-1/4
-        sm:w-full sm:mr-4
-         
-        rounded-lg
-        transform
-        transition
-        duration-300
-        ease-in-out
-        hover:-translate-y-2
-      "
+      class="bg-white my-1 px-1 md:w-1/4 lg:w-1/4 mdlg:w-1/4 sm:w-full sm:mr-4 rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2"
     >
       <!-- Article -->
 
@@ -272,7 +201,7 @@ export default {
       changeLicenseId,
       isLoading,
       modalDataId,
-      isDarkMode
+      isDarkMode,
     };
   },
 };

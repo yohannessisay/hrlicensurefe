@@ -379,6 +379,14 @@
 
           <div class="flex justify-end mb-2 mr-1">
             <button
+              data-bs-toggle="modal"
+              data-bs-target="#withdrawalModal"
+              class="px-6 mr-2 mb-2 py-2.5 bg-yellow-300 text-white font-medium border text-xs leading-tight uppercase rounded hover:text-yellow-300 hover:border-yellow-300 hover:bg-white transition duration-150 ease-in-out"
+              type="button"
+            >
+              Withdraw
+            </button>
+            <button
               :class="
                 generalInfo.educations.length > 0
                   ? 'px-6 mr-2 mb-2 py-2.5 bg-white text-main-400 font-medium border text-xs leading-tight uppercase rounded   hover:text-white hover:border-main-400 hover:bg-main-400 transition duration-150   ease-in-out'
@@ -388,13 +396,6 @@
               @click="apply()"
             >
               Next
-            </button>
-            <button
-              class="px-6 mr-2 mb-2 py-2.5 bg-yellow-300 text-white font-medium border text-xs leading-tight uppercase rounded hover:text-yellow-300 hover:border-yellow-300 hover:bg-white transition duration-150 ease-in-out"
-              type="submit"
-              @click="withdraw()"
-            >
-              Withdraw
             </button>
           </div>
         </form>
@@ -418,6 +419,58 @@
           />
         </div>
       </transition>
+      <div
+        class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
+        id="withdrawalModal"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabindex="-1"
+        aria-labelledby="staticBackdropLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-sm relative w-auto pointer-events-none">
+          <div
+            class="modal-content border-none relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current"
+          >
+            <div class="modal-header flex flex-shrink-0 justify-end p-2 rounded-t-md">
+              <button
+                type="button"
+                class="px-6 text-white bg-red-200 hover:text-white hover:border font-medium text-xs leading-tight uppercase rounded hover:border-primary-600 hover:bg-purple-700 hover: focus:bg-purple-700 focus: focus:outline-none focus:ring-0 active:bg-purple-800 active: transition duration-150 ease-in-out"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              >
+                <i class="fa fa-close fa-2x"></i>
+              </button>
+            </div>
+
+            <div class="modal-body relative p-4">
+              <div class="flex justify-center">
+                <h2 class="text-red-300 text-2xl">
+                  Are you sure you want to withdraw this application?
+                </h2>
+              </div>
+            </div>
+            <div
+              class="modal-footer p-2 flex flex-shrink-0 flex-wrap items-center justify-end border-t border-grey-100 rounded-b-md"
+            >
+              <button
+                class="inline-block px-6 py-2.5 bg-yellow-300 text-white font-medium text-xs leading-tight uppercase rounded hover:bg-white hover:text-yellow-300 transition duration-150 ease-in-out"
+                type="button"
+                @click="withdraw()"
+              >
+                Confirm
+              </button>
+              <button
+                type="button"
+                class="inline-block px-6 text-white font-medium text-xs bg-primary-700 leading-tight uppercase rounded hover:bg-white hover:text-primary-700 transition duration-150 ease-in-out"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <div v-else>
       <h2 class="text-main-400 font-bold text-2xl">
@@ -551,7 +604,8 @@ export default {
               pauseOnHover: true,
               icon: true,
             });
-            router.push({ path: "/withdraw" });
+            router.push({ path: "/Applicant/Renewal/withdraw" });
+            location.reload();
           } else {
             toast.error(res.data.message, {
               timeout: 5000,
@@ -560,7 +614,7 @@ export default {
               pauseOnHover: true,
               icon: true,
             });
-            router.push({ path: "/withdraw" });
+            location.reload();
           }
         })
         .catch((err) => {
@@ -579,7 +633,10 @@ export default {
     const fetchProfessionalType = (departmentId, educationalLevelId) => {
       console.log(departmentId, educationalLevelId);
       store
-        .dispatch("renewal/getProfessionalTypes", { departmentId, educationalLevelId })
+        .dispatch("renewal/getProfessionalTypes", {
+          departmentId,
+          educationalLevelId,
+        })
         .then((res) => {
           professionalTypes.value = res.data.data;
         });

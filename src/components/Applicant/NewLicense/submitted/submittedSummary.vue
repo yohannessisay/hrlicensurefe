@@ -369,7 +369,7 @@ export default {
     let changedDocs = ref([]);
     let prevDocs = ref([]);
     let professionChanged = ref(false);
-
+    let totalSize = ref(0);
     let progress = computed(() => store.getters["newlicense/getUploadProgress"]);
 
     const totalSteps = ref(100);
@@ -543,6 +543,12 @@ export default {
                   )
                 : {};
 
+              localFileImages.value.forEach((element) => {
+                totalSize.value += Number(
+                  Math.ceil((element.image.length * 6) / 8 / 1000)
+                );
+              });
+              totalSize.value = totalSize.value / 1000;
               if (localFileImages.value && savedData.value.documents) {
                 savedData.value.documents.forEach((ele) => {
                   localFileImages.value.forEach((newFile) => {
@@ -599,6 +605,7 @@ export default {
       progress,
       totalSteps,
       showModal,
+      totalSize,
     };
   },
 };

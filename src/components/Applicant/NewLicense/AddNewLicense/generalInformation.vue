@@ -970,8 +970,8 @@ export default {
           });
         }
       } else if (tempError == 1) {
-        toast.error(
-          "You have already submitted for this department and professional type combination,pleas contact the office for further enquires",
+        toast.warning(
+          "You have already submitted or saved it as a draft application for this department and professional type combination",
           {
             timeout: 5000,
             position: "bottom-center",
@@ -1000,7 +1000,8 @@ export default {
       ) {
         existingLicense.value.forEach((element) => {
           if (
-            (element.educations && element.applicationStatus.code != "WD") ||
+            element.educations &&
+            element.applicationStatus.code != "WD" &&
             element.applicationStatus.code != "DEC"
           ) {
             tempComparision.push({
@@ -1103,8 +1104,8 @@ export default {
         });
       } else if (tempError == 1) {
         isLoading.value = false;
-        toast.error(
-          "You have already submitted for this department and professional type combination,pleas contact the office for further enquires",
+        toast.warning(
+          "You have already submitted or saved it as a draft application for this department and professional type combination",
           {
             timeout: 5000,
             position: "bottom-center",
