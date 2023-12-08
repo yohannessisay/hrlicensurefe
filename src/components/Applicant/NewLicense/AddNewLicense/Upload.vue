@@ -2081,7 +2081,7 @@ export default {
   padding: 7px;
 }
 
-. {
+.shadow-md {
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 34%), 0 2px 4px -1px rgb(0 0 0 / 6%);
 }
 
