@@ -181,6 +181,10 @@
             : ' bg-white border-b-2 mt-2 p-4'
         "
       >
+        <h2 class="text-yellow-300 text-xl">
+          ***Please select the region you are applying for, not where you are currently
+          living***
+        </h2>
         <div
           class="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 mdlg:grid-cols-3 md:grid-cols-3 p-4"
         >
@@ -658,6 +662,8 @@ export default {
     let multipleDepartmentMaxError = ref(false);
     let checkForAddedError = ref(false);
     let existingLicense = ref({});
+
+    let existingData = { id: null, step: 1 };
     let generalInfo = ref({
       educationalLevelSelected: "",
       applicantTypeSelected: JSON.parse(localStorage.getItem("applicantTypeSelected")),
@@ -924,38 +930,8 @@ export default {
     };
     const apply = () => {
       let tempFieldError = {};
-      let tempComparision = [];
-      if (
-        existingLicense.value &&
-        generalInfo.value.education &&
-        existingLicense.value.length > 0
-      ) {
-        existingLicense.value.forEach((element) => {
-          if (element.educations && element.applicationStatus.code != "WD") {
-            tempComparision.push({
-              licenseId: element.id,
-              licenseStatus: element.applicationStatus.code,
-              educations: element.educations,
-            });
-          }
-        });
-      }
-      let tempError = false;
-      tempComparision.forEach((existingEd) => {
-        generalInfo.value.education.forEach((newEd) => {
-          if (existingEd.educations) {
-            existingEd.educations.forEach((element) => {
-              if (
-                element.departmentId == newEd.departmentId &&
-                element.professionTypeId == newEd.professionTypeId
-              ) {
-                tempError = true;
-                return;
-              }
-            });
-          }
-        });
-      });
+
+      let tempError = checkForExistingLicense();
       generalInfo.value.applicantTypeSelected == ""
         ? (tempFieldError.applicantTypeSelected = true)
         : delete tempFieldError.applicantTypeSelected;
@@ -988,12 +964,14 @@ export default {
             JSON.stringify(tempApplicationData)
           );
           store.dispatch("newlicense/setGeneralInfo", generalInfo.value).then(() => {
+            let tempNL = { step: 2 };
+            localStorage.setItem("tempNL", JSON.stringify(tempNL));
             emit("changeActiveState");
           });
         }
-      } else {
-        toast.error(
-          "Sorry, seems like you have applied for this department and profession already",
+      } else if (tempError == 1) {
+        toast.warning(
+          "You have already submitted or saved it as a draft application for this department and professional type combination",
           {
             timeout: 5000,
             position: "bottom-center",
@@ -1002,7 +980,58 @@ export default {
             icon: true,
           }
         );
+      } else {
+        let tempNL = localStorage.getItem("tempNL")
+          ? JSON.parse(localStorage.getItem("tempNL"))
+          : JSON.stringify(existingData);
+        existingData ? (tempNL.step = 3) : (tempNL.step = 2);
+        localStorage.setItem("tempNL", JSON.stringify(tempNL));
+        emit("changeActiveState");
       }
+    };
+    const checkForExistingLicense = () => {
+      let tempError = false;
+      let alreadySubmitted = 0;
+      let tempComparision = [];
+      if (
+        existingLicense.value &&
+        generalInfo.value.education &&
+        existingLicense.value.length > 0
+      ) {
+        existingLicense.value.forEach((element) => {
+          if (
+            element.educations &&
+            element.applicationStatus.code != "WD" &&
+            element.applicationStatus.code != "DEC"
+          ) {
+            tempComparision.push({
+              licenseId: element.id,
+              licenseStatus: element.applicationStatus.code,
+              educations: element.educations,
+            });
+          } else if (element.educations && element.applicationStatus.code == "SUB") {
+            alreadySubmitted = 1;
+          }
+        });
+      }
+      tempComparision.forEach((existingEd) => {
+        generalInfo.value.education.forEach((newEd) => {
+          if (existingEd.educations) {
+            existingEd.educations.forEach((element) => {
+              if (
+                element.departmentId == newEd.departmentId &&
+                element.professionTypeId == newEd.professionTypeId
+              ) {
+                tempError = true;
+                existingData.id = existingEd.licenseId;
+                existingData.step = 2;
+                return;
+              }
+            });
+          }
+        });
+      });
+      return alreadySubmitted ? alreadySubmitted : tempError;
     };
     const clearLocalData = () => {
       window.localStorage.removeItem("NLApplicationData");
@@ -1048,52 +1077,95 @@ export default {
             : "FED",
         },
       };
-      store.dispatch("newlicense/addNewLicense", license).then((res) => {
-        if (res.data.status == "Success") {
-          toast.success("Applied successfuly", {
+      let tempError = checkForExistingLicense();
+      if (!tempError) {
+        store.dispatch("newlicense/addNewLicense", license).then((res) => {
+          if (res.data.status == "Success") {
+            toast.success("Applied successfuly", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+            isLoading.value = false;
+            localStorage.removeItem("NLApplicationData");
+            localStorage.removeItem("tempNL");
+            location.reload();
+          } else {
+            toast.error("Error occured, please try again", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+          }
+        });
+      } else if (tempError == 1) {
+        isLoading.value = false;
+        toast.warning(
+          "You have already submitted or saved it as a draft application for this department and professional type combination",
+          {
             timeout: 5000,
             position: "bottom-center",
             pauseOnFocusLoss: true,
             pauseOnHover: true,
             icon: true,
-          });
-          isLoading.value = false;
-          localStorage.removeItem("NLApplicationData");
-          location.reload();
-        } else {
-          toast.error("Error occured, please try again", {
-            timeout: 5000,
+          }
+        );
+      } else {
+        isLoading.value = false;
+        toast.warning(
+          "Sorry,seems like you already applied using this department and profession type,please check your draft or submitted page",
+          {
+            timeout: 10000,
             position: "bottom-center",
             pauseOnFocusLoss: true,
             pauseOnHover: true,
             icon: true,
-          });
-        }
-      });
+          }
+        );
+      }
     };
 
     onMounted(async () => {
       window.addEventListener("darkModeChanged", (data) => {
         isDarkMode.value = data.detail ? data.detail.content : "";
       });
-      applicantTypeChangeHandler();
-      fetchApplicantType();
-      fetchDepartments();
-      fetchEducationLevel();
-      fetchRegions();
-      fetchOccupation();
-      localData.value = window.localStorage.getItem("NLApplicationData")
-        ? JSON.parse(window.localStorage.getItem("NLApplicationData"))
+      let tryAgain = localStorage.getItem("tempNL")
+        ? JSON.parse(localStorage.getItem("tempNL"))
         : {};
-      if (Object.keys(localData.value).length != 0) {
-        generalInfo.value = localData.value;
-        isAppTypeSelected.value = true;
+
+      if (tryAgain && tryAgain.id != null && tryAgain.backButtonClicked == false) {
+        tryAgain.step = 3;
+        localStorage.setItem("tempNL", JSON.stringify(tryAgain));
+
+        emit("changeActiveState");
+      } else {
+        if (tryAgain && tryAgain.backButtonClicked) {
+          tryAgain.step = 1;
+          localStorage.setItem("tempNL", JSON.stringify(tryAgain));
+        }
         applicantTypeChangeHandler();
+        fetchApplicantType();
+        fetchDepartments();
+        fetchEducationLevel();
+        fetchRegions();
+        fetchOccupation();
+        localData.value = window.localStorage.getItem("NLApplicationData")
+          ? JSON.parse(window.localStorage.getItem("NLApplicationData"))
+          : {};
+        if (Object.keys(localData.value).length != 0) {
+          generalInfo.value = localData.value;
+          isAppTypeSelected.value = true;
+          applicantTypeChangeHandler();
+        }
+        let userId = JSON.parse(window.localStorage.getItem("userId"));
+        store.dispatch("newlicense/getNewLicenseByUser", userId).then((res) => {
+          existingLicense.value = res.data.data;
+        });
       }
-      let userId = JSON.parse(window.localStorage.getItem("userId"));
-      store.dispatch("newlicense/getNewLicenseByUser", userId).then((res) => {
-        existingLicense.value = res.data.data;
-      });
     });
     return {
       applicantTypeChangeHandler,

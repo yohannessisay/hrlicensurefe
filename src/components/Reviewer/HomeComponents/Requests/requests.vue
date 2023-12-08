@@ -106,6 +106,7 @@
             :sortable="requestsTable.sortable"
             @is-finished="tableLoadingFinish"
             @row-clicked="rowClicked"
+            @do-search="doSearch"
           ></vue-table-lite>
         </div>
       </div>
@@ -147,11 +148,12 @@ export default {
     let requestedStatusFilter = ref("");
     let applicationStatuses = ref([]);
 
-    const fetchRequests = async () => {
+    const fetchRequests = async (apiParameters) => {
       store
         .dispatch("reviewer/getRequestsByAdminRegion", {
           params: [
             { key: "type", value: requestTypeFilter.value },
+            ...apiParameters,
             {
               key: "currentStatus",
               value:
@@ -284,7 +286,31 @@ export default {
     };
     const applyFilter = async () => {
       requestsTable.value.isLoading = true;
-      await fetchRequests();
+      await fetchRequests([
+        { key: "page", value: 0 },
+        { key: "size", value: 10 },
+        {
+          key: "currentStatus",
+          value:
+            currentStatusFilter.value && currentStatusFilter.value != "all"
+              ? currentStatusFilter.value
+              : "",
+        },
+        {
+          key: "requestedStatus",
+          value:
+            requestedStatusFilter.value && requestedStatusFilter.value != "all"
+              ? requestedStatusFilter.value
+              : "",
+        },
+        {
+          key: "requestStatus",
+          value:
+            requestStatusFilter.value && requestStatusFilter.value != "all"
+              ? requestStatusFilter.value
+              : "",
+        },
+      ]);
     };
     const tableLoadingFinish = () => {
       let elements = document.getElementsByClassName("edit-btn");
@@ -297,8 +323,29 @@ export default {
     const rowClicked = (row) => {
       editModalData.value = row;
     };
+    const doSearch = (offset, limit, order, sort) => {
+      requestsTable.value.isLoading = true;
+      setTimeout(() => {
+        requestsTable.value.isReSearch = offset == undefined ? true : false;
+        offset = offset / 10;
+        if (sort == "asc") {
+          fetchRequests([
+            { key: "page", value: offset },
+            { key: "size", value: limit },
+          ]);
+        } else {
+          fetchRequests([
+            { key: "page", value: offset },
+            { key: "size", value: limit },
+          ]);
+        }
+      }, 600);
+    };
     onMounted(() => {
-      fetchRequests();
+      fetchRequests([
+        { key: "page", value: 0 },
+        { key: "size", value: 10 },
+      ]);
       let tempAp = JSON.parse(localStorage.getItem("applicationStatuses"))
         ? JSON.parse(localStorage.getItem("applicationStatuses"))
         : [];
@@ -333,6 +380,7 @@ export default {
       requestTypeFilter,
       rowClicked,
       tableLoadingFinish,
+      doSearch,
     };
   },
 };

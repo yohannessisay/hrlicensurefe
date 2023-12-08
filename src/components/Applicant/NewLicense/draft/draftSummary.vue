@@ -279,7 +279,7 @@
     <!-- end row -->
     <div class="modal-mask" v-if="showModal">
       <div class="modal-wrapper">
-        <div class="modal-container">
+        <div class="modal-container sm:w-1/2 w-5/6">
           <div class="modal-header">
             <h2 class="text-main-400 text-xl border-b-4">Uploading</h2>
           </div>
@@ -343,6 +343,7 @@ export default {
     let savedData = ref({});
     let changedDocs = ref([]);
     let prevDocs = ref([]);
+    let totalSize = ref(0);
     let professionChanged = ref(false);
     let progress = computed(() => store.getters["newlicense/getUploadProgress"]);
 
@@ -427,6 +428,10 @@ export default {
             .then((res) => {
               isLoading.value = false;
               if (res) {
+                localStorage.removeItem("applicantTypeSelected");
+                localStorage.removeItem("NLApplicationData");
+                localStorage.removeItem("tempNL");
+                indexedDB.deleteDatabase("NLdocumentUploads");
                 toast.success("Applied successfuly", {
                   timeout: 5000,
                   position: "bottom-center",
@@ -515,7 +520,11 @@ export default {
                     JSON.stringify(evt.target.result[0] ? evt.target.result[0].data : {})
                   )
                 : {};
-
+              localFileImages.value.forEach((element) => {
+                totalSize.value += Number(
+                  Math.ceil((element.image.length * 6) / 8 / 1000)
+                );
+              });
               if (localFileImages.value && savedData.value.documents) {
                 savedData.value.documents.forEach((ele) => {
                   localFileImages.value.forEach((newFile) => {
@@ -572,6 +581,7 @@ export default {
       changeAgrement,
       progress,
       totalSteps,
+      totalSize,
     };
   },
 };
@@ -611,7 +621,6 @@ export default {
 }
 
 .modal-container {
-  width: 600px;
   margin: 0px auto;
   padding: 20px 30px;
   background-color: #fff;

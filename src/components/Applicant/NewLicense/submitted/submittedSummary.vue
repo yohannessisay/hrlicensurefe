@@ -302,7 +302,7 @@
     </div>
     <div class="modal-mask" v-if="showModal">
       <div class="modal-wrapper">
-        <div class="modal-container">
+        <div class="modal-container sm:w-1/2 w-5/6">
           <div class="modal-header">
             <h2 class="text-main-400 text-xl border-b-4">Uploading</h2>
           </div>
@@ -369,7 +369,7 @@ export default {
     let changedDocs = ref([]);
     let prevDocs = ref([]);
     let professionChanged = ref(false);
-
+    let totalSize = ref(0);
     let progress = computed(() => store.getters["newlicense/getUploadProgress"]);
 
     const totalSteps = ref(100);
@@ -458,7 +458,10 @@ export default {
                   pauseOnHover: true,
                   icon: true,
                 });
-
+                localStorage.removeItem("applicantTypeSelected");
+                localStorage.removeItem("NLApplicationData");
+                localStorage.removeItem("tempNL");
+                indexedDB.deleteDatabase("NLdocumentUploads");
                 router.push({ path: "/Applicant/NewLicense/submitted" });
               } else {
                 toast.error("Error occured, please try again", {
@@ -540,6 +543,12 @@ export default {
                   )
                 : {};
 
+              localFileImages.value.forEach((element) => {
+                totalSize.value += Number(
+                  Math.ceil((element.image.length * 6) / 8 / 1000)
+                );
+              });
+              totalSize.value = totalSize.value / 1000;
               if (localFileImages.value && savedData.value.documents) {
                 savedData.value.documents.forEach((ele) => {
                   localFileImages.value.forEach((newFile) => {
@@ -596,6 +605,7 @@ export default {
       progress,
       totalSteps,
       showModal,
+      totalSize,
     };
   },
 };
@@ -635,7 +645,6 @@ export default {
 }
 
 .modal-container {
-  width: 600px;
   margin: 0px auto;
   padding: 20px 30px;
   background-color: #fff;

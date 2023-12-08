@@ -33,9 +33,7 @@
       <li>
         <span
           :class="
-            isDarkMode && isDarkMode == true
-              ? 'text-white mx-2 '
-              : 'text-main-400 mx-2'
+            isDarkMode && isDarkMode == true ? 'text-white mx-2 ' : 'text-main-400 mx-2'
           "
           >/</span
         >
@@ -59,21 +57,21 @@
       :opacity="1"
     ></loading>
     <!-- {{ previousLicense }} -->
-    <div class="flex justify-center m-4 ">
+    <div class="flex justify-center m-4">
       <h1
         :class="
           isDarkMode && isDarkMode == true
-            ? 'text-3xl text-white'
-            : 'text-3xl text-main-400'
+            ? 'text-xl sm:text-3x text-white'
+            : 'text-xl sm:text-3xl text-yellow-300'
         "
       >
-        You can choose an existing license to renew or apply for a renewal form
+        You can choose an existing license that you have on this system for renewal or
+        apply for a renewal form
       </h1>
     </div>
-    <div class="flex justify-center m-4 ">
+    <div class="grid grid-cols-1 sm:grid-cols-2 m-4">
       <div
-        class="bg-white p-4 rounded-lg m-4    hover:-translate-y-2  transition-all
-          duration-200   transform"
+        class="flex justify-center bg-white p-4 rounded-lg m-4 hover:-translate-y-2 transition-all duration-200 transform"
       >
         <button
           :class="
@@ -90,21 +88,19 @@
           data-ripple-init
           data-ripple-color="light"
         >
-          Show Existing License/s
+          {{
+            previousLicense && previousLicense.length == 0
+              ? "No existing license"
+              : "Show Existing License/s"
+          }}
         </button>
-        <p
-          v-if="previousLicense && previousLicense.length == 0"
-          class="flex justify-center"
-        >
-          <small>No existing license</small>
-        </p>
+        <br />
       </div>
       <div
-        class="bg-white p-4 rounded-lg m-4    hover:-translate-y-2  transition-all
-          duration-200   transform"
+        class="flex justify-center bg-white p-4 rounded-lg m-4 hover:-translate-y-2 transition-all duration-200 transform"
       >
         <button
-          class="inline-block px-6 text-white bg-main-400 hover:text-main-400 hover:border text-sm font-bold uppercase rounded   mb-4 transition duration-150 ease-in-out"
+          class="inline-block px-6 text-white bg-main-400 hover:text-main-400 hover:border text-sm font-bold uppercase rounded mb-4 transition duration-150 ease-in-out"
           type="button"
           @click="applyForNew()"
           title="Your License exists before this system and you want to renew it"
@@ -125,10 +121,7 @@
             : 'block rounded-lg bg-primary-200 p-6 dark:bg-neutral-700 dark:text-neutral-50  '
         "
       >
-        <div
-          v-if="previousLicense && previousLicense.length != 0"
-          class="w-full p-4"
-        >
+        <div v-if="previousLicense && previousLicense.length != 0" class="w-full p-4">
           <div class="flex flex-row sm:-mx-1 lg:-mx-2">
             <div
               v-for="license in previousLicense"
@@ -166,9 +159,7 @@
                 <div class="border-b-2 text-main-400 p-2">
                   <div class="grid grid-cols-3">
                     <h1 class="text-lg">
-                      <a class="text-main-400 pointer-events-none" href="#"
-                        >Department</a
-                      >
+                      <a class="text-main-400 pointer-events-none" href="#">Department</a>
                     </h1>
 
                     <ul class="text-black text-sm col-span-2">
@@ -179,13 +170,9 @@
                       >
                         <span class="text-grey-800 text-sm">
                           {{
-                            education.department
-                              ? "*" + education.department.name
-                              : "-"
+                            education.department ? "*" + education.department.name : "-"
                           }}
-                          <span v-if="index != license.educations.length - 1"
-                            >,</span
-                          >
+                          <span v-if="index != license.educations.length - 1">,</span>
                         </span>
                       </li>
                     </ul>
@@ -193,9 +180,7 @@
 
                   <div class="grid grid-cols-3">
                     <h1 class="text-lg">
-                      <a class="text-main-400 pointer-events-none" href="#"
-                        >Profession</a
-                      >
+                      <a class="text-main-400 pointer-events-none" href="#">Profession</a>
                     </h1>
                     <ul class="text-black text-sm col-span-2">
                       <li
@@ -209,9 +194,7 @@
                               ? education.professionType.name
                               : "-"
                           }}
-                          <span v-if="index != license.educations.length - 1"
-                            >,</span
-                          >
+                          <span v-if="index != license.educations.length - 1">,</span>
                         </span>
                       </li>
                     </ul>
@@ -236,9 +219,7 @@
                     </ul>
                   </div>
                 </div>
-                <footer
-                  class="flex items-center justify-between leading-none p-2 md:p-2"
-                >
+                <footer class="flex items-center justify-between leading-none p-2 md:p-2">
                   <span class="text-main-400 text-sm">
                     {{ license.createdAt.slice(0, 10) }}
                   </span>
@@ -291,9 +272,7 @@
                       }}
                       Days Remaining For Expiration</span
                     >
-                    <h4 v-else class="text-red-300 text-2xl font-bold">
-                      Expired
-                    </h4>
+                    <h4 v-else class="text-red-300 text-2xl font-bold">Expired</h4>
                   </h2>
                 </div>
               </div>
@@ -315,7 +294,7 @@ import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 export default {
   props: ["activeState"],
   components: { Loading },
-
+  emits: ["darkMode", "changeActiveState", "changeActiveStateMinus"],
   setup(props, { emit }) {
     let isLoading = ref(false);
     const store = useStore();
@@ -379,12 +358,8 @@ export default {
       tempApplicationData.occupationSelected = license.occupationType
         ? license.occupationType
         : null;
-      tempApplicationData.woredaSelected = license.woreda
-        ? license.woreda
-        : null;
-      tempApplicationData.zoneSelected = license.woreda
-        ? license.woreda.zone
-        : null;
+      tempApplicationData.woredaSelected = license.woreda ? license.woreda : null;
+      tempApplicationData.zoneSelected = license.woreda ? license.woreda.zone : null;
       tempApplicationData.regionSelected = license.woreda
         ? license.woreda.zone.region
         : null;

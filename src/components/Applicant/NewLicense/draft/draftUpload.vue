@@ -56,7 +56,7 @@
                       <th
                         class="font-semibold text-sm uppercase px-6 py-4 text-left text-white"
                       >
-                        Previous File
+                        Uploaded Document
                       </th>
                       <th
                         class="font-semibold text-sm uppercase px-6 py-4 text-center text-white"
@@ -115,8 +115,9 @@
                         <span
                           class="document-name"
                           v-if="documentsSaved[item.documentType.code]"
-                          >{{ documentsSaved[item.documentType.code].name }}</span
-                        >
+                          >{{ documentsSaved[item.documentType.code].name }}
+                          <i class="fa fa-check-circle text-green-300"></i
+                        ></span>
                       </td>
                       <td class="px-6 py-4 text-center">
                         <a
@@ -200,15 +201,12 @@
                       <th
                         class="font-semibold text-sm uppercase px-6 py-4 text-center text-white"
                       >
-                        Previous File
+                        Uploaded Document
                       </th>
                       <th
                         class="font-semibold text-sm uppercase px-6 py-4 text-center text-white"
                       >
                         View
-                      </th>
-                      <th class="font-semibold text-sm uppercase px-6 py-4 text-white">
-                        Action
                       </th>
                     </tr>
                   </thead>
@@ -279,8 +277,9 @@
                                 item.documentType.code
                               }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                             ]?.name
-                          }}</span
-                        >
+                          }}
+                          <i class="fa fa-check-circle text-green-300"></i
+                        ></span>
                       </td>
                       <td class="px-6 py-4 text-center">
                         <a
@@ -397,8 +396,9 @@
                                 parentItem[0].documentType.code
                               }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                             ]?.name
-                          }}</span
-                        >
+                          }}
+                          <i class="fa fa-check-circle text-green-300"></i
+                        ></span>
                       </td>
                       <td class="px-6 py-4 text-center">
                         <a
@@ -596,8 +596,9 @@
                                           parentChildItem.documentType.code
                                         }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                       ]?.name
-                                    }}</span
-                                  >
+                                    }}
+                                    <i class="fa fa-check-circle text-green-300"></i
+                                  ></span>
                                 </td>
                                 <td
                                   v-if="
@@ -1694,7 +1695,7 @@ export default {
   border-radius: 5%;
   padding: 7px;
 }
-. {
+.shadow-md {
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 34%), 0 2px 4px -1px rgb(0 0 0 / 6%);
 }
 .document-name {

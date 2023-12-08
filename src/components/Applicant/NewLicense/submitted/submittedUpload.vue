@@ -54,12 +54,14 @@
                         Upload
                       </th>
                       <th
-                        class="font-semibold text-sm uppercase px-6 py-4 text-center text-white"
-                      ></th>
+                        class="font-semibold text-sm uppercase px-6 py-4 text-left text-white"
+                      >
+                        Uploaded Document
+                      </th>
 
-                      <th
-                        class="font-semibold text-sm uppercase px-6 py-4 text-white"
-                      ></th>
+                      <th class="font-semibold text-sm uppercase px-6 py-4 text-white">
+                        View
+                      </th>
                     </tr>
                   </thead>
                   <tbody class="">
@@ -112,8 +114,9 @@
                         <span
                           class="document-name"
                           v-if="documentsSaved[item.documentType.code]"
-                          >{{ documentsSaved[item.documentType.code].name }}</span
-                        >
+                          >{{ documentsSaved[item.documentType.code].name }}
+                          <i class="fa fa-check-circle text-green-300"></i
+                        ></span>
                       </td>
                       <td class="px-6 py-4 text-center">
                         <a
@@ -197,13 +200,15 @@
                         Upload
                       </th>
                       <th
-                        class="font-semibold text-sm uppercase px-6 py-4 text-center text-white"
+                        class="font-semibold text-sm uppercase px-6 py-4 text-left text-white"
                       >
-                        Upload Document
+                        Uploaded Document
                       </th>
                       <th
-                        class="font-semibold text-sm uppercase px-6 py-4 text-white"
-                      ></th>
+                        class="font-semibold text-sm uppercase px-6 py-4 text-white text-center"
+                      >
+                        View
+                      </th>
                     </tr>
                   </thead>
                   <tbody class="p-4">
@@ -266,14 +271,16 @@
                               }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                             ]?.name
                           "
-                          >{{
+                        >
+                          {{
                             documentsSaved[
                               `${
                                 item.documentType.code
                               }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                             ]?.name
-                          }}</span
-                        >
+                          }}
+                          <i class="fa fa-check-circle text-green-300"></i
+                        ></span>
                       </td>
                       <td class="px-6 py-4 text-center">
                         <a
@@ -328,7 +335,7 @@
                   </tbody>
 
                   <tbody
-                    class="divide-y p-4"
+                    class="p-4"
                     v-for="parentItem in table.parentDoc"
                     :key="parentItem.id"
                   >
@@ -391,8 +398,9 @@
                                 parentItem[0].documentType.code
                               }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                             ]?.name
-                          }}</span
-                        >
+                          }}
+                          <i class="fa fa-check-circle text-green-300"></i
+                        ></span>
                       </td>
                       <td class="px-6 py-4 text-center">
                         <a
@@ -590,8 +598,9 @@
                                           parentChildItem.documentType.code
                                         }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                       ]?.name
-                                    }}</span
-                                  >
+                                    }}
+                                    <i class="fa fa-check-circle text-green-300"></i
+                                  ></span>
                                 </td>
                                 <td
                                   v-if="
@@ -682,6 +691,18 @@
         </div>
       </div>
     </div>
+    <div class="p-2 m-4 rounded-md" v-if="errorDocuments && errorDocuments.length > 0">
+      <h2 class="text-yellow-300 font-bold text-3xl">
+        Please attach the following files to proceed
+      </h2>
+      <li
+        class="text-yellow-300 text-xl font-bold border-2 rounded-md p-2 m-1"
+        v-for="error in errorDocuments"
+        :key="error"
+      >
+        {{ error.name }}
+      </li>
+    </div>
     <div class="flex justify-end mr-8 mb-12">
       <button
         class="mt-8 inline-block px-6 py-2.5 bg-white hover:bg-main-400 hover:text-white text-main-400 text-xs font-bold leading-tight uppercase rounded active:border-main-400 transition duration-150 ease-in-out border"
@@ -701,7 +722,7 @@
 <script>
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
-
+import { useToast } from "vue-toastification";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 import MAX_FILE_SIZE from "../../../../composables/documentMessage";
@@ -714,6 +735,7 @@ export default {
 
   setup(props, { emit }) {
     let isLoading = ref(false);
+    const toast = useToast();
     let store = useStore();
     const route = useRoute();
     let documents = ref([]);
@@ -1346,43 +1368,240 @@ export default {
     };
 
     const next = () => {
-      store.dispatch("newlicense/setTempDocs", formData).then(() => {
-        //Save images to indexed Db
+      let documentValidation = checkDocuments();
 
-        let finalLocalData = {
-          created: new Date(),
-          data: [],
-        };
-        let db;
-        let request = indexedDB.open("NLdocumentUploads", 1);
-        request.onsuccess = function () {
-          db = request.result;
-          let transaction = db.transaction(["NLdocumentUploads"], "readwrite");
+      if (documentValidation && Object.keys(documentValidation).length == 0) {
+        store.dispatch("newlicense/setTempDocs", formData).then(() => {
+          //Save images to indexed Db
 
-          finalLocalData.data = imageData;
+          let finalLocalData = {
+            created: new Date(),
+            data: [],
+          };
+          let db;
+          let request = indexedDB.open("NLdocumentUploads", 1);
+          request.onsuccess = function () {
+            db = request.result;
+            let transaction = db.transaction(["NLdocumentUploads"], "readwrite");
 
-          const objectStore = transaction.objectStore("NLdocumentUploads");
+            finalLocalData.data = imageData;
 
-          const objectStoreRequest = objectStore.clear();
+            const objectStore = transaction.objectStore("NLdocumentUploads");
 
-          objectStoreRequest.onsuccess = () => {
-            let addReq = transaction.objectStore("NLdocumentUploads").put(finalLocalData);
+            const objectStoreRequest = objectStore.clear();
 
-            addReq.onerror = function () {
-              console.log(
-                "Error regarding your browser, please update your browser to the latest version"
-              );
-            };
+            objectStoreRequest.onsuccess = () => {
+              let addReq = transaction
+                .objectStore("NLdocumentUploads")
+                .put(finalLocalData);
 
-            transaction.oncomplete = function () {
-              console.log("data stored");
-              emit("changeActiveState");
+              addReq.onerror = function () {
+                console.log(
+                  "Error regarding your browser, please update your browser to the latest version"
+                );
+              };
+
+              transaction.oncomplete = function () {
+                console.log("data stored");
+                emit("changeActiveState");
+              };
             };
           };
-        };
-      });
+        });
+      } else {
+        toast.error(
+          "Please attach documents marked with red border and this icon (*) next to their name to proceed",
+          {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          }
+        );
+      }
     };
+    const checkDocuments = () => {
+      let temp = "";
+      let CMtemp = "";
+      let NSTemp = "";
+      var tempVal;
+      errorDocuments.value = [];
 
+      commonDocuments.value
+        .filter((cd) => cd.isRequired)
+        .forEach((element) => {
+          CMtemp =
+            // eslint-disable-next-line no-prototype-builtins
+            documentsUploaded.value.hasOwnProperty(element.documentType.code)
+              ? // eslint-disable-next-line no-prototype-builtins
+                documentsUploaded.value.hasOwnProperty(element.documentType.code)
+              : // eslint-disable-next-line no-prototype-builtins
+              documentsSaved.value.hasOwnProperty(element.documentType.code)
+              ? // eslint-disable-next-line no-prototype-builtins
+                documentsSaved.value.hasOwnProperty(element.documentType.code)
+              : false;
+
+          if (!CMtemp) {
+            fileUploadError.value["file_upload_row_" + element.documentType.code] = true;
+
+            errorDocuments.value.push({
+              isCommon: true,
+              name: element.documentType.name,
+              code: element.documentType.code,
+            });
+          } else {
+            delete fileUploadError.value["file_upload_row_" + element.documentType.code];
+          }
+        });
+
+      educationalDocs.value.forEach((ed) => {
+        // check normal docs with no parents
+
+        ed.docs
+          .filter((docs) => docs.isRequired)
+          .forEach((single) => {
+            temp =
+              // eslint-disable-next-line no-prototype-builtins
+              documentsUploaded.value.hasOwnProperty(
+                single.documentType.code +
+                  "_" +
+                  ed.educationalLevel.code.toUpperCase() +
+                  "_" +
+                  ed.professionType.code.toUpperCase()
+              )
+                ? // eslint-disable-next-line no-prototype-builtins
+                  documentsUploaded.value.hasOwnProperty(
+                    single.documentType.code +
+                      "_" +
+                      ed.educationalLevel.code.toUpperCase() +
+                      "_" +
+                      ed.professionType.code.toUpperCase()
+                  )
+                : // eslint-disable-next-line no-prototype-builtins
+                documentsSaved.value.hasOwnProperty(
+                    single.documentType.code +
+                      "_" +
+                      ed.educationalLevel.code.toUpperCase() +
+                      "_" +
+                      ed.professionType.code.toUpperCase()
+                  )
+                ? // eslint-disable-next-line no-prototype-builtins
+                  documentsSaved.value.hasOwnProperty(
+                    single.documentType.code +
+                      "_" +
+                      ed.educationalLevel.code.toUpperCase() +
+                      "_" +
+                      ed.professionType.code.toUpperCase()
+                  )
+                : false;
+            if (!temp) {
+              fileUploadError.value[
+                "file_upload_row_" +
+                  single.documentType.code +
+                  "_" +
+                  ed.educationalLevel.code.toUpperCase() +
+                  "_" +
+                  ed.professionType.code.toUpperCase()
+              ] = true;
+              errorDocuments.value.push({
+                name: single.documentType.name,
+                code:
+                  single.documentType.code +
+                  "_" +
+                  ed.educationalLevel.code.toUpperCase() +
+                  "_" +
+                  ed.professionType.code.toUpperCase(),
+              });
+            } else {
+              delete fileUploadError.value[
+                "file_upload_row_" +
+                  single.documentType.code +
+                  "_" +
+                  ed.educationalLevel.code.toUpperCase() +
+                  "_" +
+                  ed.professionType.code.toUpperCase()
+              ];
+            }
+          });
+
+        //// check documetns with parents
+        for (var pd in ed.parentDoc) {
+          tempVal = newLicenseDocuments.value.filter(
+            (nld) => nld.parentDocument == pd && nld.isRequired
+          );
+
+          if (
+            tempVal &&
+            tempVal.length > 0 &&
+            tempVal[0] &&
+            tempVal[0].isRequired == true
+          ) {
+            NSTemp =
+              // eslint-disable-next-line no-prototype-builtins
+              documentsUploaded.value.hasOwnProperty(
+                tempVal[0].documentType.code +
+                  "_" +
+                  ed.educationalLevel.code.toUpperCase() +
+                  "_" +
+                  ed.professionType.code.toUpperCase()
+              )
+                ? // eslint-disable-next-line no-prototype-builtins
+                  documentsUploaded.value.hasOwnProperty(
+                    tempVal[0].documentType.code +
+                      "_" +
+                      ed.educationalLevel.code.toUpperCase() +
+                      "_" +
+                      ed.professionType.code.toUpperCase()
+                  )
+                : // eslint-disable-next-line no-prototype-builtins
+                documentsSaved.value.hasOwnProperty(
+                    tempVal[0].documentType.code +
+                      "_" +
+                      ed.educationalLevel.code.toUpperCase() +
+                      "_" +
+                      ed.professionType.code.toUpperCase()
+                  )
+                ? // eslint-disable-next-line no-prototype-builtins
+                  documentsSaved.value.hasOwnProperty(
+                    tempVal[0].documentType.code +
+                      "_" +
+                      ed.educationalLevel.code.toUpperCase() +
+                      "_" +
+                      ed.professionType.code.toUpperCase()
+                  )
+                : false;
+            if (NSTemp == "") {
+              fileUploadError.value[
+                "file_upload_row_" +
+                  newLicenseDocuments.value.filter(
+                    (nld) => nld.parentDocument == pd && nld.isRequired
+                  )[0].documentType.code +
+                  "_" +
+                  ed.educationalLevel.code.toUpperCase() +
+                  "_" +
+                  ed.professionType.code.toUpperCase()
+              ] = true;
+              errorDocuments.value.push({
+                name: newLicenseDocuments.value.filter(
+                  (nld) => nld.parentDocument == pd && nld.isRequired
+                )[0].documentType.name,
+                code:
+                  newLicenseDocuments.value.filter(
+                    (nld) => nld.parentDocument == pd && nld.isRequired
+                  )[0].documentType.code +
+                  "_" +
+                  ed.educationalLevel.code.toUpperCase() +
+                  "_" +
+                  ed.professionType.code.toUpperCase(),
+              });
+            }
+          }
+        }
+      });
+
+      return fileUploadError.value;
+    };
     const groupByKey = (array, key) => {
       return array.reduce((hash, obj) => {
         if (obj[key] === undefined || obj[key] == null) return hash;
@@ -1426,16 +1645,25 @@ export default {
       }
       store
         .dispatch("newlicense/getNewLicenseApplication", route.params.id)
-        .then((res) => {
+        .then(async (res) => {
           if (res.data.data) {
-            let localData = JSON.parse(localStorage.getItem("NLApplicationData"));
+            let localData = await JSON.parse(localStorage.getItem("NLApplicationData"));
             let professionChanged = localData.professionChanged;
+            generalInfo.value = await res.data.data;
             if (professionChanged && professionChanged == true) {
+              generalInfo.value?.documents
+                ? generalInfo.value?.documents.forEach((element) => {
+                    documentsSaved.value[element.fileName] = {};
+                    documentsSaved.value[element.fileName].path =
+                      googleApi + element.filePath;
+                    documentsSaved.value[element.fileName].name =
+                      element.originalFileName;
+                  })
+                : "";
+
               documentsUploaded.value = [];
-              documentsSaved.value = [];
               generalInfo.value = localData;
             } else {
-              generalInfo.value = res.data.data;
               generalInfo.value?.documents.forEach((element) => {
                 documentsSaved.value[element.fileName] = {};
                 documentsSaved.value[element.fileName].path =
@@ -1541,7 +1769,7 @@ export default {
   border-radius: 5%;
   padding: 7px;
 }
-. {
+.shadow-md {
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 34%), 0 2px 4px -1px rgb(0 0 0 / 6%);
 }
 .document-name {

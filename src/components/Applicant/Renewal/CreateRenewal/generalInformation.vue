@@ -185,6 +185,10 @@
             : ' bg-white border-b-2 mt-2 p-4'
         "
       >
+        <h2 class="text-yellow-300 text-xl">
+          ***Please select the region you are applying for, not where you are currently
+          living***
+        </h2>
         <div
           class="grid grid-cols-1 gap-4 sm:grid-cols-1 lg:grid-cols-3 mdlg:grid-cols-3 md:grid-cols-3 p-4"
         >
@@ -615,10 +619,12 @@
 import { useStore } from "vuex";
 import { ref, onMounted, getCurrentInstance } from "vue";
 import { useToast } from "vue-toastification";
+import Loading from "vue3-loading-overlay";
+import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 export default {
   props: ["activeState"],
-  components: {},
-
+  components: { Loading },
+  emits: ["darkMode", "changeActiveState", "changeActiveStateMinus"],
   setup(props, { emit }) {
     let applicantTypes = ref("");
     const toast = useToast();
@@ -637,6 +643,7 @@ export default {
     let localData = ref({});
     let store = useStore();
     let showLocation = ref(false);
+    let isLoading = ref(false);
     let regionSelected = ref({});
     let zoneSelected = ref({});
     let woredaSelected = ref({});
@@ -657,6 +664,7 @@ export default {
     let multipleDepartmentError = ref(false);
     let multipleDepartmentMaxError = ref(false);
     let checkForAddedError = ref(false);
+    let existingLicense = ref({});
     let generalInfo = ref({
       educationalLevelSelected: "",
       applicantTypeSelected: JSON.parse(localStorage.getItem("applicantTypeSelected")),
@@ -921,7 +929,50 @@ export default {
         }
       });
     };
+
+    const checkForExistingLicense = () => {
+      let tempError = false;
+      let tempComparision = [];
+      if (
+        existingLicense.value &&
+        generalInfo.value.education &&
+        existingLicense.value.length > 0
+      ) {
+        existingLicense.value.forEach((element) => {
+          if (
+            element.educations &&
+            element.applicationStatus.code != "WD" &&
+            element.applicationStatus.code != "DEC"
+          ) {
+            tempComparision.push({
+              licenseId: element.id,
+              licenseStatus: element.applicationStatus.code,
+              educations: element.educations,
+            });
+          }
+        });
+      }
+      tempComparision.forEach((existingEd) => {
+        generalInfo.value.education.forEach((newEd) => {
+          if (existingEd.educations) {
+            existingEd.educations.forEach((element) => {
+              if (
+                element.departmentId == newEd.departmentId &&
+                element.professionTypeId == newEd.professionTypeId
+              ) {
+                tempError = true;
+                return;
+              }
+            });
+          }
+        });
+      });
+      return tempError;
+    };
+
     const apply = () => {
+      let tempError = checkForExistingLicense();
+
       let tempApplicationData = generalInfo.value;
       let tempFieldError = {};
 
@@ -940,27 +991,45 @@ export default {
       generalInfo.value.applicantTypeSelected.code == "ETH"
         ? (tempFieldError.occupationSelected = true)
         : delete tempFieldError.occupationSelected;
-
-      if (Object.keys(tempFieldError).length > 0) {
-        toast.error("Fill out fileds marked red", {
-          timeout: 5000,
-          position: "bottom-center",
-          pauseOnFocusLoss: true,
-          pauseOnHover: true,
-          icon: true,
-        });
+      if (tempError == false) {
+        if (Object.keys(tempFieldError).length > 0) {
+          toast.error("Fill out fileds marked red", {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          });
+        } else {
+          window.localStorage.setItem(
+            "RNApplicationData",
+            JSON.stringify(tempApplicationData)
+          );
+          store.dispatch("renewal/setGeneralInfo", generalInfo.value).then(() => {
+            let tempRN = localStorage.getItem("tempRN")
+              ? JSON.parse(localStorage.getItem("tempRN"))
+              : {};
+            tempRN.step = 2;
+            localStorage.setItem("tempRN", JSON.stringify(tempRN));
+            emit("changeActiveState");
+          });
+        }
       } else {
-        window.localStorage.setItem(
-          "RNApplicationData",
-          JSON.stringify(tempApplicationData)
+        toast.warning(
+          "You have already submitted or saved it as a draft application for this department and professional type combination",
+          {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          }
         );
-        store.dispatch("renewal/setGeneralInfo", generalInfo.value).then(() => {
-          emit("changeActiveState");
-        });
       }
     };
     const clearLocalData = () => {
-      window.localStorage.setItem("RNApplicationData", "");
+      window.localStorage.removeItem("RNApplicationData");
+      window.localStorage.removeItem("tempRN");
       window.indexedDB.deleteDatabase("RNdocumentUploads");
       setTimeout(() => {
         window.location.reload();
@@ -1004,27 +1073,49 @@ export default {
             : "FED",
         },
       };
-      store.dispatch("renewal/addRenewalLicense", license).then((res) => {
-        if (res.data.status == "Success") {
-          toast.success("Applied successfuly", {
+      isLoading.value = true;
+      let tempError = checkForExistingLicense();
+      if (!tempError) {
+        store.dispatch("renewal/addRenewalLicense", license).then((res) => {
+          isLoading.value = false;
+          if (res.data.status == "Success") {
+            isLoading.value = true;
+            localStorage.setItem(
+              "tempRN",
+              JSON.stringify({ id: res.data.data.id, step: 2 })
+            );
+            toast.success("Applied successfuly", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+            localStorage.removeItem("RNApplicationData");
+            location.reload();
+          } else {
+            toast.error("Error occured, please try again", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+          }
+        });
+      } else {
+        isLoading.value = false;
+        toast.warning(
+          "You have already submitted or saved it as a draft application for this department and professional type combination",
+          {
             timeout: 5000,
             position: "bottom-center",
             pauseOnFocusLoss: true,
             pauseOnHover: true,
             icon: true,
-          });
-          localStorage.removeItem("RNApplicationData");
-          location.reload();
-        } else {
-          toast.error("Error occured, please try again", {
-            timeout: 5000,
-            position: "bottom-center",
-            pauseOnFocusLoss: true,
-            pauseOnHover: true,
-            icon: true,
-          });
-        }
-      });
+          }
+        );
+      }
     };
     const darkMode = () => {
       emit("darkMode");
@@ -1040,17 +1131,28 @@ export default {
       }
     };
     onMounted(async () => {
-      applicantTypeChangeHandler();
-      fetchApplicantType();
-      fetchDepartments();
-      fetchEducationLevel();
-      fetchRegions();
-      fetchOccupation();
-      localData.value = window.localStorage.getItem("RNApplicationData")
-        ? JSON.parse(window.localStorage.getItem("RNApplicationData"))
-        : {};
-      if (Object.keys(localData.value).length != 0) {
-        generalInfo.value = localData.value;
+      let tryAgain = localStorage.getItem("tempRN")
+        ? JSON.parse(localStorage.getItem("tempRN"))
+        : false;
+      if (tryAgain && tryAgain.id != null && tryAgain.step != 1) {
+        emit("changeActiveState");
+      } else {
+        applicantTypeChangeHandler();
+        fetchApplicantType();
+        fetchDepartments();
+        fetchEducationLevel();
+        fetchRegions();
+        fetchOccupation();
+        localData.value = window.localStorage.getItem("RNApplicationData")
+          ? JSON.parse(window.localStorage.getItem("RNApplicationData"))
+          : {};
+        if (Object.keys(localData.value).length != 0) {
+          generalInfo.value = localData.value;
+        }
+        let userId = JSON.parse(window.localStorage.getItem("userId"));
+        store.dispatch("renewal/getRenewalsByUser", userId).then((res) => {
+          existingLicense.value = res.data.data;
+        });
       }
     });
     return {
@@ -1063,6 +1165,7 @@ export default {
       addMultiple,
       removeDepartment,
       apply,
+      isLoading,
       saveDraft,
       fetchOccupation,
       educationalLevelChange,

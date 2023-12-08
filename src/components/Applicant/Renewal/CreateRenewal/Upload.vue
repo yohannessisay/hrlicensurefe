@@ -1,19 +1,17 @@
 <!-- eslint-disable no-unused-vars -->
 <template>
   <div>
-    <h2 class="text-yellow-300 border p-2 rounded-md mb-4 font-bold text-xl mt-12">
-      Note:- Please upload only the documents marked with a red asterisk
-      <small class="text-red-300 text-xl"> (*) </small> to proceed to the next step.
-    </h2>
-    <div class="accordion mr-8" id="FilesAccordion">
-      <div
-        :class="
-          isDarkMode
-            ? 'accordion-item bg-secondaryDark  border border-grey-200  rounded-lg'
-            : 'accordion-item  bg-white border border-grey-200  rounded-lg'
-        "
+    <div class="accordion mr-8 mt-24 sm" id="FilesAccordion">
+      <h2
+        v-if="alreadyUploaded"
+        class="text-xl sm:text-2xl text-yellow-300 border mb-2 rounded-md p-2"
       >
-        <h2 id="headingOne" class="accordion-header mb-0 mr-1">
+        It seems like you have already attached the documents required to go to the next
+        step, if you wish to change any file, you can do so, else click next at the bottom
+        of the screen
+      </h2>
+      <div class="accordion-item bg-white border border-grey-200 p-4 rounded-lg">
+        <h2 class="accordion-header mb-0" id="headingOne">
           <button
             class="accordion-button relative flex items-center w-full p-4 border text-gray-800 text-xl rounded-md transition focus:outline-none"
             style="background: #d8d8d8 !important; color: #27687e !important"
@@ -851,9 +849,10 @@ import { useToast } from "vue-toastification";
 import Compressor from "compressorjs";
 import MAX_FILE_SIZE from "../../../../composables/documentMessage";
 import { boolean } from "yargs";
-
+import Loading from "vue3-loading-overlay";
+import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 export default {
-  components: {},
+  components: { Loading },
 
   // eslint-disable-next-line vue/no-setup-props-destructure
   setup(props, { emit }) {
@@ -864,6 +863,7 @@ export default {
     let commonDocuments = ref([]);
     let imageUploader = ref(null);
     let goToNext = ref(false);
+    let alreadyUploaded = ref(false);
     let educationalDocs = ref([]);
     let localData = ref({});
     let filePreviewData = ref({
@@ -1403,6 +1403,7 @@ export default {
       let NSTemp = "";
       var tempVal;
       errorDocuments.value = [];
+      console.log(documentsUploaded.value);
       // if back button is clicked
       if (isBackButtonClicked.value == true) {
         // check common documents
@@ -1732,6 +1733,11 @@ export default {
 
             transaction.oncomplete = function () {
               console.log("data stored");
+              let tempRN = localStorage.getItem("tempRN")
+                ? JSON.parse(localStorage.getItem("tempRN"))
+                : {};
+              tempRN.step = 3;
+              localStorage.setItem("tempRN", JSON.stringify(tempRN));
               emit("changeActiveState");
             };
           };
@@ -1759,6 +1765,14 @@ export default {
       }
     };
     const back = () => {
+      let tempRN = localStorage.getItem("tempRN")
+        ? JSON.parse(localStorage.getItem("tempRN"))
+        : false;
+      if (tempRN && tempRN.step != null) {
+        tempRN.step = 1;
+        localStorage.setItem("tempRN", JSON.stringify(tempRN));
+      }
+
       emit("changeActiveStateMinus");
     };
 
@@ -1795,6 +1809,7 @@ export default {
       store.dispatch("renewal/addRenewalLicense", license).then((res) => {
         let licenseId = res.data.data.id;
         let payload = { document: formData, id: licenseId };
+        localStorage.setItem("tempRN", JSON.stringify({ id: licenseId, step: 3 }));
         store
           .dispatch("renewal/uploadDocuments", payload)
           .then((res) => {
@@ -1808,6 +1823,8 @@ export default {
               });
               isLoading.value = false;
               localStorage.removeItem("RNApplicationData");
+              indexedDB.deleteDatabase("RNdocumentUploads");
+              localStorage.removeItem("tempRN");
               location.reload();
             } else {
               toast.error("Error occured, please try again", {
@@ -1849,7 +1866,7 @@ export default {
       }
     };
 
-    const initDb = () => {
+    const initDb = async () => {
       let request = indexedDB.open("RNdocumentUploads", dbVersion);
 
       request.onerror = function () {
@@ -1876,7 +1893,11 @@ export default {
       };
     };
 
-    onMounted(() => {
+    onMounted(async () => {
+      let tryAgain = localStorage.getItem("tempRN")
+        ? JSON.parse(localStorage.getItem("tempRN"))
+        : false;
+
       //Initialize indexdb for file storage
       if (!("indexedDB" in window)) {
         alert(
@@ -1885,7 +1906,7 @@ export default {
 
         return;
       } else {
-        initDb();
+        await initDb();
 
         localData.value = window.localStorage.getItem("RNApplicationData")
           ? JSON.parse(window.localStorage.getItem("RNApplicationData"))
@@ -1893,14 +1914,14 @@ export default {
 
         generalInfo.value = localData.value;
 
-        store.dispatch("newlicense/getApplicationCategories").then((res) => {
+        await store.dispatch("newlicense/getApplicationCategories").then(async (res) => {
           let categoryResults = res.data.data
             ? res.data.data.filter((ele) => ele.code == "RA")
             : "";
           let educationLevels = generalInfo.value.multipleDepartment;
 
           //Get department docs
-          educationLevels.forEach((element) => {
+          await educationLevels.forEach((element) => {
             store
               .dispatch("renewal/getRNdocuments", [
                 categoryResults[0].id,
@@ -1920,6 +1941,7 @@ export default {
                 });
                 if (existingDocs && existingDocs.length > 0 && resp && resp.length > 0) {
                   isBackButtonClicked.value = true;
+                  alreadyUploaded.value = true;
                   documentsUploaded.value = existingDocs;
                   educationalDocs.value.forEach((ed) => {
                     ed.docs
@@ -1958,12 +1980,15 @@ export default {
                     }
                   });
                 }
+                if (tryAgain && tryAgain.id != null && tryAgain.step == 3) {
+                  next();
+                }
               });
           });
 
           //Get Common Docs
 
-          store
+          await store
             .dispatch("renewal/getCommonRNdocuments", [
               categoryResults[0].id,
               generalInfo.value.applicantTypeSelected.id,
@@ -2020,9 +2045,11 @@ export default {
       next,
       back,
       addMore,
+      alreadyUploaded,
       showNestedDocuments,
       errorDocuments,
       fileSizeExceed,
+      isLoading,
     };
   },
 };
@@ -2038,7 +2065,7 @@ export default {
   padding: 7px;
 }
 
-. {
+.shadow-md {
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 34%), 0 2px 4px -1px rgb(0 0 0 / 6%);
 }
 

@@ -1,10 +1,14 @@
 <template>
   <div>
-    <h2 class="text-yellow-300 border p-2 rounded-md mb-4 font-bold text-xl mt-12">
-      Note:- Please upload only the documents marked with a red asterisk
-      <small class="text-red-300 text-xl"> (*) </small> to proceed to the next step.
-    </h2>
-    <div class="accordion mr-2" id="FilesAccordion">
+    <div class="accordion mr-0 sm:mr-8 mt-24" id="FilesAccordion">
+      <h2
+        v-if="alreadyUploaded"
+        class="text-xl sm:text-2xl text-yellow-300 border mb-2 rounded-md p-2"
+      >
+        It seems like you have already attached the documents required to go to the next
+        step, if you wish to change any file, you can do so, else click next at the bottom
+        of the screen
+      </h2>
       <div
         :class="
           isDarkMode
@@ -878,6 +882,7 @@ export default {
       file: "",
       name: "",
     });
+    let alreadyUploaded = ref(false);
     let existingDocs = [];
     let files = ref("");
     let maxFileSize = ref();
@@ -1741,6 +1746,12 @@ export default {
 
             transaction.oncomplete = function () {
               console.log("data stored");
+              let tempNL = localStorage.getItem("tempNL")
+                ? JSON.parse(localStorage.getItem("tempNL"))
+                : {};
+              tempNL.step = 3;
+              tempNL.backButtonClicked = false;
+              localStorage.setItem("tempNL", JSON.stringify(tempNL));
               emit("changeActiveState");
             };
           };
@@ -1759,6 +1770,14 @@ export default {
       }
     };
     const back = () => {
+      let tempNL = localStorage.getItem("tempNL")
+        ? JSON.parse(localStorage.getItem("tempNL"))
+        : false;
+      if (tempNL && tempNL.step != null) {
+        tempNL.step = 1;
+        tempNL.backButtonClicked = true;
+        localStorage.setItem("tempNL", JSON.stringify(tempNL));
+      }
       emit("changeActiveStateMinus");
     };
 
@@ -1808,6 +1827,8 @@ export default {
               });
               isLoading.value = false;
               localStorage.removeItem("NLApplicationData");
+              indexedDB.deleteDatabase("NLdocumentUploads");
+              localStorage.removeItem("tempNL");
               location.reload();
             } else {
               toast.error("Error occured, please try again", {
@@ -1851,7 +1872,7 @@ export default {
     const removeChildUpload = (docCode) => {
       showNestedDocuments.value[docCode] -= 1;
     };
-    const initDb = () => {
+    const initDb = async () => {
       existingDocs;
       let request = indexedDB.open("NLdocumentUploads", dbVersion);
 
@@ -1879,7 +1900,10 @@ export default {
       };
     };
 
-    onMounted(() => {
+    onMounted(async () => {
+      let tryAgain = localStorage.getItem("tempNL")
+        ? JSON.parse(localStorage.getItem("tempNL"))
+        : false;
       window.addEventListener("darkModeChanged", (data) => {
         isDarkMode.value = data.detail ? data.detail.content : "";
       });
@@ -1889,20 +1913,20 @@ export default {
           "This browser doesn't support Temporary storage please update your browser to the latest version"
         );
       } else {
-        initDb();
+        await initDb();
         localData.value = window.localStorage.getItem("NLApplicationData")
           ? JSON.parse(window.localStorage.getItem("NLApplicationData"))
           : {};
 
         generalInfo.value = localData.value;
 
-        store.dispatch("newlicense/getApplicationCategories").then((res) => {
+        await store.dispatch("newlicense/getApplicationCategories").then(async (res) => {
           let categoryResults = res.data.data
             ? res.data.data.filter((ele) => ele.code == "NA")
             : "";
           let educationLevels = generalInfo.value.multipleDepartment;
           //Get department docs
-          educationLevels.forEach((element) => {
+          await educationLevels.forEach((element) => {
             store
               .dispatch("newlicense/getNLdocuments", [
                 categoryResults[0].id,
@@ -1970,12 +1994,15 @@ export default {
                     }
                   });
                 }
+                if (tryAgain && tryAgain.id != null && tryAgain.step == 3) {
+                  next();
+                }
               });
           });
 
           //Get Common Docs
 
-          store
+          await store
             .dispatch("newlicense/getCommonNLdocuments", [
               categoryResults[0].id,
               generalInfo.value.applicantTypeSelected.id,
@@ -1990,6 +2017,7 @@ export default {
                 result.length > 0
               ) {
                 isBackButtonClicked.value = true;
+                alreadyUploaded.value = true;
                 documentsUploaded.value = existingDocs;
                 existingDocs.forEach((existing) => {
                   result.forEach((Cd) => {
@@ -2020,6 +2048,7 @@ export default {
       files,
       handleFileUpload,
       showImage,
+      alreadyUploaded,
       previewDocuments,
       showPreview,
       existingDocs,

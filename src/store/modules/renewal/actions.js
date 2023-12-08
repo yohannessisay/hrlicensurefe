@@ -250,10 +250,11 @@ export default {
       return error;
     }
   },
-  async getProfessionalTypes(context, deptId, eduId) {
+  async getProfessionalTypes(context, params) {
+ 
     try {
       const resp = await ApiService.get(
-        baseUrl + "/lookups/professionalTypes/" + deptId + "/" + eduId
+        baseUrl + "/lookups/professionalTypes/" + params.departmentId + "/" + params.educationalLevelId
       );
       return resp;
     } catch (error) {

@@ -2022,12 +2022,17 @@ export default {
         );
       } else if (
         tempProf.value[education.department.id] &&
-        tempProf.value[education.department.id].name == "Other"
+        tempProf.value[education.department.id].name.toLowerCase() == "other"
       ) {
         allowOtherProfChange.value[education.department.id] = true;
-
+        renewal.value.educations.forEach((element) => {
+          if (element.department.id == education.department.id) {
+            element.professionType = tempProf.value[education.department.id];
+            element.professionTypeId = tempProf.value[education.department.id].id;
+          }
+        });
         education.oldProfessionTypeId = education.professionTypeId;
-        education.professionTypeId = null;
+
         modifiedProfession.push({
           ...education,
         });

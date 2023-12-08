@@ -1,7 +1,7 @@
 <template>
   <div class="modal-mask">
-    <div class="modal-wrapper ">
-      <div class="modal-container">
+    <div class="modal-wrapper">
+      <div class="modal-container sm:w-1/2 w-5/6">
         <div class="modal-header">
           <h2 class="text-main-400 text-xl border-b-4">
             <slot name="modalHeader"></slot>
@@ -40,7 +40,6 @@ export default {
 }
 
 .modal-container {
-  width: 600px;
   margin: 0px auto;
   padding: 20px 30px;
   background-color: #fff;

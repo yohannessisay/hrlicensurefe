@@ -13,32 +13,10 @@
     <!-- End heading -->
     <!-- row -->
     <div
-      class="
-        grid grid-cols-2
-        gap-4
-        mr-8
-        md:grid-cols-2
-        lg:grid-cols-2
-        mdlg:grid-cols-2
-        sm:grid-cols-1
-      "
+      class="grid grid-cols-2 gap-4 mr-8 md:grid-cols-2 lg:grid-cols-2 mdlg:grid-cols-2 sm:grid-cols-1"
     >
       <div
-        class="
-          py-8
-          mt-4
-          px-12
-          mb-12
-          bg-gray-50
-           
-          rounded-md
-          transform
-          transition
-          duration-300
-          ease-in-out
-          bg-white
-          hover:-translate-y-2
-        "
+        class="py-8 mt-4 px-12 mb-12 bg-gray-50 rounded-md transform transition duration-300 ease-in-out bg-white hover:-translate-y-2"
         v-for="dep in localData.multipleDepartment"
         :key="dep"
       >
@@ -48,13 +26,7 @@
           </div>
           <div class="flex justify-center text-gray-900 mb-4">
             <h3
-              class="
-                text-lg text-main-400
-                leading-normal
-                mb-2
-                font-semibold
-                text-grey-800
-              "
+              class="text-lg text-main-400 leading-normal mb-2 font-semibold text-grey-800"
             >
               Department Detail
             </h3>
@@ -63,100 +35,56 @@
         <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
           <div>
             <span
-              class="
-                text-main-400
-                font-bold
-                sm:text-sm
-                mdlg:text-base
-                lg:text-base
-                md:text-base
-              "
+              class="text-main-400 font-bold sm:text-sm mdlg:text-base lg:text-base md:text-base"
             >
               Department Name</span
             >
           </div>
           <div>
-            <span class="text-grey-800 sm:text-sm">
-              {{ dep?.department?.name }}</span
-            >
+            <span class="text-grey-800 sm:text-sm"> {{ dep?.department?.name }}</span>
           </div>
         </div>
         <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
           <div>
             <span
-              class="
-                text-main-400
-                font-bold
-                sm:text-sm
-                mdlg:text-base
-                lg:text-base
-                md:text-base
-              "
+              class="text-main-400 font-bold sm:text-sm mdlg:text-base lg:text-base md:text-base"
               >Educational level</span
             >
           </div>
           <div>
-            <span class="text-grey-800 sm:text-sm">
-              {{ dep?.educationLevel?.name }}</span
-            >
+            <span class="text-grey-800 sm:text-sm"> {{ dep?.educationLevel?.name }}</span>
           </div>
         </div>
         <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
           <div>
             <span
-              class="
-                text-main-400
-                font-bold
-                sm:text-sm
-                mdlg:text-base
-                lg:text-base
-                md:text-base
-              "
+              class="text-main-400 font-bold sm:text-sm mdlg:text-base lg:text-base md:text-base"
               >Institution</span
             >
           </div>
           <div>
-            <span class="text-grey-800 sm:text-sm">
-              {{ dep.institution?.name }}</span
-            >
+            <span class="text-grey-800 sm:text-sm"> {{ dep.institution?.name }}</span>
           </div>
         </div>
         <div class="grid grid-cols-2 gap-4 border-b text-grey-200">
           <div>
             <span
-              class="
-                text-main-400
-                font-bold
-                sm:text-sm
-                mdlg:text-base
-                lg:text-base
-                md:text-base
-              "
+              class="text-main-400 font-bold sm:text-sm mdlg:text-base lg:text-base md:text-base"
             >
               Professional Type</span
             >
           </div>
           <div>
-            <span class="text-grey-800 sm:text-sm">
-              {{ dep.professionType?.name }}</span
-            >
+            <span class="text-grey-800 sm:text-sm"> {{ dep.professionType?.name }}</span>
           </div>
         </div>
       </div>
     </div>
 
     <div
-      class="
-        mt-8
-        grid grid-cols-1
-        gap-4
-        md:grid-cols-1
-        lg:grid-cols-1
-        mdlg:grid-cols-1
-        sm:grid-cols-1
-      "
+      class="mt-8 grid grid-cols-1 gap-4 md:grid-cols-1 lg:grid-cols-1 mdlg:grid-cols-1 sm:grid-cols-1"
     >
-      <div class="bg-white flex-shrink px-4 w-full rounded-md  ">
+      <div class="bg-white flex-shrink px-4 w-full rounded-md">
         <div class="py-8 px-12 mb-12 bg-gray-50 border-b border-white">
           <div class="border-b-2 text-main-400 mb-4">
             <div class="text-gray-900 mb-4 flex justify-center">
@@ -164,13 +92,7 @@
             </div>
             <div class="flex justify-center text-gray-900 mb-4">
               <h3
-                class="
-                  text-3xl text-main-400
-                  leading-normal
-                  mb-2
-                  font-semibold
-                  text-grey-800
-                "
+                class="text-3xl text-main-400 leading-normal mb-2 font-semibold text-grey-800"
               >
                 Files Uploaded
               </h3>
@@ -188,21 +110,7 @@
             "
           >
             <div
-              class="
-                mt-4
-                mb-8
-                bg-white
-                border-4
-                text-main-400
-                 
-                rounded-md
-                transform
-                transition
-                duration-300
-                ease-in-out
-                p-2
-                hover:-translate-y-2
-              "
+              class="mt-4 mb-8 bg-white border-4 text-main-400 rounded-md transform transition duration-300 ease-in-out p-2 hover:-translate-y-2"
               v-for="changed in changedDocs"
               :key="changed.id"
             >
@@ -216,10 +124,7 @@
                     :data-title="changed.docName"
                     data-lightbox="example-2"
                   >
-                    <img
-                      :src="changed.prevFile"
-                      class="w-full h-48 object-cover"
-                    />
+                    <img :src="changed.prevFile" class="w-full h-48 object-cover" />
                   </a>
                 </div>
 
@@ -244,21 +149,7 @@
             <div class="accordion-item bg-white">
               <h2 class="accordion-header mb-0" id="headingOne">
                 <button
-                  class="
-                    relative
-                    flex
-                    items-center
-                    w-full
-                    py-4
-                    px-5
-                    text-white
-                    bg-grey-200
-                    hover:text-main-400 hover:bg-white
-                    transition
-                    focus:outline-none
-                    hover:border-main-400
-                    rounded-md
-                  "
+                  class="relative flex items-center w-full py-4 px-5 text-white bg-grey-200 hover:text-main-400 hover:bg-white transition focus:outline-none hover:border-main-400 rounded-md"
                   type="button"
                   data-bs-toggle="collapse"
                   data-bs-target="#collapseOne"
@@ -276,39 +167,18 @@
               >
                 <div class="accordion-body py-4 px-5">
                   <div
-                    class="
-                      grid grid-cols-4
-                      gap-4
-                      ml-4
-                      sm:w-full sm:grid-cols-1
-                      md:w-full
-                      mdlg:grid-cols-2
-                      lg:w-full
-                      md:grid-cols-4
-                      mdlg:w-full
-                      lg:grid-cols-4
-                    "
+                    class="grid grid-cols-4 gap-4 ml-4 sm:w-full sm:grid-cols-1 md:w-full mdlg:grid-cols-2 lg:w-full md:grid-cols-4 mdlg:w-full lg:grid-cols-4"
                   >
                     <div
                       v-if="!professionChanged"
-                      class="
-                        mt-4
-                        mb-8
-                        bg-white
-                         
-                        rounded-md
-                        transform
-                        transition
-                        duration-300
-                        ease-in-out
-                        p-2
-                        hover:-translate-y-2
-                      "
+                      class="mt-4 mb-8 bg-white rounded-md transform transition duration-300 ease-in-out p-2 hover:-translate-y-2"
                       v-for="prev in prevDocs"
                       :key="prev.id"
                     >
                       <h4 class="text-main-400 font-bold m-2">Document Type</h4>
-                      <h6 class="m-2">{{ prev.documentType.name }}</h6>
+                      <h6 class="m-2">
+                        {{ prev.documentType ? prev.documentType.name : "" }}
+                      </h6>
                       <div class="flex justify-center rounded-lg p-4">
                         <div class="bg-white rounded-md p-2">
                           <a
@@ -327,24 +197,14 @@
 
                     <div
                       v-else
-                      class="
-                        mt-4
-                        mb-8
-                        bg-white
-                         
-                        rounded-md
-                        transform
-                        transition
-                        duration-300
-                        ease-in-out
-                        p-2
-                        hover:-translate-y-2
-                      "
+                      class="mt-4 mb-8 bg-white rounded-md transform transition duration-300 ease-in-out p-2 hover:-translate-y-2"
                       v-for="prev in prevDocs"
                       :key="prev.docName"
                     >
                       <h4 class="text-main-400 font-bold m-2">Document Type</h4>
-                      <h6 class="m-2">{{ prev.documentType.name }}</h6>
+                      <h6 class="m-2">
+                        {{ prev.documentType ? prev.documentType.name : "" }}
+                      </h6>
                       <div class="flex justify-center rounded-lg p-4">
                         <div class="bg-white rounded-md p-2">
                           <a
@@ -352,10 +212,7 @@
                             :data-title="prev.docName"
                             data-lightbox="example-2"
                           >
-                            <img
-                              :src="prev.path"
-                              class="w-full h-48 object-cover"
-                            />
+                            <img :src="prev.path" class="w-full h-48 object-cover" />
                           </a>
                         </div>
                       </div>
@@ -370,54 +227,17 @@
     </div>
 
     <div
-      class="
-        mt-8
-        grid grid-cols-1
-        gap-4
-        md:grid-cols-1
-        lg:grid-cols-1
-        mdlg:grid-cols-1
-        sm:grid-cols-1
-      "
+      class="mt-8 grid grid-cols-1 gap-4 md:grid-cols-1 lg:grid-cols-1 mdlg:grid-cols-1 sm:grid-cols-1"
     >
-      <div class="bg-white flex-shrink px-4 w-full rounded-md  ">
+      <div class="bg-white flex-shrink px-4 w-full rounded-md">
         <div
-          class="
-            py-8
-            px-12
-            mb-12
-            bg-gray-50
-            border-b border-white
-            transform
-            transition
-            duration-300
-            ease-in-out
-            hover:-translate-y-2
-          "
+          class="py-8 px-12 mb-12 bg-gray-50 border-b border-white transform transition duration-300 ease-in-out hover:-translate-y-2"
         >
           <div class="mb-4 border-t text-main-400">
             <div class="flex justify-center text-gray-900 mb-4 mt-4">
               <div class="form-check">
                 <input
-                  class="
-                    form-check-input
-                    appearance-none
-                    h-5
-                    w-5
-                    border border-gray-300
-                    rounded-sm
-                    bg-wmain-400
-                    checked:bg-blue-600 checked:border-blue-600
-                    focus:outline-none
-                    transition
-                    duration-200
-                    mt-1
-                    align-top
-                    bg-no-repeat bg-center bg-contain
-                    float-left
-                    mr-2
-                    cursor-pointer
-                  "
+                  class="form-check-input appearance-none h-5 w-5 border border-gray-300 rounded-sm bg-wmain-400 checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                   type="checkbox"
                   :value="agreed"
                   @click="changeAgrement()"
@@ -425,23 +245,14 @@
                 />
               </div>
               <h3
-                class="
-                  text-grey-800
-                  mb-2
-                  sm:text-xs
-                  lgmd:text-base
-                  lg:text-base
-                  md:text-base
-                "
+                class="text-grey-800 mb-2 sm:text-xs lgmd:text-base lg:text-base md:text-base"
               >
-                By checking here I hereby verify the documents and details
-                filled in are legal.
+                By checking here I hereby verify the documents and details filled in are
+                legal.
               </h3>
             </div>
             <div class="flex justify-center">
-              <label
-                for="feedback"
-                class="form-label inline-block mb-2 text-main-400"
+              <label for="feedback" class="form-label inline-block mb-2 text-main-400"
                 >Feedback on the process and system
                 <span class="text-yellow-300">(optional*)</span>
               </label>
@@ -451,23 +262,7 @@
               <input
                 v-model="generalInfo.feedback"
                 @keyup="checkAgreement()"
-                class="
-                    form-control
-                    block
-                    w-full
-                    text-main-400
-                    px-3
-                    py-1.5
-                    text-base
-                    font-normal
-                    text-gray-700
-                    border border-solid border-gray-300
-                    rounded
-                    transition
-                    ease-in-out
-                    m-0
-                    focus:outline-none
-                  "
+                class="form-control block w-full text-main-400 px-3 py-1.5 text-base font-normal text-gray-700 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:outline-none"
                 id="feedback"
                 rows="6"
                 placeholder="Your feedback"
@@ -502,22 +297,7 @@
           {{ button.name }}
         </button>
         <button
-          class="
-          inline-block
-          px-6
-          text-main-400
-          mt-4
-          bg-white
-          font-medium
-          text-xs
-          leading-tight
-          uppercase
-          rounded
-           
-          transition
-          duration-150
-          ease-in-out
-        "
+          class="inline-block px-6 text-main-400 mt-4 bg-white font-medium text-xs leading-tight uppercase rounded transition duration-150 ease-in-out"
           @click="back()"
         >
           back
@@ -527,7 +307,7 @@
     <!-- end row -->
     <div class="modal-mask" v-if="showModal">
       <div class="modal-wrapper">
-        <div class="modal-container">
+        <div class="modal-container sm:w-1/2 w-5/6">
           <div class="modal-header">
             <h2 class="text-main-400 text-xl border-b-4">Uploading</h2>
           </div>
@@ -545,20 +325,16 @@
                 :completed-steps="progress"
                 :total-steps="totalSteps"
               >
-                <h1 class="text-3xl text-main-400 font-bold">
-                  {{ progress }} %
-                </h1>
+                <h1 class="text-3xl text-main-400 font-bold">{{ progress }} %</h1>
               </RadialProgress>
             </div>
             <div>
-              <div
-                class="flex border justify-center text-yellow-300 p-2 rounded-md"
-              >
-                <h2 class=" text-xl">
-                  Please wait patiently as your files are being uploaded, if for
-                  any reason the files you uploaded are not successful you will
-                  be redirected to the submitted page automatically so you can
-                  re-attach your documents again
+              <div class="flex border justify-center text-yellow-300 p-2 rounded-md">
+                <h2 class="text-xl">
+                  Please wait patiently as your files are being uploaded, if for any
+                  reason the files you uploaded are not successful you will be redirected
+                  to the submitted page automatically so you can re-attach your documents
+                  again
                 </h2>
               </div>
             </div>
@@ -662,9 +438,7 @@ export default {
                 ? generalInfo.value.expertLevelId
                 : null,
               isLegal: true,
-              feedback: generalInfo.value.feedback
-                ? generalInfo.value.feedback
-                : "",
+              feedback: generalInfo.value.feedback ? generalInfo.value.feedback : "",
             },
           },
         };
@@ -677,6 +451,10 @@ export default {
             .then((res) => {
               isLoading.value = false;
               if (res.data.status == "Success") {
+                localStorage.removeItem("applicantTypeSelected");
+                localStorage.removeItem("RNApplicationData");
+                localStorage.removeItem("tempRN");
+                indexedDB.deleteDatabase("RNdocumentUploads");
                 toast.success("Applied successfuly", {
                   timeout: 5000,
                   position: "bottom-center",
@@ -713,98 +491,93 @@ export default {
       emit("changeActiveStateMinus");
     };
     onMounted(() => {
-      store
-        .dispatch("renewal/getRenewalApplication", route.params.id)
-        .then((res) => {
-          savedData.value = res.data.data;
+      store.dispatch("renewal/getRenewalApplication", route.params.id).then((res) => {
+        savedData.value = res.data.data;
 
-          buttons.value = store.getters["renewal/getButtons"];
+        buttons.value = store.getters["renewal/getButtons"];
 
-          buttons.value = buttons.value.filter(
-            (ele) => ele.code != "AT" && ele.code != "DRA"
-          );
-          tempDocs.value = store.getters["renewal/getTempDocs"];
+        buttons.value = buttons.value.filter(
+          (ele) => ele.code != "AT" && ele.code != "DRA"
+        );
+        tempDocs.value = store.getters["renewal/getTempDocs"];
 
-          localData.value = window.localStorage.getItem("RNApplicationData")
-            ? JSON.parse(window.localStorage.getItem("RNApplicationData"))
-            : {};
+        localData.value = window.localStorage.getItem("RNApplicationData")
+          ? JSON.parse(window.localStorage.getItem("RNApplicationData"))
+          : {};
 
-          generalInfo.value = localData.value;
-          generalInfo.value.feedback = "";
-          if (generalInfo.value.applicantTypeSelected.id == 1) {
-            store.dispatch("renewal/getExpertLevel").then((res) => {
-              let expertLevel = res.data.data.filter(function(e) {
-                return e.code.includes("REG");
-              });
-              generalInfo.value.expertLevelId = expertLevel[0].id;
+        generalInfo.value = localData.value;
+        generalInfo.value.feedback = "";
+        if (generalInfo.value.applicantTypeSelected.id == 1) {
+          store.dispatch("renewal/getExpertLevel").then((res) => {
+            let expertLevel = res.data.data.filter(function (e) {
+              return e.code.includes("REG");
             });
-          } else {
-            store.dispatch("renewal/getExpertLevel").then((res) => {
-              let expertLevel = res.data.data.filter(function(e) {
-                return e.code.includes("FED");
-              });
-              generalInfo.value.expertLevelId = expertLevel[0].id;
+            generalInfo.value.expertLevelId = expertLevel[0].id;
+          });
+        } else {
+          store.dispatch("renewal/getExpertLevel").then((res) => {
+            let expertLevel = res.data.data.filter(function (e) {
+              return e.code.includes("FED");
             });
-          }
-          //Get images from indexed Db
-          let request = indexedDB.open("RNdocumentUploads", 1);
+            generalInfo.value.expertLevelId = expertLevel[0].id;
+          });
+        }
+        //Get images from indexed Db
+        let request = indexedDB.open("RNdocumentUploads", 1);
 
-          request.onerror = function() {
-            console.error("Unable to open database.");
-          };
+        request.onerror = function () {
+          console.error("Unable to open database.");
+        };
 
-          request.onsuccess = function() {
-            let db = request.result;
-            const tx = db.transaction("RNdocumentUploads", "readonly");
-            const store = tx.objectStore("RNdocumentUploads");
-            let getAllIDB = store.getAll();
+        request.onsuccess = function () {
+          let db = request.result;
+          const tx = db.transaction("RNdocumentUploads", "readonly");
+          const store = tx.objectStore("RNdocumentUploads");
+          let getAllIDB = store.getAll();
 
-            getAllIDB.onsuccess = function(evt) {
-              localFileImages.value = evt.target.result
-                ? JSON.parse(
-                    JSON.stringify(
-                      evt.target.result[0] ? evt.target.result[0].data : {}
-                    )
-                  )
-                : {};
+          getAllIDB.onsuccess = function (evt) {
+            localFileImages.value = evt.target.result
+              ? JSON.parse(
+                  JSON.stringify(evt.target.result[0] ? evt.target.result[0].data : {})
+                )
+              : {};
 
-              if (localFileImages.value && savedData.value.documents) {
-                savedData.value.documents.forEach((ele) => {
-                  localFileImages.value.forEach((newFile) => {
-                    if (
-                      (newFile.commonDocCode &&
-                        newFile.commonDocCode == ele.fileName) ||
-                      newFile.documentCode == ele.fileName
-                    ) {
-                      changedDocs.value.push({
-                        docName: newFile.documentName,
-                        prevFile: googleApi + ele.filePath,
-                        newFile: newFile.image,
-                        id: newFile.documenttype,
-                      });
-                    }
-                  });
-                });
-              }
-
-              if (localData.value.professionChanged == true) {
-                professionChanged.value = true;
-                // prevDocs.value = localFileImages.value;
-                localFileImages.value.forEach((element) => {
-                  if (!element.commonDocCode) {
-                    prevDocs.value.push({
-                      documentType: { name: element.documentName },
-                      docName: element.documenttype,
-                      path: element.image,
+            if (localFileImages.value && savedData.value.documents) {
+              savedData.value.documents.forEach((ele) => {
+                localFileImages.value.forEach((newFile) => {
+                  if (
+                    (newFile.commonDocCode && newFile.commonDocCode == ele.fileName) ||
+                    newFile.documentCode == ele.fileName
+                  ) {
+                    changedDocs.value.push({
+                      docName: newFile.documentName,
+                      prevFile: googleApi + ele.filePath,
+                      newFile: newFile.image,
+                      id: newFile.documenttype,
                     });
                   }
                 });
-              } else {
-                prevDocs.value = savedData.value.documents;
-              }
-            };
+              });
+            }
+
+            if (localData.value.professionChanged == true) {
+              professionChanged.value = true;
+              // prevDocs.value = localFileImages.value;
+              localFileImages.value.forEach((element) => {
+                if (!element.commonDocCode) {
+                  prevDocs.value.push({
+                    documentType: { name: element.documentName },
+                    docName: element.documenttype,
+                    path: element.image,
+                  });
+                }
+              });
+            } else {
+              prevDocs.value = savedData.value.documents;
+            }
           };
-        });
+        };
+      });
     });
     return {
       localData,
@@ -864,7 +637,6 @@ export default {
 }
 
 .modal-container {
-  width: 600px;
   margin: 0px auto;
   padding: 20px 30px;
   background-color: #fff;

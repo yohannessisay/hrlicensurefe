@@ -12,9 +12,7 @@
     </header>
     <!-- End heading -->
     <!-- row -->
-    <div
-      class="grid grid-cols-2 gap-4 mr-8 md:grid-cols-2 lg:grid-cols-2 mdlg:grid-cols-2 sm:grid-cols-1"
-    >
+    <div class="grid grid-cols-1 gap-4 mr-1 sm:grid-cols-3">
       <div
         class="py-8 mt-4 px-12 mb-12 bg-gray-50 rounded-md transform transition duration-300 ease-in-out bg-white hover:-translate-y-2"
         v-for="dep in localData.multipleDepartment"
@@ -26,7 +24,7 @@
           </div>
           <div class="flex justify-center text-gray-900 mb-4">
             <h3
-              class="text-lg text-main-400 leading-normal mb-2 font-semibold text-black"
+              class="text-lg text-main-400 leading-normal mb-2 font-semibold text-grey-800"
             >
               Department Detail
             </h3>
@@ -81,34 +79,30 @@
       </div>
     </div>
 
-    <div
-      class="mt-8 grid grid-cols-1 gap-4 md:grid-cols-1 lg:grid-cols-1 mdlg:grid-cols-1 sm:grid-cols-1"
-    >
+    <div class="mt-8 grid grid-cols-1 gap-4">
       <div class="bg-white flex-shrink px-4 w-full rounded-md">
-        <div class="py-8 px-12 mb-12 bg-gray-50 border-b border-white">
+        <div class="py-8 px-2 sm:px-12 mb-12 bg-gray-50 border-b border-white">
           <div class="border-b-2 text-main-400 mb-4">
             <div class="text-gray-900 mb-4 flex justify-center">
               <i class="fa fa-folder fa-3x -text-main-400"></i>
             </div>
             <div class="flex justify-center text-gray-900 mb-4">
               <h3
-                class="text-3xl text-main-400 leading-normal mb-2 font-semibold text-black"
+                class="text-3xl text-main-400 leading-normal mb-2 font-semibold text-grey-800"
               >
                 Files Uploaded
               </h3>
             </div>
           </div>
 
-          <div
-            class="grid grid-cols-4 gap-4 ml-4 sm:w-full sm:grid-cols-1 md:w-full mdlg:grid-cols-2 lg:w-full md:grid-cols-4 mdlg:w-full lg:grid-cols-4"
-          >
+          <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 w-full">
             <div
-              class="mt-4 mb-8 bg-white hover: rounded-md transform transition duration-300 ease-in-out hover:-translate-y-2"
+              class="mt-4 mb-2 sm:mb-8 bg-white border p-2 rounded-md transform transition duration-300 ease-in-out hover:-translate-y-2"
               v-for="localFileData in localFileData[0] ? localFileData[0].data : {}"
               :key="localFileData.documenttype"
             >
               <div class="flex justify-center">
-                <div class="mt-large bg-white rounded-md">
+                <div class="mt-4 bg-white rounded-md">
                   <a
                     :href="localFileData.image"
                     :data-title="localFileData.documenttype"
@@ -132,46 +126,41 @@
     >
       <div class="bg-white flex-shrink px-4 w-full rounded-md">
         <div
-          class="py-8 px-12 mb-12 bg-gray-50 border-b border-white transform transition duration-300 ease-in-out hover:-translate-y-2"
+          class="py-8 px-2 sm:px-12 mb-12 bg-gray-50 border-b border-white transform transition duration-300 ease-in-out hover:-translate-y-2"
         >
           <div class="mb-4 border-t text-main-400">
-            <div class="flex justify-center">
-              <label
-                for="feedback"
-                class="form-label inline-block mb-2 text-main-400 text-xl"
-                >Feedback on the process and system
-                <span class="text-yellow-300">( optional / not required)</span>
-              </label>
-            </div>
-
-            <div class="mb-3 w-full flex justify-center">
-              <input
-                v-model="generalInfo.feedback"
-                class="form-control block w-full text-main-400 px-3 py-1.5 text-base font-normal text-gray-700 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:outline-none"
-                id="feedback"
-                rows="6"
-                placeholder="Your feedback"
-                type="textarea"
-              />
-            </div>
-
-            <div class="flex justify-center text-gray-900 mb-4 mt-8">
-              <div class="form-check">
+            <div class="flex justify-center text-gray-900 mb-4 mt-4">
+              <div class="form-check mt-4 sm:mt-0">
                 <input
-                  class="form-check-input appearance-none h-5 w-5 border border-gray-300 rounded-sm bg-wmain-400 checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                  class="form-check-input appearance-none h-8 w-8 border rounded-md checked:bg-main-400 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                   type="checkbox"
                   :value="agreed"
                   @click="changeAgrement()"
                   id="agreed"
                 />
               </div>
-              <h3
-                class="text-grey-800 mb-2 sm:text-xs lgmd:text-xl lg:text-xl md:text-xl"
-              >
+              <h3 class="text-grey-800 mb-2 text-lg sm:text-2xl">
                 By checking here I hereby verify the documents and details filled in are
                 legal.
               </h3>
-              <span class="text-red-300">*</span>
+            </div>
+            <div class="flex justify-center">
+              <label for="feedback" class="form-label inline-block mb-2 text-main-400"
+                >Feedback on the process and system
+                <span class="text-yellow-300">(optional*)</span>
+              </label>
+            </div>
+
+            <div class="mb-3 w-full flex justify-center">
+              <input
+                v-model="generalInfo.feedback"
+                @keyup="checkAgreement()"
+                class="form-control block w-full text-main-400 px-3 py-1.5 text-base font-normal text-gray-700 border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:outline-none"
+                id="feedback"
+                rows="6"
+                placeholder="Your feedback"
+                type="textarea"
+              />
             </div>
           </div>
         </div>
@@ -225,7 +214,7 @@
 
     <div class="modal-mask" v-if="showModal">
       <div class="modal-wrapper">
-        <div class="modal-container">
+        <div class="modal-container sm:w-1/2 w-5/6">
           <div class="modal-header">
             <h2 class="text-main-400 text-xl border-b-4">Uploading</h2>
           </div>
@@ -359,17 +348,20 @@ export default {
           },
         };
         showModal.value = true;
-
-        store.dispatch("newlicense/addNewLicense", license).then((res) => {
-          let licenseId = res.data.data.id;
+        let tryAgain = localStorage.getItem("tempNL")
+          ? JSON.parse(localStorage.getItem("tempNL"))
+          : false;
+        if (tryAgain && tryAgain.id != null && tryAgain.step == 3) {
+          let licenseId = tryAgain.id;
           let payload = { document: formData, id: licenseId };
           store
-            .dispatch("newlicense/uploadDocuments", payload)
+            .dispatch("newlicense/updateDocuments", payload)
             .then((res) => {
               isLoading.value = false;
               if (res) {
                 localStorage.removeItem("applicantTypeSelected");
                 localStorage.removeItem("NLApplicationData");
+                localStorage.removeItem("tempNL");
                 indexedDB.deleteDatabase("NLdocumentUploads");
                 toast.success("Applied successfuly", {
                   timeout: 5000,
@@ -403,10 +395,66 @@ export default {
                 icon: true,
               });
             });
-        });
+        } else {
+          store.dispatch("newlicense/addNewLicense", license).then((res) => {
+            let licenseId = res.data.data.id;
+            let payload = { document: formData, id: licenseId };
+            let tempNL = { id: licenseId, step: 3, backButtonClicked: false };
+            localStorage.setItem("tempNL", JSON.stringify(tempNL));
+            store
+              .dispatch("newlicense/uploadDocuments", payload)
+              .then((res) => {
+                isLoading.value = false;
+                if (res) {
+                  localStorage.removeItem("applicantTypeSelected");
+                  localStorage.removeItem("NLApplicationData");
+                  localStorage.removeItem("tempNL");
+                  indexedDB.deleteDatabase("NLdocumentUploads");
+                  toast.success("Applied successfuly", {
+                    timeout: 5000,
+                    position: "bottom-center",
+                    pauseOnFocusLoss: true,
+                    pauseOnHover: true,
+                    icon: true,
+                  });
+
+                  if (license.action == "DraftEvent") {
+                    router.push({ path: "/Applicant/NewLicense/draft" });
+                  } else {
+                    router.push({ path: "/Applicant/NewLicense/submitted" });
+                  }
+                } else {
+                  toast.error("Error occured, please try again", {
+                    timeout: 5000,
+                    position: "bottom-center",
+                    pauseOnFocusLoss: true,
+                    pauseOnHover: true,
+                    icon: true,
+                  });
+                }
+              })
+              .catch(() => {
+                toast.error("Error occured, please try again", {
+                  timeout: 5000,
+                  position: "bottom-center",
+                  pauseOnFocusLoss: true,
+                  pauseOnHover: true,
+                  icon: true,
+                });
+              });
+          });
+        }
       }
     };
     const back = () => {
+      let tempNL = localStorage.getItem("tempNL")
+        ? JSON.parse(localStorage.getItem("tempNL"))
+        : false;
+      if (tempNL && tempNL.step != null) {
+        tempNL.step = 2;
+        tempNL.backButtonClicked = true;
+        localStorage.setItem("tempNL", JSON.stringify(tempNL));
+      }
       emit("changeActiveStateMinus");
     };
 
@@ -525,7 +573,6 @@ export default {
 }
 
 .modal-container {
-  width: 600px;
   margin: 0px auto;
   padding: 20px 30px;
   background-color: #fff;

@@ -109,6 +109,10 @@
 
             <!-- region -->
             <div v-if="showLocation" class="border-b-2">
+              <h2 class="text-yellow-300 text-xl">
+                ***Please select the region you are applying for, not where you are
+                currently living***
+              </h2>
               <div
                 class="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 mdlg:grid-cols-3 md:grid-cols-3 p-2"
               >
@@ -125,11 +129,7 @@
                     @change="regionChangeHandler()"
                     required
                   >
-                    <option
-                      v-for="region in regions"
-                      :key="region.name"
-                      :value="region"
-                    >
+                    <option v-for="region in regions" :key="region.name" :value="region">
                       {{ region.name }}
                     </option>
                   </select>
@@ -154,11 +154,7 @@
                     >
                       {{ generalInfo.zoneSelected.name }}
                     </option>
-                    <option
-                      v-for="zone in zones"
-                      :key="zone.name"
-                      :value="zone"
-                    >
+                    <option v-for="zone in zones" :key="zone.name" :value="zone">
                       {{ zone.name }}
                     </option>
                   </select>
@@ -176,11 +172,7 @@
                     v-model="generalInfo.woredaSelected"
                     required
                   >
-                    <option
-                      v-for="woreda in woredas"
-                      :key="woreda.name"
-                      :value="woreda"
-                    >
+                    <option v-for="woreda in woredas" :key="woreda.name" :value="woreda">
                       {{ woreda.name }}
                     </option>
                     <option selected>
@@ -240,11 +232,7 @@
                     @change="ProfessionTypeChange(institution)"
                   >
                     <option disabled>First Select Department from above</option>
-                    <option
-                      v-for="pf in professionalTypes"
-                      :key="pf.id"
-                      :value="pf"
-                    >
+                    <option v-for="pf in professionalTypes" :key="pf.id" :value="pf">
                       {{ pf.name }}
                     </option>
                   </select>
@@ -408,8 +396,9 @@
             <div class="flex justify-end mb-2 mr-1">
               <button
                 class="px-6 mr-2 mb-2 py-2.5 bg-yellow-300 text-white font-medium border text-xs leading-tight uppercase rounded hover:text-yellow-300 hover:border-yellow-300 hover:bg-white transition duration-150 ease-in-out"
-                type="submit"
-                @click="withdraw()"
+                type="button"
+                data-bs-toggle="modal"
+                data-bs-target="#withdrawalModal"
               >
                 Withdraw
               </button>
@@ -445,6 +434,58 @@
             />
           </div>
         </transition>
+        <div
+          class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
+          id="withdrawalModal"
+          data-bs-backdrop="static"
+          data-bs-keyboard="false"
+          tabindex="-1"
+          aria-labelledby="staticBackdropLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog modal-sm relative w-auto pointer-events-none">
+            <div
+              class="modal-content border-none relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current"
+            >
+              <div class="modal-header flex flex-shrink-0 justify-end p-2 rounded-t-md">
+                <button
+                  type="button"
+                  class="px-6 text-white bg-red-200 hover:text-white hover:border font-medium text-xs leading-tight uppercase rounded hover:border-primary-600 hover:bg-purple-700 hover: focus:bg-purple-700 focus: focus:outline-none focus:ring-0 active:bg-purple-800 active: transition duration-150 ease-in-out"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <i class="fa fa-close fa-2x"></i>
+                </button>
+              </div>
+
+              <div class="modal-body relative p-4">
+                <div class="flex justify-center">
+                  <h2 class="text-red-300 text-2xl">
+                    Are you sure you want to withdraw this application?
+                  </h2>
+                </div>
+              </div>
+              <div
+                class="modal-footer p-2 flex flex-shrink-0 flex-wrap items-center justify-end border-t border-grey-100 rounded-b-md"
+              >
+                <button
+                  class="inline-block px-6 py-2.5 bg-yellow-300 text-white font-medium text-xs leading-tight uppercase rounded hover:bg-white hover:text-yellow-300 transition duration-150 ease-in-out"
+                  type="button"
+                  @click="withdraw()"
+                >
+                  Confirm
+                </button>
+                <button
+                  type="button"
+                  class="inline-block px-6 text-white font-medium text-xs bg-primary-700 leading-tight uppercase rounded hover:bg-white hover:text-primary-700 transition duration-150 ease-in-out"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div v-if="invalidLicenseStat == true">
         <h2 class="text-main-400 font-bold text-2xl">
@@ -582,6 +623,7 @@ export default {
               icon: true,
             });
             router.push({ path: "/Applicant/NewLicense/withdraw" });
+            location.reload();
           } else {
             toast.error(res.data.message, {
               timeout: 5000,
@@ -590,7 +632,7 @@ export default {
               pauseOnHover: true,
               icon: true,
             });
-            router.push({ path: "/Applicant/NewLicense/withdraw" });
+            location.reload();
           }
         })
         .catch((err) => {
@@ -645,6 +687,8 @@ export default {
           code: "ZN_HAR_DEF_54",
         };
         fetchWoredas();
+      } else {
+        fetchZones();
       }
     };
     const zoneChangeHandler = () => {

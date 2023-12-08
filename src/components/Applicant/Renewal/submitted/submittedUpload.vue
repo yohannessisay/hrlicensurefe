@@ -67,7 +67,10 @@
                       v-for="item in commonDocuments"
                       :key="item.id"
                       :class="
-                        fileUploadError['file_upload_row_' + `${item.documentType.code}`]
+                        fileUploadError[
+                          'file_upload_row_' +
+                            `${item.documentType ? item.documentType.code : ''}`
+                        ]
                           ? 'accordion-body py-4 px-5 border-2 border-red-300 rounded-lg'
                           : 'accordion-body py-4 px-5 border-b rounded-lg'
                       "
@@ -112,8 +115,9 @@
                         <span
                           class="document-name"
                           v-if="documentsSaved[item.documentType.code]"
-                          >{{ documentsSaved[item.documentType.code].name }}</span
-                        >
+                          >{{ documentsSaved[item.documentType.code].name }}
+                          <i class="fa fa-check-circle text-green-300"></i
+                        ></span>
                       </td>
                       <td class="px-6 py-4 text-center">
                         <a
@@ -197,11 +201,11 @@
                       <th
                         class="font-semibold text-sm uppercase px-6 py-4 text-center text-white"
                       >
-                        Upload Document
+                        Uploaded Document
                       </th>
-                      <th
-                        class="font-semibold text-sm uppercase px-6 py-4 text-white"
-                      ></th>
+                      <th class="font-semibold text-sm uppercase px-6 py-4 text-white">
+                        View
+                      </th>
                     </tr>
                   </thead>
                   <tbody class="p-4">
@@ -211,7 +215,9 @@
                       :class="
                         fileUploadError[
                           'file_upload_row_' +
-                            `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                            `${item.documentType ? item.documentType.code : ''}_${
+                              table.educationalLevel ? table.educationalLevel.code : ''
+                            }_${table.professionType ? table.professionType.code : ''}`
                         ]
                           ? 'accordion-body py-4 px-5 border-2 border-red-300 rounded-lg'
                           : 'accordion-body py-4 px-5 border-b  rounded-lg'
@@ -221,7 +227,7 @@
                         <div class="flex items-center ml-4">
                           <div>
                             <p class="">
-                              {{ item.documentType.name }}
+                              {{ item.documentType ? item.documentType.name : "" }}
                               <b v-if="item.isRequired" class="text-red-300">(*)</b>
                             </p>
                           </div>
@@ -232,7 +238,7 @@
                           <div>
                             <p class="">
                               {{
-                                item.documentType.description
+                                item.documentType && item.documentType.description
                                   ? item.documentType.description
                                   : "-----------------"
                               }}
@@ -255,27 +261,42 @@
                         </p>
                       </td>
                       <td class="px-6 py-4">
-                        <span class="document-name">{{
-                          documentsSaved[
-                            `${
-                              item.documentType.code
-                            }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
-                          ]?.name
-                        }}</span>
+                        <span class="document-name"
+                          >{{
+                            documentsSaved[
+                              `${
+                                item.documentType && item.documentType.code
+                              }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                            ]?.name
+                          }}
+                          <i class="fa fa-check-circle text-green-300"></i
+                        ></span>
                       </td>
                       <td class="px-6 py-4 text-center">
                         <a
                           :id="
                             'image_href_' +
-                            `${
-                              item.documentType.code
-                            }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                            `${item.documentType ? item.documentType.code : ''}_${
+                              table.educationalLevel
+                                ? table.educationalLevel.code.toUpperCase()
+                                : ''
+                            }_${
+                              table.professionType
+                                ? table.professionType.code.toUpperCase()
+                                : ''
+                            }`
                           "
                           :href="
                             documentsSaved[
-                              `${
-                                item.documentType.code
-                              }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                              `${item.documentType ? item.documentType.code : ''}_${
+                                table.educationalLevel
+                                  ? table.educationalLevel.code.toUpperCase()
+                                  : ''
+                              }_${
+                                table.professionType
+                                  ? table.professionType.code.toUpperCase()
+                                  : ''
+                              }`
                             ]?.path
                           "
                           :data-title="item.name ? item.name : '-----'"
@@ -284,9 +305,15 @@
                           <i
                             :id="
                               'educational_icon_' +
-                              `${
-                                item.documentType.code
-                              }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                              `${item.documentType ? item.documentType.code : ''}_${
+                                table.educationalLevel
+                                  ? table.educationalLevel.code.toUpperCase()
+                                  : ''
+                              }_${
+                                table.professionType
+                                  ? table.professionType.code.toUpperCase()
+                                  : ''
+                              }`
                             "
                             class="fa fa-eye cursor-pointer text-main-400"
                             aria-hidden="true"
@@ -294,15 +321,27 @@
                             <img
                               :id="
                                 'image_lightbox_' +
-                                `${
-                                  item.documentType.code
-                                }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                                `${item.documentType ? item.documentType.code : ''}_${
+                                  table.educationalLevel.code
+                                    ? table.educationalLevel.code.toUpperCase()
+                                    : ''
+                                }_${
+                                  table.professionType
+                                    ? table.professionType.code.toUpperCase()
+                                    : ''
+                                }`
                               "
                               :src="
                                 documentsSaved[
-                                  `${
-                                    item.documentType.code
-                                  }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
+                                  `${item.documentType ? item.documentType.code : ''}_${
+                                    table.educationalLevel
+                                      ? table.educationalLevel.code.toUpperCase()
+                                      : ''
+                                  }_${
+                                    table.professionType
+                                      ? table.professionType.code.toUpperCase()
+                                      : ''
+                                  }`
                                 ]?.path
                               "
                               class="w-full h-2 object-cover"
@@ -377,8 +416,9 @@
                                 parentItem[0].documentType.code
                               }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                             ]?.name
-                          }}</span
-                        >
+                          }}
+                          <i class="fa fa-check-circle text-green-300"></i
+                        ></span>
                       </td>
                       <td class="px-6 py-4 text-center">
                         <a
@@ -576,8 +616,9 @@
                                           parentChildItem.documentType.code
                                         }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                                       ]?.name
-                                    }}</span
-                                  >
+                                    }}
+                                    <i class="fa fa-check-circle text-green-300"></i
+                                  ></span>
                                 </td>
                                 <td
                                   v-if="
@@ -1284,7 +1325,7 @@ export default {
   border-radius: 5%;
   padding: 7px;
 }
-. {
+.shadow-md {
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 34%), 0 2px 4px -1px rgb(0 0 0 / 6%);
 }
 .document-name {
