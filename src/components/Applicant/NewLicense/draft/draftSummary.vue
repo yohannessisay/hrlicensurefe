@@ -80,112 +80,169 @@
         </div>
       </div>
     </div>
-
-    <div
-      class="mt-8 grid grid-cols-1 gap-4 md:grid-cols-1 lg:grid-cols-1 mdlg:grid-cols-1 sm:grid-cols-1"
-    >
-      <div class="bg-white flex-shrink px-4 w-full rounded-md">
-        <div class="py-8 px-12 mb-12 bg-gray-50 border-b border-white">
-          <div class="border-b-2 text-main-400 mb-4">
-            <div class="text-gray-900 mb-4 flex justify-center">
-              <i class="fa fa-folder fa-3x -text-main-400"></i>
+    <div class="vld-parent mt-4">
+      <loading
+        :active="fileIsLoading"
+        :is-full-page="false"
+        :color="'#2F639D'"
+        :opacity="1"
+      ></loading>
+      <div
+        class="mt-8 grid grid-cols-1 gap-4 md:grid-cols-1 lg:grid-cols-1 mdlg:grid-cols-1 sm:grid-cols-1"
+      >
+        <div class="bg-white flex-shrink px-4 w-full rounded-md">
+          <div class="py-8 px-2 mb-12 bg-gray-50 border-b border-white">
+            <div class="border-b-2 text-main-400 mb-4">
+              <div class="text-gray-900 mb-4 flex justify-center">
+                <i class="fa fa-folder fa-3x -text-main-400"></i>
+              </div>
+              <div class="flex justify-center text-gray-900 mb-4">
+                <h3 class="text-3xl text-main-400 leading-normal mb-2 font-semibold">
+                  Files Uploaded
+                </h3>
+              </div>
+              <h2
+                class="text-xl text-grey-800"
+                v-if="(changedDocs && changedDocs.length > 0) || localFileImages"
+              >
+                New files
+              </h2>
             </div>
-            <div class="flex justify-center text-gray-900 mb-4">
-              <h3 class="text-3xl text-main-400 leading-normal mb-2 font-semibold">
-                Files Uploaded
-              </h3>
-            </div>
-            <span class="text-lg" v-if="changedDocs && changedDocs.length > 0">
-              New files</span
-            >
-          </div>
 
-          <div
-            :class="
-              changedDocs && changedDocs.length > 0
-                ? ' border-b mb-12 grid grid-cols-4 gap-4 ml-4 sm:w-full sm:grid-cols-1 md:w-full mdlg:grid-cols-2 lg:w-full md:grid-cols-4 mdlg:w-full lg:grid-cols-4'
-                : ' mb-12 grid grid-cols-4 gap-4 ml-4 sm:w-full sm:grid-cols-1 md:w-full mdlg:grid-cols-2 lg:w-full md:grid-cols-4 mdlg:w-full lg:grid-cols-4'
-            "
-          >
-            <div
-              class="mt-4 mb-8 bg-white border-4 text-main-400 rounded-md transform transition duration-300 ease-in-out p-2 hover:-translate-y-2"
-              v-for="changed in changedDocs"
-              :key="changed.id"
-            >
-              <h4 class="text-main-400 font-bold m-2">Document Type</h4>
-              <h6 class="m-2 text-grey-800">{{ changed.id }}</h6>
-              <div class="flex justify-center rounded-lg p-4">
-                <div class="bg-white rounded-md border p-2">
-                  Previous
-                  <a
-                    :href="changed.prevFile"
-                    :data-title="changed.docName"
-                    data-lightbox="example-2"
-                  >
-                    <img :src="changed.prevFile" class="w-full h-48 object-cover" />
-                  </a>
+            <div>
+              <div
+                v-if="changedDocs && changedDocs.length > 0"
+                class="grid grid-cols-1 sm:grid-cols-4 gap-4"
+              >
+                <div
+                  class="mt-4 mb-8 bg-white border-4 text-main-400 rounded-md transform transition duration-300 ease-in-out p-2 hover:-translate-y-2"
+                  v-for="changed in changedDocs"
+                  :key="changed.id"
+                >
+                  <h4 class="text-main-400 font-bold m-2">Document Type</h4>
+                  <h6 class="m-2">{{ changed.docName }}</h6>
+                  <div class="flex justify-center rounded-lg p-4">
+                    <div class="bg-white rounded-md border p-2">
+                      Previous
+                      <a
+                        :href="changed.prevFile"
+                        :data-title="changed.docName"
+                        data-lightbox="example-2"
+                      >
+                        <img :src="changed.prevFile" class="w-full h-48 object-cover" />
+                      </a>
+                    </div>
+
+                    <div class="bg-main-400 rounded-md ml-2 border p-2">
+                      <span class="text-white"> New</span>
+                      <a
+                        :href="changed.newFile"
+                        :data-title="changed.docName"
+                        data-lightbox="example-2"
+                      >
+                        <img
+                          :src="changed.newFile"
+                          class="w-full h-48 object-cover rounded-lg"
+                        />
+                      </a>
+                    </div>
+                  </div>
                 </div>
-
-                <div class="bg-main-400 rounded-md ml-2 border p-2">
-                  <span class="text-white"> New</span>
-                  <a
-                    :href="changed.newFile"
-                    :data-title="changed.docName"
-                    data-lightbox="example-2"
-                  >
-                    <img
-                      :src="changed.newFile"
-                      class="w-full h-48 object-cover rounded-lg"
-                    />
-                  </a>
+              </div>
+              <div v-if="localFileImages" class="grid grid-cols-1 sm:grid-cols-4 gap-4">
+                <div
+                  class="mt-4 mb-8 bg-white border-4 text-main-400 rounded-md transform transition duration-300 ease-in-out p-2 hover:-translate-y-2"
+                  v-for="newDoc in localFileImages"
+                  :key="newDoc.id"
+                >
+                  <h4 class="text-main-400 font-bold m-2">Document Type</h4>
+                  <h6 class="m-2">{{ newDoc.documenttype }}</h6>
+                  <div class="flex justify-center rounded-lg p-4">
+                    <a
+                      :href="newDoc.image"
+                      :data-title="newDoc.documenttype"
+                      data-lightbox="example-2"
+                    >
+                      <img
+                        :src="newDoc.image"
+                        class="w-full h-48 object-cover rounded-lg"
+                      />
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <div class="accordion" id="accordionExample">
-            <div class="accordion-item bg-white">
-              <h2 class="accordion-header mb-0" id="headingOne">
-                <button
-                  class="relative flex items-center w-full py-4 px-5 text-white bg-grey-200 hover:text-main-400 hover:bg-white transition focus:outline-none hover:border-main-400 rounded-md"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#collapseOne"
-                  aria-expanded="true"
-                  aria-controls="collapseOne"
-                >
-                  Previously uploaded files
-                </button>
-              </h2>
-              <div
-                id="collapseOne"
-                class="accordion-collapse collapse show"
-                aria-labelledby="headingOne"
-                data-bs-parent="#accordionExample"
-              >
-                <div class="accordion-body py-4 px-5">
-                  <div
-                    class="grid grid-cols-4 gap-4 ml-4 sm:w-full sm:grid-cols-1 md:w-full mdlg:grid-cols-2 lg:w-full md:grid-cols-4 mdlg:w-full lg:grid-cols-4"
+            <div class="accordion" id="accordionExample">
+              <div class="accordion-item bg-white">
+                <h2 class="accordion-header mb-0" id="headingOne">
+                  <button
+                    class="relative flex items-center w-full py-4 px-5 text-white bg-grey-200 hover:text-main-400 hover:bg-white transition focus:outline-none hover:border-main-400 rounded-md"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseOne"
+                    aria-expanded="true"
+                    aria-controls="collapseOne"
                   >
+                    Previously uploaded files
+                  </button>
+                </h2>
+                <div
+                  id="collapseOne"
+                  class="accordion-collapse collapse show"
+                  aria-labelledby="headingOne"
+                  data-bs-parent="#accordionExample"
+                >
+                  <div class="accordion-body py-4 px-5">
                     <div
-                      class="mt-4 mb-8 bg-white rounded-md transform transition duration-300 ease-in-out p-2 hover:-translate-y-2"
-                      v-for="prev in prevDocs"
-                      :key="prev.id"
+                      class="grid grid-cols-1 gap-4 ml-4 sm:w-full sm:grid-cols-4 md:w-full mdlg:grid-cols-2 lg:w-full md:grid-cols-4 mdlg:w-full lg:grid-cols-4"
                     >
-                      <h4 class="text-main-400 font-bold m-2">Document Type</h4>
-                      <h6 class="m-2">{{ prev.documentType.name }}</h6>
-                      <div class="flex justify-center rounded-lg p-4">
-                        <div class="bg-white rounded-md p-2">
-                          <a
-                            :href="googleApi + prev.filePath"
-                            :data-title="prev.docName"
-                            data-lightbox="example-2"
-                          >
-                            <img
-                              :src="googleApi + prev.filePath"
-                              class="w-full h-48 object-cover"
-                            />
-                          </a>
+                      <div
+                        v-if="!professionChanged"
+                        class="mt-4 mb-8 bg-white rounded-md transform transition duration-300 ease-in-out p-2 hover:-translate-y-2"
+                        v-for="prev in prevDocs"
+                        :key="prev.id"
+                      >
+                        <h4 class="text-main-400 font-bold m-2">Document Type</h4>
+                        <h6 class="m-2">
+                          {{ prev.documentType ? prev.documentType.name : "" }}
+                        </h6>
+                        <div class="flex justify-center rounded-lg p-4">
+                          <div class="bg-white rounded-md p-2">
+                            <a
+                              :href="googleApi + prev.filePath"
+                              :data-title="prev.docName"
+                              data-lightbox="example-2"
+                            >
+                              <img
+                                :src="googleApi + prev.filePath"
+                                class="w-full h-48 object-cover"
+                              />
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div
+                        v-else
+                        class="mt-4 mb-8 bg-white rounded-md transform transition duration-300 ease-in-out p-2 hover:-translate-y-2"
+                        v-for="prev in prevDocs"
+                        :key="prev.docName"
+                      >
+                        <h4 class="text-main-400 font-bold m-2">Document Type</h4>
+                        <h6 class="m-2">
+                          {{ prev.documentType ? prev.documentType.name : "" }}
+                        </h6>
+                        <div class="flex justify-center rounded-lg p-4">
+                          <div class="bg-white rounded-md p-2">
+                            <a
+                              :href="prev.path"
+                              :data-title="prev.docName"
+                              data-lightbox="example-2"
+                            >
+                              <img :src="prev.path" class="w-full h-48 object-cover" />
+                            </a>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -197,7 +254,6 @@
         </div>
       </div>
     </div>
-
     <div
       class="mt-8 grid grid-cols-1 gap-4 md:grid-cols-1 lg:grid-cols-1 mdlg:grid-cols-1 sm:grid-cols-1"
     >
@@ -332,6 +388,7 @@ export default {
     const store = useStore();
     const toast = useToast();
     const router = useRouter();
+    let fileIsLoading = ref(false);
     let localData = ref({});
     let localFileImages = ref({});
     let generalInfo = ref({});
@@ -468,6 +525,7 @@ export default {
       emit("changeActiveStateMinus");
     };
     onMounted(() => {
+      fileIsLoading.value = true;
       store
         .dispatch("newlicense/getNewLicenseApplication", route.params.id)
         .then((res) => {
@@ -560,6 +618,7 @@ export default {
               }
             };
           };
+          fileIsLoading.value = false;
         });
     });
     return {
@@ -582,6 +641,7 @@ export default {
       progress,
       totalSteps,
       totalSize,
+      fileIsLoading,
     };
   },
 };
