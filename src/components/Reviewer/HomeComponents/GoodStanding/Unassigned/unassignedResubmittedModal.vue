@@ -45,10 +45,22 @@
                     <div class="text-center lg:max-w-3xl md:max-w-xl">
                       <h2 class="text-2xl font-bold mb-8 px-6">
                         Showing
-                        <span class="text-2xl font-bold px-6">
-                          {{ modalData.name ? modalData.name : "" }}
-                        </span>
+
+                        {{ modalData.name ? modalData.name : "" }}
+
                         's License Data
+                      </h2>
+                      <h2
+                        v-if="
+                          modalData &&
+                          modalData.data &&
+                          modalData.data.documents.length == 0
+                        "
+                        class="text-2xl text-yellow-300 border rounded-md p-2 font-bold mb-8 px-6"
+                      >
+                        Application has no image uploaded, proceed with caution when
+                        assigning and please inform the applicant to upload documents by
+                        editing the submitted application from their side
                       </h2>
                     </div>
                   </div>
@@ -175,7 +187,13 @@
                                     >
                                       <button
                                         v-if="button.code == 'AT'"
-                                        class="inline-block px-6 py-2.5 mt-4 bg-primary-700 text-white font-medium text-xs leading-tight uppercase rounded hover:bg-white hover:text-primary-600 transition duration-150 ease-in-out"
+                                        :class="
+                                          modalData &&
+                                          modalData.data &&
+                                          modalData.data.documents.length != 0
+                                            ? 'inline-block px-6 py-2.5 mt-4 bg-primary-600 text-white font-medium text-xs leading-tight uppercase rounded hover:bg-white hover:text-primary-600 transition duration-150 ease-in-out'
+                                            : 'pointer-events-none inline-block px-6 py-2.5 mt-4 bg-grey-200 text-white font-medium text-xs leading-tight uppercase rounded hover:bg-white hover:text-primary-600 transition duration-150 ease-in-out'
+                                        "
                                         @click="
                                           assignReviewer({
                                             action: button.action,
@@ -195,7 +213,13 @@
                               <div v-for="button in modalData.buttons" :key="button.id">
                                 <button
                                   v-if="button.code == 'AT'"
-                                  class="inline-block px-6 py-2.5 mt-4 bg-primary-700 text-white font-medium text-xs ml-4 leading-tight uppercase rounded hover:bg-white hover:text-primary-600 transition duration-150 ease-in-out"
+                                  :class="
+                                    modalData &&
+                                    modalData.data &&
+                                    modalData.data.documents.length != 0
+                                      ? 'inline-block px-6 py-2.5 mt-4 bg-primary-600 text-white font-medium text-xs leading-tight uppercase rounded hover:bg-white hover:text-primary-600 transition duration-150 ease-in-out'
+                                      : 'pointer-events-none inline-block px-6 py-2.5 mt-4 bg-grey-200 text-white font-medium text-xs leading-tight uppercase rounded hover:bg-white hover:text-primary-600 transition duration-150 ease-in-out'
+                                  "
                                   @click="
                                     assignReviewer({
                                       action: button.action,
