@@ -60,11 +60,13 @@
                 </h1>
                 <p
                   :class="
-                    license.certifiedDate ? 'text-black text-sm' : 'text-red-300 text-sm'
+                    license && license.certifiedDate
+                      ? 'text-black text-sm'
+                      : 'text-red-300 text-sm'
                   "
                 >
                   {{
-                    license.certifiedDate
+                    license && license.certifiedDate
                       ? license.certifiedDate.slice(0, 10)
                       : "Withdrawed"
                   }}
@@ -78,11 +80,13 @@
                 </h1>
                 <p
                   :class="
-                    license.certifiedDate ? 'text-black text-sm' : 'text-red-300 text-sm'
+                    license && license.certifiedDate
+                      ? 'text-black text-sm'
+                      : 'text-red-300 text-sm'
                   "
                 >
                   {{
-                    license.certifiedDate
+                    license && license.certifiedDate
                       ? license.certifiedDate.slice(0, 10)
                       : "Withdrawed"
                   }}
