@@ -1,9 +1,9 @@
 <template>
-  <main-content :url="'goodstanding'">
+  <main-content :url="'licenseDelegation'">
     <transition name="fade" mode="out-in">
       <div v-if="this.activeState == 1" class="">
         <GeneralInfo
-        @dark-mode="modeToggle()"
+          @dark-mode="modeToggle()"
           :activeState="1"
           @changeActiveState="activeState++"
           @changeActiveStateMinus="activeState--"
@@ -13,7 +13,7 @@
     <transition name="fade" mode="out-in">
       <div v-if="this.activeState == 2" class="">
         <upload
-        @dark-mode="modeToggle()"
+          @dark-mode="modeToggle()"
           :activeState="2"
           @changeActiveState="activeState++"
           @changeActiveStateMinus="activeState--"
@@ -23,7 +23,7 @@
     <transition name="fade" mode="out-in">
       <div v-if="this.activeState == 3" class="">
         <GoodStandingSummary
-        @dark-mode="modeToggle()"
+          @dark-mode="modeToggle()"
           :activeState="4"
           @changeActiveState="activeState++"
           @changeActiveStateMinus="activeState--"
@@ -34,10 +34,10 @@
 </template>
 
 <script>
-import GeneralInfo from "./AddGoodStanding/generalInformation.vue";
-import Upload from "./AddGoodStanding/Upload.vue";
+import GeneralInfo from "./AddLicenseDelegation/generalInformation.vue";
+import Upload from "./AddLicenseDelegation/Upload.vue";
 import MainContent from "../Shared/Menu.vue";
-import GoodStandingSummary from "./AddGoodStanding/LicenseSummary.vue";
+import GoodStandingSummary from "./AddLicenseDelegation/LicenseSummary.vue";
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
 export default {
@@ -119,7 +119,7 @@ export default {
         const renewalData = applicationCategories.value.filter((item) => {
           return item.name == "Renewal Application";
         });
-        applicationId.value = renewalData[0]["id"]; 
+        applicationId.value = renewalData[0]["id"];
       });
     };
 
@@ -131,7 +131,7 @@ export default {
         let status = applicationStatuses.value.filter(function (e) {
           return e.code == "INIT";
         });
-        buttons.value = status[0]["buttons"]; 
+        buttons.value = status[0]["buttons"];
         store.dispatch("goodstanding/setButtons", buttons.value);
       });
     };

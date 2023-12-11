@@ -8,9 +8,9 @@
       </li>
       <li><span class="text-gray-500 mx-2">/</span></li>
       <li>
-        <router-link to="/Applicant/GoodStanding">
+        <router-link to="/Applicant/LicenseDelegation">
           <a href="#" :class="isDarkMode ? 'text-white' : 'text-main-400'"
-            >Goodstanding</a
+            >License Delegation</a
           >
         </router-link>
       </li>
