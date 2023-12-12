@@ -655,6 +655,19 @@ export default {
         regions.value = res.data.data;
       });
     };
+    const convertOtherProf = (inputString) => {
+      let trimmedString = inputString.replace(/\s+/g, " ").trim();
+      let formattedString = trimmedString.replace(/\b\w/g, function (match) {
+        return match.toUpperCase();
+      });
+
+      return formattedString;
+    };
+    const convertOtherProfAmh = (inputString) => {
+      let trimmedString = inputString.replace(/\s+/g, " ").trim();
+
+      return trimmedString;
+    };
     const fetchZone = () => {
       generalInfo.value.regionId
         ? store
@@ -696,6 +709,28 @@ export default {
       ) {
         generalInfo.value.expertLevelId = 4;
       }
+      (generalInfo.value.professionType.otherProfessionalType = generalInfo.value
+        .otherProfessionType
+        ? convertOtherProf(generalInfo.value.otherProfessionType)
+        : ""),
+        (generalInfo.value.professionType.otherProfessionTypeAmharic = generalInfo.value
+          .otherProfessionTypeAmharic
+          ? convertOtherProfAmh(generalInfo.value.otherProfessionTypeAmharic)
+          : "");
+      generalInfo.value.professionType.other_applicant_position = generalInfo.value
+        .otherApplicantPosition
+        ? convertOtherProf(generalInfo.value.otherApplicantPosition)
+        : "";
+      (generalInfo.value.otherProfessionType = generalInfo.value.otherProfessionType
+        ? convertOtherProf(generalInfo.value.otherProfessionType)
+        : ""),
+        (generalInfo.value.otherProfessionTypeAmharic = generalInfo.value
+          .otherProfessionTypeAmharic
+          ? convertOtherProfAmh(generalInfo.value.otherProfessionTypeAmharic)
+          : "");
+      generalInfo.value.otherApplicantPosition = generalInfo.value.otherApplicantPosition
+        ? convertOtherProf(generalInfo.value.otherApplicantPosition)
+        : "";
       let tempApplicationData = generalInfo.value;
       window.localStorage.setItem(
         "GSApplicationData",
@@ -783,11 +818,13 @@ export default {
                 ? generalInfo.value.GSProfessionals.educationLevelId
                 : null,
             otherProfessionType: generalInfo.value.GSProfessionals.otherProfessionType
-              ? generalInfo.value.GSProfessionals.otherProfessionType
+              ? convertOtherProf(generalInfo.value.GSProfessionals.otherProfessionType)
               : "",
             otherProfessionTypeAmharic: generalInfo.value.GSProfessionals
               .otherProfessionTypeAmharic
-              ? generalInfo.value.GSProfessionals.otherProfessionTypeAmharic
+              ? convertOtherProfAmh(
+                  generalInfo.value.GSProfessionals.otherProfessionTypeAmharic
+                )
               : "",
           },
           expertLevelId: generalInfo.value.expertLevelId
@@ -795,7 +832,7 @@ export default {
             : null,
           islegal: true,
           other_applicant_position: generalInfo.value.otherApplicantPosition
-            ? generalInfo.value.otherApplicantPosition
+            ? convertOtherProf(generalInfo.value.otherApplicantPosition)
             : "",
           departmentId: generalInfo.value.department
             ? generalInfo.value.department.id

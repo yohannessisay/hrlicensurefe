@@ -490,6 +490,19 @@ export default {
     const zoneChangeHandler = () => {
       fetchWoredas();
     };
+    const convertOtherProf = (inputString) => {
+      let trimmedString = inputString.replace(/\s+/g, " ").trim();
+      let formattedString = trimmedString.replace(/\b\w/g, function (match) {
+        return match.toUpperCase();
+      });
+
+      return formattedString;
+    };
+    const convertOtherProfAmh = (inputString) => {
+      let trimmedString = inputString.replace(/\s+/g, " ").trim();
+
+      return trimmedString;
+    };
     const regionChangeHandler = () => {
       if (generalInfo.value.regionSelected && generalInfo.value.regionSelected.code) {
         switch (generalInfo.value.regionSelected.code) {
@@ -617,7 +630,29 @@ export default {
       ) {
         generalInfo.value.expertLevelId = 4;
       }
+      (generalInfo.value.professionType.otherProfessionalType = generalInfo.value
+        .otherProfessionType
+        ? convertOtherProf(generalInfo.value.otherProfessionType)
+        : ""),
+        (generalInfo.value.professionType.otherProfessionTypeAmharic = generalInfo.value
+          .otherProfessionTypeAmharic
+          ? convertOtherProfAmh(generalInfo.value.otherProfessionTypeAmharic)
+          : "");
+      generalInfo.value.professionType.other_applicant_position = generalInfo.value
+        .otherApplicantPosition
+        ? convertOtherProf(generalInfo.value.otherApplicantPosition)
+        : "";
 
+      (generalInfo.value.otherProfessionType = generalInfo.value.otherProfessionType
+        ? convertOtherProf(generalInfo.value.otherProfessionType)
+        : ""),
+        (generalInfo.value.otherProfessionTypeAmharic = generalInfo.value
+          .otherProfessionTypeAmharic
+          ? convertOtherProfAmh(generalInfo.value.otherProfessionTypeAmharic)
+          : "");
+      generalInfo.value.otherApplicantPosition = generalInfo.value.otherApplicantPosition
+        ? convertOtherProf(generalInfo.value.otherApplicantPosition)
+        : "";
       let tempApplicationData = generalInfo.value;
       window.localStorage.setItem(
         "GSApplicationData",
@@ -698,14 +733,14 @@ export default {
               ? generalInfo.value.educationLevelId.id
               : null,
             otherProfessionalType: generalInfo.value.otherProfessionType
-              ? generalInfo.value.otherProfessionType
+              ? convertOtherProf(generalInfo.value.otherProfessionType)
               : "",
             otherProfessionTypeAmharic: generalInfo.value.otherProfessionTypeAmharic
-              ? generalInfo.value.otherProfessionTypeAmharic
+              ? convertOtherProfAmh(generalInfo.value.otherProfessionTypeAmharic)
               : "",
           },
           other_applicant_position: generalInfo.value.otherApplicantPosition
-            ? generalInfo.value.otherApplicantPosition
+            ? convertOtherProf(generalInfo.value.otherApplicantPosition)
             : "",
           expertLevelId: generalInfo.value.expertLevelId
             ? generalInfo.value.expertLevelId

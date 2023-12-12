@@ -675,6 +675,19 @@ export default {
         zones.value = res.data.data;
       });
     };
+    const convertOtherProf = (inputString) => {
+      let trimmedString = inputString.replace(/\s+/g, " ").trim();
+      let formattedString = trimmedString.replace(/\b\w/g, function (match) {
+        return match.toUpperCase();
+      });
+
+      return formattedString;
+    };
+    const convertOtherProfAmh = (inputString) => {
+      let trimmedString = inputString.replace(/\s+/g, " ").trim();
+
+      return trimmedString;
+    };
     const fetchWoredas = () => {
       store
         .dispatch("goodstanding/getWoredas", generalInfo.value.zoneSelected.id)
@@ -707,11 +720,34 @@ export default {
       ) {
         generalInfo.value.expertLevelId = 4;
       }
+      (generalInfo.value.professionType.otherProfessionalType = generalInfo.value
+        .otherProfessionType
+        ? convertOtherProf(generalInfo.value.otherProfessionType)
+        : ""),
+        (generalInfo.value.professionType.otherProfessionTypeAmharic = generalInfo.value
+          .otherProfessionTypeAmharic
+          ? convertOtherProfAmh(generalInfo.value.otherProfessionTypeAmharic)
+          : "");
+      generalInfo.value.professionType.other_applicant_position = generalInfo.value
+        .otherApplicantPosition
+        ? convertOtherProf(generalInfo.value.otherApplicantPosition)
+        : "";
+      (generalInfo.value.otherProfessionType = generalInfo.value.otherProfessionType
+        ? convertOtherProf(generalInfo.value.otherProfessionType)
+        : ""),
+        (generalInfo.value.otherProfessionTypeAmharic = generalInfo.value
+          .otherProfessionTypeAmharic
+          ? convertOtherProfAmh(generalInfo.value.otherProfessionTypeAmharic)
+          : "");
+      generalInfo.value.otherApplicantPosition = generalInfo.value.otherApplicantPosition
+        ? convertOtherProf(generalInfo.value.otherApplicantPosition)
+        : "";
       let tempApplicationData = generalInfo.value;
       window.localStorage.setItem(
         "GSApplicationData",
         JSON.stringify(tempApplicationData)
       );
+
       store.dispatch("goodstanding/setGeneralInfo", generalInfo.value).then(() => {
         activeState.value++;
       });
@@ -793,11 +829,13 @@ export default {
                 ? generalInfo.value.GSProfessionals.educationLevelId
                 : null,
             otherProfessionType: generalInfo.value.GSProfessionals.otherProfessionType
-              ? generalInfo.value.GSProfessionals.otherProfessionType
+              ? convertOtherProf(generalInfo.value.GSProfessionals.otherProfessionType)
               : "",
             otherProfessionTypeAmharic: generalInfo.value.GSProfessionals
               .otherProfessionTypeAmharic
-              ? generalInfo.value.GSProfessionals.otherProfessionTypeAmharic
+              ? convertOtherProfAmh(
+                  generalInfo.value.GSProfessionals.otherProfessionTypeAmharic
+                )
               : "",
           },
           expertLevelId: generalInfo.value.expertLevelId
@@ -806,7 +844,7 @@ export default {
           islegal: true,
 
           other_applicant_position: generalInfo.value.otherApplicantPosition
-            ? generalInfo.value.otherApplicantPosition
+            ? convertOtherProf(generalInfo.value.otherApplicantPosition)
             : "",
           departmentId: generalInfo.value.department
             ? generalInfo.value.department.id

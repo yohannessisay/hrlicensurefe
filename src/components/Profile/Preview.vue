@@ -218,12 +218,14 @@ export default {
         name: capitalized(personalInfo.name),
         fatherName: capitalized(personalInfo.fatherName),
         grandFatherName: capitalized(personalInfo.grandFatherName),
-        alternativeName: personalInfo.alternativeName ? personalInfo.alternativeName : "",
+        alternativeName: personalInfo.alternativeName
+          ? personalInfo.alternativeName.replace(/\s/g, "")
+          : "",
         alternativeFatherName: personalInfo.alternativeFatherName
-          ? personalInfo.alternativeFatherName
+          ? personalInfo.alternativeFatherName.replace(/\s/g, "")
           : "",
         alternativeGrandFatherName: personalInfo.alternativeGrandFatherName
-          ? personalInfo.alternativeGrandFatherName
+          ? personalInfo.alternativeGrandFatherName.replace(/\s/g, "")
           : "",
         gender: personalInfo.gender,
         photo: "photo",
@@ -306,8 +308,9 @@ export default {
       });
     });
     const capitalized = (word) => {
+      word = word.replace(/\s/g, "");
       const capitalizedFirst = word[0].toUpperCase();
-      const rest = word.slice(1);
+      const rest = word.slice(1).toLowerCase();
 
       return capitalizedFirst + rest;
     };

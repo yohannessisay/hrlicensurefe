@@ -1304,7 +1304,7 @@
               <div class="flex justify-center"></div>
 
               <div class="lg:flex lg:-mx-4 mt-2 md:mt-2 justify-center">
-                <div class="pricing-plan-wrap lg:w-1/2 my-2 md:my-2">
+                <div class="pricing-plan-wrap w-full my-2 md:my-2">
                   <div
                     :class="
                       isDarkMode
