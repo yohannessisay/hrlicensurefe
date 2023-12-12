@@ -53,8 +53,8 @@
                       class="text-2xl text-yellow-300 border rounded-md p-2 font-bold mb-8 px-6"
                     >
                       Application has no image uploaded, proceed with caution when
-                        assigning and please inform the applicant to upload documents by
-                        editing the submitted application from their side
+                      assigning and please inform the applicant to upload documents by
+                      editing the submitted application from their side
                     </h2>
                   </div>
                 </div>
@@ -394,7 +394,7 @@ export default {
     let showOptions = ref(false);
     let reviewer = ref({ id: "", name: "", expertLevel: "", role: "" });
     let adminId = +localStorage.getItem("adminId");
-
+    let adminRole = localStorage.getItem("role");
     let assign = ref({
       reviewerId: "",
       renewalId: "",
@@ -611,6 +611,7 @@ export default {
       assignReviewer,
       onCancel,
       modalData,
+      adminRole,
     };
   },
 };
