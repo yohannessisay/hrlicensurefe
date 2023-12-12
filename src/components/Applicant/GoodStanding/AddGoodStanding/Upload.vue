@@ -79,7 +79,7 @@
                             type="file"
                             required
                             :id="`files${item.id}`"
-                            accept=".jpeg, .jpg,.png, .pdf"
+                            accept=".jpeg, .png, .jpg, .pdf, .webp, .tiff , .svg , .heic , .heif "
                             :ref="`imageUploader${item.id}`"
                             class="custom-file-input"
                             v-on:change="handleFileUpload(item, $event)"
@@ -682,7 +682,7 @@ export default {
   border-radius: 5%;
   padding: 7px;
 }
-. {
+.shadow-md {
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 34%), 0 2px 4px -1px rgb(0 0 0 / 6%);
 }
 .document-name {

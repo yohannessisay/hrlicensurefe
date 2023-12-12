@@ -100,7 +100,7 @@
                             type="file"
                             required
                             :id="'common_image_' + item.documentType.id + item.id"
-                            accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
+                            accept=".jpeg, .png, .jpg, .pdf, .webp, .tiff , .svg , .heic , .heif "
                             :ref="`imageUploader${item.id}`"
                             class="custom-file-input"
                             v-on:change="handleCommonFileUpload(item, $event)"
@@ -250,7 +250,7 @@
                             type="file"
                             :required="item.isRequired"
                             :id="`files${item.id}`"
-                            accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
+                            accept=".jpeg, .png, .jpg, .pdf, .webp, .tiff , .svg , .heic , .heif "
                             :ref="`imageUploader${item.id}`"
                             class="custom-file-input"
                             v-on:change="handleFileUpload(item, $event, table)"
@@ -369,7 +369,7 @@
                             type="file"
                             :required="parentItem[0].isRequired"
                             :id="`files${parentItem[0].id}`"
-                            accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
+                            accept=".jpeg, .png, .jpg, .pdf, .webp, .tiff , .svg , .heic , .heif "
                             :ref="`imageUploader${parentItem[0].id}`"
                             class="custom-file-input"
                             v-on:change="handleFileUpload(parentItem[0], $event, table)"
@@ -560,7 +560,7 @@
                                       type="file"
                                       :required="parentChildItem.isRequired"
                                       :id="`files${parentChildItem.id}`"
-                                      accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
+                                      accept=".jpeg, .png, .jpg, .pdf, .webp, .tiff , .svg , .heic , .heif "
                                       :ref="`imageUploader${parentChildItem.id}`"
                                       class="custom-file-input"
                                       v-on:change="
@@ -1691,7 +1691,7 @@ export default {
   border-radius: 5%;
   padding: 7px;
 }
-. {
+.shadwo-md {
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 34%), 0 2px 4px -1px rgb(0 0 0 / 6%);
 }
 .document-name {

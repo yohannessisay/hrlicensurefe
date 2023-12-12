@@ -109,7 +109,7 @@
                             type="file"
                             required
                             :id="'common_image_' + item.documentType.id + item.id"
-                            accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
+                            accept=".jpeg, .png, .jpg, .pdf, .webp, .tiff , .svg , .heic , .heif "
                             :ref="`imageUploader${item.id}`"
                             class="custom-file-input"
                             v-on:change="handleCommonFileUpload(item, $event)"
@@ -296,7 +296,7 @@
                             type="file"
                             :required="item.isRequired"
                             :id="`files_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`"
-                            accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
+                            accept=".jpeg, .png, .jpg, .pdf, .webp, .tiff , .svg , .heic , .heif "
                             :ref="`imageUploader${item.id}`"
                             class="custom-file-input"
                             v-on:change="handleFileUpload(item, $event, table)"
@@ -435,7 +435,7 @@
                                     ${
                                       parentItem[0].documentType.code
                                     }_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`"
-                            accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
+                            accept=".jpeg, .png, .jpg, .pdf, .webp, .tiff , .svg , .heic , .heif "
                             :ref="`imageUploader${parentItem[0].id}`"
                             class="custom-file-input"
                             v-on:change="handleFileUpload(parentItem[0], $event, table)"
@@ -666,7 +666,7 @@
                                       type="file"
                                       :required="parentChildItem.isRequired"
                                       :id="`files_${parentChildItem.documentType.code.toUpperCase()}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`"
-                                      accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
+                                      accept=".jpeg, .png, .jpg, .pdf, .webp, .tiff , .svg , .heic , .heif "
                                       :ref="`imageUploader${parentChildItem.id}`"
                                       class="custom-file-input"
                                       v-on:change="
@@ -2081,7 +2081,7 @@ export default {
   padding: 7px;
 }
 
-. {
+.shadow-md {
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 34%), 0 2px 4px -1px rgb(0 0 0 / 6%);
 }
 
