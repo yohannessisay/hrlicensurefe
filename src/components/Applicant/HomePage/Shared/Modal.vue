@@ -302,7 +302,21 @@
                         {{ detail ? detail.name : "" }}
                       </li>
                     </ul>
-                    <slot name="ethiopianDetail"> </slot>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 mt-8">
+                      <div>
+                        <slot name="ethiopianDetail"> </slot>
+                        <h2 class="-mt-4 text-xl">Ethiopian</h2>
+                      </div>
+                      <div>
+                        <slot name="foreignerDetail"> </slot>
+                        <h2 class="-mt-4 text-xl">Foreigner</h2>
+                      </div>
+
+                      <div>
+                        <slot name="ethAbroadDetail"> </slot>
+                        <h2 class="text-xl -mt-4">Ethiopian From Abroad</h2>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

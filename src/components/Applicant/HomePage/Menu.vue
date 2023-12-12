@@ -20,6 +20,7 @@
             <a href="#" class="icon one"> </a>
           </div> -->
           <div class="grid grid-cols-1 sm:grid-cols-4 mr-8 ml-8 sm:m-0 gap-8">
+            <!-- New license box -->
             <div class="w-full overview-boxes rounded-md">
               <div
                 :class="
@@ -46,7 +47,8 @@
                 </div>
               </div>
             </div>
-
+            <!-- New license box -->
+            <!-- Renewal box -->
             <div class="overview-boxes">
               <div
                 :class="
@@ -73,7 +75,8 @@
                 </div>
               </div>
             </div>
-
+            <!-- Renewal box -->
+            <!-- Goodstanding box -->
             <div class="overview-boxes">
               <div
                 :class="
@@ -100,7 +103,8 @@
                 </div>
               </div>
             </div>
-
+            <!-- Goodstanding box -->
+            <!--  License delegation box -->
             <div class="mb-8 overview-boxes">
               <div
                 :class="
@@ -123,6 +127,7 @@
                 </div>
               </div>
             </div>
+            <!-- License delegation box -->
           </div>
         </div>
       </div>
