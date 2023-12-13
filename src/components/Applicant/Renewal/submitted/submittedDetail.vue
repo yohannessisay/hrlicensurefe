@@ -787,30 +787,31 @@ export default {
                 institution: generalInfo.value.institutionSelected,
                 professionType: generalInfo.value.professionalTypeSelected,
 
-                otherEducationalInstitution: convertOtherProf(
-                  generalInfo.value.otherEducationalInstitution
-                ),
-                otherProfessionTypeAmharic: convertOtherProfAmh(
-                  generalInfo.value.otherProfessionalTypeAmharic
-                ),
-                otherProfessionType: convertOtherProf(
-                  generalInfo.value.otherProfessionalType
-                ),
+                otherEducationalInstitution: generalInfo.value.otherEducationalInstitution
+                  ? convertOtherProf(generalInfo.value.otherEducationalInstitution)
+                  : "",
+                otherProfessionalTypeAmharic: generalInfo.value
+                  .otherProfessionalTypeAmharic
+                  ? convertOtherProfAmh(generalInfo.value.otherProfessionalTypeAmharic)
+                  : "",
+                otherProfessionalType: generalInfo.value.otherProfessionalType
+                  ? convertOtherProf(generalInfo.value.otherProfessionalType)
+                  : "",
               });
               generalInfo.value.educations.push({
                 departmentId: generalInfo.value.departmentSelected.id,
                 educationalLevelId: generalInfo.value.educationalLevelSelected.id,
                 institutionId: generalInfo.value.institutionSelected.id,
                 professionTypeId: generalInfo.value.professionalTypeSelected.id,
-                otherInstitution: convertOtherProf(
-                  generalInfo.value.otherEducationalInstitution
-                ),
-                otherProfessionTypeAmharic: convertOtherProfAmh(
-                  generalInfo.value.otherProfessionalTypeAmharic
-                ),
-                otherProfessionType: convertOtherProf(
-                  generalInfo.value.otherProfessionalType
-                ),
+                otherInstitution: generalInfo.value.otherEducationalInstitution
+                  ? convertOtherProf(generalInfo.value.otherEducationalInstitution)
+                  : "",
+                otherProfessionAmharic: generalInfo.value.otherProfessionalTypeAmharic
+                  ? convertOtherProfAmh(generalInfo.value.otherProfessionalTypeAmharic)
+                  : "",
+                otherProfessionType: generalInfo.value.otherProfessionalType
+                  ? convertOtherProf(generalInfo.value.otherProfessionalType)
+                  : "",
               });
             }
           } else {
@@ -822,30 +823,30 @@ export default {
               institution: generalInfo.value.institutionSelected,
               professionType: generalInfo.value.professionalTypeSelected,
 
-              otherEducationalInstitution: convertOtherProf(
-                generalInfo.value.otherEducationalInstitution
-              ),
-              otherProfessionalTypeAmharic: convertOtherProfAmh(
-                generalInfo.value.otherProfessionalTypeAmharic
-              ),
-              otherProfessionalType: convertOtherProf(
-                generalInfo.value.otherProfessionalType
-              ),
+              otherEducationalInstitution: generalInfo.value.otherEducationalInstitution
+                ? convertOtherProf(generalInfo.value.otherEducationalInstitution)
+                : "",
+              otherProfessionalTypeAmharic: generalInfo.value.otherProfessionalTypeAmharic
+                ? convertOtherProfAmh(generalInfo.value.otherProfessionalTypeAmharic)
+                : "",
+              otherProfessionalType: generalInfo.value.otherProfessionalType
+                ? convertOtherProf(generalInfo.value.otherProfessionalType)
+                : "",
             });
             generalInfo.value.educations.push({
               departmentId: generalInfo.value.departmentSelected.id,
               educationalLevelId: generalInfo.value.educationalLevelSelected.id,
               institutionId: generalInfo.value.institutionSelected.id,
               professionTypeId: generalInfo.value.professionalTypeSelected.id,
-              otherInstitution: convertOtherProf(
-                generalInfo.value.otherEducationalInstitution
-              ),
-              otherProfessionTypeAmharic: convertOtherProfAmh(
-                generalInfo.value.otherProfessionalTypeAmharic
-              ),
-              otherProfessionType: convertOtherProf(
-                generalInfo.value.otherProfessionalType
-              ),
+              otherInstitution: generalInfo.value.otherEducationalInstitution
+                ? convertOtherProf(generalInfo.value.otherEducationalInstitution)
+                : "",
+              otherProfessionAmharic: generalInfo.value.otherProfessionalTypeAmharic
+                ? convertOtherProfAmh(generalInfo.value.otherProfessionalTypeAmharic)
+                : "",
+              otherProfessionType: generalInfo.value.otherProfessionalType
+                ? convertOtherProf(generalInfo.value.otherProfessionalType)
+                : "",
             });
           }
           generalInfo.value.departmentSelected = "";
