@@ -1642,7 +1642,14 @@ export default {
               newLicense.value.newLicenseCode +
               " has been approved after careful examination of your uploaded documents by our reviewers. Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
             : "";
+
           newLicense.value.remark = "";
+          newLicense.value.regionId = newLicense.value.residenceWoredaId
+            ? newLicense.value.woreda.zone.region.id
+            : "";
+          newLicense.value.regionCode = newLicense.value.residenceWoredaId
+            ? newLicense.value.woreda.zone.region.code
+            : "FED";
         }
         showRemarkError.value = false;
         let checkProfessionResult = false;

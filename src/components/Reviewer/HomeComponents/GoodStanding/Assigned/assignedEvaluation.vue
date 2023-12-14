@@ -1310,6 +1310,12 @@ export default {
             goodStanding.value.goodStandingCode +
             " has been approved after careful examination of your uploaded documents by our reviewers. Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
           : "";
+        goodStanding.value.regionId = goodStanding.value.residenceWoredaId
+          ? goodStanding.value.woreda.zone.region.id
+          : "";
+        goodStanding.value.regionCode = goodStanding.value.residenceWoredaId
+          ? goodStanding.value.woreda.zone.region.code
+          : "FED";
       } else if (
         actionValue == "DeclineEvent" &&
         (goodStanding.value.remark == "" || goodStanding.value.remark == null)

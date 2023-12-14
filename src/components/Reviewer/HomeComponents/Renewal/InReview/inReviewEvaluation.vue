@@ -1596,6 +1596,12 @@ export default {
             renewal.value.renewalCode +
             " has been approved after careful examination of your uploaded documents by our reviewers. Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
           : "";
+        renewal.value.regionId = renewal.value.residenceWoredaId
+          ? renewal.value.woreda.zone.region.id
+          : "";
+        renewal.value.regionCode = renewal.value.residenceWoredaId
+          ? renewal.value.woreda.zone.region.code
+          : "FED";
       } else if (actionValue == "ReviewerDraftEvent") {
         showRemarkError.value = false;
         showRemark.value = false;
