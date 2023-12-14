@@ -122,7 +122,7 @@
         "
       >
         <div v-if="previousLicense && previousLicense.length != 0" class="w-full p-4">
-          <div class="flex flex-row sm:-mx-1 lg:-mx-2">
+          <div class="grid grid-cols-1 sm:grid-cols-4">
             <div
               v-for="license in previousLicense"
               :key="license.id"
@@ -132,7 +132,7 @@
                     ? license.licenseExpirationDate.slice(0, 10)
                     : new Date().toISOString().slice(0, 10)
                 ) < 90
-                  ? 'bg-white border-4 text-red-300 my-1 px-1 md:w-1/4 lg:w-1/4 mdlg:w-1/4 sm:w-full sm:mr-3   rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2'
+                  ? 'bg-white border-4 mb-2 text-red-300 mt-2 px-1 md:w-1/4 lg:w-1/4 mdlg:w-1/4 sm:w-full sm:mr-3   rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2'
                   : expirationDatesHelper(
                       license.licenseExpirationDate
                         ? license.licenseExpirationDate.slice(0, 10)
@@ -143,8 +143,8 @@
                         ? license.licenseExpirationDate.slice(0, 10)
                         : new Date().toISOString().slice(0, 10)
                     ) < 90
-                  ? 'bg-white border-4 text-yellow-300 my-1 px-1 md:w-1/4 lg:w-1/4 mdlg:w-1/4 sm:w-full sm:mr-3   rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2'
-                  : 'bg-white my-1 px-1 md:w-1/4 lg:w-1/4 mdlg:w-1/4 sm:w-full sm:mr-3   rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2'
+                  ? 'bg-white border-4 mb-2 text-yellow-300 mt-2 px-1 md:w-1/4 lg:w-1/4 mdlg:w-1/4 sm:w-full sm:mr-3   rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2'
+                  : 'bg-white mt-2 mb-2 px-1 md:w-1/4 lg:w-1/4 mdlg:w-1/4 sm:w-full sm:mr-3   rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2'
               "
             >
               <!-- Article -->
