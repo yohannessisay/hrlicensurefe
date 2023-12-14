@@ -186,7 +186,7 @@
           living***
         </h2>
         <div
-          class="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 mdlg:grid-cols-3 md:grid-cols-3 p-4"
+          class="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 mdlg:grid-cols-3 md:grid-cols-3"
         >
           <div>
             <label
@@ -300,7 +300,7 @@
         <div
           class="grid grid-cols-1 gap-4 sm:grid-rows-1 lg:grid-cols-4 mdlg:grid-cols-2 md:grid-cols-2 p-4"
         >
-          <div class="mt-12">
+          <div class="mt-0 sm:mt-8">
             <label
               :class="isDarkMode && isDarkMode == true ? 'text-white ' : 'text-main-400'"
               >Department</label
@@ -320,7 +320,7 @@
             </select>
           </div>
           <!-- ... -->
-          <div class="mt-12">
+          <div class="mt-0 sm:mt-8">
             <label
               :class="isDarkMode && isDarkMode == true ? 'text-white ' : 'text-main-400'"
               >Education Level </label
@@ -340,7 +340,7 @@
               </option>
             </select>
           </div>
-          <div class="mt-12">
+          <div class="mt-0 sm:mt-8">
             <label
               :class="isDarkMode && isDarkMode == true ? 'text-white ' : 'text-main-400'"
               >Professional Types</label
@@ -374,7 +374,7 @@
           </div>
           <!-- ... -->
 
-          <div class="mt-12">
+          <div class="mt-0 sm:mt-8">
             <label
               :class="isDarkMode && isDarkMode == true ? 'text-white ' : 'text-main-400'"
               >Educational Institution</label

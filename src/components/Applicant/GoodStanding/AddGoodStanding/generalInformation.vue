@@ -104,9 +104,8 @@
           :class="isDarkMode ? ' rounded bg-secondaryDark ' : 'rounded bg-white '"
         >
           <h2 class="text-yellow-300 font-bold text-base">
-            *To select the facility where you want the service to be given, please select
-            the region, zone, and woreda. If you do not know the woreda, you can select
-            any woreda from the correct zone.
+            ***Please select the region you are applying for, not where you are currently
+            living***
           </h2>
           <div
             class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 sm:grid-cols-1 gap-2 mb-4 p-4 border-b"

@@ -181,8 +181,8 @@
         v-if="showLocation"
         :class="
           isDarkMode && isDarkMode == true
-            ? '  rounded-md generalInfoCard  border-white mt-2 p-4'
-            : ' bg-white border-b-2 mt-2 p-4'
+            ? '  rounded-md generalInfoCard  border-white mt-2'
+            : ' bg-white border-b-2 mt-2'
         "
       >
         <h2 class="text-yellow-300 text-xl">
@@ -304,7 +304,7 @@
         <div
           class="grid grid-cols-1 gap-4 sm:grid-rows-1 lg:grid-cols-4 mdlg:grid-cols-2 md:grid-cols-2 p-4"
         >
-          <div class="mt-12">
+          <div class="mt-0 sm:mt-8">
             <label
               :class="isDarkMode && isDarkMode == true ? 'text-white ' : 'text-main-400'"
               >Department</label
@@ -324,7 +324,7 @@
             </select>
           </div>
           <!-- ... -->
-          <div class="mt-12">
+          <div class="mt-0 sm:mt-8">
             <label
               :class="isDarkMode && isDarkMode == true ? 'text-white ' : 'text-main-400'"
               >Education Level </label
@@ -344,7 +344,7 @@
               </option>
             </select>
           </div>
-          <div class="mt-12">
+          <div class="mt-0 sm:mt-8">
             <label
               :class="isDarkMode && isDarkMode == true ? 'text-white ' : 'text-main-400'"
               >Professional Types</label
@@ -378,7 +378,7 @@
           </div>
           <!-- ... -->
 
-          <div class="mt-12">
+          <div class="mt-0 sm:mt-8">
             <label
               :class="isDarkMode && isDarkMode == true ? 'text-white ' : 'text-main-400'"
               >Educational Institution</label

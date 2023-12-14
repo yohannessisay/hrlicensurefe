@@ -106,7 +106,7 @@
                 currently living***
               </h2>
               <div
-                class="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 mdlg:grid-cols-3 md:grid-cols-3 p-2"
+                class="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 mdlg:grid-cols-3 md:grid-cols-3"
               >
                 <div class="mr-4">
                   <label class="text-main-400">Region</label>
