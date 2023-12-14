@@ -1,22 +1,20 @@
 <template>
-  <div class="container xl:max-w-6xl mx-auto p-4">
+  <div class="container w-full mx-auto p-4">
     <!-- Heading start -->
-    <header class="text-center mx-auto mb-12 lg:px-20">
+    <header class="text-center mx-auto mb-2 sm:mb-4 mt-2 lg:px-20">
       <h2 class="text-2xl leading-normal mb-2 font-bold text-main-400">
         Summary For Good Standing Letter
       </h2>
 
-      <p class="text-main-400 leading-relaxed font-light text-xl mx-auto pb-2">
+      <h3 class="text-grey-800 leading-relaxed font-light text-lg mx-auto pb-2">
         Here is the detail you have filled in so far
-      </p>
+      </h3>
     </header>
     <!-- End heading -->
     <!-- row -->
-    <div
-      class="grid grid-cols-2 gap-4 md:grid-cols-2 lg:grid-cols-2 mdlg:grid-cols-2 sm:grid-cols-1"
-    >
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
       <div
-        class="py-8 px-12 mb-12 bg-white mt-8 rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2"
+        class="py-2 px-12 mb-2 sm:mb-12 bg-white mt-2 rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2"
       >
         <div class="border-b-2 text-main-400 mb-4">
           <div class="text-gray-900 mb-4 flex justify-center">
@@ -128,7 +126,7 @@
       </div>
 
       <div
-        class="py-8 px-12 mb-12 bg-white rounded-lg mt-8 text-main-400 transform transition duration-300 ease-in-out hover:-translate-y-2"
+        class="py-2 px-12 mb-2 sm:mb-4 bg-white rounded-lg mt-2 sm:mt-4 text-main-400 transform transition duration-300 ease-in-out hover:-translate-y-2"
       >
         <div class="border-b-2 text-main-400 mb-4">
           <div class="text-gray-900 mb-4 flex justify-center">
@@ -213,13 +211,11 @@
       </div>
     </div>
 
-    <div
-      class="mt-8 grid grid-cols-1 gap-4 md:grid-cols-1 lg:grid-cols-1 mdlg:grid-cols-1 sm:grid-cols-1"
-    >
+    <div class="mt-2 sm:mt-4 grid grid-cols-1 gap-4">
       <div
-        class="py-8 px-12 mb-12 bg-gray-50 border-b border-white transform transition duration-300 ease-in-out hover:-translate-y-2"
+        class="py-2 mb-2 sm:mb-4 bg-gray-50 border-b border-white transform transition duration-300 ease-in-out hover:-translate-y-2"
       >
-        <div class="bg-white rounded-lg p-2 mb-8">
+        <div class="bg-white rounded-lg p-2 mb-4 w-full">
           <div class="text-gray-900 mb-4 flex justify-center">
             <i class="fa fa-folder fa-3x text-main-400"></i>
           </div>
@@ -230,11 +226,9 @@
               Files Uploaded
             </h3>
           </div>
-          <div
-            class="grid grid-cols-4 gap-4 mt-4 ml-4 sm:w-full sm:grid-cols-1 md:w-full mdlg:grid-cols-2 lg:w-full md:grid-cols-4 mdlg:w-full lg:grid-cols-4"
-          >
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4 ml-4 sm:w-full">
             <div
-              class="mt-4 mb-8 bg-white rounded-md p-4"
+              class="mt-4 mb-2 bg-white rounded-md border p-4"
               v-for="localFile in localFileData"
               :key="localFile.documenttype"
             >
@@ -259,10 +253,10 @@
     </div>
 
     <div
-      class="mt-8 grid grid-cols-1 gap-4 md:grid-cols-1 lg:grid-cols-1 mdlg:grid-cols-1 sm:grid-cols-1"
+      class="mt-2 grid grid-cols-1 gap-4 md:grid-cols-1 lg:grid-cols-1 mdlg:grid-cols-1 sm:grid-cols-1"
     >
       <div
-        class="py-8 px-12 mb-12 bg-white text-main-400 transform rounded-lg mt-4 transition duration-300 ease-in-out hover:-translate-y-2"
+        class="py-8 px-4 mb-12 bg-white text-main-400 transform rounded-lg mt-4 transition duration-300 ease-in-out hover:-translate-y-2"
       >
         <div class="mb-4">
           <div class="flex justify-center">
@@ -288,18 +282,16 @@
           <div class="flex justify-center text-gray-900 mb-4">
             <div class="form-check">
               <input
-                class="form-check-input appearance-none h-5 w-5 border rounded-sm bg-white checked:bg-main-400 checked:border-main-400 focus:outline-none transition duration-200 mt-1 text-main-400 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                class="mt-3 sm:mt-0 form-check-input appearance-none h-8 w-8 border rounded-sm bg-white checked:bg-main-400 checked:border-main-400 focus:outline-none transition duration-200 text-main-400 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                 type="checkbox"
                 :value="agreed"
                 @click="changeAgrement()"
                 id="agreed"
               />
             </div>
-            <h3
-              class="text-grey-800 mb-2localFileData sm:text-xs lgmd:text-xl lg:text-xl md:text-xl"
-            >
-              By checking here I hereby verify the documents and details filled in are
-              legal.
+            <h3 class="text-grey-800 mb-2localFileData text-xs sm:text-xl mt-2 sm:mt-0">
+              By checking here I hereby verify the documents and details filled in here
+              are legal.
             </h3>
             <span class="text-red-300">*</span>
           </div>

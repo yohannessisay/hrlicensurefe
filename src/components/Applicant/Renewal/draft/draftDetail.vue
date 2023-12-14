@@ -22,10 +22,12 @@
     <div v-if="invalidLicenseStat != true">
       <div
         v-if="activeState == 1"
-        class="block p-6 rounded-lg bg-white max-w-full mr-8 mb-8 sm:p-4"
+        class="block p-6 rounded-lg bg-white max-w-full mr-0 sm:mr-8 mb-8 sm:p-4"
       >
         <div class="mt-small flex justify-center">
-          <h2 class="text-main-400 text-3xl font-bold">General Information</h2>
+          <h2 class="text-main-400 text-2xl sm:text-3xl font-bold">
+            General Information
+          </h2>
         </div>
 
         <form @submit.prevent="submit" class="mx-auto w-full mt-10">

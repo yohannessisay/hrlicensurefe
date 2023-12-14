@@ -1,22 +1,20 @@
 <template>
   <div class="container xl:max-w-6xl mx-auto p-4">
     <!-- Heading start -->
-    <header class="text-center mx-auto mb-12 lg:px-20">
+    <header class="text-center mx-auto mb-2 lg:px-20">
       <h2 class="text-2xl leading-normal mb-2 font-bold text-main-400">
         Summary For Good Standing Letter
       </h2>
 
-      <p class="text-main-400 leading-relaxed font-light text-xl mx-auto pb-2">
+      <p class="text-grey-800 leading-relaxed font-light text-lg mx-auto pb-2">
         Here is the detail you have filled in so far
       </p>
     </header>
     <!-- End heading -->
     <!-- row -->
-    <div
-      class="grid grid-cols-2 gap-4 md:grid-cols-2 lg:grid-cols-2 mdlg:grid-cols-2 sm:grid-cols-1"
-    >
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
       <div
-        class="py-8 px-12 mb-12 bg-white mt-8 rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2"
+        class="py-2 px-12 mb-2 bg-white mt-2 rounded-lg transform transition duration-300 ease-in-out hover:-translate-y-2"
       >
         <div class="border-b-2 text-main-400 mb-4">
           <div class="text-gray-900 mb-4 flex justify-center">
@@ -115,7 +113,7 @@
       </div>
 
       <div
-        class="py-8 px-12 mb-12 bg-white rounded-lg mt-8 text-main-400 transform transition duration-300 ease-in-out hover:-translate-y-2"
+        class="py-2 px-12 mb-2 bg-white rounded-lg mt-2 text-main-400 transform transition duration-300 ease-in-out hover:-translate-y-2"
       >
         <div class="border-b-2 text-main-400 mb-4">
           <div class="text-gray-900 mb-4 flex justify-center">
@@ -209,7 +207,7 @@
             </div>
             <div class="flex justify-center text-gray-900 mb-4">
               <h3
-                class="text-3xl text-main-400 leading-normal mb-2 font-semibold text-grey-800"
+                class="text-2xl sm:text-3xl text-main-400 leading-normal mb-2 font-semibold"
               >
                 Files Uploaded
               </h3>
@@ -333,26 +331,9 @@
       class="mt-8 grid grid-cols-1 gap-4 md:grid-cols-1 lg:grid-cols-1 mdlg:grid-cols-1 sm:grid-cols-1"
     >
       <div
-        class="py-8 px-12 mb-12 bg-white text-main-400 transform rounded-lg mt-4 transition duration-300 ease-in-out hover:-translate-y-2"
+        class="py-2 px-4 mb-12 bg-white text-main-400 transform rounded-lg mt-4 transition duration-300 ease-in-out hover:-translate-y-2"
       >
         <div class="mb-4">
-          <div class="flex justify-center text-gray-900 mb-4">
-            <div class="form-check">
-              <input
-                class="form-check-input appearance-none h-5 w-5 border rounded-sm bg-white checked:bg-main-400 checked:border-main-400 focus:outline-none transition duration-200 mt-1 text-main-400 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
-                type="checkbox"
-                :value="agreed"
-                @click="changeAgrement()"
-                id="agreed"
-              />
-            </div>
-            <h3
-              class="text-grey-800 mb-2 localFileData sm:text-xs lgmd:text-base lg:text-base md:text-base"
-            >
-              By checking here I hereby verify the documents and details filled in are
-              legal.
-            </h3>
-          </div>
           <div class="flex justify-center">
             <label for="feedback" class="form-label inline-block mb-2 text-main-400"
               >Feedback on the process and system
@@ -370,6 +351,21 @@
               placeholder="Your feedback"
               type="textarea"
             />
+          </div>
+          <div class="flex justify-center text-gray-900 mb-4">
+            <div class="form-check">
+              <input
+                class="form-check-input appearance-none h-8 w-8 border rounded-sm bg-white checked:bg-main-400 checked:border-main-400 focus:outline-none transition duration-200 mt-1 text-main-400 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                type="checkbox"
+                :value="agreed"
+                @click="changeAgrement()"
+                id="agreed"
+              />
+            </div>
+            <h3 class="text-grey-800 mb-2 localFileData sm:text-lg text-sm">
+              By checking here I hereby verify the documents and details filled in here
+              are legal.
+            </h3>
           </div>
         </div>
       </div>

@@ -126,24 +126,9 @@
     >
       <div class="bg-white flex-shrink px-4 w-full rounded-md">
         <div
-          class="py-8 px-2 sm:px-12 mb-12 bg-gray-50 border-b border-white transform transition duration-300 ease-in-out hover:-translate-y-2"
+          class="py-2 px-4 mb-12 bg-gray-50 border-b border-white transform transition duration-300 ease-in-out hover:-translate-y-2"
         >
           <div class="mb-4 border-t text-main-400">
-            <div class="flex justify-center text-gray-900 mb-4 mt-4">
-              <div class="form-check mt-4 sm:mt-0">
-                <input
-                  class="form-check-input appearance-none h-8 w-8 border rounded-md checked:bg-main-400 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
-                  type="checkbox"
-                  :value="agreed"
-                  @click="changeAgrement()"
-                  id="agreed"
-                />
-              </div>
-              <h3 class="text-grey-800 mb-2 text-lg sm:text-2xl">
-                By checking here I hereby verify the documents and details filled in are
-                legal.
-              </h3>
-            </div>
             <div class="flex justify-center">
               <label for="feedback" class="form-label inline-block mb-2 text-main-400"
                 >Feedback on the process and system
@@ -161,6 +146,22 @@
                 placeholder="Your feedback"
                 type="textarea"
               />
+            </div>
+
+            <div class="flex justify-center text-gray-900 mb-4 mt-4">
+              <div class="form-check">
+                <input
+                  class="form-check-input appearance-none h-8 w-8 border border-gray-300 rounded-sm bg-wmain-400 checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                  type="checkbox"
+                  :value="agreed"
+                  @click="changeAgrement()"
+                  id="agreed"
+                />
+              </div>
+              <h3 class="text-grey-800 mb-2 sm:text-lg text-sm">
+                By checking here I hereby verify the documents and details filled in are
+                legal.
+              </h3>
             </div>
           </div>
         </div>

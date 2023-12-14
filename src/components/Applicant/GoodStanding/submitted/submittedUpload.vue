@@ -127,7 +127,7 @@
         </div>
       </div>
     </div>
-    <div
+    <!-- <div
       class="text-yellow-300 p-2 m-4 rounded-md border"
       v-if="errorDocuments && errorDocuments.length > 0"
     >
@@ -141,7 +141,7 @@
       >
         {{ error.name }}
       </li>
-    </div>
+    </div> -->
     <div class="vld-parent mt-4">
       <loading
         :active="isLoading"
@@ -186,6 +186,7 @@ import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 export default {
   components: { Loading },
+  emits: ["changeActiveState", "changeActiveStateMinus", "activeState"],
   setup(props, { emit }) {
     let store = useStore();
     let toast = useToast();
@@ -593,6 +594,7 @@ export default {
       imageUploader,
       documents,
       filePreviewData,
+      isLoading,
       next,
       back,
     };

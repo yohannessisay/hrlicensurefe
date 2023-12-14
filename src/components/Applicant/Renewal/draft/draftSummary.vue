@@ -1,7 +1,7 @@
 <template>
   <div class="container xl:max-w-6xl mx-auto p-4">
     <!-- Heading start -->
-    <header class="text-center mx-auto mb-12 lg:px-20">
+    <header class="text-center mx-auto mb-2 lg:px-20">
       <h2 class="text-3xl leading-normal mb-2 font-bold text-main-400">
         Summary For Renewal Application
       </h2>
@@ -12,11 +12,9 @@
     </header>
     <!-- End heading -->
     <!-- row -->
-    <div
-      class="grid grid-cols-2 gap-4 mr-8 md:grid-cols-2 lg:grid-cols-2 mdlg:grid-cols-2 sm:grid-cols-1"
-    >
+    <div class="grid grid-cols-1 gap-4 mr-0 sm:mr-8 md:grid-cols-2 sm:grid-cols-2">
       <div
-        class="py-8 mt-4 px-12 mb-12 bg-gray-50 rounded-md transform transition duration-300 ease-in-out bg-white hover:-translate-y-2"
+        class="py-2 mt-4 px-2 mb-2 bg-gray-50 rounded-md transform transition duration-300 ease-in-out bg-white hover:-translate-y-2"
         v-for="dep in localData.multipleDepartment"
         :key="dep"
       >
@@ -259,26 +257,9 @@
     >
       <div class="bg-white flex-shrink px-4 w-full rounded-md">
         <div
-          class="py-8 px-12 mb-12 bg-gray-50 border-b border-white transform transition duration-300 ease-in-out hover:-translate-y-2"
+          class="py-2 px-4 mb-12 bg-gray-50 border-b border-white transform transition duration-300 ease-in-out hover:-translate-y-2"
         >
           <div class="mb-4 border-t text-main-400">
-            <div class="flex justify-center text-gray-900 mb-4 mt-4">
-              <div class="form-check">
-                <input
-                  class="form-check-input appearance-none h-5 w-5 border border-gray-300 rounded-sm bg-wmain-400 checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
-                  type="checkbox"
-                  :value="agreed"
-                  @click="changeAgrement()"
-                  id="agreed"
-                />
-              </div>
-              <h3
-                class="text-grey-800 mb-2 sm:text-xs lgmd:text-base lg:text-base md:text-base"
-              >
-                By checking here I hereby verify the documents and details filled in are
-                legal.
-              </h3>
-            </div>
             <div class="flex justify-center">
               <label for="feedback" class="form-label inline-block mb-2 text-main-400"
                 >Feedback on the process and system
@@ -296,6 +277,22 @@
                 placeholder="Your feedback"
                 type="textarea"
               />
+            </div>
+
+            <div class="flex justify-center text-gray-900 mb-4 mt-4">
+              <div class="form-check">
+                <input
+                  class="form-check-input appearance-none h-8 w-8 border border-gray-300 rounded-sm bg-wmain-400 checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                  type="checkbox"
+                  :value="agreed"
+                  @click="changeAgrement()"
+                  id="agreed"
+                />
+              </div>
+              <h3 class="text-grey-800 mb-2 sm:text-lg text-sm">
+                By checking here I hereby verify the documents and details filled in are
+                legal.
+              </h3>
             </div>
           </div>
         </div>
@@ -404,7 +401,7 @@ export default {
     let professionChanged = ref(false);
     let fileIsLoading = ref(false);
     const route = useRoute();
-
+    let totalSize = ref(0);
     let allowSave = ref(false);
     const changeAgrement = () => {
       agreed.value = !agreed.value;
@@ -572,7 +569,10 @@ export default {
                   JSON.stringify(evt.target.result[0] ? evt.target.result[0].data : {})
                 )
               : {};
-
+            localFileImages.value.forEach((element) => {
+              totalSize.value += Number(Math.ceil((element.image.length * 6) / 8 / 1000));
+            });
+            totalSize.value = totalSize.value / 1000;
             if (localFileImages.value && savedData.value.documents) {
               savedData.value.documents.forEach((ele) => {
                 localFileImages.value.forEach((newFile) => {
@@ -631,6 +631,7 @@ export default {
       totalSteps,
       progress,
       fileIsLoading,
+      totalSize,
     };
   },
 };

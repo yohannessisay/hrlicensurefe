@@ -1,7 +1,7 @@
 <template>
   <div class="container xl:max-w-6xl mx-auto p-4">
     <!-- Heading start -->
-    <header class="text-center mx-auto mb-12 lg:px-20">
+    <header class="text-center mx-auto mb-2 lg:px-20">
       <h2 class="text-3xl leading-normal mb-2 font-bold text-main-400">
         Summary For Renewal Application
       </h2>
@@ -14,7 +14,7 @@
     <!-- row -->
     <div class="grid grid-cols-1 gap-4 mr-0 sm:mr-8 sm:grid-cols-4">
       <div
-        class="py-8 mt-4 px-12 mb-12 bg-gray-50 rounded-md transform transition duration-300 ease-in-out bg-white hover:-translate-y-2"
+        class="py-2 mt-4 px-2 mb-2 bg-gray-50 rounded-md transform transition duration-300 ease-in-out bg-white hover:-translate-y-2"
         v-for="dep in localData.multipleDepartment"
         :key="dep"
       >
@@ -86,7 +86,7 @@
         :opacity="1"
       ></loading>
       <div
-        class="mt-8 grid grid-cols-1 gap-4 md:grid-cols-1 lg:grid-cols-1 mdlg:grid-cols-1 sm:grid-cols-4"
+        class="mt-2 grid grid-cols-1 gap-4 md:grid-cols-1 lg:grid-cols-1 mdlg:grid-cols-1 sm:grid-cols-4"
       >
         <div class="bg-white flex-shrink px-4 w-full rounded-md">
           <div class="py-8 px-2 mb-12 bg-gray-50 border-b border-white">
@@ -175,7 +175,7 @@
               <div class="accordion-item bg-white">
                 <h2 class="accordion-header mb-0" id="headingOne">
                   <button
-                    class="relative flex items-center w-full py-4 px-5 text-white bg-grey-200 hover:text-main-400 hover:bg-white transition focus:outline-none hover:border-main-400 rounded-md"
+                    class="relative flex items-center w-full py-4 px-2 text-white bg-grey-200 hover:text-main-400 hover:bg-white transition focus:outline-none hover:border-main-400 rounded-md"
                     type="button"
                     data-bs-toggle="collapse"
                     data-bs-target="#collapseOne"
@@ -191,13 +191,13 @@
                   aria-labelledby="headingOne"
                   data-bs-parent="#accordionExample"
                 >
-                  <div class="accordion-body py-4 px-5">
+                  <div class="accordion-body py-4 px-2">
                     <div
-                      class="grid grid-cols-4 gap-4 ml-4 sm:w-full sm:grid-cols-1 md:w-full mdlg:grid-cols-2 lg:w-full md:grid-cols-4 mdlg:w-full lg:grid-cols-4"
+                      class="grid grid-cols-1 gap-4 ml-4 sm:w-full sm:grid-cols-4 md:w-full mdlg:grid-cols-2 lg:w-full md:grid-cols-4 mdlg:w-full lg:grid-cols-4"
                     >
                       <div
                         v-if="!professionChanged"
-                        class="mt-4 mb-8 bg-white rounded-md transform transition duration-300 ease-in-out p-2 hover:-translate-y-2"
+                        class="mt-4 border mb-8 bg-white rounded-md transform transition duration-300 ease-in-out p-2 hover:-translate-y-2"
                         v-for="prev in prevDocs"
                         :key="prev.id"
                       >
@@ -257,26 +257,9 @@
     >
       <div class="bg-white flex-shrink px-4 w-full rounded-md">
         <div
-          class="py-8 px-12 mb-12 bg-gray-50 border-b border-white transform transition duration-300 ease-in-out hover:-translate-y-2"
+          class="py-2 px-4 mb-12 bg-gray-50 border-b border-white transform transition duration-300 ease-in-out hover:-translate-y-2"
         >
           <div class="mb-4 border-t text-main-400">
-            <div class="flex justify-center text-gray-900 mb-4 mt-4">
-              <div class="form-check">
-                <input
-                  class="form-check-input appearance-none h-5 w-5 border border-gray-300 rounded-sm bg-wmain-400 checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
-                  type="checkbox"
-                  :value="agreed"
-                  @click="changeAgrement()"
-                  id="agreed"
-                />
-              </div>
-              <h3
-                class="text-grey-800 mb-2 sm:text-xs lgmd:text-base lg:text-base md:text-base"
-              >
-                By checking here I hereby verify the documents and details filled in are
-                legal.
-              </h3>
-            </div>
             <div class="flex justify-center">
               <label for="feedback" class="form-label inline-block mb-2 text-main-400"
                 >Feedback on the process and system
@@ -294,6 +277,22 @@
                 placeholder="Your feedback"
                 type="textarea"
               />
+            </div>
+
+            <div class="flex justify-center text-gray-900 mb-4 mt-4">
+              <div class="form-check">
+                <input
+                  class="form-check-input appearance-none h-8 w-8 border border-gray-300 rounded-sm bg-wmain-400 checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                  type="checkbox"
+                  :value="agreed"
+                  @click="changeAgrement()"
+                  id="agreed"
+                />
+              </div>
+              <h3 class="text-grey-800 mb-2 sm:text-lg text-sm">
+                By checking here I hereby verify the documents and details filled in are
+                legal.
+              </h3>
             </div>
           </div>
         </div>
@@ -399,6 +398,7 @@ export default {
     let fileIsLoading = ref(false);
     let professionChanged = ref(false);
     const totalSteps = ref(100);
+    let totalSize = ref(0);
     let progress = computed(() => store.getters["renewal/getUploadProgress"]);
     const route = useRoute();
     const showModal = ref(false);
@@ -569,7 +569,10 @@ export default {
                   JSON.stringify(evt.target.result[0] ? evt.target.result[0].data : {})
                 )
               : {};
-
+            localFileImages.value.forEach((element) => {
+              totalSize.value += Number(Math.ceil((element.image.length * 6) / 8 / 1000));
+            });
+            totalSize.value = totalSize.value / 1000;
             if (localFileImages.value && savedData.value.documents) {
               savedData.value.documents.forEach((ele) => {
                 localFileImages.value.forEach((newFile) => {
@@ -628,6 +631,7 @@ export default {
       totalSteps,
       progress,
       fileIsLoading,
+      totalSize,
     };
   },
 };

@@ -1,6 +1,6 @@
 <template>
   <main-content :url="'goodstanding'">
-    <nav class="bg-gray-100 px-5 py-3 rounded-md w-full mb-10" id="topNav">
+    <nav class="bg-gray-100 px-5 py-3 rounded-md w-full mb-2 sm:mb-8" id="topNav">
       <ol class="list-reset flex">
         <li>
           <router-link to="/menu">
@@ -20,19 +20,24 @@
       </ol>
     </nav>
 
-    <div v-if="activeState == 1" class="block p-6 rounded-lg max-w-full mr-8 mb-8 sm:p-4">
-      <div class="vld-parent mt-4">
+    <div
+      v-if="activeState == 1"
+      class="block p-6 rounded-lg max-w-full mr-0 sm:mr-8 mb-8 sm:p-4"
+    >
+      <div class="vld-parent mt-2">
         <loading
           :active="isLoading"
           :is-full-page="false"
           :color="'#2F639D'"
           :opacity="1"
         ></loading>
-        <form @submit.prevent="submit" class="mx-auto max-w-4xl p-2 w-full mt-2">
-          <div class="mt-small flex justify-center">
-            <h2 class="text-main-400 text-3xl font-bold">General Information</h2>
+        <form @submit.prevent="submit" class="sm:mx-auto max-w-4xl p-2 w-full mt-2">
+          <div class="flex justify-start">
+            <h2 class="text-main-400 sm:text-3xl text-2xl font-bold">
+              General Information
+            </h2>
           </div>
-          <div class="mt-12 rounded-sm bg-white">
+          <div class="mt-2 sm:mt-8 rounded-sm bg-white">
             <div class="container mx-auto border-b-2">
               <div
                 class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 sm:grid-cols-1 gap-2 mb-4 p-4"
@@ -403,7 +408,7 @@
                   <label for class="text-main-400">Who Issued Previous License</label>
 
                   <select
-                    class="form-select appearance-none block max-w-3xl px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                    class="form-select w-full appearance-none block max-w-3xl px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                     v-model="generalInfo.whoIssuedId"
                     required
                   >
@@ -661,12 +666,12 @@ export default {
         return match.toUpperCase();
       });
 
-      return formattedString;
+      return inputString != "" ? formattedString : inputString;
     };
     const convertOtherProfAmh = (inputString) => {
       let trimmedString = inputString.replace(/\s+/g, " ").trim();
 
-      return trimmedString;
+      return inputString != "" ? trimmedString : inputString;
     };
     const fetchZone = () => {
       generalInfo.value.regionId
@@ -709,27 +714,20 @@ export default {
       ) {
         generalInfo.value.expertLevelId = 4;
       }
-      (generalInfo.value.professionType.otherProfessionalType = generalInfo.value
-        .otherProfessionType
-        ? convertOtherProf(generalInfo.value.otherProfessionType)
+
+      (generalInfo.value.GSProfessionals.otherProfessionType = generalInfo.value
+        .GSProfessionals.otherProfessionType
+        ? convertOtherProf(generalInfo.value.GSProfessionals.otherProfessionType)
         : ""),
-        (generalInfo.value.professionType.otherProfessionTypeAmharic = generalInfo.value
-          .otherProfessionTypeAmharic
-          ? convertOtherProfAmh(generalInfo.value.otherProfessionTypeAmharic)
+        (generalInfo.value.GSProfessionals.otherProfessionTypeAmharic = generalInfo.value
+          .GSProfessionals.otherProfessionTypeAmharic
+          ? convertOtherProfAmh(
+              generalInfo.value.GSProfessionals.otherProfessionTypeAmharic
+            )
           : "");
-      generalInfo.value.professionType.other_applicant_position = generalInfo.value
-        .otherApplicantPosition
-        ? convertOtherProf(generalInfo.value.otherApplicantPosition)
-        : "";
-      (generalInfo.value.otherProfessionType = generalInfo.value.otherProfessionType
-        ? convertOtherProf(generalInfo.value.otherProfessionType)
-        : ""),
-        (generalInfo.value.otherProfessionTypeAmharic = generalInfo.value
-          .otherProfessionTypeAmharic
-          ? convertOtherProfAmh(generalInfo.value.otherProfessionTypeAmharic)
-          : "");
-      generalInfo.value.otherApplicantPosition = generalInfo.value.otherApplicantPosition
-        ? convertOtherProf(generalInfo.value.otherApplicantPosition)
+      generalInfo.value.otherApplicantPosition = generalInfo.value
+        .other_applicant_position
+        ? convertOtherProf(generalInfo.value.other_applicant_position)
         : "";
       let tempApplicationData = generalInfo.value;
       window.localStorage.setItem(
