@@ -104,7 +104,7 @@
               </div>
             </div>
             <!-- Goodstanding box -->
-            <!--  License delegation box -->
+            <!--  License designation box -->
             <div class="mb-8 overview-boxes">
               <div
                 :class="
@@ -123,11 +123,11 @@
                 </p>
 
                 <div class="flex justify-center px-5 mb-2 text-sm mt-1">
-                  <h1 class="text-2xl text-main-400">License Delegation</h1>
+                  <h1 class="text-2xl text-main-400">License Designation</h1>
                 </div>
               </div>
             </div>
-            <!-- License delegation box -->
+            <!-- License designation box -->
           </div>
         </div>
       </div>
@@ -138,7 +138,11 @@
     <template v-slot:ethiopianDetail>
       <div class="p-6 mb-2">
         <div class="mt-6 py-4">
-          <a :href="`/Applicant/${modalType}`">
+          <a
+            :href="`/Applicant/${
+              modalType && modalType !== 'LicenseDelegation' ? modalType : 'NewLicense'
+            }`"
+          >
             <button
               class="font-medium leading-tight rounded-md hover:border-main-400 focus:bg-blue-700 focus: focus:outline-none focus:ring-0 active:bg-blue-800 active: transition duration-150 ease-in-out text-xl text-white pt-2 pb-4 bg-main-400 hover:text-main-400 hover:border hover:bg-white px-4"
               @click="setApplicantType('Ethiopian')"
@@ -152,7 +156,11 @@
     <template v-slot:foreignerDetail>
       <div class="p-6 mb-2">
         <div class="mt-6 py-4">
-          <a :href="`/Applicant/${modalType}`">
+          <a
+            :href="`/Applicant/${
+              modalType && modalType !== 'LicenseDelegation' ? modalType : 'NewLicense'
+            }`"
+          >
             <button
               class="text-xl text-white py-2 bg-main-400 hover:text-main-400 hover:border hover:bg-white px-4 rounded-sm"
               @click="setApplicantType('Foreign')"
@@ -166,7 +174,11 @@
     <template v-slot:ethAbroadDetail>
       <div class="p-6 mb-2">
         <div class="mt-6 py-4">
-          <a :href="`/Applicant/${modalType}`">
+          <a
+            :href="`/Applicant/${
+              modalType && modalType !== 'LicenseDelegation' ? modalType : 'NewLicense'
+            }`"
+          >
             <button
               class="text-xl text-white py-2 bg-main-400 hover:text-main-400 hover:border hover:bg-white px-4 rounded-sm"
               @click="setApplicantType('EthiopianFromAbroad')"
@@ -294,6 +306,9 @@ export default {
           break;
         default:
           break;
+      }
+      if (modalType.value && modalType.value === "LicenseDelegation") {
+        localStorage.setItem("isLicenseDelegation", JSON.stringify(true));
       }
     };
     onMounted(() => {

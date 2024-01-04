@@ -336,75 +336,7 @@ const routes = [
       import("../components/Applicant/GoodStanding/draft/draftDetail.vue"),
   },
 
-  //Applicant Side License Delegation
-  {
-    path: "/Applicant/LicenseDelegation",
-    name: "ApplicantLicenseDelegation",
-    component: () =>
-      import("../components/Applicant/LicenseDelegation/licenseDelegation.vue"),
-  },
-  {
-    path: "/Applicant/LicenseDelegation/approved",
-    name: "ApplicantLicenseDelegationApproved",
-    component: () =>
-      import("../components/Applicant/LicenseDelegation/approved/approved.vue"),
-  },
-  {
-    path: "/Applicant/LicenseDelegation/submitted",
-    name: "ApplicantLicenseDelegationSubmitted",
-    component: () =>
-      import(
-        "../components/Applicant/LicenseDelegation/submitted/submitted.vue"
-      ),
-  },
-  {
-    path: "/Applicant/LicenseDelegation/submitted/detail/:id",
-    name: "ApplicantLicenseDelegationSubmittedDetail",
-    component: () =>
-      import(
-        "../components/Applicant/LicenseDelegation/submitted/submittedDetail.vue"
-      ),
-  },
-  {
-    path: "/Applicant/LicenseDelegation/assigned",
-    name: "ApplicantLicenseDelegationInReview",
-    component: () =>
-      import("../components/Applicant/LicenseDelegation/assigned/assigned.vue"),
-  },
-
-  {
-    path: "/Applicant/LicenseDelegation/withdraw",
-    name: "ApplicantLicenseDelegationWithdraw",
-    component: () =>
-      import("../components/Applicant/LicenseDelegation/withdraw/withdraw.vue"),
-  },
-
-  {
-    path: "/Applicant/LicenseDelegation/declined",
-    name: "ApplicantLicenseDelegationDeclined",
-    component: () =>
-      import("../components/Applicant/LicenseDelegation/declined/declined.vue"),
-  },
-  {
-    path: "/Applicant/LicenseDelegation/declined/detail/:id",
-    name: "ApplicantLicenseDelegationDeclinedDetail",
-    component: () =>
-      import(
-        "../components/Applicant/LicenseDelegation/declined/declinedDetail.vue"
-      ),
-  },
-  {
-    path: "/Applicant/LicenseDelegation/draft",
-    name: "ApplicantLicenseDelegationDraft",
-    component: () =>
-      import("../components/Applicant/LicenseDelegation/draft/draft.vue"),
-  },
-  {
-    path: "/Applicant/LicenseDelegation/draft/detail/:id",
-    name: "ApplicantLicenseDelegationDraftDetail",
-    component: () =>
-      import("../components/Applicant/LicenseDelegation/draft/draftDetail.vue"),
-  },
+  
 
   //Applicant Profile Management
   {

@@ -260,7 +260,7 @@
                       :class="
                         fileUploadError[
                           'file_upload_row_' +
-                            `${item.documentType.code}_${table.educationalLevel.code}_${table.professionType.code}`
+                            `${item.documentType.code.toUpperCase()}_${table.educationalLevel.code.toUpperCase()}_${table.professionType.code.toUpperCase()}`
                         ]
                           ? 'accordion-body py-4 px-5 border-4 border-red-300 rounded-md'
                           : 'accordion-body py-4 px-5 border-b  rounded-lg'
@@ -858,8 +858,7 @@ import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
 import Compressor from "compressorjs";
 import MAX_FILE_SIZE from "../../../../composables/documentMessage";
-import { boolean } from "yargs";
-
+import { checkDocuments } from "./services/checkDocumentUpload";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 export default {
@@ -876,12 +875,6 @@ export default {
     let goToNext = ref(false);
     let educationalDocs = ref([]);
     let localData = ref({});
-    let filePreviewData = ref({
-      isImage: boolean,
-      isPdf: boolean,
-      file: "",
-      name: "",
-    });
     let alreadyUploaded = ref(false);
     let existingDocs = [];
     let files = ref("");
@@ -906,14 +899,9 @@ export default {
     let newLicenseDocuments = ref([]);
     let errorDocuments = ref([]);
     let showNestedDocuments = ref({});
-
-    const previewFile = (code, name) => {
-      filePreviewData.value.isImage = isImage.value[code];
-      filePreviewData.value.isPdf = isPdf.value[code];
-      filePreviewData.value.file = previewDocuments.value[code];
-      filePreviewData.value.name = name;
-    };
-
+    let isLicenseDelegation = localStorage.getItem("isLicenseDelegation")
+      ? ref(JSON.parse(localStorage.getItem("isLicenseDelegation")))
+      : false;
     const handleCommonFileUpload = (data, event) => {
       if (/\.(pdf)$/i.test(event?.target?.files[0].name)) {
         documentsUploaded.value[data.documentType.code] = "";
@@ -1409,264 +1397,6 @@ export default {
       }
     };
 
-    const checkDocuments = () => {
-      let temp = "";
-      let CMtemp = "";
-      let NSTemp = "";
-      var tempVal;
-      errorDocuments.value = [];
-      // if back button is clicked
-      if (isBackButtonClicked.value == true) {
-        // check common documents
-
-        commonDocuments.value
-          .filter((cd) => cd.isRequired)
-          .forEach((element) => {
-            CMtemp = element.fileName;
-
-            if (!CMtemp || CMtemp == "") {
-              fileUploadError.value[
-                "file_upload_row_" + element.documentType.code
-              ] = true;
-              errorDocuments.value.push({
-                isCommon: true,
-                name: element.documentType.name,
-                code: element.documentType.code,
-              });
-            } else {
-              delete fileUploadError.value[
-                "file_upload_row_" + element.documentType.code
-              ];
-            }
-          });
-
-        // check normal docs with no parents
-        educationalDocs.value.forEach((ed) => {
-          ed.docs
-            .filter((docs) => docs.isRequired)
-            .forEach((single) => {
-              let tempEdVal = documentsUploaded.value.filter(
-                (el) =>
-                  el.documentCode ==
-                  single.documentType.code.toUpperCase() +
-                    "_" +
-                    ed.educationalLevel.code.toUpperCase() +
-                    "_" +
-                    ed.professionType.code.toUpperCase()
-              );
-
-              if (tempEdVal) {
-                delete fileUploadError.value[
-                  "file_upload_row_" +
-                    single.documentType.code.toUpperCase() +
-                    "_" +
-                    ed.educationalLevel.code.toUpperCase() +
-                    "_" +
-                    ed.professionType.code.toUpperCase()
-                ];
-              } else {
-                fileUploadError.value[
-                  "file_upload_row_" +
-                    single.documentType.code.toUpperCase() +
-                    "_" +
-                    ed.educationalLevel.code.toUpperCase() +
-                    "_" +
-                    ed.professionType.code.toUpperCase()
-                ] = true;
-                errorDocuments.value.push({
-                  name: single.documentType.name,
-                  code:
-                    single.documentType.code.toUpperCase() +
-                    "_" +
-                    ed.educationalLevel.code.toUpperCase() +
-                    "_" +
-                    ed.professionType.code.toUpperCase(),
-                });
-              }
-            });
-
-          //// check documetns with parents
-          for (var pd in ed.parentDoc) {
-            tempVal = newLicenseDocuments.value.filter(
-              (nld) => nld.parentDocument == pd && nld.isRequired
-            );
-
-            if (
-              tempVal &&
-              tempVal.length > 0 &&
-              tempVal[0] &&
-              tempVal[0].isRequired == true
-            ) {
-              // eslint-disable-next-line no-prototype-builtins
-              NSTemp = documentsUploaded.value.filter(
-                (el) =>
-                  el.documentCode ==
-                  tempVal[0].documentType.code +
-                    "_" +
-                    ed.educationalLevel.code.toUpperCase() +
-                    "_" +
-                    ed.professionType.code.toUpperCase()
-              );
-
-              if (NSTemp && NSTemp != "" && NSTemp[0]) {
-                delete fileUploadError.value[
-                  "file_upload_row_" +
-                    newLicenseDocuments.value.filter(
-                      (nld) => nld.parentDocument == pd && nld.isRequired
-                    )[0].documentType.code +
-                    "_" +
-                    ed.educationalLevel.code.toUpperCase() +
-                    "_" +
-                    ed.professionType.code.toUpperCase()
-                ];
-              } else {
-                fileUploadError.value[
-                  "file_upload_row_" +
-                    newLicenseDocuments.value.filter(
-                      (nld) => nld.parentDocument == pd && nld.isRequired
-                    )[0].documentType.code +
-                    "_" +
-                    ed.educationalLevel.code.toUpperCase() +
-                    "_" +
-                    ed.professionType.code.toUpperCase()
-                ] = true;
-                errorDocuments.value.push({
-                  name: newLicenseDocuments.value.filter(
-                    (nld) => nld.parentDocument == pd && nld.isRequired
-                  )[0].documentType.name,
-                  code:
-                    newLicenseDocuments.value.filter(
-                      (nld) => nld.parentDocument == pd && nld.isRequired
-                    )[0].documentType.code +
-                    "_" +
-                    ed.educationalLevel.code.toUpperCase() +
-                    "_" +
-                    ed.professionType.code.toUpperCase(),
-                });
-              }
-            }
-          }
-        });
-      } else {
-        commonDocuments.value
-          .filter((cd) => cd.isRequired)
-          .forEach((element) => {
-            // eslint-disable-next-line no-prototype-builtins
-            CMtemp = documentsUploaded.value.hasOwnProperty(element.documentType.code);
-
-            if (!CMtemp) {
-              fileUploadError.value[
-                "file_upload_row_" + element.documentType.code
-              ] = true;
-
-              errorDocuments.value.push({
-                isCommon: true,
-                name: element.documentType.name,
-                code: element.documentType.code,
-              });
-            } else {
-              delete fileUploadError.value[
-                "file_upload_row_" + element.documentType.code
-              ];
-            }
-          });
-
-        educationalDocs.value.forEach((ed) => {
-          // check normal docs with no parents
-
-          ed.docs
-            .filter((docs) => docs.isRequired)
-            .forEach((single) => {
-              // eslint-disable-next-line no-prototype-builtins
-              temp = documentsUploaded.value.hasOwnProperty(
-                single.documentType.code +
-                  "_" +
-                  ed.educationalLevel.code.toUpperCase() +
-                  "_" +
-                  ed.professionType.code.toUpperCase()
-              );
-              if (!temp) {
-                fileUploadError.value[
-                  "file_upload_row_" +
-                    single.documentType.code +
-                    "_" +
-                    ed.educationalLevel.code.toUpperCase() +
-                    "_" +
-                    ed.professionType.code.toUpperCase()
-                ] = true;
-                errorDocuments.value.push({
-                  name: single.documentType.name,
-                  code:
-                    single.documentType.code +
-                    "_" +
-                    ed.educationalLevel.code.toUpperCase() +
-                    "_" +
-                    ed.professionType.code.toUpperCase(),
-                });
-              } else {
-                delete fileUploadError.value[
-                  "file_upload_row_" +
-                    single.documentType.code +
-                    "_" +
-                    ed.educationalLevel.code.toUpperCase() +
-                    "_" +
-                    ed.professionType.code.toUpperCase()
-                ];
-              }
-            });
-
-          //// check documetns with parents
-          for (var pd in ed.parentDoc) {
-            tempVal = newLicenseDocuments.value.filter(
-              (nld) => nld.parentDocument == pd && nld.isRequired
-            );
-
-            if (
-              tempVal &&
-              tempVal.length > 0 &&
-              tempVal[0] &&
-              tempVal[0].isRequired == true
-            ) {
-              // eslint-disable-next-line no-prototype-builtins
-              NSTemp = documentsUploaded.value.hasOwnProperty(
-                tempVal[0].documentType.code +
-                  "_" +
-                  ed.educationalLevel.code.toUpperCase() +
-                  "_" +
-                  ed.professionType.code.toUpperCase()
-              );
-              if (NSTemp == "") {
-                fileUploadError.value[
-                  "file_upload_row_" +
-                    newLicenseDocuments.value.filter(
-                      (nld) => nld.parentDocument == pd && nld.isRequired
-                    )[0].documentType.code +
-                    "_" +
-                    ed.educationalLevel.code.toUpperCase() +
-                    "_" +
-                    ed.professionType.code.toUpperCase()
-                ] = true;
-                errorDocuments.value.push({
-                  name: newLicenseDocuments.value.filter(
-                    (nld) => nld.parentDocument == pd && nld.isRequired
-                  )[0].documentType.name,
-                  code:
-                    newLicenseDocuments.value.filter(
-                      (nld) => nld.parentDocument == pd && nld.isRequired
-                    )[0].documentType.code +
-                    "_" +
-                    ed.educationalLevel.code.toUpperCase() +
-                    "_" +
-                    ed.professionType.code.toUpperCase(),
-                });
-              }
-            }
-          }
-        });
-      }
-
-      return fileUploadError.value;
-    };
     const urltoFile = async (data, fileName) => {
       let url = data;
       let file = await fetch(url)
@@ -1678,10 +1408,23 @@ export default {
         });
       return file;
     };
-    const next = () => {
-      let documentValidation = checkDocuments();
-
-      if (documentValidation && Object.keys(documentValidation).length == 0) {
+    const next = async () => {
+      let documentValidation = await checkDocuments(
+        errorDocuments.value,
+        isBackButtonClicked.value,
+        commonDocuments.value,
+        fileUploadError.value,
+        educationalDocs.value,
+        documentsUploaded.value,
+        newLicenseDocuments.value
+      );
+      fileUploadError.value = documentValidation.fileUploadError
+        ? documentValidation.fileUploadError
+        : [];
+      errorDocuments.value = documentValidation.errorDocuments
+        ? documentValidation.errorDocuments
+        : [];
+      if (errorDocuments.value && errorDocuments.value.length == 0) {
         let finalLocalData = {
           created: new Date(),
           data: [],
@@ -1828,6 +1571,7 @@ export default {
               isLoading.value = false;
               localStorage.removeItem("NLApplicationData");
               indexedDB.deleteDatabase("NLdocumentUploads");
+              localStorage.removeItem("isLicenseDelegation");
               localStorage.removeItem("tempNL");
               location.reload();
             } else {
@@ -1854,7 +1598,7 @@ export default {
 
     const groupByKey = (array, key) => {
       return array.reduce((hash, obj) => {
-        if (obj[key] === undefined || obj[key] == null) return hash;
+        if (obj[key] === undefined || obj[key] == null || obj[key] == "") return hash;
         return Object.assign(hash, {
           [obj[key]]: (hash[obj[key]] || []).concat(obj),
         });
@@ -1934,9 +1678,17 @@ export default {
                 element.educationalLevel.id,
                 null,
               ])
-              .then((res) => {
-                let resp = res.data.data;
-                newLicenseDocuments.value = res.data.data;
+              .then(async (res) => {
+                let result = res.data ? await res.data.data : [];
+                let resp = [];
+                newLicenseDocuments.value = result;
+                if (isLicenseDelegation.value == true) {
+                  resp = result.filter(
+                    (ed) =>
+                      ed.documentType.code == "SUPINST" ||
+                      ed.documentType.code == "SENSUP"
+                  );
+                }
                 resp.forEach((ed, index) => {
                   if (
                     generalInfo.value &&
@@ -1950,7 +1702,10 @@ export default {
                 educationalDocs.value.push({
                   educationalLevel: element.educationalLevel,
                   professionType: element.professionalType,
-                  docs: resp.filter((element) => element.parentDocument == null),
+                  docs: resp.filter(
+                    (element) =>
+                      element.parentDocument == null || element.parentDocument == ""
+                  ),
                   parentDoc: groupByKey(resp, "parentDocument"),
                 });
 
@@ -2009,6 +1764,9 @@ export default {
             ])
             .then((res) => {
               let result = res.data.data;
+              if (isLicenseDelegation.value == true) {
+                result = result.filter((el) => el.documentType.code == "PSP");
+              }
               commonDocuments.value = result;
               if (
                 existingDocs &&
@@ -2053,7 +1811,6 @@ export default {
       showPreview,
       existingDocs,
       fileUploadError,
-      previewFile,
       handleCommonFileUpload,
       generalInfo,
       goToNext,
@@ -2061,7 +1818,6 @@ export default {
       isDarkMode,
       educationalDocs,
       imageUploader,
-      filePreviewData,
       next,
       back,
       addMore,

@@ -807,7 +807,7 @@
     </ul>
     <!--End of Goodstanding routes -->
 
-    <!-- License Delegation routes -->
+    <!-- License Designation routes -->
     <ul class="mt-5" v-if="finalUrl == 'licenseDelegation'">
       <div class="parentList flex justify-start">
         <a
@@ -815,7 +815,7 @@
           class="bg-white text-white rounded-md mr-4 ml-1 w-full flex justify-start p-2 pointer-events-none"
         >
           <span class="icon"><i class="bx bx-task text-grey-800 text-2xl mt-1"></i></span>
-          <h2 class="title text-grey-800 text-xl font-bold ml-4">License Delegation</h2>
+          <h2 class="title text-grey-800 text-xl font-bold ml-4">License Designation</h2>
         </a>
       </div>
 
@@ -831,7 +831,7 @@
           <router-link class="link" to="/Applicant/LicenseDelegation">
             <span class="icon"><i class="bx bx-plus"></i></span>
             <span class="text text-white font-bold break-all"
-              >Apply for License Delegation</span
+              >Apply for License Designation</span
             >
           </router-link>
         </a>
@@ -1007,7 +1007,7 @@
         </a>
       </router-link>
     </ul>
-    <!--End of License Delegation routes -->
+    <!--End of License Designation routes -->
   </div>
 </template>
 

@@ -9,10 +9,7 @@
   >
     <div
       :class="
-        modalType &&
-        modalType != 'GoodStanding' &&
-        modalType &&
-        modalType != 'LicenseDelegation'
+        (modalType && modalType == 'NewLicense') || modalType == 'Renewal'
           ? 'modal-dialog modal-xl relative w-auto pointer-events-none'
           : 'modal-dialog modal-md relative w-auto pointer-events-none'
       "

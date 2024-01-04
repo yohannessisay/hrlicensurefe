@@ -138,7 +138,7 @@
                           height="60"
                           xmlns="http://www.w3.org/2000/svg"
                           version="1.1"
-                          @click="previous()"
+                          @click="previous(index)"
                           v-if="index != 0"
                         >
                           <polyline
@@ -1334,16 +1334,19 @@ export default {
         nextClickable.value = true;
       }
     };
-    const previous = () => {
-      if (index.value == docs.value.length - 1) {
+    const previous = (ind) => {
+      if (index.value == docs.value.length) {
         showButtons.value = false;
       }
-      index.value = index.value - 1;
-      completedSteps.value -= 1;
-      amount.value = ((index.value + 1) / docs.value.length) * 100;
-      width.value = "width:" + amount.value + "%";
-      findDocumentType(documentTypes.value, docs.value[index.value]);
+
+      accepted.value = accepted.value.filter((el) => el != docs.value[ind - 1].fileName);
+      rejected.value = rejected.value.filter((el) => el != docs.value[ind - 1].fileName);
+
       nextClickable.value = true;
+      index.value = accepted.value.length + rejected.value.length;
+      completedSteps.value = index.value;
+      completedSteps.value < 0 ? (completedSteps.value = 0) : 0;
+      index.value < 0 ? (index.value = 0) : 0;
     };
     const nextRemark = () => {
       if (ind.value != rejectedObj.value.length - 1) {
@@ -1406,47 +1409,33 @@ export default {
     const accept = (doc) => {
       nextClickable.value = true;
       completedSteps.value += 1;
-
       if (accepted.value.length > 0) {
-        if (!accepted.value.includes(doc.documentTypeCode)) {
+        if (!accepted.value.includes(doc.fileName)) {
           accepted.value.push(doc.fileName);
           if (index.value == docs.value.length - 1) {
             showButtons.value = true;
-          } else {
-            index.value = index.value + 1;
-            amount.value = ((index.value + 1) / docs.value.length) * 100;
-            width.value = "width:" + amount.value + "%";
-            findDocumentType(documentTypes.value, docs.value[index.value]);
           }
-          if (rejected.value.includes(doc.documentTypeCode)) {
-            rejected.value.splice(rejected.value.indexOf(doc.documentTypeCode), 1);
-            rejectedObj.value.splice(rejectedObj.value.indexOf(doc), 1);
+          if (rejected.value.includes(doc.fileName)) {
+            rejected.value = rejected.value.filter((el) => el != doc.fileName);
+            rejectedObj.value = rejectedObj.value.filter((el) => el != doc.fileName);
           }
         } else {
           if (index.value == docs.value.length - 1) {
             showButtons.value = true;
-          } else {
-            index.value = index.value + 1;
-            amount.value = ((index.value + 1) / docs.value.length) * 100;
-            width.value = "width:" + amount.value + "%";
-            findDocumentType(documentTypes.value, docs.value[index.value]);
           }
         }
       } else {
         accepted.value.push(doc.fileName);
         if (index.value == docs.value.length - 1) {
           showButtons.value = true;
-        } else {
-          index.value = index.value + 1;
-          amount.value = ((index.value + 1) / docs.value.length) * 100;
-          width.value = "width:" + amount.value + "%";
-          findDocumentType(documentTypes.value, docs.value[index.value]);
         }
-        if (rejected.value.includes(doc.documentTypeCode)) {
-          rejected.value.splice(rejected.value.indexOf(doc.documentTypeCode), 1);
+
+        if (rejected.value.includes(doc.fileName)) {
           rejectedObj.value.splice(rejectedObj.value.indexOf(doc), 1);
+          rejectedObj.value = rejectedObj.value.filter((el) => el != doc.fileName);
         }
       }
+      index.value = accepted.value.length + rejected.value.length;
     };
 
     const reject = (doc) => {
@@ -1460,45 +1449,29 @@ export default {
       }
 
       if (rejected.value.length > 0) {
-        if (!rejected.value.includes(doc.documentTypeCode)) {
+        if (!rejected.value.includes(doc.fileName)) {
           rejected.value.push(doc.fileName);
           rejectedObj.value.push(doc);
           if (index.value == docs.value.length - 1) {
             showButtons.value = true;
-          } else {
-            index.value = index.value + 1;
-            amount.value = ((index.value + 1) / docs.value.length) * 100;
-            width.value = "width:" + amount.value + "%";
-            findDocumentType(documentTypes.value, docs.value[index.value]);
           }
-          if (accepted.value.includes(doc.documentTypeCode)) {
-            accepted.value.splice(accepted.value.indexOf(doc.documentTypeCode), 1);
+          if (accepted.value.includes(doc.fileName)) {
+            accepted.value = accepted.value.filter((el) => el != doc.fileName);
           }
         } else {
           if (index.value == docs.value.length - 1) {
             showButtons.value = true;
-          } else {
-            index.value = index.value + 1;
-            amount.value = ((index.value + 1) / docs.value.length) * 100;
-            width.value = "width:" + amount.value + "%";
-            findDocumentType(documentTypes.value, docs.value[index.value]);
           }
         }
       } else {
-        rejected.value.push(doc.fileName);
-        rejectedObj.value.push(doc);
         if (index.value == docs.value.length - 1) {
           showButtons.value = true;
-        } else {
-          index.value = index.value + 1;
-          amount.value = ((index.value + 1) / docs.value.length) * 100;
-          width.value = "width:" + amount.value + "%";
-          findDocumentType(documentTypes.value, docs.value[index.value]);
         }
-        if (accepted.value.includes(doc.documentTypeCode)) {
-          accepted.value.splice(accepted.value.indexOf(doc.documentTypeCode), 1);
+        if (accepted.value.includes(doc.fileName)) {
+          accepted.value = accepted.value.filter((el) => el != doc.fileName);
         }
       }
+      index.value = accepted.value.length + rejected.value.length;
     };
     const setOtherProfession = (education, id, event, type) => {
       if (type == "english") {
